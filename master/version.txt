@@ -1,9 +1,9 @@
-commit ad365f4af6c43fd7b5a1676ad6f07dad5ce9e543
+commit 85143e93b0eadc1e19d47e3451e4963b909fda91
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 7 17:32:18 2021 +0300
+Date:   Tue Jun 8 09:59:22 2021 +0300
 
-    refactor(ui5-daterange-picker): rename first/lastDateValue (#3397)
+    refactor(ui5-checkbox): replace `wrap` with `wrappingType` (#3403)
     
-    Part of #3107 (comment)
+    As part of #3107 we decided to replace the boolean property wrap as we expect to add a new type of wrapping (Hyphenated) and for this the string property from enum type is more suitable.
     
-    BREAKING_CHANGE: The readonly properties `firstDateValue` and `lastDateValue` have been renamed to `startDateValue` and `endDateValue`.
+    BREAKING_CHANGE: The boolean property wrap has been removed in favour of string prop wrappingType. If you previously used wrap, now set wrappingType="Normal" instead.

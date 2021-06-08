@@ -2456,13 +2456,13 @@
 <section>
 	<h3>Basic RadioButton Types</h3>
 	<div class="snippet">
-		<ui5-radiobutton text="Option A" selected name="GroupA"></ui5-radiobutton>
+		<ui5-radiobutton text="Option A" checked name="GroupA"></ui5-radiobutton>
 		<ui5-radiobutton text="Option B" value-state="None" name="GroupA"></ui5-radiobutton>
 		<ui5-radiobutton text="Option C" value-state="Warning" name="GroupA"></ui5-radiobutton>
 		<ui5-radiobutton text="Option D" value-state="Error" name="GroupA"></ui5-radiobutton>
 		<ui5-radiobutton text="Option E" disabled name="GroupA"></ui5-radiobutton>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option A"</span> <span class="na">selected</span> <span class="na">name=</span><span class="s">"GroupA"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option A"</span> <span class="na">checked</span> <span class="na">name=</span><span class="s">"GroupA"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 <span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option B"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">name=</span><span class="s">"GroupA"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 <span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option C"</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">name=</span><span class="s">"GroupA"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 <span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option D"</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">name=</span><span class="s">"GroupA"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
@@ -2476,20 +2476,20 @@
 		<div id="radioGroup" class="radio-button-group">
 			<ui5-title>Group of states</ui5-title>
 			<ui5-label id="lblRadioGroup">Selected radio: None</ui5-label>
-			<ui5-radiobutton text="None" value-state="None" selected name="GroupB"></ui5-radiobutton>
+			<ui5-radiobutton text="None" value-state="None" checked name="GroupB"></ui5-radiobutton>
 			<ui5-radiobutton text="Warning" value-state="Warning" name="GroupB"></ui5-radiobutton>
 			<ui5-radiobutton text="Error" value-state="Error" name="GroupB"></ui5-radiobutton>
 		</div>
 		<div id="radioGroup2" class="radio-button-group">
 			<ui5-title>Group of options</ui5-title>
 			<ui5-label id="lblRadioGroup2">Selected radio: Option A</ui5-label>
-			<ui5-radiobutton text="Option A" selected name="GroupC"></ui5-radiobutton>
+			<ui5-radiobutton text="Option A" checked name="GroupC"></ui5-radiobutton>
 			<ui5-radiobutton text="Option B" value-state="None" name="GroupC"></ui5-radiobutton>
 			<ui5-radiobutton text="Option C" value-state="None" name="GroupC"></ui5-radiobutton>
 		</div>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
-<span class="nx">radioGroup</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">select</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">radioGroup</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">lblRadioGroup</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
 <span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -2497,14 +2497,14 @@
 <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"radioGroup"</span> <span class="na">class=</span><span class="s">"radio-button-group"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-title&gt;</span>Group of states<span class="nt">&lt;/ui5-title&gt;</span>
 	<span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"lblRadioGroup"</span><span class="nt">&gt;</span>Selected radio: None<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"None"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">selected</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
+	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"None"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">checked</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Warning"</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Error"</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"radioGroup2"</span> <span class="na">class=</span><span class="s">"radio-button-group"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-title&gt;</span>Group of options<span class="nt">&lt;/ui5-title&gt;</span>
 	<span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"lblRadioGroup2"</span><span class="nt">&gt;</span>Selected radio: Option A<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option A"</span> <span class="na">selected</span> <span class="na">name=</span><span class="s">"GroupC"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
+	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option A"</span> <span class="na">checked</span> <span class="na">name=</span><span class="s">"GroupC"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option B"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">name=</span><span class="s">"GroupC"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 	<span class="nt">&lt;ui5-radiobutton</span> <span class="na">text=</span><span class="s">"Option C"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">name=</span><span class="s">"GroupC"</span><span class="nt">&gt;&lt;/ui5-radiobutton&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
@@ -2523,11 +2523,11 @@
 </section>
 
 <script>
-	radioGroup.addEventListener("select", function(e) {
+	radioGroup.addEventListener("change", function(e) {
 		lblRadioGroup.innerHTML = e.target.text;
 	});
 
-	radioGroup2.addEventListener("select", function(e) {
+	radioGroup2.addEventListener("change", function(e) {
 		lblRadioGroup2.innerHTML = e.target.text;
 	});
 </script>
@@ -2538,7 +2538,7 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options. When a <code>ui5-radiobutton</code> is selected by the user, the <code>select</code> event is fired. When a <code>ui5-radiobutton</code> that is within a group is selected, the one that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property. <br> <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
+The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options. When a <code>ui5-radiobutton</code> is selected by the user, the <code>change</code> event is fired. When a <code>ui5-radiobutton</code> that is within a group is selected, the one that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property. <br> <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
 
 <h3>Keyboard Handling</h3>
 
@@ -2562,16 +2562,27 @@ Once the <code>ui5-radiobutton</code> is on focus, it might be selected by press
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          checked
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the component is checked or not. <br><br> <b>Note:</b> The property value can be changed with user interaction, either by clicking/tapping on the component, or by using the Space or Enter key.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           disabled
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the component is disabled. <br><br> <b>Note:</b> A disabled component is completely noninteractive.
+                            Defines whether the component is disabled. <br><br> <b>Note:</b> A disabled component is completely noninteractive.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           name
                             <br>
@@ -2590,7 +2601,7 @@ Once the <code>ui5-radiobutton</code> is on focus, it might be selected by press
             <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the component so that it can be submitted as part of an HTML form.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -2598,18 +2609,7 @@ Once the <code>ui5-radiobutton</code> is on focus, it might be selected by press
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the component is read-only. <br><br> <b>Note:</b> A read-only component is not editable, but still provides visual feedback upon user interaction.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          selected
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the component is selected or not. <br><br> <b>Note:</b> The property value can be changed with user interaction, either by cliking/tapping on the component, or by using the Space or Enter key.
+                            Defines whether the component is read-only. <br><br> <b>Note:</b> A read-only component is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2671,9 +2671,9 @@ Once the <code>ui5-radiobutton</code> is on focus, it might be selected by press
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">select</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the component selected state changes.
+                        Fired when the component checked state changes.
                         </div>
                       </div>
             

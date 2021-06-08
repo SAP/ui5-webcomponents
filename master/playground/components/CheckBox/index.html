@@ -2515,11 +2515,11 @@
 <section>
 	<h3>CheckBox with Text Wrapping</h3>
 	<div class="snippet">
-		<ui5-checkbox text="ui5-checkbox with 'wrap' set and some long text." wrap style="width:200px"></ui5-checkbox>
-		<ui5-checkbox text="Another ui5-checkbox with very long text here" wrap style="width:200px"></ui5-checkbox>
+		<ui5-checkbox text="ui5-checkbox with 'wrapping-type=Normal' set and some long text." wrapping-type="Normal" style="width:200px"></ui5-checkbox>
+		<ui5-checkbox text="Another ui5-checkbox with very long text here" wrapping-type="Normal" style="width:200px"></ui5-checkbox>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"ui5-checkbox with 'wrap' set and some long text."</span> <span class="na">wrap</span> <span class="na">style=</span><span class="s">"width:200px"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
-<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Another ui5-checkbox with very long text here"</span> <span class="na">wrap</span> <span class="na">style=</span><span class="s">"width:200px"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"ui5-checkbox with 'wrapping-type=Normal' set and some long text."</span> <span class="na">wrapping-type=</span><span class="s">"Normal"</span> <span class="na">style=</span><span class="s">"width:200px"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Another ui5-checkbox with very long text here"</span> <span class="na">wrapping-type=</span><span class="s">"Normal"</span> <span class="na">style=</span><span class="s">"width:200px"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2592,7 +2592,7 @@ Allows the user to set a binary value, such as true/false or yes/no for an item.
 
 <h3>Usage</h3>
 
-You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default. In case you prefer text to wrap, use the <code>wrap</code> property. The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends. <br><br> You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to <code>true</code>, or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code> property to <code>true</code>.
+You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default. In case you prefer text to wrap, set the <code>wrappingType</code> property to "Normal". The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends. <br><br> You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to <code>true</code>, or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code> property to <code>true</code>.
 
 <br><br> <h3>Keyboard Handling</h3>
 
@@ -2703,13 +2703,14 @@ The user can use the following keyboard shortcuts to toggle the checked state of
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          wrap
+                          wrappingType
                             <br>
+                            <code>wrapping-type</code>
                         </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell">WrappingType</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the component text wraps when there is not enough space. <br><br> <b>Note:</b> By default, the text truncates when there is not enough space.
+                            Defines whether the component text wraps when there is not enough space. <br><br> Available options are: <ul> <li><code>None</code> - The text will be truncated with an ellipsis.</li> <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li> </ul>
                         </div>
                       </div>
             
