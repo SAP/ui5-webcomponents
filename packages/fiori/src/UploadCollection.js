@@ -150,11 +150,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event sap.ui.webcomponents.fiori.UploadCollection#file-delete
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#item-delete
 		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
 		 */
-		"file-delete": {
+		"item-delete": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -294,7 +294,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(event) {
-		this.fireEvent("file-delete", { item: event.detail.item });
+		this.fireEvent("item-delete", { item: event.detail.item });
 	}
 
 	_onSelectionChange(event) {
