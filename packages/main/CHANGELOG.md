@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.9](https://github.com/SAP/ui5-webcomponents/compare/v0.31.8...v0.31.9) (2021-06-08)
+
+
+### Bug Fixes
+
+* **ui5-label:** fix required label in safari ([#3182](https://github.com/SAP/ui5-webcomponents/issues/3182)) ([eb03fe5](https://github.com/SAP/ui5-webcomponents/commit/eb03fe5))
+
+
+### Features
+
+* **ui5-li-custom, ui5-li, ui5-li-groupheader:** add accessibleName property ([#3269](https://github.com/SAP/ui5-webcomponents/issues/3269)) ([a77ff22](https://github.com/SAP/ui5-webcomponents/commit/a77ff22))
+* **ui5-panel:** expose content css part ([#3211](https://github.com/SAP/ui5-webcomponents/issues/3211)) ([0b21f49](https://github.com/SAP/ui5-webcomponents/commit/0b21f49))
+
+
+
+
+
 ## [0.31.8](https://github.com/SAP/ui5-webcomponents/compare/v0.31.7...v0.31.8) (2021-05-31)
 
 
