@@ -1,9 +1,5 @@
-commit 85143e93b0eadc1e19d47e3451e4963b909fda91
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 8 09:59:22 2021 +0300
+commit 6104b80cc4791667dd7f81b837681954648dc56d
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue Jun 8 17:19:49 2021 +0300
 
-    refactor(ui5-checkbox): replace `wrap` with `wrappingType` (#3403)
-    
-    As part of #3107 we decided to replace the boolean property wrap as we expect to add a new type of wrapping (Hyphenated) and for this the string property from enum type is more suitable.
-    
-    BREAKING_CHANGE: The boolean property wrap has been removed in favour of string prop wrappingType. If you previously used wrap, now set wrappingType="Normal" instead.
+    fix(ui5-wheelslider): correcting the placement on mobile in different fontsizes (#3396)
