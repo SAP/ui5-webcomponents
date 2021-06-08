@@ -23,7 +23,7 @@
 }
 
 /* wrap */
-:host([wrap][text]) .ui5-checkbox-root {
+:host([wrapping-type="Normal"][text]) .ui5-checkbox-root {
 	min-height: auto;
 	box-sizing: border-box;
 	align-items: flex-start;
@@ -31,17 +31,17 @@
 	padding-bottom: var(--_ui5_checkbox_root_side_padding);
 }
 
-:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-inner,
-:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
+:host([wrapping-type="Normal"][text]) .ui5-checkbox-root .ui5-checkbox-inner,
+:host([wrapping-type="Normal"][text]) .ui5-checkbox-root .ui5-checkbox-label {
 	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
 }
 
-:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
+:host([wrapping-type="Normal"][text]) .ui5-checkbox-root .ui5-checkbox-label {
 	word-break: break-all;
 	align-self: center;
 }
 
-:host([wrap]) .ui5-checkbox-root:focus::before {
+:host([wrapping-type="Normal"]) .ui5-checkbox-root:focus::before {
 	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
 }
 
