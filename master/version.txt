@@ -1,5 +1,9 @@
-commit 6104b80cc4791667dd7f81b837681954648dc56d
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Jun 8 17:19:49 2021 +0300
+commit 5898eb8ece98bab3aa97b014148cb8fde622772f
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jun 8 18:44:14 2021 +0300
 
-    fix(ui5-wheelslider): correcting the placement on mobile in different fontsizes (#3396)
+    fix(ui5-upload-collection): change file deleted event name (#3413)
+    
+    Part of #3107
+    
+    BREAKING_CHANGE: The "file-deleted "event" is renamed to "item-delete"
