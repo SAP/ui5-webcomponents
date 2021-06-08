@@ -19,7 +19,6 @@
 }
 
 .ui5-page-content-root {
-    padding: 0 3rem;
     overflow: hidden auto;
     position: absolute;
     will-change: scroll-position;
@@ -40,29 +39,26 @@
 }
 
 :host([floating-footer]) .ui5-page-footer-root {
-    padding: 0 3rem;
     opacity: 1;
     bottom: 0.5rem;
 }
+/*** Responsive paddings ***/
 
-@media (max-width: 599px) {
-    .ui5-page-content-root {
-        padding: 0 1rem;
-    }
-
-    :host([floating-footer]) .ui5-page-footer-root {
-        padding: 0 1rem;
-    }
+:host([media-range="S"]) .ui5-page-content-root,
+:host([media-range="S"][floating-footer]) .ui5-page-footer-root {
+	padding: 0 1rem;
 }
 
-@media (min-width: 600px) and (max-width: 1439px) {
-    .ui5-page-content-root {
-        padding: 0 2rem;
-    }
+:host([media-range="M"]) .ui5-page-content-root,
+:host([media-range="L"]) .ui5-page-content-root,
+:host([media-range="M"][floating-footer]) .ui5-page-footer-root,
+:host([media-range="L"][floating-footer]) .ui5-page-footer-root {
+	padding: 0 2rem;
+}
 
-    :host([floating-footer]) .ui5-page-footer-root {
-        padding: 0 2rem;
-    }
+:host([media-range="XL"]) .ui5-page-content-root,
+:host([media-range="XL"][floating-footer]) .ui5-page-footer-root {
+	padding: 0 3rem;
 }
 
 :host([disable-scrolling]) .ui5-page-content-root {
