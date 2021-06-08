@@ -1,11 +1,11 @@
 import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import NotificationList from "./NotificationList.js";
 
 // Texts
 import {
@@ -102,7 +102,7 @@ const metadata = {
  * </ul>
  *
  * <h3>Usage</h3>
- * The component can be used in a standard <code>ui5-list</code>.
+ * The component should be used in <code>ui5-notification-list</code> to ensure accessibility.
  *
  * <h3>CSS Shadow Parts</h3>
  *
@@ -159,7 +159,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	static get dependencies() {
 		return [
-			List,
+			NotificationList,
 			Button,
 			Icon,
 			BusyIndicator,

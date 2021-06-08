@@ -147,7 +147,7 @@ const metadata = {
  * </ul>
  *
  * <h3>Usage</h3>
- * The component can be used in a standard <code>ui5-list</code>.
+ * The component can be used in <code>ui5-notification-list</code>.
  *
  * <h3>CSS Shadow Parts</h3>
  *

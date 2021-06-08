@@ -221,7 +221,7 @@ const metadata = {
  *
  * <h4>When not to use:</h4>
  * <ul>
- * <li>To display items not hierarchically strcutured. In this case, use the List component.</li>
+ * <li>To display items not hierarchically structured. In this case, use the List component.</li>
  * <li>To select one item from a very small number of non-hierarchical items. Select or ComboBox might be more appropriate.</li>
  * <li>The hierarchy turns out to have only two levels. In this case, use List with group items.</li>
  * </ul>

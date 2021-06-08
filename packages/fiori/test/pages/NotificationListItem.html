@@ -43,13 +43,13 @@
 		<li>close</li>
 	</ul>
 
-	<h3>Events on ui5-list level</h3>
+	<h3>Events on ui5-notification-list level</h3>
 	<ul>
 		<li>itemClick</li>
 		<li>itemClose</li>
 	</ul>
 
-	<ui5-list id="notificationList" header-text="Notifications heading and content 'truncates'">
+	<ui5-notification-list id="notificationList" header-text="Notifications heading and content 'truncates'">
 
 		<ui5-li-notification
 			busy
@@ -115,11 +115,11 @@
 
 			<ui5-notification-action icon="decline" disabled design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
 		</ui5-li-notification>
-	</ui5-list>
+	</ui5-notification-list>
 
 	<br><br>
 
-	<ui5-list id="notificationList2" header-text="Notifications heading and content 'wraps'">
+	<ui5-notification-list id="notificationList2" header-text="Notifications heading and content 'wraps'">
 
 		<ui5-li-notification
 			show-close
@@ -167,12 +167,12 @@
 			<span slot="footnotes">John SMith</span>
 			<span slot="footnotes">3 Days</span>
 		</ui5-li-notification>
-	</ui5-list>
+	</ui5-notification-list>
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
-		<ui5-list id="notificationListTop" header-text="Notifications heading and content 'truncates'">
+		<ui5-notification-list id="notificationListTop" header-text="Notifications heading and content 'truncates'">
 			<ui5-li-notification
 				show-close
 				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
@@ -229,7 +229,7 @@
 
 				<ui5-notification-action icon="message-error" design="Negative" text="Reject" slot="actions"></ui5-notification-action>
 			</ui5-li-notification>
-		</ui5-list>
+		</ui5-notification-list>
 	</ui5-popover>
 
 	<div style="display: flex; justify-content: flex-end; padding: 0.25rem; border-bottom: 1px solid grey;">
