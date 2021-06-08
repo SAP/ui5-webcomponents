@@ -145,11 +145,11 @@
 	pointer-events: none;
 }
 
-:host([wrap][text]) .ui5-radio-root {
+:host([wrapping-type="Normal"][text]) .ui5-radio-root {
 	height: auto;
 }
 
-:host([wrap][text]) [ui5-label].ui5-radio-label {
+:host([wrapping-type="Normal"][text]) [ui5-label].ui5-radio-label {
 	padding: var(--_ui5_rb_label_side_padding) 0;
 	word-break: break-all;
 }
