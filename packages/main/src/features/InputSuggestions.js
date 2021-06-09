@@ -4,6 +4,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
+import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
 import GroupHeaderListItem from "../GroupHeaderListItem.js";
 import SuggestionListItem from "../SuggestionListItem.js";
@@ -66,7 +67,7 @@ class Suggestions {
 				type: suggestion.type || undefined,
 				additionalText: suggestion.additionalText || undefined,
 				additionalTextState: suggestion.additionalTextState,
-				group: suggestion.group,
+				groupItem: suggestion.groupItem,
 				key: idx,
 			});
 		});
@@ -416,6 +417,7 @@ class Suggestions {
 	static get dependencies() {
 		return [
 			SuggestionItem,
+			SuggestionGroupItem,
 			ResponsivePopover,
 			List,
 			SuggestionListItem,
