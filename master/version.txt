@@ -1,17 +1,5 @@
-commit 39ccf7bf5ac37dea8a63f04477650be135638aa9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jun 9 10:27:07 2021 +0300
+commit c5e00c48feeb839fa328bff9ceb63e1d64a85ad6
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Wed Jun 9 15:20:02 2021 +0300
 
-    feat(ui5-input): introduce new SuggestionGroupItem (#3248)
-    
-    Introduce a dedicated component SuggestionGroupItem to split the suggestions into groups. Previously the app developers had to use the standard SuggestionItem and set its "group" property. But, as the group item do not have most of the interactive features, we decided to introduce dedicated component for the purpose. Related to: #3107
-    
-    BREAKING_CHANGE: The "group" property of the SuggestionItem is removed, use the SuggestionGroupItem component to create grouping as follows:
-    
-    ```html
-    <ui5-input show-suggestions>
-      <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
-      <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
-      <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
-    </ui5-input>
-    ```
+    fix(ui5-popup): scroll handle is now working for input controls (#3414)
