@@ -6,6 +6,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -183,6 +184,18 @@ const metadata = {
 		 */
 		busy: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this control.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		busyDelay: {
+			type: Integer,
+			defaultValue: 1000,
 		},
 
 		/**

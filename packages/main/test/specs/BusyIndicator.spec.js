@@ -18,19 +18,6 @@ describe("BusyIndicator general interaction", () => {
 		assert.strictEqual(input.getProperty("value"), "0", "itemClick is not thrown");
 	});
 
-	it("tests focus handling", () => {
-		const busyIndicator = browser.$("#indicator1");
-		busyIndicator.click();
-
-		let innerFocusElement = browser.execute(() => {
-			return document.getElementById("indicator1").shadowRoot.activeElement;
-		});
-
-		innerFocusElement = $(innerFocusElement);
-
-		assert.strictEqual(innerFocusElement.getAttribute("class"), "ui5-busy-indicator-busy-area", "The correct inner element is focused");
-	});
-
 	it("tests internal focused element attributes", () => {
 		const busyIndicator = browser.$("#indicator1");
 		busyIndicator.click();

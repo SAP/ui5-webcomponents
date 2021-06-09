@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -165,6 +166,18 @@ const metadata = {
 		*/
 		busy: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this control.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		busyDelay: {
+			type: Integer,
+			defaultValue: 1000,
 		},
 
 		/**

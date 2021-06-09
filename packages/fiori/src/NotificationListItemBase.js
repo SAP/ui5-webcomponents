@@ -2,6 +2,7 @@ import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 
 // Icons
@@ -84,6 +85,18 @@ const metadata = {
 		 */
 		busy: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this control.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		busyDelay: {
+			type: Integer,
+			defaultValue: 1000,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
