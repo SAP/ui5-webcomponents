@@ -12,14 +12,37 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(segmentedButtonItem.getProperty("pressed"), "SegmentedButtonItem has property pressed");
 	});
 
-	it("tests if pressed attribute is switched to the newly pressed button", () => {
+	it("tests if pressed attribute is switched to the newly pressed button when selected with enter key", () => {
+		const firstSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:first-child");
+		const secondSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
+
+		firstSegmentedButtonItem.click();
+		firstSegmentedButtonItem.keys("ArrowRight");
+		browser.keys("Enter");
+
+		assert.ok(!firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should not be pressed anymore");
+		assert.ok(secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem has property pressed");
+	});
+
+	it("tests if pressed attribute is switched to the newly pressed button when selected with space key", () => {
+		const secondSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
+		const lastSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:last-child");
+
+		secondSegmentedButtonItem.keys("ArrowRight");
+		browser.keys("Space");
+
+		assert.ok(!secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem should not be pressed anymore");
+		assert.ok(lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem has property pressed");
+	});
+
+	it("tests if pressed attribute is switched to the newly pressed button when selected with mouse", () => {
 		const firstSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 		const lastSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
-		lastSegmentedButtonItem.click();
+		firstSegmentedButtonItem.click();
 
-		assert.ok(lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem has property pressed");
-		assert.ok(!firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should not be pressed anymore");
+		assert.ok(firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem has property pressed");
+		assert.ok(!lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem should not be pressed anymore");
 	});
 
 	it("tests if pressed attribute is applied only to last child when all buttons are pressed", () => {

@@ -11,22 +11,9 @@ const metadata = {
 	tag: "ui5-segmented-button-item",
 	properties: /** @lends  sap.ui.webcomponents.main.SegmentedButtonItem.prototype */ {
 		/**
-		 * Defines the <code>ui5-button</code> design.
+		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 *
-		 * <ul>
-		 * <li><code>Default</code></li>
-		 * <li><code>Emphasized</code></li>
-		 * <li><code>Positive</code></li>
-		 * <li><code>Negative</code></li>
-		 * <li><code>Transparent</code></li>
-		 * </ul>
-		 *
-		 * @type {ButtonDesign}
-		 * @defaultvalue "Default"
-		 * @private
+		 * @public
 		 */
 		design: {
 			type: ButtonDesign,
@@ -34,22 +21,18 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the icon should be displayed after the <code>ui5-button</code> text.
+		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
+		 * @public
 		 */
 		iconEnd: {
 			type: Boolean,
 		},
 
 		/**
-		 * Defines the size of the icon inside the <code>ui5-button</code>.
+		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @private
+		 * @public
 		 */
 		iconSize: {
 			type: String,
@@ -57,22 +40,26 @@ const metadata = {
 		},
 
 		/**
-		 * When set to <code>true</code>, the <code>ui5-button</code> will
-		 * automatically submit the nearest form element upon <code>press</code>.
-		 * <br><br>
-		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
+		 * @public
 		 */
 		submits: {
 			type: Boolean,
 		},
 
 		/**
+		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+		 *
+		 * @public
+		 */
+		pressed: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the index of the item inside of the SegmentedButton.
+		 *
 		 * @private
 		 * @type {String}
 		 */
@@ -82,6 +69,7 @@ const metadata = {
 
 		/**
 		 * Defines how many items are inside of the SegmentedButton.
+		 *
 		 * @private
 		 * @type {String}
 		 */
