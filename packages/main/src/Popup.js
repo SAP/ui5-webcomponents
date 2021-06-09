@@ -268,6 +268,7 @@ class Popup extends UI5Element {
 	_onfocusout(e) {
 		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
 		if (!e.relatedTarget) {
+			this._root.tabIndex = -1;
 			this._root.focus();
 		}
 	}
@@ -322,6 +323,9 @@ class Popup extends UI5Element {
 			|| this._root; // in case of no focusable content focus the root
 
 		if (element) {
+			if (element === this._root) {
+				element.tabIndex = -1;
+			}
 			element.focus();
 		}
 	}
