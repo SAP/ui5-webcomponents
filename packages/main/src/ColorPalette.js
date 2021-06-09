@@ -238,14 +238,14 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Returns the selected color.
-	 * 
+	 *
 	 * @readonly
 	 * @type { String }
 	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	get value() {
+	get selectedColor() {
 		return this._value;
 	}
 
