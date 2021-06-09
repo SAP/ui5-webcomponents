@@ -5,7 +5,9 @@
 	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
 	--_ui5_wheelslider_mobile_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 4);
 	--_ui5_wheelslider_label_text_color: var(--sapContent_LabelColor);
-	--_ui5_wheelslider_height: 15rem;
-	--_ui5_wheelslider_mobile_height: 27rem;
+	--_ui5_wheelslider_height: 240px;
+	--_ui5_wheelslider_mobile_height: 432px;
+	--_ui5_wheelslider_item_width: 48px;
+	--_ui5_wheelslider_item_height: 46px;
 	--_ui5_wheelslider_arrows_visibility: hidden;
 }

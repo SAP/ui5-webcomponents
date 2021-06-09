@@ -64,7 +64,7 @@ describe("UploadCollection", () => {
 			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename")
 		});
 
-		it("upload collection should fire 'fileDeleted'", () => {
+		it("upload collection should fire 'item-delete'", () => {
 			const uploadCollection = browser.$("#uploadCollection");
 			const firstItem = browser.$("#firstItem");
 
@@ -75,7 +75,7 @@ describe("UploadCollection", () => {
 			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
 			deleteBtn.click();
 
-			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'fileDeleted' event is fired");
+			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", () => {

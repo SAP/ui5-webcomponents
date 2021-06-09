@@ -13,8 +13,8 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
-import WrappingType from "./types/WrappingType.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -153,14 +153,19 @@ const metadata = {
 		/**
 		 * Defines whether the component text wraps when there is not enough space.
 		 * <br><br>
-		 * <b>Note:</b> By default, the text truncates when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		_tabIndex: {
@@ -259,10 +264,6 @@ class RadioButton extends UI5Element {
 
 	onBeforeRendering() {
 		this.syncGroup();
-
-		/* temporary workaround. remove after all wrap properties in the relevant components are renamed to wrappingType */
-		this._wrappingType = this.wrap ? WrappingType.Normal : WrappingType.None;
-		/* end */
 
 		this._enableFormSupport();
 	}
