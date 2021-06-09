@@ -7,12 +7,12 @@ class RadioButtonGroup {
 		return this.groups.get(groupName);
 	}
 
-	static getSelectedRadioFromGroup(groupName) {
-		return this.selectedRadios.get(groupName);
+	static getCheckedRadioFromGroup(groupName) {
+		return this.checkedRadios.get(groupName);
 	}
 
 	static removeGroup(groupName) {
-		this.selectedRadios.delete(groupName);
+		this.checkedRadios.delete(groupName);
 		return this.groups.delete(groupName);
 	}
 
@@ -33,7 +33,7 @@ class RadioButtonGroup {
 		}
 
 		const group = this.getGroup(groupName);
-		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
+		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
 		// Remove the radio button from the given group
 		group.forEach((_radioBtn, idx, arr) => {
@@ -42,8 +42,8 @@ class RadioButtonGroup {
 			}
 		});
 
-		if (selectedRadio === radioBtn) {
-			this.selectedRadios.set(groupName, null);
+		if (checkedRadio === radioBtn) {
+			this.checkedRadios.set(groupName, null);
 		}
 
 		// Remove the group if it is empty
@@ -55,8 +55,8 @@ class RadioButtonGroup {
 	}
 
 	static createGroup(radioBtn, groupName) {
-		if (radioBtn.selected) {
-			this.selectedRadios.set(groupName, radioBtn);
+		if (radioBtn.checked) {
+			this.checkedRadios.set(groupName, radioBtn);
 		}
 
 		this.groups.set(groupName, [radioBtn]);
@@ -82,11 +82,11 @@ class RadioButtonGroup {
 		}
 
 		const group = this.getGroup(groupName);
-		const hasSelectedRadio = group.some(radioBtn => radioBtn.selected);
+		const hasCheckedRadio = group.some(radioBtn => radioBtn.checked);
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
-			if (hasSelectedRadio) {
-				radioBtn._tabIndex = radioBtn.selected ? "0" : "-1";
+			if (hasCheckedRadio) {
+				radioBtn._tabIndex = radioBtn.checked ? "0" : "-1";
 			} else {
 				radioBtn._tabIndex = idx === 0 ? "0" : "-1";
 			}
@@ -113,25 +113,25 @@ class RadioButtonGroup {
 	}
 
 	static updateSelectionInGroup(radioBtnToSelect, groupName) {
-		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
+		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
-		this._deselectRadio(selectedRadio);
+		this._deselectRadio(checkedRadio);
 		this._selectRadio(radioBtnToSelect);
-		this.selectedRadios.set(groupName, radioBtnToSelect);
+		this.checkedRadios.set(groupName, radioBtnToSelect);
 	}
 
 	static _deselectRadio(radioBtn) {
 		if (radioBtn) {
-			radioBtn.selected = false;
+			radioBtn.checked = false;
 		}
 	}
 
 	static _selectRadio(radioBtn) {
 		if (radioBtn) {
 			radioBtn.focus();
-			radioBtn.selected = true;
-			radioBtn._selected = true;
-			radioBtn.fireEvent("select");
+			radioBtn.checked = true;
+			radioBtn._checked = true;
+			radioBtn.fireEvent("change");
 		}
 	}
 
@@ -171,17 +171,17 @@ class RadioButtonGroup {
 	}
 
 	static enforceSingleSelection(radioBtn, groupName) {
-		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
+		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
-		if (radioBtn.selected) {
-			if (!selectedRadio) {
-				this.selectedRadios.set(groupName, radioBtn);
-			} else if (radioBtn !== selectedRadio) {
-				this._deselectRadio(selectedRadio);
-				this.selectedRadios.set(groupName, radioBtn);
+		if (radioBtn.checked) {
+			if (!checkedRadio) {
+				this.checkedRadios.set(groupName, radioBtn);
+			} else if (radioBtn !== checkedRadio) {
+				this._deselectRadio(checkedRadio);
+				this.checkedRadios.set(groupName, radioBtn);
 			}
-		} else if (radioBtn === selectedRadio) {
-			this.selectedRadios.set(groupName, null);
+		} else if (radioBtn === checkedRadio) {
+			this.checkedRadios.set(groupName, null);
 		}
 
 		this.updateTabOrder(groupName);
@@ -194,11 +194,11 @@ class RadioButtonGroup {
 		return this._groups;
 	}
 
-	static get selectedRadios() {
-		if (!this._selectedRadios) {
-			this._selectedRadios = new Map();
+	static get checkedRadios() {
+		if (!this._checkedRadios) {
+			this._checkedRadios = new Map();
 		}
-		return this._selectedRadios;
+		return this._checkedRadios;
 	}
 }
 
