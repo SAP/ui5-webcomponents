@@ -97,7 +97,7 @@ const metadata = {
 		 * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event sap.ui.webcomponents.fiori.TimelineItemname-click
+		 * @event sap.ui.webcomponents.fiori.TimelineItem#name-click
 		 * @public
 		 */
 		"name-click": {},
