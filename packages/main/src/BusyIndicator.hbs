@@ -1,5 +1,5 @@
 <div class="{{classes.root}}">
-	{{#if active}}
+	{{#if _isBusy}}
 		<div
 			class="ui5-busy-indicator-busy-area"
 			title="{{ariaTitle}}"
@@ -25,7 +25,7 @@
 
 	<slot></slot>
 
-	{{#if active}}
+	{{#if _isBusy}}
 		<span data-ui5-focus-redirect tabindex="0" @focusin="{{_redirectFocus}}"></span>
 	{{/if}}
 </div>

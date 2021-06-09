@@ -5,6 +5,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
@@ -77,6 +78,27 @@ const metadata = {
 		 */
 		active: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		delay: {
+			type: Integer,
+			defaultValue: 1000,
+		},
+
+		/**
+		 * Defines if the control is currently in busy state.
+		 * @private
+		 */
+		_isBusy: {
+			type: Boolean,
+			noAttribute: true,
 		},
 	},
 };
@@ -186,6 +208,23 @@ class BusyIndicator extends UI5Element {
 				"ui5-busy-indicator-root--ie": isIE(),
 			},
 		};
+	}
+
+	onBeforeRendering() {
+		if (this.active) {
+			if (!this._isBusy && !this._busyTimeoutId) {
+				this._busyTimeoutId = setTimeout(() => {
+					delete this._busyTimeoutId;
+					this._isBusy = true;
+				}, Math.max(0, this.delay));
+			}
+		} else {
+			if (this._busyTimeoutId) {
+				clearTimeout(this._busyTimeoutId);
+				delete this._busyTimeoutId;
+			}
+			this._isBusy = false;
+		}
 	}
 
 	_handleKeydown(event) {
