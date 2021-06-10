@@ -31,6 +31,7 @@ describe("BusyIndicator general interaction", () => {
 
 		// reset
 		busyIndicator.removeAttribute("active");
+		assert.notOk(busyArea.isExisting(), "busy area is removed");
 	});
 
 	it("tests focus handling", () => {
