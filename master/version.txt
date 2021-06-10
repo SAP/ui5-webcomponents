@@ -1,5 +1,5 @@
-commit b458b800ed0aa07674caeefafbe5a3d712f0fab5
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Thu Jun 10 12:37:16 2021 +0200
+commit 788d25d48633f0c5afa1e4574a8b16494cdbc4fa
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jun 10 15:23:29 2021 +0300
 
-    fix(CheckBox): Prevent jumping of elements aligned with baseline when checking/unchecking (#3408)
+    fix(ui5-tree): alignment of items (#3424)
