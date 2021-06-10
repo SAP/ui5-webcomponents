@@ -1,5 +1,5 @@
-commit 4bb84e1e43de3948c08880a9de381b50dea7ec2f
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jun 10 13:16:37 2021 +0300
+commit b458b800ed0aa07674caeefafbe5a3d712f0fab5
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Thu Jun 10 12:37:16 2021 +0200
 
-    feat(ui5-icon): add accessibility role (#3407)
+    fix(CheckBox): Prevent jumping of elements aligned with baseline when checking/unchecking (#3408)
