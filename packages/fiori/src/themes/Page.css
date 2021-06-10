@@ -49,7 +49,7 @@
 	padding: 0 1rem;
 }
 
-:host([media-range="S"]) ::slotted([ui5-bar]) {
+:host([media-range="S"]) ::slotted([ui5-bar][slot="header"]) {
     box-sizing: border-box;
     padding: 0 .25rem;
 }
@@ -61,8 +61,8 @@
 	padding: 0 2rem;
 }
 
-:host([media-range="M"]) ::slotted([ui5-bar]),
-:host([media-range="L"]) ::slotted([ui5-bar]) {
+:host([media-range="M"]) ::slotted([ui5-bar][slot="header"]),
+:host([media-range="L"]) ::slotted([ui5-bar][slot="header"]) {
     box-sizing: border-box;
     padding: 0 1.25rem;
 }
@@ -72,7 +72,7 @@
 	padding: 0 3rem;
 }
 
-:host([media-range="XL"]) ::slotted([ui5-bar]) {
+:host([media-range="XL"]) ::slotted([ui5-bar][slot="header"]) {
     box-sizing: border-box;
     padding: 0 2.25rem;
 }
