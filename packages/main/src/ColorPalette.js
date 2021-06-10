@@ -55,7 +55,7 @@ const metadata = {
 		 * @type {CSSColor}
 		 * @private
 		 */
-		_value: {
+		_selectedColor: {
 			type: CSSColor,
 		},
 	},
@@ -187,17 +187,17 @@ class ColorPalette extends UI5Element {
 	}
 
 	_setColor(color) {
-		this._value = color;
-		if (this._recentColors[0] !== this._value) {
-			if (this._recentColors.includes(this._value)) {
-				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._value), 1)[0]);
+		this._selectedColor = color;
+		if (this._recentColors[0] !== this._selectedColor) {
+			if (this._recentColors.includes(this._selectedColor)) {
+				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
 			} else {
-				this._recentColors.unshift(this._value);
+				this._recentColors.unshift(this._selectedColor);
 			}
 		}
 
 		this.fireEvent("change", {
-			color: this._value,
+			color: this._selectedColor,
 		});
 	}
 
@@ -246,7 +246,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	get selectedColor() {
-		return this._value;
+		return this._selectedColor;
 	}
 
 	get displayedColors() {
