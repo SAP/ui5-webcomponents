@@ -76,6 +76,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-shrink: 1;
 }
 
 .ui5-li-tree-toggle-icon {
