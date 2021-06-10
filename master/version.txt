@@ -1,5 +1,5 @@
-commit c5e00c48feeb839fa328bff9ceb63e1d64a85ad6
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Wed Jun 9 15:20:02 2021 +0300
+commit 4bb84e1e43de3948c08880a9de381b50dea7ec2f
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jun 10 13:16:37 2021 +0300
 
-    fix(ui5-popup): scroll handle is now working for input controls (#3414)
+    feat(ui5-icon): add accessibility role (#3407)
