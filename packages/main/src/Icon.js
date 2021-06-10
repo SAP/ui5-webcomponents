@@ -84,6 +84,16 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessibility role of the component.
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		role: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		pathData: {
@@ -237,7 +247,11 @@ class Icon extends UI5Element {
 		return this.interactive ? "0" : "-1";
 	}
 
-	get role() {
+	get effectiveAccessibleRole() {
+		if (this.role) {
+			return this.role;
+		}
+
 		if (this.interactive) {
 			return "button";
 		}
