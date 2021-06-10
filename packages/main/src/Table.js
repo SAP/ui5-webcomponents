@@ -169,7 +169,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the delay in milliseconds, after which the busy indicator will show up for this control.
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
 		 * @type {Integer}
 		 * @defaultValue 1000

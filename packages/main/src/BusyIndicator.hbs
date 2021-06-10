@@ -25,7 +25,7 @@
 
 	<slot></slot>
 
-	{{#if _isBusy}}
+	{{#if active}}
 		<span data-ui5-focus-redirect tabindex="0" @focusin="{{_redirectFocus}}"></span>
 	{{/if}}
 </div>
