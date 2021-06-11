@@ -49,15 +49,6 @@ const metadata = {
 		},
 
 		/**
-		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-		 *
-		 * @public
-		 */
-		pressed: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the index of the item inside of the SegmentedButton.
 		 *
 		 * @private
