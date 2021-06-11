@@ -1,8 +1,9 @@
-commit e679b51b3a2064dad90fdb5b8afe1cacdbd105b8
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Jun 11 10:59:00 2021 +0300
+commit 3b1c0b5b28a447e03e2c18a4e6d2cb3ef87b8584
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 11 16:59:25 2021 +0300
 
-    fix(ui5-button): stabilizing buttons line-height (#3416)
+    refactor(ui5-timeline-item): rename API (#3387)
     
-    Fixes: #3401
-    Closes: #3401
+    Improve naming as part of #3107. The word item is obsolete in the props/event names as the component is TimelineItem and has the word item itself.
+    
+    BREAKING_CHANGE: The properties `itemName` and `itemNameClickable` are renamed to renamed to `name` and `nameClickable` and the event `item-name-click` is renamed to `name-click`

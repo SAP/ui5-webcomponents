@@ -2466,7 +2466,7 @@
 	<h3>Basic Timeline</h3>
 	<div class="snippet">
 		<ui5-timeline>
-			<ui5-timeline-item id="test-item" title-text="called" subtitle-text="20.02.2017 11:30" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+			<ui5-timeline-item id="test-item" title-text="called" subtitle-text="20.02.2017 11:30" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 			<ui5-timeline-item title-text="Weekly Sync - CP Design" subtitle-text="27.07.2017 (11:00 - 12:30)" icon="calendar">
 				<div>MR SOF02 2.43</div>
 			</ui5-timeline-item>
@@ -2476,7 +2476,7 @@
 		</ui5-timeline>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timeline&gt;</span>
-	<span class="nt">&lt;ui5-timeline-item</span> <span class="na">id=</span><span class="s">"test-item"</span> <span class="na">title-text=</span><span class="s">"called"</span> <span class="na">subtitle-text=</span><span class="s">"20.02.2017 11:30"</span> <span class="na">icon=</span><span class="s">"phone"</span> <span class="na">item-name=</span><span class="s">"John Smith"</span> <span class="na">item-name-clickable</span><span class="nt">&gt;&lt;/ui5-timeline-item&gt;</span>
+	<span class="nt">&lt;ui5-timeline-item</span> <span class="na">id=</span><span class="s">"test-item"</span> <span class="na">title-text=</span><span class="s">"called"</span> <span class="na">subtitle-text=</span><span class="s">"20.02.2017 11:30"</span> <span class="na">icon=</span><span class="s">"phone"</span> <span class="na">name=</span><span class="s">"John Smith"</span> <span class="na">name-clickable</span><span class="nt">&gt;&lt;/ui5-timeline-item&gt;</span>
 	<span class="nt">&lt;ui5-timeline-item</span> <span class="na">title-text=</span><span class="s">"Weekly Sync - CP Design"</span> <span class="na">subtitle-text=</span><span class="s">"27.07.2017 (11:00 - 12:30)"</span> <span class="na">icon=</span><span class="s">"calendar"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;div&gt;</span>MR SOF02 2.43<span class="nt">&lt;/div&gt;</span>
 	<span class="nt">&lt;/ui5-timeline-item&gt;</span>
@@ -2559,26 +2559,25 @@ An entry posted on the timeline.
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          itemName
+                          name
                             <br>
-                            <code>item-name</code>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the name of the item.
+                            Defines the name of the item, displayed before the <code>title-text</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          itemNameClickable
+                          nameClickable
                             <br>
-                            <code>item-name-clickable</code>
+                            <code>name-clickable</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>itemName</code> is clickable.
+                            Defines if the <code>name</code> is clickable.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2640,9 +2639,9 @@ An entry posted on the timeline.
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-name-click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">name-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the item name is pressed either with a click/tap or by using the Enter or Space key. <br><br> <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code> attribute is not set.
+                        Fired when the item name is pressed either with a click/tap or by using the Enter or Space key. <br><br> <b>Note:</b> The event will not be fired if the <code>name-clickable</code> attribute is not set.
                         </div>
                       </div>
             
