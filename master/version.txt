@@ -1,8 +1,5 @@
-commit a8af480b173ba5f0be17ab7620664a1906274c3a
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Jun 11 09:15:28 2021 +0300
+commit e369aefca9f59826b39759c5da51ce09ceb830dd
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 11 09:54:53 2021 +0300
 
-    fix(ui5-step-input): min width is now correct (#3398)
-    
-    Fixes: #3377
-    Closes:  #3377
+    feat(ui5-select): support angular reactive forms (#3323)
