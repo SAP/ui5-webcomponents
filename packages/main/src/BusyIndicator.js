@@ -93,7 +93,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the control is currently in busy state.
+		 * Defines if the component is currently in busy state.
 		 * @private
 		 */
 		_isBusy: {
@@ -165,6 +165,11 @@ class BusyIndicator extends UI5Element {
 	}
 
 	onExitDOM() {
+		if (this._busyTimeoutId) {
+			clearTimeout(this._busyTimeoutId);
+			delete this._busyTimeoutId;
+		}
+
 		this.removeEventListener("keydown", this._keydownHandler, true);
 		this.removeEventListener("keyup", this._preventEventHandler, true);
 	}
