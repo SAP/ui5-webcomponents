@@ -1,5 +1,8 @@
-commit 788d25d48633f0c5afa1e4574a8b16494cdbc4fa
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jun 10 15:23:29 2021 +0300
+commit a8af480b173ba5f0be17ab7620664a1906274c3a
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Jun 11 09:15:28 2021 +0300
 
-    fix(ui5-tree): alignment of items (#3424)
+    fix(ui5-step-input): min width is now correct (#3398)
+    
+    Fixes: #3377
+    Closes:  #3377
