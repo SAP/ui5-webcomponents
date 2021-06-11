@@ -99,7 +99,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * The Colorpalette is meant for users that needs to select a color from a predefined set of colors.
+ * The Colorpalette is meant for users that needs to select a color from a predefined set.
  * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
  *
  * <h3>ES6 Module Import</h3>
@@ -238,12 +238,6 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Returns the selected color.
-	 *
-	 * @readonly
-	 * @type {String}
-	 * @defaultvalue undefined
-	 * @public
-	 * @since 1.0.0-rc.15
 	 */
 	get selectedColor() {
 		return this._selectedColor;
