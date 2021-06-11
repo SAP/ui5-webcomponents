@@ -1,5 +1,8 @@
-commit e369aefca9f59826b39759c5da51ce09ceb830dd
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jun 11 09:54:53 2021 +0300
+commit e679b51b3a2064dad90fdb5b8afe1cacdbd105b8
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Jun 11 10:59:00 2021 +0300
 
-    feat(ui5-select): support angular reactive forms (#3323)
+    fix(ui5-button): stabilizing buttons line-height (#3416)
+    
+    Fixes: #3401
+    Closes: #3401
