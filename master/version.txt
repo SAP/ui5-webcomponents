@@ -1,9 +1,18 @@
-commit 3b1c0b5b28a447e03e2c18a4e6d2cb3ef87b8584
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 11 16:59:25 2021 +0300
+commit 9bd9ce4e32117df3913f1ebb4078dfa115b26b38
+Author: Tereza Chobanova <terezamch@users.noreply.github.com>
+Date:   Mon Jun 14 17:01:28 2021 +0300
 
-    refactor(ui5-timeline-item): rename API (#3387)
+    feat(ui5-segmented-button-item): introduce new component to serve as child of SegmentedButton (#3258)
     
-    Improve naming as part of #3107. The word item is obsolete in the props/event names as the component is TimelineItem and has the word item itself.
+    Introduce new component SegmentedButtonItem (ui5-segmentedbutton-item), meant to be used within the SegmentedButton (ui5-segmented-button) as a child, in order to implement a11y compliant DOM structure and attributes. The SegmentedButtonItem replaces the ToggleButton, previously used in the SegmentedButton.
     
-    BREAKING_CHANGE: The properties `itemName` and `itemNameClickable` are renamed to renamed to `name` and `nameClickable` and the event `item-name-click` is renamed to `name-click`
+    Fixes: #3191
+    Closes: #3191
+    
+    BREAKING_CHANGE: `selectedButton` event detail of "selection-change" has been renamed to `selectedItem`
+    BREAKING_CHANGE: SegmentedButton no longer accepts ToggleButton, you have to use the newly created component, called SegmentedButtonItem as follows:
+    <ui5-segmentedbutton>
+       <ui5-segmentedbutton-item pressed>One</ui5-segmentedbutton-item>
+       <ui5-segmentedbutton-item>Two</ui5-segmentedbutton-item>
+       <ui5-segmentedbutton-item>Three</ui5-segmentedbutton-item>
+    </ui5-segmentedbutton>
