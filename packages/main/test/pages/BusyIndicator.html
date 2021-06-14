@@ -172,10 +172,9 @@
 		</div>
 	</ui5-dialog>
 	<script>
-		var busyIndicator = document.getElementById("busy-container");
-		var list = document.getElementById("fetch-list");
-
 		document.getElementById("fetch-btn").addEventListener("click", function(event) {
+			var busyIndicator = document.getElementById("busy-container");
+			var list = document.getElementById("fetch-list");
 			busyIndicator.setAttribute("active", "");
 
 			setTimeout(function() {
