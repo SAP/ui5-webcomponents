@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
@@ -279,11 +280,32 @@ class Link extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isEnter(event)) {
+			const executeEvent = this.fireEvent("click", null, true);
+
+			if (executeEvent) {
+				event.preventDefault();
+				this.href && window.open(this.href, this.target);
+			}
+		} else if (isSpace(event)) {
+			event.preventDefault();
+		}
+
 		event.isMarked = "link";
 	}
 
 	_onkeyup(event) {
-		event.isMarked = "link";
+		if (!isSpace(event)) {
+			event.isMarked = "link";
+			return;
+		}
+
+		event.preventDefault();
+
+		const executeEvent = this.fireEvent("click", null, true);
+		if (executeEvent) {
+			this.href && window.open(this.href, this.target);
+		}
 	}
 }
 
