@@ -1,18 +1,8 @@
-commit 9bd9ce4e32117df3913f1ebb4078dfa115b26b38
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Mon Jun 14 17:01:28 2021 +0300
+commit ffa2c4c1485a69a41aea730d612aacf151a740c9
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon Jun 14 17:29:37 2021 +0300
 
-    feat(ui5-segmented-button-item): introduce new component to serve as child of SegmentedButton (#3258)
+    fix(ui5-link): event is now fired on Space/Enter (#3374)
     
-    Introduce new component SegmentedButtonItem (ui5-segmentedbutton-item), meant to be used within the SegmentedButton (ui5-segmented-button) as a child, in order to implement a11y compliant DOM structure and attributes. The SegmentedButtonItem replaces the ToggleButton, previously used in the SegmentedButton.
-    
-    Fixes: #3191
-    Closes: #3191
-    
-    BREAKING_CHANGE: `selectedButton` event detail of "selection-change" has been renamed to `selectedItem`
-    BREAKING_CHANGE: SegmentedButton no longer accepts ToggleButton, you have to use the newly created component, called SegmentedButtonItem as follows:
-    <ui5-segmentedbutton>
-       <ui5-segmentedbutton-item pressed>One</ui5-segmentedbutton-item>
-       <ui5-segmentedbutton-item>Two</ui5-segmentedbutton-item>
-       <ui5-segmentedbutton-item>Three</ui5-segmentedbutton-item>
-    </ui5-segmentedbutton>
+    Fixes: #3007
+    Closes: #3007
