@@ -67,6 +67,7 @@ import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
+import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
 import StepInput from "./dist/StepInput.js";

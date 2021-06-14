@@ -21,57 +21,64 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### 1. Web Components
 
-|      Web Component       |       Tag name       |                       Module import                        |
-| ------------------------ | -------------------- | ---------------------------------------------------------- |
-| Avatar                   | `ui5-avatar`         | `import "@ui5/webcomponents/dist/Avatar.js";`              |
-| Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
-| Busy Indicator           | `ui5-busyindicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
-| Button                   | `ui5-button`         | `import "@ui5/webcomponents/dist/Button.js";`              |
-| Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
-| Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |
-| Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
-| Color Picker             | `ui5-color-picker`   | `import "@ui5/webcomponents/dist/ColorPicker.js";`         |
-| Color Palette            | `ui5-color-palette`  | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
-| Color Palette Item       | `ui5-color-palette-item`  | comes with `ui5-color-palette`                        |
-| ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
-| ComboBox Item            | `ui5-cb-item`        | comes with `ui5-combobox`                                  |
-| Date Picker              | `ui5-date-picker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`         |
-| Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
-| File Uploader            | `ui5-file-uploader`  | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
-| Icon                     | `ui5-icon`           | `import "@ui5/webcomponents/dist/Icon.js";`                |
-| Input                    | `ui5-input`          | `import "@ui5/webcomponents/dist/Input.js";`               |
-| Label                    | `ui5-label`          | `import "@ui5/webcomponents/dist/Label.js";`               |
-| Link                     | `ui5-link`           | `import "@ui5/webcomponents/dist/Link.js";`                |
-| List                     | `ui5-list`           | `import "@ui5/webcomponents/dist/List.js";`                |
-| List - Standard Item     | `ui5-li`             | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
-| List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
-| List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
-| Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
-| Multi ComboBox           | `ui5-multi-combobox` | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
-| Multi ComboBox Item      | `ui5-mcb-item`       | comes with `ui5-multi-combobox`                            |
-| Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
-| Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
-| Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
-| Responsive Popover       | `ui5-responsive-popover`| `import "@ui5/webcomponents/dist/ResponsivePopover.js";`|
-| Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
-| Select Option            | `ui5-option`         | comes with `ui5-select `                                   |
-| Segmented Button         | `ui5-segmentedbutton`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
-| Suggestion Item          | `ui5-suggestion-item`|`import "@ui5/webcomponents/dist/SuggestionItem.js";`       |
-| Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
-| Tab Container            | `ui5-tabcontainer`   | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
-| Tab                      | `ui5-tab`            | `import "@ui5/webcomponents/dist/Tab.js";`                 |
-| Tab Separator            | `ui5-tab-separator`  | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
-| Table                    | `ui5-table`          | `import "@ui5/webcomponents/dist/Table.js";`               |
-| Table Column             | `ui5-table-column`   | `import "@ui5/webcomponents/dist/TableColumn.js";`         |
-| Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`            |
-| Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`           |
-| Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
-| TimePicker               | `ui5-time-picker`    | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
-| Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
-| Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
-| Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
-| Tree                     | `ui5-tree`           | `import "@ui5/webcomponents/dist/Tree.js";`                |
-| Tree Item                | `ui5-tree-item`      | comes with `ui5-tree`                                      |
+|      Web Component       |         Tag name         |                       Module import                        |
+| ------------------------ | ------------------------ | ---------------------------------------------------------- |
+| Avatar                   | `ui5-avatar`             | `import "@ui5/webcomponents/dist/Avatar.js";`              |
+| Avatar Group             | `ui5-avatar-group`       | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
+| Badge                    | `ui5-badge`              | `import "@ui5/webcomponents/dist/Badge.js";`               |
+| Busy Indicator           | `ui5-busy-indicator`      | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
+| Button                   | `ui5-button`             | `import "@ui5/webcomponents/dist/Button.js";`              |
+| Card                     | `ui5-card`               | `import "@ui5/webcomponents/dist/Card.js";`                |
+| Carousel                 | `ui5-carousel`           | `import "@ui5/webcomponents/dist/Carousel.js";`            |
+| Checkbox                 | `ui5-checkbox`           | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
+| Color Palette            | `ui5-color-palette`      | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
+| Color Palette Item       | `ui5-color-palette-item` | comes with `ui5-color-palette`                             |
+| ComboBox                 | `ui5-combobox`           | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
+| ComboBox Item            | `ui5-cb-item`            | comes with `ui5-combobox`                                  |
+| Date Picker              | `ui5-date-picker`        | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Date Range Picker        | `ui5-daterange-picker`   | `import "@ui5/webcomponents/dist/DateRangePicker.js";`     |
+| Date Time Picker         | `ui5-datetime-picker`    | `import "@ui5/webcomponents/dist/DateTimePicker.js";`      |
+| Dialog                   | `ui5-dialog`             | `import "@ui5/webcomponents/dist/Dialog.js";`              |
+| Duration Picker          | `ui5-duration-picker`    | `import "@ui5/webcomponents/dist/DurationPicker.js";`      |
+| File Uploader            | `ui5-file-uploader`      | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
+| Icon                     | `ui5-icon`               | `import "@ui5/webcomponents/dist/Icon.js";`                |
+| Input                    | `ui5-input`              | `import "@ui5/webcomponents/dist/Input.js";`               |
+| Label                    | `ui5-label`              | `import "@ui5/webcomponents/dist/Label.js";`               |
+| Link                     | `ui5-link`               | `import "@ui5/webcomponents/dist/Link.js";`                |
+| List                     | `ui5-list`               | `import "@ui5/webcomponents/dist/List.js";`                |
+| List - Standard Item     | `ui5-li`                 | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
+| List - Custom Item       | `ui5-li-custom`          | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
+| List - Group Header Item | `ui5-li-groupheader`     | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
+| Message Strip            | `ui5-messagestrip`       | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
+| Multi ComboBox           | `ui5-multi-combobox`     | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
+| Multi ComboBox Item      | `ui5-mcb-item`           | comes with `ui5-multi-combobox`                            |
+| Panel                    | `ui5-panel`              | `import "@ui5/webcomponents/dist/Panel.js";`               |
+| Popover                  | `ui5-popover`            | `import "@ui5/webcomponents/dist/Popover.js";`             |
+| Radio Button             | `ui5-radiobutton`        | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Range Slider             | `ui5-range-slider`       | `import "@ui5/webcomponents/dist/RangeSlider.js";`         |
+| Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
+| Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
+| Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
+| Segmented Button         | `ui5-segmented-button`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
+| Segmented Button Item    | `ui5-segmented-button-item`| comes with `ui5-segmented-button `                         |
+| Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
+| Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
+| Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
+| Switch                   | `ui5-switch`             | `import "@ui5/webcomponents/dist/Switch.js";`              |
+| Tab Container            | `ui5-tabcontainer`       | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
+| Tab                      | `ui5-tab`                | `import "@ui5/webcomponents/dist/Tab.js";`                 |
+| Tab Separator            | `ui5-tab-separator`      | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
+| Table                    | `ui5-table`              | `import "@ui5/webcomponents/dist/Table.js";`               |
+| Table Column             | `ui5-table-column`       | `import "@ui5/webcomponents/dist/TableColumn.js";`         |
+| Table Row                | `ui5-table-row`          | `import "@ui5/webcomponents/dist/TableRow.js";`            |
+| Table Cell               | `ui5-table-cell`         | `import "@ui5/webcomponents/dist/TableCell.js";`           |
+| Textarea                 | `ui5-textarea`           | `import "@ui5/webcomponents/dist/TextArea.js";`            |
+| TimePicker               | `ui5-time-picker`        | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
+| Title                    | `ui5-title`              | `import "@ui5/webcomponents/dist/Title.js";`               |
+| Toast                    | `ui5-toast`              | `import "@ui5/webcomponents/dist/Toast.js";`               |
+| Toggle Button            | `ui5-toggle-button`       | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Tree                     | `ui5-tree`               | `import "@ui5/webcomponents/dist/Tree.js";`                |
+| Tree Item                | `ui5-tree-item`          | comes with `ui5-tree`                                      |
 
 ### 2. Assets
 
