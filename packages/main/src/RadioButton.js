@@ -13,8 +13,8 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
-import WrappingType from "./types/WrappingType.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -34,7 +34,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Determines whether the component is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
@@ -47,7 +47,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
@@ -61,17 +61,17 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component is selected or not.
+		 * Defines whether the component is checked or not.
 		 * <br><br>
 		 * <b>Note:</b> The property value can be changed with user interaction,
-		 * either by cliking/tapping on the component,
+		 * either by clicking/tapping on the component,
 		 * or by using the Space or Enter key.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		selected: {
+		checked: {
 			type: Boolean,
 		},
 
@@ -153,14 +153,19 @@ const metadata = {
 		/**
 		 * Defines whether the component text wraps when there is not enough space.
 		 * <br><br>
-		 * <b>Note:</b> By default, the text truncates when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		_tabIndex: {
@@ -184,12 +189,12 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Fired when the component selected state changes.
+		 * Fired when the component checked state changes.
 		 *
 		 * @event
 		 * @public
 		 */
-		select: {},
+		change: {},
 	},
 };
 
@@ -200,7 +205,7 @@ const metadata = {
  *
  * The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options.
  * When a <code>ui5-radiobutton</code> is selected by the user, the
- * <code>select</code> event is fired.
+ * <code>change</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
@@ -260,18 +265,14 @@ class RadioButton extends UI5Element {
 	onBeforeRendering() {
 		this.syncGroup();
 
-		/* temporary workaround. remove after all wrap properties in the relevant components are renamed to wrappingType */
-		this._wrappingType = this.wrap ? WrappingType.Normal : WrappingType.None;
-		/* end */
-
 		this._enableFormSupport();
 	}
 
 	syncGroup() {
 		const oldGroup = this._name;
 		const currentGroup = this.name;
-		const oldSelected = this._selected;
-		const currentSelected = this.selected;
+		const oldChecked = this._checked;
+		const currentChecked = this.checked;
 
 		if (currentGroup !== oldGroup) {
 			if (oldGroup) {
@@ -287,20 +288,20 @@ class RadioButton extends UI5Element {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
-		if (this.name && currentSelected !== oldSelected) {
+		if (this.name && currentChecked !== oldChecked) {
 			RadioButtonGroup.updateTabOrder(this.name);
 		}
 
 		this._name = this.name;
-		this._selected = this.selected;
+		this._checked = this.checked;
 	}
 
 	_enableFormSupport() {
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
-				nativeInput.disabled = element.disabled || !element.selected;
-				nativeInput.value = element.selected ? element.value : "";
+				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.value = element.checked ? element.value : "";
 			});
 		} else if (this.value) {
 			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -363,8 +364,8 @@ class RadioButton extends UI5Element {
 		}
 
 		if (!this.name) {
-			this.selected = !this.selected;
-			this.fireEvent("select");
+			this.checked = !this.checked;
+			this.fireEvent("change");
 			return this;
 		}
 
@@ -373,7 +374,7 @@ class RadioButton extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readonly || this.selected);
+		return !(this.disabled || this.readonly || this.checked);
 	}
 
 	valueStateTextMappings() {
