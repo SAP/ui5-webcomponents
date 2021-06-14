@@ -78,7 +78,7 @@ const metadata = {
  * Users can use the <code>ui5-segmented-button-item</code> as part of a <code>ui5-segmented-button</code>.
  * <br><br>
  * Clicking or tapping on a <code>ui5-segmented-button-item</code> changes its state to <code>pressed</code>.
- * The button returns to its initial state when the user clicks or taps on it again.
+ * The item returns to its initial state when the user clicks or taps on it again.
  * By applying additional custom CSS-styling classes, apps can give a different style to any
  * <code>ui5-segmented-button-item</code>.
  *
@@ -89,7 +89,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SegmentedButtonItem
- * @extends Button
+ * @extends ToggleButton
  * @tagname ui5-segmented-button-item
  * @public
  */

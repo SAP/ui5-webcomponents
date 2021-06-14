@@ -12,7 +12,7 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(segmentedButtonItem.getProperty("pressed"), "SegmentedButtonItem has property pressed");
 	});
 
-	it("tests if pressed attribute is switched to the newly pressed button when selected with enter key", () => {
+	it("tests if pressed attribute is switched to the newly pressed item when selected with enter key", () => {
 		const firstSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 		const secondSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
 
@@ -24,7 +24,7 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem has property pressed");
 	});
 
-	it("tests if pressed attribute is switched to the newly pressed button when selected with space key", () => {
+	it("tests if pressed attribute is switched to the newly pressed item when selected with space key", () => {
 		const secondSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
 		const lastSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
@@ -35,7 +35,7 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem has property pressed");
 	});
 
-	it("tests if pressed attribute is switched to the newly pressed button when selected with mouse", () => {
+	it("tests if pressed attribute is switched to the newly pressed item when selected with mouse", () => {
 		const firstSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 		const lastSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
@@ -45,13 +45,13 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(!lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem should not be pressed anymore");
 	});
 
-	it("tests if pressed attribute is applied only to last child when all buttons are pressed", () => {
+	it("tests if pressed attribute is applied only to last child when all items are pressed", () => {
 		const segmentedButtonItem1 =  browser.$("#segButton2 > ui5-segmented-button-item:first-child");
 		const segmentedButtonItem2 =  browser.$("#segButton2 > ui5-segmented-button-item:nth-child(2)");
 		const segmentedButtonItem3 =  browser.$("#segButton2 > ui5-segmented-button-item:nth-child(3)");
 		const segmentedButtonItem4 =  browser.$("#segButton2 > ui5-segmented-button-item:last-child");
 
-		// only last button should be pressed
+		// only last item should be pressed
 		assert.ok(!segmentedButtonItem1.getProperty("pressed"), "SegmentedButtonItem should not be pressed");
 		assert.ok(!segmentedButtonItem2.getProperty("pressed"), "SegmentedButtonItem should not be pressed");
 		assert.ok(!segmentedButtonItem3.getProperty("pressed"), "SegmentedButtonItem should not be pressed");
