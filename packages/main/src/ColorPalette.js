@@ -79,9 +79,10 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @since 1.0.0-rc.15
 		 * @param {String} color the selected color
 		 */
-		change: {
+		"item-click": {
 			details: {
 				color: {
 					type: String,
@@ -196,7 +197,7 @@ class ColorPalette extends UI5Element {
 			}
 		}
 
-		this.fireEvent("change", {
+		this.fireEvent("item-click", {
 			color: this._selectedColor,
 		});
 	}
