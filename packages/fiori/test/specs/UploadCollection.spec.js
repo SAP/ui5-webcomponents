@@ -26,8 +26,10 @@ describe("UploadCollection", () => {
 			assert.ok(secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
 			assert.notOk(secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
 
-			// focus out the second item, to hide edit buttons (reset state for the following tests)
-			browser.$("#firstItem").click();
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("secondItem").removeAttribute("_editing");
+			});
 		});
 
 		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", () => {
@@ -48,6 +50,11 @@ describe("UploadCollection", () => {
 
 			assert.notOk(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is NOT displayed when editing");
 			assert.notOk(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
+
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("errorState").removeAttribute("_editing");
+			});
 		});
 	});
 
@@ -61,10 +68,15 @@ describe("UploadCollection", () => {
 			browser.keys("fileNameSuffix");
 			browser.keys("Enter");
 
-			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename")
+			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename");
+
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("secondItem").removeAttribute("_editing");
+			});
 		});
 
-		it("upload collection should fire 'fileDeleted'", () => {
+		it("upload collection should fire 'item-delete'", () => {
 			const uploadCollection = browser.$("#uploadCollection");
 			const firstItem = browser.$("#firstItem");
 
@@ -75,7 +87,7 @@ describe("UploadCollection", () => {
 			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
 			deleteBtn.click();
 
-			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'fileDeleted' event is fired");
+			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", () => {
@@ -105,6 +117,11 @@ describe("UploadCollection", () => {
 			browser.keys("Enter");
 
 			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
+
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("latestReportsPdf").removeAttribute("_editing");
+			});
 		});
 
 		it("should be able to add extension, if there isn't such", () => {
@@ -125,6 +142,11 @@ describe("UploadCollection", () => {
 			browser.keys("Enter");
 
 			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
+
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("noFileExtension").removeAttribute("_editing");
+			});
 		});
 
 		it("should NOT consider hidden file name as extension", () => {
@@ -135,6 +157,10 @@ describe("UploadCollection", () => {
 
 			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
 
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("secondItem").removeAttribute("_editing");
+			});
 		});
 
 		it("tests cancelling of name change via keyboard", () => {
@@ -151,6 +177,11 @@ describe("UploadCollection", () => {
 			browser.keys("Enter"); // Press cancel button
 
 			assert.strictEqual(secondItem.shadow$(".ui5-uci-file-name").getText(), "Graph.docx", "The name of the file is not changed");
+
+			// reset the item
+			browser.execute(() => {
+				document.getElementById("keyboardNavigation").removeAttribute("_editing");
+			});
 		});
 	});
 

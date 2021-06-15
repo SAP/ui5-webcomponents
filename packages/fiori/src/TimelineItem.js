@@ -41,24 +41,24 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the name of the item.
+		 * Defines the name of the item, displayed before the <code>title-text</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		itemName: {
+		name: {
 			type: String,
 		},
 
 		/**
-		 * Defines whether the <code>itemName</code> is clickable.
+		 * Defines if the <code>name</code> is clickable.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		itemNameClickable: {
+		nameClickable: {
 			type: Boolean,
 		},
 
@@ -94,13 +94,13 @@ const metadata = {
 		 * Fired when the item name is pressed either with a
 		 * click/tap or by using the Enter or Space key.
 		 * <br><br>
-		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
+		 * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event sap.ui.webcomponents.fiori.TimelineItem#item-name-click
+		 * @event sap.ui.webcomponents.fiori.TimelineItem#name-click
 		 * @public
 		 */
-		"item-name-click": {},
+		"name-click": {},
 	},
 };
 
@@ -140,8 +140,8 @@ class TimelineItem extends UI5Element {
 		super();
 	}
 
-	onItemNamePress() {
-		this.fireEvent("item-name-click", {});
+	onNamePress() {
+		this.fireEvent("name-click", {});
 	}
 
 	static get dependencies() {

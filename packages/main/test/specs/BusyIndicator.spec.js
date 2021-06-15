@@ -18,6 +18,22 @@ describe("BusyIndicator general interaction", () => {
 		assert.strictEqual(input.getProperty("value"), "0", "itemClick is not thrown");
 	});
 
+	it("test activation", () => {
+		const busyIndicator = browser.$("#busy-container");
+		busyIndicator.setAttribute("active", "");
+
+		const busyArea = busyIndicator.shadow$(".ui5-busy-indicator-busy-area");
+		assert.notOk(busyArea.isExisting(), "busy area is not yet created");
+
+		browser.pause(3000);
+
+		assert.ok(busyArea.isExisting(), "busy area is created");
+
+		// reset
+		busyIndicator.removeAttribute("active");
+		assert.notOk(busyArea.isExisting(), "busy area is removed");
+	});
+
 	it("tests focus handling", () => {
 		const busyIndicator = browser.$("#indicator1");
 		busyIndicator.click();

@@ -64,17 +64,34 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the component suggestion items.
+		 * Defines the suggestion items.
+		 * <br><br>
+		 * Example:
+		 * <br><br>
+		 * &lt;ui5-input show-suggestions><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br>
+		 * &lt;/ui5-input>
+		 * <br>
+		 * <ui5-input show-suggestions>
+		 * <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
+		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+		 * <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item>
+		 * <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
+		 * </ui5-input>
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
-		 * Importing the Input Suggestions Support feature:
+		 * <b>Note:</b> The &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> are recommended to be used as suggestion items.
+		 * <br><br>
+		 * <b>Note:</b> Importing the Input Suggestions Support feature:
 		 * <br>
 		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
 		 * <br>
-		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
+		 * automatically imports the &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> for your convenience.
 		 *
 		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
@@ -261,8 +278,8 @@ const metadata = {
 		/**
 		 * Defines whether the component should show suggestions, if such are present.
 		 * <br><br>
-		 * <b>Note:</b>
-		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
+		 * <b>Note:</b> You need to import the <code>InputSuggestions</code> module
+		 * from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -441,7 +458,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Input
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
- * @appenddocs SuggestionItem
+ * @appenddocs SuggestionItem SuggestionGroupItem
  * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
