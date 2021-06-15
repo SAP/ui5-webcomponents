@@ -94,6 +94,7 @@
   "--sapField_Active_BorderColor",
   "--sapField_Background",
   "--sapField_BorderColor",
+  "--sapField_BorderCornerRadius",
   "--sapField_BorderWidth",
   "--sapField_Hover_Background",
   "--sapField_Hover_BorderColor",
