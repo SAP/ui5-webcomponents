@@ -1,3 +1,7 @@
+import getConstructableStyle from "../theming/getConstructableStyle";
+import isLegacyBrowser from "../isLegacyBrowser";
+import getEffectiveStyle from "../theming/getEffectiveStyle";
+
 /**
  * Creates a <style> tag in the <head> tag
  * @param cssText - the CSS
@@ -5,6 +9,14 @@
  * @returns {HTMLElement}
  */
 const createStyleInHead = (cssText, attributes = {}) => {
+
+	if (document.adoptedStyleSheets) { // Chrome
+		const style = new CSSStyleSheet();
+		style.replaceSync(cssText);
+		document.adoptedStyleSheets = [...document.adoptedStyleSheets, style];
+		return style;
+	}
+
 	const style = document.createElement("style");
 	style.type = "text/css";
 
