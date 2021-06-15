@@ -20,7 +20,7 @@ describe("Carousel general interaction", () => {
 		const carouselRightButton = carousel.shadow$$(".ui5-carousel-navigation-button")[0];
 
 		carouselRightButton.click();
-		assert.equal(carousel.getAttribute("selected-index"), "2", "Second view is in place");
+		assert.equal(carousel.getProperty("_selectedIndex"), "2", "Second view is in place");
 	});
 
 	it("Carousel navigates right", () => {
@@ -30,7 +30,7 @@ describe("Carousel general interaction", () => {
 		const carouselLeftButton = carousel.shadow$$(".ui5-carousel-navigation-button")[1];
 
 		carouselLeftButton.click();
-		assert.equal(carousel.getAttribute("selected-index"), "0", "Second view is in place");
+		assert.equal(carousel.getProperty("_selectedIndex"), "0", "Second view is in place");
 	});
 
 	it("Navigation is rendered for carousel with less than 9 elements", () => {
@@ -66,6 +66,9 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons are rendered in the navigation without hovering (arrows-placement)", () => {
 		const carousel = browser.$("#carousel3");
+		const carouselNextButton = carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		carouselNextButton.click();
+
 		carousel.scrollIntoView();
 		const buttons = carousel.shadow$$(".ui5-carousel-navigation-wrapper .ui5-carousel-navigation-button:not(.ui5-carousel-navigation-button--hidden)");
 
@@ -141,15 +144,6 @@ describe("Carousel general interaction", () => {
 		assert.ok(!pageIndicator.isExisting(), "Page indicator is not rendered");
 		assert.ok(!navigationArrows.isExisting(), "Navigation arrows are not rendered");
 		assert.strictEqual(pages, 1, "There is only 1 page.");
-	});
-
-	it("Invalid selectedIndex normalized", () => {
-		const carousel = browser.$("#carousel7");
-		const selectedIndex = carousel.getProperty("selectedIndex");
-		const NORMALIZED_INDEX = 0;
-
-		assert.strictEqual(selectedIndex, NORMALIZED_INDEX,
-			"Although '15' is set, the actual selectedIndex is changed to 0.");
 	});
 
 	it("Event navigate fired when pressing navigation arrows", () => {
