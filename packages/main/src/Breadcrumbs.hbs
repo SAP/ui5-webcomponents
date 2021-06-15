@@ -1,0 +1,41 @@
+<nav class="ui5-breadcrumbs-root"
+    aria-label="{{_accessibleNameText}}"
+    aria-haspopup="{{_ariaHasPopup}}">
+    <ol @focusin="{{_onfocusin}}" 
+        @keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}">
+
+        <li class="ui5-breadcrumbs-overflow-opener"
+            ?hidden="{{_isOverflowEmpty}}">
+            <ui5-link @click="{{_toggleRespPopover}}"
+                aria-label="{{_overflowAccessibleNameText}}">
+                <ui5-icon name="slim-arrow-down"
+                    title="{{_overflowAccessibleNameText}}"></ui5-icon>
+            </ui5-link>
+        </li>
+
+        {{#each _nonOverflowingLinks}}
+            <li class="ui5-breadcrumbs-link-wrapper" @click="{{../_onLinkClick}}">
+                <slot name="{{this._individualSlot}}"></slot>
+            </li>
+        {{/each}}
+
+        {{#if _endsWithCurrentLocationLabel}}
+        <li class="ui5-breadcrumbs-current-location">
+            <ui5-label id="{{id}}-current-location"
+                wrapping-type="Normal"
+                aria-current="page">{{_endingLabelText}}
+            </ui5-label>
+        </li>
+        {{/if}}
+    </ol>
+    <!-- we still render the slots for the overflowing links in a hidden area
+    => we are able this way to monitor changes in their size and visibility  -->
+    <ol class="ui5-breadcrumbs-hidden-overflow">
+        {{#each _overflowingLinks}}
+            <li class="ui5-breadcrumbs-link-wrapper">
+                <slot name="{{this._individualSlot}}"></slot>
+            </li>
+        {{/each}}
+    </ol>
+</nav>

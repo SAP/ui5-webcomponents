@@ -1,0 +1,102 @@
+.ui5-breadcrumbs-root {
+    white-space: nowrap;
+    outline: none;
+    margin: 0 0 0.5rem 0;
+}
+
+.ui5-breadcrumbs-root > ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.ui5-breadcrumbs-root > ol,
+.ui5-breadcrumbs-root > ol > li {
+    display: inline-block;
+}
+
+.ui5-breadcrumbs-overflow-opener[hidden] {
+    display: none
+}
+
+.ui5-breadcrumbs-hidden-overflow {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+}
+
+.ui5-breadcrumbs-overflow-opener ui5-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    padding-left: .675rem;
+    vertical-align: text-top;
+    color: var(--sapLinkColor);
+}
+
+.ui5-breadcrumbs-overflow-opener ui5-icon::before {
+    content: "...";
+    vertical-align: middle;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+/* icon-decoration on hover */
+.ui5-breadcrumbs-overflow-opener ui5-link[focused] ui5-icon::after,
+.ui5-breadcrumbs-overflow-opener:hover ui5-icon::after {
+    content: "";
+    position: absolute;
+    border-bottom: 0.0625rem solid;
+    top: 0;
+    left: 0;
+    bottom: 1px;
+    right: 0;
+}
+
+/* links separator */
+ui5-link::after,
+::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after  {
+    content: "";
+    padding: 0 .25rem;
+    cursor: auto;
+    color: var(--sapContent_LabelColor);
+    display: flex;
+    align-items: flex-end;
+}
+
+.ui5-breadcrumbs-popover-footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+/* separator styles */
+:host([separator-style="Slash"]) ::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after,
+:host([separator-style="Slash"]) ui5-link::after {
+    content: "/";
+}
+
+:host([separator-style="BackSlash"]) ::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after,
+:host([separator-style="BackSlash"]) ui5-link::after {
+    content: "\\";
+}
+
+:host([separator-style="DoubleBackSlash"]) ::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after,
+:host([separator-style="DoubleBackSlash"]) ui5-link::after {
+    content: "\\\\";
+}
+
+:host([separator-style="DoubleGreaterThan"]) ::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after,
+:host([separator-style="DoubleGreaterThan"]) ui5-link::after {
+    content: ">>";
+}
+
+:host([separator-style="DoubleSlash"]) ::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after,
+:host([separator-style="DoubleSlash"]) ui5-link::after {
+    content: "//";
+}
+
+:host([separator-style="GreaterThan"]) ::slotted([ui5-link]:not(.ui5-breadcrumbs-empty-link))::after,
+:host([separator-style="GreaterThan"]) ui5-link::after {
+    content: ">";
+}
