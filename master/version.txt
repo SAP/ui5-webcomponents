@@ -1,8 +1,5 @@
-commit ffa2c4c1485a69a41aea730d612aacf151a740c9
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Jun 14 17:29:37 2021 +0300
+commit aad0c322f240d28ee48903ece437f3a10d263a64
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Jun 15 12:19:25 2021 +0300
 
-    fix(ui5-link): event is now fired on Space/Enter (#3374)
-    
-    Fixes: #3007
-    Closes: #3007
+    fix(ui5-upload-collection-item): fixed keyboard navigation (#3327)
