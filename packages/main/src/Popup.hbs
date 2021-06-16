@@ -1,5 +1,4 @@
 <section
-	style="{{styles.root}}"
 	class="{{classes.root}}"
 	role="dialog"
 	aria-modal="{{_ariaModal}}"
@@ -14,7 +13,7 @@
 
 	{{> beforeContent}}
 
-	<div style="{{styles.content}}" class="{{classes.content}}"  @scroll="{{_scroll}}">
+	<div class="{{classes.content}}"  @scroll="{{_scroll}}">
 		<slot></slot>
 	</div>
 

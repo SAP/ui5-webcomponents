@@ -21,6 +21,18 @@ const updateShadowRoot = (element, forStaticArea = false) => {
 	}
 
 	element.constructor.render(renderResult, shadowRoot, styleToPrepend, { eventContext: element });
+
+	// Apply styles with imperative APIs
+	if (typeof element.styles === "object") {
+		for (const [selector, styles] of Object.entries(element.styles)) { // eslint-disable-line
+			for (const [name, value] of Object.entries(styles)) { // eslint-disable-line
+				const el = shadowRoot.querySelector(selector);
+				if (el) {
+					el.style[name] = value;
+				}
+			}
+		}
+	}
 };
 
 export default updateShadowRoot;

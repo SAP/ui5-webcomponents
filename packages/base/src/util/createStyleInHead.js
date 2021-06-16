@@ -5,6 +5,13 @@
  * @returns {HTMLElement}
  */
 const createStyleInHead = (cssText, attributes = {}) => {
+	if (document.adoptedStyleSheets) { // Chrome
+		const style = new CSSStyleSheet();
+		style.replaceSync(cssText);
+		document.adoptedStyleSheets = [...document.adoptedStyleSheets, style];
+		return style;
+	}
+
 	const style = document.createElement("style");
 	style.type = "text/css";
 
