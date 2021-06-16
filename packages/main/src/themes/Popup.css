@@ -3,3 +3,7 @@
     display: none;
     position: fixed;
 }
+
+.ui5-popup-content {
+    max-height: var(--_ui5_popup_content_max_height);
+}

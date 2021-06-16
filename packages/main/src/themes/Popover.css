@@ -5,6 +5,7 @@
 	height: 1rem;
 	position: absolute;
 	overflow: hidden;
+    transform: translate(var(--_ui5_popover_arrow_translate_x), var(--_ui5_popover_arrow_translate_y));
 }
 
 .ui5-popover-arrow:after {

@@ -517,6 +517,12 @@ class Popup extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
 	}
 
+	get dynamicCSSVars() {
+		return {
+			"--_ui5_popup_content_max_height": "auto",
+		};
+	}
+
 	get styles() {
 		return {
 			root: {},

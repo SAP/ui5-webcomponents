@@ -14,6 +14,7 @@ import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
+import PopupCSS from "./generated/themes/Popup.css.js";
 
 const arrowSize = 8;
 
@@ -265,7 +266,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss];
+		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss, PopupCSS];
 	}
 
 	static get template() {
@@ -741,6 +742,17 @@ class Popover extends Popup {
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
+		};
+	}
+
+	get dynamicCSSVars() {
+		return {
+			...super.dynamicCSSVars,
+			// content
+			"--_ui5_popup_content_max_height": `${this._maxContentHeight}px`,
+			// arrow
+			"--_ui5_popover_arrow_translate_x": `${this.arrowTranslateX}px`,
+			"--_ui5_popover_arrow_translate_y": `${this.arrowTranslateY}px`,
 		};
 	}
 

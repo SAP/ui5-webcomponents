@@ -589,10 +589,19 @@ class UI5Element extends HTMLElement {
 			this._assignIndividualSlotsToChildren();
 		}
 
+		// Apply the dynamic CSS Variables
+		for (const [varName, varValue] of Object.entries(this.dynamicCSSVars)) { // eslint-disable-line
+			this.style.setProperty(varName, varValue);
+		}
+
 		// Call the onAfterRendering hook
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
+	}
+
+	get dynamicCSSVars() {
+		return {};
 	}
 
 	/**
