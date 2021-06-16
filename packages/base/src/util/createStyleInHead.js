@@ -5,19 +5,19 @@
  * @returns {HTMLElement}
  */
 const createStyleInHead = (cssText, attributes = {}) => {
-	if (document.adoptedStyleSheets) { // Chrome
-		const style = new CSSStyleSheet();
-		style.replaceSync(cssText);
-		document.adoptedStyleSheets = [...document.adoptedStyleSheets, style];
-		return style;
-	}
-
 	const style = document.createElement("style");
 	style.type = "text/css";
 
 	Object.entries(attributes).forEach(pair => style.setAttribute(...pair));
 
-	style.textContent = cssText;
+	if (document.adoptedStyleSheets) { // Chrome
+		const stylesheet = new CSSStyleSheet();
+		stylesheet.replaceSync(cssText);
+		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
+	} else {
+		style.textContent = cssText;
+	}
+
 	document.head.appendChild(style);
 	return style;
 };
