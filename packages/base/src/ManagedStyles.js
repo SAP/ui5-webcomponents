@@ -1,7 +1,8 @@
+import getSharedResource from "./getSharedResource.js";
 import createStyleInHead from "./util/createStyleInHead.js";
 import setToArray from "./util/setToArray.js";
 
-const allAdopted = new Map();
+const allAdopted = getSharedResource("ManagedStyles.allAdopted", new Map());
 
 const createStyle = (content, name, value = "") => {
 	if (document.adoptedStyleSheets) {
