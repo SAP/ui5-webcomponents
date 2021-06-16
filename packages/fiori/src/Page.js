@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -70,6 +72,17 @@ const metadata = {
 		 */
 		hideFooter: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		mediaRange: {
+			type: String,
 		},
 	},
 
@@ -161,6 +174,24 @@ class Page extends UI5Element {
 
 	static get template() {
 		return PageTemplate;
+	}
+
+	constructor() {
+		super();
+
+		this._updateMediaRange = this.updateMediaRange.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._updateMediaRange);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._updateMediaRange);
+	}
+
+	updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	get _contentBottom() {
