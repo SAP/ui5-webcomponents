@@ -7,7 +7,7 @@ import { fireLanguageChange } from "../locale/languageChange.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 
 /** @type {String} */
-let language;
+let curLanguage;
 /** @type {Boolean} */
 let fetchDefaultLanguage;
 
@@ -16,27 +16,27 @@ let fetchDefaultLanguage;
  * @returns {String}
  */
 const getLanguage = () => {
-	if (language === undefined) {
-		language = getConfiguredLanguage();
+	if (curLanguage === undefined) {
+		curLanguage = getConfiguredLanguage();
 	}
-	return language;
+	return curLanguage;
 };
 
 /**
  * Changes the current language, re-fetches all message bundles, updates all language-aware components
  * and returns a promise that resolves when all rendering is done
  *
- * @param {String} newLanguage
+ * @param {String} language
  * @returns {Promise<void>}
  */
-const setLanguage = async newLanguage => {
-	if (language === newLanguage) {
+const setLanguage = async language => {
+	if (curLanguage === language) {
 		return;
 	}
 
-	language = newLanguage;
+	curLanguage = language;
 
-	await fireLanguageChange(newLanguage);
+	await fireLanguageChange(language);
 	await reRenderAllUI5Elements({ languageAware: true });
 };
 
