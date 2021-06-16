@@ -419,7 +419,6 @@ class Carousel extends UI5Element {
 	navigateTo(itemIndex) {
 		this._resizing = false;
 		this._selectedIndex = itemIndex;
-		this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
 	}
 
 	/**
