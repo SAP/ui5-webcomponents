@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
 
@@ -78,6 +79,27 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		delay: {
+			type: Integer,
+			defaultValue: 1000,
+		},
+
+		/**
+		 * Defines if the component is currently in busy state.
+		 * @private
+		 */
+		_isBusy: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 };
 
@@ -143,6 +165,11 @@ class BusyIndicator extends UI5Element {
 	}
 
 	onExitDOM() {
+		if (this._busyTimeoutId) {
+			clearTimeout(this._busyTimeoutId);
+			delete this._busyTimeoutId;
+		}
+
 		this.removeEventListener("keydown", this._keydownHandler, true);
 		this.removeEventListener("keyup", this._preventEventHandler, true);
 	}
@@ -186,6 +213,23 @@ class BusyIndicator extends UI5Element {
 				"ui5-busy-indicator-root--ie": isIE(),
 			},
 		};
+	}
+
+	onBeforeRendering() {
+		if (this.active) {
+			if (!this._isBusy && !this._busyTimeoutId) {
+				this._busyTimeoutId = setTimeout(() => {
+					delete this._busyTimeoutId;
+					this._isBusy = true;
+				}, Math.max(0, this.delay));
+			}
+		} else {
+			if (this._busyTimeoutId) {
+				clearTimeout(this._busyTimeoutId);
+				delete this._busyTimeoutId;
+			}
+			this._isBusy = false;
+		}
 	}
 
 	_handleKeydown(event) {
