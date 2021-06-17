@@ -9,15 +9,8 @@ const createStyleInHead = (cssText, attributes = {}) => {
 	style.type = "text/css";
 
 	Object.entries(attributes).forEach(pair => style.setAttribute(...pair));
-
-	if (document.adoptedStyleSheets) { // Chrome
-		const stylesheet = new CSSStyleSheet();
-		stylesheet.replaceSync(cssText);
-		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
-	} else {
-		style.textContent = cssText;
-	}
-
+	
+	style.textContent = cssText;
 	document.head.appendChild(style);
 	return style;
 };
