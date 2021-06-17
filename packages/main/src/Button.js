@@ -167,10 +167,10 @@ const metadata = {
 		 * Receives id(or many ids) of the elements that label the button
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.7
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
