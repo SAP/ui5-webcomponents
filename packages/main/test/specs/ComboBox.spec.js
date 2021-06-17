@@ -351,4 +351,14 @@ describe("Accessibility", () => {
 
 		assert.strictEqual(invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
+
+	it ("Should focus the ComboBox with the API", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo");
+
+		combo.focus();
+
+		assert.ok(combo.getProperty("focused"), "ComboBox to be focused");
+	});
 });
