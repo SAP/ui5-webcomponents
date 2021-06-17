@@ -407,18 +407,21 @@ class FlexibleColumnLayout extends UI5Element {
 			columnDOM.style.width = columnWidth;
 
 			// hide column with delay to allow the animation runs entirely
-			setTimeout(() => {
-				columnDOM.classList.add("ui5-fcl-column--hidden");
-			}, FlexibleColumnLayout.ANIMATION_DURATION);
+			columnDOM.addEventListener("transitionend", this.columnResizeHandler);
 
 			return;
 		}
 
 		// show column: from 0 to 33%, from 0 to 25%, etc.
 		if (previouslyHidden) {
+			columnDOM.removeEventListener("transitionend", this.columnResizeHandler);
 			columnDOM.classList.remove("ui5-fcl-column--hidden");
 			columnDOM.style.width = columnWidth;
 		}
+	}
+
+	columnResizeHandler(event) {
+		event.target.classList.add("ui5-fcl-column--hidden");
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
