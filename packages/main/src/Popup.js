@@ -513,9 +513,9 @@ class Popup extends UI5Element {
 
 	get styles() {
 		return {
-			".ui5-popup-root": {},
-			".ui5-popup-content": {},
-			".ui5-block-layer": {
+			root: {},
+			content: {},
+			blockLayer: {
 				"zIndex": (this._zIndex - 1),
 			},
 		};

@@ -111,7 +111,7 @@ const insertMainFontFace = () => {
 
 const insertOverrideFontFace = () => {
 	if (!hasStyle("data-ui5-font-face-override")) {
-		createStyle(fontFaceCSS, "data-ui5-font-face-override");
+		createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
 	}
 };
 

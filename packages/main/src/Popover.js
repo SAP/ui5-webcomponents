@@ -735,10 +735,10 @@ class Popover extends Popup {
 	get styles() {
 		return {
 			...super.styles,
-			".ui5-popup-content": {
+			content: {
 				"max-height": `${this._maxContentHeight}px`,
 			},
-			".ui5-popover-arrow": {
+			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
 		};
