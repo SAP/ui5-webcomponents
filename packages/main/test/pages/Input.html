@@ -10,7 +10,7 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete document.prototype.adoptedStyleSheets;</script>
 
 </head>
 
@@ -335,7 +335,7 @@
 			if (event.key === 'Enter') {
 				var formToSubmit = document.getElementById("submit-form");
 				var submitEvent = new Event('submit');
-				
+
 				/* The old way - supported by all browsers:
 				The submit method of the form won't trigger
 				a submit event by itself, dispatch it manually */
