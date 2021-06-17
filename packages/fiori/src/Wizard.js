@@ -832,7 +832,6 @@ class Wizard extends UI5Element {
 
 			// Hide separator if it's the last step and it's not a branching one
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
-			debugger;
 
 			const isOptional = step.subtitleText ? this.optionalStepText : "";
 			const stepStateText = step.disabled ? this.inactiveStepText : this.activeStepText;
