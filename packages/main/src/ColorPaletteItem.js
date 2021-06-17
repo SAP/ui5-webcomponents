@@ -121,6 +121,14 @@ class ColorPaletteItem extends UI5Element {
 	get colorLabel() {
 		return this.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
 	}
+
+	get styles() {
+		return {
+			root: {
+				"background-color": this.value,
+			},
+		};
+	}
 }
 
 ColorPaletteItem.define();

@@ -32,12 +32,17 @@ const updateStyle = (content, name, value = "") => {
 };
 
 const hasStyle = (name, value) => {
+	const hasStyleTag = !!document.querySelector(`head>style[${name}="${value}"]`);
+	if (hasStyleTag) {
+		return true; // If another runtime has created the style tag, even if adoptedStyleSheets are supported, use this tag
+	}
+
 	if (document.adoptedStyleSheets) {
 		const key = `${name}|${value}`;
 		return allAdopted.has(key);
 	}
 
-	return !!document.querySelector(`head>style[${name}="${value}"]`);
+	return hasStyleTag;
 };
 
 export { createStyle, hasStyle, updateStyle };

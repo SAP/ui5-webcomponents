@@ -9,7 +9,7 @@ const createStyleInHead = (cssText, attributes = {}) => {
 	style.type = "text/css";
 
 	Object.entries(attributes).forEach(pair => style.setAttribute(...pair));
-	
+
 	style.textContent = cssText;
 	document.head.appendChild(style);
 	return style;
