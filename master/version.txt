@@ -1,5 +1,5 @@
-commit aad0c322f240d28ee48903ece437f3a10d263a64
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Jun 15 12:19:25 2021 +0300
+commit b720393d01f85dfb8926c7e27a91473203112f32
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 16 12:07:30 2021 +0300
 
-    fix(ui5-upload-collection-item): fixed keyboard navigation (#3327)
+    feat(ui5-page): implement responsive paddings (#3412)
