@@ -311,6 +311,10 @@ class FlexibleColumnLayout extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
+
+		["start", "mid", "end"].forEach(column => {
+			this[`${column}ColumnDOM`].removeEventListener("transitionend", this.columnResizeHandler);
+		})
 	}
 
 	onAfterRendering() {
