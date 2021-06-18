@@ -86,7 +86,7 @@ const metadata = {
 		/**
 		 * By default, the Delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
 		 * Setting this property to <code>true</code> will hide the delete button.
-		 * 
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 */
