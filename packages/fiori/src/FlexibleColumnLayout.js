@@ -314,7 +314,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 		["start", "mid", "end"].forEach(column => {
 			this[`${column}ColumnDOM`].removeEventListener("transitionend", this.columnResizeHandler);
-		})
+		});
 	}
 
 	onAfterRendering() {
