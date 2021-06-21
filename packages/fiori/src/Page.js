@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -71,6 +73,17 @@ const metadata = {
 		hideFooter: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		mediaRange: {
+			type: String,
+		},
 	},
 
 	slots: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
@@ -130,6 +143,10 @@ const metadata = {
  * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
  * This is enabled with the <code>floatingFooter</code> property.
  *
+ * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
+ * that there is enough space for the <code>ui5-page</code> to be rendered.
+ *
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/Page.js";</code>
@@ -157,6 +174,24 @@ class Page extends UI5Element {
 
 	static get template() {
 		return PageTemplate;
+	}
+
+	constructor() {
+		super();
+
+		this._updateMediaRange = this.updateMediaRange.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._updateMediaRange);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._updateMediaRange);
+	}
+
+	updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	get _contentBottom() {

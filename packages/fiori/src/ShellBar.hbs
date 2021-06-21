@@ -104,7 +104,7 @@
 					class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button"
 					icon="sap-icon://search"
 					data-ui5-text="Search"
-					data-ui5-notification-count="{{notificationCount}}"
+					data-ui5-notifications-count="{{notificationsCount}}"
 					@click={{_handleSearchIconPress}}
 					aria-label="{{_searchText}}"
 					title="{{_searchText}}"
@@ -120,7 +120,7 @@
 					icon="{{this.icon}}"
 					title="{{this.title}}"
 					data-count="{{this.count}}"
-					data-ui5-notification-count="{{../notificationCount}}"
+					data-ui5-notifications-count="{{../notificationsCount}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
 					data-ui5-stable="{{stableDomRef}}"
 					@click={{this.press}}
@@ -134,7 +134,7 @@
 				class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
 				icon="sap-icon://bell"
 				data-ui5-text="Notifications"
-				data-ui5-notification-count="{{notificationCount}}"
+				data-ui5-notifications-count="{{notificationsCount}}"
 				@click={{_handleNotificationsPress}}
 				aria-label="{{_notificationsText}}"
 				title="{{_notificationsText}}"

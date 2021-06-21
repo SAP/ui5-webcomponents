@@ -37,7 +37,7 @@
 <body style="background-color: var(--sapBackgroundColor);">
 
 </body>
-	<ui5-color-palette id="cp1" more-colors>
+	<ui5-color-palette id="cp1" show-more-colors>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -58,7 +58,7 @@
 	<br/>
 	<br/>
 	<br/>
-	<ui5-input id="changeResult" value="Nothing selected"></ui5-input>
+	<ui5-input id="itemClickResult" value="Nothing selected"></ui5-input>
 	<br>
 	<ui5-button id="colorPaletteBtn" >Open ColorPalette</ui5-button>
 	<ui5-responsive-popover id="respPopover" with-padding>
@@ -94,7 +94,7 @@
 	<br/>
 	<br/>
 
-	<ui5-color-palette id="cp3" more-colors show-recent-colors>
+	<ui5-color-palette id="cp3" show-more-colors show-recent-colors>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -109,7 +109,7 @@
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette>
 
-	<ui5-color-palette id="cp4" more-colors show-recent-colors>
+	<ui5-color-palette id="cp4" show-more-colors show-recent-colors>
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -125,12 +125,14 @@
 	</ui5-color-palette>
 
 	<script>
-		cp1.addEventListener("change", function(event) {
-			changeResult.value = event.detail.color;
+		cp1.addEventListener("item-click", function(event) {
+			itemClickResult.value = event.detail.color;
 		});
+
 		colorPaletteBtn.addEventListener("click", function(event) {
-			respPopover.open(colorPaletteBtn);
+			respPopover.openBy(colorPaletteBtn);
 		});
+
 		btnClose.addEventListener("click", function(event) {
 			respPopover.close();
 		});

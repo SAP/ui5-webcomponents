@@ -6,6 +6,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -36,7 +37,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-list</code> header.
+		 * Defines the component header.
 		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
@@ -50,7 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the items of the <code>ui5-list</code>.
+		 * Defines the items of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
@@ -66,7 +67,7 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-list</code> header text.
+		 * Defines the component header text.
 		 * <br><br>
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
@@ -96,12 +97,12 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		inset: {
+		indent: {
 			type: Boolean,
 		},
 
 		/**
-		 * Defines the mode of the <code>ui5-list</code>.
+		 * Defines the mode of the component.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
 		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
@@ -116,7 +117,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
+		 * Defines the text that is displayed when the component contains no items.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -147,7 +148,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-list</code> will have growing capability either by pressing a <code>More</code> button,
+		 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
 		 * or via user scroll. In both cases <code>load-more</code> event is fired.
 		 * <br><br>
 		 *
@@ -183,6 +184,18 @@ const metadata = {
 		 */
 		busy: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		busyDelay: {
+			type: Integer,
+			defaultValue: 1000,
 		},
 
 		/**
@@ -290,7 +303,7 @@ const metadata = {
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
-		 * when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.
+		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-delete
 		 * @param {HTMLElement} item the deleted item.
@@ -352,6 +365,27 @@ const metadata = {
  * <code>SingleSelect</code>, <code>MultiSelect</code> and <code>Delete</code>.
  * <br><br>
  * Additionally, the <code>ui5-list</code> provides header, footer, and customization for the list item separators.
+ *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-list</code> provides advanced keyboard handling.
+ * When a list is focused the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ * <br>
+ *
+ * <ul>
+ * <li>[UP/DOWN] - Navigates up and down the items</li>
+ * <li>[HOME] - Navigates to first item</li>
+ * <li>[END] - Navigates to the last item</li>
+ * </ul>
+ *
+ * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
+ * when the <code>mode</code> property is in use:
+ * <ul>
+ * <li>[SPACE] - Select an item (if <code>type</code> is 'Active') when <code>mode</code> is selection</li>
+ * <li>[DELETE] - Delete an item if <code>mode</code> property is <code>Delete</code></li>
+ * </ul>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -514,7 +548,7 @@ class List extends UI5Element {
 		return this.growing === ListGrowingMode.Button;
 	}
 
-	get _moreText() {
+	get _growingButtonText() {
 		return this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
@@ -651,6 +685,9 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scroll
+		}
 		if (isTabNext(event)) {
 			this._handleTabNext(event);
 		}
@@ -665,6 +702,11 @@ class List extends UI5Element {
 		if (isEnter(event)) {
 			this._onLoadMoreClick();
 			this._loadMoreActive = true;
+		}
+
+		if (isTabNext(event)) {
+			this.setPreviouslyFocusedItem(event.target);
+			this.focusAfterElement();
 		}
 	}
 
@@ -755,6 +797,8 @@ class List extends UI5Element {
 			} else {
 				this.focusPreviouslyFocusedItem();
 			}
+
+			event.stopImmediatePropagation();
 		}
 
 		this.setForwardingFocus(false);
@@ -823,6 +867,7 @@ class List extends UI5Element {
 	onForwardBefore(event) {
 		this.setPreviouslyFocusedItem(event.target);
 		this.focusBeforeElement();
+		event.stopImmediatePropagation();
 	}
 
 	onForwardAfter(event) {

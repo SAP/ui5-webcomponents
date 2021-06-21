@@ -1,7 +1,7 @@
 import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
 // setAssetsPath("/my-resources/");
 
-import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
+import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 
 
 // Calendars
@@ -58,6 +58,7 @@ import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
+import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
 import StepInput from "./dist/StepInput.js";
@@ -103,6 +104,7 @@ import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.j
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 
 const testAssets = {
 	configuration : {
@@ -117,6 +119,9 @@ const testAssets = {
 		getFirstDayOfWeek,
 		getAssetsPath,
 		setAssetsPath
+	},
+	invisibleMessage : {
+		announce,
 	},
 	getLocaleData,
 	applyDirection,

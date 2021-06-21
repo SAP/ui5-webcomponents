@@ -51,17 +51,18 @@ const metadata = {
 		 * @type {Integer}
 		 * @defaultvalue 5
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		maxValue: {
+		max: {
 			type: Integer,
 			defaultValue: 5,
 		},
 
 		/**
-		 * Defines whether the <code>ui5-rating-indicator</code> is disabled.
+		 * Defines whether the component is disabled.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-rating-indicator</code> is completely noninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -71,9 +72,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-rating-indicator</code> is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-rating-indicator</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -92,18 +93,6 @@ const metadata = {
 		 * @since 1.0.0-rc.8
 		 */
 		ariaLabel: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Defines the tooltip for the rating indicator.
-		 * @type {String}
-		 * @defaultvalue: undefined
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		title: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -200,7 +189,7 @@ class RatingIndicator extends UI5Element {
 	calcState() {
 		this._stars = [];
 
-		for (let i = 1; i < this.maxValue + 1; i++) {
+		for (let i = 1; i < this.max + 1; i++) {
 			const remainder = Math.round((this.value - Math.floor(this.value)) * 10);
 			let halfStar = false,
 				tempValue = this.value;
@@ -252,7 +241,7 @@ class RatingIndicator extends UI5Element {
 			if (down && this.value > 0) {
 				this.value = Math.round(this.value - 1);
 				this.fireEvent("change");
-			} else if (up && this.value < this.maxValue) {
+			} else if (up && this.value < this.max) {
 				this.value = Math.round(this.value + 1);
 				this.fireEvent("change");
 			}
@@ -277,7 +266,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get tooltip() {
-		return this.title || this.defaultTooltip;
+		return this.getAttribute("title") || this.defaultTooltip;
 	}
 
 	get defaultTooltip() {
@@ -290,6 +279,10 @@ class RatingIndicator extends UI5Element {
 
 	get _ariaDisabled() {
 		return this.disabled || undefined;
+	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
 	}
 }
 

@@ -302,7 +302,7 @@ class TimePickerBase extends UI5Element {
 	async openPicker() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
 		const responsivePopover = await this._getPopover();
-		responsivePopover.open(this);
+		responsivePopover.openBy(this);
 		this._isPickerOpen = true;
 	}
 
@@ -388,12 +388,12 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @param {object} date A Java Script date object to be formatted as string
 	 * @public
 	 * @returns {string}
 	 */
-	formatValue(oDate) {
-		return this.getFormat().format(oDate);
+	formatValue(date) {
+		return this.getFormat().format(date);
 	}
 
 	/**

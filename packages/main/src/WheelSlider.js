@@ -24,9 +24,9 @@ const metadata = {
 	tag: "ui5-wheelslider",
 	properties: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 		/**
-		 * Defines whether the <code>ui5-wheelslider</code> is disabled
+		 * Defines whether the component is disabled
 		 * (default is set to <code>false</code>).
-		 * A disabled <code>ui5-wheelslider</code> can't be pressed or
+		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}
@@ -117,8 +117,8 @@ const metadata = {
 	},
 };
 
-const CELL_SIZE_COMPACT = 2;
-const CELL_SIZE_COZY = 2.875;
+const CELL_SIZE_COMPACT = 32;
+const CELL_SIZE_COZY = 46;
 
 /**
  * @class
@@ -225,12 +225,12 @@ class WheelSlider extends UI5Element {
 	}
 
 	get _itemCellHeight() {
-		const defaultSize = getEffectiveContentDensity(this) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
+		const defaultSize = getEffectiveContentDensity(document.body) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
 
 		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
 			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
-			const onlyDigitsValue = itemHeightValue.replace("rem", "");
+			const onlyDigitsValue = itemHeightValue.replace("px", "");
 			return Number(onlyDigitsValue) || defaultSize;
 		}
 
@@ -238,7 +238,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	_updateScrolling() {
-		const cellSizeInPx = this._itemCellHeight * 16,
+		const cellSizeInPx = this._itemCellHeight,
 			scrollWhere = this._scroller.scrollContainer.scrollTop;
 		let offsetIndex;
 
@@ -287,7 +287,7 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(currentIndex) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
-		const cellSizeInPx = this._itemCellHeight * 16;
+		const cellSizeInPx = this._itemCellHeight;
 		const scrollBy = cellSizeInPx * index;
 
 		if (this.cyclic) {

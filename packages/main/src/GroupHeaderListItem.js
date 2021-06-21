@@ -16,10 +16,22 @@ const metadata = {
 	tag: "ui5-li-groupheader",
 	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+		/**
+		 * Defines the text alternative of the component.
+		 * Note: If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		accessibleName: {
+			type: String,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-li-groupheader</code>.
+		 * Defines the text of the component.
 		 * <br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *

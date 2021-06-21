@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
 
@@ -18,12 +19,13 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-busyindicator",
+	tag: "ui5-busy-indicator",
+	altTag: "ui5-busyindicator",
 	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
 		/**
-		 * Determines the content over which the <code>ui5-busyindicator</code> will appear.
+		 * Determines the content over which the component will appear.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -36,7 +38,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
 		/**
-		 * Defines text to be displayed below the <code>ui5-busyindicator</code>. It can be used to inform the user of the current operation.
+		 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
 		 * @type {String}
 		 * @public
 		 * @defaultvalue ""
@@ -47,7 +49,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the size of the <code>ui5-busyindicator</code>.
+		 * Defines the size of the component.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
@@ -77,6 +79,27 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		delay: {
+			type: Integer,
+			defaultValue: 1000,
+		},
+
+		/**
+		 * Defines if the component is currently in busy state.
+		 * @private
+		 */
+		_isBusy: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 };
 
@@ -85,17 +108,17 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-busyindicator</code> signals that some operation is going on and that the
+ * The <code>ui5-busy-indicator</code> signals that some operation is going on and that the
  * user must wait. It does not block the current UI screen so other operations could be triggered in parallel.
  * It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
  *
  * <h3>Usage</h3>
- * For the <code>ui5-busyindicator</code> you can define the size, the text and whether it is shown or hidden.
+ * For the <code>ui5-busy-indicator</code> you can define the size, the text and whether it is shown or hidden.
  * In order to hide it, use the "active" property.
  * <br><br>
- * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busyindicator</code> instance.
+ * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busy-indicator</code> instance.
  * <br>
- * <b>Note:</b> Since <code>ui5-busyindicator</code> has <code>display: inline-block;</code> by default and no width of its own,
+ * <b>Note:</b> Since <code>ui5-busy-indicator</code> has <code>display: inline-block;</code> by default and no width of its own,
  * whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
  *
  * <h4>When to use:</h4>
@@ -119,7 +142,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.BusyIndicator
  * @extends UI5Element
- * @tagname ui5-busyindicator
+ * @tagname ui5-busy-indicator
  * @public
  * @since 0.12.0
  */
@@ -142,6 +165,11 @@ class BusyIndicator extends UI5Element {
 	}
 
 	onExitDOM() {
+		if (this._busyTimeoutId) {
+			clearTimeout(this._busyTimeoutId);
+			delete this._busyTimeoutId;
+		}
+
 		this.removeEventListener("keydown", this._keydownHandler, true);
 		this.removeEventListener("keyup", this._preventEventHandler, true);
 	}
@@ -174,13 +202,34 @@ class BusyIndicator extends UI5Element {
 		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 
+	get labelId() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
 	get classes() {
 		return {
 			root: {
-				"ui5-busyindicator-root": true,
-				"ui5-busyindicator-root--ie": isIE(),
+				"ui5-busy-indicator-root": true,
+				"ui5-busy-indicator-root--ie": isIE(),
 			},
 		};
+	}
+
+	onBeforeRendering() {
+		if (this.active) {
+			if (!this._isBusy && !this._busyTimeoutId) {
+				this._busyTimeoutId = setTimeout(() => {
+					delete this._busyTimeoutId;
+					this._isBusy = true;
+				}, Math.max(0, this.delay));
+			}
+		} else {
+			if (this._busyTimeoutId) {
+				clearTimeout(this._busyTimeoutId);
+				delete this._busyTimeoutId;
+			}
+			this._isBusy = false;
+		}
 	}
 
 	_handleKeydown(event) {
@@ -213,7 +262,7 @@ class BusyIndicator extends UI5Element {
 		}
 
 		event.preventDefault();
-		this.shadowRoot.querySelector(".ui5-busyindicator-busy-area").focus();
+		this.shadowRoot.querySelector(".ui5-busy-indicator-busy-area").focus();
 	}
 }
 

@@ -49,10 +49,10 @@
 <section>
 	<h3>Wrapped Label</h3>
 	<div class="snippet">
-		<ui5-label style="width:200px" wrap>Long labels can wrap if the 'wrap' property is set.</ui5-label>
+		<ui5-label style="width:200px" wrapping-type="Normal">Long labels can wrap if the 'wrapping-type="Normal"' property is set.</ui5-label>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-label style="width:200px" wrap>Long labels can wrap if the 'wrap' property is set.</ui5-label>
+<ui5-label style="width:200px" wrapping-type="Normal">Long labels can wrap if the 'wrapping-type="Normal"' property is set.</ui5-label>
 	</xmp></pre>
 </section>
 
@@ -78,7 +78,7 @@
 		<div style="display: flex; align-items: center;">
 			<ui5-label for="myRB" required show-colon>Gender</ui5-label>
 			<ui5-radiobutton id="myRB" name="a" text="Choice 1"></ui5-radiobutton>
-			<ui5-radiobutton id="myRB2" name="a" selected text="Choice 2"></ui5-radiobutton>
+			<ui5-radiobutton id="myRB2" name="a" checked text="Choice 2"></ui5-radiobutton>
 		</div>
 		<div style="display: flex; align-items: center;">
 			<ui5-label for="myCB" required show-colon>Accept terms of use</ui5-label>
@@ -99,7 +99,7 @@
 <ui5-textarea id="myTextArea" aria-labelledby="myLabel4" aria-required="true" placeholder="Type as much text as you wish"></ui5-textarea>
 <ui5-label for="myRB" required show-colon>Gender</ui5-label>
 	<ui5-radiobutton id="myRB" group="a" text="Choice 1"></ui5-radiobutton>
-	<ui5-radiobutton id="myRB2" group="a" selected text="Choice 2"></ui5-radiobutton>
+	<ui5-radiobutton id="myRB2" group="a" checked text="Choice 2"></ui5-radiobutton>
 <ui5-label for="myCB" required show-colon>Accept terms of use</ui5-label>
 	<ui5-checkbox id="myCB"></ui5-checkbox>
 		</xmp></pre>

@@ -2,6 +2,7 @@
 :host(:not([hidden])) {
     width: 100%;
     height: 100%;
+    display: inline-block;
 }
 
 .ui5-page-root {
@@ -28,6 +29,8 @@
 }
 
 .ui5-page-footer-root {
+    width: 100%;
+    box-sizing: border-box;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -35,16 +38,47 @@
     width: 100%;
 }
 
-:host([disable-scrolling]) .ui5-page-content-root {
-    overflow: hidden;
-}
-
 :host([floating-footer]) .ui5-page-footer-root {
-    left: 0.5rem;
-    right: 0.5rem;
-    width: auto;
     opacity: 1;
     bottom: 0.5rem;
+}
+/*** Responsive paddings ***/
+
+:host([media-range="S"]) .ui5-page-content-root,
+:host([media-range="S"][floating-footer]) .ui5-page-footer-root {
+	padding: 0 1rem;
+}
+
+:host([media-range="S"]) ::slotted([ui5-bar][slot="header"]) {
+    box-sizing: border-box;
+    padding: 0 .25rem;
+}
+
+:host([media-range="M"]) .ui5-page-content-root,
+:host([media-range="L"]) .ui5-page-content-root,
+:host([media-range="M"][floating-footer]) .ui5-page-footer-root,
+:host([media-range="L"][floating-footer]) .ui5-page-footer-root {
+	padding: 0 2rem;
+}
+
+:host([media-range="M"]) ::slotted([ui5-bar][slot="header"]),
+:host([media-range="L"]) ::slotted([ui5-bar][slot="header"]) {
+    box-sizing: border-box;
+    padding: 0 1.25rem;
+}
+
+:host([media-range="XL"]) .ui5-page-content-root,
+:host([media-range="XL"][floating-footer]) .ui5-page-footer-root {
+	padding: 0 3rem;
+}
+
+:host([media-range="XL"]) ::slotted([ui5-bar][slot="header"]) {
+    box-sizing: border-box;
+    padding: 0 2.25rem;
+}
+
+:host([disable-scrolling]) .ui5-page-content-root {
+    overflow: hidden;
 }
 
 :host([hide-footer]:not([floating-footer])) .ui5-page-footer-root {

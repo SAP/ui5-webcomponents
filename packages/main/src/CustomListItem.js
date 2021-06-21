@@ -13,7 +13,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 
 		/**
-		 * Defines the content of the <code>ui5-li-custom</code>.
+		 * Defines the content of the component.
 		 * @type {Node[]}
 		 * @slot
 		 * @public
@@ -23,6 +23,18 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
+		/**
+		 * Defines the text alternative of the component.
+		 * Note: If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		 accessibleName: {
+			type: String,
+		},
 	},
 };
 
@@ -32,7 +44,7 @@ const metadata = {
  * A component to be used as custom list item within the <code>ui5-list</code>
  * the same way as the standard <code>ui5-li</code>.
  *
- * The <code>ui5-li-custom</code> accepts arbitrary HTML content to allow full customization.
+ * The component accepts arbitrary HTML content to allow full customization.
  *
  * @constructor
  * @author SAP SE

@@ -70,7 +70,7 @@
 <section>
 	<h3>Card with List</h3>
 	<div class="snippet card-container">
-		<ui5-card heading="Team Space" subheading="Direct Reports" status="3 of 10" class="medium">
+		<ui5-card title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10" class="medium">
 			<ui5-icon name="group" slot="avatar"></ui5-icon>
 			<ui5-button design="Emphasized" slot="action">View All</ui5-button>
 
@@ -83,7 +83,7 @@
 				
 			</div>
 		</ui5-card>
-		<ui5-card heading="This header is interactive" header-interactive subheading="Click, press Enter or Space" status="3 of 6" class="medium">
+		<ui5-card title-text="This header is interactive" header-interactive subtitle-text="Click, press Enter or Space" status="3 of 6" class="medium">
 			<ui5-icon name="group" slot="avatar"></ui5-icon>
 			
 			<div class="card-content">
@@ -105,7 +105,7 @@
 }
 </style>
 
-<ui5-card avatar="group" heading="Team Space" subheading="Direct Reports" status="3 of 10" class="medium">
+<ui5-card avatar="group" title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10" class="medium">
 	<ui5-icon name="group" slot="avatar"></ui5-icon>
 	<ui5-button design="Emphasized" slot="action">View All</ui5-button>
 	<div class="card-content">
@@ -117,7 +117,7 @@
 
 	</div>
 </ui5-card>
-<ui5-card avatar="group" heading="This header is interactive" header-interactive subheading="Click, press Enter or Space" status="3 of 6" class="medium">
+<ui5-card avatar="group" title-text="This header is interactive" header-interactive subtitle-text="Click, press Enter or Space" status="3 of 6" class="medium">
 	<ui5-icon name="group" slot="avatar"></ui5-icon>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
@@ -133,7 +133,7 @@
 <section>
 	<h3>Card with Table</h3>
 	<div class="snippet card-container">
-		<ui5-card heading="New Purchase Orders" subheading="Today" status="3 of 15">
+		<ui5-card title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15">
 			<ui5-table class="demo-table content-padding">
 				<!-- Columns -->
 				<ui5-table-column slot="columns">
@@ -206,7 +206,7 @@
 .status-warning {color: #e9730c;}
 .status-success {color: #107e3e;}
 </style>
-<ui5-card heading="New Purchase Orders" subheading="Today" status="3 of 15" class="medium">
+<ui5-card title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15" class="medium">
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
 		<ui5-table-column slot="columns">
@@ -249,9 +249,9 @@
 <section>
 	<h3>Card with Timeline</h3>
 	<div class="snippet card-container">
-		<ui5-card heading="Upcoming Activities" subheading="For Today" class="medium">
+		<ui5-card title-text="Upcoming Activities" subtitle-text="For Today" class="medium">
 			<ui5-timeline>
-				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 				<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
 					MR SOF02 2.43
 				</ui5-timeline-item>
@@ -264,11 +264,11 @@
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-card
-	heading="Upcoming Activities"
-	subheading="For Today"
+	title-text="Upcoming Activities"
+	subtitle-text="For Today"
 	class="meidum">
 	<ui5-timeline>
-		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 		<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
 			MR SOF02 2.43
 		</ui5-timeline-item>
@@ -283,7 +283,7 @@
 <section>
 	<h3>More Cards</h3>
 	<div class="snippet card-container">
-		<ui5-card heading="David Willams" subheading="Sales Manager" class="small">
+		<ui5-card title-text="David Willams" subtitle-text="Sales Manager" class="small">
 			<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
 
 			<ui5-list separators="Inner" class="content-padding">
@@ -294,8 +294,8 @@
 		</ui5-card>
 
 		<ui5-card
-			heading="Project Cloud Transformation"
-			subheading="Revenue per Product | EUR"
+			title-text="Project Cloud Transformation"
+			subtitle-text="Revenue per Product | EUR"
 			status="3 of 3"
 			class="small">
 			<ui5-list separators="None" class="content-padding">
@@ -337,7 +337,7 @@
 			</ui5-list>
 		</ui5-card>
 
-		<ui5-card heading="Dona Maria Moore" subheading="Senior Sales Executive" class="small">
+		<ui5-card title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive" class="small">
 			<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
 			
 			<div class="content content-padding">
@@ -362,7 +362,7 @@
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-card heading="David Willams" subheading="Sales Manager" class="small">
+<ui5-card title-text="David Willams" subtitle-text="Sales Manager" class="small">
 	<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
 	
 	<ui5-list separators="Inner" class="content-padding">
@@ -391,7 +391,7 @@
 .status-success {color: #107e3e;}
 </style>
 
-<ui5-card heading="Project Cloud Transformation" subheading="Revenue per Product | EUR" status="3 of 3" class="small">
+<ui5-card title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3" class="small">
 	<ui5-list separators="None" class="content-padding">
 		<ui5-li-custom>
 			<div class="item">
@@ -408,7 +408,7 @@
 	</ui5-list>
 </ui5-card>
 
-<ui5-card heading="Dona Maria Moore" subheading="Senior Sales Executive" class="small">
+<ui5-card title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive" class="small">
 	<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
 	
 	<div class="content content-padding">

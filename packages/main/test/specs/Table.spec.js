@@ -77,10 +77,10 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/TableLoadMore.html`);
+			browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
-			const loadMoreTrigger = browser.$("#tbl").shadow$("[load-more-inner]");
+			const loadMoreTrigger = browser.$("#tbl").shadow$("[growing-button-inner]");
 
 			// act
 			loadMoreTrigger.click();
@@ -424,6 +424,20 @@ describe("Table general interaction", () => {
 			// test row-click and selection-change events on Space key activation over an Inactive row
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
 			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Inctive row should not trigger row-click event");
+		});
+
+		it ("tests adding spaces to input fields in a row", () => {
+			browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+
+			const input = $("#myInput");
+			const inner = input.shadow$("input");
+
+			inner.click();
+			inner.keys("a");
+			inner.keys("Space");
+			inner.keys("b");
+
+			assert.strictEqual(inner.getValue(), "a b", "space should be visible");
 		});
 	});
 });
