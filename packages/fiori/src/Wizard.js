@@ -588,7 +588,7 @@ class Wizard extends UI5Element {
 		}
 
 		const responsivePopover = await this._respPopover();
-		responsivePopover.open(oDomTarget);
+		responsivePopover.openBy(oDomTarget);
 	}
 
 	async _onGroupedTabClick(event) {

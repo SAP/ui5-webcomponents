@@ -1049,10 +1049,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.27":
-  version "11.1.27"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.27.tgz#59852c4c41c3bd55984fe14148f461f0ab8e1c6c"
-  integrity sha512-0ZIAs/+AMjfxSz0cTbrdrv560zGccVPRkMU/ZT8lALYQpeEpHMOgDHcNi7m2ULQ2zzciwL72hK7Xii85wGB40w==
+"@sap-theming/theming-base-content@11.1.30":
+  version "11.1.30"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.30.tgz#04d578693b57e243287fb8060b8cc396971d52d7"
+  integrity sha512-vbiDvb7gD0dGHllIRVh9CQzG9DHAfyv+b8HjfmOF6I1D8s0uXHVuX9rMRirmfxBOEujdQPR3mgGnrAe9A36KEg==
 
 "@sindresorhus/is@^4.0.0":
   version "4.0.0"
