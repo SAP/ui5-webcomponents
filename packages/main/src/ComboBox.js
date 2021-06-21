@@ -443,6 +443,11 @@ class ComboBox extends UI5Element {
 		if (isPhone()) {
 			this.blur();
 		}
+
+		if (this._selectionPerformed) {
+			this._lastValue = this.value;
+			this._selectionPerformed = false;
+		}
 	}
 
 	_toggleRespPopover() {
@@ -684,6 +689,12 @@ class ComboBox extends UI5Element {
 		const listItem = event.detail.item;
 
 		this._selectedItemText = listItem.mappedItem.text;
+		this._selectionPerformed = true;
+
+		if (this.value === this._selectedItemText) {
+			return this._closeRespPopover();
+		}
+
 		this.value = this._selectedItemText;
 
 		if (!listItem.mappedItem.selected) {

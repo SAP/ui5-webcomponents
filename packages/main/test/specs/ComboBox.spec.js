@@ -189,6 +189,31 @@ describe("General interaction", () => {
 
 		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+		arrow.click();
+
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+		arrow.click();
+
+		popover.$("ui5-list").$$("ui5-li")[1].click();
+		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
+	});
+
+	it ("Tests change event after selection", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const counter = $("#change-count");
+		const combo = $("#change-cb");
+		const placeholder = $("#change-placeholder");
+		const arrow = combo.shadow$("[input-icon]");
+
+		arrow.click();
+
+		// click on first item
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#change-cb");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		popover.$("ui5-list").$$("ui5-li")[0].click();
 	});
 
 	it ("Tests input event", () => {
