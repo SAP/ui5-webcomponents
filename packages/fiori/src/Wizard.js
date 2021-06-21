@@ -59,9 +59,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue undefined
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -790,7 +791,7 @@ class Wizard extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return this.accessibleName || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {
