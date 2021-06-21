@@ -1,9 +1,7 @@
-commit bca726e295874454e6c538164e54bb96af86b4c7
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Mon Jun 21 11:51:54 2021 +0000
+commit 4a4c5bcb0fee425dcf603f9e11dd99d6f782bc30
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Mon Jun 21 14:00:20 2021 +0200
 
-    refactor(ui5-radio-button): change tag name (#3405)
+    fix(inputs): use base CSS param for border-radius (#3430)
     
-    Part of #3107
-    
-    BREAKING_CHANGE: component's tag name `ui5-radiobutton` has been changed to `ui5-radio-button`
+    There is a standard css variable --sapField_BorderCornerRadius meant to be used for Input's border radius. It is 0.125rem in sap_fiori_3 and sap_fiori_3_dark and 0 in all other themes. This allows changing the border radius of all inputs via the Theme Designer
