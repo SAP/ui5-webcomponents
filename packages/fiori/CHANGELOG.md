@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.10](https://github.com/SAP/ui5-webcomponents/compare/v0.31.9...v0.31.10) (2021-06-21)
+
+
+### Features
+
+* **ui5-page:** implement responsive paddings [#3412](https://github.com/SAP/ui5-webcomponents/issues/3412) ([fa3cdb7](https://github.com/SAP/ui5-webcomponents/commit/fa3cdb7))
+
+
+
+
+
 ## [0.31.9](https://github.com/SAP/ui5-webcomponents/compare/v0.31.8...v0.31.9) (2021-06-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

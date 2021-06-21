@@ -161,7 +161,8 @@ const metadata = {
 class Page extends UI5Element {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this._updateMediaRange = this.updateMediaRange.bind(this);
 	}
 
 	static get metadata() {
@@ -182,12 +183,6 @@ class Page extends UI5Element {
 
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-	}
-
-	constructor() {
-		super();
-
-		this._updateMediaRange = this.updateMediaRange.bind(this);
 	}
 
 	onEnterDOM() {

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.10](https://github.com/SAP/ui5-webcomponents/compare/v0.31.9...v0.31.10) (2021-06-21)
+
+
+### Bug Fixes
+
+* **ui5-tree:** alignment of items ([#3424](https://github.com/SAP/ui5-webcomponents/issues/3424)) ([ec1f158](https://github.com/SAP/ui5-webcomponents/commit/ec1f158))
+
+
+### Features
+
+* **ui5-page:** implement responsive paddings [#3412](https://github.com/SAP/ui5-webcomponents/issues/3412) ([fa3cdb7](https://github.com/SAP/ui5-webcomponents/commit/fa3cdb7))
+
+
+
+
+
 ## [0.31.9](https://github.com/SAP/ui5-webcomponents/compare/v0.31.8...v0.31.9) (2021-06-08)
 
 
