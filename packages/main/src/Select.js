@@ -176,10 +176,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 

@@ -24,7 +24,6 @@ describe("Dialog general interaction", () => {
 		const btnOpenDialog = $("#btnOpenDialog");
 		const select = $("#mySelect");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		btnOpenDialog.click();
 		select.click();
@@ -151,11 +150,11 @@ describe("Acc", () => {
 
 	it("tests aria-labelledby and aria-label", () => {
 		const dialog = browser.$("ui5-dialog");
-		dialog.removeAttribute("aria-label");
+		dialog.removeAttribute("accessible-name");
 		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "dialog has aria-labelledby.");
 		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog does not have aria-label.");
 
-		dialog.setAttribute("aria-label", "text");
+		dialog.setAttribute("accessible-name", "text");
 		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
 		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "dialog has aria-label.");
 	});

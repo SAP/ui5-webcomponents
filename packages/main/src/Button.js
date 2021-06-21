@@ -155,10 +155,10 @@ const metadata = {
 		 * Defines the aria-label attribute for the button
 		 * @type {String}
 		 * @defaultvalue: ""
-		 * @private
-		 * @since 1.0.0-rc.7
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
