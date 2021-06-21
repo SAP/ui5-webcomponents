@@ -1,16 +1,16 @@
 {
 	"packages": [
-		"packages/tools",
+		"packages/theme-base",
 		"packages/base",
 		"packages/localization",
-		"packages/themes-base",
-		"packages/icons",
-		"packages/icons-tnt",
 		"packages/main",
 		"packages/fiori",
-		"packages/ie"
+		"packages/icons",
+		"packages/icons-tnt",
+		"packages/tools",
+		"packages/playground"
 	],
-	"version": "0.29.17",
+	"version": "0.29.19",
 	"command": {
 		"publish": {
 			"conventionalCommits": true
