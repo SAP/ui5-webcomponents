@@ -59,14 +59,14 @@
 
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
-		<ui5-radiobutton
+		<ui5-radio-button
 				?disabled="{{isInactive}}"
 				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
 				?checked="{{selected}}"
 				@click="{{onSingleSelectionComponentPress}}">
-		</ui5-radiobutton>
+		</ui5-radio-button>
 	{{/if}}
 
 	{{#if modeMultiSelect}}
