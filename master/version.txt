@@ -1,13 +1,9 @@
-commit 09e9d2a3ad386c7574e52891dcd62aa6af263f9c
+commit bca726e295874454e6c538164e54bb96af86b4c7
 Author: Georgi <georgi.minkov@sap.com>
-Date:   Mon Jun 21 08:08:24 2021 +0000
+Date:   Mon Jun 21 11:51:54 2021 +0000
 
-    refactor(ui5-upload-collection): rename properties (#3404)
+    refactor(ui5-radio-button): change tag name (#3405)
     
     Part of #3107
     
-    Added property hideDeleteButton which hides the always-visible delete button.
-    
-    BREAKING_CHANGE: property noDelete has been renamed to disableDeleteButton
-    BREAKING_CHANGE: property noRetry has been renamed to hideRetryButton
-    BREAKING_CHANGE: property noTerminate has been renamed to hideTerminateButton
+    BREAKING_CHANGE: component's tag name `ui5-radiobutton` has been changed to `ui5-radio-button`
