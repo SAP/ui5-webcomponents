@@ -15,6 +15,7 @@
   "--sapBlockLayer_Background",
   "--sapButton_Accept_Active_Background",
   "--sapButton_Accept_Active_BorderColor",
+  "--sapButton_Accept_Active_TextColor",
   "--sapButton_Accept_Background",
   "--sapButton_Accept_BorderColor",
   "--sapButton_Accept_Hover_Background",

@@ -159,7 +159,7 @@ bdi {
 :host([ui5-button][design="Positive"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Accept_Active_Background);
 	border-color: var(--sapButton_Accept_Active_BorderColor);
-	color: var(--sapButton_Active_TextColor);
+	color: var(--sapButton_Accept_Active_TextColor);
 	text-shadow: none;
 }
 
@@ -194,7 +194,7 @@ bdi {
 :host([ui5-button][design="Negative"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Reject_Active_Background);
 	border-color: var(--sapButton_Reject_Active_BorderColor);
-	color: var(--sapButton_Active_TextColor);
+	color: var(--sapButton_Reject_Active_TextColor);
 	text-shadow: none;
 }
 
@@ -220,7 +220,7 @@ bdi {
 :host([ui5-button][design="Empasized"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Emphasized_Active_Background);
 	border-color: var(--sapButton_Emphasized_Active_BorderColor);
-	color: var(--sapButton_Active_TextColor);
+	color: var(--sapButton_Emphasized_Active_TextColor);
 	text-shadow: none;
 }
 
