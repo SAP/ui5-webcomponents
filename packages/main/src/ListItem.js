@@ -292,9 +292,16 @@ class ListItem extends ListItemBase {
 	/**
 	 * Used in UploadCollectionItem
 	 */
+	get renderDeleteButton() {
+		return this.modeDelete;
+	}
+
 	get disableDeleteButton() {
 		return false;
 	}
+	/**
+	 * End
+	 */
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
