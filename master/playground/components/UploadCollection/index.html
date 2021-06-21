@@ -3010,16 +3010,28 @@
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          disableDeleteButton
+                            <br>
+                            <code>disable-delete-button</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Disables the delete button.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           file
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">File</div>
                         <div class="cell api-table-content-cell">null</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Holds <code>File</code>, associated with this item.
+                            Holds an instance of <code>File</code> associated with this item.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           fileName
                             <br>
@@ -3031,7 +3043,7 @@
                             The name of the file.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           fileNameClickable
                             <br>
@@ -3043,23 +3055,11 @@
                             If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noDelete
-                            <br>
-                            <code>no-delete</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Removes delete option from <code>ui5-upload-collection</code> with <code>mode</code> <code>Delete</code> for this item.
-                        </div>
-                      </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noRetry
+                          hideRetryButton
                             <br>
-                            <code>no-retry</code>
+                            <code>hide-retry-button</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -3069,9 +3069,9 @@
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noTerminate
+                          hideTerminateButton
                             <br>
-                            <code>no-terminate</code>
+                            <code>hide-terminate-button</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
