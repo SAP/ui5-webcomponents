@@ -13,7 +13,7 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 5, "Basic rating indicator renders 5 stars");
 	});
 
-	it("Tests max-value property", () => {
+	it("Tests max property", () => {
 		const ratingIndicator = browser.$("#rating-indicator2");
 
 		assert.strictEqual(ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 10, "Basic rating indicator renders 10 stars");

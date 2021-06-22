@@ -10,7 +10,7 @@
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
 	border: 1px solid var(--sapField_BorderColor);
-	border-radius: var(--_ui5_input_wrapper_border_radius);
+	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
 	height: var(--_ui5_input_height);
 	position: relative;
@@ -39,7 +39,7 @@
 	left: -1px;
 	outline: none;
 	pointer-events: none;
-	border-radius: var(--_ui5_input_wrapper_border_radius);
+	border-radius: var(--sapField_BorderCornerRadius);
 	border-style: var(--_ui5_input_error_warning_border_style);
 	z-index: 3;
 	border-width: 0px;
@@ -85,10 +85,14 @@
 	box-sizing: border-box;
 	vertical-align: top;
 	margin-top: -1px;
-	min-width: 8rem;
+	min-width: 9.125rem;
 	position: relative;
 	padding: 0px 2.5rem 0px 2.4375rem;
 	outline: none;
+}
+
+:host .ui5-step-input-root {
+	white-space: nowrap;
 }
 
 :host .ui5-step-input-input[text-align=left] {

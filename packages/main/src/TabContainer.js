@@ -115,7 +115,7 @@ const metadata = {
 		 * @type {TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
-		 * @public
+		 * @private
 		 */
 		tabsPlacement: {
 			type: TabContainerTabsPlacement,
@@ -340,6 +340,26 @@ class TabContainer extends UI5Element {
 		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
+	_onTablistFocusin(event) {
+		const target = event.target;
+
+		if (!this._scrollable || !target.classList.contains("ui5-tab-strip-item")) {
+			return;
+		}
+
+		const headerScrollContainer = this._getHeaderScrollContainer();
+		const leftArrowWidth = this.shadowRoot.querySelector(".ui5-tc__headerArrowLeft").offsetWidth;
+		const rightArrowWidth = this.shadowRoot.querySelector(".ui5-tc__headerArrowRight").offsetWidth;
+
+		if (this._scrollableBack && (target.offsetLeft - leftArrowWidth < headerScrollContainer.scrollLeft)) {
+			this._scrollEnablement.move(target.offsetLeft - leftArrowWidth - headerScrollContainer.scrollLeft, 0, true);
+			this._updateScrolling();
+		} else if (this._scrollableForward && (target.offsetLeft + target.offsetWidth > headerScrollContainer.scrollLeft + headerScrollContainer.offsetWidth - rightArrowWidth)) {
+			this._scrollEnablement.move(target.offsetLeft + target.offsetWidth - headerScrollContainer.scrollLeft - headerScrollContainer.offsetWidth + rightArrowWidth, 0, true);
+			this._updateScrolling();
+		}
+	}
+
 	_onHeaderClick(event) {
 		const tab = getTab(event.target);
 		if (!tab) {
@@ -477,7 +497,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.open(button);
+			this.responsivePopover.openBy(button);
 		}
 	}
 

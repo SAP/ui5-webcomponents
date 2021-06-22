@@ -25,12 +25,12 @@
     }
 </style>
 
-<ui5-busyindicator id="busy" style="width: 100%;">
+<ui5-busy-indicator id="busy" style="width: 100%;">
     <ui5-carousel id="dynamicCarousel" items-per-page-s="3" items-per-page-m="3" items-per-page-l="3" infinite-scroll-offset="0">
         <ui5-card
                 id="card"
-                heading="Quick Links"
-                subheading="quick links"
+                title-text="Quick Links"
+                subtitle-text="quick links"
                 header-interactive
                 class="myCard">
             <ui5-list id="myList3" separators="Inner">
@@ -44,8 +44,8 @@
 
         <ui5-card
                 id="card2"
-                heading="Quick Links"
-                subheading="quick links"
+                title-text="Quick Links"
+                subtitle-text="quick links"
                 class="myCard">
             <ui5-icon name="group" slot="avatar"></ui5-icon>
             <ui5-list id="myList3" separators="Inner">
@@ -54,7 +54,7 @@
             </ui5-list>
         </ui5-card>
 
-        <ui5-card heading="Quick Links" subheading="quick links" class="myCard">
+        <ui5-card title-text="Quick Links" subtitle-text="quick links" class="myCard">
             <ui5-list id="myList3" separators="Inner">
                 <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
                 <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
@@ -63,8 +63,8 @@
 
         <ui5-card
                 id="card"
-                heading="Quick Links"
-                subheading="quick links"
+                title-text="Quick Links"
+                subtitle-text="quick links"
                 header-interactive
                 class="myCard">
             <ui5-list id="myList3" separators="Inner">
@@ -78,8 +78,8 @@
 
         <ui5-card
                 id="card2"
-                heading="Quick Links"
-                subheading="quick links"
+                title-text="Quick Links"
+                subtitle-text="quick links"
                 class="myCard">
             <ui5-icon name="group" slot="avatar"></ui5-icon>
             <ui5-list id="myList3" separators="Inner">
@@ -88,7 +88,7 @@
             </ui5-list>
         </ui5-card>
 
-        <ui5-card heading="Quick Links" subheading="quick links" class="myCard">
+        <ui5-card title-text="Quick Links" subtitle-text="quick links" class="myCard">
             <ui5-list id="myList3" separators="Inner">
                 <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
                 <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
@@ -97,8 +97,8 @@
 
         <ui5-card
                 id="card"
-                heading="Quick Links"
-                subheading="quick links"
+                title-text="Quick Links"
+                subtitle-text="quick links"
                 header-interactive
                 class="myCard">
             <ui5-list id="myList3" separators="Inner">
@@ -112,7 +112,7 @@
 
 
     </ui5-carousel>
-</ui5-busyindicator>
+</ui5-busy-indicator>
 
 <script>
 	var dynamicCarousel = document.getElementById('dynamicCarousel');
@@ -121,7 +121,7 @@
 	function createCard() {
 		var card = document.createElement("ui5-card");
 		card.heading = "Dynamic card ";
-		card.subheading = "new";
+		card.subtitleText = "new";
 		card.classList.add("myCard");
 		card.textContent = Math.random() + "";
 

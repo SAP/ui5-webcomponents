@@ -1,7 +1,7 @@
 <div
 	class="ui5-checkbox-root {{classes.main}}"
 	role="checkbox"
-	aria-checked="{{checked}}"
+	aria-checked="{{ariaChecked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
 	aria-label="{{ariaLabelText}}"
@@ -14,7 +14,7 @@
 	dir="{{effectiveDir}}"
 >
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
-			{{#if checked}}
+			{{#if isCompletelyChecked}}
 				<ui5-icon name="accept" class="ui5-checkbox-icon"></ui5-icon>
 			{{/if}}
 
@@ -29,8 +29,8 @@
 			/>
 		</div>
 
-		{{#if _label.text}}
-			<ui5-label id="{{_id}}-label" class="ui5-checkbox-label" ?wrap="{{_label.wrap}}">{{_label.text}}</ui5-label>
+		{{#if text}}
+			<ui5-label id="{{_id}}-label" class="ui5-checkbox-label" wrapping-type="{{wrappingType}}">{{text}}</ui5-label>
 		{{/if}}
 
 		{{#if hasValueState}}

@@ -9,6 +9,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
+import WrappingType from "./types/WrappingType.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
@@ -53,6 +54,27 @@ const metadata = {
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		* Defines whether the component is displayed as partially checked.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>checked</code> properties:
+		* <ul>
+		* <li> If the component is checked and indeterminate, it will be displayed as partially checked
+		* <li> If the component is checked and it is not indeterminate, it will be displayed as checked
+		* <li> If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
+		* </ul>
+		*
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.0.0-rc.15
+		*/
+		indeterminate: {
 			type: Boolean,
 		},
 
@@ -108,14 +130,19 @@ const metadata = {
 		/**
 		 * Defines whether the component text wraps when there is not enough space.
 		 * <br><br>
-		 * <b>Note:</b> By default, the text truncates when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		 wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
@@ -161,10 +188,6 @@ const metadata = {
 			type: String,
 			defaultValue: "",
 		},
-
-		_label: {
-			type: Object,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
@@ -208,7 +231,7 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default.
- * In case you prefer text to wrap, use the <code>wrap</code> property.
+ * In case you prefer text to wrap, set the <code>wrappingType</code> property to "Normal".
  * The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends.
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
@@ -256,21 +279,11 @@ class CheckBox extends UI5Element {
 	constructor() {
 		super();
 
-		this._label = {};
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		this.syncLabel();
-
 		this._enableFormSupport();
-	}
-
-	syncLabel() {
-		this._label = { ...this._label };
-		this._label.text = this.text;
-		this._label.wrap = this.wrap;
-		this._label.textDirection = this.textDirection;
 	}
 
 	_enableFormSupport() {
@@ -307,7 +320,13 @@ class CheckBox extends UI5Element {
 
 	toggle() {
 		if (this.canToggle()) {
-			this.checked = !this.checked;
+			if (this.indeterminate) {
+				this.indeterminate = false;
+				this.checked = true;
+			} else {
+				this.checked = !this.checked;
+			}
+
 			this.fireEvent("change");
 			// Angular two way data binding
 			this.fireEvent("value-changed");
@@ -349,6 +368,10 @@ class CheckBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get ariaChecked() {
+		return this.indeterminate && this.checked ? "mixed" : this.checked;
+	}
+
 	get ariaLabelledBy() {
 		if (!this.ariaLabelText) {
 			return this.text ? `${this._id}-label` : undefined;
@@ -372,6 +395,10 @@ class CheckBox extends UI5Element {
 	get tabIndex() {
 		const tabindex = this.getAttribute("tabindex");
 		return this.disabled ? undefined : tabindex || "0";
+	}
+
+	get isCompletelyChecked() {
+		return this.checked && !this.indeterminate;
 	}
 
 	static get dependencies() {

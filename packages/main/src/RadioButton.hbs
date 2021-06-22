@@ -1,6 +1,6 @@
 <div class="ui5-radio-root {{classes.main}}"
 	role="radio"
-	aria-checked="{{selected}}"
+	aria-checked="{{checked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
 	aria-labelledby="{{ariaLabelledBy}}"
@@ -17,11 +17,11 @@
 			<circle class="ui5-radio-svg-outer" cx="50%" cy="50%" r="50%" />
 			<circle class="ui5-radio-svg-inner" cx="50%" cy="50%" r="22%" />
 		</svg>
- 		<input type='radio' ?checked="{{selected}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
+ 		<input type='radio' ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
 	</div>
 
 	{{#if text}}
-		<ui5-label id="{{_id}}-label" class="ui5-radio-label" for="{{_id}}" ?wrap="{{wrap}}">{{text}}</ui5-label>
+		<ui5-label id="{{_id}}-label" class="ui5-radio-label" for="{{_id}}" wrapping-type="{{wrappingType}}">{{text}}</ui5-label>
 	{{/if}}
 
 	{{#if hasValueState}}

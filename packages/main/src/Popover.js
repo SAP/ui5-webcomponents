@@ -126,8 +126,9 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		noArrow: {
+		hideArrow: {
 			type: Boolean,
 		},
 
@@ -498,7 +499,7 @@ class Popover extends Popup {
 		this._width = width;
 		this._height = height;
 
-		const arrowOffset = this.noArrow ? 0 : arrowSize;
+		const arrowOffset = this.hideArrow ? 0 : arrowSize;
 
 		// calc popover positions
 		switch (placementType) {
@@ -561,7 +562,7 @@ class Popover extends Popup {
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight;
+		this._maxContentHeight = maxContentHeight - Popover.MIN_OFFSET;
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 

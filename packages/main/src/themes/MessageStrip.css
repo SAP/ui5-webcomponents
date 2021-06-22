@@ -18,11 +18,11 @@
 	position: relative;
 }
 
-.ui5-messagestrip-root-no-icon {
+.ui5-messagestrip-root-hide-icon {
 	padding: var(--_ui5_messagestrip_padding_no_icon);
 }
 
-.ui5-messagestrip-root-no-close-button {
+.ui5-messagestrip-root-hide-close-button {
 	padding-right: 1rem;
 }
 
@@ -107,12 +107,12 @@
 	padding-left: 2rem;
 }
 
-[dir="rtl"] .ui5-messagestrip-root-no-icon {
+[dir="rtl"] .ui5-messagestrip-root-hide-icon {
 	padding-right: 1rem;
 	padding-left: 2rem;
 }
 
-[dir="rtl"] .ui5-messagestrip-root-no-close-button {
+[dir="rtl"] .ui5-messagestrip-root-hide-close-button {
 	padding-left: 1rem;
 	padding-right: 0;
 }
