@@ -425,9 +425,7 @@ class ComboBox extends UI5Element {
 	_focusout() {
 		this.focused = false;
 
-		if (this.value !== this._lastValue) {
-			this._fireChangeEvent();
-		}
+		this._fireChangeEvent();
 
 		!isPhone() && this._closeRespPopover();
 	}
@@ -680,7 +678,10 @@ class ComboBox extends UI5Element {
 	}
 
 	_fireChangeEvent() {
-		this.fireEvent("change");
+		if (this.value !== this._lastValue) {
+			this.fireEvent("change");
+			this._lastValue = this.value;
+		}
 	}
 
 	_inputChange(event) {

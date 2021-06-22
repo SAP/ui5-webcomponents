@@ -200,20 +200,33 @@ describe("General interaction", () => {
 		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
 	});
 
-	it ("Tests change event after selection", () => {
+	it ("Tests change event after pressing enter key", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
+		const dummyTarget = $("#combo");
+		const placeholder = $("#change-placeholder");
 		const counter = $("#change-count");
 		const combo = $("#change-cb");
-		const placeholder = $("#change-placeholder");
-		const arrow = combo.shadow$("[input-icon]");
+		const input = combo.shadow$("[inner-input]");
 
-		arrow.click();
+		input.click();
 
-		// click on first item
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#change-cb");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		popover.$("ui5-list").$$("ui5-li")[0].click();
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+
+		input.keys("a");
+
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
 	});
 
 	it ("Tests input event", () => {
