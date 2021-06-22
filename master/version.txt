@@ -1,7 +1,9 @@
-commit 4a4c5bcb0fee425dcf603f9e11dd99d6f782bc30
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Mon Jun 21 14:00:20 2021 +0200
+commit e235d7d5d08b0c4544c5b11c71e59a234567765a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jun 22 12:15:20 2021 +0300
 
-    fix(inputs): use base CSS param for border-radius (#3430)
+    fix(ui5-bar): rename middleContent slot (#3440)
     
-    There is a standard css variable --sapField_BorderCornerRadius meant to be used for Input's border radius. It is 0.125rem in sap_fiori_3 and sap_fiori_3_dark and 0 in all other themes. This allows changing the border radius of all inputs via the Theme Designer
+    Part of #3107
+    
+    BREAKING_CHANGE: The 'middleContent' slot is deprecated in favour of 'default' slot
