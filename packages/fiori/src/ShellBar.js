@@ -903,6 +903,7 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
 				"ui5-shellbar-menu-button": true,
 			},
+			title: {},
 			items: {
 				notification: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("bell"),

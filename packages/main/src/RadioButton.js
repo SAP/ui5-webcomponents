@@ -391,6 +391,7 @@ class RadioButton extends UI5Element {
 
 	get classes() {
 		return {
+			main: {},
 			inner: {
 				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},
