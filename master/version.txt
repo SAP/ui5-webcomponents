@@ -1,12 +1,5 @@
-commit 42b4adde8386e32081f57ae33a309e1cc06505d5
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Wed Jun 23 09:10:41 2021 +0300
+commit 92c6799ccea16e7f8bd76360aff1fe46a2e3e8b5
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 23 17:02:03 2021 +0300
 
-    refactor(ui5-wizard): ARIA attributes enhanced (#3443)
-    
-    * refactor(ui5-wizard): ARIA attributes enhanced
-    
-    - aria-describedby added to the element with role 'list'
-    - aria-label enhanced for each step. Now the steps will be
-    announced as "Active" or "Inactive" depending on their
-    'deactivated' property.
+    chore: upgrade serve (#3463)

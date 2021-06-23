@@ -219,7 +219,7 @@
   "32": {
     "id": "32",
     "title": "Components",
-    "content": "&lt;!DOCTYPE html&gt; Default values test page Primary button Toggle button Press me Hello world Hello world Required Primary button Hello world Press me New Items Laptop HP Discounted Items Hello world UI5 I am a native heading! UI5 Hello world Toggle button Product Supplier Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.",
+    "content": "&lt;!DOCTYPE html&gt; Default values test page Primary button Toggle button Press me Hello world Hello world Required Primary button Hello world Press me New Items Laptop HP Discounted Items Hello world I am a native heading! UI5 Hello world Toggle button Product Supplier Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Components/",
     "relUrl": "/playground/main/pages/Components/"
   },
@@ -478,7 +478,7 @@
   "69": {
     "id": "69",
     "title": "Inputs Alignment",
-    "content": "&lt;!DOCTYPE html&gt; Inputs Alignment The way the components will be rendered out of the box Cozy Compact Condensed short option ui5-select: average long option very very very very very long option Cosy Compact Condensed Longest word in the world Cosy Compact Condensed Longest word in the world Explicitly width:auto set short option average long option very very very very very long option Cosy Compact Condensed Longest word in the world Cosy Compact Condensed Longest word in the world Explicitly width:100% set short option average long option very very very very very long option Cosy Compact Condensed Longest word in the world Cosy Compact Condensed Longest word in the world",
+    "content": "&lt;!DOCTYPE html&gt; Inputs Alignment The way the components will be rendered out of the box Cozy Compact Condensed short option ui5-select: average long option very very very very very long option Explicitly width:auto set short option average long option very very very very very long option Explicitly width:100% set short option average long option very very very very very long option",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/InputsAlignment/",
     "relUrl": "/playground/main/pages/InputsAlignment/"
   },
