@@ -698,7 +698,10 @@ class ComboBox extends UI5Element {
 		this._selectedItemText = listItem.mappedItem.text;
 		this._selectionPerformed = true;
 
-		if (this.value === this._selectedItemText) {
+		const sameItemSelected = this.value === this._selectedItemText;
+		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
+
+		if (sameItemSelected && sameSelectionPerformed) {
 			return this._closeRespPopover();
 		}
 
@@ -720,6 +723,9 @@ class ComboBox extends UI5Element {
 
 		this._fireChangeEvent();
 		this._closeRespPopover();
+
+		// reset selection
+		this.inner.setSelectionRange(this.value.length, this.value.length);
 	}
 
 	_onItemFocus(event) {
