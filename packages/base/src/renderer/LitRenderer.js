@@ -1,28 +1,28 @@
-import { html, svg, render } from "lit-html/lit-html.js";
-import scopeHTML from "./scopeHTML.js";
+import { render } from "lit-html";
+import {
+	html,
+	svg,
+	unsafeStatic,
+} from "lit-html/static.js";
 
-let tags;
-let	suffix;
-
-const setTags = t => {
-	tags = t;
-};
-const setSuffix = s => {
-	suffix = s;
-};
-
-const litRender = (templateResult, domNode, styles, { eventContext } = {}) => {
+const litRender = (templateResult, domNode, styles, { host } = {}) => {
 	if (styles) {
 		templateResult = html`<style>${styles}</style>${templateResult}`;
 	}
-	render(templateResult, domNode, { eventContext });
+	render(templateResult, domNode, { host });
 };
 
-const scopedHtml = (strings, ...values) => html(scopeHTML(strings, tags, suffix), ...values);
-const scopedSvg = (strings, ...values) => svg(scopeHTML(strings, tags, suffix), ...values);
+const scopeTag = (tag, tags, suffix) => {
+	const resultTag = suffix && (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
+	return unsafeStatic(resultTag);
+};
 
-export { setTags, setSuffix };
-export { scopedHtml as html, scopedSvg as svg };
+export {
+	html,
+	svg,
+	unsafeStatic,
+};
+export { scopeTag };
 export { repeat } from "lit-html/directives/repeat.js";
 export { classMap } from "lit-html/directives/class-map.js";
 export { styleMap } from "lit-html/directives/style-map.js";
