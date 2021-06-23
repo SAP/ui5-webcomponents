@@ -15,16 +15,20 @@
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body>
 
-<ui5-datepicker></ui5-datepicker>
+<ui5-button id="btn">test</ui5-button>
 
-<ui5-button id="b">test</ui5-button>
+<ui5-popover header-text="Header" id="pop">
+	Hello world
+</ui5-popover>
 
-<ui5-select id="mySelect">
-	<ui5-option selected id="o1">Cozy</ui5-option>
-	<ui5-option selected id="o2">Compact</ui5-option>
-</ui5-select>
+
+<script>
+	btn.addEventListener("click", function (event) {
+		pop.openBy(btn);
+	});
+</script>
 
 </body>
 </html>

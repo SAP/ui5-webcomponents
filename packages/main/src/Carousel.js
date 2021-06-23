@@ -319,6 +319,9 @@ class Carousel extends UI5Element {
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
 		this._resizing = false; // not invalidating
+		this.items.forEach(item => {
+			this.getDomRef().querySelector(`#${item.id}`).style.width = `${item.width}px`;
+		});
 	}
 
 	onEnterDOM() {

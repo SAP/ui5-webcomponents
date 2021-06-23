@@ -2,6 +2,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -253,6 +254,14 @@ class TreeListItem extends ListItem {
 		const allClasses = super.classes;
 		allClasses.main["ui5-li-root-tree"] = true;
 		return allClasses;
+	}
+
+	get styles() {
+		return {
+			preContent: {
+				"padding-left": isIE() ? `${this.effectiveLevel}rem` : `calc(var(--_ui5-tree-indent-step) * ${this.effectiveLevel})`,
+			},
+		};
 	}
 
 	get effectiveLevel() {

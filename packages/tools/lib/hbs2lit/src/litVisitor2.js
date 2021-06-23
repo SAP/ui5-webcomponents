@@ -54,7 +54,10 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	const contentStatement = content.original;
+	let contentStatement = content.original;
+	if (contentStatement.match(/style="?$/)) {
+		contentStatement = contentStatement.replace(/style=("?)$/, `data-ui5-style-ref=$1`);
+	}
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
 	const closingIndex = contentStatement.lastIndexOf(">");
@@ -83,7 +86,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
-			parsedCode = `\${styleMap(${path})}`;
+			parsedCode = path.replace(/^context\.styles\./, "");
 		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;
 		} else {
