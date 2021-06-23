@@ -356,8 +356,9 @@ describe("Accessibility", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const combo = $("#combo");
+		const focusBtn = $("#combo-focus");
 
-		combo.focus();
+		focusBtn.click();
 
 		assert.ok(combo["focused"], "ComboBox to be focused");
 	});

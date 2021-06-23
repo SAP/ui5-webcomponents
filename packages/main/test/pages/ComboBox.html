@@ -54,6 +54,7 @@
 			<ui5-cb-item text="Canada"></ui5-cb-item>
 			<ui5-cb-item text="Chile"></ui5-cb-item>
 		</ui5-combobox>
+		<ui5-button id="combo-focus">Focus ComboBox</ui5-button>
 
 		<ui5-combobox id="combo2" style="width: 360px;" aria-label="Select destination:">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
@@ -240,6 +241,10 @@
 		document.getElementById("input-cb").addEventListener("ui5-input", function(event) {
 			document.getElementById("input-placeholder").innerHTML = event.target.filterValue;
 			document.getElementById("input-count").innerHTML = parseInt(document.getElementById("input-count").innerHTML) + 1;
+		});
+
+		document.getElementById("combo-focus").addEventListener("click", function () {
+			document.getElementById("combo").focus();
 		});
 	</script>
 
