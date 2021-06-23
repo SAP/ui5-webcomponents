@@ -141,6 +141,6 @@ console.log(`Successfully generated ${componentName}.hbs`);
 
 // Change the color of the output
 console.warn('\x1b[33m%s\x1b[0m', `
-Please import the generated component in bundle.esm.js:
+Please import the generated component in bundle.common.js:
 import ${componentName} from "./dist/${componentName}.js";
 `);
