@@ -181,10 +181,6 @@ class Page extends UI5Element {
 		return PageTemplate;
 	}
 
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
-	}
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._updateMediaRange);
 	}
