@@ -1,9 +1,12 @@
-commit e235d7d5d08b0c4544c5b11c71e59a234567765a
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jun 22 12:15:20 2021 +0300
+commit 42b4adde8386e32081f57ae33a309e1cc06505d5
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Wed Jun 23 09:10:41 2021 +0300
 
-    fix(ui5-bar): rename middleContent slot (#3440)
+    refactor(ui5-wizard): ARIA attributes enhanced (#3443)
     
-    Part of #3107
+    * refactor(ui5-wizard): ARIA attributes enhanced
     
-    BREAKING_CHANGE: The 'middleContent' slot is deprecated in favour of 'default' slot
+    - aria-describedby added to the element with role 'list'
+    - aria-label enhanced for each step. Now the steps will be
+    announced as "Active" or "Inactive" depending on their
+    'deactivated' property.
