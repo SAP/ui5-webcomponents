@@ -11,7 +11,7 @@
 	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
 	border-color: var(--sapField_BorderColor);
-	border-radius: var(--_ui5_input_wrapper_border_radius);
+	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
 	line-height: 1.4;
 	letter-spacing: normal;

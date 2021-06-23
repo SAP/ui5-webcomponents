@@ -14,7 +14,7 @@
 	font-style: normal;
 	background-color: var(--sapField_Background);
 	border: 1px solid var(--sapField_BorderColor);
-	border-radius: var(--_ui5_input_wrapper_border_radius);
+	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
 	line-height: normal;
 	letter-spacing: normal;

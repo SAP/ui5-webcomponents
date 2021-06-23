@@ -95,7 +95,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the elements, dipalyed in the footer of the of the <code>ui5-li-notification</code>.
+		 * Defines the elements, displayed in the footer of the of the component.
 		 * @type {HTMLElement[]}
 		 * @slot footnotes
 		 * @public
@@ -343,11 +343,11 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get accInvisibleText() {
-		const notifcationTxt = this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readTxt = this.read ? this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		const notificationText = this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const readText = this.read ? this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
 
-		return `${notifcationTxt} ${readTxt} ${priorityText}`;
+		return `${notificationText} ${readText} ${priorityText}`;
 	}
 
 	get classes() {

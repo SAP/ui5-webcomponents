@@ -647,7 +647,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_openRespPopover() {
-		this.responsivePopover.open(this);
+		this.responsivePopover.openBy(this);
 	}
 
 	_filterItems(str) {

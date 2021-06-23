@@ -34,7 +34,7 @@
 
 :host(:not([disabled]):active) [ui5-button] {
 	background-color: var(--sapButton_Active_Background);
-	border-color: var(--_ui5_button_active_border_color);
+	border-color: var(--sapButton_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 	text-shadow: none;
 }
