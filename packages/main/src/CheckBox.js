@@ -166,7 +166,8 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the <code>aria-label</code>, set on the component root tag.
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {string}
 		 * @defaultvalue undefined
 		 * @public

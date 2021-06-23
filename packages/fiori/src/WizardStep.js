@@ -103,7 +103,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label of the step.
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue ""
 		 * @public

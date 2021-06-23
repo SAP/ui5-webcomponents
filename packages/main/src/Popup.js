@@ -66,7 +66,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the popup
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""

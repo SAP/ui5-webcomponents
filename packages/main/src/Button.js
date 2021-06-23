@@ -152,7 +152,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the button
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue: ""
 		 * @public

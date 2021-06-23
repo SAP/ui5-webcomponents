@@ -199,6 +199,8 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public

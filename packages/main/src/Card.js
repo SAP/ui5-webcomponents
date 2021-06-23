@@ -115,7 +115,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the component
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @public

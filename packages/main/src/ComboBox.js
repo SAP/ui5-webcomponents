@@ -188,7 +188,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the combo box
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue: ""
 		 * @public

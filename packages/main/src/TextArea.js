@@ -212,10 +212,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the textarea.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.9
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */

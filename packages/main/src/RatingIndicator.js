@@ -86,7 +86,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the rating indicator.
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue: undefined
 		 * @public

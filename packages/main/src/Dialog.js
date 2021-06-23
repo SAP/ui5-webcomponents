@@ -58,11 +58,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible name of the dialog when <code>header</code> slot is provided.
-		 * <br><br>
+		 * Sets the accessible aria name of the component.
 		 *
-		 * <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
-
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
