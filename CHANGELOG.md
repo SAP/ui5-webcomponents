@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.11](https://github.com/SAP/ui5-webcomponents/compare/v0.31.10...v0.31.11) (2021-06-23)
+
+
+### Features
+
+* **ui5-tabcontainer:** support responsive paddings ([#2775](https://github.com/SAP/ui5-webcomponents/issues/2775)) ([398e7d6](https://github.com/SAP/ui5-webcomponents/commit/398e7d6)), closes [#2539](https://github.com/SAP/ui5-webcomponents/issues/2539)
+
+
+
+
+
 ## [0.31.10](https://github.com/SAP/ui5-webcomponents/compare/v0.31.9...v0.31.10) (2021-06-21)
 
 
