@@ -6,6 +6,8 @@ import {
 	isDown,
 	isEnter,
 	isEscape,
+	isHome,
+	isEnd,
 	isShow,
 	isTabNext,
 	isTabPrevious,
@@ -255,6 +257,8 @@ const metadata = {
  * <li>[UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.</li>
  * <li>[SPACE, ENTER] - If the drop-down is opened - selects the focused option.</li>
  * <li>[ESC] - Closes the drop-down without changing the selection.</li>
+ * <li>[HOME] - Navigates to first option</li>
+ * <li>[END] - Navigates to the last option</li>
  * </ul>
  * <br>
  *
@@ -368,7 +372,7 @@ class Select extends UI5Element {
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.open(this);
+			this.responsivePopover.openBy(this);
 		}
 	}
 
@@ -376,7 +380,8 @@ class Select extends UI5Element {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
 		const opts = this.options.map((opt, index) => {
-			if (opt.selected) {
+			if (opt.selected || opt.textContent === this.value) {
+				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
 				lastSelectedOptionIndex = index;
 			}
 			if (!opt.disabled && (firstEnabledOptionIndex === -1)) {
@@ -443,21 +448,31 @@ class Select extends UI5Element {
 		if (isShow(event)) {
 			event.preventDefault();
 			this._toggleRespPopover();
-		}
-
-		if (isSpace(event)) {
+		} else if (isSpace(event)) {
 			event.preventDefault();
-		}
-
-		if (isEscape(event) && this._isPickerOpen) {
+		} else if (isEscape(event) && this._isPickerOpen) {
 			this._escapePressed = true;
-		}
-
-		if (isEnter(event)) {
+		} else if (isHome(event)) {
+			this._handleHomeKey(event);
+		} else if (isEnd(event)) {
+			this._handleEndKey(event);
+		} else if (isEnter(event)) {
 			this._handleSelectionChange();
+		} else {
+			this._handleArrowNavigation(event);
 		}
+	}
 
-		this._handleArrowNavigation(event, true);
+	_handleHomeKey(event) {
+		event.preventDefault();
+		this._changeSelectedItem(this._selectedIndex, 0);
+	}
+
+	_handleEndKey(event) {
+		const lastIndex = this.options.length - 1;
+
+		event.preventDefault();
+		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
 	_onkeyup(event) {
@@ -511,7 +526,7 @@ class Select extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	_handleArrowNavigation(event, shouldFireEvent) {
+	_handleArrowNavigation(event) {
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(event);
@@ -525,13 +540,7 @@ class Select extends UI5Element {
 				nextIndex = this._getPreviousOptionIndex();
 			}
 
-			this.options[this._selectedIndex].selected = false;
-			this.options[this._selectedIndex]._focused = false;
-
-			this.options[nextIndex].selected = true;
-			this.options[nextIndex]._focused = true;
-
-			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
+			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
 			if (currentIndex !== this._selectedIndex) {
 				// Announce new item even if picker is opened.
@@ -539,11 +548,21 @@ class Select extends UI5Element {
 				// because listitem elements are in different shadow dom
 				this.itemSelectionAnnounce();
 			}
+		}
+	}
 
-			if (shouldFireEvent && !this._isPickerOpen) {
-				// arrow pressed on closed picker - do selection change
-				this._fireChangeEvent(this.options[nextIndex]);
-			}
+	_changeSelectedItem(oldIndex, newIndex) {
+		this.options[oldIndex].selected = false;
+		this.options[oldIndex]._focused = false;
+
+		this.options[newIndex].selected = true;
+		this.options[newIndex]._focused = true;
+
+		this._selectedIndex = newIndex;
+
+		if (!this._isPickerOpen) {
+			// arrow pressed on closed picker - do selection change
+			this._fireChangeEvent(this.options[newIndex]);
 		}
 	}
 
@@ -582,7 +601,7 @@ class Select extends UI5Element {
 		this.fireEvent("change", { selectedOption });
 
 		//  Angular two way data binding
-		this.selectedItem = selectedOption;
+		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
 	}
 
@@ -710,7 +729,7 @@ class Select extends UI5Element {
 	}
 
 	get selectedOptionIcon() {
-		return this.selectedOption.icon;
+		return this.selectedOption && this.selectedOption.icon;
 	}
 
 	async _getPopover() {

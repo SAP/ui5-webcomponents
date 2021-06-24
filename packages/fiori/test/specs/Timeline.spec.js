@@ -6,7 +6,7 @@ describe("Timeline general interaction", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Timeline.html`);
 	});
 
-	it("should fire itemNameClick event on a normal item name", () => {
+	it("should fire name-click event on a normal item name", () => {
 		const timelineItemName = browser.$("#test-item").shadow$("ui5-link");
 		const result = $("#result");
 

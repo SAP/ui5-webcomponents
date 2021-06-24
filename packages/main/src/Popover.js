@@ -562,7 +562,7 @@ class Popover extends Popup {
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight;
+		this._maxContentHeight = maxContentHeight - Popover.MIN_OFFSET;
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 

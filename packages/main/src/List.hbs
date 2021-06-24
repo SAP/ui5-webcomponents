@@ -55,11 +55,13 @@
 
 	{{#if busy}}
 		<div class="ui5-list-busy-row">
-			<ui5-busyindicator
-				active size="Medium"
+			<ui5-busy-indicator
+				delay="{{busyDelay}}"
+				active
+				size="Medium"
 				class="ui5-list-busy-ind" 
 				style="{{styles.busyInd}}"
-			></ui5-busyindicator>
+			></ui5-busy-indicator>
 		</div>
 	{{/if}}
 </div>

@@ -182,7 +182,7 @@ class TableRow extends UI5Element {
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
-		if (isSpace(event)) {
+		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
 
