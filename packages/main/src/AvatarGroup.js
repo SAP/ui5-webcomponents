@@ -390,15 +390,19 @@ class AvatarGroup extends UI5Element {
 		return button.offsetWidth;
 	}
 
+	get firstAvatarSize() {
+		return this.items[0].size;
+	}
+
 	get classes() {
 		return {
 			overflowButton: {
 				"ui5-avatar-group-overflow-btn": true,
-				"ui5-avatar-group-overflow-btn-xs": this.items[0].size === "XS",
-				"ui5-avatar-group-overflow-btn-s": this.items[0].size === "S",
-				"ui5-avatar-group-overflow-btn-m": this.items[0].size === "M",
-				"ui5-avatar-group-overflow-btn-l": this.items[0].size === "L",
-				"ui5-avatar-group-overflow-btn-xl": this.items[0].size === "XL",
+				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === "XS",
+				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === "S",
+				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === "M",
+				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === "L",
+				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === "XL",
 			},
 		};
 	}
