@@ -45,15 +45,18 @@ const metadata = {
 		startContent: {
 			type: HTMLElement,
 		},
+
 		/**
 		 * Defines the content in the middle of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		middleContent: {
+		"default": {
 			type: HTMLElement,
+			propertyName: "middleContent",
 		},
+
 		/**
 		 * Defines the content at the end of the bar
 		 * @type {HTMLElement[]}
@@ -75,7 +78,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  * The Bar is a container which is primarily used to hold titles, buttons and input elements
  * and its design and functionality is the basis for page headers and footers.
- * The component consists of three areas to hold its content - startContent, middleContent and endContent.
+ * The component consists of three areas to hold its content - startContent slot, default slot and endContent slot.
  * It has the capability to center content, such as a title, while having other components on the left and right side.
  *
  * <h3>Usage</h3>
@@ -84,7 +87,7 @@ const metadata = {
  * <b>Note:</b> Do not place a Bar inside another Bar or inside any bar-like component. Doing so may cause unpredictable behavior.
  *
  * <h3>Responsive Behavior</h3>
- * The middleContent will be centered in the available space between the startContent and the endContent areas,
+ * The default slot will be centered in the available space between the startContent and the endContent areas,
  * therefore it might not always be centered in the entire bar.
  *
  * <h3>CSS Shadow Parts</h3>

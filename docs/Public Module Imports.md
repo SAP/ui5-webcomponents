@@ -53,7 +53,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Multi ComboBox Item      | `ui5-mcb-item`           | comes with `ui5-multi-combobox`                            |
 | Panel                    | `ui5-panel`              | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`            | `import "@ui5/webcomponents/dist/Popover.js";`             |
-| Radio Button             | `ui5-radiobutton`        | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Radio Button             | `ui5-radio-button`       | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
 | Range Slider             | `ui5-range-slider`       | `import "@ui5/webcomponents/dist/RangeSlider.js";`         |
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
@@ -75,7 +75,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | TimePicker               | `ui5-time-picker`        | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Title                    | `ui5-title`              | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`              | `import "@ui5/webcomponents/dist/Toast.js";`               |
-| Toggle Button            | `ui5-toggle-button`       | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Toggle Button            | `ui5-toggle-button`      | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 | Tree                     | `ui5-tree`               | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`          | comes with `ui5-tree`                                      |
 
@@ -120,7 +120,7 @@ However, if you need to submit forms, you can import the module above and it wil
 - `ui5-input`
 - `ui5-textarea`
 - `ui5-checkbox`
-- `ui5-radiobutton`
+- `ui5-radio-button`
 - `ui5-date-picker`
 - `ui5-select`
 
