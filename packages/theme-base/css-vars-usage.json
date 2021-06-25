@@ -177,6 +177,7 @@
   "--sapList_Hover_SelectionBackground",
   "--sapList_SelectionBackgroundColor",
   "--sapList_SelectionBorderColor",
+  "--sapList_TableGroupHeaderBackground",
   "--sapList_TableGroupHeaderBorderColor",
   "--sapList_TableGroupHeaderTextColor",
   "--sapList_TextColor",

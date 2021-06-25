@@ -33,10 +33,18 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
 		/**
-		 * Defines the mode of the row (None, SingleSelect, MultiSelect).
+		 * Defines the mode of the row
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>MultiSelect</code></li>
+		 * </ul>
 		 * @type {TableMode}
 		 * @defaultvalue "None"
-		 * @since 1.0.0-rc.15
 		 * @private
 		 */
 		mode: {
@@ -75,7 +83,7 @@ const metadata = {
  * <br>
  * The <code>ui5-table-group-row</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li>group-row - Used to style the native <code>tr</code> element</li>
+ * <li>group-row - Used to style the native <code>tr</code> tag element.</li>
  * </ul>
  *
  * @constructor
@@ -83,6 +91,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableGroupRow
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-group-row
+ * @since 1.0.0-rc.17
  * @public
  */
 class TableGroupRow extends UI5Element {
