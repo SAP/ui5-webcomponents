@@ -101,6 +101,11 @@ const metadata = {
 		_busy: {
 			type: Boolean,
 		},
+		_ariaPosition: {
+			type: String,
+			defaultValue: "",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -341,11 +346,12 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.cells.map((cell, index) => {
+		let ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {

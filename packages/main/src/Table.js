@@ -18,6 +18,7 @@ import {
 	LOAD_MORE_TEXT,
 	ARIA_LABEL_SELECT_ALL_CHECKBOX,
 	TABLE_HEADER_ROW_TEXT,
+	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -433,13 +434,15 @@ class Table extends UI5Element {
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
+		const rowsCount = this.rows.length;
 
-		this.rows.forEach(row => {
+		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
 				row._columnsInfo = columnSettings;
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
+			row._ariaPosition = this.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
