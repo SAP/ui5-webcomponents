@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
 import TableMode from "./types/TableMode.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Texts
 import {
@@ -59,7 +59,7 @@ const metadata = {
 			defaultValue: "",
 			noAttribute: true,
 		},
-	}
+	},
 };
 
 /**
@@ -127,7 +127,7 @@ class TableGroupRow extends UI5Element {
 		return count;
 	}
 
-	onBeforeRendering () {
+	onBeforeRendering() {
 		if (!this._columnsInfo || this._columnsInfo.length === 0) {
 			return;
 		}

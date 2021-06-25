@@ -346,7 +346,7 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		let ariaLabel = this.cells.map((cell, index) => {
+		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
