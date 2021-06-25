@@ -502,8 +502,10 @@ class StepInput extends UI5Element {
 	}
 
 	_fireChangeEvent() {
-		this._previousValue = this.value;
-		this.fireEvent("change", { value: this.value });
+		if (this._previousValue !== this.value) {
+			this._previousValue = this.value;
+			this.fireEvent("change", { value: this.value });
+		}
 	}
 
 	/**
