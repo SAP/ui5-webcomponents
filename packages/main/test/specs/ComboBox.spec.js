@@ -360,6 +360,6 @@ describe("Accessibility", () => {
 
 		focusBtn.click();
 
-		assert.ok(combo["focused"], "ComboBox to be focused");
+		assert.ok(combo.getProperty("focused"), "ComboBox to be focused");
 	});
 });
