@@ -23,6 +23,15 @@ const metadata = {
 		 * @public
 		 */
 		additionalText: { type: String },
+		/**
+		 * The group this item belongs to
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.12
+		 * @public
+		 */
+		group: { type: String },
 	},
 };
 

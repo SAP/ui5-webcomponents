@@ -47,6 +47,7 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
+import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 
 /**
  * @public
@@ -242,6 +243,18 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
+			type: HTMLElement,
+			invalidateOnChildChange: true,
+		},
+
+		/**
+		 * Defines the component items.
+		 *
+		 * @type {sap.ui.webcomponents.main.IComboBoxGroupItem}
+		 * @slot groupItems
+		 * @public
+		 */
+			"groupItem": {
 			type: HTMLElement,
 			invalidateOnChildChange: true,
 		},
@@ -650,7 +663,14 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		let itemsToFilter = this.items.filter(item => item.nodeName === "UI5-CB-ITEM");
+		let filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+
+		// Returns true if there is a filtered suggestion item for this group item
+		let matchItemWithGroupItem = (item) => item.nodeName === "UI5-CB-GROUP-ITEM" &&
+			filteredItems.some(filteredItem => filteredItem.getAttribute("group") === item.getAttribute("name"));
+
+		return this.items.filter((item) => matchItemWithGroupItem(item) || filteredItems.some((m, i, filteredItems) => filteredItems.indexOf(item) !== -1));
 	}
 
 	_autoCompleteValue(current) {
