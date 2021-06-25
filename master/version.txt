@@ -1,5 +1,11 @@
-commit 92c6799ccea16e7f8bd76360aff1fe46a2e3e8b5
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 23 17:02:03 2021 +0300
+commit 62977d0efc3fea7172c58346db4fce1381b81496
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Jun 25 13:11:05 2021 +0300
 
-    chore: upgrade serve (#3463)
+    fix(ui5-flexible-column-layout): correct columns display (#3444)
+    
+    Sometimes timeout that adds ui5-fcl-column--hidden is executed when the calculations are already done. Executing the timeout callback later causes visual issue where column is hidden when it should be displayed.
+    
+    Now, timeout is replace with listener for transionend so if it is no longer needed to be removed.
+    
+    Fixes: #3425
