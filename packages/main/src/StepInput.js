@@ -556,11 +556,16 @@ class StepInput extends UI5Element {
 
 	_onInputChange(event) {
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
-		if (this.value !== this._previousValue || this.value !== inputValue) {
+		if (!isNaN(inputValue) && (this.value !== this._previousValue || this.value !== inputValue)) {
 			this.value = inputValue;
 			this._validate();
 			this._setButtonState();
 			this._fireChangeEvent();
+		} else if (isNaN(inputValue)) {
+			this.value = 0;
+			this._setButtonState();
+			this._fireChangeEvent();
+			this.input.value = 0;
 		}
 	}
 
