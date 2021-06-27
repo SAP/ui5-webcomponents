@@ -1,11 +1,12 @@
-import SuggestionItem from "./SuggestionGroupItem";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-cb-group-item",
-	properties: /** @lends  sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	properties: /** @lends  sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-suggestion-group-item</code>.
 		 *
@@ -13,13 +14,13 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		name: {
+		text: {
 			type: String,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	slots: /** @lends  sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
 	},
-	events: /** @lends  sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	events: /** @lends  sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
 	},
 };
 
@@ -33,24 +34,23 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ComboBoxGroupItem
  * @extends UI5Element
  * @tagname ui5-cb-group-item
- * @implements sap.ui.webcomponents.main.ISuggestionGroupItem
  * @public
  * @since 1.0.0-rc.15
  */
-class ComboBoxGroupItem extends SuggestionItem {
+class ComboBoxGroupItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get dependencies() {
 		return [
-			SuggestionItem,
+			GroupHeaderListItem,
 		];
 	}
 
 	/**
 	 * Indicates the "grouping" nature of the component
-	 * to avoid tag name checks tag name to diferenciate from the standard suggestion item.
+	 * to avoid tag name and to be diferenciated from the standard suggestion item.
 	 * @protected
 	 */
 	get groupItem() {

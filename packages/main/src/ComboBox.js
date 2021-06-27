@@ -254,7 +254,7 @@ const metadata = {
 		 * @slot groupItems
 		 * @public
 		 */
-			"groupItem": {
+		"groupItem": {
 			type: HTMLElement,
 			invalidateOnChildChange: true,
 		},
@@ -610,11 +610,18 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems[indexOfItem].focused = true;
-		this.filterValue = this._filteredItems[indexOfItem].text;
+		this.filterValue = this._filteredItems[indexOfItem].nodeName === "UI5-CB-ITEM" ? this._filteredItems[indexOfItem].text : this._tempFilterValue;
 		this._isKeyNavigation = true;
 		this._itemFocused = true;
-		this.fireEvent("input");
 
+		// Removing the focus from the input before onBefore rendering.
+		// Avoids focusing race condition between the input & the first combobox group-item.
+		if (this._filteredItems[indexOfItem].nodeName !== "UI5-CB-ITEM") {
+			this.focused = indexOfItem === 0 ? false : this.focused;
+			return;
+		}
+
+		this.fireEvent("input");
 		this.fireEvent("selection-change", {
 			item: this._filteredItems[indexOfItem],
 		});
@@ -663,17 +670,40 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		let itemsToFilter = this.items.filter(item => item.nodeName === "UI5-CB-ITEM");
-		let filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+		const itemsToFilter = this.items.filter(item => item.nodeName === "UI5-CB-ITEM");
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
 
-		// Returns true if there is a filtered suggestion item for this group item
-		let matchItemWithGroupItem = (item) => item.nodeName === "UI5-CB-GROUP-ITEM" &&
-			filteredItems.some(filteredItem => filteredItem.getAttribute("group") === item.getAttribute("name"));
+		return this.items.filter((item, idx, allItems) => ComboBox._filterGroupItems(item, idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
+	}
 
-		return this.items.filter((item) => matchItemWithGroupItem(item) || filteredItems.some((m, i, filteredItems) => filteredItems.indexOf(item) !== -1));
+	/**
+	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
+	 *
+	 * @private
+	 */
+	static _filterGroupItems(item, idx, allItems, filteredItems) {
+		if (item.nodeName === "UI5-CB-GROUP-ITEM") {
+			let groupHasFilteredItems;
+			let nextItemIdx = ++idx;
+
+			while (allItems[nextItemIdx] && allItems[nextItemIdx].nodeName === "UI5-CB-ITEM" && !groupHasFilteredItems) {
+				groupHasFilteredItems = filteredItems.indexOf(allItems[nextItemIdx]) !== -1;
+				nextItemIdx++;
+			}
+
+			return groupHasFilteredItems;
+		}
 	}
 
 	_autoCompleteValue(current) {
+		const currentlyFocusedItem = this.items.find(item => item.focused === true);
+
+		if (currentlyFocusedItem && currentlyFocusedItem.nodeName !== "UI5-CB-ITEM") {
+			this._tempValue = this._tempFilterValue;
+
+			return;
+		}
+
 		const currentValue = current;
 		const matchingItems = this._startsWithMatchingItems(currentValue);
 		const selectionValue = this._tempFilterValue ? this._tempFilterValue : currentValue;
@@ -700,9 +730,11 @@ class ComboBox extends UI5Element {
 	}
 
 	_selectMatchingItem() {
-		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = (item.text === this._tempValue);
+		const currentlyFocusedItem = this.items.find(item => item.focused === true);
+		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.nodeName !== "UI5-CB-ITEM";
 
+		this._filteredItems = this._filteredItems.map(item => {
+			item.selected = item.nodeName === "UI5-CB-ITEM" && (item.text === this._tempValue) && !shouldSelectionBeCleared;
 			return item;
 		});
 	}
@@ -735,8 +767,7 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems.map(item => {
-			item.selected = (item === listItem.mappedItem);
-
+			item.selected = (item === listItem.mappedItem && item.nodeName === "UI5-CB-ITEM");
 			return item;
 		});
 
@@ -841,6 +872,7 @@ class ComboBox extends UI5Element {
 			Button,
 			StandardListItem,
 			Popover,
+			ComboBoxGroupItem,
 		];
 	}
 
