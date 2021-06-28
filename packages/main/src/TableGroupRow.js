@@ -91,7 +91,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableGroupRow
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-group-row
- * @since 1.0.0-rc.17
+ * @since 1.0.0-rc.15
  * @public
  */
 class TableGroupRow extends UI5Element {
