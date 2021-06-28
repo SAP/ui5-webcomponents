@@ -222,7 +222,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible role the list.
+		 * Defines the accessible role of the component.
 		 * <br><br>
 		 * <b>Note:</b> If you use notification list items,
 		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
