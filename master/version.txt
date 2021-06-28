@@ -1,11 +1,8 @@
-commit 62977d0efc3fea7172c58346db4fce1381b81496
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jun 25 13:11:05 2021 +0300
+commit d85561a8fd5bb2e679e1f734c96504b6b2912b1e
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Jun 28 16:46:06 2021 +0300
 
-    fix(ui5-flexible-column-layout): correct columns display (#3444)
+    fix(ui5-combobox): enable setting value programatically (#3253)
     
-    Sometimes timeout that adds ui5-fcl-column--hidden is executed when the calculations are already done. Executing the timeout callback later causes visual issue where column is hidden when it should be displayed.
-    
-    Now, timeout is replace with listener for transionend so if it is no longer needed to be removed.
-    
-    Fixes: #3425
+    BREAKING CHANGE: filter value property is removed.
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2233
