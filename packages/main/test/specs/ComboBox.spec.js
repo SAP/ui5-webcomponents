@@ -380,7 +380,10 @@ describe("Grouping", () => {
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		let groupItem;
 
-		input.keys("al");
+		input.keys("a");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
 		input.keys("ArrowDown");
 		input.keys("ArrowDown");
 		input.keys("ArrowDown");
@@ -388,14 +391,16 @@ describe("Grouping", () => {
 		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[1];
 
 		assert.strictEqual(groupItem.getProperty("focused"), true, "The second group header should be focused");
-		assert.strictEqual(combo.getProperty("filterValue"), "al", "Filter value should be the initial one");
-		assert.strictEqual(combo.getProperty("_tempValue"), "al", "Temp value should be reset to the initial filter value - no autocomplete");
+		assert.strictEqual(combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
+		assert.strictEqual(combo.getProperty("_tempValue"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
 });
 
 describe("Accessibility", () => {
 
 	it ("Announce item on selection", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
 		const input = combo.shadow$("#ui5-combobox-input");
