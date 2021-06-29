@@ -1,8 +1,19 @@
-commit d85561a8fd5bb2e679e1f734c96504b6b2912b1e
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Jun 28 16:46:06 2021 +0300
+commit 351d289c477ab72eff9e48098276417e5d28f536
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Tue Jun 29 11:50:17 2021 +0300
 
-    fix(ui5-combobox): enable setting value programatically (#3253)
+    fix(ui5-carousel): enhance public api (#3360)
     
-    BREAKING CHANGE: filter value property is removed.
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2233
+    Part of #3107
+    
+    New features:
+    Added "visibleItemsIndices" public getter returning an array
+    Added "navigateTo" method that navigates to an item
+    
+    BREAKING_CHANGE:
+    
+    selectedIndex property is deprecated
+    infiniteScrollOffset property is deprecated
+    load-more event is deprecated
+    
+    Co-authored-by: Georgi Minkov <georgi.minkov@sap.com>

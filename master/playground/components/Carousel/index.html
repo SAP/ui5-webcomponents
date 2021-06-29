@@ -296,8 +296,6 @@
       
     
       
-    
-      
         
       
     
@@ -335,8 +333,6 @@
             
               
               <ul class="navigation-list-child-list ">
-                
-                  
                 
                   
                 
@@ -1069,8 +1065,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -1271,8 +1265,6 @@
             
               
               <ul class="navigation-list-child-list  visible">
-                
-                  
                 
                   
                 
@@ -2600,16 +2592,16 @@
 </section>
 
 <section>
-	<h3>Carousel With Arrow Placement, SelectedIndex and Cyclic</h3>
+	<h3>Carousel With Arrow Placement and Cyclic</h3>
 
 	<div class="snippet">
-		<ui5-carousel arrows-placement="Navigation" selected-index="2" cyclic>
+		<ui5-carousel arrows-placement="Navigation" cyclic>
 			<img src="../../../assets/images/sample1.jpg" alt="Landscape 1">
 			<img src="../../../assets/images/sample2.jpg" alt="Landscape 2">
 			<img src="../../../assets/images/sample3.jpg" alt="Bulb">
 		</ui5-carousel>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-carousel</span> <span class="na">arrows-placement=</span><span class="s">"Navigation"</span> <span class="na">selected-index=</span><span class="s">"2"</span> <span class="na">cyclic</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-carousel</span> <span class="na">arrows-placement=</span><span class="s">"Navigation"</span> <span class="na">cyclic</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"../../../assets/images/sample1.jpg"</span> <span class="na">alt=</span><span class="s">"Landscape 1"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"../../../assets/images/sample2.jpg"</span> <span class="na">alt=</span><span class="s">"Landscape 2"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"../../../assets/images/sample3.jpg"</span> <span class="na">alt=</span><span class="s">"Bulb"</span><span class="nt">&gt;</span>
@@ -2704,19 +2696,6 @@
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          infiniteScrollOffset
-                            <br>
-                            <code>infinite-scroll-offset</code>
-                        </div>
-                        <div class="cell api-table-content-cell">Integer</div>
-                        <div class="cell api-table-content-cell">1</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines when the <code>load-more</code> event is fired. If not applied the event will not be fired.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           itemsPerPageL
                             <br>
                             <code>items-per-page-l</code>
@@ -2727,7 +2706,7 @@
                             Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           itemsPerPageM
                             <br>
@@ -2739,7 +2718,7 @@
                             Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           itemsPerPageS
                             <br>
@@ -2749,18 +2728,6 @@
                         <div class="cell api-table-content-cell">1</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          selectedIndex
-                            <br>
-                            <code>selected-index</code>
-                        </div>
-                        <div class="cell api-table-content-cell">Integer</div>
-                        <div class="cell api-table-content-cell">0</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the index of the initially selected item.
                         </div>
                       </div>
             
@@ -2798,17 +2765,9 @@
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">load-more</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired for the last items of the component if it is scrolled and the direction of scrolling is to the end. The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
-                            <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">navigate</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired whenever the <code>selectedIndex</code> changes due to user interaction, when the user clicks on the navigation arrows or while resizing, based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+                        Fired whenever the page changes due to user interaction, when the user clicks on the navigation arrows or while resizing, based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.7</div>
                         </div>
                       </div>
@@ -2816,11 +2775,28 @@
                         <tr class="api-table-event-param">
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">selectedIndex</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Integer <br/> <strong class="api-table-event-description bold">description:</strong> the current <code>selectedIndex</code>.</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Integer <br/> <strong class="api-table-event-description bold">description:</strong> the current selected index</div>
                           </div>
                         </tr>
                   </div>
             
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">navigateTo</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Changes the currently displayed page.</div>
+                      </div>
+            
+                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">itemIndex</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Integer <br/> <strong class="api-table-event-description bold">description:</strong> The index of the target page</div>
+                  </div>
             
           </section>
         </section>
