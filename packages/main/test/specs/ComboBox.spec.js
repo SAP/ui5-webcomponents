@@ -412,6 +412,8 @@ describe("Grouping", () => {
 	});
 
 	it ("Tests group item focusability", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
 		const combo = $("#combo-grouping");
 		const input = combo.shadow$("#ui5-combobox-input");
 		const arrow = combo.shadow$("[input-icon]");
@@ -447,7 +449,7 @@ describe("Grouping", () => {
 
 		assert.strictEqual(groupItem.getProperty("focused"), true, "The second group header should be focused");
 		assert.strictEqual(combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
-		assert.strictEqual(combo.getProperty("_tempValue"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
+		assert.strictEqual(combo.getProperty("value"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
 });
 

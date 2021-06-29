@@ -374,7 +374,6 @@ class ComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._initialRendering = true;
 		this._itemFocused = false;
-		this._tempFilterValue = "";
 		this._selectionChanged = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -389,6 +388,12 @@ class ComboBox extends UI5Element {
 		}
 
 		this._selectMatchingItem();
+
+		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
+			this.focused = false;
+		} else if (this.shadowRoot.activeElement) {
+			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
+		}
 
 		this._initialRendering = false;
 		this._isKeyNavigation = false;
@@ -406,7 +411,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this._itemFocused = false;
-
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
 	}
@@ -438,7 +442,6 @@ class ComboBox extends UI5Element {
 	_afterClosePopover() {
 		this._iconPressed = false;
 		this._filteredItems = this.items;
-		this._tempFilterValue = "";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -508,7 +511,6 @@ class ComboBox extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		this._tempFilterValue = value;
 		this._filteredItems = this._filterItems(value);
 
 		this.value = value;
@@ -520,7 +522,7 @@ class ComboBox extends UI5Element {
 		if (this._autocomplete && value !== "") {
 			const item = this._autoCompleteValue(value);
 
-			if (!this._selectionChanged && (item && !item.selected)) {
+			if (!this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent("selection-change", {
 					item,
 				});
@@ -556,7 +558,7 @@ class ComboBox extends UI5Element {
 		});
 	}
 
-	handleArrowKeyPress(event) {
+	async handleArrowKeyPress(event) {
 		if (this.readonly || !this._filteredItems.length) {
 			return;
 		}
@@ -578,27 +580,23 @@ class ComboBox extends UI5Element {
 
 		indexOfItem += isArrowDown ? 1 : -1;
 		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
+		this._filteredItems[indexOfItem].focused = true;
 
 		if (this.responsivePopover.opened) {
 			this.announceSelectedItem(indexOfItem);
 		}
 
-		this._filteredItems[indexOfItem].focused = true;
-		this._filteredItems[indexOfItem].selected = true;
+		this.value = this._filteredItems[indexOfItem].isGroupItem ? this.filterValue : this._filteredItems[indexOfItem].text;
 
-		this.value = this._filteredItems[indexOfItem].isGroupItem ? this._tempFilterValue : this._filteredItems[indexOfItem].text;
+		this._isKeyNavigation = true;
+		this._itemFocused = true;
+		this._selectionChanged = true;
 
-		// Removing the focus from the input before onBefore rendering.
-		// Avoids focusing race condition between the input & the first combobox group-item.
 		if (this._filteredItems[indexOfItem].isGroupItem) {
-			this.focused = indexOfItem === 0 ? false : this.focused;
 			return;
 		}
 
-		this.fireEvent("input");
-		this.fireEvent("selection-change", {
-			item: this._filteredItems[indexOfItem],
-		});
+		this._filteredItems[indexOfItem].selected = true;
 
 		// autocomplete
 		const item = this._autoCompleteValue(this.value);
@@ -609,12 +607,8 @@ class ComboBox extends UI5Element {
 			});
 		}
 
-		this._isKeyNavigation = true;
-		this._itemFocused = true;
 		this.fireEvent("input");
 		this._fireChangeEvent();
-
-		this._selectionChanged = true;
 	}
 
 	_keydown(event) {
@@ -685,8 +679,7 @@ class ComboBox extends UI5Element {
 		const currentlyFocusedItem = this.items.find(item => item.focused === true);
 
 		if (currentlyFocusedItem && currentlyFocusedItem.isGroupItem) {
-			this._tempValue = this._tempFilterValue;
-
+			this.value = this.filterValue;
 			return;
 		}
 

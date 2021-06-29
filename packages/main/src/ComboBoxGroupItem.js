@@ -17,6 +17,13 @@ const metadata = {
 		text: {
 			type: String,
 		},
+		/**
+		 * Indicates whether the input is focssed
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
 	},
