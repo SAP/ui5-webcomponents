@@ -1,19 +1,5 @@
-commit 351d289c477ab72eff9e48098276417e5d28f536
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Tue Jun 29 11:50:17 2021 +0300
+commit 19b0a5b6aaae0a2611e4810fc3a58a7b935af9b7
+Author: Sebastian Wolf <sebastian.wolf@sap.com>
+Date:   Tue Jun 29 12:19:10 2021 +0200
 
-    fix(ui5-carousel): enhance public api (#3360)
-    
-    Part of #3107
-    
-    New features:
-    Added "visibleItemsIndices" public getter returning an array
-    Added "navigateTo" method that navigates to an item
-    
-    BREAKING_CHANGE:
-    
-    selectedIndex property is deprecated
-    infiniteScrollOffset property is deprecated
-    load-more event is deprecated
-    
-    Co-authored-by: Georgi Minkov <georgi.minkov@sap.com>
+    chore: use GitHub license template (#3479)
