@@ -8,7 +8,7 @@ const metadata = {
 	tag: "ui5-cb-group-item",
 	properties: /** @lends  sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-suggestion-group-item</code>.
+		 * Defines the text of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -27,7 +27,7 @@ const metadata = {
 /**
  * @class
  * The <code>ui5-combobox-group-item</code> is type of suggestion item,
- * that can be used to split the <code>ui5-input</code> suggestions into groups.
+ * that can be used to split the <code>ui5-combobox</code> suggestions into groups.
  *
  * @constructor
  * @author SAP SE
@@ -49,11 +49,10 @@ class ComboBoxGroupItem extends UI5Element {
 	}
 
 	/**
-	 * Indicates the "grouping" nature of the component
-	 * to avoid tag name and to be diferenciated from the standard suggestion item.
+	 * Used to avoid tag name checks
 	 * @protected
 	 */
-	get groupItem() {
+	get isGroupItem() {
 		return true;
 	}
 }

@@ -248,18 +248,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the component items.
-		 *
-		 * @type {sap.ui.webcomponents.main.IComboBoxGroupItem}
-		 * @slot groupItems
-		 * @public
-		 */
-		"groupItem": {
-			type: HTMLElement,
-			invalidateOnChildChange: true,
-		},
-
-		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
@@ -356,7 +344,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ComboBox
  * @extends UI5Element
  * @tagname ui5-combobox
- * @appenddocs ComboBoxItem
+ * @appenddocs ComboBoxItem ComboBoxGroupItem
  * @public
  * @since 1.0.0-rc.6
  */
@@ -610,13 +598,12 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems[indexOfItem].focused = true;
-		this.filterValue = this._filteredItems[indexOfItem].nodeName === "UI5-CB-ITEM" ? this._filteredItems[indexOfItem].text : this._tempFilterValue;
-		this._isKeyNavigation = true;
+		this.filterValue = this._filteredItems[indexOfItem].isGroupItem ? this._tempFilterValue: this._filteredItems[indexOfItem].text;
 		this._itemFocused = true;
 
 		// Removing the focus from the input before onBefore rendering.
 		// Avoids focusing race condition between the input & the first combobox group-item.
-		if (this._filteredItems[indexOfItem].nodeName !== "UI5-CB-ITEM") {
+		if (this._filteredItems[indexOfItem].isGroupItem) {
 			this.focused = indexOfItem === 0 ? false : this.focused;
 			return;
 		}
@@ -670,10 +657,10 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		const itemsToFilter = this.items.filter(item => item.nodeName === "UI5-CB-ITEM");
+		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
 		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
 
-		return this.items.filter((item, idx, allItems) => ComboBox._filterGroupItems(item, idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
+		return this.items.filter((item, idx, allItems) => ComboBox._filterGroupItems(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
 	}
 
 	/**
@@ -682,13 +669,12 @@ class ComboBox extends UI5Element {
 	 * @private
 	 */
 	static _filterGroupItems(item, idx, allItems, filteredItems) {
-		if (item.nodeName === "UI5-CB-GROUP-ITEM") {
+		if (item.isGroupItem) {
 			let groupHasFilteredItems;
-			let nextItemIdx = ++idx;
 
-			while (allItems[nextItemIdx] && allItems[nextItemIdx].nodeName === "UI5-CB-ITEM" && !groupHasFilteredItems) {
-				groupHasFilteredItems = filteredItems.indexOf(allItems[nextItemIdx]) !== -1;
-				nextItemIdx++;
+			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
+				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
+				idx++;
 			}
 
 			return groupHasFilteredItems;
@@ -698,7 +684,7 @@ class ComboBox extends UI5Element {
 	_autoCompleteValue(current) {
 		const currentlyFocusedItem = this.items.find(item => item.focused === true);
 
-		if (currentlyFocusedItem && currentlyFocusedItem.nodeName !== "UI5-CB-ITEM") {
+		if (currentlyFocusedItem && currentlyFocusedItem.isGroupItem) {
 			this._tempValue = this._tempFilterValue;
 
 			return;
@@ -730,11 +716,11 @@ class ComboBox extends UI5Element {
 	}
 
 	_selectMatchingItem() {
-		const currentlyFocusedItem = this.items.find(item => item.focused === true);
-		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.nodeName !== "UI5-CB-ITEM";
+		const currentlyFocusedItem = this.items.find(item => item.focused);
+		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = item.nodeName === "UI5-CB-ITEM" && (item.text === this._tempValue) && !shouldSelectionBeCleared;
+			item.selected = !item.isGroupItem && (item.text === this._tempValue) && !shouldSelectionBeCleared;
 			return item;
 		});
 	}
@@ -767,7 +753,7 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems.map(item => {
-			item.selected = (item === listItem.mappedItem && item.nodeName === "UI5-CB-ITEM");
+			item.selected = (item === listItem.mappedItem && !item.isGroupItem);
 			return item;
 		});
 
