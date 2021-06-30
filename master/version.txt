@@ -1,5 +1,7 @@
-commit 19b0a5b6aaae0a2611e4810fc3a58a7b935af9b7
-Author: Sebastian Wolf <sebastian.wolf@sap.com>
-Date:   Tue Jun 29 12:19:10 2021 +0200
+commit fd60e90ead65a9cbbe43efa9952ce2ba0eb3de46
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 30 11:01:22 2021 +0300
 
-    chore: use GitHub license template (#3479)
+    fix(ui5-avatar-group): deprecate avatarSize property (#3229)
+    
+    BREAKING_CHANGE: avatarSize property of ui5-avatar-group has been deprecated. You can set the size property to every avatar that you pass in the default slot
