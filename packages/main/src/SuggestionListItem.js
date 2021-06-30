@@ -63,7 +63,7 @@ class SuggestionListItem extends StandardListItem {
 	}
 
 	get effectiveTitle() {
-		return this.titleText.map(el => el.textContent).join("");
+		return this.titleText.filter(node => node.nodeType !== Node.COMMENT_NODE).map(el => el.textContent).join("");
 	}
 
 	get hasDescription() {

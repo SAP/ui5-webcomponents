@@ -24,6 +24,6 @@ td {
 	padding-left: 0;
 }
 
-::slotted(ui5-label) {
+::slotted([ui5-label]) {
 	color: inherit;
 }

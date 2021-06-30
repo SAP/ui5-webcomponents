@@ -26,30 +26,6 @@ describe("avatar-group rendering", () => {
 		assert.ok(avatarGroupGroup, "AvatarGroup mode 'Group' rendered");
 	});
 
-	it("tests if _size attribute is correctly set to avatars", () => {
-		const avatarGroup = browser.$("#avatar-group-individual");
-		const avatars = browser.$$("#avatar-group-individual ui5-avatar");
-
-		const avatarGroupSize = avatarGroup.getAttribute("avatar-size");
-
-		avatars.forEach(avatar => {
-			const avatarSize = avatar.getAttribute("_size");
-			assert.strictEqual(avatarSize, avatarGroupSize, "AvatarGroup avatar-size property is assigned to avatars _size property");
-		});
-	});
-
-	it("tests change of avatar-size attribute triggers change in avatar _size attribute", () => {
-		const avatarGroup = browser.$("#avatar-group-individual");
-		const avatars = browser.$$("#avatar-group-group ui5-avatar");
-		const newAvatarSize = "M";
-
-		avatarGroup.setAttribute("avatar-size", newAvatarSize)
-
-		avatars.forEach(avatar => {
-			const avatarSize = avatar.getAttribute("_size");
-			assert.strictEqual(avatarSize, newAvatarSize, "AvatarGroup avatar-size property is assigned to avatars _size property");
-		});
-	});
 
 	it("tests if _background-design attribute is automatically set to avatars", () => {
 		const avatars = browser.$$("#avatar-group-group ui5-avatar");
@@ -152,8 +128,6 @@ describe("avatar-group rendering", () => {
 		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Avatar Group type Group");
 		avatarGroupTypeGroup.keys('Space');
 		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Avatar Group type Group");
-
-
 	});
 });
 

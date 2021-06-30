@@ -43,7 +43,7 @@
 	color: var(--sapLinkColor);
 }
 
-:host([wrap]) .ui5-link-root {
+:host([wrapping-type="Normal"]) .ui5-link-root {
 	white-space: normal;
 	word-wrap: break-word;
 }

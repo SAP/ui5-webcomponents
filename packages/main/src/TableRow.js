@@ -101,6 +101,11 @@ const metadata = {
 		_busy: {
 			type: Boolean,
 		},
+		_ariaPosition: {
+			type: String,
+			defaultValue: "",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -182,7 +187,7 @@ class TableRow extends UI5Element {
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
-		if (isSpace(event)) {
+		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
 
@@ -341,11 +346,12 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.cells.map((cell, index) => {
+		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {

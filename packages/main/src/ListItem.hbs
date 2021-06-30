@@ -60,14 +60,14 @@
 
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
-		<ui5-radiobutton
+		<ui5-radio-button
 				?disabled="{{isInactive}}"
 				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
-				?selected="{{selected}}"
+				?checked="{{selected}}"
 				@click="{{onSingleSelectionComponentPress}}">
-		</ui5-radiobutton>
+		</ui5-radio-button>
 	{{/if}}
 
 	{{#if modeMultiSelect}}
@@ -82,7 +82,7 @@
 		</ui5-checkbox>
 	{{/if}}
 
-	{{#if modeDelete}}
+	{{#if renderDeleteButton}}
 		<div class="ui5-li-deletebtn">
 			<ui5-button
 				tabindex="-1"
@@ -96,4 +96,5 @@
 			></ui5-button>
 		</div>
 	{{/if}}
+
 {{/inline}}

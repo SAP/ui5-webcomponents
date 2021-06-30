@@ -229,7 +229,7 @@ class ListItem extends ListItemBase {
 	}
 
 	/*
-	 * Called when selection components in Single (ui5-radiobutton)
+	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
 	onMultiSelectionComponentPress(event) {
@@ -303,9 +303,16 @@ class ListItem extends ListItemBase {
 	/**
 	 * Used in UploadCollectionItem
 	 */
+	get renderDeleteButton() {
+		return this.modeDelete;
+	}
+
 	get disableDeleteButton() {
 		return false;
 	}
+	/**
+	 * End
+	 */
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
