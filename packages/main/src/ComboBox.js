@@ -654,7 +654,9 @@ class ComboBox extends UI5Element {
 		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
 		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
 
-		return this.items.filter((item, idx, allItems) => ComboBox._filterGroupItems(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
+		// Return the filtered items and their group items
+		return this.items.filter((item, idx, allItems) => ComboBox._filterGroupItems(item, ++idx, allItems, filteredItems) ||
+			filteredItems.indexOf(item) !== -1);
 	}
 
 	/**
