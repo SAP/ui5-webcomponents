@@ -694,7 +694,7 @@ class ComboBox extends UI5Element {
 
 		if (this._isKeyNavigation) {
 			setTimeout(() => {
-				this.inner.setSelectionRange(0, this.value.length);
+				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
 			}, 0);
 		} else if (matchingItems.length) {
 			setTimeout(() => {
