@@ -684,7 +684,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		const matchingItems = this._startsWithMatchingItems(current);
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
 		if (matchingItems.length) {
 			this.value = matchingItems[0] ? matchingItems[0].text : current;
