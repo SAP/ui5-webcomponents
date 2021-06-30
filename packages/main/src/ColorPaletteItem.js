@@ -30,15 +30,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @type {String}
-		 * @public
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Defines the tab-index of the element, helper information for the ItemNavigation.
 		 * @private
 		 */

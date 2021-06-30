@@ -29,7 +29,8 @@ import radioButtonCss from "./generated/themes/RadioButton.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-radiobutton",
+	tag: "ui5-radio-button",
+	altTag: "ui5-radiobutton",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
@@ -70,6 +71,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		checked: {
 			type: Boolean,
@@ -193,6 +195,7 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		change: {},
 	},
@@ -203,17 +206,17 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options.
- * When a <code>ui5-radiobutton</code> is selected by the user, the
+ * The <code>ui5-radio-button</code> component enables users to select a single option from a set of options.
+ * When a <code>ui5-radio-button</code> is selected by the user, the
  * <code>change</code> event is fired.
- * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
+ * When a <code>ui5-radio-button</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
- * <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
+ * <b>Note:</b> If <code>ui5-radio-button</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
- * Once the <code>ui5-radiobutton</code> is on focus, it might be selected by pressing the Space and Enter keys.
+ * Once the <code>ui5-radio-button</code> is on focus, it might be selected by pressing the Space and Enter keys.
  * <br>
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
@@ -228,7 +231,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RadioButton
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-radiobutton
+ * @tagname ui5-radio-button
  * @public
  */
 class RadioButton extends UI5Element {
@@ -388,6 +391,7 @@ class RadioButton extends UI5Element {
 
 	get classes() {
 		return {
+			main: {},
 			inner: {
 				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},

@@ -497,7 +497,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.open(button);
+			this.responsivePopover.openBy(button);
 		}
 	}
 
