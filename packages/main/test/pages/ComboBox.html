@@ -197,7 +197,7 @@
 
     <script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
-			const { filterValue } = event.target;
+			const { value } = event.target;
 
 			// set busy state
 			event.target.loading = true;
@@ -238,8 +238,12 @@
 		});
 
 		document.getElementById("input-cb").addEventListener("ui5-input", function(event) {
-			document.getElementById("input-placeholder").innerHTML = event.target.filterValue;
+			document.getElementById("input-placeholder").innerHTML = event.target.value;
 			document.getElementById("input-count").innerHTML = parseInt(document.getElementById("input-count").innerHTML) + 1;
+		});
+
+		document.getElementById("value-set-btn").addEventListener("click", function (event) {
+			document.getElementById("combo").value = "new value";
 		});
 	</script>
 
