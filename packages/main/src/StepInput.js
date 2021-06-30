@@ -555,17 +555,15 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputChange(event) {
+		if (this.input.value === "") {
+			this.input.value = this.min || 0;
+		}
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
-		if (!Number.isNaN(inputValue) && (this.value !== this._previousValue || this.value !== inputValue)) {
+		if (this.value !== this._previousValue || this.value !== inputValue) {
 			this.value = inputValue;
 			this._validate();
 			this._setButtonState();
 			this._fireChangeEvent();
-		} else if (Number.isNaN(inputValue)) {
-			this.value = 0;
-			this._setButtonState();
-			this._fireChangeEvent();
-			this.input.value = 0;
 		}
 	}
 
