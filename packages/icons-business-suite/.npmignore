@@ -1,0 +1,15 @@
+*.css
+dist/resources
+dist/test-resources
+lib/
+node_modules/
+src/
+test/
+bundle.*.js
+.eslintrc.js
+.eslintignore
+main.*js
+rollup*
+serve.json
+wdio.conf.js
+!core

@@ -9,6 +9,7 @@ Table of Contents:
  - [Fiori Package - @ui5/webcomponents-fiori](#fiori)
  - [Icons Package - @ui5/webcomponents-icons](#icons)
  - [Icons-TNT Package - @ui5/webcomponents-icons-tnt](#icons-tnt)
+ - [Icons SAP Business Suite Package - @ui5/webcomponents-icons-business-suite](#icons-business-suite)
  - [Base Package - @ui5/webcomponents-base](#base)
 
 <a name="main"></a>
@@ -242,6 +243,12 @@ To import all icons, use:
 Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future-proof:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
+
+## Icons SAP Business Suite Package (```@ui5/webcomponents-icons-business-suite```)
+<a name="icons-business-suite"></a>
+
+Same structure like the `tnt` icon collection, but shipped in `@ui5/webcomponents-icons-business-suite`.
+For a complete list of the icons in the `SAP Business Suite` collection, click [here](https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
 
 ## Base Package (```@ui5/webcomponents-base```)
 
