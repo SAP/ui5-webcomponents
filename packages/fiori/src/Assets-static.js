@@ -1,4 +1,4 @@
-// main package assets (transitively base and theme-base)
+// main package assets (transitively base and theming)
 import "@ui5/webcomponents/dist/Assets-static.js";
 
 // own fiori package assets
