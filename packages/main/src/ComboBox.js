@@ -47,6 +47,7 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
+import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 
 /**
  * @public
@@ -338,7 +339,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ComboBox
  * @extends UI5Element
  * @tagname ui5-combobox
- * @appenddocs ComboBoxItem
+ * @appenddocs ComboBoxItem ComboBoxGroupItem
  * @public
  * @since 1.0.0-rc.6
  */
@@ -373,7 +374,6 @@ class ComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._initialRendering = true;
 		this._itemFocused = false;
-		this._tempFilterValue = "";
 		this._selectionChanged = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -388,6 +388,12 @@ class ComboBox extends UI5Element {
 		}
 
 		this._selectMatchingItem();
+
+		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
+			this.focused = false;
+		} else if (this.shadowRoot.activeElement) {
+			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
+		}
 
 		this._initialRendering = false;
 		this._isKeyNavigation = false;
@@ -405,7 +411,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this._itemFocused = false;
-
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
 	}
@@ -437,7 +442,6 @@ class ComboBox extends UI5Element {
 	_afterClosePopover() {
 		this._iconPressed = false;
 		this._filteredItems = this.items;
-		this._tempFilterValue = "";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -508,6 +512,7 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems = this._filterItems(value);
+
 		this.value = value;
 		this.filterValue = value;
 
@@ -517,7 +522,7 @@ class ComboBox extends UI5Element {
 		if (this._autocomplete && value !== "") {
 			const item = this._autoCompleteValue(value);
 
-			if (!this._selectionChanged && (item && !item.selected)) {
+			if (!this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent("selection-change", {
 					item,
 				});
@@ -553,7 +558,7 @@ class ComboBox extends UI5Element {
 		});
 	}
 
-	handleArrowKeyPress(event) {
+	async handleArrowKeyPress(event) {
 		if (this.readonly || !this._filteredItems.length) {
 			return;
 		}
@@ -575,15 +580,23 @@ class ComboBox extends UI5Element {
 
 		indexOfItem += isArrowDown ? 1 : -1;
 		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
+		this._filteredItems[indexOfItem].focused = true;
 
 		if (this.responsivePopover.opened) {
 			this.announceSelectedItem(indexOfItem);
 		}
 
-		this._filteredItems[indexOfItem].focused = true;
-		this._filteredItems[indexOfItem].selected = true;
+		this.value = this._filteredItems[indexOfItem].isGroupItem ? this.filterValue : this._filteredItems[indexOfItem].text;
 
-		this.value = this._filteredItems[indexOfItem].text;
+		this._isKeyNavigation = true;
+		this._itemFocused = true;
+		this._selectionChanged = true;
+
+		if (this._filteredItems[indexOfItem].isGroupItem) {
+			return;
+		}
+
+		this._filteredItems[indexOfItem].selected = true;
 
 		// autocomplete
 		const item = this._autoCompleteValue(this.value);
@@ -594,12 +607,8 @@ class ComboBox extends UI5Element {
 			});
 		}
 
-		this._isKeyNavigation = true;
-		this._itemFocused = true;
 		this.fireEvent("input");
 		this._fireChangeEvent();
-
-		this._selectionChanged = true;
 	}
 
 	_keydown(event) {
@@ -642,11 +651,40 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+
+		// Return the filtered items and their group items
+		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
+	}
+
+	/**
+	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
+	 *
+	 * @private
+	 */
+	static _groupItemFilter(item, idx, allItems, filteredItems) {
+		if (item.isGroupItem) {
+			let groupHasFilteredItems;
+
+			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
+				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
+				idx++;
+			}
+
+			return groupHasFilteredItems;
+		}
 	}
 
 	_autoCompleteValue(current) {
-		const matchingItems = this._startsWithMatchingItems(current);
+		const currentlyFocusedItem = this.items.find(item => item.focused === true);
+
+		if (currentlyFocusedItem && currentlyFocusedItem.isGroupItem) {
+			this.value = this.filterValue;
+			return;
+		}
+
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
 		if (matchingItems.length) {
 			this.value = matchingItems[0] ? matchingItems[0].text : current;
@@ -656,7 +694,7 @@ class ComboBox extends UI5Element {
 
 		if (this._isKeyNavigation) {
 			setTimeout(() => {
-				this.inner.setSelectionRange(0, this.value.length);
+				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
 			}, 0);
 		} else if (matchingItems.length) {
 			setTimeout(() => {
@@ -670,9 +708,11 @@ class ComboBox extends UI5Element {
 	}
 
 	_selectMatchingItem() {
-		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = (item.text === this.value);
+		const currentlyFocusedItem = this.items.find(item => item.focused);
+		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 
+		this._filteredItems = this._filteredItems.map(item => {
+			item.selected = !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
 			return item;
 		});
 	}
@@ -716,8 +756,7 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems.map(item => {
-			item.selected = (item === listItem.mappedItem);
-
+			item.selected = (item === listItem.mappedItem && !item.isGroupItem);
 			return item;
 		});
 
@@ -825,6 +864,7 @@ class ComboBox extends UI5Element {
 			Button,
 			StandardListItem,
 			Popover,
+			ComboBoxGroupItem,
 		];
 	}
 
