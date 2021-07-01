@@ -2614,6 +2614,39 @@
 
 </section>
 
+<section>
+	<h3>ComboBox with Grouping of Items</h3>
+	<div class="snippet responsive-snippet">
+		<ui5-combobox placeholder="ComboBox with grouping of suggestions">
+			<ui5-cb-group-item text="A"></ui5-cb-group-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Australia"></ui5-cb-item>
+			<ui5-cb-item text="Austria"></ui5-cb-item>	
+			<ui5-cb-group-item text="B"></ui5-cb-group-item>
+			<ui5-cb-item text="Bahrain"></ui5-cb-item>
+			<ui5-cb-item text="Belgium"></ui5-cb-item>
+			<ui5-cb-item text="Brazil"></ui5-cb-item>
+			<ui5-cb-group-item text="C"></ui5-cb-group-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Chile"></ui5-cb-item>
+		</ui5-combobox>
+	</div>
+
+<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-combobox</span> <span class="na">placeholder=</span><span class="s">"ComboBox with grouping of suggestions"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-cb-group-item</span> <span class="na">text=</span><span class="s">"A"</span><span class="nt">&gt;&lt;/ui5-cb-group-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Argentina"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Australia"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Austria"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>	
+	<span class="nt">&lt;ui5-cb-group-item</span> <span class="na">text=</span><span class="s">"B"</span><span class="nt">&gt;&lt;/ui5-cb-group-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Bahrain"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Belgium"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Brazil"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-group-item</span> <span class="na">text=</span><span class="s">"C"</span><span class="nt">&gt;&lt;/ui5-cb-group-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Canada"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Chile"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span></code></pre></figure></pre>
+
+</section>
 
 <section>
 	<h3>Lazy loading</h3>
@@ -2916,6 +2949,42 @@ The <code>ui5-combobox</code> provides advanced keyboard handling.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          text
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the text of the component.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+            
+          </section>
+        </section>
+      </div>
+      <div class="api-container appended-doc">
+        <h1>ComboBoxGroupItem</h1>
+        <section class="component-description">
+          The <code>ui5-combobox-group-item</code> is type of suggestion item, that can be used to split the <code>ui5-combobox</code> suggestions into groups.
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>
