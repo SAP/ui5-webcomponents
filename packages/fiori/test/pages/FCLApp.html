@@ -28,7 +28,7 @@
 			height: 100%;
 		}
 
-		ui5-busyindicator {
+		ui5-busy-indicator {
 			display: block;
 		}
 
@@ -124,23 +124,23 @@
 			This is the best product
 		</ui5-tab>
 		<ui5-tab-separator></ui5-tab-separator>
-		<ui5-tab icon="sap-icon://menu2" text="Specification" semantic-color="Positive" additional-text="25">
+		<ui5-tab icon="sap-icon://menu2" text="Specification" design="Positive" additional-text="25">
 			Width: 100cm
 			<br>
 			Height: 200cm
 			<br>
 			Length: 500cm
 		</ui5-tab>
-		<ui5-tab icon="sap-icon://menu" text="User manual" selected semantic-color="Critical" additional-text="45">
+		<ui5-tab icon="sap-icon://menu" text="User manual" selected design="Critical" additional-text="45">
 			Read the manual
 		</ui5-tab>
-		<ui5-tab icon="sap-icon://menu2" text="Reviews" semantic-color="Negative" additional-text="15">
+		<ui5-tab icon="sap-icon://menu2" text="Reviews" design="Negative" additional-text="15">
 			<ui5-rating-indicator style="font-size: 1rem;"></ui5-rating-indicator>
 		</ui5-tab>
-		<ui5-tab icon="sap-icon://menu2" disabled text="Buy (Not available)"  semantic-color="Negative" additional-text="40">
+		<ui5-tab icon="sap-icon://menu2" disabled text="Buy (Not available)" design="Negative" additional-text="40">
 
 		</ui5-tab>
-		<ui5-tab icon="sap-icon://menu2" text="Comments" semantic-color="Neutral" additional-text="40">
+		<ui5-tab icon="sap-icon://menu2" text="Comments" design="Neutral" additional-text="40">
 			<ui5-taxtarea></ui5-taxtarea>
 		</ui5-tab>
 		<ui5-tab icon="sap-icon://menu2" text="Related products" additional-text="3">
@@ -181,13 +181,13 @@
 	id="fcl"
 >
 	<div class="column" id="startColumn" slot="startColumn">
-		<ui5-busyindicator id="startBusy">
+		<ui5-busy-indicator id="startBusy">
 			<div class="ui5-message-page">
 				<ui5-icon class="ui5-message-page-icon" name="filter"></ui5-icon>
 				<div class="ui5-message-page-title">Loading companies.</div>
 				<div class="ui5-message-page-description">Please wait...</div>
 			</div>
-		</ui5-busyindicator>
+		</ui5-busy-indicator>
 	</div>
 	<div class="column" id="midColumn" slot="midColumn"></div>
 	<div class="column" id="endColumn" slot="endColumn"></div>

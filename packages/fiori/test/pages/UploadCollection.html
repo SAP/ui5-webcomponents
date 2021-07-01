@@ -82,7 +82,7 @@
 			id="secondItem"
 			file-name=".gitignore"
 			type="Detail"
-			no-delete
+			disable-delete-button
 			upload-state="Complete"
 		>
 			<ui5-icon name="customize" slot="thumbnail"></ui5-icon>
@@ -109,6 +109,7 @@
 			id="keyboardNavigation"
 			file-name="Graph.docx"
 			type="Detail"
+			hide-delete-button
 			upload-state="Complete"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
@@ -145,12 +146,22 @@
 			id="uploadingState"
 			file-name="Laptop.jpg"
 			type="Detail"
-			no-delete
+			disable-delete-button
 			upload-state="Uploading"
 			progress="37"
 		>
 			<img src="./img/HT-1000.jpg" slot="thumbnail">
 			uploadState="Uploading"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			file-name="Laptop (2).jpg"
+			type="Detail"
+			hide-terminate-button
+			upload-state="Uploading"
+			progress="89"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			uploadState="Uploading" with hidden terminate button
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
 			id="errorState"
@@ -170,6 +181,44 @@
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 			uploadState="Ready" (default)
 		</ui5-upload-collection-item>
+	</ui5-upload-collection>
+
+	
+	<ui5-upload-collection id="uploadCollection3">
+		<div class="header" slot="header">
+			<ui5-title>Hidden buttons</ui5-title>
+		</div>
+		
+		<ui5-upload-collection-item id="uc3-default" file-name="File name">
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			Default, delete button always visible
+		</ui5-upload-collection-item>
+
+		<ui5-upload-collection-item id="uc3-default-hidden-delete" file-name="File name" hide-delete-button>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			Default, delete button hidden
+		</ui5-upload-collection-item>
+
+		<ui5-upload-collection-item id="uc3-error" file-name="File name" upload-state="Error">
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Error" with retry button visible by default
+		</ui5-upload-collection-item>
+
+		<ui5-upload-collection-item id="uc3-error-hidden-retry" file-name="File name" upload-state="Error" hide-retry-button>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Error" with hidden retry button
+		</ui5-upload-collection-item>
+
+		<ui5-upload-collection-item id="uc3-uploading" file-name="File name" upload-state="Uploading">
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Uploading" with terminate button visible by default
+		</ui5-upload-collection-item>
+
+		<ui5-upload-collection-item id="uc3-uploading-hidden-terminate" file-name="File name" upload-state="Uploading" hide-terminate-button>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Uploading" with hidden terminate button
+		</ui5-upload-collection-item>
+
 	</ui5-upload-collection>
 </body>
 </html>

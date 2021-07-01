@@ -67,13 +67,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>notificationCount</code>,
+		 * Defines the <code>notificationsCount</code>,
 		 * displayed in the notification icon top-right corner.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		notificationCount: {
+		notificationsCount: {
 			type: String,
 		},
 
@@ -328,7 +328,7 @@ const metadata = {
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#menu-item-click
-		 * @param {HTMLElement} item dom ref of the activated list item
+		 * @param {HTMLElement} item DOM ref of the activated list item
 		 * @since 0.10
 		 * @public
 		 */
@@ -897,11 +897,13 @@ class ShellBar extends UI5Element {
 			wrapper: {
 				"ui5-shellbar-root": true,
 				"ui5-shellbar-with-searchfield": this.searchField.length,
+				"ui5-shellbar-with-coPilot": this.showCoPilot,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
 				"ui5-shellbar-menu-button": true,
 			},
+			title: {},
 			items: {
 				notification: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("bell"),
@@ -1018,7 +1020,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _notificationsText() {
-		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationCount);
+		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
 	}
 
 	get _cancelBtnText() {

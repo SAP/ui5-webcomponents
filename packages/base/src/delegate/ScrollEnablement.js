@@ -70,7 +70,13 @@ class ScrollEnablement extends EventProvider {
 		this._container.scrollTop = top;
 	}
 
-	move(dx, dy) {
+	move(dx, dy, disableAnimation) {
+		if (disableAnimation) {
+			this._container.scrollLeft += dx;
+			this._container.scrollTop += dy;
+			return;
+		}
+
 		return scroll({
 			element: this._container,
 			dx,

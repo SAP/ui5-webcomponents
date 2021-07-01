@@ -1,27 +1,31 @@
 <div class="{{classes.root}}">
-	{{#if active}}
+	{{#if _isBusy}}
 		<div
-			class="ui5-busyindicator-busy-area"
+			class="ui5-busy-indicator-busy-area"
 			title="{{ariaTitle}}"
 			tabindex="0"
 			role="progressbar"
 			aria-valuemin="0"
 			aria-valuemax="100"
 			aria-valuetext="Busy"
-			aria-labelledby="{{_id}}-label"
+			aria-labelledby="{{labelId}}"
 		>
-			<div class="ui5-busyindicator-circles-wrapper">
-				<div class="ui5-busyindicator-circle circle-animation-0"></div>
-				<div class="ui5-busyindicator-circle circle-animation-1"></div>
-				<div class="ui5-busyindicator-circle circle-animation-2"></div>
+			<div class="ui5-busy-indicator-circles-wrapper">
+				<div class="ui5-busy-indicator-circle circle-animation-0"></div>
+				<div class="ui5-busy-indicator-circle circle-animation-1"></div>
+				<div class="ui5-busy-indicator-circle circle-animation-2"></div>
 			</div>
 			{{#if text}}
-				<ui5-label id="{{_id}}-label" class="ui5-busyindicator-text">
+				<ui5-label id="{{_id}}-label" class="ui5-busy-indicator-text">
 					{{text}}
 				</ui5-label>
 			{{/if}}
 		</div>
 	{{/if}}
 
-	<slot tabindex="{{slotTabIndex}}"></slot>
+	<slot></slot>
+
+	{{#if active}}
+		<span data-ui5-focus-redirect tabindex="0" @focusin="{{_redirectFocus}}"></span>
+	{{/if}}
 </div>

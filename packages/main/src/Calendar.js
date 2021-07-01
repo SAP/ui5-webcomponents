@@ -48,7 +48,7 @@ const metadata = {
 		 * Defines the visibility of the week numbers column.
 		 * <br><br>
 		 *
-		 * <b>Note:<b> For calendars other than Gregorian,
+		 * <b>Note:</b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.
 		 *
 		 * @type {boolean}
@@ -93,7 +93,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates change.
-		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, <code>ui5-calendar</code> will not
+		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
 		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
 		 *
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
@@ -153,30 +153,30 @@ const metadata = {
  * <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li>
  * <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li>
  * <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li>
- * <li>[HOME] - Navigate to the first day of the week
- * <li>[END] - Navigate to the last day of the week
- * <li>[CTRL] + [HOME] - Navigate to the first day of the month
- * <li>[CTRL] + [END] - Navigate to the last day of the month
+ * <li>[HOME] - Navigate to the first day of the week</li>
+ * <li>[END] - Navigate to the last day of the week</li>
+ * <li>[CTRL] + [HOME] - Navigate to the first day of the month</li>
+ * <li>[CTRL] + [END] - Navigate to the last day of the month</li>
  * </ul>
  * <br>
  * - Month picker: <br>
  * <ul>
  * <li>[PAGEUP] - Navigate to the previous month</li>
  * <li>[PAGEDOWN] - Navigate to the next month</li>
- * <li>[HOME] - Navigate to the first month of the current row
- * <li>[END] - Navigate to the last month of the current row
- * <li>[CTRL] + [HOME] - Navigate to the first month of the current year
- * <li>[CTRL] + [END] - Navigate to the last month of the year
+ * <li>[HOME] - Navigate to the first month of the current row</li>
+ * <li>[END] - Navigate to the last month of the current row</li>
+ * <li>[CTRL] + [HOME] - Navigate to the first month of the current year</li>
+ * <li>[CTRL] + [END] - Navigate to the last month of the year</li>
  * </ul>
  * <br>
  * - Year picker: <br>
  * <ul>
  * <li>[PAGEUP] - Navigate to the previous year range</li>
  * <li>[PAGEDOWN] - Navigate the next year range</li>
- * <li>[HOME] - Navigate to the first year of the current row
- * <li>[END] - Navigate to the last year of the current row
- * <li>[CTRL] + [HOME] - Navigate to the first year of the current year range
- * <li>[CTRL] + [END] - Navigate to the last year of the current year range
+ * <li>[HOME] - Navigate to the first year of the current row</li>
+ * <li>[END] - Navigate to the last year of the current row</li>
+ * <li>[CTRL] + [HOME] - Navigate to the first year of the current year range</li>
+ * <li>[CTRL] + [END] - Navigate to the last year of the current year range</li>
  * </ul>
  * <br>
  *
@@ -197,11 +197,13 @@ const metadata = {
  *
  * Or, you can use the global configuration and set the <code>calendarType</code> key:
  * <br>
- * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
+ * <code>
+ * &lt;script data-id="sap-ui-config" type="application/json"&gt;
  * {
  *	"calendarType": "Japanese"
  * }
  * &lt;/script&gt;
+ * </code>
  *
  *
  * <h3>ES6 Module Import</h3>

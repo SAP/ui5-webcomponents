@@ -15,8 +15,16 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Header", "Subheader", "Footer", "FloatingFooter".
+		 * <b>Note:</b>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Header</code></li>
+		 * <li><code>Subheader</code></li>
+		 * <li><code>Footer</code></li>
+		 * <li><code>FloatingFooter</code></li>
+		 * </ul>
 		 *
 		 * @type {BarDesign}
 		 * @defaultvalue "Header"
@@ -37,15 +45,18 @@ const metadata = {
 		startContent: {
 			type: HTMLElement,
 		},
+
 		/**
 		 * Defines the content in the middle of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		middleContent: {
+		"default": {
 			type: HTMLElement,
+			propertyName: "middleContent",
 		},
+
 		/**
 		 * Defines the content at the end of the bar
 		 * @type {HTMLElement[]}
@@ -65,17 +76,32 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The Bar component consists of three areas to hold its content. It has the capability to center content, such as a title, while having other components on the left and right side.
+ * The Bar is a container which is primarily used to hold titles, buttons and input elements
+ * and its design and functionality is the basis for page headers and footers.
+ * The component consists of three areas to hold its content - startContent slot, default slot and endContent slot.
+ * It has the capability to center content, such as a title, while having other components on the left and right side.
  *
  * <h3>Usage</h3>
  * With the use of the design property, you can set the style of the Bar to appear designed like a Header, Subheader, Footer and FloatingFooter.
+ * <br>
+ * <b>Note:</b> Do not place a Bar inside another Bar or inside any bar-like component. Doing so may cause unpredictable behavior.
  *
- * Note: Do not place a Bar inside another Bar or inside any bar-like component. Doing so causes unpredictable behavior.
+ * <h3>Responsive Behavior</h3>
+ * The default slot will be centered in the available space between the startContent and the endContent areas,
+ * therefore it might not always be centered in the entire bar.
  *
- * For the <code>ui5-bar</code>
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-bar</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>bar - Used to style the wrapper of the content of the component</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/Bar.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/Bar.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -100,6 +126,12 @@ class Bar extends UI5Element {
 
 	static get template() {
 		return BarTemplate;
+	}
+
+	get accInfo() {
+		return {
+			"label": this.design,
+		};
 	}
 }
 

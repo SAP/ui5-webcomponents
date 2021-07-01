@@ -37,9 +37,15 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>Delete</code></li>
+		 * </ul>
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"
@@ -77,13 +83,13 @@ const metadata = {
 		 * are dragged. If you don't intend to use drag and drop, set this property.
 		 * <br><br>
 		 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
-		 * <code>ui5-upload-collection</code> only shows an overlay.
+		 * <code>ui5-upload-collection</code> only displays an overlay.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		noDnd: {
+		hideDragOverlay: {
 			type: Boolean,
 		},
 
@@ -144,11 +150,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event sap.ui.webcomponents.fiori.UploadCollection#file-deleted
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#item-delete
 		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
 		 */
-		"file-deleted": {
+		"item-delete": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -178,7 +184,7 @@ const metadata = {
  * It also allows you to show already uploaded files.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code> (for <code>ui5-upload-collection-item</code>)
  *
@@ -232,7 +238,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -240,7 +246,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	onExitDOM() {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -248,7 +254,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondragenter(event) {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -260,7 +266,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondrop(event) {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -272,15 +278,15 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondragover(event) {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
 		event.preventDefault();
 	}
 
-	_ondragleave(event) {
-		if (this.noDnd) {
+	_ondragleave() {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -288,7 +294,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(event) {
-		this.fireEvent("file-deleted", { item: event.detail.item });
+		this.fireEvent("item-delete", { item: event.detail.item });
 	}
 
 	_onSelectionChange(event) {

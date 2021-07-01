@@ -15,7 +15,7 @@
 	width: 100%;
 }
 
-:host(:not([wrap])) .ui5-label-root {
+:host(:not([wrapping-type="Normal"])) .ui5-label-root {
 	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;
@@ -28,7 +28,7 @@ bdi {
 	padding-right: 0.15625rem;
 }
 
-:host(:not([wrap])) .ui5-label-text-wrapper {
+:host(:not([wrapping-type="Normal"])) .ui5-label-text-wrapper {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	display: inline-block;
@@ -36,16 +36,21 @@ bdi {
 	max-width: 100%;
 }
 
-:host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - .85rem);
+:host(:not([wrapping-type="Normal"])[required][show-colon]) .ui5-label-text-wrapper,
+:host(:not([wrapping-type="Normal"])[required][show-colon]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
+	max-width: calc(100% - .8rem);
 }
 
-:host(:not([wrap])[required]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.475rem);
+:host(:not([wrapping-type="Normal"])[required]) .ui5-label-text-wrapper {
+	max-width: calc(100% - .475rem);
 }
 
-:host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.2rem);
+:host(:not([wrapping-type="Normal"])[required]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
+	max-width: calc(100% - .425rem);
+}
+
+:host(:not([wrapping-type="Normal"])[show-colon]) .ui5-label-text-wrapper {
+	max-width: calc(100% - .2rem);
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {

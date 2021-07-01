@@ -15,6 +15,7 @@ import TimeSelection from "./TimeSelection.js";
 import {
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
+	DATETIME_DESCRIPTION,
 	DATETIME_PICKER_DATE_BUTTON,
 	DATETIME_PICKER_TIME_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
@@ -145,7 +146,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/DateTimePicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/DateTimePicker.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -295,6 +296,10 @@ class DateTimePicker extends DatePicker {
 		return super.phone || this._phoneMode;
 	}
 
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(DATETIME_DESCRIPTION);
+	}
+
 	/**
 	 * Defines whether the dialog on mobile should have header
 	 * @private
@@ -317,6 +322,7 @@ class DateTimePicker extends DatePicker {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
 			calendarValue: event.detail.values[0],
+			timeSelectionValue: event.path[1].lastChild.value,
 		};
 	}
 
@@ -364,6 +370,7 @@ class DateTimePicker extends DatePicker {
 		}
 
 		this._focusInputAfterClose = true;
+		this._updateValueState();
 		this.closePicker();
 	}
 

@@ -50,11 +50,7 @@
 }
 
 .ui5-carousel-content.ui5-carousel-content-has-navigation {
-    height: calc(100% - 2.75rem);
-}
-
-.ui5-carousel-content.ui5-carousel-content-has-navigation.ui5-carousel-content-has-navigation-and-buttons {
-    height: calc(100% - 3.5rem);
+    height: calc(100% - 1rem);
 }
 
 .ui5-carousel-item {
@@ -74,7 +70,7 @@
 
 .ui5-carousel-navigation-arrows {
     width: 100%;
-    padding:0 1.5rem;
+    padding:0 0.5rem;
     position: absolute;
     top: calc(50% - 2.5rem);
     left: 0;
@@ -137,7 +133,7 @@
 
 .ui5-carousel-navigation-dot[active] {
     width: .5rem;
-    height: .5rem;;
+    height: .5rem;
     margin: 0 .25rem;
     background-color: var(--sapSelectedColor);
     border: var(--ui5_carousel_dot_border);

@@ -3,6 +3,7 @@
 	box-sizing: border-box;
 }
 
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host(:not([hidden]).ui5_hovered) {
 	opacity: .7;
 }
@@ -118,58 +119,58 @@
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host([_background-color="Accent1"]),
-:host([background-color="Accent1"]) {
+:host([_color-scheme="Accent1"]),
+:host([color-scheme="Accent1"]) {
 	background-color: var(--ui5-avatar-accent1);
 }
 
-:host([_background-color="Accent2"]),
-:host([background-color="Accent2"]) {
+:host([_color-scheme="Accent2"]),
+:host([color-scheme="Accent2"]) {
 	background-color: var(--ui5-avatar-accent2);
 }
 
-:host([_background-color="Accent3"]),
-:host([background-color="Accent3"]) {
+:host([_color-scheme="Accent3"]),
+:host([color-scheme="Accent3"]) {
 	background-color: var(--ui5-avatar-accent3);
 }
 
-:host([_background-color="Accent4"]),
-:host([background-color="Accent4"]) {
+:host([_color-scheme="Accent4"]),
+:host([color-scheme="Accent4"]) {
 	background-color: var(--ui5-avatar-accent4);
 }
 
-:host([_background-color="Accent5"]),
-:host([background-color="Accent5"]) {
+:host([_color-scheme="Accent5"]),
+:host([color-scheme="Accent5"]) {
 	background-color: var(--ui5-avatar-accent5);
 }
 
-:host([_background-color="Accent6"]),
-:host([background-color="Accent6"]) {
+:host([_color-scheme="Accent6"]),
+:host([color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host([_background-color="Accent7"]),
-:host([background-color="Accent7"]) {
+:host([_color-scheme="Accent7"]),
+:host([color-scheme="Accent7"]) {
 	background-color: var(--ui5-avatar-accent7);
 }
 
-:host([_background-color="Accent8"]),
-:host([background-color="Accent8"]) {
+:host([_color-scheme="Accent8"]),
+:host([color-scheme="Accent8"]) {
 	background-color: var(--ui5-avatar-accent8);
 }
 
-:host([_background-color="Accent9"]),
-:host([background-color="Accent9"]) {
+:host([_color-scheme="Accent9"]),
+:host([color-scheme="Accent9"]) {
 	background-color: var(--ui5-avatar-accent9);
 }
 
-:host([_background-color="Accent10"]),
-:host([background-color="Accent10"]) {
+:host([_color-scheme="Accent10"]),
+:host([color-scheme="Accent10"]) {
 	background-color: var(--ui5-avatar-accent10);
 }
 
-:host([_background-color="Placeholder"]),
-:host([background-color="Placeholder"]) {
+:host([_color-scheme="Placeholder"]),
+:host([color-scheme="Placeholder"]) {
 	background-color: var(--ui5-avatar-placeholder);
 }
 

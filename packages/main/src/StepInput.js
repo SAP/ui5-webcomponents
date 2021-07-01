@@ -40,7 +40,7 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
-		 * Defines a value of the <code>ui5-step-input</code>.
+		 * Defines a value of the component.
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
@@ -52,7 +52,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a minimum value of the <code>ui5-step-input</code>.
+		 * Defines a minimum value of the component.
 		 *
 		 * @type {Float}
 		 * @public
@@ -62,7 +62,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a maximum value of the <code>ui5-step-input</code>.
+		 * Defines a maximum value of the component.
 		 *
 		 * @type {Float}
 		 * @public
@@ -72,7 +72,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a step of increasing/decreasing the value of the <code>ui5-step-input</code>.
+		 * Defines a step of increasing/decreasing the value of the component.
 		 *
 		 * @type {Float}
 		 * @defaultvalue 1
@@ -84,7 +84,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-step-input</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -105,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-step-input</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -116,7 +116,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-step-input</code> is displayed as disabled.
+		 * Determines whether the component is displayed as disabled.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -127,7 +127,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-step-input</code> is displayed as read-only.
+		 * Determines whether the component is displayed as read-only.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -139,11 +139,11 @@ const metadata = {
 
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-step-input</code> has no value.
+		 * component has no value.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-step-input</code> appear empty - without placeholder or format pattern.
+		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
@@ -155,7 +155,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-step-input</code> will be submitted in an HTML form.
+		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -163,7 +163,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-step-input</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -175,7 +175,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the number of digits after the decimal point of the <code>ui5-step-input</code>.
+		 * Determines the number of digits after the decimal point of the component.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 0
@@ -187,7 +187,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the <code>ui5-step-input</code>.
+		 * Defines the aria-label attribute for the component.
 		 *
 		 * @type {String}
 		 * @private
@@ -198,7 +198,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the <code>ui5-step-input</code>.
+		 * Receives id(or many ids) of the elements that label the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -267,13 +267,13 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-step-input</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-step-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
 		 * @slot
 		 * @public
@@ -330,13 +330,13 @@ const INITIAL_SPEED = 120; // milliseconds
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
  * <br><br>
- * <i>When to use</i>
+ * <h4>When to use:</h4>
  * <ul>
  * <li>To adjust amounts, quantities, or other values quickly.</li>
  * <li>To adjust values for a specific step.</li>
  * </ul>
  *
- * <i>When not to use</i>
+ * <h4>When not to use:</h4>
  * <ul>
  * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
  * use the regular <code>ui5-input</code> instead.</li>
@@ -347,7 +347,7 @@ const INITIAL_SPEED = 120; // milliseconds
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/StepInput.js";</code>
+ * <code>import "@ui5/webcomponents/dist/StepInput.js";</code>
  *
  * @constructor
  * @author SAP SE

@@ -18,7 +18,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
-		 * Defines the cells of the <code>ui5-table-row</code>.
+		 * Defines the cells of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
@@ -45,11 +45,11 @@ const metadata = {
 			defaultValue: TableMode.None,
 		},
 		/**
-		 * Defines the visual indication and behavior of the <code>ui5-table-row</code>.
+		 * Defines the visual indication and behavior of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
-		 * <li><code>Active</code> (by default)</li>
+		 * <li><code>Active</code></li>
 		 * <li><code>Inactive</code></li>
 		 * <ul>
 		 * <br><br>
@@ -100,6 +100,11 @@ const metadata = {
 		},
 		_busy: {
 			type: Boolean,
+		},
+		_ariaPosition: {
+			type: String,
+			defaultValue: "",
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
@@ -182,7 +187,7 @@ class TableRow extends UI5Element {
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
-		if (isSpace(event)) {
+		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
 
@@ -236,7 +241,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
-		if (this._getActiveElementTagName() === "body") {
+		if (!this.contains(document.activeElement)) {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,
@@ -341,11 +346,12 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.cells.map((cell, index) => {
+		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {

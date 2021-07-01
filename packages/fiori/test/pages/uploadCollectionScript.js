@@ -65,7 +65,7 @@
 		document.getElementById("fileUploader").value = "";
 	});
 
-	uploadCollection.addEventListener("ui5-selectionChange", function (event) {
+	uploadCollection.addEventListener("ui5-selection-change", function (event) {
 		var selectedItems = event.detail.selectedItems.reduce(function (acc, item) {
 			return acc + item.fileName + ",";
 		}, "[");
@@ -75,7 +75,7 @@
 		document.getElementById("selectedItems").innerText = selectedItems;
 	});
 
-	uploadCollection.addEventListener("ui5-fileDeleted", function (event) {
+	uploadCollection.addEventListener("ui5-item-delete", function (event) {
 		uploadCollection.removeChild(event.detail.item)
 	});
 

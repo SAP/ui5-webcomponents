@@ -15,22 +15,28 @@ describe("Carousel general interaction", () => {
 
 	it("Carousel navigates left", () => {
 		const carousel = browser.$("#carousel1");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const carouselRightButton = carousel.shadow$$(".ui5-carousel-navigation-button")[0];
 
 		carouselRightButton.click();
-		assert.equal(carousel.getAttribute("selected-index"), "2", "Second view is in place");
+		assert.equal(carousel.getProperty("_selectedIndex"), "2", "Second view is in place");
 	});
 
 	it("Carousel navigates right", () => {
 		const carousel = browser.$("#carousel1");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const carouselLeftButton = carousel.shadow$$(".ui5-carousel-navigation-button")[1];
 
 		carouselLeftButton.click();
-		assert.equal(carousel.getAttribute("selected-index"), "0", "Second view is in place");
+		assert.equal(carousel.getProperty("_selectedIndex"), "0", "Second view is in place");
 	});
 
 	it("Navigation is rendered for carousel with less than 9 elements", () => {
 		const carousel = browser.$("#carousel1");
+		carousel.moveTo();
+
 		const navigation = carousel.shadow$(".ui5-carousel-navigation > div");
 
 		assert.ok(navigation.isExisting(), "Navigation is rendered");
@@ -38,14 +44,33 @@ describe("Carousel general interaction", () => {
 
 	it("Navigation is rendered for carousel with more than 9 elements", () => {
 		const carousel = browser.$("#carousel2");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const navigation = carousel.shadow$(".ui5-carousel-navigation > ui5-label");
 
 		assert.ok(navigation.isExisting(), "Navigation is rendered");
 	});
 
-	it("Buttons are rendered in the navigation(arrows-placement)", () => {
+	it("Buttons are rendered in the content only when hovering (arrows-placement)", () => {
+		const carousel = browser.$("#carousel2");
+		carousel.scrollIntoView();
+
+		// show both arrows by navigating to the right and focus the button
+		const carouselNextButton = carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		carouselNextButton.click();
+		carousel.moveTo();
+
+		const buttons = carousel.shadow$$(".ui5-carousel-navigation-arrows .ui5-carousel-navigation-button:not(.ui5-carousel-navigation-button--hidden)");
+		assert.strictEqual(buttons.length, 2, "Navigation is rendered");
+	});
+
+	it("Buttons are rendered in the navigation without hovering (arrows-placement)", () => {
 		const carousel = browser.$("#carousel3");
-		const buttons = carousel.shadow$$(".ui5-carousel-navigation-wrapper ui5-button");
+		const carouselNextButton = carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		carouselNextButton.click();
+
+		carousel.scrollIntoView();
+		const buttons = carousel.shadow$$(".ui5-carousel-navigation-wrapper .ui5-carousel-navigation-button:not(.ui5-carousel-navigation-button--hidden)");
 
 		assert.strictEqual(buttons.length, 2, "Navigation is rendered");
 	});
@@ -59,7 +84,9 @@ describe("Carousel general interaction", () => {
 
 	it("Aria attributes are set", () => {
 		const carousel = browser.$("#carousel5");
-		const pageIndicatorDot1 = carousel.shadow$(".ui5-carousel-navigation-dot:first-child");
+		carousel.scrollIntoView();
+		carousel.moveTo();
+		const pageIndicatorDot1 = $('#carousel5').shadow$(".ui5-carousel-navigation-dot:first-child");
 		const pageIndicatorDot2 = carousel.shadow$(".ui5-carousel-navigation-dot:nth-child(2)");
 		const PAGE_INDICATOR_ARIA_LABEL1 = "Item 1 of 5 displayed";
 		const PAGE_INDICATOR_ARIA_LABEL2 = "Item 2 of 5 displayed";
@@ -119,23 +146,16 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(pages, 1, "There is only 1 page.");
 	});
 
-	it("Invalid selectedIndex normalized", () => {
-		const carousel = browser.$("#carousel7");
-		const selectedIndex = carousel.getProperty("selectedIndex");
-		const NORMALIZED_INDEX = 0;
-
-		assert.strictEqual(selectedIndex, NORMALIZED_INDEX,
-			"Although '15' is set, the actual selectedIndex is changed to 0.");
-	});
-
 	it("Event navigate fired when pressing navigation arrows", () => {
 		const carousel = browser.$("#carousel8");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const selectedIndex = browser.$("#result");
 		const eventCounter = browser.$("#resultCounter");
 		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
 		const navigationArrowsBack = carousel.shadow$("ui5-button[arrow-back]");
 
-		// using the navigtion arrows
+		// using the navigation arrows
 		navigationArrowForward.click(); // forward
 		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "1", "The navigate event is fired.");
@@ -167,24 +187,24 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
-	it("loadMore event is fired only when neccessary", () => {
+	it("hide-page-indicator property", () => {
+		const carousel = browser.$("#carouselHiddenPageIndicator");
+		carousel.scrollIntoView();
+
+		assert.strictEqual(carousel.shadow$$(".ui5-carousel-navigation > *").length, 0, "carousel has not rendered a page indicator")
+	})
+
+	it("navigateTo method and visibleItemsIndices", () => {
 		const carousel = browser.$("#carousel9");
-		const eventCounter = browser.$("#loadmore-result");
-		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
 
-		navigationArrowForward.click();
-		navigationArrowForward.click();
-		navigationArrowForward.click();
-		navigationArrowForward.click();
-		navigationArrowForward.click();
-		navigationArrowForward.click();
+		carousel.scrollIntoView();
 
-		assert.strictEqual(eventCounter.getProperty("value"), "0" , "loadMore event is not fired");
+		assert.deepEqual(carousel.getProperty("visibleItemsIndices"), [ 0, 1 ], "The indices before navigation are correct.");
 
-		navigationArrowForward.click();
-		navigationArrowForward.click();
-		navigationArrowForward.click();
+		browser.execute(() => {
+			document.getElementById("carousel9").navigateTo(1);
+		})
 
-		assert.strictEqual(eventCounter.getProperty("value"), "3", "loadMore event is fired 3 times");
-	});
+		assert.deepEqual(carousel.getProperty("visibleItemsIndices"), [ 1, 2 ], "The indices after navigation are correct.");
+	})
 });

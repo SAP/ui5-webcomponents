@@ -16,7 +16,7 @@
 }
 
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-icon,
-:host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading,
+:host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title,
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
 	color:var(--sapList_Active_TextColor);
 }
@@ -69,7 +69,7 @@
 }
 
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle,
-.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
+.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
 	line-height: 1.25rem;
 	white-space: nowrap;
 	overflow: hidden;
@@ -78,7 +78,7 @@
 	pointer-events: none;
 }
 
-.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
+.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
 	font-size:var( --sapFontHeader6Size);
 	color:var(--sapGroup_TitleTextColor);
 }
@@ -124,7 +124,7 @@
 
 
 	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle,
-	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
+	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
 		line-height: normal;
 	}
 

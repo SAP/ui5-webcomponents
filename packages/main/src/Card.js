@@ -27,7 +27,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Defines the content of the <code>ui5-card</code>.
+		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
 		 * @slot content
 		 * @public
@@ -69,27 +69,29 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Defines the title displayed in the <code>ui5-card</code> header.
+		 * Defines the title displayed in the component header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subheading displayed in the <code>ui5-card</code> header.
+		 * Defines the subtitle displayed in the component header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc5
 		 */
-		subheading: {
+		subtitleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the status displayed in the <code>ui5-card</code> header.
+		 * Defines the status displayed in the component header.
 		 * <br><br>
 		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
 		 * you can either have <code>action</code>, or <code>status</code>.
@@ -102,7 +104,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>ui5-card</code> header would be interactive,
+		 * Defines if the component header would be interactive,
 		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -113,7 +115,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the <code>ui5-card</code>
+		 * Defines the aria-label attribute for the component
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
@@ -125,7 +127,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the <code>ui5-card</code>
+		 * Receives id(or many ids) of the elements that label the component
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -145,7 +147,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is activated
+		 * Fired when the component header is activated
 		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
@@ -164,7 +166,7 @@ const metadata = {
  * The <code>ui5-card</code> is a component that represents information in the form of a
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
- * The header can be used through several properties, such as: <code>heading</code>, <code>subheading</code>, <code>status</code>
+ * The header can be used through several properties, such as: <code>titleText</code>, <code>subtitleText</code>, <code>status</code>
  * and two slots: <code>avatar</code> and <code>action</code>.
  *
  * <h3>Keyboard handling</h3>
@@ -176,8 +178,8 @@ const metadata = {
  * <br>
  * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li>heading - Used to style the heading of the card</li>
- * <li>subheading - Used to style the subheading of the card</li>
+ * <li>title - Used to style the title of the card</li>
+ * <li>subtitle - Used to style the subtitle of the card</li>
  * <li>status - Used to style the status of the card</li>
  * </ul>
  *
@@ -246,7 +248,7 @@ class Card extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
+		return !!(this.titleText || this.subtitleText || this.status || this.hasAction || this.avatar);
 	}
 
 	get ariaLabelText() {
@@ -272,8 +274,8 @@ class Card extends UI5Element {
 	get ariaLabelledByHeader() {
 		const labels = [];
 
-		if (this.subheading) {
-			labels.push(`${this._id}-subheading`);
+		if (this.subtitleText) {
+			labels.push(`${this._id}-subtitle`);
 		}
 
 		if (this.status) {
@@ -288,7 +290,7 @@ class Card extends UI5Element {
 	}
 
 	get ariaLabelledByCard() {
-		return this.heading ? `${this._id}-heading ${this._id}-desc` : `${this._id}-desc`;
+		return this.titleText ? `${this._id}-title ${this._id}-desc` : `${this._id}-desc`;
 	}
 
 	get hasAvatar() {

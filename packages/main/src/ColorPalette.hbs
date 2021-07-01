@@ -1,10 +1,13 @@
-<div class="ui5-cp-root">
+<div
+	class="ui5-cp-root"
+	@click={{_onclick}}
+	@keyup={{_onkeyup}}
+	@keydown={{_onkeydown}}
+>
 	<div class="ui5-cp-item-container" 
 		role="region"
 		aria-label="{{colorContainerLabel}}"
-		@click={{_onclick}}
-		@keyup={{_onkeyup}}
-		@keydown={{_onkeydown}}>
+	>
 		{{#each this.displayedColors}}
 			<slot
 				name="{{this._individualSlot}}"
@@ -13,7 +16,7 @@
 		{{/each}}
 	</div>
 
-	{{#if showMoreColors}}
+	{{#if _showMoreColors}}
 		<div class="ui5-cp-more-colors-wrapper">
 			<div class="ui5-cp-separator"></div>
 			<ui5-button
@@ -21,6 +24,15 @@
 				class="ui5-cp-more-colors"
 				@click="{{_openMoreColorsDialog}}"
 			>{{colorPaleteMoreColorsText}}</ui5-button>
+		</div>
+	{{/if}}
+
+	{{#if showRecentColors}}
+		<div class="ui5-cp-separator"></div>
+		<div class="ui5-cp-recent-colors-wrapper">
+			{{#each recentColors}}
+				<ui5-color-palette-item value="{{this}}"></ui5-color-palette-item>
+			{{/each}}
 		</div>
 	{{/if}}
 </div>

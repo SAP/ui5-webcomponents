@@ -58,7 +58,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-date-picker</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -79,7 +79,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-date-picker</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @since 1.0.0-rc.9
 		 * @type {boolean}
@@ -91,7 +91,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
+		 * Determines whether the component is displayed as disabled.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -102,7 +102,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-date-picker</code> is displayed as read-only.
+		 * Determines whether the component is displayed as read-only.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -114,11 +114,11 @@ const metadata = {
 
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-date-picker</code> has no value.
+		 * component has no value.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-date-picker</code> appear empty - without placeholder or format pattern.
+		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
@@ -130,7 +130,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-date-picker</code> will be submitted in an HTML form.
+		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -138,7 +138,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-date-picker</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -166,7 +166,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the <code>ui5-date-picker</code>.
+		 * Defines the aria-label attribute for the component.
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
@@ -178,7 +178,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the <code>ui5-date-picker</code>.
+		 * Receives id(or many ids) of the elements that label the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -207,13 +207,13 @@ const metadata = {
 
 	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-date-picker</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-date-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
 		 * @since 1.0.0-rc.7
 		 * @slot
@@ -246,7 +246,7 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the value of the <code>ui5-date-picker</code> is changed at each key stroke.
+		 * Fired when the value of the component is changed at each key stroke.
 		 *
 		 * @event
 		 * @public
@@ -482,14 +482,18 @@ class DatePicker extends DateComponentBase {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	_updateValueAndFireEvents(value, normalizeValue, events) {
+	_updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
 		const valid = this._checkValueValidity(value);
+
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		this.value = value;
-		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		if (updateValue) {
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
 		});
@@ -532,7 +536,7 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	async _onInputInput(event) {
-		this._updateValueAndFireEvents(event.target.value, false, ["input"]);
+		this._updateValueAndFireEvents(event.target.value, false, ["input"], false);
 	}
 
 	/**
@@ -547,7 +551,7 @@ class DatePicker extends DateComponentBase {
 
 	_click(event) {
 		if (isPhone()) {
-			this.responsivePopover.open(this);
+			this.responsivePopover.openBy(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -567,7 +571,7 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * Checks if a date is between the minimum and maximum date.
-	 * @param {string} value
+	 * @param {string} value A value to be checked
 	 * @returns {boolean}
 	 * @public
 	 */
@@ -629,7 +633,7 @@ class DatePicker extends DateComponentBase {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-responsive-popover`,
+			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
@@ -682,12 +686,12 @@ class DatePicker extends DateComponentBase {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
-	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @param {object} date A Java Script date object to be formatted as string
 	 * @returns {string} The date as string
 	 * @public
 	 */
-	formatValue(oDate) {
-		return this.getFormat().format(oDate);
+	formatValue(date) {
+		return this.getFormat().format(date);
 	}
 
 	/**
@@ -709,7 +713,7 @@ class DatePicker extends DateComponentBase {
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
 
-		this.responsivePopover.open(this);
+		this.responsivePopover.openBy(this);
 	}
 
 	togglePicker() {

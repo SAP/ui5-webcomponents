@@ -32,7 +32,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
+		 * Defines the unique identifier (icon name) of the component.
 		 * <br>
 		 *
 		 * To browse all available icons, see the
@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text alternative of the <code>ui5-icon</code>.
+		 * Defines the text alternative of the component.
 		 * If not provided a default text alternative will be set, if present.
 		 * <br><br>
 		 * <b>Note:</b> Every icon should have a text alternative in order to
@@ -75,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-icon</code> should have a tooltip.
+		 * Defines whether the component should have a tooltip.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -83,6 +83,16 @@ const metadata = {
 		 */
 		showTooltip: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the accessibility role of the component.
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		role: {
+			type: String,
 		},
 
 		/**
@@ -154,6 +164,15 @@ const metadata = {
  * For the SAP Fiori Tools icon collection (supported since 1.0.0-rc.10), you have to import an icon from the <code>@ui5/webcomponents-icons-tnt</code> package:
  * <br>
  * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
+ *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the ui5-icon without triggering the click event.</li>
+ * </ul>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -242,7 +261,11 @@ class Icon extends UI5Element {
 		return this.interactive ? "0" : "-1";
 	}
 
-	get role() {
+	get effectiveAccessibleRole() {
+		if (this.role) {
+			return this.role;
+		}
+
 		if (this.interactive) {
 			return "button";
 		}
@@ -282,7 +305,7 @@ class Icon extends UI5Element {
 		if (iconData === ICON_NOT_FOUND) {
 			this.invalid = true;
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/AllIcons.js".`);
 		}
 
 		if (!iconData) {

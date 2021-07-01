@@ -145,7 +145,7 @@ You can then explore component test pages on:
 You can start the Playground app with the following commands:
 
 ```sh
-# install palyground specific dependencies (one time only)
+# install playground specific dependencies (one time only)
 cd packages/playground
 yarn install:dependencies
 
@@ -165,7 +165,7 @@ See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-te
 To build the UI5 Web Components project, run the following commands:
 
 ```sh
-yarn # to install all dependecies
+yarn # to install all dependencies
 yarn build # to build the project
 ```
 

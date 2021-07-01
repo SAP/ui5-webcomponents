@@ -4,6 +4,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -24,6 +25,8 @@ import {
 	VALUE_STATE_INFORMATION,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
+	LIST_ITEM_POSITION,
+	LIST_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -51,10 +54,9 @@ import StandardListItem from "./StandardListItem.js";
 const metadata = {
 	tag: "ui5-combobox",
 	languageAware: true,
-	defaultSlot: "items",
 	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
-		 * Defines the value of the <code>ui5-combobox</code>.
+		 * Defines the value of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -66,16 +68,16 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the "live" value of the <code>ui5-combobox</code>.
+		 * Defines the "live" value of the component.
 		 * <br><br>
-		 * <b>Note:</b> The property is updated upon typing.
+		 * <b>Note:</b> If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Initially the filter value is synced with value.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @public
+		 * @private
 		 */
 		filterValue: {
 			type: String,
@@ -84,7 +86,7 @@ const metadata = {
 
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
-		 * <code>ui5-combobox</code> has no value.
+		 * component has no value.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -95,9 +97,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-combobox</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-combobox</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled component is completely uninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -108,7 +110,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-combobox</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -129,9 +131,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-combobox</code> is readonly.
+		 * Defines whether the component is readonly.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-combobox</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -143,7 +145,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-combobox</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -165,7 +167,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the filter type of the <code>ui5-combobox</code>.
+		 * Defines the filter type of the component.
 		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code> and <code>Contains</code>.
 		 *
 		 * @type {string}
@@ -214,11 +216,6 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_tempValue: {
-			type: String,
-			defaultValue: "",
-		},
-
 		_filteredItems: {
 			type: Object,
 		},
@@ -232,14 +229,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
-		 * Defines the <code>ui5-combobox</code> items.
-		 * <br><br>
-		 * Example: <br>
-		 * &lt;ui5-combobox><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
-		 * &lt;/ui5-combobox>
-		 * <br> <br>
+		 * Defines the component items.
 		 *
 		 * @type {sap.ui.webcomponents.main.IComboBoxItem[]}
 		 * @slot items
@@ -252,7 +242,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-combobox</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
@@ -389,27 +379,8 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		let domValue;
-
 		if (this._initialRendering) {
-			domValue = this.value;
 			this._filteredItems = this.items;
-		} else {
-			domValue = this.filterValue;
-		}
-
-		if (this._autocomplete && domValue !== "") {
-			const item = this._autoCompleteValue(domValue);
-
-			if (!this._selectionChanged && (item && !item.selected)) {
-				this.fireEvent("selection-change", {
-					item,
-				});
-
-				this._selectionChanged = false;
-			}
-		} else {
-			this._tempValue = domValue;
 		}
 
 		if (!this._initialRendering && this.popover && document.activeElement === this && !this._filteredItems.length) {
@@ -417,12 +388,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this._selectMatchingItem();
-
-		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
-			this.focused = false;
-		} else if (this.shadowRoot.activeElement) {
-			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
-		}
 
 		this._initialRendering = false;
 		this._isKeyNavigation = false;
@@ -452,9 +417,7 @@ class ComboBox extends UI5Element {
 	_focusin(event) {
 		this.focused = true;
 
-		if (this.filterValue !== this.value) {
-			this.filterValue = this.value;
-		}
+		this._lastValue = this.value;
 
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
@@ -462,18 +425,13 @@ class ComboBox extends UI5Element {
 	_focusout() {
 		this.focused = false;
 
-		this._inputChange();
+		this._fireChangeEvent();
+
 		!isPhone() && this._closeRespPopover();
 	}
 
 	_afterOpenPopover() {
 		this._iconPressed = true;
-
-		if (isPhone() && this.value) {
-			this.filterValue = this.value;
-		}
-
-		this._clearFocus();
 	}
 
 	_afterClosePopover() {
@@ -484,6 +442,11 @@ class ComboBox extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
+		}
+
+		if (this._selectionPerformed) {
+			this._lastValue = this.value;
+			this._selectionPerformed = false;
 		}
 	}
 
@@ -544,12 +507,28 @@ class ComboBox extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		this._clearFocus();
-		this._tempFilterValue = value;
-		this.filterValue = value;
-		this.fireEvent("input");
-
 		this._filteredItems = this._filterItems(value);
+		this.value = value;
+		this.filterValue = value;
+
+		this._clearFocus();
+
+		// autocomplete
+		if (this._autocomplete && value !== "") {
+			const item = this._autoCompleteValue(value);
+
+			if (!this._selectionChanged && (item && !item.selected)) {
+				this.fireEvent("selection-change", {
+					item,
+				});
+
+				this._selectionChanged = false;
+
+				item.focused = true;
+			}
+		}
+
+		this.fireEvent("input");
 
 		if (isPhone()) {
 			return;
@@ -597,15 +576,28 @@ class ComboBox extends UI5Element {
 		indexOfItem += isArrowDown ? 1 : -1;
 		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
 
+		if (this.responsivePopover.opened) {
+			this.announceSelectedItem(indexOfItem);
+		}
+
 		this._filteredItems[indexOfItem].focused = true;
-		this.filterValue = this._filteredItems[indexOfItem].text;
+		this._filteredItems[indexOfItem].selected = true;
+
+		this.value = this._filteredItems[indexOfItem].text;
+
+		// autocomplete
+		const item = this._autoCompleteValue(this.value);
+
+		if ((item && !item.selected)) {
+			this.fireEvent("selection-change", {
+				item,
+			});
+		}
+
 		this._isKeyNavigation = true;
 		this._itemFocused = true;
 		this.fireEvent("input");
-
-		this.fireEvent("selection-change", {
-			item: this._filteredItems[indexOfItem],
-		});
+		this._fireChangeEvent();
 
 		this._selectionChanged = true;
 	}
@@ -619,7 +611,7 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._inputChange();
+			this._fireChangeEvent();
 			this._closeRespPopover();
 		}
 
@@ -640,14 +632,13 @@ class ComboBox extends UI5Element {
 		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
 			this.value = this._selectedItemText;
 			this.filterValue = this._selectedItemText;
-			this._tempValue = this._selectedItemText;
 		}
 
 		this.responsivePopover.close();
 	}
 
 	_openRespPopover() {
-		this.responsivePopover.open(this);
+		this.responsivePopover.openBy(this);
 	}
 
 	_filterItems(str) {
@@ -655,23 +646,21 @@ class ComboBox extends UI5Element {
 	}
 
 	_autoCompleteValue(current) {
-		const currentValue = current;
-		const matchingItems = this._startsWithMatchingItems(currentValue);
-		const selectionValue = this._tempFilterValue ? this._tempFilterValue : currentValue;
+		const matchingItems = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
-			this._tempValue = matchingItems[0] ? matchingItems[0].text : current;
+			this.value = matchingItems[0] ? matchingItems[0].text : current;
 		} else {
-			this._tempValue = current;
+			this.value = current;
 		}
 
-		if (matchingItems.length && (selectionValue !== this._tempValue && this.value !== this._tempValue)) {
+		if (this._isKeyNavigation) {
 			setTimeout(() => {
-				this.inner.setSelectionRange(selectionValue.length, this._tempValue.length);
+				this.inner.setSelectionRange(0, this.value.length);
 			}, 0);
-		} else if (this._isKeyNavigation) {
+		} else if (matchingItems.length) {
 			setTimeout(() => {
-				this.inner.setSelectionRange(0, this._tempValue.length);
+				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
 			}, 0);
 		}
 
@@ -682,18 +671,21 @@ class ComboBox extends UI5Element {
 
 	_selectMatchingItem() {
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = (item.text === this._tempValue);
+			item.selected = (item.text === this.value);
 
 			return item;
 		});
 	}
 
-	_inputChange() {
-		if (this.value !== this._tempValue) {
-			this.value = this._tempValue;
+	_fireChangeEvent() {
+		if (this.value !== this._lastValue) {
 			this.fireEvent("change");
-			this.inner.setSelectionRange(this.value.length, this.value.length);
+			this._lastValue = this.value;
 		}
+	}
+
+	_inputChange(event) {
+		event.preventDefault();
 	}
 
 	_itemMousedown(event) {
@@ -703,9 +695,17 @@ class ComboBox extends UI5Element {
 	_selectItem(event) {
 		const listItem = event.detail.item;
 
-		this._tempValue = listItem.mappedItem.text;
 		this._selectedItemText = listItem.mappedItem.text;
-		this.filterValue = this._tempValue;
+		this._selectionPerformed = true;
+
+		const sameItemSelected = this.value === this._selectedItemText;
+		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
+
+		if (sameItemSelected && sameSelectionPerformed) {
+			return this._closeRespPopover();
+		}
+
+		this.value = this._selectedItemText;
 
 		if (!listItem.mappedItem.selected) {
 			this.fireEvent("selection-change", {
@@ -721,12 +721,22 @@ class ComboBox extends UI5Element {
 			return item;
 		});
 
-		this._inputChange();
+		this._fireChangeEvent();
 		this._closeRespPopover();
+
+		// reset selection
+		this.inner.setSelectionRange(this.value.length, this.value.length);
 	}
 
 	_onItemFocus(event) {
 		this._itemFocused = true;
+	}
+
+	announceSelectedItem(indexOfItem) {
+		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [indexOfItem + 1], [this._filteredItems.length]);
+		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
+
+		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {

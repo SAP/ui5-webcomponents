@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -15,7 +17,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
-		 * Defines whether an asterisk character is added to the <code>ui5-label</code> text.
+		 * Defines whether an asterisk character is added to the component text.
 		 * <br><br>
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
@@ -28,20 +30,24 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-label</code> should wrap, when there is not enough space.
-		 * <br><br>
-		 * <b>Note:</b> By default the text would truncate.
+		 * Defines how the text of a component will be displayed when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		 wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
-		 * Defines whether semi-colon is added to the <code>ui5-label</code> text.
+		 * Defines whether semi-colon is added to the component text.
 		 * <br><br>
 		 * <b>Note:</b> Usually used in forms.
 		 * @type {boolean}
@@ -68,7 +74,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-label</code>.
+		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -92,7 +98,7 @@ const metadata = {
  * It informs the user about what data is displayed or expected in the value holder.
  * <br><br>
  * The <code>ui5-label</code> appearance can be influenced by properties,
- * such as <code>required</code> and <code>wrap</code>.
+ * such as <code>required</code> and <code>wrappingType</code>.
  * The appearance of the Label can be configured in a limited way by using the design property.
  * For a broader choice of designs, you can use custom styles.
  *
@@ -122,6 +128,15 @@ class Label extends UI5Element {
 
 	static get styles() {
 		return labelCss;
+	}
+
+	get classes() {
+		return {
+			textWrapper: {
+				"ui5-label-text-wrapper": true,
+				"ui5-label-text-wrapper-safari": isSafari(),
+			},
+		};
 	}
 
 	_onclick() {

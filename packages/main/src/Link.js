@@ -1,8 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
@@ -21,9 +23,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
-		 * Defines whether the <code>ui5-link</code> is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the <code>ui5-link</code> cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the component cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -34,7 +36,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> href.
+		 * Defines the component href.
 		 * <br><br>
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
@@ -47,14 +49,19 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> target.
+		 * Defines the component target.
 		 * <br><br>
 		 * <b>Notes:</b>
+		 *
 		 * <ul>
-		 * <li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
-		 * <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li>
-		 * <li>This property must only be used when the <code>href</code> property is set.</li>
+		 * <li><code>_self</code></li>
+		 * <li><code>_top</code></li>
+		 * <li><code>_blank</code></li>
+		 * <li><code>_parent</code></li>
+		 * <li><code>_search</code></li>
 		 * </ul>
+		 *
+		 * <b>This property must only be used when the <code>href</code> property is set.</b>
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -65,7 +72,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> design.
+		 * Defines the component design.
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
@@ -79,17 +86,20 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-link</code> text should wrap
-		 * when there is no sufficient space.
-		 * <br><br>
-		 * <b>Note:</b> The text is truncated by default.
+		 * Defines how the text of a component will be displayed when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
@@ -124,7 +134,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-link</code>.
+		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -138,7 +148,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-link</code> is triggered either with a mouse/tap
+		 * Fired when the component is triggered either with a mouse/tap
 		 * or by using the Enter key.
 		 *
 		 * @event
@@ -168,14 +178,14 @@ const metadata = {
  * <code>Subtle</code> or the more important ones as <code>Emphasized</code>,
  * by using the <code>design</code> property.
  * <br><br>
- * If the <code>href</code> property is set, the link behaves as the basic HTML
- * anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property).
+ * If the <code>href</code> property is set, the link behaves as the HTML
+ * anchor tag (<code>&lt;a&gt;&lt;a&#47;&gt;</code>) and opens the specified URL in the given target frame (<code>target</code> property).
  * To specify where the linked content is opened, you can use the <code>target</code> property.
  *
  * <h3>Responsive behavior</h3>
  *
  * If there is not enough space, the text of the <code>ui5-link</code> becomes truncated.
- * If the <code>wrap</code> property is set to <code>true</code>, the text is displayed
+ * If the <code>wrappingType</code> property is set to <code>"Normal"</code>, the text is displayed
  * on several lines instead of being truncated.
  *
  * <h3>ES6 Module Import</h3>
@@ -270,11 +280,32 @@ class Link extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isEnter(event)) {
+			const executeEvent = this.fireEvent("click", null, true);
+
+			if (executeEvent) {
+				event.preventDefault();
+				this.href && window.open(this.href, this.target);
+			}
+		} else if (isSpace(event)) {
+			event.preventDefault();
+		}
+
 		event.isMarked = "link";
 	}
 
 	_onkeyup(event) {
-		event.isMarked = "link";
+		if (!isSpace(event)) {
+			event.isMarked = "link";
+			return;
+		}
+
+		event.preventDefault();
+
+		const executeEvent = this.fireEvent("click", null, true);
+		if (executeEvent) {
+			this.href && window.open(this.href, this.target);
+		}
 	}
 }
 

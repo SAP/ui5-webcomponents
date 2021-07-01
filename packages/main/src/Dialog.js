@@ -20,6 +20,9 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
+		 * <code>accessibleName</code> should be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -55,9 +58,23 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
+		 * Defines the accessible name of the dialog when <code>header</code> slot is provided.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to approximately
+		 *
+		 * <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
+
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Determines whether the component should be stretched to fullscreen.
+		 * <br><br>
+		 * <b>Note:</b> The component will be stretched to approximately
 		 * 90% of the viewport.
 		 *
 		 * @type {boolean}
@@ -69,10 +86,10 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-dialog</code> is draggable.
+		 * Determines whether the component is draggable.
 		 * If this property is set to true, the Dialog will be draggable by its header.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> can be draggable only in desktop mode.
+		 * <b>Note:</b> The component can be draggable only in desktop mode.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.9
@@ -83,11 +100,11 @@ const metadata = {
 		},
 
 		/**
-		 * Configures the <code>ui5-dialog</code> to be resizable.
+		 * Configures the component to be resizable.
 		 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
 		 * In RTL languages, the resize handle will be placed in the bottom left corner.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> can be resizable only in desktop mode.
+		 * <b>Note:</b> The component can be resizable only in desktop mode.
 		 * <br>
 		 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
 		 * @type {boolean}
@@ -146,6 +163,9 @@ const metadata = {
  * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>) inside <code>ui5-dialog</code>.
  * Ideally you should create all popups on the same level inside your HTML page and just open them from one another, rather than nesting them.
  *
+ * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>) inside other components containing z-index.
+ * This might break z-index management.
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Dialog
@@ -187,7 +207,7 @@ class Dialog extends Popup {
 	/**
 	 * Opens the dialog
 	 *
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
+	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @async
 	 * @returns {Promise} Resolves when the dialog is open
 	 * @public
@@ -205,7 +225,22 @@ class Dialog extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return (this.ariaLabel || this.header.length) ? undefined : "ui5-popup-header-text";
+		let ariaLabelledById;
+
+		if (this.headerText !== "" && !this.ariaLabel) {
+			ariaLabelledById = "ui5-popup-header-text";
+		}
+
+		return ariaLabelledById;
+	}
+
+	get _ariaLabel() {
+		let ariaLabel;
+
+		if (this.header.length > 0 && !!this.accessibleName) {
+			ariaLabel = this.accessibleName;
+		}
+		return this.ariaLabel ? this.ariaLabel : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js

@@ -9,7 +9,7 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**
-		 * Defines the selected state of the <code>ui5-option</code>.
+		 * Defines the selected state of the component.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -19,9 +19,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-option</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-option</code> is noninteractive.
+		 * <b>Note:</b> A disabled component is noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -35,7 +35,7 @@ const metadata = {
 		 * Defines the <code>icon</code> source URI.
 		 * <br><br>
 		 * <b>Note:</b>
-		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
+		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
@@ -47,7 +47,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this <code>ui5-option</code> is selected.
+		 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
 		 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 		 *
 		 * @type {string}
@@ -68,7 +68,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the focused state of the <code>ui5-option</code>.
+		 * Defines the focused state of the component.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.13
@@ -80,7 +80,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-option</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *

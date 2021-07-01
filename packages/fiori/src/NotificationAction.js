@@ -33,9 +33,16 @@ const metadata = {
 
 		/**
 		 * Defines the action design.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
-		 * "Negative", and "Transparent".
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li><code>Default</code></li>
+		 * <li><code>Emphasized</code></li>
+		 * <li><code>Positive</code></li>
+		 * <li><code>Negative</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
 		 *
 		 * @type {ButtonDesign}
 		 * @defaultvalue "Transparent"
@@ -50,7 +57,7 @@ const metadata = {
 		 * Defines the <code>icon</code> source URI.
 		 * <br><br>
 		 * <b>Note:</b>
-		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
+		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
