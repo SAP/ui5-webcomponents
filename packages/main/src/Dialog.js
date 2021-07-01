@@ -342,8 +342,6 @@ class Dialog extends Popup {
 			width,
 			height,
 		} = window.getComputedStyle(this);
-		// debugger
-		// check if top/left are the same, maybe remove this repeating assignment
 
 		Object.assign(this.style, {
 			top: `${top}px`,

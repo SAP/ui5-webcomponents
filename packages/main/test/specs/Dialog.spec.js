@@ -247,7 +247,6 @@ describe("Dialog general interaction", () => {
 		closeResizableDialogButton.click();
 	});
 
-
 	it("initial focus after dynamic dialog creation", () => {
 		const openDynamicDialog = browser.$("#dynamic-open");
 		openDynamicDialog.click();
