@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.20](https://github.com/SAP/ui5-webcomponents/compare/v0.29.19...v0.29.20) (2021-07-02)
+
+
+### Bug Fixes
+
+* **ui5-step-input:** firing step input once when value is deleted ([#3474](https://github.com/SAP/ui5-webcomponents/issues/3474)) ([2bcb78b](https://github.com/SAP/ui5-webcomponents/commit/2bcb78b)), closes [#3457](https://github.com/SAP/ui5-webcomponents/issues/3457)
+
+
+### Features
+
+* **ui5-icon:** add accessibility role ([#3407](https://github.com/SAP/ui5-webcomponents/issues/3407)) ([2bf99af](https://github.com/SAP/ui5-webcomponents/commit/2bf99af))
+* **ui5-li:** title attribute handle ([#3385](https://github.com/SAP/ui5-webcomponents/issues/3385)) ([ec4273d](https://github.com/SAP/ui5-webcomponents/commit/ec4273d))
+
+
+
+
+
 ## [0.29.19](https://github.com/SAP/ui5-webcomponents/compare/v0.29.18...v0.29.19) (2021-06-21)
 
 

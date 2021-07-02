@@ -10,7 +10,7 @@
 		"packages/tools",
 		"packages/playground"
 	],
-	"version": "0.29.19",
+	"version": "0.29.20",
 	"command": {
 		"publish": {
 			"conventionalCommits": true
