@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.12](https://github.com/SAP/ui5-webcomponents/compare/v0.31.11...v0.31.12) (2021-07-02)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** enable setting value programatically ([#3253](https://github.com/SAP/ui5-webcomponents/issues/3253)) ([1294d44](https://github.com/SAP/ui5-webcomponents/commit/1294d44))
+* **ui5-step-input:** firing step input once when value is deleted ([#3474](https://github.com/SAP/ui5-webcomponents/issues/3474)) ([46f54f8](https://github.com/SAP/ui5-webcomponents/commit/46f54f8)), closes [#3457](https://github.com/SAP/ui5-webcomponents/issues/3457)
+
+
+### Features
+
+* **ui5-combobox:** add suggestions grouping ([#3469](https://github.com/SAP/ui5-webcomponents/issues/3469)) ([31f7c14](https://github.com/SAP/ui5-webcomponents/commit/31f7c14)), closes [#3371](https://github.com/SAP/ui5-webcomponents/issues/3371)
+* **ui5-icon:** add accessibility role ([#3407](https://github.com/SAP/ui5-webcomponents/issues/3407)) ([c070c2a](https://github.com/SAP/ui5-webcomponents/commit/c070c2a))
+* **ui5-li:** title attribute handle ([#3385](https://github.com/SAP/ui5-webcomponents/issues/3385)) ([86214d5](https://github.com/SAP/ui5-webcomponents/commit/86214d5))
+
+
+### BREAKING CHANGES
+
+* **ui5-combobox:** filter value property is removed.
+FIXES: https://github.com/SAP/ui5-webcomponents/issues/2233
+
+
+
+
+
 ## [0.31.11](https://github.com/SAP/ui5-webcomponents/compare/v0.31.10...v0.31.11) (2021-06-23)
 
 
