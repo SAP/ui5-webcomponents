@@ -66,7 +66,7 @@ describe("Dialog general interaction", () => {
 		const header = browser.$("#draggable-dialog").shadow$(".ui5-popup-header-root");
 
 		// Act
-		header.dragAndDrop({ x: -200, y: -200 });
+		header.dragAndDrop({ x: -50, y: -50 });
 
 		// Assert
 		const topAfterDragging = parseInt(dialog.getCSSProperty("top").value);
@@ -138,7 +138,6 @@ describe("Dialog general interaction", () => {
 		closeDraggableDialogButton.click();
 	});
 
-
 	it("resizable - mouse support", () => {
 		// Setup
 		const openResizableDialogButton = browser.$("#resizable-open");
@@ -153,7 +152,7 @@ describe("Dialog general interaction", () => {
 		const handle = browser.$("#resizable-dialog").shadow$(".ui5-popup-resize-handle");
 
 		// Act
-		handle.dragAndDrop({ x: 200, y: 200});
+		handle.dragAndDrop({ x: 50, y: 50});
 
 		// Assert
 		const widthAfterResizing = parseInt(dialog.getCSSProperty("width").value);
