@@ -131,6 +131,19 @@ const metadata = {
 			type: String,
 			noAttribute: true,
 		},
+
+		_tabIndex: {
+			type: String,
+			noAttribute: true,
+		},
+
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		 focused: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
@@ -241,6 +254,9 @@ class Link extends UI5Element {
 	}
 
 	get tabIndex() {
+		if (this._tabIndex) {
+			return this._tabIndex;
+		}
 		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
@@ -277,6 +293,11 @@ class Link extends UI5Element {
 
 	_onfocusin(event) {
 		event.isMarked = "link";
+		this.focused = true;
+	}
+
+	_onfocusout(event) {
+		this.focused = false;
 	}
 
 	_onkeydown(event) {
