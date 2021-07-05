@@ -33,17 +33,17 @@ const metadata = {
 			type: HTMLElement,
 		},
 
-        /**
-         * Defines the header of the component.
-         * <br><br>
-         * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-         * @type {HTMLElement[]}
-         * @slot content
-         * @public
-         */
-        header: {
-            type: HTMLElement,
-        }
+		/**
+		 * Defines the header of the component.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
+		 * @type {HTMLElement[]}
+		 * @slot content
+		 * @public
+		 */
+		header: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -70,7 +70,7 @@ const metadata = {
 		ariaLabelledby: {
 			type: String,
 			defaultValue: "",
-		}
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {},
 };
@@ -128,13 +128,13 @@ class Card extends UI5Element {
 
 	get classes() {
 		return {
-            "ui5-card-root": true,
-            "ui5-card--nocontent": !this.content.length
+			"ui5-card-root": true,
+			"ui5-card--nocontent": !this.content.length,
 		};
 	}
 
 	get hasHeader() {
-        return !!this.header.length;
+		return !!this.header.length;
 	}
 
 	get ariaLabelText() {
@@ -150,12 +150,12 @@ class Card extends UI5Element {
 	}
 
 	get ariaLabelledByCard() {
-	    let labels;
-	    if (this.hasHeader) {
-	        labels = this.header[0].hasAttribute("title-text") ? `${this._id}--header-title ${this._id}-desc` : `${this._id}-desc`;
-        } else {
-            labels =  `${this._id}-desc`;
-        }
+		let labels;
+		if (this.hasHeader) {
+			labels = this.header[0].hasAttribute("title-text") ? `${this._id}--header-title ${this._id}-desc` : `${this._id}-desc`;
+		} else {
+			labels = `${this._id}-desc`;
+		}
 		return labels;
 	}
 
