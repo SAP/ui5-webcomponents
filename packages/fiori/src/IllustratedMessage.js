@@ -82,7 +82,7 @@ const metadata = {
 		 */
 		name: {
 			type: IllustrationMessageType,
-			defaultValue: "BeforeSearch",
+			defaultValue: IllustrationMessageType.BeforeSearch,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
