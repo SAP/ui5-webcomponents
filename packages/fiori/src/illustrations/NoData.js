@@ -1,4 +1,4 @@
-import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustration.js";
+import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import dialogSvg from "./sapIllus-Dialog-NoData.js";
 import sceneSvg from "./sapIllus-Scene-NoData.js";
 import spotSvg from "./sapIllus-Spot-NoData.js";

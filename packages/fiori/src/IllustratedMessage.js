@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustration.js";
+import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+import IllustrationMessageType from "./types/IllustrationMessageType";
 
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -71,13 +72,16 @@ const metadata = {
 		 * <li><code>UnableToLoad</code></li>
 		 * <li><code>UnableToUpload</code></li>
 		 * </ul>
-		 * @type {string}
+		 * <br><br>
+		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
+		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>). 
+		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		name: {
-			type: String,
+			type: IllustrationMessageType,
 			defaultValue: "BeforeSearch",
 		},
 	},
@@ -106,7 +110,8 @@ const metadata = {
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
- * Each illistration has default title and subtitle texts.
+ * Each illistration has default internationalised title and subtitle texts. Also they can be managed with
+ * <code>titleText</code> and <code>subtitleText</code> properties.
  *
  * <b>Note:</b> By default BeforeSearch illustration is loaded.
  *
@@ -137,6 +142,22 @@ class IllustratedMessage extends UI5Element {
 
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
+	}
+
+	static get styles() {
+		return IllustratedMessageCss;
+	}
+
+	static get template() {
+		return IllustratedMessageTemplate;
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -217,26 +238,6 @@ class IllustratedMessage extends UI5Element {
 
 	get hasActions() {
 		return !!this.actions.length && this.media !== IllustratedMessage.MEDIA.BASE;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return IllustratedMessageCss;
-	}
-
-	static get template() {
-		return IllustratedMessageTemplate;
-	}
-
-	static get dependencies() {
-		return [];
-	}
-
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 
