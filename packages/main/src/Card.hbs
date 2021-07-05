@@ -1,42 +1,12 @@
 <div
-	class="{{classes.main}}"
+	class="{{classes}}"
 	dir="{{effectiveDir}}"
 	role="region"
 	aria-label="{{ariaLabelText}}"
 	aria-labelledby="{{ariaLabelledByCard}}">
 	{{#if hasHeader}}
-		<div class="{{classes.header}}"
-			@click="{{_headerClick}}"
-			@keydown="{{_headerKeydown}}"
-			@keyup="{{_headerKeyup}}"
-			role="{{ariaHeaderRole}}"
-			aria-labelledby="{{ariaLabelledByHeader}}"
-			aria-level="{{ariaLevel}}"
-			aria-roledescription="{{ariaCardHeaderRoleDescription}}"
-			tabindex="0">
-
-			{{#if hasAvatar}}
-				<div id="{{_id}}-avatar" class="ui5-card-avatar" aria-label="{{ariaCardAvatarLabel}}">
-					<slot name="avatar"></slot>
-				</div>
-			{{/if}}
-
-			<div class="ui5-card-header-text">
-				{{#if titleText}}
-					<div id="{{_id}}-title" class="ui5-card-title" part="title">{{titleText}}</div>
-				{{/if}}
-
-				{{#if subtitleText}}
-					<div id="{{_id}}-subtitle" class="ui5-card-subtitle" part="subtitle">{{subtitleText}}</div>
-				{{/if}}
-			</div>
-
-			{{#if hasAction}}
-				<slot name="action"></slot>
-			{{else}}
-				<span id="{{_id}}-status" part="status" class="ui5-card-status">{{status}}</span>
-			{{/if}}
-		</div>
+        <!-- header -->
+            <slot name="header"></slot>
 	{{/if}}
 
 	<div role="group" aria-label="{{ariaCardContentLabel}}">
