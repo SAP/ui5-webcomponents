@@ -328,7 +328,7 @@ class Dialog extends Popup {
 	 */
 	_onDragMouseDown(event) {
 		// allow dragging only on the header
-		if (!(this._movable && this.draggable && Dialog._isHeader(event.target))) {
+		if (!this._movable || !this.draggable || !Dialog._isHeader(event.target)) {
 			return;
 		}
 
@@ -487,7 +487,7 @@ class Dialog extends Popup {
 	}
 
 	_onResizeMouseDown(event) {
-		if (!(this._movable && this.resizable)) {
+		if (!this._movable || !this.resizable) {
 			return;
 		}
 
