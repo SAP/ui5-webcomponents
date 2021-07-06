@@ -316,6 +316,8 @@ class Select extends UI5Element {
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
+		this._sTypedChars = "";
+		this._iTypingTimeoutID = -1;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -458,9 +460,63 @@ class Select extends UI5Element {
 			this._handleEndKey(event);
 		} else if (isEnter(event)) {
 			this._handleSelectionChange();
-		} else {
+		} else if (isDown(event) || isUp(event)) {
 			this._handleArrowNavigation(event);
+		} else if (event.keyCode >= 65 && event.keyCode <= 90) {
+			this._handleKeyboardNavigation(event);
 		}
+	}
+
+	_handleKeyboardNavigation(event) {
+		//debugger;
+
+		// note: jQuery oEvent.which normalizes oEvent.keyCode and oEvent.charCode
+		const sTypedCharacter = event.key;
+		let sText;
+		console.log(sTypedCharacter);
+		this._sTypedChars += sTypedCharacter;
+
+		// We check if we have more than one characters and they are all duplicate, we set the
+		// text to be the last input character (sTypedCharacter). If not, we set the text to be
+		// the whole input string.
+
+		sText = (/^(.)\1+$/i).test(this._sTypedChars) ? sTypedCharacter : this._sTypedChars;
+
+		clearTimeout(this._iTypingTimeoutID);
+
+		this._iTypingTimeoutID = setTimeout(function() {
+			this._sTypedChars = "";
+			this._iTypingTimeoutID = -1;
+			this._selectTypedItem(sText);
+		}.bind(this), 100);
+	}
+
+	_selectTypedItem(sText) {
+		const currentIndex = this._selectedIndex;
+		let oItemToSelect =this._searchNextItemByText(sText);
+
+			if (oItemToSelect) {
+				const nextIndex = this._getSelectedItemIndex(oItemToSelect);
+
+				this._changeSelectedItem(this._selectedIndex, nextIndex);
+
+				if (currentIndex !== this._selectedIndex) {
+					// Announce new item even if picker is opened.
+					// The aria-activedescendents attribute can't be used,
+					// because listitem elements are in different shadow dom
+					this.itemSelectionAnnounce();
+				}
+			}
+	}
+
+	_searchNextItemByText(sText) {
+		let aOrderedOptions = this.options.slice(0);
+		let aOptionsAfterSelected = aOrderedOptions.splice(this._selectedIndex + 1, aOrderedOptions.length - this._selectedIndex);
+		let aOptionsBeforeSelected = aOrderedOptions.splice(0, aOrderedOptions.length - 1);
+
+		aOrderedOptions = aOptionsAfterSelected.concat(aOptionsBeforeSelected);
+
+		return aOrderedOptions.find(o => o.textContent.toLowerCase().startsWith(sText));
 	}
 
 	_handleHomeKey(event) {
