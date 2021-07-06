@@ -171,3 +171,30 @@ describe("Acc", () => {
 		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
 	});
 });
+
+describe("Multiple dialogs page scroll", () => {
+		before(() => {
+			browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		});
+
+		it("tests multiple dialogs page scrolling", () => {
+			const preventButtonBefore = browser.$("#prevent");
+
+			browser.setWindowSize(400, 400);
+			preventButtonBefore.scrollIntoView();
+
+			const offsetBefore = preventButtonBefore.getLocation('y');
+
+			preventButtonBefore.click();
+
+			browser.keys("Escape");
+			const confirmButton = browser.$("#yes");
+			confirmButton.click();
+
+			browser.setTimeout({ script: 5000 });
+    		const offsetAfter = preventButtonBefore.getLocation('y');
+
+			assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
+		});
+
+});
