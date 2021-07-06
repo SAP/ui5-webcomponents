@@ -168,6 +168,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.CardHeader
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-card-header
+ * @appenddocs CardHeader
  * @public
  */
 class CardHeader extends UI5Element {
