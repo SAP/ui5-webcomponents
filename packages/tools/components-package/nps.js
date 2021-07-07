@@ -10,6 +10,7 @@ const getScripts = (options) => {
 
 	const port = options.port || 8080; // preferred port
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
+	const rollupPath = options.rollupPath || "rollup"; // allows the rollup process to be run with node parameters
 
 	const scripts = {
 		clean: "rimraf dist && rimraf .port",
@@ -37,7 +38,7 @@ const getScripts = (options) => {
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
-			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
+			bundle: `${rollupPath} --config config/rollup.config.js --environment ES5_BUILD`,
 			samples: {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
@@ -60,8 +61,8 @@ const getScripts = (options) => {
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
 			bundle: {
-				default: 'rollup --config config/rollup.config.js -w --environment DEV,DEPLOY_PUBLIC_PATH:/resources/',
-				es5: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/'
+				default: `${rollupPath} --config config/rollup.config.js -w --environment DEV,DEPLOY_PUBLIC_PATH:/resources/`,
+				es5: `${rollupPath} --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/`
 			},
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
@@ -100,7 +101,7 @@ const getScripts = (options) => {
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',
 			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',
-			bundle: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE'
+			bundle: `${rollupPath} --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE`
 		}
 	};
 
