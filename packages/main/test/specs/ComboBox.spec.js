@@ -65,7 +65,6 @@ describe("General interaction", () => {
 		});
 
 		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
-		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
 		const listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
 
@@ -182,6 +181,62 @@ describe("General interaction", () => {
 		const arrow = combo.shadow$("[input-icon]");
 
 		arrow.click();
+
+		// click on first item
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#change-cb");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		popover.$("ui5-list").$$("ui5-li")[0].click();
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+		arrow.click();
+
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+		arrow.click();
+
+		popover.$("ui5-list").$$("ui5-li")[1].click();
+		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
+	});
+
+	it ("Tests change event after pressing enter key", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const counter = $("#change-count");
+		const combo = $("#change-cb");
+		const input = combo.shadow$("[inner-input]");
+
+		input.click();
+
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+
+		input.keys("a");
+
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+		input.keys("Enter");
+
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+	});
+
+	it ("Tests change event after type and item select", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const counter = $("#change-count");
+		const combo = $("#change-cb");
+		const input = combo.shadow$("[inner-input]");
+		const placeholder = $("#change-placeholder");
+
+		input.click();
+		input.keys("a");
 
 		// click on first item
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#change-cb");
@@ -329,9 +384,80 @@ describe("General interaction", () => {
 	});
 });
 
+describe("Grouping", () => {
+
+	it ("Tests group filtering", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo-grouping");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo-grouping");
+		let popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let groupItems = popover.$("ui5-list").$$("ui5-li-groupheader");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+		assert.strictEqual(groupItems.length, 4, "Group items should be 4");
+		assert.strictEqual(listItems.length, 13, "Items should be 13");
+
+		input.keys("c");
+
+		popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		groupItems = popover.$("ui5-list").$$("ui5-li-groupheader");
+		listItems = popover.$("ui5-list").$$("ui5-li");
+
+		assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
+		assert.strictEqual(listItems.length, 2, "Filtered items should be 2");
+	});
+
+	it ("Tests group item focusability", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo-grouping");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo-grouping");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let groupItem;
+
+		arrow.click();
+		input.keys("ArrowDown");
+
+		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+
+		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
+	});
+
+	it ("Tests input value while group item is focused", () => {
+		const combo = $("#combo-grouping");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo-grouping");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let groupItem;
+
+		input.keys("a");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+
+		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[1];
+
+		assert.strictEqual(groupItem.getProperty("focused"), true, "The second group header should be focused");
+		assert.strictEqual(combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
+		assert.strictEqual(combo.getProperty("value"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
+	});
+});
+
 describe("Accessibility", () => {
 
 	it ("Announce item on selection", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
 		const input = combo.shadow$("#ui5-combobox-input");
@@ -350,6 +476,21 @@ describe("Accessibility", () => {
 		input.keys("ArrowDown");
 
 		assert.strictEqual(invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
+	});
+
+	it ("Tests setting value programatically", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo");
+		const btn = $("#value-set-btn");
+		const inner = combo.shadow$("input");
+
+		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Initial Value should be Bulgaria");
+
+		btn.click();
+
+		assert.strictEqual(combo.getProperty("value"), "new value", "ComboBox value should be set to 'new value'");
+		assert.strictEqual(inner.getProperty("value"), "new value", "ComboBox value should be set to 'new value'");
 	});
 
 	it ("Should focus the ComboBox with the API", () => {

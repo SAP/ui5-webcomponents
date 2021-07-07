@@ -227,6 +227,7 @@ class SideNavigation extends UI5Element {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
 
+		item.fireEvent("click");
 		if (item.selected) {
 			return;
 		}

@@ -69,7 +69,7 @@ describe("Table general interaction", () => {
 	it("tests row aria-label value", () => {
 		const row = browser.$("#roll-0").shadow$(".ui5-table-row-root");
 
-		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR";
+		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR. 1 of 5";
 
 		assert.strictEqual(row.getAttribute("aria-label"), EXPECTED_TEXT,
 			"The aria-label value is correct.");
@@ -193,7 +193,7 @@ describe("Table general interaction", () => {
 			// test row-click and selection-change events on Enter key activation over an already selected row
 			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Enter key over an already selected row should trigger row-click event");
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "3", "Enter key over an already selected row should not trigger selection-change event");
-			
+
 			// act
 			browser.keys("ArrowDown");
 			browser.keys("ArrowDown");
@@ -333,7 +333,7 @@ describe("Table general interaction", () => {
 
 			// act
 			checkBoxFirstCell.keys("Space");
-			
+
 			// test Space key over the selection checkbox of already selected row in MultiSelect mode
 			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over the selection checkbox should not trigger row-click event");
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "3", "Space key over the selection checkbox of already selected row should trigger selection-change event");
