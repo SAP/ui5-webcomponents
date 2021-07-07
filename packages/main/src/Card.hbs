@@ -4,11 +4,8 @@
 	role="region"
 	aria-label="{{ariaLabelText}}"
 	aria-labelledby="{{ariaLabelledByCard}}">
-	{{#if hasHeader}}
-        <!-- header -->
-            <slot name="header"></slot>
-	{{/if}}
-
+    <!-- header -->
+    <slot name="header"></slot>
 	<div role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</div>
