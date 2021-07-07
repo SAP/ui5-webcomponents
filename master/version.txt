@@ -1,10 +1,7 @@
-commit 5e3f3912751b3ab9e6ded4054c570550ab6f2479
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Jul 1 13:39:43 2021 +0300
+commit 790c02e6a0c51b5b3b9841f86095408bdfe22ef3
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Wed Jul 7 11:05:28 2021 +0300
 
-    feat(ui5-combobox): add suggestions grouping (#3469)
+    fix(ui5-combobox): Properly focus inner input (#3243)
     
-    Enable users to set items to groups. Groups are visually identified in the suggestions list by group headers.
-    For group headers a new component is introduced - ComboBoxGroupItem. The grouping is based on the items order as they are declared in the markup - the items between two group headers are considered to belong to the first one.
-    
-    Fixes: #3371
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2895

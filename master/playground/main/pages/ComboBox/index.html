@@ -58,6 +58,7 @@
 			<ui5-cb-item text="Canada"></ui5-cb-item>
 			<ui5-cb-item text="Chile"></ui5-cb-item>
 		</ui5-combobox>
+		<ui5-button id="combo-focus">Focus ComboBox</ui5-button>
 
 		<br>
 
@@ -279,6 +280,10 @@
 
 		document.getElementById("value-set-btn").addEventListener("click", function (event) {
 			document.getElementById("combo").value = "new value";
+		});
+
+		document.getElementById("combo-focus").addEventListener("click", function () {
+			document.getElementById("combo").focus();
 		});
 	</script>
 
