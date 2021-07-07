@@ -491,4 +491,15 @@ describe("Accessibility", () => {
 		assert.strictEqual(combo.getProperty("value"), "new value", "ComboBox value should be set to 'new value'");
 		assert.strictEqual(inner.getProperty("value"), "new value", "ComboBox value should be set to 'new value'");
 	});
+
+	it ("Should focus the ComboBox with the API", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo");
+		const focusBtn = $("#combo-focus");
+
+		focusBtn.click();
+
+		assert.ok(combo.getProperty("focused"), "ComboBox to be focused");
+	});
 });
