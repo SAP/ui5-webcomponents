@@ -28,7 +28,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Busy Indicator           | `ui5-busy-indicator`     | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`             | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Card                     | `ui5-card`               | `import "@ui5/webcomponents/dist/Card.js";`                |
-| CardHeader               | `ui5-card-header`        | `import "@ui5/webcomponents/dist/CardHeader.js";`                |
+| CardHeader               | `ui5-card-header`        | `import "@ui5/webcomponents/dist/CardHeader.js";`          |
 | Carousel                 | `ui5-carousel`           | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`           | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | Color Palette            | `ui5-color-palette`      | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
@@ -59,8 +59,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
-| Segmented Button         | `ui5-segmented-button`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
-| Segmented Button Item    | `ui5-segmented-button-item`| comes with `ui5-segmented-button `                         |
+| Segmented Button         | `ui5-segmented-button`   | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
+| Segmented Button Item    | `ui5-segmented-button-item`| comes with `ui5-segmented-button `                       |
 | Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
 | Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
 | Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
