@@ -1,7 +1,7 @@
-commit 790c02e6a0c51b5b3b9841f86095408bdfe22ef3
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Wed Jul 7 11:05:28 2021 +0300
+commit 97a87137e423e14667d4ce060c8852a689f4d6ad
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Jul 8 08:45:23 2021 +0300
 
-    fix(ui5-combobox): Properly focus inner input (#3243)
+    fix(ui5-button): added belize parameters to bundle (#3485)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2895
+    fixes: #3482
