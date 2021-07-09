@@ -39,6 +39,7 @@ const metadata = {
 		 * <li><code>Positive</code></li>
 		 * <li><code>Negative</code></li>
 		 * <li><code>Transparent</code></li>
+		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
 		 * @type {ButtonDesign}
