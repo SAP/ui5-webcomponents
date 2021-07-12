@@ -202,14 +202,6 @@ class CardHeader extends UI5Element {
 		};
 	}
 
-	get icon() {
-		return !!this.avatar && this.avatar.startsWith("sap-icon://");
-	}
-
-	get image() {
-		return !!this.avatar && !this.icon;
-	}
-
 	get ariaHeaderRole() {
 		return this.headerInteractive ? "button" : "heading";
 	}
