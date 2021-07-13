@@ -258,7 +258,7 @@ class Icon extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.interactive ? "0" : "-1";
+		return this.interactive ? "0" : undefined;
 	}
 
 	get effectiveAccessibleRole() {
@@ -329,6 +329,8 @@ class Icon extends UI5Element {
 			}
 			const i18nBundle = getI18nBundle(this.packageName);
 			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
+		} else {
+			this.effectiveAccessibleName = undefined;
 		}
 	}
 
