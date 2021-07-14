@@ -1,10 +1,11 @@
 <ui5-dialog stretch
+	dir={{effectiveDir}}
 	@ui5-before-open={{_startReader}}
 	@ui5-after-close={{_resetReader}}>
 	<ui5-busy-indicator
 		?active={{loading}}
 		size="Large"
-		text="Loading"
+		text="{{_busyIndicatorText}}"
 		class="ui5-barcode-scanner-dialog-busy">
 	</ui5-busy-indicator>
 	<div class="ui5-barcode-scanner-dialog-video-wrapper">

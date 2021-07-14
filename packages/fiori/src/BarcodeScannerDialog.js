@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -13,9 +13,12 @@ import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDi
 import barcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
 
 // Texts
-import { BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT,
+	BARCODE_SCANNER_DIALOG_LOADING_TXT,
+} from "./generated/i18n/i18n-defaults.js";
 
-const defaultConstraints = {
+const defaultMediaConstraints = {
 	audio: false,
 	video: {
 		height: {
@@ -53,7 +56,8 @@ const metadata = {
 		 * Fired when the scan completed successfuuly.
 		 *
 		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-success
-		 * @param {String} result the scan result.
+		 * @param {String} text the scan result as string.
+		 * @param {Object} rawBytes the scan result as a Uint8Array.
 		 * @public
 		 */
 		 "scan-success": {
@@ -83,10 +87,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>BarcodeScannerDialog</code> provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API.
  * Opening the dialog launches the device camera and scans for known barcode formats.
  * <br>
+ * <br>
  * Fires a <code>scanSuccess</code> event whenever a barcode is identified
- * and a <code>scanError</code> event when the scan failed (e.g. due to missing permisions etc.).
+ * and a <code>scanError</code> event when the scan failed (e.g. due to missing permisions).
+ * <br>
  * <br>
  * The component internally uses the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> third party OSS.
  * Check the zxing-js/library documentation for the list of supported barcode formats.
@@ -130,6 +137,10 @@ class BarcodeScannerDialog extends UI5Element {
 		return [barcodeScannerDialogCss];
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
+	}
+
 	/**
 	 * Opens a dialog with the camera videostream. Starts a scan session.
 	 * @param {HTMLElement} opener the element relative to which the dialog is positioned
@@ -169,7 +180,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_getUserPermission() {
-		return navigator.mediaDevices.getUserMedia(defaultConstraints);
+		return navigator.mediaDevices.getUserMedia(defaultMediaConstraints);
 	}
 
 	async _getDialog() {
@@ -191,10 +202,6 @@ class BarcodeScannerDialog extends UI5Element {
 		if (this._isOpen) {
 			this.dialog.close();
 		}
-	}
-
-	get _isOpen() {
-		return !!this.dialog && this.dialog.opened;
 	}
 
 	_startReader() {
@@ -220,13 +227,21 @@ class BarcodeScannerDialog extends UI5Element {
 					});
 			}
 			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent("scan-error", { err });
+				this.fireEvent("scan-error", { message: err });
 			}
-		}).catch(err => this.fireEvent("scan-error", { err }));
+		}).catch(err => this.fireEvent("scan-error", { message: err }));
+	}
+
+	get _isOpen() {
+		return !!this.dialog && this.dialog.opened;
 	}
 
 	get _cancelButtonText() {
-		return this.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TEXT);
+		return this.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT);
+	}
+
+	get _busyIndicatorText() {
+		return this.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
 	}
 
 	static get dependencies() {
