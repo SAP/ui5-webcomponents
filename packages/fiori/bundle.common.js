@@ -3,6 +3,7 @@ import "./dist/features/CoPilotAnimation.js";
 
 // FIORI components
 import Bar from "./dist/Bar.js";
+import BarcodeScannerDialog from "./dist/BarcodeScannerDialog.js";
 import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
 import ProductSwitch from "./dist/ProductSwitch.js";
 import ProductSwitchItem from "./dist/ProductSwitchItem.js";
