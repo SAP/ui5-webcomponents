@@ -26,21 +26,18 @@
 	<br>
 	<br>
 	<ui5-view-settings-dialog id="vsd">
-		<ui5-li slot="sortBy">Name</ui5-li>
-		<ui5-li slot="sortBy">Position</ui5-li>
-		<ui5-li slot="sortBy">Company</ui5-li>
-		<ui5-li slot="sortBy">Department</ui5-li>
+		<ui5-li slot="sorting">Name</ui5-li>
+		<ui5-li slot="sorting">Position</ui5-li>
+		<ui5-li slot="sorting">Company</ui5-li>
+		<ui5-li slot="sorting">Department</ui5-li>
 	</ui5-view-settings-dialog>
 
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.open();
 		});
-		vsd.addEventListener("ok-click", function(evt) {
+		vsd.addEventListener("confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
-		});
-		vsd.addEventListener("cancel-click", function(evt) {
-			alert("Cancel button clicked");
 		});
 	</script>
 

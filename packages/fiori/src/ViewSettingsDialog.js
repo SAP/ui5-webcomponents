@@ -26,18 +26,6 @@ import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js"
 const metadata = {
 	tag: "ui5-view-settings-dialog",
 	managedSlots: true,
-	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
-		/**
-		 * Defines the <code>Sort By</code> list.
-		 * @type {sap.ui.webcomponents.fiori.List}
-		 * @slot sortBy
-		 * @public
-		 */
-		 "sortBy": {
-			propertyName: "sortBy",
-			type: HTMLElement,
-		},
-	},
 	properties: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the initial sort order.
@@ -49,18 +37,67 @@ const metadata = {
 		 sortDescending: {
 			type: Boolean,
 		},
+		/**
+		 * Keeps recently focused list in order to focus it on next dialog open.
+		 *
+		 * @type {Object}
+		 * @private
+		 */
+		 _recentlyFocused: {
+			type: Object,
+
+		},
+		/**
+		 * Stores settings of the dialog before the first open.
+		 *
+		 * @type {Object}
+		 * @private
+		 */
+		 _initialSettings: {
+			type: Object,
+		},
+		/**
+		 * Stores settings of the dialog after confirmation.
+		 *
+		 * @type {Object}
+		 * @private
+		 */
+		 _confirmedSettings: {
+			type: Object,
+		},
+		/**
+		 * Stores current settings of the dialog.
+		 *
+		 * @type {Object}
+		 * @private
+		 */
+		 _currentSettings: {
+			type: Object,
+		},
+	},
+	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+		/**
+		 * Defines the <code>sorting</code> list.
+		 * @type {sap.ui.webcomponents.fiori.List}
+		 * @slot sorting
+		 * @public
+		 */
+		 "sorting": {
+			propertyName: "sorting",
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 
 		/**
 		 * Fired when OK button is activated.
 		 *
-		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#ok-click
+		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The current sort by selected.
 		 * @public
 		 */
-		"ok-click": {
+		"confirm": {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
@@ -69,11 +106,11 @@ const metadata = {
 		/**
 		 * Fired when Cancel button is activated.
 		 *
-		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel-click
+		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
 		 * @param {Object} settings The current settings.
 		 * @public
 		 */
-		"cancel-click": {},
+		"cancel": {},
 	},
 };
 
@@ -81,7 +118,8 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-view-settings-dialog</code> component consisting of several lists.
- * One of them (<code>Sort order</code>) is built-in, and another (<code>Sort By</code>) must be provided by the developer.
+ * One of them (<code>Sort
+ * order</code>) is built-in, and another (<code>Sort By</code>) must be provided by the developer.
  * The selected options can be used to create sorters for the table.
  *
  * The <code>ui5-view-settings-dialog</code> interrupts the current app processing as it is the only focused UI element and
@@ -104,14 +142,16 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ViewSettigsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
+ * @since 1.0.0-rc.15
  * @public
  */
 class ViewSettingsDialog extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
-		this._initialSettings = {}; // settings when the control is opened for the first time
-		this._currentSettings = {}; // settings saved after pressing OK button
+		this._initialSettings = {};
+		this._confirmedSettings = {};
+		this._currentSettings = {};
 	}
 
 	static get render() {
@@ -182,99 +222,137 @@ class ViewSettingsDialog extends UI5Element {
 		return !this.sortDescending;
 	}
 
-	get _sortDescending() {
-		return this.sortDescending;
+	/**
+	 * Determines disabled state of the <code>Reset</code> button.
+	 */
+	get _disableResetButton() {
+		return this._dialog && JSON.stringify(this._currentSettings) === JSON.stringify(this._initialSettings);
 	}
 
+	/**
+	 * Returns the current settings (current state of all lists).
+	 */
 	get _settings() {
-		// return the current settings
 		const settings = {},
 			  sortOrderSelected = this._sortOrder.getSelectedItems(),
 			  sortBySelected = this._sortBy.getSelectedItems();
 
-		settings.sortOrder = sortOrderSelected.length ? sortOrderSelected[0].innerText : "";
-		settings.sortBy = sortBySelected.length ? sortBySelected[0].innerText : "";
+		settings.sortOrder = sortOrderSelected.length ? sortOrderSelected[0] : undefined;
+		settings.sortBy = sortBySelected.length ? sortBySelected[0] : undefined;
 		return settings;
 	}
 
+	/**
+	 * Opens the dialog. On first call does initialization of the control.
+	 */
 	open() {
 		if (!this._dialog) {
-			this._dialog = this.shadowRoot.querySelector("[ui5-dialog]");
 			this._sortOrder = this.shadowRoot.querySelector("[ui5-list][sort-order]");
 			this._sortBy = this.shadowRoot.querySelector("[ui5-list][sort-by]");
-			this._resetButton = this.shadowRoot.querySelector("[ui5-button][reset-button]");
-			this._recentlyFocused = this._sortOrder;
-			this._dialog.ariaLabel = this._dialogTitle;
 			this._initialSettings = this._settings;
 			this._currentSettings = this._initialSettings;
+			this._confirmedSettings = this._initialSettings;
+			this._dialog = this.shadowRoot.querySelector("[ui5-dialog]");
 		} else {
-			this._restoreSettings(this._currentSettings);
+			this._restoreSettings(this._confirmedSettings);
 		}
-		this._resetButtonDisabled();
 		this._dialog.open();
 	}
 
+	/**
+	 * Closes the dialog.
+	 */
 	close() {
 		this._dialog && this._dialog.close();
 	}
 
-	_focusLastControl() {
+	/**
+	 * Sets focus on recently used control within the dialog.
+	 */
+	_focusRecentlyUsedControl() {
+		if (!Object.keys(this._recentlyFocused).length) {
+			return;
+		}
 		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),
-			  recentlyFocusedItems = this._recentlyFocused.items;
+			  recentlyFocusedItems = this._recentlyFocused.items,
+			  slottedNodesExist = recentlyFocusedItems[1] && recentlyFocusedItems[1].assignedNodes && recentlyFocusedItems[1].assignedNodes().length;
 
 		if (recentlyFocusedSelectedItems.length) {
 			recentlyFocusedSelectedItems[0].focus();
-		} else if (recentlyFocusedItems[1] && recentlyFocusedItems[1].assignedNodes && recentlyFocusedItems[1].assignedNodes().length) {
+		} else if (slottedNodesExist) {
 			this._recentlyFocused.focusItem(recentlyFocusedItems[1].assignedNodes()[0]);
 		}
 	}
 
-	_resetButtonDisabled() {
-		// check for current and saved state and disable Reset button if there is no difference
-		this._resetButton.disabled = JSON.stringify(this._settings) === JSON.stringify(this._initialSettings);
-	}
-
-	_acceptSettings() {
-		// save current settings and close the dialog
-		this._currentSettings = this._settings;
-		this.fireEvent("ok-click", {
-			sortOrder: this._currentSettings.sortOrder,
-			sortBy: this._currentSettings.sortBy,
+	/**
+	 * Stores current settings as confirmed and fires <code>confirm</code> event.
+	 */
+	_confirmSettings() {
+		this._confirmedSettings = this._currentSettings;
+		this.fireEvent("confirm", {
+			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
+			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.innerText : "",
 		});
 		this.close();
 	}
 
+	/**
+	 * Sets current settings to recently confirmed ones and fires <code>cancel</code> event.
+	 */
 	_cancelSettings() {
-		// don't save current settings and close the dialog
-		this._restoreSettings(this._currentSettings);
-		this.fireEvent("cancel-click");
+		this._restoreSettings(this._confirmedSettings);
+		this.fireEvent("cancel");
 		this.close();
 	}
 
+	/**
+	 * If the dialog is closed by [ESC] key, do the same as if the <code>Cancel</code> button is pressed.
+	 *
+	 * @param {event} evt
+	 */
+	_restoreConfirmedOnEscape(evt) {
+		if (evt.detail.escPressed) {
+			this._cancelSettings();
+		}
+	}
+
+	/**
+	 * Resets the control settings to their initial state.
+	 */
 	_resetSettings() {
-		// reset to initial settings
 		this._restoreSettings(this._initialSettings);
 		this._recentlyFocused = this._sortOrder;
-		this._focusLastControl();
+		this._focusRecentlyUsedControl();
 	}
 
+	/**
+	 * Sets current settings to ones passed as <code>settings</code> argument.
+	 *
+	 * @param {Object} settings
+	 */
 	_restoreSettings(settings) {
-		// apply stored settings if any
-		this._sortOrder.items.forEach(item => { item.selected = settings.sortOrder === item.innerText; });
-		this._sortBy.items[1].assignedNodes().forEach(item => { item.selected = settings.sortBy === item.innerText; });
-		this._resetButtonDisabled();
+		const sortOrderSelected = settings.sortOrder && settings.sortOrder.innerText,
+			  sortBySelected = settings.sortBy && settings.sortBy.innerText;
+
+		this._sortOrder.items.forEach(item => { item.selected = sortOrderSelected === item.innerText; });
+		this._sortBy.items[1].assignedNodes().forEach(item => { item.selected = sortBySelected === item.innerText; });
+		this._currentSettings = settings;
 	}
 
+	/**
+	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
+	 */
 	_onSortOrderChange() {
-		// called when the sort order is changed in order to update reset button
 		this._recentlyFocused = this._sortOrder;
-		this._resetButtonDisabled();
+		this._currentSettings = this._settings;
 	}
 
-	_onSortByChange() {
-		// called when the sort by is changed in order to update reset button
+	/**
+	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
+	 */
+	 _onSortByChange() {
 		this._recentlyFocused = this._sortBy;
-		this._resetButtonDisabled();
+		this._currentSettings = this._settings;
 	}
 }
 

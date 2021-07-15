@@ -1,5 +1,7 @@
 <ui5-dialog
-	@after-open={{_focusLastControl}}
+	aria-label="{{_dialogTitle}}"
+	@after-open={{_focusRecentlyUsedControl}}
+	@before-close={{_restoreConfirmedOnEscape}}
 	?stretch={{_isPhone}}
 >
 
@@ -12,6 +14,7 @@
 				slot="endContent"
 				design="Transparent"
 				@click="{{_resetSettings}}"
+				?disabled={{_disableResetButton}}
 				reset-button>{{_resetButtonLabel}}</ui5-button>
 		</ui5-bar>
 	</div>
@@ -27,7 +30,7 @@
 					?selected="{{_sortAscending}}"
 				>{{_ascendingLabel}}</ui5-li>
 				<ui5-li
-					?selected="{{_sortDescending}}"
+					?selected="{{sortDescending}}"
 				>{{_descendingLabel}}</ui5-li>
 			</ui5-list>
 			<ui5-list
@@ -35,7 +38,7 @@
 				@selection-change={{_onSortByChange}}
 				sort-by>
 				<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
-				<slot name="sortBy"></slot>
+				<slot name="sorting"></slot>
 			</ui5-list>
 		</div>
 	</div>
@@ -43,7 +46,7 @@
 	<div slot="footer" class="ui5-vsd-footer">
 		<ui5-button
 			design="Emphasized"
-			@click="{{_acceptSettings}}"
+			@click="{{_confirmSettings}}"
 		>{{_okButtonLabel}}</ui5-button>
 		<ui5-button
 			design="Transparent"
