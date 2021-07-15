@@ -7,7 +7,7 @@ import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -248,7 +248,9 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	static blockBodyScrolling() {
-		document.body.style.top = `-${window.pageYOffset}px`;
+		if (window.pageYOffset > 0) {
+			document.body.style.top = `-${window.pageYOffset}px`;
+		}
 		document.body.classList.add("ui5-popup-scroll-blocker");
 	}
 
@@ -412,9 +414,12 @@ class Popup extends UI5Element {
 			return;
 		}
 
+		const openedPopups = getOpenedPopups();
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling();
+			if (openedPopups.length === 1) {
+				Popup.unblockBodyScrolling();
+			}
 		}
 
 		this.hide();
