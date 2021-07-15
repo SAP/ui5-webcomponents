@@ -2559,10 +2559,10 @@ chrome-launcher@^0.13.1:
     mkdirp "^0.5.3"
     rimraf "^3.0.2"
 
-chromedriver@90.0.1:
-  version "90.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-90.0.1.tgz#e322d9fcab28da124a25fd4469a8683b00f69e09"
-  integrity sha512-jvyhin0I/Bacxfet7eg29B1j+5mKR35XwWGbgcCOUALeE3mqcCKJY8xUW9cVrqVqTK9/iUOq8/kar7qrTVshPA==
+chromedriver@91.0.1:
+  version "91.0.1"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-91.0.1.tgz#4d70a569901e356c978a41de3019c464f2a8ebd0"
+  integrity sha512-9LktpHiUxM4UWUsr+jI1K1YKx2GENt6BKKJ2mibPj1Wc6ODzX/3fFIlr8CZ4Ftuyga+dHTTbAyPWKwKvybEbKA==
   dependencies:
     "@testim/chrome-version" "^1.0.7"
     axios "^0.21.1"
