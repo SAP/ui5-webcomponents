@@ -224,14 +224,17 @@ const metadata = {
 		},
 
 		/**
-		 * Used to externally manipulate the role of the list
+		 * Defines the accessible role of the component.
+		 * <br><br>
+		 * <b>Note:</b> If you use notification list items,
+		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
 		 *
-		 * @private
+		 * @public
 		 * @type {String}
 		 * @defaultvalue "listbox"
-		 * @since 1.0.0-rc.9
+		 * @since 1.0.0-rc.15
 		 */
-		accRole: {
+		 accessibleRole: {
 			type: String,
 			defaultValue: "listbox",
 		},
