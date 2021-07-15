@@ -71,14 +71,14 @@
 	background: var(--sapList_Hover_SelectionBackground);
 }
 
-:host([type="Active"][active]) .ui5-table-row-root ::slotted(ui5-table-cell) {
+:host([type="Active"][active]) .ui5-table-row-root ::slotted([ui5-table-cell]) {
 	color: var(--sapList_Active_TextColor);
 }
 
-:host ::slotted(ui5-table-cell) {
+:host ::slotted([ui5-table-cell]) {
 	padding: .5rem .25rem;
 }
 
-:host ::slotted(ui5-table-cell:first-child) {
+:host ::slotted([ui5-table-cell]:first-child) {
 	padding-left: 1rem;
 }

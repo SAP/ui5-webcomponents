@@ -6,6 +6,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -186,6 +187,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		busyDelay: {
+			type: Integer,
+			defaultValue: 1000,
+		},
+
+		/**
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
@@ -209,14 +222,17 @@ const metadata = {
 		},
 
 		/**
-		 * Used to externally manipulate the role of the list
+		 * Defines the accessible role of the component.
+		 * <br><br>
+		 * <b>Note:</b> If you use notification list items,
+		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
 		 *
-		 * @private
+		 * @public
 		 * @type {String}
 		 * @defaultvalue "listbox"
-		 * @since 1.0.0-rc.9
+		 * @since 1.0.0-rc.15
 		 */
-		accRole: {
+		 accessibleRole: {
 			type: String,
 			defaultValue: "listbox",
 		},

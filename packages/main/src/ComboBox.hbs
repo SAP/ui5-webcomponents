@@ -4,7 +4,7 @@
 	{{/if}}
 
 	<input id="ui5-combobox-input"
-		.value="{{_tempValue}}"
+		.value="{{value}}"
 		inner-input
 		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
@@ -23,6 +23,7 @@
 		aria-describedby="{{valueStateTextId}}"
 		aria-label="{{ariaLabelText}}"
 		aria-required="{{required}}"
+		data-sap-focus-ref
 	/>
 
 	{{#if icon}}

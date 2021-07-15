@@ -56,7 +56,7 @@
 		<ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="2">
 			<ui5-card title-text="Activities" subtitle-text="For Today" class="medium">
 				<ui5-timeline>
-					<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+					<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 					<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
 						MR SOF02 2.43
 					</ui5-timeline-item>
@@ -106,7 +106,7 @@
 <ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="2">
 		<ui5-card title-text="Activities" subtitle-text="For Today" class="medium">
 			<ui5-timeline>
-				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 				<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
 					MR SOF02 2.43
 				</ui5-timeline-item>
@@ -155,17 +155,17 @@
 </section>
 
 <section>
-	<h3>Carousel With Arrow Placement, SelectedIndex and Cyclic</h3>
+	<h3>Carousel With Arrow Placement and Cyclic</h3>
 
 	<div class="snippet">
-		<ui5-carousel arrows-placement="Navigation" selected-index="2" cyclic>
+		<ui5-carousel arrows-placement="Navigation" cyclic>
 			<img src="../../../assets/images/sample1.jpg" alt="Landscape 1">
 			<img src="../../../assets/images/sample2.jpg" alt="Landscape 2">
 			<img src="../../../assets/images/sample3.jpg" alt="Bulb">
 		</ui5-carousel>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-carousel arrows-placement="Navigation" selected-index="2" cyclic>
+<ui5-carousel arrows-placement="Navigation" cyclic>
 	<img src="../../../assets/images/sample1.jpg" alt="Landscape 1">
 	<img src="../../../assets/images/sample2.jpg" alt="Landscape 2">
 	<img src="../../../assets/images/sample3.jpg" alt="Bulb">

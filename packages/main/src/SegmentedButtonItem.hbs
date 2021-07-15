@@ -1,0 +1,42 @@
+<li
+		role="option"
+		aria-roledescription="{{ariaDescription}}"
+		aria-posinset="{{posInSet}}"
+		aria-setsize="{{sizeOfSet}}"
+		aria-selected="{{pressed}}"
+		class="ui5-button-root"
+		aria-disabled="{{disabled}}"
+		data-sap-focus-ref
+	{{> ariaPressed}}
+		dir="{{effectiveDir}}"
+		@focusout={{_onfocusout}}
+		@focusin={{_onfocusin}}
+		@click={{_onclick}}
+		@mousedown={{_onmousedown}}
+		@mouseup={{_onmouseup}}
+		@keydown={{_onkeydown}}
+		@keyup={{_onkeyup}}
+		@touchstart="{{_ontouchstart}}"
+		@touchend="{{_ontouchend}}"
+		tabindex={{tabIndexValue}}
+		aria-label="{{ariaLabelText}}"
+		title="{{accInfo.title}}"
+>
+	{{#if icon}}
+		<ui5-icon
+			class="ui5-button-icon"
+			name="{{icon}}"
+			part="icon"
+			?show-tooltip={{showIconTooltip}}
+		></ui5-icon>
+	{{/if}}
+
+	<span id="{{_id}}-content" class="ui5-button-text">
+		<bdi>
+			<slot></slot>
+		</bdi>
+	</span>
+
+</li>
+
+{{#*inline "ariaPressed"}}{{/inline}}

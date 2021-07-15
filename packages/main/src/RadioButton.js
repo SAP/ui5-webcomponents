@@ -14,6 +14,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -28,12 +29,13 @@ import radioButtonCss from "./generated/themes/RadioButton.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-radiobutton",
+	tag: "ui5-radio-button",
+	altTag: "ui5-radiobutton",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Determines whether the component is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
@@ -46,7 +48,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
@@ -60,17 +62,18 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component is selected or not.
+		 * Defines whether the component is checked or not.
 		 * <br><br>
 		 * <b>Note:</b> The property value can be changed with user interaction,
-		 * either by cliking/tapping on the component,
+		 * either by clicking/tapping on the component,
 		 * or by using the Space or Enter key.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		selected: {
+		checked: {
 			type: Boolean,
 		},
 
@@ -152,14 +155,19 @@ const metadata = {
 		/**
 		 * Defines whether the component text wraps when there is not enough space.
 		 * <br><br>
-		 * <b>Note:</b> By default, the text truncates when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		_tabIndex: {
@@ -183,12 +191,13 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Fired when the component selected state changes.
+		 * Fired when the component checked state changes.
 		 *
 		 * @event
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		select: {},
+		change: {},
 	},
 };
 
@@ -197,17 +206,17 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options.
- * When a <code>ui5-radiobutton</code> is selected by the user, the
- * <code>select</code> event is fired.
- * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
+ * The <code>ui5-radio-button</code> component enables users to select a single option from a set of options.
+ * When a <code>ui5-radio-button</code> is selected by the user, the
+ * <code>change</code> event is fired.
+ * When a <code>ui5-radio-button</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
- * <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
+ * <b>Note:</b> If <code>ui5-radio-button</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
- * Once the <code>ui5-radiobutton</code> is on focus, it might be selected by pressing the Space and Enter keys.
+ * Once the <code>ui5-radio-button</code> is on focus, it might be selected by pressing the Space and Enter keys.
  * <br>
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
@@ -222,7 +231,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RadioButton
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-radiobutton
+ * @tagname ui5-radio-button
  * @public
  */
 class RadioButton extends UI5Element {
@@ -258,14 +267,15 @@ class RadioButton extends UI5Element {
 
 	onBeforeRendering() {
 		this.syncGroup();
+
 		this._enableFormSupport();
 	}
 
 	syncGroup() {
 		const oldGroup = this._name;
 		const currentGroup = this.name;
-		const oldSelected = this._selected;
-		const currentSelected = this.selected;
+		const oldChecked = this._checked;
+		const currentChecked = this.checked;
 
 		if (currentGroup !== oldGroup) {
 			if (oldGroup) {
@@ -281,20 +291,20 @@ class RadioButton extends UI5Element {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
-		if (this.name && currentSelected !== oldSelected) {
+		if (this.name && currentChecked !== oldChecked) {
 			RadioButtonGroup.updateTabOrder(this.name);
 		}
 
 		this._name = this.name;
-		this._selected = this.selected;
+		this._checked = this.checked;
 	}
 
 	_enableFormSupport() {
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
-				nativeInput.disabled = element.disabled || !element.selected;
-				nativeInput.value = element.selected ? element.value : "";
+				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.value = element.checked ? element.value : "";
 			});
 		} else if (this.value) {
 			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -357,8 +367,8 @@ class RadioButton extends UI5Element {
 		}
 
 		if (!this.name) {
-			this.selected = !this.selected;
-			this.fireEvent("select");
+			this.checked = !this.checked;
+			this.fireEvent("change");
 			return this;
 		}
 
@@ -367,7 +377,7 @@ class RadioButton extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readonly || this.selected);
+		return !(this.disabled || this.readonly || this.checked);
 	}
 
 	valueStateTextMappings() {
@@ -381,6 +391,7 @@ class RadioButton extends UI5Element {
 
 	get classes() {
 		return {
+			main: {},
 			inner: {
 				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},

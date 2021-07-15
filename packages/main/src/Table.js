@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -17,6 +18,7 @@ import {
 	LOAD_MORE_TEXT,
 	ARIA_LABEL_SELECT_ALL_CHECKBOX,
 	TABLE_HEADER_ROW_TEXT,
+	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -165,6 +167,18 @@ const metadata = {
 		*/
 		busy: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+		 *
+		 * @type {Integer}
+		 * @defaultValue 1000
+		 * @public
+		 */
+		busyDelay: {
+			type: Integer,
+			defaultValue: 1000,
 		},
 
 		/**
@@ -364,7 +378,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Table
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table
- * @appenddocs TableColumn TableRow TableCell
+ * @appenddocs TableColumn TableRow TableGroupRow TableCell
  * @public
  */
 class Table extends UI5Element {
@@ -420,13 +434,15 @@ class Table extends UI5Element {
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
+		const rowsCount = this.rows.length;
 
-		this.rows.forEach(row => {
+		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
 				row._columnsInfo = columnSettings;
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
+			row._ariaPosition = this.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);

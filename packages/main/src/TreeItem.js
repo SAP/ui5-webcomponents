@@ -91,6 +91,17 @@ const metadata = {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		title: {
+			type: String,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
