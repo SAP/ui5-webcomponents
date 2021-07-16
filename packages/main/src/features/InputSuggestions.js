@@ -104,6 +104,15 @@ class Suggestions {
 		return false;
 	}
 
+	onTab(event) {
+		const input = this._getComponent();
+		if (this._isItemOnTarget() && (input.previousValue === "" && input.previousValue !== input.value)) {
+			this.onItemSelected(null, true);
+			return true;
+		}
+		return false;
+	}
+
 	toggle(bToggle, { preventFocusRestore }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 

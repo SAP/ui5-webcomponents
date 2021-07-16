@@ -12,6 +12,7 @@ import {
 	isEnter,
 	isBackSpace,
 	isEscape,
+	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -595,6 +596,10 @@ class Input extends UI5Element {
 			return this._handleSpace(event);
 		}
 
+		if (isTabNext(event)) {
+			return this._handleTab(event);
+		}
+
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
@@ -636,6 +641,12 @@ class Input extends UI5Element {
 	_handleSpace(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onSpace(event);
+		}
+	}
+
+	_handleTab(event) {
+		if (this.Suggestions) {
+			this.Suggestions.onTab(event);
 		}
 	}
 

@@ -128,11 +128,21 @@
 	<h3> 'input' test result</h3>
 	<ui5-input id="inputLiveChangeResult"></ui5-input>
 
-	<h3> Input test change</h3>
-	<ui5-input id="inputChange">	</ui5-input>
-	<h3> Input test change result</h3>
-	<ui5-input id="inputChangeResult"></ui5-input>
+	<h3> Input test change with suggestions</h3>
+	<ui5-input id="inputChange-Suggestions" show-suggestions>
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+		<ui5-suggestion-item text="Project"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Fellowship"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Vocational Training"></ui5-suggestion-item>
+	</ui5-input>
 
+	<h3> Input test change</h3>
+	<ui5-input id="inputChange">
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+	</ui5-input>
+
+	<h3> Input test change result</h3>
+	<ui5-input id="inputChangeResult"></ui5-input>	
 	<h3>Input test ESC</h3>
 	<ui5-input id="myInputEsc" show-suggestions style="width: 100%">
 		<ui5-suggestion-item text="Chromium"></ui5-suggestion-item>
@@ -360,6 +370,7 @@
 		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
 		var input = document.getElementById('myInput');
+		var inputChangeWithSuggestions = document.getElementById('inputChange-Suggestions');
 		var inputGrouping = document.getElementById('myInputGrouping');
 		var myInput2 = document.getElementById('myInput2');
 		var inputError = document.getElementById("inputError");
@@ -459,6 +470,11 @@
 		inputChange.addEventListener("ui5-change", function (event) {
 			inputChangeResult.value = ++inputChangeResultCounter;
 		});
+
+		inputChangeWithSuggestions.addEventListener("ui5-change", function (event) {
+			inputChangeResult.value = ++inputChangeResultCounter;
+		});
+
 
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
 			scrollResult.value = event.detail.scrollTop;
