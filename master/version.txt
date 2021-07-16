@@ -1,7 +1,5 @@
-commit 97a87137e423e14667d4ce060c8852a689f4d6ad
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Jul 8 08:45:23 2021 +0300
+commit ab110015bb75e51ce9e405e5c700305414371b89
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Fri Jul 16 15:02:28 2021 +0300
 
-    fix(ui5-button): added belize parameters to bundle (#3485)
-    
-    fixes: #3482
+    fix(ui5-popup): adjust default header height (#3506)

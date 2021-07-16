@@ -435,8 +435,7 @@ li:not(.style-scope) {
   margin: 0.25em 0; }
 
 img:not(.style-scope):not([slot]) {
-  max-width: 100%;
-  height: auto; }
+  max-width: 100%; }
 
 hr:not(.style-scope) {
   height: 1px;
