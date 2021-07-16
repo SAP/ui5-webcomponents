@@ -1,5 +1,13 @@
-commit ab110015bb75e51ce9e405e5c700305414371b89
+commit e0744d602fcbff527c239b561caeaa19fd1695df
 Author: Georgi <georgi.minkov@sap.com>
-Date:   Fri Jul 16 15:02:28 2021 +0300
+Date:   Fri Jul 16 15:37:07 2021 +0300
 
-    fix(ui5-popup): adjust default header height (#3506)
+    fix(ui5-responsive-popover): fixed position of downward pointing arrow (#3508)
+    
+    ResponsivePopover resets the custom property `_ui5_popup_content_padding`
+    as it is used by other components.
+    The calculation for the position of the arrow depended on the padding,
+    and the calculation will be wrong when the padding is set to "0".
+    Solved by changing the positioning of the arrow by using `top`.
+    
+    Fixes #3500

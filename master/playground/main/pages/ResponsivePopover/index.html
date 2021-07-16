@@ -103,6 +103,11 @@
 		Content
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnRpTopWithArrow">RP on Top with downward pointing arrow</ui5-button>
+	<ui5-responsive-popover placement-type="Top" id="rpTopWithArrow">
+		<div>text</div>
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.openBy(btnOpen);
@@ -130,6 +135,10 @@
 
 		btnSimpleRP.addEventListener("click", function(event) {
 			simpleRP.openBy(btnSimpleRP);
+		});
+
+		btnRpTopWithArrow.addEventListener("click", function(event) {
+			rpTopWithArrow.openBy(btnRpTopWithArrow);
 		});
 	</script>
 </body>
