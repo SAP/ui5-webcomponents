@@ -645,7 +645,7 @@ class Input extends UI5Element {
 	}
 
 	_handleTab(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions  && (!this.previousValue && this.previousValue !== this.value)) {
 			this.Suggestions.onTab(event);
 		}
 	}

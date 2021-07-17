@@ -105,8 +105,7 @@ class Suggestions {
 	}
 
 	onTab(event) {
-		const input = this._getComponent();
-		if (this._isItemOnTarget() && (input.previousValue === "" && input.previousValue !== input.value)) {
+		if (this._isItemOnTarget()) {
 			this.onItemSelected(null, true);
 			return true;
 		}
