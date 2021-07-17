@@ -502,8 +502,10 @@ class StepInput extends UI5Element {
 	}
 
 	_fireChangeEvent() {
-		this._previousValue = this.value;
-		this.fireEvent("change", { value: this.value });
+		if (this._previousValue !== this.value) {
+			this._previousValue = this.value;
+			this.fireEvent("change", { value: this.value });
+		}
 	}
 
 	/**
@@ -553,6 +555,9 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputChange(event) {
+		if (this.input.value === "") {
+			this.input.value = this.min || 0;
+		}
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
 			this.value = inputValue;

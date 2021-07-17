@@ -10,7 +10,7 @@
 	height: 100%;
 	color: var(--sapGroup_TitleTextColor);
 	background: var(--sapTile_Background);
-	box-shadow: var(--sapContent_Shadow0);
+	box-shadow: var(--_ui5_card_box_shadow);
 	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;

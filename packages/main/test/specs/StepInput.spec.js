@@ -424,6 +424,25 @@ describe("'change' event firing", () => {
 		assert.strictEqual(Number(changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
 
+	it("'change' event should be fired once after element deleted and focus out", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
+		const siCozy = $("#stepInputCozy");
+		const siMinMax = $("#stepInputMinMax");
+		const changeResult = $("#changeResult");
+
+		siMinMax.click();
+		siMinMax.keys("ArrowUp");
+		siMinMax.keys("ArrowUp");
+		siMinMax.keys("ArrowUp");
+		siCozy.click();
+		assert.strictEqual(siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
+		assert.strictEqual(Number(changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
+		siMinMax.doubleClick();
+		siMinMax.keys("Backspace");
+		siCozy.click();
+		assert.strictEqual(siMinMax.getProperty("value"), 0, "Value is increased correctly to 1");
+		assert.strictEqual(Number(changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
+	});
 });
 
 describe("Accessibility related parameters", () => {
