@@ -2,12 +2,18 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineItem from "./TimelineItem.js";
 
 // Styles
 import styles from "./generated/themes/Timeline.css.js";
+
+const AXIS_ORIENTATION = {
+	vertical: "vertical",
+	horizontal: "horizontal"
+}
 
 /**
  * @public
@@ -28,6 +34,19 @@ const metadata = {
 			propertyName: "items",
 			type: HTMLElement,
 			individualSlots: true,
+		},
+	},
+	properties: /** @lends  sap.ui.webcomponents.fiori.Timeline.prototype */ {
+		/**
+		 * Select orientation.
+		 *
+		 * @type {String}
+		 * @defaultvalue "Vertical"
+		 * @public
+		 */
+		axisOrientation: {
+			type: String,
+			default: AXIS_ORIENTATION.vertical
 		},
 	},
 };
@@ -75,7 +94,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.items,
 		});
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
@@ -95,6 +113,18 @@ class Timeline extends UI5Element {
 		const target = event.target;
 
 		this._itemNavigation.setCurrentItem(target);
+	}
+
+	onAfterRendering() {
+		this._itemNavigation.NavigationMode = this.axisOrientation === AXIS_ORIENTATION.horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+		// this.items.forEach((item) => item.axisOrientation = this.axisOrientation)
+
+		for (let i = 0; i < this.items.length; i++){
+			this.items[i].axisOrientation = this.axisOrientation;
+			if (this.items[i + 1] && !!this.items[i + 1].icon) {
+				this.items[i].isShortLine = true
+			}
+		}
 	}
 }
 
