@@ -1,13 +1,14 @@
-commit e0744d602fcbff527c239b561caeaa19fd1695df
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Fri Jul 16 15:37:07 2021 +0300
+commit 18de8a19f6b67e050acb637bd18c8de738b5d197
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon Jul 19 16:25:28 2021 +0300
 
-    fix(ui5-responsive-popover): fixed position of downward pointing arrow (#3508)
+    fix(ui5-checkbox): add aria-hidden attribute to icon (#3511)
     
-    ResponsivePopover resets the custom property `_ui5_popup_content_padding`
-    as it is used by other components.
-    The calculation for the position of the arrow depended on the padding,
-    and the calculation will be wrong when the padding is set to "0".
-    Solved by changing the positioning of the arrow by using `top`.
+    The role presentation on the icon SVG is ignored in some cases:
+    *The element is focusable, e.g. it is natively focusable like an HTML link or input, or it has a tabindex attribute.
+    *The element has any of the twenty-one global ARIA states and properties, e.g., aria-label.
     
-    Fixes #3500
+    With this change we introduce ariaHidden property on ui5-icon to be able to completly hide it from accessibility tree mapping.
+    Also, change the default value of effectiveAccessibleName to undefined as a value of "" will still set the aria-label attribute and the presentation role will be ignroed.
+    
+    Fixes #3433
