@@ -7,99 +7,99 @@ describe("Testing Range Slider interactions", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
 		browser.setWindowSize(1257, 2000);
 
-		// const rangeSlider = browser.$("#range-slider-tickmarks");
-		// const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
 
-		// assert.strictEqual(startHandle.getAttribute("style"), "left: 0%;", "Initially if no value is set, the Range Slider start-handle is at the beginning of the Range Slider");
+		assert.strictEqual(startHandle.getAttribute("style"), "left:0%;", "Initially if no value is set, the Range Slider start-handle is at the beginning of the Range Slider");
 
-		// rangeSlider.setProperty("startValue", 5);
+		rangeSlider.setProperty("startValue", 5);
 
-		// assert.strictEqual(startHandle.getAttribute("style"), "left: 12.5%;", "Start-handle should be 12.5% from the start");
+		assert.strictEqual(startHandle.getAttribute("style"), "left: 12.5%;", "Start-handle should be 12.5% from the start");
 
-		// startHandle.dragAndDrop({ x: 100, y: 1 });
+		startHandle.dragAndDrop({ x: 100, y: 1 });
 
-		// assert.strictEqual(startHandle.getAttribute("style"), "left: 20%;", "Start-handle should be 20% from the start of the Range Slider");
-		// assert.strictEqual(rangeSlider.getProperty("startValue"), 8, "Range Slider startValue should be 8");
+		assert.strictEqual(startHandle.getAttribute("style"), "left: 20%;", "Start-handle should be 20% from the start of the Range Slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 8, "Range Slider startValue should be 8");
 
-		// startHandle.click({ x: -100 });
+		startHandle.click({ x: -100 });
 
-		// assert.strictEqual(startHandle.getAttribute("style"), "left: 12.5%;", "Start-handle should be again 12.5% from the start");
-		// assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "Current startValue should be again 5");
+		assert.strictEqual(startHandle.getAttribute("style"), "left: 12.5%;", "Start-handle should be again 12.5% from the start");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "Current startValue should be again 5");
 	});
 
-	// it("Changing the endValue is reflected", () => {
-	// 	const rangeSlider = browser.$("#range-slider-tickmarks");
-	// 	const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+	it("Changing the endValue is reflected", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
-	// 	assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "Range Slider end-handle is should be 50% from the start the Range Slider");
-	// 	rangeSlider.setProperty("endValue", 10);
+		assert.strictEqual(endHandle.getAttribute("style"), "left:50%;", "Range Slider end-handle is should be 50% from the start the Range Slider");
+		rangeSlider.setProperty("endValue", 10);
 
-	// 	assert.strictEqual(endHandle.getAttribute("style"), "left: 25%;", "End-handle should be 25% from the start");
+		assert.strictEqual(endHandle.getAttribute("style"), "left: 25%;", "End-handle should be 25% from the start");
 
-	// 	rangeSlider.click();
+		rangeSlider.click();
 
-	// 	assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "Range Slider end-handle should be in the middle of the slider");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "Range Slider endValue should be 20");
+		assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "Range Slider end-handle should be in the middle of the slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "Range Slider endValue should be 20");
 
-	// 	endHandle.click({ x: 100 });
+		endHandle.click({ x: 100 });
 
-	// 	assert.strictEqual(endHandle.getAttribute("style"), "left: 57.5%;", "End-handle should be 57.5%% from the start of the Range slider");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 23, "Range Slider current endValue should be 23");
+		assert.strictEqual(endHandle.getAttribute("style"), "left: 57.5%;", "End-handle should be 57.5%% from the start of the Range slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 23, "Range Slider current endValue should be 23");
 
-	// 	endHandle.dragAndDrop({ x: -100, y: 1 });
+		endHandle.dragAndDrop({ x: -100, y: 1 });
 
-	// 	assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "End-handle should be back to 50% from the start of the Range Slider");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "Current endValue should be 20");
-	// });
+		assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "End-handle should be back to 50% from the start of the Range Slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "Current endValue should be 20");
+	});
 
-	// it("Click within the selected range should not change any value", () => {
-	// 	const rangeSlider = browser.$("#range-slider-tickmarks");
+	it("Click within the selected range should not change any value", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
 
-	// 	rangeSlider.setProperty("endValue", 30);
+		rangeSlider.setProperty("endValue", 30);
 
-	// 	assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "startValue should be 5");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "endValue value should be 30");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "startValue should be 5");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "endValue value should be 30");
 
-	// 	rangeSlider.click();
+		rangeSlider.click();
 
-	// 	assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "startValue should still be 5");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "endValue value should still be 30");
-	// });
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "startValue should still be 5");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "endValue value should still be 30");
+	});
 
-	// it("Dragging the selected range should change both values and handles", () => {
-	// 	const rangeSlider = browser.$("#range-slider-tickmarks");
-	// 	const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
-	// 	const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
-
-	// 	rangeSlider.dragAndDrop({ x: 100, y: 1 });
-
-	// 	assert.strictEqual(rangeSlider.getProperty("startValue"), 8, "startValue should be 8");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 33, "endValue should be 33");
-	// });
-
-	// it("Dragging the start-handle pass the end-handle should swap the values", () => {
-	// 	const rangeSlider = browser.$("#range-slider-tickmarks");
-	// 	const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
-	// 	const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
-
-	// 	rangeSlider.setProperty("endValue", 9);
-
-	// 	startHandle.dragAndDrop({ x: 100, y: 1 });
-
-	// 	assert.strictEqual(rangeSlider.getProperty("startValue"), 9, "startValue should swapped with the endValue and should be 9");
-	// 	assert.strictEqual(rangeSlider.getProperty("endValue"), 11, "endValue should swapped with the startValue and should be 11");
-	// });
-
-	it("Dragging the whole range selection should always keep the initially selected range and be within min/max values", () => {
+	it("Dragging the selected range should change both values and handles", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
 		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
-		browser.pause(2000)
 
-		// rangeSlider.setProperty("endValue", 30);
-		// browser.pause(2000)
-		rangeSlider.dragAndDrop({ x: -500, y: 1 });
-		browser.debug();
+		rangeSlider.dragAndDrop({ x: 100, y: 1 });
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 8, "startValue should be 8");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 33, "endValue should be 33");
+	});
+
+	it("Dragging the start-handle pass the end-handle should swap the values", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		rangeSlider.setProperty("endValue", 9);
+
+		startHandle.dragAndDrop({ x: 100, y: 1 });
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 9, "startValue should swapped with the endValue and should be 9");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 11, "endValue should swapped with the startValue and should be 11");
+	});
+
+	it("Dragging the whole range selection should always keep the initially selected range and be within min/max values", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const sliderProgress = rangeSlider.shadow$(".ui5-slider-progress");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		rangeSlider.setProperty("endValue", 30);
+
+		sliderProgress.dragAndDrop({ x: -500, y: 1 });
+
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "startValue should be 0 as the selected range has reached the start of the Range Slider");
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "endValue should be 21 and no less, the initially selected range should be preserved");
 
