@@ -127,6 +127,29 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		/**
+		 * Defines the aria-haspopup value of the component.
+		 *
+		 * @type String
+		 * @defaultvalue undefined
+		 * @since 1.0.0-rc.15
+		 * @private
+		 */
+		 ariaHaspopup: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the accessibility role of the component.
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		role: {
+			type: String,
+		},
+
 		_rel: {
 			type: String,
 			noAttribute: true,
@@ -281,6 +304,10 @@ class Link extends UI5Element {
 
 	get parsedRef() {
 		return (this.href && this.href.length > 0) ? this.href : undefined;
+	}
+
+	get effectiveAccRole() {
+		return this.role || "link";
 	}
 
 	static async onDefine() {
