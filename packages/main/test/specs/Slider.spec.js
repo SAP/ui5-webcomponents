@@ -9,7 +9,7 @@ describe("Slider basic interactions", () => {
 		const slider = browser.$("#basic-slider");
 		const sliderHandle = slider.shadow$(".ui5-slider-handle");
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 0%;", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "left:0%;", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
 
 		browser.setWindowSize(1257, 2000);
 		slider.setProperty("value", 3);
@@ -435,7 +435,7 @@ describe("Testing resize handling and RTL support", () => {
 		const slider = browser.$("#basic-slider-rtl");
 		const sliderHandle = slider.shadow$(".ui5-slider-handle");
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 0%;", "Initially if no value is set, the Slider handle is at the right of the Slider");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right:0%;", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
 		slider.setProperty("value", 3);
 		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
