@@ -1,11 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import IllustrationMessageType from "./types/IllustrationMessageType";
 
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
+import IllustrationMessageType from "./types/IllustrationMessageType.js";
 
 // Styles
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
@@ -74,7 +74,7 @@ const metadata = {
 		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
-		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>). 
+		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @since 1.0.0-rc.15

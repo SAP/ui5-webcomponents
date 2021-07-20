@@ -70,7 +70,7 @@ const IllustrationMessageTypes = {
 	 * @public
 	 * @type {UnableToUpload}
 	 */
-	UnableToUpload: "UnableToUpload"
+	UnableToUpload: "UnableToUpload",
 };
 
 /**
