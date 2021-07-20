@@ -6,7 +6,7 @@ import Dialog from "@ui5/webcomponents/Dialog.js";
 import Button from "@ui5/webcomponents/Button.js";
 import Bar from "./Bar.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
-import List from "@ui5/webcomponents/dist/List.js"
+import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 
 import {
