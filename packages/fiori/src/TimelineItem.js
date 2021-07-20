@@ -88,6 +88,29 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
+		/**
+		 * Select orientation.
+		 *
+		 * @type {String}
+		 * @defaultvalue "vertical"
+		 * @public
+		 */
+		axisOrientation: {
+			type: String,
+			default:"vertical"
+		},
+
+		/**
+		 * Define the indicator line width.
+		 *
+		 * @type {Boolean}
+		 * @defaultvalue "vertical"
+		 * @public
+		 */
+		isShortLine: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
 		/**
@@ -149,6 +172,19 @@ class TimelineItem extends UI5Element {
 			Icon,
 			Link,
 		];
+	}
+	get classes() {
+		return {
+			indicator: {
+				"ui5-tli-indicator" : true,
+				"ui5-tli-indicator-short-line": this.isShortLine,
+			},
+			arrowOrientation: {
+				"ui5-tli-bubble-arrow" : true,
+				"ui5-tli-bubble-arrow--left": this.axisOrientation === "vertical",
+				"ui5-tli-bubble-arrow--top": this.axisOrientation === "horizontal"
+			}
+		}
 	}
 }
 
