@@ -686,25 +686,26 @@ class ComboBox extends UI5Element {
 
 		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
+		let value;
 		if (matchingItems.length) {
-			this.value = matchingItems[0] ? matchingItems[0].text : current;
+			value = matchingItems[0] ? matchingItems[0].text : current;
 		} else {
-			this.value = current;
+			value = current;
 		}
 
-		if (this._isKeyNavigation) {
-			setTimeout(() => {
-				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
-			}, 0);
-		} else if (matchingItems.length) {
-			setTimeout(() => {
-				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
-			}, 0);
-		}
+		this._applyAtomicValueAndSelection(value, this._isKeyNavigation || matchingItems.length);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
+	}
+
+	_applyAtomicValueAndSelection(value, highlightValue) {
+		this.inner.value = value;
+		if (highlightValue) {
+			this.inner.setSelectionRange(this.filterValue.length, value.length);
+		}
+		this.value = value;
 	}
 
 	_selectMatchingItem() {
