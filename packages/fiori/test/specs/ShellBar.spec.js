@@ -1,6 +1,7 @@
 
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
+HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
 
 const getOverflowPopover = id => {
 	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
@@ -69,177 +70,193 @@ describe("Component Behavior", () => {
 
 			browser.setWindowSize(1920, 1080);
 
-			const shellbar = browser.$("#shellbar");
-			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
-			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+				const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
+				const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
+				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "XXL", true, "XXL Breakpoint class should be set");
-			assert.strictEqual(overflowButton.isDisplayed(), false, "Overflow button should be hidden");
-			assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
-			assert.strictEqual(primaryTitle.isDisplayed(), true, "Primary title should be visible");
-			assert.strictEqual(secondaryTitle.isDisplayed(), true, "Secondary title should be visible");
-			assert.strictEqual(searchIcon.isDisplayed(), true, "Search icon should be visible");
-			assert.strictEqual(customActionIcon1.isDisplayed(), true, "Custom Action 1 should be visible");
-			assert.strictEqual(customActionIcon2.isDisplayed(), true, "Custom Action 2 should be visible");
-			assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
-			assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
-			assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "XXL", true, "XXL Breakpoint class should be set");
+				assert.strictEqual(overflowButton.isDisplayed(), false, "Overflow button should be hidden");
+				assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
+				assert.strictEqual(primaryTitle.isDisplayed(), true, "Primary title should be visible");
+				assert.strictEqual(secondaryTitle.isDisplayed(), true, "Secondary title should be visible");
+				assert.strictEqual(searchIcon.isDisplayed(), true, "Search icon should be visible");
+				assert.strictEqual(customActionIcon1.isDisplayed(), true, "Custom Action 1 should be visible");
+				assert.strictEqual(customActionIcon2.isDisplayed(), true, "Custom Action 2 should be visible");
+				assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
+				assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
+				assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests XL Breakpoint 1820px", () => {
 			browser.setWindowSize(1820, 1080);
 
-			const shellbar = browser.$("#shellbar");
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "XL", true, "XL Breakpoint class should be set");
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "XL", true, "XL Breakpoint class should be set");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests L Breakpoint 1400px", () => {
 			browser.setWindowSize(1400, 1080);
 
-			const shellbar = browser.$("#shellbar");
-			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
-			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+				const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
+				const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
+				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "L", true, "L Breakpoint class should be set");
-			assert.strictEqual(overflowButton.isDisplayed(), false, "Overflow button should be hidden");
-			assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
-			assert.strictEqual(primaryTitle.isDisplayed(), true, "Primary title should be visible");
-			assert.strictEqual(secondaryTitle.isDisplayed(), true, "Secondary title should be visible");
-			assert.strictEqual(searchIcon.isDisplayed(), true, "Search icon should be visible");
-			assert.strictEqual(customActionIcon1.isDisplayed(), true, "Custom Action 1 should be visible");
-			assert.strictEqual(customActionIcon2.isDisplayed(), true, "Custom Action 2 should be visible");
-			assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
-			assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
-			assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "L", true, "L Breakpoint class should be set");
+				assert.strictEqual(overflowButton.isDisplayed(), false, "Overflow button should be hidden");
+				assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
+				assert.strictEqual(primaryTitle.isDisplayed(), true, "Primary title should be visible");
+				assert.strictEqual(secondaryTitle.isDisplayed(), true, "Secondary title should be visible");
+				assert.strictEqual(searchIcon.isDisplayed(), true, "Search icon should be visible");
+				assert.strictEqual(customActionIcon1.isDisplayed(), true, "Custom Action 1 should be visible");
+				assert.strictEqual(customActionIcon2.isDisplayed(), true, "Custom Action 2 should be visible");
+				assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
+				assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
+				assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests M Breakpoint and overflow 870px", () => {
 			browser.setWindowSize(870, 1080);
 
-			const shellbar = browser.$("#shellbar");
-			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
-			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+				const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
+				const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
+				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
-			const overflowPopover =  getOverflowPopover("shellbar");
-			const overflowPopoverItem1Icon = getOverflowChildProp("shellbar", 0, "icon");
-			const overflowPopoverItem2Icon = getOverflowChildProp("shellbar", 1, "icon");
+				const overflowPopover =  getOverflowPopover("shellbar");
+				const overflowPopoverItem1Icon = getOverflowChildProp("shellbar", 0, "icon");
+				const overflowPopoverItem2Icon = getOverflowChildProp("shellbar", 1, "icon");
 
-			overflowButton.click();
+				overflowButton.click();
 
-			const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
+				const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
-			assert.strictEqual(overflowButton.isDisplayed(), true, "Overflow button should be visible");
-			assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
-			assert.strictEqual(primaryTitle.isDisplayed(), true, "Primary title should be visible");
-			assert.strictEqual(secondaryTitle.isDisplayed(), false, "Secondary title should be hidden");
-			assert.strictEqual(searchIcon.isDisplayed(), true, "Search icon should be visible");
-			assert.strictEqual(customActionIcon1.isDisplayed(), false, "Custom Action 1 should be hidden");
-			assert.strictEqual(customActionIcon2.isDisplayed(), false, "Custom Action 2 should be hidden");
-			assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
-			assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
-			assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
-			assert.strictEqual(overflowPopover.isDisplayedInViewport(), true, "Overflow popover should be visible");
-			assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
-			assert.strictEqual(overflowPopoverItem1Icon, getCustomActionProp("shellbar", 0, "icon"), "Popover items have same sources as corresponding icons", overflowPopoverItem1Icon);
-			assert.strictEqual(overflowPopoverItem2Icon, getCustomActionProp("shellbar", 1, "icon"), "Popover items have same sources as corresponding icons", overflowPopoverItem2Icon);
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
+				assert.strictEqual(overflowButton.isDisplayed(), true, "Overflow button should be visible");
+				assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
+				assert.strictEqual(primaryTitle.isDisplayed(), true, "Primary title should be visible");
+				assert.strictEqual(secondaryTitle.isDisplayed(), false, "Secondary title should be hidden");
+				assert.strictEqual(searchIcon.isDisplayed(), true, "Search icon should be visible");
+				assert.strictEqual(customActionIcon1.isDisplayed(), false, "Custom Action 1 should be hidden");
+				assert.strictEqual(customActionIcon2.isDisplayed(), false, "Custom Action 2 should be hidden");
+				assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
+				assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
+				assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+				assert.strictEqual(overflowPopover.isDisplayedInViewport(), true, "Overflow popover should be visible");
+				assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
+				assert.strictEqual(overflowPopoverItem1Icon, getCustomActionProp("shellbar", 0, "icon"), "Popover items have same sources as corresponding icons", overflowPopoverItem1Icon);
+				assert.strictEqual(overflowPopoverItem2Icon, getCustomActionProp("shellbar", 1, "icon"), "Popover items have same sources as corresponding icons", overflowPopoverItem2Icon);
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests M Breakpoint and overflow 780px", () => {
 			browser.setWindowSize(780, 1080);
 
-			const shellbar = browser.$("#shellbar");
-			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-			const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
+				const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
+				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
 
-			const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
+				const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
-			assert.strictEqual(listItemsCount, 3, "3 actions should overflow");
-			assert.strictEqual(productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
+				assert.strictEqual(listItemsCount, 3, "3 actions should overflow");
+				assert.strictEqual(productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests M Breakpoint and overflow 710px", () => {
 			browser.setWindowSize(710, 1080);
 
-			const shellbar = browser.$("#shellbar");
-			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-			const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
+				const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
+				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
 
-			const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
+				const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
-			assert.strictEqual(listItemsCount, 4, "4 actions should overflow");
-			assert.strictEqual(productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
-			assert.strictEqual(notificationsIcon.isDisplayed(), false, "Notifications should be hidden");
+				assert.strictEqual(listItemsCount, 4, "4 actions should overflow");
+				assert.strictEqual(productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
+				assert.strictEqual(notificationsIcon.isDisplayed(), false, "Notifications should be hidden");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests M Breakpoint and overflow 570px", () => {
 			browser.setWindowSize(570, 1080);
 
-			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+			setTimeout(async () => {
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 
-			assert.strictEqual(searchIcon.isDisplayed(), false, "Search should be hidden");
-			assert.strictEqual(overflowButton.isDisplayed(), true, "Overflow should be visible");
+				assert.strictEqual(searchIcon.isDisplayed(), false, "Search should be hidden");
+				assert.strictEqual(overflowButton.isDisplayed(), true, "Overflow should be visible");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
 		it("tests S Breakpoint and overflow 510px", () => {
 			browser.setWindowSize(510, 1080);
 
-			const shellbar = browser.$("#shellbar");
-			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
-			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-			const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
-			const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
+			setTimeout(async () => {
+				const shellbar = browser.$("#shellbar");
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+				const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
+				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
-			assert.strictEqual(shellbar.getProperty("breakpointSize") === "S", true, "S Breakpoint class should be set");
-			assert.strictEqual(overflowButton.isDisplayed(), true, "Overflow button should be visible");
-			assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
-			assert.strictEqual(primaryTitle.isDisplayed(), false, "Primary title should be hidden");
-			assert.strictEqual(secondaryTitle.isDisplayed(), false, "Secondary title should be hidden");
-			assert.strictEqual(searchIcon.isDisplayed(), false, "Search icon should be hidden");
-			assert.strictEqual(notificationsIcon.isDisplayed(), false, "Notifications icon should be hidden");
-			assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
-			assert.strictEqual(productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
-			assert.strictEqual(listItemsCount, 5, "5 actions should overflow");
+				assert.strictEqual(shellbar.getProperty("breakpointSize") === "S", true, "S Breakpoint class should be set");
+				assert.strictEqual(overflowButton.isDisplayed(), true, "Overflow button should be visible");
+				assert.strictEqual(backButton.isDisplayed(), true, "Back icon is visible");
+				assert.strictEqual(primaryTitle.isDisplayed(), false, "Primary title should be hidden");
+				assert.strictEqual(secondaryTitle.isDisplayed(), false, "Secondary title should be hidden");
+				assert.strictEqual(searchIcon.isDisplayed(), false, "Search icon should be hidden");
+				assert.strictEqual(notificationsIcon.isDisplayed(), false, "Notifications icon should be hidden");
+				assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
+				assert.strictEqual(productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
+				assert.strictEqual(listItemsCount, 5, "5 actions should overflow");
+			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 	});
 
