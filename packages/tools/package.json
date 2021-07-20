@@ -22,6 +22,7 @@
     "directory": "packages/tools"
   },
   "dependencies": {
+    "@ui5/webcomponents-tools-i18n": "1.0.0-rc.14",
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
@@ -66,7 +67,6 @@
     "postcss-cli": "^8.3.1",
     "postcss-combine-duplicated-selectors": "^10.0.2",
     "postcss-import": "^14.0.0",
-    "properties-reader": "^2.2.0",
     "puppeteer": "^8.0.0",
     "recursive-readdir": "^2.2.2",
     "rimraf": "^3.0.2",
