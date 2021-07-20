@@ -1,7 +1,7 @@
 <ui5-dialog
 	aria-label="{{_dialogTitle}}"
-	@after-open={{_focusRecentlyUsedControl}}
-	@before-close={{_restoreConfirmedOnEscape}}
+	@ui5-after-open={{_focusRecentlyUsedControl}}
+	@ui5-before-close={{_restoreConfirmedOnEscape}}
 	?stretch={{_isPhone}}
 >
 
@@ -23,7 +23,7 @@
 		<div class="ui5-vsd-sort">
 			<ui5-list
 				mode="SingleSelectBegin"
-				@selection-change="{{_onSortOrderChange}}"
+				@ui5-selection-change="{{_onSortOrderChange}}"
 				sort-order>
 				<ui5-li-groupheader>{{_sortOrderLabel}}</ui5-li-groupheader>
 				<ui5-li
@@ -35,7 +35,7 @@
 			</ui5-list>
 			<ui5-list
 				mode="SingleSelectBegin"
-				@selection-change={{_onSortByChange}}
+				@ui5-selection-change={{_onSortByChange}}
 				sort-by>
 				<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
 				<slot name="sortItems"></slot>
