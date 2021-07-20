@@ -232,12 +232,41 @@
 	transform: scale(-1, 1);
 }
 
+[dir=rtl] .ui5-tli-bubble-arrow--top {
+	right: 0;
+	left: auto;
+	transform: scale(-1, 1);
+}
+
 [dir=rtl] .ui5-tli-bubble {
 	margin-left: auto;
 	margin-right: .5rem;
 }
 
+:host([axis-orientation="horizontal"]) [dir=rtl] .ui5-tli-bubble {
+	margin-right: 0;
+}
+
 [dir=rtl] .ui5-tli-bubble:focus::after {
 	left: var(--_ui5_TimelineItem_bubble_rtl_left_offset);
 	right: var(--_ui5_TimelineItem_bubble_rtl_right_offset);
+}
+
+:host([axis-orientation="horizontal"]) [dir=rtl]  .ui5-tli-bubble:focus::after {
+	right: 0
+}
+
+:host([axis-orientation="horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::after {
+	right: 0.625rem;
+}
+
+/* Line when no Icon is provided in horizontal*/
+:host([axis-orientation="horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::before {
+	right: 1.9375rem;
+	left: -1.625rem;
+}
+
+:host([axis-orientation="horizontal"]) [dir=rtl] .ui5-tli-indicator::before {
+	left: -1.625rem;
+	right: 2.125rem;
 }
