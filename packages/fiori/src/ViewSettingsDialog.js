@@ -5,6 +5,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/Dialog.js";
 import Button from "@ui5/webcomponents/Button.js";
 import Bar from "./Bar.js";
+import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
+import List from "@ui5/webcomponents/dist/List.js"
+import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 
 import {
 	VSD_DIALOG_TITLE_SORT,
@@ -77,13 +80,13 @@ const metadata = {
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
-		 * Defines the <code>sorting</code> list.
-		 * @type {sap.ui.webcomponents.fiori.List}
-		 * @slot sorting
+		 * Defines the <code>sortItems</code> list.
+		 * @type {sap.ui.webcomponents.fiori.ListItem}
+		 * @slot sortItems
 		 * @public
 		 */
-		 "sorting": {
-			propertyName: "sorting",
+		 "sortItems": {
+			propertyName: "sortItems",
 			type: HTMLElement,
 		},
 	},
@@ -139,7 +142,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ViewSettigsDialog
+ * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
  * @since 1.0.0-rc.15
@@ -167,6 +170,9 @@ class ViewSettingsDialog extends UI5Element {
 			Bar,
 			Button,
 			Dialog,
+			List,
+			StandardListItem,
+			GroupHeaderListItem,
 		];
 	}
 

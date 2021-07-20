@@ -18,6 +18,7 @@
 
 .ui5-vsd-footer [ui5-button]:first-child {
 	margin-right: 0.5rem;
+	min-width: 4rem;
 }
 
 .ui5-vsd-sort {
@@ -28,3 +29,4 @@
 .ui5-vsd-sort [ui5-li-groupheader] {
 	overflow: hidden;
 }
+
