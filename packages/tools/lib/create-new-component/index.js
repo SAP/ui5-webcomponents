@@ -139,8 +139,16 @@ console.log(`Successfully generated ${componentName}.js`);
 console.log(`Successfully generated ${componentName}.css`);
 console.log(`Successfully generated ${componentName}.hbs`);
 
+const bundleLogger = fs.createWriteStream("./bundle.common.js", {
+	flags: "a" // appending
+});
+
+bundleLogger.write(`
+// TODO: Move this line in order to keep the file sorted alphabetically
+import ${componentName} from "./dist/${componentName}.js";`);
+
 // Change the color of the output
-console.warn('\x1b[33m%s\x1b[0m', `
-Please import the generated component in bundle.esm.js:
-import ${componentName} from "./dist/${componentName}.js";
+	console.warn('\x1b[33m%s\x1b[0m', `
+Component is imported in bundle.common.js.
+Do NOT forget to sort the file in alphabeticall order.
 `);
