@@ -11,4 +11,15 @@ describe("Properties can only have values, restricted to their types", () => {
 		assert.strictEqual(el.getProperty("strProp"), "5", "String property is string");
 	});
 
+	it("String properties set to null result in empty string", () => {
+		const el = browser.$("#nullString");
+		el.setPropertyToNull("strProp");
+		assert.strictEqual(el.getProperty("strProp"), "", "String property is empty");
+	});
+
+	it("String properties set to undefined result in empty string", () => {
+		const el = browser.$("#undefinedString");
+		el.setProperty("strProp", undefined);
+		assert.strictEqual(el.getProperty("strProp"), "", "String property is empty");
+	});
 });
