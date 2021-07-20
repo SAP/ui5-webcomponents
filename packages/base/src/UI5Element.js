@@ -251,7 +251,7 @@ class UI5Element extends HTMLElement {
 						}
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
-					window.customElements.upgrade(child);
+					await window.customElements.upgrade(child);
 				}
 			}
 
