@@ -645,8 +645,7 @@ class Input extends UI5Element {
 	}
 
 	_handleTab(event) {
-		// Only fire change event if the previous value is empty
-		if (this.Suggestions && (!this.previousValue && this.previousValue !== this.value)) {
+		if (this.Suggestions && (this.previousValue !== this.value)) {
 			this.Suggestions.onTab(event);
 		}
 	}
