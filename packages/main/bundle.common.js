@@ -36,6 +36,7 @@ import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
 import Card from "./dist/Card.js";
+import CardHeader from "./dist/CardHeader.js";
 import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ColorPalette from "./dist/ColorPalette.js";
