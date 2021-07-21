@@ -125,9 +125,8 @@ const metadata = {
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-view-settings-dialog</code> component consisting of several lists.
- * One of them (<code>Sort
- * order</code>) is built-in, and another (<code>Sort By</code>) must be provided by the developer.
+ * The <code>ui5-view-settings-dialog</code> component helps the user to sort, filter, or group data within a list or a table.
+ * It consists of several lists like <code>Sort order</code> which is built-in and <code>Sort By</code> which must be provided by the developer.
  * The selected options can be used to create sorters for the table.
  *
  * The <code>ui5-view-settings-dialog</code> interrupts the current app processing as it is the only focused UI element and
