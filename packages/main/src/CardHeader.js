@@ -23,6 +23,13 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.CardHeader.prototype */ {
+
+		/**
+		 * Defines an avatar image, displayed in the left most part of the header.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
 		avatar: {
 			type: HTMLElement,
 		},
@@ -35,7 +42,6 @@ const metadata = {
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
 		action: {
 			type: HTMLElement,
@@ -48,7 +54,6 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
 		titleText: {
 			type: String,
@@ -59,7 +64,6 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
 		subtitleText: {
 			type: String,
@@ -73,7 +77,6 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
 		status: {
 			type: String,
@@ -85,7 +88,6 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
 		headerInteractive: {
 			type: Boolean,
@@ -95,7 +97,6 @@ const metadata = {
 		 * Defines the aria-label attribute for the component
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.15
 		 * @private
 		 * @defaultvalue ""
 		 */
@@ -109,7 +110,6 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
-		 * @since 1.0.0-rc.15
 		 */
 		ariaLabelledby: {
 			type: String,
@@ -130,9 +130,8 @@ const metadata = {
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event sap.ui.webcomponents.main.CarHeader#header-click
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
-		"header-click": {},
+		"click": {},
 	},
 };
 
@@ -170,6 +169,7 @@ const metadata = {
  * @tagname ui5-card-header
  * @appenddocs CardHeader
  * @public
+ * @since 1.0.0-rc.15
  */
 class CardHeader extends UI5Element {
 	constructor() {
@@ -258,7 +258,7 @@ class CardHeader extends UI5Element {
 
 	_headerClick() {
 		if (this.headerInteractive) {
-			this.fireEvent("header-click");
+			this.fireEvent("click");
 		}
 	}
 
@@ -273,7 +273,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("header-click");
+			this.fireEvent("click");
 			return;
 		}
 
@@ -292,7 +292,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("header-click");
+			this.fireEvent("click");
 		}
 	}
 }

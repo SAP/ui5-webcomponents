@@ -13,7 +13,7 @@ describe("Card general interaction", () => {
 	});
 
 	it("tests status not rendered, when action is set", () => {
-		const status = browser.$("#actionCardHeader").shadow$(".ui5-card-status");
+		const status = browser.$("#actionCardHeader").shadow$(".ui5-card-header-status");
 
 		assert.notOk(status.isExisting(), "The status DOM is not rendered.");
 	});
