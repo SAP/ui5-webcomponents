@@ -305,7 +305,7 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._openerRect = opener.getBoundingClientRect();
 
-		await super.open(preventInitialFocus);
+		await super._open(preventInitialFocus);
 	}
 
 	/**
@@ -360,10 +360,10 @@ class Popover extends Popup {
 	}
 
 	reposition() {
-		this.show();
+		this._show();
 	}
 
-	show() {
+	_show() {
 		let placement;
 		const popoverSize = this.getPopoverSize();
 
@@ -392,7 +392,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			super.show();
+			super._show();
 			this.style.width = this._width;
 			return;
 		}
@@ -437,7 +437,7 @@ class Popover extends Popup {
 			top: `${top}px`,
 			left: `${left}px`,
 		});
-		super.show();
+		super._show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;

@@ -61,7 +61,7 @@ function toggleSettings() {
         }
       });
 
-      dialog.open();
+      dialog.show();
     });
 
     cancelButton.addEventListener("click", function(event) {

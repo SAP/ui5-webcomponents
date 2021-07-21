@@ -234,7 +234,7 @@ class ColorPalette extends UI5Element {
 
 	async _openMoreColorsDialog() {
 		const dialog = await this._getDialog();
-		dialog.open();
+		dialog.show();
 	}
 
 	/**

@@ -215,15 +215,15 @@ class Dialog extends Popup {
 	}
 
 	/**
-	 * Opens the dialog
+	 * Shows the dialog.
 	 *
 	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @async
 	 * @returns {Promise} Resolves when the dialog is open
 	 * @public
 	 */
-	async open(preventInitialFocus) {
-		await super.open(preventInitialFocus);
+	async show(preventInitialFocus) {
+		await super._open(preventInitialFocus);
 	}
 
 	get isModal() { // Required by Popup.js
@@ -277,8 +277,8 @@ class Dialog extends Popup {
 		return this._movable ? "0" : undefined;
 	}
 
-	show() {
-		super.show();
+	_show() {
+		super._show();
 		this._center();
 		this._attachResizeHandlers();
 	}

@@ -135,7 +135,7 @@ class ResponsivePopover extends Popover {
 			await super.openBy(opener);
 		} else {
 			this.style.zIndex = getNextZIndex();
-			await this._dialog.open();
+			await this._dialog.show();
 		}
 	}
 
