@@ -120,9 +120,11 @@ const metadata = {
 
 		/**
 		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		accessibleName: {
 			type: String,

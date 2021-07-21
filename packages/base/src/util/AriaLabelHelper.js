@@ -2,8 +2,8 @@ import findNodeOwner from "./findNodeOwner.js";
 
 const getEffectiveAriaLabelText = el => {
 	if (!el.ariaLabelledby) {
-		if (el.ariaLabel) {
-			return el.ariaLabel;
+		if (el.accessibleName) {
+			return el.accessibleName;
 		}
 
 		return undefined;

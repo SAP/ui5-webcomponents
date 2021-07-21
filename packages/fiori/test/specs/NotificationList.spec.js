@@ -158,17 +158,7 @@ describe("Notification List Item Tests", () => {
 			"The ariaLabelledBy text is correct.");
 	});
 
-	it("tests List Item ACC invisible text", () => {
-		const EXPECTED_RESULT = "Notification unread High Priority";
-		const firstItem = $("#nli1");
-		const invisibleText = firstItem.shadow$(".ui5-hidden-text");
-
-		// assert
-		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
-			"The invisible text is correct.");
-	});
-
-	it("tests List Group Item ACC ariaLabelledBy", () => {
+	it("tests List Item ACC ariaLabelledBy", () => {
 		const firstItem = $("#nli1");
 		const firstItemRoot = firstItem.shadow$(".ui5-nli-root");
 
@@ -181,5 +171,24 @@ describe("Notification List Item Tests", () => {
 		// assert
 		assert.strictEqual(firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
 			"The ariaLabelledBy text is correct.");
+	});
+
+	it("tests List Item ACC invisible text", () => {
+		const EXPECTED_RESULT = "Notification unread High Priority";
+		const firstItem = $("#nli1");
+		const invisibleText = firstItem.shadow$(".ui5-hidden-text");
+
+		// assert
+		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
+			"The invisible text is correct.");
+	});
+
+	it("tests List (Group) Item ACC role", () => {
+		const firstItemRoot = $("#nli1").shadow$(".ui5-nli-root");
+		const firstGroupItemRoot = $("#nlgi1").shadow$(".ui5-nli-group-root");
+		const EXPECTED_ROLE = "listitem";
+
+		assert.strictEqual(firstGroupItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
+		assert.strictEqual(firstItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
 	});
 });

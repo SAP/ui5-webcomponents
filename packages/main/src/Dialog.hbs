@@ -5,6 +5,8 @@
 		<header
 			class="ui5-popup-header-root"
 			id="ui5-popup-header"
+			tabindex="{{_headerTabIndex}}"
+			@keydown="{{_onDragOrResizeKeyDown}}"
 			@mousedown="{{_onDragMouseDown}}">
 			{{#if header.length }}
 				<slot name="header"></slot>

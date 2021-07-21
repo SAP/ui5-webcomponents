@@ -33,18 +33,30 @@
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M" >
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M" >
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M" >
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 		</ui5-avatar-group>
 	
 		<script>
@@ -80,9 +92,12 @@
 					hiddenItems.forEach((avatar, index) => {
 						const color = avatarGroup.colorScheme[firstHiddenIndex + index];
 
-						html += '<div class="avatar-slot" style="padding: 5px">' +
-									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + color + '"></ui5-avatar>' +
-								'</div>';
+						html += `<div class="avatar-slot" style="padding: 5px">
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+						if (avatar.image.length > 0) {
+							html += `<img src="${avatar.image[0].src}">`
+						}
+						html +=`</ui5-avatar></div>`;
 					});
 	
 					placeholder.innerHTML = html;
@@ -123,7 +138,9 @@
 <ui5-avatar-group type="Individual">
 	<ui5-avatar size="M" icon="employee"></ui5-avatar>
 	<ui5-avatar size="M" initials="JD"></ui5-avatar>
-	<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
+	<ui5-avatar size="M">
+		<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+	</ui5-avatar>
 	...
 </ui5-avatar-group>
 
@@ -175,18 +192,30 @@
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" icon="employee"></ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 		</ui5-avatar-group>
 	
 		<script>
@@ -205,9 +234,12 @@
 					avatarGroup.items.forEach((avatar, index) => {
 						const avatarColor = avatarGroup.colorScheme[index];
 
-						html += '<div class="avatar-slot" style="padding: 3px">' +
-									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + avatarColor + '"></ui5-avatar>' +
-								'</div>';
+						html += `<div class="avatar-slot" style="padding: 5px">
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+						if (avatar.image.length > 0) {
+							html += `<img src="${avatar.image[0].src}">`
+						}
+						html +=`</ui5-avatar></div>`;
 					});
 	
 					placeholder.innerHTML = html;
@@ -237,7 +269,9 @@
 <ui5-avatar-group type="Group">
 	<ui5-avatar size="M" icon="employee"></ui5-avatar>
 	<ui5-avatar size="M" initials="JD"></ui5-avatar>
-	<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
+	<ui5-avatar size="M">
+		<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+	</ui5-avatar>
 	...
 </ui5-avatar-group>
 
@@ -262,54 +296,90 @@
 	<h4>Avatar Group Sizes</h4>
 	<div class="snippet">
 		<ui5-avatar-group type="Individual">
-			<ui5-avatar size="S" image="../../../assets/images/avatars/man_avatar_1.png" ></ui5-avatar>
+			<ui5-avatar size="S">
+				<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1">
+			</ui5-avatar>
 			<ui5-avatar size="S" initials="JD"></ui5-avatar>
-			<ui5-avatar size="S" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="S" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="S">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="S">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 		</ui5-avatar-group>
 
 		<br>
 
 		<ui5-avatar-group type="Individual">
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_1.png" ></ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1">
+			</ui5-avatar>
 			<ui5-avatar size="M" initials="JD"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="M">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 		</ui5-avatar-group>
 
 		<br>
 
 		<ui5-avatar-group type="Group">
-			<ui5-avatar size="L" image="../../../assets/images/avatars/man_avatar_1.png" ></ui5-avatar>
+			<ui5-avatar size="L">
+				<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1">
+			</ui5-avatar>
 			<ui5-avatar size="L" initials="JD"></ui5-avatar>
-			<ui5-avatar size="L" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-			<ui5-avatar size="L" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+			<ui5-avatar size="L">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
+			<ui5-avatar size="L">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+			</ui5-avatar>
 		</ui5-avatar-group>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-avatar-group type="Individual">
-	<ui5-avatar size="S" image="../../../assets/images/avatars/man_avatar_1.png" ></ui5-avatar>
+	<ui5-avatar size="S">
+		<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1">
+	</ui5-avatar>
 	<ui5-avatar size="S" initials="JD"></ui5-avatar>
-	<ui5-avatar size="S" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar size="S" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+	<ui5-avatar size="S">
+		<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+	</ui5-avatar>
+	<ui5-avatar size="S">
+		<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+	</ui5-avatar>
 </ui5-avatar-group>
 
 <br>
 
 <ui5-avatar-group type="Individual">
-	<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_1.png" ></ui5-avatar>
+	<ui5-avatar size="M">
+		<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1">
+	</ui5-avatar>
 	<ui5-avatar size="M" initials="JD"></ui5-avatar>
-	<ui5-avatar size="M" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar size="M" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+	<ui5-avatar size="M">
+		<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+	</ui5-avatar>
+	<ui5-avatar size="M">
+		<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+	</ui5-avatar>
 </ui5-avatar-group>
 
 <br>
 
 <ui5-avatar-group type="Group">
-	<ui5-avatar size="L" image="../../../assets/images/avatars/man_avatar_1.png" ></ui5-avatar>
+	<ui5-avatar size="L">
+		<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1">
+	</ui5-avatar>
 	<ui5-avatar size="L" initials="JD"></ui5-avatar>
-	<ui5-avatar size="L" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar size="L" image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+	<ui5-avatar size="L">
+		<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5">
+	</ui5-avatar>
+	<ui5-avatar size="L">
+		<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3">
+	</ui5-avatar>
 </ui5-avatar-group>
 	</xmp></pre>
 </section>

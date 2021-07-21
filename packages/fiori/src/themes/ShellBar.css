@@ -231,13 +231,14 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
-	max-width: calc(50% - 1.5rem);
+
 	justify-content: flex-start;
 	margin-right: 0.5rem;
 }
 
 .ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
+	max-width: calc(50% - 1.5rem);
 }
 
 .ui5-shellbar-menu-button {
@@ -407,6 +408,7 @@ slot[name="profile"] {
 	max-height: 2rem;
 	pointer-events: none;
 }
+
 
 /**
 * IE styles
