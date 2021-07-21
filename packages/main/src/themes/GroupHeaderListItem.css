@@ -1,6 +1,7 @@
 @import "./InvisibleTextStyles.css";
 
 :host {
+	height: var(--_ui5_group_header_list_item_height);
 	background: var(--ui5-group-header-listitem-background-color);
 	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
 	color: var(--sapList_TableGroupHeaderTextColor);
