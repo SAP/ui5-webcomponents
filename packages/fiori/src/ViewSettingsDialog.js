@@ -4,10 +4,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/Dialog.js";
 import Button from "@ui5/webcomponents/Button.js";
-import Bar from "./Bar.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import Bar from "./Bar.js";
 
 import {
 	VSD_DIALOG_TITLE_SORT,
@@ -93,7 +93,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 
 		/**
-		 * Fired when OK button is activated.
+		 * Fired when confirmation button is activated.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
 		 * @param {String} sortOrder The current sort order selected.
@@ -113,7 +113,12 @@ const metadata = {
 		 * @param {Object} settings The current settings.
 		 * @public
 		 */
-		"cancel": {},
+		"cancel": {
+			detail: {
+				confirmedSortOrder: { type: String },
+				confirmedSortBy: { type: String },
+			},
+		},
 	},
 };
 
@@ -307,7 +312,10 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
-		this.fireEvent("cancel");
+		this.fireEvent("cancel", {
+			confirmedSortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
+			confirmedSortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.innerText : "",
+		});
 		this.close();
 	}
 
