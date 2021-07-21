@@ -199,12 +199,14 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -523,7 +525,7 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		if (this.accessibleNameRef || this.ariaLabel) {
+		if (this.accessibleNameRef || this.accessibleName) {
 			return undefined;
 		}
 
