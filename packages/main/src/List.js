@@ -215,10 +215,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -525,7 +525,7 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		if (this.ariaLabelledby || this.accessibleName) {
+		if (this.accessibleNameRef || this.accessibleName) {
 			return undefined;
 		}
 
