@@ -57,7 +57,7 @@ exports.config = {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
 			args: ['--headless', '--disable-gpu'],
-			// args: ['--disable-gpu'],
+			args: ['--disable-gpu'],
 		}
 	}],
 	//
@@ -101,7 +101,7 @@ exports.config = {
 	// commands. Instead, they hook themselves up into the test process.
 	services: ['chromedriver'],
 	// options
-	chromeDriverArgs: ['--port=9515'], // default
+	chromeDriverArgs: ['--port=9515', '--verbose'], // default
 	// Framework you want to run your specs with.
 	// The following are supported: Mocha, Jasmine, and Cucumber
 	// see also: https://webdriver.io/docs/frameworks.html

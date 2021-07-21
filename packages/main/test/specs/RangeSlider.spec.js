@@ -10,7 +10,7 @@ describe("Testing Range Slider interactions", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
 		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
 
-		assert.strictEqual(startHandle.getAttribute("style"), "left: 0%;", "Initially if no value is set, the Range Slider start-handle is at the beginning of the Range Slider");
+		assert.strictEqual(startHandle.getAttribute("style"), "left:0%;", "Initially if no value is set, the Range Slider start-handle is at the beginning of the Range Slider");
 
 		rangeSlider.setProperty("startValue", 5);
 
@@ -31,7 +31,7 @@ describe("Testing Range Slider interactions", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
 		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
-		assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "Range Slider end-handle is should be 50% from the start the Range Slider");
+		assert.strictEqual(endHandle.getAttribute("style"), "left:50%;", "Range Slider end-handle is should be 50% from the start the Range Slider");
 		rangeSlider.setProperty("endValue", 10);
 
 		assert.strictEqual(endHandle.getAttribute("style"), "left: 25%;", "End-handle should be 25% from the start");
@@ -92,12 +92,13 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Dragging the whole range selection should always keep the initially selected range and be within min/max values", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const sliderProgress = rangeSlider.shadow$(".ui5-slider-progress");
 		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.setProperty("endValue", 30);
 
-		rangeSlider.dragAndDrop({ x: -500, y: 1 });
+		sliderProgress.dragAndDrop({ x: -500, y: 1 });
 
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "startValue should be 0 as the selected range has reached the start of the Range Slider");
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "endValue should be 21 and no less, the initially selected range should be preserved");

@@ -122,7 +122,6 @@ describe("Table general interaction", () => {
 
 	describe("Table selection modes", () => {
 		it("test click over Active/Inactive row in SingleSelect mode", () => {
-			browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
 			const table = $("#single");
 			const firstRow = $("#firstRowSingleSelect");
 			const thirdRow = $("#thirdRowSingleSelect");
@@ -369,6 +368,8 @@ describe("Table general interaction", () => {
 		});
 
 		it("test mouse and keyboard interaction over Active/Inactive row in Default mode", () => {
+			browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+
 			const table = $("#default");
 			const firstRow = $("#firstRowDefaultMode");
 			const thirdRow = $("#thirdRowDefaultMode");
@@ -381,10 +382,10 @@ describe("Table general interaction", () => {
 			firstCellFirstRowLabel.click();
 
 			// Check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(table.getAttribute("mode"), "None", "The table's mode is None");
-			assert.strictEqual(firstRow.getAttribute("mode"), "None", "The row's mode is None");
-			assert.strictEqual(firstRow.getAttribute("type"), "Active", "The row's type is Active");
-			assert.strictEqual(thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
+			assert.strictEqual(table.getProperty("mode"), "None", "The table's mode is None");
+			assert.strictEqual(firstRow.getProperty("mode"), "None", "The row's mode is None");
+			assert.strictEqual(firstRow.getProperty("type"), "Active", "The row's type is Active");
+			assert.strictEqual(thirdRow.getProperty("type"), "Inactive", "The row's type is Inactive")
 
 			// test row-click and selection-change events on click over an Active row
 			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");

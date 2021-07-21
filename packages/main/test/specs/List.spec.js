@@ -255,7 +255,7 @@ describe("List Tests", () => {
 		btn.click();
 		browser.pause(1000);
 
-		assert.strictEqual(loadMoreResult.getAttribute("value"), "1", "The event loadMore is fired.");
+		assert.strictEqual(loadMoreResult.getProperty("value"), "1", "The event loadMore is fired.");
 	});
 
 	it("detailPress event is fired", () => {
