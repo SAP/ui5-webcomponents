@@ -1,13 +1,15 @@
 <a
 	class="ui5-link-root"
-	role="link"
+	role="{{effectiveAccRole}}"
 	href="{{parsedRef}}"
 	target="{{target}}"
 	rel="{{_rel}}"
 	tabindex="{{tabIndex}}"
 	?disabled="{{disabled}}"
 	aria-label="{{ariaLabelText}}"
+	aria-haspopup="{{ariaHaspopup}}"
 	@focusin={{_onfocusin}}
+	@focusout={{_onfocusout}}
 	@click={{_onclick}}
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}>
