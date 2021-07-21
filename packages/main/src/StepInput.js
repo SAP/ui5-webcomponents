@@ -187,13 +187,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the component.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
