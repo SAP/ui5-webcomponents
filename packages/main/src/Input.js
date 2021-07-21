@@ -659,7 +659,7 @@ class Input extends UI5Element {
 
 	_handleEscape() {
 		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
-			// Restore the value.
+			// Restore the value
 			this.value = this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
