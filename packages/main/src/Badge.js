@@ -2,6 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
+import nodesHaveText from "@ui5/webcomponents-base/dist/util/nodesHaveText.js";
+
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
@@ -114,11 +116,8 @@ class Badge extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.hasIcon) {
-			this.setAttribute("__has-icon", "");
-		} else {
-			this.removeAttribute("__has-icon");
-		}
+		this.toggleAttribute("__has-icon", this.hasIcon);
+		this.toggleAttribute("__has-icon-only", this.hasIconOnly);
 	}
 
 	get hasText() {
@@ -127,6 +126,10 @@ class Badge extends UI5Element {
 
 	get hasIcon() {
 		return !!this.icon.length;
+	}
+
+	get hasIconOnly() {
+		return this.hasIcon && !nodesHaveText(this.default);
 	}
 
 	get badgeDescription() {
