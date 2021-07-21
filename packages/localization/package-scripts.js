@@ -1,6 +1,9 @@
 const resolve = require("resolve");
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
+const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
+const replaceGlobalCore = resolve.sync("@ui5/webcomponents-tools/lib/replace-global-core/index.js");
+const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
 const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
 
 const scripts = {
@@ -13,12 +16,12 @@ const scripts = {
 		"replace-export-true": `replace-in-file ", /* bExport= */ true" "" dist/**/*.js`,
 		"replace-export-false": `replace-in-file ", /* bExport= */ false" "" dist/**/*.js`,
 		"amd-to-es6": "amdtoes6 --src=dist --replace --glob=**/*.js",
-		"replace-global-core-usage": "node ./lib/replace-global-core/index.js dist/",
-		"esm-abs-to-rel": "node ./lib/esm-abs-to-rel/index.js dist/",
+		"replace-global-core-usage": `node ${replaceGlobalCore} dist/`,
+		"esm-abs-to-rel": `node ${esmAbsToRel} dist/`,
 		jsonImports: "node ./lib/generate-json-imports/cldr.js"
 	},
 	copy: {
-		"used-modules": "node ./lib/copy-list/index.js ./used-modules.txt dist/",
+		"used-modules": `node ${copyUsedModules} ./used-modules.txt dist/`,
 		cldr: `copy-and-watch "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/*.json" dist/generated/assets/cldr/`,
 		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 		src: `copy-and-watch "src/**/*.js" dist/`,

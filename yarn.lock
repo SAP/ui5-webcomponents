@@ -856,7 +856,7 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@buxlabs/amd-to-es6@^0.16.0":
+"@buxlabs/amd-to-es6@0.16.0", "@buxlabs/amd-to-es6@^0.16.0":
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/@buxlabs/amd-to-es6/-/amd-to-es6-0.16.0.tgz#172a4fc04ffe033e96c67b5b897e83d59d8377b5"
   integrity sha512-6wTVkChKcbWcg4Kio61j9HnT7SWMBVbv+y7pu96RvpoMyM/qF/th7x8SqTavnEhLfFjeJPG51fthSdRurGKpsQ==
