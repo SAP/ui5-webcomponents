@@ -98,6 +98,18 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires change on tab", () => {
+		const input = $("#inputChange-Suggestions").shadow$("input");
+		const inputResult = $("#inputChangeResult").shadow$("input");
+
+		// Start typing.
+		input.click();
+		input.keys("ArrowDown");
+		input.keys("Tab");
+
+		assert.strictEqual(inputResult.getValue(), "1", "change is called twice");
+	});
+
 	it("fires input", () => {
 		const input2 = $("#input2").shadow$("input");
 		const inputLiveChangeResult = $("#inputLiveChangeResult").shadow$("input");
@@ -132,7 +144,7 @@ describe("Input general interaction", () => {
 		// which should trigger second change event, although same value is typed in.
 		inputChangeResult.click();
 
-		assert.strictEqual(inputChangeResult.getValue(), "2", "change is called twice");
+		assert.strictEqual(inputChangeResult.getValue(), "3", "change is called twice");
 	});
 
 	it("fires suggestion-scroll event", () => {

@@ -12,6 +12,7 @@ import {
 	isEnter,
 	isBackSpace,
 	isEscape,
+	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -594,6 +595,10 @@ class Input extends UI5Element {
 			return this._handleSpace(event);
 		}
 
+		if (isTabNext(event)) {
+			return this._handleTab(event);
+		}
+
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
@@ -638,6 +643,12 @@ class Input extends UI5Element {
 		}
 	}
 
+	_handleTab(event) {
+		if (this.Suggestions && (this.previousValue !== this.value)) {
+			this.Suggestions.onTab(event);
+		}
+	}
+
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
 		if (!itemPressed) {
@@ -647,7 +658,7 @@ class Input extends UI5Element {
 
 	_handleEscape() {
 		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
-			// Restore the value.
+			// Restore the value
 			this.value = this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
