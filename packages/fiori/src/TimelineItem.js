@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
-
+import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
 import styles from "./generated/themes/TimelineItem.css.js";
 
@@ -92,24 +92,23 @@ const metadata = {
 		/**
 		 * Select orientation.
 		 *
-		 * @type {String}
-		 * @defaultvalue "vertical"
-		 * @public
+		 * @type {TimelineLayout}
+		 * @defaultvalue "Vertical"
+		 * @private
 		 */
 		axisOrientation: {
-			type: String,
-			default:"vertical"
+			type: TimelineLayout,
+			defaultvalue: TimelineLayout.Vertical,
 		},
 
 		/**
 		 * Define the indicator line width.
 		 *
-		 * @type {Boolean}
-		 * @defaultvalue "vertical"
-		 * @public
+		 * @type {String}
+		 * @private
 		 */
-		isShortLine: {
-			type: Boolean,
+		_lineWidth: {
+			type: String,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
@@ -173,18 +172,20 @@ class TimelineItem extends UI5Element {
 			Link,
 		];
 	}
+
 	get classes() {
 		return {
 			indicator: {
-				"ui5-tli-indicator" : true,
-				"ui5-tli-indicator-short-line": this.isShortLine,
+				"ui5-tli-indicator": true,
+				"ui5-tli-indicator-short-line": this._lineWidth === "short",
+				"ui5-tli-indicator-large-line": this._lineWidth === "large",
 			},
 			arrowOrientation: {
-				"ui5-tli-bubble-arrow" : true,
-				"ui5-tli-bubble-arrow--left": this.axisOrientation === "vertical",
-				"ui5-tli-bubble-arrow--top": this.axisOrientation === "horizontal"
-			}
-		}
+				"ui5-tli-bubble-arrow": true,
+				"ui5-tli-bubble-arrow--left": this.axisOrientation === TimelineLayout.Vertical,
+				"ui5-tli-bubble-arrow--top": this.axisOrientation === TimelineLayout.Horizontal,
+			},
+		};
 	}
 }
 

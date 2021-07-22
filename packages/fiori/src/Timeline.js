@@ -9,11 +9,7 @@ import TimelineItem from "./TimelineItem.js";
 
 // Styles
 import styles from "./generated/themes/Timeline.css.js";
-
-const AXIS_ORIENTATION = {
-	vertical: "vertical",
-	horizontal: "horizontal"
-}
+import TimelineLayout from "./types/TimelineLayout.js";
 
 /**
  * @public
@@ -22,6 +18,28 @@ const metadata = {
 	tag: "ui5-timeline",
 	languageAware: true,
 	managedSlots: true,
+	properties: /** @lends  sap.ui.webcomponents.fiori.Timeline.prototype */ {
+		/**
+		 * Select orientationn.
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Available options are:
+		 * <ul>
+	 	* <li><code>Vertical</code></li>
+	 	* <li><code>Horizontal</code></li>
+		 * </ul>
+		 *
+		 * @type {TimelineLayout}
+		 * @defaultvalue "Vertical"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		axisOrientation: {
+			type: TimelineLayout,
+			defaultValue: TimelineLayout.Vertical,
+		},
+	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
@@ -36,19 +54,7 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.fiori.Timeline.prototype */ {
-		/**
-		 * Select orientation.
-		 *
-		 * @type {String}
-		 * @defaultvalue "Vertical"
-		 * @public
-		 */
-		axisOrientation: {
-			type: String,
-			default: AXIS_ORIENTATION.vertical
-		},
-	},
+
 };
 
 /**
@@ -116,13 +122,14 @@ class Timeline extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._itemNavigation.NavigationMode = this.axisOrientation === AXIS_ORIENTATION.horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
-		// this.items.forEach((item) => item.axisOrientation = this.axisOrientation)
+		this._itemNavigation.NavigationMode = this.axisOrientation === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
-		for (let i = 0; i < this.items.length; i++){
+		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].axisOrientation = this.axisOrientation;
 			if (this.items[i + 1] && !!this.items[i + 1].icon) {
-				this.items[i].isShortLine = true
+				this.items[i]._lineWidth = "short";
+			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
+				this.items[i]._lineWidth = "large";
 			}
 		}
 	}

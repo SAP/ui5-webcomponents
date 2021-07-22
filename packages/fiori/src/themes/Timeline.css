@@ -22,19 +22,19 @@
 	margin-bottom: 0;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-timeline-list {
+:host([axis-orientation="Horizontal"]) .ui5-timeline-list {
 	white-space: nowrap;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-timeline-list-item {
+:host([axis-orientation="Horizontal"]) .ui5-timeline-list-item {
 	display: inline-block;
 	margin-left: var(--_ui5_tl_li_margin_bottom);
 }
 
-:host([axis-orientation="horizontal"]) .ui5-timeline-scroll-container {
+:host([axis-orientation="Horizontal"]) .ui5-timeline-scroll-container {
 	overflow: auto;
 	width: calc(100% + 1.5rem);
 }

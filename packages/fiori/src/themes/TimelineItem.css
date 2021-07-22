@@ -6,23 +6,23 @@
 	display: flex;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-root {
+:host([axis-orientation="Horizontal"]) .ui5-tli-root {
 	flex-direction: column;
 }
 
-:host(:not([axis-orientation="horizontal"])) .ui5-tli-indicator {
+:host(:not([axis-orientation="Horizontal"])) .ui5-tli-indicator {
 	position: relative;
 	width: 2rem;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-indicator {
+:host([axis-orientation="Horizontal"]) .ui5-tli-indicator {
 	position: relative;
 	display: flex;
 	height: 2rem;
 	align-items: center;
 }
 
-:host(:not([axis-orientation="horizontal"])) .ui5-tli-indicator::before {
+:host(:not([axis-orientation="Horizontal"])) .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
@@ -33,33 +33,37 @@
 	left: 50%;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-indicator::before {
+:host([axis-orientation="Horizontal"]) .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
 	height: 1px;
 	top: 50%;
 	position: absolute;
-	left: 2.125rem;
+	left: 2.0625rem;
 	right: -1.625rem;
 }
 
+:host([axis-orientation="Horizontal"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before{
+	right: -2.0625rem;
+}
+
 /* Line when no Icon is provided */
-:host(:not([axis-orientation="horizontal"]):not([icon])) .ui5-tli-indicator::before {
+:host(:not([axis-orientation="Horizontal"]):not([icon])) .ui5-tli-indicator::before {
 	bottom: -2.125rem;
 	top: 1.875rem;
 }
 
 /* Line when no Icon is provided in horizontal*/
-:host([axis-orientation="horizontal"]:not([icon])) .ui5-tli-indicator::before {
+:host([axis-orientation="Horizontal"]:not([icon])) .ui5-tli-indicator::before {
 	top: 50%;
-	right: -2.125rem;
-	left: 1.875rem;
+	right: -2.0625rem;
+	left: 1.4375rem;
 }
 
- :host([axis-orientation="horizontal"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
+ :host([axis-orientation="Horizontal"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
 	right: -1.625rem;
-	left: 2rem;
+	left: 1.4375rem;
 }
 
 /* No Icon Dot */
@@ -79,9 +83,9 @@
 }
 
 /* No Icon Dot in Hotizontal */
-:host([axis-orientation="horizontal"]:not([icon])) .ui5-tli-indicator::after {
+:host([axis-orientation="Horizontal"]:not([icon])) .ui5-tli-indicator::after {
 	top: 0.78125rem;
-	left: 1.125rem;
+	left: 0.9625rem;
 }
 
 :host(:last-child) .ui5-tli-indicator::before {
@@ -97,15 +101,15 @@
 	justify-content: center;
 	align-items: center;
 	margin-top: .25rem;
-	height: 1.4375rem;
+	height: 1.625rem;
 	width: 2rem;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-icon-outer {
+:host([axis-orientation="Horizontal"]) .ui5-tli-icon-outer {
 	margin-top: 0rem;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-icon-outer.dummy{
+:host([axis-orientation="Horizontal"]) .ui5-tli-icon-outer.dummy{
 	height: 1.425rem;
 }
 
@@ -126,7 +130,7 @@
 	padding: var(--_ui5_tl_bubble_padding);
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-bubble {
+:host([axis-orientation="Horizontal"]) .ui5-tli-bubble {
 	margin-top: .5rem;
 	margin-left: 0;
 }
@@ -146,9 +150,9 @@
 	pointer-events: none;
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-bubble:focus::after {
-	top: var(--_ui5_TimelineItem_horizontal_bubble_outline_top);
-	left: var(--_ui5_TimelineItem_horizontal_bubble_outline_left);
+:host([axis-orientation="Horizontal"]) .ui5-tli-bubble:focus::after {
+	top: -0.625rem;
+	left: -0.125rem;
 }
 
 .ui5-tli-bubble-arrow {
@@ -174,7 +178,7 @@
 	transform: rotate(45deg);
 }
 
-:host([axis-orientation="horizontal"]) .ui5-tli-bubble-arrow::before {
+:host([axis-orientation="Horizontal"]) .ui5-tli-bubble-arrow::before {
 	transform: rotate(315deg);
 }
 
@@ -193,7 +197,7 @@
 }
 
 .ui5-tli-bubble-arrow--top::before {
-	left: 50%;
+	left: 42%;
 	width: 75%;
 	transform-origin: 152% 104%;
 }
@@ -243,7 +247,7 @@
 	margin-right: .5rem;
 }
 
-:host([axis-orientation="horizontal"]) [dir=rtl] .ui5-tli-bubble {
+:host([axis-orientation="Horizontal"]) [dir=rtl] .ui5-tli-bubble {
 	margin-right: 0;
 }
 
@@ -252,21 +256,21 @@
 	right: var(--_ui5_TimelineItem_bubble_rtl_right_offset);
 }
 
-:host([axis-orientation="horizontal"]) [dir=rtl]  .ui5-tli-bubble:focus::after {
+:host([axis-orientation="Horizontal"]) [dir=rtl]  .ui5-tli-bubble:focus::after {
 	right: 0
 }
 
-:host([axis-orientation="horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::after {
+:host([axis-orientation="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::after {
 	right: 0.625rem;
 }
 
 /* Line when no Icon is provided in horizontal*/
-:host([axis-orientation="horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::before {
+:host([axis-orientation="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::before {
 	right: 1.9375rem;
 	left: -1.625rem;
 }
 
-:host([axis-orientation="horizontal"]) [dir=rtl] .ui5-tli-indicator::before {
+:host([axis-orientation="Horizontal"]) [dir=rtl] .ui5-tli-indicator::before {
 	left: -1.625rem;
 	right: 2.125rem;
 }
