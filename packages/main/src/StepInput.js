@@ -187,13 +187,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the component.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -502,8 +502,10 @@ class StepInput extends UI5Element {
 	}
 
 	_fireChangeEvent() {
-		this._previousValue = this.value;
-		this.fireEvent("change", { value: this.value });
+		if (this._previousValue !== this.value) {
+			this._previousValue = this.value;
+			this.fireEvent("change", { value: this.value });
+		}
 	}
 
 	/**
@@ -553,6 +555,9 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputChange(event) {
+		if (this.input.value === "") {
+			this.input.value = this.min || 0;
+		}
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
 			this.value = inputValue;

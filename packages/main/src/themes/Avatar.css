@@ -27,7 +27,8 @@
 }
 
 /* Shapes */
-:host([shape="Square"]) {
+:host([shape="Square"]),
+:host([shape="Square"]) ::slotted(*){
 	border-radius: .25rem;
 }
 
@@ -115,7 +116,15 @@
 	width: 3rem;
 }
 
-:host(:not([image])) {
+::slotted(*) {
+	border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
+
+:host(:not([background-color]):not([_has-image])),
+:host([_background-color="Accent6"]),
+:host([background-color="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 }
 
