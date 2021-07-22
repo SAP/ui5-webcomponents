@@ -116,8 +116,17 @@ class Badge extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.toggleAttribute("__has-icon", this.hasIcon);
-		this.toggleAttribute("__has-icon-only", this.hasIconOnly);
+		if (this.hasIcon) {
+			this.setAttribute("__has-icon", "");
+		} else {
+			this.removeAttribute("__has-icon");
+		}
+
+		if (this.hasIconOnly) {
+			this.setAttribute("__has-icon-only", "");
+		} else {
+			this.removeAttribute("__has-icon-only");
+		}
 	}
 
 	get hasText() {
