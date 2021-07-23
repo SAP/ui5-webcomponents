@@ -56,6 +56,7 @@ describe("General interaction", () => {
 		input.click();
 		input.keys("b");
 
+		browser.pause(200);
 		assert.ok(popover.getProperty("opened"), "Popover should be displayed");
 		assert.strictEqual(input.getProperty("value"), "Bahrain", "Value should be Bahrain");
 
