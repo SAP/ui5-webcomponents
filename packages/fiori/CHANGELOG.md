@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
+
+
+### Bug Fixes
+
+* **ui5-bar:** aria-label added depending on the "design" property ([#3161](https://github.com/SAP/ui5-webcomponents/issues/3161)) ([7ffb575](https://github.com/SAP/ui5-webcomponents/commit/7ffb575)), closes [#3020](https://github.com/SAP/ui5-webcomponents/issues/3020)
+* **ui5-bar:** rename middleContent slot ([#3440](https://github.com/SAP/ui5-webcomponents/issues/3440)) ([e235d7d](https://github.com/SAP/ui5-webcomponents/commit/e235d7d)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+* **ui5-flexible-column-layout:** column borders in high contrast themes ([#3328](https://github.com/SAP/ui5-webcomponents/issues/3328)) ([bd18bb9](https://github.com/SAP/ui5-webcomponents/commit/bd18bb9)), closes [#3320](https://github.com/SAP/ui5-webcomponents/issues/3320)
+* **ui5-flexible-column-layout:** correct columns display ([#3444](https://github.com/SAP/ui5-webcomponents/issues/3444)) ([62977d0](https://github.com/SAP/ui5-webcomponents/commit/62977d0)), closes [#3425](https://github.com/SAP/ui5-webcomponents/issues/3425)
+* **ui5-flexible-column-layout:** rename noArrows property to hideArrows ([#3352](https://github.com/SAP/ui5-webcomponents/issues/3352)) ([8660d11](https://github.com/SAP/ui5-webcomponents/commit/8660d11)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+* **ui5-shellbar:** fix search field width ([#3296](https://github.com/SAP/ui5-webcomponents/issues/3296)) ([51fb1a3](https://github.com/SAP/ui5-webcomponents/commit/51fb1a3))
+* **ui5-shellbar:** Fix unnecessary cutting space on left side ([#3513](https://github.com/SAP/ui5-webcomponents/issues/3513)) ([c7e6f07](https://github.com/SAP/ui5-webcomponents/commit/c7e6f07)), closes [#3501](https://github.com/SAP/ui5-webcomponents/issues/3501)
+* **ui5-shellbar:** hide notification bubble if empty str ([#3123](https://github.com/SAP/ui5-webcomponents/issues/3123)) ([33fde82](https://github.com/SAP/ui5-webcomponents/commit/33fde82)), closes [#3121](https://github.com/SAP/ui5-webcomponents/issues/3121)
+* **ui5-shellbar:** menu button arrow position ([#3285](https://github.com/SAP/ui5-webcomponents/issues/3285)) ([18ea76d](https://github.com/SAP/ui5-webcomponents/commit/18ea76d)), closes [#3199](https://github.com/SAP/ui5-webcomponents/issues/3199)
+* **ui5-side-navigation:** items in popup fire click event ([#3468](https://github.com/SAP/ui5-webcomponents/issues/3468)) ([658328a](https://github.com/SAP/ui5-webcomponents/commit/658328a))
+* **ui5-upload-collection:** change file deleted event name ([#3413](https://github.com/SAP/ui5-webcomponents/issues/3413)) ([5898eb8](https://github.com/SAP/ui5-webcomponents/commit/5898eb8)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+* **ui5-upload-collection:** rename noDnd property to hideDragOverlay ([#3335](https://github.com/SAP/ui5-webcomponents/issues/3335)) ([c360443](https://github.com/SAP/ui5-webcomponents/commit/c360443)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+* **ui5-upload-collection-item:** fixed keyboard navigation ([#3327](https://github.com/SAP/ui5-webcomponents/issues/3327)) ([aad0c32](https://github.com/SAP/ui5-webcomponents/commit/aad0c32))
+* **ui5-wizard:** Circle's number horizontally aligned with the step's title ([#3370](https://github.com/SAP/ui5-webcomponents/issues/3370)) ([2cd97ec](https://github.com/SAP/ui5-webcomponents/commit/2cd97ec)), closes [#3251](https://github.com/SAP/ui5-webcomponents/issues/3251) [#3251](https://github.com/SAP/ui5-webcomponents/issues/3251)
+* **ui5-wizard:** correct aria-controls value ([#3180](https://github.com/SAP/ui5-webcomponents/issues/3180)) ([d449812](https://github.com/SAP/ui5-webcomponents/commit/d449812))
+* **ui5-wizard:** implement revised accessibility spec ([#2990](https://github.com/SAP/ui5-webcomponents/issues/2990)) ([99cb6b1](https://github.com/SAP/ui5-webcomponents/commit/99cb6b1))
+* **ui5-wizard-step:** rename properties ([#3334](https://github.com/SAP/ui5-webcomponents/issues/3334)) ([b0e73ad](https://github.com/SAP/ui5-webcomponents/commit/b0e73ad)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+* keep invisible texts out of the view port ([#3085](https://github.com/SAP/ui5-webcomponents/issues/3085)) ([de47520](https://github.com/SAP/ui5-webcomponents/commit/de47520)), closes [#2723](https://github.com/SAP/ui5-webcomponents/issues/2723) [#2723](https://github.com/SAP/ui5-webcomponents/issues/2723)
+
+
+### Features
+
+* **ui5-page:** implement responsive paddings ([#3412](https://github.com/SAP/ui5-webcomponents/issues/3412)) ([b720393](https://github.com/SAP/ui5-webcomponents/commit/b720393))
+* **ui5-product-switch:** Implement accessibility specification ([#2865](https://github.com/SAP/ui5-webcomponents/issues/2865)) ([8c0225c](https://github.com/SAP/ui5-webcomponents/commit/8c0225c)), closes [#2707](https://github.com/SAP/ui5-webcomponents/issues/2707)
+* **ui5-wizard:** set initial focus when a step is changed ([#3310](https://github.com/SAP/ui5-webcomponents/issues/3310)) ([70f5563](https://github.com/SAP/ui5-webcomponents/commit/70f5563))
+
+
+
 # [1.0.0-rc.14](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.13...v1.0.0-rc.14) (2021-04-01)
 
 
