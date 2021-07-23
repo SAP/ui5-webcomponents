@@ -115,15 +115,15 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+		assert.strictEqual(firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
 
 		step1InHeader.keys(["Shift", "Tab"]);
 		step2InHeader.keys("Space");
-		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+		assert.strictEqual(firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
 
 		step1InHeader.keys(["Shift", "Tab"]);
 		step2InHeader.keys("Enter");
-		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+		assert.strictEqual(firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(step2.getAttribute("selected"), null,
