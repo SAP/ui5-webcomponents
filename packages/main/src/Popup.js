@@ -278,10 +278,17 @@ class Popup extends UI5Element {
 	}
 
 	_onfocusout(e) {
-		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root.
 		if (!e.relatedTarget) {
 			this._root.tabIndex = -1;
+			this._shouldFocusRoot = true;
+		}
+	}
+
+	_onmouseup(e) {
+		if (document.activeElement !== this && !this.contains(document.activeElement) && this._shouldFocusRoot) {
 			this._root.focus();
+			this._shouldFocusRoot = false;
 		}
 	}
 
