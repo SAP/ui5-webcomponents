@@ -6,6 +6,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
 
 
+### New Component
+
+* **ui5-illustrated-message:** introduce new component ([#3376](https://github.com/SAP/ui5-webcomponents/issues/3376)) ([2dff1f4](https://github.com/SAP/ui5-webcomponents/commit/2dff1f4))
+
 ### Features
 
 * **a11y:** introduce "accessible-name" for multiple components ([#3449](https://github.com/SAP/ui5-webcomponents/issues/3449)) ([f4f5864](https://github.com/SAP/ui5-webcomponents/commit/f4f5864))
