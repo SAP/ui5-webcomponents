@@ -1,36 +1,35 @@
 @import "./InvisibleTextStyles.css";
-
 :host(:not([hidden])) {
 	display: block;
-    cursor: pointer;
-    position: relative;
+	position: relative;
 }
 
 :host([_minimal]) .ui5-li-tree-toggle-box {
-    width: 0;
+	width: 0;
+	min-width: 0;
 }
 
 :host([_minimal]) .ui5-li-icon {
-    padding: 0;
+	padding: 0;
 }
 
 :host([_minimal]) .ui5-li-content {
-    justify-content: center;
+	justify-content: center;
 }
 
 :host([_minimal]) .ui5-li-root-tree {
-    padding: 0;
+	padding: 0;
 }
 
 :host([_minimal][show-toggle-button])::after {
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 0.375rem solid transparent;
-    border-bottom: .375rem solid var(--sapContent_IconColor);
-    position: absolute;
-    right: 0.1875rem;
-    bottom: 0.125rem;
+	content: "";
+	width: 0;
+	height: 0;
+	border-left: 0.375rem solid transparent;
+	border-bottom: .375rem solid var(--sapContent_IconColor);
+	position: absolute;
+	right: 0.1875rem;
+	bottom: 0.125rem;
 }
 
 :host([_minimal]) .ui5-li-tree-text-wrapper {
@@ -38,87 +37,65 @@
 }
 
 .ui5-li-root-tree {
-    padding-left: 0;
+	padding-left: 0;
 }
 
-:host([selected][has-border]:not([level="1"])),
 :host(:not([level="1"])) {
-    border-bottom: none;
+	border-color: var(--sapList_AlternatingBackground);
 }
 
-:host([_toggle-button-end][selected]:not([level="1"])){
-    border-bottom: var(--ui5-listitem-selected-border-bottom);
+:host([_toggle-button-end][selected]:not([level="1"])) {
+	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover {
-    background: var(--sapList_Hover_Background);
-    cursor: pointer;
+:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover, :host([_mode]:not([_mode="None"]):not([_mode="Delete"]):not([selected])) .ui5-li-root-tree:hover {
+	background: var(--sapList_Hover_Background);
+	cursor: pointer;
 }
 
-:host(:not([level="1"])) .ui5-li-root-tree {
-    background: var(--sapList_AlternatingBackground);
+:host(:not([level="1"]):not([selected])) .ui5-li-root-tree {
+	background: var(--sapList_AlternatingBackground);
 }
 
 :host([_toggle-button-end]:not([level="1"])) .ui5-li-root-tree {
-    background: var(--ui5-listitem-background-color);
+	background: var(--ui5-listitem-background-color);
 }
 
 :host([_toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
-    background: var(--sapList_SelectionBackgroundColor);
+	background: var(--sapList_SelectionBackgroundColor);
+}
+
+:host([_mode]:not([_mode="None"]):not([_mode="Delete"])[selected]) .ui5-li-root-tree:hover {
+	background-color: var(--sapList_Hover_SelectionBackground);
+	cursor: pointer;
 }
 
 .ui5-li-tree-toggle-box {
-    min-width: var(--_ui5-tree-toggle-box-width);
-    min-height: var(--_ui5-tree-toggle-box-height);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	min-width: var(--_ui5-tree-toggle-box-width);
+	min-height: var(--_ui5-tree-toggle-box-height);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 }
 
 .ui5-li-tree-toggle-icon {
-    width: var(--_ui5-tree-toggle-icon-size);
-    height: var(--_ui5-tree-toggle-icon-size);
+	width: var(--_ui5-tree-toggle-icon-size);
+	height: var(--_ui5-tree-toggle-icon-size);
+	color: var(--sapContent_IconColor);
+	cursor: pointer;
 }
 
 :host([actionable]) .ui5-li-tree-toggle-icon {
-    color: var(--sapButton_TextColor);
+	color: var(--sapButton_TextColor);
 }
 
 :host([active][actionable]) .ui5-li-tree-toggle-icon {
-    color: var(--sapList_Active_TextColor);
-}
-
-/* [ui5-li]: infoState */
-:host([info-state="Warning"]) .ui5-li-tree-info {
-	color: var(--sapCriticalTextColor);
-}
-
-:host([info-state="Success"]) .ui5-li-tree-info {
-	color: var(--sapPositiveTextColor);
-}
-
-:host([info-state="Error"]) .ui5-li-tree-info {
-	color: var(--sapNegativeTextColor);
-}
-
-:host([info-state="Information"]) .ui5-li-tree-info {
-	color: var(--sapInformativeTextColor);
-}
-
-/* [ui5-li]: info */
-.ui5-li-tree-info {
-	margin: 0 0.25rem;
-	color: var(--sapNeutralTextColor);
-	font-size: 0.875rem;
-	min-width: 6rem;
-	max-width: 40%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	color: var(--sapList_Active_TextColor);
 }
 
 .ui5-li-tree-text-wrapper {
-	display:flex;
-	justify-content:space-between;
+	display: flex;
+	justify-content: space-between;
 	width: 100%;
 }

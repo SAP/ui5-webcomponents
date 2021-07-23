@@ -35,11 +35,11 @@
 
 <body style="background-color: var(--sapBackgroundColor);">
 	<div id="nav" class="navbar" style="display: flex; align-items: center;">
-		<ui5-togglebutton id="menu-btn" icon="menu" type="Transparent"></ui5-togglebutton>
+		<ui5-toggle-button id="menu-btn" icon="menu" type="Transparent"></ui5-toggle-button>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
-		<ui5-togglebutton id="btnCompact">Compact</ui5-togglebutton>
-		<ui5-togglebutton id="btnRTL">RTL</ui5-togglebutton>
-		<ui5-togglebutton id="btnTheme">HCB/FIORI</ui5-togglebutton>
+		<ui5-toggle-button id="btnCompact">Compact</ui5-toggle-button>
+		<ui5-toggle-button id="btnRTL">RTL</ui5-toggle-button>
+		<ui5-toggle-button id="btnTheme">HCB/FIORI</ui5-toggle-button>
 	</div>
 
 	<div id="side-nav" class="sidenav">
@@ -56,7 +56,7 @@
 			<ui5-li type="Active" id="ch1" icon="developer-settings">ui5-li</ui5-li>
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-panel</ui5-li>
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-popover</ui5-li>
-			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-radiobutton</ui5-li>
+			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-radio-button</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-tabcontainer</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-table</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-textarea</ui5-li>
@@ -155,11 +155,11 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-togglebutton>Yes/No</ui5-togglebutton>
-			<ui5-togglebutton>I/O</ui5-togglebutton>
-			<ui5-togglebutton pressed>Toggle Button pressed</ui5-togglebutton>
-			<ui5-togglebutton type="Positive">On/Off</ui5-togglebutton>
-			<ui5-togglebutton pressed type="Negative" icon="menu">Menu</ui5-togglebutton>
+			<ui5-toggle-button>Yes/No</ui5-toggle-button>
+			<ui5-toggle-button>I/O</ui5-toggle-button>
+			<ui5-toggle-button pressed>Toggle Button pressed</ui5-toggle-button>
+			<ui5-toggle-button type="Positive">On/Off</ui5-toggle-button>
+			<ui5-toggle-button pressed type="Negative" icon="menu">Menu</ui5-toggle-button>
 			<ui5-button id="openPopoverButton">Open Popover</ui5-button>
 			<ui5-popover header-text="Popover" id="hello-popover">
 				<div style="padding: 1rem;text-align: center;">
@@ -207,27 +207,27 @@
 				</div>
 			</ui5-dialog>
 
-			<ui5-togglebutton pressed type="Negative">Euro/BGN</ui5-togglebutton>
-			<ui5-togglebutton>Light/Dark</ui5-togglebutton>
-			<ui5-togglebutton pressed>BG/EN</ui5-togglebutton>
+			<ui5-toggle-button pressed type="Negative">Euro/BGN</ui5-toggle-button>
+			<ui5-toggle-button>Light/Dark</ui5-toggle-button>
+			<ui5-toggle-button pressed>BG/EN</ui5-toggle-button>
 		</section>
 
 		<section class="row row-centered">
-			<ui5-radiobutton id="myRb1" selected text="Default"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb2" read-only text="read only"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb3" disabled text="disabled"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb4" read-only text="read only" selected></ui5-radiobutton>
-			<ui5-radiobutton id="myRb5" disabled text="disabled" selected></ui5-radiobutton>
-			<ui5-radiobutton id="myRb6" value-state="Warning" selected text="warning"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb7" value-state="Error" selected text="error"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb6" value-state="Warning" text="warning"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb7" value-state="Error" text="error long text should truncate"></ui5-radiobutton>
+			<ui5-radio-button id="myRb1" checked text="Default"></ui5-radio-button>
+			<ui5-radio-button id="myRb2" read-only text="read only"></ui5-radio-button>
+			<ui5-radio-button id="myRb3" disabled text="disabled"></ui5-radio-button>
+			<ui5-radio-button id="myRb4" read-only text="read only" checked></ui5-radio-button>
+			<ui5-radio-button id="myRb5" disabled text="disabled" checked></ui5-radio-button>
+			<ui5-radio-button id="myRb6" value-state="Warning" checked text="warning"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" value-state="Error" checked text="error"></ui5-radio-button>
+			<ui5-radio-button id="myRb6" value-state="Warning" text="warning"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" value-state="Error" text="error long text should truncate"></ui5-radio-button>
 		</section>
 
 		<section class="row row-centered">
 			<ui5-checkbox id="myCb1" checked text="Default"></ui5-checkbox>
 			<ui5-checkbox id="myCb2" read-only text="read only"></ui5-checkbox>
-			<ui5-checkbox id="myCb3" disabled wrap text="disabled long text might also wrap"></ui5-checkbox>
+			<ui5-checkbox id="myCb3" disabled wrapping-type="Normal" text="disabled long text might also wrap"></ui5-checkbox>
 			<ui5-checkbox id="myCb4" read-only text="read only" checked></ui5-checkbox>
 			<ui5-checkbox id="myCb5" disabled text="disabled" checked></ui5-checkbox>
 			<ui5-checkbox id="myCb6" value-state="Warning" checked text="warning"></ui5-checkbox>
@@ -318,18 +318,18 @@
 		<section class="row">
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item1">
 				<ui5-tab key="item1" text="Products" icon="product" icon-color="Negative">
-					<ui5-togglebutton pressed type="Positive">Cucumber</ui5-togglebutton>
+					<ui5-toggle-button pressed type="Positive">Cucumber</ui5-toggle-button>
 					<ui5-button>Banana</ui5-button>
-					<ui5-togglebutton pressed type="Negative">Tomato</ui5-togglebutton>
+					<ui5-toggle-button pressed type="Negative">Tomato</ui5-toggle-button>
 				</ui5-tab>
 
                 <ui5-tab-separator></ui5-tab-separator>
 
-				<ui5-tab key="item2" text="Drinks" icon="pharmacy" icon-color="Critical">
+				<ui5-tab key="item2" text="Drinks" icon="pharmacy" design="Critical">
 					<ui5-button>Wine</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item3" text="Music" icon="widgets" icon-color="Positive">
+				<ui5-tab key="item3" text="Music" icon="widgets" design="Positive">
 					<ui5-button>Pop</ui5-button>
 				</ui5-tab>
 
@@ -337,16 +337,16 @@
 					<ui5-button>Dress</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item5" text="Team" icon="group"  icon-color="Neutral">
+				<ui5-tab key="item5" text="Team" icon="group" design="Neutral">
 					<ui5-button>Gravity</ui5-button>
 				</ui5-tab>
 			</ui5-tabcontainer>
 
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item2">
 					<ui5-tab key="item1" text="Products">
-						<ui5-togglebutton pressed type="Positive">Cucumber</ui5-togglebutton>
+						<ui5-toggle-button pressed type="Positive">Cucumber</ui5-toggle-button>
 						<ui5-button>Banana</ui5-button>
-						<ui5-togglebutton pressed type="Negative">Tomato</ui5-togglebutton>
+						<ui5-toggle-button pressed type="Negative">Tomato</ui5-toggle-button>
 					</ui5-tab>
 
 					<ui5-tab key="item2" text="Drinks">
@@ -561,7 +561,7 @@
 
 		<section class="row row-centered">
 			<ui5-label>This is a long long even longer text defined via the ui5-label and it truncates by default</ui5-label>
-			<ui5-label wrap>This is a long long even longer text defined via the ui5-label, but this one wraps</ui5-label>
+			<ui5-label wrapping-type="Normal">This is a long long even longer text defined via the ui5-label, but this one wraps</ui5-label>
 		</section>
 	</div>
 	<script src="./kitchen-scripts.js"></script>

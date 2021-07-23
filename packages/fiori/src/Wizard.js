@@ -1,13 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 
@@ -15,6 +16,14 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import {
 	WIZARD_NAV_STEP_DEFAULT_HEADING,
 	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
+	WIZARD_NAV_ARIA_LABEL,
+	WIZARD_LIST_ARIA_LABEL,
+	WIZARD_LIST_ARIA_DESCRIBEDBY,
+	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
+	WIZARD_OPTIONAL_STEP_ARIA_LABEL,
+	WIZARD_STEP_ARIA_LABEL,
+	WIZARD_STEP_ACTIVE,
+	WIZARD_STEP_INACTIVE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -35,6 +44,12 @@ const AFTER_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-next";
 const AFTER_CURRENT_STEP = "data-ui5-wizard-after-current-tab";
 const BEFORE_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-prev";
 
+const STEP_SWITCH_THRESHOLDS = {
+	MIN: 0.5,
+	DEFAULT: 0.7,
+	MAX: 1,
+};
+
 /**
  * @public
  */
@@ -43,13 +58,14 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Defines the aria-label text of the <code>ui5-wizard</code>.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue undefined
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -81,7 +97,7 @@ const metadata = {
 		 */
 		 stepSwitchThreshold: {
 			type: Float,
-			defaultValue: 0.7,
+			defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT,
 		},
 
 		/**
@@ -116,19 +132,19 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Fired when the step selection is changed by user interaction - either with scrolling,
+		 * Fired when the step is changed by user interaction - either with scrolling,
 		 * or by clicking on the steps within the component header.
 		 *
-		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
-		 * @param {HTMLElement} selectedStep the newly selected step
-		 * @param {HTMLElement} previouslySelectedStep the previously selected step
-		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation
+		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
+		 * @param {HTMLElement} step the new step
+		 * @param {HTMLElement} previousStep the previous step
+		 * @param {Boolean} changeWithClick the step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation
 		 * @public
 		 */
-		"selection-change": {
+		"step-change": {
 			detail: {
-				selectedStep: { type: HTMLElement },
-				previouslySelectedStep: { type: HTMLElement },
+				step: { type: HTMLElement },
+				previousStep: { type: HTMLElement },
 				changeWithClick: { Boolean },
 			},
 		},
@@ -149,7 +165,7 @@ const metadata = {
  * It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps.
  * <ul>
  * <li> Steps can have different visual representations - numbers or icons.
- * <li> Steps might have labels for better readability - heading and subheding.</li>
+ * <li> Steps might have labels for better readability - titleText and subTitleText.</li>
  * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
  * </ul>
  *
@@ -188,15 +204,16 @@ const metadata = {
  * <h3>Usage</h3>
  * <h4>When to use:</h4>
  * When the user has to accomplish a long set of tasks.
+ *
  * <h4>When not to use:</h4>
  * When the task has less than 3 steps.
  *
  * <h3>Responsive Behavior</h3>
- * On small widths the step's heading, subheading and separators in the navigation area
+ * On small widths the step's titleText, subtitleText and separators in the navigation area
  * will start truncate and shrink and from particular point they will hide to free as much space as possible.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
+ * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
  *
  * @constructor
  * @author SAP SE
@@ -415,7 +432,7 @@ class Wizard extends UI5Element {
 	 */
 	onSelectionChangeRequested(event) {
 		this.selectionRequestedByClick = true;
-		this.changeSelectionByStepClick(event.target);
+		this.changeSelectionByStepAction(event.target);
 	}
 
 	/**
@@ -575,7 +592,7 @@ class Wizard extends UI5Element {
 		}
 
 		const responsivePopover = await this._respPopover();
-		responsivePopover.open(oDomTarget);
+		responsivePopover.openBy(oDomTarget);
 	}
 
 	async _onGroupedTabClick(event) {
@@ -625,7 +642,7 @@ class Wizard extends UI5Element {
 		}
 
 		// If the calculated index is in range,
-		// change selection and fire "selection-change".
+		// change selection and fire "step-change".
 		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			const stepToSelect = this.slottedSteps[newlySelectedIndex];
 
@@ -637,16 +654,20 @@ class Wizard extends UI5Element {
 	/**
 	 * Called upon <code>onSelectionChangeRequested</code>.
 	 * Selects the external step (ui5-wizard-step),
-	 * based on the clicked step in the header (ui5-wizard-tab).
+	 * based on the clicked or activated via keyboard step in the header (ui5-wizard-tab).
 	 * @param {HTMLElement} stepInHeader the step equivalent in the header
 	 * @private
 	 */
-	changeSelectionByStepClick(stepInHeader) {
+	async changeSelectionByStepAction(stepInHeader) {
 		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
 		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP) === "true";
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
+		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
+
+		// Focus the first focusable element within the step content corresponding to the currently focused tab
+		firstFocusableElement.focus();
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.
@@ -656,7 +677,7 @@ class Wizard extends UI5Element {
 		}
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
-			// Change selection and fire "selection-change".
+			// Change selection and fire "step-change".
 			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		}
 	}
@@ -669,6 +690,10 @@ class Wizard extends UI5Element {
 		});
 
 		return contentHeight;
+	}
+
+	getStepAriaLabelText(step, ariaLabel) {
+		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
 	}
 
 	get stepsDOM() {
@@ -748,24 +773,44 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
+	get navAriaLabelText() {
+		return this.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
+	}
+
+	get navAriaDescribedbyText() {
+		return this.i18nBundle.getText(WIZARD_LIST_ARIA_DESCRIBEDBY);
+	}
+
+	get listAriaLabelText() {
+		return this.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
+	}
+
+	get actionSheetStepsText() {
+		return this.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
+	}
+
 	get navStepDefaultHeading() {
 		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
 	}
 
+	get optionalStepText() {
+		return this.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
+	}
+
+	get activeStepText() {
+		return this.i18nBundle.getText(WIZARD_STEP_ACTIVE);
+	}
+
+	get inactiveStepText() {
+		return this.i18nBundle.getText(WIZARD_STEP_INACTIVE);
+	}
+
 	get ariaLabelText() {
-		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return this.accessibleName || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {
-		if (this.stepSwitchThreshold < 0.5) {
-			return 0.5;
-		}
-
-		if (this.stepSwitchThreshold > 1) {
-			return 1;
-		}
-
-		return this.stepSwitchThreshold;
+		return clamp(this.stepSwitchThreshold, STEP_SWITCH_THRESHOLDS.MIN, STEP_SWITCH_THRESHOLDS.MAX);
 	}
 
 	/**
@@ -779,6 +824,7 @@ class Wizard extends UI5Element {
 		const stepsCount = this.stepsCount;
 		const selectedStepIndex = this.getSelectedStepIndex();
 		let inintialZIndex = this.steps.length + 10;
+		let accInfo;
 
 		this._adjustHeaderOverflow();
 
@@ -788,14 +834,21 @@ class Wizard extends UI5Element {
 			// Hide separator if it's the last step and it's not a branching one
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
-			// Calculate the step's aria-roledectioption: "1. heading" or "Step 1".
-			const roleDescription = step.heading ? `${pos}. ${step.heading}` : `${this.navStepDefaultHeading} ${pos}`;
+			const isOptional = step.subtitleText ? this.optionalStepText : "";
+			const stepStateText = step.disabled ? this.inactiveStepText : this.activeStepText;
+			const ariaLabel = (step.titleText ? `${pos} ${step.titleText} ${stepStateText} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${stepStateText} ${isOptional}`).trim();
 			const isAfterCurrent = (idx > selectedStepIndex);
+
+			accInfo = {
+				"ariaSetsize": stepsCount,
+				"ariaPosinset": pos,
+				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
+			};
 
 			return {
 				icon: step.icon,
-				heading: step.heading,
-				subheading: step.subheading,
+				titleText: step.titleText,
+				subtitleText: step.subtitleText,
 				number: pos,
 				selected: step.selected,
 				disabled: step.disabled,
@@ -803,9 +856,7 @@ class Wizard extends UI5Element {
 				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
 				pos,
-				size: stepsCount,
-				roleDescription,
-				ariaLabel: getEffectiveAriaLabelText(step),
+				accInfo,
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: `z-index: ${isAfterCurrent ? --inintialZIndex : 1}`,
@@ -936,9 +987,9 @@ class Wizard extends UI5Element {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
 
-			this.fireEvent("selection-change", {
-				selectedStep: stepToSelect,
-				previouslySelectedStep: selectedStep,
+			this.fireEvent("step-change", {
+				step: stepToSelect,
+				previousStep: selectedStep,
 				changeWithClick,
 			});
 

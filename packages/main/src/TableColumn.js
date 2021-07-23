@@ -27,7 +27,7 @@ const metadata = {
 		 * Defines the minimum table width required to display this column. By default it is always displayed.
 		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
-		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.
+		 * <code>minWidth</code> property to <code>400</code> sets the minimum width to 400 pixels, and	shows this column on tablet (and desktop) but hides it on mobile.
 		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
@@ -52,7 +52,7 @@ const metadata = {
 		},
 
 		/**
-		 * According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden
+		 * According to your <code>minWidth</code> settings, the component can be hidden
 		 * in different screen sizes.
 		 * <br><br>
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
@@ -95,6 +95,15 @@ const metadata = {
  *
  * The <code>ui5-table-column</code> component allows to define column specific properties that are applied
  * when rendering the <code>ui5-table</code> component.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-table-column</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>column - Used to style the native <code>th</code> element</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE

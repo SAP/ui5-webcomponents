@@ -73,25 +73,25 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
 		 * @type {string}
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		info: {
+		additionalText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the state of the <code>info</code>.
+		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		infoState: {
+		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
@@ -139,7 +139,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-li-tree</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -199,6 +199,17 @@ const metadata = {
  * <br>
  * <i>Note:</i> Do not use <code>ui5-li-tree</code> directly in your apps. Use <code>ui5-tree-item</code> instead, as it can be nested inside a <code>ui5-tree</code>.
  * On the other hand, <code>ui5-li-tree</code> can only be slotted inside a <code>ui5-list</code>, being a list item. It may be useful if you want to build a custom tree component, for example.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-tree</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>title - Used to style the title of the tree list item</li>
+ * <li>additionalText - Used to style the additionalText of the tree list item</li>
+ * <li>icon - Used to style the icon of the tree list item</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE

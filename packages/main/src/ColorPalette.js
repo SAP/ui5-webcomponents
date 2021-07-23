@@ -28,26 +28,36 @@ const metadata = {
 	tag: "ui5-color-palette",
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+
 		/**
-		 * Defines whether the user can choose a custom color from a color picker
-		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+		 * Defines whether the user can see the last used colors in the bottom of the component
 		 * @type {boolean}
-		 * @public
-		 * @since 1.0.0-rc.12
+		 * @private
+		 * @since 1.0.0-rc.15
 		 */
-		moreColors: {
+		showRecentColors: {
 			type: Boolean,
 		},
 
 		/**
-		 *
-		 * The selected color.
-		 * @type {CSSColor}
-		 * @public
+		 * Defines whether the user can choose a custom color from a color picker
+		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+		 * @type {boolean}
+		 * @private
+		 * @since 1.0.0-rc.15
 		 */
-		value: {
+		showMoreColors: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the selected color.
+		 * @type {CSSColor}
+		 * @private
+		 */
+		_selectedColor: {
 			type: CSSColor,
-		 },
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -69,9 +79,10 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @since 1.0.0-rc.15
 		 * @param {String} color the selected color
 		 */
-		change: {
+		"item-click": {
 			details: {
 				color: {
 					type: String,
@@ -85,16 +96,16 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ColorPalette provides the users with a range of predefined colors.
- * You can set them by using the ColorPaletteItem items as slots.
+ * The ColorPalette provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  *
  * <h3>Usage</h3>
- * The palette is intended for users, who don't want to check and remember the different values of the colors .
  *
- * For the <code>ui5-color-palette</code>
+ * The Colorpalette is meant for users that needs to select a color from a predefined set.
+ * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/ColorPalette.js";</code>
+ * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -147,6 +158,8 @@ class ColorPalette extends UI5Element {
 			rowSize: 5,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
+
+		this._recentColors = [];
 	}
 
 	onBeforeRendering() {
@@ -154,7 +167,7 @@ class ColorPalette extends UI5Element {
 			item.index = index + 1;
 		});
 
-		if (this.moreColors) {
+		if (this.showMoreColors) {
 			const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
 			if (ColorPaletteMoreColors) {
 				this.moreColorsFeature = new ColorPaletteMoreColors();
@@ -166,16 +179,26 @@ class ColorPalette extends UI5Element {
 
 	selectColor(item) {
 		item.focus();
-		this._itemNavigation.setCurrentItem(item);
+
+		if (this.displayedColors.includes(item)) {
+			this._itemNavigation.setCurrentItem(item);
+		}
 
 		this._setColor(item.value);
 	}
 
 	_setColor(color) {
-		this.value = color;
+		this._selectedColor = color;
+		if (this._recentColors[0] !== this._selectedColor) {
+			if (this._recentColors.includes(this._selectedColor)) {
+				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
+			} else {
+				this._recentColors.unshift(this._selectedColor);
+			}
+		}
 
-		this.fireEvent("change", {
-			color: this.value,
+		this.fireEvent("item-click", {
+			color: this._selectedColor,
 		});
 	}
 
@@ -214,6 +237,13 @@ class ColorPalette extends UI5Element {
 		dialog.open();
 	}
 
+	/**
+	 * Returns the selected color.
+	 */
+	get selectedColor() {
+		return this._selectedColor;
+	}
+
 	get displayedColors() {
 		return this.colors.filter(item => item.value).slice(0, 15);
 	}
@@ -226,8 +256,20 @@ class ColorPalette extends UI5Element {
 		return this.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
 	}
 
-	get showMoreColors() {
-		return this.moreColors && this.moreColorsFeature;
+	get _showMoreColors() {
+		return this.showMoreColors && this.moreColorsFeature;
+	}
+
+	get recentColors() {
+		if (this._recentColors.length > 5) {
+			this._recentColors = this._recentColors.slice(0, 5);
+		}
+
+		while (this._recentColors.length < 5) {
+			this._recentColors.push("");
+		}
+
+		return this._recentColors;
 	}
 
 	async _getDialog() {

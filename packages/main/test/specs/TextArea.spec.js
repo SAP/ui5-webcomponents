@@ -162,13 +162,13 @@ describe("when enabled", () => {
 
 			const initialSize = textArea.getSize();
 			textAreaInner.setValue(`1\n`);
-			textAreaInner.setValue(`2\n`);
-			textAreaInner.setValue(`3\n`);
-			textAreaInner.setValue(`4\n`);
-			textAreaInner.setValue(`5\n`);
-			textAreaInner.setValue(`6\n`);
-			textAreaInner.setValue(`7\n`);
-			textAreaInner.setValue(`8`);
+			textAreaInner.addValue(`2\n`);
+			textAreaInner.addValue(`3\n`);
+			textAreaInner.addValue(`4\n`);
+			textAreaInner.addValue(`5\n`);
+			textAreaInner.addValue(`6\n`);
+			textAreaInner.addValue(`7\n`);
+			textAreaInner.addValue(`8`);
 
 			const sizeBeforeGrow = textArea.getSize();
 			assert.strictEqual(initialSize.height, sizeBeforeGrow.height, "TextArea should not grow before it reaches its 8th line");
@@ -223,5 +223,29 @@ describe("when enabled", () => {
 				assert.strictEqual(count, 4, "4 symbols should exceed");
 			});
 		});
+	});
+});
+
+describe("Value update", () => {
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+	});
+
+	it("Should revert the DOM value, when escape is pressed", () => {
+		const textarea = $("#basic-textarea");
+
+		// act
+		textarea.click();
+		textarea.keys("1");
+		textarea.keys("2");
+
+		// assert
+		assert.strictEqual(textarea.getProperty("value"), "12", "Value is updated");
+
+		// act
+		textarea.keys("Escape");
+
+		// assert
+		assert.strictEqual(textarea.getProperty("value"), "", "Value is reverted");
 	});
 });

@@ -21,7 +21,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 		"default": {
-			propertyName: "title",
+			propertyName: "titleText",
 		},
 	},
 };
@@ -30,6 +30,17 @@ const metadata = {
  * @class
  * The <code>ui5-li-suggestion-item</code> represents the suggestion item in the <code>ui5-input</code>
  * suggestion popover.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-suggestion-item</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>title - Used to style the title of the suggestion list item</li>
+ * <li>description - Used to style the description of the suggestion list item</li>
+ * <li>info - Used to style the info of the suggestion list item</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE
@@ -48,11 +59,11 @@ class SuggestionListItem extends StandardListItem {
 
 	onBeforeRendering(...params) {
 		super.onBeforeRendering(...params);
-		this.hasTitle = !!this.title.length;
+		this.hasTitle = !!this.titleText.length;
 	}
 
 	get effectiveTitle() {
-		return this.title.map(el => el.textContent).join("");
+		return this.titleText.filter(node => node.nodeType !== Node.COMMENT_NODE).map(el => el.textContent).join("");
 	}
 
 	get hasDescription() {

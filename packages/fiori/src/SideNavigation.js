@@ -121,7 +121,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code> (for <code>ui5-side-navigation-item</code>)
  * <br>
@@ -227,6 +227,7 @@ class SideNavigation extends UI5Element {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
 
+		item.fireEvent("click");
 		if (item.selected) {
 			return;
 		}
@@ -241,7 +242,7 @@ class SideNavigation extends UI5Element {
 
 	async openPicker(opener) {
 		const responsivePopover = await this.getPicker();
-		responsivePopover.open(opener);
+		responsivePopover.openBy(opener);
 	}
 
 	async closePicker(opener) {

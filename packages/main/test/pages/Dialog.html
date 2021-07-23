@@ -25,6 +25,8 @@
 </head>
 
 <body>
+	<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
+	<br>
 	<ui5-button id="btnOpenDialog">Open Streched Dialog</ui5-button>
 	<br>
 	<br>
@@ -50,6 +52,9 @@
 	<br>
 	<br>
 	<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="draggable-and-resizable-open">Open draggable & resizable dialog</ui5-button>
 	<br>
 	<br>
 	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
@@ -114,13 +119,15 @@
 	</ui5-dialog>
 
 
-	<ui5-dialog id="dialog" stretch>
+	<ui5-dialog id="dialog" accessible-name="Resizable" stretch>
 		<div slot="header">
 			<ui5-button id="header-button">focus stop</ui5-button>
+			<ui5-title id="tt" level="H2">Resizable</ui5-title>
+
 		</div>
 
 		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
+			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
 		<ui5-select id="mySelect">
@@ -132,7 +139,7 @@
 		</ui5-textarea>
 
 		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
+			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
 		<ui5-select>
@@ -144,20 +151,7 @@
 		</ui5-textarea>
 
 		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
-		</div>
-
-		<ui5-select>
-			<ui5-option>Hello</ui5-option>
-			<ui5-option>World</ui5-option>
-		</ui5-select>
-
-		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
-		</ui5-textarea>
-
-
-		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
+			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
 		<ui5-select>
@@ -170,7 +164,7 @@
 
 
 		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
+			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
 		<ui5-select>
@@ -196,7 +190,20 @@
 
 
 		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
 		<ui5-select>
@@ -271,11 +278,11 @@
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="draggable-dialog" draggable>
-		<div slot="header" style="flex: 1 0 0; height: 2.5rem;">Draggable dialog</div>
+	<ui5-dialog id="draggable-dialog" accessible-name="Draggable" draggable>
+		<div id="tlt" slot="header"  style="flex: 1 0 0; height: 2.5rem;">Draggable dialog</div>
 
-		<p>Move this dialog around the screen by dragging it by its header.</p>
-		<p>This feature available only on Desktop.</p>
+		<p>Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
+		<p>This feature is available only on Desktop.</p>
 
 		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
 			<ui5-button id="draggable-close" design="Emphasized">OK</ui5-button>
@@ -283,11 +290,21 @@
 	</ui5-dialog>
 
 	<ui5-dialog id="resizable-dialog" header-text="Resizable dialog" resizable>
-		<p>Resize this dialog by dragging it by its resize handle.</p>
-		<p>This feature available only on Desktop.</p>
+		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
+		<p>This feature is available only on Desktop.</p>
 
 		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
 			<ui5-button id="resizable-close" design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
+	<ui5-dialog id="draggable-and-resizable-dialog" header-text="Draggable & resizable dialog" draggable resizable>
+		<p>Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
+		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
+		<p>This feature is available only on Desktop.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button id="draggable-and-resizable-close" design="Emphasized">Close</ui5-button>
 		</div>
 	</ui5-dialog>
 
@@ -327,7 +344,7 @@
 		</div>
 	</ui5-popover>
 
-	<ui5-dialog placement-type="Bottom" no-arrow id='danger'>
+	<ui5-dialog placement-type="Bottom" id='danger'>
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>World</ui5-li>
@@ -353,6 +370,10 @@
 	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
 
 	<script>
+		cbCompact.addEventListener("change", function () {
+			document.body.classList.toggle("ui5-content-density-compact", cbCompact.checked);
+		});
+
 		let preventClosing = true;
 
 		btnOpenDialog.addEventListener("click", function () {
@@ -409,6 +430,8 @@
 		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].close(); });
 		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].open(); });
 		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].close(); });
+		window["draggable-and-resizable-open"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].open(); });
+		window["draggable-and-resizable-close"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].close(); });
 
 		window["dynamic-open"].addEventListener("click", function () {
 			var dialog = document.createElement("ui5-dialog"),

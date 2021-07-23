@@ -77,8 +77,9 @@ const metadata = {
 		* @type {boolean}
 		* @defaultvalue false
 		* @public
+		* @since 1.0.0-rc.15
 		*/
-		noArrows: {
+		hideArrows: {
 			type: Boolean,
 		},
 
@@ -188,13 +189,13 @@ const metadata = {
 		 * Fired when the layout changes via user interaction by clicking the arrows
 		 * or by changing the component size due to resizing.
 		 *
-		 * @param {FCLLayout} layout the current layout
-		 * @param {Array} columnLayout the effective column layout, f.e [67%, 33%, 0]
-		 * @param {boolean} startColumnVisible indicates if the start column is currently visible
-		 * @param {boolean} midColumnVisible indicates if the middle column is currently visible
-		 * @param {boolean} endColumnVisible indicates if the end column is currently visible
-		 * @param {boolean} arrowsUsed indicates if the layout is changed via the arrows
-		 * @param {boolean} resize indicates if the layout is changed via resizing
+		 * @param {FCLLayout} layout The current layout
+		 * @param {Array} columnLayout The effective column layout, f.e [67%, 33%, 0]
+		 * @param {boolean} startColumnVisible Indicates if the start column is currently visible
+		 * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
+		 * @param {boolean} endColumnVisible Indicates if the end column is currently visible
+		 * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
+		 * @param {boolean} resize Indicates if the layout is changed via resizing
 		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
 		 * @public
 		 */
@@ -231,9 +232,17 @@ const metadata = {
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
  *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -302,6 +311,10 @@ class FlexibleColumnLayout extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
+
+		["start", "mid", "end"].forEach(column => {
+			this[`${column}ColumnDOM`].removeEventListener("transitionend", this.columnResizeHandler);
+		});
 	}
 
 	onAfterRendering() {
@@ -398,18 +411,21 @@ class FlexibleColumnLayout extends UI5Element {
 			columnDOM.style.width = columnWidth;
 
 			// hide column with delay to allow the animation runs entirely
-			setTimeout(() => {
-				columnDOM.classList.add("ui5-fcl-column--hidden");
-			}, FlexibleColumnLayout.ANIMATION_DURATION);
+			columnDOM.addEventListener("transitionend", this.columnResizeHandler);
 
 			return;
 		}
 
 		// show column: from 0 to 33%, from 0 to 25%, etc.
 		if (previouslyHidden) {
+			columnDOM.removeEventListener("transitionend", this.columnResizeHandler);
 			columnDOM.classList.remove("ui5-fcl-column--hidden");
 			columnDOM.style.width = columnWidth;
 		}
+	}
+
+	columnResizeHandler(event) {
+		event.target.classList.add("ui5-fcl-column--hidden");
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
@@ -584,11 +600,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartArrow() {
-		return this.noArrows ? false : this.startArrowVisibility;
+		return this.hideArrows ? false : this.startArrowVisibility;
 	}
 
 	get showEndArrow() {
-		return this.noArrows ? false : this.endArrowVisibility;
+		return this.hideArrows ? false : this.endArrowVisibility;
 	}
 
 	get startArrowVisibility() {

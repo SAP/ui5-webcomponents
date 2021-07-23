@@ -23,7 +23,7 @@ const metadata = {
 	tag: "ui5-progress-indicator",
 	properties: /** @lends sap.ui.webcomponents.main.ProgressIndicator.prototype */ {
 		/**
-		 * Defines whether <code>ui5-progress-indicator</code> is in disabled state.
+		 * Defines whether component is in disabled state.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -33,7 +33,7 @@ const metadata = {
 			type: Boolean,
 		},
 		/**
-		 * Defines whether <code>ui5-progress-indicator</code> value is shown.
+		 * Defines whether the component value is shown.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -43,7 +43,7 @@ const metadata = {
 			type: Boolean,
 		},
 		/**
-		 * Specifies the numerical value in percent for the length of the <code>ui5-progress-indicator</code>.
+		 * Specifies the numerical value in percent for the length of the component.
 		 *
 		 * <b>Note:</b>
 		 * If a value greater than 100 is provided, the percentValue is set to 100. In other cases of invalid value, percentValue is set to its default of 0.
@@ -56,7 +56,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Defines the value state of the <code>ui5-progress-indicator</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -89,17 +89,14 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * Shows the progress of a process in a graphical way. To indicate the progress,
- * the inside of the <code>ui5-progress-indicator</code> is filled with a color.
+ * the inside of the component is filled with a color.
  *
  * <h3>Responsive Behavior</h3>
- * You can change the size of the Rating Indicator by changing its <code>width</code> or <code>height</code> CSS properties.
- * <br>
- * Example: <code>&lt;ui5-progress-indicator style="height: 2rem; width: 6rem;">&lt;/ui5-progress-indicator></code>
+ * You can change the size of the Progress Indicator by changing its <code>width</code> or <code>height</code> CSS properties.
  *
- * For the <code>ui5-progress-indicator</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/ProgressIndicator.js";</code>
+ * <code>import "@ui5/webcomponents/dist/ProgressIndicator.js";</code>
  *
  * @constructor
  * @author SAP SE

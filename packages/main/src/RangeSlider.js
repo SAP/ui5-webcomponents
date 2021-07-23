@@ -69,16 +69,32 @@ const metadata = {
  * <li>showTickmarks - Displays a visual divider between the step values</li>
  * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
  * </ul>
- * <h4>Notes:<h4>
+ * <h4>Notes:</h4>
  * <ul>
  * <li>The right and left handle can be moved individually and their positions could therefore switch.</li>
  * <li>The entire range can be moved along the interval.</li>
  * </ul>
  * <h3>Usage</h3>
- * The most common usecase is to select and move sub-ranges on a continuous numerical scale.
+ * The most common use case is to select and move sub-ranges on a continuous numerical scale.
  *
  * <h3>Responsive Behavior</h3>
  * You can move the currently selected range by clicking on it and dragging it along the interval.
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li><code>Left or Down Arrow</code> - Moves a component's handle or the entire selection one step to the left;</li>
+ * <li><code>Right or Up Arrow</code> - Moves a component's handle or the entire selection one step to the right;</li>
+ * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
+ * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
+ * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
+ * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
+ * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the component's range;</li>
+ * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the component's range;</li>
+ * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code></li>
+ * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code></li>
+ * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> properties to the values prior the component focusing;</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -177,6 +193,10 @@ class RangeSlider extends SliderBase {
 			this._setInitialValue("startValue", this.startValue);
 			this._setInitialValue("endValue", this.endValue);
 		}
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
+		}
 	}
 
 	/**
@@ -194,10 +214,15 @@ class RangeSlider extends SliderBase {
 	_onfocusout(event) {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
-		} else {
-			this._setAffectedValue(null);
-			this._setInitialValue("startValue", null);
-			this._setInitialValue("endValue", null);
+			return;
+		}
+
+		this._setAffectedValue(null);
+		this._setInitialValue("startValue", null);
+		this._setInitialValue("endValue", null);
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 	}
 

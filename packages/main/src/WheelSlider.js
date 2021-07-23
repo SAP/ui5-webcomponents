@@ -24,9 +24,9 @@ const metadata = {
 	tag: "ui5-wheelslider",
 	properties: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 		/**
-		 * Defines whether the <code>ui5-wheelslider</code> is disabled
+		 * Defines whether the component is disabled
 		 * (default is set to <code>false</code>).
-		 * A disabled <code>ui5-wheelslider</code> can't be pressed or
+		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}
@@ -76,7 +76,7 @@ const metadata = {
 		},
 
 		_itemsToShow: {
-			type: String,
+			type: Object,
 			multiple: true,
 		},
 
@@ -117,21 +117,19 @@ const metadata = {
 	},
 };
 
-const CELL_SIZE_COMPACT = 2;
-const CELL_SIZE_COZY = 2.875;
+const CELL_SIZE_COMPACT = 32;
+const CELL_SIZE_COZY = 46;
 
 /**
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-wheelslider</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/WheelSlider.js";</code>
+ * <code>import "@ui5/webcomponents/dist/WheelSlider.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -227,12 +225,12 @@ class WheelSlider extends UI5Element {
 	}
 
 	get _itemCellHeight() {
-		const defaultSize = getEffectiveContentDensity(this) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
+		const defaultSize = getEffectiveContentDensity(document.body) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
 
 		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
 			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
-			const onlyDigitsValue = itemHeightValue.replace("rem", "");
+			const onlyDigitsValue = itemHeightValue.replace("px", "");
 			return Number(onlyDigitsValue) || defaultSize;
 		}
 
@@ -240,7 +238,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	_updateScrolling() {
-		const cellSizeInPx = this._itemCellHeight * 16,
+		const cellSizeInPx = this._itemCellHeight,
 			scrollWhere = this._scroller.scrollContainer.scrollTop;
 		let offsetIndex;
 
@@ -250,7 +248,7 @@ class WheelSlider extends UI5Element {
 
 		offsetIndex = Math.round(scrollWhere / cellSizeInPx);
 
-		if (this.value === this._itemsToShow[offsetIndex]) {
+		if (this.value === this._itemsToShow[offsetIndex].value) {
 			return;
 		}
 
@@ -261,7 +259,7 @@ class WheelSlider extends UI5Element {
 			}
 		}
 
-		this.value = this._itemsToShow[offsetIndex];
+		this.value = this._itemsToShow[offsetIndex].value;
 		this._currentElementIndex = offsetIndex;
 	}
 
@@ -289,7 +287,7 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(currentIndex) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
-		const cellSizeInPx = this._itemCellHeight * 16;
+		const cellSizeInPx = this._itemCellHeight;
 		const scrollBy = cellSizeInPx * index;
 
 		if (this.cyclic) {
@@ -313,14 +311,21 @@ class WheelSlider extends UI5Element {
 	}
 
 	_buildItemsToShow() {
-		this._itemsToShow = this._items;
+		let itemsToShow = this._items;
 		if (this.cyclic) {
-			if (this._itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
+			if (itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
 				for (let i = 0; i < this._timesMultipliedOnCyclic(); i++) {
-					this._itemsToShow = this._itemsToShow.concat(this._items);
+					itemsToShow = itemsToShow.concat(this._items);
 				}
 			}
 		}
+
+		this._itemsToShow = itemsToShow.map(value => {
+			return {
+				value,
+				"selected": (value === this.value),
+			};
+		});
 	}
 
 	_handleArrayBorderReached(currentIndex) {

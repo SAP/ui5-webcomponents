@@ -20,6 +20,7 @@ import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
@@ -54,14 +55,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
-		 * Defines the <code>ui5-multi-combobox</code> items.
-		 * <br><br>
-		 * Example: <br>
-		 * &lt;ui5-multi-combobox><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
-		 * &lt;/ui5-multi-combobox>
-		 * <br> <br>
+		 * Defines the component items.
 		 *
 		 * @type {sap.ui.webcomponents.main.IMultiComboBoxItem[]}
 		 * @slot items
@@ -74,7 +68,7 @@ const metadata = {
 		},
 
 		/**
-		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
+		* Defines the icon to be displayed in the component.
 		*
 		* @type {sap.ui.webcomponents.main.IIcon}
 		* @slot
@@ -86,13 +80,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multi-combobox</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-multi-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
@@ -104,7 +98,7 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
-		 * Defines the value of the <code>ui5-multi-combobox</code>.
+		 * Defines the value of the component.
 		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
@@ -119,7 +113,7 @@ const metadata = {
 
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
-		 * <code>ui5-multi-combobox</code> has no value.
+		 * component has no value.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -141,9 +135,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-multi-combobox</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely noninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -154,7 +148,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-multi-combobox</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -175,9 +169,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-multi-combobox</code> is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -189,7 +183,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-multi-combobox</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -201,7 +195,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the filter type of the <code>ui5-multi-combobox</code>.
+		 * Defines the filter type of the component.
 		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 		 *
 		 * @type {string}
@@ -218,6 +212,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @readonly
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -267,7 +262,7 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the value of the <code>ui5-multi-combobox</code> changes at each keystroke.
+		 * Fired when the value of the component changes at each keystroke.
 		 *
 		 * @event
 		 * @public
@@ -340,6 +335,15 @@ const metadata = {
  * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
  * </ul>
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-multi-combobox</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
@@ -386,6 +390,7 @@ class MultiComboBox extends UI5Element {
 			Token,
 			Icon,
 			ResponsivePopover,
+			Popover,
 			List,
 			StandardListItem,
 			ToggleButton,
@@ -498,7 +503,7 @@ class MultiComboBox extends UI5Element {
 			if (filteredItems.length === 0) {
 				this.allItemsPopover.close();
 			} else {
-				this.allItemsPopover.open(this);
+				this.allItemsPopover.openBy(this);
 			}
 		}
 
@@ -659,7 +664,7 @@ class MultiComboBox extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && !this._showMorePressed) {
-			this.allItemsPopover.open(this);
+			this.allItemsPopover.openBy(this);
 		}
 
 		this._showMorePressed = false;

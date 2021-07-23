@@ -128,7 +128,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
 	display: inline-block;
-	margin-left: 0.5rem;
+	margin-left: 0.375rem;
 	width: 10px;
 	height: 10px;
 	width: 0px;
@@ -231,10 +231,14 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
-	flex-basis: 50%;
-	max-width: calc(50% - 1.5rem);
+
 	justify-content: flex-start;
 	margin-right: 0.5rem;
+}
+
+.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
+	flex-basis: 50%;
+	max-width: calc(50% - 1.5rem);
 }
 
 .ui5-shellbar-menu-button {
@@ -276,7 +280,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
-	float: right;
+	justify-content: flex-end;
 }
 
 .ui5-shellbar-overflow-button {
@@ -322,11 +326,11 @@ slot[name="profile"] {
 	margin-left: 1rem;
 }
 
-:host(:not([notification-count])) .ui5-shellbar-bell-button {
+:host(:not([notifications-count])) .ui5-shellbar-bell-button {
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before,
+:host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before,
 .ui5-shellbar-button[data-count]::before {
 	position: absolute;
 	width: auto;
@@ -347,8 +351,8 @@ slot[name="profile"] {
 	box-sizing: border-box;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
-	content: attr(data-ui5-notification-count);
+:host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before {
+	content: attr(data-ui5-notifications-count);
 }
 
 .ui5-shellbar-button[data-count]::before {
@@ -360,9 +364,10 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	width: 240px;
+	flex-grow: 1;
 	min-width: 240px;
 	margin-left: 0.5rem;
+	max-width: 25rem;
 }
 
 .ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
@@ -403,6 +408,7 @@ slot[name="profile"] {
 	max-height: 2rem;
 	pointer-events: none;
 }
+
 
 /**
 * IE styles
@@ -470,7 +476,7 @@ slot[name="profile"] {
 }
 
 [dir="rtl"] .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
-	margin-right: .5rem;
+	margin-right: 0.375rem;
 	margin-left: 0;
 }
 

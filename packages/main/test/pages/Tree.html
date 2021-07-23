@@ -48,10 +48,10 @@
 
 <body style="padding: 5px; background-color: var(--sapBackgroundColor);">
 
-	<ui5-segmentedbutton id="density">
-		<ui5-togglebutton pressed>Cozy</ui5-togglebutton>
-		<ui5-togglebutton>Compact</ui5-togglebutton>
-	</ui5-segmentedbutton>
+	<ui5-segmented-button id="density">
+		<ui5-toggle-button pressed>Cozy</ui5-toggle-button>
+		<ui5-toggle-button>Compact</ui5-toggle-button>
+	</ui5-segmented-button>
 
 	<br><br>
 
@@ -74,10 +74,10 @@
 			<ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
 		</div>
 
-		<ui5-tree-item expanded text="Tree 1" icon="paste" info="Available" info-state="Information" selected>
-			<ui5-tree-item expanded text="Tree 1.1" info="Re-stock" info-state="Error" selected>
-				<ui5-tree-item text="Tree 1.1.1" info="Required" info-state="Warning"></ui5-tree-item>
-				<ui5-tree-item text="Tree 1.1.2" info="Available" info-state="Success"></ui5-tree-item>
+		<ui5-tree-item expanded text="Tree 1" icon="paste" additional-text="Available" additional-text-state="Information" selected>
+			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Error" selected>
+				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Warning"></ui5-tree-item>
+				<ui5-tree-item text="Tree 1.1.2" additional-text="Available" additional-text-state="Success"></ui5-tree-item>
 			</ui5-tree-item>
 		</ui5-tree-item>
 
@@ -101,7 +101,7 @@
 
 	<br><br>
 
-	<ui5-busyindicator id="busy" class="full-width">
+	<ui5-busy-indicator id="busy" class="full-width">
 		<ui5-tree id="treeDynamic" class="full-width">
 			<div slot="header" class="hdr">
 				<ui5-title>Dynamic tree</ui5-title>
@@ -116,7 +116,7 @@
 
 			<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
 		</ui5-tree>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
 	<script>
 

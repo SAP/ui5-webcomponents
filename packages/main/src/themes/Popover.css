@@ -55,7 +55,7 @@
 :host([actual-placement-type="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	height: 0.5625rem;
-	bottom: calc(-1 * (var(--_ui5_popup_content_padding) + 2px));
+	top: 100%;
 }
 
 :host([actual-placement-type="Top"]) .ui5-popover-arrow:after {
@@ -81,6 +81,6 @@
 	margin: .1875rem -.375rem 0 0;
 }
 
-:host([no-arrow]) .ui5-popover-arrow {
+:host([hide-arrow]) .ui5-popover-arrow {
 	display: none;
 }

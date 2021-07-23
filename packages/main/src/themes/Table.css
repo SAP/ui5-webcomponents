@@ -1,4 +1,4 @@
-@import "./LoadMoreRow.css";
+@import "./GrowingButton.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -70,6 +70,15 @@ tr {
 	z-index: 1;
 }
 
-:host([busy]) [load-more] {
+:host([busy]) [growing-button] {
 	opacity: 0.72;
+}
+
+.ui5-table-select-all-column {
+	width: var(--ui5_table_multiselect_column_width);
+	text-align: center;
+}
+
+th {
+	background: var(--sapList_HeaderBackground);
 }

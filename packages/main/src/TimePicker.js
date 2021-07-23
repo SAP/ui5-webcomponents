@@ -2,6 +2,10 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import TimePickerBase from "./TimePickerBase.js";
 
+import {
+	TIMEPICKER_INPUT_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -11,11 +15,11 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-time-picker</code> has no value.
+		 * component has no value.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-time-picker</code> appear empty - without placeholder or format pattern.
+		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
@@ -99,7 +103,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/TimePicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/TimePicker.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -139,6 +143,21 @@ class TimePicker extends TimePickerBase {
 	 */
 	get dateValue() {
 		return this.getFormat().parse(this._effectiveValue);
+	}
+
+	get accInfo() {
+		return {
+			"ariaRoledescription": this.dateAriaDescription,
+			"ariaHasPopup": "dialog",
+			"ariaAutoComplete": "none",
+			"role": "combobox",
+			"ariaControls": `${this._id}-responsive-popover`,
+			"ariaExpanded": this.isOpen(),
+		};
+	}
+
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 }
 

@@ -1,5 +1,5 @@
 <ui5-responsive-popover
-	no-arrow
+	hide-arrow
 	content-only-on-desktop
 	_disable-initial-focus
 	placement-type="Bottom"
@@ -7,12 +7,12 @@
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
 >
-	<ui5-busyindicator
+	<ui5-busy-indicator
 		?active={{loading}}
 		size="Medium"
 		class="ui5-combobox-busy"
 	>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">
@@ -33,7 +33,7 @@
 			>
 				<input
 					class="ui5-input-inner-phone"
-					.value="{{_tempValue}}"
+					.value="{{value}}"
 					inner-input
 					placeholder="{{placeholder}}"
 					value-state="{{valueState}}"
@@ -68,16 +68,22 @@
 		mode="SingleSelect"
 	>
 		{{#each _filteredItems}}
-			<ui5-li
-				type="Active"
-				info={{this.additionalText}}
-				._tabIndex={{itemTabIndex}}
-				.mappedItem={{this}}
-				?selected={{this.selected}}
-				?focused={{this.focused}}
-			>
-				{{this.text}}
-			</ui5-li>
+			{{#if isGroupItem}}
+				<ui5-li-groupheader ?focused={{this.focused}}>{{ this.text }}</ui5-li-groupheader>
+			{{else}}
+				<ui5-li
+					type="Active"
+					additional-text={{this.additionalText}}
+					group-name={{this.groupName}}
+					._tabIndex={{itemTabIndex}}
+					.mappedItem={{this}}
+					?selected={{this.selected}}
+					?focused={{this.focused}}
+				>
+					{{this.text}}
+				</ui5-li>
+			{{/if}}
+
 		{{/each}}
 	</ui5-list>
 
@@ -95,7 +101,7 @@
 		_disable-initial-focus
 		prevent-focus-restore
 		no-padding
-		no-arrow
+		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		placement-type="Bottom"
 	>

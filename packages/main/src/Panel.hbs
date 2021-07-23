@@ -25,7 +25,7 @@
 						icon="slim-arrow-right"
 						@click="{{_toggleButtonClick}}"
 						._buttonAccInfo="{{accInfo.button}}"
-						aria-label="{{accInfo.button.ariaLabelButton}}"
+						accessible-name="{{accInfo.button.ariaLabelButton}}"
 					></ui5-button>
 				{{else}}
 					<ui5-icon
@@ -51,7 +51,13 @@
 	</div>
 
 	<!-- content area -->
-	<div class="ui5-panel-content" id="{{_id}}-content" tabindex="-1" style="{{styles.content}}">
+	<div
+		class="ui5-panel-content"
+		id="{{_id}}-content"
+		tabindex="-1"
+		style="{{styles.content}}"
+		part="content"
+	>
 		<slot></slot>
 	</div>
 </div>

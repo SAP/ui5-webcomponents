@@ -1,7 +1,7 @@
 @import "../base/sizes-parameters.css";
 @import "../base/Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
-@import "./Button-parameters.css";
+@import "../base/Button-parameters.css";
 @import "../base/DatePicker-parameters.css";
 @import "../base/DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
@@ -25,9 +25,9 @@
 @import "../base/Select-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
-@import "../base/Table-parameters.css";
+@import "./Table-parameters.css";
 @import "../base/TableRow-parameters.css";
-@import "../base/LoadMoreRow-parameters.css";
+@import "../base/GrowingButton-parameters.css";
 @import "../base/TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Title-parameters.css";

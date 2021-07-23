@@ -53,7 +53,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
 		/**
-		 * Defines the icon to be displayed in the <code>ui5-input</code>.
+		 * Defines the icon to be displayed in the component.
 		 *
 		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
@@ -64,7 +64,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-input</code> suggestion items.
+		 * Defines the suggestion items.
 		 * <br><br>
 		 * Example:
 		 * <br><br>
@@ -74,19 +74,24 @@ const metadata = {
 		 * &lt;/ui5-input>
 		 * <br>
 		 * <ui5-input show-suggestions>
+		 * <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
 		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
 		 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+		 * <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item>
+		 * <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 		 * </ui5-input>
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
-		 * Importing the Input Suggestions Support feature:
+		 * <b>Note:</b> The &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> are recommended to be used as suggestion items.
+		 * <br><br>
+		 * <b>Note:</b> Importing the Input Suggestions Support feature:
 		 * <br>
 		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
 		 * <br>
-		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
+		 * automatically imports the &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> for your convenience.
 		 *
 		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
@@ -108,15 +113,15 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-input</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * <br>
-		 * <b>Note:</b> If the <code>ui5-input</code> has <code>suggestionItems</code>,
+		 * <b>Note:</b> If the component has <code>suggestionItems</code>,
 		 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.6
@@ -130,9 +135,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
 		/**
-		 * Defines whether the <code>ui5-input</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely noninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -150,7 +155,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @public
+		 * @private
 		 * @sicne 1.0.0-rc.8
 		 */
 		highlight: {
@@ -159,7 +164,7 @@ const metadata = {
 
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
-		 * <code>ui5-input</code> has no value.
+		 * component has no value.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -169,9 +174,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-input</code> is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-input</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -183,7 +188,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-input</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -195,7 +200,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the HTML type of the <code>ui5-input</code>.
+		 * Defines the HTML type of the component.
 		 * Available options are: <code>Text</code>, <code>Email</code>,
 		 * <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>.
 		 * <br><br>
@@ -217,7 +222,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value of the <code>ui5-input</code>.
+		 * Defines the value of the component.
 		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
@@ -230,7 +235,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-input</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -251,7 +256,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
+		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -259,7 +264,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -271,10 +276,10 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
+		 * Defines whether the component should show suggestions, if such are present.
 		 * <br><br>
-		 * <b>Note:</b>
-		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
+		 * <b>Note:</b> You need to import the <code>InputSuggestions</code> module
+		 * from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -295,14 +300,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the input
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.8
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -366,7 +370,7 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the value of the <code>ui5-input</code> changes at each keystroke,
+		 * Fired when the value of the component changes at each keystroke,
 		 * and when a suggestion item has been selected.
 		 *
 		 * @event
@@ -453,7 +457,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Input
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
- * @appenddocs SuggestionItem
+ * @appenddocs SuggestionItem SuggestionGroupItem
  * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
@@ -687,7 +691,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.open(this);
+			this.Suggestions.openBy(this);
 			this.isRespPopoverOpen = true;
 		}
 	}
@@ -798,10 +802,9 @@ class Input extends UI5Element {
 
 	/**
 	 * Checks if the value state popover is open.
-	 * @returns {boolean} true if the popover is open, false otherwise
-	 * @public
+	 * @returns {boolean} true if the value state popover is open, false otherwise
 	 */
-	isOpen() {
+	isValueStateOpened() {
 		return !!this._isPopoverOpen;
 	}
 
@@ -827,13 +830,13 @@ class Input extends UI5Element {
 
 	enableSuggestions() {
 		if (this.Suggestions) {
-			this.Suggestions.highlight = this.highlight;
 			return;
 		}
 
 		const Suggestions = getFeature("InputSuggestions");
+
 		if (Suggestions) {
-			this.Suggestions = new Suggestions(this, "suggestionItems", this.highlight);
+			this.Suggestions = new Suggestions(this, "suggestionItems", true);
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
@@ -1080,14 +1083,10 @@ class Input extends UI5Element {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
 	}
 
-	get suggestionsCount() {
-		return this.showSuggestions ? `${this._id}-suggestionsCount` : "";
-	}
-
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
+		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
 		return {
 			"input": {
@@ -1097,7 +1096,7 @@ class Input extends UI5Element {
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 				"role": this._inputAccInfo && this._inputAccInfo.role,
-				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
@@ -1133,7 +1132,7 @@ class Input extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": !this.isOpen(),
+				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -1200,7 +1199,7 @@ class Input extends UI5Element {
 	}
 
 	get availableSuggestionsCount() {
-		if (this.showSuggestions) {
+		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
 				return this.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);

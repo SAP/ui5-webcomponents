@@ -26,7 +26,7 @@ const metadata = {
 		 * Defines the <code>icon</code> source URI.
 		 * <br><br>
 		 * <b>Note:</b>
-		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
+		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
@@ -62,27 +62,40 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the list item.
+		 * Defines the <code>additionalText</code>, displayed in the end of the list item.
 		 * @type {string}
 		 * @public
-		 * @since 0.13.0
+		 * @since 1.0.0-rc.15
 		 */
-		info: {
+		additionalText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the state of the <code>info</code>.
+		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 0.13.0
+		 * @since 1.0.0-rc.15
 		 */
-		infoState: {
+		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Defines the text alternative of the component.
+		 * Note: If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		accessibleName: {
+			type: String,
 		},
 
 		/**
@@ -96,7 +109,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-li</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -117,6 +130,18 @@ const metadata = {
  * This is a list item,
  * providing the most common use cases such as <code>text</code>,
  * <code>image</code> and <code>icon</code>.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>title - Used to style the title of the list item</li>
+ * <li>description - Used to style the description of the list item</li>
+ * <li>additional-text - Used to style the additionalText of the list item</li>
+ * <li>icon - Used to style the icon of the list item</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE

@@ -55,7 +55,7 @@
 	<!-- ex1 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail: Master Expanded</ui5-title>
-	<ui5-togglebutton id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-togglebutton><br>
+	<ui5-toggle-button id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-toggle-button><br>
 	<ui5-input id="layoutChangeRes" placeholder="layout..." style="width: 600px"></ui5-input><br>
 	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." style="width: 600px"></ui5-input><br>
 	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." style="width: 600px"></ui5-input><br>
@@ -84,7 +84,7 @@
 		<!-- mid column -->
 		<div style="box-sizing: border-box; height: 100%" slot="midColumn">
 			<ui5-wizard id="wiz">
-				<ui5-wizard-step icon="sap-icon://home" heading="Product type">
+				<ui5-wizard-step icon="sap-icon://home" title-text="Product type">
 					<div style="display: flex; min-height: 200px; flex-direction: column;">
 						<ui5-title>1. Product Type</ui5-title><br>
 
@@ -92,7 +92,7 @@
 							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 						</ui5-messagestrip><br>
 
-						<ui5-label wrap>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
+						<ui5-label wrapping-type="Normal">Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 						</ui5-label>
 						<ui5-button id="btnOpenDialog" style="width: 150px; align-self: flex-end;">Open Wizard Dialog</ui5-button>
 					</div>
@@ -100,10 +100,10 @@
 					<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 				</ui5-wizard-step>
 
-				<ui5-wizard-step heading="Product Information">
+				<ui5-wizard-step title-text="Product Information">
 					<div style="display: flex;flex-direction: column">
 						<ui5-title>2. Product Information</ui5-title><br>
-						<ui5-label wrap>
+						<ui5-label wrapping-type="Normal">
 							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 						</ui5-label>
 
@@ -137,11 +137,11 @@
 					<ui5-button id="toStep3" design="Emphasized" hidden>Step 3</ui5-button>
 				</ui5-wizard-step>
 
-				<ui5-wizard-step heading="Options">
+				<ui5-wizard-step title-text="Options">
 					<div style="display: flex; flex-direction: column;">
 						<ui5-title>3. Options</ui5-title><br>
 
-						<ui5-label wrap>
+						<ui5-label wrapping-type="Normal">
 							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 						</ui5-label>
 						<ui5-messagestrip>
@@ -156,21 +156,21 @@
 
 							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Availability</ui5-label>
-								<ui5-segmentedbutton id="segButton1">
-									<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-									<ui5-togglebutton>In depot</ui5-togglebutton>
-									<ui5-togglebutton>Damaged</ui5-togglebutton>
-									<ui5-togglebutton>Out of stock</ui5-togglebutton>
-								</ui5-segmentedbutton>
+								<ui5-segmented-button id="segButton1">
+									<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+									<ui5-toggle-button>In depot</ui5-toggle-button>
+									<ui5-toggle-button>Damaged</ui5-toggle-button>
+									<ui5-toggle-button>Out of stock</ui5-toggle-button>
+								</ui5-segmented-button>
 							</div>
 
 							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Size</ui5-label>
-								<ui5-segmentedbutton id="sb">
-									<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-									<ui5-togglebutton>Medium</ui5-togglebutton>
-									<ui5-togglebutton>Largr</ui5-togglebutton>
-								</ui5-segmentedbutton>
+								<ui5-segmented-button id="sb">
+									<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+									<ui5-toggle-button>Medium</ui5-toggle-button>
+									<ui5-toggle-button>Largr</ui5-toggle-button>
+								</ui5-segmented-button>
 							</div>
 						</div>
 					</div>
@@ -178,10 +178,10 @@
 					<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 				</ui5-wizard-step>
 
-				<ui5-wizard-step heading="Pricing">
+				<ui5-wizard-step title-text="Pricing">
 					<div style="display: flex; flex-direction: column;">
 						<ui5-title>4. Pricing</ui5-title><br>
-						<ui5-label wrap>
+						<ui5-label wrapping-type="Normal">
 							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 						</ui5-label>
 						<ui5-messagestrip>
@@ -227,11 +227,11 @@
 
 	<!-- ex2 -->
 	<br><br>
-	<ui5-title class="sectionTitle">Master-Detail: Detail expanded + no-arrows</ui5-title>
-	<ui5-togglebutton id="switchBtn2" class="testButton">Set to TwoColumnsMidExpanded</ui5-togglebutton>
+	<ui5-title class="sectionTitle">Master-Detail: Detail expanded + hide-arrows</ui5-title>
+	<ui5-toggle-button id="switchBtn2" class="testButton">Set to TwoColumnsMidExpanded</ui5-toggle-button>
 	<br><br>
 
-	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" no-arrows>
+	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" hide-arrows>
 			<!-- start column -->
 			<div style="box-sizing: border-box;" slot="startColumn">
 				<div style="padding: 1rem">
@@ -471,7 +471,7 @@
 				<ui5-title>Column 2</ui5-title>
 
 				<div>
-					<ui5-togglebutton id="expandMidColumn" icon="full-screen" design="Transparent"></ui5-togglebutton>
+					<ui5-toggle-button id="expandMidColumn" icon="full-screen" design="Transparent"></ui5-toggle-button>
 					<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
 				</div>
 			</div>
@@ -491,7 +491,7 @@
 			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 3</ui5-title>
 				<div>
-					<ui5-togglebutton id="expandEndColumn" icon="full-screen" design="Transparent"></ui5-togglebutton>
+					<ui5-toggle-button id="expandEndColumn" icon="full-screen" design="Transparent"></ui5-toggle-button>
 					<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
 				</div>
 			</div>
@@ -514,7 +514,7 @@
 		<div class="col" slot="startColumn">
 			<ui5-shellbar
 				primary-title="Smart Store, New Yorks"
-				notification-count="4"
+				notifications-count="4"
 				show-notifications
 				show-product-switch
 				show-co-pilot
@@ -526,26 +526,26 @@
 
 			<br><br>
 			<ui5-list id="col1list" header-text="Products (13)" mode="SingleSelect">
-				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="47.00 EUR">10 inch Portable DVD
+				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end additional-text="47.00 EUR">10 inch Portable DVD
 				</ui5-li>
-				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="249.00 EUR">7 inch Widescreen
+				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end additional-text="249.00 EUR">7 inch Widescreen
 					Portable DVD Player w MP3</ui5-li>
-				<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end info="947.00 EUR">Astro Laptop 1516
+				<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end additional-text="947.00 EUR">Astro Laptop 1516
 				</ui5-li>
-				<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end info="647.00 EUR">Astro Phone 6</ui5-li>
-				<ui5-li description=HT-1252 icon='slim-arrow-right' icon-end info="27.99 EUR">Audio/Video Cable Kit - 4m
+				<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end additional-text="647.00 EUR">Astro Phone 6</ui5-li>
+				<ui5-li description=HT-1252 icon='slim-arrow-right' icon-end additional-text="27.99 EUR">Audio/Video Cable Kit - 4m
 				</ui5-li>
-				<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end info="447.90 EUR">Beam Breaker B-1</ui5-li>
-				<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end info="647.50 EUR">Beam Breaker B-2</ui5-li>
-				<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end info="847.80 EUR">Beam Breaker B-3</ui5-li>
-				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="1,250.00 EUR">Beam Breaker B-4
+				<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end additional-text="447.90 EUR">Beam Breaker B-1</ui5-li>
+				<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end additional-text="647.50 EUR">Beam Breaker B-2</ui5-li>
+				<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end additional-text="847.80 EUR">Beam Breaker B-3</ui5-li>
+				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end additional-text="1,250.00 EUR">Beam Breaker B-4
 				</ui5-li>
-				<ui5-li description=HT-8001 icon='slim-arrow-right' icon-end info="1,288.00 EUR">Camcorder View</ui5-li>
-				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="996.00 EUR">Benda Laptop 1408
+				<ui5-li description=HT-8001 icon='slim-arrow-right' icon-end additional-text="1,288.00 EUR">Camcorder View</ui5-li>
+				<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end additional-text="996.00 EUR">Benda Laptop 1408
 				</ui5-li>
-				<ui5-li description=HT-0003 icon='slim-arrow-right' icon-end info="147.00 EUR">Cepat Tablet 10.5
+				<ui5-li description=HT-0003 icon='slim-arrow-right' icon-end additional-text="147.00 EUR">Cepat Tablet 10.5
 				</ui5-li>
-				<ui5-li description=HT-1001 icon='slim-arrow-right' icon-end info="87.90 EUR">Gladiator MX</ui5-li>
+				<ui5-li description=HT-1001 icon='slim-arrow-right' icon-end additional-text="87.90 EUR">Gladiator MX</ui5-li>
 			</ui5-list>
 		</div>
 
@@ -596,7 +596,7 @@
 						<ui5-title level="H5">Rating:</ui5-title>
 						<ui5-rating-indicator
 							id="productRating"
-							aria-label="Hello World"
+							accessible-name="Hello World"
 							value="3.5"
 						></ui5-rating-indicator>
 					</div>
@@ -643,15 +643,15 @@
 				<ui5-tab text="Products" additional-text="125">
 				</ui5-tab>
 				<ui5-tab-separator></ui5-tab-separator>
-				<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+				<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+				<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Keyboards" semantic-color="Negative" additional-text="15">
+				<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" disabled text="Disabled"  semantic-color="Negative" additional-text="40">
+				<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Neutral" semantic-color="Neutral" additional-text="40">
+				<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40">
 				</ui5-tab>
 				<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
 				</ui5-tab>
@@ -659,7 +659,7 @@
 
 			<section style="padding: 1rem 1rem; background: var(--sapList_Background);">
 				<p>
-					<ui5-title level="H5" wrap>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -667,7 +667,7 @@
 					</ui5-title>
 				</p>
 				<p>
-					<ui5-title level="H5" wrap>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -675,7 +675,7 @@
 					</ui5-title>
 				</p>
 				<p>
-					<ui5-title level="H5" wrap>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in

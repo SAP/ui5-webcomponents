@@ -11,7 +11,7 @@
 			@focusout="{{_onfocusout}}"
 			@focusin="{{_onfocusin}}"
 			tabindex="-1"
-			part="slider-progress"
+			part="progress-bar"
 		></div>
 	</div>
 {{/inline}}
@@ -30,7 +30,7 @@
 		aria-labelledby="{{_id}}-sliderDesc"
 		aria-disabled="{{_ariaDisabled}}"
 		data-sap-focus-ref
-		part="slider-handle"
+		part="handle"
 	>
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">

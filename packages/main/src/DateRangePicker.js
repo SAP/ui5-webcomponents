@@ -2,6 +2,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
+import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -47,7 +48,7 @@ const metadata = {
  * For the <code>ui5-daterange-picker</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/DateRangePicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/DateRangePicker.js";</code>
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
@@ -83,12 +84,16 @@ class DateRangePicker extends DatePicker {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
-	get _firstDateTimestamp() {
+	get _startDateTimestamp() {
 		return this._extractFirstTimestamp(this.value);
 	}
 
-	get _lastDateTimestamp() {
+	get _endDateTimestamp() {
 		return this._extractLastTimestamp(this.value);
+	}
+
+	get _tempTimestamp() {
+		return this._tempValue && this.getFormat().parse(this._tempValue, true).getTime() / 1000;
 	}
 
 	/**
@@ -104,7 +109,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		return this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
+		return this._tempTimestamp || this._startDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
@@ -122,25 +127,25 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * Currently selected first date represented as JavaScript Date instance.
+	 * Returns the start date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }
 	 * @public
 	 */
-	get firstDateValue() {
-		return CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000).toLocalJSDate();
+	get startDateValue() {
+		return CalendarDate.fromTimestamp(this._startDateTimestamp * 1000).toLocalJSDate();
 	}
 
 	/**
-	 * Currently selected last date represented as JavaScript Date instance.
+	 * Returns the end date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }
 	 * @public
 	 */
-	get lastDateValue() {
-		return CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000).toLocalJSDate();
+	get endDateValue() {
+		return CalendarDate.fromTimestamp(this._endDateTimestamp * 1000).toLocalJSDate();
 	}
 
 	/**
@@ -148,6 +153,10 @@ class DateRangePicker extends DatePicker {
 	 */
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
+	}
+
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(DATERANGE_DESCRIPTION);
 	}
 
 	/**
@@ -158,6 +167,14 @@ class DateRangePicker extends DatePicker {
 		const caretPos = input.getCaretPosition();
 		await renderFinished();
 		input.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
+	}
+
+	/**
+	 * @override
+	 */
+	 onResponsivePopoverAfterClose() {
+		this._tempValue = ""; // reset _tempValue on popover close
+		super.onResponsivePopoverAfterClose();
 	}
 
 	/**
@@ -206,7 +223,6 @@ class DateRangePicker extends DatePicker {
 
 		const newValue = this._buildValue(...event.detail.dates); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-		this._tempValue = "";
 		this._focusInputAfterClose = true;
 		this.closePicker();
 	}
@@ -215,7 +231,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	async _modifyDateValue(amount, unit) {
-		if (!this._lastDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
+		if (!this._endDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
 			return super._modifyDateValue(amount, unit);
 		}
 
@@ -224,17 +240,17 @@ class DateRangePicker extends DatePicker {
 		let newValue;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the seoond date
-			const firstDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
-			const newFirstDateTimestamp = firstDateModified.valueOf() / 1000;
-			if (newFirstDateTimestamp > this._lastDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
+			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+			const newStartDateTimestamp = startDateModified.valueOf() / 1000;
+			if (newStartDateTimestamp > this._endDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
 				caretPos += Math.ceil(this.value.length / 2);
 			}
-			newValue = this._buildValue(newFirstDateTimestamp, this._lastDateTimestamp); // the value will be normalized so we don't try to order them here
+			newValue = this._buildValue(newStartDateTimestamp, this._endDateTimestamp); // the value will be normalized so we don't try to order them here
 		} else {
-			const lastDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
-			const newLastDateTimestamp = lastDateModified.valueOf() / 1000;
-			newValue = this._buildValue(this._firstDateTimestamp, newLastDateTimestamp); // the value will be normalized so we don't try to order them here
-			if (newLastDateTimestamp < this._firstDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
+			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+			const newEndDateTimestamp = endDateModified.valueOf() / 1000;
+			newValue = this._buildValue(this._startDateTimestamp, newEndDateTimestamp); // the value will be normalized so we don't try to order them here
+			if (newEndDateTimestamp < this._startDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
 				caretPos -= Math.ceil(this.value.length / 2);
 			}
 		}

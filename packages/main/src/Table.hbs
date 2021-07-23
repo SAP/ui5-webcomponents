@@ -5,7 +5,18 @@
 
 	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
 		<thead>
-			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" aria-label="{{ariaLabelText}}" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+				{{#if isMultiSelect}}
+					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
+						<ui5-checkbox class="ui5-table-select-all-checkbox"
+							?checked="{{_allRowsSelected}}"
+							@ui5-change="{{_selectAll}}"
+							aria-label="{{ariaLabelSelectAllText}}"
+						>
+						</ui5-checkbox>
+					</th>
+				{{/if}}
+
 				{{#each visibleColumns}}
 					<slot name="{{this._individualSlot}}"></slot>
 				{{/each}}
@@ -18,7 +29,7 @@
 			{{/each}}
 
 			{{#unless rows.length}}
-				{{#if showNoData}}
+				{{#unless hideNoData}}
 					<tr class="ui5-table-no-data-row-root" role="row">
 						<td colspan="{{visibleColumnsCount}}" role="cell">
 
@@ -27,7 +38,7 @@
 							</div>
 						</td>
 					</tr>
-				{{/if}}
+				{{/unless}}
 			{{/unless}}
 
 			{{#if growsWithButton}}
@@ -44,7 +55,7 @@
 {{#*inline "moreRow"}}
 <tr>
 	<td colspan="{{visibleColumnsCount}}">
-		<div load-more>
+		<div growing-button>
 			<div 
 				tabindex="0"
 				role="button"
@@ -53,12 +64,12 @@
 				@click="{{_onLoadMoreClick}}"
 				@keydown="{{_onLoadMoreKeydown}}"
 				@keyup="{{_onLoadMoreKeyup}}"
-				load-more-inner
+				growing-button-inner
 			>
-				<span id="{{_id}}-showMore-text" load-more-text>{{_moreText}}</span>
+				<span id="{{_id}}-growingButton-text" growing-button-text>{{_growingButtonText}}</span>
 
-				{{#if moreSubtext}}
-					<span id="{{_id}}-showMore-desc" load-more-subtext>{{moreSubtext}}</span>
+				{{#if growingButtonSubtext}}
+					<span id="{{_id}}-growingButton-subtext" growing-button-subtext>{{growingButtonSubtext}}</span>
 				{{/if}}
 			</div>
 		</div>
@@ -76,11 +87,12 @@
 
 {{#*inline "busyRow"}}
 	<div tabindex="-1" class="ui5-table-busy-row">
-		<ui5-busyindicator
+		<ui5-busy-indicator
+			delay="{{busyDelay}}"
 			class="ui5-table-busy-ind"
 			style="{{styles.busy}}"
 			active
 			size="Medium"
-		></ui5-busyindicator>
+		></ui5-busy-indicator>
 	</div>
 {{/inline}}

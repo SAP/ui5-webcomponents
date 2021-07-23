@@ -39,7 +39,7 @@ const metadata = {
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		/**
-		 * Holds <code>File</code>, associated with this item.
+		 * Holds an instance of <code>File</code> associated with this item.
 		 *
 		 * @type {File}
 		 * @defaultvalue null
@@ -73,13 +73,24 @@ const metadata = {
 		},
 
 		/**
-		 * Removes delete option from <code>ui5-upload-collection</code> with <code>mode</code> <code>Delete</code> for this item.
+		 * Disables the delete button.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		noDelete: {
+		disableDeleteButton: {
+			type: Boolean,
+		},
+
+		/**
+		 * By default, the Delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
+		 * Setting this property to <code>true</code> will hide the delete button.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 */
+		hideDeleteButton: {
 			type: Boolean,
 		},
 
@@ -90,7 +101,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		noRetry: {
+		hideRetryButton: {
 			type: Boolean,
 		},
 
@@ -101,7 +112,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		noTerminate: {
+		hideTerminateButton: {
 			type: Boolean,
 		},
 
@@ -227,7 +238,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -269,37 +280,32 @@ class UploadCollectionItem extends ListItem {
 	constructor() {
 		super();
 		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
-
-		this._editPressed = false; // indicates if the edit btn has been pressed
-		this.doNotCloseInput = false; // Indicates whether the input should be closed when using keybord for navigation
-		this.isEnter = false;
 	}
 
-	onAfterRendering() {
-		if (this._editPressed) {
-			this._editing = true;
-			this._editPressed = false;
-			this.focusAndSelectText();
-		}
-	}
-
-	async focusAndSelectText() {
-		await this.focus();
+	async _initInputField() {
+		await renderFinished();
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
+		inp.value = this._fileNameWithoutExtension;
 
 		await renderFinished();
-		if (inp.getFocusDomRef()) {
-			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
+
+		const inpFocusDomRef = inp.getFocusDomRef();
+
+		if (inpFocusDomRef) {
+			inpFocusDomRef.focus();
+			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
 	}
 
 	/**
 	 * @override
 	 */
-	onDetailClick(event) {
+	async onDetailClick(event) {
 		super.onDetailClick(event);
 		this._editing = true;
+
+		await this._initInputField();
 	}
 
 	_onDetailKeyup(event) {
@@ -308,79 +314,51 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	/**
-	 * @override
-	 */
-	_onfocusout(event) {
-		super._onfocusout(event);
-
-		const path = event.path || (event.composedPath && event.composedPath());
-
-		this._editPressed = this.isDetailPressed(event);
-
-		if (!this._editPressed && path.indexOf(this) > -1) {
-			this._editing = false;
-		}
+	_onInputFocusin(event) {
+		// prevent focusing the whole upload collection item.
+		event.stopPropagation();
 	}
 
-	_onInputKeydown(event) {
-		this.isEnter = isEnter(event);
-		this.isEscape = isEscape(event);
-	}
-
-	_onInputKeyUp(event) {
-		this.doNotCloseInput = true;
-		this.tempValue = event.target.value + this._fileExtension;
-
-		if (this.isEscape) {
-			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
-			return this._onRenameCancel();
-		}
-	}
-
-	isDetailPressed(event) {
-		const path = event.path || (event.composedPath && event.composedPath());
-
-		return path.some(e => {
-			return e.classList && e.classList.contains("ui5-uci-edit");
-		});
-	}
-
-	_onInputChange(event) {
-		if (this.shadowRoot.getElementById("ui5-uci-edit-cancel").active) {
-			return;
-		}
-
-		if ((!this.isEnter && this.doNotCloseInput) || this.isEscape) {
-			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
-			this.isEscape = false;
-			return;
-		}
-
-		this._editing = false;
-		this.fileName = event.target.value + this._fileExtension;
-		this.fireEvent("rename");
-
-		if (this.isEnter) {
-			this._focus();
+	_onInputKeyDown(event) {
+		if (isEscape(event)) {
+			this._onRenameCancel(event);
+		} else if (isEnter(event)) {
+			this._onRename();
+		} else if (isSpace(event)) {
+			event.stopImmediatePropagation();
 		}
 	}
 
 	_onRename(event) {
-		this.doNotCloseInput = false;
+		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
+		this.fileName = inp.value + this._fileExtension;
+		this.fireEvent("rename");
+
 		this._editing = false;
 		this._focus();
 	}
 
-	_onRenameCancel(event) {
-		if (!this.isEscape) {
-			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+	_onRenameKeyup(event) {
+		if (isSpace(event)) {
+			this._onRename(event);
 		}
+	}
 
+	async _onRenameCancel(event) {
 		this._editing = false;
-		this.doNotCloseInput = false;
 
-		this._focus();
+		if (isEscape(event)) {
+			await renderFinished();
+			this.shadowRoot.getElementById(`${this._id}-editing-button`).focus();
+		} else {
+			this._focus();
+		}
+	}
+
+	_onRenameCancelKeyup(event) {
+		if (isSpace(event)) {
+			this._onRenameCancel(event);
+		}
 	}
 
 	_focus() {
@@ -395,8 +373,24 @@ class UploadCollectionItem extends ListItem {
 		this.fireEvent("retry");
 	}
 
+	_onRetryKeyup(event) {
+		if (isSpace(event)) {
+			this._onRetry(event);
+		}
+	}
+
 	_onTerminate(event) {
 		this.fireEvent("terminate");
+	}
+
+	_onTerminateKeyup(event) {
+		if (isSpace(event)) {
+			this._onTerminate(event);
+		}
+	}
+
+	getFocusDomRef() {
+		return this.getDomRef();
 	}
 
 	get list() {
@@ -422,8 +416,22 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get disableDeleteButton() {
-		return this.noDelete;
+	get renderDeleteButton() {
+		return !this.hideDeleteButton;
+	}
+
+	/**
+	 * @override
+	 */
+	get placeSelectionElementAfter() {
+		return true;
+	}
+
+	/**
+	 * @override
+	 */
+	get placeSelectionElementBefore() {
+		return false;
 	}
 
 	get _fileNameWithoutExtension() {
@@ -459,11 +467,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _showRetry() {
-		return !this.noRetry && this.uploadState === UploadState.Error;
+		return !this.hideRetryButton && this.uploadState === UploadState.Error;
 	}
 
 	get _showTerminate() {
-		return !this.noTerminate && this.uploadState === UploadState.Uploading;
+		return !this.hideTerminateButton && this.uploadState === UploadState.Uploading;
 	}
 
 	get _retryButtonTooltip() {

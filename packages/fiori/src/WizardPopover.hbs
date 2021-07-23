@@ -1,6 +1,7 @@
 <ui5-responsive-popover
 	horizontal-align="Center"
 	placement-type="Bottom"
+	aria-label="{{actionSheetStepsText}}"
 	class="{{classes.popover}}"
 	@ui5-after-close={{_afterClosePopover}}
 	content-only-on-desktop
@@ -15,7 +16,7 @@
 					icon="{{this.icon}}"
 					?disabled="{{this.disabled}}"
 					design="Transparent"
-					data-ui5-header-tab-ref-id="{{this.ariaPosinset}}"
+					data-ui5-header-tab-ref-id="{{pos}}"
 					@click="{{../_onOverflowStepButtonClick}}"
 				>
 				{{this.heading}}

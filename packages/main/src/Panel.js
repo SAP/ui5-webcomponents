@@ -27,7 +27,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-panel</code> header area.
+		 * Defines the component header area.
 		 * <br><br>
 		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 		 *
@@ -40,8 +40,8 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the content of the <code>ui5-panel</code>.
-		 * The content is visible only when the <code>ui5-panel</code> is expanded.
+		 * Determines the content of the component.
+		 * The content is visible only when the component is expanded.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -54,7 +54,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
-		 * This property is used to set the header text of the <code>ui5-panel</code>.
+		 * This property is used to set the header text of the component.
 		 * The text is visible in both expanded and collapsed states.
 		 * <br><br>
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
@@ -68,7 +68,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-panel</code> is in a fixed state that is not
+		 * Determines whether the component is in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {boolean}
@@ -80,7 +80,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates whether the <code>ui5-panel</code> is collapsed and only the header is displayed.
+		 * Indicates whether the component is collapsed and only the header is displayed.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -91,7 +91,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria role of the <code>ui5-panel</code>.
+		 * Sets the accessible aria role of the component.
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
@@ -105,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the "aria-level" of <code>ui5-panel</code> heading,
+		 * Defines the "aria-level" of component heading,
 		 * set by the <code>headerText</code>.
 		 * <br><br>
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
@@ -119,10 +119,12 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the <code>ui5-panel</code>.
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		accessibleName: {
 			type: String,
@@ -168,7 +170,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
-		 * Fired when the ui5-panel is expanded/collapsed by user interaction.
+		 * Fired when the component is expanded/collapsed by user interaction.
 		 *
 		 * @event
 		 * @public
@@ -215,6 +217,15 @@ const metadata = {
  * close the content area.</li>
  * <li>When the panel expands/collapses, the arrow icon rotates 90 degrees
  * clockwise/counter-clockwise.</li>
+ * </ul>
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-panel</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>content - Used to style the wrapper of the content</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

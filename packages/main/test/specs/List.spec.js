@@ -172,6 +172,19 @@ describe("List Tests", () => {
 		assert.equal(browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
 	});
 
+	it("mode: delete. DELETE key press - deletes item", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		list.root.setProperty("mode", "Delete");
+
+		const firstItem = list.getItem(0);
+		firstItem.click();
+
+		assert.ok(!firstItem.getAttribute("selected"), "item is selected");
+
+		firstItem.keys("Delete")
+		assert.equal(browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
+	});
+
 	it("item size and classed, when an item has both text and description", () => {
 		const ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT = 80;
 		const firstItem =  $("#listWithDesc ui5-li:first-child");
@@ -185,7 +198,7 @@ describe("List Tests", () => {
 		const item = $("ui5-li-custom.item");
 		const itemBtn = $("ui5-button.itemBtn");
 		const itemLink = $("ui5-link.itemLink");
-		const itemRadioBtn = $("ui5-radiobutton.itemRadio");
+		const itemRadioBtn = $("ui5-radio-button.itemRadio");
 		const randomBtn = $("#randomBtn");
 
 		headerBtn.click();
@@ -228,6 +241,11 @@ describe("List Tests", () => {
 		firstListItem.keys("ArrowLeft");
 
 		assert.ok(firstListItem.isFocused(), "First item remains focussed");
+	});
+
+	it("tests 'loadMore' event not fired initially when the list did not overflow", () => {
+		const loadMoreResult = $("#growingScrollTestCounter");
+		assert.strictEqual(loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
 	});
 
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
@@ -348,5 +366,15 @@ describe("List Tests", () => {
 		item1.keys("ArrowDown");
 
 		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
+	});
+
+	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', () => {
+		const growingListButton = $('#growingListButton').shadow$("div[growing-button-inner]");
+		const nextInteractiveElement = $('#nextInteractiveElement');
+			
+		growingListButton.click() // focus growing button
+		growingListButton.keys("Tab") // focus next list
+
+		assert.strictEqual(nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
 	});
 });

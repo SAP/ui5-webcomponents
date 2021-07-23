@@ -1,8 +1,8 @@
-# Customizing fonts
+# Custom Fonts
 
-## The `data-ui5-font-face` font-face `style` tag
+## The `data-ui5-font-face` Font-Face `style` Tag
 
-Upon `boot`, the `UI5 Web Components` framework creates a `<style data-ui5-font-face>` tag in the `<head>` in order to load the necessary fonts.
+Upon `boot`, the UI5 Web Components framework creates a `<style data-ui5-font-face>` tag in the `<head>` in order to load the necessary fonts.
 
 It may look something like this:
 
@@ -21,25 +21,25 @@ It may look something like this:
 </style>
 ```
 
-*Important: * Notice the `data-ui5-font-face` attribute. It is unique and recognized by `UI5 Web Components`.
+*Important: * Notice the `data-ui5-font-face` attribute. It is unique and recognized by UI5 Web Components.
 
-## Customizing fonts
+## Customizing Fonts
 
 You might need to customize fonts for several reasons: 
- - In order to provide different paths for the fonts (e.g. no public internet connection on the server)
- - Provide additional declarations inside `@font-face`
- - Download additional fonts, such as f.e. `72-Light`
- - Not download any of the default fonts
+ - To provide different paths for the fonts (e.g. no public internet connection on the server).
+ - To provide additional declarations inside `@font-face`.
+ - To download additional fonts, such as f.e. `72-Light`.
+ - Not to download any of the default fonts.
 
-In order to do that, just create a `<style type="text/css" data-ui5-font-face="">` tag in the `head` of your HTML page and 
+To do that, just create a `<style type="text/css" data-ui5-font-face="">` tag in the `head` of your HTML page and 
 provide arbitrary content for it.
 
-Then, when the `UI5 Web Components` framework boots, it will detect the existence of this tag by the `data-ui5-font-face`
+Then, when the UI5 Web Components framework boots, it will detect the existence of this tag by the `data-ui5-font-face`
 attribute, and will not create it. The one you provided will be used instead.
 
 ## Example
 
-In order to use the `72-Light` font in your app, and have an additional setting (`font-display`), you could add the following markup in the `<head>` of your HTML page:
+In order to use the `72-Light` font in your app and have an additional setting (`font-display`), you could add the following markup in the `<head>` of your HTML page:
 
 ```html
     <style type="text/css" data-ui5-font-face="">

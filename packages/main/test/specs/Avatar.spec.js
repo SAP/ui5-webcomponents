@@ -9,7 +9,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image", () => {
 		const avatar = browser.$("#myAvatar1");
-		const image = avatar.shadow$(".ui5-avatar-img");
+		const image = avatar.shadow$("slot");
 		const icon = avatar.shadow$("ui5-avatar-icon");
 
 		// img tag is rendered, ui5-icon - not
@@ -19,7 +19,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of icon", () => {
 		const avatar = browser.$("#myAvatar2");
-		const image = avatar.shadow$(".ui5-avatar-img");
+		const image = avatar.shadow$("slot");
 		const icon = avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
@@ -29,7 +29,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image, when all set", () => {
 		const avatar = browser.$("#myAvatar3");
-		const image = avatar.shadow$(".ui5-avatar-img");
+		const image = avatar.shadow$("slot");
 		const icon = avatar.shadow$(".ui5-avatar-icon");
 		const initials = avatar.shadow$(".ui5-avatar-initials");
 
@@ -85,5 +85,32 @@ describe("Avatar", () => {
 
 		avatar.click();
 		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
+	});
+});
+
+describe("ARIA attributes", () => {
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+	});
+
+	it ("role set correctly", () => {
+		const avatar = $("#myInteractiveAvatar");;
+		const avatarRoot = avatar.shadow$(".ui5-avatar-root");
+
+		assert.strictEqual(avatarRoot.getAttribute("role"), "button", "should have role button for interactive avatar");
+	});
+
+	it ("aria-haspopup is correct for interactive avatar", () => {
+		const avatar = $("#myInteractiveAvatar");;
+		const ariaHasPopup = avatar.getProperty("_ariaHasPopup");
+
+		assert.strictEqual(ariaHasPopup, "menu", "should have aria-haspopup set");
+	});
+
+	it ("aria-haspopup is correct for non-interactive avatar", () => {
+		const avatar = $("#non-interactive-avatar");;
+		const ariaHasPopup = avatar.getProperty("_ariaHasPopup");
+
+		assert.notExists(ariaHasPopup, "should not have aria-haspopup set");
 	});
 });

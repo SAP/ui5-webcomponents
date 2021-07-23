@@ -23,7 +23,7 @@ describe("Attributes propagation", () => {
 		assert.ok(popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "Initially popover has arrow.");
 
 		browser.execute(() => {
-			document.getElementById("pop").toggleAttribute("no-arrow");
+			document.getElementById("pop").toggleAttribute("hide-arrow");
 		});
 
 		assert.ok(!popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "The arrow was hidden.");
@@ -294,11 +294,11 @@ describe("Acc", () => {
 
 	it("tests aria-labelledby and aria-label", () => {
 		const popover = browser.$("ui5-popover");
-		popover.removeAttribute("aria-label");
+		popover.removeAttribute("accessible-name");
 		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "Popover has aria-labelledby.");
 		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
 
-		popover.setAttribute("aria-label", "text");
+		popover.setAttribute("accessible-name", "text");
 		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
 		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "Popover has aria-label.");
 	});

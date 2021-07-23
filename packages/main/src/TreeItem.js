@@ -69,34 +69,45 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
 		 * @type {string}
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		info: {
+		additionalText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the state of the <code>info</code>.
+		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		infoState: {
+		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		title: {
+			type: String,
 		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
 
 		/**
-		 * Defines the items of this <code>ui5-tree-item</code>.
+		 * Defines the items of this component.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
 		 * @slot items
@@ -123,7 +134,7 @@ const metadata = {
  * <code>ui5-tree-item</code> directly in your apps. The <code>ui5-li-tree</code> list item is internal for the list, and not intended for public use.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents/dist/TreeItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
  *
  * @constructor
  * @author SAP SE

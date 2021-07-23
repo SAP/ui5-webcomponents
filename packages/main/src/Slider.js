@@ -64,6 +64,33 @@ const metadata = {
  * <li>Click/tap on the range bar to move the handle to that location</li>
  * </ul>
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-slider</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>progress-container - Used to style the progress container(the thin line) of the <code>ui5-slider</code></li>
+ * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-slider</code></li>
+ * <li>handle - Used to style the handle of the <code>ui5-slider</code></li>
+ * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li><code>Left or Down Arrow</code> - Moves the handle one step to the left, effectively decreasing the component's value by <code>step</code> amount;</li>
+ * <li><code>Right or Up Arrow</code> - Moves the handle one step to the right, effectively increasing the component's value by <code>step</code> amount;</li>
+ * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves the handle to the left with step equal to 1/10th of the entire range, effectively decreasing the component's value by 1/10th of the range;</li>
+ * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves the handle to the right with step equal to 1/10th of the entire range, effectively increasing the component's value by 1/10th of the range;</li>
+ * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
+ * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
+ * <li><code>Home</code> - Moves the handle to the beginning of the range;</li>
+ * <li><code>End</code> - Moves the handle to the end of the range;</li>
+ * <li><code>Page Up</code> - Same as <code>Right or Up + Ctrl/Cmd</code></li>
+ * <li><code>Page Down</code> - Same as <code>Left or Down + Ctrl/Cmd</code></li>
+ * <li><code>Escape</code> - Resets the value property after interaction, to the position prior the component's focusing;</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Slider";</code>
@@ -147,6 +174,10 @@ class Slider extends SliderBase {
 		if (this._getInitialValue("value") === null) {
 			this._setInitialValue("value", this.value);
 		}
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
+		}
 	}
 
 	_onfocusout(event) {
@@ -160,6 +191,10 @@ class Slider extends SliderBase {
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
 		this._setInitialValue("value", null);
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		}
 	}
 
 	/**

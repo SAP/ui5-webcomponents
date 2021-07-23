@@ -1,10 +1,14 @@
-<div class="ui5-bar-root"
-	role="toolbar">
+<div
+	class="ui5-bar-root"
+	aria-label="{{accInfo.label}}"
+	role="toolbar"
+	part="bar"
+>
 	<div class="ui5-bar-content-container ui5-bar-startcontent-container">
 		<slot name="startContent"></slot>
 	</div>
 	<div class="ui5-bar-content-container ui5-bar-midcontent-container">
-		<slot name="middleContent"></slot>
+		<slot></slot>
 	</div>
 	<div class="ui5-bar-content-container ui5-bar-endcontent-container">
 		<slot name="endContent"></slot>

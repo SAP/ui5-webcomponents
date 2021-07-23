@@ -7,9 +7,11 @@
 	@focusout={{_onfocusout}}
 	@focusin={{_onfocusin}}
 	@click={{_onclick}}
+	role="{{_role}}"
+	aria-haspopup="{{_ariaHasPopup}}"
 >
-	{{#if image}}
-		<span class="ui5-avatar-img" style="{{styles.img}}" role="img" aria-label="{{accessibleNameText}}"></span>
+	{{#if hasImage}}
+		<slot></slot>
 	{{else if icon}}
 		<ui5-icon class="ui5-avatar-icon" name="{{icon}}" accessible-name="{{accessibleNameText}}"></ui5-icon>
 	{{else if initials}}

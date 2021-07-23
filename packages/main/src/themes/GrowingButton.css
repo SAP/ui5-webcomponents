@@ -1,4 +1,4 @@
-[load-more] {
+[growing-button] {
 	display: flex;
 	align-items: center;
 	padding: var(--_ui5_load_more_padding);
@@ -8,7 +8,7 @@
 	outline: none;
 }
 
-[load-more-inner] {
+[growing-button-inner] {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -22,29 +22,29 @@
 	box-sizing: border-box;
 }
 
-[load-more-inner]:focus {
+[growing-button-inner]:focus {
 	outline: var(--_ui5_load_more_outline_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 	border-color: transparent;
 }
 
-[load-more-inner]:hover {
+[growing-button-inner]:hover {
 	background-color: var(--sapList_Hover_Background);
 }
 
-[load-more-inner]:active,
-[load-more-inner][active] {
+[growing-button-inner]:active,
+[growing-button-inner][active] {
 	background-color: var(--sapList_Active_Background);
 	border-color: var(--sapList_Active_Background);
 }
 
-[load-more-inner]:active > *,
-[load-more-inner][active] > * {
+[growing-button-inner]:active > *,
+[growing-button-inner][active] > * {
 	color: var(--sapList_Active_TextColor);
 }
 
-[load-more-text],
-[load-more-subtext] {
+[growing-button-text],
+[growing-button-subtext] {
 	width: 100%;
 	text-align: center;
 	font-family: "72override", var(--sapFontFamily);
@@ -54,14 +54,14 @@
 	box-sizing: border-box;
 }
 
-[load-more-text] {
+[growing-button-text] {
 	height: var(--_ui5_load_more_text_height);
 	padding: 0.875rem 1rem 0 1rem;
 	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
 }
 
-[load-more-subtext] {
+[growing-button-subtext] {
 	font-size: var(--sapFontSize);
 	padding: var(--_ui5_load_more_desc_padding);
 }

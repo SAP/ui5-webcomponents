@@ -6,7 +6,7 @@ describe("Wizard general interaction", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 	});
 
-	it("test initial selection", () => {
+	it("test initial state", () => {
 		const wiz = browser.$("#wizTest");
 		const step1 = browser.$("#st1");
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
@@ -18,6 +18,43 @@ describe("Wizard general interaction", () => {
 			"First step  in the header is selected.");
 	});
 
+	it("ARIA Attributes", () => {
+		const wiz = browser.$("#wizTest");
+		const wizRoot = wiz.shadow$(".ui5-wiz-root");
+		const wizNav = wiz.shadow$(".ui5-wiz-nav");
+		const wizList = wiz.shadow$(".ui5-wiz-nav-list");
+
+		const wizRootText = "Wizard";
+		const wizNavText = "Wizard Progress Bar";
+		const wizListDescribedbyId = "wiz-nav-descr";
+		const wizListText = "Wizard Steps";
+
+		const step1InHeaderRoot = wiz.shadow$(`[data-ui5-index="1"]`).shadow$(`.ui5-wiz-step-root`);
+		const step2InHeaderRoot = wiz.shadow$(`[data-ui5-index="2"]`).shadow$(`.ui5-wiz-step-root`);;
+		const step1Text = "Step 1 Product type Active";
+		const step2Text = "Step 2 Product Information Inactive";
+
+		assert.strictEqual(wizRoot.getAttribute("role"), "region",
+			"Wizard has role set.");
+		assert.strictEqual(wizRoot.getAttribute("aria-label"), wizRootText,
+			"Wizard has aria-label set.");
+		assert.strictEqual(wizNav.getAttribute("aria-label"), wizNavText,
+			"Wizard nav has aria-label set.");
+		assert.strictEqual(wizList.getAttribute("aria-describedby"), wizListDescribedbyId,
+			"Wizard nav has aria-label set.");
+		assert.strictEqual(wizList.getAttribute("role"), "list",
+			"Wizard list has role set..");
+		assert.strictEqual(wizList.getAttribute("aria-controls"), `${wiz.getProperty("_id")}-wiz-content`,
+			"Wizard list has aria-controls set.");
+		assert.strictEqual(wizList.getAttribute("aria-label"), wizListText,
+			"Wizard list has aria-label set.");
+
+		assert.strictEqual(step1InHeaderRoot.getAttribute("aria-label"), step1Text,
+			"First step in the header has aria-label.");
+		assert.strictEqual(step2InHeaderRoot.getAttribute("aria-label"), step2Text,
+			"Second step (inactive) in the header has aria-label.");
+	});
+
 	it("move to next step by API", () => {
 		const wiz = browser.$("#wizTest");
 		const btnToStep2 = browser.$("#toStep2");
@@ -25,6 +62,7 @@ describe("Wizard general interaction", () => {
 		const step2 = browser.$("#st2");
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
+		const step1InHeaderRoot = step1InHeader.shadow$(`.ui5-wiz-step-root`);
 
 		// act - the click handler calls the API
 		btnToStep2.click();
@@ -34,6 +72,10 @@ describe("Wizard general interaction", () => {
 			"First step in the content is not selected.");
 		assert.strictEqual(step1InHeader.getAttribute("selected"), null,
 			"First step  in the header not is selected.");
+
+		// assert - check if aria-attributes are applied correctly when step is not selected
+		assert.strictEqual(step1InHeaderRoot.getAttribute("role"), "listitem",
+			"First step in the header has role.");
 
 		// assert - that second step in the content and in the header are properly selected
 		assert.strictEqual(step2.getAttribute("selected"), "true",
@@ -50,15 +92,20 @@ describe("Wizard general interaction", () => {
 		const wiz = browser.$("#wizTest");
 		const step1 = browser.$("#st1");
 		const step2 = browser.$("#st2");
+
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
-		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
-		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
+		const inpStepChangeCounter =  browser.$("#inpStepChangeCounter");
+		const inpStepChangeCause =  browser.$("#inpStepChangeCause");
+
+		const wizardStep = browser.$("ui5-wizard-step");
+		const messageStrip = wizardStep.shadow$("ui5-messagestrip")
+		const firstFocusableElement = messageStrip.shadow$(`ui5-button`);
 
 		// act - click on the first step in the header
 		step1InHeader.click();
 
-		// assert - that first step in the content and in the header are  selected
+		// assert - that first step in the content and in the header are selected
 		assert.strictEqual(step1.getAttribute("selected"), "true",
 			"First step in the content is selected.");
 		assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
@@ -68,18 +115,28 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
+		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+
+		step1InHeader.keys(["Shift", "Tab"]);
+		step2InHeader.keys("Space");
+		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+
+		step1InHeader.keys(["Shift", "Tab"]);
+		step2InHeader.keys("Enter");
+		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(step2.getAttribute("selected"), null,
 			"Second step in the content is not selected.");
 		assert.strictEqual(step2InHeader.getAttribute("selected"), null,
 			"Second step in the header is not selected.");
 
-		// assert - selection-change fired once
-		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "1",
-			"Event selection-change fired once.");
-		// assert - selection-change fired due to user click
-		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "true",
-			"Event selection-change fired due to click.");
+		// assert - step-change fired once
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "1",
+			"Event step-change fired once.");
+		// assert - step-change fired due to user click
+		assert.strictEqual(inpStepChangeCause.getProperty("value"), "true",
+			"Event step-change fired due to click.");
 	});
 
 	it("move to next step by SPACE/ENTER", () => {
@@ -88,11 +145,12 @@ describe("Wizard general interaction", () => {
 		const step2 = browser.$("#st2");
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
-		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpStepChangeCounter =  browser.$("#inpStepChangeCounter");
 
 		// act - bring the focus to the first step in the header
 		// act - use keyboard to move to step2
 		step1InHeader.click();
+		step1InHeader.keys(["Shift", "Tab"]);
 		step1InHeader.keys("ArrowRight");
 		step2InHeader.keys("Space");
 
@@ -110,45 +168,51 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step2InHeader.getAttribute("disabled"), null,
 			"Second step in header is enabled.");
 
-		// assert - selection-change second time
-		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "2", "Event selection-change fired 2nd time.");
+		// assert - step-change second time
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "2", "Event step-change fired 2nd time.");
 
-		// act - use keyboard to move back to step1
-		step2InHeader.keys("ArrowLeft");
+		// act - move back to step1 then move the focus to the step 2 and press enter
+		step1InHeader.click();
+		step1InHeader.keys(["Shift", "Tab"]);
+		step1InHeader.keys("ArrowRight");
 		step1InHeader.keys("Enter");
 
 		// assert - that first step in the content and in the header are  selected
-		assert.strictEqual(step1.getAttribute("selected"), "true",
+		assert.strictEqual(step2.getAttribute("selected"), "true",
 			"First step in the content is not selected.");
-		assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
+		assert.strictEqual(step2InHeader.getAttribute("selected"), "true",
 			"First step  in the header not is selected.");
-		assert.strictEqual(step1.getAttribute("disabled"), null,
+		assert.strictEqual(step2.getAttribute("disabled"), null,
 			"First step is enabled.");
-		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
+		assert.strictEqual(step2InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		// assert - that second step in the content and in the header are not selected
-		assert.strictEqual(step2.getAttribute("selected"), null,
+		// assert - that first step in the content and in the header are not selected
+		assert.strictEqual(step1.getAttribute("selected"), null,
 			"Second step in the content is not selected.");
-		assert.strictEqual(step2InHeader.getAttribute("selected"), null,
+		assert.strictEqual(step1InHeader.getAttribute("selected"), null,
 			"Second step in the header is not selected.");
 
-		// assert - selection-change second time
-		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "3",
-			"Event selection-change fired 3rd time.");
+		// assert - step-change second time
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "4",
+			"Event step-change fired 4th time.");
+
+		// Activate the first step for the next tests
+		step1InHeader.click();
 	});
 
 	it("move to next step by scroll", () => {
 		const wiz = browser.$("#wizTest");
 		const step2 = browser.$("#st2");
+		const scrollMarker = browser.$("#scrollMarkerSt2");
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
-		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
-		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
+		const inpStepChangeCounter =  browser.$("#inpStepChangeCounter");
+		const inpStepChangeCause =  browser.$("#inpStepChangeCause");
 
 		// act - scroll the 2nd step into view
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
 		// this test should be reworked.
-		step2.scrollIntoView();
+		scrollMarker.scrollIntoView();
 		browser.pause(500);
 
 		// assert - that second step in the content and in the header are properly selected
@@ -157,12 +221,12 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step2.getAttribute("disabled"), null, "Second step is enabled.");
 		assert.strictEqual(step2InHeader.getAttribute("disabled"), null, "Second step in header is enabled.");
 
-		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "4",
-			"Event selection-change fired 4th time due to scrolling.");
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "6",
+			"Event step-change fired 6th time due to scrolling.");
 
-		// assert - selection-change fired not becasue of user click
-		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "false",
-			"Event selection-change fired not becasue of user click, but scrolling");
+		// assert - step-change fired not because of user click
+		assert.strictEqual(inpStepChangeCause.getProperty("value"), "false",
+			"Event step-change fired not because of user click, but scrolling");
 	});
 
 	it("tests dynamically increase step size and move to next step", () => {
@@ -171,24 +235,25 @@ describe("Wizard general interaction", () => {
 		const btnToStep2 = browser.$("#toStep22");
 		const btnToStep3 = browser.$("#toStep3");
 		const step3 = browser.$("#st3");
+		const scrollMarker = browser.$("#scrollMarkerSt3");
 		const step3InHeader = wiz.shadow$(`[data-ui5-index="3"]`);
-		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpStepChangeCounter =  browser.$("#inpStepChangeCounter");
 
 		btnToStep3.click(); // click to enable step 3
 		btnToStep2.click(); // click to get back to step 2
 		sw.click(); // click to dynamically expand content in step 2
-		step3.scrollIntoView(); // scroll to step 3
+		scrollMarker.scrollIntoView(); // scroll to step 3
 		browser.pause(500);
 
 		assert.strictEqual(step3.getAttribute("selected"), "true",
 			"Third step in the content is selected.");
 		assert.strictEqual(step3InHeader.getAttribute("selected"), "true",
 			"Third step in the header is selected.");
-		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "5",
-			"Event selection-change fired once for 5th time due to scrolling.");
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "7",
+			"Event step-change fired once for 7th time due to scrolling.");
 	});
 
-	it("tests no scrolling to selected step, if the selection was not changed", ()=>{
+	it("tests no scrolling to step, if the step was not changed", ()=>{
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 
 		const wizard = browser.$("#wizTest");

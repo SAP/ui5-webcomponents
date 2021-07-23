@@ -51,7 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the number of items per page on small size (up to 640px). One item per page shown by default.
+		 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -62,7 +62,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
+		 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -73,7 +73,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the number of items per page on large size (more than 1024px). One item per page shown by default.
+		 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -84,12 +84,29 @@ const metadata = {
 		},
 
 		/**
-		 * If set to true the navigation is hidden.
+		 * Defines the visibility of the navigation arrows.
+		 * If set to true the navigation arrows will be hidden.
+		 * <br><br>
+		 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
+		 * In this case, the user can swipe to navigate through the items.
 		 * @type {boolean}
+		 * @since 1.0.0-rc.15
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideNavigation: {
+		hideNavigationArrows: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the visibility of the paging indicator.
+		 * If set to true the page indicator will be hidden.
+		 * @type {boolean}
+		 * @since 1.0.0-rc.15
+		 * @defaultvalue false
+		 * @public
+		 */
+		hidePageIndicator: {
 			type: Boolean,
 		},
 
@@ -97,23 +114,11 @@ const metadata = {
 		 * Defines the index of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
-		 * @public
+		 * @private
 		 */
-		selectedIndex: {
+		_selectedIndex: {
 			type: Integer,
 			defaultValue: 0,
-		},
-
-		/**
-		 * Defines when the <code>load-more</code> event is fired. If not applied the event will not be fired.
-		 * @type {Integer}
-		 * @defaultvalue 1
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		infiniteScrollOffset: {
-			type: Integer,
-			defaultValue: 1,
 		},
 
 		/**
@@ -138,7 +143,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the carousel width in pixels
+		 * Defines the carousel width in pixels.
 		 * @private
 		 */
 		_width: {
@@ -146,17 +151,27 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the carousel item width in pixels
+		 * Defines the carousel item width in pixels.
 		 * @private
 		 */
 		_itemWidth: {
 			type: Integer,
 		},
+
+		/**
+		 * If set to true navigation arrows are shown.
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		_visibleNavigationArrows: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
-		 * Defines the content of the <code>ui5-carousel</code>.
+		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
 		 * @slot content
 		 * @public
@@ -170,12 +185,12 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 
 		/**
-		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * Fired whenever the page changes due to user interaction,
 		 * when the user clicks on the navigation arrows or while resizing,
 		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
 		 *
 		 * @event
-		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
+		 * @param {Integer} selectedIndex the current selected index
 		 * @public
 		 * @since 1.0.0-rc.7
 		 */
@@ -184,15 +199,6 @@ const metadata = {
 				selectedIndex: { type: Integer },
 			},
 		},
-
-		/**
-		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
-		 * The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
-		 * @event sap.ui.webcomponents.main.Carousel#load-more
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		"load-more": {},
 	},
 };
 
@@ -200,24 +206,44 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The carousel allows the user to browse through a set of items by swiping right or left.
+ * The Carousel allows the user to browse through a set of items.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
+ * <br>
+ * There are several ways to perform navigation:
+ * <ul>
+ * <li>on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.</li>
+ * <li>on mobile - the user can use swipe gestures.</li>
+ * </ul>
  *
  * <h3>Usage</h3>
  *
- * When to use
+ * <h4>When to use:</h4>
  *
- * - The items you want to display are very different from each other.
- * - You want to display the items one after the other.
- * When not to use
+ * <ul>
+ * <li>The items you want to display are very different from each other.</li>
+ * <li>You want to display the items one after the other.</li>
+ * </ul>
  *
- * - The items you want to display need to be visible at the same time.
- * - The items you want to display are uniform and very similar
+ * <h4>When not to use:</h4>
  *
- * For the <code>ui5-carousel</code>
+ * <ul>
+ * <li>The items you want to display need to be visible at the same time.</li>
+ * <li>The items you want to display are uniform and very similar.</li>
+ * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ * When the <code>ui5-carousel</code> is focused the user can navigate between the items
+ * with the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[UP/DOWN] - Navigates to previous and next item</li>
+ * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Carousel.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -262,6 +288,10 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
+			this._visibleNavigationArrows = true;
+		}
+
 		this.validateSelectedIndex();
 	}
 
@@ -279,9 +309,8 @@ class Carousel extends UI5Element {
 	}
 
 	validateSelectedIndex() {
-		if (!this.isIndexInRange(this.selectedIndex)) {
-			this.selectedIndex = 0;
-			console.warn(`The "selectedIndex" is out of range, changed to: ${0}`); // eslint-disable-line
+		if (!this.isIndexInRange(this._selectedIndex)) {
+			this._selectedIndex = 0;
 		}
 	}
 
@@ -301,9 +330,9 @@ class Carousel extends UI5Element {
 			return;
 		}
 
-		if (this.selectedIndex > this.pagesCount - 1) {
-			this.selectedIndex = this.pagesCount - 1;
-			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		if (this._selectedIndex > this.pagesCount - 1) {
+			this._selectedIndex = this.pagesCount - 1;
+			this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -331,46 +360,65 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	_onmouseout() {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Content) {
+			this._visibleNavigationArrows = false;
+		}
+	}
+
+	_onmouseover() {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Content) {
+			this._visibleNavigationArrows = true;
+		}
+	}
+
 	navigateLeft() {
 		this._resizing = false;
 
-		const peviousSelectedIndex = this.selectedIndex;
+		const previousSelectedIndex = this._selectedIndex;
 
-		if (this.selectedIndex - 1 < 0) {
+		if (this._selectedIndex - 1 < 0) {
 			if (this.cyclic) {
-				this.selectedIndex = this.pagesCount - 1;
+				this._selectedIndex = this.pagesCount - 1;
 			}
 		} else {
-			--this.selectedIndex;
+			--this._selectedIndex;
 		}
 
-		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		if (previousSelectedIndex !== this._selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
 	navigateRight() {
 		this._resizing = false;
 
-		const peviousSelectedIndex = this.selectedIndex;
+		const previousSelectedIndex = this._selectedIndex;
 
-		if (this.selectedIndex + 1 > this.pagesCount - 1) {
+		if (this._selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
-				this.selectedIndex = 0;
+				this._selectedIndex = 0;
 			} else {
 				return;
 			}
 		} else {
-			++this.selectedIndex;
+			++this._selectedIndex;
 		}
 
-		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		if (previousSelectedIndex !== this._selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
+	}
 
-		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset + 1) {
-			this.fireEvent("load-more");
-		}
+	/**
+	 * Changes the currently displayed page.
+	 * @param {Integer} itemIndex The index of the target page
+	 * @since 1.0.0-rc.15
+	 * @public
+	 */
+	navigateTo(itemIndex) {
+		this._resizing = false;
+		this._selectedIndex = itemIndex;
 	}
 
 	/**
@@ -405,17 +453,40 @@ class Carousel extends UI5Element {
 	}
 
 	isItemInViewport(index) {
-		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
+		return index >= this._selectedIndex && index <= this._selectedIndex + this.effectiveItemsPerPage - 1;
 	}
 
 	isIndexInRange(index) {
 		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
+	/**
+	 * @private
+	 */
+	get renderNavigation() {
+		if (!this.hasManyPages) {
+			return false;
+		}
+
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows) {
+			return true;
+		}
+
+		if (this.hidePageIndicator) {
+			return false;
+		}
+
+		return true;
+	}
+
+	get hasManyPages() {
+		return this.pagesCount > 1;
+	}
+
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(${this._isRTL ? "" : "-"}${this.selectedIndex * this._itemWidth}px`,
+				transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * this._itemWidth}px`,
 			},
 		};
 	}
@@ -423,17 +494,18 @@ class Carousel extends UI5Element {
 	get classes() {
 		return {
 			viewport: {
+				"ui5-carousel-viewport": true,
 				"ui5-carousel-viewport--single": this.pagesCount === 1,
 			},
 			content: {
 				"ui5-carousel-content": true,
-				"ui5-carousel-content-no-animation": this.supressAimation,
-				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
-				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-no-animation": this.suppressAnimation,
+				"ui5-carousel-content-has-navigation": this.renderNavigation,
+				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -459,7 +531,7 @@ class Carousel extends UI5Element {
 
 		for (let index = 0; index < pages; index++) {
 			dots.push({
-				active: index === this.selectedIndex,
+				active: index === this._selectedIndex,
 				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
 			});
 		}
@@ -468,23 +540,23 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = this.showNavigationArrows && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
 
 		return {
-			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
 	get hasPrev() {
-		return this.cyclic || this.selectedIndex - 1 >= 0;
+		return this.cyclic || this._selectedIndex - 1 >= 0;
 	}
 
 	get hasNext() {
-		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
+		return this.cyclic || this._selectedIndex + 1 <= this.pagesCount - 1;
 	}
 
-	get supressAimation() {
+	get suppressAnimation() {
 		return this._resizing || getAnimationMode() === AnimationMode.None;
 	}
 
@@ -493,11 +565,7 @@ class Carousel extends UI5Element {
 	}
 
 	get selectedIndexToShow() {
-		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
-	}
-
-	get showNavigationArrows() {
-		return !this.hideNavigation && this.pagesCount > 1;
+		return this._isRTL ? this.pagesCount - (this.pagesCount - this._selectedIndex) + 1 : this._selectedIndex + 1;
 	}
 
 	get ofText() {
@@ -505,7 +573,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
+		return this.content.length ? `${this._id}-carousel-item-${this._selectedIndex + 1}` : undefined;
 	}
 
 	get nextPageText() {
@@ -514,6 +582,24 @@ class Carousel extends UI5Element {
 
 	get previousPageText() {
 		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+	}
+
+	/**
+	 * The indices of the currently visible items of the component.
+	 * @readonly
+	 * @since 1.0.0-rc.15
+	 * @returns {Integer[]} the indices of the visible items
+	 */
+	get visibleItemsIndices() {
+		const visibleItemsIndices = [];
+
+		this.items.forEach((item, index) => {
+			if (this.isItemInViewport(index)) {
+				visibleItemsIndices.push(index);
+			}
+		});
+
+		return visibleItemsIndices;
 	}
 
 	static get dependencies() {

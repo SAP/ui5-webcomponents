@@ -365,9 +365,9 @@ describe("Input general interaction", () => {
 		const innerInput = input.shadow$("input");
 		const NEW_TEXT = "New cool text";
 
-		assert.strictEqual(input.getAttribute("aria-label"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
+		assert.strictEqual(input.getAttribute("accessible-name"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
 
-		input.setAttribute("aria-label", NEW_TEXT);
+		input.setAttribute("accessible-name", NEW_TEXT);
 
 		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
@@ -457,5 +457,33 @@ describe("Input general interaction", () => {
 		// assert
 		assert.notOk(popover.isDisplayedInViewport(), "The popover is not visible");
 		assert.ok(dialog.isDisplayedInViewport(), "The dialog is opened.");
+	});
+
+	it("Suggestions count should be read out when necessary", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const inputDynamicSuggestions = $("#inputCompact");
+		const inputSuggestions = $("#myInput2");
+		const dynamicSuggestionsInnerInput = inputDynamicSuggestions.shadow$("input");
+		const dynamicSuggestionsCount = inputDynamicSuggestions.shadow$(`#${inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
+		const suggestionsCount = inputSuggestions.shadow$(`#${inputSuggestions.getProperty("_id")}-suggestionsCount`);
+
+		//act
+		dynamicSuggestionsInnerInput.click();
+
+		//assert
+		assert.strictEqual(dynamicSuggestionsCount.getText(), "", "Suggestions count is not available");
+
+		//act
+		dynamicSuggestionsInnerInput.keys("c");
+
+		//assert
+		assert.strictEqual(dynamicSuggestionsCount.getText(), "4 results are available", "Suggestions count is available since value is entered");
+		dynamicSuggestionsInnerInput.keys("Backspace");
+		//act
+		inputSuggestions.click();
+
+		//assert
+		assert.strictEqual(suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
 	});
 });
