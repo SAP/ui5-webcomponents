@@ -1,9 +1,23 @@
 // FIORI features
 import "./dist/features/CoPilotAnimation.js";
 
+// FIORI illustrations
+import "./dist/illustrations/UnableToUpload.js";
+import "./dist/illustrations/UnableToLoad.js";
+import "./dist/illustrations/NoTasks.js";
+import "./dist/illustrations/NoSearchResults.js";
+import "./dist/illustrations/NoSavedItems.js";
+import "./dist/illustrations/NoNotifications.js";
+import "./dist/illustrations/NoMail.js";
+import "./dist/illustrations/NoEntries.js";
+import "./dist/illustrations/NoData.js";
+import "./dist/illustrations/NoActivities.js";
+import "./dist/illustrations/BeforeSearch";
+
 // FIORI components
 import Bar from "./dist/Bar.js";
 import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
+import IllustratedMessage from "./dist/IllustratedMessage.js";
 import ProductSwitch from "./dist/ProductSwitch.js";
 import ProductSwitchItem from "./dist/ProductSwitchItem.js";
 import SideNavigation from "./dist/SideNavigation.js";

@@ -458,7 +458,7 @@ describe("Accessibility related parameters", () => {
 		assert.strictEqual(siInner.getAttribute("max"), "", "'step' attribute doesn't exist");
 		siCozy.setProperty("max", 20);
 		siCozy.setProperty("required", true);
-		siCozy.setProperty("ariaLabel", "test-aria-label");
+		siCozy.setProperty("accessibleName", "test-aria-label");
 
 		assert.strictEqual(siInner.getAttribute("step"), "5", "'step' attribute exists and has correct value 5");
 		assert.strictEqual(siInner.getAttribute("min"), "-10", "'min' attribute exists and has correct value -10");

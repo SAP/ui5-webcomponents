@@ -172,14 +172,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the select.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 

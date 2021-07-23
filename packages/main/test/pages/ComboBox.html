@@ -54,12 +54,10 @@
 			<ui5-cb-item text="Canada"></ui5-cb-item>
 			<ui5-cb-item text="Chile"></ui5-cb-item>
 		</ui5-combobox>
+		<ui5-button id="combo-focus">Focus ComboBox</ui5-button>
+		<ui5-button id="value-set-btn">Set value</ui5-button>
 
-		<br>
-
-		<ui5-button id="value-set-btn" >Set value</ui5-button>
-
-		<ui5-combobox id="combo2" style="width: 360px;" aria-label="Select destination:">
+		<ui5-combobox id="combo2" style="width: 360px;" accessible-name="Select destination:">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Australia"></ui5-cb-item>
@@ -275,6 +273,10 @@
 
 		document.getElementById("value-set-btn").addEventListener("click", function (event) {
 			document.getElementById("combo").value = "new value";
+		});
+
+		document.getElementById("combo-focus").addEventListener("click", function () {
+			document.getElementById("combo").focus();
 		});
 	</script>
 
