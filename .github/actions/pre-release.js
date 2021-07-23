@@ -72,8 +72,8 @@ const getDependencies = (dependencies) => {
 
 const publishPackage = pkg => {
 	console.info(`Publish ${pkg.name}: ${pkg.version} ...`); // eslint-disable-line
-	// const OTP_PARAM = OTP ? `--otp=${OTP}` : ``;
-	// execSync(`yarn publish ${pkg.folder} --tag=${TAG} --new-version=${pkg.version} ${OTP_PARAM}`);
+	const OTP_PARAM = OTP ? `--otp=${OTP}` : ``;
+	execSync(`yarn publish ${pkg.folder} --tag=${TAG} --new-version=${pkg.version} ${OTP_PARAM}`);
 };
 
 run().catch(error => {
