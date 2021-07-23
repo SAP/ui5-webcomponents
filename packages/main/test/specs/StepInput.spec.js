@@ -452,10 +452,10 @@ describe("Accessibility related parameters", () => {
 		const siCozy = $("#stepInputCozy");
 		const siInner = siCozy.shadow$('.ui5-step-input-input').shadow$("input");
 
+		assert.strictEqual(siInner.getAttribute("min"), null, "'min' attribute doesn't exist");
+		assert.strictEqual(siInner.getAttribute("max"), null, "'max' attribute doesn't exist");
 		siCozy.setProperty("step", 5);
-		assert.strictEqual(siInner.getAttribute("min"), "", "'step' attribute doesn't exist");
 		siCozy.setProperty("min", -10);
-		assert.strictEqual(siInner.getAttribute("max"), "", "'step' attribute doesn't exist");
 		siCozy.setProperty("max", 20);
 		siCozy.setProperty("required", true);
 		siCozy.setProperty("accessibleName", "test-aria-label");
