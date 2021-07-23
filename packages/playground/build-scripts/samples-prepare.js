@@ -12,7 +12,7 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"StepInput",
+	"IllustratedMessage",
 ];
 
 packages.forEach(package => {
