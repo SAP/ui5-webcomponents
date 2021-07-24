@@ -122,7 +122,6 @@ The support of "aria-label" in Button, Wizard, WizardStep, Card, CheckBox, Combo
 StandardListItem's "info" and "infoState" properties have been renamed to "additionalText" and "additionalTextState".
 SuggestionItem's "info" and "infoState" properties have been renamed to "additionalText" and "additionalTextState".
 TreeItem's: "info" and "infoState" properties have been renamed to "additionalText" and "additionalTextState".
-
 * **ui5-avatar:** rename "backgroundColor" property to "colorScheme" ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([a3a3a11](https://github.com/SAP/ui5-webcomponents/commit/a3a3a11))
 The property "backgroundColor" has been renamed to "colorScheme".
 * **ui5-avatar:** implement default slot for image ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([9646c3e](https://github.com/SAP/ui5-webcomponents/commit/9646c3e))
@@ -158,6 +157,8 @@ The "stableDomRef" property has been removed. If previously used, just call "get
 The "filterValue" property has been removed. The "value" property should be used as now it represents the "live" value of the component.
 * **ui5-daterange-picker:** rename first/lastDateValue ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ad365f4](https://github.com/SAP/ui5-webcomponents/commit/ad365f4))
 The readonly attributes "firstDateValue" and "lastDateValue" have been renamed to "startDateValue" and "endDateValue".
+* **ui5-duration-picker:** remove component ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8801e55](https://github.com/SAP/ui5-webcomponents/commit/8801e55))
+The DurationPicker is now private component and no longer supported. It may continue working, but it's not guaranteed.
 * **ui5-flexible-column-layout:** rename "noArrows" property to "hideArrows" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8660d11](https://github.com/SAP/ui5-webcomponents/commit/8660d11))
 The "noArrows" property has been renamed to "hideArrows".
 * **ui5-input:** ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([6630c2a](https://github.com/SAP/ui5-webcomponents/commit/6630c2a))
@@ -253,6 +254,7 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-color-palette:** change API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([12ce9fd](https://github.com/SAP/ui5-webcomponents/commit/12ce9fd))
 * **ui5-color-palette-item:** remove "stableDomRef" as not needed ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([862a452](https://github.com/SAP/ui5-webcomponents/commit/862a452))
 * **ui5-daterange-picker:** rename first/lastDateValue ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ad365f4](https://github.com/SAP/ui5-webcomponents/commit/ad365f4))
+* **ui5-duration-picker:** remove component ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8801e55](https://github.com/SAP/ui5-webcomponents/commit/8801e55))
 * **ui5-flexible-column-layout:** rename "noArrows" property to "hideArrows" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8660d11](https://github.com/SAP/ui5-webcomponents/commit/8660d11))
 * **ui5-input:** remove "highlight" property ([#3350](https://github.com/SAP/ui5-webcomponents/issues/3350)) ([6630c2a](https://github.com/SAP/ui5-webcomponents/commit/6630c2a))
 * **ui5-input:** change public method to private ([#3224](https://github.com/SAP/ui5-webcomponents/issues/3224)) ([1166fb4](https://github.com/SAP/ui5-webcomponents/commit/1166fb4)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
