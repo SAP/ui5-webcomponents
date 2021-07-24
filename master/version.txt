@@ -1,9 +1,9 @@
-commit 8801e55bc495f9c2ffc43c44dea2baebb5334692
+commit 0ecc50884aa5f90ab0b8324c573fe46c3e665cd6
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Jul 24 08:46:18 2021 +0300
+Date:   Sat Jul 24 13:43:05 2021 +0300
 
-    refactor(ui5-duration-picker): make component private (#3530)
+    refactor(ui5-dialog): rename "open()" to "show()" (#3528)
     
-    DurationPicker is now private component and will remain private until we refactor its API. It's a component that does not an equivalent in OpenUI5 and the required specs.
+    Dialog's public method "open" is renamed to "show" to allow introducing a "open" attribute in future.
     
-    BREAKING CHANGE: DurationPicker is no longer supported, it may continue working, but it's not guarantee
+    BREAKING CHANGE: Dialog's "open" method has been renamed to "show"
