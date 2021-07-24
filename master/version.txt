@@ -1,9 +1,6 @@
-commit 0ecc50884aa5f90ab0b8324c573fe46c3e665cd6
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Jul 24 13:43:05 2021 +0300
+commit 00fcfda9cecd31aec56d7f22aa99795f3727f51c
+Merge: 0ecc508 061fa6a
+Author: ilhan <ilhan.myumyun@sap.com>
+Date:   Sat Jul 24 18:53:57 2021 +0300
 
-    refactor(ui5-dialog): rename "open()" to "show()" (#3528)
-    
-    Dialog's public method "open" is renamed to "show" to allow introducing a "open" attribute in future.
-    
-    BREAKING CHANGE: Dialog's "open" method has been renamed to "show"
+    Merge branch 'niyap-groupheaderheight'
