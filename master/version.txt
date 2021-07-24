@@ -1,14 +1,9 @@
-commit 18de8a19f6b67e050acb637bd18c8de738b5d197
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Jul 19 16:25:28 2021 +0300
+commit 8801e55bc495f9c2ffc43c44dea2baebb5334692
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat Jul 24 08:46:18 2021 +0300
 
-    fix(ui5-checkbox): add aria-hidden attribute to icon (#3511)
+    refactor(ui5-duration-picker): make component private (#3530)
     
-    The role presentation on the icon SVG is ignored in some cases:
-    *The element is focusable, e.g. it is natively focusable like an HTML link or input, or it has a tabindex attribute.
-    *The element has any of the twenty-one global ARIA states and properties, e.g., aria-label.
+    DurationPicker is now private component and will remain private until we refactor its API. It's a component that does not an equivalent in OpenUI5 and the required specs.
     
-    With this change we introduce ariaHidden property on ui5-icon to be able to completly hide it from accessibility tree mapping.
-    Also, change the default value of effectiveAccessibleName to undefined as a value of "" will still set the aria-label attribute and the presentation role will be ignroed.
-    
-    Fixes #3433
+    BREAKING CHANGE: DurationPicker is no longer supported, it may continue working, but it's not guarantee

@@ -298,6 +298,8 @@
       
     
       
+    
+      
         
       
     
@@ -335,6 +337,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1071,6 +1075,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -1271,6 +1277,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -1730,17 +1738,6 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" class="navigation-list-link">
-                        <div class="component-name">Duration Picker</div>
-                        
-                      </a>
-                      
-                    </li>
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/" class="navigation-list-link">
                         <div class="component-name">File Uploader</div>
                         
@@ -1765,6 +1762,17 @@
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/" class="navigation-list-link">
                         <div class="component-name">Icon</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/IllustratedMessage/" class="navigation-list-link">
+                        <div class="component-name">Illustrated Message</div>
                         
                       </a>
                       
@@ -2501,6 +2509,19 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                            <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Sets the accessible aria name of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           disabled
                             <br>
                         </div>
@@ -2510,7 +2531,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Indicates whether the user can interact with the component or not. <br><br> <b>Note:</b> Disabled components cannot be focused and they are out of the tab chain.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           growing
                             <br>
@@ -2521,7 +2542,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Enables the component to automatically grow and shrink dynamically with its content. <br><br> <b>Note:</b> If set to <code>true</code>, the CSS <code>height</code> property is ignored.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           growingMaxLines
                             <br>
@@ -2533,7 +2554,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines the maximum number of lines that the Web Component can grow.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           maxlength
                             <br>
@@ -2544,7 +2565,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines the maximum number of characters that the <code>value</code> can have.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           name
                             <br>
@@ -2559,7 +2580,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
             <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the component so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placeholder
                             <br>
@@ -2570,7 +2591,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines a short hint intended to aid the user with data entry when the component has no value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -2581,7 +2602,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines whether the component is read-only. <br><br> <b>Note:</b> A read-only component is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           required
                             <br>
@@ -2593,7 +2614,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.3</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           rows
                             <br>
@@ -2604,7 +2625,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines the number of visible text lines for the component. <br><br> <b>Notes:</b> <ul> <li>If the <code>growing</code> property is enabled, this property defines the minimum rows to be displayed in the textarea.</li> <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showExceededText
                             <br>
@@ -2616,7 +2637,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Determines whether the characters exceeding the maximum allowed character count are visible in the component. <br><br> If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the <code>maxlength</code> property. If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on paste and the counter below the component displays their number.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -2627,7 +2648,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines the value of the Web Component.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>

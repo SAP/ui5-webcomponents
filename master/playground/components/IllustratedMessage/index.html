@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Duration Picker - UI5 Web Components</title>
+    <title>Illustrated Message - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Duration Picker | UI5 Web Components</title>
+<title>Illustrated Message | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Duration Picker" />
+<meta property="og:title" content="Illustrated Message" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/IllustratedMessage/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/IllustratedMessage/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/","headline":"Duration Picker","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/IllustratedMessage/","headline":"Illustrated Message","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -66,6 +66,8 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
     
       
     
@@ -335,6 +337,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1071,6 +1075,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -1271,6 +1277,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -1728,17 +1736,6 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
-                      
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" class="navigation-list-link active">
-                        <div class="component-name">Duration Picker</div>
-                        
-                      </a>
-                      
-                    </li>
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/" class="navigation-list-link">
@@ -1765,6 +1762,17 @@
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/" class="navigation-list-link">
                         <div class="component-name">Icon</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/IllustratedMessage/" class="navigation-list-link active">
+                        <div class="component-name">Illustrated Message</div>
                         
                       </a>
                       
@@ -2439,81 +2447,90 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Duration Picker</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Illustrated Message</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header class="component-heading">
-	<h2 class="control-header">Duration Picker</h2>
+          <header>
+	<div class="control-header">IllustratedMessage</div>
 	<div class="component-heading-since">
-		<span>v1.0.0-rc.7</span>
+		<span>
+			v1.0.0-rc.15
+		</span>
 	</div>
 </header>
 
-<div class="component-package">@ui5/webcomponents</div>
+<div class="component-package">@ui5/webcomponents-fiori</div>
 
-<div class="control-tag">&lt;ui5-duration-picker&gt;</div>
-
-<section>
-	<h3>Basic Duration Picker</h3>
-	<div class="snippet">
-			<ui5-duration-picker value="10:30"></ui5-duration-picker>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"10:30"</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<div class="control-tag">&lt;ui5-illustrated-message&gt;</div>
 
 <section>
-	<h3>Duration Picker With Steps</h3>
+	<h3>Illustrated message</h3>
 	<div class="snippet">
-		<ui5-duration-picker value="05:08:32" seconds-step="5" minutes-step="10"></ui5-duration-picker>
+		<ui5-illustrated-message name="UnableToUpload">
+			<ui5-button design="Emphasized">Action 1</ui5-button>
+			<ui5-button>Action 2</ui5-button>
+		</ui5-illustrated-message>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"05:08:32"</span> <span class="na">seconds-step=</span><span class="s">"5"</span> <span class="na">minutes-step=</span><span class="s">"10"</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-illustrated-message</span> <span class="na">name=</span><span class="s">"UnableToUpload"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;</span>Action 1<span class="nt">&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;ui5-button&gt;</span>Action 2<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-illustrated-message&gt;</span>
 	</code></pre></figure></pre>
 </section>
-
 <section>
-	<h3>Duration Picker With No Seconds, Minutes or Hours</h3>
+	<h3>Illustrated message in dialog</h3>
 	<div class="snippet">
-		<ui5-duration-picker value="05:00" hide-seconds></ui5-duration-picker>
-		<ui5-duration-picker value="01:30" hide-minutes></ui5-duration-picker>
-		<ui5-duration-picker value="10:30" hide-hours></ui5-duration-picker>
+		<ui5-button id="openDialogButton">Open Dialog</ui5-button>
+
+		<ui5-dialog id="hello-dialog" header-text="Error">
+			<ui5-illustrated-message name="UnableToLoad"></ui5-illustrated-message>
+			<ui5-bar design="Footer" slot="footer">
+				<ui5-button id="closeDialogButton" design="Emphasized" slot="endContent">Close</ui5-button>
+			</ui5-bar>
+		</ui5-dialog>
+
+		<script>
+			var dialogOpener = document.getElementById("openDialogButton");
+			var dialog = document.getElementById("hello-dialog");
+			var dialogCloser = document.getElementById("closeDialogButton");
+
+			dialogOpener.addEventListener("click", function () {
+				dialog.open();
+			});
+
+			dialogCloser.addEventListener("click", function () {
+				dialog.close();
+			});
+		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"05:00"</span> <span class="na">hide-seconds</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
-<span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"01:30"</span> <span class="na">hide-minutes</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
-<span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"10:30"</span> <span class="na">hide-hours</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"openDialogButton"</span><span class="nt">&gt;</span>Open Dialog<span class="nt">&lt;/ui5-button&gt;</span>
+
+<span class="nt">&lt;ui5-dialog</span> <span class="na">id=</span><span class="s">"hello-dialog"</span> <span class="na">header-text=</span><span class="s">"Error"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-illustrated-message</span> <span class="na">name=</span><span class="s">"UnableToLoad"</span><span class="nt">&gt;&lt;/ui5-illustrated-message&gt;</span>
+	<span class="nt">&lt;ui5-bar</span> <span class="na">design=</span><span class="s">"Footer"</span> <span class="na">slot=</span><span class="s">"footer"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"closeDialogButton"</span> <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">slot=</span><span class="s">"endContent"</span><span class="nt">&gt;</span>Close<span class="nt">&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;/ui5-bar&gt;</span>
+<span class="nt">&lt;/ui5-dialog&gt;</span>
 	</code></pre></figure></pre>
 </section>
-
-<section>
-	<h3>Duration Picker With Seconds & Max Value</h3>
-	<div class="snippet">
-			<ui5-duration-picker value="05:40:30" max-value="05:30:00" show-seconds></ui5-duration-picker>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"05:40:30"</span> <span class="na">max-value=</span><span class="s">"05:30:00"</span> <span class="na">show-seconds</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
-	</code></pre></figure></pre>
-</section>
-
-
 
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3> The <code>ui5-duration-picker</code> component provides an input field with assigned sliders which opens on user action. The <code>ui5-duration-picker</code> allows users to select a time duration. It consists of two parts: the time input field and the sliders.
+          <h3 class="comment-api-title">Overview</h3> An <code>ui5-illustrated-message</code> recommended combination of a solution-oriented message, an engaging illustration, and conversational tone to better communicate an empty or a success state than just show a message alone.
 
-<h3>Usage</h3>
+Each illistration has default internationalised title and subtitle texts. Also they can be managed with <code>titleText</code> and <code>subtitleText</code> properties.
 
-The Duration Picker is used for input of time. Users are able to select hours, minutes and seconds. The user can enter a time by: <ul> <li>Using the sliders that opens in a popup</li> <li>Typing it in directly in the input field</li> </ul> <br><br> When the user makes an entry and chooses the enter key, the sliders shows the corresponding time. When the user directly triggers the sliders display, the actual time is displayed.
+<b>Note:</b> By default BeforeSearch illustration is loaded.
 
-For the <code>ui5-duration-picker</code>
+<h3>Usage</h3> <code>ui5-illustrated-message</code> is meant to be used inside container component, for example a <code>ui5-card</code>, a <code>ui5-dialog</code> or a <code>ui5-page</code>
 
-<h3>Keyboard handling</h3> [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it. <br> When closed: <ul> <li>[PAGEUP] - Increments hours by 1. If max value is reached, the slider doesn't increment.</li> <li>[PAGEDOWN] - Decrements the corresponding field by 1. If min value is reached, the slider doesn't increment.</li> <li>[SHIFT]+[PAGEUP] Increments minutes by 1.</li> <li>[SHIFT]+ [PAGEDOWN] Decrements minutes by 1.</li> <li>[SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.</li> <li>[SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.</li> </ul> When opened: <ul> <li>[UP] If focus is on one of the selection lists: Select the value which is above the current value. If the first value is selected, select the last value in the list.</li> <li>[DOWN] If focus is on one of the selection lists: Select the value which is below the current value. If the last value is selected, select the first value in the list.</li> <li>[LEFT] If focus is on one of the selection lists: Move focus to the selection list which is left of the current selection list. If focus is at the first selection list, move focus to the last selection list.</li> <li>[RIGHT] If focus is on one of the selection lists: Move focus to the selection list which is right of the current selection list. When focus is at the last selection list, move focus to the first selection list.</li> <li>[PAGEUP] If focus is on one of the selection lists: Move focus to the first entry of this list.</li> <li>[PAGEDOWN] If focus is on one of the selection lists: Move focus to the last entry of this list.</li> </ul>
+For the <code>ui5-illustrated-message</code> <h3>ES6 Module Import</h3>
 
-<h3>ES6 Module Import</h3>
-
-<code>import "@ui5/webcomponents/dist/DurationPicker.js";</code>
+<code>import @ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -2529,150 +2546,40 @@ For the <code>ui5-duration-picker</code>
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          hideHours
+                          name
                             <br>
-                            <code>hide-hours</code>
                         </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell">IllustrationMessageType</div>
+                        <div class="cell api-table-content-cell">&quot;BeforeSearch&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the slider for hours will be available. By default there are sliders for hours, minutes and seconds.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
+                            Defines the illustration name that will be displayed in the component. <br><br> Available illustrations are: <ul> <li><code>BeforeSearch</code></li> <li><code>NoActivities</code></li> <li><code>NoData</code></li> <li><code>NoEntries</code></li> <li><code>NoMail</code></li> <li><code>NoNotifications</code></li> <li><code>NoSavedItems</code></li> <li><code>NoSearchResults</code></li> <li><code>NoTasks</code></li> <li><code>UnableToLoad</code></li> <li><code>UnableToUpload</code></li> </ul> <br><br> <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          hideMinutes
+                          subtitleText
                             <br>
-                            <code>hide-minutes</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the slider for minutes will be available. By default there are sliders for hours, minutes and seconds.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          hideSeconds
-                            <br>
-                            <code>hide-seconds</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether a slider for seconds will be available. By default there are sliders for hours, minutes and seconds.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          maxValue
-                            <br>
-                            <code>max-value</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;23:59:59&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a formatted maximal time that the user will be able to adjust.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          minutesStep
-                            <br>
-                            <code>minutes-step</code>
-                        </div>
-                        <div class="cell api-table-content-cell">Integer</div>
-                        <div class="cell api-table-content-cell">1</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the selection step for the minutes
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          secondsStep
-                            <br>
-                            <code>seconds-step</code>
-                        </div>
-                        <div class="cell api-table-content-cell">Integer</div>
-                        <div class="cell api-table-content-cell">1</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the selection step for the seconds
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          value
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;00:00:00&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a formatted time value.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          disabled
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          formatPattern
-                            <br>
-                            <code>format-pattern</code>
+                            <code>subtitle-text</code>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines the format, displayed in the input field.
-            
-            Example: HH:mm:ss -> 11:42:35 hh:mm:ss a -> 2:23:15 PM mm:ss -> 12:04 (only minutes and seconds)
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          placeholder
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">undefined</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a short hint, intended to aid the user with data entry when the component has no value.
-            
-            <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
+                            Defines the subtitle of the component. <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          readonly
+                          titleText
                             <br>
+                            <code>title-text</code>
                         </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-time-picker</code> is displayed as readonly.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          valueState
-                            <br>
-                            <code>value-state</code>
-                        </div>
-                        <div class="cell api-table-content-cell">ValueState</div>
-                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the value state of the <code>ui5-time-picker</code>. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
+                            Defines the title of the component. <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
             
@@ -2693,81 +2600,14 @@ For the <code>ui5-duration-picker</code>
                   </div>
             
                     <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">valueStateMessage</div>
-                      <div class="cell api-table-content-cell">HTMLElement</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>. <br><br>
-            
-            <b>Note:</b> If not specified, a default text (in the respective language) will be displayed. <br> <b>Note:</b> The <code>valueStateMessage</code> would be displayed, when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the component actions.</div>
                     </div>
             
                 </div>
             
-                  <h3 class="comment-api-title space-top">Events</h3>
-                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
             
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the input operation has finished by clicking the "OK" button or when the text in the input field has changed and the focus leaves the input field.
-                        </div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                  <h3 class="comment-api-title space-top">Methods</h3>
-                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">closePicker</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Closes the picker</div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">formatValue</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Formats a Java Script date object into a string representing a locale date and time according to the <code>formatPattern</code> property of the TimePicker instance</div>
-                      </div>
-            
-                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">date</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> object <br/> <strong class="api-table-event-description bold">description:</strong> A Java Script date object to be formatted as string</div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">isOpen</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Checks if the picker is open</div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">isValid</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Checks if a value is valid against the current <code>formatPattern</code> value.
-            
-            <br><br> <b>Note:</b> an empty string is considered as valid value.</div>
-                      </div>
-            
-                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">value</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> string <br/> <strong class="api-table-event-description bold">description:</strong> The value to be tested against the current date format</div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">openPicker</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Opens the picker.</div>
-                      </div>
-            
-                  </div>
             
           </section>
         </section>
@@ -2780,7 +2620,6 @@ For the <code>ui5-duration-picker</code>
       </div>
       <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
     </footer>
-
 
 <div class="settings" id="settings-button">
     <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
