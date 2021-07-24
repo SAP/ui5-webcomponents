@@ -11,6 +11,20 @@ let isNodeValue = false;
 // matches event handlers @click= and boolean attrs ?disabled=
 const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
 
+if (!String.prototype.replaceAll) {
+	String.prototype.replaceAll = function(str, newStr){
+
+		// If a regex pattern
+		if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+			return this.replace(str, newStr);
+		}
+
+		// If a string
+		return this.replace(new RegExp(str, 'g'), newStr);
+
+	};
+}
+
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];
@@ -54,7 +68,7 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	const contentStatement = content.original;
+	let contentStatement = content.original;
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
 	const closingIndex = contentStatement.lastIndexOf(">");
@@ -62,6 +76,9 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	if (closingIndex !== -1 || openingIndex !== -1) { // Only change isNodeValue whenever < or > is found in the content statement
 		isNodeValue = closingIndex > openingIndex;
 	}
+
+	// Scope custom element tags
+	contentStatement = contentStatement.replaceAll(/(<\/?\s*)([a-zA-Z0-9_]+-[a-zA-Z0-9_-]+)/g, "$1\${scopeTag(\"$2\", tags, suffix)}");
 
 	this.blocks[this.currentKey()] += contentStatement;
 };

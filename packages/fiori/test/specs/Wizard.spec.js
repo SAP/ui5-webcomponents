@@ -26,7 +26,13 @@ describe("Wizard general interaction", () => {
 
 		const wizRootText = "Wizard";
 		const wizNavText = "Wizard Progress Bar";
+		const wizListDescribedbyId = "wiz-nav-descr";
 		const wizListText = "Wizard Steps";
+
+		const step1InHeaderRoot = wiz.shadow$(`[data-ui5-index="1"]`).shadow$(`.ui5-wiz-step-root`);
+		const step2InHeaderRoot = wiz.shadow$(`[data-ui5-index="2"]`).shadow$(`.ui5-wiz-step-root`);;
+		const step1Text = "Step 1 Product type Active";
+		const step2Text = "Step 2 Product Information Inactive";
 
 		assert.strictEqual(wizRoot.getAttribute("role"), "region",
 			"Wizard has role set.");
@@ -34,12 +40,19 @@ describe("Wizard general interaction", () => {
 			"Wizard has aria-label set.");
 		assert.strictEqual(wizNav.getAttribute("aria-label"), wizNavText,
 			"Wizard nav has aria-label set.");
+		assert.strictEqual(wizList.getAttribute("aria-describedby"), wizListDescribedbyId,
+			"Wizard nav has aria-label set.");
 		assert.strictEqual(wizList.getAttribute("role"), "list",
 			"Wizard list has role set..");
 		assert.strictEqual(wizList.getAttribute("aria-controls"), `${wiz.getProperty("_id")}-wiz-content`,
 			"Wizard list has aria-controls set.");
 		assert.strictEqual(wizList.getAttribute("aria-label"), wizListText,
 			"Wizard list has aria-label set.");
+
+		assert.strictEqual(step1InHeaderRoot.getAttribute("aria-label"), step1Text,
+			"First step in the header has aria-label.");
+		assert.strictEqual(step2InHeaderRoot.getAttribute("aria-label"), step2Text,
+			"Second step (inactive) in the header has aria-label.");
 	});
 
 	it("move to next step by API", () => {
@@ -50,8 +63,6 @@ describe("Wizard general interaction", () => {
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const step1InHeaderRoot = step1InHeader.shadow$(`.ui5-wiz-step-root`);
-		const step2InHeaderRoot = step2InHeader.shadow$(`.ui5-wiz-step-root`);
-		const stepText = "Step 1 Product type";
 
 		// act - the click handler calls the API
 		btnToStep2.click();
@@ -65,8 +76,6 @@ describe("Wizard general interaction", () => {
 		// assert - check if aria-attributes are applied correctly when step is not selected
 		assert.strictEqual(step1InHeaderRoot.getAttribute("role"), "listitem",
 			"First step in the header has role.");
-		assert.strictEqual(step1InHeaderRoot.getAttribute("aria-label"), stepText,
-			"First step in the header has aria-label.");
 
 		// assert - that second step in the content and in the header are properly selected
 		assert.strictEqual(step2.getAttribute("selected"), "true",
@@ -106,15 +115,15 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+		assert.strictEqual(firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
 
 		step1InHeader.keys(["Shift", "Tab"]);
 		step2InHeader.keys("Space");
-		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+		assert.strictEqual(firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
 
 		step1InHeader.keys(["Shift", "Tab"]);
 		step2InHeader.keys("Enter");
-		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+		assert.strictEqual(firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(step2.getAttribute("selected"), null,

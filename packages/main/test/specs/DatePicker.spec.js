@@ -115,7 +115,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
 
-		assert.equal(datepicker.innerInput.getAttribute("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
+		assert.equal(datepicker.innerInput.getProperty("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
 	});
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
@@ -602,7 +602,7 @@ describe("Date Picker Tests", () => {
 		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
 
 		// The DatePicker has placeholder set, in this case the default placeholder, based on the format pattern,
-		// is not dipslayed.
+		// is not displayed.
 		assert.ok(datepicker.root.getProperty("placeholder"), "The DatePicker has placeholder set");
 		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
 	});

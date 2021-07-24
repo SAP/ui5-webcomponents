@@ -25,7 +25,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Avatar                   | `ui5-avatar`             | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Avatar Group             | `ui5-avatar-group`       | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
 | Badge                    | `ui5-badge`              | `import "@ui5/webcomponents/dist/Badge.js";`               |
-| Busy Indicator           | `ui5-busyindicator`      | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
+| Busy Indicator           | `ui5-busy-indicator`      | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`             | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Card                     | `ui5-card`               | `import "@ui5/webcomponents/dist/Card.js";`                |
 | Carousel                 | `ui5-carousel`           | `import "@ui5/webcomponents/dist/Carousel.js";`            |
@@ -53,12 +53,13 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Multi ComboBox Item      | `ui5-mcb-item`           | comes with `ui5-multi-combobox`                            |
 | Panel                    | `ui5-panel`              | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`            | `import "@ui5/webcomponents/dist/Popover.js";`             |
-| Radio Button             | `ui5-radiobutton`        | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Radio Button             | `ui5-radio-button`       | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
 | Range Slider             | `ui5-range-slider`       | `import "@ui5/webcomponents/dist/RangeSlider.js";`         |
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
 | Segmented Button         | `ui5-segmented-button`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
+| Segmented Button Item    | `ui5-segmented-button-item`| comes with `ui5-segmented-button `                         |
 | Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
 | Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
 | Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
@@ -74,7 +75,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | TimePicker               | `ui5-time-picker`        | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Title                    | `ui5-title`              | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`              | `import "@ui5/webcomponents/dist/Toast.js";`               |
-| Toggle Button            | `ui5-toggle-button`       | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Toggle Button            | `ui5-toggle-button`      | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 | Tree                     | `ui5-tree`               | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`          | comes with `ui5-tree`                                      |
 
@@ -119,7 +120,7 @@ However, if you need to submit forms, you can import the module above and it wil
 - `ui5-input`
 - `ui5-textarea`
 - `ui5-checkbox`
-- `ui5-radiobutton`
+- `ui5-radio-button`
 - `ui5-date-picker`
 - `ui5-select`
 

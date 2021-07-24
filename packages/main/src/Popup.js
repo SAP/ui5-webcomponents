@@ -7,7 +7,7 @@ import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -66,14 +66,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the popup
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -248,7 +248,9 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	static blockBodyScrolling() {
-		document.body.style.top = `-${window.pageYOffset}px`;
+		if (window.pageYOffset > 0) {
+			document.body.style.top = `-${window.pageYOffset}px`;
+		}
 		document.body.classList.add("ui5-popup-scroll-blocker");
 	}
 
@@ -278,6 +280,7 @@ class Popup extends UI5Element {
 	_onfocusout(e) {
 		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
 		if (!e.relatedTarget) {
+			this._root.tabIndex = -1;
 			this._root.focus();
 		}
 	}
@@ -334,6 +337,9 @@ class Popup extends UI5Element {
 			|| this._root; // in case of no focusable content focus the root
 
 		if (element) {
+			if (element === this._root) {
+				element.tabIndex = -1;
+			}
 			element.focus();
 		}
 	}
@@ -408,9 +414,12 @@ class Popup extends UI5Element {
 			return;
 		}
 
+		const openedPopups = getOpenedPopups();
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling();
+			if (openedPopups.length === 1) {
+				Popup.unblockBodyScrolling();
+			}
 		}
 
 		this.hide();
@@ -506,7 +515,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.ariaLabel || undefined;
+		return this.accessibleName || undefined;
 	}
 
 	get _root() {

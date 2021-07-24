@@ -20,7 +20,7 @@
 
 		<ul id="{{_id}}-listUl"
 			class="ui5-list-ul"
-			role="{{accRole}}"
+			role="{{accessibleRole}}"
 			aria-label="{{ariaLabelТxt}}"
 			aria-labelledby="{{ariaLabelledBy}}"
 			aria-multiselectable="{{isMultiSelect}}"
@@ -55,11 +55,13 @@
 
 	{{#if busy}}
 		<div class="ui5-list-busy-row">
-			<ui5-busyindicator
-				active size="Medium"
+			<ui5-busy-indicator
+				delay="{{busyDelay}}"
+				active
+				size="Medium"
 				class="ui5-list-busy-ind" 
 				style="{{styles.busyInd}}"
-			></ui5-busyindicator>
+			></ui5-busy-indicator>
 		</div>
 	{{/if}}
 </div>

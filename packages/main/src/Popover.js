@@ -562,7 +562,7 @@ class Popover extends Popup {
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight;
+		this._maxContentHeight = maxContentHeight - Popover.MIN_OFFSET;
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
@@ -725,7 +725,7 @@ class Popover extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this.ariaLabel ? undefined : "ui5-popup-header";
+		return this.accessibleName ? undefined : "ui5-popup-header";
 	}
 
 	get _ariaModal() { // Required by Popup.js

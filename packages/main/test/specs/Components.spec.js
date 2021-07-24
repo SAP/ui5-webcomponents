@@ -43,11 +43,9 @@ describe("General assertions", () => {
 		assertBooleanProperty(dialog, "stretch");
 
 		//  Label
-		assertBooleanProperty(label, "wrap");
 		assertBooleanProperty(label, "required");
 
 		//Link
-		assertBooleanProperty(link, "wrap");
 		assertBooleanProperty(link, "disabled");
 
 		// Input
@@ -61,7 +59,7 @@ describe("General assertions", () => {
 
 		// RadioButton
 		assertBooleanProperty(radiobutton, "readonly");
-		assertBooleanProperty(radiobutton, "selected");
+		assertBooleanProperty(radiobutton, "checked");
 		assertBooleanProperty(radiobutton, "disabled");
 
 		// Switch

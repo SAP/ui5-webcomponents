@@ -5,8 +5,9 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
-import ToggleButton from "./ToggleButton.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -26,32 +27,32 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
-		 * Defines the buttons of component.
+		 * Defines the items of <code>ui5-segmented-button</code>.
 		 * <br><br>
-		 * <b>Note:</b> Multiple buttons are allowed.
+		 * <b>Note:</b> Multiple items are allowed.
 		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-toggle-button</code> for the intended design.
+		 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
 		 * @type {sap.ui.webcomponents.main.IButton[]}
-		 * @slot buttons
+		 * @slot items
 		 * @public
 		 */
 		"default": {
-			propertyName: "buttons",
+			propertyName: "items",
 			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
-		 * Fired when the selected button changes.
+		 * Fired when the selected item changes.
 		 *
 		 * @event sap.ui.webcomponents.main.SegmentedButton#selection-change
-		 * @param {HTMLElement} selectedButton the pressed button.
+		 * @param {HTMLElement} selectedItem the pressed item.
 		 * @public
 		 */
 		"selection-change": {
 			detail: {
-				selectedButton: { type: HTMLElement },
+				selectedItem: { type: HTMLElement },
 			},
 		},
 	},
@@ -62,11 +63,11 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-segmented-button</code> shows a group of buttons. When the user clicks or taps
- * one of the buttons, it stays in a pressed state. It automatically resizes the buttons
+ * The <code>ui5-segmented-button</code> shows a group of items. When the user clicks or taps
+ * one of the items, it stays in a pressed state. It automatically resizes the items
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  * <br><br>
- * <b>Note:</b> There can be just one selected <code>button</code> at a time.
+ * <b>Note:</b> There can be just one selected <code>item</code> at a time.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -78,6 +79,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-segmented-button
  * @since 1.0.0-rc.6
+ * @appenddocs SegmentedButtonItem
  * @public
  */
 class SegmentedButton extends UI5Element {
@@ -98,7 +100,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [ToggleButton];
+		return [SegmentedButtonItem];
 	}
 
 	static async onDefine() {
@@ -109,7 +111,7 @@ class SegmentedButton extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.getSlottedNodes("buttons"),
+			getItemsCallback: () => this.getSlottedNodes("items"),
 		});
 
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
@@ -129,6 +131,13 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		const items = this.getSlottedNodes("items");
+
+		items.forEach((item, index, arr) => {
+			item.posInSet = index + 1;
+			item.sizeOfSet = arr.length;
+		});
+
 		this.normalizeSelection();
 	}
 
@@ -136,24 +145,24 @@ class SegmentedButton extends UI5Element {
 		await this._doLayout();
 	}
 
-	prepareToMeasureButtons() {
+	prepareToMeasureItems() {
 		this.style.width = "";
-		this.buttons.forEach(button => {
-			button.style.width = "";
+		this.items.forEach(item => {
+			item.style.width = "";
 		});
 	}
 
-	async measureButtonsWidth() {
+	async measureItemsWidth() {
 		await renderFinished();
-		this.prepareToMeasureButtons();
+		this.prepareToMeasureItems();
 
-		this.widths = this.buttons.map(button => {
+		this.widths = this.items.map(item => {
 			// +1 is added because for width 100.44px the offsetWidth property returns 100px and not 101px
-			let width = button.offsetWidth + 1;
+			let width = item.offsetWidth + 1;
 
 			if (isIE()) {
-				// in IE we are adding 1 one px beacause the width of the border on a button in the middle is not calculated and if the
-				// longest button is in the middle, it truncates
+				// in IE we are adding 1 one px beacause the width of the border on an item in the middle is not calculated and if the
+				// longest item is in the middle, it truncates
 				width += 1;
 			}
 
@@ -162,35 +171,53 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		this._selectedButton = this.buttons.filter(button => button.pressed).pop();
+		this._selectedItem = this.items.filter(item => item.pressed).pop();
 
-		if (this._selectedButton) {
-			this.buttons.forEach(button => {
-				button.pressed = false;
+		if (this._selectedItem) {
+			this.items.forEach(item => {
+				item.pressed = false;
 			});
-			this._selectedButton.pressed = true;
+			this._selectedItem.pressed = true;
 		}
 	}
 
-	_onclick(event) {
+	_selectItem(event) {
 		if (event.target.disabled || event.target === this.getDomRef()) {
 			return;
 		}
 
-		if (event.target !== this._selectedButton) {
-			if (this._selectedButton) {
-				this._selectedButton.pressed = false;
+		if (event.target !== this._selectedItem) {
+			if (this._selectedItem) {
+				this._selectedItem.pressed = false;
 			}
-			this._selectedButton = event.target;
+			this._selectedItem = event.target;
 			this.fireEvent("selection-change", {
-				selectedButton: this._selectedButton,
+				selectedItem: this._selectedItem,
 			});
 		}
 
-		this._selectedButton.pressed = true;
-		this._itemNavigation.setCurrentItem(this._selectedButton);
+		this._selectedItem.pressed = true;
+		this._itemNavigation.setCurrentItem(this._selectedItem);
 
 		return this;
+	}
+
+	_onclick(event) {
+		this._selectItem(event);
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._selectItem(event);
+		} else if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._selectItem(event);
+		}
 	}
 
 	_onfocusin(event) {
@@ -203,28 +230,28 @@ class SegmentedButton extends UI5Element {
 
 		// If the component is focused for the first time
 		// focus the selected item if such present
-		if (this.selectedButton) {
-			this.selectedButton.focus();
-			this._itemNavigation.setCurrentItem(this._selectedButton);
+		if (this.selectedItem) {
+			this.selectedItem.focus();
+			this._itemNavigation.setCurrentItem(this._selectedItem);
 			this.hasPreviouslyFocusedItem = true;
 		}
 	}
 
 	async _doLayout() {
-		const buttonsHaveWidth = this.widths && this.widths.some(button => button.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
-		if (!buttonsHaveWidth) {
-			await this.measureButtonsWidth();
+		const itemsHaveWidth = this.widths && this.widths.some(item => item.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
+		if (!itemsHaveWidth) {
+			await this.measureItemsWidth();
 		}
 
 		const parentWidth = this.parentNode.offsetWidth;
 
 		if (!this.style.width || this.percentageWidthSet) {
-			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
+			this.style.width = `${Math.max(...this.widths) * this.items.length}px`;
 			this.absoluteWidthSet = true;
 		}
 
-		this.buttons.forEach(button => {
-			button.style.width = "100%";
+		this.items.forEach(item => {
+			item.style.width = "100%";
 		});
 
 		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
@@ -234,14 +261,18 @@ class SegmentedButton extends UI5Element {
 	}
 
 	/**
-	 * Currently selected button.
+	 * Currently selected item.
 	 *
 	 * @readonly
-	 * @type { ui5-toggle-button }
+	 * @type { ui5-segmented-button-item }
 	 * @public
 	 */
-	get selectedButton() {
-		return this._selectedButton;
+	get selectedItem() {
+		return this._selectedItem;
+	}
+
+	get ariaDescribedBy() {
+		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
 	}
 
 	get ariaDescription() {

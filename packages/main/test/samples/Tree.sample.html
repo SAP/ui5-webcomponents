@@ -123,7 +123,7 @@
 <section>
 	<h3>Tree with dynamic content</h3>
 	<div class="snippet">
-		<ui5-busyindicator id="busy" class="full-width">
+		<ui5-busy-indicator id="busy" class="full-width">
 			<ui5-tree id="treeDynamic" mode="None" class="full-width">
 				<ui5-tree-item text="Has pre-loaded children">
 					<ui5-tree-item text="Child 1"></ui5-tree-item>
@@ -134,10 +134,10 @@
 
 				<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
 			</ui5-tree>
-		</ui5-busyindicator>
+		</ui5-busy-indicator>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-busyindicator id="busy" class="full-width">
+<ui5-busy-indicator id="busy" class="full-width">
 	<ui5-tree id="treeDynamic" mode="None" class="full-width">
 		<ui5-tree-item text="Has pre-loaded children">
 			<ui5-tree-item text="Child 1"></ui5-tree-item>
@@ -148,7 +148,7 @@
 
 		<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
 	</ui5-tree>
-</ui5-busyindicator>
+</ui5-busy-indicator>
 
 <script>
 	var busyIndicator = document.getElementById("busy");

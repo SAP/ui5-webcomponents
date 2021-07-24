@@ -24,40 +24,40 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-title>Large ui5-busyindicator</ui5-title>
-	<ui5-busyindicator active size="Large"></ui5-busyindicator>
+	<ui5-title>Large ui5-busy-indicator</ui5-title>
+	<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
 	<br/>
 	<br/>
 
-	<ui5-title>Default Medium ui5-busyindicator</ui5-title>
-	<ui5-busyindicator size="Medium" active id="indicator1"></ui5-busyindicator>
+	<ui5-title>Default Medium ui5-busy-indicator</ui5-title>
+	<ui5-busy-indicator size="Medium" active id="indicator1"></ui5-busy-indicator>
 
 	<br />
 	<br />
-	<ui5-busyindicator size="Medium" active id="indicator2"></ui5-busyindicator>
+	<ui5-busy-indicator size="Medium" active id="indicator2"></ui5-busy-indicator>
 
-	<ui5-title>ui5-busyindicator with text</ui5-title>
+	<ui5-title>ui5-busy-indicator with text</ui5-title>
 
 	<br />
 	<br />
-	<ui5-busyindicator active text="Loading" style="width: 10rem; border: 1px solid red"></ui5-busyindicator>
+	<ui5-busy-indicator active text="Loading" style="width: 10rem; border: 1px solid red"></ui5-busy-indicator>
 
 	<br />
 	<br />
 
 	<div>
 		<ui5-button id="beforeIndicatorWithBtn">focus stop before</ui5-button>
-		<ui5-busyindicator id="indicatorWithBtn" size="Medium" active>
+		<ui5-busy-indicator id="indicatorWithBtn" size="Medium" active>
 			<ui5-button>Hello World</ui5-button>
-		</ui5-busyindicator>
+		</ui5-busy-indicator>
 		<ui5-button id="afterIndicatorWithBtn" >focus stop after</ui5-button>
 	</div>
 
 	<br />
 	<br />
-	<ui5-busyindicator size="Medium" active text="Loading">
+	<ui5-busy-indicator size="Medium" active text="Loading">
 		<ui5-checkbox text="Hello World"></ui5-checkbox>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
 	<br />
 	<br />
@@ -65,9 +65,9 @@
 	<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
 	<br>
 	<br>
-	<ui5-busyindicator id="busy-container" style="width: 520px" size="Medium" text="Loading">
+	<ui5-busy-indicator id="busy-container" style="width: 520px" size="Medium" text="Loading">
 		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" style="width: 100%"></ui5-list>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
 
 	<br>
@@ -75,21 +75,21 @@
 	<br>
 	<br>
 
-	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px">
+	<ui5-busy-indicator size="Medium" active style="width: 500px; margin-left: 100px">
 		<ui5-list style="width: 100%; border: 1px solid black;">
 			<ui5-li>Item 1</ui5-li>
 			<ui5-li>Item 2</ui5-li>
 			<ui5-li>Item 3</ui5-li>
 		</ui5-list>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
-	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px" text="Custom loading text">
+	<ui5-busy-indicator size="Medium" active style="width: 500px; margin-left: 100px" text="Custom loading text">
 		<ui5-list style="width: 100%; border: 1px solid black;">
 			<ui5-li>Item 1</ui5-li>
 			<ui5-li>Item 2</ui5-li>
 			<ui5-li>Item 3</ui5-li>
 		</ui5-list>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
 	 <br>
 	<br>
@@ -99,32 +99,32 @@
 	<br>
 	<br>
 
-	<ui5-busyindicator active></ui5-busyindicator>
+	<ui5-busy-indicator active></ui5-busy-indicator>
 	<br>
 	<br>
 	<span>Small </span>
 
 	<br>
 	<br>
-	<ui5-busyindicator size="Small" active></ui5-busyindicator>
+	<ui5-busy-indicator size="Small" active></ui5-busy-indicator>
 	<br>
 	<br>
 	<span>Medium </span>
 
 	<br>
 	<br>
-	<ui5-busyindicator size="Medium" active></ui5-busyindicator>
+	<ui5-busy-indicator size="Medium" active></ui5-busy-indicator>
 	<br>
 	<br>
 	<span>Large </span>
 
 	<br>
 	<br>
-	<ui5-busyindicator size="Large" active></ui5-busyindicator>
+	<ui5-busy-indicator size="Large" active></ui5-busy-indicator>
 	<br>
 	<br>
 
-	<ui5-busyindicator id="busy-tree" style="width: 100%;">
+	<ui5-busy-indicator id="busy-tree" style="width: 100%;">
 		<ui5-tree id="treeDynamic">
 			<div slot="header">
 				<ui5-title>Dynamic tree</ui5-title>
@@ -139,7 +139,7 @@
 
 			<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
 		</ui5-tree>
-	</ui5-busyindicator>
+	</ui5-busy-indicator>
 
 	<ui5-input value="0" id="tree-input"></ui5-input>
 
@@ -151,11 +151,11 @@
 		<div slot="header">Dialog with focus issue</div>
 		<div>
 			<div>Buttons are wrapped in busy indicator, which is inactive.</div>
-			<ui5-busyindicator>
+			<ui5-busy-indicator>
 				<ui5-button id="dialog-inactive-indicator-focused-button">button 1</ui5-button>
 				<ui5-button>button 2</ui5-button>
 				<ui5-button>button 3</ui5-button>
-			</ui5-busyindicator>
+			</ui5-busy-indicator>
 		</div>
 	</ui5-dialog>
 
@@ -164,19 +164,18 @@
 		<div slot="header">Dialog with focus issue</div>
 		<div>
 			<div>Buttons are wrapped in busy indicator, which is active.</div>
-			<ui5-busyindicator active>
+			<ui5-busy-indicator active>
 				<ui5-button>button 1</ui5-button>
 				<ui5-button>button 2</ui5-button>
 				<ui5-button>button 3</ui5-button>
-			</ui5-busyindicator>
+			</ui5-busy-indicator>
 		</div>
 	</ui5-dialog>
 	<script>
-		var busyIndocator = document.getElementById("busy-container");
-		var list = document.getElementById("fetch-list");
-
 		document.getElementById("fetch-btn").addEventListener("click", function(event) {
-			busyIndocator.setAttribute("active", "");
+			var busyIndicator = document.getElementById("busy-container");
+			var list = document.getElementById("fetch-list");
+			busyIndicator.setAttribute("active", "");
 
 			setTimeout(function() {
 				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
@@ -187,7 +186,7 @@
 				});
 
 				list.noDataText = "";
-				busyIndocator.removeAttribute("active");
+				busyIndicator.removeAttribute("active");
 			}, 2000);
 		});
 

@@ -86,6 +86,25 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessibility role of the component.
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		role: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria hidden state of the component.
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		ariaHidden: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		pathData: {
@@ -120,6 +139,7 @@ const metadata = {
 		 */
 		effectiveAccessibleName: {
 			type: String,
+			defaultValue: undefined,
 			noAttribute: true,
 		},
 	},
@@ -247,11 +267,23 @@ class Icon extends UI5Element {
 		return this.effectiveDir;
 	}
 
+	get effectiveAriaHidden() {
+		if (this.ariaHidden === "") {
+			return;
+		}
+
+		return this.ariaHidden;
+	}
+
 	get tabIndex() {
 		return this.interactive ? "0" : "-1";
 	}
 
-	get role() {
+	get effectiveAccessibleRole() {
+		if (this.role) {
+			return this.role;
+		}
+
 		if (this.interactive) {
 			return "button";
 		}

@@ -198,7 +198,7 @@ describe("List Tests", () => {
 		const item = $("ui5-li-custom.item");
 		const itemBtn = $("ui5-button.itemBtn");
 		const itemLink = $("ui5-link.itemLink");
-		const itemRadioBtn = $("ui5-radiobutton.itemRadio");
+		const itemRadioBtn = $("ui5-radio-button.itemRadio");
 		const randomBtn = $("#randomBtn");
 
 		headerBtn.click();
@@ -255,7 +255,7 @@ describe("List Tests", () => {
 		btn.click();
 		browser.pause(1000);
 
-		assert.strictEqual(loadMoreResult.getAttribute("value"), "1", "The event loadMore is fired.");
+		assert.strictEqual(loadMoreResult.getProperty("value"), "1", "The event loadMore is fired.");
 	});
 
 	it("detailPress event is fired", () => {

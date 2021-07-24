@@ -32,7 +32,7 @@ const metadata = {
 		/**
 		 * Defines whether the user can see the last used colors in the bottom of the component
 		 * @type {boolean}
-		 * @public
+		 * @private
 		 * @since 1.0.0-rc.15
 		 */
 		showRecentColors: {
@@ -43,7 +43,7 @@ const metadata = {
 		 * Defines whether the user can choose a custom color from a color picker
 		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
 		 * @type {boolean}
-		 * @public
+		 * @private
 		 * @since 1.0.0-rc.15
 		 */
 		showMoreColors: {
@@ -51,12 +51,11 @@ const metadata = {
 		},
 
 		/**
-		 *
-		 * The selected color.
+		 * Defines the selected color.
 		 * @type {CSSColor}
-		 * @public
+		 * @private
 		 */
-		value: {
+		_selectedColor: {
 			type: CSSColor,
 		},
 	},
@@ -80,9 +79,10 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @since 1.0.0-rc.15
 		 * @param {String} color the selected color
 		 */
-		change: {
+		"item-click": {
 			details: {
 				color: {
 					type: String,
@@ -97,12 +97,11 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The ColorPalette provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
- * You can set them by using the ColorPaletteItem items as slots.
  *
  * <h3>Usage</h3>
- * The Colorpalette is intended for users that needs to select a color from a predefined set of colors.
- * To allow users select any color from a color picker, enable the <code>show-more-colors</code> property.
- * And, to display the most recent color selection, enable the <code>show-recent-colors</code> property.
+ *
+ * The Colorpalette is meant for users that needs to select a color from a predefined set.
+ * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -189,17 +188,17 @@ class ColorPalette extends UI5Element {
 	}
 
 	_setColor(color) {
-		this.value = color;
-		if (this._recentColors[0] !== this.value) {
-			if (this._recentColors.includes(this.value)) {
-				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this.value), 1)[0]);
+		this._selectedColor = color;
+		if (this._recentColors[0] !== this._selectedColor) {
+			if (this._recentColors.includes(this._selectedColor)) {
+				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
 			} else {
-				this._recentColors.unshift(this.value);
+				this._recentColors.unshift(this._selectedColor);
 			}
 		}
 
-		this.fireEvent("change", {
-			color: this.value,
+		this.fireEvent("item-click", {
+			color: this._selectedColor,
 		});
 	}
 
@@ -236,6 +235,13 @@ class ColorPalette extends UI5Element {
 	async _openMoreColorsDialog() {
 		const dialog = await this._getDialog();
 		dialog.open();
+	}
+
+	/**
+	 * Returns the selected color.
+	 */
+	get selectedColor() {
+		return this._selectedColor;
 	}
 
 	get displayedColors() {

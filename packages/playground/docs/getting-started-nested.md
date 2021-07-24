@@ -14,7 +14,7 @@ UI5 Web Components are shipped as ES6 modules and published on NPM. If you are a
 
 ## Creating a project
 
-Any ES6 module-capable front-end tooling can be used, but in case you don’t already have a preference, you can start a new project using [Vite](https://vite.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
+Any ES6 module-capable front-end tooling can be used, but in case you don’t already have a preference, you can start a new project using [Vite](https://vitejs.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
 
 ```console
 npm init @vitejs/app
@@ -40,7 +40,7 @@ You should see a message that a server is running on `Local: http://localhost:30
 Install ```@ui5/webcomponents```
 
 ```bash
-npm install @ui5/webcomponents --save
+npm install @ui5/webcomponents
 ```
 
 This command downloads the published source code of the UI5 Web Components to the `node_modules` folder. Now you can add them to your code to get them on the web page.
