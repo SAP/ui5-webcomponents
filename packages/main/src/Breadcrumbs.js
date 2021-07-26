@@ -133,7 +133,13 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * Enables users to navigate between items by providing a list of links to previous steps in the user's navigation path. The last three steps can be accessed as links directly, while the remaining links prior to them are available in a drop-down menu.
+ * Enables users to navigate between items by providing a list of links to previous steps in the user's navigation path.
+ * It helps the user to be aware of their location within the application and allows faster navigation.
+ * <br><br>
+ * The last three steps can be accessed as links directly, while the remaining links prior to them are available
+ * in a drop-down menu.
+ * <br><br>
+ * You can choose the type of separator to be used from a number of predefined options.
  *
  * @constructor
  * @author SAP SE
