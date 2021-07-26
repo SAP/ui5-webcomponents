@@ -149,16 +149,13 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
- * @since 1.0.0-rc.15
+ * @since 1.0.0-rc.16
  * @public
  */
 class ViewSettingsDialog extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
-		this._initialSettings = {};
-		this._confirmedSettings = {};
-		this._currentSettings = {};
 	}
 
 	static get render() {
