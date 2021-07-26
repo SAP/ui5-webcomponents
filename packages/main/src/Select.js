@@ -460,10 +460,10 @@ class Select extends UI5Element {
 			this._handleEndKey(event);
 		} else if (isEnter(event)) {
 			this._handleSelectionChange();
-		} else if (isDown(event) || isUp(event)) {
-			this._handleArrowNavigation(event);
 		} else if (event.keyCode >= 65 && event.keyCode <= 90) {
 			this._handleKeyboardNavigation(event);
+		} else {
+			this._handleArrowNavigation(event);
 		}
 	}
 
