@@ -99,7 +99,7 @@ const metadata = {
 		},
 
 		/**
-		 * Holds the number of link-items in the overflow
+		 * Holds the number of link-items in the overflow.
 		 *
 		 * @type {integer}
 		 * @defaultvalue 0
