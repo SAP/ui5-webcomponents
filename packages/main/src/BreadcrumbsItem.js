@@ -24,8 +24,7 @@ const metadata = {
 		/**
 		 * Defines the link target.
 		 * <br><br>
-		 * <b>Notes:</b>
-		 *
+		 * Available options are:
 		 * <ul>
 		 * <li><code>_self</code></li>
 		 * <li><code>_top</code></li>
@@ -33,8 +32,8 @@ const metadata = {
 		 * <li><code>_parent</code></li>
 		 * <li><code>_search</code></li>
 		 * </ul>
-		 *
-		 * <b>This property must only be used when the <code>href</code> property is set.</b>
+		 * <br><br>
+		 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
