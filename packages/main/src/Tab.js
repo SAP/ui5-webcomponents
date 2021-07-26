@@ -22,6 +22,7 @@ import overflowCss from "./generated/themes/TabInOverflow.css.js";
  */
 const metadata = {
 	tag: "ui5-tab",
+	"abstract": true,
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
@@ -104,16 +105,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.8
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Specifies if the component is selected.
 		 *
 		 * @type {boolean}
@@ -190,6 +181,10 @@ class Tab extends UI5Element {
 
 	get overflowPresentation() {
 		return executeTemplate(this.constructor.overflowTemplate, this);
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 
 	getFocusDomRef() {

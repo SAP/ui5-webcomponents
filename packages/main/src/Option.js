@@ -6,6 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-option",
 	managedSlots: true,
+	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**
@@ -58,16 +59,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.11
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Defines the focused state of the component.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -113,6 +104,10 @@ const metadata = {
 class Option extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 }
 

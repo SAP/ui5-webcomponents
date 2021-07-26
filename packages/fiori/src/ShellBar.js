@@ -360,12 +360,6 @@ const metadata = {
  * <li>product-switch</li>
  * </ul>
  *
- * In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM refs for:
- * <ul>
- * <li>Every <code>ui5-shellbar-item</code> that you provide.
- * Example: <code><ui5-shellbar-item stable-dom-ref="messages"></ui5-shellbar-item></code></li>
- * </ul>
- *
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
@@ -752,6 +746,58 @@ class ShellBar extends UI5Element {
 		this._defaultItemPressPrevented = !this.fireEvent("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : buttonRef,
 		}, true);
+	}
+
+	getStableDomRefPerAbstractItem(item) {
+		return this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+	}
+
+	/**
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	get logoDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="logo"]`);
+	}
+
+	/**
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	get copilotDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="copilot"]`);
+	}
+
+	/**
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	get notificationsDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="notifications"]`);
+	}
+
+	/**
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	get overflowlogoDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="notifications"]`);
+	}
+
+	/**
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	get profileDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="profile"]`);
+	}
+
+	/**
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	get productSwitchDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="product-switch"]`);
 	}
 
 	/**

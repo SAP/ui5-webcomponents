@@ -9,6 +9,7 @@ import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit
  */
 const metadata = {
 	tag: "ui5-shellbar-item",
+	"abstract": true,
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Defines the name of the item's icon.
@@ -38,16 +39,6 @@ const metadata = {
 		 * @public
 		 */
 		count: {
-			type: String,
-		},
-
-		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.8
-		 */
-		stableDomRef: {
 			type: String,
 		},
 	},
@@ -95,6 +86,10 @@ class ShellBarItem extends UI5Element {
 
 	static get template() {
 		return ShellBarItemTemplate;
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 }
 

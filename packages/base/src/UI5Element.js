@@ -618,9 +618,15 @@ class UI5Element extends HTMLElement {
 	/**
 	 * Returns the DOM Element inside the Shadow Root that corresponds to the opening tag in the UI5 Web Component's template
 	 * Use this method instead of "this.shadowRoot" to read the Shadow DOM, if ever necessary
+	 * This method can be called on abastract elements as well.
+	 *
 	 * @public
 	 */
 	getDomRef() {
+		if (this.constructor._isAbstract() && this.parentNode.isUI5Element) {
+			return this.parentNode.getStableDomRefPerAbstractItem(this);
+		}
+
 		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
 			return;
 		}
@@ -778,6 +784,15 @@ class UI5Element extends HTMLElement {
 	 */
 	static _needsShadowDOM() {
 		return !!this.template;
+	}
+
+	/**
+	 * @private
+	 *
+	 * Checks if the component is responsible of its own rendering
+	 */
+	static _isAbstract() {
+		return this.getMetadata().isAbstract();
 	}
 
 	/**

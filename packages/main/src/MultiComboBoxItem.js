@@ -5,6 +5,7 @@ import ComboBoxItem from "./ComboBoxItem.js";
  */
 const metadata = {
 	tag: "ui5-mcb-item",
+	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.MultiComboBoxItem.prototype */ {
 		/**
 		 * Defines the selected state of the component.
@@ -13,16 +14,6 @@ const metadata = {
 		 * @public
 		 */
 		selected: { type: Boolean },
-
-		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.11
-		 */
-		stableDomRef: {
-			type: String,
-		},
 	},
 };
 
@@ -41,6 +32,10 @@ const metadata = {
 class MultiComboBoxItem extends ComboBoxItem {
 	static get metadata() {
 		return metadata;
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 }
 

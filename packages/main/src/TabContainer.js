@@ -235,14 +235,6 @@ const metadata = {
  * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
  * </ul>
  *
- * <h3>Stable DOM Refs</h3>
- *
- * In the context of <code>ui5-tabcontainer</code>, you can provide a custom stable DOM refs for:
- * <ul>
- * <li>Each <code>ui5-tab</code>
- * Example: <code><ui5-tab stable-dom-ref="in-stock"></ui5-tab></code></li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
@@ -338,6 +330,10 @@ class TabContainer extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResize);
+	}
+
+	getStableDomRefPerAbstractItem(tab) {
+		return this.getDomRef().querySelector(`*[data-ui5-stable=${tab.stableDomRef}]`);
 	}
 
 	_onTablistFocusin(event) {

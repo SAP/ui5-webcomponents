@@ -189,6 +189,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element knows where it is rendered
+	 * @public
+	 */
+	isAbstract() {
+		return !!this.metadata.abstract;
+	}
+
+	/**
 	 * Returns an object with key-value pairs of properties and their metadata definitions
 	 * @public
 	 */
