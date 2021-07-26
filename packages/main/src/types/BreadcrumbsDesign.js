@@ -15,7 +15,7 @@ const BreadcrumbsTypes = {
 	Standard: "Standard",
 
 	/**
-	 * All items in the breadcrumb are links.
+	 * All items are displayed as links.
 	 * @public
 	 * @type {NoCurrentPage}
 	 */
