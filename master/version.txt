@@ -1,7 +1,5 @@
-commit 3c2e6597f70b92457d9d2c17e95dd2eb342683f8
+commit b8537b5c07e4917fb826b7fd35835f2e62881f1d
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 26 10:35:47 2021 +0300
+Date:   Mon Jul 26 11:42:10 2021 +0300
 
-    feat(framework): Expose HTML sanitization utilities (#3525)
-    
-    Co-authored-by: ilhan <ilhan.myumyun@sap.com>
+    chore: add caja to .reuse/dep5 (#3537)
