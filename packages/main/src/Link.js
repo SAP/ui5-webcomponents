@@ -143,9 +143,9 @@ const metadata = {
 		 * Defines the accessibility role of the component.
 		 * @defaultvalue ""
 		 * @private
-		 * @since 1.0.0-rc.15
+		 * @since 1.0.0-rc.16
 		 */
-		role: {
+		 accessibleRole: {
 			type: String,
 		},
 
@@ -306,7 +306,7 @@ class Link extends UI5Element {
 	}
 
 	get effectiveAccRole() {
-		return this.role || "link";
+		return this.accessibleRole || "link";
 	}
 
 	static async onDefine() {

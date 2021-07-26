@@ -521,7 +521,6 @@ class Breadcrumbs extends UI5Element {
 			Link,
 			Label,
 			ResponsivePopover,
-			Popover,
 			List,
 			StandardListItem,
 			Icon,
