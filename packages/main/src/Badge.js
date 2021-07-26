@@ -37,7 +37,7 @@ const metadata = {
 		 * Defines if the badge has an icon.
 		 * @private
 		 */
-		__hasIcon: {
+		_hasIcon: {
 			type: Boolean,
 		},
 
@@ -45,7 +45,7 @@ const metadata = {
 		 * Defines if the badge has only an icon (and no text).
 		 * @private
 		 */
-		__hasIconOnly: {
+		_iconOnly: {
 			type: Boolean,
 		},
 	},
@@ -130,8 +130,8 @@ class Badge extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.__hasIcon = this.hasIcon;
-		this.__hasIconOnly = this.hasIconOnly;
+		this._hasIcon = this.hasIcon;
+		this._iconOnly = this.iconOnly;
 	}
 
 	get hasText() {
@@ -142,7 +142,7 @@ class Badge extends UI5Element {
 		return !!this.icon.length;
 	}
 
-	get hasIconOnly() {
+	get iconOnly() {
 		return this.hasIcon && !this.hasText;
 	}
 
