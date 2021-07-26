@@ -468,12 +468,9 @@ class Select extends UI5Element {
 	}
 
 	_handleKeyboardNavigation(event) {
-		//debugger;
-
-		// note: jQuery oEvent.which normalizes oEvent.keyCode and oEvent.charCode
 		const sTypedCharacter = event.key;
 		let sText;
-		console.log(sTypedCharacter);
+
 		this._sTypedChars += sTypedCharacter;
 
 		// We check if we have more than one characters and they are all duplicate, we set the
@@ -484,16 +481,17 @@ class Select extends UI5Element {
 
 		clearTimeout(this._iTypingTimeoutID);
 
-		this._iTypingTimeoutID = setTimeout(function() {
+		this._iTypingTimeoutID = setTimeout(async () => {
 			this._sTypedChars = "";
 			this._iTypingTimeoutID = -1;
-			this._selectTypedItem(sText);
-		}.bind(this), 100);
+		}, 1000);
+
+		this._selectTypedItem(sText);
 	}
 
 	_selectTypedItem(sText) {
 		const currentIndex = this._selectedIndex;
-		let oItemToSelect =this._searchNextItemByText(sText);
+		let oItemToSelect = this._searchNextItemByText(sText);
 
 			if (oItemToSelect) {
 				const nextIndex = this._getSelectedItemIndex(oItemToSelect);
@@ -501,9 +499,6 @@ class Select extends UI5Element {
 				this._changeSelectedItem(this._selectedIndex, nextIndex);
 
 				if (currentIndex !== this._selectedIndex) {
-					// Announce new item even if picker is opened.
-					// The aria-activedescendents attribute can't be used,
-					// because listitem elements are in different shadow dom
 					this.itemSelectionAnnounce();
 				}
 			}
@@ -511,8 +506,8 @@ class Select extends UI5Element {
 
 	_searchNextItemByText(sText) {
 		let aOrderedOptions = this.options.slice(0);
-		let aOptionsAfterSelected = aOrderedOptions.splice(this._selectedIndex + 1, aOrderedOptions.length - this._selectedIndex);
-		let aOptionsBeforeSelected = aOrderedOptions.splice(0, aOrderedOptions.length - 1);
+		const aOptionsAfterSelected = aOrderedOptions.splice(this._selectedIndex + 1, aOrderedOptions.length - this._selectedIndex);
+		const aOptionsBeforeSelected = aOrderedOptions.splice(0, aOrderedOptions.length - 1);
 
 		aOrderedOptions = aOptionsAfterSelected.concat(aOptionsBeforeSelected);
 
