@@ -1,0 +1,13 @@
+:root {
+    --sapIllus_BrandColorPrimary: #0a6ed1;
+    --sapIllus_BrandColorSecondary: #72b5f8;
+    --sapIllus_StrokeDetailColor: #4a5055;
+    --sapIllus_Layering1: #9da4aa;
+    --sapIllus_Layering2: #c6cace;
+    --sapIllus_BackgroundColor: #e7e9ea;
+    --sapIllus_ObjectFillColor: #fff;
+    --sapIllus_AccentColor: #ffba10;
+    --sapIllus_NoColor: none;
+    --sapIllus_PatternShadow: url(#sapIllus_PatternShadow);
+    --sapIllus_PatternHighlight: url(#sapIllus_PatternHighlight);
+  }

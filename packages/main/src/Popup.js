@@ -66,14 +66,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the popup
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -361,7 +361,7 @@ class Popup extends UI5Element {
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
 	 */
-	async open(preventInitialFocus) {
+	async _open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 		if (prevented) {
 			return;
@@ -378,7 +378,7 @@ class Popup extends UI5Element {
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.show();
+		this._show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
 			this.applyInitialFocus();
@@ -461,7 +461,7 @@ class Popup extends UI5Element {
 	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
 	 * @protected
 	 */
-	show() {
+	_show() {
 		this.style.display = this._displayProp;
 	}
 
@@ -515,7 +515,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.ariaLabel || undefined;
+		return this.accessibleName || undefined;
 	}
 
 	get _root() {
