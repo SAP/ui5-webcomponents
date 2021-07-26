@@ -41,7 +41,7 @@ const metadata = {
 	},
 	properties: /** @lends  sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
 		/**
-		 * Indicates whether a loading indicator should be shown in the dialog.
+		 * Indicates whether a loading indicator should be displayed in the dialog.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -53,11 +53,11 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
 		/**
-		 * Fired when the scan completed successfuuly.
+		 * Fired when the scan is completed successfuuly.
 		 *
 		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-success
-		 * @param {String} text the scan result as string.
-		 * @param {Object} rawBytes the scan result as a Uint8Array.
+		 * @param {String} text the scan result as string
+		 * @param {Object} rawBytes the scan result as a Uint8Array
 		 * @public
 		 */
 		 "scan-success": {
@@ -68,10 +68,10 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the scan failed with error.
+		 * Fired when the scan fails with error.
 		 *
 		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-error
-		 * @param {String} message the error message.
+		 * @param {String} message the error message
 		 * @public
 		 */
 		 "scan-error": {
@@ -87,16 +87,17 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>BarcodeScannerDialog</code> provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API.
+ * The <code>BarcodeScannerDialog</code> component provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API.
  * Opening the dialog launches the device camera and scans for known barcode formats.
  * <br>
  * <br>
- * Fires a <code>scanSuccess</code> event whenever a barcode is identified
- * and a <code>scanError</code> event when the scan failed (e.g. due to missing permisions).
+ * A <code>scanSuccess</code> event fires whenever a barcode is identified
+ * and a <code>scanError</code> event fires when the scan failed (for example, due to missing permisions).
  * <br>
  * <br>
- * The component internally uses the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> third party OSS.
- * Check the zxing-js/library documentation for the list of supported barcode formats.
+ * Internally, the component  uses the zxing-js/library third party OSS. 
+ * 
+ * For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.
  *
  * @constructor
  * @author SAP SE

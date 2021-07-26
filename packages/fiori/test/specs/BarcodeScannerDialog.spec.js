@@ -8,7 +8,7 @@ describe("BarcodeScannerDialog Behavior", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/BarcodeScannerDialog.html`);
 	});
 
-	it("fires scan-error when no persions granted", () => {
+	it("fires scan-error when no permissions granted", () => {
 		// Setup: deny permissions to access the camera
 		browser.setPermissions({ name: 'camera'}, 'denied');
 		const btnScan = browser.$("#btnScan"),
