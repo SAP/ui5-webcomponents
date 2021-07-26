@@ -155,6 +155,8 @@ The "showMoreColors" and "showRecentColors" property have been removed - ColorPa
 The "stableDomRef" property has been removed. If previously used, just call "getDomRef" on the ColorPaletteItem to get its DOM reference.
 * **ui5-combobox:** enable setting value programatically ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([d85561a]d85561a(https://github.com/SAP/ui5-webcomponents/commit/d85561a))
 The "filterValue" property has been removed. The "value" property should be used as now it represents the "live" value of the component.
+* **ui5-dialog:** rename the "open" method to "show" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([0ecc508](https://github.com/SAP/ui5-webcomponents/commit/0ecc508))
+The public method "open" has been renamed to "show".
 * **ui5-daterange-picker:** rename first/lastDateValue ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ad365f4](https://github.com/SAP/ui5-webcomponents/commit/ad365f4))
 The readonly attributes "firstDateValue" and "lastDateValue" have been renamed to "startDateValue" and "endDateValue".
 * **ui5-duration-picker:** remove component ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8801e55](https://github.com/SAP/ui5-webcomponents/commit/8801e55))
@@ -253,6 +255,7 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-color-palette:** rename "change" event ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([b1e2eaf](https://github.com/SAP/ui5-webcomponents/commit/b1e2eaf))
 * **ui5-color-palette:** change API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([12ce9fd](https://github.com/SAP/ui5-webcomponents/commit/12ce9fd))
 * **ui5-color-palette-item:** remove "stableDomRef" as not needed ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([862a452](https://github.com/SAP/ui5-webcomponents/commit/862a452))
+* **ui5-dialog:** rename the "open" method to "show" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([0ecc508](https://github.com/SAP/ui5-webcomponents/commit/0ecc508))
 * **ui5-daterange-picker:** rename first/lastDateValue ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ad365f4](https://github.com/SAP/ui5-webcomponents/commit/ad365f4))
 * **ui5-duration-picker:** remove component ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8801e55](https://github.com/SAP/ui5-webcomponents/commit/8801e55))
 * **ui5-flexible-column-layout:** rename "noArrows" property to "hideArrows" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8660d11](https://github.com/SAP/ui5-webcomponents/commit/8660d11))

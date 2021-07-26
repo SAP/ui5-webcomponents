@@ -3,7 +3,7 @@ function onload() {
 	var wcBtnOpenDialog = document.querySelector('.wcBtnOpenDialog');
 	wcBtnOpenDialog.addEventListener('click', function () {
 		var wcDialog = document.querySelector('.wcDialog');
-		wcDialog.open();
+		wcDialog.show();
 	});
 
 	var wcBtnCloseDialog = document.querySelector('.wcBtnCloseDialog');
@@ -15,7 +15,7 @@ function onload() {
 	var wcBtnOpenNewDialog = document.querySelector('.wcBtnOpenNewDialog');
 	wcBtnOpenNewDialog.addEventListener('click', function () {
 		var wcNewDialog = document.querySelector('.wcNewDialog');
-		wcNewDialog.open();
+		wcNewDialog.show();
 	});
 
 	var wcBtnOpenNewDialogPopover = document.querySelector('.wcBtnOpenNewDialogPopover');
@@ -46,6 +46,6 @@ function onload() {
 	var wcBtnOpenNewPopoverDialog11 = document.querySelector('.wcBtnOpenNewPopoverDialog11');
 	wcBtnOpenNewPopoverDialog11.addEventListener('click', function () {
 		var wcNewPopoverDialog11 = document.querySelector('.wcNewPopoverDialog11');
-		wcNewPopoverDialog11.open();
+		wcNewPopoverDialog11.show();
 	});
 }
