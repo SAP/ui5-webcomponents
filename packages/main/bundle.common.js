@@ -95,6 +95,10 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
+import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/util/HTMLSanitizer.js";
+window.sanitizeHTML = sanitizeHTML;
+window.URLListValidator = URLListValidator;
+
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
