@@ -668,17 +668,6 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Use this method in order to get a reference to an element in the shadow root of the web component or the static area item of the component
-	 * @public
-	 * @method
-	 * @param {String} refName Defines the name of the stable DOM ref
-	 */
-	getStableDomRef(refName) {
-		const staticAreaResult = this.staticAreaItem && this.staticAreaItem.getStableDomRef(refName);
-		return staticAreaResult || this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
-	}
-
-	/**
 	 * Set the focus to the element, returned by "getFocusDomRef()" (marked by "data-sap-focus-ref")
 	 * @public
 	 */

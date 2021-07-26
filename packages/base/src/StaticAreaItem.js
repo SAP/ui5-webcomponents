@@ -65,15 +65,6 @@ class StaticAreaItem extends HTMLElement {
 		return this.shadowRoot;
 	}
 
-	/**
-	 * @protected
-	 * @param refName
-	 * @returns {Element}
-	 */
-	getStableDomRef(refName) {
-		return this.shadowRoot.querySelector(`[data-ui5-stable=${refName}]`);
-	}
-
 	static getTag() {
 		const pureTag = "ui5-static-area-item";
 		const suffix = getEffectiveScopingSuffixForTag(pureTag);
