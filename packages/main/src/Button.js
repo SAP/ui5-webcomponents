@@ -4,7 +4,6 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import nodesHaveText from "@ui5/webcomponents-base/dist/util/nodesHaveText.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -429,7 +428,10 @@ class Button extends UI5Element {
 	}
 
 	get isIconOnly() {
-		return !nodesHaveText(this.childNodes);
+		return !Array.from(this.childNodes).filter(node => {
+			return node.nodeType !== Node.COMMENT_NODE
+			&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0);
+		}).length;
 	}
 
 	get accInfo() {
