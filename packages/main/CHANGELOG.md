@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.13](https://github.com/SAP/ui5-webcomponents/compare/v0.31.12...v0.31.13) (2021-07-26)
+
+
+### Bug Fixes
+
+* **ui5-checkbox:** add aria-hidden attribute to icon ([#3511](https://github.com/SAP/ui5-webcomponents/issues/3511)) ([5d62888](https://github.com/SAP/ui5-webcomponents/commit/5d62888)), closes [#3433](https://github.com/SAP/ui5-webcomponents/issues/3433)
+* **ui5-combobox:** Properly focus inner input ([#3243](https://github.com/SAP/ui5-webcomponents/issues/3243)) ([fef8110](https://github.com/SAP/ui5-webcomponents/commit/fef8110))
+* **ui5-li-groupheader:** height value enhanced ([21c547e](https://github.com/SAP/ui5-webcomponents/commit/21c547e))
+* **ui5-popup:** adjust default header height ([#3506](https://github.com/SAP/ui5-webcomponents/issues/3506)) ([4b0be34](https://github.com/SAP/ui5-webcomponents/commit/4b0be34))
+* **ui5-responsive-popover:** fix header styles ([#3176](https://github.com/SAP/ui5-webcomponents/issues/3176)) ([4b25668](https://github.com/SAP/ui5-webcomponents/commit/4b25668)), closes [#3173](https://github.com/SAP/ui5-webcomponents/issues/3173)
+* **ui5-responsive-popover:** fixed position of downward pointing arrow ([#3508](https://github.com/SAP/ui5-webcomponents/issues/3508)) ([9c997fe](https://github.com/SAP/ui5-webcomponents/commit/9c997fe)), closes [#3500](https://github.com/SAP/ui5-webcomponents/issues/3500)
+* **ui5-shellbar:** Fix unnecessary cutting space on left side ([#3513](https://github.com/SAP/ui5-webcomponents/issues/3513)) ([536e917](https://github.com/SAP/ui5-webcomponents/commit/536e917)), closes [#3501](https://github.com/SAP/ui5-webcomponents/issues/3501)
+
+
+
+
+
 ## [0.31.12](https://github.com/SAP/ui5-webcomponents/compare/v0.31.11...v0.31.12) (2021-07-02)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.13](https://github.com/SAP/ui5-webcomponents/compare/v0.31.12...v0.31.13) (2021-07-26)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** fix search field width ([#3296](https://github.com/SAP/ui5-webcomponents/issues/3296)) ([01d234e](https://github.com/SAP/ui5-webcomponents/commit/01d234e))
+* **ui5-shellbar:** Fix unnecessary cutting space on left side ([#3513](https://github.com/SAP/ui5-webcomponents/issues/3513)) ([d8c5c59](https://github.com/SAP/ui5-webcomponents/commit/d8c5c59)), closes [#3501](https://github.com/SAP/ui5-webcomponents/issues/3501)
+
+
+
+
+
 ## [0.31.12](https://github.com/SAP/ui5-webcomponents/compare/v0.31.11...v0.31.12) (2021-07-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

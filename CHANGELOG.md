@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.13](https://github.com/SAP/ui5-webcomponents/compare/v0.31.12...v0.31.13) (2021-07-26)
+
+
+### Bug Fixes
+
+* **ui5-checkbox:** add "aria-hidden" attribute to icon ([#3511](https://github.com/SAP/ui5-webcomponents/issues/3511)) ([5d62888](https://github.com/SAP/ui5-webcomponents/commit/5d62888)), closes [#3433](https://github.com/SAP/ui5-webcomponents/issues/3433)
+* **ui5-combobox:** forward the focus properly to the inner input ([#3243](https://github.com/SAP/ui5-webcomponents/issues/3243)) ([fef8110](https://github.com/SAP/ui5-webcomponents/commit/fef8110)), closes [#2895](https://github.com/SAP/ui5-webcomponents/issues/2895)
+* **ui5-li-groupheader:** fix GroupHeaderListItem height ([21c547e](https://github.com/SAP/ui5-webcomponents/commit/21c547e)), closes [#3522](https://github.com/SAP/ui5-webcomponents/issues/3522)
+* **ui5-popup:** adjust default header height ([#3506](https://github.com/SAP/ui5-webcomponents/issues/3506)) ([4b0be34](https://github.com/SAP/ui5-webcomponents/commit/4b0be34)), closes [#3497](https://github.com/SAP/ui5-webcomponents/issues/3497)
+* **ui5-responsive-popover:** fix header styles ([#3475](https://github.com/SAP/ui5-webcomponents/issues/3475)) ([4b25668](https://github.com/SAP/ui5-webcomponents/commit/4b25668)), closes [#3475](https://github.com/SAP/ui5-webcomponents/issues/3475)
+* **ui5-responsive-popover:** fix position of downward pointing arrow ([#3508](https://github.com/SAP/ui5-webcomponents/issues/3508)) ([e0744d6](https://github.com/SAP/ui5-webcomponents/commit/e0744d6)), closes [#3500](https://github.com/SAP/ui5-webcomponents/issues/3500)
+* **ui5-shellbar:** fix unnecessary cutting space on left side ([#3513](https://github.com/SAP/ui5-webcomponents/issues/3513)) ([c7e6f07](https://github.com/SAP/ui5-webcomponents/commit/c7e6f07)), closes [#3501](https://github.com/SAP/ui5-webcomponents/issues/3501)
+
+
+
+
+
 ## [0.31.12](https://github.com/SAP/ui5-webcomponents/compare/v0.31.11...v0.31.12) (2021-07-02)
 
 
