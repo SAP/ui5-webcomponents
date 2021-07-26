@@ -1,6 +1,7 @@
-commit 00fcfda9cecd31aec56d7f22aa99795f3727f51c
-Merge: 0ecc508 061fa6a
-Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Sat Jul 24 18:53:57 2021 +0300
+commit 3c2e6597f70b92457d9d2c17e95dd2eb342683f8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 26 10:35:47 2021 +0300
 
-    Merge branch 'niyap-groupheaderheight'
+    feat(framework): Expose HTML sanitization utilities (#3525)
+    
+    Co-authored-by: ilhan <ilhan.myumyun@sap.com>
