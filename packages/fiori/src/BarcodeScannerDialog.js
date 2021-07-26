@@ -53,7 +53,7 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
 		/**
-		 * Fired when the scan is completed successfuuly.
+		 * Fires when the scan is completed successfuuly.
 		 *
 		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-success
 		 * @param {String} text the scan result as string
@@ -68,7 +68,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the scan fails with error.
+		 * Fires when the scan fails with error.
 		 *
 		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-error
 		 * @param {String} message the error message
