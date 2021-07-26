@@ -56,7 +56,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * Defines the stable selector that you can use via <code>getStableDomRef</code> method.
 		 * @type {string}
 		 * @public
 		 */

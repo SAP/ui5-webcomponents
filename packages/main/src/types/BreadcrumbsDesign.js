@@ -7,7 +7,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 const BreadcrumbsTypes = {
 	/**
 	 * Shows the current page as the last item in the trail.
-	 * The last item contains only plain text and not a link.
+	 * The last item contains only plain text and is not a link.
 	 *
 	 * @public
 	 * @type {Standard}
@@ -24,7 +24,7 @@ const BreadcrumbsTypes = {
 
 /**
  * @class
- * Different types of Breadcrumbs.
+ * Different types of <code>Breadcrumbs</code>.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.types.BreadcrumbsDesign

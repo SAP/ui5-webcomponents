@@ -115,7 +115,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Breadcrumbs.prototype */ {
 
 		/**
-		 * Fired when a link is activated.
+		 * Fires when a link is activated.
 		 *
 		 * @event sap.ui.webcomponents.main.Breadcrumbs#link-click
 		 * @param {HTMLElement} link The clicked link.

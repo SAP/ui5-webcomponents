@@ -7,42 +7,42 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 const SeparatorTypes = {
 
 	/**
-	 * The separator will appear as "/"
+	 * The separator appears as "/".
 	 * @public
 	 * @type {Slash}
 	 */
 	Slash: "Slash",
 
 	/**
-	 * The separator will appear as "\"
+	 * The separator appears as "\".
 	 * @public
 	 * @type {BackSlash}
 	 */
 	BackSlash: "BackSlash",
 
 	/**
-	 * The separator will appear as "\\"
+	 * The separator appears as "\\".
 	 * @public
 	 * @type {DoubleBackSlash}
 	 */
 	DoubleBackSlash: "DoubleBackSlash",
 
 	/**
-	 * The separator will appear as ">>"
+	 * The separator appears as ">>"
 	 * @public
 	 * @type {DoubleGreaterThan}
 	 */
 	DoubleGreaterThan: "DoubleGreaterThan",
 
 	/**
-	 * The separator will appear as "//"
+	 * The separator appears as "//".
 	 * @public
 	 * @type {DoubleSlash}
 	 */
 	DoubleSlash: "DoubleSlash",
 
 	/**
-	 * The separator will appear as ">"
+	 * The separator appears as ">".
 	 * @public
 	 * @type {GreaterThan}
 	 */
