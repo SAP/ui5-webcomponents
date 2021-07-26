@@ -143,7 +143,6 @@ class BarcodeScannerDialog extends UI5Element {
 
 	/**
 	 * Opens a dialog with the camera videostream. Starts a scan session.
-	 * @param {HTMLElement} opener the element relative to which the dialog is positioned
 	 * @public
 	 */
 	open(opener) {
@@ -155,7 +154,7 @@ class BarcodeScannerDialog extends UI5Element {
 		this.loading = true;
 
 		this._getUserPermission()
-			.then(() => this._openDialog(opener || this))
+			.then(() => this._openDialog())
 			.catch(err => {
 				this.fireEvent("scan-error", { message: err });
 				this.loading = false;
@@ -193,9 +192,9 @@ class BarcodeScannerDialog extends UI5Element {
 		return staticAreaItem.querySelector(".ui5-barcode-scanner-dialog-video");
 	}
 
-	async _openDialog(opener) {
+	async _openDialog() {
 		this.dialog = await this._getDialog();
-		this.dialog.open(opener);
+		this.dialog.open();
 	}
 
 	_closeDialog() {
