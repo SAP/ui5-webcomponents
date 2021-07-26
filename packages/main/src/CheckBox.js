@@ -2,7 +2,6 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -163,31 +162,6 @@ const metadata = {
 		 */
 		name: {
 			type: String,
-		},
-
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the checkbox
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-			defaultValue: "",
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
@@ -363,10 +337,6 @@ class CheckBox extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
-	}
-
-	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
 	}
 
 	get ariaChecked() {

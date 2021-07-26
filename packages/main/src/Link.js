@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getAriaLabelledByTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
@@ -100,17 +100,6 @@ const metadata = {
 		wrappingType: {
 			type: WrappingType,
 			defaultValue: WrappingType.None,
-		},
-
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
 		},
 
 		/**
@@ -244,7 +233,7 @@ class Link extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return getAriaLabelledByTexts(this);
 	}
 
 	get hasLinkType() {
