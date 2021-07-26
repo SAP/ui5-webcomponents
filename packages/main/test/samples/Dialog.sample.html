@@ -9,7 +9,7 @@
 <section>
 	<h3>Basic Dialog</h3>
 	<div class="snippet">
-		<ui5-button id="openDialogButton" design="Emphasized">Open Dialog</ui5-button>
+		<ui5-button id="openDialogButton" design="Emphasized">Show Dialog</ui5-button>
 
 		<ui5-dialog id="hello-dialog" header-text="Register Form">
 			<section class="login-form">
@@ -46,7 +46,7 @@
 			var dialogCloser = document.getElementById("closeDialogButton");
 
 			dialogOpener.addEventListener("click", function() {
-				dialog.open();
+				dialog.show();
 			});
 
 			dialogCloser.addEventListener("click", function() {
@@ -92,7 +92,7 @@
 	var dialogCloser = document.getElementById("closeDialogButton");
 
 	dialogOpener.addEventListener("click", function() {
-		dialog.open();
+		dialog.show();
 	});
 
 	dialogCloser.addEventListener("click", function() {
@@ -131,7 +131,7 @@
 		var dialogCloser2 = document.getElementById("resizable-drggable-close");
 	
 		dialogOpener2.addEventListener("click", function() {
-			dialog2.open();
+			dialog2.show();
 		});
 	
 		dialogCloser2.addEventListener("click", function() {

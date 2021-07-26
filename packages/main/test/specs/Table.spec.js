@@ -152,7 +152,7 @@ describe("Table general interaction", () => {
 			firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events on click over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inctive row should not trigger row-click event");
+			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inactive row should not trigger row-click event");
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "2", "Click over an Inactive row should trigger selection-change event");
 			assert.strictEqual(selectedRow.getProperty("value"), "thirdRowSingleSelect", "The second row is selected");
 			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
@@ -200,7 +200,7 @@ describe("Table general interaction", () => {
 			thirdRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Enter key over an Inctive row should not trigger row-click event");
+			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Enter key over an Inactive row should not trigger row-click event");
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "4", "Enter key over an Inactive row should trigger selection-change event");
 			assert.strictEqual(selectedRow.getProperty("value"), "thirdRowSingleSelect", "The third row is selected");
 			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
@@ -217,8 +217,8 @@ describe("Table general interaction", () => {
 			forthRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Space key over an Inctive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "5", "Space key over an Inctive row should trigger selection-change event");
+			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Space key over an Inactive row should not trigger row-click event");
+			assert.strictEqual(selectionChangeCount.getProperty("value"), "5", "Space key over an Inactive row should trigger selection-change event");
 
 			// act
 			browser.keys("ArrowUp");
@@ -288,8 +288,8 @@ describe("Table general interaction", () => {
 			firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inctive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Click over an Inctive row should not trigger selection-change event");
+			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inactive row should not trigger row-click event");
+			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Click over an Inactive row should not trigger selection-change event");
 		});
 
 		it("test Space/Enter key interaction over Active/Inactive row in MultiSelect mode", () => {
@@ -381,10 +381,10 @@ describe("Table general interaction", () => {
 			firstCellFirstRowLabel.click();
 
 			// Check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(table.getAttribute("mode"), "None", "The table's mode is None");
-			assert.strictEqual(firstRow.getAttribute("mode"), "None", "The row's mode is None");
-			assert.strictEqual(firstRow.getAttribute("type"), "Active", "The row's type is Active");
-			assert.strictEqual(thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
+			assert.strictEqual(table.getProperty("mode"), "None", "The table's mode is None");
+			assert.strictEqual(firstRow.getProperty("mode"), "None", "The row's mode is None");
+			assert.strictEqual(firstRow.getProperty("type"), "Active", "The row's type is Active");
+			assert.strictEqual(thirdRow.getProperty("type"), "Inactive", "The row's type is Inactive")
 
 			// test row-click and selection-change events on click over an Active row
 			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
@@ -416,14 +416,14 @@ describe("Table general interaction", () => {
 
 			// test row-click and selection-change events on Enter key activation over an Inactive row
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an Inctive row should not trigger row-click event");
+			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an Inactive row should not trigger row-click event");
 
 			// act
 			thirdRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Inctive row should not trigger row-click event");
+			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Inactive row should not trigger row-click event");
 		});
 
 		it ("tests adding spaces to input fields in a row", () => {

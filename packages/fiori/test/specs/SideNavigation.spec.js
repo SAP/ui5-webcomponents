@@ -55,12 +55,12 @@ describe("Component Behavior", () => {
 			items[3].click();
 
 			assert.strictEqual(input.getProperty("value"), "7", "Event is not fired");
-			assert.strictEqual(items[3].getAttribute("expanded"), "true", "Expanded is toggled");
+			assert.strictEqual(items[3].getProperty("expanded"), true, "Expanded is toggled");
 
 			items[3].click();
 
 			assert.strictEqual(input.getProperty("value"), "7", "Event is not fired");
-			assert.strictEqual(items[3].getAttribute("expanded"), "false", "Expanded is toggled");
+			assert.strictEqual(items[3].getProperty("expanded"), false, "Expanded is toggled");
 
             items[1].click();
             assert.strictEqual(input.getProperty("value"), "8", "Event is fired");
