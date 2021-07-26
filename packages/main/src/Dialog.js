@@ -67,11 +67,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible name of the dialog when <code>header</code> slot is provided.
-		 * <br><br>
+		 * Sets the accessible aria name of the component.
 		 *
-		 * <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
-
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -218,15 +215,15 @@ class Dialog extends Popup {
 	}
 
 	/**
-	 * Opens the dialog
+	 * Shows the dialog.
 	 *
 	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @async
 	 * @returns {Promise} Resolves when the dialog is open
 	 * @public
 	 */
-	async open(preventInitialFocus) {
-		await super.open(preventInitialFocus);
+	async show(preventInitialFocus) {
+		await super._open(preventInitialFocus);
 	}
 
 	get isModal() { // Required by Popup.js
@@ -240,7 +237,7 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.ariaLabel) {
+		if (this.headerText !== "" && !this.accessibleName) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
@@ -253,7 +250,8 @@ class Dialog extends Popup {
 		if (this.header.length > 0 && !!this.accessibleName) {
 			ariaLabel = this.accessibleName;
 		}
-		return this.ariaLabel ? this.ariaLabel : ariaLabel;
+
+		return this.accessibleName ? this.accessibleName : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -279,8 +277,8 @@ class Dialog extends Popup {
 		return this._movable ? "0" : undefined;
 	}
 
-	show() {
-		super.show();
+	_show() {
+		super._show();
 		this._center();
 		this._attachResizeHandlers();
 	}

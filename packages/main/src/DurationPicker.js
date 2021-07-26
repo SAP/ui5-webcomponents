@@ -7,7 +7,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
- * @public
+ * @private
  */
 const metadata = {
 	tag: "ui5-duration-picker",
@@ -164,7 +164,7 @@ const pad = number => {
  * @alias sap.ui.webcomponents.main.DurationPicker
  * @extends TimePickerBase
  * @tagname ui5-duration-picker
- * @public
+ * @private
  */
 class DurationPicker extends TimePickerBase {
 	static get metadata() {

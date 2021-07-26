@@ -97,10 +97,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 	dialogOpener.addEventListener("click", function() {
-		dialog.open();
+		dialog.show();
 	});
 	dialogOpener2.addEventListener("click", function() {
-		dialog2.open();
+		dialog2.show();
 	});
 	dialogCloser.addEventListener("click", function() {
 		dialog.close();
