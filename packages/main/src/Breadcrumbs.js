@@ -143,6 +143,7 @@ const metadata = {
  * @tagname ui5-breadcrumbs
  * @appenddocs BreadcrumbsItem
  * @public
+ * @since 1.0.0-rc.16
  */
 class Breadcrumbs extends UI5Element {
 	static get metadata() {
