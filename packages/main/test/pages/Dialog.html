@@ -413,14 +413,14 @@
 			preventClosing = true;
 		});
 
-		window["modals-open"].addEventListener("click", function (event) { pop.openBy(event.target) });
+		window["modals-open"].addEventListener("click", function (event) { pop.showAt(event.target) });
 
 		popbtn.addEventListener('click', function (event) {
 			danger.show();
 		});
 
 		bigDanger.addEventListener('click', function (event) {
-			bigDangerPop.openBy(bigDanger);
+			bigDangerPop.showAt(bigDanger);
 		});
 
 		window["empty-open"].addEventListener("click", function () { window["empty-dialog"].show(); });

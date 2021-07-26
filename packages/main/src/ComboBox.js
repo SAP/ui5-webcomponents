@@ -479,7 +479,7 @@ class ComboBox extends UI5Element {
 
 	async openValueStatePopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.openBy(this);
+		this.popover && this.popover.showAt(this);
 	}
 
 	async closeValueStatePopover() {
@@ -648,7 +648,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_openRespPopover() {
-		this.responsivePopover.openBy(this);
+		this.responsivePopover.showAt(this);
 	}
 
 	_filterItems(str) {

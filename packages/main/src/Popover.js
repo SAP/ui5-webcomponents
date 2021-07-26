@@ -290,14 +290,14 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Opens the popover.
-	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * Shows the popover.
+	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 * @async
 	 * @returns {Promise} Resolved when the popover is open
 	 */
-	async openBy(opener, preventInitialFocus = false) {
+	async showAt(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
@@ -337,7 +337,7 @@ class Popover extends Popup {
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if (closedPopupParent.openBy) {
+		if (closedPopupParent.showAt) {
 			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;

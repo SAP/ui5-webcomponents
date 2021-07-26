@@ -302,7 +302,7 @@ class TimePickerBase extends UI5Element {
 	async openPicker() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
 		const responsivePopover = await this._getPopover();
-		responsivePopover.openBy(this);
+		responsivePopover.showAt(this);
 		this._isPickerOpen = true;
 	}
 
