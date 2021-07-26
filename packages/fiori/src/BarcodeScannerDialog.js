@@ -95,8 +95,8 @@ const metadata = {
  * and a <code>scanError</code> event fires when the scan failed (for example, due to missing permisions).
  * <br>
  * <br>
- * Internally, the component  uses the zxing-js/library third party OSS. 
- * 
+ * Internally, the component  uses the zxing-js/library third party OSS.
+ *
  * For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.
  *
  * @constructor
@@ -143,10 +143,10 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	/**
-	 * Opens a dialog with the camera videostream. Starts a scan session.
+	 * Shows a dialog with the camera videostream. Starts a scan session.
 	 * @public
 	 */
-	open(opener) {
+	show() {
 		if (!this._hasGetUserMedia()) {
 			this.fireEvent("scan-error", { message: "getUserMedia() is not supported by your browser" });
 			return;
@@ -155,7 +155,7 @@ class BarcodeScannerDialog extends UI5Element {
 		this.loading = true;
 
 		this._getUserPermission()
-			.then(() => this._openDialog())
+			.then(() => this._showDialog())
 			.catch(err => {
 				this.fireEvent("scan-error", { message: err });
 				this.loading = false;
@@ -193,9 +193,9 @@ class BarcodeScannerDialog extends UI5Element {
 		return staticAreaItem.querySelector(".ui5-barcode-scanner-dialog-video");
 	}
 
-	async _openDialog() {
+	async _showDialog() {
 		this.dialog = await this._getDialog();
-		this.dialog.open();
+		this.dialog.show();
 	}
 
 	_closeDialog() {
