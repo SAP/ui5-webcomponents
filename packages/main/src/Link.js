@@ -131,8 +131,8 @@ const metadata = {
 		 *
 		 * @type String
 		 * @defaultvalue undefined
-		 * @since 1.0.0-rc.15
 		 * @private
+		 * @since 1.0.0-rc.16
 		 */
 		 ariaHaspopup: {
 			type: String,
