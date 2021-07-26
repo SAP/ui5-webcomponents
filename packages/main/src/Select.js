@@ -469,7 +469,6 @@ class Select extends UI5Element {
 
 	_handleKeyboardNavigation(event) {
 		const sTypedCharacter = event.key;
-		let sText;
 
 		this._sTypedChars += sTypedCharacter;
 
@@ -477,7 +476,7 @@ class Select extends UI5Element {
 		// text to be the last input character (sTypedCharacter). If not, we set the text to be
 		// the whole input string.
 
-		sText = (/^(.)\1+$/i).test(this._sTypedChars) ? sTypedCharacter : this._sTypedChars;
+		const sText = (/^(.)\1+$/i).test(this._sTypedChars) ? sTypedCharacter : this._sTypedChars;
 
 		clearTimeout(this._iTypingTimeoutID);
 
@@ -491,17 +490,17 @@ class Select extends UI5Element {
 
 	_selectTypedItem(sText) {
 		const currentIndex = this._selectedIndex;
-		let oItemToSelect = this._searchNextItemByText(sText);
+		const oItemToSelect = this._searchNextItemByText(sText);
 
-			if (oItemToSelect) {
-				const nextIndex = this._getSelectedItemIndex(oItemToSelect);
+		if (oItemToSelect) {
+			const nextIndex = this._getSelectedItemIndex(oItemToSelect);
 
-				this._changeSelectedItem(this._selectedIndex, nextIndex);
+			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
-				if (currentIndex !== this._selectedIndex) {
-					this.itemSelectionAnnounce();
-				}
+			if (currentIndex !== this._selectedIndex) {
+				this.itemSelectionAnnounce();
 			}
+		}
 	}
 
 	_searchNextItemByText(sText) {
