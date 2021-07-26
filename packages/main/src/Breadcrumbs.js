@@ -79,6 +79,17 @@ const metadata = {
 		/**
 		 * Determines the visual style of the separator between the breadcrumb items.
 		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Slash</code></li>
+		 * <li><code>BackSlash</code></li>
+		 * <li><code>DoubleBackSlash</code></li>
+		 * <li><code>DoubleGreaterThan</code></li>
+		 * <li><code>DoubleSlash</code></li>
+		 * <li><code>GreaterThan</code></li>
+		 * </ul>
+		 *
 		 * @type {BreadcrumbsSeparatorStyle}
 		 * @defaultvalue "Slash"
 		 * @public
