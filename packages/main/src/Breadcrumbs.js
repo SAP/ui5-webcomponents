@@ -115,15 +115,15 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Breadcrumbs.prototype */ {
 
 		/**
-		 * Fires when a link is activated.
+		 * Fires when a <code>BreadcrumbsItem</code> is clicked.
 		 *
-		 * @event sap.ui.webcomponents.main.Breadcrumbs#link-click
-		 * @param {HTMLElement} link The clicked link.
+		 * @event sap.ui.webcomponents.main.Breadcrumbs#item-click
+		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
-		"link-click": {
+		"item-click": {
 			detail: {
-				link: { type: HTMLElement },
+				item: { type: HTMLElement },
 			},
 		},
 	},
@@ -265,6 +265,7 @@ class Breadcrumbs extends UI5Element {
 		const map = this._breadcrumbItemWidths,
 			links = this._nonOverflowingLinks,
 			breadcrumbItems = this.getSlottedNodes("items");
+		var label;
 
 		for (let i = 0; i < links.length; i++) {
 			const breadcrumbItemIndex = (i + this._countItemsInOverflow),
@@ -272,9 +273,9 @@ class Breadcrumbs extends UI5Element {
 			map.set(breadcrumbItem, this._getElementWidth(links[i]));
 		}
 
-		if (this._endsWithCurrentLocation && links.length) {
+		if (this._endsWithCurrentLocation && links.length && (label = this._currentLocationLabel)) {
 			const breadcrumbItem = breadcrumbItems[breadcrumbItems.length - 1];
-			map.set(breadcrumbItem, this._getElementWidth(this._currentLocationLabel));
+			map.set(breadcrumbItem, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
@@ -334,18 +335,29 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onLinkClick(event) {
-		const link = event.target;
-		this.fireEvent("link-click", { link });
+		const link = event.target,
+			links = this._nonOverflowingLinks,
+			breadcrumbItems = this.getSlottedNodes("items"),
+			linkIndex = [].indexOf.call(links, link),
+			breadcrumbItemIndex = (linkIndex + this._countItemsInOverflow),
+			breadcrumbItem = breadcrumbItems[breadcrumbItemIndex];
+		this.fireEvent("item-click", { item: breadcrumbItem });
+	}
+
+	_onLabelClick(event) {
+		const breadcrumbItems = this.getSlottedNodes("items"),
+			item = breadcrumbItems[breadcrumbItems.length - 1];
+		this.fireEvent("item-click", { item });
 	}
 
 	_onOverflowListItemSelect(event) {
-		const item = event.detail.item,
-			itemIndex = this._getSelectedItemIndex(item),
-			link = this._overflowingItems[itemIndex];
+		const listItem = event.detail.item,
+			listItemIndex = this._getSelectedItemIndex(listItem),
+			item = this._overflowingItems[listItemIndex];
 
-		window.open(link.href, link.target || "_self", "noopener,noreferrer");
+		window.open(item.href, item.target || "_self", "noopener,noreferrer");
 		this.responsivePopover.close();
-		this.fireEvent("link-click", { link });
+		this.fireEvent("item-click", { item });
 	}
 
 	async _respPopover() {

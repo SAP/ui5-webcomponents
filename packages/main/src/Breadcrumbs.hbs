@@ -29,7 +29,7 @@
         {{/each}}
 
         {{#if _endsWithCurrentLocation}}
-        <li class="ui5-breadcrumbs-current-location">
+        <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelClick}}">
             <ui5-label id="{{id}}-current-location"
                 aria-current="page">
                 {{_currentLocationText}}
