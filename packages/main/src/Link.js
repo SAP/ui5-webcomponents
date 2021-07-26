@@ -160,7 +160,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the elements is on focus
+		 * Indicates if the element is on focus.
 		 * @private
 		 */
 		 focused: {
