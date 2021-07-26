@@ -264,8 +264,8 @@ class Breadcrumbs extends UI5Element {
 	_cacheWidths() {
 		const map = this._breadcrumbItemWidths,
 			links = this._nonOverflowingLinks,
-			breadcrumbItems = this.getSlottedNodes("items");
-		var label;
+			breadcrumbItems = this.getSlottedNodes("items"),
+			label = this._currentLocationLabel;
 
 		for (let i = 0; i < links.length; i++) {
 			const breadcrumbItemIndex = (i + this._countItemsInOverflow),
@@ -273,7 +273,7 @@ class Breadcrumbs extends UI5Element {
 			map.set(breadcrumbItem, this._getElementWidth(links[i]));
 		}
 
-		if (this._endsWithCurrentLocation && links.length && (label = this._currentLocationLabel)) {
+		if (this._endsWithCurrentLocation && links.length && label) {
 			const breadcrumbItem = breadcrumbItems[breadcrumbItems.length - 1];
 			map.set(breadcrumbItem, this._getElementWidth(label));
 		}
