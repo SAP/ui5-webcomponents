@@ -228,7 +228,8 @@ The properties "itemName" and "itemNameClickable" are renamed to renamed to "nam
 * **ui5-title:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([448c726](https://github.com/SAP/ui5-webcomponents/commit/448c726))
 The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
 * **ui5-toggle-button:** change tag name ([4347195](https://github.com/SAP/ui5-webcomponents/commit/4347195)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
-The component's tag name has been renamed from "ui5-togglebutton" to "ui5-toggle-button".
+* **ui5-toggle-button:** remove "iconSize" property ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ff9d7dd](https://github.com/SAP/ui5-webcomponents/commit/ff9d7dd))
+The "iconSize" property has been removed.
 * **ui5-upload-collection:** change "file-deleted" event name ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([5898eb8](https://github.com/SAP/ui5-webcomponents/commit/5898eb8))
 The "file-deleted" event has been renamed to "file-delete".
 * **ui5-upload-collection:** change API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([09e9d2a](https://github.com/SAP/ui5-webcomponents/commit/09e9d2a))
@@ -283,6 +284,7 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-timeline-item:** change API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([3b1c0b5](https://github.com/SAP/ui5-webcomponents/commit/3b1c0b5))
 * **ui5-title:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([448c726](https://github.com/SAP/ui5-webcomponents/commit/448c726))
 * **ui5-toggle-button:** change tag name ([4347195](https://github.com/SAP/ui5-webcomponents/commit/4347195)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+* **ui5-toggle-button:** remove "iconSize" property ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ff9d7dd](https://github.com/SAP/ui5-webcomponents/commit/ff9d7dd))
 * **ui5-upload-collection:** change API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([09e9d2a](https://github.com/SAP/ui5-webcomponents/commit/09e9d2a))
 * **ui5-upload-collection:** rename "noDnd" property to "hideDragOverlay" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([c360443](https://github.com/SAP/ui5-webcomponents/commit/c360443))
 * **ui5-upload-collection:** change "file-deleted" event name ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([5898eb8](https://github.com/SAP/ui5-webcomponents/commit/5898eb8))
