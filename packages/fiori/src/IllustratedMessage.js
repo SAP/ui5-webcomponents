@@ -21,10 +21,10 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
 		 * Defines the title of the component.
+		 * <br><br>
 		 * <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		titleText: {
@@ -32,10 +32,10 @@ const metadata = {
 		},
 		/**
 		 * Defines the subtitle of the component.
+		 * <br><br>
 		 * <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		subtitleText: {
@@ -77,7 +77,6 @@ const metadata = {
 		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
-		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		name: {
