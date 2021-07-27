@@ -64,7 +64,7 @@ const metadata = {
 		 * Available options are <code>Standard</code> (by default) and <code>NoCurrentPage</code>.
 		 * <br><br>
 		 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
-		 * The last item contains only plain text and not a link.
+		 * The last item contains only plain text and is not a link.
 		 *
 		 * @type {BreadcrumbsDesign}
 		 * @defaultvalue "Standard"
@@ -99,7 +99,7 @@ const metadata = {
 		},
 
 		/**
-		 * Holds the number of link-items in the overflow
+		 * Holds the number of link-items in the overflow.
 		 *
 		 * @type {integer}
 		 * @defaultvalue 0

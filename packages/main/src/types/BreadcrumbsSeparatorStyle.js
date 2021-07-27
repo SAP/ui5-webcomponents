@@ -28,7 +28,7 @@ const SeparatorTypes = {
 	DoubleBackSlash: "DoubleBackSlash",
 
 	/**
-	 * The separator appears as ">>"
+	 * The separator appears as ">>".
 	 * @public
 	 * @type {DoubleGreaterThan}
 	 */
@@ -51,7 +51,7 @@ const SeparatorTypes = {
 
 /**
  * @class
- * Different types of Breadcrumbs separator.
+ * Different types of <code>Breadcrumbs</code> separator.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.types.BreadcrumbsSeparatorStyle
