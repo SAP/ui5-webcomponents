@@ -24,3 +24,12 @@
 	height: auto;
 }
 
+.ui5-card-root.ui5-card--nocontent .ui5-card-header-root  {
+    border-bottom: none;
+}
+
+.ui5-card-root .ui5-card-header-root  {
+    display: block;
+    border-bottom: 1px solid var(--_ui5_card_header_border_color);
+}
+

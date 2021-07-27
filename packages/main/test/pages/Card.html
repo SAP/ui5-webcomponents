@@ -157,6 +157,24 @@
 		</ui5-card-header>
 	</ui5-card>
 
+<ui5-card
+        aria-labelledby="infoText"
+        id="textAreaAriaLabelledBy">
+    <div
+            slot="header"
+            id="header2">
+        Test
+    </div>
+    <ui5-list id="myList3" separators="Inner">
+        <ui5-li icon="horizontal-bullet-chart">
+            Increase customer satisfaction by 10% using marketing methods
+        </ui5-li>
+        <ui5-li icon="opportunity">
+            Get 1000 survey responses to annual employee survey
+        </ui5-li>
+    </ui5-list>
+</ui5-card>
+
 <script>
 	card.addEventListener("ui5-click", function (event) {
 		console.log(event);
