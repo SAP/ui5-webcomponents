@@ -41,7 +41,7 @@ const metadata = {
 		 */
 		 target: {
 			type: String,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
