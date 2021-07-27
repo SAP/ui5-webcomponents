@@ -36,18 +36,6 @@ describe("Card general interaction", () => {
 		assert.strictEqual(field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 
-	it("Tests aria-label", () => {
-		const card1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-card-root");
-		const card2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-card-root");
-		const EXPECTED_ARIA_LABEL1 = "Hello World";
-		const EXPECTED_ARIA_LABEL2 = "info text";
-
-		assert.strictEqual(card1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
-			"The aria-label is correctly set internally.");
-		assert.strictEqual(card2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
-			"The aria-label is correctly set internally.");
-	});
-
 	it("Tests internal aria-labelledby labeling", () => {
 		const card1 = $("#card2").shadow$(".ui5-card-root");
 		const card1Id = $("#card2").getProperty("_id");
