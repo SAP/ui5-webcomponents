@@ -286,7 +286,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_updateOverflow() {
-		const items = this.getSlottedNodes("items")/* .filter(item => this._isItemVisible(item)) */,
+		const items = this.getSlottedNodes("items"),
 			availableWidth = this.shadowRoot.querySelector(".ui5-breadcrumbs-root").offsetWidth;
 		let requiredWidth = this._getTotalContentWidth(),
 			overflowSize = 0;
