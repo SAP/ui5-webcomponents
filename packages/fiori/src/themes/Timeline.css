@@ -38,3 +38,15 @@
 	overflow: auto;
 	width: calc(100% + 1.5rem);
 }
+
+:host([axis-orientation="Horizontal"]) [dir=rtl] .ui5-timeline-list-item {
+	display: inline-block;
+	margin-left: inherit;
+	margin-right: var(--_ui5_tl_li_margin_bottom);
+}
+
+:host([axis-orientation="Horizontal"]) [dir=rtl] .ui5-timeline-scroll-container {
+	overflow: auto;
+	
+	width: calc(100% - 0.5rem);
+}

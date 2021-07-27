@@ -90,7 +90,7 @@ const metadata = {
 		},
 
 		/**
-		 * Select orientation.
+		 * Defines the items orientation.
 		 *
 		 * @type {TimelineLayout}
 		 * @defaultvalue "Vertical"
@@ -102,7 +102,7 @@ const metadata = {
 		},
 
 		/**
-		 * Define the indicator line width.
+		 * Defines the indicator line width.
 		 *
 		 * @type {String}
 		 * @private
@@ -180,7 +180,7 @@ class TimelineItem extends UI5Element {
 				"ui5-tli-indicator-short-line": this._lineWidth === "short",
 				"ui5-tli-indicator-large-line": this._lineWidth === "large",
 			},
-			arrowOrientation: {
+			bubbleArrowPosition: {
 				"ui5-tli-bubble-arrow": true,
 				"ui5-tli-bubble-arrow--left": this.axisOrientation === TimelineLayout.Vertical,
 				"ui5-tli-bubble-arrow--top": this.axisOrientation === TimelineLayout.Horizontal,

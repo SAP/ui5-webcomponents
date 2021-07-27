@@ -20,7 +20,7 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.fiori.Timeline.prototype */ {
 		/**
-		 * Select orientationn.
+		 * Defines the items orientation.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
@@ -121,8 +121,8 @@ class Timeline extends UI5Element {
 		this._itemNavigation.setCurrentItem(target);
 	}
 
-	onAfterRendering() {
-		this._itemNavigation.NavigationMode = this.axisOrientation === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+	onBeforeRendering() {
+		this._itemNavigation.navigationMode = this.axisOrientation === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
 		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].axisOrientation = this.axisOrientation;

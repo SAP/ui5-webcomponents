@@ -22,7 +22,7 @@
 	align-items: center;
 }
 
-:host(:not([axis-orientation="Horizontal"])) .ui5-tli-indicator::before {
+:host([axis-orientation="Vertical"]) .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
@@ -49,7 +49,7 @@
 }
 
 /* Line when no Icon is provided */
-:host(:not([axis-orientation="Horizontal"]):not([icon])) .ui5-tli-indicator::before {
+:host([axis-orientation="Vertical"]):not([icon]) .ui5-tli-indicator::before {
 	bottom: -2.125rem;
 	top: 1.875rem;
 }
