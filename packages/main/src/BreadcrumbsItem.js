@@ -36,11 +36,12 @@ const metadata = {
 		 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 		 *
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @public
 		 */
 		 target: {
 			type: String,
+			defaultValue: undefined
 		},
 
 		/**
