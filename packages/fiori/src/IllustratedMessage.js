@@ -106,7 +106,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * An <code>ui5-illustrated-message</code> recommended combination of a solution-oriented message, an engaging
+ * An <code>ui5-illustrated-message</code> is a recommended combination of a solution-oriented message, an engaging
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
