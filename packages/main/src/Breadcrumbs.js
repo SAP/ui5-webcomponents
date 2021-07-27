@@ -101,7 +101,7 @@ const metadata = {
 		/**
 		 * Holds the number of link-items in the overflow.
 		 *
-		 * @type {integer}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @private
 		 */
