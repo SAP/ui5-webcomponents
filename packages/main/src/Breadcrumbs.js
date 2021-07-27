@@ -99,13 +99,13 @@ const metadata = {
 		},
 
 		/**
-		 * Holds the number of link-items in the overflow.
+		 * Holds the number of items in the overflow.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @private
 		 */
-		_countItemsInOverflow: {
+		_overflowSize: {
 			type: Integer,
 			noAttribute: true,
 			defaultValue: 0,
@@ -189,12 +189,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	onInvalidation(changeInfo) {
-		if (changeInfo.reason === "childchange"
-			&& this._overflowingItems.indexOf(changeInfo.child) > -1) {
-			// the content of an overflowing item has changed
-			// => need to update the width of the overflowing item
-			// => need to render all items outside the overflow to update their widths cache
-			this._countItemsInOverflow = 0;
+		if (changeInfo.reason === "childchange") {
+			const itemIndex = this.getSlottedNodes("items").indexOf(changeInfo.child),
+				isInOverflow = itemIndex < this._overflowSize;
+			if (isInOverflow) {
+				// the content of an overflowing item has changed
+				// => need to render the item outside the overflow to obtain its new width
+				// => lower-down the <code>_overfowSize</code> to exclude that item from the overflow
+				this._overflowSize = itemIndex;
+			}
 		}
 	}
 
@@ -225,7 +228,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	_getFocusableItems() {
-		const items = this._nonOverflowingLinks,
+		const items = this._links,
 			currentLocationLabel = this._currentLocationLabel;
 
 		if (!this._isOverflowEmpty) {
@@ -263,19 +266,18 @@ class Breadcrumbs extends UI5Element {
 	 */
 	_cacheWidths() {
 		const map = this._breadcrumbItemWidths,
-			links = this._nonOverflowingLinks,
-			breadcrumbItems = this.getSlottedNodes("items"),
+			links = this._links,
+			items = this.getSlottedNodes("items"),
 			label = this._currentLocationLabel;
 
-		for (let i = 0; i < links.length; i++) {
-			const breadcrumbItemIndex = (i + this._countItemsInOverflow),
-				breadcrumbItem = breadcrumbItems[breadcrumbItemIndex];
-			map.set(breadcrumbItem, this._getElementWidth(links[i]));
-		}
+		links.forEach(link => {
+			const item = items.find(x => x._id.concat("-link") === link.id);
+			map.set(item, this._getElementWidth(link));
+		});
 
-		if (this._endsWithCurrentLocation && links.length && label) {
-			const breadcrumbItem = breadcrumbItems[breadcrumbItems.length - 1];
-			map.set(breadcrumbItem, this._getElementWidth(label));
+		if (this._endsWithCurrentLocationLabel && label) {
+			const item = items[items.length - 1];
+			map.set(item, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
@@ -284,29 +286,33 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_updateOverflow() {
-		const items = this._interactiveItems.filter(item => !item.hidden),
+		const items = this.getSlottedNodes("items")/* .filter(item => this._isItemVisible(item)) */,
 			availableWidth = this.shadowRoot.querySelector(".ui5-breadcrumbs-root").offsetWidth;
 		let requiredWidth = this._getTotalContentWidth(),
-			countItemsInOverflow = 0;
+			overflowSize = 0;
 
 		if (requiredWidth > availableWidth) {
 			// need to show the overflow opener as well
 			requiredWidth += this._overflowLinkWidth;
 		}
 
-		while ((requiredWidth > availableWidth) && (countItemsInOverflow < this._maxAllowedCountItemsInOverflow)) {
-			const itemToOverflow = items[countItemsInOverflow],
+		while ((requiredWidth > availableWidth) && (overflowSize < this._maxAllowedOverflowSize)) {
+			const itemToOverflow = items[overflowSize];
+			let itemWidth = 0;
+
+			if (this._isItemVisible(itemToOverflow)) {
 				itemWidth = this._breadcrumbItemWidths.get(itemToOverflow) || 0;
+			}
 
 			// move the item to the overflow
 			requiredWidth -= itemWidth;
-			countItemsInOverflow++;
+			overflowSize++;
 		}
 
-		this._countItemsInOverflow = countItemsInOverflow;
+		this._overflowSize = overflowSize;
 
 		// if overflow was emptied while picker was open => close redundant popup
-		if (this._countItemsInOverflow === 0 && this._isPickerOpen) {
+		if (this._isOverflowEmpty && this._isPickerOpen) {
 			this.responsivePopover.close();
 		}
 
@@ -323,37 +329,30 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getTotalContentWidth() {
-		const items = this._interactiveItems,
+		const items = this.getSlottedNodes("items"),
 			widthsMap = this._breadcrumbItemWidths,
 			totalLinksWidth = items.reduce((sum, link) => sum + widthsMap.get(link), 0);
 
-		return totalLinksWidth + this._currentLocationTextWidth;
-	}
-
-	_getSelectedItemIndex(item) {
-		return [].indexOf.call(item.parentElement.children, item);
+		return totalLinksWidth;
 	}
 
 	_onLinkClick(event) {
 		const link = event.target,
-			links = this._nonOverflowingLinks,
-			breadcrumbItems = this.getSlottedNodes("items"),
-			linkIndex = [].indexOf.call(links, link),
-			breadcrumbItemIndex = (linkIndex + this._countItemsInOverflow),
-			breadcrumbItem = breadcrumbItems[breadcrumbItemIndex];
-		this.fireEvent("item-click", { item: breadcrumbItem });
+			items = this.getSlottedNodes("items"),
+			item = items.find(x => x._id.concat("-link") === link.id);
+		this.fireEvent("item-click", { item });
 	}
 
 	_onLabelClick(event) {
-		const breadcrumbItems = this.getSlottedNodes("items"),
-			item = breadcrumbItems[breadcrumbItems.length - 1];
+		const items = this.getSlottedNodes("items"),
+			item = items[items.length - 1];
 		this.fireEvent("item-click", { item });
 	}
 
 	_onOverflowListItemSelect(event) {
 		const listItem = event.detail.item,
-			listItemIndex = this._getSelectedItemIndex(listItem),
-			item = this._overflowingItems[listItemIndex];
+			items = this.getSlottedNodes("items"),
+			item = items.find(x => x._id.concat("-li") === listItem.id);
 
 		window.open(item.href, item.target || "_self", "noopener,noreferrer");
 		this.responsivePopover.close();
@@ -394,37 +393,19 @@ class Breadcrumbs extends UI5Element {
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
 	}
 
-	/**
-	 * Returns all slotted items except the item that represents the current location label
-	 */
-	get _interactiveItems() {
-		const items = this.getSlottedNodes("items");
-		if (this._endsWithCurrentLocation) {
-			items.pop();
-		}
-		return items;
-	}
-
-	get _endsWithCurrentLocation() {
+	get _endsWithCurrentLocationLabel() {
 		return this.design === BreadcrumbsDesign.Standard;
 	}
 
-	get _currentLocationItem() {
-		let lastItem;
-		if (this._endsWithCurrentLocation) {
-			const items = this.getSlottedNodes("items");
-			lastItem = items[items.length - 1];
-		}
-		return lastItem;
-	}
-
 	get _currentLocationText() {
-		const item = this._currentLocationItem;
-		return (item) ? item.innerText : "";
-	}
-
-	get _currentLocationTextWidth() {
-		return this._breadcrumbItemWidths.get(this._currentLocationItem) || 0;
+		const items = this.getSlottedNodes("items");
+		if (this._endsWithCurrentLocationLabel && items.length > 1) {
+			const item = items[items.length - 1];
+			if (this._isItemVisible(item)) {
+				return item.innerText;
+			}
+		}
+		return "";
 	}
 
 	get _currentLocationLabel() {
@@ -435,14 +416,10 @@ class Breadcrumbs extends UI5Element {
 	 * Returns the maximum allowed count of items in the overflow
 	 * with respect to the UX requirement to never overflow the last visible item
 	 */
-	get _maxAllowedCountItemsInOverflow() {
-		const interactiveItems = this._interactiveItems.filter(item => this._isItemVisible(item));
-		if (this._endsWithCurrentLocation) {
-			// all link-items are allowed to overflow by UX requirement
-			return interactiveItems.length;
-		}
-		// all link-items except tha last visible link are allowed to overflow by UX requirement
-		return interactiveItems.length - 1;
+	get _maxAllowedOverflowSize() {
+		const items = this.getSlottedNodes("items").filter(item => this._isItemVisible(item));
+		// all items except tha last visible one are allowed to overflow by UX requirement
+		return items.length - 1;
 	}
 
 	/**
@@ -454,71 +431,37 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	/**
-	 * Getter for the list of links to be rendered inside the overflow
+	 * Getter for the list of abstract breadcrumb items to be rendered as list-items inside the overflow
 	 */
-	get _overflowingItems() {
-		const indexOfLastOveflowingLink = this._indexOfLastOveflowingItem;
-
-		if (indexOfLastOveflowingLink > -1) {
-			return this._interactiveItems
-				.slice(0, indexOfLastOveflowingLink + 1)
-				.reverse();
-		}
-		return [];
-	}
-
-	/**
-	 * Getter for the list of non-hidden links to be rendered inside the overflow
-	 */
-	get _visibleOverflowingItems() {
-		return this._interactiveItems
+	get _overflowItemsData() {
+		return this.getSlottedNodes("items")
+			.slice(0, this._overflowSize)
 			.filter(item => this._isItemVisible(item))
-			.slice(0, this._countItemsInOverflow)
 			.reverse();
 	}
 
-	get _indexOfLastOveflowingItem() {
-		const visibleOverflowingItems = this._visibleOverflowingItems;
-		let lastVisibleOverflowingLink;
+	/**
+	 * Getter for the list of abstract breadcrumb items to be rendered as links outside the overflow
+	 */
+	get _linksData() {
+		const items = this.getSlottedNodes("items").slice(this._overflowSize);
 
-		if (visibleOverflowingItems.length) {
-			// visible links appear in reverse order in the dropdown
-			// => we obtain the first item
-			lastVisibleOverflowingLink = visibleOverflowingItems[0];
-			return this._getSelectedItemIndex(lastVisibleOverflowingLink);
+		if (this._endsWithCurrentLocationLabel) {
+			items.pop();
 		}
 
-		return -1;
+		return items.filter(item => this._isItemVisible(item));
 	}
 
 	/**
-	 * Getter for the list of breadcrumb items to be rendered outside the overflow
+	 * Getter for the list of links corresponding to the abstract breadcrumb items
 	 */
-	get _nonOverflowingItems() {
-		const items = this._interactiveItems,
-			indexOfLastOveflowingLink = this._indexOfLastOveflowingItem;
-
-		// if there is at least one overflowing link
-		// => extract the remaining and return as non-overflowing
-		if (indexOfLastOveflowingLink > -1) {
-			return items.slice(indexOfLastOveflowingLink + 1);
-		}
-		return items;
-	}
-
-	get _visibleNonOverflowingItems() {
-		return this._nonOverflowingItems.filter(item => this._isItemVisible(item));
-	}
-
-	/**
-	 * Getter for the list of links to be rendered outside the overflow
-	 */
-	get _nonOverflowingLinks() {
+	get _links() {
 		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper ui5-link"));
 	}
 
 	get _isOverflowEmpty() {
-		return this._countItemsInOverflow === 0;
+		return this._overflowItemsData.length === 0;
 	}
 
 	get _ariaHasPopup() {

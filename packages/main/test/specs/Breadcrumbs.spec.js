@@ -40,7 +40,7 @@ describe("Breadcrumbs general interaction", () => {
 	it("updates layout on container resize", () => {
 		const breadcrumbs = $("#breadcrumbs1"),
 			shrinkContainerBtn = $("#shrinkSizeBtn"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_countItemsInOverflow"),
+			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
 			expectedCountLinksInOverflowAfter = countItemsInOverflowBefore + 1;
 
 		// Act: shrink the breadcrumbs container
@@ -48,13 +48,13 @@ describe("Breadcrumbs general interaction", () => {
 		shrinkContainerBtn.click();
 
 		// Check links inside overflow
-		assert.strictEqual(breadcrumbs.getProperty("_countItemsInOverflow"), expectedCountLinksInOverflowAfter, "one link is added to the overflow");
+		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountLinksInOverflowAfter, "one link is added to the overflow");
 	});
 
 	it("updates layout on resize of content outside overflow", () => {
 		const breadcrumbs = $("#breadcrumbs1"),
 			extendLinkTextBtn = $("#extendLinkTextBtn"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_countItemsInOverflow"),
+			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
 
 		// Act:
@@ -63,13 +63,13 @@ describe("Breadcrumbs general interaction", () => {
 		extendLinkTextBtn.click();
 
 		// Check
-		assert.strictEqual(breadcrumbs.getProperty("_countItemsInOverflow"), expectedCountItemsInOverflowAfter, "the link is added to the overflow");
+		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "the link is added to the overflow");
 	});
 
 	it("updates layout on resize of content inside overflow", () => {
 		const breadcrumbs = $("#breadcrumbs1"),
 			shortenLinkTextBtn = $("#shortenLinkTextBtn"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_countItemsInOverflow"),
+			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
 		// Act: 
@@ -78,7 +78,7 @@ describe("Breadcrumbs general interaction", () => {
 		shortenLinkTextBtn.click();
 
 		// Check
-		assert.strictEqual(breadcrumbs.getProperty("_countItemsInOverflow"), expectedCountItemsInOverflowAfter, "the link is taken out of the overflow");
+		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "the link is taken out of the overflow");
 	});
 
 	it("updates layout when link content removed", () => {

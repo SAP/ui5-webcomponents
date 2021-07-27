@@ -10,9 +10,9 @@
 		separators="None"
 		@ui5-item-press="{{_onOverflowListItemSelect}}">
 
-		{{#each _visibleOverflowingItems}}
+		{{#each _overflowItemsData}}
 			<ui5-li
-				id="{{this.id}}-li"
+				id="{{this._id}}-li"
 				accessible-name="{{this.accessibleName}}"
 				data-ui5-stable="{{this.stableDomRef}}">
 				{{this.textContent}}
