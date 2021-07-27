@@ -46,7 +46,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
-		 * @type {sap.ui.webcomponents.main.IBreadcrumbItem[]}
+		 * @type {sap.ui.webcomponents.main.IBreadcrumbsItem[]}
 		 * @slot items
 		 * @public
 		 */
