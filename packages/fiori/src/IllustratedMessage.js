@@ -75,6 +75,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
 		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
+		 *
+		 * When using an illustration type, other than the default, it should be loaded in addition:
+		 * <br>
+		 * <code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
