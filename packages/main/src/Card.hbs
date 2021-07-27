@@ -6,7 +6,11 @@
 	aria-labelledby="{{ariaLabelledByCard}}"
 >
 	<!-- header -->
-	<slot class="ui5-card-header-root" name="header"></slot>
+	{{#if hasHeader}}
+		<div class="ui5-card-header-root">
+			<slot name="header"></slot>
+		</div>
+	{{/if}}
 	<div role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</div>
