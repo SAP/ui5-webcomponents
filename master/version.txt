@@ -1,5 +1,5 @@
-commit adfdcf08a23ade049b2c9f7dc8675dd860e154f5
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jul 27 14:07:06 2021 +0300
+commit e335f52f49b5147d2caf711101840a5bdcf77e5d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jul 27 14:45:57 2021 +0300
 
-    fix(ui5-illustrated-message): add top level wrapper (#3550)
+    docs: ClorPalette event properly documented (#3544)
