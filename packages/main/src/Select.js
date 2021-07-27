@@ -468,7 +468,7 @@ class Select extends UI5Element {
 	}
 
 	_handleKeyboardNavigation(event) {
-		const sTypedCharacter = event.key;
+		const sTypedCharacter = event.key.toLowerCase();
 
 		this._sTypedChars += sTypedCharacter;
 
