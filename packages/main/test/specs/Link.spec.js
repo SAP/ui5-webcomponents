@@ -65,4 +65,3 @@ describe("General API", () => {
 		assert.ok(browser.getUrl().indexOf("https://www.google.com") === -1);
 	});
 });
-
