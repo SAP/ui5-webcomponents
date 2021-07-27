@@ -67,7 +67,7 @@
 	color: currentColor;
 }
 
-:host([focused]) {
+:host([focused]) .ui5-link-root {
 	outline-offset: -1px;
 	outline: 1px dotted var(--sapContent_FocusColor);
 	text-decoration: underline;
