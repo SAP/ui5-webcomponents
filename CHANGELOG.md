@@ -139,8 +139,19 @@ The middleContent slot is deprecated in favour of default slot.
 The component tag name is renamed from "ui5-busyindicator" to "ui5-busy-indicator".
 * **ui5-button:** remove "iconSize" property ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ff9d7dd](https://github.com/SAP/ui5-webcomponents/commit/ff9d7dd))
 The "iconSize" property has been removed.
-* **ui5-card:** rename "heading" and "subheading" properties ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([24fda86](https://github.com/SAP/ui5-webcomponents/commit/24fda86))
-The properties "heading" and "subheading" have been renamed to "titleText" and "subtitleText".
+* **ui5-card:** refactor API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([86f0333](https://github.com/SAP/ui5-webcomponents/commit/86f0333))
+The Card's "header", "subheading", "status", "headerInteractive" properties, "action" and "avatar" slots, and "header-click" events are not available anymore. Instead, use the newly created "CardHeader" component,
+which provides the same API with a bit of change in the names as follows: The "headerInteractive", "heading" and "subheading" proeprties have been renamed to "interactive, "titleText" and "subtitleText". The "header-click" event has been renamed to "click". In addition, the Card now has a "header" slot, for which you can use the CardHeader.
+```html
+<ui5-card>
+	<ui5-card-header
+		slot="header"
+		status="4 of 10"
+		title-text="Quick Links"
+		subtitle-text="quick links">
+	</ui5-card-header>
+</ui5-card>
+```
 * **ui5-carousel:** refactor API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([351d289](https://github.com/SAP/ui5-webcomponents/commit/351d289))
 The "selectedIndex" property is deprecated. The "infiniteScrollOffset" property and "load-more" event are  deprecated, use the "navigate" event to load more items.
 * **ui5-carousel:** change "hideNavigation" to "hideNavigationArrows" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([2adee01](https://github.com/SAP/ui5-webcomponents/commit/2adee01))
@@ -249,7 +260,7 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-bar:** remove "middleContent" slot ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([e235d7d](https://github.com/SAP/ui5-webcomponents/commit/e235d7d))
 * **ui5-busy-indicator:** change tag name ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([d43de85](https://github.com/SAP/ui5-webcomponents/commit/d43de85))
 * **ui5-button:** remove "iconSize" property ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ff9d7dd](https://github.com/SAP/ui5-webcomponents/commit/ff9d7dd))
-* **ui5-card:** rename "heading" and "subheading" properties ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([24fda86](https://github.com/SAP/ui5-webcomponents/commit/24fda86))
+* **ui5-card:** refactor API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([86f0333](https://github.com/SAP/ui5-webcomponents/commit/86f0333))
 * **ui5-carousel:** refactor API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([351d289](https://github.com/SAP/ui5-webcomponents/commit/351d289))
 * **ui5-carousel:** change "hideNavigation" to "hideNavigationArrows" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([2adee01](https://github.com/SAP/ui5-webcomponents/commit/2adee01))
 * **ui5-checkbox:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([85143e9](https://github.com/SAP/ui5-webcomponents/commit/85143e9))
