@@ -365,9 +365,9 @@ describe("Input general interaction", () => {
 		const innerInput = input.shadow$("input");
 		const NEW_TEXT = "New cool text";
 
-		assert.strictEqual(input.getAttribute("aria-label"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
+		assert.strictEqual(input.getAttribute("accessible-name"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
 
-		input.setAttribute("aria-label", NEW_TEXT);
+		input.setAttribute("accessible-name", NEW_TEXT);
 
 		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});

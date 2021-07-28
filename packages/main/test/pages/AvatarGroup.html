@@ -76,7 +76,7 @@
 
 	<div id="avatar-group-wrapper">
 
-		<ui5-popover header-text="My Heading" id="group-pop" style="width: 400px" placement-type="Bottom" aria-label="This popover is important">
+		<ui5-popover header-text="My Heading" id="group-pop" style="width: 400px" placement-type="Bottom" accessible-name="This popover is important">
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
@@ -90,7 +90,7 @@
 			</div>
 		</ui5-popover>
 
-		<ui5-popover header-text="My Heading" id="individual-pop" style="width: 300px" placement-type="Bottom" aria-label="This popover is important" prevent-focus-restore>
+		<ui5-popover header-text="My Heading" id="individual-pop" style="width: 300px" placement-type="Bottom" accessible-name="This popover is important" prevent-focus-restore>
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
@@ -263,7 +263,7 @@
 			<ui5-avatar size="M" interactive initials="M"></ui5-avatar>
 			<ui5-avatar size="L" interactive initials="L"></ui5-avatar>
 			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
-			<ui5-button slot="overflowButton" id="overflowButton" aria-label="+99 avatars">+99</ui5-button>
+			<ui5-button slot="overflowButton" id="overflowButton" accessible-name="+99 avatars">+99</ui5-button>
 		</ui5-avatar-group>
 	</div>
 
@@ -324,7 +324,7 @@
 		placeholder.innerHTML = html;
 
 		groupPop.close();
-		groupPop.openBy(event.detail.targetRef);
+		groupPop.showAt(event.detail.targetRef);
 	}
 
 	function onAvatarClicked(avatarGroup, avatarRef) {
@@ -333,7 +333,7 @@
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
 		individualPop.close();
-		individualPop.openBy(avatarRef);
+		individualPop.showAt(avatarRef);
 	}
 
 	avatarGroupGroupEvents.addEventListener("ui5-click", function (event) {
@@ -377,7 +377,7 @@
 		var totalAvatars = 90 - group.items.length + group.hiddenItems.length;
 
 		customOBtn.innerHTML = totalAvatars > 99 ? "+99" : "+" + totalAvatars;
-		customOBtn.ariaLabel = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
+		customOBtn.accessibleName = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
 	};
 
 	groupWithBtn.addEventListener("ui5-overflow", function (event) {

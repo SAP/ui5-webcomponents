@@ -386,7 +386,7 @@ class FileUploader extends UI5Element {
 		const popover = await this._getPopover();
 
 		if (popover) {
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 

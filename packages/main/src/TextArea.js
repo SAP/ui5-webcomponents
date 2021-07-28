@@ -212,14 +212,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the textarea.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.9
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -499,7 +498,7 @@ class TextArea extends UI5Element {
 
 	async openPopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.openBy(this.shadowRoot.querySelector(".ui5-textarea-inner"));
+		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-inner"));
 	}
 
 	async closePopover() {

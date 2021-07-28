@@ -124,7 +124,7 @@ class Suggestions {
 		this._beforeOpen();
 
 		if (this._getItems().length) {
-			this.responsivePopover.openBy(this._getComponent());
+			this.responsivePopover.showAt(this._getComponent());
 		}
 	}
 

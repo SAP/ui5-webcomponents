@@ -300,14 +300,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the input
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.8
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -692,7 +691,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.openBy(this);
+			this.Suggestions.showAt(this);
 			this.isRespPopoverOpen = true;
 		}
 	}
@@ -814,7 +813,7 @@ class Input extends UI5Element {
 
 		if (popover) {
 			this._isPopoverOpen = true;
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 
