@@ -257,7 +257,7 @@ class NotificationListItemBase extends ListItemBase {
 
 	async openOverflow() {
 		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover.openBy(this.overflowButtonDOM);
+		overflowPopover.showAt(this.overflowButtonDOM);
 	}
 
 	async closeOverflow() {

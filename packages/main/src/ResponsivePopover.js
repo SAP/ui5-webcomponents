@@ -114,13 +114,13 @@ class ResponsivePopover extends Popover {
 	}
 
 	/**
-	 * Opens popover on desktop and dialog on mobile.
-	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * Shows popover on desktop and dialog on mobile.
+	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
 	 * @async
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
-	async openBy(opener) {
+	async showAt(opener) {
 		this.style.display = this._isPhone ? "contents" : "";
 
 		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
@@ -132,7 +132,7 @@ class ResponsivePopover extends Popover {
 			if (!this.noStretch) {
 				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
 			}
-			await super.openBy(opener);
+			await super.showAt(opener);
 		} else {
 			this.style.zIndex = getNextZIndex();
 			await this._dialog.show();
@@ -156,7 +156,7 @@ class ResponsivePopover extends Popover {
 			return this.close();
 		}
 
-		this.openBy(opener);
+		this.showAt(opener);
 	}
 
 	/**

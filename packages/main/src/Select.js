@@ -372,7 +372,7 @@ class Select extends UI5Element {
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.openBy(this);
+			this.responsivePopover.showAt(this);
 		}
 	}
 
@@ -712,7 +712,7 @@ class Select extends UI5Element {
 	async openValueStatePopover() {
 		this.popover = await this._getPopover();
 		if (this.popover) {
-			this.popover.openBy(this);
+			this.popover.showAt(this);
 		}
 	}
 
