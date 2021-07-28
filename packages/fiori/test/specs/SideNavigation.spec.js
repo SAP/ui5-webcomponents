@@ -50,18 +50,30 @@ describe("Component Behavior", () => {
 
 			items[0].click();
 
-			assert.strictEqual(input.getProperty("value"), "6", "Event is fired");
+			assert.strictEqual(input.getProperty("value"), "7", "Event is fired");
 
 			items[3].click();
 
-			assert.strictEqual(input.getProperty("value"), "6", "Event is not fired");
-			assert.strictEqual(items[3].getAttribute("expanded"), "true", "Expanded is toggled");
+			assert.strictEqual(input.getProperty("value"), "7", "Event is not fired");
+			assert.strictEqual(items[3].getProperty("expanded"), true, "Expanded is toggled");
 
 			items[3].click();
 
-			assert.strictEqual(input.getProperty("value"), "6", "Event is not fired");
-			assert.strictEqual(items[3].getAttribute("expanded"), "false", "Expanded is toggled");
-		});
+			assert.strictEqual(input.getProperty("value"), "7", "Event is not fired");
+			assert.strictEqual(items[3].getProperty("expanded"), false, "Expanded is toggled");
+
+            items[1].click();
+            assert.strictEqual(input.getProperty("value"), "8", "Event is fired");
+
+            const staticAreaItemClassName = browser.getStaticAreaItemClassName("#sn1");
+            const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+            items = popover.$("ui5-list").$$("ui5-li");
+
+            items[1].click();
+
+            assert.strictEqual(input.getProperty("value"), "9", "Event is fired");
+
+        });
 
 		it("Tests header visibility", () => {
 			let showHeader = null;
