@@ -289,7 +289,7 @@ class Carousel extends UI5Element {
 		this._resizing = false; // indicates if the carousel is in process of resizing
 
 		this._lastFocusedElements = [];
-		this._orderOfLastFocusedPages = []
+		this._orderOfLastFocusedPages = [];
 	}
 
 	onBeforeRendering() {
@@ -395,7 +395,7 @@ class Carousel extends UI5Element {
 		// Save reference of the last focused element for each page
 		this._lastFocusedElements[pageIndex] = event.target;
 
-		let sortedPageIndex = this._orderOfLastFocusedPages.indexOf(pageIndex);
+		const sortedPageIndex = this._orderOfLastFocusedPages.indexOf(pageIndex);
 		if (sortedPageIndex === -1) {
 			this._orderOfLastFocusedPages.unshift(pageIndex);
 		} else {
@@ -416,7 +416,7 @@ class Carousel extends UI5Element {
 	}
 
 	_handleF7Key(event) {
-		let lastFocusedElement = this._lastFocusedElements[this._getLastFocusedActivePageIndex];
+		const lastFocusedElement = this._lastFocusedElements[this._getLastFocusedActivePageIndex];
 
 		if (event.target === this.getDomRef() && lastFocusedElement) {
 			lastFocusedElement.focus();
@@ -427,7 +427,6 @@ class Carousel extends UI5Element {
 
 	get _getLastFocusedActivePageIndex() {
 		for (let i = 0; i < this._orderOfLastFocusedPages.length; i++) {
-
 			let pageIndex = this._orderOfLastFocusedPages[i];
 
 			if (this.isItemInViewport(pageIndex)) {
@@ -436,7 +435,7 @@ class Carousel extends UI5Element {
 		}
 
 		return this._selectedIndex;
-	};
+	}
 
 	navigateLeft() {
 		this._resizing = false;
