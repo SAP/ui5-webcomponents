@@ -1,9 +1,10 @@
-commit 86f03331dc281bcd369bfa794a263cddbe67f171
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Wed Jul 28 08:26:49 2021 +0300
+commit faf3135261c4918e6043a44bc42513b5c6b9cd50
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jul 28 08:33:21 2021 +0300
 
-    refactor(ui5-card): header slot is added (#3490)
+    fix(ui5-wizard): import "InivisibleText" styles (#3552)
     
-    Extract the Card's header part as a separate component with all the related API, called CardHeader and introduce new slot "header" in the Card.
+    Recently a "invisible text" has been added to the WIzard's template with this PR #3443 but the required styles has not been imported and the text is actually visible, right under the step (as described in the related issue). The change imports the styles and the "invisible text" is really invisible now.
     
-    BREAKING CHANGE: titleText, subtitleText, status, headerInteractive properties, action and avatar slots, and header-click events are not available anymore. Instead, use the newly created CardHeader component, where all these properties are available ("headerInteractive" becomes "interactive" and "header-click" becomes "click"). In addition, the Card now has a "header" slot, for which you can use the CardHeader.
+    FIXES: #3551
+    Closes: #3551
