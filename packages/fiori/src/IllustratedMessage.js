@@ -78,7 +78,7 @@ const metadata = {
 		 *
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
-		 * <code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>
+		 * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -109,7 +109,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * An <code>ui5-illustrated-message</code> is a recommended combination of a solution-oriented message, an engaging
+ * An IllustratedMessage is a recommended combination of a solution-oriented message, an engaging
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
@@ -118,7 +118,7 @@ const metadata = {
  *
  * То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
  * <br><br>
- * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition:
+ * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
  * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js</code>
  *
@@ -128,7 +128,7 @@ const metadata = {
  * <ul>
  * <li>Illustration</li>
  * <li>Title</li>
- * <li>Description</li>
+ * <li>Subtitle</li>
  * <li>Actions</li>
  * </ul>
  *
@@ -136,7 +136,6 @@ const metadata = {
  * <code>ui5-illustrated-message</code> is meant to be used inside container component, for example a <code>ui5-card</code>,
  * a <code>ui5-dialog</code> or a <code>ui5-page</code>
  *
- * For the <code>ui5-illustrated-message</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
