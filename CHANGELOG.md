@@ -15,6 +15,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **a11y:** introduce "accessible-name" for multiple components ([#3449](https://github.com/SAP/ui5-webcomponents/issues/3449)) ([f4f5864](https://github.com/SAP/ui5-webcomponents/commit/f4f5864))
 * **ui5-avatar:** implement default slot for image ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([9646c3e](https://github.com/SAP/ui5-webcomponents/commit/9646c3e))
 * **ui5-avatar-group:** implement accessibility specification ([#3154](https://github.com/SAP/ui5-webcomponents/issues/3154)) ([baec15b](https://github.com/SAP/ui5-webcomponents/commit/baec15b)), closes [#2745](https://github.com/SAP/ui5-webcomponents/issues/2745)
+* **ui5-badge:** apply latest Fiori 3 design ([#3389](https://github.com/SAP/ui5-webcomponents/issues/3389)) ([a58a1a4](https://github.com/SAP/ui5-webcomponents/commit/a58a1a4))
 * **ui5-busy-indicator:** add "delay" property ([#3419](https://github.com/SAP/ui5-webcomponents/issues/3419)) ([cc8acc7](https://github.com/SAP/ui5-webcomponents/commit/cc8acc7))
 * **ui5-button:** introduce "Attention" type ([#3481](https://github.com/SAP/ui5-webcomponents/issues/3481)) ([2c9393c](https://github.com/SAP/ui5-webcomponents/commit/2c9393c)), closes [#3446](https://github.com/SAP/ui5-webcomponents/issues/3446)
 * **ui5-carousel:** add "hidePageIndicator" property ([#3268](https://github.com/SAP/ui5-webcomponents/issues/3268)) ([e13a4c9](https://github.com/SAP/ui5-webcomponents/commit/e13a4c9)), closes [#3158](https://github.com/SAP/ui5-webcomponents/issues/3158)
@@ -141,7 +142,7 @@ The component tag name is renamed from "ui5-busyindicator" to "ui5-busy-indicato
 The "iconSize" property has been removed.
 * **ui5-card:** refactor API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([86f0333](https://github.com/SAP/ui5-webcomponents/commit/86f0333))
 The Card's "header", "subheading", "status", "headerInteractive" properties, "action" and "avatar" slots, and "header-click" events are not available anymore. Instead, use the newly created "CardHeader" component,
-which provides the same API with a bit of change in the names as follows: The "headerInteractive", "heading" and "subheading" proeprties have been renamed to "interactive, "titleText" and "subtitleText". The "header-click" event has been renamed to "click". In addition, the Card now has a "header" slot, for which you can use the CardHeader.
+which provides the same API with a bit of change in the names as follows: the "headerInteractive", "heading" and "subheading" properties have been renamed to "interactive, "titleText" and "subtitleText", the "header-click" event has been renamed to "click". In addition, the Card now has a "header" slot, for which you can use the CardHeader:
 ```html
 <ui5-card>
 	<ui5-card-header
