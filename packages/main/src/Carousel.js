@@ -6,6 +6,7 @@ import {
 	isRight,
 	isDown,
 	isUp,
+	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	fetchI18nBundle,
@@ -13,6 +14,7 @@ import {
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -285,6 +287,9 @@ class Carousel extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._onResizeBound = this._onResize.bind(this);
 		this._resizing = false; // indicates if the carousel is in process of resizing
+
+		this._lastFocusedElements = [];
+		this._orderOfLastFocusedPages = []
 	}
 
 	onBeforeRendering() {
@@ -348,15 +353,53 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	_onkeydown(event) {
+	async _onkeydown(event) {
+		if (isF7(event)) {
+			this._handleF7Key(event);
+			return;
+		}
+
 		if (event.target !== this.getDomRef()) {
 			return;
 		}
 
 		if (isLeft(event) || isDown(event)) {
 			this.navigateLeft();
+			await renderFinished();
+			this.getDomRef().focus();
 		} else if (isRight(event) || isUp(event)) {
 			this.navigateRight();
+			await renderFinished();
+			this.getDomRef().focus();
+		}
+	}
+
+	_onfocusin(event) {
+		if (event.target === this.getDomRef()) {
+			return;
+		}
+
+		let pageIndex = -1;
+
+		for (let i = 0; i < this.content.length; i++) {
+			if (this.content[i].contains(event.target)) {
+				pageIndex = i;
+				break;
+			}
+		}
+
+		if (pageIndex === -1) {
+			return;
+		}
+
+		// Save reference of the last focused element for each page
+		this._lastFocusedElements[pageIndex] = event.target;
+
+		let sortedPageIndex = this._orderOfLastFocusedPages.indexOf(pageIndex);
+		if (sortedPageIndex === -1) {
+			this._orderOfLastFocusedPages.unshift(pageIndex);
+		} else {
+			this._orderOfLastFocusedPages.splice(0, 0, this._orderOfLastFocusedPages.splice(sortedPageIndex, 1)[0]);
 		}
 	}
 
@@ -371,6 +414,29 @@ class Carousel extends UI5Element {
 			this._visibleNavigationArrows = true;
 		}
 	}
+
+	_handleF7Key(event) {
+		let lastFocusedElement = this._lastFocusedElements[this._getLastFocusedActivePageIndex];
+
+		if (event.target === this.getDomRef() && lastFocusedElement) {
+			lastFocusedElement.focus();
+		} else {
+			this.getDomRef().focus();
+		}
+	}
+
+	get _getLastFocusedActivePageIndex() {
+		for (let i = 0; i < this._orderOfLastFocusedPages.length; i++) {
+
+			let pageIndex = this._orderOfLastFocusedPages[i];
+
+			if (this.isItemInViewport(pageIndex)) {
+				return pageIndex;
+			}
+		}
+
+		return this._selectedIndex;
+	};
 
 	navigateLeft() {
 		this._resizing = false;
