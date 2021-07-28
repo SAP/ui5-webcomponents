@@ -35,7 +35,7 @@ const metadata = {
 		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		axisOrientation: {
+		layout: {
 			type: TimelineLayout,
 			defaultValue: TimelineLayout.Vertical,
 		},
@@ -122,10 +122,10 @@ class Timeline extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._itemNavigation.navigationMode = this.axisOrientation === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+		this._itemNavigation.navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
 		for (let i = 0; i < this.items.length; i++) {
-			this.items[i].axisOrientation = this.axisOrientation;
+			this.items[i].layout = this.layout;
 			if (this.items[i + 1] && !!this.items[i + 1].icon) {
 				this.items[i]._lineWidth = "short";
 			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {

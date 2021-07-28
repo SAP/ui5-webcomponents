@@ -22,31 +22,31 @@
 	margin-bottom: 0;
 }
 
-:host([axis-orientation="Horizontal"]) .ui5-timeline-list {
+:host([layout="Horizontal"]) .ui5-timeline-list {
 	white-space: nowrap;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-:host([axis-orientation="Horizontal"]) .ui5-timeline-list-item {
+:host([layout="Horizontal"]) .ui5-timeline-list-item {
 	display: inline-block;
 	margin-left: var(--_ui5_tl_li_margin_bottom);
 }
 
-:host([axis-orientation="Horizontal"]) .ui5-timeline-scroll-container {
+:host([layout="Horizontal"]) .ui5-timeline-scroll-container {
 	overflow: auto;
-	width: calc(100% + 1.5rem);
+	/* The padding values of the parent container are added to the size of scroll container */
+	width: calc(100% + 0.5rem);
 }
 
-:host([axis-orientation="Horizontal"]) [dir=rtl] .ui5-timeline-list-item {
+:host([layout="Horizontal"]) [dir=rtl] .ui5-timeline-list-item {
 	display: inline-block;
 	margin-left: inherit;
 	margin-right: var(--_ui5_tl_li_margin_bottom);
 }
 
-:host([axis-orientation="Horizontal"]) [dir=rtl] .ui5-timeline-scroll-container {
-	overflow: auto;
-	
+:host([layout="Horizontal"]) [dir=rtl] .ui5-timeline-scroll-container {
+	/* The padding values of the parent container are added to the size of scroll container */
 	width: calc(100% - 0.5rem);
 }

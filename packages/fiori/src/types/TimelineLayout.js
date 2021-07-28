@@ -4,7 +4,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  * @lends sap.ui.webcomponents.fiori.types.TimelineLayout.prototype
  * @public
  */
-const AxisOrintation = {
+const Layout = {
 	/**
 	 * Default type
 	 * @public
@@ -31,10 +31,10 @@ const AxisOrintation = {
  */
 class TimeLineLayout extends DataType {
 	static isValid(value) {
-		return !!AxisOrintation[value];
+		return !!Layout[value];
 	}
 }
 
-TimeLineLayout.generateTypeAccessors(AxisOrintation);
+TimeLineLayout.generateTypeAccessors(Layout);
 
 export default TimeLineLayout;

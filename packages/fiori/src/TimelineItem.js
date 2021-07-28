@@ -96,7 +96,7 @@ const metadata = {
 		 * @defaultvalue "Vertical"
 		 * @private
 		 */
-		axisOrientation: {
+		layout: {
 			type: TimelineLayout,
 			defaultvalue: TimelineLayout.Vertical,
 		},
@@ -182,8 +182,8 @@ class TimelineItem extends UI5Element {
 			},
 			bubbleArrowPosition: {
 				"ui5-tli-bubble-arrow": true,
-				"ui5-tli-bubble-arrow--left": this.axisOrientation === TimelineLayout.Vertical,
-				"ui5-tli-bubble-arrow--top": this.axisOrientation === TimelineLayout.Horizontal,
+				"ui5-tli-bubble-arrow--left": this.layout === TimelineLayout.Vertical,
+				"ui5-tli-bubble-arrow--top": this.layout === TimelineLayout.Horizontal,
 			},
 		};
 	}
