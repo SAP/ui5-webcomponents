@@ -2522,7 +2522,7 @@
 					popover.close();
 				} else {
 					event.preventDefault();
-					popover.openBy(event.detail.targetRef);
+					popover.showAt(event.detail.targetRef);
 				}
 			});
 		</script>
@@ -2562,7 +2562,7 @@
 		<span class="k">if</span> <span class="p">(</span><span class="nx">popover</span><span class="p">.</span><span class="nx">opened</span><span class="p">)</span> <span class="p">{</span>
 			<span class="nx">popover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="nx">popover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
+			<span class="nx">popover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
 		<span class="p">}</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>

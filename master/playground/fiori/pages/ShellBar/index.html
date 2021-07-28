@@ -235,14 +235,14 @@
 		});
 
 		shellbar.addEventListener("ui5-profileClick", function(event) {
-			popover.openBy(event.detail.targetRef);
+			popover.showAt(event.detail.targetRef);
 			window["press-input"].value = "Profile";
 		});
 
 		shellbar.addEventListener("ui5-notificationsClick", function(event) {
 			window["press-input"].value = "Notifications";
 			event.preventDefault();
-			popover.openBy(event.detail.targetRef);
+			popover.showAt(event.detail.targetRef);
 		});
 
 		shellbar.addEventListener("ui5-productSwitchClick", function(event) {
@@ -270,12 +270,12 @@
 
 		shelbarCompact.addEventListener("ui5-notificationsClick", function(event) {
 			event.preventDefault();
-			popover.openBy(event.detail.targetRef);
+			popover.showAt(event.detail.targetRef);
 		});
 
 		shelbarCompact.addEventListener("ui5-productSwitchClick", function(event) {
 			event.preventDefault();
-			popover.openBy(event.detail.targetRef);
+			popover.showAt(event.detail.targetRef);
 		});
 
 		menuItemsSB.addEventListener("ui5-menuItemClick", function(event) {
@@ -289,7 +289,7 @@
 			currenItem.addEventListener("ui5-itemClick", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
-				window["custom-item-popover"].openBy(event.detail.targetRef);
+				window["custom-item-popover"].showAt(event.detail.targetRef);
 			});
 		});
 	</script>

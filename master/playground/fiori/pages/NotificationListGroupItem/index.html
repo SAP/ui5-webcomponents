@@ -319,7 +319,7 @@
 		});
 
 		openNotifications.addEventListener("click", function(event) {
-			notificationsPopover.openBy(openNotifications);
+			notificationsPopover.showAt(openNotifications);
 		});
 
 		btnMakeGroupBusy.addEventListener("click", function(event) {
@@ -334,7 +334,7 @@
 
 		shellbar.addEventListener("ui5-notificationsClick", function(event) {
 			event.preventDefault();
-			notificationsPopover.openBy(event.detail.targetRef);
+			notificationsPopover.showAt(event.detail.targetRef);
 		});
 	</script>
 </body>

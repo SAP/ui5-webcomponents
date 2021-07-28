@@ -418,23 +418,23 @@
 
 	<script>
 		btn.addEventListener("click", function (event) {
-			pop.openBy(btn);
+			pop.showAt(btn);
 		});
 
 		popbtn.addEventListener("click", function (event) {
-			danger.openBy(popbtn);
+			danger.showAt(popbtn);
 		});
 
 		bigDanger.addEventListener("click", function (event) {
-			bigDangerPop.openBy(bigDanger);
+			bigDangerPop.showAt(bigDanger);
 		});
 
 		btnPopModal.addEventListener("click", function (event) {
-			modalPopover.openBy(btnPopModal);
+			modalPopover.showAt(btnPopModal);
 		});
 
 		btnPopModalNoLayer.addEventListener("click", function() {
-			modalPopoverNoLayer.openBy(btnPopModalNoLayer);
+			modalPopoverNoLayer.showAt(btnPopModalNoLayer);
 		});
 
 		modalPopoverNoLayerClose.addEventListener("click", function() {
@@ -446,7 +446,7 @@
 		});
 
 		btnPopFocus.addEventListener("click", function (event) {
-			popFocus.openBy(btnPopFocus);
+			popFocus.showAt(btnPopFocus);
 		});
 
 		document.getElementById("many-items").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
@@ -458,53 +458,53 @@
 		}).join("");
 
 		document.getElementById("big-popover-button").addEventListener("click", function (event) {
-			document.getElementById("big-popover").openBy(event.target);
+			document.getElementById("big-popover").showAt(event.target);
 		});
 
 		btnFullWidth.addEventListener("click", function (event) {
-			popFullWidth.openBy(btnFullWidth);
+			popFullWidth.showAt(btnFullWidth);
 		});
 
 		btnFullWidthTargetOverlap.addEventListener("click", function (event) {
-			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
+			popFullWidthTargetOverlap.showAt(btnFullWidthTargetOverlap);
 		});
 
 		btnFullWidthLeft.addEventListener("click", function (event) {
-			popFullWidthLeft.openBy(btnFullWidthLeft);
+			popFullWidthLeft.showAt(btnFullWidthLeft);
 		});
 
 		btnFullWidthLeftTargetOverlap.addEventListener("click", function (event) {
-			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
+			popFullWidthLeftTargetOverlap.showAt(btnFullWidthLeftTargetOverlap);
 		});
 
 		btnFullWidthTop.addEventListener("click", function (event) {
-			popFullWidthTop.openBy(btnFullWidthTop);
+			popFullWidthTop.showAt(btnFullWidthTop);
 		});
 
 		btnFullWidthBottom.addEventListener("click", function (event) {
-			popFullWidthBottom.openBy(btnFullWidthBottom);
+			popFullWidthBottom.showAt(btnFullWidthBottom);
 		});
 
 		btnQuickViewCardOpener.addEventListener("click", function (event) {
-			quickViewCard.openBy(btnQuickViewCardOpener);
+			quickViewCard.showAt(btnQuickViewCardOpener);
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
 		btnOpenXLeft.addEventListener("click", function (event) {
-			popXLeft.openBy(targetOpener);
+			popXLeft.showAt(targetOpener);
 		});
 		btnOpenXRight.addEventListener("click", function (event) {
-			popXRight.openBy(targetOpener2);
+			popXRight.showAt(targetOpener2);
 		});
 
 		firstBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "First button is clicked";
-			popNoFocusableContent.openBy(event.target);
+			popNoFocusableContent.showAt(event.target);
 		});
 
 		secondBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "Second button is clicked";
-			popNoFocusableContent.openBy(event.target);
+			popNoFocusableContent.showAt(event.target);
 		});
 
 		btnOpenDynamic.addEventListener("click", function () {
@@ -518,19 +518,19 @@
 
 			document.body.appendChild(popover);
 
-			popover.openBy(btnOpenDynamic);
+			popover.showAt(btnOpenDynamic);
 		});
 
 		btnOpenPopoverWithDiv.addEventListener("click", function (event) {
-			popWithDiv.openBy(event.target);
+			popWithDiv.showAt(event.target);
 		});
 
 		btnOpenXRightWide.addEventListener("click", function () {
-			popXRightWide.openBy(btnOpenXRightWide);
+			popXRightWide.showAt(btnOpenXRightWide);
 		});
 
 		btnRightEdge.addEventListener("click", function () {
-			popoverRightEdge.openBy(btnRightEdge);
+			popoverRightEdge.showAt(btnRightEdge);
 		});
 
 	</script>

@@ -2512,7 +2512,7 @@
 
 	<script>
 		shellbar.addEventListener("profile-click", function(event) {
-			window["action-popover"].openBy(event.detail.targetRef);
+			window["action-popover"].showAt(event.detail.targetRef);
 		});
 	</script>
 	</div>
@@ -2561,7 +2561,7 @@
 
 <span class="nt">&lt;script&gt;</span>
 	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">profile-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">popover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
+		<span class="nx">popover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>

@@ -328,7 +328,7 @@
 		placeholder.innerHTML = html;
 
 		groupPop.close();
-		groupPop.openBy(event.detail.targetRef);
+		groupPop.showAt(event.detail.targetRef);
 	}
 
 	function onAvatarClicked(avatarGroup, avatarRef) {
@@ -337,7 +337,7 @@
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
 		individualPop.close();
-		individualPop.openBy(avatarRef);
+		individualPop.showAt(avatarRef);
 	}
 
 	avatarGroupGroupEvents.addEventListener("ui5-click", function (event) {

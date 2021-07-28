@@ -1,5 +1,9 @@
-commit a58a1a443c31e45a36a7950287a61d306bd71c19
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Wed Jul 28 10:49:24 2021 +0300
+commit 59f5354d879b40c77512532db9d2885ca493d97b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jul 28 10:53:03 2021 +0300
 
-    feat(ui5-badge): update design (#3529)
+    refactor(ui5-popover, ui5-responsive-popover): rename "openBy" to "showAt" (#3540)
+    
+    Rename the Popover's and ResponsivePopover's "openBy" method to "showAt" to have more consistent API with the Toast and Dialog components, which have "show" method. The name "showBy" has been also discussed, but from English language perspective to "show" something "at" some place is more accurate to say and this why we picked up "showAt".
+    
+    BREAKING CHANGE: Popover's and ResponsivePopover's "openBy" method has been renamed to "showAt".

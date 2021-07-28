@@ -2534,7 +2534,7 @@
 					popAvatar.image = avatarRef.image;
 					popAvatar.icon = avatarRef.icon;
 	
-					personPopover.openBy(avatarRef);
+					personPopover.showAt(avatarRef);
 				}
 	
 				function onButtonClicked(targetRef) {
@@ -2558,7 +2558,7 @@
 					placeholder.innerHTML = html;
 	
 					peoplePopover.close();
-					peoplePopover.openBy(targetRef);
+					peoplePopover.showAt(targetRef);
 				}
 	
 				avatarGroup.addEventListener("click", function (event) {
@@ -2604,7 +2604,7 @@
 	<span class="kd">const</span> <span class="nx">personPopover</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">.personPopover</span><span class="dl">"</span><span class="p">);</span>
 
 	<span class="kd">function</span> <span class="nx">onAvatarClicked</span><span class="p">(</span><span class="nx">avatarRef</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">personPopover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">avatarRef</span><span class="p">);</span>
+		<span class="nx">personPopover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">avatarRef</span><span class="p">);</span>
 	<span class="p">}</span>
 
 	<span class="kd">function</span> <span class="nx">onButtonClicked</span><span class="p">(</span><span class="nx">targetRef</span><span class="p">)</span> <span class="p">{</span>
@@ -2619,7 +2619,7 @@
 		<span class="p">});</span>
 
 		<span class="nx">placeholder</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">html</span><span class="p">;</span>
-		<span class="nx">peoplePopover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">targetRef</span><span class="p">);</span>
+		<span class="nx">peoplePopover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">targetRef</span><span class="p">);</span>
 	<span class="p">}</span>
 
 	<span class="nx">avatarGroup</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
@@ -2699,7 +2699,7 @@
 					placeholder.innerHTML = html;
 	
 					peoplePopover.close();
-					peoplePopover.openBy(targetRef);
+					peoplePopover.showAt(targetRef);
 				}
 	
 				avatarGroup.addEventListener("click", function (event) {
@@ -2735,7 +2735,7 @@
 	<span class="kd">const</span> <span class="nx">peoplePopover</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">.peoplePopover</span><span class="dl">"</span><span class="p">);</span>
 
 	<span class="kd">function</span> <span class="nx">onAvatarGroupClick</span><span class="p">(</span><span class="nx">targetRef</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">peoplePopover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">targetRef</span><span class="p">);</span>
+		<span class="nx">peoplePopover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">targetRef</span><span class="p">);</span>
 	<span class="p">}</span>
 
 	<span class="nx">avatarGroup</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>

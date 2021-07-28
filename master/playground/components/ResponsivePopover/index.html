@@ -2486,7 +2486,7 @@
 			var popoverCloser = document.getElementById("closePopoverButton");
 
 			popoverOpener.addEventListener("click", function() {
-				popover.openBy(popoverOpener);
+				popover.showAt(popoverOpener);
 			});
 			popoverCloser.addEventListener("click", function() {
 				popover.close();
@@ -2515,7 +2515,7 @@
 	<span class="kd">var</span> <span class="nx">popoverCloser</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">closePopoverButton</span><span class="dl">"</span><span class="p">);</span>
 
 	<span class="nx">popoverOpener</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-		<span class="nx">popover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">popoverOpener</span><span class="p">);</span>
+		<span class="nx">popover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">popoverOpener</span><span class="p">);</span>
 	<span class="p">});</span>
 	<span class="nx">popoverCloser</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 		<span class="nx">popover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
@@ -2779,12 +2779,12 @@
                       </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">openBy</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Opens popover on desktop and dialog on mobile.</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">showAt</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Shows popover on desktop and dialog on mobile.</div>
                       </div>
             
                         <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">opener</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the element that the popover is opened by</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the element that the popover is shown at</div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">applyFocus</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Focuses the element denoted by <code>initialFocus</code>, if provided, or the first focusable element otherwise.</div>
