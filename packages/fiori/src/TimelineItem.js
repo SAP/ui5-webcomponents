@@ -7,6 +7,9 @@ import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
 import styles from "./generated/themes/TimelineItem.css.js";
 
+const SHORT_LINE_WIDTH = "ShortLineWidth";
+const LARGE_LINE_WIDTH = "LargeLineWidth";
+
 /**
  * @public
  */
@@ -177,8 +180,8 @@ class TimelineItem extends UI5Element {
 		return {
 			indicator: {
 				"ui5-tli-indicator": true,
-				"ui5-tli-indicator-short-line": this._lineWidth === "short",
-				"ui5-tli-indicator-large-line": this._lineWidth === "large",
+				"ui5-tli-indicator-short-line": this._lineWidth === SHORT_LINE_WIDTH,
+				"ui5-tli-indicator-large-line": this._lineWidth === LARGE_LINE_WIDTH,
 			},
 			bubbleArrowPosition: {
 				"ui5-tli-bubble-arrow": true,

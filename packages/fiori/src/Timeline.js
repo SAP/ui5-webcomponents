@@ -11,6 +11,9 @@ import TimelineItem from "./TimelineItem.js";
 import styles from "./generated/themes/Timeline.css.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 
+const SHORT_LINE_WIDTH = "ShortLineWidth";
+const LARGE_LINE_WIDTH = "LargeLineWidth";
+
 /**
  * @public
  */
@@ -127,9 +130,9 @@ class Timeline extends UI5Element {
 		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].layout = this.layout;
 			if (this.items[i + 1] && !!this.items[i + 1].icon) {
-				this.items[i]._lineWidth = "short";
+				this.items[i]._lineWidth = SHORT_LINE_WIDTH;
 			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
-				this.items[i]._lineWidth = "large";
+				this.items[i]._lineWidth = LARGE_LINE_WIDTH;
 			}
 		}
 	}

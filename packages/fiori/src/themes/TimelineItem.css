@@ -10,7 +10,7 @@
 	flex-direction: column;
 }
 
-:host(:not([layout="Horizontal"])) .ui5-tli-indicator {
+:host([layout="Vertical"]) .ui5-tli-indicator {
 	position: relative;
 	width: 2rem;
 }
@@ -45,7 +45,7 @@
 }
 
 :host([layout="Horizontal"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before{
-	right: -2.0625rem;
+	right: -1.9375rem;
 }
 
 /* Line when no Icon is provided */
@@ -57,13 +57,12 @@
 /* Line when no Icon is provided in horizontal*/
 :host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator::before {
 	top: 50%;
-	right: -2.0625rem;
-	left: 1.4375rem;
+	right: -1.9375rem;
+	left: 1.6875rem;
 }
 
  :host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
 	right: -1.625rem;
-	left: 1.4375rem;
 }
 
 /* No Icon Dot */

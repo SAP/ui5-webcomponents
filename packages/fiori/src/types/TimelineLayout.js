@@ -1,21 +1,23 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
+ * Available Timeline layout orientation
  * @lends sap.ui.webcomponents.fiori.types.TimelineLayout.prototype
  * @public
  */
 const Layout = {
 	/**
+	 * Vertical layout
 	 * Default type
 	 * @public
-	 * @type {Header}
+	 * @type {Vertical}
 	 */
 	Vertical: "Vertical",
 
 	/**
-	 * Subheader type
+	 * Horizontal layout
 	 * @public
-	 * @type {Subheader}
+	 * @type {Horizontal}
 	 */
 	Horizontal: "Horizontal",
 };
