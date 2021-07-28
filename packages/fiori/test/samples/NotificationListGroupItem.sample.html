@@ -301,7 +301,7 @@
 		<script>
 			shellbar.addEventListener("ui5-notifications-click", function(event) {
 				event.preventDefault();
-				notificationsPopover.openBy(event.detail.targetRef);
+				notificationsPopover.showAt(event.detail.targetRef);
 			});
 		</script>
 	</div>
@@ -347,7 +347,7 @@
 
 <script>
 	shellbar.addEventListener("ui5-notifications-click", function(event) {
-		notificationsPopover.openBy(event.detail.targetRef);
+		notificationsPopover.showAt(event.detail.targetRef);
 	});
 </script>
 	

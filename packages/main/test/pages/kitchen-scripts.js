@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverCloser = document.getElementById("closePopoverButton");
 
 	popoverOpener.addEventListener("click", function() {
-		popover.openBy(popoverOpener);
+		popover.showAt(popoverOpener);
 	});
 	popoverCloser.addEventListener("click", function() {
 		popover.close();

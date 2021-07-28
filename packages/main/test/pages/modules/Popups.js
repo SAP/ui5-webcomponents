@@ -21,14 +21,14 @@ function onload() {
 	var wcBtnOpenNewDialogPopover = document.querySelector('.wcBtnOpenNewDialogPopover');
 	wcBtnOpenNewDialogPopover.addEventListener('click', function () {
 		var wcNewDialogPopover = document.querySelector('.wcNewDialogPopover');
-		wcNewDialogPopover.openBy(wcBtnOpenNewDialogPopover);
+		wcNewDialogPopover.showAt(wcBtnOpenNewDialogPopover);
 	});
 
 	// web component popover
 	var wcBtnOpenPopover = document.querySelector('.wcBtnOpenPopover');
 	wcBtnOpenPopover.addEventListener('click', function () {
 		var wcPopover = document.querySelector('.wcPopover');
-		wcPopover.openBy(wcBtnOpenPopover);
+		wcPopover.showAt(wcBtnOpenPopover);
 	});
 
 	var wcBtnClosePopover = document.querySelector('.wcBtnClosePopover');
@@ -40,7 +40,7 @@ function onload() {
 	var wcBtnOpenNewPopover = document.querySelector('.wcBtnOpenNewPopover');
 	wcBtnOpenNewPopover.addEventListener('click', function () {
 		var wcNewPopover = document.querySelector('.wcNewPopover');
-		wcNewPopover.openBy(wcBtnOpenNewPopover);
+		wcNewPopover.showAt(wcBtnOpenNewPopover);
 	});
 
 	var wcBtnOpenNewPopoverDialog11 = document.querySelector('.wcBtnOpenNewPopoverDialog11');

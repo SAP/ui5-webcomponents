@@ -199,6 +199,8 @@ The properties "noIcon" and "noCloseButton" have been renamed to "hideIcon" and 
 The property "type" has been renamed to "design".
 * **ui5-popover:** rename "noArrow" property to "hideArrow" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([39cc473](https://github.com/SAP/ui5-webcomponents/commit/39cc473))
 The property "noArrow" has been renamed to "hideArrow".
+* **ui5-popover:** rename "openBy" method to "showAt" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([59f5354](https://github.com/SAP/ui5-webcomponents/commit/59f5354))
+The public method "openBy" has been renamed to "showAt".
 * **ui5-product-switch-item:** rename "heading" and "subtitle" properties ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([2461b73](https://github.com/SAP/ui5-webcomponents/commit/2461b73))
 The properties "heading" and "subtitle" have been renamed to "titleText" and "subtitleText".
 * **ui5-radio-button:** change tag name [bca726e](https://github.com/SAP/ui5-webcomponents/commit/bca726e)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
@@ -209,8 +211,8 @@ The boolean property "wrap" has been removed in favour of string prop "wrappingT
 The "selected" property has been renamed to "checked" and the "select" event to "change".
 * **ui5-rating-indicator:** rename "maxValue" property to "max"	 ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8aaf99b](https://github.com/SAP/ui5-webcomponents/commit/8aaf99b))
 The "maxValue" property has been deprecated in favour of "max" property.
-* **ui5-responsive-popover:** rename "open" to "openBy" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([50a568b](https://github.com/SAP/ui5-webcomponents/commit/50a568b))
-The "open" method has been deprecaed in favour of "openBy". If ypu previously used "open", replace it with "openBy".
+* **ui5-responsive-popover:** rename "openBy" method to "showAt" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([59f5354](https://github.com/SAP/ui5-webcomponents/commit/59f5354))
+The public method "open" has been renamed to "showAt".
 * **ui5-segmented-button:** change tag name ([b3b42f6](https://github.com/SAP/ui5-webcomponents/commit/b3b42f6)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 The component's tag name has been renamed from "ui5-segmentedbutton" to "ui5-segmented-button".
 * **ui5-segmented-button-item:** introduce new component ([#3258](https://github.com/SAP/ui5-webcomponents/issues/3258)) ([9bd9ce4](https://github.com/SAP/ui5-webcomponents/commit/9bd9ce4)), closes [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191) [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191)
@@ -279,12 +281,13 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-messagestrip:** refactor API ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([1cb43f2](https://github.com/SAP/ui5-webcomponents/commit/1cb43f2))
 * **ui5-messagestrip:** rename property "type" to "design" ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([4208d19](https://github.com/SAP/ui5-webcomponents/commit/4208d19))
 * **ui5-popover:** rename "noArrow" property to "hideArrow" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([39cc473](https://github.com/SAP/ui5-webcomponents/commit/39cc473))
+* **ui5-popover:** rename "openBy" method to "showAt" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([59f5354](https://github.com/SAP/ui5-webcomponents/commit/59f5354))
 * **ui5-product-switch-item:** rename "heading" and "subtitle" properties ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([2461b73](https://github.com/SAP/ui5-webcomponents/commit/2461b73))
 * **ui5-radio-button:** change tag name ([bca726e](https://github.com/SAP/ui5-webcomponents/commit/bca726e)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 * **ui5-radio-button:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([724025b](https://github.com/SAP/ui5-webcomponents/commit/724025b))
 * **ui5-radio-button:** change "selected" proerty to "checked" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([677d5be](https://github.com/SAP/ui5-webcomponents/commit/677d5be))
 * **ui5-rating-indicator:** rename "maxValue" property to "max"	 ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8aaf99b](https://github.com/SAP/ui5-webcomponents/commit/8aaf99b))
-* **ui5-responsive-popover:** rename "open" to "openBy" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([50a568b](https://github.com/SAP/ui5-webcomponents/commit/50a568b))
+* **ui5-responsive-popover:** rename "openBy" method to "showAt" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([59f5354](https://github.com/SAP/ui5-webcomponents/commit/59f5354))
 * **ui5-segmented-button:** change tag name ([b3b42f6](https://github.com/SAP/ui5-webcomponents/commit/b3b42f6)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 * **ui5-shellbar:** rename "notificationCount" property to "notificationsCount" ([6495028](https://github.com/SAP/ui5-webcomponents/commit/6495028)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 * **ui5-switch:** implement "design" property ([998be76](https://github.com/SAP/ui5-webcomponents/commit/998be76)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
