@@ -2461,8 +2461,8 @@
 
 <p>Example:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-setCustomElementsScopingSuffix("demo");
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setCustomElementsScopingSuffix</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CustomElementsScope.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">setCustomElementsScopingSuffix</span><span class="p">(</span><span class="dl">"</span><span class="s2">demo</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>Then all names can only be used with the supplied suffix:</p>
@@ -2493,7 +2493,7 @@ upgraded with this version, while your code may rely on newer features.</p>
 <p>Imagine the following integration scenario of an app, using several third-party libraries, loaded on demand (and not bundled with the app):</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;body&gt;</span>
- 
+
  	<span class="c">&lt;!-- Application code, using version 1.0.1 --&gt;</span>
  	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"application-container"</span><span class="nt">&gt;</span>
  		<span class="nt">&lt;ui5-title&gt;</span>This is the new app with many third-party extensions!<span class="nt">&lt;/ui5-title&gt;</span>
@@ -2502,13 +2502,13 @@ upgraded with this version, while your code may rely on newer features.</p>
  			<span class="nt">&lt;ui5-input&gt;&lt;/ui5-input&gt;</span>
  		<span class="nt">&lt;/ui5-card&gt;</span>
  	<span class="nt">&lt;/div&gt;</span>
- 
+
  	<span class="c">&lt;!-- Code inserted by "common help" library, using version 1.2.0 --&gt;</span>
  	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"common-help-container"</span><span class="nt">&gt;</span>
  		<span class="nt">&lt;ui5-button-chlp</span> <span class="na">new-button-prop=</span><span class="s">"1"</span><span class="nt">&gt;</span>Help Menu<span class="nt">&lt;/ui5-button-chlp&gt;</span>
  		<span class="nt">&lt;ui5-input-chlp</span> <span class="na">value=</span><span class="s">"Type your question"</span><span class="nt">&gt;&lt;/ui5-input-chlp&gt;</span>
  	<span class="nt">&lt;/div&gt;</span>
- 
+
  	<span class="c">&lt;!-- Code inserted by "global footer" library, using version 1.3.0 --&gt;</span>
  	<span class="nt">&lt;footer</span> <span class="na">id=</span><span class="s">"global-footer-container"</span><span class="nt">&gt;</span>
  		<span class="nt">&lt;global-footer-main&gt;</span>
@@ -2516,7 +2516,7 @@ upgraded with this version, while your code may rely on newer features.</p>
  			<span class="nt">&lt;ui5-link-glob-foot&gt;</span>Contacts<span class="nt">&lt;/ui5-link-glob-foot&gt;</span>
  		<span class="nt">&lt;/global-footer-main&gt;</span>
  	<span class="nt">&lt;/footer&gt;</span>
- 
+
  <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
 
@@ -2536,7 +2536,7 @@ upgraded with this version, while your code may rely on newer features.</p>
 <span class="nx">setCustomElementsScopingRules</span><span class="p">({</span><span class="na">include</span><span class="p">:</span> <span class="p">[</span><span class="sr">/^ui5-/</span><span class="p">],</span> <span class="na">exclude</span><span class="p">:</span> <span class="p">[</span><span class="sr">/^ui5-my-/</span><span class="p">,</span> <span class="sr">/-test-/</span><span class="p">]});</span>
 </code></pre></div></div>
 
-<p>By default, all UI5 Web Components starting with <code class="highlighter-rouge">ui5-</code> are scoped when you call <code class="highlighter-rouge">setCustomElementsScopingSuffix</code>. 
+<p>By default, all UI5 Web Components starting with <code class="highlighter-rouge">ui5-</code> are scoped when you call <code class="highlighter-rouge">setCustomElementsScopingSuffix</code>.
 However, you have full control over which tags are scoped and which not. In the example above, tags starting with <code class="highlighter-rouge">ui5-my-</code> and tags
 having the word <code class="highlighter-rouge">-test-</code> in their name are not scoped.</p>
 
