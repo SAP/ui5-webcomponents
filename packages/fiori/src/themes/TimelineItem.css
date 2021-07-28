@@ -116,6 +116,13 @@
 	width: 1.375rem;
 }
 
+:host([layout="Horizontal"]) .ui5-tli-dummy-icon-container {
+	height: 1.375rem;
+	width: 1.375rem;
+	display: inline-block;
+	outline: none;
+}
+
 .ui5-tli-bubble {
 	background: var(--sapGroup_ContentBackground);
 	border: 1px solid var(--sapList_BorderColor);
