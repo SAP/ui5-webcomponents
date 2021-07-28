@@ -316,8 +316,8 @@ class Select extends UI5Element {
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
-		this._sTypedChars = "";
-		this._iTypingTimeoutID = -1;
+		this._typedChars = "";
+		this._typingTimeoutID = -1;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -460,40 +460,45 @@ class Select extends UI5Element {
 			this._handleEndKey(event);
 		} else if (isEnter(event)) {
 			this._handleSelectionChange();
-		} else if (event.keyCode >= 65 && event.keyCode <= 90) {
-			this._handleKeyboardNavigation(event);
-		} else {
+		} else if (isUp(event) || isDown(event)) {
 			this._handleArrowNavigation(event);
+		} else {
+			this._handleKeyboardNavigation(event);
 		}
 	}
 
 	_handleKeyboardNavigation(event) {
-		const sTypedCharacter = event.key.toLowerCase();
+		// Waiting for the actual symbol to trigger the keydown event
+		if (event.shiftKey && event.key === "Shift") {
+			return;
+		}
 
-		this._sTypedChars += sTypedCharacter;
+		const typedCharacter = event.key.toLowerCase();
+
+		this._typedChars += typedCharacter;
 
 		// We check if we have more than one characters and they are all duplicate, we set the
-		// text to be the last input character (sTypedCharacter). If not, we set the text to be
+		// text to be the last input character (typedCharacter). If not, we set the text to be
 		// the whole input string.
 
-		const sText = (/^(.)\1+$/i).test(this._sTypedChars) ? sTypedCharacter : this._sTypedChars;
+		const text = (/^(.)\1+$/i).test(this._typedChars) ? typedCharacter : this._typedChars;
 
-		clearTimeout(this._iTypingTimeoutID);
+		clearTimeout(this._typingTimeoutID);
 
-		this._iTypingTimeoutID = setTimeout(async () => {
-			this._sTypedChars = "";
-			this._iTypingTimeoutID = -1;
+		this._typingTimeoutID = setTimeout(() => {
+			this._typedChars = "";
+			this._typingTimeoutID = -1;
 		}, 1000);
 
-		this._selectTypedItem(sText);
+		this._selectTypedItem(text);
 	}
 
-	_selectTypedItem(sText) {
+	_selectTypedItem(text) {
 		const currentIndex = this._selectedIndex;
-		const oItemToSelect = this._searchNextItemByText(sText);
+		const itemToSelect = this._searchNextItemByText(text);
 
-		if (oItemToSelect) {
-			const nextIndex = this._getSelectedItemIndex(oItemToSelect);
+		if (itemToSelect) {
+			const nextIndex = this._getSelectedItemIndex(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -503,14 +508,14 @@ class Select extends UI5Element {
 		}
 	}
 
-	_searchNextItemByText(sText) {
-		let aOrderedOptions = this.options.slice(0);
-		const aOptionsAfterSelected = aOrderedOptions.splice(this._selectedIndex + 1, aOrderedOptions.length - this._selectedIndex);
-		const aOptionsBeforeSelected = aOrderedOptions.splice(0, aOrderedOptions.length - 1);
+	_searchNextItemByText(text) {
+		let orderedOptions = this.options.slice(0);
+		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
+		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
-		aOrderedOptions = aOptionsAfterSelected.concat(aOptionsBeforeSelected);
+		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return aOrderedOptions.find(o => o.textContent.toLowerCase().startsWith(sText));
+		return orderedOptions.find(option => option.textContent.toLowerCase().startsWith(text));
 	}
 
 	_handleHomeKey(event) {
@@ -580,24 +585,21 @@ class Select extends UI5Element {
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(event);
-		const isUpKey = isUp(event);
 
-		if (isDownKey || isUpKey) {
-			event.preventDefault();
-			if (isDownKey) {
-				nextIndex = this._getNextOptionIndex();
-			} else {
-				nextIndex = this._getPreviousOptionIndex();
-			}
+		event.preventDefault();
+		if (isDownKey) {
+			nextIndex = this._getNextOptionIndex();
+		} else {
+			nextIndex = this._getPreviousOptionIndex();
+		}
 
-			this._changeSelectedItem(this._selectedIndex, nextIndex);
+		this._changeSelectedItem(this._selectedIndex, nextIndex);
 
-			if (currentIndex !== this._selectedIndex) {
-				// Announce new item even if picker is opened.
-				// The aria-activedescendents attribute can't be used,
-				// because listitem elements are in different shadow dom
-				this.itemSelectionAnnounce();
-			}
+		if (currentIndex !== this._selectedIndex) {
+			// Announce new item even if picker is opened.
+			// The aria-activedescendents attribute can't be used,
+			// because listitem elements are in different shadow dom
+			this.itemSelectionAnnounce();
 		}
 	}
 
