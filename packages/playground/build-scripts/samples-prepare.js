@@ -13,6 +13,7 @@ const components = [];
  // Add new components here
 const newComponents = [
 	"StepInput",
+	"ColorPalette"
 ];
 
 packages.forEach(package => {

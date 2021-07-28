@@ -31,3 +31,13 @@
 	display: flex;
     flex-direction: column;
 }
+
+.ui5-cp-default-color-button-wrapper,
+.ui5-cp-default-color-button {
+	width: 100%;
+}
+
+.ui5-cp-separator {
+	height: 0.0625rem;
+	background: var(--sapToolbar_SeparatorColor);
+}

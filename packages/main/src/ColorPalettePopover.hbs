@@ -1,0 +1,14 @@
+<ui5-responsive-popover
+>
+	<div>
+		<ui5-color-palette 
+			?show-more-colors="{{this.showMoreColors}}"
+			?show-recent-colors="{{this.showRecentColors}}"
+			?show-default-color="{{this.defaultColor}}"
+			default-color="{{this.defaultColor}}">
+			{{#each colorPaletteColors}}
+				<ui5-color-palette-item value="{{this.value}}"></ui5-color-palette-item>
+			{{/each}}
+		</ui5-color-palette>
+	</div>
+</ui5-responsive-popover>

@@ -7,6 +7,8 @@ import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavig
 import {
 	isSpace,
 	isEnter,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
@@ -48,6 +50,28 @@ const metadata = {
 		 */
 		showMoreColors: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the user can choose the default color from a button.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 * @since 1.0.0-rc.19
+		 */
+		showDefaultColor: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the default color of the color palette
+		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
+		 * @type {CSSColor}
+		 * @private
+		 * @since 1.0.0-rc.19
+		 */
+		defaultColor: {
+			type: CSSColor,
 		},
 
 		/**
@@ -159,6 +183,12 @@ class ColorPalette extends UI5Element {
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
 
+		this._itemNavigationRecentColors = new ItemNavigation(this, {
+			getItemsCallback: () => this.recentColorsElements,
+			rowSize: 5,
+			behavior: ItemNavigationBehavior.Static,
+		});
+
 		this._recentColors = [];
 	}
 
@@ -221,6 +251,28 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	_onDefaultColorKeyDown(event) {
+		if (isDown(event)) {
+			this.colorPaletteNavigationElements[1].focus();
+			this._itemNavigation.setCurrentItem(this.colorPaletteNavigationElements[1]);
+			this._itemNavigation._focusCurrentItem();
+		} else if (isUp(event)) {
+			this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1].focus();
+		}
+	}
+
+	_onMoreColorsKeyDown(event) {
+		const index = this.colorPaletteNavigationElements.indexOf(event.target);
+		const isLast = index === this.colorPaletteNavigationElements.length;
+		if (isUp(event)) {
+			this.colorPaletteNavigationElements[index - 1].focus();
+			this._itemNavigation.setCurrentItem(this.colorPaletteNavigationElements[index - 1]);
+			this._itemNavigation._focusCurrentItem();
+		} else if (isDown(event)) {
+			isLast ? this.colorPaletteNavigationElements[0].focus : this.colorPaletteNavigationElements[index + 1].focus();
+		}
+	}
+
 	async _chooseCustomColor() {
 		const colorPicker = await this.getColorPicker();
 		this._setColor(colorPicker.color);
@@ -235,6 +287,12 @@ class ColorPalette extends UI5Element {
 	async _openMoreColorsDialog() {
 		const dialog = await this._getDialog();
 		dialog.open();
+	}
+
+	_onDefaultColorClick() {
+		if (this.defaultColor) {
+			this._setColor(this.defaultColor);
+		}
 	}
 
 	/**
@@ -270,6 +328,31 @@ class ColorPalette extends UI5Element {
 		}
 
 		return this._recentColors;
+	}
+
+	get recentColorsElements() {
+		return Array.from(this.shadowRoot.querySelectorAll(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")).filter( x => x.value !== "");
+	}
+
+	get colorPaletteNavigationElements() {
+		let navigationElements = [];
+		const rootElement = this.shadowRoot.querySelector(".ui5-cp-root");
+
+		if (this.showDefaultColor) {
+			navigationElements.push(rootElement.querySelector(".ui5-cp-default-color-button"));
+		}
+
+		navigationElements.push(this.displayedColors[0]);
+
+		if (this.showMoreColors) {
+			navigationElements.push(rootElement.querySelector(".ui5-cp-more-colors"));
+		}
+
+		if (this.showRecentColors && !!this.recentColorsElements.length) {
+			navigationElements.push(this.recentColorsElements[0]);
+		}
+
+		return navigationElements;
 	}
 
 	async _getDialog() {
