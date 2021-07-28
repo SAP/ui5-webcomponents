@@ -21,10 +21,10 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
 		 * Defines the title of the component.
+		 * <br><br>
 		 * <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		titleText: {
@@ -32,10 +32,10 @@ const metadata = {
 		},
 		/**
 		 * Defines the subtitle of the component.
+		 * <br><br>
 		 * <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		subtitleText: {
@@ -75,9 +75,12 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
 		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
+		 *
+		 * When using an illustration type, other than the default, it should be loaded in addition:
+		 * <br>
+		 * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
-		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		name: {
@@ -106,20 +109,33 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * An <code>ui5-illustrated-message</code> recommended combination of a solution-oriented message, an engaging
+ * An IllustratedMessage is a recommended combination of a solution-oriented message, an engaging
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
  * Each illistration has default internationalised title and subtitle texts. Also they can be managed with
  * <code>titleText</code> and <code>subtitleText</code> properties.
  *
- * <b>Note:</b> By default BeforeSearch illustration is loaded.
+ * То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
+ * <br><br>
+ * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
+ * <br>
+ * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js</code>
+ *
+ * <h3>Structure</h3>
+ * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
+ * <br>
+ * <ul>
+ * <li>Illustration</li>
+ * <li>Title</li>
+ * <li>Subtitle</li>
+ * <li>Actions</li>
+ * </ul>
  *
  * <h3>Usage</h3>
  * <code>ui5-illustrated-message</code> is meant to be used inside container component, for example a <code>ui5-card</code>,
  * a <code>ui5-dialog</code> or a <code>ui5-page</code>
  *
- * For the <code>ui5-illustrated-message</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>

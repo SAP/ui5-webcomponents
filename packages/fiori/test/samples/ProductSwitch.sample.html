@@ -68,7 +68,7 @@
 					popover.close();
 				} else {
 					event.preventDefault();
-					popover.openBy(event.detail.targetRef);
+					popover.showAt(event.detail.targetRef);
 				}
 			});
 		</script>
@@ -109,7 +109,7 @@
 		if (popover.opened) {
 			popover.close();
 		} else {
-			popover.openBy(event.detail.targetRef);
+			popover.showAt(event.detail.targetRef);
 		}
 	});
 </script>
