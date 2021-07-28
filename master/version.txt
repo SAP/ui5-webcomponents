@@ -1,10 +1,5 @@
-commit faf3135261c4918e6043a44bc42513b5c6b9cd50
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 28 08:33:21 2021 +0300
+commit a58a1a443c31e45a36a7950287a61d306bd71c19
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Wed Jul 28 10:49:24 2021 +0300
 
-    fix(ui5-wizard): import "InivisibleText" styles (#3552)
-    
-    Recently a "invisible text" has been added to the WIzard's template with this PR #3443 but the required styles has not been imported and the text is actually visible, right under the step (as described in the related issue). The change imports the styles and the "invisible text" is really invisible now.
-    
-    FIXES: #3551
-    Closes: #3551
+    feat(ui5-badge): update design (#3529)
