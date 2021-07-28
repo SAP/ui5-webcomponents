@@ -2,103 +2,18 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	height: 1.125em;
+	height: 1em;
 	min-width: 1.125em;
 	max-width: 100%;
-	padding: 0 0.625em;
-	color: var(--sapTextColor);
+	padding: 0 0.3125em;
+	color: var(--sapAccentColor1);
 	background: var(--sapLegendBackgroundColor1);
-	border: solid 1px var(--sapLegendColor1);
-	border-radius: 1.125em;
+	border: solid 0.0625em var(--sapAccentColor1);
+	border-radius: 0.5em;
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
 	text-align: center;
 	letter-spacing: 0.0125em;
-}
-
-/* Bagde with Icon */
-:host([__has-icon]) {
-	padding: 0 0.3125em;
-}
-
-::slotted([ui5-icon]) {
-	width: .75em;
-	height: .75em;
-}
-
-/* IE 11 specific selector */
-[ui5-badge] [ui5-icon][slot="icon"] {
-	display: flex;
-}
-
-:host([__has-icon]) .ui5-badge-text {
-	padding-left: 0.1875em;
-}
-
-/* RTL */
-:host([__has-icon]) .ui5-badge-root[dir="rtl"] .ui5-badge-text {
-	padding-left: 0;
-	padding-right: 0.1875em;
-}
-
-/* Scheme 1 */
-:host([color-scheme="1"]) {
-	background-color: var(--ui5-badge-color-scheme-1-background);
-	border-color: var(--ui5-badge-color-scheme-1-border);
-}
-
-/* Scheme 2 */
-:host([color-scheme="2"]) {
-	background-color: var(--ui5-badge-color-scheme-2-background);
-	border-color: var(--ui5-badge-color-scheme-2-border);
-}
-
-/* Scheme 3 */
-:host([color-scheme="3"]) {
-	background-color: var(--ui5-badge-color-scheme-3-background);
-	border-color: var(--ui5-badge-color-scheme-3-border);
-}
-
-/* Scheme 4 */
-:host([color-scheme="4"]) {
-	background-color: var(--ui5-badge-color-scheme-4-background);
-	border-color: var(--ui5-badge-color-scheme-4-border);
-}
-
-/* Scheme 5 */
-:host([color-scheme="5"]) {
-	background-color: var(--ui5-badge-color-scheme-5-background);
-	border-color: var(--ui5-badge-color-scheme-5-border);
-}
-
-/* Scheme 6 */
-:host([color-scheme="6"]) {
-	background-color: var(--ui5-badge-color-scheme-6-background);
-	border-color: var(--ui5-badge-color-scheme-6-border);
-}
-
-/* Scheme 7 */
-:host([color-scheme="7"]) {
-	background-color: var(--ui5-badge-color-scheme-7-background);
-	border-color: var(--ui5-badge-color-scheme-7-border);
-}
-
-/* Scheme 8 */
-:host([color-scheme="8"]) {
-	background-color: var(--ui5-badge-color-scheme-8-background);
-	border-color: var(--ui5-badge-color-scheme-8-border);
-}
-
-/* Scheme 9 */
-:host([color-scheme="9"]) {
-	background-color: var(--ui5-badge-color-scheme-9-background);
-	border-color: var(--ui5-badge-color-scheme-9-border);
-}
-
-/* Scheme 10 */
-:host([color-scheme="10"]) {
-	background-color: var(--ui5-badge-color-scheme-10-background);
-	border-color: var(--ui5-badge-color-scheme-10-border);
 }
 
 .ui5-badge-root {
@@ -113,8 +28,106 @@
 	width: 100%;
 	overflow: hidden;
 	white-space: nowrap;
+	font-weight: bold;
 	text-overflow: ellipsis;
 	text-transform: uppercase;
 	letter-spacing: inherit;
 	font-size: var(--ui5-badge-font-size); /* origin from --sapFontSmallSize (0.75rem) */
+}
+
+:host([_icon-only]) {
+	padding: 0 0.1875em;
+}
+
+::slotted([ui5-icon]) {
+	width: 0.75em;
+	height: 0.75em;
+	min-width: 0.75em;
+	min-height: 0.75em;
+	color: inherit;
+}
+
+/* IE 11 specific selector */
+[ui5-badge] [ui5-icon][slot="icon"] {
+	display: flex;
+}
+
+:host([_has-icon]) .ui5-badge-text {
+	padding-left: 0.125em;
+}
+
+/* RTL */
+:host([_has-icon]) .ui5-badge-root[dir="rtl"] .ui5-badge-text {
+	padding-left: 0;
+	padding-right: 0.125em;
+}
+
+/* Scheme 1 */
+:host([color-scheme="1"]) {
+	background-color: var(--ui5-badge-color-scheme-1-background);
+	border-color: var(--ui5-badge-color-scheme-1-border);
+	color: var(--ui5-badge-color-scheme-1-color);
+}
+
+/* Scheme 2 */
+:host([color-scheme="2"]) {
+	background-color: var(--ui5-badge-color-scheme-2-background);
+	border-color: var(--ui5-badge-color-scheme-2-border);
+	color: var(--ui5-badge-color-scheme-2-color);
+}
+
+/* Scheme 3 */
+:host([color-scheme="3"]) {
+	background-color: var(--ui5-badge-color-scheme-3-background);
+	border-color: var(--ui5-badge-color-scheme-3-border);
+	color: var(--ui5-badge-color-scheme-3-color);
+}
+
+/* Scheme 4 */
+:host([color-scheme="4"]) {
+	background-color: var(--ui5-badge-color-scheme-4-background);
+	border-color: var(--ui5-badge-color-scheme-4-border);
+	color: var(--ui5-badge-color-scheme-4-color);
+}
+
+/* Scheme 5 */
+:host([color-scheme="5"]) {
+	background-color: var(--ui5-badge-color-scheme-5-background);
+	border-color: var(--ui5-badge-color-scheme-5-border);
+	color: var(--ui5-badge-color-scheme-5-color);
+}
+
+/* Scheme 6 */
+:host([color-scheme="6"]) {
+	background-color: var(--ui5-badge-color-scheme-6-background);
+	border-color: var(--ui5-badge-color-scheme-6-border);
+	color: var(--ui5-badge-color-scheme-6-color);
+}
+
+/* Scheme 7 */
+:host([color-scheme="7"]) {
+	background-color: var(--ui5-badge-color-scheme-7-background);
+	border-color: var(--ui5-badge-color-scheme-7-border);
+	color: var(--ui5-badge-color-scheme-7-color);
+}
+
+/* Scheme 8 */
+:host([color-scheme="8"]) {
+	background-color: var(--ui5-badge-color-scheme-8-background);
+	border-color: var(--ui5-badge-color-scheme-8-border);
+	color: var(--ui5-badge-color-scheme-8-color);
+}
+
+/* Scheme 9 */
+:host([color-scheme="9"]) {
+	background-color: var(--ui5-badge-color-scheme-9-background);
+	border-color: var(--ui5-badge-color-scheme-9-border);
+	color: var(--ui5-badge-color-scheme-9-color);
+}
+
+/* Scheme 10 */
+:host([color-scheme="10"]) {
+	background-color: var(--ui5-badge-color-scheme-10-background);
+	border-color: var(--ui5-badge-color-scheme-10-border);
+	color: var(--ui5-badge-color-scheme-10-color);
 }
