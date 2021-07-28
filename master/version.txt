@@ -1,5 +1,9 @@
-commit e335f52f49b5147d2caf711101840a5bdcf77e5d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 27 14:45:57 2021 +0300
+commit 86f03331dc281bcd369bfa794a263cddbe67f171
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Wed Jul 28 08:26:49 2021 +0300
 
-    docs: ClorPalette event properly documented (#3544)
+    refactor(ui5-card): header slot is added (#3490)
+    
+    Extract the Card's header part as a separate component with all the related API, called CardHeader and introduce new slot "header" in the Card.
+    
+    BREAKING CHANGE: titleText, subtitleText, status, headerInteractive properties, action and avatar slots, and header-click events are not available anymore. Instead, use the newly created CardHeader component, where all these properties are available ("headerInteractive" becomes "interactive" and "header-click" becomes "click"). In addition, the Card now has a "header" slot, for which you can use the CardHeader.
