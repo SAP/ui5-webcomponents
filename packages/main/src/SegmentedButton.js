@@ -123,7 +123,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.parentNode, this._handleResizeBound);
+		ResizeHandler.register(this, this._handleResizeBound);
 	}
 
 	onExitDOM() {
