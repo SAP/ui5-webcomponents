@@ -1774,6 +1774,8 @@
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/IllustratedMessage/" class="navigation-list-link active">
                         <div class="component-name">Illustrated Message</div>
                         
+                          <span class="new-tag">NEW</span>
+                        
                       </a>
                       
                     </li>
@@ -2037,8 +2039,6 @@
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/StepInput/" class="navigation-list-link">
                         <div class="component-name">Step Input</div>
-                        
-                          <span class="new-tag">NEW</span>
                         
                       </a>
                       
@@ -2520,15 +2520,17 @@
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3> An <code>ui5-illustrated-message</code> recommended combination of a solution-oriented message, an engaging illustration, and conversational tone to better communicate an empty or a success state than just show a message alone.
+          <h3 class="comment-api-title">Overview</h3> An IllustratedMessage is a recommended combination of a solution-oriented message, an engaging illustration, and conversational tone to better communicate an empty or a success state than just show a message alone.
 
 Each illistration has default internationalised title and subtitle texts. Also they can be managed with <code>titleText</code> and <code>subtitleText</code> properties.
 
-<b>Note:</b> By default BeforeSearch illustration is loaded.
+То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations. <br><br> <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example: <br> <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js</code>
+
+<h3>Structure</h3> The IllustratedMessage consists of the following elements, which are displayed below each other in the following order: <br> <ul> <li>Illustration</li> <li>Title</li> <li>Subtitle</li> <li>Actions</li> </ul>
 
 <h3>Usage</h3> <code>ui5-illustrated-message</code> is meant to be used inside container component, for example a <code>ui5-card</code>, a <code>ui5-dialog</code> or a <code>ui5-page</code>
 
-For the <code>ui5-illustrated-message</code> <h3>ES6 Module Import</h3>
+<h3>ES6 Module Import</h3>
 
 <code>import @ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
           <section class="component-api space-top">
@@ -2553,7 +2555,8 @@ For the <code>ui5-illustrated-message</code> <h3>ES6 Module Import</h3>
                         <div class="cell api-table-content-cell">&quot;BeforeSearch&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the illustration name that will be displayed in the component. <br><br> Available illustrations are: <ul> <li><code>BeforeSearch</code></li> <li><code>NoActivities</code></li> <li><code>NoData</code></li> <li><code>NoEntries</code></li> <li><code>NoMail</code></li> <li><code>NoNotifications</code></li> <li><code>NoSavedItems</code></li> <li><code>NoSearchResults</code></li> <li><code>NoTasks</code></li> <li><code>UnableToLoad</code></li> <li><code>UnableToUpload</code></li> </ul> <br><br> <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+            
+            When using an illustration type, other than the default, it should be loaded in addition: <br> <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2565,8 +2568,7 @@ For the <code>ui5-illustrated-message</code> <h3>ES6 Module Import</h3>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the subtitle of the component. <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                            Defines the subtitle of the component. <br><br> <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2578,8 +2580,7 @@ For the <code>ui5-illustrated-message</code> <h3>ES6 Module Import</h3>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the title of the component. <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                            Defines the title of the component. <br><br> <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
                         </div>
                       </div>
             

@@ -1,5 +1,5 @@
-commit 59eb38eeb8023137608c767f034b46852bcfd94d
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Jul 28 10:58:46 2021 +0300
+commit 55f6f53fa67981a422019b40867d7df79ee5ec65
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Jul 28 13:42:01 2021 +0300
 
-    chore: remove unused rollup plugins (#3472)
+    fix(ui5-illustrated-message): documentation and missing parameters (#3553)
