@@ -77,8 +77,3 @@ bdi {
 	margin-right: .125rem;
 	margin-left: 0;
 }
-
-.ui5-label-root:focus {
-	outline-offset: -1px;
-	outline: 1px dotted var(--sapContent_FocusColor);
-}

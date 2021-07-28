@@ -30,10 +30,12 @@
 
         {{#if _endsWithCurrentLocationLabel}}
         <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelClick}}">
-            <ui5-label
-                aria-current="page">
-                {{_currentLocationText}}
-            </ui5-label>
+            <span id={{this._id}}-labelWrapper>
+                <ui5-label
+                    aria-current="page">
+                    {{_currentLocationText}}
+                </ui5-label>
+            </span>
         </li>
         {{/if}}
     </ol>

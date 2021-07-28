@@ -24,6 +24,11 @@
     flex: 1 1 auto;
 }
 
+.ui5-breadcrumbs-current-location > span:focus {
+	outline-offset: -1px;
+	outline: 1px dotted var(--sapContent_FocusColor);
+}
+
 .ui5-breadcrumbs-overflow-opener[hidden] {
     display: none
 }

@@ -186,6 +186,21 @@ class Breadcrumbs extends UI5Element {
 		this._breadcrumbItemWidths = new WeakMap();
 		// the width of the interactive element that opens the overflow
 		this._overflowLinkWidth = 0;
+
+		this._labelFocusAdaptor = {
+			id: `${this._id}-labelWrapper`,
+			getlabelWrapper: this.getCurrentLocationLabelWrapper.bind(this),
+			set _tabIndex(value) {
+				const wrapper = this.getlabelWrapper();
+				wrapper && (wrapper.setAttribute("tabindex", value));
+			},
+			get _tabIndex() {
+				const wrapper = this.getlabelWrapper();
+				if (wrapper) {
+					return wrapper.getAttribute("tabindex");
+				}
+			}
+		};
 	}
 
 	onInvalidation(changeInfo) {
@@ -228,20 +243,24 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	_getFocusableItems() {
-		const items = this._links,
-			currentLocationLabel = this._currentLocationLabel;
+		const items = this._links;
 
 		if (!this._isOverflowEmpty) {
 			items.unshift(this._overflowLink);
 		}
-		if (currentLocationLabel) {
-			items.push(currentLocationLabel);
+
+		if (this._endsWithCurrentLocationLabel) {
+			items.push(this._labelFocusAdaptor);
 		}
 		return items;
 	}
 
 	_onfocusin(event) {
-		this._itemNavigation.setCurrentItem(event.target);
+		const target = event.target,
+			labelWrapper = this.getCurrentLocationLabelWrapper(),
+			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target
+
+		this._itemNavigation.setCurrentItem(currentItem);
 	}
 
 	_onkeydown(event) {
@@ -271,7 +290,7 @@ class Breadcrumbs extends UI5Element {
 			label = this._currentLocationLabel;
 
 		links.forEach(link => {
-			const item = items.find(x => x._id.concat("-link") === link.id);
+			const item = items.find(x => `${x._id}-link` === link.id);
 			map.set(item, this._getElementWidth(link));
 		});
 
@@ -339,7 +358,7 @@ class Breadcrumbs extends UI5Element {
 	_onLinkClick(event) {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
-			item = items.find(x => x._id.concat("-link") === link.id);
+			item = items.find(x => `${x._id}-link` === link.id);
 		this.fireEvent("item-click", { item });
 	}
 
@@ -352,7 +371,7 @@ class Breadcrumbs extends UI5Element {
 	_onOverflowListItemSelect(event) {
 		const listItem = event.detail.item,
 			items = this.getSlottedNodes("items"),
-			item = items.find(x => x._id.concat("-li") === listItem.id);
+			item = items.find(x => `${x._id}-li` === listItem.id);
 
 		window.open(item.href, item.target || "_self", "noopener,noreferrer");
 		this.responsivePopover.close();
@@ -410,6 +429,10 @@ class Breadcrumbs extends UI5Element {
 
 	get _currentLocationLabel() {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location ui5-label");
+	}
+
+	getCurrentLocationLabelWrapper() {
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
 	}
 
 	/**

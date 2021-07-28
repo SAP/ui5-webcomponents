@@ -71,12 +71,6 @@ const metadata = {
 		"for": {
 			type: String,
 		},
-
-		_tabIndex: {
-			type: String,
-			defaultValue: undefined,
-			noAttribute: true,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
 		/**
