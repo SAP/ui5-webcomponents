@@ -691,7 +691,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.openBy(this);
+			this.Suggestions.showAt(this);
 			this.isRespPopoverOpen = true;
 		}
 	}
@@ -813,7 +813,7 @@ class Input extends UI5Element {
 
 		if (popover) {
 			this._isPopoverOpen = true;
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 
