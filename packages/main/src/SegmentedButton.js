@@ -127,7 +127,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {
@@ -243,7 +243,7 @@ class SegmentedButton extends UI5Element {
 			await this.measureItemsWidth();
 		}
 
-		const parentWidth = this.parentNode.offsetWidth;
+		const parentWidth = this.parentNode ? this.parentNode.offsetWidth : 0;
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.items.length}px`;
