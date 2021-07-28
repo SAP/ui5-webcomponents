@@ -196,10 +196,8 @@ class Breadcrumbs extends UI5Element {
 			},
 			get _tabIndex() {
 				const wrapper = this.getlabelWrapper();
-				if (wrapper) {
-					return wrapper.getAttribute("tabindex");
-				}
-			}
+				return (wrapper) ? wrapper.getAttribute("tabindex") : undefined;
+			},
 		};
 	}
 
@@ -258,7 +256,7 @@ class Breadcrumbs extends UI5Element {
 	_onfocusin(event) {
 		const target = event.target,
 			labelWrapper = this.getCurrentLocationLabelWrapper(),
-			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target
+			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target;
 
 		this._itemNavigation.setCurrentItem(currentItem);
 	}
