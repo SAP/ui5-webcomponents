@@ -1,9 +1,5 @@
-commit 071262f3b076ab865a3c113074ac60c3c40cab04
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 29 16:36:07 2021 +0300
+commit ba8551ff0f3bd17c547491c9705433a7cc81f069
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jul 29 17:54:33 2021 +0300
 
-    refactor(ui5-card-header): rename "headerInteractive" to "interactive" (#3562)
-    
-    As we extracted all header related properties from the Card component to a new CardHeader and the "headerInteractive" property now belongs to CardHeader component, we no longer have to use "header" in the name, but call it just "interactive" - same as we did with the "header-click" event, that is now called "click".
-    
-    BREAKING CHANGE: The CardHeader's property "headerInteractive" has been renamed to "interactive"
+    chore(ui5-illustrated-message): import default illustration (#3570)
