@@ -1,7 +1,7 @@
-commit 6d9946118e149e43be2e3df83cea8baa58c1bce8
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Jul 29 12:39:38 2021 +0300
+commit 2115c210c1c8af6efb97ff7f98871f768c8a6521
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 29 14:24:06 2021 +0300
 
-    fix(ui5-calendar): opening month/year pickers with space now works correct (#3561)
+    fix(ui5-input): additionalText in suggestions (#3563)
     
-    Fixes: #3555
+    The additional-text used to be broken for the SuggestionItem due to typos in the template file. Not its fixed within the template
