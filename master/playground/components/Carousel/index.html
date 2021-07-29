@@ -2508,7 +2508,13 @@
 
 	<div class="snippet">
 		<ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="2">
-			<ui5-card title-text="Activities" subtitle-text="For Today" class="medium">
+			<ui5-card class="medium">
+				<ui5-card-header
+					slot="header"
+					title-text="Activities"
+					subtitle-text="For Today"
+				></ui5-card-header>
+
 				<ui5-timeline>
 					<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 					<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
@@ -2520,8 +2526,14 @@
 				</ui5-timeline>
 			</ui5-card>
 
-			<ui5-card title-text="David Willams" subtitle-text="Sales Manager" class="small">
-				<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+			<ui5-card class="small">
+				<ui5-card-header
+					slot="header"
+					title-text="David Willams"
+					subtitle-text="Sales Manager"
+				>
+					<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+				</ui5-card-header>
 
 				<ui5-list separators="Inner" class="content-padding">
 					<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
@@ -2530,8 +2542,15 @@
 				</ui5-list>
 			</ui5-card>
 
-			<ui5-card title-text="Team Dolphins" subtitle-text="Direct Reports" status="1 of 2" class="medium">
-				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-card class="medium">
+				<ui5-card-header
+					slot="header"
+					title-text="Team Dolphins"
+					subtitle-text="Direct Reports"
+					status="1 of 2"
+				>
+					<ui5-icon name="group" slot="avatar"></ui5-icon>
+				</ui5-card-header>
 
 				<div class="card-content">
 					<ui5-list separators="None" class="card-content-child" style="width: 100%">
@@ -2539,12 +2558,18 @@
 						<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
 						<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 					</ui5-list>
-
 				</div>
 			</ui5-card>
 
-			<ui5-card title-text="Team Bears" header-interactive subtitle-text="Direct Reports" status="2 of 2" class="medium">
-				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-card class="medium">
+				<ui5-card-header
+					slot="header"
+					title-text="Team Bears"
+					subtitle-text="Direct Reports"
+					interactive
+					status="2 of 2">
+						<ui5-icon name="group" slot="avatar"></ui5-icon>
+				</ui5-card-header>
 
 				<div class="card-content">
 					<ui5-list separators="None" class="card-content-child" style="width: 100%">
@@ -2557,52 +2582,77 @@
 		</ui5-carousel>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-carousel</span> <span class="na">items-per-page-s=</span><span class="s">"1"</span> <span class="na">items-per-page-m=</span><span class="s">"2"</span> <span class="na">items-per-page-l=</span><span class="s">"2"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-card</span> <span class="na">title-text=</span><span class="s">"Activities"</span> <span class="na">subtitle-text=</span><span class="s">"For Today"</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
-			<span class="nt">&lt;ui5-timeline&gt;</span>
-				<span class="nt">&lt;ui5-timeline-item</span> <span class="na">id=</span><span class="s">"test-item"</span> <span class="na">title-text=</span><span class="s">"called"</span> <span class="na">timestamp=</span><span class="s">"1487583000000"</span> <span class="na">icon=</span><span class="s">"phone"</span> <span class="na">name=</span><span class="s">"John Smith"</span> <span class="na">name-clickable</span><span class="nt">&gt;&lt;/ui5-timeline-item&gt;</span>
-				<span class="nt">&lt;ui5-timeline-item</span> <span class="na">title-text=</span><span class="s">"Weekly Sync - CP Design"</span> <span class="na">timestamp=</span><span class="s">"1517349600000"</span> <span class="na">icon=</span><span class="s">"calendar"</span><span class="nt">&gt;</span>
-					MR SOF02 2.43
-				<span class="nt">&lt;/ui5-timeline-item&gt;</span>
-				<span class="nt">&lt;ui5-timeline-item</span> <span class="na">title-text=</span><span class="s">"Video Converence Call - UI5"</span> <span class="na">timestamp=</span><span class="s">"1485813600000"</span> <span class="na">icon=</span><span class="s">"calendar"</span><span class="nt">&gt;</span>
-					Online meeting
-				<span class="nt">&lt;/ui5-timeline-item&gt;</span>
-			<span class="nt">&lt;/ui5-timeline&gt;</span>
-		<span class="nt">&lt;/ui5-card&gt;</span>
+	<span class="nt">&lt;ui5-card</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-card-header</span>
+			<span class="na">slot=</span><span class="s">"header"</span>
+			<span class="na">title-text=</span><span class="s">"Activities"</span>
+			<span class="na">subtitle-text=</span><span class="s">"For Today"</span>
+		<span class="nt">&gt;&lt;/ui5-card-header&gt;</span>
 
-		<span class="nt">&lt;ui5-card</span> <span class="na">title-text=</span><span class="s">"David Willams"</span> <span class="na">subtitle-text=</span><span class="s">"Sales Manager"</span> <span class="na">class=</span><span class="s">"small"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-timeline&gt;</span>
+			<span class="nt">&lt;ui5-timeline-item</span> <span class="na">id=</span><span class="s">"test-item"</span> <span class="na">title-text=</span><span class="s">"called"</span> <span class="na">timestamp=</span><span class="s">"1487583000000"</span> <span class="na">icon=</span><span class="s">"phone"</span> <span class="na">name=</span><span class="s">"John Smith"</span> <span class="na">name-clickable</span><span class="nt">&gt;&lt;/ui5-timeline-item&gt;</span>
+			<span class="nt">&lt;ui5-timeline-item</span> <span class="na">title-text=</span><span class="s">"Weekly Sync - CP Design"</span> <span class="na">timestamp=</span><span class="s">"1517349600000"</span> <span class="na">icon=</span><span class="s">"calendar"</span><span class="nt">&gt;</span>
+				MR SOF02 2.43
+			<span class="nt">&lt;/ui5-timeline-item&gt;</span>
+			<span class="nt">&lt;ui5-timeline-item</span> <span class="na">title-text=</span><span class="s">"Video Converence Call - UI5"</span> <span class="na">timestamp=</span><span class="s">"1485813600000"</span> <span class="na">icon=</span><span class="s">"calendar"</span><span class="nt">&gt;</span>
+				Online meeting
+			<span class="nt">&lt;/ui5-timeline-item&gt;</span>
+		<span class="nt">&lt;/ui5-timeline&gt;</span>
+	<span class="nt">&lt;/ui5-card&gt;</span>
+
+	<span class="nt">&lt;ui5-card</span> <span class="na">class=</span><span class="s">"small"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-card-header</span>
+			<span class="na">slot=</span><span class="s">"header"</span>
+			<span class="na">title-text=</span><span class="s">"David Willams"</span>
+			<span class="na">subtitle-text=</span><span class="s">"Sales Manager"</span>
+		<span class="nt">&gt;</span>
 			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"../../../assets/images/avatars/man_avatar_1.png"</span> <span class="na">slot=</span><span class="s">"avatar"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;/ui5-card-header&gt;</span>
 
-			<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"Inner"</span> <span class="na">class=</span><span class="s">"content-padding"</span><span class="nt">&gt;</span>
-				<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"competitor"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Personal Development<span class="nt">&lt;/ui5-li&gt;</span>
-				<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"wallet"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Finance<span class="nt">&lt;/ui5-li&gt;</span>
-				<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"collaborate"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Communications Skills<span class="nt">&lt;/ui5-li&gt;</span>
+		<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"Inner"</span> <span class="na">class=</span><span class="s">"content-padding"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"competitor"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Personal Development<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"wallet"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Finance<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"collaborate"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Communications Skills<span class="nt">&lt;/ui5-li&gt;</span>
+		<span class="nt">&lt;/ui5-list&gt;</span>
+	<span class="nt">&lt;/ui5-card&gt;</span>
+
+	<span class="nt">&lt;ui5-card</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-card-header</span>
+			<span class="na">slot=</span><span class="s">"header"</span>
+			<span class="na">title-text=</span><span class="s">"Team Dolphins"</span>
+			<span class="na">subtitle-text=</span><span class="s">"Direct Reports"</span>
+			<span class="na">status=</span><span class="s">"1 of 2"</span>
+		<span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"group"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+		<span class="nt">&lt;/ui5-card-header&gt;</span>
+
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"card-content"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"card-content-child"</span> <span class="na">style=</span><span class="s">"width: 100%"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_1.png"</span> <span class="na">description=</span><span class="s">"User Researcher"</span><span class="nt">&gt;</span>Alain Chevalier<span class="nt">&lt;/ui5-li&gt;</span>
+				<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_1.png"</span> <span class="na">description=</span><span class="s">"Artist"</span><span class="nt">&gt;</span>Monique Legrand<span class="nt">&lt;/ui5-li&gt;</span>
+				<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_2.png"</span> <span class="na">description=</span><span class="s">"UX Specialist"</span><span class="nt">&gt;</span>Michael Adams<span class="nt">&lt;/ui5-li&gt;</span>
 			<span class="nt">&lt;/ui5-list&gt;</span>
-		<span class="nt">&lt;/ui5-card&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/ui5-card&gt;</span>
 
-		<span class="nt">&lt;ui5-card</span> <span class="na">title-text=</span><span class="s">"Team Dolphins"</span> <span class="na">subtitle-text=</span><span class="s">"Direct Reports"</span> <span class="na">status=</span><span class="s">"1 of 2"</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
-			<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"group"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+	<span class="nt">&lt;ui5-card</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-card-header</span>
+			<span class="na">slot=</span><span class="s">"header"</span>
+			<span class="na">title-text=</span><span class="s">"Team Bears"</span>
+			<span class="na">subtitle-text=</span><span class="s">"Direct Reports"</span>
+			<span class="na">interactive</span>
+			<span class="na">status=</span><span class="s">"2 of 2"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"group"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+		<span class="nt">&lt;/ui5-card-header&gt;</span>
 
-			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"card-content"</span><span class="nt">&gt;</span>
-				<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"card-content-child"</span> <span class="na">style=</span><span class="s">"width: 100%"</span><span class="nt">&gt;</span>
-					<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_1.png"</span> <span class="na">description=</span><span class="s">"User Researcher"</span><span class="nt">&gt;</span>Alain Chevalier<span class="nt">&lt;/ui5-li&gt;</span>
-					<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_1.png"</span> <span class="na">description=</span><span class="s">"Artist"</span><span class="nt">&gt;</span>Monique Legrand<span class="nt">&lt;/ui5-li&gt;</span>
-					<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_2.png"</span> <span class="na">description=</span><span class="s">"UX Specialist"</span><span class="nt">&gt;</span>Michael Adams<span class="nt">&lt;/ui5-li&gt;</span>
-				<span class="nt">&lt;/ui5-list&gt;</span>
-
-			<span class="nt">&lt;/div&gt;</span>
-		<span class="nt">&lt;/ui5-card&gt;</span>
-
-		<span class="nt">&lt;ui5-card</span> <span class="na">title-text=</span><span class="s">"Team Bears"</span> <span class="na">header-interactive</span> <span class="na">subtitle-text=</span><span class="s">"Direct Reports"</span> <span class="na">status=</span><span class="s">"2 of 2"</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
-			<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"group"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-
-			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"card-content"</span><span class="nt">&gt;</span>
-				<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"card-content-child"</span> <span class="na">style=</span><span class="s">"width: 100%"</span><span class="nt">&gt;</span>
-					<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_2.png"</span> <span class="na">description=</span><span class="s">"Software Architect"</span><span class="nt">&gt;</span>Richard Wilson<span class="nt">&lt;/ui5-li&gt;</span>
-					<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_3.png"</span> <span class="na">description=</span><span class="s">"Visual Designer"</span><span class="nt">&gt;</span>Elena Petrova<span class="nt">&lt;/ui5-li&gt;</span>
-					<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_3.png"</span> <span class="na">description=</span><span class="s">"Quality Specialist"</span><span class="nt">&gt;</span>John Miller<span class="nt">&lt;/ui5-li&gt;</span>
-				<span class="nt">&lt;/ui5-list&gt;</span>
-			<span class="nt">&lt;/div&gt;</span>
-		<span class="nt">&lt;/ui5-card&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"card-content"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"card-content-child"</span> <span class="na">style=</span><span class="s">"width: 100%"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_2.png"</span> <span class="na">description=</span><span class="s">"Software Architect"</span><span class="nt">&gt;</span>Richard Wilson<span class="nt">&lt;/ui5-li&gt;</span>
+				<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_3.png"</span> <span class="na">description=</span><span class="s">"Visual Designer"</span><span class="nt">&gt;</span>Elena Petrova<span class="nt">&lt;/ui5-li&gt;</span>
+				<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_3.png"</span> <span class="na">description=</span><span class="s">"Quality Specialist"</span><span class="nt">&gt;</span>John Miller<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;/ui5-list&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/ui5-card&gt;</span>
 <span class="nt">&lt;/ui5-carousel&gt;</span>
 	</code></pre></figure></pre>
 </section>

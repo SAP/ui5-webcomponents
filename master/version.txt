@@ -1,25 +1,9 @@
-commit c29b9efcf8b18f4a1c3a6b0429c07af5e66802d2
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Jul 29 15:19:43 2021 +0300
+commit 071262f3b076ab865a3c113074ac60c3c40cab04
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 29 16:36:07 2021 +0300
 
-    fix(ui5-input): fire change on the initial tab press after suggestion is selected (#3514)
+    refactor(ui5-card-header): rename "headerInteractive" to "interactive" (#3562)
     
-    * Fix change firing on the initial tab press
+    As we extracted all header related properties from the Card component to a new CardHeader and the "headerInteractive" property now belongs to CardHeader component, we no longer have to use "header" in the name, but call it just "interactive" - same as we did with the "header-click" event, that is now called "click".
     
-    * Minor error fixes
-    
-    * Code refactoring
-    
-    * Minor linting fix
-    
-    * Retrigger tests
-    
-    * Fix firing of change after shift+tab is used for focus inwq
-    
-    * Retrigger tests
-    
-    * Retrigger tests
-    
-    * Avoid double firing of the change event
-    
-    * Add test
+    BREAKING CHANGE: The CardHeader's property "headerInteractive" has been renamed to "interactive"
