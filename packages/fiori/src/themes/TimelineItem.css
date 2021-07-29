@@ -49,8 +49,8 @@
 }
 
 /* Line when no Icon is provided */
-:host([layout="Vertical"]):not([icon]) .ui5-tli-indicator::before {
-	bottom: -2.125rem;
+:host([layout="Vertical"]:not([icon])) .ui5-tli-indicator::before {
+	bottom: -1.625rem;
 	top: 1.875rem;
 }
 
