@@ -74,11 +74,11 @@ const metadata = {
 		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
-		 * it have to be loaded separately (<code>import @ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
+		 * it have to be loaded separately (<code>import "@ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
 		 *
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
-		 * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
+		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -91,7 +91,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
 		 * Defines the component actions.
-		 * @type {sap.ui.webcomponents.main.Button[]}
+		 * @type {sap.ui.webcomponents.main.IButton[]}
 		 * @slot actions
 		 * @public
 		 */
@@ -113,14 +113,14 @@ const metadata = {
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
- * Each illistration has default internationalised title and subtitle texts. Also they can be managed with
+ * Each illustration has default internationalised title and subtitle texts. Also they can be managed with
  * <code>titleText</code> and <code>subtitleText</code> properties.
  *
  * То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
  * <br><br>
  * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
- * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"</code>
  *
  * <h3>Structure</h3>
  * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
@@ -138,7 +138,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
  *
  * @constructor
  * @author SAP SE
