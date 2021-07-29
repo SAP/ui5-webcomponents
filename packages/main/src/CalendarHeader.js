@@ -117,7 +117,17 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onMonthButtonKeyDown(event) {
-		if (isSpace(event) || isEnter(event)) {
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+
+		if (isEnter(event)) {
+			this.fireEvent("show-month-press", event);
+		}
+	}
+
+	onMonthButtonKeyUp(event) {
+		if (isSpace(event)) {
 			event.preventDefault();
 			this.fireEvent("show-month-press", event);
 		}
@@ -128,7 +138,17 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onYearButtonKeyDown(event) {
-		if (isSpace(event) || isEnter(event)) {
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+
+		if (isEnter(event)) {
+			this.fireEvent("show-year-press", event);
+		}
+	}
+
+	onYearButtonKeyUp(event) {
+		if (isSpace(event)) {
 			event.preventDefault();
 			this.fireEvent("show-year-press", event);
 		}
