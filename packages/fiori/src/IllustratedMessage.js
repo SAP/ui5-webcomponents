@@ -6,6 +6,7 @@ import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
+import "./illustrations/BeforeSearch.js";
 
 // Styles
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
