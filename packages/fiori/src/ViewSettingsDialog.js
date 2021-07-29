@@ -274,7 +274,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Closes the dialog.
 	 */
 	close() {
-		debugger
 		this._dialog && this._dialog.close();
 	}
 
