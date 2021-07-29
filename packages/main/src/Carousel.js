@@ -427,7 +427,7 @@ class Carousel extends UI5Element {
 
 	get _getLastFocusedActivePageIndex() {
 		for (let i = 0; i < this._orderOfLastFocusedPages.length; i++) {
-			let pageIndex = this._orderOfLastFocusedPages[i];
+			const pageIndex = this._orderOfLastFocusedPages[i];
 
 			if (this.isItemInViewport(pageIndex)) {
 				return pageIndex;
