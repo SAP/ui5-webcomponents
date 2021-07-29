@@ -1,7 +1,25 @@
-commit 2115c210c1c8af6efb97ff7f98871f768c8a6521
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 29 14:24:06 2021 +0300
+commit c29b9efcf8b18f4a1c3a6b0429c07af5e66802d2
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Jul 29 15:19:43 2021 +0300
 
-    fix(ui5-input): additionalText in suggestions (#3563)
+    fix(ui5-input): fire change on the initial tab press after suggestion is selected (#3514)
     
-    The additional-text used to be broken for the SuggestionItem due to typos in the template file. Not its fixed within the template
+    * Fix change firing on the initial tab press
+    
+    * Minor error fixes
+    
+    * Code refactoring
+    
+    * Minor linting fix
+    
+    * Retrigger tests
+    
+    * Fix firing of change after shift+tab is used for focus inwq
+    
+    * Retrigger tests
+    
+    * Retrigger tests
+    
+    * Avoid double firing of the change event
+    
+    * Add test

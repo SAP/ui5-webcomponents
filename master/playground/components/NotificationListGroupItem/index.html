@@ -2464,6 +2464,12 @@
 
 <div class="control-tag">&lt;ui5-li-notification-group&gt;</div>
 
+<style>
+	ui5-avatar:not(:defined) {
+		visibility: hidden;
+	}
+</style>
+
 <!--Basic -->
 <section>
 	<h3>NotificationListGroupItem</h3>
@@ -2786,7 +2792,10 @@
 				<span class="na">heading=</span><span class="s">"New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."</span>
 			<span class="nt">&gt;</span>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<span class="nt">&lt;ui5-avatar</span> <span class="na">image=</span><span class="s">"./img/man_avatar_1.png"</span> <span class="na">size=</span><span class="s">"XS"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-avatar&gt;</span>
+				<span class="nt">&lt;ui5-avatar</span> <span class="na">slot=</span><span class="s">"avatar"</span> <span class="na">size=</span><span class="s">"XS"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./img/man_avatar_1.png"</span> <span class="nt">/&gt;</span>
+				<span class="nt">&lt;/ui5-avatar&gt;</span>
+
 				<span class="nt">&lt;span</span> <span class="na">slot=</span><span class="s">"footnotes"</span><span class="nt">&gt;</span>John Doe<span class="nt">&lt;/span&gt;</span>
 				<span class="nt">&lt;span</span> <span class="na">slot=</span><span class="s">"footnotes"</span><span class="nt">&gt;</span>2 Days<span class="nt">&lt;/span&gt;</span>
 
