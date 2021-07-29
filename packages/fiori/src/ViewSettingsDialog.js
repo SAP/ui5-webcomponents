@@ -40,6 +40,7 @@ const metadata = {
 		 sortDescending: {
 			type: Boolean,
 		},
+
 		/**
 		 * Keeps recently focused list in order to focus it on next dialog open.
 		 *
@@ -48,8 +49,8 @@ const metadata = {
 		 */
 		 _recentlyFocused: {
 			type: Object,
-
 		},
+
 		/**
 		 * Stores settings of the dialog before the first open.
 		 *
@@ -59,6 +60,7 @@ const metadata = {
 		 _initialSettings: {
 			type: Object,
 		},
+
 		/**
 		 * Stores settings of the dialog after confirmation.
 		 *
@@ -68,6 +70,7 @@ const metadata = {
 		 _confirmedSettings: {
 			type: Object,
 		},
+
 		/**
 		 * Stores current settings of the dialog.
 		 *
@@ -86,7 +89,6 @@ const metadata = {
 		 * @public
 		 */
 		 "sortItems": {
-			propertyName: "sortItems",
 			type: HTMLElement,
 		},
 	},
@@ -100,23 +102,25 @@ const metadata = {
 		 * @param {String} sortBy The current sort by selected.
 		 * @public
 		 */
-		"confirm": {
+		confirm: {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
 			},
 		},
+
 		/**
 		 * Fired when Cancel button is activated.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
-		 * @param {Object} settings The current settings.
+		 * @param {String} sortOrder The current sort order selected.
+		 * @param {String} sortBy The current sort by selected.
 		 * @public
 		 */
-		"cancel": {
+		cancel: {
 			detail: {
-				confirmedSortOrder: { type: String },
-				confirmedSortBy: { type: String },
+				sortOrder: { type: String },
+				sortBy: { type: String },
 			},
 		},
 	},
@@ -270,6 +274,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Closes the dialog.
 	 */
 	close() {
+		debugger
 		this._dialog && this._dialog.close();
 	}
 
@@ -309,8 +314,8 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 		this.fireEvent("cancel", {
-			confirmedSortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
-			confirmedSortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.innerText : "",
+			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
+			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.innerText : "",
 		});
 		this.close();
 	}
