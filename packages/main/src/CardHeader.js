@@ -50,7 +50,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.CardHeader.prototype */ {
 
 		/**
-		 * Defines the title displayed in the component header.
+		 * Defines the title text.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subtitle displayed in the component header.
+		 * Defines the subtitle text.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -70,7 +70,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the status displayed in the component header.
+		 * Defines the status text.
 		 * <br><br>
 		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
 		 * you can either have <code>action</code>, or <code>status</code>.
@@ -84,7 +84,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component would be interactive,
-		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
+		 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -138,9 +138,8 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-card-header</code> is a component that represents information in the header slot
- * of the <code>ui5-card</code> component.
- * The header can be used through several properties, such as: <code>titleText</code>, <code>subtitleText</code>, <code>status</code>
+ * The <code>ui5-card-header</code> is a component, meant to be used as a header of the <code>ui5-card</code> component.
+ * It displays valuable information, that can be defined with several properties, such as: <code>titleText</code>, <code>subtitleText</code>, <code>status</code>
  * and two slots: <code>avatar</code> and <code>action</code>.
  *
  * <h3>Keyboard handling</h3>
