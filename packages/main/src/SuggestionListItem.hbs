@@ -15,8 +15,8 @@
 					{{/if}}
 				</span>
 
-				{{#if info}}
-					<span part="info" class="ui5-li-additional-text">{{info}}</span>
+				{{#if additionalText}}
+					<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
 				{{/if}}
 			</div>
 		{{/if}}
@@ -25,8 +25,8 @@
 		{{/unless}}
 	</div>
 	{{#unless hasDescription}}
-		{{#if info}}
-			<span part="info" class="ui5-li-additional-text">{{info}}</span>
+		{{#if additionalText}}
+			<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
 		{{/if}}
 	{{/unless}}
 {{/inline}}
