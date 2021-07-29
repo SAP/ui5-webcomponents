@@ -187,6 +187,8 @@ const isF4 = event => {
 
 const isF4Shift = event => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
 
+const isF7 = event => (event.key ? event.key === "F7" : event.keyCode === KeyCodes.F7) && !hasModifierKeys(event);
+
 const isShowByArrows = event => {
 	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
@@ -230,6 +232,7 @@ export {
 	isShow,
 	isF4,
 	isF4Shift,
+	isF7,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
