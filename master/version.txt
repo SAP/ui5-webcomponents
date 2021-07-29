@@ -1,7 +1,7 @@
-commit 9da60313e0675f7bd36bdb4d448477dd9e1da50d
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Thu Jul 29 09:32:47 2021 +0200
+commit 6d9946118e149e43be2e3df83cea8baa58c1bce8
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Jul 29 12:39:38 2021 +0300
 
-    docs: minor corrections for rc.15 (#3560)
+    fix(ui5-calendar): opening month/year pickers with space now works correct (#3561)
     
-    Fixed Typo in IllustratedMessageType prototype. Use correct interface for IllustratedMessage default slot. Add tags to ui5-input
+    Fixes: #3555
