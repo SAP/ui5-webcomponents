@@ -83,13 +83,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component header would be interactive,
+		 * Defines if the component would be interactive,
 		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		headerInteractive: {
+		interactive: {
 			type: Boolean,
 		},
 
@@ -124,11 +124,10 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.CardHeader.prototype */ {
 
 		/**
-		 * Fired when the header is activated
-		 * by mouse/tap or by using the Enter or Space key.
+		 * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
-		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
-		 * @event sap.ui.webcomponents.main.CarHeader#header-click
+		 * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
+		 * @event sap.ui.webcomponents.main.CardHeader#click
 		 * @public
 		 */
 		"click": {},
@@ -145,7 +144,7 @@ const metadata = {
  * and two slots: <code>avatar</code> and <code>action</code>.
  *
  * <h3>Keyboard handling</h3>
- * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ * In case you enable <code>interactive</code> property, you can press the <code>ui5-card-header</code> by Space and Enter keys.
  *
  * <h3>CSS Shadow Parts</h3>
  *
@@ -153,9 +152,9 @@ const metadata = {
  * <br>
  * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li>title - Used to style the title of the card</li>
- * <li>subtitle - Used to style the subtitle of the card</li>
- * <li>status - Used to style the status of the card</li>
+ * <li>title - Used to style the title of the CardHeader</li>
+ * <li>subtitle - Used to style the subtitle of the CardHeader</li>
+ * <li>status - Used to style the status of the CardHeader</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -197,17 +196,17 @@ class CardHeader extends UI5Element {
 	get classes() {
 		return {
 			"ui5-card-header": true,
-			"ui5-card-header--interactive": this.headerInteractive,
-			"ui5-card-header--active": this.headerInteractive && this._headerActive,
+			"ui5-card-header--interactive": this.interactive,
+			"ui5-card-header--active": this.interactive && this._headerActive,
 		};
 	}
 
 	get ariaHeaderRole() {
-		return this.headerInteractive ? "button" : "heading";
+		return this.interactive ? "button" : "heading";
 	}
 
 	get ariaLevel() {
-		return this.headerInteractive ? undefined : "3";
+		return this.interactive ? undefined : "3";
 	}
 
 	get ariaLabelText() {
@@ -215,7 +214,7 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaCardHeaderRoleDescription() {
-		return this.headerInteractive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
+		return this.interactive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaCardAvatarLabel() {
@@ -257,13 +256,13 @@ class CardHeader extends UI5Element {
 	}
 
 	_headerClick() {
-		if (this.headerInteractive) {
+		if (this.interactive) {
 			this.fireEvent("click");
 		}
 	}
 
 	_headerKeydown(event) {
-		if (!this.headerInteractive) {
+		if (!this.interactive) {
 			return;
 		}
 
@@ -283,7 +282,7 @@ class CardHeader extends UI5Element {
 	}
 
 	_headerKeyup(event) {
-		if (!this.headerInteractive) {
+		if (!this.interactive) {
 			return;
 		}
 
