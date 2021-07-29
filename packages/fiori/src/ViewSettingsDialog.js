@@ -267,7 +267,7 @@ class ViewSettingsDialog extends UI5Element {
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
-		this._dialog.open();
+		this._dialog.show();
 	}
 
 	/**
