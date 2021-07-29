@@ -397,7 +397,7 @@ class Breadcrumbs extends UI5Element {
 
 	async _openRespPopover() {
 		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.openBy(this._overflowLink);
+		this.responsivePopover.showAt(this._overflowLink);
 	}
 
 	_isItemVisible(item) {
