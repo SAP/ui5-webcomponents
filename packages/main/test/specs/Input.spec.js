@@ -93,7 +93,37 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires change on tab", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = $("#inputChange-Suggestions").shadow$("input");
+		const inputResult = $("#inputChangeResult").shadow$("input");
+
+		input.click();
+		input.keys("ArrowDown");
+		input.keys("Tab");
+
+		assert.strictEqual(inputResult.getValue(), "1", "change is called twice");
+	});
+
+	it("fires change only once when there was already a value on focus in", () => {
+		const input = $("#inputChange-Suggestions").shadow$("input");
+		const inputResult = $("#inputChangeResult").shadow$("input");
+		browser.keys(["Shift", "Tab"]);
+		input.keys("Backspace");
+
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+
+
+		input.keys("Tab");
+
+		assert.strictEqual(inputResult.getValue(), "2", "change is called once");
+	});
+
 	it("fires input", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
 		const input2 = $("#input2").shadow$("input");
 		const inputLiveChangeResult = $("#inputLiveChangeResult").shadow$("input");
 

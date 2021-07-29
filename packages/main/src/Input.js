@@ -12,6 +12,7 @@ import {
 	isEnter,
 	isBackSpace,
 	isEscape,
+	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -512,6 +513,9 @@ class Input extends UI5Element {
 		// Indicates if the user selection has been canceled with [ESC].
 		this.suggestionSelectionCanceled = false;
 
+		// Indicates if the change event has already been fired
+		this._changeFired = false;
+
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
 
@@ -602,6 +606,10 @@ class Input extends UI5Element {
 			return this._handleSpace(event);
 		}
 
+		if (isTabNext(event)) {
+			return this._handleTab(event);
+		}
+
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
@@ -643,6 +651,12 @@ class Input extends UI5Element {
 	_handleSpace(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onSpace(event);
+		}
+	}
+
+	_handleTab(event) {
+		if (this.Suggestions && (this.previousValue !== this.value)) {
+			this.Suggestions.onTab(event);
 		}
 	}
 
@@ -705,7 +719,12 @@ class Input extends UI5Element {
 	}
 
 	_handleChange(event) {
-		this.fireEvent(this.EVENT_CHANGE);
+		if (!this._changeFired) {
+			this.fireEvent(this.EVENT_CHANGE);
+		}
+
+		// Set event as no longer marked
+		this._changeFired = false;
 	}
 
 	_scroll(event) {
@@ -875,6 +894,9 @@ class Input extends UI5Element {
 			this.valueBeforeItemSelection = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this.fireEvent(this.EVENT_CHANGE);
+
+			// Mark the change event to avoid double firing
+			this._changeFired = true;
 		}
 
 		this.valueBeforeItemPreview = "";
