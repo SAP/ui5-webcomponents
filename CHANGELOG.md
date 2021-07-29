@@ -58,6 +58,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-button:** improve use of Theme Designer CSS Variables ([#3445](https://github.com/SAP/ui5-webcomponents/issues/3445)) ([baec4d4](https://github.com/SAP/ui5-webcomponents/commit/baec4d4))
 * **ui5-button:** fix line-height ([#3416](https://github.com/SAP/ui5-webcomponents/issues/3416)) ([e679b51](https://github.com/SAP/ui5-webcomponents/commit/e679b51)), closes [#3401](https://github.com/SAP/ui5-webcomponents/issues/3401) [#3401](https://github.com/SAP/ui5-webcomponents/issues/3401)
 * **ui5-calendar:** correct enable/disable of prev and next buttons ([#3249](https://github.com/SAP/ui5-webcomponents/issues/3249)) ([8c66d5a](https://github.com/SAP/ui5-webcomponents/commit/8c66d5a)), closes [#3201](https://github.com/SAP/ui5-webcomponents/issues/3201)
+* **ui5-calendar:**: fix opening pf month/year pickers with SPACE ([#3561](https://github.com/SAP/ui5-webcomponents/issues/3561)) ([6d99461](https://github.com/SAP/ui5-webcomponents/commit/6d99461)), closes [#3555](https://github.com/SAP/ui5-webcomponents/issues/3555)
 * **ui5-card:** fix internal content's HTML tag ([#3464](https://github.com/SAP/ui5-webcomponents/issues/3464)) ([9832843](https://github.com/SAP/ui5-webcomponents/commit/9832843)), closes [#3439](https://github.com/SAP/ui5-webcomponents/issues/3439) [#3439](https://github.com/SAP/ui5-webcomponents/issues/3439)
 * **ui5-card:** fix styles for slotted images ([#3301](https://github.com/SAP/ui5-webcomponents/issues/3301)) ([1683134](https://github.com/SAP/ui5-webcomponents/commit/1683134))
 * **ui5-card:** update "border-width" and "box-shadow" styles ([#3509](https://github.com/SAP/ui5-webcomponents/issues/3509)) ([76dcdbf](https://github.com/SAP/ui5-webcomponents/commit/76dcdbf))
@@ -192,6 +193,8 @@ The "group" property of the SuggestionItem is removed, use the SuggestionGroupIt
 The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
 * **ui5-link:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([cff8fd4](https://github.com/SAP/ui5-webcomponents/commit/cff8fd4))
 The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
+* **ui5-li-notification:** replace "wrap" with "wrappingType" ([#3565](https://github.com/SAP/ui5-webcomponents/issues/3565)) ([6701ab5](https://github.com/SAP/ui5-webcomponents/commit/6701ab5))
+The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
 * **ui5-list:** rename "inset" property to "indent" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([eba1e64](https://github.com/SAP/ui5-webcomponents/commit/eba1e64))
 The property "inset" has been renamed to "indent".
 * **ui5-messagestrip:** refactor API ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([1cb43f2](https://github.com/SAP/ui5-webcomponents/commit/1cb43f2))
@@ -278,6 +281,7 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-input:** change public method to private ([#3224](https://github.com/SAP/ui5-webcomponents/issues/3224)) ([1166fb4](https://github.com/SAP/ui5-webcomponents/commit/1166fb4)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 * **ui5-label:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([e591e04](https://github.com/SAP/ui5-webcomponents/commit/e591e04))
 * **ui5-link:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([cff8fd4](https://github.com/SAP/ui5-webcomponents/commit/cff8fd4))
+* **ui5-li-notification:** replace "wrap" with "wrappingType" ([#3565](https://github.com/SAP/ui5-webcomponents/issues/3565)) ([6701ab5](https://github.com/SAP/ui5-webcomponents/commit/6701ab5))
 * **ui5-list:** rename "inset" property to "indent" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([eba1e64](https://github.com/SAP/ui5-webcomponents/commit/eba1e64))
 * **ui5-messagestrip:** refactor API ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([1cb43f2](https://github.com/SAP/ui5-webcomponents/commit/1cb43f2))
 * **ui5-messagestrip:** rename property "type" to "design" ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([4208d19](https://github.com/SAP/ui5-webcomponents/commit/4208d19))

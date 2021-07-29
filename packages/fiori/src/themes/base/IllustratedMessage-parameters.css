@@ -1,12 +1,12 @@
 :root {
-    --sapIllus_BrandColorPrimary: #0a6ed1;
-    --sapIllus_BrandColorSecondary: #72b5f8;
-    --sapIllus_StrokeDetailColor: #4a5055;
-    --sapIllus_Layering1: #9da4aa;
-    --sapIllus_Layering2: #c6cace;
-    --sapIllus_BackgroundColor: #e7e9ea;
-    --sapIllus_ObjectFillColor: #fff;
-    --sapIllus_AccentColor: #ffba10;
+    --sapIllus_BrandColorPrimary: var(--sapContent_Illustrative_Color1);
+    --sapIllus_BrandColorSecondary: var(--sapContent_Illustrative_Color2);
+    --sapIllus_StrokeDetailColor: var(--sapContent_Illustrative_Color4);
+    --sapIllus_Layering1: var(--sapContent_Illustrative_Color5);
+    --sapIllus_Layering2: var(--sapContent_Illustrative_Color6);
+    --sapIllus_BackgroundColor: var(--sapContent_Illustrative_Color7);
+    --sapIllus_ObjectFillColor: var(--sapContent_Illustrative_Color8);
+    --sapIllus_AccentColor: var(--sapContent_Illustrative_Color3);
     --sapIllus_NoColor: none;
     --sapIllus_PatternShadow: url(#sapIllus_PatternShadow);
     --sapIllus_PatternHighlight: url(#sapIllus_PatternHighlight);
