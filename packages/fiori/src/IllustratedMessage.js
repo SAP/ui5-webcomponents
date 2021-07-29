@@ -78,7 +78,7 @@ const metadata = {
 		 *
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
-		 * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
+		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -120,7 +120,7 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
- * <code>import @ui5/webcomponents-fiori/dist/illustrations/NoData.js</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"</code>
  *
  * <h3>Structure</h3>
  * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
