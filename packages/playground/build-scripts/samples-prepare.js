@@ -14,6 +14,7 @@ const components = [];
 const newComponents = [
 	"StepInput",
 	"ViewSettingsDialog",
+	"IllustratedMessage"
 ];
 
 packages.forEach(package => {

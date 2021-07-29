@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverCloser = document.getElementById("closePopoverButton");
 
 	popoverOpener.addEventListener("click", function() {
-		popover.openBy(popoverOpener);
+		popover.showAt(popoverOpener);
 	});
 	popoverCloser.addEventListener("click", function() {
 		popover.close();
@@ -97,10 +97,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 	dialogOpener.addEventListener("click", function() {
-		dialog.open();
+		dialog.show();
 	});
 	dialogOpener2.addEventListener("click", function() {
-		dialog2.open();
+		dialog2.show();
 	});
 	dialogCloser.addEventListener("click", function() {
 		dialog.close();

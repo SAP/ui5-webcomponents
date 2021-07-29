@@ -550,7 +550,7 @@ class DatePicker extends DateComponentBase {
 
 	_click(event) {
 		if (isPhone()) {
-			this.responsivePopover.openBy(this);
+			this.responsivePopover.showAt(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -712,7 +712,7 @@ class DatePicker extends DateComponentBase {
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
 
-		this.responsivePopover.openBy(this);
+		this.responsivePopover.showAt(this);
 	}
 
 	togglePicker() {

@@ -85,13 +85,13 @@ const metadata = {
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> are recommended to be used as suggestion items.
+		 * <b>Note:</b> The <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item><code/> are recommended to be used as suggestion items.
 		 * <br><br>
 		 * <b>Note:</b> Importing the Input Suggestions Support feature:
 		 * <br>
 		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
 		 * <br>
-		 * automatically imports the &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> for your convenience.
+		 * automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.
 		 *
 		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
@@ -691,7 +691,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.openBy(this);
+			this.Suggestions.showAt(this);
 			this.isRespPopoverOpen = true;
 		}
 	}
@@ -813,7 +813,7 @@ class Input extends UI5Element {
 
 		if (popover) {
 			this._isPopoverOpen = true;
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 
