@@ -9,6 +9,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
+import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
@@ -49,12 +50,14 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> by default the <code>heading</code> and <code>decription</code>,
 		 * and a <code>ShowMore/Less</code> button would be displayed.
-         * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
+		 * @since 1.0.0-rc.16
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
@@ -246,7 +249,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hideShowMore() {
-		if (!this.wrap && this._showMore) {
+		if (this.wrappingType === WrappingType.None && this._showMore) {
 			return undefined;
 		}
 
@@ -405,7 +408,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onResize() {
-		if (this.wrap) {
+		if (this.wrappingType === WrappingType.Normal) {
 			this._showMore = false;
 			return;
 		}

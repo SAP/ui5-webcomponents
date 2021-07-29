@@ -1,14 +1,14 @@
 @import "./NotificationListItemBase.css";
 @import "./NotificationPrioIcon.css";
 
-:host(:not([wrap])) .ui5-nli-heading {
+:host([wrapping-type="None"]) .ui5-nli-heading {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
 
-:host(:not([wrap])) .ui5-nli-description {
+:host(:not([wrapping-type="Normal"])) .ui5-nli-description {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -28,11 +28,11 @@
 }
 
 /* IE */
-:host(:not([wrap])) .ui5-nli-content--ie .ui5-nli-description {
+:host([wrapping-type="None"]) .ui5-nli-content--ie .ui5-nli-description {
 	max-height: 32px;
 }
 
-:host(:not([wrap])) .ui5-nli-content--ie .ui5-nli-heading {
+:host([wrapping-type="None"]) .ui5-nli-content--ie .ui5-nli-heading {
 	max-height: 32px;
 }
 
