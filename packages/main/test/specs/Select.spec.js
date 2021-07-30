@@ -205,31 +205,6 @@ describe("Select general interaction", () => {
 		select.keys("Escape");
 	});
 
-	it("changes selection with typing single letter", () => {
-		const select = browser.$("#keyboardHandling");
-		const EXPECTED_SELECTION_TEXT = "Banana";
-
-		select.click(); // Open select
-		select.keys("b");
-
-		const selectText = select.shadow$(".ui5-select-label-root");
-
-		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Typing letter should change selection");
-	});
-
-	it("changes selection with typing more letters", () => {
-		const select = browser.$("#mySelect3");
-		const EXPECTED_SELECTION_TEXT = "Brazil";
-
-		select.click(); // Open select
-		select.keys("b");
-		select.keys("r");
-
-		const selectText = select.shadow$(".ui5-select-label-root");
-
-		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Typing text should change selection");
-	});
-
 	it("opens upon space", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
 

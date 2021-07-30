@@ -316,8 +316,6 @@ class Select extends UI5Element {
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
-		this._sTypedChars = "";
-		this._iTypingTimeoutID = -1;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -460,57 +458,9 @@ class Select extends UI5Element {
 			this._handleEndKey(event);
 		} else if (isEnter(event)) {
 			this._handleSelectionChange();
-		} else if (event.keyCode >= 65 && event.keyCode <= 90) {
-			this._handleKeyboardNavigation(event);
 		} else {
 			this._handleArrowNavigation(event);
 		}
-	}
-
-	_handleKeyboardNavigation(event) {
-		const sTypedCharacter = event.key.toLowerCase();
-
-		this._sTypedChars += sTypedCharacter;
-
-		// We check if we have more than one characters and they are all duplicate, we set the
-		// text to be the last input character (sTypedCharacter). If not, we set the text to be
-		// the whole input string.
-
-		const sText = (/^(.)\1+$/i).test(this._sTypedChars) ? sTypedCharacter : this._sTypedChars;
-
-		clearTimeout(this._iTypingTimeoutID);
-
-		this._iTypingTimeoutID = setTimeout(async () => {
-			this._sTypedChars = "";
-			this._iTypingTimeoutID = -1;
-		}, 1000);
-
-		this._selectTypedItem(sText);
-	}
-
-	_selectTypedItem(sText) {
-		const currentIndex = this._selectedIndex;
-		const oItemToSelect = this._searchNextItemByText(sText);
-
-		if (oItemToSelect) {
-			const nextIndex = this._getSelectedItemIndex(oItemToSelect);
-
-			this._changeSelectedItem(this._selectedIndex, nextIndex);
-
-			if (currentIndex !== this._selectedIndex) {
-				this.itemSelectionAnnounce();
-			}
-		}
-	}
-
-	_searchNextItemByText(sText) {
-		let aOrderedOptions = this.options.slice(0);
-		const aOptionsAfterSelected = aOrderedOptions.splice(this._selectedIndex + 1, aOrderedOptions.length - this._selectedIndex);
-		const aOptionsBeforeSelected = aOrderedOptions.splice(0, aOrderedOptions.length - 1);
-
-		aOrderedOptions = aOptionsAfterSelected.concat(aOptionsBeforeSelected);
-
-		return aOrderedOptions.find(o => o.textContent.toLowerCase().startsWith(sText));
 	}
 
 	_handleHomeKey(event) {
