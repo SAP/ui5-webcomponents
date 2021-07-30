@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -48,32 +47,10 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @public
-		 * @since 1.0.0-rc.15
-		 * @defaultvalue ""
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the component
-		 *
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
-		 */
-		ariaLabelledby: {
-			type: String,
-			defaultValue: "",
-		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {},
+	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+
+	},
 };
 
 /**
@@ -136,10 +113,6 @@ class Card extends UI5Element {
 
 	get hasHeader() {
 		return !!this.header.length;
-	}
-
-	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
 	}
 
 	get ariaCardRoleDescription() {
