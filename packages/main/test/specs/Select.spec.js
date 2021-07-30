@@ -111,13 +111,11 @@ describe("Select general interaction", () => {
 		select.keys("ArrowDown");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2), "Arrow Down should change selected item");
 		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT2, "Selection announcement text should be equalt to the current selected item's text");
-
 		// change previewed item with picker opened
 		select.click();
 		select.keys("ArrowUp");
 		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
 		select.keys("Escape");
-
 		// change selection with picker opened
 		select.click();
 		select.keys("ArrowUp");
