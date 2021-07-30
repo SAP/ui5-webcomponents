@@ -205,7 +205,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo:focus {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
-
+	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
 }
 
 .ui5-shellbar-button {
