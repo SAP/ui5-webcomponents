@@ -119,7 +119,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 * **a11y:** deprecate "aria-label" support in favour of "accessible-name" ([#3449](https://github.com/SAP/ui5-webcomponents/issues/3449)) ([f4f5864](https://github.com/SAP/ui5-webcomponents/commit/f4f5864)) 
-The support of "aria-label" in Button, Wizard, WizardStep, Card, CheckBox, ComboBox, DatePicker, Dialog, Input, Link, List, Panel, Popover, Popup, RatingIndicator, Select, StepInput and TextArea components has been deprecated in favor of new property - "accessibleName".
+* *  The support of "aria-label"  has been deprecated in favor of new property "accessibleName" for the following components: Button, Wizard, WizardStep, ComboBox, DatePicker, Dialog, Input, List, Panel, Popover, Popup, RatingIndicator, Select, StepInput and TextArea.
+* *  The support of "aria-label"  has been removed  for the following components: Card, CheckBox and Link.
+```html
+<ui5-date-picker accessible-name="Hello World"></ui5-date-picker>
+```
+* **a11y:** deprecate "aria-labelledby" support in favour of "accessible-name-ref" ([#3442](https://github.com/SAP/ui5-webcomponents/issues/3442)) ([42d3ed5](https://github.com/SAP/ui5-webcomponents/commit/42d3ed5)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107) 
+* *  The support for "aria-labelledby" have been deprecated in favour of  new property "accessibleNameRef" for the following components: ComboBox, DatePicker, Input, List, Rating Indicator, Select, StepInput, TextArea, WizardStep.
+* *  The support for "aria-labelledby"` has been removed for the following component: Button, Card and CheckBox.
+```html
+<ui5-label id="infoText">info text</ui5-label>
+<ui5-date-picker  accessible-name-ref="infoText"></ui5-date-picker>
+```
 * **all list items:** rename "info" and "infoState" properties ([#3259](https://github.com/SAP/ui5-webcomponents/issues/3259)) ([ca42531](https://github.com/SAP/ui5-webcomponents/commit/ca42531)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 StandardListItem's "info" and "infoState" properties have been renamed to "additionalText" and "additionalTextState".
 SuggestionItem's "info" and "infoState" properties have been renamed to "additionalText" and "additionalTextState".

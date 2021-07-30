@@ -289,11 +289,11 @@
 	<br><br>
 	<ui5-input id="scrollResult"></ui5-input>
 
-	<h3>Test accessibleName and ariaLabelledBy</h3>
+	<h3>Test accessibleName and accessibleNameRef</h3>
 	<ui5-input accessible-name="Very important input"></ui5-input>
 	<br>
 	<ui5-label id="enterNameLabel">Enter name: </ui5-label>
-	<ui5-input aria-labelledby="enterNameLabel"></ui5-input>
+	<ui5-input accessible-name-ref="enterNameLabel"></ui5-input>
 
 	<h3>Input suggestions with highlighing and XSS test</h3>
 	<ui5-input show-suggestions style="width: 100%">

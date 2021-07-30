@@ -53,7 +53,7 @@ const metadata = {
 		 * @type {WrappingType}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 1.0.0-rc.16
+		 * @since 1.0.0-rc.15
 		 */
 		wrappingType: {
 			type: WrappingType,
