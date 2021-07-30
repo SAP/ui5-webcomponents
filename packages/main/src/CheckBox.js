@@ -344,11 +344,7 @@ class CheckBox extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		if (!this.ariaLabelText) {
-			return this.text ? `${this._id}-label` : undefined;
-		}
-
-		return undefined;
+		return this.text ? `${this._id}-label` : undefined;
 	}
 
 	get ariaDescribedBy() {
