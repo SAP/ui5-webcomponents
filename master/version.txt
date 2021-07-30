@@ -1,5 +1,9 @@
-commit ae607efd524852f1d72468f95ef50d13f402a9e8
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jul 30 19:13:20 2021 +0300
+commit 6ce9907d3f7631fceffc883a8865f8e554949581
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Fri Jul 30 19:53:13 2021 +0300
 
-    chore(ui5-illustrated-message): UnableToUpload default text (#3575)
+    fix(ui5-shellbar): cutting of the logo outline is fixed (#3572)
+    
+    Left side of the outline of the logo in ui5-shellbar was missing its left side, which is now corrected.
+    
+    FIXES: #3567
