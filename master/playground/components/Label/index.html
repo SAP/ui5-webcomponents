@@ -2510,20 +2510,20 @@
 	<h3>Label 'for'</h3>
 	<div class="snippet" style="display: flex;flex-direction: column;">
 		<ui5-label id="myLabel" for="myInput" required show-colon>First name</ui5-label>
-		<ui5-input id="myInput" aria-required="true" aria-labelledby="myLabel" placeholder="Enter your name"></ui5-input>
+		<ui5-input id="myInput" aria-required="true" accessible-name-ref="myLabel" placeholder="Enter your name"></ui5-input>
 		<br>
 		<ui5-label id="myLabel2" for="myDP" required show-colon>Date of birth</ui5-label>
-		<ui5-date-picker id="myDP" aria-labelledby="myLabel2" aria-required="true"></ui5-date-picker>
+		<ui5-date-picker id="myDP" accessible-name-ref="myLabel2" aria-required="true"></ui5-date-picker>
 		<br>
 		<ui5-label id="myLabel3" for="mySelect" required show-colon>Job</ui5-label>
-		<ui5-select id="mySelect" aria-required="true" aria-labelledby="myLabel3">
+		<ui5-select id="mySelect" aria-required="true" accessible-name-ref="myLabel3">
 			<ui5-option>Manager</ui5-option>
 			<ui5-option>Sales</ui5-option>
 			<ui5-option selected>Developer</ui5-option>
 		</ui5-select>
 		<br>
 		<ui5-label id="myLabel4" for="myTextArea" required show-colon>Description label test</ui5-label>
-		<ui5-textarea id="myTextArea" aria-labelledby="myLabel4" aria-required="true" placeholder="Type as much text as you wish"></ui5-textarea>
+		<ui5-textarea id="myTextArea" accessible-name-ref="myLabel4" aria-required="true" placeholder="Type as much text as you wish"></ui5-textarea>
 		<br>
 		<div style="display: flex; align-items: center;">
 			<ui5-label for="myRB" required show-colon>Gender</ui5-label>
@@ -2535,17 +2535,17 @@
 			<ui5-checkbox id="myCB"></ui5-checkbox>
 		</div>
 		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"myLabel"</span> <span class="na">for=</span><span class="s">"myInput"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>First name<span class="nt">&lt;/ui5-label&gt;</span>
-<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"myInput"</span> <span class="na">aria-required=</span><span class="s">"true"</span> <span class="na">aria-labelledby=</span><span class="s">"myLabel"</span> <span class="na">placeholder=</span><span class="s">"Enter your name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"myInput"</span> <span class="na">aria-required=</span><span class="s">"true"</span> <span class="na">accessible-name-ref=</span><span class="s">"myLabel"</span> <span class="na">placeholder=</span><span class="s">"Enter your name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 <span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"myLabel2"</span> <span class="na">for=</span><span class="s">"myDP"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>Date of birth<span class="nt">&lt;/ui5-label&gt;</span>
-<span class="nt">&lt;ui5-date-picker</span> <span class="na">id=</span><span class="s">"myDP"</span> <span class="na">aria-labelledby=</span><span class="s">"myLabel2"</span> <span class="na">aria-required=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
+<span class="nt">&lt;ui5-date-picker</span> <span class="na">id=</span><span class="s">"myDP"</span> <span class="na">accessible-name-ref=</span><span class="s">"myLabel2"</span> <span class="na">aria-required=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 <span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"myLabel3"</span> <span class="na">for=</span><span class="s">"mySelect"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>Job<span class="nt">&lt;/ui5-label&gt;</span>
-<span class="nt">&lt;ui5-select</span> <span class="na">id=</span><span class="s">"mySelect"</span> <span class="na">aria-required=</span><span class="s">"true"</span> <span class="na">aria-labelledby=</span><span class="s">"myLabel3"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;ui5-select</span> <span class="na">id=</span><span class="s">"mySelect"</span> <span class="na">aria-required=</span><span class="s">"true"</span> <span class="na">accessible-name-ref=</span><span class="s">"myLabel3"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-option&gt;</span>Manager<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option&gt;</span>Sales<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">selected</span><span class="nt">&gt;</span>Developer<span class="nt">&lt;/ui5-option&gt;</span>
 <span class="nt">&lt;/ui5-select&gt;</span>
 <span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"myLabel4"</span> <span class="na">for=</span><span class="s">"myTextArea"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>Description label test<span class="nt">&lt;/ui5-label&gt;</span>
-<span class="nt">&lt;ui5-textarea</span> <span class="na">id=</span><span class="s">"myTextArea"</span> <span class="na">aria-labelledby=</span><span class="s">"myLabel4"</span> <span class="na">aria-required=</span><span class="s">"true"</span> <span class="na">placeholder=</span><span class="s">"Type as much text as you wish"</span><span class="nt">&gt;&lt;/ui5-textarea&gt;</span>
+<span class="nt">&lt;ui5-textarea</span> <span class="na">id=</span><span class="s">"myTextArea"</span> <span class="na">accessible-name-ref=</span><span class="s">"myLabel4"</span> <span class="na">aria-required=</span><span class="s">"true"</span> <span class="na">placeholder=</span><span class="s">"Type as much text as you wish"</span><span class="nt">&gt;&lt;/ui5-textarea&gt;</span>
 <span class="nt">&lt;ui5-label</span> <span class="na">for=</span><span class="s">"myRB"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>Gender<span class="nt">&lt;/ui5-label&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">id=</span><span class="s">"myRB"</span> <span class="na">group=</span><span class="s">"a"</span> <span class="na">text=</span><span class="s">"Choice 1"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">id=</span><span class="s">"myRB2"</span> <span class="na">group=</span><span class="s">"a"</span> <span class="na">checked</span> <span class="na">text=</span><span class="s">"Choice 2"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>

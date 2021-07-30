@@ -1,5 +1,5 @@
-commit ba8551ff0f3bd17c547491c9705433a7cc81f069
+commit ae607efd524852f1d72468f95ef50d13f402a9e8
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jul 29 17:54:33 2021 +0300
+Date:   Fri Jul 30 19:13:20 2021 +0300
 
-    chore(ui5-illustrated-message): import default illustration (#3570)
+    chore(ui5-illustrated-message): UnableToUpload default text (#3575)
