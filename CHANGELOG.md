@@ -12,7 +12,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **a11y:** introduce "accessible-name" for multiple components ([#3449](https://github.com/SAP/ui5-webcomponents/issues/3449)) ([f4f5864](https://github.com/SAP/ui5-webcomponents/commit/f4f5864))
+* **a11y:** introduce "accessibleName" property for multiple components ([#3449](https://github.com/SAP/ui5-webcomponents/issues/3449)) ([f4f5864](https://github.com/SAP/ui5-webcomponents/commit/f4f5864))
+* **a11y:** introduce "accessibleNameRef" property for multiple components ([#3442](https://github.com/SAP/ui5-webcomponents/issues/3442)) ([42d3ed5](https://github.com/SAP/ui5-webcomponents/commit/42d3ed5)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 * **ui5-avatar:** implement default slot for image ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([9646c3e](https://github.com/SAP/ui5-webcomponents/commit/9646c3e))
 * **ui5-avatar-group:** implement accessibility specification ([#3154](https://github.com/SAP/ui5-webcomponents/issues/3154)) ([baec15b](https://github.com/SAP/ui5-webcomponents/commit/baec15b)), closes [#2745](https://github.com/SAP/ui5-webcomponents/issues/2745)
 * **ui5-badge:** apply latest Fiori 3 design ([#3389](https://github.com/SAP/ui5-webcomponents/issues/3389)) ([a58a1a4](https://github.com/SAP/ui5-webcomponents/commit/a58a1a4))
