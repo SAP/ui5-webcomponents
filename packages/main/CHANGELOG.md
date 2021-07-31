@@ -582,7 +582,7 @@ FIXES: https://github.com/SAP/ui5-webcomponents/issues/1337
 - **ui5-combobox-item:** change the tag name from `ui5-combobox-item` to `ui5-cb-item`
 * **ui5-tabcontainer:** `itemSelect` is renamed to `tabSelect` and the `item` event param is renamed to `tab`.
 
-* **ui5-card:** the proeprty `subtitle` has been renamed to `subheading`
+* **ui5-card:** the property `subtitle` has been renamed to `subheading`
 * **ui5-textarea:** The property `maxLength` has been renamed to `maxlength`and the attribute name is changed from `max-length` to `maxlength`.
 
 
