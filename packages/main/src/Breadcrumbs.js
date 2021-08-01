@@ -283,14 +283,14 @@ class Breadcrumbs extends UI5Element {
 	 */
 	_cacheWidths() {
 		const map = this._breadcrumbItemWidths,
-			links = this._links,
 			items = this.getSlottedNodes("items"),
 			label = this._currentLocationLabel;
 
-		links.forEach(link => {
-			const item = items.find(x => `${x._id}-link` === link.id);
-			map.set(item, this._getElementWidth(link));
-		});
+		for (let i = this._overflowSize; i < items.length; i++) {
+			const item = items[i],
+				link = this.shadowRoot.querySelector(`.ui5-breadcrumbs-link-wrapper #${item._id}-link`);
+			map.set(item, this._getElementWidth(link) || 0);
+		}
 
 		if (this._endsWithCurrentLocationLabel && label) {
 			const item = items[items.length - 1];
@@ -342,7 +342,9 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getElementWidth(element) {
-		return Math.ceil(element.getBoundingClientRect().width);
+		if (element) {
+			return Math.ceil(element.getBoundingClientRect().width);
+		}
 	}
 
 	_getTotalContentWidth() {

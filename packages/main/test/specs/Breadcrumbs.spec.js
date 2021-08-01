@@ -85,39 +85,39 @@ describe("Breadcrumbs general interaction", () => {
 		const breadcrumbs = $("#breadcrumbs1"),
 			shortenLinkTextBtn = $("#shortenLinkTextBtn"),
 			link = breadcrumbs.shadow$$("ui5-link")[1],
-			countLinksBefore = breadcrumbs.shadow$$("ui5-link").length,
-			expectedCountLinksAfter = countLinksBefore - 1;
-
-		// Check initial state
-		assert.ok(link.getText().length, "the link has text");
+			linkId = link.getProperty("id"),
+			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
+			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
 		// Act: 
 		// shrink the length of the last link to make it empty
 		shortenLinkTextBtn.click();
 
-		// verify result => the link is now empty
-		assert.strictEqual(link.getText(), "", "the link is empty");
-
-		// Check
-		assert.strictEqual(breadcrumbs.shadow$$("ui5-link").length, expectedCountLinksAfter, "the empty link is removed from DOM");
+		// Check: a link is taken out of the overflow, to fill the space left after removing 
+		assert.notEqual(link.getProperty("id"), linkId, "another link is rendrered in the place of the empty item");
+		assert.ok(link.getText(), "the new link is non-empty");
+		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is taken out of the overflow");
 	});
 
 	it("updates layout when content added to empty link", () => {
 		const breadcrumbs = $("#breadcrumbs1"),
-		lastLinkItem = $("#item7"),
+		lastItem = $("#item7"),
+		lastLinkId = lastItem.getProperty('_id') + "-link",
 		extendLinkTextBtn = $("#extendLinkTextBtn"),
-		countLinksBefore = breadcrumbs.shadow$$("ui5-link").length,
-		expectedCountLinksAfter = countLinksBefore + 1;
+		countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
+		expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
 
 		// Check initial state
-		assert.strictEqual(lastLinkItem.getText(), "", "the item has no text");
+		assert.strictEqual(lastItem.getText(), "", "the item has no text");
+		assert.strictEqual(breadcrumbs.shadow$$("#" + lastLinkId).length, 0, "the link for empty item is not rendered");
 
 		// Act: 
-		// extend the length of the last link to make it non-empty
+		// add text of the last link to make it non-empty
 		extendLinkTextBtn.click();
 
 		// Check
-		assert.strictEqual(breadcrumbs.shadow$$("ui5-link").length, expectedCountLinksAfter, "the link is added to DOM");
+		assert.strictEqual(breadcrumbs.shadow$$("#" + lastLinkId).length, 1, "the link for non-empty item is rendered");
+		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is added to the overflow");
 	}); 
 
 	it("opens upon space", () => {
