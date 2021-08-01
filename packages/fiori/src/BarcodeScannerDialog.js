@@ -147,6 +147,11 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @public
 	 */
 	show() {
+		if (this.loading) {
+			console.warn("Barcode scanning is already in progress.");  // eslint-disable-line
+			return;
+		}
+
 		if (!this._hasGetUserMedia()) {
 			this.fireEvent("scan-error", { message: "getUserMedia() is not supported by your browser" });
 			return;
