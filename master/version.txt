@@ -1,5 +1,5 @@
-commit dbfa9ca2c51b323ccb4f74ef99a0139cc144f3a8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Aug 2 13:42:31 2021 +0300
+commit 4657395150f2463bb1128b5e336a2def18442a07
+Author: Iliana Bobeva <iliana.bobeva@sap.com>
+Date:   Mon Aug 2 16:08:12 2021 +0300
 
-    fix(framework): InvisibleMessage synced with framework lifecycle (#3583)
+    feat(ui5-select): Change focus of options on keypress (#3538)
