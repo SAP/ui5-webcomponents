@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -39,6 +38,7 @@ const metadata = {
 		 * <li><code>Positive</code></li>
 		 * <li><code>Negative</code></li>
 		 * <li><code>Transparent</code></li>
+		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
 		 * @type {ButtonDesign}
@@ -152,27 +152,16 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the button
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue: ""
-		 * @private
-		 * @since 1.0.0-rc.7
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the button
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.7
-		 */
-		ariaLabelledby: {
-			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -439,10 +428,6 @@ class Button extends UI5Element {
 			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
 			"title": this.title || (this._buttonAccInfo && this._buttonAccInfo.title),
 		};
-	}
-
-	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
 	}
 
 	static typeTextMappings() {

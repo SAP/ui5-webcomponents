@@ -172,14 +172,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the select.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -188,10 +188,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -372,7 +372,7 @@ class Select extends UI5Element {
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.openBy(this);
+			this.responsivePopover.showAt(this);
 		}
 	}
 
@@ -712,7 +712,7 @@ class Select extends UI5Element {
 	async openValueStatePopover() {
 		this.popover = await this._getPopover();
 		if (this.popover) {
-			this.popover.openBy(this);
+			this.popover.showAt(this);
 		}
 	}
 

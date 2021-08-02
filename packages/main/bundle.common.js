@@ -36,6 +36,7 @@ import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
 import Card from "./dist/Card.js";
+import CardHeader from "./dist/CardHeader.js";
 import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ColorPalette from "./dist/ColorPalette.js";
@@ -74,6 +75,7 @@ import TabSeparator from "./dist/TabSeparator.js";
 import Table from "./dist/Table.js";
 import TableColumn from "./dist/TableColumn.js";
 import TableRow from "./dist/TableRow.js";
+import TableGroupRow from "./dist/TableGroupRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
 import TimeSelection from "./dist/TimeSelection.js";
@@ -92,6 +94,10 @@ import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
+
+import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/util/HTMLSanitizer.js";
+window.sanitizeHTML = sanitizeHTML;
+window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";

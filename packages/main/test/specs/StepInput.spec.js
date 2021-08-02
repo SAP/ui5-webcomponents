@@ -424,6 +424,25 @@ describe("'change' event firing", () => {
 		assert.strictEqual(Number(changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
 
+	it("'change' event should be fired once after element deleted and focus out", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
+		const siCozy = $("#stepInputCozy");
+		const siMinMax = $("#stepInputMinMax");
+		const changeResult = $("#changeResult");
+
+		siMinMax.click();
+		siMinMax.keys("ArrowUp");
+		siMinMax.keys("ArrowUp");
+		siMinMax.keys("ArrowUp");
+		siCozy.click();
+		assert.strictEqual(siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
+		assert.strictEqual(Number(changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
+		siMinMax.doubleClick();
+		siMinMax.keys("Backspace");
+		siCozy.click();
+		assert.strictEqual(siMinMax.getProperty("value"), 0, "Value is increased correctly to 1");
+		assert.strictEqual(Number(changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
+	});
 });
 
 describe("Accessibility related parameters", () => {
@@ -433,13 +452,13 @@ describe("Accessibility related parameters", () => {
 		const siCozy = $("#stepInputCozy");
 		const siInner = siCozy.shadow$('.ui5-step-input-input').shadow$("input");
 
+		assert.strictEqual(siInner.getAttribute("min"), null, "'min' attribute doesn't exist");
+		assert.strictEqual(siInner.getAttribute("max"), null, "'max' attribute doesn't exist");
 		siCozy.setProperty("step", 5);
-		assert.strictEqual(siInner.getAttribute("min"), "", "'step' attribute doesn't exist");
 		siCozy.setProperty("min", -10);
-		assert.strictEqual(siInner.getAttribute("max"), "", "'step' attribute doesn't exist");
 		siCozy.setProperty("max", 20);
 		siCozy.setProperty("required", true);
-		siCozy.setProperty("ariaLabel", "test-aria-label");
+		siCozy.setProperty("accessibleName", "test-aria-label");
 
 		assert.strictEqual(siInner.getAttribute("step"), "5", "'step' attribute exists and has correct value 5");
 		assert.strictEqual(siInner.getAttribute("min"), "-10", "'min' attribute exists and has correct value -10");

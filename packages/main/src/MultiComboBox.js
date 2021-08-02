@@ -20,6 +20,7 @@ import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
@@ -389,6 +390,7 @@ class MultiComboBox extends UI5Element {
 			Token,
 			Icon,
 			ResponsivePopover,
+			Popover,
 			List,
 			StandardListItem,
 			ToggleButton,
@@ -501,7 +503,7 @@ class MultiComboBox extends UI5Element {
 			if (filteredItems.length === 0) {
 				this.allItemsPopover.close();
 			} else {
-				this.allItemsPopover.openBy(this);
+				this.allItemsPopover.showAt(this);
 			}
 		}
 
@@ -662,7 +664,7 @@ class MultiComboBox extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && !this._showMorePressed) {
-			this.allItemsPopover.openBy(this);
+			this.allItemsPopover.showAt(this);
 		}
 
 		this._showMorePressed = false;
@@ -729,7 +731,7 @@ class MultiComboBox extends UI5Element {
 		const popover = await this._getPopover();
 
 		if (popover) {
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 

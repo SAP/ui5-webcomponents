@@ -18,9 +18,12 @@ import {
 	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
 	WIZARD_NAV_ARIA_LABEL,
 	WIZARD_LIST_ARIA_LABEL,
+	WIZARD_LIST_ARIA_DESCRIBEDBY,
 	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
 	WIZARD_OPTIONAL_STEP_ARIA_LABEL,
 	WIZARD_STEP_ARIA_LABEL,
+	WIZARD_STEP_ACTIVE,
+	WIZARD_STEP_INACTIVE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -55,13 +58,14 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Defines the aria-label text of the <code>ui5-wizard</code>.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue undefined
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -588,7 +592,7 @@ class Wizard extends UI5Element {
 		}
 
 		const responsivePopover = await this._respPopover();
-		responsivePopover.openBy(oDomTarget);
+		responsivePopover.showAt(oDomTarget);
 	}
 
 	async _onGroupedTabClick(event) {
@@ -773,6 +777,10 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
 	}
 
+	get navAriaDescribedbyText() {
+		return this.i18nBundle.getText(WIZARD_LIST_ARIA_DESCRIBEDBY);
+	}
+
 	get listAriaLabelText() {
 		return this.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
 	}
@@ -789,8 +797,16 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
 	}
 
+	get activeStepText() {
+		return this.i18nBundle.getText(WIZARD_STEP_ACTIVE);
+	}
+
+	get inactiveStepText() {
+		return this.i18nBundle.getText(WIZARD_STEP_INACTIVE);
+	}
+
 	get ariaLabelText() {
-		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return this.accessibleName || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {
@@ -819,7 +835,8 @@ class Wizard extends UI5Element {
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
 			const isOptional = step.subtitleText ? this.optionalStepText : "";
-			const ariaLabel = (step.titleText ? `${pos} ${step.titleText} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`).trim();
+			const stepStateText = step.disabled ? this.inactiveStepText : this.activeStepText;
+			const ariaLabel = (step.titleText ? `${pos} ${step.titleText} ${stepStateText} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${stepStateText} ${isOptional}`).trim();
 			const isAfterCurrent = (idx > selectedStepIndex);
 
 			accInfo = {
