@@ -208,7 +208,7 @@ class Breadcrumbs extends UI5Element {
 			getlabelWrapper: this.getCurrentLocationLabelWrapper.bind(this),
 			set _tabIndex(value) {
 				const wrapper = this.getlabelWrapper();
-				wrapper && (wrapper.setAttribute("tabindex", value));
+				wrapper && wrapper.setAttribute("tabindex", value);
 			},
 			get _tabIndex() {
 				const wrapper = this.getlabelWrapper();
