@@ -98,7 +98,37 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires change on tab", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = $("#inputChange-Suggestions").shadow$("input");
+		const inputResult = $("#inputChangeResult").shadow$("input");
+
+		input.click();
+		input.keys("ArrowDown");
+		input.keys("Tab");
+
+		assert.strictEqual(inputResult.getValue(), "1", "change is called twice");
+	});
+
+	it("fires change only once when there was already a value on focus in", () => {
+		const input = $("#inputChange-Suggestions").shadow$("input");
+		const inputResult = $("#inputChangeResult").shadow$("input");
+		browser.keys(["Shift", "Tab"]);
+		input.keys("Backspace");
+
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+
+
+		input.keys("Tab");
+
+		assert.strictEqual(inputResult.getValue(), "2", "change is called once");
+	});
+
 	it("fires input", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
 		const input2 = $("#input2").shadow$("input");
 		const inputLiveChangeResult = $("#inputLiveChangeResult").shadow$("input");
 
@@ -365,9 +395,9 @@ describe("Input general interaction", () => {
 		const innerInput = input.shadow$("input");
 		const NEW_TEXT = "New cool text";
 
-		assert.strictEqual(input.getAttribute("aria-label"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
+		assert.strictEqual(input.getAttribute("accessible-name"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
 
-		input.setAttribute("aria-label", NEW_TEXT);
+		input.setAttribute("accessible-name", NEW_TEXT);
 
 		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});

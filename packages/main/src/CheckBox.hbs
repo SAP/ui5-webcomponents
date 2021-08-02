@@ -4,7 +4,6 @@
 	aria-checked="{{ariaChecked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
-	aria-label="{{ariaLabelText}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
@@ -15,7 +14,7 @@
 >
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
 			{{#if isCompletelyChecked}}
-				<ui5-icon name="accept" class="ui5-checkbox-icon"></ui5-icon>
+				<ui5-icon aria-hidden="true" name="accept" class="ui5-checkbox-icon"></ui5-icon>
 			{{/if}}
 
 			<input
@@ -24,6 +23,7 @@
 				?checked="{{checked}}"
 				?readonly="{{readonly}}"
 				?disabled="{{disabled}}"
+				tabindex="-1"
 				aria-hidden="true"
 				data-sap-no-tab-ref
 			/>

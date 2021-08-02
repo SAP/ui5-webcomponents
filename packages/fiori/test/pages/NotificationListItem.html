@@ -11,6 +11,12 @@
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<style>
+		:not(:defined) {
+			display: none;
+		}
+	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -23,7 +29,7 @@
 	<h3>Properties</h3>
 	<ul>
 		<li>heading</li>
-		<li>wrap (default: "false")</li>
+		<li>wrappingType (default: "None")</li>
 		<li>priority (default: "None")</li>
 		<li>read (default: "false")</li>
 		<li>show-close (default: "false")</li>
@@ -49,7 +55,7 @@
 		<li>itemClose</li>
 	</ul>
 
-	<ui5-list id="notificationList" header-text="Notifications heading and content 'truncates'">
+	<ui5-list id="notificationList" header-text="Notifications heading and content 'truncates'" accessible-role="list">
 
 		<ui5-li-notification
 			busy
@@ -57,7 +63,11 @@
 			heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-			<ui5-avatar image="./img/man_avatar_1.png" size="XS" slot="avatar"></ui5-avatar>
+
+			<ui5-avatar size="XS" slot="avatar">
+				<img src="./img/man_avatar_1.png" />
+			</ui5-avatar>
+
 			<span slot="footnotes">John Doe</span>
 			<span slot="footnotes">2 Days</span>
 			<span slot="footnotes">Other stuff</span>
@@ -119,15 +129,17 @@
 
 	<br><br>
 
-	<ui5-list id="notificationList2" header-text="Notifications heading and content 'wraps'">
+	<ui5-list id="notificationList2" header-text="Notifications heading and content 'wraps'" accessible-role="list">
 
 		<ui5-li-notification
 			show-close
-			wrap
+			wrapping-type="Normal"
 			heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-			<ui5-avatar image="./img/man_avatar_1.png" size="XS" slot="avatar"></ui5-avatar>
+			<ui5-avatar size="XS" slot="avatar">
+				<img src="./img/man_avatar_1.png" />
+			</ui5-avatar>
 			<span slot="footnotes">John Doe</span>
 			<span slot="footnotes">2 Days</span>
 			<span slot="footnotes">Other stuff</span>
@@ -135,7 +147,7 @@
 
 		<ui5-li-notification
 			show-close
-			wrap
+			wrapping-type="Normal"
 			heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 			priority="High"
 		>
@@ -147,7 +159,7 @@
 		</ui5-li-notification>
 
 		<ui5-li-notification
-			wrap
+			wrapping-type="Normal"
 			heading="New order (#2522)"
 			priority="Low"
 		>
@@ -160,7 +172,7 @@
 
 		<ui5-li-notification
 			heading="New order (#2523)"
-			wrap
+			wrapping-type="Normal"
 		>
 			<div>With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.</div>
 
@@ -172,13 +184,15 @@
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
-		<ui5-list id="notificationListTop" header-text="Notifications heading and content 'truncates'">
+		<ui5-list id="notificationListTop" header-text="Notifications heading and content 'truncates'" accessible-role="list">
 			<ui5-li-notification
 				show-close
 				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar image="./img/man_avatar_1.png" size="XS" slot="avatar"></ui5-avatar>
+				<ui5-avatar size="XS" slot="avatar">
+					<img src="./img/man_avatar_1.png" />
+				</ui5-avatar>
 				<span slot="footnotes">John Doe</span>
 				<span slot="footnotes">2 Days</span>
 				<span slot="footnotes">Other stuff</span>
@@ -286,12 +300,12 @@
 		});
 
 		openNotifications.addEventListener("click", function(event) {
-			notificationsPopover.openBy(openNotifications);
+			notificationsPopover.showAt(openNotifications);
 		});
 
 		shellbar.addEventListener("ui5-notificationsClick", function(event) {
 			event.preventDefault();
-			notificationsPopover.openBy(event.detail.targetRef);
+			notificationsPopover.showAt(event.detail.targetRef);
 		});
 	</script>
 </body>

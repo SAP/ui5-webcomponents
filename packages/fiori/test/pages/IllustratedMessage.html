@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>IllustratedMessage</title>
+
+	<script>delete Document.prototype.adoptedStyleSheets</script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<style>
+		.border {
+			border: 1px solid red;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	Illustration:
+	<ui5-select id="illustrationSelect">
+		<ui5-option selected>BeforeSearch</ui5-option>
+		<ui5-option>NoTasks</ui5-option>
+		<ui5-option>NoSearchResults</ui5-option>
+		<ui5-option>NoSavedItems</ui5-option>
+		<ui5-option>NoNotifications</ui5-option>
+		<ui5-option>NoMail</ui5-option>
+		<ui5-option>NoEntries</ui5-option>
+		<ui5-option>NoData</ui5-option>
+		<ui5-option>NoActivities</ui5-option>
+		<ui5-option>UnableToUpload</ui5-option>
+		<ui5-option>UnableToLoad</ui5-option>
+	</ui5-select>
+	Size:
+	<ui5-select id="sizeSelect">
+		<ui5-option>base</ui5-option>
+		<ui5-option>spot</ui5-option>
+		<ui5-option>dialog</ui5-option>
+		<ui5-option selected>scene</ui5-option>
+	</ui5-select>
+	<ui5-illustrated-message class="border">
+		<ui5-button>Action 1</ui5-button>
+	</ui5-illustrated-message>
+
+	<ui5-button id="openDialogButton">Open Dialog</ui5-button>
+
+	<ui5-dialog id="hello-dialog" header-text="Error">
+		<ui5-illustrated-message name="UnableToLoad"></ui5-illustrated-message>
+		<ui5-bar design="Footer" slot="footer">
+			<ui5-button id="closeDialogButton" design="Emphasized" slot="endContent">Close</ui5-button>
+		</ui5-bar>
+	</ui5-dialog>
+
+	<script>
+		const illustrationSelect = document.getElementById("illustrationSelect");
+		const sizeSelect = document.getElementById("sizeSelect");
+		const illustratedMessage = document.querySelector("ui5-illustrated-message");
+		const dialogOpener = document.getElementById("openDialogButton");
+		const dialog = document.getElementById("hello-dialog");
+		const dialogCloser = document.getElementById("closeDialogButton");
+		const sizes = {
+			base: 250,
+			spot: 300,
+			dialog: 650,
+			scene: 1100,
+		}
+
+		illustratedMessage.style.width = `${sizes.scene}px`;
+
+		illustrationSelect.addEventListener("change", (event) => {
+			illustratedMessage.setAttribute("name", event.detail.selectedOption.textContent);
+		});
+
+		sizeSelect.addEventListener("change", (event) => {
+			illustratedMessage.style.width = `${sizes[event.detail.selectedOption.textContent]}px`;
+		});
+
+		dialogOpener.addEventListener("click", () => {
+			dialog.show();
+		});
+
+		dialogCloser.addEventListener("click", () => {
+			dialog.close();
+		});
+	</script>
+</body>
+
+</html>

@@ -64,7 +64,7 @@ describe("Popover general interaction", () => {
 		browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(popover.getAttribute("open"), "true",
+		assert.strictEqual(popover.getAttribute("opened"), "",
 			"Popover remains open.");
 		assert.strictEqual(popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -294,11 +294,11 @@ describe("Acc", () => {
 
 	it("tests aria-labelledby and aria-label", () => {
 		const popover = browser.$("ui5-popover");
-		popover.removeAttribute("aria-label");
+		popover.removeAttribute("accessible-name");
 		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "Popover has aria-labelledby.");
 		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
 
-		popover.setAttribute("aria-label", "text");
+		popover.setAttribute("accessible-name", "text");
 		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
 		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "Popover has aria-label.");
 	});

@@ -28,6 +28,11 @@
 	cursor: auto;
 }
 
+.ui5-popup-header-root:focus {
+	outline: var(--_ui5_dialog_header_focus_width) dotted var(--sapContent_FocusColor);
+	outline-offset: var(--_ui5_dialog_header_focus_offset);
+}
+
 .ui5-popup-root {
 	display: flex;
 	flex-direction: column;

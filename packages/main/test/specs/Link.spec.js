@@ -64,17 +64,4 @@ describe("General API", () => {
 		link.click();
 		assert.ok(browser.getUrl().indexOf("https://www.google.com") === -1);
 	});
-
-	it("tests acc attributes", () => {
-		const link1 = browser.$("#ariaLbl").shadow$("a");
-		const link2 = browser.$("#ariaLblBy").shadow$("a");
-
-		const ARIA_LABEL_1 = "Text from aria-label";
-		const ARIA_LABEL_2 = "Text from aria-labelledby";
-
-		assert.strictEqual(link1.getAttribute("aria-label"),
-			ARIA_LABEL_1, "The aria-label attribute is correct.");
-		assert.strictEqual(link2.getAttribute("aria-label"),
-			ARIA_LABEL_2, "The aria-label attribute is correct.");
-	});
 });
