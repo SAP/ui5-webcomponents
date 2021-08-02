@@ -12,6 +12,7 @@ import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./popup-util
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 
 /**
  * @public
@@ -298,7 +299,9 @@ class Popup extends UI5Element {
 	_onmouseup() {
 		this._root.tabIndex = -1;
 		if (this._shouldFocusRoot) {
-			this._root.focus();
+			if (isChrome()) {
+				this._root.focus();
+			}
 			this._shouldFocusRoot = false;
 		}
 	}
