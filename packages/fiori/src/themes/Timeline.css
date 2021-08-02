@@ -21,3 +21,32 @@
 .ui5-timeline-list-item:last-child {
 	margin-bottom: 0;
 }
+
+:host([layout="Horizontal"]) .ui5-timeline-list {
+	white-space: nowrap;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+:host([layout="Horizontal"]) .ui5-timeline-list-item {
+	display: inline-block;
+	margin-left: var(--_ui5_tl_li_margin_bottom);
+}
+
+:host([layout="Horizontal"]) .ui5-timeline-scroll-container {
+	overflow: auto;
+	/* The padding values of the parent container are added to the size of scroll container */
+	width: calc(100% + 0.5rem);
+}
+
+:host([layout="Horizontal"]) [dir=rtl] .ui5-timeline-list-item {
+	display: inline-block;
+	margin-left: inherit;
+	margin-right: var(--_ui5_tl_li_margin_bottom);
+}
+
+:host([layout="Horizontal"]) [dir=rtl] .ui5-timeline-scroll-container {
+	/* The padding values of the parent container are added to the size of scroll container */
+	width: calc(100% - 0.5rem);
+}
