@@ -16,7 +16,7 @@
         </li>
 
         {{#each _linksData}}
-            <li class="ui5-breadcrumbs-link-wrapper" @click="{{../_onLinkClick}}">
+            <li class="ui5-breadcrumbs-link-wrapper" @click="{{../_onLinkPress}}">
                 <ui5-link
                     href="{{this.href}}"
                     target="{{this.target}}"
@@ -29,7 +29,7 @@
         {{/each}}
 
         {{#if _endsWithCurrentLocationLabel}}
-        <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelClick}}">
+        <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelPress}}">
             <span id={{this._id}}-labelWrapper>
                 <ui5-label
                     aria-current="page">

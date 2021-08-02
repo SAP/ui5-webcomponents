@@ -1,6 +1,7 @@
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
+	isEnter,
 	isSpace,
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -141,6 +142,21 @@ const metadata = {
  * <br><br>
  * You can choose the type of separator to be used from a number of predefined options.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-breadcrumbs</code> provides advanced keyboard handling.
+ * <br>
+ * <ul>
+ * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.</li>
+ * <li>[SPACE, ENTER] - If the drop-down is open - activates the focused item and triggers the <code>item-click</code> event.</li>
+ * <li>[ESC] - Closes the drop-down.</li>
+ * <li>[LEFT] - If the drop-down is closed - navigates one item to the left.</li>
+ * <li>[RIGHT] - If the drop-down is closed - navigates one item to the right.</li>
+ * <li>[UP] - If the drop-down is open - moves focus to the next item.</li>
+ * <li>[DOWN] - If the drop-down is open - moves focus to the previous item.</li>
+ * <li>[HOME] - Navigates to the first item.</li>
+ * <li>[END] - Navigates to the last item.</li>
+ * </ul>
+ * <br>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Breadcrumbs
@@ -262,17 +278,24 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isShow(event) && !this._isOverflowEmpty) {
+		const isOverflowOpenerFocused = this._isOverflowOpenerFocused;
+
+		if (isShow(event) && isOverflowOpenerFocused && !this._isOverflowEmpty) {
 			event.preventDefault();
 			this._toggleRespPopover();
+			return;
 		}
-		if (isSpace(event) && !this._isOverflowEmpty && !this._isPickerOpen) {
+		if (isSpace(event) && isOverflowOpenerFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
 			event.preventDefault();
+			return;
+		}
+		if ((isEnter(event) || isSpace(event)) && this._isCurrentLocationLabelFocused) {
+			this._onLabelPress();
 		}
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event) && !this._isOverflowEmpty && !this._isPickerOpen) {
+		if (this._isOverflowOpenerFocused && isSpace(event) && !this._isOverflowEmpty && !this._isPickerOpen) {
 			this._openRespPopover();
 		}
 	}
@@ -355,14 +378,14 @@ class Breadcrumbs extends UI5Element {
 		return totalLinksWidth;
 	}
 
-	_onLinkClick(event) {
+	_onLinkPress(event) {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-link` === link.id);
 		this.fireEvent("item-click", { item });
 	}
 
-	_onLabelClick(event) {
+	_onLabelPress() {
 		const items = this.getSlottedNodes("items"),
 			item = items[items.length - 1];
 		this.fireEvent("item-click", { item });
@@ -412,6 +435,10 @@ class Breadcrumbs extends UI5Element {
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
 	}
 
+	getCurrentLocationLabelWrapper() {
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
+	}
+
 	get _endsWithCurrentLocationLabel() {
 		return this.design === BreadcrumbsDesign.Standard;
 	}
@@ -431,8 +458,13 @@ class Breadcrumbs extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location ui5-label");
 	}
 
-	getCurrentLocationLabelWrapper() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
+	get _isOverflowOpenerFocused() {
+		return this._overflowLink._tabIndex === "0";
+	}
+
+	get _isCurrentLocationLabelFocused() {
+		const label = this.getCurrentLocationLabelWrapper();
+		return label && label.tabIndex === 0;
 	}
 
 	/**
