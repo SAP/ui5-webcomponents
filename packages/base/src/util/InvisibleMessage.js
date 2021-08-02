@@ -2,6 +2,9 @@ import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
 import getSingletonElementInstance from "./getSingletonElementInstance.js";
 import { attachBoot } from "../Boot.js";
 
+let politeSpan;
+let assertiveSpan;
+
 attachBoot(() => {
 	const styles = `position: absolute;
 	clip: rect(1px,1px,1px,1px);
@@ -10,8 +13,8 @@ attachBoot(() => {
 	top: -1000px;
 	pointer-events: none;`;
 
-	const politeSpan = document.createElement("span");
-	const assertiveSpan = document.createElement("span");
+	politeSpan = document.createElement("span");
+	assertiveSpan = document.createElement("span");
 
 	politeSpan.classList.add("ui5-invisiblemessage-polite");
 	assertiveSpan.classList.add("ui5-invisiblemessage-assertive");
