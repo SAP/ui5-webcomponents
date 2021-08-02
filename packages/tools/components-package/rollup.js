@@ -7,7 +7,6 @@ const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
 const colors = require("colors/safe");
-const notify = require("rollup-plugin-notify");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
 
@@ -131,10 +130,6 @@ const getPlugins = ({ transpile }) => {
 		plugins.push(terser({
 			numWorkers: 1,
 		}));
-	}
-
-	if (process.env.DEV) {
-		plugins.push(notify());
 	}
 
 	const es6DevMain = process.env.DEV && !transpile && packageName === "@ui5/webcomponents";

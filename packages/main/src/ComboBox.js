@@ -205,10 +205,10 @@ const metadata = {
 		 * Receives id(or many ids) of the elements that label the combo box
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -479,7 +479,7 @@ class ComboBox extends UI5Element {
 
 	async openValueStatePopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.openBy(this);
+		this.popover && this.popover.showAt(this);
 	}
 
 	async closeValueStatePopover() {
@@ -648,7 +648,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_openRespPopover() {
-		this.responsivePopover.openBy(this);
+		this.responsivePopover.showAt(this);
 	}
 
 	_filterItems(str) {
