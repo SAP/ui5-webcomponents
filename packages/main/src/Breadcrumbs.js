@@ -146,8 +146,8 @@ const metadata = {
  * The <code>ui5-breadcrumbs</code> provides advanced keyboard handling.
  * <br>
  * <ul>
- * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.</li>
- * <li>[SPACE, ENTER] - If the drop-down is open - activates the focused item and triggers the <code>item-click</code> event.</li>
+ * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - If the dropdown arrow is focused - opens/closes the drop-down.</li>
+ * <li>[SPACE, ENTER] - Activates the focused item and triggers the <code>item-click</code> event.</li>
  * <li>[ESC] - Closes the drop-down.</li>
  * <li>[LEFT] - If the drop-down is closed - navigates one item to the left.</li>
  * <li>[RIGHT] - If the drop-down is closed - navigates one item to the right.</li>
