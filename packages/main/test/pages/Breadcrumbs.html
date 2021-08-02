@@ -22,6 +22,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<style>
+		h2 {
+			margin-top: 2rem;
+		}
+	</style>
+
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -78,6 +84,24 @@
 		<ui5-breadcrumbs-item href="#">Link6</ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="#">Link7</ui5-breadcrumbs-item>
 	</ui5-breadcrumbs>
+
+	<h2>Breadcrumbs with specific separator style</h2>
+	<ui5-select id="selectSeparator">
+		<ui5-option>Slash</ui5-option>
+		<ui5-option>BackSlash</ui5-option>
+		<ui5-option>DoubleBackSlash</ui5-option>
+		<ui5-option>DoubleGreaterThan</ui5-option>
+		<ui5-option>DoubleSlash</ui5-option>
+		<ui5-option>GreaterThan</ui5-option>
+	</ui5-select>
+	<div style="margin-top:0.5rem">
+		<ui5-breadcrumbs id="breadcrumbs4" separator-style="Slash">
+			<ui5-breadcrumbs-item href="#">Link1 </ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#">Link2</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#">Location</ui5-breadcrumbs-item>
+		</ui5-breadcrumbs>
+	</div>
 
 	<div style="width: 200px;border: 1px solid lightgray;padding-top: 0.5rem;margin-top: 0.5rem">
 
@@ -161,6 +185,11 @@
 
 			link.innerText = newContent;
 		}
+
+		selectSeparator.addEventListener("ui5-change", function(e) {
+			let separator = e.detail.selectedOption.textContent;
+			breadcrumbs4.setAttribute("separator-style", separator);
+		});
 
 	</script>
 
