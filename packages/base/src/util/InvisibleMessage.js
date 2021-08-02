@@ -6,6 +6,10 @@ let politeSpan;
 let assertiveSpan;
 
 attachBoot(() => {
+	if (politeSpan && assertiveSpan) {
+		return;
+	}
+
 	const styles = `position: absolute;
 	clip: rect(1px,1px,1px,1px);
 	user-select: none;
