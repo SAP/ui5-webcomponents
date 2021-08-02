@@ -1,5 +1,5 @@
-commit 7c71884e94493c750ea1d1717e1c2c3451ad04f0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Jul 31 11:37:31 2021 +0300
+commit dbfa9ca2c51b323ccb4f74ef99a0139cc144f3a8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Aug 2 13:42:31 2021 +0300
 
-    chore: remove CLA texts (#3577)
+    fix(framework): InvisibleMessage synced with framework lifecycle (#3583)
