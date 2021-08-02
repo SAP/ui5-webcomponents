@@ -6,12 +6,23 @@
 	display: flex;
 }
 
-.ui5-tli-indicator {
+:host([layout="Horizontal"]) .ui5-tli-root {
+	flex-direction: column;
+}
+
+:host([layout="Vertical"]) .ui5-tli-indicator {
 	position: relative;
 	width: 2rem;
 }
 
-.ui5-tli-indicator::before {
+:host([layout="Horizontal"]) .ui5-tli-indicator {
+	position: relative;
+	display: flex;
+	height: 2rem;
+	align-items: center;
+}
+
+:host([layout="Vertical"]) .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
@@ -22,10 +33,36 @@
 	left: 50%;
 }
 
+:host([layout="Horizontal"]) .ui5-tli-indicator::before {
+	content: "";
+	display: inline-block;
+	background-color: var(--sapContent_ForegroundBorderColor);
+	height: 1px;
+	top: 50%;
+	position: absolute;
+	left: 2.0625rem;
+	right: -1.625rem;
+}
+
+:host([layout="Horizontal"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before{
+	right: -1.9375rem;
+}
+
 /* Line when no Icon is provided */
-:host(:not([icon])) .ui5-tli-indicator::before {
-	bottom: -2.125rem;
+:host([layout="Vertical"]:not([icon])) .ui5-tli-indicator::before {
+	bottom: -1.625rem;
 	top: 1.875rem;
+}
+
+/* Line when no Icon is provided in horizontal*/
+:host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator::before {
+	top: 50%;
+	right: -1.9375rem;
+	left: 1.6875rem;
+}
+
+ :host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
+	right: -1.625rem;
 }
 
 /* No Icon Dot */
@@ -44,6 +81,16 @@
 	transform: translateX(-50%);
 }
 
+/* No Icon Dot in Hotizontal */
+:host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator::after {
+	top: 0.78125rem;
+	left: 0.9625rem;
+}
+
+:host(:last-child) .ui5-tli-indicator::before {
+	display: none;
+}
+
 :host(:last-child) .ui5-tli-indicator::before {
 	display: none;
 }
@@ -57,10 +104,22 @@
 	width: 2rem;
 }
 
+:host([layout="Horizontal"]) .ui5-tli-icon-outer {
+	margin-top: 0rem;
+	height: 1.3125rem;
+}
+
 .ui5-tli-icon {
 	color: var(--sapContent_NonInteractiveIconColor);
 	height: 1.375rem;
 	width: 1.375rem;
+}
+
+:host([layout="Horizontal"]) .ui5-tli-dummy-icon-container {
+	height: 1.375rem;
+	width: 1.375rem;
+	display: inline-block;
+	outline: none;
 }
 
 .ui5-tli-bubble {
@@ -72,6 +131,11 @@
 	position: relative;
 	margin-left: .5rem;
 	padding: var(--_ui5_tl_bubble_padding);
+}
+
+:host([layout="Horizontal"]) .ui5-tli-bubble {
+	margin-top: .5rem;
+	margin-left: 0;
 }
 
 .ui5-tli-bubble:focus {
@@ -87,6 +151,11 @@
 	bottom: var(--_ui5_TimelineItem_bubble_outline_bottom);
 	left: var(--_ui5_TimelineItem_bubble_outline_left);
 	pointer-events: none;
+}
+
+:host([layout="Horizontal"]) .ui5-tli-bubble:focus::after {
+	top: -0.625rem;
+	left: -0.125rem;
 }
 
 .ui5-tli-bubble-arrow {
@@ -112,14 +181,28 @@
 	transform: rotate(45deg);
 }
 
+:host([layout="Horizontal"]) .ui5-tli-bubble-arrow::before {
+	transform: rotate(315deg);
+}
+
 .ui5-tli-bubble-arrow--left {
 	left: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
+}
+
+.ui5-tli-bubble-arrow--top {
+	top: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
 }
 
 .ui5-tli-bubble-arrow--left::before {
 	left: 50%;
 	width: 50%;
 	transform-origin: 100% 100%;
+}
+
+.ui5-tli-bubble-arrow--top::before {
+	left: 42%;
+	width: 75%;
+	transform-origin: 152% 104%;
 }
 
 .ui5-tli-title,
@@ -156,12 +239,41 @@
 	transform: scale(-1, 1);
 }
 
+[dir=rtl] .ui5-tli-bubble-arrow--top {
+	right: 0;
+	left: auto;
+	transform: scale(-1, 1);
+}
+
 [dir=rtl] .ui5-tli-bubble {
 	margin-left: auto;
 	margin-right: .5rem;
 }
 
+:host([layout="Horizontal"]) [dir=rtl] .ui5-tli-bubble {
+	margin-right: 0;
+}
+
 [dir=rtl] .ui5-tli-bubble:focus::after {
 	left: var(--_ui5_TimelineItem_bubble_rtl_left_offset);
 	right: var(--_ui5_TimelineItem_bubble_rtl_right_offset);
+}
+
+:host([layout="Horizontal"]) [dir=rtl]  .ui5-tli-bubble:focus::after {
+	right: 0
+}
+
+:host([layout="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::after {
+	right: 0.625rem;
+}
+
+/* Line when no Icon is provided in horizontal*/
+:host([layout="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::before {
+	right: 1.9375rem;
+	left: -1.625rem;
+}
+
+:host([layout="Horizontal"]) [dir=rtl] .ui5-tli-indicator::before {
+	left: -1.625rem;
+	right: 2.125rem;
 }

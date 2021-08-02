@@ -2,12 +2,17 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineItem from "./TimelineItem.js";
 
 // Styles
 import styles from "./generated/themes/Timeline.css.js";
+import TimelineLayout from "./types/TimelineLayout.js";
+
+const SHORT_LINE_WIDTH = "ShortLineWidth";
+const LARGE_LINE_WIDTH = "LargeLineWidth";
 
 /**
  * @public
@@ -16,6 +21,28 @@ const metadata = {
 	tag: "ui5-timeline",
 	languageAware: true,
 	managedSlots: true,
+	properties: /** @lends  sap.ui.webcomponents.fiori.Timeline.prototype */ {
+		/**
+		 * Defines the items orientation.
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Available options are:
+		 * <ul>
+	 	* <li><code>Vertical</code></li>
+	 	* <li><code>Horizontal</code></li>
+		 * </ul>
+		 *
+		 * @type {TimelineLayout}
+		 * @defaultvalue "Vertical"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		layout: {
+			type: TimelineLayout,
+			defaultValue: TimelineLayout.Vertical,
+		},
+	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
@@ -30,6 +57,7 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
+
 };
 
 /**
@@ -75,7 +103,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.items,
 		});
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
@@ -95,6 +122,19 @@ class Timeline extends UI5Element {
 		const target = event.target;
 
 		this._itemNavigation.setCurrentItem(target);
+	}
+
+	onBeforeRendering() {
+		this._itemNavigation.navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+
+		for (let i = 0; i < this.items.length; i++) {
+			this.items[i].layout = this.layout;
+			if (this.items[i + 1] && !!this.items[i + 1].icon) {
+				this.items[i]._lineWidth = SHORT_LINE_WIDTH;
+			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
+				this.items[i]._lineWidth = LARGE_LINE_WIDTH;
+			}
+		}
 	}
 }
 
