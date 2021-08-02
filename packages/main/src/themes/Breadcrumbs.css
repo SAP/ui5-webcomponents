@@ -29,11 +29,11 @@
 	outline: 1px dotted var(--sapContent_FocusColor);
 }
 
-.ui5-breadcrumbs-overflow-opener[hidden] {
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper[hidden] {
     display: none
 }
 
-.ui5-breadcrumbs-overflow-opener [ui5-icon] {
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-icon] {
     width: var(--sapFontSize);
     height: var(--sapFontSize);
     padding-left: .675rem;
@@ -41,7 +41,7 @@
     color: var(--sapLinkColor);
 }
 
-.ui5-breadcrumbs-overflow-opener [ui5-icon]::before {
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-icon]::before {
     content: "...";
     vertical-align: middle;
     position: absolute;
@@ -50,8 +50,8 @@
 }
 
 /* underline icon on hover */
-.ui5-breadcrumbs-overflow-opener [ui5-link][focused] [ui5-icon]::after,
-.ui5-breadcrumbs-overflow-opener:hover [ui5-icon]::after {
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link][focused] [ui5-icon]::after,
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper:hover [ui5-icon]::after {
     content: "";
     position: absolute;
     border-bottom: 0.0625rem solid;

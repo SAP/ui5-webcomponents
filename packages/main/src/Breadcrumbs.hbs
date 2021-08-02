@@ -4,14 +4,14 @@
         @keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}">
 
-        <li class="ui5-breadcrumbs-overflow-opener"
+        <li class="ui5-breadcrumbs-dropdown-arrow-link-wrapper"
             ?hidden="{{_isOverflowEmpty}}">
             <ui5-link @click="{{_openRespPopover}}"
                 accessible-role="button"
-                aria-label="{{_overflowAccessibleNameText}}"
+                aria-label="{{_dropdownArrowAccessibleNameText}}"
                 aria-haspopup="{{_ariaHasPopup}}">
                 <ui5-icon name="slim-arrow-down"
-                    title="{{_overflowAccessibleNameText}}"></ui5-icon>
+                    title="{{_dropdownArrowAccessibleNameText}}"></ui5-icon>
             </ui5-link>
         </li>
 

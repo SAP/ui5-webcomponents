@@ -201,7 +201,7 @@ class Breadcrumbs extends UI5Element {
 		// maps items to their widths
 		this._breadcrumbItemWidths = new WeakMap();
 		// the width of the interactive element that opens the overflow
-		this._overflowLinkWidth = 0;
+		this._dropdownArrowLinkWidth = 0;
 
 		this._labelFocusAdaptor = {
 			id: `${this._id}-labelWrapper`,
@@ -260,7 +260,7 @@ class Breadcrumbs extends UI5Element {
 		const items = this._links;
 
 		if (!this._isOverflowEmpty) {
-			items.unshift(this._overflowLink);
+			items.unshift(this._dropdownArrowLink);
 		}
 
 		if (this._endsWithCurrentLocationLabel) {
@@ -278,14 +278,14 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		const isOverflowOpenerFocused = this._isOverflowOpenerFocused;
+		const isDropdownArrowFocused = this._isDropdownArrowFocused;
 
-		if (isShow(event) && isOverflowOpenerFocused && !this._isOverflowEmpty) {
+		if (isShow(event) && isDropdownArrowFocused && !this._isOverflowEmpty) {
 			event.preventDefault();
 			this._toggleRespPopover();
 			return;
 		}
-		if (isSpace(event) && isOverflowOpenerFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
+		if (isSpace(event) && isDropdownArrowFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
 			event.preventDefault();
 			return;
 		}
@@ -295,7 +295,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		if (this._isOverflowOpenerFocused && isSpace(event) && !this._isOverflowEmpty && !this._isPickerOpen) {
+		if (this._isDropdownArrowFocused && isSpace(event) && !this._isOverflowEmpty && !this._isPickerOpen) {
 			this._openRespPopover();
 		}
 	}
@@ -321,7 +321,7 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._overflowLinkWidth = this._getElementWidth(this._overflowLink);
+			this._dropdownArrowLinkWidth = this._getElementWidth(this._dropdownArrowLink);
 		}
 	}
 
@@ -332,8 +332,8 @@ class Breadcrumbs extends UI5Element {
 			overflowSize = 0;
 
 		if (requiredWidth > availableWidth) {
-			// need to show the overflow opener as well
-			requiredWidth += this._overflowLinkWidth;
+			// need to show the component that opens the overflow
+			requiredWidth += this._dropdownArrowLinkWidth;
 		}
 
 		while ((requiredWidth > availableWidth) && (overflowSize < this._maxAllowedOverflowSize)) {
@@ -422,7 +422,7 @@ class Breadcrumbs extends UI5Element {
 
 	async _openRespPopover() {
 		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.showAt(this._overflowLink);
+		this.responsivePopover.showAt(this._dropdownArrowLink);
 	}
 
 	_isItemVisible(item) {
@@ -458,8 +458,8 @@ class Breadcrumbs extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location ui5-label");
 	}
 
-	get _isOverflowOpenerFocused() {
-		return this._overflowLink._tabIndex === "0";
+	get _isDropdownArrowFocused() {
+		return this._dropdownArrowLink._tabIndex === "0";
 	}
 
 	get _isCurrentLocationLabelFocused() {
@@ -481,8 +481,8 @@ class Breadcrumbs extends UI5Element {
 	 * Getter for the interactive element that opens the overflow
 	 * @private
 	 */
-	get _overflowLink() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-overflow-opener ui5-link");
+	get _dropdownArrowLink() {
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper ui5-link");
 	}
 
 	/**
@@ -534,7 +534,7 @@ class Breadcrumbs extends UI5Element {
 		return this.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
 	}
 
-	get _overflowAccessibleNameText() {
+	get _dropdownArrowAccessibleNameText() {
 		return this.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
 	}
 
