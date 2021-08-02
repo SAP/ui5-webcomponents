@@ -227,10 +227,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 		},
 
@@ -498,7 +498,7 @@ class TextArea extends UI5Element {
 
 	async openPopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.openBy(this.shadowRoot.querySelector(".ui5-textarea-inner"));
+		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-inner"));
 	}
 
 	async closePopover() {

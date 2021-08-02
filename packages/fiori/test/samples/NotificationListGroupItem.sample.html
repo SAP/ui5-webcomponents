@@ -9,6 +9,12 @@
 
 <div class="control-tag">&lt;ui5-li-notification-group&gt;</div>
 
+<style>
+	ui5-avatar:not(:defined) {
+		visibility: hidden;
+	}
+</style>
+
 <!--Basic -->
 <section>
 	<h3>NotificationListGroupItem</h3>
@@ -301,7 +307,7 @@
 		<script>
 			shellbar.addEventListener("ui5-notifications-click", function(event) {
 				event.preventDefault();
-				notificationsPopover.openBy(event.detail.targetRef);
+				notificationsPopover.showAt(event.detail.targetRef);
 			});
 		</script>
 	</div>
@@ -333,7 +339,10 @@
 				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar image="./img/man_avatar_1.png" size="XS" slot="avatar"></ui5-avatar>
+				<ui5-avatar slot="avatar" size="XS">
+					<img src="./img/man_avatar_1.png" />
+				</ui5-avatar>
+
 				<span slot="footnotes">John Doe</span>
 				<span slot="footnotes">2 Days</span>
 
@@ -347,7 +356,7 @@
 
 <script>
 	shellbar.addEventListener("ui5-notifications-click", function(event) {
-		notificationsPopover.openBy(event.detail.targetRef);
+		notificationsPopover.showAt(event.detail.targetRef);
 	});
 </script>
 	

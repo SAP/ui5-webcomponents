@@ -104,6 +104,14 @@ class Suggestions {
 		return false;
 	}
 
+	onTab(event) {
+		if (this._isItemOnTarget()) {
+			this.onItemSelected(null, true);
+			return true;
+		}
+		return false;
+	}
+
 	toggle(bToggle, { preventFocusRestore }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
@@ -124,7 +132,7 @@ class Suggestions {
 		this._beforeOpen();
 
 		if (this._getItems().length) {
-			this.responsivePopover.openBy(this._getComponent());
+			this.responsivePopover.showAt(this._getComponent());
 		}
 	}
 
