@@ -6,9 +6,10 @@ if (process.argv.length < 4) {
 	return;
 }
 
-const fileNamePattern = /sapIllus-(.+)-(.+).svg/;
+const fileNamePattern = /sapIllus-.+-(.+).svg/;
 const srcPath = process.argv[2];
 const destPath = process.argv[3];
+// collect each illustration name because each one should have Sample.js file
 const fileNames = new Set();
 
 const svgImportTemplate = svgContent => { return `export default \`${svgContent}\`;`};
@@ -45,26 +46,25 @@ export {
 const svgToJs = fileName => {
 	const svg = fs.readFileSync(path.join(srcPath, fileName), { encoding: "utf-8" });
 	const fileContent = svgImportTemplate(svg);
-	fileName = fileName.replace("svg", "js");
+	fileName = fileName.replace(/\.svg$/, ".js");
 
 	fs.writeFileSync(path.join(destPath, fileName), fileContent);
 }
 
 mkdirp.sync(destPath);
 
-const illustrationFileNames = fs.readdirSync(path.normalize(process.argv[2]));
+const illustrationFileNames = fs.readdirSync(path.normalize(srcPath));
 
-// convert svg to js imports
+// convert SVG to JS imports
 illustrationFileNames.forEach(illustration => {
 	if (fileNamePattern.test(illustration)) {
-		let [fileName, name] = illustration.match(/sapIllus-.+-(.+).svg/);
+		let [fileName, illustrationName] = illustration.match(fileNamePattern);
 
 		svgToJs(fileName);
-		fileNames.add(name);
+		fileNames.add(illustrationName);
 	}
 });
 
-// combine whole illustration data in single import
 for (let illustrationName of fileNames) {
 	fs.writeFileSync(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName));
 }
