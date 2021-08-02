@@ -25,7 +25,9 @@
 
 {{#*inline "imageBegin"}}
 	{{#if displayImage}}
-		<ui5-avatar image="{{image}}" image-fit-type="Contain" shape="Square" class="ui5-li-img"></ui5-avatar>
+		<ui5-avatar shape="Square" class="ui5-li-img">
+			<img src="{{image}}" class="ui5-li-img-inner" />
+		</ui5-avatar>
 	{{/if}}
 {{/inline}}
 
