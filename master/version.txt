@@ -1,5 +1,5 @@
-commit 4657395150f2463bb1128b5e336a2def18442a07
-Author: Iliana Bobeva <iliana.bobeva@sap.com>
-Date:   Mon Aug 2 16:08:12 2021 +0300
+commit b28e104c489a07652ed700c1ee1c6e0ea35e5ec6
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Aug 2 16:30:07 2021 +0300
 
-    feat(ui5-select): Change focus of options on keypress (#3538)
+    feat(ui5-timeline): enable horizontal layout (#3520)
