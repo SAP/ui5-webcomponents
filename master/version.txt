@@ -1,9 +1,19 @@
-commit e4770b3bb07211b166cc4718e0e762997c933c5f
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Aug 3 08:45:27 2021 +0300
+commit 196a590d14342fe76acd54a13d6f6c3e9a7d1adf
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Tue Aug 3 10:00:35 2021 +0300
 
-    fix(ui5-table-cell): allow selection of text nodes (#3568)
+    feat(ui5-barcode-scanner-dialog): Initial implementation (#3523)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3494
+    * feat(ui5-barcode-scanner-dialog): Initial implementation
     
-    Co-authored-by: Filip Siderov <filip.siderov@sap.com>
+    * feat(ui5-barcode-scanner-dialog): Initial implementation
+    
+    * remove obsolete function argument
+    
+    * corrected jsdoc
+    
+    * adopted show method
+    
+    * correct jsdoc
+    
+    * added check for loading status upon open; addopted show in playground sample
