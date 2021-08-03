@@ -29,10 +29,22 @@
 			<ui5-li slot="sortItems">Company</ui5-li>
 			<ui5-li slot="sortItems">Department</ui5-li>
 		</ui5-view-settings-dialog>
+		<script>
+			let vsdResults = document.getElementById("vsdResults");
+			btnOpenDialog1.addEventListener("click", ()=> {
+				vsdResults.innerHTML = "";
+				vsd1.open();
+			});
+
+			vsd1.addEventListener("confirm", function(evt) {
+				vsdResults.innerHTML = JSON.stringify(evt.detail);
+			});
+
+		</script>
 	</xmp></pre>
 	<script>
-		var vsdResults = document.getElementById("vsdResults");
-		btnOpenDialog1.addEventListener("click", function () {
+		let vsdResults = document.getElementById("vsdResults");
+		btnOpenDialog1.addEventListener("click", ()=> {
 			vsdResults.innerHTML = "";
 			vsd1.open();
 		});
