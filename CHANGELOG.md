@@ -109,6 +109,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-step-input:** fire "input" once when value is deleted ([#3474](https://github.com/SAP/ui5-webcomponents/issues/3474)) ([a5f27f2](https://github.com/SAP/ui5-webcomponents/commit/a5f27f2)), closes [#3457](https://github.com/SAP/ui5-webcomponents/issues/3457)
 * **ui5-step-input:** fix "min-width" is now correct ([#3398](https://github.com/SAP/ui5-webcomponents/issues/3398)) ([a8af480](https://github.com/SAP/ui5-webcomponents/commit/a8af480)), closes [#3377](https://github.com/SAP/ui5-webcomponents/issues/3377) [#3377](https://github.com/SAP/ui5-webcomponents/issues/3377)
 * **ui5-tabcontainer:** scroll tabs into view with keyboard navigation ([#3354](https://github.com/SAP/ui5-webcomponents/issues/3354)) ([d61a9b2](https://github.com/SAP/ui5-webcomponents/commit/d61a9b2))
+fix(ui5-table-cell):
+* **ui5-table-cell:**  allow selection of text nodes ([#3568](https://github.com/SAP/ui5-webcomponents/issues/3568)) ([e4770b3](https://github.com/SAP/ui5-webcomponents/commit/e4770b3))
 * **ui5-table-row:** prevent SPACE only when event target is the TableRow ([#3393](https://github.com/SAP/ui5-webcomponents/issues/3393)) ([d48b4c6](https://github.com/SAP/ui5-webcomponents/commit/d48b4c6))
 * **ui5-textarea:** restore value on ESCAPE key ([#3261](https://github.com/SAP/ui5-webcomponents/issues/3261)) ([7b60885](https://github.com/SAP/ui5-webcomponents/commit/7b60885))
 * **ui5-time-picker:** fix accessibility ([#3162](https://github.com/SAP/ui5-webcomponents/issues/3162)) ([927abf6](https://github.com/SAP/ui5-webcomponents/commit/927abf6)), closes [#3010](https://github.com/SAP/ui5-webcomponents/issues/3010)
