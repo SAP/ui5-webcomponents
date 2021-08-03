@@ -1,7 +1,7 @@
-commit 4f17a315e00515120f166aad0fb428a734a00436
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Aug 3 14:02:29 2021 +0300
+commit 6dbc2a096753f6a25d44658af169cb2a3713001f
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Tue Aug 3 14:28:39 2021 +0300
 
-    fix(ui5-li-notification, ui5-li-notification-group): rename heading property to titleText (#3586)
+    feat(ui5-breadcrumbs): Initial implementation (#3489)
     
-    BREAKING CHANGE The property "heading" property has been renamed to "titleText"
+    Fixes #3166
