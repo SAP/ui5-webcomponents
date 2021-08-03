@@ -1,7 +1,8 @@
-commit 6dbc2a096753f6a25d44658af169cb2a3713001f
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Tue Aug 3 14:28:39 2021 +0300
+commit 4dbda9237036af121e83ba6e468c3a6cfa27ca6d
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Aug 3 14:39:17 2021 +0300
 
-    feat(ui5-breadcrumbs): Initial implementation (#3489)
+    refactor(ui5-illustrated-message): convert SVG files to JS imports (#3556)
     
-    Fixes #3166
+    Since all SVG and JS imports were pre-generated it was hard to keep everything up to date and synced correctly.
+    Now, the single source of truth are the SVG files of each illustrations and all JS imports are automatically generated when the build is started.
