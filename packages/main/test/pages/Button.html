@@ -32,10 +32,8 @@
 	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
 	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
 	<ui5-button>
-		<ui5-avatar
-			id="btnImage"
-			size="XS"
-			image="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png">
+		<ui5-avatar id="btnImage" size="XS">
+			<img src="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png" />
 		</ui5-avatar>
 	</ui5-button>
 	<ui5-icon name="invalid_name"></ui5-icon>
@@ -88,10 +86,10 @@
 	<ui5-label id="download-text2">From This Button</ui5-label>
 
 	<ui5-button icon="employee" accessible-name="Help me">Action Bar Button</ui5-button>
-	<ui5-button icon="download" accessible-name="Help me" aria-labelledby="1download-text"></ui5-button>
+	<ui5-button icon="download" accessible-name="Help me" accessible-name-ref="1download-text"></ui5-button>
 
-	<ui5-button icon="employee" aria-labelledby="1download-text download-text2">Action Bar Button</ui5-button>
-	<ui5-button icon="download" aria-labelledby="1download-text"></ui5-button>
+	<ui5-button icon="employee" accessible-name-ref="1download-text download-text2">Action Bar Button</ui5-button>
+	<ui5-button icon="download" accessible-name-ref="1download-text"></ui5-button>
 
 
 

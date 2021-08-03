@@ -9,7 +9,7 @@
 	display: none;
 }
 
-:host([read]) .ui5-nli-group-heading {
+:host([read]) .ui5-nli-group-title-text {
 	font-weight: normal;
 }
 
@@ -36,7 +36,7 @@
 	cursor: pointer;
 }
 
-.ui5-nli-group-heading {
+.ui5-nli-group-title-text {
 	color: var(--sapGroup_TitleTextColor);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontHeader6Size);

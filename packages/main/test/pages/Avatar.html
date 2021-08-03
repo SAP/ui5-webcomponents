@@ -15,6 +15,12 @@
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<style>
+		:not(:defined) {
+			display: none;
+		}
+	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">

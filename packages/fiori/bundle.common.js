@@ -16,6 +16,7 @@ import "./dist/illustrations/BeforeSearch";
 
 // FIORI components
 import Bar from "./dist/Bar.js";
+import BarcodeScannerDialog from "./dist/BarcodeScannerDialog.js";
 import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
 import IllustratedMessage from "./dist/IllustratedMessage.js";
 import ProductSwitch from "./dist/ProductSwitch.js";
