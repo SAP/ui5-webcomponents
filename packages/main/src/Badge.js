@@ -32,6 +32,22 @@ const metadata = {
 			type: String,
 			defaultValue: "1",
 		},
+
+		/**
+		 * Defines if the badge has an icon.
+		 * @private
+		 */
+		_hasIcon: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if the badge has only an icon (and no text).
+		 * @private
+		 */
+		_iconOnly: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
@@ -114,11 +130,8 @@ class Badge extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.hasIcon) {
-			this.setAttribute("__has-icon", "");
-		} else {
-			this.removeAttribute("__has-icon");
-		}
+		this._hasIcon = this.hasIcon;
+		this._iconOnly = this.iconOnly;
 	}
 
 	get hasText() {
@@ -127,6 +140,10 @@ class Badge extends UI5Element {
 
 	get hasIcon() {
 		return !!this.icon.length;
+	}
+
+	get iconOnly() {
+		return this.hasIcon && !this.hasText;
 	}
 
 	get badgeDescription() {

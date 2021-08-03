@@ -9,7 +9,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image", () => {
 		const avatar = browser.$("#myAvatar1");
-		const image = avatar.shadow$(".ui5-avatar-img");
+		const image = avatar.shadow$("slot");
 		const icon = avatar.shadow$("ui5-avatar-icon");
 
 		// img tag is rendered, ui5-icon - not
@@ -19,7 +19,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of icon", () => {
 		const avatar = browser.$("#myAvatar2");
-		const image = avatar.shadow$(".ui5-avatar-img");
+		const image = avatar.shadow$("slot");
 		const icon = avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
@@ -29,7 +29,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image, when all set", () => {
 		const avatar = browser.$("#myAvatar3");
-		const image = avatar.shadow$(".ui5-avatar-img");
+		const image = avatar.shadow$("slot");
 		const icon = avatar.shadow$(".ui5-avatar-icon");
 		const initials = avatar.shadow$(".ui5-avatar-initials");
 

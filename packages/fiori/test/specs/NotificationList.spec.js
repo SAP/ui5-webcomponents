@@ -149,12 +149,27 @@ describe("Notification List Item Tests", () => {
 	it("tests List Group Item ACC ariaLabelledBy", () => {
 		const firstGroupItem = $("#nlgi1");
 		const firstGroupItemRoot = firstGroupItem.shadow$(".ui5-nli-group-root");
-		const headingId = `${firstGroupItem.getProperty("_id")}-heading`;
+		const titleTextId = `${firstGroupItem.getProperty("_id")}-title-text`;
 		const inivisbleTextId = `${firstGroupItem.getProperty("_id")}-invisibleText`;
-		const EXPECTED_ARIA_LABELLED_BY = `${headingId} ${inivisbleTextId}`;
+		const EXPECTED_ARIA_LABELLED_BY = `${titleTextId} ${inivisbleTextId}`;
 
 		// assert
 		assert.strictEqual(firstGroupItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
+			"The ariaLabelledBy text is correct.");
+	});
+
+	it("tests List Item ACC ariaLabelledBy", () => {
+		const firstItem = $("#nli1");
+		const firstItemRoot = firstItem.shadow$(".ui5-nli-root");
+
+		const titleTextId = `${firstItem.getProperty("_id")}-title-text`;
+		const descriptionId = `${firstItem.getProperty("_id")}-description`;
+		const footerId = `${firstItem.getProperty("_id")}-footer`;
+		const inivisbleTextId = `${firstItem.getProperty("_id")}-invisibleText`;
+		const EXPECTED_ARIA_LABELLED_BY = `${titleTextId} ${descriptionId} ${footerId} ${inivisbleTextId}`;
+
+		// assert
+		assert.strictEqual(firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
 			"The ariaLabelledBy text is correct.");
 	});
 
@@ -168,18 +183,12 @@ describe("Notification List Item Tests", () => {
 			"The invisible text is correct.");
 	});
 
-	it("tests List Group Item ACC ariaLabelledBy", () => {
-		const firstItem = $("#nli1");
-		const firstItemRoot = firstItem.shadow$(".ui5-nli-root");
+	it("tests List (Group) Item ACC role", () => {
+		const firstItemRoot = $("#nli1").shadow$(".ui5-nli-root");
+		const firstGroupItemRoot = $("#nlgi1").shadow$(".ui5-nli-group-root");
+		const EXPECTED_ROLE = "listitem";
 
-		const headingId = `${firstItem.getProperty("_id")}-heading`;
-		const descriptionId = `${firstItem.getProperty("_id")}-description`;
-		const footerId = `${firstItem.getProperty("_id")}-footer`;
-		const inivisbleTextId = `${firstItem.getProperty("_id")}-invisibleText`;
-		const EXPECTED_ARIA_LABELLED_BY = `${headingId} ${descriptionId} ${footerId} ${inivisbleTextId}`;
-
-		// assert
-		assert.strictEqual(firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
-			"The ariaLabelledBy text is correct.");
+		assert.strictEqual(firstGroupItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
+		assert.strictEqual(firstItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
 	});
 });

@@ -1,13 +1,14 @@
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -66,14 +67,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the popup
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -248,7 +249,9 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	static blockBodyScrolling() {
-		document.body.style.top = `-${window.pageYOffset}px`;
+		if (window.pageYOffset > 0) {
+			document.body.style.top = `-${window.pageYOffset}px`;
+		}
 		document.body.classList.add("ui5-popup-scroll-blocker");
 	}
 
@@ -276,10 +279,30 @@ class Popup extends UI5Element {
 	}
 
 	_onfocusout(e) {
-		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root.
+		// This happens after the mouse is released in order to not interrupt text selection.
 		if (!e.relatedTarget) {
-			this._root.tabIndex = -1;
-			this._root.focus();
+			this._shouldFocusRoot = true;
+		}
+	}
+
+	_onmousedown(e) {
+		this._root.removeAttribute("tabindex");
+
+		if (this.shadowRoot.contains(e.target)) {
+			this._shouldFocusRoot = true;
+		} else {
+			this._shouldFocusRoot = false;
+		}
+	}
+
+	_onmouseup() {
+		this._root.tabIndex = -1;
+		if (this._shouldFocusRoot) {
+			if (isChrome()) {
+				this._root.focus();
+			}
+			this._shouldFocusRoot = false;
 		}
 	}
 
@@ -359,7 +382,7 @@ class Popup extends UI5Element {
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
 	 */
-	async open(preventInitialFocus) {
+	async _open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 		if (prevented) {
 			return;
@@ -376,7 +399,7 @@ class Popup extends UI5Element {
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.show();
+		this._show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
 			this.applyInitialFocus();
@@ -412,9 +435,12 @@ class Popup extends UI5Element {
 			return;
 		}
 
+		const openedPopups = getOpenedPopups();
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling();
+			if (openedPopups.length === 1) {
+				Popup.unblockBodyScrolling();
+			}
 		}
 
 		this.hide();
@@ -456,7 +482,7 @@ class Popup extends UI5Element {
 	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
 	 * @protected
 	 */
-	show() {
+	_show() {
 		this.style.display = this._displayProp;
 	}
 
@@ -510,7 +536,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.ariaLabel || undefined;
+		return this.accessibleName || undefined;
 	}
 
 	get _root() {

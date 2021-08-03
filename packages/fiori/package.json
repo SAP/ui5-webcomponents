@@ -44,10 +44,11 @@
     "@ui5/webcomponents-base": "0.34.0",
     "@ui5/webcomponents-icons": "1.0.0-rc.14",
     "@ui5/webcomponents-ie11": "0.34.0",
-    "@ui5/webcomponents-theme-base": "1.0.0-rc.14"
+    "@ui5/webcomponents-theme-base": "1.0.0-rc.14",
+    "@zxing/library": "^0.18.3"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.14",
-    "chromedriver": "90.0.1"
+    "chromedriver": "92.0.0"
   }
 }

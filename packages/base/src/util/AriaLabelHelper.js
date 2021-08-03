@@ -1,9 +1,9 @@
 import findNodeOwner from "./findNodeOwner.js";
 
 const getEffectiveAriaLabelText = el => {
-	if (!el.ariaLabelledby) {
-		if (el.ariaLabel) {
-			return el.ariaLabel;
+	if (!el.accessibleNameRef) {
+		if (el.accessibleName) {
+			return el.accessibleName;
 		}
 
 		return undefined;
@@ -19,7 +19,7 @@ const getEffectiveAriaLabelText = el => {
  * @param {String} readyIds (Optional) Defines a string of elements ids. The text of these elements will be returned. If used you should provide either el or ownerDocument
  */
 const getAriaLabelledByTexts = (el, ownerDocument, readyIds = "") => {
-	const ids = (readyIds && readyIds.split(" ")) || el.ariaLabelledby.split(" ");
+	const ids = (readyIds && readyIds.split(" ")) || el.accessibleNameRef.split(" ");
 	const owner = ownerDocument || findNodeOwner(el);
 	let result = "";
 

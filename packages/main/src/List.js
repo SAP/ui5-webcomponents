@@ -199,12 +199,14 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -213,23 +215,26 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
 
 		/**
-		 * Used to externally manipulate the role of the list
+		 * Defines the accessible role of the component.
+		 * <br><br>
+		 * <b>Note:</b> If you use notification list items,
+		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
 		 *
-		 * @private
+		 * @public
 		 * @type {String}
 		 * @defaultvalue "listbox"
-		 * @since 1.0.0-rc.9
+		 * @since 1.0.0-rc.15
 		 */
-		accRole: {
+		 accessibleRole: {
 			type: String,
 			defaultValue: "listbox",
 		},
@@ -520,7 +525,7 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		if (this.ariaLabelledby || this.ariaLabel) {
+		if (this.accessibleNameRef || this.accessibleName) {
 			return undefined;
 		}
 

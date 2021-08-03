@@ -76,7 +76,7 @@
 
 	<div id="avatar-group-wrapper">
 
-		<ui5-popover header-text="My Heading" id="group-pop" style="width: 400px" placement-type="Bottom" aria-label="This popover is important">
+		<ui5-popover header-text="My Heading" id="group-pop" style="width: 400px" placement-type="Bottom" accessible-name="This popover is important">
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
@@ -90,7 +90,7 @@
 			</div>
 		</ui5-popover>
 
-		<ui5-popover header-text="My Heading" id="individual-pop" style="width: 300px" placement-type="Bottom" aria-label="This popover is important" prevent-focus-restore>
+		<ui5-popover header-text="My Heading" id="individual-pop" style="width: 300px" placement-type="Bottom" accessible-name="This popover is important" prevent-focus-restore>
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
@@ -123,22 +123,32 @@
 		</ui5-avatar-group>
 		<br>
 		<ui5-avatar-group aria-haspopup="menu" type="Group" id="avatar-group-group">
-			<ui5-avatar size="M" initials="M" image="./img/woman_avatar_5.png"></ui5-avatar>
+			<ui5-avatar size="M" initials="M">
+				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 			<ui5-avatar size="M" icon="home"></ui5-avatar>
-			<ui5-avatar size="M" initials="M" image="./img/Lamp_avatar_01.jpg"></ui5-avatar>
+			<ui5-avatar size="M" initials="M">
+				<img src="./img/Lamp_avatar_01.jpg" alt="Lamp 1">
+			</ui5-avatar>
 			<ui5-avatar size="M" icon="home"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
-			<ui5-avatar size="M" icon="home" image="./img/John_Miller.png"></ui5-avatar>
+			<ui5-avatar size="M" icon="home">
+				<img src="./img/John_Miller.png" alt="John Miller">
+			</ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 			<ui5-avatar size="M" icon="home"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
-			<ui5-avatar size="M" initials="M" image="./img/woman_avatar_5.png"></ui5-avatar>
+			<ui5-avatar size="M" initials="M">
+				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
 			<ui5-avatar size="M" icon="home"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
-			<ui5-avatar size="M" initials="M" image="./img/Lamp_avatar_01.jpg"></ui5-avatar>
+			<ui5-avatar size="M" initials="M">
+				<img src="./img/Lamp_avatar_01.jpg" alt="Lamp 1">
+			</ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 		</ui5-avatar-group>
@@ -253,7 +263,7 @@
 			<ui5-avatar size="M" interactive initials="M"></ui5-avatar>
 			<ui5-avatar size="L" interactive initials="L"></ui5-avatar>
 			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
-			<ui5-button slot="overflowButton" id="overflowButton" aria-label="+99 avatars">+99</ui5-button>
+			<ui5-button slot="overflowButton" id="overflowButton" accessible-name="+99 avatars">+99</ui5-button>
 		</ui5-avatar-group>
 	</div>
 
@@ -292,23 +302,29 @@
 		var html = "";
 
 		hiddenItems.forEach(function (avatar, index) {
-			var color = avatarGroup.colorScheme[firstHiddenIndex + index]
-			html += '<div class="avatar-slot" style="padding: 5px">' +
-						'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + color + '"></ui5-avatar>' +
-					'</div>';
+			var color = avatarGroup.colorScheme[firstHiddenIndex + index];
+			html += `<div class="avatar-slot" style="padding: 5px">
+						<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+			if (avatar.image.length > 0) {
+				html += `<img src="${avatar.image[0].src}">`
+			}
+			html +=`</ui5-avatar></div>`;
 		});
 
 		for (var index = 0; index < hiddenItems; index++) {
 			var avatarRef = items[index];
 
-			html +=  '<div class="avatar-slot">' +
-						'<ui5-avatar interactive image="' + avatarRef.image + '" initials="' + avatarRef.initials + '" color-scheme="' + avatarRef._effectiveBackgroundColor + '"></ui5-avatar>' +
-					'</div>';
+			html += `<div class="avatar-slot" style="padding: 5px">
+						<ui5-avatar interactive icon="${avatarRef.icon}" initials="${avatarRef.initials}" background-color="${color}">`;
+			if (avatarRef.image.length > 0) {
+				html += `<img src="${avatarRef.image[0].src}">`
+			}
+			html +=`</ui5-avatar></div>`;
 		}
 		placeholder.innerHTML = html;
 
 		groupPop.close();
-		groupPop.openBy(event.detail.targetRef);
+		groupPop.showAt(event.detail.targetRef);
 	}
 
 	function onAvatarClicked(avatarGroup, avatarRef) {
@@ -317,7 +333,7 @@
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
 		individualPop.close();
-		individualPop.openBy(avatarRef);
+		individualPop.showAt(avatarRef);
 	}
 
 	avatarGroupGroupEvents.addEventListener("ui5-click", function (event) {
@@ -361,7 +377,7 @@
 		var totalAvatars = 90 - group.items.length + group.hiddenItems.length;
 
 		customOBtn.innerHTML = totalAvatars > 99 ? "+99" : "+" + totalAvatars;
-		customOBtn.ariaLabel = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
+		customOBtn.accessibleName = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
 	};
 
 	groupWithBtn.addEventListener("ui5-overflow", function (event) {

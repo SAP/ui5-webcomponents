@@ -39,6 +39,13 @@ const ButtonTypes = {
 	 * @type {Emphasized}
 	 */
 	Emphasized: "Emphasized",
+
+	/**
+	 * attention type
+	 * @public
+	 * @type {Attention}
+	 */
+	Attention: "Attention",
 };
 
 /**
