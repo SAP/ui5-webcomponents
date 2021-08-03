@@ -1,19 +1,19 @@
-commit 196a590d14342fe76acd54a13d6f6c3e9a7d1adf
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Tue Aug 3 10:00:35 2021 +0300
+commit 1abd40d33139be8667cfe22100bfce3fcfde669f
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Tue Aug 3 10:09:34 2021 +0300
 
-    feat(ui5-barcode-scanner-dialog): Initial implementation (#3523)
+    fix(ui5-dialog): fix text selection on chrome (#3532)
     
-    * feat(ui5-barcode-scanner-dialog): Initial implementation
+    On Chrome, clicking on slotted elements (light DOM) in the
+    dialog (shadow DOM) causes the focus to travel up the light DOM tree to
+    reach the closes element that is focusable.
+    Which ends to be the body element as document.activeElement.
     
-    * feat(ui5-barcode-scanner-dialog): Initial implementation
+    This is not the case for FF & Safari, where the focus travels up the
+    slot, reaching the dialog root which is actually the closest focusable element.
     
-    * remove obsolete function argument
+    This change introduces a workaround to align the focus behaviour in Chrome
+    with the other browsers.
     
-    * corrected jsdoc
-    
-    * adopted show method
-    
-    * correct jsdoc
-    
-    * added check for loading status upon open; addopted show in playground sample
+    Related issue: WICG/webcomponents#773
+    Fixes #3466
