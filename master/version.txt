@@ -1,19 +1,8 @@
-commit 1abd40d33139be8667cfe22100bfce3fcfde669f
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Tue Aug 3 10:09:34 2021 +0300
+commit 2584341248d4d3bf561d765a033fa6248d402638
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Aug 3 11:54:43 2021 +0300
 
-    fix(ui5-dialog): fix text selection on chrome (#3532)
+    fix(ui5-wizard): correct navigator icons vertical alignment (#3566)
     
-    On Chrome, clicking on slotted elements (light DOM) in the
-    dialog (shadow DOM) causes the focus to travel up the light DOM tree to
-    reach the closes element that is focusable.
-    Which ends to be the body element as document.activeElement.
     
-    This is not the case for FF & Safari, where the focus travels up the
-    slot, reaching the dialog root which is actually the closest focusable element.
-    
-    This change introduces a workaround to align the focus behaviour in Chrome
-    with the other browsers.
-    
-    Related issue: WICG/webcomponents#773
-    Fixes #3466
+    Co-authored-by: Filip Siderov <filip.siderov@sap.com>
