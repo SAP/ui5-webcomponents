@@ -1,8 +1,7 @@
-commit 2584341248d4d3bf561d765a033fa6248d402638
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Aug 3 11:54:43 2021 +0300
+commit 4f17a315e00515120f166aad0fb428a734a00436
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Aug 3 14:02:29 2021 +0300
 
-    fix(ui5-wizard): correct navigator icons vertical alignment (#3566)
+    fix(ui5-li-notification, ui5-li-notification-group): rename heading property to titleText (#3586)
     
-    
-    Co-authored-by: Filip Siderov <filip.siderov@sap.com>
+    BREAKING CHANGE The property "heading" property has been renamed to "titleText"
