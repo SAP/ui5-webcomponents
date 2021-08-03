@@ -6,7 +6,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
 
 
-### New Component
+### New Components
 
 * **ui5-barcode-scanner-dialog:** introduce new component ([#3523](https://github.com/SAP/ui5-webcomponents/issues/3523)) ([196a590](https://github.com/SAP/ui5-webcomponents/commit/196a590))
 * **ui5-illustrated-message:** introduce new component ([#3376](https://github.com/SAP/ui5-webcomponents/issues/3376)) ([2dff1f4](https://github.com/SAP/ui5-webcomponents/commit/2dff1f4))
