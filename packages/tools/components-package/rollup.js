@@ -14,6 +14,11 @@ const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
+const warningsToSkip = [{
+	warningCode: "THIS_IS_UNDEFINED",
+	filePath: /.+zxing.+/,
+}];
+
 function ui5DevImportCheckerPlugin() {
 	return {
 		name: "ui5-dev-import-checker-plugin",
@@ -24,6 +29,23 @@ function ui5DevImportCheckerPlugin() {
 			}
 		},
 	};
+}
+
+function onwarn(warning, warn) {
+	// Skip warning for known false positives that will otherwise polute the log
+	let skip = warningsToSkip.find(warningToSkip => {
+		let loc, file;
+		return warning.code === warningToSkip.warningCode
+			&& (loc = warning.loc)
+			&& (file = loc.file)
+			&& file.match(warningToSkip.filePath);
+	});
+	if (skip) {
+		return;
+	}
+
+	// warn everything else
+	warn( warning );
 }
 
 const reportedForPackages = new Set(); // sometimes writeBundle is called more than once per bundle -> suppress extra messages
@@ -146,6 +168,7 @@ const getES6Config = (input = "bundle.esm.js") => {
 			clearScreen: false,
 		},
 		plugins: getPlugins({ transpile: false }),
+		onwarn: onwarn,
 	}];
 };
 
@@ -170,6 +193,7 @@ const getES5Config = (input = "bundle.es5.js") => {
 			clearScreen: false,
 		},
 		plugins: getPlugins({ transpile: true }),
+		onwarn: onwarn,
 	}];
 };
 

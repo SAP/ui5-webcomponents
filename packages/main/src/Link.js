@@ -115,9 +115,45 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		/**
+		 * Defines the aria-haspopup value of the component.
+		 *
+		 * @type String
+		 * @defaultvalue undefined
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		 ariaHaspopup: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the accessibility role of the component.
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		 accessibleRole: {
+			type: String,
+		},
+
 		_rel: {
 			type: String,
 			noAttribute: true,
+		},
+
+		_tabIndex: {
+			type: String,
+			noAttribute: true,
+		},
+
+		/**
+		 * Indicates if the element is on focus.
+		 * @private
+		 */
+		 focused: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
@@ -229,6 +265,9 @@ class Link extends UI5Element {
 	}
 
 	get tabIndex() {
+		if (this._tabIndex) {
+			return this._tabIndex;
+		}
 		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
@@ -255,6 +294,10 @@ class Link extends UI5Element {
 		return (this.href && this.href.length > 0) ? this.href : undefined;
 	}
 
+	get effectiveAccRole() {
+		return this.accessibleRole || "link";
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
@@ -265,6 +308,11 @@ class Link extends UI5Element {
 
 	_onfocusin(event) {
 		event.isMarked = "link";
+		this.focused = true;
+	}
+
+	_onfocusout(event) {
+		this.focused = false;
 	}
 
 	_onkeydown(event) {
