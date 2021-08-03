@@ -217,6 +217,10 @@ The boolean property "wrap" has been removed in favour of string prop "wrappingT
 The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
 * **ui5-list:** rename "inset" property to "indent" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([eba1e64](https://github.com/SAP/ui5-webcomponents/commit/eba1e64))
 The property "inset" has been renamed to "indent".
+* **ui5-li-notification:** rename "heading" property to "titleText" ([#3586](https://github.com/SAP/ui5-webcomponents/issues/3586)) ([4f17a31](https://github.com/SAP/ui5-webcomponents/commit/4f17a31))
+The property "heading" property has been renamed to "titleText".
+* **ui5-li-notification-group:** rename "heading" property to "titleText" ([#3586](https://github.com/SAP/ui5-webcomponents/issues/3586)) ([4f17a31](https://github.com/SAP/ui5-webcomponents/commit/4f17a31))
+The property "heading" property has been renamed to "titleText".
 * **ui5-messagestrip:** refactor API ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([1cb43f2](https://github.com/SAP/ui5-webcomponents/commit/1cb43f2))
 The properties "noIcon" and "noCloseButton" have been renamed to "hideIcon" and "hideCloseButton".
 * **ui5-messagestrip:** rename property "type" to "design" ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([4208d19](https://github.com/SAP/ui5-webcomponents/commit/4208d19))
@@ -301,8 +305,10 @@ The properties "heading" and "subheading" have been renamed to "titleText" and "
 * **ui5-input:** change public method to private ([#3224](https://github.com/SAP/ui5-webcomponents/issues/3224)) ([1166fb4](https://github.com/SAP/ui5-webcomponents/commit/1166fb4)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
 * **ui5-label:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([e591e04](https://github.com/SAP/ui5-webcomponents/commit/e591e04))
 * **ui5-link:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([cff8fd4](https://github.com/SAP/ui5-webcomponents/commit/cff8fd4))
-* **ui5-li-notification:** replace "wrap" with "wrappingType" ([#3565](https://github.com/SAP/ui5-webcomponents/issues/3565)) ([6701ab5](https://github.com/SAP/ui5-webcomponents/commit/6701ab5))
 * **ui5-list:** rename "inset" property to "indent" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([eba1e64](https://github.com/SAP/ui5-webcomponents/commit/eba1e64))
+* **ui5-li-notification:** replace "wrap" with "wrappingType" ([#3565](https://github.com/SAP/ui5-webcomponents/issues/3565)) ([6701ab5](https://github.com/SAP/ui5-webcomponents/commit/6701ab5))
+* **ui5-li-notification:** rename "heading" property to "titleText" ([#3586](https://github.com/SAP/ui5-webcomponents/issues/3586)) ([4f17a31](https://github.com/SAP/ui5-webcomponents/commit/4f17a31))
+* **ui5-li-notification-group:** rename "heading" property to "titleText" ([#3586](https://github.com/SAP/ui5-webcomponents/issues/3586)) ([4f17a31](https://github.com/SAP/ui5-webcomponents/commit/4f17a31))
 * **ui5-messagestrip:** refactor API ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([1cb43f2](https://github.com/SAP/ui5-webcomponents/commit/1cb43f2))
 * **ui5-messagestrip:** rename property "type" to "design" ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([4208d19](https://github.com/SAP/ui5-webcomponents/commit/4208d19))
 * **ui5-popover:** rename "noArrow" property to "hideArrow" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([39cc473](https://github.com/SAP/ui5-webcomponents/commit/39cc473))
