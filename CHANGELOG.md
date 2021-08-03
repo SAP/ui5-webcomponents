@@ -8,9 +8,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### New Component
 
+* **ui5-barcode-scanner-dialog:** introduce new component ([#3523](https://github.com/SAP/ui5-webcomponents/issues/3523)) ([196a590](https://github.com/SAP/ui5-webcomponents/commit/196a590))
 * **ui5-illustrated-message:** introduce new component ([#3376](https://github.com/SAP/ui5-webcomponents/issues/3376)) ([2dff1f4](https://github.com/SAP/ui5-webcomponents/commit/2dff1f4))
 
-* **ui5-barcode-scanner-dialog:** introduce new component ([#3523](https://github.com/SAP/ui5-webcomponents/issues/3523)) ([196a590](https://github.com/SAP/ui5-webcomponents/commit/196a590))
 
 ### Features
 
@@ -120,6 +120,7 @@ fix(ui5-table-cell):
 * **ui5-tree:** fix alignment of items ([#3424](https://github.com/SAP/ui5-webcomponents/issues/3424)) ([788d25d](https://github.com/SAP/ui5-webcomponents/commit/788d25d))
 * **ui5-upload-collection-item:** fix keyboard navigation ([#3327](https://github.com/SAP/ui5-webcomponents/issues/3327)) ([aad0c32](https://github.com/SAP/ui5-webcomponents/commit/aad0c32))
 * **ui5-wizard:** fix step's alignment of number and title texts ([#3370](https://github.com/SAP/ui5-webcomponents/issues/3370)) ([2cd97ec](https://github.com/SAP/ui5-webcomponents/commit/2cd97ec)), closes [#3251](https://github.com/SAP/ui5-webcomponents/issues/3251) [#3251](https://github.com/SAP/ui5-webcomponents/issues/3251)
+* **ui5-wizard:** correct step icons vertical alignment ([#3566](https://github.com/SAP/ui5-webcomponents/issues/3566)) ([2584341](https://github.com/SAP/ui5-webcomponents/commit/2584341))
 * **ui5-wizard:** correct "aria-controls" value ([#3180](https://github.com/SAP/ui5-webcomponents/issues/3180)) ([d449812](https://github.com/SAP/ui5-webcomponents/commit/d449812))
 * **ui5-wizard:** implement revised accessibility spec ([#2990](https://github.com/SAP/ui5-webcomponents/issues/2990)) ([99cb6b1](https://github.com/SAP/ui5-webcomponents/commit/99cb6b1))
 * **playground:** fix links ([#3295](https://github.com/SAP/ui5-webcomponents/issues/3295)) ([62a0cc3](https://github.com/SAP/ui5-webcomponents/commit/62a0cc3))
