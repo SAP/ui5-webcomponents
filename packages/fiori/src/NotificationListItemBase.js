@@ -26,12 +26,12 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
 
 		/**
-		 * Defines the <code>heading</code> of the item.
+		 * Defines the <code>titleText</code> of the item.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
@@ -66,7 +66,7 @@ const metadata = {
 		/**
 		 * Defines if the <code>notification</code> is new or has been already read.
 		 * <br><br>
-		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
 		 * if set to true - it has a normal font.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -167,8 +167,8 @@ class NotificationListItemBase extends ListItemBase {
 		};
 	}
 
-	get hasHeading() {
-		return !!this.heading.length;
+	get hasTitleText() {
+		return !!this.titleText.length;
 	}
 
 	get hasPriority() {
