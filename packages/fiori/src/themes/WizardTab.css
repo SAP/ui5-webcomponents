@@ -68,9 +68,11 @@
 
 /* Icon */
 .ui5-wiz-step-icon-circle {
-	display: inline-block;
+	display: inline-flex;
 	box-sizing: border-box;
 	vertical-align: middle;
+	justify-content: center;
+	align-items: center;
 	text-align: center;
 	width: 2rem;
 	height: 2rem;
@@ -87,7 +89,6 @@
 	height: 1rem;
 	color: var(--_ui5_wiz_tab_icon_color);
 	pointer-events: none;
-	vertical-align: middle;
 }
 
 /* Texts when no icon set */
