@@ -96,7 +96,7 @@ const metadata = {
  * <ul>
  * <li><code>Toggle</code> button to expand and collapse the group</li>
  * <li><code>Priority</code> icon to display the priority of the group</li>
- * <li><code>titleText</code> to entitle the group</li>
+ * <li><code>TitleText</code> to entitle the group</li>
  * <li>Custom actions - with the use of <code>ui5-notification-action</code></li>
  * <li>Items of the group</li>
  * </ul>
