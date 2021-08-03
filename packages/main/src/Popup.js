@@ -2,6 +2,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -266,10 +267,30 @@ class Popup extends UI5Element {
 	}
 
 	_onfocusout(e) {
-		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root.
+		// This happens after the mouse is released in order to not interrupt text selection.
 		if (!e.relatedTarget) {
-			this._root.tabIndex = -1;
-			this._root.focus();
+			this._shouldFocusRoot = true;
+		}
+	}
+
+	_onmousedown(e) {
+		this._root.removeAttribute("tabindex");
+
+		if (this.shadowRoot.contains(e.target)) {
+			this._shouldFocusRoot = true;
+		} else {
+			this._shouldFocusRoot = false;
+		}
+	}
+
+	_onmouseup() {
+		this._root.tabIndex = -1;
+		if (this._shouldFocusRoot) {
+			if (isChrome()) {
+				this._root.focus();
+			}
+			this._shouldFocusRoot = false;
 		}
 	}
 
