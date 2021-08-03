@@ -1,5 +1,9 @@
-commit b28e104c489a07652ed700c1ee1c6e0ea35e5ec6
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon Aug 2 16:30:07 2021 +0300
+commit e4770b3bb07211b166cc4718e0e762997c933c5f
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Aug 3 08:45:27 2021 +0300
 
-    feat(ui5-timeline): enable horizontal layout (#3520)
+    fix(ui5-table-cell): allow selection of text nodes (#3568)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3494
+    
+    Co-authored-by: Filip Siderov <filip.siderov@sap.com>
