@@ -39,12 +39,11 @@
 			vsd1.addEventListener("confirm", function(evt) {
 				vsdResults.innerHTML = JSON.stringify(evt.detail);
 			});
-
 		</script>
 	</xmp></pre>
 	<script>
-		let vsdResults = document.getElementById("vsdResults");
-		btnOpenDialog1.addEventListener("click", ()=> {
+		var vsdResults = document.getElementById("vsdResults");
+		btnOpenDialog1.addEventListener("click", function () {
 			vsdResults.innerHTML = "";
 			vsd1.open();
 		});
