@@ -1,0 +1,28 @@
+<ui5-responsive-popover
+	hide-arrow
+	content-only-on-desktop
+	placement-type="Bottom"
+	horizontal-align="Left"
+	with-padding
+	_hide-header
+	@keydown="{{_onkeydown}}">
+	<ui5-list mode="SingleSelectAuto"
+		separators="None"
+		@ui5-item-press="{{_onOverflowListItemSelect}}">
+
+		{{#each _overflowItemsData}}
+			<ui5-li
+				id="{{this._id}}-li"
+				accessible-name="{{this.accessibleName}}"
+				data-ui5-stable="{{this.stableDomRef}}">
+				{{this.textContent}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+	<div slot="footer" class="ui5-breadcrumbs-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>{{_cancelButtonText}}</ui5-button>
+	</div>
+</ui5-responsive-popover>

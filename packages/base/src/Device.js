@@ -75,6 +75,7 @@ const detectTablet = () => {
 const supportsTouch = () => touch;
 const isIE = () => ie;
 const isSafari = () => safari;
+const isChrome = () => chrome;
 
 const isTablet = () => {
 	detectTablet();
@@ -94,6 +95,7 @@ export {
 	supportsTouch,
 	isIE,
 	isSafari,
+	isChrome,
 	isPhone,
 	isTablet,
 	isDesktop,

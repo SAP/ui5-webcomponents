@@ -242,7 +242,7 @@ class SideNavigation extends UI5Element {
 
 	async openPicker(opener) {
 		const responsivePopover = await this.getPicker();
-		responsivePopover.openBy(opener);
+		responsivePopover.showAt(opener);
 	}
 
 	async closePicker(opener) {

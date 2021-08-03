@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<title>Card</title>
 
@@ -22,11 +23,15 @@
 
 <ui5-card
 	id="card"
-	status="4 of 10"
-	title-text="Quick Links"
-	subtitle-text="quick links"
-	header-interactive
 	class="myCard">
+	<ui5-card-header
+		id="cardHeader"
+		slot="header"
+		status="4 of 10"
+		title-text="Quick Links"
+		subtitle-text="quick links"
+		interactive>
+	</ui5-card-header>
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
@@ -38,18 +43,28 @@
 
 <ui5-card
 	id="card2"
-	status="4 of 10"
-	title-text="Quick Links"
-	subtitle-text="quick links"
 	class="myCard">
-	<ui5-icon name="group" slot="avatar"></ui5-icon>
+	<ui5-card-header
+		id="cardHeader2"
+		slot="header"
+		status="4 of 10"
+		title-text="Quick Links"
+		subtitle-text="quick links">
+		<ui5-icon name="group" slot="avatar"></ui5-icon>
+	</ui5-card-header>
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
 	</ui5-list>
 </ui5-card>
 
-<ui5-card id="card3" title-text="Quick Links" subtitle-text="quick links">
+<ui5-card id="card3">
+	<ui5-card-header
+		id="cardHeader3"
+		slot="header"
+		title-text="Quick Links"
+		subtitle-text="quick links">
+	</ui5-card-header>
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
@@ -57,75 +72,143 @@
 </ui5-card>
 
 
-<ui5-card title-text="Linked activities (5)" class="myCard" status="4 of 10" id="actionCard">
-	<ui5-list id="myList3" separators="Inner">
-		<ui5-li icon="horizontal-bullet-chart">
-			Increase customer satisfaction by 10% using marketing methods
-		</ui5-li>
-		<ui5-li icon="opportunity">
-			Get 1000 survey responses to annual employee survey
-		</ui5-li>
-	</ui5-list>
-
-	<ui5-button icon="add" slot="action" design="Transparent">
-		Add activity
-	</ui5-button>
-</ui5-card>
-
-<ui5-card title-text="Linked activities (5)" class="myCard" subtitle-text="quick links">
-	<ui5-list id="myList3" separators="Inner">
-		<ui5-li icon="horizontal-bullet-chart">
-			Increase customer satisfaction by 10% using marketing methods
-		</ui5-li>
-		<ui5-li icon="opportunity">
-			Get 1000 survey responses to annual employee survey
-		</ui5-li>
-	</ui5-list>
-
-	<ui5-button icon="add" slot="action" design="Transparent">
-		Add activity
-	</ui5-button>
-</ui5-card>
-
-<ui5-card title-text="Linked activities (5)">
-	<ui5-list id="myList3" separators="Inner">
-		<ui5-li icon="horizontal-bullet-chart">
-			Increase customer satisfaction by 10% using marketing methods
-		</ui5-li>
-		<ui5-li icon="opportunity">
-			Get 1000 survey responses to annual employee survey
-		</ui5-li>
-	</ui5-list>
-
-	<ui5-icon name="group" slot="avatar"></ui5-icon>
-
-	<ui5-button icon="overflow" slot="action" design="Transparent"></ui5-button>
-</ui5-card>
-
-<h3>Test accessibleName and ariaLabelledBy</h3>
-	<ui5-card
-		id="textAreaAriaLabel"
+<ui5-card class="myCard" id="actionCard">
+	<ui5-card-header
+		id="actionCardHeader"
+		slot="header"
 		title-text="Linked activities (5)"
-		subtitle-text="quick links"
-		accessible-name="Hello World"
-		class="myCard">
+		status="4 of 10">
+		<ui5-button icon="add" slot="action" design="Transparent">
+			Add activity
+		</ui5-button>
+	</ui5-card-header>
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="horizontal-bullet-chart">
+			Increase customer satisfaction by 10% using marketing methods
+		</ui5-li>
+		<ui5-li icon="opportunity">
+			Get 1000 survey responses to annual employee survey
+		</ui5-li>
+	</ui5-list>
+</ui5-card>
+
+<ui5-card class="myCard">
+	<ui5-card-header
+			slot="header"
+			title-text="Linked activities (5)"
+			subtitle-text="quick links">
+			<ui5-icon name="group" slot="avatar"></ui5-icon>
+		</ui5-card-header>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+			<ui5-li icon="opportunity">Segmentation Models</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<ui5-card id="card3">
+		<ui5-card-header id="cardHeader3" slot="header" title-text="Quick Links" subtitle-text="quick links">
+		</ui5-card-header>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+			<ui5-li icon="opportunity">Segmentation Models</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+
+	<ui5-card class="myCard" id="actionCard">
+		<ui5-card-header id="actionCardHeader" slot="header" title-text="Linked activities (5)" status="4 of 10">
+			<ui5-button icon="add" slot="action" design="Transparent">
+				Add activity
+			</ui5-button>
+		</ui5-card-header>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">
+				Increase customer satisfaction by 10% using marketing methods
+			</ui5-li>
+			<ui5-li icon="opportunity">
+				Get 1000 survey responses to annual employee survey
+			</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<ui5-card class="myCard">
+		<ui5-card-header slot="header" title-text="Linked activities (5)" subtitle-text="quick links">
+			<ui5-button icon="add" slot="action" design="Transparent">
+				Add activity
+			</ui5-button>
+		</ui5-card-header>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">
+				Increase customer satisfaction by 10% using marketing methods
+			</ui5-li>
+			<ui5-li icon="opportunity">
+				Get 1000 survey responses to annual employee survey
+			</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<ui5-card>
+		<ui5-card-header slot="header" title-text="Linked activities (5)">
+			<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-button icon="add" slot="action" design="Transparent">
+				Add activity
+			</ui5-button>
+		</ui5-card-header>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">
+				Increase customer satisfaction by 10% using marketing methods
+			</ui5-li>
+			<ui5-li icon="opportunity">
+				Get 1000 survey responses to annual employee survey
+			</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<ui5-card id="textAreaAriaLabel" class="myCard">
+		<ui5-card-header slot="header" id="header" status="4 of 10" title-text="Linked activities (5)"
+			subtitle-text="quick links">
+		</ui5-card-header>
 	</ui5-card>
 
 	<br>
 	<ui5-label id="infoText">info text</ui5-label>
 
-	<ui5-card
-		id="textAreaAriaLabelledBy"
-		aria-labelledby="infoText"
-		title-text="New jobs (5)"
-		subtitle-text="find one">
+	<ui5-card id="textAreaAriaLabelledBy">
+		<ui5-card-header slot="header" id="header2" title-text="New jobs (5)" subtitle-text="find one">
+		</ui5-card-header>
 	</ui5-card>
 
-<script>
-	card.addEventListener("ui5-headerClick", function (event) {
-		console.log(event);
-		field.value = parseInt(field.value) + 1;
-	});
-</script>
+	<ui5-card id="textAreaAriaLabelledBy">
+		<div slot="header" id="header2">
+			Test
+		</div>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">
+				Increase customer satisfaction by 10% using marketing methods
+			</ui5-li>
+			<ui5-li icon="opportunity">
+				Get 1000 survey responses to annual employee survey
+			</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<ui5-card>
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart">
+				Increase customer satisfaction by 10% using marketing methods
+			</ui5-li>
+			<ui5-li icon="opportunity">
+				Get 1000 survey responses to annual employee survey
+			</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<script>
+		card.addEventListener("ui5-click", function (event) {
+			console.log(event);
+			field.value = parseInt(field.value) + 1;
+		});
+	</script>
 </body>
+
 </html>
