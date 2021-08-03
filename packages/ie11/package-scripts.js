@@ -7,7 +7,6 @@ const scripts = {
 	start: "nps watch",
 };
 
-
 module.exports = {
 	scripts,
 };

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.14](https://github.com/SAP/ui5-webcomponents/compare/v0.31.13...v0.31.14) (2021-08-03)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** fix text selection on chrome ([#3532](https://github.com/SAP/ui5-webcomponents/issues/3532)) ([c44c23f](https://github.com/SAP/ui5-webcomponents/commit/c44c23f)), closes [WICG/webcomponents#773](https://github.com/WICG/webcomponents/issues/773) [#3466](https://github.com/SAP/ui5-webcomponents/issues/3466)
+* **ui5-input:** fire change on the initial tab press after suggestion is selected ([#3514](https://github.com/SAP/ui5-webcomponents/issues/3514)) ([b3cd01b](https://github.com/SAP/ui5-webcomponents/commit/b3cd01b))
+* **ui5-popup:** scroll handle is now working for input controls ([#3414](https://github.com/SAP/ui5-webcomponents/issues/3414)) ([3e3edcc](https://github.com/SAP/ui5-webcomponents/commit/3e3edcc))
+
+
+### Features
+
+* **ui5-badge:** update design ([#3529](https://github.com/SAP/ui5-webcomponents/issues/3529)) ([227efdb](https://github.com/SAP/ui5-webcomponents/commit/227efdb))
+* **ui5-timeline:** enable horizontal layout ([13be2c4](https://github.com/SAP/ui5-webcomponents/commit/13be2c4))
+
+
+
+
+
 ## [0.31.13](https://github.com/SAP/ui5-webcomponents/compare/v0.31.12...v0.31.13) (2021-07-26)
 
 

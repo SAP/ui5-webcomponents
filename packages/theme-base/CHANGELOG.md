@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.14](https://github.com/SAP/ui5-webcomponents/compare/v0.31.13...v0.31.14) (2021-08-03)
+
+
+### Features
+
+* **ui5-badge:** update design ([#3529](https://github.com/SAP/ui5-webcomponents/issues/3529)) ([227efdb](https://github.com/SAP/ui5-webcomponents/commit/227efdb))
+
+
+
+
+
 ## [0.31.13](https://github.com/SAP/ui5-webcomponents/compare/v0.31.12...v0.31.13) (2021-07-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-theme-base

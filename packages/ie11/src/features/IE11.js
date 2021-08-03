@@ -44,7 +44,6 @@ import "../patchNodeValue.js";
 // Hook with the framework
 import "../integrate.js";
 
-
 window.CSSVarsPonyfill = {
 	cssVars,
 };
