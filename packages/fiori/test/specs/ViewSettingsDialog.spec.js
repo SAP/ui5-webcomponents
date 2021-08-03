@@ -61,7 +61,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.$("ui5-li[selected]").getText(), "Position", "sortBy should be change selected option");
+		assert.strictEqual(viewSettingsDialog.$("ui5-li[selected]").getText(), "Position", "sortBy should change selected option");
 
 		browser.keys("Escape");
 	})
