@@ -13,6 +13,7 @@ const components = [];
  // Add new components here
 const newComponents = [
 	"BarcodeScannerDialog",
+	"Breadcrumbs",
 	"IllustratedMessage",
 ];
 
