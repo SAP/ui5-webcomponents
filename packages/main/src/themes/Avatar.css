@@ -122,9 +122,9 @@
     height: 100%;
 }
 
-:host(:not([background-color]):not([_has-image])),
-:host([_background-color="Accent6"]),
-:host([background-color="Accent6"]) {
+:host(:not([color-scheme]):not([_has-image])),
+:host([_color-scheme="Accent6"]),
+:host([color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 }
 
