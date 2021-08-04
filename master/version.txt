@@ -1,16 +1,5 @@
-commit bc62eaacade06dcf73e2c63ea4ba29937563b1a6
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Wed Aug 4 10:27:18 2021 +0300
+commit d557d3e933312b74ef7027471fee7b3ba0a4f1a6
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Wed Aug 4 11:20:49 2021 +0200
 
-    fix(ui5-tokenizer): Fix invisble texts styling (#3394)
-    
-    Resolves https://github.com/SAP/ui5-webcomponents/issues/2259
-    
-    Tokenizer is a component which (for now) is not used standalone. Its main use case is to be used within MultiInput & MultiCombobox.
-    The wrapping controls (MultiInput & MultiCombobox) style their layout using a flexbox, Tokenizer does the same in order to align the tokens. So, we end up with nested flexboxes.
-    
-    The Tokenizer however, has hidden texts within the flex elements and this leads to some strange behaviour where the whole wrapping control missalignes to its base line.
-    The CSS Styles which are responsible for hidden texts (Acc), are defined globally and are reused within the Tokenizer. They rely on some absolute positioning with big dimesnisons, so the element won't fit in the visible area of the window. This solution breaks the nested flexboxes and for that case in the Tokenizer, we need to workaround it and implement an own, custom solution.
-    This solution aligns the hidden texts along with the other flex elements without breaking the layout.
-    
-    Co-authored-by: ilhan <ilhan.myumyun@sap.com>
+    docs(ui5-dialog): default `preventInitialFocus` to false for better docs (#3589)
