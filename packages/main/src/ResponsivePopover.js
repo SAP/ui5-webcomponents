@@ -121,7 +121,7 @@ class ResponsivePopover extends Popover {
 	 * @async
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
-	async showAt(opener, preventInitialFocus) {
+	async showAt(opener, preventInitialFocus = false) {
 		this.style.display = this._isPhone ? "contents" : "";
 
 		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
