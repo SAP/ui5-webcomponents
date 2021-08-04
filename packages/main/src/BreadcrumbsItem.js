@@ -96,7 +96,7 @@ const metadata = {
  * @tagname ui5-breadcrumbs-item
  * @implements sap.ui.webcomponents.main.IBreadcrumbsItem
  * @public
- * @since 1.0.0-rc.16
+ * @since 1.0.0-rc.15
  */
 class BreadcrumbsItem extends UI5Element {
 	static get metadata() {

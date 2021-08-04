@@ -121,7 +121,7 @@ const metadata = {
 		 * @type String
 		 * @defaultvalue undefined
 		 * @private
-		 * @since 1.0.0-rc.16
+		 * @since 1.0.0-rc.15
 		 */
 		 ariaHaspopup: {
 			type: String,
@@ -132,7 +132,7 @@ const metadata = {
 		 * Defines the accessibility role of the component.
 		 * @defaultvalue ""
 		 * @private
-		 * @since 1.0.0-rc.16
+		 * @since 1.0.0-rc.15
 		 */
 		 accessibleRole: {
 			type: String,
