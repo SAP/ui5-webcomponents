@@ -122,12 +122,6 @@
     height: 100%;
 }
 
-:host(:not([color-scheme]):not([_has-image])),
-:host([_color-scheme="Accent6"]),
-:host([color-scheme="Accent6"]) {
-	background-color: var(--ui5-avatar-accent6);
-}
-
 :host([_color-scheme="Accent1"]),
 :host([color-scheme="Accent1"]) {
 	background-color: var(--ui5-avatar-accent1);
@@ -153,6 +147,7 @@
 	background-color: var(--ui5-avatar-accent5);
 }
 
+:host(:not([color-scheme]):not([_has-image])),
 :host([_color-scheme="Accent6"]),
 :host([color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
