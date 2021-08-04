@@ -52,7 +52,7 @@ const metadata = {
 		},
 
 		/**
-		 * Stores settings of the dialog before the first open.
+		 * Stores settings of the dialog before the initial open.
 		 *
 		 * @type {Object}
 		 * @private
@@ -110,7 +110,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when Cancel button is activated.
+		 * Fired when cancel button is activated.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
 		 * @param {String} sortOrder The current sort order selected.
@@ -129,11 +129,11 @@ const metadata = {
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-view-settings-dialog</code> component helps the user to sort, filter, or group data within a list or a table.
+ * The <code>ui5-view-settings-dialog</code> component helps the user to sort data within a list or a table.
  * It consists of several lists like <code>Sort order</code> which is built-in and <code>Sort By</code> which must be provided by the developer.
  * The selected options can be used to create sorters for the table.
  *
- * The <code>ui5-view-settings-dialog</code> interrupts the current app processing as it is the only focused UI element and
+ * The <code>ui5-view-settings-dialog</code> interrupts the current application processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
  * The <code>ui5-view-settings-dialog</code> is modal, which means that user action is required before returning to the parent window is possible.
  *
