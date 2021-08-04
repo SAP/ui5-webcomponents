@@ -10,14 +10,15 @@ const getScripts = (options) => {
 
 	const port = options.port || 8080; // preferred port
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
+	const illustrationsPath = options.illustrationsPath || "";
 
 	const scripts = {
 		clean: "rimraf dist && rimraf .port",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: {
-			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
-			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples"
+			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples build.illustrations",
+			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples build.illustrations"
 		},
 		build: {
 			default: "nps lint prepare.es5 build.bundle",
@@ -42,6 +43,9 @@ const getScripts = (options) => {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
+			},
+			illustrations: {
+				default: `node "${LIB}/create-illustrations/index.js" ${illustrationsPath} dist/illustrations`
 			}
 		},
 		copy: {
