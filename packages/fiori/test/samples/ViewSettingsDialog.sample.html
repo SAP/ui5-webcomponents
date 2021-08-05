@@ -33,7 +33,7 @@
 			let vsdResults = document.getElementById("vsdResults");
 			btnOpenDialog1.addEventListener("click", ()=> {
 				vsdResults.innerHTML = "";
-				vsd1.open();
+				vsd1.show();
 			});
 
 			vsd1.addEventListener("confirm", function(evt) {
@@ -45,7 +45,7 @@
 		var vsdResults = document.getElementById("vsdResults");
 		btnOpenDialog1.addEventListener("click", function () {
 			vsdResults.innerHTML = "";
-			vsd1.open();
+			vsd1.show();
 		});
 		vsd1.addEventListener("confirm", function(evt) {
 			vsdResults.innerHTML = JSON.stringify(evt.detail);

@@ -22,7 +22,7 @@
 <body style="background-color: var(--sapBackgroundColor);">
 
 	<h3> ViewSettingsDialog</h3>
-	<ui5-button id="btnOpenDialog">Open ViewSettingsDialog</ui5-button>
+	<ui5-button id="btnOpenDialog">Show ViewSettingsDialog</ui5-button>
 	<br>
 	<br>
 	<ui5-view-settings-dialog id="vsd">
@@ -34,7 +34,7 @@
 
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
-			vsd.open();
+			vsd.show();
 		});
 		vsd.addEventListener("confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
