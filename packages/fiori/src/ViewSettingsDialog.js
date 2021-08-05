@@ -2,8 +2,8 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Dialog from "@ui5/webcomponents/Dialog.js";
-import Button from "@ui5/webcomponents/Button.js";
+import Dialog from "@ui5/webcomponents/dist/Dialog.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
@@ -254,9 +254,10 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Opens the dialog. On first call does initialization of the control.
+	 * Shows the dialog.
+	 * @public
 	 */
-	open() {
+	show() {
 		if (!this._dialog) {
 			this._sortOrder = this.shadowRoot.querySelector("[ui5-list][sort-order]");
 			this._sortBy = this.shadowRoot.querySelector("[ui5-list][sort-by]");
