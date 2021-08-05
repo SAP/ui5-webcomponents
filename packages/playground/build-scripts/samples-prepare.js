@@ -12,7 +12,9 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"IllustratedMessage"
+	"BarcodeScannerDialog",
+	"Breadcrumbs",
+	"IllustratedMessage",
 ];
 
 packages.forEach(package => {
