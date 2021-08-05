@@ -71,9 +71,9 @@ section {
 }
 
 .row > ui5-button,
-.row > ui5-togglebutton,
+.row > ui5-toggle-button,
 .row > ui5-checkbox,
-.row > ui5-radiobutton,
+.row > ui5-radio-button,
 .row > ui5-link,
 .row > ui5-icon {
 	margin: 8px;

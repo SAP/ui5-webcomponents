@@ -30,6 +30,28 @@
 		<ui5-li id="lastItem">Last Item</ui5-li>
 	</ui5-list>
 	<input id="loadMoreResult" value="0"/>
+	<br><br><br>
+
+	<ui5-title>List growing="Scroll" items don't overflow initially</ui5-title>
+
+	<ui5-input id="growingScrollTestCounter" value="0"></ui5-input>
+	<section style="max-height: 20rem; overflow: auto;">
+		<ui5-list id="growingScrollTest" growing="Scroll">
+			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		</ui5-list>
+	</section>
+
+	<br><br><br>
+
+	<ui5-list id="growingListButton" growing="Button" style="height: 300px;">
+		<ui5-li>Javascript</ui5-li>
+		<ui5-li>PHP</ui5-li>
+	</ui5-list>
+
+	<button id="nextInteractiveElement">Next Interactive element</button>
+
+	<br><br><br>
+	
 	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -42,6 +64,7 @@
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
 
+	<br><br><br>
 	<ui5-list id="listEvents2" mode="MultiSelect">
 		<ui5-li id="country11">Argentina</ui5-li>
 		<ui5-li id="country22" selected >Bulgaria</ui5-li>
@@ -52,6 +75,7 @@
 	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
+	<br><br><br>
 	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
@@ -94,11 +118,11 @@
 				<ui5-button class="itemBtn">Click me</ui5-button>
 				<ui5-link href="https://www.google.bg" target="_blank" class="itemLink">UI5 link</ui5-link>
 				<ui5-button class="itemBtn" disabled>Disabled</ui5-button>
-				<ui5-radiobutton text="Option B" class="itemRadio"></ui5-radiobutton>
+				<ui5-radio-button text="Option B" class="itemRadio"></ui5-radio-button>
 		</ui5-li-custom>
 		<ui5-li>China</ui5-li>
 		<ui5-li-custom selected>
-				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
+				<ui5-radio-button text="Option C" disabled="disabled"></ui5-radio-button>
 		</ui5-li-custom>
 	</ui5-list>
 	<ui5-button id="randomBtn">Random button</ui5-button>
@@ -144,7 +168,7 @@
 	</ui5-list>
 	<br/><br/>
 
-	<ui5-list id="listWithCustomHeader" aria-labelledby="testHeader">
+	<ui5-list id="listWithCustomHeader" accessible-name-ref="testHeader">
 		<div slot="header" class="header">
 			<h2 id="testHeader">Test aria</h2>
 		</div>
@@ -279,7 +303,13 @@
 		});
 
 		btnOpenPopup.addEventListener("click", function() {
-			popup.openBy(btnOpenPopup);
+			popup.showAt(btnOpenPopup);
+		});
+
+
+		var groiwngScrollTestCounter = 0;
+		growingScrollTest.addEventListener("ui5-loadMore", function(e) {
+			growingScrollTestCounter.value= ++groiwngScrollTestCounter;
 		});
 	</script>
 </body>

@@ -21,7 +21,7 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-togglebutton id="myBtn">turn lights</ui5-togglebutton>
+	<ui5-toggle-button id="myBtn">turn lights</ui5-toggle-button>
 	<ui5-button id="add-items-btn">Add new Items</ui5-button>
 	<ui5-button id="restore-items-btn">Restore Items</ui5-button>
 	<ui5-button id="myBtn2">click</ui5-button>
@@ -83,13 +83,13 @@
 		<h3>Select aria-label and aria-labelledby</h3>
 		<span id="infoText">info text</span>
 		<div>
-			<ui5-select id="textAreaAriaLabel" aria-label="Hello World">
+			<ui5-select id="textAreaAriaLabel" accessible-name="Hello World">
 				<ui5-option selected>First</ui5-option>
 				<ui5-option selected>Second</ui5-option>
 				<ui5-option selected>Third</ui5-option>
 			</ui5-select>
 
-			<ui5-select id="textAreaAriaLabelledBy" aria-labelledby="infoText">
+			<ui5-select id="textAreaAriaLabelledBy" accessible-name-ref="infoText">
 				<ui5-option selected>One</ui5-option>
 				<ui5-option selected>Two</ui5-option>
 				<ui5-option selected>Three</ui5-option>

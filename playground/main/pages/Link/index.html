@@ -68,7 +68,7 @@
 
 	<section class="group">
 		<h2>Wrapping link</h2>
-		<ui5-link style="width: 100px" id="wrapping-link" wrap>Eu enim consectetur do amet elit.</ui5-link>
+		<ui5-link style="width: 100px" id="wrapping-link" wrapping-type="Normal">Eu enim consectetur do amet elit.</ui5-link>
 		<ui5-link style="width: 100px" id="non-wrapping-link">Eu enim consectetur do amet elit.</ui5-link>
 	</section>
 
@@ -85,8 +85,8 @@
 
 	<section class="group">
 		<label id="lbl">Text from aria-labelledby</label>
-		<ui5-link id="ariaLbl" aria-label="Text from aria-label">Go to</ui5-link>
-		<ui5-link id="ariaLblBy" aria-labelledby="lbl">Go to</ui5-link>
+		<ui5-link id="ariaLbl" accessible-name="Text from aria-label">Go to</ui5-link>
+		<ui5-link id="ariaLblBy" accessible-name-ref="lbl">Go to</ui5-link>
 	</section>
 
 	<script>

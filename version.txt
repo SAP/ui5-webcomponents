@@ -1,5 +1,6 @@
-commit d3c4701e7ff351954d87780d6fceef9230e948bb
+commit 6b22bc7bd1191189eb9cb9749ee5052d5973ef78
+Merge: d3c4701 2ff477f
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 27 10:41:45 2021 +0300
+Date:   Thu Aug 5 16:08:49 2021 +0300
 
-    chore: update chromedriver (#3317)
+    update playground to rc15
