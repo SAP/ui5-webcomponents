@@ -45,7 +45,7 @@ function _invalidate(changeInfo) {
 
 	this._changedState.push(changeInfo);
 	renderDeferred(this);
-	this._eventProvider.fireEvent("change", { ...changeInfo, target: this });
+	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
 
 /**
@@ -253,7 +253,7 @@ class UI5Element extends HTMLElement {
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (child.isUI5Element && slotData.invalidateOnChildChange) {
-				child._attachChange(this._getChildChangeListener(slotName));
+				child.attachInvalidate(this._getChildChangeListener(slotName));
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
@@ -313,7 +313,7 @@ class UI5Element extends HTMLElement {
 
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
-				child._detachChange(this._getChildChangeListener(slotName));
+				child.detachInvalidate(this._getChildChangeListener(slotName));
 			}
 
 			if (isSlot(child)) {
@@ -328,20 +328,20 @@ class UI5Element extends HTMLElement {
 	 * Attach a callback that will be executed whenever the component is invalidated
 	 *
 	 * @param callback
-	 * @protected
+	 * @public
 	 */
-	_attachChange(callback) {
-		this._eventProvider.attachEvent("change", callback);
+	attachInvalidate(callback) {
+		this._eventProvider.attachEvent("invalidate", callback);
 	}
 
 	/**
 	 * Detach the callback that is executed whenever the component is invalidated
 	 *
 	 * @param callback
-	 * @protected
+	 * @public
 	 */
-	_detachChange(callback) {
-		this._eventProvider.detachEvent("change", callback);
+	detachInvalidate(callback) {
+		this._eventProvider.detachEvent("invalidate", callback);
 	}
 
 	/**
