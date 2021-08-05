@@ -1,7 +1,7 @@
-commit 9668f87d9ba8cd3dc8b874d4a4d93bf37149afdb
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Aug 5 10:25:39 2021 +0300
+commit 24696292e8fd212d757de52606e6039a266a9457
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Aug 5 01:51:57 2021 -0700
 
-    chore(ui5-avatar): fix color-scheme API usage (#3593)
+    chore: translation delivery (#3599)
     
-    The color-scheme property currently does not take any effect due to these styles that rely on the old property. Now it works fine.
+    Change-Id: I417ed9b8c8c702b602ff2182fcec41d4c378e8be
