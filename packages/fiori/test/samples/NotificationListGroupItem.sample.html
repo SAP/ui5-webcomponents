@@ -305,7 +305,7 @@
 		</ui5-popover>
 
 		<script>
-			shellbar.addEventListener("ui5-notifications-click", function(event) {
+			shellbar.addEventListener("notifications-click", function(event) {
 				event.preventDefault();
 				notificationsPopover.showAt(event.detail.targetRef);
 			});
@@ -355,7 +355,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("ui5-notifications-click", function(event) {
+	shellbar.addEventListener("notifications-click", function(event) {
 		notificationsPopover.showAt(event.detail.targetRef);
 	});
 </script>

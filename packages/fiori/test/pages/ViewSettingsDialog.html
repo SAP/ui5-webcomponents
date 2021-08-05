@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>ViewSettingsDialog test page</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webcomponents.main"
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<h3> ViewSettingsDialog</h3>
+	<ui5-button id="btnOpenDialog">Show ViewSettingsDialog</ui5-button>
+	<br>
+	<br>
+	<ui5-view-settings-dialog id="vsd">
+		<ui5-li slot="sortItems">Name</ui5-li>
+		<ui5-li slot="sortItems">Position</ui5-li>
+		<ui5-li slot="sortItems">Company</ui5-li>
+		<ui5-li slot="sortItems">Department</ui5-li>
+	</ui5-view-settings-dialog>
+
+	<script>
+		btnOpenDialog.addEventListener("click", function () {
+			vsd.show();
+		});
+		vsd.addEventListener("confirm", function(evt) {
+			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
+		});
+	</script>
+
+</body>
+</html>

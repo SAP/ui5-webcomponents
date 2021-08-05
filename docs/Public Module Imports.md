@@ -157,6 +157,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Timeline Item                | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection            | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item       | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| View Settings Dialog         | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | Wizard                       | `ui5-wizard`                   | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                   |
 | Wizard Step                  | `ui5-wizard-step`              | comes with `ui5-wizard`                                               |
 

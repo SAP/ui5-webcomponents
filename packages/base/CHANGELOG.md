@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
+
+
+### Features
+
+* **framework:** expose dist paths as root paths via package.json export field ([#3274](https://github.com/SAP/ui5-webcomponents/issues/3274)) ([bd34a5e](https://github.com/SAP/ui5-webcomponents/commit/bd34a5e))
+* **framework:** support sap-* config URL params ([#3138](https://github.com/SAP/ui5-webcomponents/issues/3138)) ([5d9cdb9](https://github.com/SAP/ui5-webcomponents/commit/5d9cdb9)), closes [#3114](https://github.com/SAP/ui5-webcomponents/issues/3114)
+* **framework:** introduce InvisibleMessage util ([#3192](https://github.com/SAP/ui5-webcomponents/issues/3192)) ([0a33c40](https://github.com/SAP/ui5-webcomponents/commit/0a33c40))
+
+
 # [1.0.0-rc.13](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v1.0.0-rc.13) (2021-03-26)
 
 
