@@ -1,5 +1,7 @@
-commit 375cce5c49b8a1dab70297c3aac20ff9453e2e07
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 5 15:38:23 2021 +0300
+commit 2ff477f4842d14da526c09b155b6810c6c4fd67d
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Aug 5 16:04:08 2021 +0300
 
-    chore(playground): add changelog section (#3602)
+    feat(icons-business-suite): add new icon collection (#3461)
+    
+    based on SAP Buisness Suite icon collection
