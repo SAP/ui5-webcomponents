@@ -1,7 +1,7 @@
-commit df0ace8941112eda3257aef7438b2b853d01f209
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Aug 5 12:19:23 2021 +0300
+commit c6106d58c7d7625a66aa22f60a41d86a26aef205
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Aug 5 13:53:41 2021 +0300
 
-    feat(ui5-carousel): Implement F7 keyboard functionality (#3559)
+    chore(ui5-vsd): rename "open" to show" (#3600)
     
-    Part of #3092
+    The Dialog's and Popup's public methods have been recently renamed to show (previously open), showAt (previously openBy) and we have to use "show" here as well to keep the convention. Also, the public method should be documented.
