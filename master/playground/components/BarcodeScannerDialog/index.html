@@ -2567,12 +2567,12 @@
 				dlgScan.show();
 			});
 
-			dlgScan.addEventListener("ui5-scan-success", function(event) {
+			dlgScan.addEventListener("scan-success", function(event) {
 				scanResult.innerHTML = event.detail.text;
 				dlgScan.close();
 			});
 
-			dlgScan.addEventListener("ui5-scan-error", function(event) {
+			dlgScan.addEventListener("scan-error", function(event) {
 				scanError.innerHTML = event.detail.message;
 				dlgScan.close();
 			});
@@ -2589,12 +2589,12 @@
 		<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
 	<span class="p">});</span>
 
-	<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-scan-success</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">scan-success</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">scanResult</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
 		<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 	<span class="p">});</span>
 
-	<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-scan-error</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">scan-error</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">scanError</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
 		<span class="nx">dlgScan</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 	<span class="p">});</span>

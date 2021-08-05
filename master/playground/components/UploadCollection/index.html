@@ -2617,7 +2617,7 @@
 				return uci;
 			}
 
-			fileUploader.addEventListener("ui5-change", function(event) {
+			fileUploader.addEventListener("change", function(event) {
 				var files = event.detail.files;
 
 				for (var i = 0; i < files.length; i++) {
@@ -2690,7 +2690,7 @@
 		<span class="k">return</span> <span class="nx">uci</span><span class="p">;</span>
 	<span class="p">}</span>
 
-	<span class="nx">fileUploader</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">fileUploader</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="kd">const</span> <span class="nx">files</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span>
 
 		<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -2747,7 +2747,7 @@
 		</ui5-upload-collection>	
 
 		<script>
-			uploadCollectionWithRenaming.addEventListener("ui5-rename", function(event) {
+			uploadCollectionWithRenaming.addEventListener("rename", function(event) {
 				alert("Rename event:" + event.target.fileName)
 			});
 		</script>
@@ -2777,7 +2777,7 @@
 <span class="nt">&lt;/ui5-upload-collection&gt;</span>	
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="nx">uploadCollectionWithRenaming</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-rename</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">uploadCollectionWithRenaming</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">rename</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Rename event:</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">fileName</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -2824,11 +2824,11 @@
 		</ui5-upload-collection>
 
 		<script>
-			uploadCollectionStates.addEventListener("ui5-retry", function(event) {
+			uploadCollectionStates.addEventListener("retry", function(event) {
 				alert("Retry uploading: " + event.target.fileName);
 			});
 		
-			uploadCollectionStates.addEventListener("ui5-terminate", function(event) {
+			uploadCollectionStates.addEventListener("terminate", function(event) {
 				alert("Terminate uploading of: " + event.target.fileName);
 			});
 		</script>
@@ -2870,11 +2870,11 @@
 <span class="nt">&lt;/ui5-upload-collection&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="nx">uploadCollectionStates</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-retry</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">uploadCollectionStates</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">retry</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Retry uploading: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">fileName</span><span class="p">);</span>
 	<span class="p">});</span>
 
-	<span class="nx">uploadCollectionStates</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-terminate</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">uploadCollectionStates</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">terminate</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Terminate uploading of: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">fileName</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
