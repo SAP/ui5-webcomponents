@@ -58,13 +58,14 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Defines the aria-label text of the <code>ui5-wizard</code>.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue undefined
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -591,7 +592,7 @@ class Wizard extends UI5Element {
 		}
 
 		const responsivePopover = await this._respPopover();
-		responsivePopover.openBy(oDomTarget);
+		responsivePopover.showAt(oDomTarget);
 	}
 
 	async _onGroupedTabClick(event) {
@@ -805,7 +806,7 @@ class Wizard extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return this.accessibleName || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {

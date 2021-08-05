@@ -1,9 +1,11 @@
-<div class="ui5-timeline-root" @focusin={{_onfocusin}}>
-	<ul class="ui5-timeline-list" role="listbox" aria-live="polite" aria-label="{{ariaLabel}}">
-		{{#each items}}
-			<li class="ui5-timeline-list-item" style="list-style-type: none;">
-				<slot name="{{this._individualSlot}}"></slot>
-			</li>
-		{{/each}}
-	</ul>
+<div class="ui5-timeline-root" @focusin={{_onfocusin}} dir="{{effectiveDir}}">
+	<div class="ui5-timeline-scroll-container">
+		<ul class="ui5-timeline-list" role="listbox" aria-live="polite" aria-label="{{accessibleName}}">
+			{{#each items}}
+				<li class="ui5-timeline-list-item" style="list-style-type: none;">
+					<slot name="{{this._individualSlot}}"></slot>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
 </div>

@@ -43,3 +43,8 @@ License: MIT
 Files: packages/playground/assets/js/webcomponentsjs/* /packages/base/src/thirdparty/Array.from.js /packages/base/src/thirdparty/events-polyfills.js /packages/base/src/thirdparty/Object.assign.js /packages/base/src/thirdparty/template.js /packages/base/src/thirdparty/webcomponents-sd-ce-pf.js
 Copyright: 2018 The Polymer Project Authors
 License: BSD-3-Clause-Clear
+
+Files: packages/base/dist/sap/ui/thirdparty/caja-html-sanitizer.js
+Copyright: Google Inc.
+License: Apache-2.0
+Comment: these files belong to: Google-Caja JS HTML Sanitizer

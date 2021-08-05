@@ -169,11 +169,10 @@ const metadata = {
 		 * Defines the aria-label attribute for the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.9
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -182,10 +181,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -551,7 +550,7 @@ class DatePicker extends DateComponentBase {
 
 	_click(event) {
 		if (isPhone()) {
-			this.responsivePopover.openBy(this);
+			this.responsivePopover.showAt(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -713,7 +712,7 @@ class DatePicker extends DateComponentBase {
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
 
-		this.responsivePopover.openBy(this);
+		this.responsivePopover.showAt(this);
 	}
 
 	togglePicker() {

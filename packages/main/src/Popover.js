@@ -290,14 +290,14 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Opens the popover.
-	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * Shows the popover.
+	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 * @async
 	 * @returns {Promise} Resolved when the popover is open
 	 */
-	async openBy(opener, preventInitialFocus = false) {
+	async showAt(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
@@ -305,7 +305,7 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._openerRect = opener.getBoundingClientRect();
 
-		await super.open(preventInitialFocus);
+		await super._open(preventInitialFocus);
 	}
 
 	/**
@@ -337,7 +337,7 @@ class Popover extends Popup {
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if (closedPopupParent.openBy) {
+		if (closedPopupParent.showAt) {
 			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
@@ -360,10 +360,10 @@ class Popover extends Popup {
 	}
 
 	reposition() {
-		this.show();
+		this._show();
 	}
 
-	show() {
+	_show() {
 		let placement;
 		const popoverSize = this.getPopoverSize();
 
@@ -392,7 +392,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			super.show();
+			super._show();
 			this.style.width = this._width;
 			return;
 		}
@@ -437,7 +437,7 @@ class Popover extends Popup {
 			top: `${top}px`,
 			left: `${left}px`,
 		});
-		super.show();
+		super._show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;
@@ -725,7 +725,7 @@ class Popover extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this.ariaLabel ? undefined : "ui5-popup-header";
+		return this.accessibleName ? undefined : "ui5-popup-header";
 	}
 
 	get _ariaModal() { // Required by Popup.js
