@@ -34,3 +34,4 @@ import NotificationListItem from "./dist/NotificationListItem.js"
 import NotificationListGroupItem from "./dist/NotificationListGroupItem.js";
 import NotificationAction from "./dist/NotificationAction.js";
 import Wizard from "./dist/Wizard.js";
+import ViewSettingsDialog from "./dist/ViewSettingsDialog.js";
