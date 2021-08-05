@@ -1,5 +1,7 @@
-commit d557d3e933312b74ef7027471fee7b3ba0a4f1a6
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Wed Aug 4 11:20:49 2021 +0200
+commit 9668f87d9ba8cd3dc8b874d4a4d93bf37149afdb
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Aug 5 10:25:39 2021 +0300
 
-    docs(ui5-dialog): default `preventInitialFocus` to false for better docs (#3589)
+    chore(ui5-avatar): fix color-scheme API usage (#3593)
+    
+    The color-scheme property currently does not take any effect due to these styles that rely on the old property. Now it works fine.

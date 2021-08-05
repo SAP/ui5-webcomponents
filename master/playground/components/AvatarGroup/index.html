@@ -1604,6 +1604,8 @@
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/BarcodeScannerDialog/" class="navigation-list-link">
                         <div class="component-name">Barcode Scanner Dialog</div>
                         
+                          <span class="new-tag">NEW</span>
+                        
                       </a>
                       
                     </li>
@@ -1616,6 +1618,8 @@
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Breadcrumbs/" class="navigation-list-link">
                         <div class="component-name">Breadcrumbs</div>
+                        
+                          <span class="new-tag">NEW</span>
                         
                       </a>
                       
@@ -2608,7 +2612,7 @@
 						const color = avatarGroup.colorScheme[firstHiddenIndex + index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme="${color}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}
@@ -2749,7 +2753,7 @@
 						const avatarColor = avatarGroup.colorScheme[index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme"${color}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}
