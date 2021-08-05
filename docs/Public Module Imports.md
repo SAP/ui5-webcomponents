@@ -133,26 +133,26 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### 1. Web Components
 
-|      Web Component           |       Tag name                     |                       Module import                                    |
-| ------------------------     | ---------------------------------- | ---------------------------------------------------------------------- |
-| Flexible Column Layout       | `ui5-flexible-column-layout`       | `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`      |
-| Side Navigation              | `ui5-side-navigation`              | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`            |
-| Side Navigation Item         | `ui5-side-navigation-item`         | `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`        |
-| Side Navigation Sub Item     | `ui5-side-navigation-sub-item`     | `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`     |
-| Shell Bar                    | `ui5-shellbar`                     | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`                  |
-| Shell Bar Item               | `ui5-shellbar-item`                | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`              |
-| Page                         | `ui5-page`                         | `import "@ui5/webcomponents-fiori/dist/Page.js";`                      |
-| Product Switch               | `ui5-product-switch`               | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`             |
-| Product Switch Item          | `ui5-product-switch-item`          | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`         |
-| Notification List Item       | `ui5-li-notifcation`               | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`       |
-| Notification Group List Item | `ui5-li-notification-group`        | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";`  |
-| Notification Action          | `ui5-notification-action`          | `import "@ui5/webcomponents-fiori/dist/NotificationAction.js";`        |
-| Timeline                     | `ui5-timeline`                     | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                  |
-| Timeline Item                | `ui5-timeline-item`                | comes with `ui5-timeline`                                              |
-| Upload Collection            | `ui5-upload-collection`            | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`          |
-| Upload Collection Item       | `ui5-upload-collection-item`       | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`      |
-| Wizard                       | `ui5-wizard`                       | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                    |
-| Wizard Step                  | `ui5-wizard-step`                  | comes with `ui5-wizard`                                                |
+|        Web Component         |            Tag name            |                             Module import                             |
+| ---------------------------- | ------------------------------ | --------------------------------------------------------------------- |
+| Flexible Column Layout       | `ui5-flexible-column-layout`   | `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`     |
+| Side Navigation              | `ui5-side-navigation`          | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`           |
+| Side Navigation Item         | `ui5-side-navigation-item`     | `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`       |
+| Side Navigation Sub Item     | `ui5-side-navigation-sub-item` | `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`    |
+| Shell Bar                    | `ui5-shellbar`                 | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`                 |
+| Shell Bar Item               | `ui5-shellbar-item`            | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`             |
+| Product Switch               | `ui5-product-switch`           | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`            |
+| Product Switch Item          | `ui5-product-switch-item`      | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`        |
+| Notification List Item       | `ui5-li-notifcation`           | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`      |
+| Notification Group List Item | `ui5-li-notification-group`    | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";` |
+| Notification Action          | `ui5-notification-action`      | `import "@ui5/webcomponents-fiori/dist/NotificationAction.js";`       |
+| Timeline                     | `ui5-timeline`                 | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                 |
+| Timeline Item                | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
+| Upload Collection            | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
+| Upload Collection Item       | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| View Settings Dialog         | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
+| Wizard                       | `ui5-wizard`                   | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                   |
+| Wizard Step                  | `ui5-wizard-step`              | comes with `ui5-wizard`                                               |
 
 ### 2. Assets
 
