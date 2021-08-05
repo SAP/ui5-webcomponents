@@ -15,6 +15,7 @@ const newComponents = [
 	"BarcodeScannerDialog",
 	"Breadcrumbs",
 	"IllustratedMessage",
+	"ViewSettingsDialog",
 ];
 
 packages.forEach(package => {
