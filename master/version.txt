@@ -1,7 +1,5 @@
-commit 2ff477f4842d14da526c09b155b6810c6c4fd67d
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Aug 5 16:04:08 2021 +0300
+commit 1811d3686752eed66309745d67c09ce4c7f3c57b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Aug 5 17:03:58 2021 +0300
 
-    feat(icons-business-suite): add new icon collection (#3461)
-    
-    based on SAP Buisness Suite icon collection
+    chore: update create component script (#3465)
