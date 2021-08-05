@@ -9,6 +9,7 @@ Table of Contents:
  - [Fiori Package - @ui5/webcomponents-fiori](#fiori)
  - [Icons Package - @ui5/webcomponents-icons](#icons)
  - [Icons-TNT Package - @ui5/webcomponents-icons-tnt](#icons-tnt)
+ - [Icons SAP Business Suite Package - @ui5/webcomponents-icons-business-suite](#icons-business-suite)
  - [Base Package - @ui5/webcomponents-base](#base)
 
 <a name="main"></a>
@@ -156,6 +157,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Timeline Item                | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection            | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item       | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| View Settings Dialog         | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | Wizard                       | `ui5-wizard`                   | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                   |
 | Wizard Step                  | `ui5-wizard-step`              | comes with `ui5-wizard`                                               |
 
@@ -242,6 +244,12 @@ To import all icons, use:
 Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future-proof:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
+
+## Icons SAP Business Suite Package (```@ui5/webcomponents-icons-business-suite```)
+<a name="icons-business-suite"></a>
+
+Same structure like the `tnt` icon collection, but shipped in `@ui5/webcomponents-icons-business-suite`.
+For a complete list of the icons in the `SAP Business Suite` collection, click [here](https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
 
 ## Base Package (```@ui5/webcomponents-base```)
 

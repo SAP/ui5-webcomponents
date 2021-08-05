@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
+
+
+### Bug Fixes
+
+* **tools:** fix build error on MacOS 11 from rollup-plugin-terser ([#3347](https://github.com/SAP/ui5-webcomponents/issues/3347)) ([59892c4](https://github.com/SAP/ui5-webcomponents/commit/59892c4)), closes [#2515](https://github.com/SAP/ui5-webcomponents/issues/2515)
+
+
+
+
+
+
 # [1.0.0-rc.14](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.13...v1.0.0-rc.14) (2021-04-01)
 
 

@@ -99,7 +99,7 @@
 						const color = avatarGroup.colorScheme[firstHiddenIndex + index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme="${color}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}
@@ -241,7 +241,7 @@
 						const avatarColor = avatarGroup.colorScheme[index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme"${color}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}

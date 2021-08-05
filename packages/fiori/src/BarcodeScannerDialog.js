@@ -105,7 +105,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-barcode-scanner-dialog
  * @public
- * @since 1.0.0-rc.16
+ * @since 1.0.0-rc.15
  */
 class BarcodeScannerDialog extends UI5Element {
 	constructor() {

@@ -25,12 +25,12 @@
 				dlgScan.show();
 			});
 
-			dlgScan.addEventListener("ui5-scan-success", function(event) {
+			dlgScan.addEventListener("scan-success", function(event) {
 				scanResult.innerHTML = event.detail.text;
 				dlgScan.close();
 			});
 
-			dlgScan.addEventListener("ui5-scan-error", function(event) {
+			dlgScan.addEventListener("scan-error", function(event) {
 				scanError.innerHTML = event.detail.message;
 				dlgScan.close();
 			});
@@ -48,12 +48,12 @@
 		dlgScan.show();
 	});
 
-	dlgScan.addEventListener("ui5-scan-success", function(event) {
+	dlgScan.addEventListener("scan-success", function(event) {
 		scanResult.innerHTML = event.detail.text;
 		dlgScan.close();
 	});
 
-	dlgScan.addEventListener("ui5-scan-error", function(event) {
+	dlgScan.addEventListener("scan-error", function(event) {
 		scanError.innerHTML = event.detail.message;
 		dlgScan.close();
 	});

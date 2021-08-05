@@ -1,0 +1,57 @@
+<ui5-dialog
+	aria-label="{{_dialogTitle}}"
+	@ui5-after-open={{_focusRecentlyUsedControl}}
+	@ui5-before-close={{_restoreConfirmedOnEscape}}
+	?stretch={{_isPhone}}
+>
+
+	<div slot="header" class="ui5-vsd-header">
+		<ui5-bar>
+			<ui5-label
+				slot="startContent"
+				class="ui5-vsd-title">{{_dialogTitle}}</ui5-label>
+			<ui5-button
+				slot="endContent"
+				design="Transparent"
+				@click="{{_resetSettings}}"
+				?disabled={{_disableResetButton}}
+				reset-button>{{_resetButtonLabel}}</ui5-button>
+		</ui5-bar>
+	</div>
+
+	<div class="ui5-vsd-content">
+		<div class="ui5-vsd-sort">
+			<ui5-list
+				mode="SingleSelectBegin"
+				@ui5-selection-change="{{_onSortOrderChange}}"
+				sort-order>
+				<ui5-li-groupheader>{{_sortOrderLabel}}</ui5-li-groupheader>
+				<ui5-li
+					?selected="{{_sortAscending}}"
+				>{{_ascendingLabel}}</ui5-li>
+				<ui5-li
+					?selected="{{sortDescending}}"
+				>{{_descendingLabel}}</ui5-li>
+			</ui5-list>
+			<ui5-list
+				mode="SingleSelectBegin"
+				@ui5-selection-change={{_onSortByChange}}
+				sort-by>
+				<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
+				<slot name="sortItems"></slot>
+			</ui5-list>
+		</div>
+	</div>
+
+	<div slot="footer" class="ui5-vsd-footer">
+		<ui5-button
+			design="Emphasized"
+			@click="{{_confirmSettings}}"
+		>{{_okButtonLabel}}</ui5-button>
+		<ui5-button
+			design="Transparent"
+			@click="{{_cancelSettings}}"
+		>{{_cancelButtonLabel}}</ui5-button>
+	</div>
+
+</ui5-dialog>
