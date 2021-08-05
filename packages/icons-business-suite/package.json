@@ -27,10 +27,10 @@
     "directory": "packages/icons-business-suite"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "0.34.0"
+    "@ui5/webcomponents-base": "1.0.0-rc.15"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.14",
-    "chromedriver": "90.0.1"
+    "@ui5/webcomponents-tools": "1.0.0-rc.15",
+    "chromedriver": "92.0.0"
   }
 }
