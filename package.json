@@ -74,7 +74,6 @@
     "wsrun": "^5.2.4"
   },
   "workspaces": [
-    "packages/theming",
     "packages/base",
     "packages/localization",
     "packages/main",
