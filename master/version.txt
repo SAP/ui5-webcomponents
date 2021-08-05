@@ -1,5 +1,5 @@
-commit cad314e65c2c4424f35057b6016d07069738883a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Aug 5 14:01:01 2021 +0300
+commit 375cce5c49b8a1dab70297c3aac20ff9453e2e07
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Aug 5 15:38:23 2021 +0300
 
-    docs: replace noConflict events in samples (#3596)
+    chore(playground): add changelog section (#3602)
