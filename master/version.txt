@@ -1,7 +1,7 @@
-commit 24696292e8fd212d757de52606e6039a266a9457
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Aug 5 01:51:57 2021 -0700
+commit df0ace8941112eda3257aef7438b2b853d01f209
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Thu Aug 5 12:19:23 2021 +0300
 
-    chore: translation delivery (#3599)
+    feat(ui5-carousel): Implement F7 keyboard functionality (#3559)
     
-    Change-Id: I417ed9b8c8c702b602ff2182fcec41d4c378e8be
+    Part of #3092
