@@ -10,10 +10,12 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
+import DataType from "./types/DataType.js";
 import Integer from "./types/Integer.js";
 import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
+import isDescendantOf from "./util/isDescendantOf.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
@@ -102,7 +104,6 @@ class UI5Element extends HTMLElement {
 	async connectedCallback() {
 		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
 
-		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		this._inDOM = true;
@@ -111,10 +112,6 @@ class UI5Element extends HTMLElement {
 			// always register the observer before yielding control to the main thread (await)
 			this._startObservingDOMChildren();
 			await this._processChildren();
-		}
-
-		if (needsShadowDOM && !this.shadowRoot) { // Workaround for Firefox74 bug
-			await Promise.resolve();
 		}
 
 		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
@@ -134,7 +131,6 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	disconnectedCallback() {
-		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		this._inDOM = false;
@@ -143,13 +139,11 @@ class UI5Element extends HTMLElement {
 			this._stopObservingDOMChildren();
 		}
 
-		if (needsShadowDOM) {
-			if (this._fullyConnected) {
-				if (typeof this.onExitDOM === "function") {
-					this.onExitDOM();
-				}
-				this._fullyConnected = false;
+		if (this._fullyConnected) {
+			if (typeof this.onExitDOM === "function") {
+				this.onExitDOM();
 			}
+			this._fullyConnected = false;
 		}
 
 		if (this.staticAreaItem && this.staticAreaItem.parentElement) {
@@ -391,6 +385,13 @@ class UI5Element extends HTMLElement {
 			if (propertyTypeClass === Float) {
 				newValue = parseFloat(newValue);
 			}
+
+			if (isDescendantOf(propertyTypeClass, DataType)) {
+				if (newValue === null) {
+					return;
+				}
+				newValue = propertyTypeClass.attributeToProperty(newValue);
+			}
 			this[nameInCamelCase] = newValue;
 		}
 	}
@@ -402,12 +403,13 @@ class UI5Element extends HTMLElement {
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
+		const attrName = camelToKebabCase(name);
 
 		if (typeof newValue === "object") {
+			this.removeAttribute(attrName); // mostly relevant for custom types - if the new value is an object, remove the attribute
 			return;
 		}
 
-		const attrName = camelToKebabCase(name);
 		const attrValue = this.getAttribute(attrName);
 		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
