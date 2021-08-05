@@ -1,5 +1,5 @@
-commit 1811d3686752eed66309745d67c09ce4c7f3c57b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 5 17:03:58 2021 +0300
+commit 41f72e3b20cacb1f22cad3058ee747aeef43e27d
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Aug 5 19:37:13 2021 +0300
 
-    chore: update create component script (#3465)
+    fix(ui5-illustrated-message): remove style attribute of svg (#3605)
