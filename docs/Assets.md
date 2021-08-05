@@ -31,19 +31,19 @@ The `localization` package provides CLDR assets.
 
 Unless you are developing a Web Components package of your own, you don't need to import the assets directly from the `localization` package but rather from the package(s) containing the actual Web Components you'll be using in your app.
 
-### `theme-base` package
+### `theming` package
 
-The `theme-base` package provides common parameters for all themes.
+The `theming` package provides common parameters for all themes.
 
 `import "@ui5/webcomponents-theming/dist/Assets.js";`
 
-Unless you are developing a Web Components package of your own, you don't need to import the assets directly from the `theme-base` package,
+Unless you are developing a Web Components package of your own, you don't need to import the assets directly from the `theming` package,
 but rather from the package(s) containing the actual Web Components you'll be using in your app.
 
 ### `main` package
 
 The `main` package's `Assets.js` import provides package-specific additional theming parameters and i18n assets.
-All assets from the `base` and `theme-base` packages are also imported automatically so you don't have to worry about them.
+All assets from the `base` and `theminge` packages are also imported automatically so you don't have to worry about them.
 
 `import "@ui5/webcomponents/dist/Assets.js";`
 

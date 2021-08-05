@@ -20,12 +20,12 @@ The name that you give to your package will be used by the UI5 Web Components to
 ## Step 2. Add the UI5 Web Components packages as dependencies
 
 With `npm`:
- - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base`
+ - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theming`
  - `npm i --save-dev @ui5/webcomponents-tools chromedriver`
  - (Optional) `npm i --save @ui5/webcomponents-ie11`
 
 or with `yarn`:
- - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base`
+ - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theming`
  - `yarn add -D @ui5/webcomponents-tools chromedriver`
  - (Optional) `yarn add @ui5/webcomponents-ie11`
 
@@ -34,7 +34,7 @@ These three `@ui5/` packages will serve as foundation for your own package and W
             Package             |                        Description
 ------------------------------- | ----------------------------------------------------------
 `@ui5/webcomponents-base`       | Base classes and framework
-`@ui5/webcomponents-theme-base` | Base theming assets
+`@ui5/webcomponents-theming` | Base theming assets
 `@ui5/webcomponents-tools`      | Build and configuration assets
 `@ui5/webcomponents-ie11`       | (Optional) Internet Explorer 11 polyfills and adapter code
 
