@@ -46,8 +46,8 @@ function getSVGMatches(template) {
 
 function getSVGBlock(input, blockCounter) {
 	return {
-		usage: `\${blockSVG${blockCounter}(context)}`,
-		definition: `\nconst blockSVG${blockCounter} = (context) => {return svg\`${input}\`};`,
+		usage: `\${blockSVG${blockCounter}(context, tags, suffix)}`,
+		definition: `\nconst blockSVG${blockCounter} = (context, tags, suffix) => svg\`${input}\`;`,
 	};
 }
 
