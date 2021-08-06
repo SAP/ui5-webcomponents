@@ -116,9 +116,10 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Opens popover on desktop and dialog on mobile.
 	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
 	 * @public
 	 */
-	open(opener) {
+	open(opener, preventInitialFocus = false) {
 		this.style.display = this._isPhone ? "contents" : "";
 
 		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
@@ -131,7 +132,7 @@ class ResponsivePopover extends Popover {
 				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
 			}
 
-			this.openBy(opener);
+			this.openBy(opener, preventInitialFocus);
 		} else {
 			this.style.zIndex = getNextZIndex();
 			this._dialog.open();
