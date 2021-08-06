@@ -240,17 +240,37 @@ const metadata = {
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
 		*/
-		change: {},
+		change: {
+			details: {
+				value: {
+					type: Object,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 
 		/**
 		 * Fired when the value of the component is changed at each key stroke.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
 		*/
-		input: {},
+		input: {
+			details: {
+				value: {
+					type: Object,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 	},
 };
 
@@ -491,7 +511,9 @@ class DatePicker extends DateComponentBase {
 		let executeEvent = true;
 
 		events.forEach(event => {
-			executeEvent = this.fireEvent(event, { value, valid }, true) && executeEvent ? true : false;
+			if (!this.fireEvent(event, { value, valid }, true)) {
+				executeEvent = false;
+			}
 		});
 
 		if (!executeEvent) {

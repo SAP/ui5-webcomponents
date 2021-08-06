@@ -285,7 +285,7 @@ describe("Date Picker Tests", () => {
 
 		// Two change events should be fired and the date should twice normalized
 		assert.equal(lblChangeCounter.getHTML(false), "2", 'change event is being fired twice');
-		assert.equal(lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalazid to date twice as well');
+		assert.equal(lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalized to date twice as well');
 	});
 
 	it("today value is normalized and correctly rounded to 00:00:00", () => {
@@ -923,5 +923,15 @@ describe("Date Picker Tests", () => {
 		browser.keys("Enter");
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+	});
+
+	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", () => {
+		datepicker.id = "#dpPrevent";
+
+		datepicker.input.click();
+		datepicker.root.keys("Jan 1, 1999999");
+		browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+
+		assert.equal(datepicker.input.getProperty("valueState"), "None", 'the value state is not changed');
 	});
 });
