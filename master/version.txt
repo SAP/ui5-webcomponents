@@ -1,5 +1,5 @@
-commit 41f72e3b20cacb1f22cad3058ee747aeef43e27d
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Aug 5 19:37:13 2021 +0300
+commit fd132d6c3abfb60f7df86e26a289c83693afc5a2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Aug 6 14:39:21 2021 +0300
 
-    fix(ui5-illustrated-message): remove style attribute of svg (#3605)
+    chore(framework): Generate better lit templates (#3608)
