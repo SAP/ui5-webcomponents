@@ -242,11 +242,13 @@ const metadata = {
 		 * @event
 		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
 			details: {
 				value: {
-					type: Object,
+					type: String,
 				},
 				valid: {
 					type: Boolean,
@@ -260,11 +262,13 @@ const metadata = {
 		 * @event
 		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
 			details: {
 				value: {
-					type: Object,
+					type: String,
 				},
 				valid: {
 					type: Boolean,
