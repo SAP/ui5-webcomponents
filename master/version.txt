@@ -1,9 +1,9 @@
-commit 79d259eb95068a08feaadfa0b6e2138c53db1029
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Aug 6 15:12:11 2021 +0300
+commit 62d1079c5039fc5f922601160899dbe5c5494726
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Fri Aug 6 15:19:45 2021 +0300
 
-    fix(ui5-li-groupheader): fix row height (#3610)
+    feat(ui5-responsive-popover): add prevent initial focus parameter to showAt method (#3595)
     
-    The space between bottom border and text should be 0.5rem by visual specification.
+    New "preventInitialFocus" parameter is added to the "showAt" method to prevent the Responsive Popover from applying an initial focus when needed.
     
-    Fixes: #3606
+    Fixes: #3473
