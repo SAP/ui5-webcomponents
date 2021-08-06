@@ -55,7 +55,7 @@ function replaceInternalBlocks(template, svgContent) {
 	const internalBlocks = svgContent.match(blockrx) || [];
 
 	internalBlocks.forEach(blockName => {
-		const rx = new RegExp(`const ${blockName}.*(html\`).*};`);
+		const rx = new RegExp(`const ${blockName}.*(html\`).*;`);
 		template = template.replace(rx, (match, p1) => {
 			return match.replace(p1, "svg\`");
 		});
