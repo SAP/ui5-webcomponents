@@ -377,11 +377,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
-		if (this._attributeInSync) {
-			this._attributeInSync = false;
-			return;
-		}
-
+		// if (this._attributeInSync) {
+		// 	this._attributeInSync = false;
+		// 	return;
+		// }
 		const properties = this.constructor.getMetadata().getProperties();
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
@@ -403,11 +402,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateAttribute(name, newValue) {
-		if (this._attributeInSync) {
-			this._attributeInSync = false;
-			return;
-		}
-
+		// if (this._attributeInSync) {
+		// 	this._attributeInSync = false;
+		// 	return;
+		// }
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
