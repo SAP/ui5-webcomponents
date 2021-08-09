@@ -1,9 +1,11 @@
-commit 62d1079c5039fc5f922601160899dbe5c5494726
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Fri Aug 6 15:19:45 2021 +0300
+commit 05e076943d9b0c99c12884bc460fa09cd60404c8
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon Aug 9 18:17:46 2021 +0300
 
-    feat(ui5-responsive-popover): add prevent initial focus parameter to showAt method (#3595)
+    feat(ui5-date-picker): preventable change and input events (#3609)
     
-    New "preventInitialFocus" parameter is added to the "showAt" method to prevent the Responsive Popover from applying an initial focus when needed.
+    In this change we introduce the preventable behaviour of the change event in the DatePicker control.
+    This change will allow the application developers to control the whole value setting and value validation, this means that they will receive this event before we set the value and the value state and will have the possibility to prevent our setters and validators and update the value and the value state themselves.
     
-    Fixes: #3473
+    Fixes: #3516
+    Closes:  #3516

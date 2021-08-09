@@ -61,6 +61,14 @@
 		<ui5-label id="lblChange">change: N/A</ui5-label><br/>
 		<ui5-label id="lblLiveChange">input: N/A</ui5-label><br/>
 
+		<h3>placeholder + title + prevented default events</h3>
+		<ui5-date-picker id='dpPrevent'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+		</ui5-date-picker>
+		<ui5-label id="lblChangePrevent">change: N/A</ui5-label><br/>
+		<ui5-label id="lblLiveChangePrevent">input: N/A</ui5-label><br/>
+
 		<h3>format-pattern - 'short'</h3>
 		<ui5-date-picker id='dp6' format-pattern='short'></ui5-date-picker>
 
@@ -155,6 +163,20 @@
 		dp.addEventListener('ui5-input', function(e) {
 			console.log('input: ', e.detail);
 			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
+		});
+
+		var dpPrevent = document.getElementById('dpPrevent');
+		var labelChangePrevent = document.getElementById('lblChangePrevent');
+		var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
+
+		dpPrevent.addEventListener('ui5-change', function(e) {
+			e.preventDefault();
+			console.log('change: ', e.detail);
+			labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
+		});
+		dpPrevent.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
 		});
 
 		$('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
