@@ -60,7 +60,6 @@ class UI5Element extends HTMLElement {
 	constructor() {
 		super();
 
-		this._attributeInSync = new Set();
 		this._changedState = []; // Filled on each invalidation, cleared on re-render (used for debugging)
 		this._suppressInvalidation = true; // A flag telling whether all invalidations should be ignored. Initialized with "true" because a UI5Element can not be invalidated until it is rendered for the first time
 		this._inDOM = false; // A flag telling whether the UI5Element is currently in the DOM tree of the document or not
@@ -378,8 +377,8 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
-		if (this._attributeInSync.has(name)) {
-			this._attributeInSync.delete(name);
+		if (this._attributeInSync) {
+			this._attributeInSync = false;
 			return;
 		}
 
@@ -395,7 +394,7 @@ class UI5Element extends HTMLElement {
 				newValue = propertyTypeClass.attributeToProperty(newValue);
 			}
 
-			this._attributeInSync.add(name);
+			this._attributeInSync = true;
 			this[nameInCamelCase] = newValue;
 		}
 	}
@@ -404,19 +403,19 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateAttribute(name, newValue) {
+		if (this._attributeInSync) {
+			this._attributeInSync = false;
+			return;
+		}
+
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
 
 		const attrName = camelToKebabCase(name);
 
-		if (this._attributeInSync.has(attrName)) {
-			this._attributeInSync.delete(attrName);
-			return;
-		}
-
 		if (typeof newValue === "object") {
-			this._attributeInSync.add(attrName);
+			this._attributeInSync = true;
 			this.removeAttribute(attrName); // If the type allows both primitive and object values, and there was an attribute set, remove it when setting an object value
 			return;
 		}
@@ -424,14 +423,14 @@ class UI5Element extends HTMLElement {
 		const attrValue = this.getAttribute(attrName);
 		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
-				this._attributeInSync.add(attrName);
+				this._attributeInSync = true;
 				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
-				this._attributeInSync.add(attrName);
+				this._attributeInSync = true;
 				this.removeAttribute(attrName);
 			}
 		} else if (attrValue !== newValue) {
-			this._attributeInSync.add(attrName);
+			this._attributeInSync = true;
 			this.setAttribute(attrName, newValue);
 		}
 	}
@@ -891,7 +890,7 @@ class UI5Element extends HTMLElement {
 						});
 						this._updateAttribute(prop, value);
 					} else {
-						this._attributeInSync.delete(camelToKebabCase(prop));
+						this._attributeInSync = false;
 					}
 				},
 			});
