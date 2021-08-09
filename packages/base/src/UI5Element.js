@@ -891,6 +891,8 @@ class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 						this._updateAttribute(prop, value);
+					} else {
+						this._attributeInSync.delete(camelToKebabCase(prop));
 					}
 				},
 			});
