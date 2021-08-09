@@ -60,6 +60,7 @@ class UI5Element extends HTMLElement {
 	constructor() {
 		super();
 
+		this._attributesInSyncSet = new Set(); // Tells which attributes are already in sync with their respective properties (to avoid unneeded calls of attributeChangedCallback and _updateAttribute)
 		this._changedState = []; // Filled on each invalidation, cleared on re-render (used for debugging)
 		this._suppressInvalidation = true; // A flag telling whether all invalidations should be ignored. Initialized with "true" because a UI5Element can not be invalidated until it is rendered for the first time
 		this._inDOM = false; // A flag telling whether the UI5Element is currently in the DOM tree of the document or not
@@ -377,8 +378,8 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
-		if (this._attributeInSync) {
-			this._attributeInSync = false;
+		if (this._attributesInSyncSet.has(name)) { // _updateAttribute just set/removed the attribute, therefore attributeChangedCallback triggered. Skip.
+			this._attributesInSyncSet.delete(name);
 			return;
 		}
 
@@ -394,7 +395,7 @@ class UI5Element extends HTMLElement {
 				newValue = propertyTypeClass.attributeToProperty(newValue);
 			}
 
-			this._attributeInSync = true;
+			this._attributesInSyncSet.add(name); // the attribute is already up to date, skip _updateAttribute from the property setter on the next line
 			this[nameInCamelCase] = newValue;
 		}
 	}
@@ -403,19 +404,19 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateAttribute(name, newValue) {
-		if (this._attributeInSync) {
-			this._attributeInSync = false;
-			return;
-		}
-
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
 
 		const attrName = camelToKebabCase(name);
 
+		if (this._attributesInSyncSet.has(attrName)) { // attributeChangedCallback updated the property, and the property setter in turn called _updateAttribute. Skip.
+			this._attributesInSyncSet.delete(attrName);
+			return;
+		}
+
 		if (typeof newValue === "object") {
-			this._attributeInSync = true;
+			this._attributesInSyncSet.add(attrName); // skip the attributeChangedCallback call that will be triggered by the next line
 			this.removeAttribute(attrName); // If the type allows both primitive and object values, and there was an attribute set, remove it when setting an object value
 			return;
 		}
@@ -423,14 +424,14 @@ class UI5Element extends HTMLElement {
 		const attrValue = this.getAttribute(attrName);
 		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
-				this._attributeInSync = true;
+				this._attributesInSyncSet.add(attrName); // skip the attributeChangedCallback call that will be triggered by the next line
 				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
-				this._attributeInSync = true;
+				this._attributesInSyncSet.add(attrName); // skip the attributeChangedCallback call that will be triggered by the next line
 				this.removeAttribute(attrName);
 			}
 		} else if (attrValue !== newValue) {
-			this._attributeInSync = true;
+			this._attributesInSyncSet.add(attrName); // skip the attributeChangedCallback call that will be triggered by the next line
 			this.setAttribute(attrName, newValue);
 		}
 	}
@@ -890,7 +891,8 @@ class UI5Element extends HTMLElement {
 						});
 						this._updateAttribute(prop, value);
 					} else {
-						this._attributeInSync = false;
+						const attrName = camelToKebabCase(prop); // Since _updateAttribute will not be called, we must manually mark the attribute as not-in-sync. Otherwise the next attributeChangedCallback will be skipped.
+						this._attributesInSyncSet.delete(attrName);
 					}
 				},
 			});
