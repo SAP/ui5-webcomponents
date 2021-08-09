@@ -10,8 +10,6 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import Integer from "./types/Integer.js";
-import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
@@ -19,6 +17,8 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import isLegacyBrowser from "./isLegacyBrowser.js";
+import isDescendantOf from "./util/isDescendantOf.js";
+import DataType from "./types/DataType.js";
 
 let autoId = 0;
 
@@ -377,20 +377,24 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
+		if (this._attributeInSync) {
+			this._attributeInSync = false;
+			return;
+		}
+
 		const properties = this.constructor.getMetadata().getProperties();
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
 		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
 			const propertyTypeClass = properties[nameInCamelCase].type;
+
 			if (propertyTypeClass === Boolean) {
 				newValue = newValue !== null;
+			} else if (isDescendantOf(propertyTypeClass, DataType)) {
+				newValue = propertyTypeClass.attributeToValue(newValue);
 			}
-			if (propertyTypeClass === Integer) {
-				newValue = parseInt(newValue);
-			}
-			if (propertyTypeClass === Float) {
-				newValue = parseFloat(newValue);
-			}
+
+			this._attributeInSync = true;
 			this[nameInCamelCase] = newValue;
 		}
 	}
@@ -399,6 +403,11 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateAttribute(name, newValue) {
+		if (this._attributeInSync) {
+			this._attributeInSync = false;
+			return;
+		}
+
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
@@ -411,11 +420,14 @@ class UI5Element extends HTMLElement {
 		const attrValue = this.getAttribute(attrName);
 		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
+				this._attributeInSync = true;
 				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
+				this._attributeInSync = true;
 				this.removeAttribute(attrName);
 			}
 		} else if (attrValue !== newValue) {
+			this._attributeInSync = true;
 			this.setAttribute(attrName, newValue);
 		}
 	}

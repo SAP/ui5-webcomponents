@@ -11,6 +11,10 @@ class DataType {
 	static isValid(value) {
 	}
 
+	static attributeToProperty(attributeValue) {
+		return attributeValue;
+	}
+
 	static generateTypeAccessors(types) {
 		Object.keys(types).forEach(type => {
 			Object.defineProperty(this, type, {
