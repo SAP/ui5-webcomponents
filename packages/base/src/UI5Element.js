@@ -79,6 +79,8 @@ class UI5Element extends HTMLElement {
 		if (this.constructor._needsShadowDOM()) {
 			this.attachShadow({ mode: "open" });
 		}
+
+		this._attributeInSync = new Set();
 	}
 
 	/**
@@ -377,10 +379,11 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
-		// if (this._attributeInSync) {
-		// 	this._attributeInSync = false;
-		// 	return;
-		// }
+		if (this._attributeInSync.has(name)) {
+			this._attributeInSync.delete(name);
+			return;
+		}
+
 		const properties = this.constructor.getMetadata().getProperties();
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
@@ -393,7 +396,7 @@ class UI5Element extends HTMLElement {
 				newValue = propertyTypeClass.attributeToProperty(newValue);
 			}
 
-			this._attributeInSync = true;
+			this._attributeInSync.add(name);
 			this[nameInCamelCase] = newValue;
 		}
 	}
@@ -402,18 +405,19 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateAttribute(name, newValue) {
-		// if (this._attributeInSync) {
-		// 	this._attributeInSync = false;
-		// 	return;
-		// }
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
 
 		const attrName = camelToKebabCase(name);
 
+		if (this._attributeInSync.has(attrName)) {
+			this._attributeInSync.delete(attrName);
+			return;
+		}
+
 		if (typeof newValue === "object") {
-			this._attributeInSync = true;
+			this._attributeInSync.add(attrName);
 			this.removeAttribute(attrName); // If the type allows both primitive and object values, and there was an attribute set, remove it when setting an object value
 			return;
 		}
@@ -421,14 +425,14 @@ class UI5Element extends HTMLElement {
 		const attrValue = this.getAttribute(attrName);
 		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
-				this._attributeInSync = true;
+				this._attributeInSync.add(attrName);
 				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
-				this._attributeInSync = true;
+				this._attributeInSync.add(attrName);
 				this.removeAttribute(attrName);
 			}
 		} else if (attrValue !== newValue) {
-			this._attributeInSync = true;
+			this._attributeInSync.add(attrName);
 			this.setAttribute(attrName, newValue);
 		}
 	}
