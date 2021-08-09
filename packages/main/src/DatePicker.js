@@ -230,17 +230,41 @@ const metadata = {
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
-		change: {},
+		change: {
+			details: {
+				value: {
+					type: String,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 
 		/**
 		 * Fired when the value of the <code>ui5-date-picker</code> is changed at each key stroke.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
-		input: {},
+		input: {
+			details: {
+				value: {
+					type: String,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 	},
 };
 
@@ -478,14 +502,22 @@ class DatePicker extends DateComponentBase {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
+		let executeEvent = true;
+
+		events.forEach(event => {
+			if (!this.fireEvent(event, { value, valid }, true)) {
+				executeEvent = false;
+			}
+		});
+
+		if (!executeEvent) {
+			return;
+		}
+
 		if (updateValue) {
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
-
-		events.forEach(event => {
-			this.fireEvent(event, { value, valid });
-		});
 	}
 
 	_updateValueState() {
