@@ -391,7 +391,7 @@ class UI5Element extends HTMLElement {
 			if (propertyTypeClass === Boolean) {
 				newValue = newValue !== null;
 			} else if (isDescendantOf(propertyTypeClass, DataType)) {
-				newValue = propertyTypeClass.attributeToValue(newValue);
+				newValue = propertyTypeClass.attributeToProperty(newValue);
 			}
 
 			this._attributeInSync = true;
@@ -412,11 +412,14 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		const attrName = camelToKebabCase(name);
+
 		if (typeof newValue === "object") {
+			this._attributeInSync = true;
+			this.removeAttribute(attrName); // If the type allows both primitive and object values, and there was an attribute set, remove it when setting an object value
 			return;
 		}
 
-		const attrName = camelToKebabCase(name);
 		const attrValue = this.getAttribute(attrName);
 		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
