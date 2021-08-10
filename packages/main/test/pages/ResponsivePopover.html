@@ -104,6 +104,16 @@
 		<div>text</div>
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnInitialFocus">Open RP and Focus</ui5-button>
+	<ui5-responsive-popover id="simpleRPInitialFocus">
+		Content
+	</ui5-responsive-popover>
+
+	<ui5-button id="btnInitialFocusPrevented">Open RP and prevent initial focus</ui5-button>
+	<ui5-responsive-popover id="simpleRPInitialFocusPrevented">
+		Content
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -135,6 +145,14 @@
 
 		btnRpTopWithArrow.addEventListener("click", function(event) {
 			rpTopWithArrow.showAt(btnRpTopWithArrow);
+		});
+
+		btnInitialFocus.addEventListener("click", function(event) {
+			simpleRPInitialFocus.showAt(event.target, false);
+		});
+
+		btnInitialFocusPrevented.addEventListener("click", function(event) {
+			simpleRPInitialFocusPrevented.showAt(event.target, true);
 		});
 	</script>
 </body>
