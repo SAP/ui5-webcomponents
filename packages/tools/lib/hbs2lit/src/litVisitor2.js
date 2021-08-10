@@ -32,7 +32,7 @@ function HTMLLitVisitor(debug) {
 	this.result = "";
 	this.mainBlock = "";
 	this.blockPath = "context";
-	this.blockParameters = ["context"];
+	this.blockParameters = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
 	if (this.debug) {
@@ -48,7 +48,7 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.keys.push(key);
 	this.debug && this.blockByNumber.push(key);
 
-	this.blocks[this.currentKey()] = "const " + this.currentKey() + " = (" + this.blockParameters.join(", ") + ") => { return ";
+	this.blocks[this.currentKey()] = "const " + this.currentKey() + " = (" + this.blockParameters.join(", ") + ") => ";
 
 	if (this.keys.length > 1) { //it's a nested block
 		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
@@ -59,7 +59,7 @@ HTMLLitVisitor.prototype.Program = function(program) {
 
 	this.blocks[this.currentKey()] += "html`";
 	Visitor.prototype.Program.call(this, program);
-	this.blocks[this.currentKey()] += "`; };";
+	this.blocks[this.currentKey()] += "`;";
 
 	this.keys.pop(key);
 };
