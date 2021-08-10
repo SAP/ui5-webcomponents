@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.15](https://github.com/SAP/ui5-webcomponents/compare/v0.31.14...v0.31.15) (2021-08-10)
+
+
+### Bug Fixes
+
+* **ui5-li-groupheader:** fix row height ([#3610](https://github.com/SAP/ui5-webcomponents/issues/3610)) ([9ee7ea5](https://github.com/SAP/ui5-webcomponents/commit/9ee7ea5)), closes [#3606](https://github.com/SAP/ui5-webcomponents/issues/3606)
+
+
+### Features
+
+* **ui5-date-picker:** preventable change and input events ([#3609](https://github.com/SAP/ui5-webcomponents/issues/3609)) ([850a6c4](https://github.com/SAP/ui5-webcomponents/commit/850a6c4)), closes [#3516](https://github.com/SAP/ui5-webcomponents/issues/3516) [#3516](https://github.com/SAP/ui5-webcomponents/issues/3516)
+```js
+dpPrevent.addEventListener('change', function(e) {
+	e.preventDefault();
+	// up to the app developer to set the value and the valueState
+	// e.target.value = e.detail.value;
+	// e.target.valueState = "Error";
+});
+```
+* **ui5-responsive-popover:** add prevent initial focus parameter to showAt method ([#3595](https://github.com/SAP/ui5-webcomponents/issues/3595)) ([1eb7206](https://github.com/SAP/ui5-webcomponents/commit/1eb7206)), closes [#3473](https://github.com/SAP/ui5-webcomponents/issues/3473)`
+```js
+responsivePopover.open(event.target, true /*prevent initial focus */);
+```
+* **ui5-segmented-button-item:** introduce new component to serve as child of SegmentedButton ([#3258](https://github.com/SAP/ui5-webcomponents/issues/3258)) ([d9f5ce3](https://github.com/SAP/ui5-webcomponents/commit/d9f5ce3)), closes [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191) [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191)
+```html
+<ui5-segmented-button>
+   <ui5-segmentedbutton-item pressed>One</ui5-segmentedbutton-item>
+   <ui5-segmentedbutton-item>Two</ui5-segmentedbutton-item>
+   <ui5-segmentedbutton-item>Three</ui5-segmentedbutton-item>
+</ui5-segmented-button>
+```
+* **ui5-view-settings-dialog:** introduce new component ([#3502](https://github.com/SAP/ui5-webcomponents/issues/3502)) ([43991c2](https://github.com/SAP/ui5-webcomponents/commit/43991c2)), closes [#3304](https://github.com/SAP/ui5-webcomponents/issues/3304) [#3304](https://github.com/SAP/ui5-webcomponents/issues/3304), [API Ref](https://sap.github.io/ui5-webcomponents/playground/components/ViewSettingsDialog/)
+```html
+<ui5-view-settings-dialog id="vsd">
+		<ui5-li slot="sortItems">Name</ui5-li>
+		<ui5-li slot="sortItems">Position</ui5-li>
+		<ui5-li slot="sortItems">Company</ui5-li>
+		<ui5-li slot="sortItems">Department</ui5-li>
+	</ui5-view-settings-dialog>
+
+	<script>
+		btnOpenDialog.addEventListener("click", function () {
+			vsd.open();
+		});
+		vsd.addEventListener("confirm", function(evt) {
+			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
+		});
+	</script>
+```
+<b>Note:</b> in the `master` and `RC.15` versions we use the "show()" method to show the ViewSettingsDialog, as all popus methods have been renamed to `show` (previously `open`) and `showAt`(previously `openBy`).
+
+But, in `0.31` we still use `open` and `openBy` (these breaking changes are not downported), that's why to show the ViewSettingsDialog we use `open`.
+
+### BREAKING_CHANGES
+* **ui5-segmented-button:** rename tag name ([#3345](https://github.com/SAP/ui5-webcomponents/issues/3345)) ([b3b42f6](https://github.com/SAP/ui5-webcomponents/commit/b3b42f6))
+The SegmentedButton's tag name has been changed to `ui5-segmented-button`.
+* **ui5-segmented-button-item:** introduce new component to serve as child of SegmentedButton ([#3258](https://github.com/SAP/ui5-webcomponents/issues/3258)) ([d9f5ce3](https://github.com/SAP/ui5-webcomponents/commit/d9f5ce3)), closes [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191) [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191)
+The SegmentedButton no longer accepts ToggleButton, you have to use the newly created component, called SegmentedButtonItem as follows:
+```html
+<ui5-segmented-button>
+   <ui5-segmentedbutton-item pressed>One</ui5-segmentedbutton-item>
+   <ui5-segmentedbutton-item>Two</ui5-segmentedbutton-item>
+   <ui5-segmentedbutton-item>Three</ui5-segmentedbutton-item>
+</ui5-segmented-button>
+```
+
 ## [0.31.14](https://github.com/SAP/ui5-webcomponents/compare/v0.31.13...v0.31.14) (2021-08-03)
 
 

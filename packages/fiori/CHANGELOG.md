@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.15](https://github.com/SAP/ui5-webcomponents/compare/v0.31.14...v0.31.15) (2021-08-10)
+
+
+### Features
+
+* **ui5-view-settings-dialog:** introduce new component ([#3502](https://github.com/SAP/ui5-webcomponents/issues/3502)) ([43991c2](https://github.com/SAP/ui5-webcomponents/commit/43991c2)), closes [#3304](https://github.com/SAP/ui5-webcomponents/issues/3304) [#3304](https://github.com/SAP/ui5-webcomponents/issues/3304)
+
+
+
+
+
 ## [0.31.14](https://github.com/SAP/ui5-webcomponents/compare/v0.31.13...v0.31.14) (2021-08-03)
 
 

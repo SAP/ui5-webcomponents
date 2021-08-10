@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.15](https://github.com/SAP/ui5-webcomponents/compare/v0.31.14...v0.31.15) (2021-08-10)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:**  does not trigger value verification upon typing([#2922](https://github.com/SAP/ui5-webcomponents/issues/2922)) ([38a90ba](https://github.com/SAP/ui5-webcomponents/commit/38a90ba)), closes [#2827](https://github.com/SAP/ui5-webcomponents/issues/2827)
+* **ui5-li-groupheader:** fix row height ([#3610](https://github.com/SAP/ui5-webcomponents/issues/3610)) ([9ee7ea5](https://github.com/SAP/ui5-webcomponents/commit/9ee7ea5)), closes [#3606](https://github.com/SAP/ui5-webcomponents/issues/3606)
+
+
+### Features
+
+* **ui5-date-picker:** preventable change and input events ([#3609](https://github.com/SAP/ui5-webcomponents/issues/3609)) ([850a6c4](https://github.com/SAP/ui5-webcomponents/commit/850a6c4)), closes [#3516](https://github.com/SAP/ui5-webcomponents/issues/3516) [#3516](https://github.com/SAP/ui5-webcomponents/issues/3516)
+* **ui5-responsive-popover:** add prevent initial focus parameter to showAt method ([#3595](https://github.com/SAP/ui5-webcomponents/issues/3595)) ([1eb7206](https://github.com/SAP/ui5-webcomponents/commit/1eb7206)), closes [#3473](https://github.com/SAP/ui5-webcomponents/issues/3473)
+* **ui5-segmented-button-item:** introduce new component to serve as child of SegmentedButton ([#3258](https://github.com/SAP/ui5-webcomponents/issues/3258)) ([d9f5ce3](https://github.com/SAP/ui5-webcomponents/commit/d9f5ce3)), closes [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191) [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191)
+
+
+
+
+
 ## [0.31.14](https://github.com/SAP/ui5-webcomponents/compare/v0.31.13...v0.31.14) (2021-08-03)
 
 
