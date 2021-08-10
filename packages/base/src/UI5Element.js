@@ -378,18 +378,7 @@ class UI5Element extends HTMLElement {
 			const propertyTypeClass = properties[nameInCamelCase].type;
 			if (propertyTypeClass === Boolean) {
 				newValue = newValue !== null;
-			}
-			if (propertyTypeClass === Integer) {
-				newValue = parseInt(newValue);
-			}
-			if (propertyTypeClass === Float) {
-				newValue = parseFloat(newValue);
-			}
-
-			if (isDescendantOf(propertyTypeClass, DataType)) {
-				if (newValue === null) {
-					return;
-				}
+			} else if (isDescendantOf(propertyTypeClass, DataType)) {
 				newValue = propertyTypeClass.attributeToProperty(newValue);
 			}
 			this[nameInCamelCase] = newValue;
@@ -403,22 +392,23 @@ class UI5Element extends HTMLElement {
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
+		const properties = this.constructor.getMetadata().getProperties();
+		const propertyTypeClass = properties[name].type;
 		const attrName = camelToKebabCase(name);
-
-		if (typeof newValue === "object") {
-			this.removeAttribute(attrName); // mostly relevant for custom types - if the new value is an object, remove the attribute
-			return;
-		}
-
 		const attrValue = this.getAttribute(attrName);
-		if (typeof newValue === "boolean") {
+
+		if (propertyTypeClass === Boolean) {
 			if (newValue === true && attrValue === null) {
 				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
 				this.removeAttribute(attrName);
 			}
-		} else if (attrValue !== newValue) {
-			this.setAttribute(attrName, newValue);
+		} else if (isDescendantOf(propertyTypeClass, DataType)) {
+			this.setAttribute(attrName, propertyTypeClass.propertyToAttribute(newValue));
+		} else if (typeof newValue !== "object") {
+			if (attrValue !== newValue) {
+				this.setAttribute(attrName, newValue);
+			}
 		}
 	}
 
@@ -863,6 +853,8 @@ class UI5Element extends HTMLElement {
 					const oldState = this._state[prop];
 					if (propData.multiple && propData.compareValues) {
 						isDifferent = !arraysAreEqual(oldState, value);
+					} else if (isDescendantOf(propData.type, DataType)) {
+						isDifferent = !propData.type.valuesAreEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
