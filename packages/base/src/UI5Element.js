@@ -11,8 +11,6 @@ import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import DataType from "./types/DataType.js";
-import Integer from "./types/Integer.js";
-import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isDescendantOf from "./util/isDescendantOf.js";
@@ -409,7 +407,7 @@ class UI5Element extends HTMLElement {
 			if (attrValue !== newValue) {
 				this.setAttribute(attrName, newValue);
 			}
-		}
+		} // else { return; } // old object handling
 	}
 
 	/**
