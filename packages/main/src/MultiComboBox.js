@@ -682,7 +682,9 @@ class MultiComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
-		this.items.forEach(item => item._getRealDomRef =  () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`));
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+		});
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
