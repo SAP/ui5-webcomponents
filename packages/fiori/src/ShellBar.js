@@ -762,10 +762,6 @@ class ShellBar extends UI5Element {
 		}, true);
 	}
 
-	getStableDomRefPerAbstractItem(item) {
-		return this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
-	}
-
 	/**
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -834,6 +830,7 @@ class ShellBar extends UI5Element {
 				show: !!this.searchField.length,
 			},
 			...this.items.map((item, index) => {
+				item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 				return {
 					icon: item.icon,
 					id: item._id,

@@ -1,15 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-// Template
-import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit.js";
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-shellbar-item",
-	"abstract": true,
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Defines the name of the item's icon.
@@ -82,10 +78,6 @@ class ShellBarItem extends UI5Element {
 
 	static get render() {
 		return litRender;
-	}
-
-	static get template() {
-		return ShellBarItemTemplate;
 	}
 
 	get stableDomRef() {
