@@ -8,6 +8,8 @@ import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js"
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Bar from "./Bar.js";
+import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
+import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 
 import {
 	VSD_DIALOG_TITLE_SORT,
@@ -18,6 +20,7 @@ import {
 	VSD_SORT_BY,
 	VSD_ORDER_ASCENDING,
 	VSD_ORDER_DESCENDING,
+	VSD_FILTER_BY,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -25,6 +28,7 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
+import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 
 const metadata = {
 	tag: "ui5-view-settings-dialog",
@@ -80,6 +84,27 @@ const metadata = {
 		 _currentSettings: {
 			type: Object,
 		},
+
+		/**
+		 * Defnies the current mode of the component
+		 *
+		 * @since 1.0.0-rc.16
+		 * @private
+		 */
+		_currentMode: {
+			type: ViewSettingsDialogMode,
+			defaultValue: ViewSettingsDialogMode.Sort,
+		},
+
+		/**
+		 * When in Filter By mode, defines whether we need to show the list of keys, or multicombobox with values
+		 *
+		 * @since 1.0.0-rc.16
+		 * @private
+		 */
+		_filterStepTwo: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
@@ -88,7 +113,17 @@ const metadata = {
 		 * @slot sortItems
 		 * @public
 		 */
-		 "sortItems": {
+		 sortItems: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the <code>filterItems</code> list.
+		 * @type {sap.ui.webcomponents.fiori.ListItem}
+		 * @slot filterItems
+		 * @public
+		 */
+		filterItems: {
 			type: HTMLElement,
 		},
 	},
@@ -106,6 +141,7 @@ const metadata = {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
+				filters: { type: Array },
 			},
 		},
 
@@ -121,6 +157,7 @@ const metadata = {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
+				filters: { type: Array },
 			},
 		},
 	},
@@ -160,6 +197,8 @@ class ViewSettingsDialog extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this._currentFilterOptions = [];
+		this._currentFilter;
 	}
 
 	static get render() {
@@ -178,6 +217,8 @@ class ViewSettingsDialog extends UI5Element {
 			List,
 			StandardListItem,
 			GroupHeaderListItem,
+			SegmentedButton,
+			SegmentedButtonItem,
 		];
 	}
 
@@ -191,6 +232,10 @@ class ViewSettingsDialog extends UI5Element {
 
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents-fiori");
+	}
+
+	get _filterByTitle() {
+		return `${this.i18nBundle.getText(VSD_FILTER_BY)}: ${this._currentFilter.text}`;
 	}
 
 	get _dialogTitle() {
@@ -221,6 +266,10 @@ class ViewSettingsDialog extends UI5Element {
 		return this.i18nBundle.getText(VSD_SORT_ORDER);
 	}
 
+	get _filterByLabel() {
+		return this.i18nBundle.getText(VSD_FILTER_BY);
+	}
+
 	get _sortByLabel() {
 		return this.i18nBundle.getText(VSD_SORT_BY);
 	}
@@ -245,12 +294,36 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	get _settings() {
 		const settings = {},
-			  sortOrderSelected = this._sortOrder.getSelectedItems(),
-			  sortBySelected = this._sortBy.getSelectedItems();
+			  sortOrderSelected = this._sortOrder && this._sortOrder.getSelectedItems(),
+			  sortBySelected = this._sortBy && this._sortBy.getSelectedItems();
 
-		settings.sortOrder = sortOrderSelected.length ? sortOrderSelected[0] : undefined;
-		settings.sortBy = sortBySelected.length ? sortBySelected[0] : undefined;
+		settings.sortOrder = sortOrderSelected ? sortOrderSelected[0] : undefined;
+		settings.sortBy = sortBySelected ? sortBySelected[0] : undefined;
 		return settings;
+	}
+
+	get isModeSort() {
+		return this._currentMode === ViewSettingsDialogMode.Sort;
+	}
+
+	get isModeFilter() {
+		return this._currentMode === ViewSettingsDialogMode.Filter;
+	}
+
+	get showBackButton() {
+		return this.isModeFilter && this._filterStepTwo;
+	}
+
+	get _sortOrderList() {
+		return this.shadowRoot.querySelector("[ui5-list][sort-order]")
+	}
+
+	get _sortByList() {
+		return this.shadowRoot.querySelector("[ui5-list][sort-by]");
+	}
+
+	get _dialogDomRef() {
+		return this.shadowRoot.querySelector("[ui5-dialog]");
 	}
 
 	/**
@@ -258,17 +331,36 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	show() {
+		this._currentMode = ViewSettingsDialogMode.Sort;
 		if (!this._dialog) {
-			this._sortOrder = this.shadowRoot.querySelector("[ui5-list][sort-order]");
-			this._sortBy = this.shadowRoot.querySelector("[ui5-list][sort-by]");
+			this._sortOrder = this._sortOrderList;
+			this._sortBy = this._sortByList;
 			this._initialSettings = this._settings;
 			this._currentSettings = this._initialSettings;
 			this._confirmedSettings = this._initialSettings;
-			this._dialog = this.shadowRoot.querySelector("[ui5-dialog]");
+			this._dialog = this._dialogDomRef;
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
 		this._dialog.show();
+	}
+
+	_handleModeChange(event) {
+		this._currentMode = ViewSettingsDialogMode[event.detail.selectedItem.getAttribute("mode")];
+	}
+
+	_handleFilterValueChange(event) {
+
+	}
+
+	_navigateToFilters(event) {
+		this._filterStepTwo = false;
+	}
+
+	_changeCurrentFilter(event) {
+		this._filterStepTwo = true;
+		this._currentFilter = event.detail.item;
+		this._currentFilterOptions = event.detail.item.values.map(token => token.text);
 	}
 
 	/**
