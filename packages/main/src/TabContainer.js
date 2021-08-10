@@ -312,6 +312,7 @@ class TabContainer extends UI5Element {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
+			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${tab.stableDomRef}]`);
 		});
 
 		if (!this._animationRunning) {
@@ -330,10 +331,6 @@ class TabContainer extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResize);
-	}
-
-	getStableDomRefPerAbstractItem(tab) {
-		return this.getDomRef().querySelector(`*[data-ui5-stable=${tab.stableDomRef}]`);
 	}
 
 	_onTablistFocusin(event) {

@@ -6,7 +6,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-option",
 	managedSlots: true,
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**

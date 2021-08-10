@@ -504,10 +504,6 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("input");
 	}
 
-	getStableDomRefPerAbstractItem(item) {
-		return this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
-	}
-
 	_tokenDelete(event) {
 		const token = event.detail.ref;
 		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"));
@@ -685,6 +681,8 @@ class MultiComboBox extends UI5Element {
 		if (input && !input.value) {
 			this._filteredItems = this.items;
 		}
+
+		this.items.forEach(item => item._getRealDomRef =  () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`));
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;

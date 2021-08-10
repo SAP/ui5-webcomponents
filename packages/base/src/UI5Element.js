@@ -623,8 +623,8 @@ class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	getDomRef() {
-		if (this.constructor._isAbstract() && this.parentNode.isUI5Element) {
-			return this.parentNode.getStableDomRefPerAbstractItem(this);
+		if (!(this.constructor._needsShadowDOM() && this.constructor._needsStaticArea())) {
+			return this._getRealDomRef();
 		}
 
 		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
@@ -773,15 +773,6 @@ class UI5Element extends HTMLElement {
 	 */
 	static _needsShadowDOM() {
 		return !!this.template;
-	}
-
-	/**
-	 * @private
-	 *
-	 * Checks if the component is responsible of its own rendering
-	 */
-	static _isAbstract() {
-		return this.getMetadata().isAbstract();
 	}
 
 	/**

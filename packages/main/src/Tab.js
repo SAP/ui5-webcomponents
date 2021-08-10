@@ -22,7 +22,6 @@ import overflowCss from "./generated/themes/TabInOverflow.css.js";
  */
 const metadata = {
 	tag: "ui5-tab",
-	"abstract": true,
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**

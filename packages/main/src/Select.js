@@ -384,6 +384,7 @@ class Select extends UI5Element {
 
 			opt.selected = false;
 			opt._focused = false;
+			opt._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${opt.stableDomRef}]`);
 
 			return {
 				selected: false,
@@ -418,14 +419,6 @@ class Select extends UI5Element {
 		}
 
 		this._syncedOptions = opts;
-	}
-
-	/**
-	 * @protected
-	 * @param {ui5-option} item
-	 */
-	getStableDomRefPerAbstractItem(item) {
-		return this.responsivePopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 	}
 
 	_enableFormSupport() {
