@@ -1,13 +1,19 @@
-commit d4fa8cb2cda1d655b5378400ca2e3fc791495379
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Aug 10 23:24:17 2021 -0700
+commit 2a22fff272cde7562cc1df642b3add8c3860eb55
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Aug 11 11:05:20 2021 +0300
 
-    Translation Delivery (#3628)
+    chore(deps): bump path-parse from 1.0.6 to 1.0.7 (#3626)
     
-    * chore: translation delivery
+    Bumps [path-parse](https://github.com/jbgutierrez/path-parse) from 1.0.6 to 1.0.7.
+    - [Release notes](https://github.com/jbgutierrez/path-parse/releases)
+    - [Commits](https://github.com/jbgutierrez/path-parse/commits/v1.0.7)
     
-    Change-Id: Ie9d57624128f838e5b7570f95d6a7ceefdd213e7
+    ---
+    updated-dependencies:
+    - dependency-name: path-parse
+      dependency-type: indirect
+    ...
     
-    * chore: translation delivery
+    Signed-off-by: dependabot[bot] <support@github.com>
     
-    Change-Id: I3839f6ddae370e8faf2268467cfd58df6b78f3af
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
