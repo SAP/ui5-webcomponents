@@ -55,15 +55,9 @@
 	</ui5-dialog>
 
 	<ui5-illustrated-message name="UnableToUpload" title="Something went wrong...">
-		<div slot="subtitle">Please try again or contact us at <ui5-link class="illustrated-message-child">example@example.com</ui5-link></div>
+		<div slot="subtitle">Please try again or contact us at <ui5-link>example@example.com</ui5-link></div>
 		<ui5-button icon="refresh">Try again</ui5-button>
 	</ui5-illustrated-message>
-
-	<style>
-		.illustrated-message-child {
-			font-size: inherit;
-		}
-	</style>
 
 	<script>
 		const illustrationSelect = document.getElementById("illustrationSelect");
