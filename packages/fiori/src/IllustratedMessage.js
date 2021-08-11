@@ -109,7 +109,7 @@ const metadata = {
 		 * @type {HTMLElement}
 		 * @slot subtitle
 		 * @public
-		 * @since 1.0.0-rc.15
+		 * @since 1.0.0-rc.16
 		 */
 		subtitle: {
 			type: HTMLElement,
