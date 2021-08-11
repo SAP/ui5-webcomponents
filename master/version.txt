@@ -1,5 +1,14 @@
-commit 61d4742340a69a46864f8a84b39e3b386072d014
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Wed Aug 11 15:29:21 2021 +0200
+commit 7cdcb4dbb1c8761e998e79c661ebaa78a22a91bb
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Aug 11 20:40:26 2021 +0300
 
-    docs(ViewSettingDialog): correct type of `sortItems` slot (#3630)
+    chore(deps): bump hosted-git-info in /packages/playground (#3213)
+    
+    Bumps [hosted-git-info](https://github.com/npm/hosted-git-info) from 2.7.1 to 2.8.9.
+    - [Release notes](https://github.com/npm/hosted-git-info/releases)
+    - [Changelog](https://github.com/npm/hosted-git-info/blob/v2.8.9/CHANGELOG.md)
+    - [Commits](https://github.com/npm/hosted-git-info/compare/v2.7.1...v2.8.9)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
