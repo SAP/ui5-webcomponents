@@ -105,7 +105,7 @@ const metadata = {
 		/**
 		 * Defines the subtitle of the component.
 		 * <br><br>
-		 * <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> will be overwritten.
+		 * <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
 		 * @type {HTMLElement}
 		 * @slot subtitle
 		 * @public
