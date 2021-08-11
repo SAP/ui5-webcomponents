@@ -84,7 +84,7 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the <code>sortItems</code> list.
-		 * @type {sap.ui.webcomponents.fiori.ListItem}
+		 * @type {sap.ui.webcomponents.fiori.IListItem[]}
 		 * @slot sortItems
 		 * @public
 		 */
