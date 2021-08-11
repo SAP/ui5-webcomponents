@@ -163,7 +163,11 @@ const isPageDown = event => (event.key ? event.key === "PageDown" : event.keyCod
 
 const isPageUpShift = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, false, true);
 
+const isPageUpAlt = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, true, false);
+
 const isPageDownShift = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, false, true);
+
+const isPageDownAlt = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, true, false);
 
 const isPageUpShiftCtrl = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, true, false, true);
 
@@ -236,7 +240,9 @@ export {
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
+	isPageUpAlt,
 	isPageDownShift,
+	isPageDownAlt,
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
 };
