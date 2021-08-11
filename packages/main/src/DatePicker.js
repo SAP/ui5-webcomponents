@@ -394,9 +394,8 @@ class DatePicker extends DateComponentBase {
 		this._isPickerOpen = false;
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
-		} else if (this._focusInputAfterClose) {
+		} else {
 			this._getInput().focus();
-			this._focusInputAfterClose = false;
 		}
 	}
 
@@ -710,7 +709,6 @@ class DatePicker extends DateComponentBase {
 		const newValue = event.detail.values && event.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		this._focusInputAfterClose = true;
 		this.closePicker();
 	}
 
