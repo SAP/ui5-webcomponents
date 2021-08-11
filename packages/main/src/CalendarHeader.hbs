@@ -23,7 +23,7 @@
 		>
 			<span>{{_monthButtonText}}</span>
 			{{#if isSecoundCalendarType}}
-			<span>{{_secoundMonthButtonText}}</span>
+			<span class="ui5-calheader-btn-sectext">{{_secoundMonthButtonText}}</span>
 			{{/if}}
 		</div>
 
@@ -34,10 +34,10 @@
 			@click={{onYearButtonClick}}
 			@keydown={{onYearButtonKeyDown}}
 			@keyup={{onYearButtonKeyUp}}
-		>	
+		>
 			<span>{{_yearButtonText}}</span>
 			{{#if isSecoundCalendarType}}
-			<span>{{_secoundYearButtonText}}</span>
+			<span class="ui5-calheader-btn-sectext">{{_secoundYearButtonText}}</span>
 			{{/if}}
 		</div>
 	</div>

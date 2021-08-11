@@ -7,8 +7,21 @@
 	width: 100%;
 }
 
-:host([_hide-week-numbers]) .ui5-dp-content {
+:host([hide-week-numbers]) .ui5-dp-content {
 	flex-basis: 100%;
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item {
+	flex-direction: column;
+}
+
+:host([secondary-calendar-type]) .ui5-dp-daytext {
+	padding: 0.375rem 0.375rem 0 0;
+}
+
+:host([secondary-calendar-type]) .ui5-dp-daysectext {
+	font-size: 0.625rem;
+	padding: 0 0 0.375rem 0.375rem;
 }
 
 .ui5-dp-weekname,

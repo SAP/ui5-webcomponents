@@ -61,6 +61,17 @@
 	display:flex;
 }
 
+.ui5-calheader-middlebtn {
+	flex-direction: column;
+	align-items: center;
+	justify-content:center;
+}
+
+.ui5-calheader-btn-sectext {
+	color: #6a6d70;
+	font-size: 0.625rem;
+}
+
 .ui5-calheader-arrowicon {
 	color: currentColor;
 	pointer-events: none;
