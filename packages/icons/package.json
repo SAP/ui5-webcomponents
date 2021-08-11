@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-icons",
-  "version": "1.0.0-rc.15",
+  "version": "0.33.0",
   "description": "UI5 Web Components: webcomponents.SAP-icons",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -27,10 +27,10 @@
     "directory": "packages/icons"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.0.0-rc.15"
+    "@ui5/webcomponents-base": "0.33.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.15",
+    "@ui5/webcomponents-tools": "0.33.0",
     "chromedriver": "92.0.0"
   }
 }

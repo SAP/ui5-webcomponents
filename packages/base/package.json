@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "1.0.0-rc.15",
+  "version": "0.33.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -35,7 +35,7 @@
     "lit-html": "2.0.0-rc.3"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.15",
+    "@ui5/webcomponents-tools": "0.33.0",
     "@buxlabs/amd-to-es6": "0.16.0",
     "@openui5/sap.ui.core": "1.87.3",
     "array-uniq": "^2.0.0",
