@@ -42,6 +42,10 @@ const metadata = {
 			type: CalendarType,
 		},
 
+		secondaryCalendarType: {
+			type: CalendarType
+		},
+
 		isNextButtonDisabled: {
 			type: Boolean,
 		},
@@ -53,6 +57,10 @@ const metadata = {
 		isMonthButtonHidden: {
 			type: Boolean,
 		},
+
+		isSecoundCalendarType: {
+			type: Boolean
+		}
 	},
 	events: {
 		"previous-press": {},
@@ -95,11 +103,14 @@ class CalendarHeader extends UI5Element {
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const secoundYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
 		const localDate = new Date(this.timestamp * 1000);
 		const calendarDate = CalendarDate.fromTimestamp(localDate.getTime(), this.primaryCalendarType);
 
 		this._monthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[calendarDate.getMonth()];
+		this._secoundMonthButtonText = localeData.getMonths("wide", this.secondaryCalendarType)[calendarDate.getMonth()];
 		this._yearButtonText = yearFormat.format(localDate, true);
+		this._secoundYearButtonText = secoundYearFormat.format(localDate, true)
 		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
 		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 	}

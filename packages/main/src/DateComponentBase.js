@@ -26,6 +26,10 @@ const metadata = {
 			type: CalendarType,
 		},
 
+		secondaryCalendarType: {
+			type: CalendarType
+		},
+
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
@@ -91,10 +95,15 @@ class DateComponentBase extends UI5Element {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
-
+	
 	get _primaryCalendarType() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
+	}
+
+	get _secondaryCalendarType() {
+		//
+		return this.secondaryCalendarType ;
 	}
 
 	get _minDate() {

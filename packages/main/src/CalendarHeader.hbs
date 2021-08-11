@@ -21,7 +21,10 @@
 			@keydown={{onMonthButtonKeyDown}}
 			@keyup={{onMonthButtonKeyUp}}
 		>
-			{{_monthButtonText}}
+			<span>{{_monthButtonText}}</span>
+			{{#if isSecoundCalendarType}}
+			<span>{{_secoundMonthButtonText}}</span>
+			{{/if}}
 		</div>
 
 		<div
@@ -31,8 +34,11 @@
 			@click={{onYearButtonClick}}
 			@keydown={{onYearButtonKeyDown}}
 			@keyup={{onYearButtonKeyUp}}
-		>
-			{{_yearButtonText}}
+		>	
+			<span>{{_yearButtonText}}</span>
+			{{#if isSecoundCalendarType}}
+			<span>{{_secoundYearButtonText}}</span>
+			{{/if}}
 		</div>
 	</div>
 
