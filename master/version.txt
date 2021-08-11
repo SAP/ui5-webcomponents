@@ -1,5 +1,19 @@
-commit 970108d35dd246bf0f6b3198e655aa43de92ba07
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 11 14:07:53 2021 +0300
+commit 2de5e456c3a901d86513d4180db5878c1c911fb2
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Aug 11 14:16:28 2021 +0300
 
-    docs(ui5-illustrated-message): fix repetition in docs (#3632)
+    chore(deps): bump path-parse from 1.0.6 to 1.0.7 in /packages/playground (#3631)
+    
+    Bumps [path-parse](https://github.com/jbgutierrez/path-parse) from 1.0.6 to 1.0.7.
+    - [Release notes](https://github.com/jbgutierrez/path-parse/releases)
+    - [Commits](https://github.com/jbgutierrez/path-parse/commits/v1.0.7)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: path-parse
+      dependency-type: indirect
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
