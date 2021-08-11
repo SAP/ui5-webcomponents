@@ -513,6 +513,10 @@ class DatePicker extends DateComponentBase {
 		}
 
 		let executeEvent = true;
+		const previousValue = this.value;
+		if (updateValue) {
+			this.value = value;
+		}
 
 		events.forEach(event => {
 			if (!this.fireEvent(event, { value, valid }, true)) {
@@ -521,11 +525,11 @@ class DatePicker extends DateComponentBase {
 		});
 
 		if (!executeEvent) {
+			this.value = previousValue;
 			return;
 		}
 
 		if (updateValue) {
-			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 	}
