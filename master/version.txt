@@ -1,20 +1,13 @@
-commit 9bf20dc1ccdc560190e0db9e5c4d9aa457393fe9
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Mon Aug 9 18:54:45 2021 +0300
+commit d4fa8cb2cda1d655b5378400ca2e3fc791495379
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Aug 10 23:24:17 2021 -0700
 
-    chore(deps): bump tar from 6.1.0 to 6.1.6 (#3592)
+    Translation Delivery (#3628)
     
-    Bumps [tar](https://github.com/npm/node-tar) from 6.1.0 to 6.1.6.
-    - [Release notes](https://github.com/npm/node-tar/releases)
-    - [Changelog](https://github.com/npm/node-tar/blob/main/CHANGELOG.md)
-    - [Commits](https://github.com/npm/node-tar/compare/v6.1.0...v6.1.6)
+    * chore: translation delivery
     
-    ---
-    updated-dependencies:
-    - dependency-name: tar
-      dependency-type: indirect
-    ...
+    Change-Id: Ie9d57624128f838e5b7570f95d6a7ceefdd213e7
     
-    Signed-off-by: dependabot[bot] <support@github.com>
+    * chore: translation delivery
     
-    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+    Change-Id: I3839f6ddae370e8faf2268467cfd58df6b78f3af
