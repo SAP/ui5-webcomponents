@@ -74,9 +74,8 @@ const metadata = {
 		 * <li><code>UnableToUpload</code></li>
 		 * </ul>
 		 * <br><br>
-		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
-		 * it have to be loaded separately (<code>import "@ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
-		 *
+		 * <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
+		 * <br>
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
