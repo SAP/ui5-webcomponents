@@ -35,6 +35,8 @@ const metadata = {
 		 * Defines the subtitle of the component.
 		 * <br><br>
 		 * <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
+		 * <br><br>
+		 * <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -97,6 +99,18 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "actions",
+			type: HTMLElement,
+		},
+		/**
+		 * Defines the subtitle of the component.
+		 * <br><br>
+		 * <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
+		 * @type {HTMLElement}
+		 * @slot subtitle
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		subtitle: {
 			type: HTMLElement,
 		},
 	},
@@ -242,6 +256,10 @@ class IllustratedMessage extends UI5Element {
 		default:
 			return "";
 		}
+	}
+
+	get hasFormattedSubtitle() {
+		return !!this.subtitle.length;
 	}
 
 	get effectiveTitleText() {
