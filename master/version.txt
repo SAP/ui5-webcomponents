@@ -1,10 +1,14 @@
-commit 24467f838184b997b36ed804ee9e16562f850d8b
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Aug 11 18:49:56 2021 +0100
+commit 7d89d5a635680ba616fd212cd339ab80f8d55b76
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Aug 11 21:27:09 2021 +0300
 
-    fix(ui5-date-picker): keyboard handling now compliant with the specification (#3636)
+    chore(deps): bump y18n from 3.2.1 to 3.2.2 in /packages/playground (#3040)
     
-    - Focus is moved on the component input field after closing
-    the corresponding popover via Escape keyboard key.
+    Bumps [y18n](https://github.com/yargs/y18n) from 3.2.1 to 3.2.2.
+    - [Release notes](https://github.com/yargs/y18n/releases)
+    - [Changelog](https://github.com/yargs/y18n/blob/master/CHANGELOG.md)
+    - [Commits](https://github.com/yargs/y18n/commits)
     
-    Fixes #3091
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
