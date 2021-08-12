@@ -17,8 +17,10 @@ import {
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
+	isPageUpAlt,
 	isPageUpShiftCtrl,
 	isPageDownShift,
+	isPageDownAlt,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -323,6 +325,10 @@ class DayPicker extends CalendarPart {
 		this._autoFocus = true;
 	}
 
+	_onfocusout() {
+		this._autoFocus = false;
+	}
+
 	/**
 	 * Tells if the day is selected (dark blue)
 	 * @param timestamp
@@ -516,9 +522,9 @@ class DayPicker extends CalendarPart {
 			this._modifyTimestampBy(-1, "month");
 		} else if (isPageDown(event)) {
 			this._modifyTimestampBy(1, "month");
-		} else if (isPageUpShift(event)) {
+		} else if (isPageUpShift(event) || isPageUpAlt(event)) {
 			this._modifyTimestampBy(-1, "year");
-		} else if (isPageDownShift(event)) {
+		} else if (isPageDownShift(event) || isPageDownAlt(event)) {
 			this._modifyTimestampBy(1, "year");
 		} else if (isPageUpShiftCtrl(event)) {
 			this._modifyTimestampBy(-10, "year");
