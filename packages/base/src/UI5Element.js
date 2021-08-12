@@ -689,10 +689,10 @@ class UI5Element extends HTMLElement {
 	/**
 	 *
 	 * @public
-	 * @param name - name of the event
-	 * @param data - additional data for the event
-	 * @param cancelable - true, if the user can call preventDefault on the event object
-	 * @param bubbles - true, if the event bubbles
+	 * @param {string} name - name of the event
+	 * @param {any} data - additional data for the event
+	 * @param {boolean} cancelable - true, if the user can call preventDefault on the event object
+	 * @param {boolean} bubbles - true, if the event bubbles
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireEvent(name, data, cancelable = false, bubbles = true) {
