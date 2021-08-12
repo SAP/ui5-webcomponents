@@ -144,6 +144,11 @@
 	color: var(--sapContent_Selected_TextColor);
 }
 
+.ui5-dp-item.ui5-dp-item--selected:hover .ui5-dp-daytext {
+	background: var(--_ui5_daypicker_item_selected_hover_background_color);
+	color: var(--sapContent_Selected_TextColor);
+}
+
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
 	border: 1px solid var(--_ui5_daypicker_item_selected_border_color);
 	border-radius: var(--_ui5_daypicker_item_now_inner_border_radius);
