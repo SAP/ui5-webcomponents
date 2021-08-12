@@ -192,7 +192,7 @@ describe("Carousel general interaction", () => {
 		carousel.scrollIntoView();
 
 		assert.strictEqual(carousel.shadow$$(".ui5-carousel-navigation > *").length, 0, "carousel has not rendered a page indicator")
-	})
+	});
 
 	it("navigateTo method and visibleItemsIndices", () => {
 		const carousel = browser.$("#carousel9");
@@ -203,8 +203,66 @@ describe("Carousel general interaction", () => {
 
 		browser.execute(() => {
 			document.getElementById("carousel9").navigateTo(1);
-		})
+		});
 
 		assert.deepEqual(carousel.getProperty("visibleItemsIndices"), [ 1, 2 ], "The indices after navigation are correct.");
-	})
+	});
+
+	it("F7 keyboard navigation", () => {
+		const carousel = browser.$("#carouselF7");
+		const button = browser.$("#carouselF7Button");
+		const input = browser.$("#carouselF7Input");
+		carousel.scrollIntoView();
+
+		button.click();
+
+		browser.keys("F7");
+
+		let innerFocusedElement = browser.execute(() => {
+			return document.getElementById("carouselF7").shadowRoot.activeElement;
+		});
+
+		assert.ok($(innerFocusedElement).hasClass("ui5-carousel-root"), "Carousel is focused");
+
+		browser.keys("F7");
+
+		innerFocusedElement = browser.execute(() => {
+			return document.getElementById("carouselF7Button").shadowRoot.activeElement;
+		});
+
+		assert.ok($(innerFocusedElement).hasClass("ui5-button-root"), "Button is focused");
+
+		input.click();
+
+		browser.keys("F7");
+
+		innerFocusedElement = browser.execute(() => {
+			return document.getElementById("carouselF7").shadowRoot.activeElement;
+		});
+
+		assert.ok($(innerFocusedElement).hasClass("ui5-carousel-root"), "Carousel is focused");
+
+		browser.keys("F7");
+
+		innerFocusedElement = browser.execute(() => {
+			return document.getElementById("carouselF7Input").shadowRoot.activeElement;
+		});
+
+		assert.ok($(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
+
+		button.click();
+		browser.keys("F7");
+
+		browser.execute(() => {
+			document.getElementById("carouselF7").navigateTo(1);
+		});
+
+		browser.keys("F7");
+
+		innerFocusedElement = browser.execute(() => {
+			return document.getElementById("carouselF7Input").shadowRoot.activeElement;
+		});
+
+		assert.ok($(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
+	});
 });

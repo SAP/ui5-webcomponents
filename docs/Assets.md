@@ -56,7 +56,7 @@ package are also imported since the `fiori` package internally uses features of 
 
 ### `icons` package
 
-The assets file for the `@ui5/webcomponents-icons` package provides i18n assets for some icons: 
+The assets file for the `@ui5/webcomponents-icons` package provides i18n assets for some icons:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 
@@ -72,10 +72,22 @@ However, sometimes it makes sense to import all icons. To do so, use the followi
 
 The assets file for the `@ui5/webcomponents-icons-tnt` package is currently empty, but it may provide i18n assets in the future:
 
-`import "@ui5/webcomponents-icons/dist/Assets.js";`
+`import "@ui5/webcomponents-icons-tnt/dist/Assets.js";`
 
 Therefore, we recommend importing it to be future-proof.
 
 To import all `tnt` icons:
 
 `import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`
+
+### `icons-business-suite` package
+
+The assets file for the `@ui5/webcomponents-icons-business-suite` package is currently empty, but it may provide i18n assets in the future:
+
+`import "@ui5/webcomponents-icons-business-suite/dist/Assets.js";`
+
+Therefore, we recommend importing it to be future-proof.
+
+To import all `business-suite` icons:
+
+`import "@ui5/webcomponents-icons-business-suite/dist/AllIcons.js";`

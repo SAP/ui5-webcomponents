@@ -3,11 +3,17 @@
 		{{{effectiveIllustration}}}
 	</div>
 	<ui5-title level="H2" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
-	<div class="ui5-illustrated-message-subtitle">{{effectiveSubitleText}}</div>
-	{{#if hasActions}}
-	<div class="ui5-illustrated-message-actions">
-		<slot></slot>
+	<div class="ui5-illustrated-message-subtitle">
+		{{#if hasFormattedSubtitle}}
+			<slot name="subtitle"></slot>
+		{{else}}
+			{{effectiveSubitleText}}
+		{{/if}}
 	</div>
+	{{#if hasActions}}
+		<div class="ui5-illustrated-message-actions">
+			<slot></slot>
+		</div>
 	{{/if}}
 
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

@@ -122,6 +122,8 @@ Project | NPM Package | Description
 `main` | [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents) | Bread-and-butter components (buttons, inputs, popups, pickers, tables, etc...) that are generally found in web apps.
 `fiori` | [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | More semantic components, specific to the Fiori UX (shell bar, side navigation, etc...) that are commonly found in SAP apps.
 `icons` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) | A rich icons collection (`SAP-icons`), suitable for enterprise-grade apps
+`icons-tnt` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt) | A rich icons collection (`SAP-icons-TNT`), suitable for more technical apps
+`icons-business-suite` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) | A rich icons collection (`BusinessSuiteInAppSymbols`), suitable for SAP Fiori apps
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
 `theming` | [UI5 Web Components Theming](https://www.npmjs.com/package/@ui5/webcomponents-theming) | Theming assets (the default theme and additional accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
@@ -159,7 +161,7 @@ yarn start:playground
 *Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](/docs/dev/Playground.md)*
 
 If you wish to run the tests locally on a Windows machine, you must also manually install `Windows Build Tools 2015` and `Python 2.7`.
-See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this. 
+See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this.
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:

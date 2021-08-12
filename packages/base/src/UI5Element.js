@@ -10,10 +10,10 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import Integer from "./types/Integer.js";
-import Float from "./types/Float.js";
+import DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
+import isDescendantOf from "./util/isDescendantOf.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
@@ -43,7 +43,7 @@ function _invalidate(changeInfo) {
 
 	this._changedState.push(changeInfo);
 	renderDeferred(this);
-	this._eventProvider.fireEvent("change", { ...changeInfo, target: this });
+	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
 
 /**
@@ -102,7 +102,6 @@ class UI5Element extends HTMLElement {
 	async connectedCallback() {
 		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
 
-		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		this._inDOM = true;
@@ -111,10 +110,6 @@ class UI5Element extends HTMLElement {
 			// always register the observer before yielding control to the main thread (await)
 			this._startObservingDOMChildren();
 			await this._processChildren();
-		}
-
-		if (needsShadowDOM && !this.shadowRoot) { // Workaround for Firefox74 bug
-			await Promise.resolve();
 		}
 
 		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
@@ -134,7 +129,6 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	disconnectedCallback() {
-		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		this._inDOM = false;
@@ -143,13 +137,11 @@ class UI5Element extends HTMLElement {
 			this._stopObservingDOMChildren();
 		}
 
-		if (needsShadowDOM) {
-			if (this._fullyConnected) {
-				if (typeof this.onExitDOM === "function") {
-					this.onExitDOM();
-				}
-				this._fullyConnected = false;
+		if (this._fullyConnected) {
+			if (typeof this.onExitDOM === "function") {
+				this.onExitDOM();
 			}
+			this._fullyConnected = false;
 		}
 
 		if (this.staticAreaItem && this.staticAreaItem.parentElement) {
@@ -259,7 +251,7 @@ class UI5Element extends HTMLElement {
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (child.isUI5Element && slotData.invalidateOnChildChange) {
-				child._attachChange(this._getChildChangeListener(slotName));
+				child.attachInvalidate(this._getChildChangeListener(slotName));
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
@@ -319,7 +311,7 @@ class UI5Element extends HTMLElement {
 
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
-				child._detachChange(this._getChildChangeListener(slotName));
+				child.detachInvalidate(this._getChildChangeListener(slotName));
 			}
 
 			if (isSlot(child)) {
@@ -334,20 +326,20 @@ class UI5Element extends HTMLElement {
 	 * Attach a callback that will be executed whenever the component is invalidated
 	 *
 	 * @param callback
-	 * @protected
+	 * @public
 	 */
-	_attachChange(callback) {
-		this._eventProvider.attachEvent("change", callback);
+	attachInvalidate(callback) {
+		this._eventProvider.attachEvent("invalidate", callback);
 	}
 
 	/**
 	 * Detach the callback that is executed whenever the component is invalidated
 	 *
 	 * @param callback
-	 * @protected
+	 * @public
 	 */
-	_detachChange(callback) {
-		this._eventProvider.detachEvent("change", callback);
+	detachInvalidate(callback) {
+		this._eventProvider.detachEvent("invalidate", callback);
 	}
 
 	/**
@@ -384,12 +376,8 @@ class UI5Element extends HTMLElement {
 			const propertyTypeClass = properties[nameInCamelCase].type;
 			if (propertyTypeClass === Boolean) {
 				newValue = newValue !== null;
-			}
-			if (propertyTypeClass === Integer) {
-				newValue = parseInt(newValue);
-			}
-			if (propertyTypeClass === Float) {
-				newValue = parseFloat(newValue);
+			} else if (isDescendantOf(propertyTypeClass, DataType)) {
+				newValue = propertyTypeClass.attributeToProperty(newValue);
 			}
 			this[nameInCamelCase] = newValue;
 		}
@@ -402,22 +390,24 @@ class UI5Element extends HTMLElement {
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
-
-		if (typeof newValue === "object") {
-			return;
-		}
-
+		const properties = this.constructor.getMetadata().getProperties();
+		const propertyTypeClass = properties[name].type;
 		const attrName = camelToKebabCase(name);
 		const attrValue = this.getAttribute(attrName);
-		if (typeof newValue === "boolean") {
+
+		if (propertyTypeClass === Boolean) {
 			if (newValue === true && attrValue === null) {
 				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
 				this.removeAttribute(attrName);
 			}
-		} else if (attrValue !== newValue) {
-			this.setAttribute(attrName, newValue);
-		}
+		} else if (isDescendantOf(propertyTypeClass, DataType)) {
+			this.setAttribute(attrName, propertyTypeClass.propertyToAttribute(newValue));
+		} else if (typeof newValue !== "object") {
+			if (attrValue !== newValue) {
+				this.setAttribute(attrName, newValue);
+			}
+		} // else { return; } // old object handling
 	}
 
 	/**
@@ -861,6 +851,8 @@ class UI5Element extends HTMLElement {
 					const oldState = this._state[prop];
 					if (propData.multiple && propData.compareValues) {
 						isDifferent = !arraysAreEqual(oldState, value);
+					} else if (isDescendantOf(propData.type, DataType)) {
+						isDifferent = !propData.type.valuesAreEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
