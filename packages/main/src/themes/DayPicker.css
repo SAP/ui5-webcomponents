@@ -13,15 +13,20 @@
 
 :host([secondary-calendar-type]) .ui5-dp-item {
 	flex-direction: column;
+	justify-content: space-between;
 }
 
 :host([secondary-calendar-type]) .ui5-dp-daytext {
-	padding: 0.375rem 0.375rem 0 0;
+	padding: .575rem 0 0 0;
+	height: 1.575rem;
 }
 
 :host([secondary-calendar-type]) .ui5-dp-daysectext {
 	font-size: 0.625rem;
-	padding: 0 0 0.375rem 0.375rem;
+	display: flex;
+	justify-content: flex-end;
+	height: 1rem;
+	padding: 0 0.375rem 0.375rem 0;
 }
 
 .ui5-dp-weekname,
