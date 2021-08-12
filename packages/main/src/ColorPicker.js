@@ -318,6 +318,11 @@ class ColorPicker extends UI5Element {
 
 	_handleAlphaInput(event) {
 		this._alpha = parseFloat(event.target.value);
+		this._setColor({
+			r: this._color.r,
+			g: this._color.g,
+			b: this._color.b,
+		});
 	}
 
 	_handleHueInput(event) {
