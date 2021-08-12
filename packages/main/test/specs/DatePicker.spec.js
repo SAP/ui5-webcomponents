@@ -394,6 +394,24 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
+	it("DatePicker popover when initially opened displays a day picker", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click() // open the datepicker
+		browser.keys('F4'); // show month picker
+		datepicker.valueHelpIcon.click(); // close the datepicker
+
+		assert.notOk(datepicker.calendar.shadow$("ui5-daypicker")._hidden, "Day picker is open");
+
+		browser.keys(['Shift', 'F4']); // show year picker
+		datepicker.valueHelpIcon.click(); // close the datepicker
+
+		datepicker.valueHelpIcon.click() // open the datepicker
+		assert.notOk(datepicker.calendar.shadow$("ui5-daypicker")._hidden, "Day picker is open");
+
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
 
 	it("[F4] on year picker doesn't close the date picker", () => {
 		datepicker.id = "#dp11";
