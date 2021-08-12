@@ -108,6 +108,9 @@ const metadata = {
 				values: { type: Array },
 			},
 		},
+
+		"show-month-press": {},
+		"show-year-press": {},
 	},
 };
 
@@ -271,15 +274,17 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress() {
+	onHeaderShowMonthPress(event) {
 		this._currentPicker = "month";
+		this.fireEvent("show-month-press", event);
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress() {
+	onHeaderShowYearPress(event) {
 		this._currentPicker = "year";
+		this.fireEvent("show-year-press", event);
 	}
 
 	get _currentPickerDOM() {
