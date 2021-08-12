@@ -43,7 +43,7 @@ but rather from the package(s) containing the actual Web Components you'll be us
 ### `main` package
 
 The `main` package's `Assets.js` import provides package-specific additional theming parameters and i18n assets.
-All assets from the `base` and `theminge` packages are also imported automatically so you don't have to worry about them.
+All assets from the `base` and `theming` packages are also imported automatically so you don't have to worry about them.
 
 `import "@ui5/webcomponents/dist/Assets.js";`
 

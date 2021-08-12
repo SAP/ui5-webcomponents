@@ -34,7 +34,7 @@ These three `@ui5/` packages will serve as foundation for your own package and W
             Package             |                        Description
 ------------------------------- | ----------------------------------------------------------
 `@ui5/webcomponents-base`       | Base classes and framework
-`@ui5/webcomponents-theming` | Base theming assets
+`@ui5/webcomponents-theming`    | Base theming assets
 `@ui5/webcomponents-tools`      | Build and configuration assets
 `@ui5/webcomponents-ie11`       | (Optional) Internet Explorer 11 polyfills and adapter code
 
