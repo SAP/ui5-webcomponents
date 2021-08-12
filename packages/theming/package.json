@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-theming",
-  "version": "1.0.0-rc.14",
+  "version": "1.0.0-rc.15",
   "description": "UI5 Web Components: webcomponents.theming",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -28,7 +28,7 @@
     "@ui5/webcomponents-base": "0.34.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.14",
+    "@ui5/webcomponents-tools": "1.0.0-rc.15",
     "chokidar-cli": "^2.1.0",
     "chromedriver": "89.0.0",
     "copy-and-watch": "^0.1.5",
