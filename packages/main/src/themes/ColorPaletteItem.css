@@ -7,17 +7,6 @@
 	margin: var(--_ui5_color-palette-item-margin);
 }
 
-:host(:not([_disabled])) .ui5-cp-item:focus{
-	outline: white dotted 0.0625rem;
-	outline-offset: -2px;
-}
-
-:host(:not([_disabled]):focus) .ui5-cp-item {
-	pointer-events: none;
-	outline: white solid 0.0625rem;
-	outline-offset: -3px;
-}
-
 :host(:not([_disabled]):hover) {
 	height: var(--_ui5_color-palette-item-hover-height);
 	width: var(--_ui5_color-palette-item-hover-height);
@@ -25,6 +14,31 @@
 }
 
 .ui5-cp-item {
+	position: relative;
 	width: 100%;
-    height: 100%;
+	height: 100%;
+}
+
+:host(:not([_disabled])) .ui5-cp-item:focus::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	left: 0.125rem;
+	top: 0.125rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
+	border: 0.0625rem solid black;
+	pointer-events: none;
+}
+
+:host(:not([_disabled])) .ui5-cp-item:focus::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	left: 0.125rem;
+	top: 0.125rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
+	border: 0.0625rem dotted white;
+	pointer-events: none;
 }
