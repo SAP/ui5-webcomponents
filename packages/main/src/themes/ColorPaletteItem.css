@@ -35,7 +35,7 @@
 	top: 0.125rem;
 	right: 0.125rem;
 	bottom: 0.125rem;
-	border: 0.0625rem solid black;
+	border: 0.0625rem solid white;
 	pointer-events: none;
 }
 
@@ -47,6 +47,6 @@
 	top: 0.125rem;
 	right: 0.125rem;
 	bottom: 0.125rem;
-	border: 0.0625rem dotted white;
+	border: 0.0625rem dotted black;
 	pointer-events: none;
 }
