@@ -19,6 +19,14 @@
 	height: 100%;
 }
 
+:host(:not([_disabled])) .ui5-cp-item:focus{
+	outline: none;
+}
+
+:host(:not([_disabled]):focus) .ui5-cp-item {
+	pointer-events: none;
+}
+
 :host(:not([_disabled])) .ui5-cp-item:focus::before {
 	content: "";
 	box-sizing: border-box;
