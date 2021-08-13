@@ -33,4 +33,18 @@ describe("Some configuration options can be changed at runtime", () => {
 
 		assert.ok(result, "Static area removed from DOM successfully");
 	});
+
+	it("Test RTL not set for static area items", () => {
+		const componentId = browser.$("#with-static-area").getProperty("_id");
+		const staticArea = browser.$("ui5-static-area");
+
+		assert.notOk(staticArea.$(`.${componentId}`).getProperty("rtl"), "dir attribute not set for static area item");
+	});
+
+	it("Test RTL set for static area items", () => {
+		const componentId = browser.$("#with-static-area-rtl").getProperty("_id");
+		const staticArea = browser.$("ui5-static-area");
+
+		assert.equal("rtl", staticArea.$(`.${componentId}`).getProperty("dir"), "dir property correctly set for static area item");
+	});
 });

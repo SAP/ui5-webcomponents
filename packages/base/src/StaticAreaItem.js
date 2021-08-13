@@ -3,6 +3,7 @@ import updateShadowRoot from "./updateShadowRoot.js";
 import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
+import getEffectiveDir from "./locale/getEffectiveDir.js";
 
 /**
  *
@@ -33,6 +34,7 @@ class StaticAreaItem extends HTMLElement {
 	update() {
 		if (this._rendered) {
 			this._updateContentDensity();
+			this._updateDirection();
 			updateShadowRoot(this.ownerElement, true);
 		}
 	}
@@ -48,6 +50,13 @@ class StaticAreaItem extends HTMLElement {
 		} else {
 			this.classList.remove("sapUiSizeCompact");
 			this.classList.remove("ui5-content-density-compact");
+		}
+	}
+
+	_updateDirection() {
+		const dir = getEffectiveDir(this.ownerElement);
+		if (dir) {
+			this.dir = dir;
 		}
 	}
 
