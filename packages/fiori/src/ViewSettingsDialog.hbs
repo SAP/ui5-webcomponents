@@ -74,10 +74,14 @@
 			{{#if _filterStepTwo}}
 				<ui5-list
 					mode="MultiSelect"
-					@ui5-selection-change="{{_handleFilterValueChange}}"
+					@ui5-item-click="{{_handleFilterValueItemClick}}"
 				>
-					{{#each _currentFilterOptions}}
-						<ui5-li>{{this}}</ui5-li>
+					{{#each _filters}}
+						{{#if this.selected}}
+							{{#each this.filterOptions}}
+								<ui5-li ?selected={{this.selected}}>{{this.text}}</ui5-li>
+							{{/each}}
+						{{/if}}
 					{{/each}}
 				</ui5-list>
 			{{else}}

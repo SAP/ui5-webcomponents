@@ -2,4 +2,7 @@
 
 {{#*inline "listItemContent"}}
     <span part="title" class="ui5-li-title">{{text}}</span>
+    {{#if additionalText}}
+        <span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
+    {{/if}}
 {{/inline}}

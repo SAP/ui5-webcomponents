@@ -1,8 +1,8 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import FilterItemTemplate from "./generated/templates/FilterItemTemplate.lit.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
+import FilterItemTemplate from "./generated/templates/FilterItemTemplate.lit.js";
 
+import FilterItemCSS from "./generated/themes/FilterItem.css.js";
 
 /**
  * @public
@@ -13,12 +13,23 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
 		/**
 		 * Defines the text of the component
-		 * 
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
+			type: String,
+		},
+
+		/**
+		 * Defines the text of the component
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		additionalText: {
 			type: String,
 		},
 	},
@@ -54,7 +65,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.FilterItem
- * @extends UI5Element
+ * @extends ListItem
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item
  * @public
@@ -69,17 +80,11 @@ class FilterItem extends ListItem {
 	}
 
 	static get styles() {
-		return [ListItem.styles];
+		return [ListItem.styles, FilterItemCSS];
 	}
 
 	static get template() {
 		return FilterItemTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			ListItem,
-		];
 	}
 }
 

@@ -1,4 +1,3 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import SortItemTemplate from "./generated/templates/SortItemTemplate.lit.js";
@@ -11,7 +10,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.SortItem.prototype */ {
 		/**
 		 * Defines the text of the component
-		 * 
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
@@ -64,12 +63,6 @@ class SortItem extends ListItem {
 
 	static get template() {
 		return SortItemTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			ListItem,
-		];
 	}
 }
 

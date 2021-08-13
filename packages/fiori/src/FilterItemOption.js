@@ -8,13 +8,22 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.FilterItemOption.prototype */ {
 		/**
 		 * Defnies the text of the component
-		 * 
+		 *
 		 * @public
 		 * @type {String}
 		 * @defaultvalue ""
 		 */
 		text: {
 			type: String,
+		},
+
+		/**
+		 * @public
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 */
+		selected: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FilterItemOption.prototype */ {
