@@ -26,8 +26,15 @@ const metadata = {
 			type: CalendarType,
 		},
 
+		/**
+		 * Sets a secound calendar type used for display.
+		 * If not set second calendar type, the calendar not show second date.
+		 * @type {CalendarType}
+		 * @defaultvalue undefined
+		 * @public
+		 */
 		secondaryCalendarType: {
-			type: CalendarType
+			type: CalendarType,
 		},
 
 		/**
@@ -95,15 +102,14 @@ class DateComponentBase extends UI5Element {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
-	
+
 	get _primaryCalendarType() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _secondaryCalendarType() {
-		//
-		return this.secondaryCalendarType ;
+		return this.secondaryCalendarType;
 	}
 
 	get _minDate() {

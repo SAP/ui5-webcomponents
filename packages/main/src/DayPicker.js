@@ -118,6 +118,14 @@ const metadata = {
 		_secondTimestamp: {
 			type: String,
 		},
+
+		/**
+		 * @type {boolean}
+		 * @private
+		 */
+		_isSecondaryCalendarType: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
@@ -181,12 +189,14 @@ class DayPicker extends CalendarPart {
 		}
 
 		this._weeks = [];
+		this._isSecondaryCalendarType = !!this._secondaryCalendarType;
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
+		const tempSecondDate = this._getSecondarytDay(tempDate);
 		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
 		const minDate = this._minDate; // store the _minDate (expensive getter)
@@ -219,6 +229,8 @@ class DayPicker extends CalendarPart {
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				iDay: tempDate.getDate(),
+				iSecondDay: tempSecondDate.getDate(),
+				_isSecondaryCalendarType: this._isSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`,
 				ariaSelected: isSelected ? "true" : "false",
@@ -268,6 +280,9 @@ class DayPicker extends CalendarPart {
 			}
 
 			tempDate.setDate(tempDate.getDate() + 1);
+			if (this._secondaryCalendarType) {
+				tempSecondDate.setDate(tempSecondDate.getDate() + 1);
+			}
 		}
 	}
 
@@ -672,6 +687,11 @@ class DayPicker extends CalendarPart {
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+	}
+
+	_getSecondarytDay(tempDate) {
+		const secondaryDay = new CalendarDate(tempDate, this._secondaryCalendarType);
+		return secondaryDay;
 	}
 
 	_getFirstDay() {

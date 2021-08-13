@@ -321,11 +321,6 @@ class Calendar extends CalendarPart {
 		return this._currentPicker !== "year";
 	}
 
-	get isSecondCalendarType() {
-		//
-		return true
-	}
-
 	onSelectedDatesChange(event) {
 		const timestamp = event.detail.timestamp;
 		const selectedDates = event.detail.dates;
