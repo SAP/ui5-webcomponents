@@ -15,7 +15,8 @@ const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/compo
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
-	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
+	prepare: "nps clean typedefs integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
+	typedefs: "tsc",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
