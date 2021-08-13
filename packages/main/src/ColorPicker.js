@@ -328,6 +328,11 @@ class ColorPicker extends UI5Element {
 	_handleHueInput(event) {
 		this.selectedHue = event.target.value;
 		this._setMainColor(this._hue);
+		this._setColor({
+			r: this._mainColor.r,
+			g: this._mainColor.g,
+			b: this._mainColor.b,
+		});
 	}
 
 	_handleHEXChange(event) {
