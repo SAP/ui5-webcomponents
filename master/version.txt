@@ -1,7 +1,5 @@
-commit 66688ee52e9effcbe5a0ac9978c4b4ec021e489b
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Aug 12 02:48:06 2021 -0700
+commit 768d1e7f19199e2dbb87c38ec65214d53cc49f0e
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Fri Aug 13 09:36:27 2021 +0100
 
-    chore: translation delivery (#3638)
-    
-    Change-Id: I4fb2c5812f80d5b3eb824ea3d1bf5a2cb4983912
+    fix(ui5-calendar): keyboard handling now compliant with the specification (#3649)
