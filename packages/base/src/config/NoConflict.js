@@ -16,6 +16,10 @@ const shouldNotFireOriginalEvent = eventName => {
 	return !(nc.events && nc.events.includes && nc.events.includes(eventName));
 };
 
+/**
+ * Returns true when events are fired in the `non-conflict` mode.
+ * @return {boolean}
+ */
 const getNoConflict = () => {
 	if (noConflict === undefined) {
 		noConflict = getConfiguredNoConflict();
@@ -40,6 +44,10 @@ const skipOriginalEvent = eventName => {
 	return !shouldNotFireOriginalEvent(eventName);
 };
 
+/**
+ * Sets whether events should be fired in a non-conflict mode
+ * @param {boolean} noConflictData
+ */
 const setNoConflict = noConflictData => {
 	noConflict = noConflictData;
 };

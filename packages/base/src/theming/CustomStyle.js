@@ -18,6 +18,12 @@ const fireCustomCSSChange = tag => {
 
 const customCSSFor = {};
 
+/**
+ *
+ * @param {string} tag tag-name where the custom css should be added, e.g. `ui5-button`
+ * @param {string} css
+ * @return {Promise<void>}
+ */
 const addCustomCSS = (tag, css) => {
 	if (!customCSSFor[tag]) {
 		customCSSFor[tag] = [];

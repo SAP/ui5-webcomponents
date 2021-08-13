@@ -30,8 +30,9 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `${UP_TO_DATE} || nps lint prepare build.bundle hash`,
+		default: `${UP_TO_DATE} || nps lint prepare build.bundle build.types hash`,
 		bundle: "rollup --config config/rollup.config.js",
+        types: "tsc"
 	},
 	copy: {
 		default: "nps copy.src copy.test",
