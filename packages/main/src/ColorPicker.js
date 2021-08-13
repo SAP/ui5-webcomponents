@@ -181,6 +181,7 @@ class ColorPicker extends UI5Element {
 		};
 
 		this.selectedHue = 0;
+		this._maxAlpha = 1;
 
 		this.mouseDown = false;
 	}
@@ -322,7 +323,7 @@ class ColorPicker extends UI5Element {
 			r: this._color.r,
 			g: this._color.g,
 			b: this._color.b,
-		});
+		}, this._maxAlpha);
 	}
 
 	_handleHueInput(event) {
@@ -332,7 +333,7 @@ class ColorPicker extends UI5Element {
 			r: this._mainColor.r,
 			g: this._mainColor.g,
 			b: this._mainColor.b,
-		});
+		}, this._maxAlpha);
 	}
 
 	_handleHEXChange(event) {
@@ -349,7 +350,7 @@ class ColorPicker extends UI5Element {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
-			this._setColor(HEXToRGB(this.hex));
+			this._setColor(HEXToRGB(this.hex), this._alpha);
 		}
 	}
 
@@ -370,7 +371,7 @@ class ColorPicker extends UI5Element {
 			break;
 		}
 
-		this._setColor(tempColor);
+		this._setColor(tempColor, this._alpha);
 	}
 
 	_setMainColor(hueValue) {
@@ -426,7 +427,7 @@ class ColorPicker extends UI5Element {
 
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
-			this._setColor(HSLToRGB(tempColor));
+			this._setColor(HSLToRGB(tempColor), this._alpha);
 		}
 	}
 
@@ -456,8 +457,8 @@ class ColorPicker extends UI5Element {
 		r: undefined,
 		g: undefined,
 		b: undefined,
-	}) {
-		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
+	}, alpha = undefined) {
+		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
 
 		this.fireEvent("change");
 	}
