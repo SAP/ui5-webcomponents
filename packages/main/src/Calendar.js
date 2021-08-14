@@ -11,6 +11,7 @@ import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -74,6 +75,10 @@ const metadata = {
 		_nextButtonDisabled: {
 			type: Boolean,
 		},
+
+		_headerYearButtonText: {
+			type: String,
+		}
 	},
 	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
@@ -269,6 +274,13 @@ class Calendar extends CalendarPart {
 		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
+
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const localDate = new Date(this.timestamp * 1000);
+
+		this._headerYearButtonText = (this._currentPicker === "year") ?
+			`${this._currentPickerDOM._firstYear} - ${this._currentPickerDOM._lastYear}` :
+			String(yearFormat.format(localDate, true));
 	}
 
 	/**
@@ -308,12 +320,12 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * The month button is only hidden when the month picker is shown
+	 * The month button is hidden when the month picker or year picker is shown
 	 * @returns {boolean}
 	 * @private
 	 */
 	get _isHeaderMonthButtonHidden() {
-		return this._currentPicker === "month";
+		return this._currentPicker === "month" || this._currentPicker === "year";
 	}
 
 	get _isDayPickerHidden() {
