@@ -85,6 +85,11 @@ const metadata = {
 			type: Object,
 		},
 
+		_currentFilters: {
+			type: Object,
+			multiple: true,
+		},
+
 		/**
 		 * Defnies the current mode of the component
 		 *
@@ -210,7 +215,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this._filters.length) {
+		if (this._currentFilters && this._currentFilters.length) {
 			this._setAdditionalTexts();
 		}
 	}
@@ -220,7 +225,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.filterItems.forEach((filter, index) => {
 			let selectedCount = 0;
 			for (let i = 0; i < filter.values.length; i++) {
-				if (this._filters[index].filterOptions[i].selected) {
+				if (this._currentFilters[index].filterOptions[i].selected) {
 					selectedCount++;
 				}
 			}
@@ -263,9 +268,9 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _selectedFilter() {
-		for (let i = 0; i < this._filters.length; i++) {
-			if (this._filters[i].selected) {
-				return this._filters[i];
+		for (let i = 0; i < this._currentFilters.length; i++) {
+			if (this._currentFilters[i].selected) {
+				return this._currentFilters[i];
 			}
 		}
 	}
@@ -337,7 +342,6 @@ class ViewSettingsDialog extends UI5Element {
 		settings.sortOrder = sortOrderSelected ? sortOrderSelected[0] : undefined;
 		settings.sortBy = sortBySelected ? sortBySelected[0] : undefined;
 
-		settings._filters = this._initFilters;
 		return settings;
 	}
 
@@ -390,12 +394,21 @@ class ViewSettingsDialog extends UI5Element {
 		if (!this._dialog) {
 			this._sortOrder = this._sortOrderList;
 			this._sortBy = this._sortByList;
+
+			// Sorting
 			this._initialSettings = this._settings;
 			this._currentSettings = this._settings
 			this._confirmedSettings = this._settings
+
+			// Filtering
+			this._initialFilters = this._initFilters;
+			this._currentFilters = this._initFilters;
+			this._confirmedFilters = this._initFilters;
+
 			this._dialog = this._dialogDomRef;
 		} else {
 			this._restoreSettings(this._confirmedSettings);
+			this._restoreFilters(this._confirmedFilters);
 		}
 		this._dialog.show();
 	}
@@ -406,7 +419,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	_handleFilterValueItemClick(event) {
 		// Update the component state
-		this._filters = this._filters.map(filter => {
+		this._currentFilters = this._currentFilters.map(filter => {
 			if (filter.selected) {
 				filter.filterOptions.forEach(option => {
 					if (option.text === event.detail.item.innerText) {
@@ -425,7 +438,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	_changeCurrentFilter(event) {
 		this._filterStepTwo = true;
-		this._filters = this._filters.map(filter => {
+		this._currentFilters = this._currentFilters.map(filter => {
 			filter.selected = filter.item === event.detail.item;
 
 			return filter;
@@ -462,8 +475,8 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_confirmSettings() {
 		this.close();
-		// this._confirmedSettings = this._currentSettings;
-		this._filters = [...this._filters];
+		this._confirmedSettings = this._currentSettings;
+		this._confirmedFilters = JSON.parse(JSON.stringify(this._currentFilters));
 
 		this.fireEvent("confirm", {
 			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
@@ -478,6 +491,8 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		debugger;
 		this._restoreSettings(this._confirmedSettings);
+		this._restoreFilters(this._confirmedFilters);
+
 		this.fireEvent("cancel", {
 			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
 			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.text : "",
@@ -520,8 +535,11 @@ class ViewSettingsDialog extends UI5Element {
 		this._sortBy.items[1].assignedNodes().forEach(item => { item.selected = sortBySelected === item.text; });
 
 		// Filters handling
-		// this._currentSettings = settings;
-		this._filters = settings._filters.map(filter=> filter);
+		this._currentSettings = settings;
+	}
+
+	_restoreFilters(filters) {
+		this._currentFilters = [...JSON.parse(JSON.stringify(filters))];
 	}
 
 	/**

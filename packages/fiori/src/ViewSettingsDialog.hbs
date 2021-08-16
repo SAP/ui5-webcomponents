@@ -76,7 +76,7 @@
 					mode="MultiSelect"
 					@ui5-item-click="{{_handleFilterValueItemClick}}"
 				>
-					{{#each _filters}}
+					{{#each _currentFilters}}
 						{{#if this.selected}}
 							{{#each this.filterOptions}}
 								<ui5-li ?selected={{this.selected}}>{{this.text}}</ui5-li>
