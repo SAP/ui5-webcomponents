@@ -276,11 +276,10 @@ class Calendar extends CalendarPart {
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
 
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
-		const localDate = new Date(this.timestamp * 1000);
 
 		this._headerYearButtonText = (this._currentPicker === "year")
 			? `${this._currentPickerDOM._firstYear} - ${this._currentPickerDOM._lastYear}`
-			: String(yearFormat.format(localDate, true));
+			: String(yearFormat.format(this._localDate, true));
 	}
 
 	/**
