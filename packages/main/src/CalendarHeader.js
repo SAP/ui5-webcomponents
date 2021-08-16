@@ -127,9 +127,10 @@ class CalendarHeader extends UI5Element {
 
 		if (this.hesSecondaryCalendarType) {
 			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-			const secoundaryMoths = this._getDisplayedSecondaryMonths(localDate);
-			const SecondaryMonthInfo = this._getDisplayedSecondaryMonthsText(secoundaryMoths);
-			this._secondMonthButtonText = SecondaryMonthInfo.shortText;
+			const secoundaryMonths = this._getDisplayedSecondaryMonths(localDate);
+			const secondaryMonthInfo = this._getDisplayedSecondaryMonthText(secoundaryMonths);
+
+			this._secondMonthButtonText = secondaryMonthInfo;
 			this._secondYearButtonText = secondYearFormat.format(localDate, true);
 		}
 	}
@@ -184,13 +185,16 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
-	_getDisplayedSecondaryMonthsText(month) {
-		const pattern = getCachedLocaleDataInstance(getLocale()).getIntervalPattern();
+	_getDisplayedSecondaryMonthText(month) {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const pattern = localeData.getIntervalPattern();
 		const secondaryMonthNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarDate);
-		const secondaryWideMonthName = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarDate);
-		const shortText = pattern.replace(/\{0\}/, secondaryMonthNames[month.startMonth]).replace(/\{1\}/, secondaryMonthNames[month.endMonth]);
-		const longText = pattern.replace(/\{0\}/, secondaryWideMonthName[month.start]).replace(/\{1\}/, secondaryWideMonthName[month.end]);
-		return { shortText, longText };
+
+		if (month.startMonth === month.endMonth) {
+			return localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth];
+		}
+
+		return pattern.replace(/\{0\}/, secondaryMonthNames[month.startMonth]).replace(/\{1\}/, secondaryMonthNames[month.endMonth]);
 	}
 
 	_getDisplayedSecondaryMonths(localDate) {
