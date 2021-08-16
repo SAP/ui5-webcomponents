@@ -4,7 +4,6 @@
 	--_ui5_daypicker_item_selected_border_color: var(--sapList_Background);
 	--_ui5_daypicker_daynames_container_height: 2rem;
 	--_ui5_daypicker_weeknumbers_container_padding_top: 2rem;
-	--_ui5_daypicker_item_selected_hover_background_color: var(--sapContent_Selected_Hover_Background);
 	--_ui5_daypicker_item_othermonth_background_color: var(--sapList_Background);
 	--_ui5_daypicker_item_othermonth_color: var(--sapContent_LabelColor);
 	--_ui5_daypicker_item_othermonth_hover_color: var(--sapContent_LabelColor);

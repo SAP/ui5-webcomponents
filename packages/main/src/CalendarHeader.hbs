@@ -22,22 +22,22 @@
 			@keyup={{onMonthButtonKeyUp}}
 		>
 			<span>{{_monthButtonText}}</span>
-			{{#if _isSecondaryCalendarType}}
-				<span class="ui5-calheader-btn-sectext">{{_secoundMonthButtonText}}</span>
+			{{#if hesSecondaryCalendarType}}
+				<span class="ui5-calheader-btn-sectext">{{_secondMonthButtonText}}</span>
 			{{/if}}
 		</div>
-
 		<div
 			data-ui5-cal-header-btn-year
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+			?hidden="{{isYearButtonHidden}}"
 			tabindex="0"
 			@click={{onYearButtonClick}}
 			@keydown={{onYearButtonKeyDown}}
 			@keyup={{onYearButtonKeyUp}}
 		>
 			<span>{{_yearButtonText}}</span>
-			{{#if _isSecondaryCalendarType}}
-				<span class="ui5-calheader-btn-sectext">{{_secoundYearButtonText}}</span>
+			{{#if hesSecondaryCalendarType}}
+				<span class="ui5-calheader-btn-sectext">{{_secondYearButtonText}}</span>
 			{{/if}}
 		</div>
 	</div>

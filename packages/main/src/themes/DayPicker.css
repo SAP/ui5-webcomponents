@@ -165,7 +165,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected:hover .ui5-dp-daytext {
-	background: var(--_ui5_daypicker_item_selected_hover_background_color);
+	background: var(--sapContent_Selected_Hover_Background);
 	color: var(--sapContent_Selected_TextColor);
 }
 
@@ -185,7 +185,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected:hover {
-	background: var(--_ui5_daypicker_item_selected_hover_background_color);
+	background: var(--sapContent_Selected_Hover_Background);
 	color: var(--sapContent_ContrastTextColor);
 }
 

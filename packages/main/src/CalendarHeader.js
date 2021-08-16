@@ -44,6 +44,8 @@ const metadata = {
 
 		/**
 		 * Already normalized by Calendar
+		 * @sience 1.0.0-rc16
+		 * @defaultvalue undefined
 		 * @type {CalendarType}
 		 * @public
 		 */
@@ -60,6 +62,10 @@ const metadata = {
 		},
 
 		isMonthButtonHidden: {
+			type: Boolean,
+		},
+
+		isYearButtonHidden: {
 			type: Boolean,
 		},
 
@@ -112,17 +118,20 @@ class CalendarHeader extends UI5Element {
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
-		const secoundYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
 		const localDate = new Date(this.timestamp * 1000);
 		const calendarDate = CalendarDate.fromTimestamp(localDate.getTime(), this.primaryCalendarType);
-
 		this._monthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[calendarDate.getMonth()];
-		this._secoundMonthButtonText = localeData.getMonths("wide", this.secondaryCalendarType)[calendarDate.getMonth()];
 		this._yearButtonText = yearFormat.format(localDate, true);
-		this._secoundYearButtonText = secoundYearFormat.format(localDate, true);
 		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
 		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
-		this._isSecondaryCalendarType = !!this.secondaryCalendarType;
+
+		if (this.hesSecondaryCalendarType) {
+			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+			const secoundaryMoths = this._getDisplayedSecondaryMonths(localDate);
+			const SecondaryMonthInfo = this._getDisplayedSecondaryMonthsText(secoundaryMoths);
+			this._secondMonthButtonText = SecondaryMonthInfo.shortText;
+			this._secondYearButtonText = secondYearFormat.format(localDate, true);
+		}
 	}
 
 	onPrevButtonClick(event) {
@@ -173,6 +182,41 @@ class CalendarHeader extends UI5Element {
 			event.preventDefault();
 			this.fireEvent("show-year-press", event);
 		}
+	}
+
+	_getDisplayedSecondaryMonthsText(month) {
+		const pattern = getCachedLocaleDataInstance(getLocale()).getIntervalPattern();
+		const secondaryMonthNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarDate);
+		const secondaryWideMonthName = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarDate);
+		const shortText = pattern.replace(/\{0\}/, secondaryMonthNames[month.startMonth]).replace(/\{1\}/, secondaryMonthNames[month.endMonth]);
+		const longText = pattern.replace(/\{0\}/, secondaryWideMonthName[month.start]).replace(/\{1\}/, secondaryWideMonthName[month.end]);
+		return { shortText, longText };
+	}
+
+	_getDisplayedSecondaryMonths(localDate) {
+		let firstDate = CalendarDate.fromLocalJSDate(localDate);
+		firstDate.setDate(1);
+		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
+
+		const startMonth = firstDate.getMonth();
+		let lastDate = CalendarDate.fromLocalJSDate(localDate, this.primaryCalendarType);
+
+		lastDate.setDate(this._daysInMonth(lastDate));
+		lastDate = new CalendarDate(lastDate, this.secondaryCalendarType);
+		const endMonth = lastDate.getMonth();
+		return { startMonth, endMonth };
+	}
+
+	_daysInMonth(calendarDate) {
+		calendarDate = new CalendarDate(calendarDate);
+		calendarDate.setDate(1);
+		calendarDate.setMonth(calendarDate.getMonth() + 1);
+		calendarDate.setDate(0);
+		return calendarDate.getDate();
+	}
+
+	get hesSecondaryCalendarType() {
+		return !!this.secondaryCalendarType;
 	}
 
 	get classes() {

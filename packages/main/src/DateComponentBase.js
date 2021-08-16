@@ -27,9 +27,10 @@ const metadata = {
 		},
 
 		/**
-		 * Sets a secound calendar type used for display.
-		 * If not set second calendar type, the calendar not show second date.
+		 * Defines the secondary calendar type.
+		 * If not set, the calendar will only show the primary calendar type.
 		 * @type {CalendarType}
+		 * @since 1.0.0-rc16
 		 * @defaultvalue undefined
 		 * @public
 		 */
@@ -106,10 +107,6 @@ class DateComponentBase extends UI5Element {
 	get _primaryCalendarType() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
-	}
-
-	get _secondaryCalendarType() {
-		return this.secondaryCalendarType;
 	}
 
 	get _minDate() {

@@ -68,7 +68,7 @@
 }
 
 .ui5-calheader-btn-sectext {
-	color: #6a6d70;
+	color: var(--sapNeutralElementColor);
 	font-size: 0.625rem;
 }
 
