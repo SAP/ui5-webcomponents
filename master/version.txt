@@ -1,5 +1,9 @@
-commit 768d1e7f19199e2dbb87c38ec65214d53cc49f0e
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Fri Aug 13 09:36:27 2021 +0100
+commit cce6505c697edaf882211ea085253108c9b5da40
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Aug 16 15:13:23 2021 +0300
 
-    fix(ui5-calendar): keyboard handling now compliant with the specification (#3649)
+    fix(ui5-select): align value state to visual specification (#3655)
+    
+    By visual specification the value state message should have 32px height when it is on a single line.
+    
+    #3611
