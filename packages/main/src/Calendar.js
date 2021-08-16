@@ -4,6 +4,7 @@ import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -11,7 +12,6 @@ import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -78,7 +78,7 @@ const metadata = {
 
 		_headerYearButtonText: {
 			type: String,
-		}
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
@@ -278,9 +278,9 @@ class Calendar extends CalendarPart {
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
 		const localDate = new Date(this.timestamp * 1000);
 
-		this._headerYearButtonText = (this._currentPicker === "year") ?
-			`${this._currentPickerDOM._firstYear} - ${this._currentPickerDOM._lastYear}` :
-			String(yearFormat.format(localDate, true));
+		this._headerYearButtonText = (this._currentPicker === "year")
+			? `${this._currentPickerDOM._firstYear} - ${this._currentPickerDOM._lastYear}`
+			: String(yearFormat.format(localDate, true));
 	}
 
 	/**

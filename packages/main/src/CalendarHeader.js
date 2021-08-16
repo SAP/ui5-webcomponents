@@ -1,6 +1,5 @@
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -56,7 +55,7 @@ const metadata = {
 
 		_yearButtonText: {
 			type: String,
-		}
+		},
 	},
 	events: {
 		"previous-press": {},
