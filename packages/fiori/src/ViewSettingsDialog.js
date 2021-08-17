@@ -273,11 +273,12 @@ class ViewSettingsDialog extends UI5Element {
 				return this._currentFilters[i];
 			}
 		}
+
+		return "";
 	}
 
 	get _filterByTitle() {
-		return "awd";
-		// return `${this.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
+		return `${this.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
 	}
 
 	get _dialogTitle() {
@@ -328,7 +329,24 @@ class ViewSettingsDialog extends UI5Element {
 	 * Determines disabled state of the <code>Reset</code> button.
 	 */
 	get _disableResetButton() {
-		return this._dialog && JSON.stringify(this._currentSettings) === JSON.stringify(this._initialSettings);
+		return this._dialog && this._sortSetttingsAreInitial && this._filteresAreInitial;
+	}
+
+	get _sortSetttingsAreInitial() {
+		return this._currentSettings.sortBy === this._initialSettings.sortBy && this._currentSettings.sortOrder === this._initialSettings.sortOrder;
+	}
+
+	get _filteresAreInitial() {
+		let filtersAreInitial = true;
+		this._currentFilters.forEach((filter, index) => {
+			for (let i = 0; i < filter.filterOptions.length; i++) {
+				if (filter.filterOptions[i].selected !== this._initialFilters[index].filterOptions[i].selected) {
+					filtersAreInitial = false;
+				}
+			}
+		});
+
+		return filtersAreInitial;
 	}
 
 	/**
@@ -350,11 +368,9 @@ class ViewSettingsDialog extends UI5Element {
 			return {
 				text: item.text,
 				selected: false,
-				item,
 				filterOptions: item.values.map(optionValue => {
 					return {
 						text: optionValue.text,
-						option: optionValue,
 						selected: optionValue.selected,
 					};
 				}),
@@ -439,7 +455,7 @@ class ViewSettingsDialog extends UI5Element {
 	_changeCurrentFilter(event) {
 		this._filterStepTwo = true;
 		this._currentFilters = this._currentFilters.map(filter => {
-			filter.selected = filter.item === event.detail.item;
+			filter.selected = filter.text === event.detail.item.text;
 
 			return filter;
 		});
@@ -476,12 +492,12 @@ class ViewSettingsDialog extends UI5Element {
 	_confirmSettings() {
 		this.close();
 		this._confirmedSettings = this._currentSettings;
-		this._confirmedFilters = JSON.parse(JSON.stringify(this._currentFilters));
+		this._confirmedFilters = [...this._currentFilters];
 
 		this.fireEvent("confirm", {
 			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
 			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.text : "",
-			// filters: this._filters.map(),
+			filters: this.selectedFilters,
 		});
 	}
 
@@ -489,15 +505,36 @@ class ViewSettingsDialog extends UI5Element {
 	 * Sets current settings to recently confirmed ones and fires <code>cancel</code> event.
 	 */
 	_cancelSettings() {
-		debugger;
 		this._restoreSettings(this._confirmedSettings);
 		this._restoreFilters(this._confirmedFilters);
 
 		this.fireEvent("cancel", {
 			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
 			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.text : "",
+			filters: this.selectedFilters,
 		});
 		this.close();
+	}
+
+	get selectedFilters() {
+		const result = [];
+
+		this._currentFilters.forEach(filter => {
+			const selectedOptions = [];
+
+			filter.filterOptions.forEach(option => {
+				if (option.selected) {
+					selectedOptions.push(option.text);
+				}
+			});
+
+			if (selectedOptions.length) {
+				result.push({});
+				result[result.length - 1][filter.text] = selectedOptions;
+			}
+		});
+
+		return result;
 	}
 
 	/**
@@ -516,6 +553,7 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_resetSettings() {
 		this._restoreSettings(this._initialSettings);
+		this._restoreFilters(this._initialFilters);
 		this._filterStepTwo = false;
 		this._recentlyFocused = this._sortOrder;
 		this._focusRecentlyUsedControl();
@@ -527,20 +565,43 @@ class ViewSettingsDialog extends UI5Element {
 	 * @param {Object} settings
 	 */
 	_restoreSettings(settings) {
-		///Sorting handling
 		const sortOrderSelected = settings.sortOrder && settings.sortOrder.innerText,
 			  sortBySelected = settings.sortBy && settings.sortBy.text;
 
 		this._sortOrder.items.forEach(item => { item.selected = sortOrderSelected === item.innerText; });
 		this._sortBy.items[1].assignedNodes().forEach(item => { item.selected = sortBySelected === item.text; });
-
-		// Filters handling
-		this._currentSettings = settings;
+		this._currentSettings = JSON.parse(JSON.stringify(settings));
 	}
 
 	_restoreFilters(filters) {
-		this._currentFilters = [...JSON.parse(JSON.stringify(filters))];
+		this._currentFilters = JSON.parse(JSON.stringify(filters));
 	}
+
+	// _restoreFilters(filters) {
+	// 	this._currentFilters = filters.map(filter => {
+	// 		const result = {};
+	// 		Object.keys(filter).map(filterProperty => {
+	// 			if (filter[filterProperty instanceof Array]) {
+
+	// 			} else {
+	// 				result.filterProperty = filter[filterProperty]
+	// 			}
+	// 		});
+	// 	});
+	// }
+
+	// _deepCopy(toCopy) {
+	// 	const result = {};
+	// 	Object.keys(toCopy).map(toCopyProperty => {
+	// 		if (toCopy[toCopyProperty instanceof Array]) {
+	// 			toCopy[toCopyProperty] = this._deepCopy(toCopy[toCopyProperty]);
+	// 		} else if (toCopy[toCopyProperty instanceof Object]){
+	// 			toCopy[toCopyProperty] = {...this._deepCopy(toCopy[toCopyProperty])};
+	// 		} else {
+	// 			result.toCopyProperty = toCopy[toCopyProperty]
+	// 		}
+	// 	});
+	// }
 
 	/**
 	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
