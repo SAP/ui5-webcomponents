@@ -1,9 +1,5 @@
-commit cce6505c697edaf882211ea085253108c9b5da40
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Aug 16 15:13:23 2021 +0300
+commit 2e708d476e0521412cf53e99c6a2c0e818e31bee
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue Aug 17 09:06:11 2021 +0100
 
-    fix(ui5-select): align value state to visual specification (#3655)
-    
-    By visual specification the value state message should have 32px height when it is on a single line.
-    
-    #3611
+    fix(ui5-color-palette): focus outline is properly visualized (#3648)
