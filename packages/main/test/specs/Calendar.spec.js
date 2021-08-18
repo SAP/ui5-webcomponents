@@ -312,12 +312,10 @@ describe("Calendar general interaction", () => {
 	it("Second month and year are rendered in the header", ()=>{
 		const calendar = browser.$("#calendar5");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
-
 		const calendarHeader = browser.$("#calendar5").shadow$("ui5-calendar-header");
-		const prevButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-prev]`);
 		const monthButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`).$$('span');
 		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
-		
+
 		assert.strictEqual(monthButton.length, 2, "Second month is rendered");
 		assert.strictEqual(yearButton.length, 2,"Second year is rendered");
 	});
@@ -328,7 +326,7 @@ describe("Calendar general interaction", () => {
 		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
 
 		assert.strictEqual(monthButton[0].getText(), "Rajab", "first month set in the header");
-		assert.strictEqual(monthButton[1].getText(), "October", "Second month set in the header");
+		assert.strictEqual(monthButton[1].getText(), "Oct", "Second month set in the header");
 
 		assert.strictEqual(yearButton[0].getText(), "1421 AH", "first year set in the header");
 		assert.strictEqual(yearButton[1].getText(), "2000", "Second year set in the header");
