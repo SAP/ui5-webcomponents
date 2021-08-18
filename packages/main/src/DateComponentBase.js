@@ -30,7 +30,7 @@ const metadata = {
 		 * Defines the secondary calendar type.
 		 * If not set, the calendar will only show the primary calendar type.
 		 * @type {CalendarType}
-		 * @since 1.0.0-rc16
+		 * @since 1.0.0-rc.16
 		 * @defaultvalue undefined
 		 * @public
 		 */

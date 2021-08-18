@@ -44,7 +44,7 @@ const metadata = {
 
 		/**
 		 * Already normalized by Calendar
-		 * @sience 1.0.0-rc16
+		 * @sience 1.0.0-rc.16
 		 * @defaultvalue undefined
 		 * @type {CalendarType}
 		 * @public
@@ -66,14 +66,6 @@ const metadata = {
 		},
 
 		isYearButtonHidden: {
-			type: Boolean,
-		},
-
-		/**
-		 * @type {boolean}
-		 * @private
-		 */
-		_isSecondaryCalendarType: {
 			type: Boolean,
 		},
 	},
@@ -125,7 +117,7 @@ class CalendarHeader extends UI5Element {
 		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
 		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 
-		if (this.hesSecondaryCalendarType) {
+		if (this.hasSecondaryCalendarType) {
 			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
 			const secoundaryMonths = this._getDisplayedSecondaryMonths(localDate);
 
@@ -226,7 +218,7 @@ class CalendarHeader extends UI5Element {
 		return calendarDate.getDate();
 	}
 
-	get hesSecondaryCalendarType() {
+	get hasSecondaryCalendarType() {
 		return !!this.secondaryCalendarType;
 	}
 
@@ -245,7 +237,7 @@ class CalendarHeader extends UI5Element {
 
 	get accInfo() {
 		return {
-			ariaLabelMonthButton: this.hesSecondaryCalendarType ? `${this._monthButtonText},${this._secondaryMonthInfo.textInfo}` : `${this._monthButtonText}`,
+			ariaLabelMonthButton: this.hasSecondaryCalendarType ? `${this._monthButtonText},${this._secondaryMonthInfo.textInfo}` : `${this._monthButtonText}`,
 		};
 	}
 }
