@@ -185,6 +185,7 @@ class DayPicker extends CalendarPart {
 		const _isSecondaryCalendarType = this.hesSecondaryCalendarType;
 		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const secondaryMonthsNames = _isSecondaryCalendarType && localeData.getMonths("wide", this._secondaryCalendarType);
 		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
@@ -192,6 +193,7 @@ class DayPicker extends CalendarPart {
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
 		const minDate = this._minDate; // store the _minDate (expensive getter)
 		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
+
 		const tempSecondDate = _isSecondaryCalendarType && this._getSecondarytDay(tempDate);
 
 		let week = [];
@@ -214,6 +216,8 @@ class DayPicker extends CalendarPart {
 
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
+			const ariaLabel = _isSecondaryCalendarType ? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
+				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}}`;
 
 			const day = {
 				timestamp: timestamp.toString(),
@@ -224,7 +228,7 @@ class DayPicker extends CalendarPart {
 				iSecondDay: _isSecondaryCalendarType && tempSecondDate.getDate(),
 				_isSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
-				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`,
+				ariaLabel,
 				ariaSelected: isSelected ? "true" : "false",
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,

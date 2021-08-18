@@ -17,6 +17,7 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			?hidden="{{isMonthButtonHidden}}"
 			tabindex="0"
+			aria-label="{{accInfo.ariaLabelMonthButton}}"
 			@click={{onMonthButtonClick}}
 			@keydown={{onMonthButtonKeyDown}}
 			@keyup={{onMonthButtonKeyUp}}
@@ -49,5 +50,5 @@
 		title={{_nextButtonText}}
 	>
 		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-right"></ui5-icon>
-    </div>
+	</div>
 </div>

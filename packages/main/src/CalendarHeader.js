@@ -128,9 +128,9 @@ class CalendarHeader extends UI5Element {
 		if (this.hesSecondaryCalendarType) {
 			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
 			const secoundaryMonths = this._getDisplayedSecondaryMonths(localDate);
-			const secondaryMonthInfo = this._getDisplayedSecondaryMonthText(secoundaryMonths);
 
-			this._secondMonthButtonText = secondaryMonthInfo;
+			this._secondaryMonthInfo = this._getDisplayedSecondaryMonthText(secoundaryMonths);
+			this._secondMonthButtonText = this._secondaryMonthInfo.text;
 			this._secondYearButtonText = secondYearFormat.format(localDate, true);
 		}
 	}
@@ -188,13 +188,20 @@ class CalendarHeader extends UI5Element {
 	_getDisplayedSecondaryMonthText(month) {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const pattern = localeData.getIntervalPattern();
-		const secondaryMonthNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarDate);
+		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarDate);
+		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarDate);
 
 		if (month.startMonth === month.endMonth) {
-			return localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth];
+			return {
+				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[month.startMonth],
+				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth],
+			};
 		}
 
-		return pattern.replace(/\{0\}/, secondaryMonthNames[month.startMonth]).replace(/\{1\}/, secondaryMonthNames[month.endMonth]);
+		return {
+			text: pattern.replace(/\{0\}/, secondaryMonthsNames[month.startMonth]).replace(/\{1\}/, secondaryMonthsNames[month.endMonth]),
+			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[month.startMonth]).replace(/\{1\}/, secondaryMonthsNamesWide[month.endMonth]),
+		};
 	}
 
 	_getDisplayedSecondaryMonths(localDate) {
@@ -233,6 +240,12 @@ class CalendarHeader extends UI5Element {
 				"ui5-calheader-arrowbtn": true,
 				"ui5-calheader-arrowbtn-disabled": this.isNextButtonDisabled,
 			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			ariaLabelMonthButton: this.hesSecondaryCalendarType ? `${this._monthButtonText},${this._secondaryMonthInfo.textInfo}` : `${this._monthButtonText}`,
 		};
 	}
 }
