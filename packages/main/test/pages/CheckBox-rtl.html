@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>ui5-checkbox</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<style>
+		ui5-checkbox:not(.ui5-cb-testing-wrap) {
+			border: 1px solid red;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);" dir="rtl">
+	<ui5-checkbox></ui5-checkbox>
+	<ui5-checkbox id="cbError" value-state="Error"></ui5-checkbox>
+	<ui5-checkbox id="truncatingCb" text="Long long long text that should truncate at some point" style="width: 300px"></ui5-checkbox>
+	<ui5-checkbox text="Long long long text that should truncate at some point"></ui5-checkbox>
+
+	<br><br>
+	<ui5-title>Text Wrapping</ui5-title>
+	<ui5-checkbox id="wrappingCb" wrapping-type="Normal" class="ui5-cb-testing-wrap" text="Longest ever text written in English that have to wraps because it is so long of course!" style="width: 300px"></ui5-checkbox>
+	<ui5-checkbox wrapping-type="Normal" text="Longest ever text written in English that wraps because it's too long of course!" style="width: 300px"></ui5-checkbox>
+
+	<br><br>
+	<ui5-title>Change Event Test</ui5-title>
+	<ui5-checkbox id="cb1" text="Long long long text"></ui5-checkbox>
+	<ui5-checkbox id="cb2" disabled></ui5-checkbox>
+	<ui5-input id="field"></ui5-input>
+
+	<br>
+	<ui5-title>ACC Test - aria-label</ui5-title>
+	<ui5-checkbox id="accCb" accessible-name="Hello world"></ui5-checkbox>
+	<br />
+	<ui5-checkbox value-state="Warning" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="Error" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="None" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="Success" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="Information" text="Long long long text" indeterminate checked></ui5-checkbox>
+
+	<br />
+	<ui5-checkbox id="checkboxChecked" checked></ui5-checkbox>
+
+	<script>
+		var hcb = false;
+		var input = document.querySelector("#field");
+		var checkBox1 = document.querySelector("#cb1");
+		var checkBox2 = document.querySelector("#cb2");
+		var counter = 0;
+
+		[checkBox1, checkBox2].forEach(function(el) {
+			el.addEventListener("ui5-change", function(event) {
+				counter += 1;
+				input.value = counter;
+			});
+		});
+</script>
+</body>
+</html>

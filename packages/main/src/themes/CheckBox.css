@@ -80,11 +80,15 @@
 }
 
 :host([text]) .ui5-checkbox-root {
-	padding-right: 0;
+	padding-right: 0; /* applies in IE, overwritten in the rest */
+	padding-inline-end: 0; /* applies in Chrome, Safari, FF */
+	padding-inline-start: var(--_ui5_checkbox_wrapper_padding); /* applies in Chrome, Safari, FF */
 }
 
 :host([text]) .ui5-checkbox-root:focus::before {
-	right: 0;
+	right: 0; /* applies in IE, overwritten in the rest */
+	inset-inline-start: var(--_ui5_checkbox_focus_position); /* applies in Chrome, Safari, FF */
+	inset-inline-end: 0; /* applies in Chrome, Safari, FF */
 }
 
 .ui5-checkbox-root {
@@ -95,7 +99,9 @@
 	width: 100%;
 	min-height: var(--_ui5_checkbox_width_height);
 	min-width: var(--_ui5_checkbox_width_height);
-	padding: 0 var(--_ui5_checkbox_wrapper_padding);
+	padding: 0 var(--_ui5_checkbox_wrapper_padding); /* applies in IE, overwritten in the rest */
+	padding-inline-start: var(--_ui5_checkbox_wrapper_padding); /* applies in Chrome, Safari, FF */
+	padding-inline-end: var(--_ui5_checkbox_wrapper_padding); /* applies in Chrome, Safari, FF */
 	box-sizing: border-box;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -113,9 +119,11 @@ https://github.com/philipwalton/flexbugs/issues/231
 .ui5-checkbox-root:focus::before {
 	content: "";
 	position: absolute;
+	left: var(--_ui5_checkbox_focus_position); /* applies in IE, overwritten in the rest */
+	right: var(--_ui5_checkbox_focus_position); /* applies in IE, overwritten in the rest */
+	inset-inline-start: var(--_ui5_checkbox_focus_position); /* applies in Chrome, Safari, FF */
+	inset-inline-end: var(--_ui5_checkbox_focus_position); /* applies in Chrome, Safari, FF */
 	top: var(--_ui5_checkbox_focus_position);
-	left: var(--_ui5_checkbox_focus_position);
-	right: var(--_ui5_checkbox_focus_position);
 	bottom: var(--_ui5_checkbox_focus_position);
 	border: var(--_ui5_checkbox_focus_outline);
 }
@@ -160,7 +168,9 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-root .ui5-checkbox-label {
-	margin-left: var(--_ui5_checkbox_wrapper_padding);
+	margin-left: var(--_ui5_checkbox_wrapper_padding); /* applies in IE, overwritten in the rest */
+	margin-inline-start: var(--_ui5_checkbox_wrapper_padding); /* applies in Chrome, Safari, FF */
+	margin-inline-end: 0; /* applies in Chrome, Safari, FF */
 	cursor: default;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -175,7 +185,6 @@ https://github.com/philipwalton/flexbugs/issues/231
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
 	cursor: default;
-    position: absolute;
 }
 
 /* RTL */

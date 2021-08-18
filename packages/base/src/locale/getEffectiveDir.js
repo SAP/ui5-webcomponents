@@ -1,8 +1,13 @@
 import { getRTL } from "../config/RTL.js";
+import { isIE } from "../Device.js";
 
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 
 const getEffectiveDir = element => {
+	if (!isIE() && element.localName === "ui5-checkbox") {
+		return;
+	}
+
 	const doc = window.document;
 	const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
 	const locallyAppliedDir = getComputedStyle(element).getPropertyValue(GLOBAL_DIR_CSS_VAR);
