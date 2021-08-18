@@ -85,6 +85,13 @@ const metadata = {
 			type: Object,
 		},
 
+		/**
+		 * Stores current settings of the dialog.
+		 *
+		 * @sinec 1.0.0-rc.16
+		 * @type {Object}
+		 * @private
+		 */
 		_currentFilters: {
 			type: Object,
 			multiple: true,
@@ -109,16 +116,6 @@ const metadata = {
 		 */
 		_filterStepTwo: {
 			type: Boolean,
-		},
-
-		/**
-		 *
-		 * @since 1.0.0-rc.16
-		 * @private
-		 */
-		_filters: {
-			type: Object,
-			multiple: true,
 		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
@@ -212,6 +209,10 @@ class ViewSettingsDialog extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this._currentSettings = {
+			sortOrder: [],
+			sortBy: [],
+		};
 	}
 
 	onBeforeRendering() {
@@ -333,7 +334,16 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _sortSetttingsAreInitial() {
-		return this._currentSettings.sortBy === this._initialSettings.sortBy && this._currentSettings.sortOrder === this._initialSettings.sortOrder;
+		let settingsAreInitial = true;
+		Object.keys(this._currentSettings).forEach(sortList => {
+			this._currentSettings[sortList].forEach((item, index) => {
+				if (item.selected !== this._initialSettings[sortList][index].selected) {
+					settingsAreInitial = false;
+				}
+			});
+		});
+
+		return settingsAreInitial;
 	}
 
 	get _filteresAreInitial() {
@@ -353,14 +363,10 @@ class ViewSettingsDialog extends UI5Element {
 	 * Returns the current settings (current state of all lists).
 	 */
 	get _settings() {
-		const settings = {},
-			  sortOrderSelected = this._sortOrder && this._sortOrder.getSelectedItems(),
-			  sortBySelected = this._sortBy && this._sortBy.getSelectedItems();
-
-		settings.sortOrder = sortOrderSelected ? sortOrderSelected[0] : undefined;
-		settings.sortBy = sortBySelected ? sortBySelected[0] : undefined;
-
-		return settings;
+		return {
+			sortOrder: JSON.parse(JSON.stringify(this.initSortOrderItems)),
+			sortBy: JSON.parse(JSON.stringify(this.initSortByItems)),
+		};
 	}
 
 	get _initFilters() {
@@ -378,6 +384,28 @@ class ViewSettingsDialog extends UI5Element {
 		});
 	}
 
+	get initSortByItems() {
+		return this.sortItems.map(item => {
+			return {
+				text: item.text,
+				selected: item.selected,
+			};
+		});
+	}
+
+	get initSortOrderItems() {
+		return [
+			{
+				text: this._ascendingLabel,
+				selected: true,
+			},
+			{
+				text: this._descendingLabel,
+				selected: false,
+			},
+		];
+	}
+
 	get isModeSort() {
 		return this._currentMode === ViewSettingsDialogMode.Sort;
 	}
@@ -390,7 +418,7 @@ class ViewSettingsDialog extends UI5Element {
 		return this.isModeFilter && this._filterStepTwo;
 	}
 
-	get _sortOrderList() {
+	get _sortOrderListDomRef() {
 		return this.shadowRoot.querySelector("[ui5-list][sort-order]");
 	}
 
@@ -408,13 +436,13 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	show() {
 		if (!this._dialog) {
-			this._sortOrder = this._sortOrderList;
+			this._sortOrder = this._sortOrderListDomRef;
 			this._sortBy = this._sortByList;
 
 			// Sorting
 			this._initialSettings = this._settings;
-			this._currentSettings = this._settings
-			this._confirmedSettings = this._settings
+			this._currentSettings = this._settings;
+			this._confirmedSettings = this._settings;
 
 			// Filtering
 			this._initialFilters = this._initFilters;
@@ -442,7 +470,6 @@ class ViewSettingsDialog extends UI5Element {
 						option.selected = !option.selected;
 					}
 				});
-
 			}
 			return filter;
 		});
@@ -494,11 +521,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._confirmedSettings = this._currentSettings;
 		this._confirmedFilters = [...this._currentFilters];
 
-		this.fireEvent("confirm", {
-			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
-			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.text : "",
-			filters: this.selectedFilters,
-		});
+		this.fireEvent("confirm", this.eventsParams);
 	}
 
 	/**
@@ -508,12 +531,16 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._confirmedSettings);
 		this._restoreFilters(this._confirmedFilters);
 
-		this.fireEvent("cancel", {
-			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
-			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.text : "",
-			filters: this.selectedFilters,
-		});
+		this.fireEvent("cancel", this.eventsParams);
 		this.close();
+	}
+
+	get eventsParams() {
+		return {
+			sortOrder: this._currentSettings.sortOrder.filter(item => item.selected)[0].text,
+			sortBy: this._currentSettings.sortBy.filter(item => item.selected)[0].text,
+			filters: this.selectedFilters,
+		};
 	}
 
 	get selectedFilters() {
@@ -565,11 +592,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * @param {Object} settings
 	 */
 	_restoreSettings(settings) {
-		const sortOrderSelected = settings.sortOrder && settings.sortOrder.innerText,
-			  sortBySelected = settings.sortBy && settings.sortBy.text;
-
-		this._sortOrder.items.forEach(item => { item.selected = sortOrderSelected === item.innerText; });
-		this._sortBy.items[1].assignedNodes().forEach(item => { item.selected = sortBySelected === item.text; });
 		this._currentSettings = JSON.parse(JSON.stringify(settings));
 	}
 
@@ -577,46 +599,32 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentFilters = JSON.parse(JSON.stringify(filters));
 	}
 
-	// _restoreFilters(filters) {
-	// 	this._currentFilters = filters.map(filter => {
-	// 		const result = {};
-	// 		Object.keys(filter).map(filterProperty => {
-	// 			if (filter[filterProperty instanceof Array]) {
-
-	// 			} else {
-	// 				result.filterProperty = filter[filterProperty]
-	// 			}
-	// 		});
-	// 	});
-	// }
-
-	// _deepCopy(toCopy) {
-	// 	const result = {};
-	// 	Object.keys(toCopy).map(toCopyProperty => {
-	// 		if (toCopy[toCopyProperty instanceof Array]) {
-	// 			toCopy[toCopyProperty] = this._deepCopy(toCopy[toCopyProperty]);
-	// 		} else if (toCopy[toCopyProperty instanceof Object]){
-	// 			toCopy[toCopyProperty] = {...this._deepCopy(toCopy[toCopyProperty])};
-	// 		} else {
-	// 			result.toCopyProperty = toCopy[toCopyProperty]
-	// 		}
-	// 	});
-	// }
-
 	/**
 	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
 	 */
-	_onSortOrderChange() {
+	_onSortOrderChange(event) {
 		this._recentlyFocused = this._sortOrder;
-		this._currentSettings = this._settings;
+		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
+			item.selected = item.text === event.detail.item.innerText;
+			return item;
+		});
+
+		// Invalidate
+		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
 
 	/**
 	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
 	 */
-	 _onSortByChange() {
+	 _onSortByChange(event) {
 		this._recentlyFocused = this._sortBy;
-		this._currentSettings = this._settings;
+		this._currentSettings.sortBy = this.initSortByItems.map(item => {
+			item.selected = item.text === event.detail.item.innerText;
+			return item;
+		});
+
+		// Invalidate
+		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
 }
 
