@@ -1,5 +1,5 @@
-commit 2e708d476e0521412cf53e99c6a2c0e818e31bee
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Aug 17 09:06:11 2021 +0100
+commit 9cebb5b5291e771cfc4a16f334a00054d5fee230
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Aug 18 23:30:00 2021 +0300
 
-    fix(ui5-color-palette): focus outline is properly visualized (#3648)
+    fix: update readme build steps (#3676)
