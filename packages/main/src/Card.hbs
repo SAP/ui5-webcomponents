@@ -2,14 +2,14 @@
 	class="{{classes}}"
 	dir="{{effectiveDir}}"
 	role="region"
-	aria-labelledby="{{ariaLabelledByCard}}">
-	{{#if hasHeader}}
+	aria-labelledby="{{_id}}-desc">
+	{{#if _hasHeader}}
 		<div class="ui5-card-header-root">
 			<slot name="header"></slot>
 		</div>
 	{{/if}}
-	<div role="group" aria-label="{{ariaCardContentLabel}}">
+	<div role="group" aria-label="{{_ariaCardContentLabel}}">
 		<slot></slot>
 	</div>
-	<span id="{{_id}}-desc" class="ui5-hidden-text">{{ariaCardRoleDescription}}</span>
+	<span id="{{_id}}-desc" class="ui5-hidden-text">{{_ariaCardRoleDescription}}</span>
 </div>

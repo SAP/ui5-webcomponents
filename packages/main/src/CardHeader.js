@@ -195,6 +195,10 @@ class CardHeader extends UI5Element {
 	get ariaLabelledByHeader() {
 		const labels = [];
 
+		if (this.titleText) {
+			labels.push(`${this._id}-title`);
+		}
+
 		if (this.subtitleText) {
 			labels.push(`${this._id}-subtitle`);
 		}
