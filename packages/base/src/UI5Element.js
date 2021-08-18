@@ -985,9 +985,6 @@ class UI5Element extends HTMLElement {
 		]);
 
 		const tag = this.getMetadata().getTag();
-		if (!tag) {
-			return;
-		}
 		const altTag = this.getMetadata().getAltTag();
 
 		const definedLocally = isTagRegistered(tag);

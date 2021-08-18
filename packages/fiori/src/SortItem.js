@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
-import SortItemTemplate from "./generated/templates/SortItemTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
 
 /**
  * @public
@@ -18,6 +18,15 @@ const metadata = {
 		text: {
 			type: String,
 		},
+
+		/**
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		selected: {
+			type: Boolean,
+		}
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.SortItem.prototype */ {
 		//
@@ -48,21 +57,13 @@ const metadata = {
  * @tagname ui5-sort-item
  * @public
  */
-class SortItem extends ListItem {
+class SortItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get render() {
 		return litRender;
-	}
-
-	static get styles() {
-		return [ListItem.styles];
-	}
-
-	static get template() {
-		return SortItemTemplate;
 	}
 }
 
