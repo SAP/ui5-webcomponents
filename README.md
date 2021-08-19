@@ -137,6 +137,7 @@ future compatibility is not guaranteed and the project may stop working on old b
 
 ```sh
 yarn # to install all dependencies
+yarn build # to build the project initially (this step needs to be performed only the first time you run the project)
 yarn start # to serve the project
 ```
 

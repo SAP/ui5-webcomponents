@@ -717,7 +717,7 @@ class Select extends UI5Element {
 	get styles() {
 		return {
 			popoverHeader: {
-				"width": `${this.offsetWidth}px`,
+				"max-width": `${this.offsetWidth}px`,
 			},
 			responsivePopoverHeader: {
 				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
