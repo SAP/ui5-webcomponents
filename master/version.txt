@@ -1,5 +1,9 @@
-commit 9cebb5b5291e771cfc4a16f334a00054d5fee230
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Aug 18 23:30:00 2021 +0300
+commit 1e57b00e0a93962060be7b782bf954f5cce8a057
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Thu Aug 19 13:31:02 2021 +0300
 
-    fix: update readme build steps (#3676)
+    fix(ui5-card): correctly set aria-labelledby (#3692)
+    
+    Now card doesn't reference element ID in another shadow DOM with aria-labelledby. The header is labelled by its own title instead.
+    
+    Fixes #3643
