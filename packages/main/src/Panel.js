@@ -99,7 +99,7 @@ const metadata = {
 		 * @since 1.0.0-rc.16
 		 */
 		 noAnimation: {
-			type: Boolean
+			type: Boolean,
 		},
 
 		/**
