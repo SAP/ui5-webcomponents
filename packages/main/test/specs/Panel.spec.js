@@ -97,6 +97,14 @@ describe("Panel general interaction", () => {
 		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
 	});
 
+	it("tests toggle expand/collapse animation", () => {
+		const panelWithAnimationIcon = browser.$("#panel-expandable").shadow$(".ui5-panel-header-button");
+		const panelWithoutAnimationIcon = browser.$("#p1").shadow$(".ui5-panel-header-button");
+
+		assert.ok(panelWithAnimationIcon.hasClass("ui5-panel-header-button-animated"), "Animation is presented");
+		assert.notOk(panelWithoutAnimationIcon.hasClass("ui5-panel-header-button-animated"), "Animation is turn off");
+	});
+
 	describe("Accessibility", () => {
 
 		it("tests whether aria attributes are set correctly with native header", () => {
