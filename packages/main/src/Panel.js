@@ -91,6 +91,17 @@ const metadata = {
 		},
 
 		/**
+		 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		 noAnimation: {
+			type: Boolean
+		},
+
+		/**
 		 * Sets the accessible aria role of the component.
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
@@ -280,8 +291,8 @@ class Panel extends UI5Element {
 		return true;
 	}
 
-	shouldAnimate() {
-		return getAnimationMode() !== AnimationMode.None;
+	shouldNotAnimate() {
+		return this.noAnimation || getAnimationMode() === AnimationMode.None;
 	}
 
 	_headerClick(event) {
@@ -329,7 +340,7 @@ class Panel extends UI5Element {
 
 		this.collapsed = !this.collapsed;
 
-		if (!this.shouldAnimate()) {
+		if (this.shouldNotAnimate()) {
 			this.fireEvent("toggle");
 			return;
 		}
@@ -365,7 +376,7 @@ class Panel extends UI5Element {
 	get classes() {
 		return {
 			headerBtn: {
-				"ui5-panel-header-button-animated": this.shouldAnimate(),
+				"ui5-panel-header-button-animated": !this.shouldNotAnimate(),
 			},
 		};
 	}
