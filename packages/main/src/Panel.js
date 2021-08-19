@@ -96,6 +96,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.16
 		 */
 		 noAnimation: {
 			type: Boolean
