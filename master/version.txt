@@ -1,9 +1,7 @@
-commit 1e57b00e0a93962060be7b782bf954f5cce8a057
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Thu Aug 19 13:31:02 2021 +0300
+commit acf0c10269d0d137efe70f7acda760c8880d7e5c
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Aug 19 05:41:48 2021 -0700
 
-    fix(ui5-card): correctly set aria-labelledby (#3692)
+    chore: translation delivery (#3691)
     
-    Now card doesn't reference element ID in another shadow DOM with aria-labelledby. The header is labelled by its own title instead.
-    
-    Fixes #3643
+    Change-Id: I0e523489f7d1c32208375490ec327b56a12d52f6
