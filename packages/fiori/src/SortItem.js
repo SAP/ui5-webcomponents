@@ -1,5 +1,6 @@
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+
 
 /**
  * @public
