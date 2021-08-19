@@ -1,7 +1,7 @@
-commit acf0c10269d0d137efe70f7acda760c8880d7e5c
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Aug 19 05:41:48 2021 -0700
+commit fc7972ba447baa333924313ade5c2f2bea3ea9e7
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Aug 19 16:28:38 2021 +0300
 
-    chore: translation delivery (#3691)
+    feat(ui5-panel): noAnimation property introduced (#3694)
     
-    Change-Id: I0e523489f7d1c32208375490ec327b56a12d52f6
+    FIXES: #3505
