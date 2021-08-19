@@ -7,7 +7,7 @@ const metadata = {
 	tag: "ui5-filter-item-option",
 	properties: /** @lends sap.ui.webcomponents.fiori.FilterItemOption.prototype */ {
 		/**
-		 * Defnies the text of the component
+		 * Defines the text of the component.
 		 *
 		 * @public
 		 * @type {String}
@@ -18,6 +18,8 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the option is selected
+		 *
 		 * @public
 		 * @type {Boolean}
 		 * @defaultvalue false

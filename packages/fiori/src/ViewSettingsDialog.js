@@ -109,7 +109,7 @@ const metadata = {
 		},
 
 		/**
-		 * When in Filter By mode, defines whether we need to show the list of keys, or multicombobox with values
+		 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values
 		 *
 		 * @since 1.0.0-rc.16
 		 * @private

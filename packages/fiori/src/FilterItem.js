@@ -23,7 +23,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the component
+		 * Defines the additional text of the component
 		 *
 		 * @type {String}
 		 * @defaultvalue ""

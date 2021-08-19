@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
 
@@ -60,10 +59,6 @@ const metadata = {
 class SortItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 }
 
