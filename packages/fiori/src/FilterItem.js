@@ -12,7 +12,7 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
 		/**
-		 * Defines the text of the component
+		 * Defines the text of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -23,7 +23,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the additional text of the component
+		 * Defines the additional text of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""

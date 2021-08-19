@@ -98,7 +98,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defnies the current mode of the component
+		 * Defnies the current mode of the component.
 		 *
 		 * @since 1.0.0-rc.16
 		 * @private
@@ -109,7 +109,7 @@ const metadata = {
 		},
 
 		/**
-		 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values
+		 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
 		 *
 		 * @since 1.0.0-rc.16
 		 * @private
@@ -536,9 +536,12 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get eventsParams() {
+		const sortOrder = this._currentSettings.sortOrder.filter(item => item.selected)[0] && this._currentSettings.sortOrder.filter(item => item.selected)[0].text,
+			sortBy = this._currentSettings.sortBy.filter(item => item.selected)[0] && this._currentSettings.sortBy.filter(item => item.selected)[0].text;
+
 		return {
-			sortOrder: this._currentSettings.sortOrder.filter(item => item.selected)[0].text,
-			sortBy: this._currentSettings.sortBy.filter(item => item.selected)[0].text,
+			sortOrder,
+			sortBy,
 			filters: this.selectedFilters,
 		};
 	}
