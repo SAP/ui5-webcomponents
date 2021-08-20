@@ -237,7 +237,9 @@ class ViewSettingsDialog extends UI5Element {
 	 * Determines disabled state of the <code>Reset</code> button.
 	 */
 	get _disableResetButton() {
-		return this._dialog && JSON.stringify(this._currentSettings) === JSON.stringify(this._initialSettings);
+		return this._dialog
+			&& this._currentSettings.sortBy.innerText === this._initialSettings.sortBy.innerText
+			&& this._currentSettings.sortOrder.innerText === this._initialSettings.sortOrder.innerText;
 	}
 
 	/**
@@ -248,8 +250,8 @@ class ViewSettingsDialog extends UI5Element {
 			  sortOrderSelected = this._sortOrder.getSelectedItems(),
 			  sortBySelected = this._sortBy.getSelectedItems();
 
-		settings.sortOrder = sortOrderSelected.length ? sortOrderSelected[0] : undefined;
-		settings.sortBy = sortBySelected.length ? sortBySelected[0] : undefined;
+		settings.sortOrder = sortOrderSelected.length ? sortOrderSelected[0] : { innerText: "" };
+		settings.sortBy = sortBySelected.length ? sortBySelected[0] : { innerText: "" };
 		return settings;
 	}
 
@@ -302,8 +304,8 @@ class ViewSettingsDialog extends UI5Element {
 	_confirmSettings() {
 		this._confirmedSettings = this._currentSettings;
 		this.fireEvent("confirm", {
-			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
-			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.innerText : "",
+			sortOrder: this._confirmedSettings.sortOrder.innerText,
+			sortBy: this._confirmedSettings.sortBy.innerText,
 		});
 		this.close();
 	}
@@ -314,8 +316,8 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 		this.fireEvent("cancel", {
-			sortOrder: this._confirmedSettings.sortOrder && this._confirmedSettings.sortOrder.innerText,
-			sortBy: this._confirmedSettings.sortBy ? this._confirmedSettings.sortBy.innerText : "",
+			sortOrder: this._confirmedSettings.sortOrder.innerText,
+			sortBy: this._confirmedSettings.sortBy.innerText,
 		});
 		this.close();
 	}
@@ -346,8 +348,8 @@ class ViewSettingsDialog extends UI5Element {
 	 * @param {Object} settings
 	 */
 	_restoreSettings(settings) {
-		const sortOrderSelected = settings.sortOrder && settings.sortOrder.innerText,
-			  sortBySelected = settings.sortBy && settings.sortBy.innerText;
+		const sortOrderSelected = settings.sortOrder.innerText,
+			  sortBySelected = settings.sortBy.innerText;
 
 		this._sortOrder.items.forEach(item => { item.selected = sortOrderSelected === item.innerText; });
 		this._sortBy.items[1].assignedNodes().forEach(item => { item.selected = sortBySelected === item.innerText; });
