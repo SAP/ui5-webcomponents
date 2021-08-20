@@ -329,6 +329,18 @@ describe("General interaction", () => {
 		assert.notOk(popover.opened, "Popover should be closed when no match");
 	});
 
+	it ("Tests autocomplete when typing", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#startswith-cb");
+		const input = combo.shadow$("#ui5-combobox-input");
+
+		input.keys("a");
+		input.keys("r");
+
+		assert.strictEqual(input.value, "Argentina", "ComboBox value should be autocompletet with the text of the matching item");
+	});
+
 	it ("Tests selection-change event and its parameters", () => {
 		const combo = $("#combo");
 		const label = $("#selection-change-event-result");
