@@ -688,6 +688,7 @@ class ComboBox extends UI5Element {
 
 		if (matchingItems.length) {
 			this.value = matchingItems[0] ? matchingItems[0].text : current;
+			this.inner.value = this.value;
 		} else {
 			this.value = current;
 		}
