@@ -387,7 +387,7 @@ class Select extends UI5Element {
 				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
 				lastSelectedOptionIndex = index;
 			}
-			if (!opt.disabled && (firstEnabledOptionIndex === -1)) {
+			if (firstEnabledOptionIndex === -1) {
 				firstEnabledOptionIndex = index;
 			}
 
@@ -397,7 +397,6 @@ class Select extends UI5Element {
 			return {
 				selected: false,
 				_focused: false,
-				disabled: opt.disabled,
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
