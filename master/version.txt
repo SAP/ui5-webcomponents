@@ -1,7 +1,8 @@
-commit fc7972ba447baa333924313ade5c2f2bea3ea9e7
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Aug 19 16:28:38 2021 +0300
+commit d34afc1cae96f10bbff968e58d6e20884b666302
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Aug 23 15:58:41 2021 +0300
 
-    feat(ui5-panel): noAnimation property introduced (#3694)
+    fix(ui5-SegmentedButton): keyboard handling now compliant with the specification (#3709)
     
-    FIXES: #3505
+    Focus is moved on the first element of Segmented Button or last element via PageUp or PageDown keyboard key.
+    Related to: https://github.com/SAP/ui5-webcomponents/issues/3091
