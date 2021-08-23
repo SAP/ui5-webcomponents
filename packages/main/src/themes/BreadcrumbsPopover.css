@@ -1,0 +1,6 @@
+.ui5-breadcrumbs-popover-footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 0.5rem;
+}

@@ -108,6 +108,9 @@ const metadata = {
 				values: { type: Array },
 			},
 		},
+
+		"show-month-press": {},
+		"show-year-press": {},
 	},
 };
 
@@ -271,15 +274,19 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress() {
+	onHeaderShowMonthPress(event) {
+		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
+		this.fireEvent("show-month-press", event);
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress() {
+	onHeaderShowYearPress(event) {
+		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
+		this.fireEvent("show-year-press", event);
 	}
 
 	get _currentPickerDOM() {
@@ -339,11 +346,13 @@ class Calendar extends CalendarPart {
 	onSelectedMonthChange(event) {
 		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
+		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onSelectedYearChange(event) {
 		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
+		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onNavigate(event) {
@@ -351,11 +360,11 @@ class Calendar extends CalendarPart {
 	}
 
 	_onkeydown(event) {
-		if (isF4(event) && this._currentPicker === "day") {
+		if (isF4(event) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
 		}
 
-		if (isF4Shift(event) && this._currentPicker === "day") {
+		if (isF4Shift(event) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
 		}
 	}

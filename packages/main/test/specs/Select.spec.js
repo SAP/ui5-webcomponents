@@ -111,13 +111,13 @@ describe("Select general interaction", () => {
 		select.keys("ArrowDown");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2), "Arrow Down should change selected item");
 		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT2, "Selection announcement text should be equalt to the current selected item's text");
-		
+
 		// change previewed item with picker opened
 		select.click();
 		select.keys("ArrowUp");
 		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
 		select.keys("Escape");
-		
+
 		// change selection with picker opened
 		select.click();
 		select.keys("ArrowUp");
@@ -203,6 +203,31 @@ describe("Select general interaction", () => {
 
 		// Close the select not to cover other components that tests would try to click
 		select.keys("Escape");
+	});
+
+	it("changes selection with typing single letter", () => {
+		const select = browser.$("#keyboardHandling");
+		const EXPECTED_SELECTION_TEXT = "Banana";
+
+		select.click(); // Open select
+		select.keys("b");
+
+		const selectText = select.shadow$(".ui5-select-label-root");
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Typing letter should change selection");
+	});
+
+	it("changes selection with typing more letters", () => {
+		const select = browser.$("#mySelect3");
+		const EXPECTED_SELECTION_TEXT = "Brazil";
+
+		select.click(); // Open select
+		select.keys("b");
+		select.keys("r");
+
+		const selectText = select.shadow$(".ui5-select-label-root");
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Typing text should change selection");
 	});
 
 	it("opens upon space", () => {

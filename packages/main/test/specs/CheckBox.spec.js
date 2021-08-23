@@ -46,12 +46,9 @@ describe("CheckBox general interaction", () => {
 		assert.ok(wrappingCbHeight > CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is more than: " + CHECKBOX_DEFAULT_HEIGHT);
 	});
 
-	it("tests aria-label", () => {
-		const defaultCb = browser.$("#cb2").shadow$(".ui5-checkbox-root");
-		const accCheckBox = browser.$("#accCb").shadow$(".ui5-checkbox-root");
-		const EXPECTED_ARIA_LABEL="Hello world";
+	it("tests ui5-icon", () => {
+		const checkboxChecked = browser.$("#checkboxChecked").shadow$(".ui5-checkbox-icon");
 
-		assert.strictEqual(defaultCb.getAttribute("aria-label"), null, "aria-label is not set");
-		assert.strictEqual(accCheckBox.getAttribute("aria-label"), EXPECTED_ARIA_LABEL, "aria-label is set");
+		assert.strictEqual(checkboxChecked.getAttribute("aria-hidden"), "true", "aria-hidden is set");
 	});
 });

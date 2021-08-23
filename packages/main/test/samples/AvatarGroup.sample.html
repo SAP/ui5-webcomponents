@@ -9,6 +9,12 @@
 
 <div class="control-tag">&lt;ui5-avatar-group&gt;</div>
 
+<style>
+	ui5-avatar:not(:defined) {
+		visibility: hidden;
+	}
+</style>
+
 <section>
 	<h4>Avatar Group - type "Individual"</h4> 
 	<div class="snippet individual">
@@ -79,7 +85,7 @@
 					popAvatar.image = avatarRef.image;
 					popAvatar.icon = avatarRef.icon;
 	
-					personPopover.openBy(avatarRef);
+					personPopover.showAt(avatarRef);
 				}
 	
 				function onButtonClicked(targetRef) {
@@ -93,7 +99,7 @@
 						const color = avatarGroup.colorScheme[firstHiddenIndex + index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme="${color}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}
@@ -103,7 +109,7 @@
 					placeholder.innerHTML = html;
 	
 					peoplePopover.close();
-					peoplePopover.openBy(targetRef);
+					peoplePopover.showAt(targetRef);
 				}
 	
 				avatarGroup.addEventListener("click", function (event) {
@@ -150,7 +156,7 @@
 	const personPopover = document.querySelector(".personPopover");
 
 	function onAvatarClicked(avatarRef) {
-		personPopover.openBy(avatarRef);
+		personPopover.showAt(avatarRef);
 	}
 
 	function onButtonClicked(targetRef) {
@@ -165,7 +171,7 @@
 		});
 
 		placeholder.innerHTML = html;
-		peoplePopover.openBy(targetRef);
+		peoplePopover.showAt(targetRef);
 	}
 
 	avatarGroup.addEventListener("click", function (event) {
@@ -235,7 +241,7 @@
 						const avatarColor = avatarGroup.colorScheme[index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme"${color}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}
@@ -245,7 +251,7 @@
 					placeholder.innerHTML = html;
 	
 					peoplePopover.close();
-					peoplePopover.openBy(targetRef);
+					peoplePopover.showAt(targetRef);
 				}
 	
 				avatarGroup.addEventListener("click", function (event) {
@@ -282,7 +288,7 @@
 	const peoplePopover = document.querySelector(".peoplePopover");
 
 	function onAvatarGroupClick(targetRef) {
-		peoplePopover.openBy(targetRef);
+		peoplePopover.showAt(targetRef);
 	}
 
 	avatarGroup.addEventListener("click", function (event) {

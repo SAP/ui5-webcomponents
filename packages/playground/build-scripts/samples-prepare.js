@@ -12,7 +12,10 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"StepInput",
+	"BarcodeScannerDialog",
+	"Breadcrumbs",
+	"IllustratedMessage",
+	"ViewSettingsDialog",
 ];
 
 packages.forEach(package => {

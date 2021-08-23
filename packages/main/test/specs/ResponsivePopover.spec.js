@@ -33,4 +33,22 @@ describe("ResponsivePopover general interaction", () => {
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
 		assert.ok(!header.isExisting(), "Header is not displayed.");
 	});
+
+	it("Initial focus prevented", () => {
+		const btnOpenPopover = $("#btnInitialFocus");
+		btnOpenPopover.click();
+
+		const activeElementId = $(browser.getActiveElement()).getAttribute("id");
+		assert.strictEqual(activeElementId, "simpleRPInitialFocus", "Initial focus is not prevented");
+
+	});
+
+	it("Initial focus not prevented", () => {
+		const btnOpenPopover = $("#btnInitialFocusPrevented");
+		btnOpenPopover.click();
+
+		const activeElementId = $(browser.getActiveElement()).getAttribute("id");
+		assert.strictEqual(activeElementId, "btnInitialFocusPrevented", "Initial focus is prevented");
+
+	});
 });

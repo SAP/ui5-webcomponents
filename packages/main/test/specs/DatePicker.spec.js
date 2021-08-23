@@ -115,7 +115,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
 
-		assert.equal(datepicker.innerInput.getAttribute("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
+		assert.equal(datepicker.innerInput.getProperty("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
 	});
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
@@ -285,7 +285,7 @@ describe("Date Picker Tests", () => {
 
 		// Two change events should be fired and the date should twice normalized
 		assert.equal(lblChangeCounter.getHTML(false), "2", 'change event is being fired twice');
-		assert.equal(lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalazid to date twice as well');
+		assert.equal(lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalized to date twice as well');
 	});
 
 	it("today value is normalized and correctly rounded to 00:00:00", () => {
@@ -391,6 +391,24 @@ describe("Date Picker Tests", () => {
 		browser.keys(['Shift', 'F4']);
 
 		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+	it("DatePicker popover when initially opened displays a day picker", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click() // open the datepicker
+		browser.keys('F4'); // show month picker
+		datepicker.valueHelpIcon.click(); // close the datepicker
+
+		assert.notOk(datepicker.calendar.shadow$("ui5-daypicker")._hidden, "Day picker is open");
+
+		browser.keys(['Shift', 'F4']); // show year picker
+		datepicker.valueHelpIcon.click(); // close the datepicker
+
+		datepicker.valueHelpIcon.click() // open the datepicker
+		assert.notOk(datepicker.calendar.shadow$("ui5-daypicker")._hidden, "Day picker is open");
+
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -923,5 +941,15 @@ describe("Date Picker Tests", () => {
 		browser.keys("Enter");
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+	});
+
+	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", () => {
+		datepicker.id = "#dpPrevent";
+
+		datepicker.input.click();
+		datepicker.root.keys("Jan 1, 1999999");
+		browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+
+		assert.equal(datepicker.input.getProperty("valueState"), "None", 'the value state is not changed');
 	});
 });

@@ -56,4 +56,12 @@ describe("Icon general interaction", () => {
 		icon.click();
 		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
 	});
+
+	it("Tests the accessibility attributes", () => {
+		const iconRoot = browser.$("#myIcon").shadow$(".ui5-icon-root");
+		const ariaHiddenIconRoot = browser.$("#araHiddenIcon").shadow$(".ui5-icon-root");
+
+		assert.strictEqual(iconRoot.getAttribute("aria-hidden"), null, "The aria-hidden attribute is not set");
+		assert.strictEqual(ariaHiddenIconRoot.getAttribute("aria-hidden"), "true", "The ariaHidden property works");
+	});
 });

@@ -57,6 +57,14 @@
 		<ui5-label id="lblChange">change: N/A</ui5-label><br/>
 		<ui5-label id="lblLiveChange">input: N/A</ui5-label><br/>
 
+		<h3>placeholder + title + prevented default events</h3>
+		<ui5-date-picker id='dpPrevent'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+		</ui5-date-picker>
+		<ui5-label id="lblChangePrevent">change: N/A</ui5-label><br/>
+		<ui5-label id="lblLiveChangePrevent">input: N/A</ui5-label><br/>
+
 		<h3>format-pattern - 'short'</h3>
 		<ui5-date-picker id='dp6' format-pattern='short'></ui5-date-picker>
 
@@ -113,11 +121,11 @@
 		<ui5-date-picker id="minMax4" value="Feb 5, 2020" min-date="Jan 5, 2020" max-date="Jan 5, 2021"></ui5-date-picker>
 
 		<section>
-			<h3>Test ariaLabel and ariaLabelledBy</h3>
-			<ui5-date-picker id="dpAriaLabel" aria-label="Hello World"></ui5-date-picker>
+			<h3>Test accessibleName and accessibleNameRef</h3>
+			<ui5-date-picker id="dpAriaLabel" accessible-name="Hello World"></ui5-date-picker>
 			<br>
 			<ui5-label id="infoText">info text</ui5-label>
-			<ui5-date-picker id="dpAriaLabelledBy" aria-labelledby="infoText"></ui5-date-picker>
+			<ui5-date-picker id="dpAriaLabelledBy" accessible-name-ref="infoText"></ui5-date-picker>
 		</section>
 
 		<section class="ui5-content-density-compact">
@@ -151,6 +159,20 @@
 		dp.addEventListener('ui5-input', function(e) {
 			console.log('input: ', e.detail);
 			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
+		});
+
+		var dpPrevent = document.getElementById('dpPrevent');
+		var labelChangePrevent = document.getElementById('lblChangePrevent');
+		var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
+
+		dpPrevent.addEventListener('ui5-change', function(e) {
+			e.preventDefault();
+			console.log('change: ', e.detail);
+			labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
+		});
+		dpPrevent.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
 		});
 
 		$('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
