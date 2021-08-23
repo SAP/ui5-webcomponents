@@ -336,10 +336,11 @@ describe("General interaction", () => {
 		const combo = $("#startswith-cb");
 		const input = combo.shadow$("#ui5-combobox-input");
 
+		input.click();
 		input.keys("a");
 		input.keys("r");
 
-		assert.strictEqual(input.value, "Argentina", "ComboBox value should be autocompletet with the text of the matching item");
+		assert.strictEqual(input.getProperty("value"), "Argentina", "ComboBox value should be autocompletet with the text of the matching item");
 	});
 
 	it ("Tests selection-change event and its parameters", () => {
