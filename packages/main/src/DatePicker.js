@@ -413,6 +413,8 @@ class DatePicker extends DateComponentBase {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		this.liveValue = this.value;
 	}
 
 	/**
@@ -513,10 +515,7 @@ class DatePicker extends DateComponentBase {
 		}
 
 		let executeEvent = true;
-		const previousValue = this.value;
-		if (updateValue) {
-			this.value = value;
-		}
+		this.liveValue = value;
 
 		events.forEach(event => {
 			if (!this.fireEvent(event, { value, valid }, true)) {
@@ -525,11 +524,11 @@ class DatePicker extends DateComponentBase {
 		});
 
 		if (!executeEvent) {
-			this.value = previousValue;
 			return;
 		}
 
 		if (updateValue) {
+			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 	}
@@ -776,11 +775,11 @@ class DatePicker extends DateComponentBase {
 	 * @public
 	 */
 	get dateValue() {
-		return this.getFormat().parse(this.value);
+		return this.liveValue ? this.getFormat().parse(this.liveValue) : this.getFormat().parse(this.value);
 	}
 
 	get dateValueUTC() {
-		return this.getFormat().parse(this.value, true);
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true) : this.getFormat().parse(this.value);
 	}
 
 	get styles() {
