@@ -184,7 +184,7 @@ class DayPicker extends CalendarPart {
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
-		const secondaryMonthsNames = this.hasSecondaryCalendarType && localeData.getMonths("wide", this._secondaryCalendarType);
+		const secondaryMonthsNames = this.hasSecondaryCalendarType && localeData.getMonths("wide", this.secondaryCalendarType);
 		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
@@ -215,7 +215,8 @@ class DayPicker extends CalendarPart {
 
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
-			const ariaLabel = this.hasSecondaryCalendarType ? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
+			const ariaLabel = this.hasSecondaryCalendarType
+				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
 				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
 
 			const day = {
@@ -689,7 +690,7 @@ class DayPicker extends CalendarPart {
 	}
 
 	_getSecondaryDay(tempDate) {
-		return new CalendarDate(tempDate, this._secondaryCalendarType);
+		return new CalendarDate(tempDate, this.secondaryCalendarType);
 	}
 
 	_getFirstDay() {
