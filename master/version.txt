@@ -1,8 +1,7 @@
-commit d34afc1cae96f10bbff968e58d6e20884b666302
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon Aug 23 15:58:41 2021 +0300
+commit bee34da7bc6f311fe2fa07b06c5a303c1933bfbf
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon Aug 23 18:09:17 2021 +0300
 
-    fix(ui5-SegmentedButton): keyboard handling now compliant with the specification (#3709)
+    fix(ui5-date-picker): fix "dateValue" getter to return most recent value (#3629)
     
-    Focus is moved on the first element of Segmented Button or last element via PageUp or PageDown keyboard key.
-    Related to: https://github.com/SAP/ui5-webcomponents/issues/3091
+    Fixes: #3516

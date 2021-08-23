@@ -109,7 +109,7 @@
 		document.querySelector("#dp8").addEventListener("ui5-change", increaseCounter);
 		document.querySelector("#dp13").addEventListener("ui5-change", function(e) {
 			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
-			document.querySelector('#lblTomorrowDate').innerHTML = e.detail.value;
+			document.querySelector('#lblTomorrowDate').innerHTML = e.target.liveValue;
 		});
 
 		var dp16 = document.getElementById('dp16');
