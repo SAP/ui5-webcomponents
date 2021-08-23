@@ -220,23 +220,15 @@ class SegmentedButton extends UI5Element {
 			event.preventDefault();
 		} else if (isPageUp(event)) {
 			event.preventDefault();
-			this._onPageUpOrDown(isPageUp(event));
-		} else if (isPageDown(event)) {
-			event.preventDefault();
-			this._onPageUpOrDown();
-		}
-	}
-
-	_onPageUpOrDown(pageUpPressed) {
-		if (pageUpPressed) {
 			const target = this.items[0];
 			target.focus();
-			return this._itemNavigation.setCurrentItem(target);
+			this._itemNavigation.setCurrentItem(target);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			const target = this.items[this.items.length - 1];
+			target.focus();
+			this._itemNavigation.setCurrentItem(target);
 		}
-
-		const target = this.items[this.items.length - 1];
-		target.focus();
-		return this._itemNavigation.setCurrentItem(target);
 	}
 
 	_onkeyup(event) {
