@@ -133,6 +133,34 @@ class Bar extends UI5Element {
 			"label": this.design,
 		};
 	}
+
+	resizeHandler(entry) {
+		const bar = entry[0].target;
+		let changeFlex = false;
+		const barWidth = bar.offsetWidth;
+
+		for (let i = 0; i < bar.childElementCount; i++) {
+			if (barWidth / 3 < bar.children[i].offsetWidth) {
+				changeFlex = true;
+			}
+		}
+
+		if (changeFlex) {
+			for (let i = 0; i < bar.childElementCount; i++) {
+				bar.children[i].classList.add("ui5-bar-content-container-overflow");
+			}
+		} else {
+			for (let i = 0; i < bar.childElementCount; i++) {
+				bar.children[i].classList.remove("ui5-bar-content-container-overflow");
+			}
+		}
+	}
+
+	onAfterRendering() {
+		if (!this.sizeObserver) {
+			this.sizeObserver = new ResizeObserver(this.resizeHandler).observe(this.getDomRef());
+		}
+	}
 }
 
 Bar.define();
