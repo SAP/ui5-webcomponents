@@ -180,8 +180,8 @@ class CalendarHeader extends UI5Element {
 	_getDisplayedSecondaryMonthText(month) {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const pattern = localeData.getIntervalPattern();
-		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarDate);
-		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarDate);
+		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
+		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
 
 		if (month.startMonth === month.endMonth) {
 			return {
