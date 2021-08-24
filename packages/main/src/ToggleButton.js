@@ -72,7 +72,10 @@ class ToggleButton extends Button {
 	_onkeyup(event) {
 		if (isSpaceShift(event)) {
 			event.preventDefault();
+			return;
 		}
+
+		super._onkeyup(event);
 	}
 }
 
