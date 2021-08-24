@@ -144,6 +144,14 @@ class DateComponentBase extends UI5Element {
 		return this.getFormat().format(localDate, true);
 	}
 
+	_getDaysInMonth(date) {
+		const tempCalendarDate = new CalendarDate(date);
+		tempCalendarDate.setDate(1);
+		tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
+		tempCalendarDate.setDate(0);
+		return tempCalendarDate.getDate();
+	}
+
 	getFormat() {
 		let dateFormat;
 		if (this._isPattern) {
