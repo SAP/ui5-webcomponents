@@ -1,12 +1,9 @@
-commit 91a974fb10229a3c3ea0c65610ab3dea0b0d08ec
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 25 14:32:37 2021 +0300
+commit 48adbbe0dc373eddc75380b30916d406980864e4
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Wed Aug 25 16:47:47 2021 +0300
 
-    feat(ItemNavigation): handle Page UP/DOWN (#3727)
+    fix(ui5-ToggleButton): SHIFT+SPACE cancels the action (#3713)
     
-    As we improve the keyboard handling more and more, it turns out the Item Navigation does not handle Page Up and Page Down combinations. The change has been triggered from this recently merged SegmentedButton PR and this in progress
-    Timeline PR where we manually handle the focus on PageUp/Down. Now, the code from the SegmentedButton is removed, as the ItemNavigation takes care of it.
+    Pressing [SHIFT] + [SPACE] does not change ToggleButton's state
     
-    For most of the components, Page Up/Down should behave as Home and End. But some of the components has specific predefined number of items that should be skipped before applying the focus to the next item. Therefore, we also introduce a new property "skipItemsSize". In this change only the List is using it.
-    
-    Note: for grid/matrix components (like ColorPalette,ProductSwitch), the PageDown/Up should move the focus in column direction. This will be done with future enhancement.
+    Related to: https://github.com/SAP/ui5-webcomponents/issues/3091
