@@ -1,3 +1,5 @@
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -74,6 +76,10 @@ const metadata = {
 
 		_nextButtonDisabled: {
 			type: Boolean,
+		},
+
+		_headerMonthButtonText: {
+			type: String,
 		},
 
 		_headerYearButtonText: {
@@ -276,10 +282,19 @@ class Calendar extends CalendarPart {
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
 
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		this._headerMonthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
 
-		this._headerYearButtonText = (this._currentPicker === "year")
-			? `${this._currentPickerDOM._firstYear} - ${this._currentPickerDOM._lastYear}`
-			: String(yearFormat.format(this._localDate, true));
+		if (this._currentPicker === "year") {
+			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			rangeStart.setYear(this._currentPickerDOM._firstYear);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+
+			this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
+		} else {
+			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
+		}
 	}
 
 	/**
