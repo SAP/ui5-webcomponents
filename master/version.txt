@@ -1,7 +1,11 @@
-commit bee34da7bc6f311fe2fa07b06c5a303c1933bfbf
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Aug 23 18:09:17 2021 +0300
+commit 28e868bf407879d5230305cb4e572c3c685d65a8
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Aug 25 10:45:27 2021 +0300
 
-    fix(ui5-date-picker): fix "dateValue" getter to return most recent value (#3629)
+    fix(framework): apply RTL for components with popovers (#3657)
     
-    Fixes: #3516
+    * fix(framework): apply RTL for components with popovers
+    
+    * remove dir attribute if it was unset
+    
+    * add test for dynamic dir changes
