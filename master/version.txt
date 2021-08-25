@@ -1,11 +1,9 @@
-commit 28e868bf407879d5230305cb4e572c3c685d65a8
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Aug 25 10:45:27 2021 +0300
+commit 1c8e656f03b900c9df20cd8a83a55b7806433f06
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Wed Aug 25 14:29:48 2021 +0300
 
-    fix(framework): apply RTL for components with popovers (#3657)
+    fix(ui5-dialog): correctly restore body scrolling on ESC (#3696)
     
-    * fix(framework): apply RTL for components with popovers
+    Body scrolling is now blocked only on first call of blockBodyScrolling and restored on the last call of unblockBodyScrolling.
     
-    * remove dir attribute if it was unset
-    
-    * add test for dynamic dir changes
+    Fixes #3690
