@@ -54,7 +54,6 @@ const metadata = {
 			type: Integer,
 			multiple: true,
 			compareValues: true,
-			noAttribute: true,
 		},
 
 		/**
