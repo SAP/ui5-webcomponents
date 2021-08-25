@@ -232,7 +232,8 @@ class ItemNavigation {
 
 	_handlePageUp() {
 		if (this._rowSize > 1) {
-			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch
+			// eslint-disable-next-line
+			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch.
 			return;
 		}
 		this._handlePageUpFlat();
@@ -240,8 +241,9 @@ class ItemNavigation {
 
 	_handlePageDown() {
 		if (this._rowSize > 1) {
-			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch
-			return; 
+			// eslint-disable-next-line
+			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch.
+			return;
 		}
 		this._handlePageDownFlat();
 	}
