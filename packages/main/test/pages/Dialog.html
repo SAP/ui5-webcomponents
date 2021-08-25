@@ -26,6 +26,7 @@
 
 <body>
 	<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
+	<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
 	<br>
 	<ui5-button id="btnOpenDialog">Open Streched Dialog</ui5-button>
 	<br>
@@ -309,7 +310,7 @@
 		<br>
 		<br>
 
-		<ui5-button id='popbtn'>Open Popover</ui5-button>
+		<ui5-button id="dangerDialogBtn">Open Dialog</ui5-button>
 
 
 
@@ -356,9 +357,15 @@
 
 	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
 
+	<span id="scrollHelper" style="display: none; margin-top: 1000px;">SCroll Helper</span>
+
 	<script>
 		cbCompact.addEventListener("change", function () {
 			document.body.classList.toggle("ui5-content-density-compact", cbCompact.checked);
+		});
+
+		cbScrollable.addEventListener("change", function () {
+			scrollHelper.style.display = cbScrollable.checked ? "block" : "none";
 		});
 
 		let preventClosing = true;

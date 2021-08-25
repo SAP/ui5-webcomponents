@@ -9,7 +9,7 @@ import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -150,6 +150,8 @@ const createBlockingStyle = () => {
 
 createBlockingStyle();
 
+let bodyScrollingBlockers = 0;
+
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -237,6 +239,12 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	static blockBodyScrolling() {
+		bodyScrollingBlockers++;
+
+		if (bodyScrollingBlockers !== 1) {
+			return;
+		}
+
 		if (window.pageYOffset > 0) {
 			document.body.style.top = `-${window.pageYOffset}px`;
 		}
@@ -248,6 +256,12 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	static unblockBodyScrolling() {
+		bodyScrollingBlockers--;
+
+		if (bodyScrollingBlockers !== 0) {
+			return;
+		}
+
 		document.body.classList.remove("ui5-popup-scroll-blocker");
 		window.scrollTo(0, -parseFloat(document.body.style.top));
 		document.body.style.top = "";
@@ -422,12 +436,9 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		const openedPopups = getOpenedPopups();
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			if (openedPopups.length === 1) {
-				Popup.unblockBodyScrolling();
-			}
+			Popup.unblockBodyScrolling();
 		}
 
 		this.hide();
