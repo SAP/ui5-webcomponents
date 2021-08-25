@@ -575,6 +575,7 @@ class List extends UI5Element {
 
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
+			skipItemsSize: 10, // PAGE_UP and PAGE_DOWN will skip trough 10 items
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledItems(),
 		});
