@@ -513,7 +513,7 @@
   "74": {
     "id": "74",
     "title": "Item Navigation",
-    "content": "&lt;!DOCTYPE html&gt; Item Navigation Focus does not cycle Option 1 Option 2 Vertical navigation only Option 2.1 Option 2.2 Option 2.3",
+    "content": "&lt;!DOCTYPE html&gt; Item Navigation Focus does not cycle Option 1 Option 2 Vertical navigation only Option 2.1 Option 2.2 Option 2.3 Test PAGE UP/DOWN 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/ItemNavigation/",
     "relUrl": "/playground/main/pages/ItemNavigation/"
   },
@@ -590,7 +590,7 @@
   "85": {
     "id": "85",
     "title": "List_keyboard_support",
-    "content": "&lt;!DOCTYPE html&gt; List UI5 Table Web Component The sample shows the keyboard navigation support of the Table To navigate between items use the [UP] and [DOWN] arrow keys To navigate within an item use the [TAB] and [SHIFT+TAB] keys Countries Export Argentina Bulgaria Click me UI5 link Click me China Argentina Bulgaria Click me UI5 link Click me China",
+    "content": "&lt;!DOCTYPE html&gt; List UI5 Table Web Component The sample shows the keyboard navigation support of the Table To navigate between items use the [UP] and [DOWN] arrow keys To navigate within an item use the [TAB] and [SHIFT+TAB] keys Countries Export Argentina Bulgaria Click me UI5 link Click me China Argentina Bulgaria Click me UI5 link Click me China Test PAGE UP/DOWN 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/List_keyboard_support/",
     "relUrl": "/playground/main/pages/List_keyboard_support/"
   },

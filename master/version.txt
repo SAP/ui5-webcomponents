@@ -1,9 +1,12 @@
-commit 1c8e656f03b900c9df20cd8a83a55b7806433f06
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Wed Aug 25 14:29:48 2021 +0300
+commit 91a974fb10229a3c3ea0c65610ab3dea0b0d08ec
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Aug 25 14:32:37 2021 +0300
 
-    fix(ui5-dialog): correctly restore body scrolling on ESC (#3696)
+    feat(ItemNavigation): handle Page UP/DOWN (#3727)
     
-    Body scrolling is now blocked only on first call of blockBodyScrolling and restored on the last call of unblockBodyScrolling.
+    As we improve the keyboard handling more and more, it turns out the Item Navigation does not handle Page Up and Page Down combinations. The change has been triggered from this recently merged SegmentedButton PR and this in progress
+    Timeline PR where we manually handle the focus on PageUp/Down. Now, the code from the SegmentedButton is removed, as the ItemNavigation takes care of it.
     
-    Fixes #3690
+    For most of the components, Page Up/Down should behave as Home and End. But some of the components has specific predefined number of items that should be skipped before applying the focus to the next item. Therefore, we also introduce a new property "skipItemsSize". In this change only the List is using it.
+    
+    Note: for grid/matrix components (like ColorPalette,ProductSwitch), the PageDown/Up should move the focus in column direction. This will be done with future enhancement.
