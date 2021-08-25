@@ -235,7 +235,7 @@ class ItemNavigation {
 			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch
 			return;
 		}
-		this._handlePageUpList();
+		this._handlePageUpFlat();
 	}
 
 	_handlePageDown() {
@@ -243,10 +243,13 @@ class ItemNavigation {
 			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch
 			return; 
 		}
-		this._handlePageDownList();
+		this._handlePageDownFlat();
 	}
 
-	_handlePageUpList() {
+	/**
+	 * Handles PAGE_UP in a flat list-like structure, both vertically and horizontally.
+	 */
+	_handlePageUpFlat() {
 		if (this._skipItemsSize === null) {
 			// Move the focus to the very top (as Home).
 			this._currentIndex -= this._currentIndex;
@@ -262,7 +265,10 @@ class ItemNavigation {
 		}
 	}
 
-	_handlePageDownList() {
+	/**
+	 * Handles PAGE_DOWN in a flat list-like structure, both vertically and horizontally.
+	 */
+	_handlePageDownFlat() {
 		if (this._skipItemsSize === null) {
 			// Move the focus to the very bottom (as End).
 			this._currentIndex = this._getItems().length - 1;
