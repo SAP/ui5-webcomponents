@@ -35,7 +35,7 @@ const _keydownListener = event => {
 	}
 
 	if (isEscape(event)) {
-		openedRegistry.pop().instance.close(true);
+		openedRegistry[openedRegistry.length - 1].instance.close(true);
 	}
 };
 
