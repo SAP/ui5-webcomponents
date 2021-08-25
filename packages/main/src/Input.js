@@ -705,7 +705,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.showAt(this);
+			this.Suggestions.open();
 			this.isRespPopoverOpen = true;
 		}
 	}
