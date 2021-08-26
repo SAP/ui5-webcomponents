@@ -12,15 +12,11 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-<<<<<<< HEAD
-	"StepInput",
-	"ColorPalette"
-=======
 	"BarcodeScannerDialog",
 	"Breadcrumbs",
 	"IllustratedMessage",
 	"ViewSettingsDialog",
->>>>>>> origin
+	"ColorPalettePopover"
 ];
 
 packages.forEach(package => {
