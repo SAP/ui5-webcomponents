@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.16](https://github.com/SAP/ui5-webcomponents/compare/v0.31.15...v0.31.16) (2021-08-26)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:** fix "dateValue" getter to return most recent value ([#3629](https://github.com/SAP/ui5-webcomponents/issues/3629)) ([eb8fcf9](https://github.com/SAP/ui5-webcomponents/commit/eb8fcf9)), closes [#3516](https://github.com/SAP/ui5-webcomponents/issues/3516)
+
+
+### Features
+
+* **ui5-panel:** noAnimation property introduced ([#3694](https://github.com/SAP/ui5-webcomponents/issues/3694)) ([d58bf44](https://github.com/SAP/ui5-webcomponents/commit/d58bf44)), closes [#3505](https://github.com/SAP/ui5-webcomponents/issues/3505)
+
+
+
+
+
 ## [0.31.15](https://github.com/SAP/ui5-webcomponents/compare/v0.31.14...v0.31.15) (2021-08-10)
 
 
