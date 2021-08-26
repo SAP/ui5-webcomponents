@@ -34,6 +34,8 @@ import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTempla
 // Styles
 import styles from "./generated/themes/ShellBar.css.js";
 
+const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
+
 /**
  * @public
  */
@@ -458,18 +460,28 @@ class ShellBar extends UI5Element {
 
 				if (this.hasMenuItems) {
 					const menuPopover = await this._getMenuPopover();
-					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
+					menuPopover.showAt(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
 		};
 
 		this._handleResize = async event => {
-			await this._getResponsivePopover();
-			this.overflowPopover.close();
-			this._overflowActions();
+			this._debounce(async () => {
+				await this._getResponsivePopover();
+				this.overflowPopover.close();
+				this._overflowActions();
+			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+	}
+
+	_debounce(fn, delay) {
+		clearTimeout(this._debounceInterval);
+		this._debounceInterval = setTimeout(() => {
+			this._debounceInterval = null;
+			fn();
+		}, delay);
 	}
 
 	_menuItemPress(event) {
@@ -676,7 +688,7 @@ class ShellBar extends UI5Element {
 
 	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		this.overflowPopover.openBy(overflowButton);
+		this.overflowPopover.showAt(overflowButton);
 	}
 
 	onEnterDOM() {
@@ -686,6 +698,8 @@ class ShellBar extends UI5Element {
 	onExitDOM() {
 		this.menuItemsObserver.disconnect();
 		ResizeHandler.deregister(this, this._handleResize);
+		clearTimeout(this._debounceInterval);
+		this._debounceInterval = null;
 	}
 
 	_handleSearchIconPress(event) {

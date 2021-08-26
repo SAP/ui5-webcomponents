@@ -5,7 +5,12 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isPageUp,
+	isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
@@ -127,7 +132,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
+		if (this.parentNode) {
+			ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
+		}
 	}
 
 	onBeforeRendering() {
@@ -211,6 +218,16 @@ class SegmentedButton extends UI5Element {
 			this._selectItem(event);
 		} else if (isSpace(event)) {
 			event.preventDefault();
+		} else if (isPageUp(event)) {
+			event.preventDefault();
+			const target = this.items[0];
+			target.focus();
+			this._itemNavigation.setCurrentItem(target);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			const target = this.items[this.items.length - 1];
+			target.focus();
+			this._itemNavigation.setCurrentItem(target);
 		}
 	}
 
@@ -243,7 +260,7 @@ class SegmentedButton extends UI5Element {
 			await this.measureItemsWidth();
 		}
 
-		const parentWidth = this.parentNode.offsetWidth;
+		const parentWidth = this.parentNode ? this.parentNode.offsetWidth : 0;
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.items.length}px`;

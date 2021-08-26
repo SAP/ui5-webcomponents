@@ -27,7 +27,8 @@
 }
 
 /* Shapes */
-:host([shape="Square"]) {
+:host([shape="Square"]),
+:host([shape="Square"]) ::slotted(*){
 	border-radius: .25rem;
 }
 
@@ -115,8 +116,10 @@
 	width: 3rem;
 }
 
-:host(:not([image])) {
-	background-color: var(--ui5-avatar-accent6);
+::slotted(*) {
+	border-radius: 50%;
+    width: 100%;
+    height: 100%;
 }
 
 :host([_color-scheme="Accent1"]),
@@ -144,6 +147,7 @@
 	background-color: var(--ui5-avatar-accent5);
 }
 
+:host(:not([color-scheme]):not([_has-image])),
 :host([_color-scheme="Accent6"]),
 :host([color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);

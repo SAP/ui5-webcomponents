@@ -169,7 +169,7 @@ class Tokenizer extends UI5Element {
 		if (this.showPopover) {
 			const popover = await this.getPopover();
 
-			popover.openBy(this.morePopoverOpener || this);
+			popover.showAt(this.morePopoverOpener || this);
 		}
 
 		this.fireEvent("show-more-items-press");

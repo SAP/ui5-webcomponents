@@ -369,7 +369,6 @@ class DateTimePicker extends DatePicker {
 			this.fireEvent("value-changed", { value: this.value, valid });
 		}
 
-		this._focusInputAfterClose = true;
 		this._updateValueState();
 		this.closePicker();
 	}

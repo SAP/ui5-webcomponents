@@ -103,12 +103,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label of the step.
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue ""
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -116,9 +118,10 @@ const metadata = {
 		 * Defines the aria-labelledby of the step.
 		 * @type {boolean}
 		 * @defaultvalue ""
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 		},
 	},

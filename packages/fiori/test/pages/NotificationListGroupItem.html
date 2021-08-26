@@ -22,7 +22,7 @@
 
 	<h3>Properties</h3>
 	<ul>
-		<li>heading</li>
+		<li>titleText</li>
 		<li>priority (default: "None")</li>
 		<li>collapsed (default: "false")</li>
 		<li>show-close (default: "false")</li>
@@ -48,16 +48,16 @@
 		<li>itemToggle</li>
 	</ul>
 
-	<ui5-list id="notificationList" header-text="Notifications grouped">
+	<ui5-list id="notificationList" header-text="Notifications grouped" accessible-role="list">
 		<ui5-li-notification-group
 			show-close
 			show-counter
-			heading="Orders"
+			title-text="Orders"
 			priority="High"
 		>
 			<ui5-li-notification
 				show-close
-				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -72,7 +72,7 @@
 
 			<ui5-li-notification
 				show-close
-				heading="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -86,7 +86,7 @@
 
 			<ui5-li-notification
 				show-close
-				heading="New order (#252) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#252) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -105,13 +105,13 @@
 		<ui5-li-notification-group
 			show-close
 			show-counter
-			heading="Payments"
+			title-text="Payments"
 			priority="High"
 		>
 			<ui5-li-notification
 				busy
 				show-close
-				heading="New order (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -125,7 +125,7 @@
 
 			<ui5-li-notification
 				show-close
-				heading="New order (#29001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#29001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -139,7 +139,7 @@
 
 			<ui5-li-notification
 				show-close
-				heading="New order (#29003) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#29003) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -158,12 +158,12 @@
 			show-counter
 			read
 			priority="High"
-			heading="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			title-text="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
 			<ui5-li-notification
 				busy
 				show-close
-				heading="New order (#35001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#35001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 				read
 			>
@@ -176,7 +176,7 @@
 
 			<ui5-li-notification
 				show-close
-				heading="New order (#35002) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#35002) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 				read
 			>
@@ -189,7 +189,7 @@
 
 			<ui5-li-notification
 				show-close
-				heading="New order (#35003) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				title-text="New order (#35003) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
 				read
 			>
@@ -209,20 +209,24 @@
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
-		<ui5-list id="notificationListTop" header-text="Notifications heading and content 'truncates'">
+		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'" accessible-role="list">
 			<ui5-li-notification-group
 				show-close
 				show-counter
-				heading="Orders"
+				title-text="Orders"
 				priority="Medium"
 			>
 				<ui5-li-notification
 					show-close
 					priority="Medium"
-					heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+					title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-					<ui5-avatar image="./img/man_avatar_1.png" size="XS" slot="avatar"></ui5-avatar>
+
+					<ui5-avatar size="XS" slot="avatar">
+						<img src="./img/man_avatar_1.png" />
+					</ui5-avatar>
+
 					<span slot="footnotes">John Doe</span>
 					<span slot="footnotes">2 Days</span>
 					<span slot="footnotes">Other stuff</span>
@@ -234,7 +238,7 @@
 				<ui5-li-notification
 					show-close
 					show-counter
-					heading="Orders"
+					title-text="Orders"
 					priority="Medium"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -251,11 +255,11 @@
 			<ui5-li-notification-group
 				show-close
 				show-counter
-				heading="Calls"
+				title-text="Calls"
 				priority="Low"
 			>
 				<ui5-li-notification
-					heading="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+					title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 					priority="Low"
 				>
 					Short description
@@ -269,7 +273,7 @@
 				</ui5-li-notification>
 
 				<ui5-li-notification
-					heading="New order (#2523)"
+					title-text="New order (#2523)"
 					priority="Low"
 				>
 					<div>. With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.</div>
@@ -289,18 +293,18 @@
 
 	<script>
 		notificationList.addEventListener("itemClick", function(event) {
-			wcToastBS.textContent = event.detail.item.heading;
+			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
 		notificationList.addEventListener("itemClose", function(event) {
-			wcToastBS.textContent = event.detail.item.heading;
+			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
 		notificationList.addEventListener("itemToggle", function(event) {
 			var item = event.detail.item;
-			wcToastBS.textContent = item.heading + " has been " + (item.collapsed ? "collapsed" : "expanded");
+			wcToastBS.textContent = item.titleText + " has been " + (item.collapsed ? "collapsed" : "expanded");
 			wcToastBS.show();
 		});
 
@@ -315,7 +319,7 @@
 		});
 
 		openNotifications.addEventListener("click", function(event) {
-			notificationsPopover.openBy(openNotifications);
+			notificationsPopover.showAt(openNotifications);
 		});
 
 		btnMakeGroupBusy.addEventListener("click", function(event) {
@@ -330,7 +334,7 @@
 
 		shellbar.addEventListener("ui5-notificationsClick", function(event) {
 			event.preventDefault();
-			notificationsPopover.openBy(event.detail.targetRef);
+			notificationsPopover.showAt(event.detail.targetRef);
 		});
 	</script>
 </body>

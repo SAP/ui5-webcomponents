@@ -5,7 +5,7 @@
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
-	role="option"
+	role="listitem"
 	tabindex="{{_tabIndex}}"
 	dir="{{effectiveDir}}"
 	aria-labelledby="{{ariaLabelledBy}}"
@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="ui5-nli-content {{classes.content}}">
-		<div class="ui5-nli-heading-wrapper">
+		<div class="ui5-nli-title-text-wrapper">
 			{{#if hasPriority}}
 				<ui5-icon
 					class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
@@ -57,8 +57,8 @@
 				</ui5-icon>
 			{{/if}}
 
-			<div id="{{_id}}-heading" class="ui5-nli-heading" part="heading">
-				{{heading}}
+			<div id="{{_id}}-title-text" class="ui5-nli-title-text" part="title-text">
+				{{titleText}}
 			</div>
 		</div>
 

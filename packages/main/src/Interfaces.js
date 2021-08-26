@@ -8,6 +8,15 @@
 const IAvatar = "sap.ui.webcomponents.main.IAvatar";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
+ *
+ * @name sap.ui.webcomponents.main.IBreadcrumbsItem
+ * @interface
+ * @public
+ */
+const IBreadcrumbsItem = "sap.ui.webcomponents.main.IBreadcrumbsItem";
+
+/**
  * Interface for components that may be used as a button inside numerous higher-order components
  *
  * @name sap.ui.webcomponents.main.IButton
@@ -153,6 +162,7 @@ const ITreeItem = "sap.ui.webcomponents.main.ITreeItem";
 
 export {
 	IAvatar,
+	IBreadcrumbsItem,
 	IButton,
 	ICalendarDate,
 	IColorPaletteItem,

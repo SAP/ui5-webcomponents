@@ -223,7 +223,6 @@ class DateRangePicker extends DatePicker {
 
 		const newValue = this._buildValue(...event.detail.dates); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-		this._focusInputAfterClose = true;
 		this.closePicker();
 	}
 

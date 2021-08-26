@@ -9,6 +9,7 @@ Table of Contents:
  - [Fiori Package - @ui5/webcomponents-fiori](#fiori)
  - [Icons Package - @ui5/webcomponents-icons](#icons)
  - [Icons-TNT Package - @ui5/webcomponents-icons-tnt](#icons-tnt)
+ - [Icons SAP Business Suite Package - @ui5/webcomponents-icons-business-suite](#icons-business-suite)
  - [Base Package - @ui5/webcomponents-base](#base)
 
 <a name="main"></a>
@@ -25,9 +26,10 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Avatar                   | `ui5-avatar`             | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Avatar Group             | `ui5-avatar-group`       | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
 | Badge                    | `ui5-badge`              | `import "@ui5/webcomponents/dist/Badge.js";`               |
-| Busy Indicator           | `ui5-busy-indicator`      | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
+| Busy Indicator           | `ui5-busy-indicator`     | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`             | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Card                     | `ui5-card`               | `import "@ui5/webcomponents/dist/Card.js";`                |
+| CardHeader               | `ui5-card-header`        | `import "@ui5/webcomponents/dist/CardHeader.js";`          |
 | Carousel                 | `ui5-carousel`           | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`           | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | Color Palette            | `ui5-color-palette`      | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
@@ -38,7 +40,6 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Date Range Picker        | `ui5-daterange-picker`   | `import "@ui5/webcomponents/dist/DateRangePicker.js";`     |
 | Date Time Picker         | `ui5-datetime-picker`    | `import "@ui5/webcomponents/dist/DateTimePicker.js";`      |
 | Dialog                   | `ui5-dialog`             | `import "@ui5/webcomponents/dist/Dialog.js";`              |
-| Duration Picker          | `ui5-duration-picker`    | `import "@ui5/webcomponents/dist/DurationPicker.js";`      |
 | File Uploader            | `ui5-file-uploader`      | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`               | `import "@ui5/webcomponents/dist/Icon.js";`                |
 | Input                    | `ui5-input`              | `import "@ui5/webcomponents/dist/Input.js";`               |
@@ -58,8 +59,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
-| Segmented Button         | `ui5-segmented-button`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
-| Segmented Button Item    | `ui5-segmented-button-item`| comes with `ui5-segmented-button `                         |
+| Segmented Button         | `ui5-segmented-button`   | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
+| Segmented Button Item    | `ui5-segmented-button-item`| comes with `ui5-segmented-button `                       |
 | Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
 | Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
 | Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
@@ -156,6 +157,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Timeline Item                | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection            | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item       | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| View Settings Dialog         | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | Wizard                       | `ui5-wizard`                   | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                   |
 | Wizard Step                  | `ui5-wizard-step`              | comes with `ui5-wizard`                                               |
 
@@ -242,6 +244,12 @@ To import all icons, use:
 Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future-proof:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
+
+## Icons SAP Business Suite Package (```@ui5/webcomponents-icons-business-suite```)
+<a name="icons-business-suite"></a>
+
+Same structure like the `tnt` icon collection, but shipped in `@ui5/webcomponents-icons-business-suite`.
+For a complete list of the icons in the `SAP Business Suite` collection, click [here](https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
 
 ## Base Package (```@ui5/webcomponents-base```)
 

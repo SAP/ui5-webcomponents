@@ -101,7 +101,7 @@ const metadata = {
 		/**
 		 * Fired when the user selects a color.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.ColorPalette#item-click
 		 * @public
 		 * @since 1.0.0-rc.15
 		 * @param {String} color the selected color
@@ -298,7 +298,7 @@ class ColorPalette extends UI5Element {
 
 	async _openMoreColorsDialog() {
 		const dialog = await this._getDialog();
-		dialog.open();
+		dialog.show();
 	}
 
 	_onDefaultColorClick() {

@@ -169,11 +169,10 @@ const metadata = {
 		 * Defines the aria-label attribute for the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.9
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -182,10 +181,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -241,17 +240,41 @@ const metadata = {
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
-		change: {},
+		change: {
+			details: {
+				value: {
+					type: String,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 
 		/**
 		 * Fired when the value of the component is changed at each key stroke.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
-		input: {},
+		input: {
+			details: {
+				value: {
+					type: String,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 	},
 };
 
@@ -371,9 +394,8 @@ class DatePicker extends DateComponentBase {
 		this._isPickerOpen = false;
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
-		} else if (this._focusInputAfterClose) {
+		} else {
 			this._getInput().focus();
-			this._focusInputAfterClose = false;
 		}
 	}
 
@@ -390,6 +412,8 @@ class DatePicker extends DateComponentBase {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		this.liveValue = this.value;
 	}
 
 	/**
@@ -489,14 +513,23 @@ class DatePicker extends DateComponentBase {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
+		let executeEvent = true;
+		this.liveValue = value;
+
+		events.forEach(event => {
+			if (!this.fireEvent(event, { value, valid }, true)) {
+				executeEvent = false;
+			}
+		});
+
+		if (!executeEvent) {
+			return;
+		}
+
 		if (updateValue) {
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
-
-		events.forEach(event => {
-			this.fireEvent(event, { value, valid });
-		});
 	}
 
 	_updateValueState() {
@@ -551,7 +584,7 @@ class DatePicker extends DateComponentBase {
 
 	_click(event) {
 		if (isPhone()) {
-			this.responsivePopover.openBy(this);
+			this.responsivePopover.showAt(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -679,8 +712,21 @@ class DatePicker extends DateComponentBase {
 		const newValue = event.detail.values && event.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		this._focusInputAfterClose = true;
 		this.closePicker();
+	}
+
+	/**
+	 * The user clicked the "month" button in the header
+	 */
+	onHeaderShowMonthPress() {
+		this._calendarCurrentPicker = "month";
+	}
+
+	/**
+	 * The user clicked the "year" button in the header
+	 */
+	onHeaderShowYearPress() {
+		this._calendarCurrentPicker = "year";
 	}
 
 	/**
@@ -713,7 +759,7 @@ class DatePicker extends DateComponentBase {
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
 
-		this.responsivePopover.openBy(this);
+		this.responsivePopover.showAt(this);
 	}
 
 	togglePicker() {
@@ -741,11 +787,11 @@ class DatePicker extends DateComponentBase {
 	 * @public
 	 */
 	get dateValue() {
-		return this.getFormat().parse(this.value);
+		return this.liveValue ? this.getFormat().parse(this.liveValue) : this.getFormat().parse(this.value);
 	}
 
 	get dateValueUTC() {
-		return this.getFormat().parse(this.value, true);
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true) : this.getFormat().parse(this.value);
 	}
 
 	get styles() {

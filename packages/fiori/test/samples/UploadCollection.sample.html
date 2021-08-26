@@ -75,7 +75,7 @@
 				return uci;
 			}
 
-			fileUploader.addEventListener("ui5-change", function(event) {
+			fileUploader.addEventListener("change", function(event) {
 				var files = event.detail.files;
 
 				for (var i = 0; i < files.length; i++) {
@@ -149,7 +149,7 @@
 		return uci;
 	}
 
-	fileUploader.addEventListener("ui5-change", event => {
+	fileUploader.addEventListener("change", event => {
 		const files = event.detail.files;
 
 		for (let i = 0; i < files.length; i++) {
@@ -206,7 +206,7 @@
 		</ui5-upload-collection>	
 
 		<script>
-			uploadCollectionWithRenaming.addEventListener("ui5-rename", function(event) {
+			uploadCollectionWithRenaming.addEventListener("rename", function(event) {
 				alert("Rename event:" + event.target.fileName)
 			});
 		</script>
@@ -237,7 +237,7 @@
 </ui5-upload-collection>	
 
 <script>
-	uploadCollectionWithRenaming.addEventListener("ui5-rename", event => {
+	uploadCollectionWithRenaming.addEventListener("rename", event => {
 		alert("Rename event:" + event.target.fileName);
 	});
 </script>
@@ -284,11 +284,11 @@
 		</ui5-upload-collection>
 
 		<script>
-			uploadCollectionStates.addEventListener("ui5-retry", function(event) {
+			uploadCollectionStates.addEventListener("retry", function(event) {
 				alert("Retry uploading: " + event.target.fileName);
 			});
 		
-			uploadCollectionStates.addEventListener("ui5-terminate", function(event) {
+			uploadCollectionStates.addEventListener("terminate", function(event) {
 				alert("Terminate uploading of: " + event.target.fileName);
 			});
 		</script>
@@ -331,11 +331,11 @@
 </ui5-upload-collection>
 
 <script>
-	uploadCollectionStates.addEventListener("ui5-retry", event => {
+	uploadCollectionStates.addEventListener("retry", event => {
 		alert("Retry uploading: " + event.target.fileName);
 	});
 
-	uploadCollectionStates.addEventListener("ui5-terminate", event => {
+	uploadCollectionStates.addEventListener("terminate", event => {
 		alert("Terminate uploading of: " + event.target.fileName);
 	});
 </script>
