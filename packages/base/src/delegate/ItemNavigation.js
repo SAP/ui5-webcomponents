@@ -232,29 +232,28 @@ class ItemNavigation {
 
 	_handlePageUp() {
 		if (this._rowSize > 1) {
-			// eslint-disable-next-line
-			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch.
+			this._handlePageUpInGrid();
 			return;
 		}
-		this._handlePageUpFlat();
+		this._handlePageUpInList();
 	}
 
 	_handlePageDown() {
 		if (this._rowSize > 1) {
-			// eslint-disable-next-line
-			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch.
+			this._handlePageDownInGrid();
 			return;
 		}
-		this._handlePageDownFlat();
+		this._handlePageDownInList();
 	}
 
 	/**
 	 * Handles PAGE_UP in a flat list-like structure, both vertically and horizontally.
 	 */
-	_handlePageUpFlat() {
+	_handlePageUpInList() {
 		if (this._skipItemsSize === null) {
 			// Move the focus to the very top (as Home).
 			this._currentIndex -= this._currentIndex;
+			return;
 		}
 
 		if (this._currentIndex + 1 > this._skipItemsSize) {
@@ -268,12 +267,23 @@ class ItemNavigation {
 	}
 
 	/**
+	 * Handles PAGE_UP in a grid structure and moves the focus vertically in column direction,
+	 * by bringing the focus the top most item of the column.
+	 * <b>Note:</b> <code>skipItemsSize</code> is relevant for flat structures.
+	 */
+	_handlePageUpInGrid() {
+		// Move the focus to the top of the current column.
+		this._currentIndex -= Math.floor(this._currentIndex / this._rowSize) * this._rowSize;
+	}
+
+	/**
 	 * Handles PAGE_DOWN in a flat list-like structure, both vertically and horizontally.
 	 */
-	_handlePageDownFlat() {
+	_handlePageDownInList() {
 		if (this._skipItemsSize === null) {
 			// Move the focus to the very bottom (as End).
 			this._currentIndex = this._getItems().length - 1;
+			return;
 		}
 
 		const currentToEndRange = this._getItems().length - this._currentIndex - 1;
@@ -285,6 +295,29 @@ class ItemNavigation {
 		} else {
 			// Otherwise, move the focus to the very bottom (as End).
 			this._currentIndex = this._getItems().length - 1;
+		}
+	}
+
+	/**
+	 * Handles PAGE_DOWN in a grid structure and moves the focus vertically in column direction,
+	 * by bringing the focus the bottom most item of the column.
+	 * <b>Note:</b> <code>skipItemsSize</code> is relevant for flat structures.
+	 */
+	 _handlePageDownInGrid() {
+		const maxItemIndex = this._getItems().length - 1;
+		const maxRowIndex = Math.floor(maxItemIndex / this._rowSize); // the max index of rows that are present
+		const currentRowIndex = Math.floor(this._currentIndex / this._rowSize); // the index of the row, the currently focused item is at
+
+		// The number of items we need to skip towards the end of the column
+		const skipItemsCount = (maxRowIndex - currentRowIndex) * this._rowSize;
+
+		// If the column is complete, move the focus to the last row.
+		if (this._currentIndex + skipItemsCount <= maxItemIndex) {
+			this._currentIndex += skipItemsCount;
+		} else {
+			// If the column is not complete (in not complete grid/matrix),
+			// move the focus to the last but one item within the same column.
+			this._currentIndex += (skipItemsCount - this._rowSize);
 		}
 	}
 

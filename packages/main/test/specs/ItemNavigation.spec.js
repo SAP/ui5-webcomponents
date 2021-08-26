@@ -67,4 +67,32 @@ describe("Item Navigation Tests", () => {
 		itemOnFocus2.keys("PageUp");
 		assert.strictEqual(nextFocusedItem2.isFocused(), true, "The 6th is focused.");
 	});
+
+
+	it("test PageDown and PageUp in grid", () => {
+		const itemOnFocus = $("#color_palette_item1");
+		const nextFocusedItem = $("#color_palette_item11");
+
+		// act - start from first item and press PageDown.
+		itemOnFocus.click();
+		itemOnFocus.keys("PageDown");
+
+		// assert - the focus should move to the bottom of the first column - Item 11.
+		assert.strictEqual(nextFocusedItem.isFocused(), true, "The 11th item is focused.");
+
+
+		// act - switch to the next (2nd) column.
+		nextFocusedItem.keys("ArrowRight");
+		const nextFocusedItem2 = $("#color_palette_item12");
+
+		// assert - focus should go to Item 12
+		assert.strictEqual(nextFocusedItem2.isFocused(), true, "The 12th item is focused.");
+
+
+		// act - press PageUp to move to the top of the 2nd column.
+		nextFocusedItem2.keys("PageUp");
+		const nextFocusedItem3 = $("#color_palette_item2");
+		// assert - focus should go to Item 2
+		assert.strictEqual(nextFocusedItem3.isFocused(), true, "The 2th is focused.");
+	});
 });
