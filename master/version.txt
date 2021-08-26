@@ -1,9 +1,8 @@
-commit 68da439355c451d38bf007ea185c4443cfcd652f
+commit 28d9a1ad54247aa49fb1dae82570569382403f0b
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Aug 26 18:08:40 2021 +0300
+Date:   Thu Aug 26 18:35:42 2021 +0300
 
-    fix(ui5-select): selection change with keyboard (#3704)
+    fix(ui5-shellbar): remove empty secondary title wrapper (#3737)
     
-    Checks inside onkeydown handler were not enough and _handleKeyboardNavigation method is called event when the tab key is pressed. Executing _handleKeyboardNavigation method when the tab key is pressed leads to change of the selection because event.key returns "tab" which is added to the string that determinates which item should be selected.
-    
-    _handleKeyboardNavigation is handled on keypress event which is fired when only symbol key is pressed.
+    Closes: #3698
+    Fixes: #3698
