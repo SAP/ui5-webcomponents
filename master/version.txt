@@ -1,7 +1,9 @@
-commit 8d056066269860e83ea4e7110fd04998536d4415
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Aug 26 10:07:07 2021 +0300
+commit 68da439355c451d38bf007ea185c4443cfcd652f
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Aug 26 18:08:40 2021 +0300
 
-    fix(ui5-input): prevent exception in console when input is clicked on mobile (#3729)
+    fix(ui5-select): selection change with keyboard (#3704)
     
-    FIXES: 3714
+    Checks inside onkeydown handler were not enough and _handleKeyboardNavigation method is called event when the tab key is pressed. Executing _handleKeyboardNavigation method when the tab key is pressed leads to change of the selection because event.key returns "tab" which is added to the string that determinates which item should be selected.
+    
+    _handleKeyboardNavigation is handled on keypress event which is fired when only symbol key is pressed.
