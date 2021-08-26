@@ -1,9 +1,7 @@
-commit 48adbbe0dc373eddc75380b30916d406980864e4
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Wed Aug 25 16:47:47 2021 +0300
+commit 8d056066269860e83ea4e7110fd04998536d4415
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Aug 26 10:07:07 2021 +0300
 
-    fix(ui5-ToggleButton): SHIFT+SPACE cancels the action (#3713)
+    fix(ui5-input): prevent exception in console when input is clicked on mobile (#3729)
     
-    Pressing [SHIFT] + [SPACE] does not change ToggleButton's state
-    
-    Related to: https://github.com/SAP/ui5-webcomponents/issues/3091
+    FIXES: 3714
