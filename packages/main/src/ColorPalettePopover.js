@@ -10,6 +10,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import Popover from "./Popover.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import ColorPalette from "./ColorPalette";
 
 // import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"
 // import "@ui5/webcomponents/dist/features/ColorPaletteRecentColors.js"
@@ -76,6 +77,7 @@ const metadata = {
 		"default": {
 			type: HTMLElement,
 			propertyName: "colors",
+			individualSlots: true
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
@@ -112,11 +114,11 @@ class ColorPalettePopover extends UI5Element {
 		return litRender;
 	}
 
-	static get staticAreaStyles() {
+	static get styles() {
 		return [ResponsivePopoverCommonCss, ColorPalettePopoverCss];
 	}
 
-	static get staticAreaTemplate() {
+	static get template() {
 		return ColorPalettePopoverTemplate;
 	}
 
@@ -124,7 +126,8 @@ class ColorPalettePopover extends UI5Element {
 		return [
 			ResponsivePopover,
 			Popover,
-			Button
+			Button,
+			ColorPalette
 		];
 	}
 
@@ -133,8 +136,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
+		this.responsivePopover = this.shadowRoot.querySelector("[ui5-responsive-popover]");
 
 		return this.responsivePopover;
 	}
@@ -148,7 +150,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	get colorPaletteColors() {
-		return this.colors.filter(item => item.value).slice(0, 15);
+		return this.getSlottedNodes("colors");
 	} 
 }
 

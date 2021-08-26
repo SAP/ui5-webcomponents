@@ -94,7 +94,7 @@ const metadata = {
 			propertyName: "colors",
 			type: HTMLElement,
 			invalidateOnChildChange: true,
-			individualSlots: true,
+			individualSlots: true
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
@@ -253,7 +253,7 @@ class ColorPalette extends UI5Element {
 
 	_onDefaultColorKeyDown(event) {
 		if (isDown(event)) {
-			this.colorPaletteNavigationElements[1].focus();
+			event.stopPropagation();
 			this._itemNavigation.setCurrentItem(this.colorPaletteNavigationElements[1]);
 			this._itemNavigation._focusCurrentItem();
 		} else if (isUp(event)) {
@@ -264,13 +264,25 @@ class ColorPalette extends UI5Element {
 	_onMoreColorsKeyDown(event) {
 		const index = this.colorPaletteNavigationElements.indexOf(event.target);
 		const isLast = index === this.colorPaletteNavigationElements.length;
+		const rowSize = 5;
+		const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
+
 		if (isUp(event)) {
-			this.colorPaletteNavigationElements[index - 1].focus();
-			this._itemNavigation.setCurrentItem(this.colorPaletteNavigationElements[index - 1]);
+			event.stopPropagation()
+			this._itemNavigation.setCurrentItem(this.displayedColors[colorPaletteFocusIndex]);
 			this._itemNavigation._focusCurrentItem();
 		} else if (isDown(event)) {
+			event.stopPropagation();
 			isLast ? this.colorPaletteNavigationElements[0].focus : this.colorPaletteNavigationElements[index + 1].focus();
 		}
+	}
+
+	_onColorContainerKeyDown(event) {
+		console.log(event.target);
+	}
+
+	_onRecentColorsContainerKeyDown(event) {
+		console.log(event.target);
 	}
 
 	async _chooseCustomColor() {
@@ -303,7 +315,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get displayedColors() {
-		return this.colors.filter(item => item.value).slice(0, 15);
+		return this.getSlottedNodes("colors").filter(item => item.value).slice(0, 15);
 	}
 
 	get colorContainerLabel() {

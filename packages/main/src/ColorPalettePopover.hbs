@@ -1,4 +1,6 @@
 <ui5-responsive-popover
+hide-arrow
+placement-type="Bottom"
 >
 	<div>
 		<ui5-color-palette 
@@ -7,7 +9,7 @@
 			?show-default-color="{{this.defaultColor}}"
 			default-color="{{this.defaultColor}}">
 			{{#each colorPaletteColors}}
-				<ui5-color-palette-item value="{{this.value}}"></ui5-color-palette-item>
+				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}
 		</ui5-color-palette>
 	</div>
