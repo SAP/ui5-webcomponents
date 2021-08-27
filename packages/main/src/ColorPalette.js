@@ -4,11 +4,13 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isSpace,
 	isEnter,
 	isDown,
 	isUp,
+	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
@@ -82,6 +84,15 @@ const metadata = {
 		_selectedColor: {
 			type: CSSColor,
 		},
+
+		/**
+		 * Defines if the palette is in Popup or Embeded mode.
+		 * @type {CSSColor}
+		 * @private
+		 */
+		popupMode: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -94,7 +105,7 @@ const metadata = {
 			propertyName: "colors",
 			type: HTMLElement,
 			invalidateOnChildChange: true,
-			individualSlots: true
+			individualSlots: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
@@ -195,6 +206,7 @@ class ColorPalette extends UI5Element {
 	onBeforeRendering() {
 		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
+			item.phone = isPhone();
 		});
 
 		if (this.showMoreColors) {
@@ -208,6 +220,10 @@ class ColorPalette extends UI5Element {
 	}
 
 	selectColor(item) {
+		if (!item.value) {
+			return;
+		}
+
 		item.focus();
 
 		if (this.displayedColors.includes(item)) {
@@ -239,50 +255,131 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event)) {
+		if (isSpace(event) && event.target.localName === "ui5-color-palette-item") {
 			event.preventDefault();
 			this.selectColor(event.target);
 		}
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event)) {
+		if (isEnter(event) && event.target.localName === "ui5-color-palette-item") {
 			this.selectColor(event.target);
 		}
 	}
 
 	_onDefaultColorKeyDown(event) {
+		if (isTabNext(event) && this.popupMode) {
+			event.preventDefault();
+			this._onDefaultColorClick();
+		}
+
 		if (isDown(event)) {
 			event.stopPropagation();
-			this._itemNavigation.setCurrentItem(this.colorPaletteNavigationElements[1]);
-			this._itemNavigation._focusCurrentItem();
+
+			this.focusColorPaletteElement(this.colorPaletteNavigationElements[1]);
 		} else if (isUp(event)) {
-			this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1].focus();
+			event.stopPropagation();
+			const hasRecentColors = this.showRecentColors && this.recentColors[0];
+			const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+
+			if (hasRecentColors) {
+				this.focusRecentColorsElement(lastElementInNavigation);
+			} else if (this.showMoreColors) {
+				lastElementInNavigation.focus();
+			} else {
+				const rowSize = 5;
+				const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
+
+				this.focusColorPaletteElement(this.displayedColors[colorPaletteFocusIndex]);
+			}
 		}
 	}
 
 	_onMoreColorsKeyDown(event) {
 		const index = this.colorPaletteNavigationElements.indexOf(event.target);
-		const isLast = index === this.colorPaletteNavigationElements.length;
 		const rowSize = 5;
 		const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
+		const hasRecentColors = this.showRecentColors && this.recentColors[0];
 
 		if (isUp(event)) {
-			event.stopPropagation()
-			this._itemNavigation.setCurrentItem(this.displayedColors[colorPaletteFocusIndex]);
-			this._itemNavigation._focusCurrentItem();
+			event.stopPropagation();
+
+			this.focusColorPaletteElement(this.displayedColors[colorPaletteFocusIndex]);
 		} else if (isDown(event)) {
 			event.stopPropagation();
-			isLast ? this.colorPaletteNavigationElements[0].focus : this.colorPaletteNavigationElements[index + 1].focus();
+
+			if (hasRecentColors) {
+				this.focusRecentColorsElement(this.colorPaletteNavigationElements[index + 1]);
+			} else if (this.showDefaultColor) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else {
+				this.focusColorPaletteElement(this.displayedColors[0]);
+			}
 		}
 	}
 
 	_onColorContainerKeyDown(event) {
-		console.log(event.target);
+		const hasRecentColors = this.showRecentColors && this.recentColors[0];
+		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+		if (isTabNext(event) && this.popupMode) {
+			event.preventDefault();
+			this.selectColor(event.target);
+		}
+
+		if (isUp(event) && event.target === this.displayedColors[0] && this.colorPaletteNavigationElements.length > 1) {
+			event.stopPropagation();
+			if (this.showDefaultColor) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else if (!this.showDefaultColor && hasRecentColors) {
+				this.focusRecentColorsElement(lastElementInNavigation);
+			} else if (!this.showDefaultColor && this.showMoreColors) {
+				lastElementInNavigation.focus();
+			}
+		} else if (isDown(event) && event.target === this.displayedColors[this.displayedColors.length - 1] && this.colorPaletteNavigationElements.length > 1) {
+			event.stopPropagation();
+			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && hasRecentColors);
+
+			if (this.showDefaultColor && this.showMoreColors) {
+				this.colorPaletteNavigationElements[2].focus();
+			} else if (this.showDefaultColor && !this.showMoreColors && (!this.showRecentColors || !this.recentColors[0])) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else if (isRecentColorsNextElement) {
+				this.focusRecentColorsElement(lastElementInNavigation);
+			} else if (!this.showDefaultColor && this.showMoreColors) {
+				this.colorPaletteNavigationElements[1].focus();
+			}
+		}
 	}
 
 	_onRecentColorsContainerKeyDown(event) {
-		console.log(event.target);
+		if (isUp(event)) {
+			if (this.showMoreColors) {
+				this.colorPaletteNavigationElements[1 + this.showDefaultColor].focus();
+			} else if (!this.showMoreColors && this.colorPaletteNavigationElements.length > 1) {
+				const rowSize = 5;
+				const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
+				event.stopPropagation();
+
+				this.focusColorPaletteElement(this.displayedColors[colorPaletteFocusIndex]);
+			}
+		} else if (isDown(event)) {
+			if (this.showDefaultColor) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else {
+				event.stopPropagation();
+				this.focusColorPaletteElement(this.displayedColors[0]);
+			}
+		}
+	}
+
+	focusRecentColorsElement(element) {
+		this._itemNavigationRecentColors.setCurrentItem(element);
+		this._itemNavigationRecentColors._focusCurrentItem();
+	}
+
+	focusColorPaletteElement(element) {
+		this._itemNavigation.setCurrentItem(element);
+		this._itemNavigation._focusCurrentItem();
 	}
 
 	async _chooseCustomColor() {
@@ -343,11 +440,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	get recentColorsElements() {
-		return Array.from(this.shadowRoot.querySelectorAll(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")).filter( x => x.value !== "");
+		return Array.from(this.shadowRoot.querySelectorAll(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")).filter(x => x.value !== "");
 	}
 
 	get colorPaletteNavigationElements() {
-		let navigationElements = [];
+		const navigationElements = [];
 		const rootElement = this.shadowRoot.querySelector(".ui5-cp-root");
 
 		if (this.showDefaultColor) {
@@ -365,6 +462,19 @@ class ColorPalette extends UI5Element {
 		}
 
 		return navigationElements;
+	}
+
+	get classes() {
+		return {
+			colorPaletteRoot: {
+				"ui5-cp-root": true,
+				"ui5-cp-root-phone": isPhone(),
+			},
+		};
+	}
+
+	get phone() {
+		return isPhone();
 	}
 
 	async _getDialog() {

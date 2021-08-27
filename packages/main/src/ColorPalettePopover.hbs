@@ -7,7 +7,9 @@ placement-type="Bottom"
 			?show-more-colors="{{this.showMoreColors}}"
 			?show-recent-colors="{{this.showRecentColors}}"
 			?show-default-color="{{this.defaultColor}}"
-			default-color="{{this.defaultColor}}">
+			default-color="{{this.defaultColor}}"
+			popup-mode
+			@item-click="{{onSelectedColor}}">
 			{{#each colorPaletteColors}}
 				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}

@@ -10,10 +10,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import Popover from "./Popover.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import ColorPalette from "./ColorPalette";
-
-// import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"
-// import "@ui5/webcomponents/dist/features/ColorPaletteRecentColors.js"
+import ColorPalette from "./ColorPalette.js";
 
 /**
  * @public
@@ -67,7 +64,7 @@ const metadata = {
 			type: CSSColor,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {	
+	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Defines the content of the Popup.
 		 * @type {HTMLElement[]}
@@ -77,11 +74,25 @@ const metadata = {
 		"default": {
 			type: HTMLElement,
 			propertyName: "colors",
-			individualSlots: true
+			individualSlots: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
-		//
+		/**
+		 * Fired when the user selects a color.
+		 *
+		 * @event sap.ui.webcomponents.main.ColorPalette#item-click
+		 * @public
+		 * @since 1.0.0-rc.15
+		 * @param {String} color the selected color
+		 */
+		"item-click": {
+			details: {
+				color: {
+					type: String,
+				},
+			},
+		 },
 	},
 };
 
@@ -127,7 +138,7 @@ class ColorPalettePopover extends UI5Element {
 			ResponsivePopover,
 			Popover,
 			Button,
-			ColorPalette
+			ColorPalette,
 		];
 	}
 
@@ -141,17 +152,32 @@ class ColorPalettePopover extends UI5Element {
 		return this.responsivePopover;
 	}
 
+	_colorPalette() {
+		return this.responsivePopover.content[0].querySelector("[ui5-color-palette]");
+	}
+
 	closePopover() {
 		this.responsivePopover.close();
 	}
 
 	openPopover(opener) {
-		this.responsivePopover.openBy(opener);
+		this.responsivePopover.showAt(opener, true);
+
+		if (this.showDefaultColor) {
+			this._colorPalette().colorPaletteNavigationElements[0].focus();
+		} else {
+			this._colorPalette().focusColorPaletteElement(this._colorPalette().colorPaletteNavigationElements[0]);
+		}
+	}
+
+	onSelectedColor(event) {
+		this.responsivePopover.close();
+		this.fireEvent("item-click", event);
 	}
 
 	get colorPaletteColors() {
 		return this.getSlottedNodes("colors");
-	} 
+	}
 }
 
 ColorPalettePopover.define();

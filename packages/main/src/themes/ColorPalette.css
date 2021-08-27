@@ -1,10 +1,40 @@
 :host(:not([hidden])) {
 	display: inline-block;
+	width: 100%;
 }
 
 .ui5-cp-root {
 	display: flex;
 	flex-direction: column;
+}
+
+.ui5-cp-root.ui5-cp-root-phone,
+.ui5-cp-separator,
+.ui5-cp-more-colors-wrapper,
+.ui5-cp-default-color-button-wrapper,
+.ui5-cp-recent-colors-wrapper {
+	width: 100%;
+}
+
+.ui5-cp-root.ui5-cp-root-phone .ui5-cp-item-container {
+	width: 18.5rem;
+	max-width: 19.5rem;
+	max-height: 13rem;
+}
+
+.ui5-cp-recent-colors-wrapper {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+.ui5-cp-root.ui5-cp-root-phone .ui5-cp-item-container {
+	width: 18.5rem;
+	max-width: 19.5rem;
+}
+
+.ui5-cp-root.ui5-cp-root-phone {
+	display: flex;
+	align-items: center;
 }
 
 .ui5-cp-item-container {

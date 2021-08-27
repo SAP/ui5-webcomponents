@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
@@ -46,6 +47,15 @@ const metadata = {
 		 */
 		index: {
 			type: String,
+		},
+
+		/**
+		 * Defines if the ColorPalette is on phone mode.
+		 * @private
+		 * @type {Boolean}
+		 */
+		phone: {
+			type: Boolean,
 		},
 
 		/**
@@ -111,6 +121,10 @@ class ColorPaletteItem extends UI5Element {
 
 	get colorLabel() {
 		return this.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
+	}
+
+	get phone() {
+		return isPhone();
 	}
 }
 
