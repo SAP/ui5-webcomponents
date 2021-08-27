@@ -382,7 +382,8 @@ class Select extends UI5Element {
 	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
-		const opts = this._filteredItems.map((opt, index) => {
+		const options = this._filteredItems;
+		const syncOpts = options.map((opt, index) => {
 			if (opt.selected || opt.textContent === this.value) {
 				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
 				lastSelectedOptionIndex = index;
@@ -405,27 +406,27 @@ class Select extends UI5Element {
 			};
 		});
 
-		if (lastSelectedOptionIndex > -1 && !opts[lastSelectedOptionIndex].disabled) {
-			opts[lastSelectedOptionIndex].selected = true;
-			opts[lastSelectedOptionIndex]._focused = true;
-			this._filteredItems[lastSelectedOptionIndex].selected = true;
-			this._filteredItems[lastSelectedOptionIndex]._focused = true;
-			this._text = opts[lastSelectedOptionIndex].textContent;
+		if (lastSelectedOptionIndex > -1 && !syncOpts[lastSelectedOptionIndex].disabled) {
+			syncOpts[lastSelectedOptionIndex].selected = true;
+			syncOpts[lastSelectedOptionIndex]._focused = true;
+			options[lastSelectedOptionIndex].selected = true;
+			options[lastSelectedOptionIndex]._focused = true;
+			this._text = syncOpts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
 			this._text = "";
 			this._selectedIndex = -1;
-			if (opts[firstEnabledOptionIndex]) {
-				opts[firstEnabledOptionIndex].selected = true;
-				opts[firstEnabledOptionIndex]._focused = true;
-				this._filteredItems[firstEnabledOptionIndex].selected = true;
-				this._filteredItems[firstEnabledOptionIndex]._focused = true;
+			if (syncOpts[firstEnabledOptionIndex]) {
+				syncOpts[firstEnabledOptionIndex].selected = true;
+				syncOpts[firstEnabledOptionIndex]._focused = true;
+				options[firstEnabledOptionIndex].selected = true;
+				options[firstEnabledOptionIndex]._focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = this._filteredItems[firstEnabledOptionIndex].textContent;
+				this._text = options[firstEnabledOptionIndex].textContent;
 			}
 		}
 
-		this._syncedOptions = opts;
+		this._syncedOptions = syncOpts;
 	}
 
 	_enableFormSupport() {
