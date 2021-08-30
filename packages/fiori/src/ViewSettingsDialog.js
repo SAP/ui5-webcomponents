@@ -283,7 +283,8 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _dialogTitle() {
-		return this.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
+		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
+		return this.i18nBundle.getText(currentModeText);
 	}
 
 	get _okButtonLabel() {
@@ -311,7 +312,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _filterByLabel() {
-		return this.i18nBundle.getText(VSD_FILTER_BY);
+		return this.i18nBundle.getText();
 	}
 
 	get _sortByLabel() {
@@ -536,8 +537,10 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get eventsParams() {
-		const sortOrder = this._currentSettings.sortOrder.filter(item => item.selected)[0] && this._currentSettings.sortOrder.filter(item => item.selected)[0].text,
-			sortBy = this._currentSettings.sortBy.filter(item => item.selected)[0] && this._currentSettings.sortBy.filter(item => item.selected)[0].text;
+		const _currentSortOrderSelected = this._currentSettings.sortOrder.filter(item => item.selected)[0],
+			_currentSortBySelected = this._currentSettings.sortBy.filter(item => item.selected)[0],
+			sortOrder = _currentSortOrderSelected && _currentSortOrderSelected.text,
+			sortBy = _currentSortBySelected && _currentSortBySelected.text;
 
 		return {
 			sortOrder,
