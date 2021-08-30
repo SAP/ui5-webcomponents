@@ -44,7 +44,7 @@
 			<div class="ui5-cp-separator"></div>
 			<div class="ui5-cp-recent-colors-container" @keydown="{{_onRecentColorsContainerKeyDown}}">
 				{{#each recentColors}}
-					<ui5-color-palette-item value="{{this}}" phone="{{../this.phone}}"></ui5-color-palette-item>
+					<ui5-color-palette-item value="{{this}}" ?phone="{{../this.phone}}"></ui5-color-palette-item>
 				{{/each}}
 			</div>
 		</div>

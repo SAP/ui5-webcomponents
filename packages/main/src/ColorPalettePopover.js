@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
 // Styles
@@ -177,6 +178,10 @@ class ColorPalettePopover extends UI5Element {
 
 	get colorPaletteColors() {
 		return this.getSlottedNodes("colors");
+	}
+
+	get phone() {
+		return isPhone();
 	}
 }
 

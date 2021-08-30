@@ -1,7 +1,12 @@
 :host(:not([hidden])) {
 	display: inline-block;
+}
+
+:host(:not([hidden])[phone]) {
+	display: inline-block;
 	width: 100%;
 }
+
 
 .ui5-cp-root {
 	display: flex;
@@ -10,8 +15,8 @@
 
 .ui5-cp-root.ui5-cp-root-phone,
 .ui5-cp-separator,
-.ui5-cp-more-colors-wrapper,
-.ui5-cp-default-color-button-wrapper,
+.ui5-cp-root.ui5-cp-root-phone .ui5-cp-more-colors-wrapper,
+.ui5-cp-root.ui5-cp-root-phone .ui5-cp-default-color-button-wrapper,
 .ui5-cp-recent-colors-wrapper {
 	width: 100%;
 }
@@ -26,10 +31,6 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-}
-.ui5-cp-root.ui5-cp-root-phone .ui5-cp-item-container {
-	width: 18.5rem;
-	max-width: 19.5rem;
 }
 
 .ui5-cp-root.ui5-cp-root-phone {
