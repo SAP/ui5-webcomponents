@@ -197,7 +197,7 @@ class CalendarHeader extends UI5Element {
 	}
 
 	_getDisplayedSecondaryMonths(localDate) {
-		let firstDate = CalendarDate.fromLocalJSDate(localDate);
+		let firstDate = CalendarDate.fromLocalJSDate(localDate, this.primaryCalendarType);
 		firstDate.setDate(1);
 		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
 
