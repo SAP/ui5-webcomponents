@@ -1,12 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import {
-	isPageUp,
-	isPageDown,
-	isTabNext,
-	isTabPrevious
-} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
@@ -143,47 +138,30 @@ class Timeline extends UI5Element {
 		}
 	}
 
-	_onkeyup(event) {
-
-	}
-
-	_onkeydown(event){
-		if (isPageUp(event)) {
-			event.preventDefault();
-			const target = this.items[0];
-			target.focus();
-			this._itemNavigation.setCurrentItem(target);
-		} else if (isPageDown(event)) {
-			event.preventDefault();
-			const target = this.items[this.items.length - 1];
-			target.focus();
-			this._itemNavigation.setCurrentItem(target);
-		} else if (isTabNext(event)) {
-			event.preventDefault()
-			const nextTargetIndex = this.items.indexOf(event.target) + 1
-			const nextTarget = this.items[nextTargetIndex]
-			if (!nextTarget) {
-				return;
-			}
-
+	_onkeydown(event) {
+		if (isTabNext(event)) {
 			if (!event.target.nameClickable || event.isMarked === "link") {
-				nextTarget.focus();
-				this._itemNavigation.setCurrentItem(nextTarget)
+				this._handleTabNextOrPrevius(event, isTabNext(event));
 			}
 		} else if (isTabPrevious(event)) {
-			event.preventDefault()
-			const nextTargetIndex = this.items.indexOf(event.target) - 1;
-			const nextTarget = this.items[nextTargetIndex]
-			if (!nextTarget) {
-				return;
-			}
-
-			nextTarget.focus();
-			this._itemNavigation.setCurrentItem(nextTarget)
+			this._handleTabNextOrPrevius(event);
 		}
 	}
 
-
+	_handleTabNextOrPrevius(event, isNext) {
+		const nextTargetIndex = isNext ? this.items.indexOf(event.target) + 1 : this.items.indexOf(event.target) - 1;
+		const nextTarget = this.items[nextTargetIndex];
+		if (!nextTarget) {
+			return;
+		}
+		if (nextTarget.nameClickable && !isTabNext) {
+			event.preventDefault();
+			return nextTarget.shadowRoot.querySelector("[ui5-link]").focus();
+		}
+		event.preventDefault();
+		nextTarget.focus();
+		return this._itemNavigation.setCurrentItem(nextTarget);
+	}
 }
 
 Timeline.define();
