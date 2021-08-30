@@ -28,6 +28,8 @@ import { LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
+const PAGE_UP_DOWN_SIZE = 10;
+
 /**
  * @public
  */
@@ -575,6 +577,7 @@ class List extends UI5Element {
 
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledItems(),
 		});

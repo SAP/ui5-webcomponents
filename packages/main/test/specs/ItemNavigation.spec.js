@@ -33,4 +33,38 @@ describe("Item Navigation Tests", () => {
 		firstItem.keys("ArrowDown");
 		assert.strictEqual(secondItem.isFocused(), true, "second item is now focused - vertical navigation allowed.");
 	});
+
+
+	it("test PageDown", () => {
+		const itemOnFocus = $("#pageUpDownList_item1");
+		const nextFocusedItem = $("#pageUpDownList_item11");
+		
+		itemOnFocus.click();
+		itemOnFocus.keys("PageDown");
+		assert.strictEqual(nextFocusedItem.isFocused(), true, "The 11th item is focused.");
+
+		const itemOnFocus2 = $("#pageUpDownList_item16");
+		const nextFocusedItem2 = $("#pageUpDownList_item26");
+
+		itemOnFocus2.click();
+		itemOnFocus2.keys("PageDown");
+		assert.strictEqual(nextFocusedItem2.isFocused(), true, "The 26th is focused.");
+	});
+
+
+	it("test PageUp", () => {
+		const itemOnFocus = $("#pageUpDownList_item4");
+		const nextFocusedItem = $("#pageUpDownList_item1");
+		
+		itemOnFocus.click();
+		itemOnFocus.keys("PageUp");
+		assert.strictEqual(nextFocusedItem.isFocused(), true, "The first item is focused.");
+
+		const itemOnFocus2 = $("#pageUpDownList_item16");
+		const nextFocusedItem2 = $("#pageUpDownList_item6");
+
+		itemOnFocus2.click();
+		itemOnFocus2.keys("PageUp");
+		assert.strictEqual(nextFocusedItem2.isFocused(), true, "The 6th is focused.");
+	});
 });

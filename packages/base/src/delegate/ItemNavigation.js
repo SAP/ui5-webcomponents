@@ -5,6 +5,8 @@ import {
 	isRight,
 	isHome,
 	isEnd,
+	isPageDown,
+	isPageUp,
 } from "../Keys.js";
 import getActiveElement from "../util/getActiveElement.js";
 
@@ -52,6 +54,7 @@ class ItemNavigation {
 	 *  - currentIndex: the index of the item that will be initially selected (from which navigation will begin)
 	 *  - navigationMode (Auto|Horizontal|Vertical): whether the items are displayed horizontally (Horizontal), vertically (Vertical) or as a matrix (Auto) meaning the user can navigate in both directions (up/down and left/right)
 	 *  - rowSize: tells how many items per row there are when the items are not rendered as a flat list but rather as a matrix. Relevant for navigationMode=Auto
+	 * 	- skipItemsSize: tells how many items upon PAGE_UP and PAGE_DOWN should be skipped to applying the focus on the next item
 	 *  - behavior (Static|Cycling): tells what to do when trying to navigate beyond the first and last items
 	 *    Static means that nothing happens if the user tries to navigate beyond the first/last item.
 	 *    Cycling means that when the user navigates beyond the last item they go to the first and vice versa.
@@ -85,6 +88,7 @@ class ItemNavigation {
 		this._behavior = options.behavior || ItemNavigationBehavior.Static;
 		this._navigationMode = options.navigationMode || NavigationMode.Auto;
 		this._affectedPropertiesNames = options.affectedPropertiesNames || [];
+		this._skipItemsSize = options.skipItemsSize || null;
 	}
 
 	/**
@@ -142,6 +146,10 @@ class ItemNavigation {
 			this._handleHome();
 		} else if (isEnd(event)) {
 			this._handleEnd();
+		} else if (isPageUp(event)) {
+			this._handlePageUp();
+		} else if (isPageDown(event)) {
+			this._handlePageDown();
 		} else {
 			return; // if none of the supported keys is pressed, we don't want to prevent the event or update the item navigation
 		}
@@ -220,6 +228,64 @@ class ItemNavigation {
 	_handleEnd() {
 		const homeEndRange = this._rowSize > 1 ? this._rowSize : this._getItems().length;
 		this._currentIndex += (homeEndRange - 1 - this._currentIndex % homeEndRange); // eslint-disable-line
+	}
+
+	_handlePageUp() {
+		if (this._rowSize > 1) {
+			// eslint-disable-next-line
+			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch.
+			return;
+		}
+		this._handlePageUpFlat();
+	}
+
+	_handlePageDown() {
+		if (this._rowSize > 1) {
+			// eslint-disable-next-line
+			// TODO: handle page up on matrix (grid) layout - ColorPalette, ProductSwitch.
+			return;
+		}
+		this._handlePageDownFlat();
+	}
+
+	/**
+	 * Handles PAGE_UP in a flat list-like structure, both vertically and horizontally.
+	 */
+	_handlePageUpFlat() {
+		if (this._skipItemsSize === null) {
+			// Move the focus to the very top (as Home).
+			this._currentIndex -= this._currentIndex;
+		}
+
+		if (this._currentIndex + 1 > this._skipItemsSize) {
+			// When there are more than "skipItemsSize" number of items to the top,
+			// move the focus up/left with the predefined number.
+			this._currentIndex -= this._skipItemsSize;
+		} else {
+			// Otherwise, move the focus to the very top (as Home).
+			this._currentIndex -= this._currentIndex;
+		}
+	}
+
+	/**
+	 * Handles PAGE_DOWN in a flat list-like structure, both vertically and horizontally.
+	 */
+	_handlePageDownFlat() {
+		if (this._skipItemsSize === null) {
+			// Move the focus to the very bottom (as End).
+			this._currentIndex = this._getItems().length - 1;
+		}
+
+		const currentToEndRange = this._getItems().length - this._currentIndex - 1;
+
+		if (currentToEndRange > this._skipItemsSize) {
+			// When there are more than "skipItemsSize" number of items until the bottom,
+			// move the focus down/right with the predefined number.
+			this._currentIndex += this._skipItemsSize;
+		} else {
+			// Otherwise, move the focus to the very bottom (as End).
+			this._currentIndex = this._getItems().length - 1;
+		}
 	}
 
 	_applyTabIndex() {

@@ -53,7 +53,9 @@
 			</button>
 		{{/if}}
 
-		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
+		{{#if secondaryTitle}}
+			<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
+		{{/if}}
 	</div>
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
