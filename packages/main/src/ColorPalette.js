@@ -206,7 +206,6 @@ class ColorPalette extends UI5Element {
 	onBeforeRendering() {
 		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
-			item.phone = isPhone();
 		});
 
 		if (this.showMoreColors) {
@@ -440,7 +439,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	get recentColorsElements() {
-		return Array.from(this.shadowRoot.querySelectorAll(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")).filter(x => x.value !== "");
+		if (this.getDomRef()) {
+			return Array.from(this.getDomRef().querySelectorAll(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")).filter(x => x.value !== "");
+		}
+
+		return [];
 	}
 
 	get colorPaletteNavigationElements() {

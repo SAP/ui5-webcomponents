@@ -101,9 +101,17 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * Represents a predefined range of colors for easier selection.
+
+Overview
+The ColorPalettePopover provides the users with a slot to predefine colors.
+
+You can customize them with the use of the colors property. You can specify a defaultColor and display a "Default color" button for the user to choose directly.
+You can display a "More colors..." button that opens an additional color picker for the user to choose specific colors that are not present in the predefined range.
  *
  * <h3>Usage</h3>
+ *
+ * The palette is intended for users, who don't want to check and remember the different values of the colors and spend large amount of time to configure the right color through the color picker.
  *
  * For the <code>ui5-color-palette-popover</code>
  * <h3>ES6 Module Import</h3>
@@ -153,11 +161,7 @@ class ColorPalettePopover extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	async onAfterRendering() {
-		await this._respPopover();
-	}
-
-	async _respPopover() {
+	_respPopover() {
 		this.responsivePopover = this.shadowRoot.querySelector("[ui5-responsive-popover]");
 
 		return this.responsivePopover;
@@ -172,6 +176,8 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	openPopover(opener) {
+		this._respPopover();
+
 		this.responsivePopover.showAt(opener, true);
 
 		if (this.showDefaultColor) {
