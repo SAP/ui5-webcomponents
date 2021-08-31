@@ -1,7 +1,5 @@
-commit 471feb4887a4efa01ff3a843c573a75ed427f76d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 31 09:27:16 2021 +0300
+commit fca75086993eaac8d9095061d57242dd420692b2
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Tue Aug 31 11:19:24 2021 +0300
 
-    docs: fix Custom Theming section (#3717)
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/3515
+    feat(ui5-calendar): support secondary calendar type (#3634)
