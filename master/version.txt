@@ -1,5 +1,5 @@
-commit fca75086993eaac8d9095061d57242dd420692b2
+commit 8dd14c18ba9ac5fd20aa061a2c79cfaaa96d6fb1
 Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Tue Aug 31 11:19:24 2021 +0300
+Date:   Tue Aug 31 16:21:21 2021 +0300
 
-    feat(ui5-calendar): support secondary calendar type (#3634)
+    fix(ui5-daypicker): support secondary calendar type (#3773)
