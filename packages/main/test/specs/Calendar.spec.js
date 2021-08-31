@@ -247,4 +247,48 @@ describe("Calendar general interaction", () => {
 
 		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
 	});
+
+	it("Previous and next buttons are disabled when necessary", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
+		const calendarHeader = browser.$("#calendar4").shadow$("ui5-calendar-header");
+		const prevButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-prev]`);
+		const nextButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
+
+		assert.ok(prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Previous Button is disabled");
+		assert.notOk(nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Next Button is enabled");
+
+		nextButton.click();
+
+		assert.notOk(prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Previous Button is enabled");
+		assert.notOk(nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Next Button is enabled");
+
+		nextButton.click();
+		nextButton.click();
+
+		assert.notOk(prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Previous Button is enabled");
+		assert.ok(nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Next Button is disabled");
+	});
+
+	it("Second month and year are rendered in the header", ()=>{
+		const calendar = browser.$("#calendar5");
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
+		const calendarHeader = browser.$("#calendar5").shadow$("ui5-calendar-header");
+		const monthButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`).$$('span');
+		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
+
+		assert.strictEqual(monthButton.length, 2, "Second month is rendered");
+		assert.strictEqual(yearButton.length, 2,"Second year is rendered");
+	});
+
+	it("Buttons for month and year in header are rendered with correct value", ()=>{
+		const calendarHeader = browser.$("#calendar5").shadow$("ui5-calendar-header");
+		const monthButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`).$$('span');
+		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
+
+		assert.strictEqual(monthButton[0].getText(), "Rajab", "first month set in the header");
+		assert.strictEqual(monthButton[1].getText(), "Sep – Oct", "Second month set in the header");
+
+		assert.strictEqual(yearButton[0].getText(), "1421 AH", "first year set in the header");
+		assert.strictEqual(yearButton[1].getText(), "2000", "Second year set in the header");
+	});
 });
