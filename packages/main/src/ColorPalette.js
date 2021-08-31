@@ -59,7 +59,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @private
-		 * @since 1.0.0-rc.19
+		 * @since 1.0.0-rc.16
 		 */
 		showDefaultColor: {
 			type: Boolean,
@@ -70,7 +70,7 @@ const metadata = {
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
 		 * @type {CSSColor}
 		 * @private
-		 * @since 1.0.0-rc.19
+		 * @since 1.0.0-rc.16
 		 */
 		defaultColor: {
 			type: CSSColor,

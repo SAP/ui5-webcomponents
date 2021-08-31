@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
@@ -7,6 +8,10 @@ import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopov
 // Styles
 import ColorPalettePopoverCss from "./generated/themes/ColorPalettePopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import {
+	COLORPALETTE_POPOVER_TITLE,
+	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
+} from "./generated/i18n/i18n-defaults.js";
 
 import Popover from "./Popover.js";
 import Button from "./Button.js";
@@ -25,7 +30,6 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.19
 		 */
 		showRecentColors: {
 			type: Boolean,
@@ -37,7 +41,6 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.19
 		 */
 		showMoreColors: {
 			type: Boolean,
@@ -48,7 +51,6 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.19
 		 */
 		showDefaultColor: {
 			type: Boolean,
@@ -59,7 +61,6 @@ const metadata = {
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
 		 * @type {CSSColor}
 		 * @public
-		 * @since 1.0.0-rc.19
 		 */
 		defaultColor: {
 			type: CSSColor,
@@ -82,9 +83,8 @@ const metadata = {
 		/**
 		 * Fired when the user selects a color.
 		 *
-		 * @event sap.ui.webcomponents.main.ColorPalette#item-click
+		 * @event sap.ui.webcomponents.main.ColorPalettePopover#item-click
 		 * @public
-		 * @since 1.0.0-rc.15
 		 * @param {String} color the selected color
 		 */
 		"item-click": {
@@ -116,6 +116,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-color-palette-popover
  * @public
+ * @since 1.0.0-rc.16
  */
 class ColorPalettePopover extends UI5Element {
 	static get metadata() {
@@ -141,6 +142,15 @@ class ColorPalettePopover extends UI5Element {
 			Button,
 			ColorPalette,
 		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	async onAfterRendering() {
@@ -172,7 +182,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	onSelectedColor(event) {
-		this.responsivePopover.close();
+		this.closePopover();
 		this.fireEvent("item-click", event);
 	}
 
@@ -182,6 +192,14 @@ class ColorPalettePopover extends UI5Element {
 
 	get phone() {
 		return isPhone();
+	}
+
+	get _colorPaletteTitle() {
+		return this.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE);
+	}
+
+	get _cancelButtonLabel() {
+		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 }
 

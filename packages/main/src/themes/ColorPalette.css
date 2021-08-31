@@ -3,7 +3,6 @@
 }
 
 :host(:not([hidden])[phone]) {
-	display: inline-block;
 	width: 100%;
 }
 

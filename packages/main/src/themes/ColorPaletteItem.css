@@ -22,12 +22,6 @@
 	margin: 0.375rem;
 }
 
-:host(:not([_disabled])[phone]:hover) {
-	height: 2.75rem;
-	width: 2.75rem;
-	margin: 0.375rem;
-}
-
 .ui5-cp-item {
 	position: relative;
 	width: 100%;
