@@ -186,6 +186,18 @@ class Tab extends UI5Element {
 		return `${this._id}-stable-dom-ref`;
 	}
 
+	/**
+	 * Returns the DOM reference of the tab that is placed in the header.
+	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
+	 *
+	 * @function
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	getTabInStripDomRef() {
+		return this._getTabInStripDomRef;
+	}
+
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 

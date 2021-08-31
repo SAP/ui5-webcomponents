@@ -322,6 +322,10 @@ class TabContainer extends UI5Element {
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this._getHeaderScrollContainer();
 		this._updateScrolling();
+
+		this.items.forEach(item => {
+			item._getTabInStripDomRef = this.getDomRef().querySelector(`*[data-ui5-stable="${item.stableDomRef}"]`);
+		});
 	}
 
 	onEnterDOM() {
