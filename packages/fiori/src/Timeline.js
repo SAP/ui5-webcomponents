@@ -154,7 +154,7 @@ class Timeline extends UI5Element {
 		if (!nextTarget) {
 			return;
 		}
-		if (nextTarget.nameClickable && !isTabNext) {
+		if (nextTarget.nameClickable && !isNext) {
 			event.preventDefault();
 			return nextTarget.shadowRoot.querySelector("[ui5-link]").focus();
 		}
