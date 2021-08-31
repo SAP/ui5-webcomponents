@@ -1,8 +1,7 @@
-commit 28d9a1ad54247aa49fb1dae82570569382403f0b
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Aug 26 18:35:42 2021 +0300
+commit 471feb4887a4efa01ff3a843c573a75ed427f76d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Aug 31 09:27:16 2021 +0300
 
-    fix(ui5-shellbar): remove empty secondary title wrapper (#3737)
+    docs: fix Custom Theming section (#3717)
     
-    Closes: #3698
-    Fixes: #3698
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/3515
