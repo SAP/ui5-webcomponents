@@ -326,7 +326,7 @@ describe("Calendar general interaction", () => {
 		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
 
 		assert.strictEqual(monthButton[0].getText(), "Rajab", "first month set in the header");
-		assert.strictEqual(monthButton[1].getText(), "Oct", "Second month set in the header");
+		assert.strictEqual(monthButton[1].getText(), "Sep – Oct", "Second month set in the header");
 
 		assert.strictEqual(yearButton[0].getText(), "1421 AH", "first year set in the header");
 		assert.strictEqual(yearButton[1].getText(), "2000", "Second year set in the header");
