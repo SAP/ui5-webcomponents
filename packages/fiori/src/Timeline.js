@@ -156,11 +156,12 @@ class Timeline extends UI5Element {
 		}
 		if (nextTarget.nameClickable && !isNext) {
 			event.preventDefault();
-			return nextTarget.shadowRoot.querySelector("[ui5-link]").focus();
+			nextTarget.shadowRoot.querySelector("[ui5-link]").focus();
+			return;
 		}
 		event.preventDefault();
 		nextTarget.focus();
-		return this._itemNavigation.setCurrentItem(nextTarget);
+		this._itemNavigation.setCurrentItem(nextTarget);
 	}
 }
 
