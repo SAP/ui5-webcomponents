@@ -141,14 +141,14 @@ class Timeline extends UI5Element {
 	_onkeydown(event) {
 		if (isTabNext(event)) {
 			if (!event.target.nameClickable || event.isMarked === "link") {
-				this._handleTabNextOrPrevius(event, isTabNext(event));
+				this._handleTabNextOrPrevious(event, isTabNext(event));
 			}
 		} else if (isTabPrevious(event)) {
-			this._handleTabNextOrPrevius(event);
+			this._handleTabNextOrPrevious(event);
 		}
 	}
 
-	_handleTabNextOrPrevius(event, isNext) {
+	_handleTabNextOrPrevious(event, isNext) {
 		const nextTargetIndex = isNext ? this.items.indexOf(event.target) + 1 : this.items.indexOf(event.target) - 1;
 		const nextTarget = this.items[nextTargetIndex];
 		if (!nextTarget) {
