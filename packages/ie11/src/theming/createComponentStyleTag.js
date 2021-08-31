@@ -14,7 +14,7 @@ attachCustomCSSChange(tag => {
 const createComponentStyleTag = component => {
 	const ElementClass = component.constructor;
 
-	if (!ElementClass._isAbstract() && !ElementClass._needsStaticArea()) {
+	if (!ElementClass._needsShadowDOM() && !ElementClass._needsStaticArea()) {
 		return;
 	}
 
