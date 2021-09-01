@@ -54,11 +54,17 @@
 		var oProductSwitch = document.getElementById("firstItem");
 		var oInput = document.getElementById("eventTest");
 		var pressCount = 0;
+		var oProductSwitchItems = document.querySelectorAll("ui5-product-switch-item");
 
 		oProductSwitch.addEventListener("click", function (oEvent) {
 			pressCount += 1;
 			oInput.value = pressCount;
 		});
+		oProductSwitchItems.forEach(function(item) {
+			item.addEventListener("click", function (oEvent) {
+				this.active= true;
+			});
+		})
 	</script>
 </body>
 

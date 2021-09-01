@@ -62,6 +62,7 @@
 		<script>
 			var shellBar = document.getElementById("shellbar");
 			var popover = document.getElementById("productswitch-popover");
+			var oProductSwitchItems = document.querySelectorAll("ui5-product-switch-item");
 
 			shellbar.addEventListener("product-switch-click", function(event) {
 				if (popover.opened) {
@@ -71,6 +72,11 @@
 					popover.showAt(event.detail.targetRef);
 				}
 			});
+			oProductSwitchItems.forEach(function(item) {
+			item.addEventListener("click", function (oEvent) {
+				this.active= true;
+			});
+		});
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
