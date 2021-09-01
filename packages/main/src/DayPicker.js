@@ -218,7 +218,7 @@ class DayPicker extends CalendarPart {
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 			const ariaLabel = this.hasSecondaryCalendarType
-				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
+				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
 				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
 
 			const day = {
@@ -735,6 +735,11 @@ class DayPicker extends CalendarPart {
 				width: "100%",
 			},
 		};
+	}
+	get ariaRoledescription() {
+		return this.hasSecondaryCalendarType ? 
+			`${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType} calendar` :
+			`${this._primaryCalendarType} calendar`;
 	}
 }
 

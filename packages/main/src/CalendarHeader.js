@@ -53,6 +53,15 @@ const metadata = {
 			type: CalendarType,
 		},
 
+		/**
+		 * Stores information for month button in second calendar type
+		 * @type {Object}
+		 * @private
+		*/
+		secondaryCalendarMonthButtonInfo: {
+			type: Object,
+		},
+
 		isNextButtonDisabled: {
 			type: Boolean,
 		},
@@ -119,10 +128,7 @@ class CalendarHeader extends UI5Element {
 
 		if (this.hasSecondaryCalendarType) {
 			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-			const secoundaryMonths = this._getDisplayedSecondaryMonths(localDate);
-
-			this._secondaryMonthInfo = this._getDisplayedSecondaryMonthText(secoundaryMonths);
-			this._secondMonthButtonText = this._secondaryMonthInfo.text;
+			this._secondMonthButtonText = this.secondaryCalendarMonthButtonInfo.text;;
 			this._secondYearButtonText = secondYearFormat.format(localDate, true);
 		}
 	}
@@ -177,47 +183,6 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
-	_getDisplayedSecondaryMonthText(month) {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const pattern = localeData.getIntervalPattern();
-		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
-		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
-
-		if (month.startMonth === month.endMonth) {
-			return {
-				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[month.startMonth],
-				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth],
-			};
-		}
-
-		return {
-			text: pattern.replace(/\{0\}/, secondaryMonthsNames[month.startMonth]).replace(/\{1\}/, secondaryMonthsNames[month.endMonth]),
-			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[month.startMonth]).replace(/\{1\}/, secondaryMonthsNamesWide[month.endMonth]),
-		};
-	}
-
-	_getDisplayedSecondaryMonths(localDate) {
-		let firstDate = CalendarDate.fromLocalJSDate(localDate, this.primaryCalendarType);
-		firstDate.setDate(1);
-		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
-
-		const startMonth = firstDate.getMonth();
-		let lastDate = CalendarDate.fromLocalJSDate(localDate, this.primaryCalendarType);
-
-		lastDate.setDate(this._daysInMonth(lastDate));
-		lastDate = new CalendarDate(lastDate, this.secondaryCalendarType);
-		const endMonth = lastDate.getMonth();
-		return { startMonth, endMonth };
-	}
-
-	_daysInMonth(calendarDate) {
-		calendarDate = new CalendarDate(calendarDate);
-		calendarDate.setDate(1);
-		calendarDate.setMonth(calendarDate.getMonth() + 1);
-		calendarDate.setDate(0);
-		return calendarDate.getDate();
-	}
-
 	get hasSecondaryCalendarType() {
 		return !!this.secondaryCalendarType;
 	}
@@ -237,7 +202,8 @@ class CalendarHeader extends UI5Element {
 
 	get accInfo() {
 		return {
-			ariaLabelMonthButton: this.hasSecondaryCalendarType ? `${this._monthButtonText},${this._secondaryMonthInfo.textInfo}` : `${this._monthButtonText}`,
+			ariaLabelMonthButton: this.hasSecondaryCalendarType
+				? `${this._monthButtonText}, ${this.secondaryCalendarMonthButtonInfo.textInfo}` : `${this._monthButtonText}`,
 		};
 	}
 }
