@@ -736,10 +736,11 @@ class DayPicker extends CalendarPart {
 			},
 		};
 	}
+
 	get ariaRoledescription() {
-		return this.hasSecondaryCalendarType ? 
-			`${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType} calendar` :
-			`${this._primaryCalendarType} calendar`;
+		return this.hasSecondaryCalendarType
+			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType} calendar`
+			: `${this._primaryCalendarType} calendar`;
 	}
 }
 

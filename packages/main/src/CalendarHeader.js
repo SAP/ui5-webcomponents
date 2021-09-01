@@ -128,7 +128,7 @@ class CalendarHeader extends UI5Element {
 
 		if (this.hasSecondaryCalendarType) {
 			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-			this._secondMonthButtonText = this.secondaryCalendarMonthButtonInfo.text;;
+			this._secondMonthButtonText = this.secondaryCalendarMonthButtonInfo.text;
 			this._secondYearButtonText = secondYearFormat.format(localDate, true);
 		}
 	}
