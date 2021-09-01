@@ -55,6 +55,19 @@ const metadata = {
 		_hideHeader: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether a close button will be rendered in the header of the component
+		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
+		 *
+		 * @private
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.16
+		 */
+		_hideCloseButton: {
+			type: Boolean,
+		},
 	},
 };
 

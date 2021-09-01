@@ -17,22 +17,29 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			?hidden="{{isMonthButtonHidden}}"
 			tabindex="0"
+			aria-label="{{accInfo.ariaLabelMonthButton}}"
 			@click={{onMonthButtonClick}}
 			@keydown={{onMonthButtonKeyDown}}
 			@keyup={{onMonthButtonKeyUp}}
 		>
-			{{_monthButtonText}}
+			<span>{{_monthButtonText}}</span>
+			{{#if hasSecondaryCalendarType}}
+				<span class="ui5-calheader-btn-sectext">{{_secondMonthButtonText}}</span>
+			{{/if}}
 		</div>
-
 		<div
 			data-ui5-cal-header-btn-year
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+			?hidden="{{isYearButtonHidden}}"
 			tabindex="0"
 			@click={{onYearButtonClick}}
 			@keydown={{onYearButtonKeyDown}}
 			@keyup={{onYearButtonKeyUp}}
 		>
-			{{_yearButtonText}}
+			<span>{{_yearButtonText}}</span>
+			{{#if hasSecondaryCalendarType}}
+				<span class="ui5-calheader-btn-sectext">{{_secondYearButtonText}}</span>
+			{{/if}}
 		</div>
 	</div>
 
@@ -43,5 +50,5 @@
 		title={{_nextButtonText}}
 	>
 		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-right"></ui5-icon>
-    </div>
+	</div>
 </div>

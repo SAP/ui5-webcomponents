@@ -1,4 +1,5 @@
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
+import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
@@ -66,6 +67,15 @@ class ToggleButton extends Button {
 
 	_onclick() {
 		this.pressed = !this.pressed;
+	}
+
+	_onkeyup(event) {
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+			return;
+		}
+
+		super._onkeyup(event);
 	}
 }
 

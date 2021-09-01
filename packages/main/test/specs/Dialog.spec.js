@@ -300,29 +300,53 @@ describe("Acc", () => {
 	});
 });
 
-describe("Multiple dialogs page scroll", () => {
-		before(() => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
-		});
+describe("Page scrolling", () => {
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	});
 
-		it("tests multiple dialogs page scrolling", () => {
-			const preventButtonBefore = browser.$("#prevent");
+	it("tests that page scrolling is blocked and restored", () => {
+		browser.$("#cbScrollable").click();
+		const offsetHeightBefore = browser.$("body").getProperty("offsetHeight");
 
-			browser.setWindowSize(400, 400);
-			preventButtonBefore.scrollIntoView();
+		browser.$("#btnOpenDialog").click();
 
-			const offsetBefore = preventButtonBefore.getLocation('y');
+		assert.ok(browser.$("body").getProperty("offsetHeight") < offsetHeightBefore, "Body scrolling is blocked");
 
-			preventButtonBefore.click();
+		browser.$("#btnCloseDialog").click();
 
-			browser.keys("Escape");
-			const confirmButton = browser.$("#yes");
-			confirmButton.click();
+		assert.strictEqual(browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+		browser.$("#cbScrollable").click();
+	});
 
-			browser.setTimeout({ script: 5000 });
-    		const offsetAfter = preventButtonBefore.getLocation('y');
+	it("test page scrolling is restored after close with ESC", () => {
+		browser.$("#cbScrollable").click();
+		const offsetHeightBefore = browser.$("body").getProperty("offsetHeight");
 
-			assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
-		});
+		browser.$("#btnOpenDialog").click();
+		browser.keys("Escape");
+		assert.strictEqual(browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
 
+		browser.$("#cbScrollable").click();
+	});
+
+	it("tests multiple dialogs page scrolling", () => {
+		const preventButtonBefore = browser.$("#prevent");
+
+		browser.setWindowSize(400, 400);
+		preventButtonBefore.scrollIntoView();
+
+		const offsetBefore = preventButtonBefore.getLocation('y');
+
+		preventButtonBefore.click();
+
+		browser.keys("Escape");
+		const confirmButton = browser.$("#yes");
+		confirmButton.click();
+
+		browser.setTimeout({ script: 5000 });
+		const offsetAfter = preventButtonBefore.getLocation('y');
+
+		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
+	});
 });
