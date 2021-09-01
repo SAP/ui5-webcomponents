@@ -48,35 +48,35 @@
 	width: 2rem;
 	min-height: 2rem;
 	min-width: 2rem;
-	font-size: 1rem;
+	font-size: var(--_ui5_avatar_fontsize_XS);
 }
 
 :host([_size="S"]),
 :host([size="S"]) {
 	min-height: 3rem;
 	min-width: 3rem;
-	font-size: 1.125rem;
+	font-size: var(--_ui5_avatar_fontsize_S);
 }
 
 :host([_size="M"]),
 :host([size="M"]) {
 	min-height: 4rem;
 	min-width: 4rem;
-	font-size: 1.5rem;
+	font-size: var(--_ui5_avatar_fontsize_M);
 }
 
 :host([_size="L"]),
 :host([size="L"]) {
 	min-height: 5rem;
 	min-width: 5rem;
-	font-size: 2.25rem;
+	font-size: var(--_ui5_avatar_fontsize_L);
 }
 
 :host([_size="XL"]),
 :host([size="XL"]) {
 	min-height: 7rem;
 	min-width: 7rem;
-	font-size: 3rem;
+	font-size: var(--_ui5_avatar_fontsize_XL);
 }
 
 /* Icon */
