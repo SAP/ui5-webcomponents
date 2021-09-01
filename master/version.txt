@@ -1,5 +1,5 @@
-commit 8dd14c18ba9ac5fd20aa061a2c79cfaaa96d6fb1
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Tue Aug 31 16:21:21 2021 +0300
+commit 165afdf26fc4d79d62cc1fcfcbf7c26630f2caa4
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Sep 1 14:40:01 2021 +0300
 
-    fix(ui5-daypicker): support secondary calendar type (#3773)
+    chore(ui5-view-settings-dialog): fix jsdoc (#3785)
