@@ -1,7 +1,7 @@
 @import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
-	display: flex;
+	display: inline-block;
 }
 
 :host {
@@ -99,7 +99,7 @@
 .ui5-radio-root {
 	height: var(--_ui5_radio_button_height);
 	position: relative;
-	display: flex;
+	display: inline-flex;
 	flex-wrap: nowrap;
 	outline: none;
 	max-width: 100%;

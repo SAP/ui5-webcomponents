@@ -7,7 +7,7 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event", () => {
-		const radioButton = browser.$("#rb1");
+		const radioButton = browser.$("#rb1").shadow$(".ui5-radio-root");
 		const field = browser.$("#field");
 
 		radioButton.click();
@@ -18,8 +18,8 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event upon ENTER", () => {
-		const radioButton1 = browser.$("#rb1");
-		const radioButton2 = browser.$("#rb2");
+		const radioButton1 = browser.$("#rb1").shadow$(".ui5-radio-root");
+		const radioButton2 = browser.$("#rb2").shadow$(".ui5-radio-root");;
 		const field = browser.$("#field");
 
 		radioButton1.click();
@@ -33,8 +33,8 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event upon SPACE", () => {
-		const radioButton1 = browser.$("#rb2");
-		const radioButton2 = browser.$("#rb3");
+		const radioButton1 = browser.$("#rb2").shadow$(".ui5-radio-root");;
+		const radioButton2 = browser.$("#rb3").shadow$(".ui5-radio-root");;
 		const field = browser.$("#field");
 
 		radioButton1.click();
@@ -48,7 +48,7 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event not fired, when disabled", () => {
-		const radioButton = browser.$("#rb4");
+		const radioButton = browser.$("#rb4").shadow$(".ui5-radio-root");;
 		const field = browser.$("#field");
 
 		radioButton.click();
@@ -132,11 +132,12 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event from radio buttons within group", () => {
+		const radioButtonToBeSelectedShadow = browser.$("#groupRb7").shadow$(".ui5-radio-root");
 		const radioButtonToBeSelected = browser.$("#groupRb7");
 		const lblEventCounter = browser.$("#lblEventCounter");
 		const lblSelectedRadio = browser.$("#lblRadioGroup");
 
-		radioButtonToBeSelected.click();
+		radioButtonToBeSelectedShadow.click();
 
 		assert.equal(lblEventCounter.getHTML(false), "1", 'The change event is fired once');
 		assert.equal(lblSelectedRadio.getHTML(false), radioButtonToBeSelected.getProperty("text"), "The correct radio is selected");
