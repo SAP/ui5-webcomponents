@@ -1,5 +1,5 @@
-commit 05d4fa2dda20d69aad4c962d58709d377510154c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Sep 1 15:29:49 2021 +0300
+commit 2ad208e2def817ad98f955e12c9daf6aba3ac7b7
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Thu Sep 2 10:05:15 2021 +0300
 
-    chore(ui5-responive-popover): implement hideCloseButton property (#3787)
+    fix(ui5-timeline): keyboard handling is now compliant with the specification (#3722)
