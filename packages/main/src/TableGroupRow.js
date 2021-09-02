@@ -83,7 +83,7 @@ const metadata = {
  * <br>
  * The <code>ui5-table-group-row</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li>group-row - Used to style the native <code>tr</code> tag element.</li>
+ * <li>group-row - Used to style the native <code>tr</code> element.</li>
  * </ul>
  *
  * @constructor
