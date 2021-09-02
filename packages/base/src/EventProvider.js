@@ -8,8 +8,9 @@ class EventProvider {
 		let eventListeners = eventRegistry.get(eventName);
 
 		if (!Array.isArray(eventListeners)) {
-			eventListeners = [];
+			eventListeners = [fnFunction];
 			eventRegistry.set(eventName, eventListeners);
+			return;
 		}
 
 		if (!eventListeners.includes(fnFunction)) {
