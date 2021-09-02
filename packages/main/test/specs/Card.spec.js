@@ -19,8 +19,8 @@ describe("Card general interaction", () => {
 	});
 
 	it("tests header's click event with mouse click, Enter and Space", () => {
-		const cardHeader = $("#cardHeader").shadow$(".ui5-card-header");
-		const cardHeader2 = $("#cardHeader2").shadow$(".ui5-card-header");
+		const cardHeader = browser.$("#cardHeader").shadow$(".ui5-card-header");
+		const cardHeader2 = browser.$("#cardHeader2").shadow$(".ui5-card-header");
 		const field = browser.$("#field");
 
 		cardHeader.click();
