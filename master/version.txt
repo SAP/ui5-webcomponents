@@ -1,5 +1,5 @@
-commit 8fb6b2263d498b402352513d87b2201df272f344
+commit 2487e618d2b7a058a0e9f2ce6981d86078e034d4
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Sep 2 11:23:23 2021 +0300
+Date:   Thu Sep 2 13:06:13 2021 +0300
 
-    chore: add interfaces JSDoc (#3803)
+    chore(ui5-segmented-button): fix jsdoc (#3807)
