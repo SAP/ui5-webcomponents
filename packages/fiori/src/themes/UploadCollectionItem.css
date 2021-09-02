@@ -6,6 +6,10 @@
 	display: block;
 }
 
+:host([active][actionable]) {
+	background-color: var(--sapList_SelectionBackgroundColor);
+}
+
 .ui5-li-root.ui5-uci-root {
 	padding: 1rem;
 }
@@ -112,6 +116,10 @@
 
 .ui5-uci-edit-rename-btn {
 	margin-right: 0.125rem;
+}
+
+.ui5-li-deletebtn {
+	display: inline-block;
 }
 
 /* Progress Box */
