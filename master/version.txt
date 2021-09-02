@@ -1,5 +1,5 @@
-commit b5f45e2dc747c3200c623e43ea4acb40d37dc2f3
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 2 16:07:52 2021 +0300
+commit c3198228f6368f4c01bbbbd6fb16663c25605657
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Sep 2 16:40:39 2021 +0300
 
-    docs(ui5-table): samples and documentation enhancements (#3795)
+    refactor(framework): EventProvider.js reworked (#3819)
