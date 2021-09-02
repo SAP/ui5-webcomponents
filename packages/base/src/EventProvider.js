@@ -1,34 +1,34 @@
-import setToArray from "./util/setToArray.js";
-
 class EventProvider {
 	constructor() {
-		this._eventRegistry = new Map(); // map of sets (one set per event)
+		this._eventRegistry = new Map();
 	}
 
 	attachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
 		let eventListeners = eventRegistry.get(eventName);
 
-		if (!eventListeners) {
-			eventListeners = new Set();
+		if (!Array.isArray(eventListeners)) {
+			eventListeners = [];
 			eventRegistry.set(eventName, eventListeners);
 		}
 
-		eventListeners.add(fnFunction);
+		if (!eventListeners.includes(fnFunction)) {
+			eventListeners.push(fnFunction);
+		}
 	}
 
 	detachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		const eventListeners = eventRegistry.get(eventName);
+		let eventListeners = eventRegistry.get(eventName);
 
 		if (!eventListeners) {
 			return;
 		}
 
-		eventListeners.delete(fnFunction);
+		eventListeners = eventListeners.filter(fn => fn !== fnFunction);
 
-		if (eventListeners.size === 0) {
-			eventRegistry.delete(eventListeners);
+		if (eventListeners.length === 0) {
+			eventRegistry.delete(eventName);
 		}
 	}
 
@@ -47,8 +47,8 @@ class EventProvider {
 			return [];
 		}
 
-		return setToArray(eventListeners).map(event => {
-			return event.call(this, data); // eslint-disable-line
+		return eventListeners.map(fn => {
+			return fn.call(this, data); // eslint-disable-line
 		});
 	}
 
@@ -71,11 +71,11 @@ class EventProvider {
 			return false;
 		}
 
-		return eventRegistry.has(fnFunction);
+		return eventListeners.includes(fnFunction);
 	}
 
 	hasListeners(eventName) {
-		return !!this._eventRegistry[eventName];
+		return !!this._eventRegistry.get(eventName);
 	}
 }
 
