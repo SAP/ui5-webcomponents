@@ -18,16 +18,16 @@ describe("Card general interaction", () => {
 		assert.notOk(status.isExisting(), "The status DOM is not rendered.");
 	});
 
-	it("tests headerPress upon click, Enter and Space", () => {
-		const cardHeader = browser.$("#cardHeader").shadow$(".ui5-card-header");
-		const cardHeader2 = browser.$("#cardHeader2").shadow$(".ui5-card-header");
+	it("tests header's click event with mouse click, Enter and Space", () => {
+		const cardHeader = $("#cardHeader").shadow$(".ui5-card-header");
+		const cardHeader2 = $("#cardHeader2").shadow$(".ui5-card-header");
 		const field = browser.$("#field");
 
 		cardHeader.click();
 		cardHeader.keys("Space");
 		cardHeader.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "The headerPress event should be called 3 times.");
+		assert.strictEqual(field.getProperty("value"), "3", "The header's click event should be called 3 times.");
 
 		cardHeader2.click();
 		cardHeader2.keys("Space");

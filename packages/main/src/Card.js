@@ -37,7 +37,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
 		 * @type {HTMLElement[]}
-         * @since 1.0.0-rc.15
+		 * @since 1.0.0-rc.15
 		 * @slot content
 		 * @public
 		 */
