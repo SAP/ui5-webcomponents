@@ -1,36 +1,34 @@
+import setToArray from "./util/setToArray.js";
+
 class EventProvider {
 	constructor() {
-		this._eventRegistry = {};
+		this._eventRegistry = new Map(); // map of sets (one set per event)
 	}
 
 	attachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		let eventListeners = eventRegistry[eventName];
+		let eventListeners = eventRegistry.get(eventName);
 
-		if (!Array.isArray(eventListeners)) {
-			eventRegistry[eventName] = [];
-			eventListeners = eventRegistry[eventName];
+		if (!eventListeners) {
+			eventListeners = new Set();
+			eventRegistry.set(eventName, eventListeners);
 		}
 
-		eventListeners.push({
-			"function": fnFunction,
-		});
+		eventListeners.add(fnFunction);
 	}
 
 	detachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		let eventListeners = eventRegistry[eventName];
+		const eventListeners = eventRegistry.get(eventName);
 
 		if (!eventListeners) {
 			return;
 		}
 
-		eventListeners = eventListeners.filter(event => {
-			return event["function"] !== fnFunction; // eslint-disable-line
-		});
+		eventListeners.delete(fnFunction);
 
-		if (eventListeners.length === 0) {
-			delete eventRegistry[eventName];
+		if (eventListeners.size === 0) {
+			eventRegistry.delete(eventListeners);
 		}
 	}
 
@@ -43,14 +41,14 @@ class EventProvider {
 	 */
 	fireEvent(eventName, data) {
 		const eventRegistry = this._eventRegistry;
-		const eventListeners = eventRegistry[eventName];
+		const eventListeners = eventRegistry.get(eventName);
 
 		if (!eventListeners) {
 			return [];
 		}
 
-		return eventListeners.map(event => {
-			return event["function"].call(this, data); // eslint-disable-line
+		return setToArray(eventListeners).map(event => {
+			return event.call(this, data); // eslint-disable-line
 		});
 	}
 
@@ -67,20 +65,13 @@ class EventProvider {
 
 	isHandlerAttached(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		const eventListeners = eventRegistry[eventName];
+		const eventListeners = eventRegistry.get(eventName);
 
 		if (!eventListeners) {
 			return false;
 		}
 
-		for (let i = 0; i < eventListeners.length; i++) {
-			const event = eventListeners[i];
-			if (event["function"] === fnFunction) { // eslint-disable-line
-				return true;
-			}
-		}
-
-		return false;
+		return eventRegistry.has(fnFunction);
 	}
 
 	hasListeners(eventName) {
