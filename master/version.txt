@@ -1,5 +1,5 @@
-commit 2487e618d2b7a058a0e9f2ce6981d86078e034d4
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Sep 2 13:06:13 2021 +0300
+commit b5f45e2dc747c3200c623e43ea4acb40d37dc2f3
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Sep 2 16:07:52 2021 +0300
 
-    chore(ui5-segmented-button): fix jsdoc (#3807)
+    docs(ui5-table): samples and documentation enhancements (#3795)
