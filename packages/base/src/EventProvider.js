@@ -5,11 +5,10 @@ class EventProvider {
 
 	attachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		let eventListeners = eventRegistry.get(eventName);
+		const eventListeners = eventRegistry.get(eventName);
 
 		if (!Array.isArray(eventListeners)) {
-			eventListeners = [fnFunction];
-			eventRegistry.set(eventName, eventListeners);
+			eventRegistry.set(eventName, [fnFunction]);
 			return;
 		}
 
