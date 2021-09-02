@@ -356,8 +356,7 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_input
-		Focused: {
+		_inputIconFocused: {
 			type: Boolean,
 			noAttribute: true,
 		},
