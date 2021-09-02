@@ -1,5 +1,5 @@
-commit 14536faec37b02ee1d23fa4e510b3fb3963bd279
+commit 8fb6b2263d498b402352513d87b2201df272f344
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Sep 2 11:00:50 2021 +0300
+Date:   Thu Sep 2 11:23:23 2021 +0300
 
-    chore(ui5-wizard-step): fix JSDoc (#3798)
+    chore: add interfaces JSDoc (#3803)
