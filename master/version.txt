@@ -1,5 +1,5 @@
-commit 2ad208e2def817ad98f955e12c9daf6aba3ac7b7
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Thu Sep 2 10:05:15 2021 +0300
+commit 14536faec37b02ee1d23fa4e510b3fb3963bd279
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Sep 2 11:00:50 2021 +0300
 
-    fix(ui5-timeline): keyboard handling is now compliant with the specification (#3722)
+    chore(ui5-wizard-step): fix JSDoc (#3798)
