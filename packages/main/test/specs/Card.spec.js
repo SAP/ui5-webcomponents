@@ -19,7 +19,6 @@ describe("Card general interaction", () => {
 	});
 
 	it("tests header's click event with mouse click, Enter and Space", () => {
-		browser.pause(5000)
 		const cardHeader = browser.$("#cardHeader").shadow$(".ui5-card-header");
 		const cardHeader2 = browser.$("#cardHeader2").shadow$(".ui5-card-header");
 		const field = browser.$("#field");
@@ -28,8 +27,6 @@ describe("Card general interaction", () => {
 		cardHeader.keys("Space");
 		cardHeader.keys("Enter");
 
-		browser.pause(5000)
-		browser.debug();
 		assert.strictEqual(field.getProperty("value"), "3", "The header's click event should be called 3 times.");
 
 		cardHeader2.click();
