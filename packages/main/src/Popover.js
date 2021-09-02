@@ -413,21 +413,21 @@ class Popover extends Popup {
 
 		let { arrowX, arrowY } = placement;
 
-		const popoverOnLeftBorder = this._left === 0;
-		const popoverOnRightBorder = this._left + popoverSize.width >= document.documentElement.clientWidth;
-		if (popoverOnLeftBorder) {
-			arrowX -= Popover.MIN_OFFSET;
-		} else if (popoverOnRightBorder) {
-			arrowX += Popover.MIN_OFFSET;
+		const popoverOnLeftBorderOffset = Popover.MIN_OFFSET - this._left;
+		const popoverOnRightBorderOffset = this._left + popoverSize.width + Popover.MIN_OFFSET - document.documentElement.clientWidth;
+		if (popoverOnLeftBorderOffset > 0) {
+			arrowX -= popoverOnLeftBorderOffset;
+		} else if (popoverOnRightBorderOffset > 0) {
+			arrowX += popoverOnRightBorderOffset;
 		}
 		this.arrowTranslateX = arrowX;
 
-		const popoverOnTopBorder = this._top === 0;
-		const popoverOnBottomBorder = this._top + popoverSize.height >= document.documentElement.clientHeight;
-		if (popoverOnTopBorder) {
-			arrowY -= Popover.MIN_OFFSET;
-		} else if (popoverOnBottomBorder) {
-			arrowY += Popover.MIN_OFFSET;
+		const popoverOnTopBorderOffset = Popover.MIN_OFFSET - this._top;
+		const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.MIN_OFFSET - document.documentElement.clientHeight;
+		if (popoverOnTopBorderOffset > 0) {
+			arrowY -= popoverOnTopBorderOffset;
+		} else if (popoverOnBottomBorderOffset > 0) {
+			arrowY += popoverOnBottomBorderOffset;
 		}
 		this.arrowTranslateY = arrowY;
 
