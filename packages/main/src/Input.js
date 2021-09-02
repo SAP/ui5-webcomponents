@@ -56,7 +56,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the component.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webcomponents.main.IIcon[]}
 		 * @slot
 		 * @public
 		 */
@@ -356,7 +356,8 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_inputIconFocused: {
+		_input
+		Focused: {
 			type: Boolean,
 			noAttribute: true,
 		},
