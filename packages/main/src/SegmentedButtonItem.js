@@ -91,6 +91,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.SegmentedButtonItem
  * @extends ToggleButton
  * @tagname ui5-segmented-button-item
+ * @implements sap.ui.webcomponents.main.ISegmentedButtonItem
  * @public
  */
 class SegmentedButtonItem extends ToggleButton {

@@ -35,7 +35,7 @@ const metadata = {
 		 * <b>Note:</b> Multiple items are allowed.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
-		 * @type {sap.ui.webcomponents.main.IButton[]}
+		 * @type {sap.ui.webcomponents.main.ISegmentedButtonItem[]}
 		 * @slot items
 		 * @public
 		 */
