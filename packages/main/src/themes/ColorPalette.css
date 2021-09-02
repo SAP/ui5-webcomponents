@@ -2,7 +2,7 @@
 	display: inline-block;
 }
 
-:host(:not([hidden])[phone]) {
+:host(:not([hidden])[popup-mode]) {
 	width: 100%;
 }
 

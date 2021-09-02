@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
 // Styles
@@ -13,7 +12,6 @@ import {
 	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
-import Popover from "./Popover.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
@@ -36,7 +34,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the user can choose a custom color from a color picker
+		 * Defines whether the user can choose a custom color from a component.
 		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -57,9 +55,10 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the default color of the color palette
+		 * Defines the default color of the component.
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
 		 * @type {CSSColor}
+		 * @defaultValue ""
 		 * @public
 		 */
 		defaultColor: {
@@ -68,7 +67,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
 		/**
-		 * Defines the content of the Popup.
+		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -102,12 +101,12 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * Represents a predefined range of colors for easier selection.
-
-Overview
-The ColorPalettePopover provides the users with a slot to predefine colors.
-
-You can customize them with the use of the colors property. You can specify a defaultColor and display a "Default color" button for the user to choose directly.
-You can display a "More colors..." button that opens an additional color picker for the user to choose specific colors that are not present in the predefined range.
+ *
+ * Overview
+ * The ColorPalettePopover provides the users with a slot to predefine colors.
+ *
+ * You can customize them with the use of the colors property. You can specify a defaultColor and display a "Default color" button for the user to choose directly.
+ * You can display a "More colors..." button that opens an additional color picker for the user to choose specific colors that are not present in the predefined range.
  *
  * <h3>Usage</h3>
  *
@@ -146,7 +145,6 @@ class ColorPalettePopover extends UI5Element {
 	static get dependencies() {
 		return [
 			ResponsivePopover,
-			Popover,
 			Button,
 			ColorPalette,
 		];
@@ -183,7 +181,7 @@ class ColorPalettePopover extends UI5Element {
 		if (this.showDefaultColor) {
 			this._colorPalette().colorPaletteNavigationElements[0].focus();
 		} else {
-			this._colorPalette().focusColorPaletteElement(this._colorPalette().colorPaletteNavigationElements[0]);
+			this._colorPalette().focusColorElement(this._colorPalette().colorPaletteNavigationElements[0], this._colorPalette()._itemNavigation);
 		}
 	}
 
@@ -194,10 +192,6 @@ class ColorPalettePopover extends UI5Element {
 
 	get colorPaletteColors() {
 		return this.getSlottedNodes("colors");
-	}
-
-	get phone() {
-		return isPhone();
 	}
 
 	get _colorPaletteTitle() {

@@ -190,13 +190,13 @@ class ColorPalette extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.displayedColors,
-			rowSize: 5,
+			rowSize: this.rowSize,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
 
 		this._itemNavigationRecentColors = new ItemNavigation(this, {
 			getItemsCallback: () => this.recentColorsElements,
-			rowSize: 5,
+			rowSize: this.rowSize,
 			behavior: ItemNavigationBehavior.Static,
 		});
 
@@ -275,50 +275,45 @@ class ColorPalette extends UI5Element {
 		if (isDown(event)) {
 			event.stopPropagation();
 
-			this.focusColorPaletteElement(this.colorPaletteNavigationElements[1]);
+			this.focusColorElement(this.colorPaletteNavigationElements[1], this._itemNavigation);
 		} else if (isUp(event)) {
 			event.stopPropagation();
-			const hasRecentColors = this.showRecentColors && this.recentColors[0];
 			const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
 
-			if (hasRecentColors) {
-				this.focusRecentColorsElement(lastElementInNavigation);
+			if (this.hasRecentColors) {
+				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (this.showMoreColors) {
 				lastElementInNavigation.focus();
 			} else {
-				const rowSize = 5;
-				const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
+				const colorPaletteFocusIndex = (this.displayedColors.length % this.rowSize) * this.rowSize;
 
-				this.focusColorPaletteElement(this.displayedColors[colorPaletteFocusIndex]);
+				this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
 			}
 		}
 	}
 
 	_onMoreColorsKeyDown(event) {
 		const index = this.colorPaletteNavigationElements.indexOf(event.target);
-		const rowSize = 5;
-		const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
-		const hasRecentColors = this.showRecentColors && this.recentColors[0];
+		const colorPaletteFocusIndex = (this.displayedColors.length % this.rowSize) * this.rowSize;
 
 		if (isUp(event)) {
 			event.stopPropagation();
 
-			this.focusColorPaletteElement(this.displayedColors[colorPaletteFocusIndex]);
+			this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
 		} else if (isDown(event)) {
 			event.stopPropagation();
 
-			if (hasRecentColors) {
-				this.focusRecentColorsElement(this.colorPaletteNavigationElements[index + 1]);
+			if (this.hasRecentColors) {
+				this.focusColorElement(this.colorPaletteNavigationElements[index + 1], this._itemNavigationRecentColors);
 			} else if (this.showDefaultColor) {
 				this.colorPaletteNavigationElements[0].focus();
 			} else {
-				this.focusColorPaletteElement(this.displayedColors[0]);
+				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
 			}
 		}
 	}
 
 	_onColorContainerKeyDown(event) {
-		const hasRecentColors = this.showRecentColors && this.recentColors[0];
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
 		if (isTabNext(event) && this.popupMode) {
 			event.preventDefault();
@@ -329,21 +324,21 @@ class ColorPalette extends UI5Element {
 			event.stopPropagation();
 			if (this.showDefaultColor) {
 				this.colorPaletteNavigationElements[0].focus();
-			} else if (!this.showDefaultColor && hasRecentColors) {
-				this.focusRecentColorsElement(lastElementInNavigation);
+			} else if (!this.showDefaultColor && this.hasRecentColors) {
+				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				lastElementInNavigation.focus();
 			}
 		} else if (isDown(event) && event.target === this.displayedColors[this.displayedColors.length - 1] && this.colorPaletteNavigationElements.length > 1) {
 			event.stopPropagation();
-			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && hasRecentColors);
+			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && this.hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && this.hasRecentColors);
 
 			if (this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[2].focus();
 			} else if (this.showDefaultColor && !this.showMoreColors && (!this.showRecentColors || !this.recentColors[0])) {
 				this.colorPaletteNavigationElements[0].focus();
 			} else if (isRecentColorsNextElement) {
-				this.focusRecentColorsElement(lastElementInNavigation);
+				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[1].focus();
 			}
@@ -355,30 +350,24 @@ class ColorPalette extends UI5Element {
 			if (this.showMoreColors) {
 				this.colorPaletteNavigationElements[1 + this.showDefaultColor].focus();
 			} else if (!this.showMoreColors && this.colorPaletteNavigationElements.length > 1) {
-				const rowSize = 5;
-				const colorPaletteFocusIndex = (this.displayedColors.length % rowSize) * rowSize;
+				const colorPaletteFocusIndex = (this.displayedColors.length % this.rowSize) * this.rowSize;
 				event.stopPropagation();
 
-				this.focusColorPaletteElement(this.displayedColors[colorPaletteFocusIndex]);
+				this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
 			}
 		} else if (isDown(event)) {
 			if (this.showDefaultColor) {
 				this.colorPaletteNavigationElements[0].focus();
 			} else {
 				event.stopPropagation();
-				this.focusColorPaletteElement(this.displayedColors[0]);
+				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
 			}
 		}
 	}
 
-	focusRecentColorsElement(element) {
-		this._itemNavigationRecentColors.setCurrentItem(element);
-		this._itemNavigationRecentColors._focusCurrentItem();
-	}
-
-	focusColorPaletteElement(element) {
-		this._itemNavigation.setCurrentItem(element);
-		this._itemNavigation._focusCurrentItem();
+	focusColorElement(element, itemNavigation) {
+		itemNavigation.setCurrentItem(element);
+		itemNavigation._focusCurrentItem();
 	}
 
 	async _chooseCustomColor() {
@@ -426,12 +415,20 @@ class ColorPalette extends UI5Element {
 		return this.showMoreColors && this.moreColorsFeature;
 	}
 
+	get rowSize() {
+		return 5;
+	}
+
+	get hasRecentColors() {
+		return this.showRecentColors && this.recentColors[0];
+	}
+
 	get recentColors() {
-		if (this._recentColors.length > 5) {
-			this._recentColors = this._recentColors.slice(0, 5);
+		if (this._recentColors.length > this.rowSize) {
+			this._recentColors = this._recentColors.slice(0, this.rowSize);
 		}
 
-		while (this._recentColors.length < 5) {
+		while (this._recentColors.length < this.rowSize) {
 			this._recentColors.push("");
 		}
 
@@ -474,10 +471,6 @@ class ColorPalette extends UI5Element {
 				"ui5-cp-root-phone": isPhone(),
 			},
 		};
-	}
-
-	get phone() {
-		return isPhone();
 	}
 
 	async _getDialog() {
