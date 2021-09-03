@@ -1,5 +1,5 @@
-commit 75e6a8c36a9ae2fd07e17387b0ef4540b6166040
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Sep 3 10:53:57 2021 +0300
+commit f174db4f54179d55a139da85ea6a27ff45dae942
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Fri Sep 3 10:01:56 2021 +0200
 
-    fix(ui5-illustrated-message): add missing dependencies (#3822)
+    docs(ui5-input): correct icon type in jsdocs comments (#3825)
