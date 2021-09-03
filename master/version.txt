@@ -1,5 +1,5 @@
-commit c3198228f6368f4c01bbbbd6fb16663c25605657
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Sep 2 16:40:39 2021 +0300
+commit 75e6a8c36a9ae2fd07e17387b0ef4540b6166040
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Sep 3 10:53:57 2021 +0300
 
-    refactor(framework): EventProvider.js reworked (#3819)
+    fix(ui5-illustrated-message): add missing dependencies (#3822)
