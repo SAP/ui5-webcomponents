@@ -26,7 +26,7 @@
 		</ui5-color-palette-popover>
 	</div>
 	<script>
-		colorPaletteBtn.addEventListener("click", (event) => {
+		colorPaletteBtn.addEventListener("click", function(event) {
 			colorPalettePopover.openPopover(this);
 		});
 	</script>
@@ -57,8 +57,8 @@
 <section>
 	<h3>Color Palette Popover without any additional features</h3>
 	<div class="snippet">
-		<ui5-button id="colorPaletteBtn" >Open ColorPalettePopover</ui5-button>
-		<ui5-color-palette-popover id="colorPalettePopover">
+		<ui5-button id="colorPaletteBtn1" >Open ColorPalettePopover</ui5-button>
+		<ui5-color-palette-popover id="colorPalettePopover1">
 			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -74,8 +74,8 @@
 		</ui5-color-palette-popover>
 	</div>
 	<script>
-		colorPaletteBtn.addEventListener("click", (event) => {
-			colorPalettePopover.openPopover(this);
+		colorPaletteBtn1.addEventListener("click", function (event) {
+			colorPalettePopover1.openPopover(this);
 		});
 	</script>
 	<pre class="prettyprint lang-html"><xmp>
