@@ -462,14 +462,11 @@ class Select extends UI5Element {
 			this._handleSelectionChange();
 		} else if (isUp(event) || isDown(event)) {
 			this._handleArrowNavigation(event);
-		} else {
-			this._handleKeyboardNavigation(event);
 		}
 	}
 
 	_handleKeyboardNavigation(event) {
-		// Waiting for the actual symbol to trigger the keydown event
-		if (event.shiftKey && event.key === "Shift") {
+		if (isEnter(event)) {
 			return;
 		}
 

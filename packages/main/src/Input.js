@@ -56,7 +56,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the component.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webcomponents.main.IIcon[]}
 		 * @slot
 		 * @public
 		 */
@@ -705,7 +705,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.showAt(this);
+			this.Suggestions.open();
 			this.isRespPopoverOpen = true;
 		}
 	}
