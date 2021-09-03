@@ -29,7 +29,7 @@
 	min-width: 30%;
 }
 
-.ui5-bar-root .ui5-bar-content-container.ui5-bar-content-container-overflow {
+.ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
 	min-width: 0px;
 	overflow: hidden;
 }

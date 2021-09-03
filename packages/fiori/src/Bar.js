@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import BarTemplate from "./generated/templates/BarTemplate.lit.js";
 import BarDesign from "./types/BarDesign.js";
 
@@ -33,6 +34,15 @@ const metadata = {
 		design: {
 			type: BarDesign,
 			defaultValue: BarDesign.Header,
+		},
+
+		/**
+		 * Defines if the component middle area needs to be centered between start and end area
+		 * @type {Boolean}
+		 * @private
+		 */
+		_shrinked: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
@@ -134,8 +144,14 @@ class Bar extends UI5Element {
 		};
 	}
 
-	resizeHandler(entry) {
-		const bar = entry[0].target;
+	constructor() {
+		super();
+
+		this._handleResizeBound = this.resizeHandler.bind(this);
+	}
+
+	resizeHandler() {
+		const bar = this.getDomRef();
 		let changeFlex = false;
 		const barWidth = bar.offsetWidth;
 
@@ -146,20 +162,27 @@ class Bar extends UI5Element {
 		}
 
 		if (changeFlex) {
-			for (let i = 0; i < bar.childElementCount; i++) {
-				bar.children[i].classList.add("ui5-bar-content-container-overflow");
-			}
+			this._shrinked = true;
 		} else {
-			for (let i = 0; i < bar.childElementCount; i++) {
-				bar.children[i].classList.remove("ui5-bar-content-container-overflow");
-			}
+			this._shrinked = false;
 		}
 	}
 
-	onAfterRendering() {
-		if (!this.sizeObserver) {
-			this.sizeObserver = new ResizeObserver(this.resizeHandler).observe(this.getDomRef());
-		}
+	get classes() {
+		return {
+			root: {
+				"ui5-bar-root": true,
+				"ui5-bar-root-shrinked": this._shrinked,
+			},
+		};
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 }
 
