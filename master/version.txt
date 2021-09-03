@@ -1,5 +1,5 @@
-commit d4f4e91b0a465ca543a6762b2c9a409086b92318
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Fri Sep 3 13:55:50 2021 +0300
+commit 894628fa2dc7225936bb1609037054c7d9243f8e
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Sep 3 17:26:00 2021 +0300
 
-    fix(ui5-card-header): no longer fires click event twice (#3823)
+    feat(ui5-color-palette-popover): initial implementation (#3746)
