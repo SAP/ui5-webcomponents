@@ -689,6 +689,8 @@ class ComboBox extends UI5Element {
 
 		if (matchingItems.length) {
 			this.value = matchingItems[0] ? matchingItems[0].text : current;
+			// As the value property was the same before the second typing interaction the Input's value
+			// doesn't get updated during rendering and it stays the intermediate (user typed) one - set it manually
 			this.inner.value = this.value;
 		} else {
 			this.value = current;
