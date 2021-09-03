@@ -1,5 +1,5 @@
-commit 0ff332587d70f10c835356c5c0be80f99df4fec9
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Fri Sep 3 11:56:38 2021 +0300
+commit d4f4e91b0a465ca543a6762b2c9a409086b92318
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Fri Sep 3 13:55:50 2021 +0300
 
-    fix(ui5-combobox): Double announcement on key navigation fixed (#3495)
+    fix(ui5-card-header): no longer fires click event twice (#3823)

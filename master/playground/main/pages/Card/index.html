@@ -208,9 +208,13 @@
 	</ui5-card>
 
 	<script>
-		card.addEventListener("ui5-click", function (event) {
+		function onClick(event) {
 			console.log(event);
 			field.value = parseInt(field.value) + 1;
+		}
+
+		[cardHeader, cardHeader2].forEach(function (el) {
+			el.addEventListener("ui5-click", onClick);
 		});
 	</script>
 </body>
