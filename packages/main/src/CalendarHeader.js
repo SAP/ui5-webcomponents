@@ -54,11 +54,11 @@ const metadata = {
 		},
 
 		/**
-		 * Stores information for month button in second calendar type
+		 * Stores information for month button for secondary calendar type
 		 * @type {Object}
 		 * @private
 		*/
-		secondaryCalendarMonthButtonInfo: {
+		buttonTextForSecondaryCalendarType: {
 			type: Object,
 		},
 
@@ -127,9 +127,8 @@ class CalendarHeader extends UI5Element {
 		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 
 		if (this.hasSecondaryCalendarType) {
-			const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-			this._secondMonthButtonText = this.secondaryCalendarMonthButtonInfo.text;
-			this._secondYearButtonText = secondYearFormat.format(localDate, true);
+			this._secondMonthButtonText = this.buttonTextForSecondaryCalendarType.monthButtonText;
+			this._secondYearButtonText = this.buttonTextForSecondaryCalendarType.yearButtonText;
 		}
 	}
 
@@ -203,7 +202,7 @@ class CalendarHeader extends UI5Element {
 	get accInfo() {
 		return {
 			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._monthButtonText}, ${this.secondaryCalendarMonthButtonInfo.textInfo}` : `${this._monthButtonText}`,
+				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType.info}` : `${this._monthButtonText}`,
 		};
 	}
 }

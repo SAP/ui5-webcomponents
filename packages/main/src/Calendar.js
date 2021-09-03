@@ -6,6 +6,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -282,10 +283,50 @@ class Calendar extends CalendarPart {
 		this.fireEvent("show-month-press", event);
 	}
 
-	get displayedSecondaryMonthText() {
+	/**
+	 * The user clicked the "year" button in the header
+	 */
+	onHeaderShowYearPress(event) {
+		this._currentPickerDOM._autoFocus = false;
+		this._currentPicker = "year";
+		this.fireEvent("show-year-press", event);
+	}
+
+	get _currentPickerDOM() {
+		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
+	}
+
+	/**
+	 * The year clicked the "Previous" button in the header
+	 */
+	onHeaderPreviousPress() {
+		this._currentPickerDOM._showPreviousPage();
+	}
+
+	/**
+	 * The year clicked the "Next" button in the header
+	 */
+	onHeaderNextPress() {
+		this._currentPickerDOM._showNextPage();
+	}
+
+	get secondaryCalendarTypeButtonText() {
 		if (!this.secondaryCalendarType) {
 			return;
 		}
+
+		const localDate = new Date(this._timestamp * 1000);
+		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
+		const secondYearText = secondYearFormat.format(localDate, true);
+		return {
+			yearButtonText: secondYearText,
+			monthButtonText: secondMonthInfo.text,
+			monthButtonInfo: secondMonthInfo.info,
+		};
+	}
+
+	_getDisplayedSecondaryMonthText() {
 		const month = this._getDisplayedSecondaryMonths();
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const pattern = localeData.getIntervalPattern();
@@ -320,31 +361,12 @@ class Calendar extends CalendarPart {
 		return { startMonth, endMonth };
 	}
 
-	/**
-	 * The user clicked the "year" button in the header
-	 */
-	onHeaderShowYearPress(event) {
-		this._currentPickerDOM._autoFocus = false;
-		this._currentPicker = "year";
-		this.fireEvent("show-year-press", event);
-	}
-
-	get _currentPickerDOM() {
-		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
-	}
-
-	/**
-	 * The year clicked the "Previous" button in the header
-	 */
-	onHeaderPreviousPress() {
-		this._currentPickerDOM._showPreviousPage();
-	}
-
-	/**
-	 * The year clicked the "Next" button in the header
-	 */
-	onHeaderNextPress() {
-		this._currentPickerDOM._showNextPage();
+	_getDaysInMonth(date) {
+		const tempCalendarDate = new CalendarDate(date);
+		tempCalendarDate.setDate(1);
+		tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
+		tempCalendarDate.setDate(0);
+		return tempCalendarDate.getDate();
 	}
 
 	/**
