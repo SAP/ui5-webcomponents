@@ -155,11 +155,13 @@ class Bar extends UI5Element {
 		let changeFlex = false;
 		const barWidth = bar.offsetWidth;
 
-		for (let i = 0; i < bar.childElementCount; i++) {
-			if (barWidth / 3 < bar.children[i].offsetWidth) {
-				changeFlex = true;
+		changeFlex = Array.from(bar.children).some(element => {
+			if (barWidth / 3 < element.offsetWidth) {
+				return true;
 			}
-		}
+
+			return false;
+		});
 
 		if (changeFlex) {
 			this._shrinked = true;
