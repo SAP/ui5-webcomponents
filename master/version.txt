@@ -1,5 +1,5 @@
-commit f174db4f54179d55a139da85ea6a27ff45dae942
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Fri Sep 3 10:01:56 2021 +0200
+commit 0ff332587d70f10c835356c5c0be80f99df4fec9
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Fri Sep 3 11:56:38 2021 +0300
 
-    docs(ui5-input): correct icon type in jsdocs comments (#3825)
+    fix(ui5-combobox): Double announcement on key navigation fixed (#3495)
