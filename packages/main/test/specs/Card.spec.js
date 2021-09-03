@@ -21,6 +21,11 @@ describe("Card general interaction", () => {
 	it("tests header's click event with mouse click, Enter and Space", () => {
 		const cardHeader = browser.$("#cardHeader").shadow$(".ui5-card-header");
 		const cardHeader2 = browser.$("#cardHeader2").shadow$(".ui5-card-header");
+		// TODO: the field is bound to the "ui5-click" event, but it misses out a test case
+		// change it to be bound to the "click" event, so we can test
+		// if the browser's native 'click' event is not fired to prevent double firing of "click"
+		// Currently this does not work right, because that "click" event
+		// does not fire at all when running the test with WDIO/webdriver
 		const field = browser.$("#field");
 
 		cardHeader.click();
