@@ -1,5 +1,4 @@
 .ui5-valuestatemessage-popover {
-	min-height: 1rem;
 	box-shadow: none;
 }
 
@@ -9,11 +8,16 @@
 	color: var(--sapTextColor);
 	font-size: var(--sapFontSmallSize);
 	font-family: "72override", var(--sapFontFamily);
-	padding: .3rem .625rem;
+	height: auto;
+	padding: .5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	min-width: 6.25rem;
 	border: var(--_ui5_value_state_message_border);
+}
+
+.ui5-valuestatemessage-header {
+	padding: .5625rem 1rem;
 }
 
 .ui5-valuestatemessage--success {
