@@ -3,7 +3,7 @@ const resolve = require("resolve");
 
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
-const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
+const UP_TO_DATE = `node "${hashIsUpToDate}" dist/ hash.txt && echo "Up to date."`;
 
 const LIB = path.join(__dirname, `../lib/`);
 
@@ -29,7 +29,7 @@ const getScripts = (options) => {
 			},
 			icons: `node "${LIB}/create-icons/index.js" "${options.collectionName}"`,
 		},
-		hash: `node ${generateHash} dist/ hash.txt`,
+		hash: `node "${generateHash}" dist/ hash.txt`,
 	};
 
 	return scripts;
