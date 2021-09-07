@@ -4,9 +4,13 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isSpace,
 	isEnter,
+	isDown,
+	isUp,
+	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
@@ -51,12 +55,43 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the user can choose the default color from a button.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		showDefaultColor: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the default color of the color palette
+		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
+		 * @type {CSSColor}
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		defaultColor: {
+			type: CSSColor,
+		},
+
+		/**
 		 * Defines the selected color.
 		 * @type {CSSColor}
 		 * @private
 		 */
 		_selectedColor: {
 			type: CSSColor,
+		},
+
+		/**
+		 * Defines if the palette is in Popup or Embeded mode.
+		 * @type {CSSColor}
+		 * @private
+		 */
+		popupMode: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
@@ -155,8 +190,14 @@ class ColorPalette extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.displayedColors,
-			rowSize: 5,
+			rowSize: this.rowSize,
 			behavior: ItemNavigationBehavior.Cyclic,
+		});
+
+		this._itemNavigationRecentColors = new ItemNavigation(this, {
+			getItemsCallback: () => this.recentColorsElements,
+			rowSize: this.rowSize,
+			behavior: ItemNavigationBehavior.Static,
 		});
 
 		this._recentColors = [];
@@ -178,6 +219,10 @@ class ColorPalette extends UI5Element {
 	}
 
 	selectColor(item) {
+		if (!item.value) {
+			return;
+		}
+
 		item.focus();
 
 		if (this.displayedColors.includes(item)) {
@@ -209,16 +254,120 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event)) {
+		if (isSpace(event) && event.target.localName === "ui5-color-palette-item") {
 			event.preventDefault();
 			this.selectColor(event.target);
 		}
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event)) {
+		if (isEnter(event) && event.target.localName === "ui5-color-palette-item") {
 			this.selectColor(event.target);
 		}
+	}
+
+	_onDefaultColorKeyDown(event) {
+		if (isTabNext(event) && this.popupMode) {
+			event.preventDefault();
+			this._onDefaultColorClick();
+		}
+
+		if (isDown(event)) {
+			event.stopPropagation();
+
+			this.focusColorElement(this.colorPaletteNavigationElements[1], this._itemNavigation);
+		} else if (isUp(event)) {
+			event.stopPropagation();
+			const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+
+			if (this.hasRecentColors) {
+				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
+			} else if (this.showMoreColors) {
+				lastElementInNavigation.focus();
+			} else {
+				const colorPaletteFocusIndex = (this.displayedColors.length % this.rowSize) * this.rowSize;
+
+				this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
+			}
+		}
+	}
+
+	_onMoreColorsKeyDown(event) {
+		const index = this.colorPaletteNavigationElements.indexOf(event.target);
+		const colorPaletteFocusIndex = (this.displayedColors.length % this.rowSize) * this.rowSize;
+
+		if (isUp(event)) {
+			event.stopPropagation();
+
+			this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
+		} else if (isDown(event)) {
+			event.stopPropagation();
+
+			if (this.hasRecentColors) {
+				this.focusColorElement(this.colorPaletteNavigationElements[index + 1], this._itemNavigationRecentColors);
+			} else if (this.showDefaultColor) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else {
+				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
+			}
+		}
+	}
+
+	_onColorContainerKeyDown(event) {
+		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+		if (isTabNext(event) && this.popupMode) {
+			event.preventDefault();
+			this.selectColor(event.target);
+		}
+
+		if (isUp(event) && event.target === this.displayedColors[0] && this.colorPaletteNavigationElements.length > 1) {
+			event.stopPropagation();
+			if (this.showDefaultColor) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else if (!this.showDefaultColor && this.hasRecentColors) {
+				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
+			} else if (!this.showDefaultColor && this.showMoreColors) {
+				lastElementInNavigation.focus();
+			}
+		} else if (isDown(event) && event.target === this.displayedColors[this.displayedColors.length - 1] && this.colorPaletteNavigationElements.length > 1) {
+			event.stopPropagation();
+			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && this.hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && this.hasRecentColors);
+
+			if (this.showDefaultColor && this.showMoreColors) {
+				this.colorPaletteNavigationElements[2].focus();
+			} else if (this.showDefaultColor && !this.showMoreColors && (!this.showRecentColors || !this.recentColors[0])) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else if (isRecentColorsNextElement) {
+				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
+			} else if (!this.showDefaultColor && this.showMoreColors) {
+				this.colorPaletteNavigationElements[1].focus();
+			}
+		}
+	}
+
+	_onRecentColorsContainerKeyDown(event) {
+		if (isUp(event)) {
+			if (this.showMoreColors) {
+				this.colorPaletteNavigationElements[1 + this.showDefaultColor].focus();
+			} else if (!this.showMoreColors && this.colorPaletteNavigationElements.length > 1) {
+				const colorPaletteFocusIndex = (this.displayedColors.length % this.rowSize) * this.rowSize;
+				event.stopPropagation();
+
+				this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
+			}
+		} else if (isDown(event)) {
+			if (this.showDefaultColor) {
+				this.colorPaletteNavigationElements[0].focus();
+			} else {
+				event.stopPropagation();
+				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
+			}
+		}
+	}
+
+	focusColorElement(element, itemNavigation) {
+		itemNavigation.setCurrentItem(element);
+		itemNavigation._focusCurrentItem();
 	}
 
 	async _chooseCustomColor() {
@@ -237,6 +386,12 @@ class ColorPalette extends UI5Element {
 		dialog.show();
 	}
 
+	_onDefaultColorClick() {
+		if (this.defaultColor) {
+			this._setColor(this.defaultColor);
+		}
+	}
+
 	/**
 	 * Returns the selected color.
 	 */
@@ -245,7 +400,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get displayedColors() {
-		return this.colors.filter(item => item.value).slice(0, 15);
+		return this.getSlottedNodes("colors").filter(item => item.value).slice(0, 15);
 	}
 
 	get colorContainerLabel() {
@@ -260,16 +415,62 @@ class ColorPalette extends UI5Element {
 		return this.showMoreColors && this.moreColorsFeature;
 	}
 
+	get rowSize() {
+		return 5;
+	}
+
+	get hasRecentColors() {
+		return this.showRecentColors && this.recentColors[0];
+	}
+
 	get recentColors() {
-		if (this._recentColors.length > 5) {
-			this._recentColors = this._recentColors.slice(0, 5);
+		if (this._recentColors.length > this.rowSize) {
+			this._recentColors = this._recentColors.slice(0, this.rowSize);
 		}
 
-		while (this._recentColors.length < 5) {
+		while (this._recentColors.length < this.rowSize) {
 			this._recentColors.push("");
 		}
 
 		return this._recentColors;
+	}
+
+	get recentColorsElements() {
+		if (this.getDomRef()) {
+			return Array.from(this.getDomRef().querySelectorAll(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")).filter(x => x.value !== "");
+		}
+
+		return [];
+	}
+
+	get colorPaletteNavigationElements() {
+		const navigationElements = [];
+		const rootElement = this.shadowRoot.querySelector(".ui5-cp-root");
+
+		if (this.showDefaultColor) {
+			navigationElements.push(rootElement.querySelector(".ui5-cp-default-color-button"));
+		}
+
+		navigationElements.push(this.displayedColors[0]);
+
+		if (this.showMoreColors) {
+			navigationElements.push(rootElement.querySelector(".ui5-cp-more-colors"));
+		}
+
+		if (this.showRecentColors && !!this.recentColorsElements.length) {
+			navigationElements.push(this.recentColorsElements[0]);
+		}
+
+		return navigationElements;
+	}
+
+	get classes() {
+		return {
+			colorPaletteRoot: {
+				"ui5-cp-root": true,
+				"ui5-cp-root-phone": isPhone(),
+			},
+		};
 	}
 
 	async _getDialog() {
