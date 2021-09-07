@@ -1,22 +1,25 @@
 :host {
 	min-width: 20rem;
 	min-height: 6rem;
+	max-height: 94%;
+	max-width: 90%;
+	flex-direction: column;
 	box-shadow: var(--sapContent_Shadow3);
 }
 
 :host([stretch]) {
 	width: 90%;
-	height: 90%;
+	height: 94%;
+}
+
+:host([on-phone]) {
+	max-height: 100%;
+	max-width: 100%;
 }
 
 :host([stretch][on-phone]) {
 	width: 100%;
 	height: 100%;
-}
-
-:host([stretch][on-phone]) .ui5-popup-root {
-	max-height: 100vh;
-	max-width: 100vw;
 }
 
 :host([draggable]) .ui5-popup-header-root,
