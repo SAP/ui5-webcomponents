@@ -16,6 +16,7 @@ const newComponents = [
 	"Breadcrumbs",
 	"IllustratedMessage",
 	"ViewSettingsDialog",
+	"ColorPalettePopover"
 ];
 
 packages.forEach(package => {

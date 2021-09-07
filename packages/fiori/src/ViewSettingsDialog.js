@@ -26,6 +26,9 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-view-settings-dialog",
 	managedSlots: true,
@@ -84,7 +87,7 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the <code>sortItems</code> list.
-		 * @type {sap.ui.webcomponents.fiori.IListItem[]}
+		 * @type {sap.ui.webcomponents.main.IListItem[]}
 		 * @slot sortItems
 		 * @public
 		 */
