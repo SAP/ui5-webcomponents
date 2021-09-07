@@ -127,6 +127,7 @@ class ResponsivePopover extends Popover {
 			await super.showAt(opener, preventInitialFocus);
 		} else {
 			this.style.display = "contents";
+			this.style.zIndex = getNextZIndex();
 			await this._dialog.show(preventInitialFocus);
 		}
 	}
