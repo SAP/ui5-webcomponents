@@ -1,5 +1,7 @@
-commit 894628fa2dc7225936bb1609037054c7d9243f8e
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Sep 3 17:26:00 2021 +0300
+commit 7efd0bec3bc7a6cadfd1436241fb89e255f912ba
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Sep 7 01:52:33 2021 -0700
 
-    feat(ui5-color-palette-popover): initial implementation (#3746)
+    chore: translation delivery (#3831)
+    
+    Change-Id: I62dd6992b3dbc4fc72abaea6bae40e041cc343ed
