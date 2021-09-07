@@ -13,6 +13,24 @@ import "./dist/illustrations/NoEntries.js";
 import "./dist/illustrations/NoData.js";
 import "./dist/illustrations/NoActivities.js";
 import "./dist/illustrations/BeforeSearch";
+import "./dist/illustrations/tnt/TntCodePlaceholder";
+import "./dist/illustrations/tnt/TntCompany";
+import "./dist/illustrations/tnt/TntExternalLink";
+import "./dist/illustrations/tnt/TntFaceID";
+import "./dist/illustrations/tnt/TntFingerprint";
+import "./dist/illustrations/tnt/TntLock";
+import "./dist/illustrations/tnt/TntMission";
+import "./dist/illustrations/tnt/TntNoApplications";
+import "./dist/illustrations/tnt/TntNoFlows";
+import "./dist/illustrations/tnt/TntNoUsers";
+import "./dist/illustrations/tnt/TntRadar";
+import "./dist/illustrations/tnt/TntServices";
+import "./dist/illustrations/tnt/TntSessionExpired";
+import "./dist/illustrations/tnt/TntSessionExpiring";
+import "./dist/illustrations/tnt/TntSuccess";
+import "./dist/illustrations/tnt/TntSuccessfulAuth";
+import "./dist/illustrations/tnt/TntUnlock";
+import "./dist/illustrations/tnt/TntUnsuccessfulAuth";
 
 // FIORI components
 import Bar from "./dist/Bar.js";

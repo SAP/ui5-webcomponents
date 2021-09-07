@@ -10,7 +10,11 @@ const getScripts = (options) => {
 
 	const port = options.port || 8080; // preferred port
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
-	const illustrationsPath = options.illustrationsPath || "";
+	let illustrations = options.illustrationsPath || [];
+
+	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.destinationPath}`);
+
+	let illustrationsScript = illustrations.join(" && ");
 
 	const scripts = {
 		clean: "rimraf dist && rimraf .port",
@@ -45,7 +49,7 @@ const getScripts = (options) => {
 				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
 			},
 			illustrations: {
-				default: `node "${LIB}/create-illustrations/index.js" ${illustrationsPath} dist/illustrations`
+				default: illustrationsScript
 			}
 		},
 		copy: {

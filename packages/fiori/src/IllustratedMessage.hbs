@@ -2,14 +2,20 @@
 	<div class="ui5-illustrated-message-illustration">
 		{{{effectiveIllustration}}}
 	</div>
+	{{#if hasTitle}}
 	<ui5-title level="H2" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
-	<div class="ui5-illustrated-message-subtitle">
-		{{#if hasFormattedSubtitle}}
-			<slot name="subtitle"></slot>
-		{{else}}
-			{{effectiveSubitleText}}
-		{{/if}}
-	</div>
+	{{/if}}
+
+	{{#if hasSubtitle}}
+		<div class="ui5-illustrated-message-subtitle">
+			{{#if hasFormattedSubtitle}}
+				<slot name="subtitle"></slot>
+			{{else}}
+				{{effectiveSubitleText}}
+			{{/if}}
+		</div>
+	{{/if}}
+
 	{{#if hasActions}}
 		<div class="ui5-illustrated-message-actions">
 			<slot></slot>
