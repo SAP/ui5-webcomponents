@@ -249,7 +249,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get _periodSliderFocused() {
-		return this._currentSlider === "period";
+		return this._currentSlider === "periods";
 	}
 
 	get _hours() {
@@ -391,7 +391,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get _activeSliders() {
-		return ["hours", "minutes", "seconds", "period"].filter(slider => this[`_has${capitalizeFirst(slider)}Slider`]);
+		return ["hours", "minutes", "seconds", "periods"].filter(slider => this[`_has${capitalizeFirst(slider)}Slider`]);
 	}
 
 	_onfocusin(event) {
