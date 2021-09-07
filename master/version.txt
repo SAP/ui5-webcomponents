@@ -1,7 +1,5 @@
-commit 7efd0bec3bc7a6cadfd1436241fb89e255f912ba
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Sep 7 01:52:33 2021 -0700
+commit c77d9c9ac89f0b45655d1550a7189690f9547a3b
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue Sep 7 12:21:49 2021 +0300
 
-    chore: translation delivery (#3831)
-    
-    Change-Id: I62dd6992b3dbc4fc72abaea6bae40e041cc343ed
+    fix: (ui5-li): add accessible name to single select radio button (#3842)
