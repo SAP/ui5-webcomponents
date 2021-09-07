@@ -272,7 +272,7 @@ class Popover extends Popup {
 		return PopoverTemplate;
 	}
 
-	static get MIN_OFFSET() {
+	static get VIEWPORT_MARGIN() {
 		return 10; // px
 	}
 
@@ -401,14 +401,14 @@ class Popover extends Popup {
 
 		const left = clamp(
 			this._left,
-			Popover.MIN_OFFSET,
-			document.documentElement.clientWidth - popoverSize.width - Popover.MIN_OFFSET,
+			Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
 		const top = clamp(
 			this._top,
-			Popover.MIN_OFFSET,
-			document.documentElement.clientHeight - popoverSize.height - Popover.MIN_OFFSET,
+			Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
 
 		let { arrowX, arrowY } = placement;
@@ -562,7 +562,7 @@ class Popover extends Popup {
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight - Popover.MIN_OFFSET;
+		this._maxContentHeight = maxContentHeight - Popover.VIEWPORT_MARGIN;
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
