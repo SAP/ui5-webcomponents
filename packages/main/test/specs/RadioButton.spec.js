@@ -153,4 +153,14 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(truncatingRbHeight, RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is : " + truncatingRbHeight);
 		assert.ok(wrappingRbHeight > RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is more than: " + RADIOBUTTON_DEFAULT_HEIGHT);
 	});
+
+	it("tests accessibleName", () => {
+		const rbAccName = browser.$("#rb-acc-name");
+		const rbAccNameText = browser.$("#rb-acc-name-text");
+		const RADIOBUTTON_LABEL = "Sample Label";
+		const RADIOBUTTON_TEXT = "Sample Text";
+
+		assert.strictEqual(rbAccName.getProperty("ariaLabelText"), RADIOBUTTON_LABEL, "The ariaLabelledByText includes the accessibleName.");
+		assert.strictEqual(rbAccNameText.getProperty("ariaLabelText"), `${RADIOBUTTON_TEXT} ${RADIOBUTTON_LABEL}`, "The ariaLabelledByText includes both the text and the accessibleName.");
+	});
 });

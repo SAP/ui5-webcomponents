@@ -162,6 +162,19 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the text alternative of the component.
+		 * If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleName: {
+			type: String,
+		},
+
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
@@ -383,8 +396,8 @@ class RadioButton extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+	get ariaLabelText() {
+		return [this.text, this.accessibleName].filter(Boolean).join(" ");
 	}
 
 	get ariaDescribedBy() {

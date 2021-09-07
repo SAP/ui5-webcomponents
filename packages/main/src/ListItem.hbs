@@ -62,6 +62,7 @@
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
 				?disabled="{{isInactive}}"
+				accessible-name="{{_accInfo.ariaLabelRadioButton}}"
 				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
