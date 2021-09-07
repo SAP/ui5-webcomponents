@@ -13,13 +13,16 @@
 
 .ui5-label-root {
 	width: 100%;
+	cursor: inherit;
+}
+
+:host([wrapping-type="Normal"]) .ui5-label-root {
+	white-space: normal;
 }
 
 :host(:not([wrapping-type="Normal"])) .ui5-label-root {
-	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;
-	cursor: inherit;
 	overflow: hidden;
 }
 
