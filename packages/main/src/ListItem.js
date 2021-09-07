@@ -8,7 +8,12 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
-import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX, ARIA_LABEL_LIST_ITEM_RADIO_BUTTON, LIST_ITEM_SELECTED } from "./generated/i18n/i18n-defaults.js";
+import {
+	DELETE,
+	ARIA_LABEL_LIST_ITEM_CHECKBOX,
+	ARIA_LABEL_LIST_ITEM_RADIO_BUTTON,
+	LIST_ITEM_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
