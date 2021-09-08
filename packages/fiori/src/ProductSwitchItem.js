@@ -99,6 +99,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Used to set the selected state of the component. Only one selected in a sequence.
+		 * @private
+		 */
+		selected: {
+			type: Boolean,
+		},
+
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
