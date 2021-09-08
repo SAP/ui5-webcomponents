@@ -391,12 +391,6 @@ class Popover extends Popup {
 			return this.close();
 		}
 
-		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			super._show();
-			this.style.width = this._width;
-			return;
-		}
-
 		this._oldPlacement = placement;
 
 		const left = clamp(

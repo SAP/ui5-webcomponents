@@ -12,24 +12,12 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
-const POPOVER_MIN_WIDTH = 100;
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-
-		/**
-		 * Defines whether the component will stretch to fit its content.
-		 * <br/><b>Note:</b> by default the popover will be as wide as its opener component and will grow if the content is not fitting.
-		 * <br/><b>Note:</b> if set to true, it will take only as much space as it needs.
-		 * @private
-		 */
-		noStretch: {
-			type: Boolean,
-		},
 
 		/**
 		 * Defines if padding would be added around the content.
@@ -135,21 +123,12 @@ class ResponsivePopover extends Popover {
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
 	async showAt(opener, preventInitialFocus = false) {
-		this.style.display = this._isPhone ? "contents" : "";
-
-		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
-			return;
-		}
-
 		if (!isPhone()) {
-			// make popover width be >= of the opener's width
-			if (!this.noStretch) {
-				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
-			}
 			await super.showAt(opener, preventInitialFocus);
 		} else {
+			this.style.display = "contents";
 			this.style.zIndex = getNextZIndex();
-			await this._dialog.show();
+			await this._dialog.show(preventInitialFocus);
 		}
 	}
 
@@ -161,7 +140,7 @@ class ResponsivePopover extends Popover {
 		if (!isPhone()) {
 			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
-			this._dialog.close();
+			this._dialog.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		}
 	}
 
@@ -180,16 +159,6 @@ class ResponsivePopover extends Popover {
 	 */
 	isOpen() {
 		return isPhone() ? this._dialog.isOpen() : super.isOpen();
-	}
-
-	get styles() {
-		const popoverStyles = super.styles;
-
-		popoverStyles.root = {
-			"min-width": `${this._minWidth}px`,
-		};
-
-		return popoverStyles;
 	}
 
 	get _dialog() {
