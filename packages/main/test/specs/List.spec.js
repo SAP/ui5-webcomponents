@@ -348,4 +348,25 @@ describe("List Tests", () => {
 
 		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
 	});
+
+	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', () => {
+		const growingListButton = $('#growingListButton').shadow$("div[growing-button-inner]");
+		const nextInteractiveElement = $('#nextInteractiveElement');
+			
+		growingListButton.click() // focus growing button
+		growingListButton.keys("Tab") // focus next list
+
+		assert.strictEqual(nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
+	});
+
+	it('should include selected state text in accInfo', () => {
+		const notSelectedItem = $("#listSelectedItem #not-selected-country");
+		const selectedItem = $("#listSelectedItem #selected-country");
+
+		let accInfo = notSelectedItem.getProperty("_accInfo")
+		assert.strictEqual(accInfo.listItemAriaLabel, null, "Item label is empty");
+
+		accInfo = selectedItem.getProperty("_accInfo");
+		assert.strictEqual(accInfo.listItemAriaLabel, "Selected", "Selected text is part of the label");
+	});
 });
