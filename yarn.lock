@@ -796,10 +796,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.19":
-  version "11.1.19"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.19.tgz#301b8085807cd410e5c7269cca55cd4ca385534c"
-  integrity sha512-0RIoniX0XgQDMfMsySvNDeXVGtH3UQRQMkJYFIkaq/nrTGSyfXT9k+B4CbTf4546dyrlLM0YoaHIOtxmMsh1ZA==
+"@sap-theming/theming-base-content@11.1.31":
+  version "11.1.31"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.31.tgz#0c23390b3b103a40abe5472b7f27a3e8fdaf3acb"
+  integrity sha512-ePVChOam4vL/m+TeTrn6yeBFGxOUv0FK1HQtHJTQsugSCOdHAXXsa06kObPBPAn9k1HenUbF4IFmxMjEnjgd+g==
 
 "@sindresorhus/is@^2.0.0":
   version "2.1.1"
