@@ -12,7 +12,7 @@ const getScripts = (options) => {
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
 	let illustrations = options.illustrationsPath || [];
 
-	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.destinationPath}`);
+	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 
 	let illustrationsScript = illustrations.join(" && ");
 

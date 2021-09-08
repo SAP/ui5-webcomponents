@@ -8,12 +8,14 @@ const options = {
 			path: "src/illustrations",
 			defaultText: true,
 			illustrationsPrefix: "sapIllus",
+			set: "fiori",
 			destinationPath: "dist/illustrations",
 		},
 		{
 			path: "src/illustrations/tnt",
 			defaultText: false,
 			illustrationsPrefix: "tnt",
+			set: "tnt",
 			destinationPath: "dist/illustrations/tnt",
 		},
 	]

@@ -100,9 +100,10 @@ const metadata = {
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
 		 * <br><br>
-		 * <b>Note:</b> You can import TNT illustrations like this:
+		 * <b>Note:</b> TNT illustrations cointain <code>Tnt</code> prefix in their name.
+		 * You can import them removing the <code>Tnt</code> prefix like this:
 		 * <br>
-		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/TntSessionExpired.js";</code>
+		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -297,11 +298,11 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	get hasTitle() {
-		return this.titleText || this.illustrationTitle
+		return this.titleText || this.illustrationTitle;
 	}
 
 	get hasSubtitle() {
-		return this.subtitleText || this.illustrationSubtitle
+		return this.subtitleText || this.illustrationSubtitle;
 	}
 
 	get hasActions() {
