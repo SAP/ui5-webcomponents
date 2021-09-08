@@ -369,4 +369,10 @@ describe("List Tests", () => {
 		accInfo = selectedItem.getProperty("_accInfo");
 		assert.strictEqual(accInfo.listItemAriaLabel, "Selected", "Selected text is part of the label");
 	});
+
+	it('group headers should not be with role options', () => {
+		const groupHeader = $("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
+
+		assert.strictEqual(groupHeader.getAttribute("role"), "group", "Item label is empty");
+	});
 });
