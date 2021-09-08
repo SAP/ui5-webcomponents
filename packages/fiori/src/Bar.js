@@ -147,10 +147,10 @@ class Bar extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleResizeBound = this.resizeHandler.bind(this);
+		this._handleResizeBound = this.handleResize.bind(this);
 	}
 
-	resizeHandler() {
+	handleResize() {
 		const bar = this.getDomRef();
 		let changeFlex = false;
 		const barWidth = bar.offsetWidth;
