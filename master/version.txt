@@ -1,5 +1,5 @@
-commit e3134eeec506db5a88223879b4d8abcd5cd5eac6
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Sep 8 01:16:53 2021 -0700
+commit 292401069c1807160c3212843e1cd1fcd683f232
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed Sep 8 11:23:21 2021 +0300
 
-    Translation Delivery (#3858)
+    fix(ui5-li): add "Selected" text to item's accessible name (#3853)
