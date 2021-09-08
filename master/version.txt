@@ -1,5 +1,5 @@
-commit 539b87309b673f1c31b70d15fcca2b2996e14504
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Wed Sep 8 11:40:44 2021 +0300
+commit 3f007fd814989b6e9d8fa746ffdedf2bd5564a42
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Wed Sep 8 12:11:59 2021 +0300
 
-    refactor(ui5-responsive-popover): Simplify "stretch" logic (#3846)
+    fix(ui5-product-switch-item): no-wrap title behavior added when subtitle is not present (#3800)
