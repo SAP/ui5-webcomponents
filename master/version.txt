@@ -1,5 +1,5 @@
-commit 292401069c1807160c3212843e1cd1fcd683f232
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed Sep 8 11:23:21 2021 +0300
+commit 539b87309b673f1c31b70d15fcca2b2996e14504
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Wed Sep 8 11:40:44 2021 +0300
 
-    fix(ui5-li): add "Selected" text to item's accessible name (#3853)
+    refactor(ui5-responsive-popover): Simplify "stretch" logic (#3846)
