@@ -75,6 +75,23 @@ const metadata = {
 		 * <li><code>NoTasks</code></li>
 		 * <li><code>UnableToLoad</code></li>
 		 * <li><code>UnableToUpload</code></li>
+		 * <li><code>TntCompany</code></li>
+		 * <li><code>TntExternalLink</code></li>
+		 * <li><code>TntFaceID</code></li>
+		 * <li><code>TntFingerprint</code></li>
+		 * <li><code>TntLock</code></li>
+		 * <li><code>TntMission</code></li>
+		 * <li><code>TntNoApplications</code></li>
+		 * <li><code>TntNoFlows</code></li>
+		 * <li><code>TntNoUsers</code></li>
+		 * <li><code>TntRadar</code></li>
+		 * <li><code>TntServices</code></li>
+		 * <li><code>TntSessionExpired</code></li>
+		 * <li><code>TntSessionExpiring</code></li>
+		 * <li><code>TntSuccess</code></li>
+		 * <li><code>TntSuccessfulAuth</code></li>
+		 * <li><code>TntUnlock</code></li>
+		 * <li><code>TntUnsuccessfulAuth</code></li>
 		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
@@ -82,6 +99,11 @@ const metadata = {
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
+		 * <br><br>
+		 * <b>Note:</b> TNT illustrations cointain <code>Tnt</code> prefix in their name.
+		 * You can import them removing the <code>Tnt</code> prefix like this:
+		 * <br>
+		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -273,6 +295,14 @@ class IllustratedMessage extends UI5Element {
 
 	get effectiveSubitleText() {
 		return this.subtitleText ? this.subtitleText : this.illustrationSubtitle;
+	}
+
+	get hasTitle() {
+		return this.titleText || this.illustrationTitle;
+	}
+
+	get hasSubtitle() {
+		return this.subtitleText || this.illustrationSubtitle;
 	}
 
 	get hasActions() {
