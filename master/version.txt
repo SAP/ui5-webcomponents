@@ -1,7 +1,5 @@
-commit e30991edf7bc75b25446bee927db1987321b5440
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Sep 9 05:46:59 2021 -0700
+commit 8333f5e2018fb8f609d2d2d191e28e74c16bdfe2
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Thu Sep 9 16:50:23 2021 +0300
 
-    chore: translation delivery (#3877)
-    
-    Change-Id: Ic0666f6a009e7bea95d4faa068eae6f14c42b42e
+    fix(ui5-label): wrapping now works when used in CustomListItem (#3852)
