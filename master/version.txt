@@ -1,5 +1,5 @@
-commit 9c709e48d0be816585b9a9a3267d6658558b42f3
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Sep 9 17:07:28 2021 +0300
+commit cb394449849ac81f5b951e1a20ff20d874f1f4df
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Thu Sep 9 17:25:40 2021 +0300
 
-    chore(ui5-illustrated-message): improve docs (#3880)
+    fix(ui5-side-navigation): fix rtl behaviour (#3774)
