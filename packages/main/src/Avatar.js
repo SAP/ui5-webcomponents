@@ -322,12 +322,14 @@ class Avatar extends UI5Element {
 		};
 	}
 
-	_onclick(event) {
-		if (this.interactive) {
-			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation();
-			this.fireEvent("click");
-		}
+	onBeforeRendering() {
+		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+	}
+
+	_onClickHandler(event) {
+		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+		event.stopPropagation();
+		this.fireEvent("click");
 	}
 
 	_onkeydown(event) {
