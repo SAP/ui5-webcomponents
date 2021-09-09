@@ -1,5 +1,7 @@
-commit 0ade371d6064729a466b03f6ddd7ba88705c1204
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Sep 8 16:22:30 2021 +0300
+commit e30991edf7bc75b25446bee927db1987321b5440
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Sep 9 05:46:59 2021 -0700
 
-    feat(ui5-illustrated-message): add TNT illustration set (#3857)
+    chore: translation delivery (#3877)
+    
+    Change-Id: Ic0666f6a009e7bea95d4faa068eae6f14c42b42e
