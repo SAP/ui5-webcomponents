@@ -131,7 +131,7 @@ const metadata = {
  * Each illustration has default internationalised title and subtitle texts. Also they can be managed with
  * <code>titleText</code> and <code>subtitleText</code> properties.
  *
- * То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
+ * To display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
  * <br><br>
  * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
