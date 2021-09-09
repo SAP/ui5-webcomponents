@@ -143,3 +143,8 @@
 [dir="rtl"] .ui5-nli-footer-showMore {
 	margin-right: 1rem;
 }
+
+[dir=rtl] .ui5-prio-icon {
+	padding-left: .5rem;
+	padding-right: 0rem;
+}
