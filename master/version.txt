@@ -1,5 +1,5 @@
-commit 8333f5e2018fb8f609d2d2d191e28e74c16bdfe2
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Thu Sep 9 16:50:23 2021 +0300
+commit 9c709e48d0be816585b9a9a3267d6658558b42f3
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Sep 9 17:07:28 2021 +0300
 
-    fix(ui5-label): wrapping now works when used in CustomListItem (#3852)
+    chore(ui5-illustrated-message): improve docs (#3880)
