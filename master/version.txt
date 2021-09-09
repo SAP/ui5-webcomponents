@@ -1,5 +1,20 @@
-commit cb394449849ac81f5b951e1a20ff20d874f1f4df
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Thu Sep 9 17:25:40 2021 +0300
+commit 2723bd42ee66ee7d494e6e945fbdc7c9d12f8214
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Thu Sep 9 20:10:18 2021 +0300
 
-    fix(ui5-side-navigation): fix rtl behaviour (#3774)
+    chore(deps): bump axios from 0.21.1 to 0.21.4 (#3885)
+    
+    Bumps [axios](https://github.com/axios/axios) from 0.21.1 to 0.21.4.
+    - [Release notes](https://github.com/axios/axios/releases)
+    - [Changelog](https://github.com/axios/axios/blob/master/CHANGELOG.md)
+    - [Commits](https://github.com/axios/axios/compare/v0.21.1...v0.21.4)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: axios
+      dependency-type: indirect
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
