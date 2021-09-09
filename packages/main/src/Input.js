@@ -892,6 +892,7 @@ class Input extends UI5Element {
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
+			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this.fireEvent(this.EVENT_CHANGE);
 
