@@ -1,5 +1,7 @@
-commit 521a9f52942c5a87342d9caf95da6fa53a4975d2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Sep 10 14:19:53 2021 +0300
+commit 99136328213ba51bbeb48e48b8455d4d37af52f6
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Fri Sep 10 14:48:04 2021 +0300
 
-    chore: Use nodejs 14 and upgrade dependencies (#3892)
+    fix(ui5-popover): fix arrow placement when reaching a border (#3821)
+    
+    Fixes: #3391
