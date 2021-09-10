@@ -190,6 +190,19 @@ class ColorPalettePopover extends UI5Element {
 		this.fireEvent("item-click", event.detail);
 	}
 
+	/**
+	 * Returns if the component is opened.
+	 *
+	 * @protected
+	 * @since 1.0.0-rc.16
+	 * @returns {boolean}
+	 */
+	isOpen() {
+		this._respPopover();
+
+		return this.responsivePopover.opened;
+	}
+
 	get colorPaletteColors() {
 		return this.getSlottedNodes("colors");
 	}
