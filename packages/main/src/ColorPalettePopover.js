@@ -191,8 +191,9 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	/**
-	 * Tells if the component is opened
-	 * @public
+	 * Returns if the component is opened.
+	 *
+	 * @protected
 	 * @since 1.0.0-rc.16
 	 * @returns {boolean}
 	 */
