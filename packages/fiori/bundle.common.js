@@ -35,6 +35,8 @@ import "./dist/illustrations/tnt/UnsuccessfulAuth";
 // FIORI components
 import Bar from "./dist/Bar.js";
 import BarcodeScannerDialog from "./dist/BarcodeScannerDialog.js";
+import FilterItem from "./dist/FilterItem.js";
+import FilterItemOption from "./dist/FilterItemOption.js";
 import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
 import IllustratedMessage from "./dist/IllustratedMessage.js";
 import ProductSwitch from "./dist/ProductSwitch.js";
@@ -45,6 +47,7 @@ import SideNavigationSubItem from "./dist/SideNavigationSubItem.js";
 import Page from "./dist/Page.js";
 import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";
+import SortItem from "./dist/SortItem.js";
 import Timeline from "./dist/Timeline.js";
 import UploadCollection from "./dist/UploadCollection.js";
 import UploadCollectionItem from "./dist/UploadCollectionItem.js";
