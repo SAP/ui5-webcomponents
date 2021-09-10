@@ -428,7 +428,7 @@ class ComboBox extends UI5Element {
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
 
-	_focusout() {
+	_focusout(event) {
         const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
         if (focusedOutToValueStateMessage) {
             event.stopImmediatePropagation();
