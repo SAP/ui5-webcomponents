@@ -21,17 +21,20 @@ const transformLine = line => {
 	// before
 	line = line.replace(/(before.*?)(\(\))(\s+=>\s+{)/, "$1async $2$3");
 
+	// element.*
+	line = line.replaceAll(/([a-zA-Z0-9_]+)\.(getText|setText|getValue|getProperty|setValue|setProperty|getAttribute|setAttribute|click|keys|shadow\$|shadow\$\$)\(/g, "await $1.$2(");
+
 	// browser.(url, $, $$, etc...)
 	line = line.replaceAll(/browser\.(.*?)\(/g, "await browser.$1(");
-
-	// element.*
-	line = line.replaceAll(/([a-zA-Z0-9_]+)\.(getText|setText|getValue|getProperty|setValue|setProperty|getAttribute|setAttribute|click|keys)\(/g, "await $1.$2(");
 
 	// browser.execute(() => {
 	line = line.replace(/browser\.execute\(\s*\(\s*\)\s*=>\s*{/, "browser.executeAsync(done => {");
 
 	// browser.execute((param, param, param) => {
 	line = line.replace(/browser\.execute\(\s*\(\s*(.*?)\s*\)\s*\s*=>\s*{/, "browser.executeAsync(($1, done) => {");
+
+	// = $(
+	line = line.replace(/= \$\(/, "= await browser.$(");
 
 	return line;
 };
