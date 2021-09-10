@@ -1,10 +1,5 @@
-commit 10660303c13e2e25414c7d2effba83b39c90e936
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Sep 9 20:24:28 2021 +0300
+commit a46327d93776a9b1afb1da6d293b46f8bf90716b
+Author: Maxi Dietz <maxidietz96@gmail.com>
+Date:   Fri Sep 10 09:52:32 2021 +0200
 
-    fix(ui5-color-palette-popover): fix event params (#3873)
-    
-    Prior to this change, you could access the selected colours like this: event.detail.detail.color.
-    Now it is fixed and can be accessed like this: event.detail.color
-    
-    BREAKING CHANGE: The selected color is now available as it is documented: event.detail.color
+    chore: add missing quotation marks in build scripts (#3839)
