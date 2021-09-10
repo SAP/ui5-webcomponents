@@ -112,9 +112,9 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the <code>sortItems</code> list.
-		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents/dist/SortItem";</code>
+		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 		 *
-		 * @type {sap.ui.webcomponents.main.SortItem[]}
+		 * @type {sap.ui.webcomponents.fiori.SortItem[]}
 		 * @slot sortItems
 		 * @public
 		 */
@@ -124,7 +124,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>filterItems</code> list.
-		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents/dist/FilterItem";</code>
+		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 		 *
 		 * @type {sap.ui.webcomponents.fiori.FilterItem[]}
 		 * @slot filterItems
@@ -566,6 +566,8 @@ class ViewSettingsDialog extends UI5Element {
 	_restoreConfirmedOnEscape(evt) {
 		if (evt.detail.escPressed) {
 			this._cancelSettings();
+			this._currentMode = "Sort";
+			this._filterStepTwo = false;
 		}
 	}
 
