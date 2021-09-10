@@ -1,5 +1,5 @@
-commit b112765b9fa05d3783187dee6a7b5f64d25b8f6d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Sep 10 14:09:52 2021 +0300
+commit 521a9f52942c5a87342d9caf95da6fa53a4975d2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Sep 10 14:19:53 2021 +0300
 
-    feat(ui5-color-palette-popover): implement isOpen method (#3883)
+    chore: Use nodejs 14 and upgrade dependencies (#3892)
