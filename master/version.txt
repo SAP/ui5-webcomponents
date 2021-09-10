@@ -1,5 +1,5 @@
-commit a46327d93776a9b1afb1da6d293b46f8bf90716b
-Author: Maxi Dietz <maxidietz96@gmail.com>
-Date:   Fri Sep 10 09:52:32 2021 +0200
+commit 75023c13bdc1cc3f1f65ca702f89b5b5dc788ba3
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Fri Sep 10 11:42:29 2021 +0300
 
-    chore: add missing quotation marks in build scripts (#3839)
+    fix(ui5-card): exploratory testing issues (#3881)
