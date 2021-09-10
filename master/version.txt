@@ -1,9 +1,5 @@
-commit c6487145046273ba2faa8f36ef22c9b2f18ed0c0
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Fri Sep 10 14:56:14 2021 +0300
+commit 52987c2046ac705812931b389fb2670f8eb6206b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Sep 10 17:02:02 2021 +0300
 
-    fix(ui5-dialog): fix console warning from exploratory testing (#3893)
-    
-    There is no ResizeHandler warning when a dialog is created dynamically
-    
-    Fixes: #3620
+    feat(ui5-view-settings-dialog): introduce filter section (#3616)
