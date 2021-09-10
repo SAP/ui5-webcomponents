@@ -195,6 +195,10 @@ class CardHeader extends UI5Element {
 	get ariaLabelledByHeader() {
 		const labels = [];
 
+		if (this.titleText) {
+			labels.push(`${this._id}-title`);
+		}
+
 		if (this.subtitleText) {
 			labels.push(`${this._id}-subtitle`);
 		}
@@ -226,7 +230,9 @@ class CardHeader extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
-	_headerClick() {
+	_headerClick(event) {
+		event.stopImmediatePropagation(); // prevents the native browser "click" event from firing
+
 		if (this.interactive) {
 			this.fireEvent("click");
 		}

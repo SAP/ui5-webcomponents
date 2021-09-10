@@ -8,7 +8,12 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
-import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-defaults.js";
+import {
+	DELETE,
+	ARIA_LABEL_LIST_ITEM_CHECKBOX,
+	ARIA_LABEL_LIST_ITEM_RADIO_BUTTON,
+	LIST_ITEM_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -340,7 +345,8 @@ class ListItem extends ListItemBase {
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
-			listItemAriaLabel: undefined,
+			ariaLabelRadioButton: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
+			listItemAriaLabel: this.ariaSelected ? this.i18nBundle.getText(LIST_ITEM_SELECTED) : undefined,
 		};
 	}
 

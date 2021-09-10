@@ -37,7 +37,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
 		 * @type {HTMLElement[]}
-         * @since 1.0.0-rc.15
+		 * @since 1.0.0-rc.15
 		 * @slot content
 		 * @public
 		 */
@@ -111,26 +111,16 @@ class Card extends UI5Element {
 		};
 	}
 
-	get hasHeader() {
+	get _hasHeader() {
 		return !!this.header.length;
 	}
 
-	get ariaCardRoleDescription() {
+	get _ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
 
-	get ariaCardContentLabel() {
+	get _ariaCardContentLabel() {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
-	}
-
-	get ariaLabelledByCard() {
-		let labels;
-		if (this.hasHeader) {
-			labels = this.header[0].hasAttribute("title-text") ? `${this._id}--header-title ${this._id}-desc` : `${this._id}-desc`;
-		} else {
-			labels = `${this._id}-desc`;
-		}
-		return labels;
 	}
 
 	static get dependencies() {

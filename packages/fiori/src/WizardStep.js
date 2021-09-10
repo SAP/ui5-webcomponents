@@ -105,7 +105,7 @@ const metadata = {
 		/**
 		 * Sets the accessible aria name of the component.
 		 *
-		 * @type {boolean}
+		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -116,7 +116,7 @@ const metadata = {
 
 		/**
 		 * Defines the aria-labelledby of the step.
-		 * @type {boolean}
+		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
