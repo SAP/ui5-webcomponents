@@ -17,7 +17,7 @@ UI5 Web Components are shipped as ES6 modules and published on NPM. If you are a
 Any ES6 module-capable front-end tooling can be used, but in case you don’t already have a preference, you can start a new project using [Vite](https://vitejs.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
 
 ```console
-npm init @vitejs/app
+npm init vite
 ```
 
 - Select a project name: `my-webcomponents-app`
