@@ -45,7 +45,7 @@
 	<div class="snippet">
 		<ui5-input
 			id="suggestions-input"
-			class="samples-responsive-padding-bottom"
+			class="samples-responsive-margin-bottom"
 			placeholder="Start typing country name"
 			show-suggestions
 		></ui5-input>
@@ -90,7 +90,7 @@
 	var ui5_database_entries = ["Argentina", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark", '...'];
 
 	var input = document.getElementById("suggestions-input");
-	
+
 	// listen for the input event
 	input.addEventListener("input", event => {
 		var value = input.value;
@@ -141,7 +141,7 @@
 <section>
 	<h3>Input with Suggestions and Value State message</h3>
 	<div class="snippet">
-		<ui5-input class="samples-margin samples-responsive-margin-bottom" id="value-state-suggestions" class="samples-responsive-padding-bottom" placeholder="Start typing country name" show-suggestions value-state="Warning">
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" id="value-state-suggestions" placeholder="Start typing country name" show-suggestions value-state="Warning">
 		</ui5-input>
 
 		<ui5-input class="samples-margin samples-responsive-margin-bottom" placeholder="Choose content density" show-suggestions value-state="Error">
@@ -183,7 +183,7 @@
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-input id="value-state-suggestions" class="samples-responsive-padding-bottom" placeholder="Start typing country name" show-suggestions value-state="Warning">
+<ui5-input id="value-state-suggestions" class="samples-responsive-margin-bottom" placeholder="Start typing country name" show-suggestions value-state="Warning">
 </ui5-input>
 
 <ui5-input placeholder="Choose content density" show-suggestions value-state="Error">
