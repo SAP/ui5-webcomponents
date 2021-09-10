@@ -1,5 +1,5 @@
-commit 75023c13bdc1cc3f1f65ca702f89b5b5dc788ba3
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Fri Sep 10 11:42:29 2021 +0300
+commit b112765b9fa05d3783187dee6a7b5f64d25b8f6d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Sep 10 14:09:52 2021 +0300
 
-    fix(ui5-card): exploratory testing issues (#3881)
+    feat(ui5-color-palette-popover): implement isOpen method (#3883)
