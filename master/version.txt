@@ -1,7 +1,9 @@
-commit 99136328213ba51bbeb48e48b8455d4d37af52f6
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Fri Sep 10 14:48:04 2021 +0300
+commit c6487145046273ba2faa8f36ef22c9b2f18ed0c0
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Fri Sep 10 14:56:14 2021 +0300
 
-    fix(ui5-popover): fix arrow placement when reaching a border (#3821)
+    fix(ui5-dialog): fix console warning from exploratory testing (#3893)
     
-    Fixes: #3391
+    There is no ResizeHandler warning when a dialog is created dynamically
+    
+    Fixes: #3620
