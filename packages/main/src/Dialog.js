@@ -286,10 +286,7 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-
-		if (this._screenResizeHandler) {
-			this._detachResizeHandlers();
-		}
+		this._detachResizeHandlers();
 	}
 
 	onAfterRendering() {
