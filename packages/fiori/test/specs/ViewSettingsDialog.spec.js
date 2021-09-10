@@ -11,7 +11,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = browser.$("#vsd");
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText(), "Ascending", "initially sortOrder has correct value");
+		assert.ok(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText().includes("Ascending"), "initially sortOrder has correct value");
 		assert.notOk(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").isExisting(), "initially sortBy should not have an option selected");
 
 		browser.keys("Escape");
@@ -28,7 +28,7 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText(), "Descending", "SortOrder should properly change value");
+		assert.ok(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText().includes("Descending"), "SortOrder should properly change value");
 
 		browser.keys("Escape");
 	});
@@ -45,7 +45,7 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText(), "Name", "sortBy should  have an option selected");
+		assert.ok(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText().includes("Name"), "sortBy should  have an option selected");
 
 		browser.keys("Escape");
 	});
@@ -55,13 +55,13 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = browser.$("#vsd");
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText(), "Name", "sortBy should have an option selected");
+		assert.ok(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText().includes("Name"), "sortBy should have an option selected");
 
 		viewSettingsDialog.shadow$("[sort-by]").$$("ui5-li")[1].click();
 		viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText(), "Position", "sortBy should change selected option");
+		assert.ok(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText().includes("Position"), "sortBy should change selected option");
 
 		browser.keys("Escape");
 	})
@@ -71,8 +71,8 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = browser.$("#vsd");
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText(),"Position", "sortBy should have an option selected");
-		assert.strictEqual(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText(), "Descending", "sortOrder should have correct option selected");
+		assert.ok(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText().includes("Position"),  "sortBy should have an option selected");
+		assert.ok(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText().includes("Descending"), "sortOrder should have correct option selected");
 	
 		viewSettingsDialog.shadow$("ui5-list").$$("ui5-li")[0].click();
 		viewSettingsDialog.shadow$$("ui5-li")[0].click();
@@ -80,8 +80,8 @@ describe("ViewSettingsDialog general interaction", () => {
 		viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button")[1].click();
 		btnOpenDialog.click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText(),"Position", "sortBy should not have a change in the selected option");
-		assert.strictEqual(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText(), "Descending", "sortOrder should not have a change in the selected option");
+		assert.ok(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText().includes("Position"), "sortBy should not have a change in the selected option");
+		assert.ok(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText().includes("Descending"), "sortOrder should not have a change in the selected option");
 
 		browser.keys("Escape");
 	})
@@ -93,7 +93,7 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
 
-		assert.strictEqual(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText(), "Ascending", "sortOrder has returned to the initial state");
+		assert.ok(viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText().includes("Ascending"), "sortOrder has returned to the initial state");
 		assert.notOk(viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").isExisting(), "sortBy has returned to the initial state");
 		
 		viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button")[1].click();

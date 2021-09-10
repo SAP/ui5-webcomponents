@@ -98,6 +98,15 @@ const IListItem = "sap.ui.webcomponents.main.IListItem";
 const IMultiComboBoxItem = "sap.ui.webcomponents.main.IMultiComboBoxItem";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
+ *
+ * @name sap.ui.webcomponents.main.ISegmentedButtonItem
+ * @interface
+ * @public
+ */
+const ISegmentedButtonItem = "sap.ui.webcomponents.main.ISegmentedButtonItem";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
  * @name sap.ui.webcomponents.main.ISelectOption
@@ -172,6 +181,7 @@ export {
 	IInputSuggestionItem,
 	IListItem,
 	IMultiComboBoxItem,
+	ISegmentedButtonItem,
 	ISelectOption,
 	ITab,
 	ITableCell,

@@ -86,6 +86,10 @@ class GroupHeaderListItem extends ListItemBase {
 		return this.i18nBundle.getText(GROUP_HEADER_TEXT);
 	}
 
+	get ariaLabelText() {
+		return [this.textContent, this.accessibleName].filter(Boolean).join(" ");
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),

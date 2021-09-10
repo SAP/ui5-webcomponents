@@ -2,7 +2,7 @@ const resolve = require("resolve");
 
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
-const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
+const UP_TO_DATE = `node "${hashIsUpToDate}" dist/ hash.txt && echo "Up to date."`;
 
 const scripts = {
 	clean: "rimraf dist",
@@ -11,7 +11,7 @@ const scripts = {
 	build: `${UP_TO_DATE} || nps lint clean copy hash`,
 	watch: `nps "copy --watch --skip-initial-copy"`,
 	start: "nps watch",
-	hash: `node ${generateHash} dist/ hash.txt`,
+	hash: `node "${generateHash}" dist/ hash.txt`,
 };
 
 module.exports = {

@@ -1,0 +1,16 @@
+.ui5-cp-header {
+	width: 100%;
+	height: var(--_ui5_color-palette-button-height);
+	padding: 0 1rem;
+	display: flex;
+	align-items: center;
+}
+
+.ui5-cp-footer {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	margin: 0.1875rem 1rem;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}

@@ -30,6 +30,9 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-view-settings-dialog",
 	managedSlots: true,
@@ -109,7 +112,9 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the <code>sortItems</code> list.
-		 * @type {sap.ui.webcomponents.fiori.IListItem[]}
+		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents/dist/SortItem";</code>
+		 *
+		 * @type {sap.ui.webcomponents.main.SortItem[]}
 		 * @slot sortItems
 		 * @public
 		 */
@@ -119,7 +124,9 @@ const metadata = {
 
 		/**
 		 * Defines the <code>filterItems</code> list.
-		 * @type {sap.ui.webcomponents.fiori.ListItem}
+		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents/dist/FilterItem";</code>
+		 *
+		 * @type {sap.ui.webcomponents.fiori.FilterItem[]}
 		 * @slot filterItems
 		 * @public
 		 */
@@ -167,8 +174,9 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-view-settings-dialog</code> component helps the user to sort data within a list or a table.
- * It consists of several lists like <code>Sort order</code> which is built-in and <code>Sort By</code> which must be provided by the developer.
- * The selected options can be used to create sorters for the table.
+ * It consists of several lists like <code>Sort order</code> which is built-in and <code>Sort By</code> and <code>Filter By</code> lists,
+ * for which you must be provide items(<code>ui5-sort-item</code> & <code>ui5-filter-item</code> respectively)
+ * These options can be used to create sorters for a table.
  *
  * The <code>ui5-view-settings-dialog</code> interrupts the current application processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
