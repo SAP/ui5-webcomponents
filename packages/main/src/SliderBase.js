@@ -415,10 +415,6 @@ class SliderBase extends UI5Element {
 		const step = this._effectiveStep;
 		const newValue = SliderBase.getValueFromInteraction(event, step, min, max, domRect, directionStart);
 
-		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
-		}
-
 		// Mark start of a user interaction
 		this._isUserInteraction = true;
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
@@ -452,10 +448,6 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	handleUpBase(valueType) {
-		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
-		}
-
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 
