@@ -111,9 +111,7 @@
 		<ui5-avatar-group aria-haspopup="menu" type="Individual" id="avatar-group-individual">
 			<ui5-avatar interactive size="XL" aria-haspopup="menu" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
 			<ui5-avatar interactive size="XL" aria-haspopup="dialog" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="listbox" initials="XL">
-				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
-			</ui5-avatar>
+			<ui5-avatar interactive size="XL" aria-haspopup="listbox" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" aria-haspopup="tree" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" aria-haspopup="grid" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" aria-haspopup="none" initials="XL"></ui5-avatar>
@@ -331,17 +329,9 @@
 	}
 
 	function onAvatarClicked(avatarGroup, avatarRef) {
-		var avatarRefImages;
-
+		popAvatar.image = avatarRef.image;
 		popAvatar.initials = avatarRef.initials;
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
-
-		if (avatarRef.image.length) {
-			avatarRefImage = avatarRef.image[0].cloneNode();
-			popAvatar.appendChild (avatarRefImage);
-		} else if (popAvatar.image.length) {
-			popAvatar.removeChild(popAvatar.image[0])
-		}
 
 		individualPop.close();
 		individualPop.showAt(avatarRef);
