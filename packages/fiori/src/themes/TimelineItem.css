@@ -65,7 +65,6 @@
 }
 
 :host([layout="Vertical"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
-	/* bottom: -1.625rem; */
 	bottom: var(--_ui5_timeline_tli_indicator_before_bottom); 
 }
 
