@@ -429,14 +429,14 @@ class ComboBox extends UI5Element {
 	}
 
 	_focusout(event) {
-        const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
-        if (focusedOutToValueStateMessage) {
-            event.stopImmediatePropagation();
-        }else{
-            this.focused = false;
-            this._fireChangeEvent();
-            !isPhone() && this._closeRespPopover();
-        }
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
+		if (focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
+		} else {
+			this.focused = false;
+			this._fireChangeEvent();
+			!isPhone() && this._closeRespPopover();
+		}
 	}
 
 	_afterOpenPopover() {
