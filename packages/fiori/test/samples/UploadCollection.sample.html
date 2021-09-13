@@ -88,7 +88,7 @@
 					// if there is a file ready to be uploaded send request
 					if (item.uploadState === "Ready" && item.file) {
 						var oXHR = new XMLHttpRequest();
-						
+
 						oXHR.open("POST", "/upload", true);
 						oXHR.onreadystatechange = function () {
 							if (this.status !== 200) {
@@ -107,7 +107,7 @@
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-upload-collection id="uploadCollection">
+	<ui5-upload-collection id="uploadCollection" mode="Delete">
 	<div slot="header" class="header">
 		<ui5-title>Uploaded (2)</ui5-title>
 		<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
@@ -132,7 +132,7 @@
 		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 		Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
 	</ui5-upload-collection-item>
-</ui5-upload-collection>	
+</ui5-upload-collection>
 
 <script>
 	const createThumbnail = fileName => {
@@ -177,6 +177,10 @@
 				item.uploadState="Uploading";
 			}
 		});
+	});
+
+	uploadCollection.addEventListener("ui5-item-delete", event => {
+			uploadCollection.removeChild(event.detail.item)
 	});
 </script>
 	</xmp></pre>
