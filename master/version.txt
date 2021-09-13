@@ -1,5 +1,5 @@
-commit 75aef88cec609fb9f346a9ad1a13030b6940def6
-Author: a-z-ivanov <alexander.ivanov01@sap.com>
-Date:   Mon Sep 13 11:01:33 2021 +0300
+commit f6bce94cb9632d713b7123c75b16c755515e25c9
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Mon Sep 13 12:21:29 2021 +0300
 
-    fix(ui5-date-picker): calendar horizontal center align (#3905)
+    fix(ui5 card): exploratory testing issues (#3894)
