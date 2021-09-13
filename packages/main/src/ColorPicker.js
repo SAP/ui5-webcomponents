@@ -181,7 +181,6 @@ class ColorPicker extends UI5Element {
 		};
 
 		this.selectedHue = 0;
-		this._maxAlpha = 1;
 
 		this.mouseDown = false;
 	}
@@ -189,9 +188,10 @@ class ColorPicker extends UI5Element {
 	onBeforeRendering() {
 		// we have the color & _mainColor properties here
 		this._color = getRGBColor(this.color);
+		const tempColor = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, 1)`;
 		this._setHex();
 		this._setValues();
-		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", this.color);
+		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", tempColor);
 	}
 
 	async onAfterRendering() {
@@ -323,17 +323,22 @@ class ColorPicker extends UI5Element {
 			r: this._color.r,
 			g: this._color.g,
 			b: this._color.b,
-		}, this._maxAlpha);
+		});
 	}
 
 	_handleHueInput(event) {
 		this.selectedHue = event.target.value;
-		this._setMainColor(this._hue);
+		this._setMainColor(this.selectedHue);
 		this._setColor({
 			r: this._mainColor.r,
 			g: this._mainColor.g,
 			b: this._mainColor.b,
-		}, this._maxAlpha);
+		});
+
+		// const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
+		// if (tempColor) {
+		// 	this._setColor(HSLToRGB(tempColor));
+		// }
 	}
 
 	_handleHEXChange(event) {
@@ -350,7 +355,7 @@ class ColorPicker extends UI5Element {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
-			this._setColor(HEXToRGB(this.hex), this._alpha);
+			this._setColor(HEXToRGB(this.hex));
 		}
 	}
 
@@ -369,9 +374,11 @@ class ColorPicker extends UI5Element {
 		case "blue":
 			tempColor = { ...this._color, b: targetValue };
 			break;
+		default:
+			tempColor = { ...this._color };
 		}
 
-		this._setColor(tempColor, this._alpha);
+		this._setColor(tempColor);
 	}
 
 	_setMainColor(hueValue) {
@@ -427,7 +434,7 @@ class ColorPicker extends UI5Element {
 
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
-			this._setColor(HSLToRGB(tempColor), this._alpha);
+			this._setColor(HSLToRGB(tempColor));
 		}
 	}
 
@@ -457,8 +464,8 @@ class ColorPicker extends UI5Element {
 		r: undefined,
 		g: undefined,
 		b: undefined,
-	}, alpha = undefined) {
-		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+	}) {
+		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 
 		this.fireEvent("change");
 	}
@@ -483,10 +490,10 @@ class ColorPicker extends UI5Element {
 
 	_setValues() {
 		const hslColours = RGBToHSL(this._color);
-		this._selectedCoordinates = {
-			x: ((Math.round(hslColours.l * 100) * 2.56)) - 6.5, // Center the coordinates, because of the width of the circle
-			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
-		};
+		// this._selectedCoordinates = {
+		// 	x: ((Math.round(hslColours.l * 100) * 2.56)) - 6.5, // Center the coordinates, because of the width of the circle
+		// 	y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
+		// };
 
 		this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
 		this._setMainColor(this._hue);
