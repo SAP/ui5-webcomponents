@@ -3,15 +3,17 @@
 	role="region"
 	aria-roledescription="{{_roleDescription}}"
 	@drop="{{_ondrop}}">
-	<div class="ui5-uc-header">
-		<slot name="header"></slot>
-	</div>
 	<div class="{{classes.content}}">
 		<ui5-list
+			accessible-name="{{accessibleName}}"
 			mode="{{mode}}"
 			@ui5-selection-change="{{_onSelectionChange}}"
 			@ui5-item-delete="{{_onItemDelete}}"
 		>
+			{{!-- forward slot header to inner list slot header --}}
+			{{#if header.length}}
+				<slot slot="header" name="header"></slot>
+			{{/if}}
 			<slot></slot>
 		</ui5-list>
 		{{#if _showNoData}}
