@@ -5,6 +5,7 @@
 	border-radius: 0.25rem;
 	display: inline-block;
 	margin: var(--_ui5_color-palette-item-margin);
+	box-sizing: border-box;
 }
 
 :host(:not([_disabled]):hover) {
@@ -28,6 +29,12 @@
 	height: 100%;
 }
 
+.ui5-cp-item:hover {
+	border: 1px solid var(--sapGroup_ContentBackground);
+	border-radius: 0.25rem; 
+	box-sizing: border-box;
+}
+
 :host(:not([_disabled])) .ui5-cp-item:focus{
 	outline: none;
 }
@@ -40,10 +47,10 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: 0.125rem;
-	top: 0.125rem;
-	right: 0.125rem;
-	bottom: 0.125rem;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
 	border: 0.0625rem solid white;
 	pointer-events: none;
 }
@@ -52,10 +59,10 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: 0.125rem;
-	top: 0.125rem;
-	right: 0.125rem;
-	bottom: 0.125rem;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
 	border: 0.0625rem dotted black;
 	pointer-events: none;
 }
