@@ -93,7 +93,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-list</code> is indented.
+		 * Determines whether the component is indented.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
