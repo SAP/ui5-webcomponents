@@ -5,6 +5,7 @@
 	border-radius: 0.25rem;
 	display: inline-block;
 	margin: var(--_ui5_color-palette-item-margin);
+	box-sizing: border-box;
 }
 
 :host(:not([_disabled]):hover) {
@@ -26,6 +27,12 @@
 	position: relative;
 	width: 100%;
 	height: 100%;
+}
+
+.ui5-cp-item:hover {
+	border: 1px solid var(--sapGroup_ContentBackground);
+	border-radius: 0.25rem; 
+	box-sizing: border-box;
 }
 
 :host(:not([_disabled])) .ui5-cp-item:focus{
