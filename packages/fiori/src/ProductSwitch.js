@@ -156,7 +156,7 @@ class ProductSwitch extends UI5Element {
 		}
 	}
 
-	handleProductSwitchItemClick = function(event) {
+	handleProductSwitchItemClick(event) {
 		event.target.parentNode.querySelectorAll("ui5-product-switch-item").forEach(function(item) {
 			item.selected = false;
 		})
