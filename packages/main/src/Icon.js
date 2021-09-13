@@ -247,12 +247,10 @@ class Icon extends UI5Element {
 		}
 	}
 
-	_onclick(event) {
-		if (this.interactive) {
-			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation();
-			this.fireEvent("click");
-		}
+	_onClickHandler(event) {
+		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+		event.stopPropagation();
+		this.fireEvent("click");
 	}
 
 	get _dir() {
@@ -338,6 +336,8 @@ class Icon extends UI5Element {
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
+
+		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;

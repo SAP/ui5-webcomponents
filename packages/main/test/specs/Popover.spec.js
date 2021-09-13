@@ -109,7 +109,7 @@ describe("Popover general interaction", () => {
 	it("tests if overflown content can be reached by scrolling (with header and arrow)", () => {
 		const bigPopover = $("#big-popover");
 		const items = bigPopover.$$("ui5-li");
-		const openBigPopoverButton = $("#big-popover-button")
+		const openBigPopoverButton = $("#big-popover-button");
 
 		openBigPopoverButton.click();
 

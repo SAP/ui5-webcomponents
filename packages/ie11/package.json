@@ -24,8 +24,8 @@
   },
   "dependencies": {
     "@ui5/webcomponents-base": "1.0.0-rc.15",
-    "lit-html": "2.0.0-rc.3",
     "css-vars-ponyfill": "^2.4.3",
+    "lit-html": "2.0.0-rc.3",
     "regenerator-runtime": "0.13.7",
     "url-search-params-polyfill": "^8.1.0"
   },
