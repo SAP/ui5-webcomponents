@@ -573,7 +573,13 @@ class ComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if ((indexOfItem === 0 && isArrowUp) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
+		if (indexOfItem === 0 && isArrowUp) {
+			this.focused = true;
+			this._itemFocused = false;
+			this._clearFocus();
+		}
+
+		if ((this.focused === true && isArrowUp) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
 			return;
 		}
 
