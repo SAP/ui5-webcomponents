@@ -1,5 +1,5 @@
-commit 833040d60fb7c65c6a0caf1104685bd91adcc382
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Sep 13 13:00:23 2021 +0300
+commit 0c315022b0e02000d9c9ecc922926f875856733d
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Sep 13 13:19:36 2021 +0300
 
-    fix(ui5-avatar): documentation improvements (#3909)
+    fix(ui5-timeline): align indicator in compact mode (#3902)
