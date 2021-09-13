@@ -1,5 +1,5 @@
-commit f6bce94cb9632d713b7123c75b16c755515e25c9
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Mon Sep 13 12:21:29 2021 +0300
+commit dee93fa585e6ebb8cff540d4c72f6bd82ec8792a
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Sep 13 12:42:33 2021 +0300
 
-    fix(ui5 card): exploratory testing issues (#3894)
+    fix(ui5-flexible-column-layout): documentation improvement (#3908)
