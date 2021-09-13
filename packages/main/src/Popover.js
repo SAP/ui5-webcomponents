@@ -392,18 +392,27 @@ class Popover extends Popup {
 		}
 
 		this._oldPlacement = placement;
+		this.actualPlacementType = placement.placementType;
 
-		const left = clamp(
+		let left = clamp(
 			this._left,
 			Popover.VIEWPORT_MARGIN,
 			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
-		const top = clamp(
+		if (this.actualPlacementType === PopoverPlacementType.Right) {
+			left = Math.max(left, this._left);
+		}
+
+		let top = clamp(
 			this._top,
 			Popover.VIEWPORT_MARGIN,
 			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
+
+		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
+			top = Math.max(top, this._top);
+		}
 
 		let { arrowX, arrowY } = placement;
 
@@ -414,7 +423,7 @@ class Popover extends Popup {
 		} else if (popoverOnRightBorderOffset > 0) {
 			arrowX += popoverOnRightBorderOffset;
 		}
-		this.arrowTranslateX = arrowX;
+		this.arrowTranslateX = Math.round(arrowX);
 
 		const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - this._top;
 		const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
@@ -423,9 +432,7 @@ class Popover extends Popup {
 		} else if (popoverOnBottomBorderOffset > 0) {
 			arrowY += popoverOnBottomBorderOffset;
 		}
-		this.arrowTranslateY = arrowY;
-
-		this.actualPlacementType = placement.placementType;
+		this.arrowTranslateY = Math.round(arrowY);
 
 		Object.assign(this.style, {
 			top: `${top}px`,
