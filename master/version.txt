@@ -1,7 +1,5 @@
-commit 96203c23e493ab5966174c2cdb3f3aed16a2b3bb
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Mon Sep 13 00:55:57 2021 -0700
+commit 75aef88cec609fb9f346a9ad1a13030b6940def6
+Author: a-z-ivanov <alexander.ivanov01@sap.com>
+Date:   Mon Sep 13 11:01:33 2021 +0300
 
-    chore: translation delivery (#3900)
-    
-    Change-Id: Iacd2664ef14a2757d01c23b38ae6bf6c0f2fd44e
+    fix(ui5-date-picker): calendar horizontal center align (#3905)
