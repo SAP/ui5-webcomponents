@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.17](https://github.com/SAP/ui5-webcomponents/compare/v0.31.16...v0.31.17) (2021-09-13)
+
+
+### Bug Fixes
+
+* **ui5-li:** add "Selected" text to item's accessible name ([#3853](https://github.com/SAP/ui5-webcomponents/issues/3853)) ([d73bba1](https://github.com/SAP/ui5-webcomponents/commit/d73bba1))
+
+
+### Features
+
+* **ui5-view-settings-dialog:** introduce filter section ([#3616](https://github.com/SAP/ui5-webcomponents/issues/3616)) ([89e07b1](https://github.com/SAP/ui5-webcomponents/commit/89e07b1))
+
+
+
+
+
 ## [0.31.16](https://github.com/SAP/ui5-webcomponents/compare/v0.31.15...v0.31.16) (2021-08-26)
 
 

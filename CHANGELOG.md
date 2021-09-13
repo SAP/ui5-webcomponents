@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.17](https://github.com/SAP/ui5-webcomponents/compare/v0.31.16...v0.31.17) (2021-09-13)
+
+
+### Bug Fixes
+
+* **ui5-avatar, ui5-icon:** attach onclick handler based on interactive property ([#3742](https://github.com/SAP/ui5-webcomponents/issues/3742)) ([e61f46f](https://github.com/SAP/ui5-webcomponents/commit/e61f46f))
+* **ui5-badge:** update parameters for color-scheme="8" ([#3814](https://github.com/SAP/ui5-webcomponents/issues/3814)) ([3ea8cad](https://github.com/SAP/ui5-webcomponents/commit/3ea8cad))
+* **ui5-dialog:** correctly restore body scrolling on ESC ([#3696](https://github.com/SAP/ui5-webcomponents/issues/3696)) ([983af6a](https://github.com/SAP/ui5-webcomponents/commit/983af6a)), closes [#3690](https://github.com/SAP/ui5-webcomponents/issues/3690)
+* **ui5-li:** add "Selected" text to item's accessible name ([#3853](https://github.com/SAP/ui5-webcomponents/issues/3853)) ([d73bba1](https://github.com/SAP/ui5-webcomponents/commit/d73bba1))
+* **ui5-li-groupheader:** change role option ([#3869](https://github.com/SAP/ui5-webcomponents/issues/3869)) ([b6219c7](https://github.com/SAP/ui5-webcomponents/commit/b6219c7))
+* (ui5-li): add accessible name to single select radio button ([#3842](https://github.com/SAP/ui5-webcomponents/issues/3842)) ([eda250f](https://github.com/SAP/ui5-webcomponents/commit/eda250f))
+
+
+### Features
+
+* **ui5-calendar:** support secondary calendar type ([#3634](https://github.com/SAP/ui5-webcomponents/issues/3634)) ([3d04792](https://github.com/SAP/ui5-webcomponents/commit/3d04792))
+* **ui5-view-settings-dialog:** introduce filter section ([#3616](https://github.com/SAP/ui5-webcomponents/issues/3616)) ([89e07b1](https://github.com/SAP/ui5-webcomponents/commit/89e07b1))
+
+
+
+
+
 ## [0.31.16](https://github.com/SAP/ui5-webcomponents/compare/v0.31.15...v0.31.16) (2021-08-26)
 
 

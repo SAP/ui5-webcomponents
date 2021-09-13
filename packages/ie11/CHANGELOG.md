@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.17](https://github.com/SAP/ui5-webcomponents/compare/v0.31.16...v0.31.17) (2021-09-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-ie11
+
+
+
+
+
 ## [0.31.16](https://github.com/SAP/ui5-webcomponents/compare/v0.31.15...v0.31.16) (2021-08-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-ie11
