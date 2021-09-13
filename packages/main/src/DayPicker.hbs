@@ -6,6 +6,7 @@
 	@click={{_onclick}}
 	@mouseover={{_onmouseover}}
 	@focusin={{_onfocusin}}
+	@focusout={{_onfocusout}}
 >
 
 	<div id="{{_id}}-content" class="ui5-dp-content" role="grid" aria-roledescription="Calendar">
@@ -38,8 +39,13 @@
 										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
 									>
-											{{this.iDay}}
+										{{this.day}}
 									</span>
+									{{#if this._isSecondaryCalendarType}}
+										<span class="ui5-dp-daytext ui5-dp-daysectext" >
+											{{this.secondDay}}
+										</span>
+									{{/if}}
 							</div>
 						{{else}}
 							{{#unless this.isHidden}}

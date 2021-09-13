@@ -72,7 +72,7 @@ describe("Breadcrumbs general interaction", () => {
 			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
-		// Act: 
+		// Act:
 		// shrink the length of the last link from the overflow,
 		// to make it small enough => eligible to be moved outside the overflow
 		shortenLinkTextBtn.click();
@@ -83,17 +83,21 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("updates layout when link content removed", () => {
 		const breadcrumbs = $("#breadcrumbs1"),
-			shortenLinkTextBtn = $("#shortenLinkTextBtn"),
-			link = breadcrumbs.shadow$$("ui5-link")[1],
-			linkId = link.getProperty("id"),
+			shortenLinkTextBtn = $("#shortenLinkTextBtn");
+
+		let	link = breadcrumbs.shadow$$("ui5-link")[1];
+
+		const linkId = link.getProperty("id"),
 			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
-		// Act: 
+		// Act:
 		// shrink the length of the last link to make it empty
 		shortenLinkTextBtn.click();
 
-		// Check: a link is taken out of the overflow, to fill the space left after removing 
+		link = breadcrumbs.shadow$$("ui5-link")[1];
+
+		// Check: a link is taken out of the overflow, to fill the space left after removing
 		assert.notEqual(link.getProperty("id"), linkId, "another link is rendrered in the place of the empty item");
 		assert.ok(link.getText(), "the new link is non-empty");
 		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is taken out of the overflow");
@@ -111,14 +115,14 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(lastItem.getText(), "", "the item has no text");
 		assert.strictEqual(breadcrumbs.shadow$$("#" + lastLinkId).length, 0, "the link for empty item is not rendered");
 
-		// Act: 
+		// Act:
 		// add text of the last link to make it non-empty
 		extendLinkTextBtn.click();
 
 		// Check
 		assert.strictEqual(breadcrumbs.shadow$$("#" + lastLinkId).length, 1, "the link for non-empty item is rendered");
 		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is added to the overflow");
-	}); 
+	});
 
 	it("opens upon space", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);

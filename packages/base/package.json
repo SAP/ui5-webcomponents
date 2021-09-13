@@ -35,11 +35,11 @@
     "lit-html": "2.0.0-rc.3"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.15",
     "@buxlabs/amd-to-es6": "0.16.0",
     "@openui5/sap.ui.core": "1.87.3",
+    "@ui5/webcomponents-tools": "1.0.0-rc.15",
     "array-uniq": "^2.0.0",
-    "chromedriver": "92.0.0",
+    "chromedriver": "93.0.1",
     "copy-and-watch": "^0.1.5",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",

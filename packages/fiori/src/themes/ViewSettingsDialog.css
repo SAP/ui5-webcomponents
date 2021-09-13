@@ -7,6 +7,30 @@
 	width: 100%;
 }
 
+.ui5-vsd-header > ui5-bar {
+	height: 4rem;
+}
+
+.ui5-vsd-title {
+	margin-bottom: 0.3rem;
+}
+
+.ui5-vsd-start {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui5-vsd-bar-title {
+	display: flex;
+	flex-direction: column;
+	margin-left: .5rem;
+}
+
+.ui5-vsd-back-button {
+	margin-right: .5rem;
+}
+
 .ui5-vsd-footer {
 	width: 100%;
 	display: flex;
@@ -26,7 +50,7 @@
 	height: 100%;
 }
 
-.ui5-vsd-sort [ui5-li-groupheader] {
+[ui5-li-groupheader] {
 	overflow: hidden;
 }
 

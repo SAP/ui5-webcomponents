@@ -34,6 +34,8 @@ import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
+import applyDirection from "./dist/locale/applyDirection.js";
+
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -51,4 +53,5 @@ window["sap-ui-webcomponents-bundle"] = {
 	fetchI18nBundle,
 	getI18nBundle,
 	renderFinished,
+	applyDirection,
 };

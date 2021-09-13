@@ -27,8 +27,9 @@ class WithStaticArea extends UI5Element {
 
 	static get template() {
 		return element => {
+			// access effectiveDir getter to mark control as RTL-aware (test changes dir attribute and expects rerender)
 			return html`
-				<div>
+				<div dir=${element.effectiveDir}>
 					WithStaticArea works!
 				</div>`;
 		};

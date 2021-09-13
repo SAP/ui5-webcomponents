@@ -1,15 +1,14 @@
 # Custom Theming with `SAP Theme Designer`
 
-UI5 Web Components are fully compatible with `SAP Theme Designer`. You can create your own theme and effortlessly 
-integrate it in your UI5 Web Components project on HTML level! On top, this does not prevent you from switching to
-and from officially supported themes, while having your own.  
+UI5 Web Components are fully compatible with `SAP Theme Designer`, a tool for building a custom theme. You can create your own theme and effortlessly integrate it in your UI5 Web Components project on HTML level! On top, this does not prevent you from switching to and from officially supported themes, while having your own.
 
-Follow this simple tutorial to get a custom theme running with UI5 Web Components in 5 minutes:
+<b>*Note:*</b> The `SAP Theme Designer` is available for SAP customers only. We are currently working on a new tool, that will be publicly available.
+
+Follow this simple tutorial to build a custom theme running with UI5 Web Components in 5 minutes:
 
 1. Open **SAP Theme Designer**.
 
-	Go to [ui5.sap.com](https://ui5.sap.com) and select `Tools` -> `UI Theme Designer` from the menu, or just follow the
-	[direct link](https://themedesigner-themedesigner.dispatcher.hanatrial.ondemand.com/index.html).
+	Go to the [official docs](https://help.sap.com/viewer/09f6818d8e064537973102d6289e2aca/Cloud/en-US/935325fb130d41449362181fb6020dd0.html) and set up the Theme Designer, or just open the [Demo Theme Designer](https://themedesigner-themedesignerdemo.dispatcher.eu2.hana.ondemand.com/index.html).
 
 2. Create your **custom theme** in `SAP Theme Designer`.
 

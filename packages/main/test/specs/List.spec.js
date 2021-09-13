@@ -377,4 +377,21 @@ describe("List Tests", () => {
 
 		assert.strictEqual(nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
 	});
+
+	it('should include selected state text in accInfo', () => {
+		const notSelectedItem = $("#listSelectedItem #not-selected-country");
+		const selectedItem = $("#listSelectedItem #selected-country");
+
+		let accInfo = notSelectedItem.getProperty("_accInfo")
+		assert.strictEqual(accInfo.listItemAriaLabel, null, "Item label is empty");
+
+		accInfo = selectedItem.getProperty("_accInfo");
+		assert.strictEqual(accInfo.listItemAriaLabel, "Selected", "Selected text is part of the label");
+	});
+
+	it('group headers should not be with role options', () => {
+		const groupHeader = $("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
+
+		assert.strictEqual(groupHeader.getAttribute("role"), "group", "Item label is empty");
+	});
 });

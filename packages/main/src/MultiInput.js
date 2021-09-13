@@ -49,7 +49,6 @@ const metadata = {
 		 */
 		tokens: {
 			type: HTMLElement,
-			multiple: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
