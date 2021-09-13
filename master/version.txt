@@ -1,5 +1,7 @@
-commit 52987c2046ac705812931b389fb2670f8eb6206b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Sep 10 17:02:02 2021 +0300
+commit 96203c23e493ab5966174c2cdb3f3aed16a2b3bb
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Mon Sep 13 00:55:57 2021 -0700
 
-    feat(ui5-view-settings-dialog): introduce filter section (#3616)
+    chore: translation delivery (#3900)
+    
+    Change-Id: Iacd2664ef14a2757d01c23b38ae6bf6c0f2fd44e
