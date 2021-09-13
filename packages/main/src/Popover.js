@@ -391,12 +391,6 @@ class Popover extends Popup {
 			return this.close();
 		}
 
-		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			super._show();
-			this.style.width = this._width;
-			return;
-		}
-
 		this._oldPlacement = placement;
 
 		const left = clamp(
@@ -413,21 +407,21 @@ class Popover extends Popup {
 
 		let { arrowX, arrowY } = placement;
 
-		const popoverOnLeftBorder = this._left === 0;
-		const popoverOnRightBorder = this._left + popoverSize.width >= document.documentElement.clientWidth;
-		if (popoverOnLeftBorder) {
-			arrowX -= Popover.VIEWPORT_MARGIN;
-		} else if (popoverOnRightBorder) {
-			arrowX += Popover.VIEWPORT_MARGIN;
+		const popoverOnLeftBorderOffset = Popover.VIEWPORT_MARGIN - this._left;
+		const popoverOnRightBorderOffset = this._left + popoverSize.width + Popover.VIEWPORT_MARGIN - document.documentElement.clientWidth;
+		if (popoverOnLeftBorderOffset > 0) {
+			arrowX -= popoverOnLeftBorderOffset;
+		} else if (popoverOnRightBorderOffset > 0) {
+			arrowX += popoverOnRightBorderOffset;
 		}
 		this.arrowTranslateX = arrowX;
 
-		const popoverOnTopBorder = this._top === 0;
-		const popoverOnBottomBorder = this._top + popoverSize.height >= document.documentElement.clientHeight;
-		if (popoverOnTopBorder) {
-			arrowY -= Popover.VIEWPORT_MARGIN;
-		} else if (popoverOnBottomBorder) {
-			arrowY += Popover.VIEWPORT_MARGIN;
+		const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - this._top;
+		const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
+		if (popoverOnTopBorderOffset > 0) {
+			arrowY -= popoverOnTopBorderOffset;
+		} else if (popoverOnBottomBorderOffset > 0) {
+			arrowY += popoverOnBottomBorderOffset;
 		}
 		this.arrowTranslateY = arrowY;
 
