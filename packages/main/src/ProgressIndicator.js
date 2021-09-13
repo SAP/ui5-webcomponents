@@ -63,7 +63,7 @@ const metadata = {
 		 * <li>If there is no value provided or the value is empty, the default percentage value is shown.</li>
 		 * <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li>
 		 * </ul>
-		 * 
+		 *
 		 * @type {string}
 		 * @public
 		 */
