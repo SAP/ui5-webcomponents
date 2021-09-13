@@ -453,7 +453,7 @@ class TextArea extends UI5Element {
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 		this.focused = false;
 
-		if(!focusedOutToValueStateMessage) {
+		if (!focusedOutToValueStateMessage) {
 			this._openValueStateMsgPopover = false;
 		}
 	}
