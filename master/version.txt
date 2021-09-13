@@ -1,5 +1,5 @@
-commit 53f909da4e3d74bf3e6fe0276762517b6e8aa974
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Sep 13 15:48:27 2021 +0300
+commit 8ad1fdd156011aeb83c5fddc3a1a89988d8eeba8
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Sep 13 18:06:24 2021 +0300
 
-    docs(ui5-list):  improve documentation (#3907)
+    fix(ui5-color-palette): align space between swatches (#3912)
