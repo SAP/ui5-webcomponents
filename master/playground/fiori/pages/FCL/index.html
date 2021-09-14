@@ -836,6 +836,9 @@
 			}
 
 			if (target === "col3close") {
+				if (fclApp.media === "phone") {
+					endFullScreen = true;
+				}
 				if (endFullScreen) {
 					enterFullScreen();
 					return "MidColumnFullScreen";

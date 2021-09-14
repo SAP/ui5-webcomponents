@@ -1,5 +1,5 @@
-commit a5910ffc7f0947037ed402614ffb7275af8bf683
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Sep 14 16:48:11 2021 +0300
+commit 47a292fcd3e3767d9f314b4a60b08010ff1b359d
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Tue Sep 14 16:59:13 2021 +0300
 
-    docs: fix datepicker docs (#3770)
+    docs(ui5-flexible-column-layout): Fixed sample on mobile not closing the last column (#3802)
