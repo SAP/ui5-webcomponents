@@ -80,6 +80,18 @@ describe("UploadCollection", () => {
 			assert.strictEqual(uploadingItemHiddenTerminate.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
 			assert.strictEqual(uploadingItemHiddenTerminate.shadow$("ui5-button[icon=stop]").isDisplayed(), false, "terminate button is visible");
 		});
+
+		it("should forward 'header' and 'accessible-name' to the inner list", () => {
+			const uploadCollection = browser.$("#uploadCollection");
+			const innerList = uploadCollection.shadow$("ui5-list");
+
+			const headerInnerListSlotContent = browser.execute(() => {
+				return document.getElementById("uploadCollection").shadowRoot.querySelector("ui5-list").shadowRoot.querySelector("slot[name='header']").assignedNodes()[0].assignedNodes()[0].querySelector("#uploadCollectionTitle");
+			});
+
+			assert.strictEqual(uploadCollection.getAttribute("accessible-name"), innerList.getAttribute("accessible-name"), "accessible-name is forwarded");
+			assert.ok(headerInnerListSlotContent, "header is forwarded");
+		});
 	});
 
 	describe("Events", () => {

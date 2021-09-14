@@ -2,15 +2,8 @@
 	display: block;
 }
 
-.ui5-uc-root {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
-
 .ui5-uc-content {
 	position: relative;
-	flex: 1 1 auto;
 }
 
 .ui5-uc-content.ui5-uc-content-no-data {
