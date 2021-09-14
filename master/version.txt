@@ -1,8 +1,5 @@
-commit ea79fb38198f9c138f77251707b9bc2927f901c2
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Sep 14 15:06:57 2021 +0300
+commit a5910ffc7f0947037ed402614ffb7275af8bf683
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Sep 14 16:48:11 2021 +0300
 
-    feat(ui5-upload-collection): Added "accessibleName" property (#3917)
-    
-    Fixes:  #3768
-    Closes:  #3768
+    docs: fix datepicker docs (#3770)

@@ -3045,6 +3045,15 @@
 </section>
 
 <section>
+	<h3>Progress Indicator With Custom Display Value</h3>
+	<div class="snippet">
+        <ui5-progress-indicator value="25" display-value="Custom Display Value"></ui5-progress-indicator>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-progress-indicator</span> <span class="na">value=</span><span class="s">"25"</span> <span class="na">display-value=</span><span class="s">"Custom Display Value"</span><span class="nt">&gt;&lt;/ui5-progress-indicator&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
 	<h3>Progress Indicator With Value State</h3>
 	<div class="snippet">
         <ui5-progress-indicator value-state="None" value="25"></ui5-progress-indicator>
@@ -3109,6 +3118,20 @@
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          displayValue
+                            <br>
+                            <code>display-value</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Specifies the text value to be displayed in the bar.
+            
+            <b>Note:</b> <ul> <li>If there is no value provided or the value is empty, the default percentage value is shown.</li> <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           hideValue
                             <br>
                             <code>hide-value</code>
@@ -3119,7 +3142,7 @@
                             Defines whether the component value is shown.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -3132,7 +3155,7 @@
             <b>Note:</b> If a value greater than 100 is provided, the percentValue is set to 100. In other cases of invalid value, percentValue is set to its default of 0.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
