@@ -1,5 +1,5 @@
-commit 8ad1fdd156011aeb83c5fddc3a1a89988d8eeba8
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon Sep 13 18:06:24 2021 +0300
+commit 952445dae175db5d3fac2acfcb0ac386474fd261
+Author: Maxi Dietz <maxi-dietz96@gmx.de>
+Date:   Tue Sep 14 10:04:38 2021 +0200
 
-    fix(ui5-color-palette): align space between swatches (#3912)
+    fix(ui5-slider): show tooltips when component has focus (#3899)
