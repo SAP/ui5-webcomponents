@@ -56,6 +56,21 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
+		 * Specifies the text value to be displayed in the bar.
+		 *
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li>If there is no value provided or the value is empty, the default percentage value is shown.</li>
+		 * <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li>
+		 * </ul>
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		displayValue: {
+			type: String,
+		},
+		/**
 		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
