@@ -11,6 +11,7 @@
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
+	text-decoration: var(--_ui5_link_text_decoration);
 }
 
 :host([disabled]) {
@@ -56,9 +57,8 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-wrap: normal;
-	text-decoration: none;
 	outline: none;
-	text-decoration: var(--_ui5_link_text_decoration);
+	text-decoration: inherit;
 }
 
 .ui5-link-root,
