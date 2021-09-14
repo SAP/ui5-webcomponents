@@ -194,4 +194,25 @@ describe("TimePicker general interaction", () => {
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of seconds is -1");
 	});
+
+	it("test arrow navigation", () => {
+		// arrange
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html`);
+
+		const timepicker = browser.$("#timepicker3"); //picker with 4 sliders
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#timepicker3");
+
+		// act
+		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+
+		browser.keys("ArrowRight");
+		browser.keys("ArrowRight");
+		browser.keys("ArrowRight");
+
+		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// assert
+		assert.strictEqual(timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).getAttribute("expanded"),
+			"", "the periods slider should be expanded");
+	});
 });
