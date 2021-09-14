@@ -1,5 +1,5 @@
-commit 952445dae175db5d3fac2acfcb0ac386474fd261
-Author: Maxi Dietz <maxi-dietz96@gmx.de>
-Date:   Tue Sep 14 10:04:38 2021 +0200
+commit 6afad2aba0b786d6b93d31d353a29046d9d13cb8
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Sep 14 14:31:06 2021 +0300
 
-    fix(ui5-slider): show tooltips when component has focus (#3899)
+    fix(ui5-popover): fixed initial flickering (#3910)
