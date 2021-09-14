@@ -22,7 +22,7 @@ const transformLine = line => {
 	line = line.replace(/(before.*?)(\(\))(\s+=>\s+{)/, "$1async $2$3");
 
 	// element.*
-	line = line.replaceAll(/([a-zA-Z0-9_]+)\.(\$|\$\$|getText|setText|getValue|getProperty|setValue|setProperty|getAttribute|setAttribute|removeAttribute|click|keys|shadow\$|shadow\$\$|isExisting|isDisplayed|isFocused|isFocusedDeep|hasClass|moveTo|scrollIntoView)\(/g, "await $1.$2(");
+	line = line.replaceAll(/([a-zA-Z0-9_\[\]]+)\.(\$|\$\$|getText|setText|getValue|getProperty|setValue|setProperty|getAttribute|setAttribute|removeAttribute|click|keys|shadow\$|shadow\$\$|isExisting|isDisplayed|isDisplayedInViewport|isFocused|isFocusedDeep|hasClass|moveTo|scrollIntoView|getSize)\(/g, "await $1.$2(");
 
 	// browser.(url, $, $$, etc...)
 	line = line.replaceAll(/browser\.(.*?)\(/g, "await browser.$1(");
