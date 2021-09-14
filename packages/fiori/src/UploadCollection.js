@@ -97,6 +97,18 @@ const metadata = {
 			type: String,
 			defaultValue: UploadCollectionDnDOverlayMode.None,
 		},
+
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleName: {
+			type: String,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
@@ -115,6 +127,10 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-upload-collection</code> header.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided,
+		 * the labelling of the <code>UploadCollection</code> is a responsibility of the application developer.
+		 * <code>accessibleName</code> should be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
