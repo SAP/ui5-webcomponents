@@ -187,7 +187,14 @@ const metadata = {
 			defaultValue: PopoverPlacementType.Right,
 		},
 
-		_maxContentHeight: { type: Integer },
+		_maxContentHeight: {
+			type: Integer,
+			noAttribute: true,
+		},
+		_maxContentWidth: {
+			type: Integer,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
@@ -415,22 +422,28 @@ class Popover extends Popup {
 		}
 
 		let { arrowX, arrowY } = placement;
+		const isVertical = this.actualPlacementType === PopoverPlacementType.Top
+			|| this.actualPlacementType === PopoverPlacementType.Bottom;
 
-		const popoverOnLeftBorderOffset = Popover.VIEWPORT_MARGIN - this._left;
-		const popoverOnRightBorderOffset = this._left + popoverSize.width + Popover.VIEWPORT_MARGIN - document.documentElement.clientWidth;
-		if (popoverOnLeftBorderOffset > 0) {
-			arrowX -= popoverOnLeftBorderOffset;
-		} else if (popoverOnRightBorderOffset > 0) {
-			arrowX += popoverOnRightBorderOffset;
+		if (isVertical) {
+			const popoverOnLeftBorderOffset = Popover.VIEWPORT_MARGIN - this._left;
+			const popoverOnRightBorderOffset = this._left + popoverSize.width + Popover.VIEWPORT_MARGIN - document.documentElement.clientWidth;
+			if (popoverOnLeftBorderOffset > 0) {
+				arrowX -= popoverOnLeftBorderOffset;
+			} else if (popoverOnRightBorderOffset > 0) {
+				arrowX += popoverOnRightBorderOffset;
+			}
 		}
 		this.arrowTranslateX = Math.round(arrowX);
 
-		const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - this._top;
-		const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
-		if (popoverOnTopBorderOffset > 0) {
-			arrowY -= popoverOnTopBorderOffset;
-		} else if (popoverOnBottomBorderOffset > 0) {
-			arrowY += popoverOnBottomBorderOffset;
+		if (!isVertical) {
+			const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - this._top;
+			const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
+			if (popoverOnTopBorderOffset > 0) {
+				arrowY -= popoverOnTopBorderOffset;
+			} else if (popoverOnBottomBorderOffset > 0) {
+				arrowY += popoverOnBottomBorderOffset;
+			}
 		}
 		this.arrowTranslateY = Math.round(arrowY);
 
@@ -478,6 +491,7 @@ class Popover extends Popup {
 		const clientHeight = document.documentElement.clientHeight;
 
 		let maxHeight = clientHeight;
+		let maxWidth = clientWidth;
 
 		let width = "";
 		let height = "";
@@ -525,12 +539,17 @@ class Popover extends Popup {
 		case PopoverPlacementType.Left:
 			left = Math.max(targetRect.left - popoverSize.width - arrowOffset, 0);
 			top = this.getHorizontalTop(targetRect, popoverSize);
+
+			if (!allowTargetOverlap) {
+				maxWidth = targetRect.left - arrowOffset;
+			}
 			break;
 		case PopoverPlacementType.Right:
 			if (allowTargetOverlap) {
 				left = Math.max(Math.min(targetRect.left + targetRect.width + arrowOffset, clientWidth - popoverSize.width), 0);
 			} else {
 				left = targetRect.left + targetRect.width + arrowOffset;
+				maxWidth = clientWidth - targetRect.right - arrowOffset;
 			}
 
 			top = this.getHorizontalTop(targetRect, popoverSize);
@@ -552,18 +571,19 @@ class Popover extends Popup {
 			}
 		}
 
-		let maxContentHeight = Math.round(maxHeight);
+		let maxContentHeight = maxHeight;
 
 		if (this._displayHeader) {
 			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
 			if (headerDomRef) {
-				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
+				maxContentHeight = maxHeight - headerDomRef.offsetHeight;
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight - Popover.VIEWPORT_MARGIN;
+		this._maxContentHeight = Math.round(maxContentHeight - Popover.VIEWPORT_MARGIN);
+		this._maxContentWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
@@ -738,6 +758,7 @@ class Popover extends Popup {
 			...super.styles,
 			content: {
 				"max-height": `${this._maxContentHeight}px`,
+				"max-width": `${this._maxContentWidth}px`,
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
