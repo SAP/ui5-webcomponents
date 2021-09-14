@@ -111,6 +111,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.16
 		 */
 		accessibleName: {
 			type: String,
