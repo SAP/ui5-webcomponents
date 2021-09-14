@@ -1,5 +1,8 @@
-commit 6afad2aba0b786d6b93d31d353a29046d9d13cb8
+commit ea79fb38198f9c138f77251707b9bc2927f901c2
 Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Sep 14 14:31:06 2021 +0300
+Date:   Tue Sep 14 15:06:57 2021 +0300
 
-    fix(ui5-popover): fixed initial flickering (#3910)
+    feat(ui5-upload-collection): Added "accessibleName" property (#3917)
+    
+    Fixes:  #3768
+    Closes:  #3768
