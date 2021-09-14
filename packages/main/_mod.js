@@ -22,7 +22,7 @@ const transformLine = line => {
 	line = line.replace(/(before.*?)(\(\))(\s+=>\s+{)/, "$1async $2$3");
 
 	// element.*
-	line = line.replaceAll(/([a-zA-Z0-9_]+)\.(getText|setText|getValue|getProperty|setValue|setProperty|getAttribute|setAttribute|click|keys|shadow\$|shadow\$\$)\(/g, "await $1.$2(");
+	line = line.replaceAll(/([a-zA-Z0-9_]+)\.(\$|\$\$|getText|setText|getValue|getProperty|setValue|setProperty|getAttribute|setAttribute|removeAttribute|click|keys|shadow\$|shadow\$\$|isExisting|isDisplayed|isFocused|isFocusedDeep|hasClass|moveTo|scrollIntoView)\(/g, "await $1.$2(");
 
 	// browser.(url, $, $$, etc...)
 	line = line.replaceAll(/browser\.(.*?)\(/g, "await browser.$1(");
@@ -36,6 +36,8 @@ const transformLine = line => {
 	// = $(
 	line = line.replace(/= \$\(/, "= await browser.$(");
 
+	line = line.replaceAll(/await await/g, "await");
+
 	return line;
 };
 
@@ -47,5 +49,5 @@ let lines = content.split("\n");
 lines = lines.map(transformLine);
 
 const result = lines.join("\n");
-const newFile = file.replace(/\.js$/, "2.js");
+const newFile = file; //.replace(/\.js$/, "2.js");
 fs.writeFileSync(newFile, result);
