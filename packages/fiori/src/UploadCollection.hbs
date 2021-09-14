@@ -11,9 +11,7 @@
 			@ui5-item-delete="{{_onItemDelete}}"
 		>
 			{{!-- forward slot header to inner list slot header --}}
-			{{#if header.length}}
-				<slot slot="header" name="header"></slot>
-			{{/if}}
+			<slot slot="header" name="header"></slot>
 			<slot></slot>
 		</ui5-list>
 		{{#if _showNoData}}
