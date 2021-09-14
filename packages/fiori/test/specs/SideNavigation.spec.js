@@ -95,6 +95,39 @@ describe("Component Behavior", () => {
 			});
 
 			assert.strictEqual(showHeader, false, "Header is not displayed");
+
+			// clean up
+			browser.$("#sn1").setProperty("collapsed", false);
+		});
+
+		it("Tests tooltips when expanded", () => {
+			const sideNavigation = browser.$("#sn1");
+			const items = sideNavigation.$$("ui5-side-navigation-item");
+			const renderedItems = sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			const firstItemSubItems = items[1].$$("ui5-side-navigation-sub-item");
+		
+			assert.strictEqual(items[0].getAttribute("text"), renderedItems[0].getAttribute("title"), "Text is set as tooltip to root item");
+			assert.strictEqual(firstItemSubItems[0].getAttribute("text"), renderedItems[2].getAttribute("title"), "Text is set as tooltip to sub item");
+		});
+
+		it("Tests tooltips when collapsed", () => {
+			browser.$("#sn1").setProperty("collapsed", true);
+			const sideNavigation = browser.$("#sn1");
+			const items = sideNavigation.$$("ui5-side-navigation-item");
+			const renderedItems = sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+
+			assert.strictEqual(items[0].getAttribute("text"), renderedItems[0].getAttribute("title"), "Text is set as tooltip to root item");
+
+			renderedItems[1].click();
+
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#sn1");
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popoverItems = popover.$("ui5-list").$$("ui5-li");
+
+			assert.strictEqual(items[1].getAttribute("text"), popoverItems[0].getAttribute("title"));
+
+			// clean up
+			browser.$("#sn1").setProperty("collapsed", false);
 		});
 	});
 });
