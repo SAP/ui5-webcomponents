@@ -1,5 +1,8 @@
-commit 47a292fcd3e3767d9f314b4a60b08010ff1b359d
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Tue Sep 14 16:59:13 2021 +0300
+commit 7c45ff75a412dff34622ae2212e2669f5241cf0a
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Tue Sep 14 18:52:03 2021 +0300
 
-    docs(ui5-flexible-column-layout): Fixed sample on mobile not closing the last column (#3802)
+    fix(ui5-badge): update accent colors (#3926)
+    
+    Fixes: #3923
+    Closes: #3923

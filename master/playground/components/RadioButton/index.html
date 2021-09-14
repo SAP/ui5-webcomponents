@@ -3043,15 +3043,15 @@
 <section>
 	<h3>RadioButton in group - navigate via [UP/Right] and [DOWN/Left] arrow keys</h3>
 	<div class="snippet" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-		<div id="radioGroup" class="radio-button-group">
-			<ui5-title>Group of states</ui5-title>
+		<div aria-labelledby="radioGroupTitle1" role="radiogroup" id="radioGroup" class="radio-button-group">
+			<ui5-title id="radioGroupTitle1">Group of states</ui5-title>
 			<ui5-label id="lblRadioGroup">Selected radio: None</ui5-label>
 			<ui5-radio-button text="None" value-state="None" checked name="GroupB"></ui5-radio-button>
 			<ui5-radio-button text="Warning" value-state="Warning" name="GroupB"></ui5-radio-button>
 			<ui5-radio-button text="Error" value-state="Error" name="GroupB"></ui5-radio-button>
 		</div>
-		<div id="radioGroup2" class="radio-button-group">
-			<ui5-title>Group of options</ui5-title>
+		<div aria-labelledby="radioGroupTitle2" role="radiogroup" id="radioGroup2" class="radio-button-group">
+			<ui5-title id="radioGroupTitle2">Group of options</ui5-title>
 			<ui5-label id="lblRadioGroup2">Selected radio: Option A</ui5-label>
 			<ui5-radio-button text="Option A" checked name="GroupC"></ui5-radio-button>
 			<ui5-radio-button text="Option B" value-state="None" name="GroupC"></ui5-radio-button>
@@ -3064,15 +3064,15 @@
 <span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
 
-<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"radioGroup"</span> <span class="na">class=</span><span class="s">"radio-button-group"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-title&gt;</span>Group of states<span class="nt">&lt;/ui5-title&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">aria-labelledby=</span><span class="s">"radioGroupTitle1"</span> <span class="na">role=</span><span class="s">"radiogroup"</span> <span class="na">id=</span><span class="s">"radioGroup"</span> <span class="na">class=</span><span class="s">"radio-button-group"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-title</span> <span class="na">id=</span><span class="s">"radioGroupTitle1"</span><span class="nt">&gt;</span>Group of states<span class="nt">&lt;/ui5-title&gt;</span>
 	<span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"lblRadioGroup"</span><span class="nt">&gt;</span>Selected radio: None<span class="nt">&lt;/ui5-label&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">text=</span><span class="s">"None"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">checked</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">text=</span><span class="s">"Warning"</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">text=</span><span class="s">"Error"</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">name=</span><span class="s">"GroupB"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"radioGroup2"</span> <span class="na">class=</span><span class="s">"radio-button-group"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-title&gt;</span>Group of options<span class="nt">&lt;/ui5-title&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">aria-labelledby=</span><span class="s">"radioGroupTitle2"</span> <span class="na">role=</span><span class="s">"radiogroup"</span> <span class="na">id=</span><span class="s">"radioGroup2"</span> <span class="na">class=</span><span class="s">"radio-button-group"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-title</span> <span class="na">id=</span><span class="s">"radioGroupTitle2"</span><span class="nt">&gt;</span>Group of options<span class="nt">&lt;/ui5-title&gt;</span>
 	<span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"lblRadioGroup2"</span><span class="nt">&gt;</span>Selected radio: Option A<span class="nt">&lt;/ui5-label&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">text=</span><span class="s">"Option A"</span> <span class="na">checked</span> <span class="na">name=</span><span class="s">"GroupC"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>
 	<span class="nt">&lt;ui5-radio-button</span> <span class="na">text=</span><span class="s">"Option B"</span> <span class="na">value-state=</span><span class="s">"None"</span> <span class="na">name=</span><span class="s">"GroupC"</span><span class="nt">&gt;&lt;/ui5-radio-button&gt;</span>
