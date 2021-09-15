@@ -5,8 +5,8 @@
 	hide-arrow
 	_disable-initial-focus
 	@ui5-selection-change={{_listSelectionChange}}
-	@ui5-after-close={{_toggle}}
-	@ui5-after-open={{_toggle}}
+	@ui5-after-close={{_afterClosePicker}}
+	@ui5-after-open={{_afterOpenPicker}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">

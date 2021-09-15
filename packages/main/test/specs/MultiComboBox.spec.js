@@ -218,6 +218,34 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
 		});
+
+		it("Tests if clicking n more will prefilter items before opening the popover", () => {
+			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			browser.setWindowSize(1920, 1080);
+
+			const mcb = $("#more-mcb");
+			const icon = mcb.shadow$("[input-icon]");
+			const nMoreText = mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			mcb.scrollIntoView();
+
+			nMoreText.click();
+
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = popover.$(".ui5-multi-combobox-all-items-list");
+
+			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown (all selected)");
+
+			icon.click();
+
+			assert.notOk(mcb.getProperty("open"), "MultiComboBox should be closed");
+
+			icon.click();
+
+			assert.ok(mcb.getProperty("open"), "MultiComboBox should be closed");
+			assert.strictEqual(list.getProperty("items").length, 4, "4 items should be shown");
+		});
 	});
 
 	describe("keyboard handling", () => {
