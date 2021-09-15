@@ -1,8 +1,8 @@
-commit 7c45ff75a412dff34622ae2212e2669f5241cf0a
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Tue Sep 14 18:52:03 2021 +0300
+commit 5fd1643264ca713ade5d2c8742fff10461d0356b
+Author: Maxi Dietz <maxi-dietz96@gmx.de>
+Date:   Wed Sep 15 09:27:00 2021 +0200
 
-    fix(ui5-badge): update accent colors (#3926)
+    fix(ui5-combo-box): Link in value state message is now accessible (#3901)
     
-    Fixes: #3923
-    Closes: #3923
+    Fixes: #3855
+    Closes: #3855
