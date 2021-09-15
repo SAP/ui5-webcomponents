@@ -575,37 +575,17 @@ class ComboBox extends UI5Element {
 
 		this._isKeyNavigation = true;
 
-		if (indexOfItem === 0 && isArrowUp && !this.hasValueStateText) {
-			this._clearFocus();
-			this.focused = true;
-			this._itemFocused = false;
-			return;
+		if (isArrowDown) {
+			this._handleArrowDown(event, indexOfItem)
 		}
 
-		if (indexOfItem === 0 && isArrowUp && this.hasValueStateText) {
-			this._clearFocus();
-			this._itemFocused = false;
-			this._isValueStateFocused = true;
-			this._filteredItems[0].selected = false;
-			return;
+		if (isArrowUp) {
+			this._handleArrowUp(event, indexOfItem)
 		}
+	}
 
-		if (this.focused && indexOfItem === -1 && isArrowDown && this.hasValueStateText) {
-			this._isValueStateFocused = true;
-			this.focused = false;
-			return;
-		}
-
-		if (this._isValueStateFocused & isArrowUp) {
-			this.focused = true;
-			this._isValueStateFocused = false;
-			return;
-		}
-
+	_handleItemNavigation(event, indexOfItem) {
 		this._clearFocus();
-
-		indexOfItem += isArrowDown ? 1 : -1;
-		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
 		this._filteredItems[indexOfItem].focused = true;
 		this.focused = false;
 
@@ -636,6 +616,41 @@ class ComboBox extends UI5Element {
 
 		this.fireEvent("input");
 		this._fireChangeEvent();
+	}
+
+	_handleArrowDown(event, indexOfItem) {
+		if (this.focused && indexOfItem === -1 && this.hasValueStateText) {
+			this._isValueStateFocused = true;
+			this.focused = false;
+			return;
+		}
+
+		this._handleItemNavigation(event, ++indexOfItem)
+	}
+
+	_handleArrowUp(event, indexOfItem) {
+		if (indexOfItem === 0 && !this.hasValueStateText) {
+			this._clearFocus();
+			this.focused = true;
+			this._itemFocused = false;
+			return;
+		}
+
+		if (indexOfItem === 0 && this.hasValueStateText) {
+			this._clearFocus();
+			this._itemFocused = false;
+			this._isValueStateFocused = true;
+			this._filteredItems[0].selected = false;
+			return;
+		}
+
+		if (this._isValueStateFocused) {
+			this.focused = true;
+			this._isValueStateFocused = false;
+			return;
+		}
+
+		this._handleItemNavigation(event, --indexOfItem)
 	}
 
 	_keydown(event) {
