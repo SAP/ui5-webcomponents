@@ -408,7 +408,6 @@ class ComboBox extends UI5Element {
 			this.responsivePopover.close(false, false, true);
 		}
 
-		this._itemFocused = false;
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
 	}
@@ -591,7 +590,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (this.focused && isArrowDown && this.hasValueStateText) {
+		if (this.focused && indexOfItem === -1 && isArrowDown && this.hasValueStateText) {
 			this._isValueStateFocused = true;
 			this.focused = false;
 			return;
@@ -650,6 +649,7 @@ class ComboBox extends UI5Element {
 		if (isEnter(event)) {
 			this._fireChangeEvent();
 			this._closeRespPopover();
+			this.focused = true;
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
@@ -663,7 +663,9 @@ class ComboBox extends UI5Element {
 			});
 
 			if (selectedItem) {
+				this._itemFocused = true;
 				selectedItem.focused = true;
+				this.focused = false;
 			}
 		}
 	}
