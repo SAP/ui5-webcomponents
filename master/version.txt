@@ -1,8 +1,5 @@
-commit 5fd1643264ca713ade5d2c8742fff10461d0356b
-Author: Maxi Dietz <maxi-dietz96@gmx.de>
-Date:   Wed Sep 15 09:27:00 2021 +0200
+commit ccca6716d922453dc949ecc21c97c021055494c7
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Wed Sep 15 15:38:22 2021 +0300
 
-    fix(ui5-combo-box): Link in value state message is now accessible (#3901)
-    
-    Fixes: #3855
-    Closes: #3855
+    fix(ui5-label): adjust colon margins (#3897)
