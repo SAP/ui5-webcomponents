@@ -96,7 +96,7 @@ const metadata = {
 		/**
 		 * Define the <code>aria-level</code> attribute of the component
 		 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
-		 * @public
+		 * @private
 		 * @type {Integer}
 		 * @defaultValue 3
 		 */
