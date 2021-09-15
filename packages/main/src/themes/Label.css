@@ -17,12 +17,11 @@
 	display: inline-block;
 	white-space: nowrap;
 	cursor: inherit;
-	overflow: hidden;
 }
 
-bdi{
-    content: "";
-	padding-right: 0.15625rem;
+bdi {
+	content: "";
+	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
 }
 
 :host(:not([wrap])) .ui5-label-text-wrapper {
@@ -48,6 +47,10 @@ bdi{
 
 :host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
 	max-width: calc(100% - .2rem);
+}
+
+:host([show-colon]) .ui5-label-required-colon {
+	margin-left: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {

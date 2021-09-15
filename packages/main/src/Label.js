@@ -42,7 +42,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether semi-colon is added to the <code>ui5-label</code> text.
+		 * Defines whether colon is added to the component text.
 		 * <br><br>
 		 * <b>Note:</b> Usually used in forms.
 		 * @type {boolean}
