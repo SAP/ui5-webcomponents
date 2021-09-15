@@ -188,6 +188,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_isValueStateFocused: {
+			type: Boolean,
+		},
+
 		/**
 		 * Sets the accessible aria name of the component.
 		 *
@@ -389,13 +393,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this._selectMatchingItem();
-
-		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
-			this.focused = false;
-		} else if (this.shadowRoot.activeElement) {
-			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
-		}
-
 		this._initialRendering = false;
 		this._isKeyNavigation = false;
 	}
@@ -417,7 +414,7 @@ class ComboBox extends UI5Element {
 	}
 
 	shouldClosePopover() {
-		return this.responsivePopover.opened && !this.focused && !this._itemFocused;
+		return this.responsivePopover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(event) {
@@ -573,13 +570,36 @@ class ComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if (indexOfItem === 0 && isArrowUp) {
-			this.focused = true;
-			this._itemFocused = false;
-			this._clearFocus();
+		if ((this.focused === true && isArrowUp) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
+			return;
 		}
 
-		if ((this.focused === true && isArrowUp) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
+		this._isKeyNavigation = true;
+
+		if (indexOfItem === 0 && isArrowUp && !this.hasValueStateText) {
+			this._clearFocus();
+			this.focused = true;
+			this._itemFocused = false;
+			return;
+		}
+
+		if (indexOfItem === 0 && isArrowUp && this.hasValueStateText) {
+			this._clearFocus();
+			this._itemFocused = false;
+			this._isValueStateFocused = true;
+			this._filteredItems[0].selected = false;
+			return;
+		}
+
+		if (this.focused && isArrowDown && this.hasValueStateText) {
+			this._isValueStateFocused = true;
+			this.focused = false;
+			return;
+		}
+
+		if (this._isValueStateFocused & isArrowUp) {
+			this.focused = true;
+			this._isValueStateFocused = false;
 			return;
 		}
 
@@ -588,16 +608,17 @@ class ComboBox extends UI5Element {
 		indexOfItem += isArrowDown ? 1 : -1;
 		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
 		this._filteredItems[indexOfItem].focused = true;
+		this.focused = false;
 
 		if (this.responsivePopover.opened) {
 			this.announceSelectedItem(indexOfItem);
 		}
 
-		this.value = this._filteredItems[indexOfItem].isGroupItem ? this.filterValue : this._filteredItems[indexOfItem].text;
-
-		this._isKeyNavigation = true;
-		this._itemFocused = true;
+		this._isValueStateFocused = false;
 		this._selectionChanged = true;
+		this._itemFocused = true;
+
+		this.value = this._filteredItems[indexOfItem].isGroupItem ? this.filterValue : this._filteredItems[indexOfItem].text;
 
 		if (this._filteredItems[indexOfItem].isGroupItem) {
 			return;
@@ -633,8 +654,17 @@ class ComboBox extends UI5Element {
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
+
 			this._resetFilter();
 			this._toggleRespPopover();
+
+			const selectedItem = this._filteredItems.find(item => {
+				return item.selected;
+			});
+
+			if (selectedItem) {
+				selectedItem.focused = true;
+			}
 		}
 	}
 
@@ -649,6 +679,9 @@ class ComboBox extends UI5Element {
 			this.value = this._selectedItemText;
 			this.filterValue = this._selectedItemText;
 		}
+
+		this._isValueStateFocused = false;
+		this._clearFocus();
 
 		this.responsivePopover.close();
 	}
