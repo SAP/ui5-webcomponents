@@ -711,7 +711,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_onIconMousedown() {
-		this._iconPressed = true
+		this._iconPressed = true;
 	}
 
 	storeResponsivePopoverWidth() {
