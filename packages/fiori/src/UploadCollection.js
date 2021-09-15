@@ -330,8 +330,8 @@ class UploadCollection extends UI5Element {
 			},
 			noFiles: {
 				"uc-no-files": true,
-				"uc-no-files-dnd-overlay": this._showDndOverlay
-			}
+				"uc-no-files-dnd-overlay": this._showDndOverlay,
+			},
 		};
 	}
 
