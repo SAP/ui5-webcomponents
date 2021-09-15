@@ -607,17 +607,17 @@ class Select extends UI5Element {
 	_changeSelectedItem(oldIndex, newIndex) {
 		const options = this._filteredItems;
 
-		this.options[oldIndex].selected = false;
-		this.options[oldIndex]._focused = false;
+		options[oldIndex].selected = false;
+		options[oldIndex]._focused = false;
 
-		this.options[newIndex].selected = true;
-		this.options[newIndex]._focused = true;
+		options[newIndex].selected = true;
+		options[newIndex]._focused = true;
 
 		this._selectedIndex = newIndex;
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
-			this._fireChangeEvent(this.options[newIndex]);
+			this._fireChangeEvent(options[newIndex]);
 		}
 	}
 
