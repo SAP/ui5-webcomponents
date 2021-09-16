@@ -565,7 +565,7 @@ class ComboBox extends UI5Element {
 		const currentItem = this._filteredItems.find(item => {
 			return this.responsivePopover.opened ? item.focused : item.selected;
 		});
-		let indexOfItem = this._filteredItems.indexOf(currentItem);
+		const indexOfItem = this._filteredItems.indexOf(currentItem);
 
 		event.preventDefault();
 
@@ -576,11 +576,11 @@ class ComboBox extends UI5Element {
 		this._isKeyNavigation = true;
 
 		if (isArrowDown) {
-			this._handleArrowDown(event, indexOfItem)
+			this._handleArrowDown(event, indexOfItem);
 		}
 
 		if (isArrowUp) {
-			this._handleArrowUp(event, indexOfItem)
+			this._handleArrowUp(event, indexOfItem);
 		}
 	}
 
@@ -625,7 +625,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		this._handleItemNavigation(event, ++indexOfItem)
+		this._handleItemNavigation(event, ++indexOfItem);
 	}
 
 	_handleArrowUp(event, indexOfItem) {
@@ -650,7 +650,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		this._handleItemNavigation(event, --indexOfItem)
+		this._handleItemNavigation(event, --indexOfItem);
 	}
 
 	_keydown(event) {

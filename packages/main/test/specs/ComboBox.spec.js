@@ -515,7 +515,7 @@ describe("Keyboard navigation", () => {
 		const arrow = combo.shadow$("[input-icon]");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo-grouping");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		let groupItem;
+		let groupItem, listItem;
 
 		arrow.click();
 		input.keys("ArrowDown");
@@ -526,6 +526,17 @@ describe("Keyboard navigation", () => {
 
 		input.keys("ArrowUp");
 		assert.strictEqual(combo.getProperty("focused"), true, "The input should be focused");
+
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+
+		listItem = popover.$("ui5-list").$$("ui5-li")[0];
+
+		assert.strictEqual(listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
+	
+		input.keys("ArrowUp");
+
+		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
 
 	it ("Should focus the value state header and then the input", () => {
@@ -536,19 +547,61 @@ describe("Keyboard navigation", () => {
 		const arrow = combo.shadow$("[input-icon]");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#value-state-grouping");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		let valueStateHeader;
+		let valueStateHeader, groupItem;
 
 		arrow.click();
 		input.keys("ArrowDown");
 
 		valueStateHeader = popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 
-		assert.strictEqual(combo.getProperty("_isValueStateFocused"), true, "The input should be focused");
+		assert.strictEqual(combo.getProperty("_isValueStateFocused"), true, "The value state header should be focused");
+		assert.strictEqual(combo.getProperty("focused"), false, "The input should not be focused");
 		assert.notEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
 
 		input.keys("ArrowUp");
 		assert.strictEqual(combo.getProperty("focused"), true, "The input should be focused");
-		assert.strictEqual(combo.getProperty("_isValueStateFocused"), false, "The input should be focused");
-		assert.strictEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
+		assert.strictEqual(combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
+		assert.strictEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should not be focused");
+
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+
+		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+
+		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
+	});
+
+	it ("Previous focus should not remain on the item after reopening the picker and choosing another one", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#value-state-grouping");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#value-state-grouping");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItem, prevListItem;
+
+		arrow.click();
+
+		// Got to the last item and press ENTER
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("ArrowDown");
+		input.keys("Enter");
+
+		arrow.click();
+
+		listItem = popover.$("ui5-list").$$("ui5-li")[3];
+
+		listItem.click();
+
+		arrow.click();
+		prevListItem = popover.$("ui5-list").$$("ui5-li")[5];
+
+		assert.strictEqual(prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
 	});
 });
