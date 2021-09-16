@@ -201,7 +201,7 @@ describe("General interaction", () => {
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		popover.$("ui5-list").$$("ui5-li")[0].click();
 
-		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(placeholder.getText(), "Argentina", "Text should not be empty");
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
 
 		arrow.click();
@@ -210,6 +210,41 @@ describe("General interaction", () => {
 
 		popover.$("ui5-list").$$("ui5-li")[1].click();
 		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
+	});
+
+	it ("Tests change event with value state and links", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const counter = $("#change-count");
+		const combo = $("#value-state-error");
+		const placeholder = $("#change-placeholder");
+		const arrow = combo.shadow$("[input-icon]");
+
+		browser.execute(() => {
+			document.querySelector("[value-state='Error']").addEventListener("ui5-change", function(event) {
+				document.getElementById("change-placeholder").innerHTML = event.target.value;
+				document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
+			})
+		});
+
+		// open picker
+		arrow.click();
+
+		combo.keys("B");
+		combo.keys("a");
+
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+
+		// click on first item
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#value-state-error");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const link = popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root a");
+
+		link.click();
+
+		assert.strictEqual(placeholder.getText(), "Bahrain", "Text should not be empty");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
 	});
 
 	it ("Tests change event after pressing enter key", () => {
