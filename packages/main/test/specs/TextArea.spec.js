@@ -165,18 +165,18 @@ describe("when enabled", () => {
 
 			const initialSize = await textArea.getSize();
 			await textAreaInner.setValue(`1\n`);
-			textAreaInner.addValue(`2\n`);
-			textAreaInner.addValue(`3\n`);
-			textAreaInner.addValue(`4\n`);
-			textAreaInner.addValue(`5\n`);
-			textAreaInner.addValue(`6\n`);
-			textAreaInner.addValue(`7\n`);
-			textAreaInner.addValue(`8`);
+			await textAreaInner.addValue(`2\n`);
+			await textAreaInner.addValue(`3\n`);
+			await textAreaInner.addValue(`4\n`);
+			await textAreaInner.addValue(`5\n`);
+			await textAreaInner.addValue(`6\n`);
+			await textAreaInner.addValue(`7\n`);
+			await textAreaInner.addValue(`8`);
 
 			const sizeBeforeGrow = await textArea.getSize();
 			assert.strictEqual(initialSize.height, sizeBeforeGrow.height, "TextArea should not grow before it reaches its 8th line");
 
-			textAreaInner.addValue(`\n9`);
+			await textAreaInner.addValue(`\n9`);
 			const sizeAfterGrow = await textArea.getSize();
 
 			assert.ok(sizeBeforeGrow.height < sizeAfterGrow.height, "TextArea should grow");
