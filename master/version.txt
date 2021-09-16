@@ -1,7 +1,5 @@
-commit bb2b024e7f6e82353da23bc67c91a42b1fd81ae7
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Sep 16 01:53:08 2021 -0700
+commit 66901ad537cf141138530487f3ebe933854f354d
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Sep 16 16:50:58 2021 +0300
 
-    chore: translation delivery (#3935)
-    
-    Change-Id: I44c90da7dd724582314fa6a91068d12105772da1
+    fix(ui5-toast): Content is announced when ui5-toast is shown (#3939)
