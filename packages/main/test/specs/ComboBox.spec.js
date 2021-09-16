@@ -505,3 +505,50 @@ describe("Accessibility", () => {
 		assert.ok(combo.getProperty("focused"), "ComboBox to be focused");
 	});
 });
+
+describe("Keyboard navigation", () => {
+	it ("Should focus the first item on arrow down and then the input on arrow up", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo-grouping");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo-grouping");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let groupItem;
+
+		arrow.click();
+		input.keys("ArrowDown");
+
+		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+
+		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
+
+		input.keys("ArrowUp");
+		assert.strictEqual(combo.getProperty("focused"), true, "The input should be focused");
+	});
+
+	it ("Should focus the value state header and then the input", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#value-state-grouping");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#value-state-grouping");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let valueStateHeader;
+
+		arrow.click();
+		input.keys("ArrowDown");
+
+		valueStateHeader = popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
+
+		assert.strictEqual(combo.getProperty("_isValueStateFocused"), true, "The input should be focused");
+		assert.notEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
+
+		input.keys("ArrowUp");
+		assert.strictEqual(combo.getProperty("focused"), true, "The input should be focused");
+		assert.strictEqual(combo.getProperty("_isValueStateFocused"), false, "The input should be focused");
+		assert.strictEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
+	});
+});
