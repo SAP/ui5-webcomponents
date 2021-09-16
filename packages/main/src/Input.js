@@ -1168,7 +1168,8 @@ class Input extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": !this.isOpen(),
+				"ui5-valuestatemessage-header": true,
+				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -1185,7 +1186,6 @@ class Input extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.925rem 1rem",
 			},
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
