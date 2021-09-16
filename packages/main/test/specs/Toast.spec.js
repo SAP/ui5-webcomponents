@@ -24,6 +24,25 @@ describe("Toast general interaction", () => {
 			"Toast's content div should be displayed in the viewport after its opening.")
 	});
 
+	it("tests domRendered property", () => {
+		const button = browser.$("#wcBtnShowToastBS");
+		const toast = browser.$("#wcToastBS");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
+
+		assert.notOk(toastShadowContent.isDisplayedInViewport(),
+			"Toast's content div should be displayed in the viewport after its opening.");
+		assert.notOk(toast.getProperty("domRendered"),
+			"domRendered property value should be false before Toast is shown");
+
+		button.click();
+
+		assert.strictEqual(toast.getProperty("domRendered"), true,
+			"domRendered property value should be true when Toast is shown");
+
+		assert.ok(toastShadowContent.isDisplayedInViewport(),
+			"Toast's content div should be displayed in the viewport after its opening.")
+	});
+
 	it("tests duration property", () => {
 		const button = browser.$("#wcBtnShowToastTC");
 		const toast = browser.$("#wcToastTC");
@@ -45,7 +64,10 @@ describe("Toast general interaction", () => {
 	});
 
 	it("tests shadow content div role", () => {
+		const button = browser.$("#wcBtnShowToastBE");		
 		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
+
+		button.click();
 
 		assert.strictEqual(toastShadowContent.getAttribute("role"), "alert",
 			"The role of the shadow ui5-toast-root div should be alert");
@@ -111,6 +133,8 @@ describe("Toast general interaction", () => {
 
 		assert.notOk(toast.getProperty("open"),
 		"Open property should be false after Toast is closed");
+		assert.notOk(toast.getProperty("domRendered"),
+		"domRendered property value should be false after Toast is closed");
 	});
 
 	it("tests minimum allowed duration", () => {
