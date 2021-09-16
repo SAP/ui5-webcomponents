@@ -18,6 +18,19 @@ describe("General interaction", () => {
 		assert.ok(popover.getProperty("opened"), "Popover should be displayed")
 	});
 
+	it ("Should close the popover when clicking on the arrow second time", () => {
+		const combo = $("#combo");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.ok(popover.getProperty("opened"), "Popover should be displayed")
+
+		arrow.click();
+
+		assert.ok(!popover.getProperty("opened"), "Popover should not be displayed")
+	});
+
 	it ("Items filtration", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
@@ -194,8 +207,6 @@ describe("General interaction", () => {
 		arrow.click();
 
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
-
-		arrow.click();
 
 		popover.$("ui5-list").$$("ui5-li")[1].click();
 		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
