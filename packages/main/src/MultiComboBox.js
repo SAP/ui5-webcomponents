@@ -625,7 +625,6 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_listSelectionChange(event) {
-
 		// sync list items and cb items
 		this.syncItems(event.target.items);
 
@@ -716,7 +715,7 @@ class MultiComboBox extends UI5Element {
 		this._itemsBeforeOpen = this.items.map(item => {
 			return {
 				ref: item,
-				selected: item.selected
+				selected: item.selected,
 			};
 		});
 	}
