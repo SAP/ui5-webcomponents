@@ -1,5 +1,5 @@
-commit ccca6716d922453dc949ecc21c97c021055494c7
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Wed Sep 15 15:38:22 2021 +0300
+commit 9f40233777bd2aeb9fb9572d6c5109686899f517
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Thu Sep 16 10:29:08 2021 +0300
 
-    fix(ui5-label): adjust colon margins (#3897)
+    fix(ui5-calendar): ACC improvements (#3789)
