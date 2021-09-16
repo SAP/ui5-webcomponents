@@ -26,7 +26,7 @@ class EventProvider {
 		}
 
 		eventListeners = eventListeners.filter(fn => fn !== fnFunction);
-        this._eventRegistry[eventName] = eventListeners;
+		this._eventRegistry[eventName] = eventListeners;
 
 		if (eventListeners.length === 0) {
 			eventRegistry.delete(eventName);
