@@ -233,12 +233,12 @@ const metadata = {
 		 *
 		 * @public
 		 * @type {String}
-		 * @defaultvalue "listbox"
+		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
 		 */
 		 accessibleRole: {
 			type: String,
-			defaultValue: "listbox",
+			defaultValue: "list",
 		},
 
 		/**
