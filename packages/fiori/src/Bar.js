@@ -152,22 +152,11 @@ class Bar extends UI5Element {
 
 	handleResize() {
 		const bar = this.getDomRef();
-		let changeFlex = false;
 		const barWidth = bar.offsetWidth;
 
-		changeFlex = Array.from(bar.children).some(element => {
-			if (barWidth / 3 < element.offsetWidth) {
-				return true;
-			}
-
-			return false;
+		this._shrinked = Array.from(bar.children).some(element => {
+			return barWidth / 3 < element.offsetWidth;
 		});
-
-		if (changeFlex) {
-			this._shrinked = true;
-		} else {
-			this._shrinked = false;
-		}
 	}
 
 	get classes() {
