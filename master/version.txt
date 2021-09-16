@@ -1,5 +1,7 @@
-commit 9f40233777bd2aeb9fb9572d6c5109686899f517
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Thu Sep 16 10:29:08 2021 +0300
+commit bb2b024e7f6e82353da23bc67c91a42b1fd81ae7
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Sep 16 01:53:08 2021 -0700
 
-    fix(ui5-calendar): ACC improvements (#3789)
+    chore: translation delivery (#3935)
+    
+    Change-Id: I44c90da7dd724582314fa6a91068d12105772da1
