@@ -627,7 +627,7 @@ class MultiComboBox extends UI5Element {
 			this.valueState = valueState;
 			this._validationTimeout = null;
 
-			callback();
+			callback && callback();
 		}, 2000);
 	}
 
