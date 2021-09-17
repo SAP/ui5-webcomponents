@@ -1,12 +1,9 @@
-commit 3f1c26708e5c5a76553e6afe8fbc96596f08f890
+commit 3e49773d6c31a849b441ac67740114209e784d14
 Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Sep 17 07:09:36 2021 +0300
+Date:   Fri Sep 17 07:22:29 2021 +0300
 
-    fix(ui5-input): Fix value reset on ESC (#3886)
+    fix(ui5-input): remove data-sap-no-tab-ref attribute from the inner input
     
-    Now the component is synced with the desired by specifications behavior.
-    If the suggestions popover is opened: ESC closes it.
-    If the suggestions are not opened: ESC resets the value to the last confirmed by the user with 'ENTER' or if there isn't one - with the initial value of the component when focused by the user.
+    The data-sap-no-tab-ref is removed to allow container controls which are checking for tabbable children to pass the focus to it via the TAB key.
     
-    Fixes #3784
-    Closes #3784
+    Issue: #3603
