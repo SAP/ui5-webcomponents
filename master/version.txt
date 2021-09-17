@@ -1,5 +1,9 @@
-commit e020249306039b20da0d635e32d63cf4294057e5
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Fri Sep 17 13:08:19 2021 +0300
+commit 9530a5bee30dd2f946fd41d029e48648900e4660
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Sep 17 13:53:28 2021 +0300
 
-    fix(ui5-upload-collection): fix "no files" heading HTML tag (#3930)
+    fix(ui5-table): Select all column is now sticky (#3950)
+    
+    * fix(ui5-table): Select all column is now sticky
+    
+    * review comment fix
