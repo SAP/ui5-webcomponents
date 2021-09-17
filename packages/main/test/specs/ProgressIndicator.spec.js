@@ -28,4 +28,19 @@ describe("API", () => {
 		largerButton.click();
 		assert.strictEqual(getValidatedValue(progressIndicator), 100, "The value is limited to 100 and it is validated correctly.");
 	});
+
+	it("tests displayValue property", () => {
+		const progressIndicator = $("#test-progress-indicator");
+		const customDisplayValue = "Custom Display Value";
+		const originalPercentageValue = getValidatedValue(progressIndicator);
+		const valueShadowSpan = progressIndicator.shadow$(".ui5-progress-indicator-value");
+
+		progressIndicator.setAttribute("display-value", customDisplayValue);
+		assert.strictEqual(valueShadowSpan.getText(), customDisplayValue,
+			"The value span is showing the custom set text by the display-value attribute.");
+
+		progressIndicator.setAttribute("display-value", "");
+		assert.strictEqual(valueShadowSpan.getText(), originalPercentageValue + "%",
+			"The value is row backed to the originally shown percentage value after the display value is set to empty string.");
+	});
 });

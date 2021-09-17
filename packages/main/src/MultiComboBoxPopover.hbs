@@ -17,7 +17,7 @@
 					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
-					@click="{{togglePopover}}"
+					@click="{{handleCancel}}"
 				>
 				</ui5-button>
 			</div>
@@ -84,7 +84,7 @@
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
 				design="Transparent"
-				@click="{{togglePopover}}"
+				@click="{{handleOK}}"
 			>{{_dialogOkButton}}</ui5-button>
 		</div>
 	{{/if}}
