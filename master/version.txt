@@ -1,9 +1,5 @@
-commit 3e49773d6c31a849b441ac67740114209e784d14
+commit 1a760fecbace3b148b8c259ab0f5d77c7cff7c74
 Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Sep 17 07:22:29 2021 +0300
+Date:   Fri Sep 17 08:48:26 2021 +0300
 
-    fix(ui5-input): remove data-sap-no-tab-ref attribute from the inner input
-    
-    The data-sap-no-tab-ref is removed to allow container controls which are checking for tabbable children to pass the focus to it via the TAB key.
-    
-    Issue: #3603
+    Prevent LitHTML from throwing from too many re-renderings (#3888)
