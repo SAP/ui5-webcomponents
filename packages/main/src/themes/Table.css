@@ -79,7 +79,7 @@ tr {
 	text-align: center;
 }
 
-.ui5-table-select-all-column-sticky {
+:host([sticky-column-header]) .ui5-table-select-all-column {
 	position: sticky;
 	top: 0;
 	z-index: 99;
