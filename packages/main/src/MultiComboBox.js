@@ -464,6 +464,10 @@ class MultiComboBox extends UI5Element {
 		const filteredItems = this._filterItems(value);
 		const oldValueState = this.valueState;
 
+		if (this.filterSelected) {
+			this.filterSelected = false;
+		}
+
 		/* skip calling change event when an input with a placeholder is focused on IE
 			- value of the host and the internal input should be differnt in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
@@ -682,6 +686,12 @@ class MultiComboBox extends UI5Element {
 		this.filterSelected = false;
 	}
 
+	_beforeOpen() {
+		if (this.filterSelected) {
+			this.selectedItems = this._filteredItems.filter(item => item.selected);
+		}
+	}
+
 	onBeforeRendering() {
 		const input = this.shadowRoot.querySelector("input");
 		this._inputLastValue = this.value;
@@ -692,10 +702,6 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
-
-		if (this.filterSelected) {
-			this._filteredItems = this._filteredItems.filter(item => item.selected);
-		}
 	}
 
 	async onAfterRendering() {
@@ -766,6 +772,11 @@ class MultiComboBox extends UI5Element {
 	inputFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
+
+			// remove the value if user focus out the input and focus is not going in the popover
+			if (!this.allowCustomValues && (this.staticAreaItem !== event.relatedTarget)) {
+				this.value = "";
+			}
 		}
 	}
 

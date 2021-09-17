@@ -219,7 +219,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
 		});
 
-		it("Tests if clicking n more will prefilter items before opening the popover", () => {
+		it("tests if clicking n more will prefilter items before opening the popover", () => {
 			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 			browser.setWindowSize(1920, 1080);
 
@@ -243,9 +243,34 @@ describe("MultiComboBox general interaction", () => {
 
 			icon.click();
 
-			assert.ok(mcb.getProperty("open"), "MultiComboBox should be closed");
+			assert.ok(mcb.getProperty("open"), "MultiComboBox should be open");
 			assert.strictEqual(list.getProperty("items").length, 4, "4 items should be shown");
 		});
+
+		it("tests filtering of items when nmore popover is open and user types in the input fueld", () => {
+			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			browser.setWindowSize(1920, 1080);
+
+			const mcb = $("#more-mcb");
+			const nMoreText = mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			mcb.scrollIntoView();
+
+			const input = mcb.shadow$("input");
+
+			nMoreText.click();
+
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = popover.$(".ui5-multi-combobox-all-items-list");
+			const lastListItem = list.$("ui5-li:last-child");
+
+			input.click();
+			input.keys("c");
+
+			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown (all selected)");
+			assert.notOk(lastListItem.getProperty("selected"), "last item should not be selected");
+		})
 	});
 
 	describe("keyboard handling", () => {
