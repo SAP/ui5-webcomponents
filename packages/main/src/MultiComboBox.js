@@ -701,6 +701,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_beforeOpen() {
+		this._itemsBeforeOpen = this.items.map(item => {
+			return {
+				ref: item,
+				selected: item.selected,
+			};
+		});
+
 		if (this.filterSelected) {
 			this.selectedItems = this._filteredItems.filter(item => item.selected);
 		}
@@ -716,15 +723,6 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
-	}
-
-	_beforeOpen() {
-		this._itemsBeforeOpen = this.items.map(item => {
-			return {
-				ref: item,
-				selected: item.selected,
-			};
-		});
 	}
 
 	async onAfterRendering() {
