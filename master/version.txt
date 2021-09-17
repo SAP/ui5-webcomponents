@@ -1,5 +1,7 @@
-commit 1a760fecbace3b148b8c259ab0f5d77c7cff7c74
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Sep 17 08:48:26 2021 +0300
+commit 97d0382cf3589d17463679b5f40e5ee12f2bcb84
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Sep 17 09:59:31 2021 +0300
 
-    Prevent LitHTML from throwing from too many re-renderings (#3888)
+    fix(ui5-multi-combobox): prevent setting max-width of dialog header on mobile (#3943)
+    
+    FIXES: #3763
