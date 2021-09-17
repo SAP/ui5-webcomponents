@@ -274,6 +274,35 @@ describe("General interaction", () => {
 
 	});
 
+	it ("Value should be reset on ESC key", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo2");
+		const input = combo.shadow$("[inner-input]");
+
+		input.click();
+
+		input.keys("Al");
+		// Close picker
+		input.keys("Escape");
+		// Reset value
+		input.keys("Escape");
+
+		assert.strictEqual(combo.getProperty("value"), "", "Value should be cleared");
+
+		input.keys("Al");
+		// Chose itemr
+		input.keys("Enter");
+		// Clear current value
+		input.keys("");
+		// Enter another value
+		input.keys("Al");
+		// Reset value
+		input.keys("Escape");
+
+		assert.strictEqual(combo.getProperty("value"), "Algeria", "Value should be restored to the last confirmed one");
+	});
+
 	it ("Tests change event after type and item select", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 

@@ -15,6 +15,7 @@ import {
 	isUp,
 	isDown,
 	isEnter,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -631,6 +632,10 @@ class ComboBox extends UI5Element {
 		if (isEnter(event)) {
 			this._fireChangeEvent();
 			this._closeRespPopover();
+		}
+
+		if (isEscape(event) && !this.open) {
+			this.value = this._lastValue;
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
