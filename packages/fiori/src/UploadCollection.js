@@ -320,6 +320,10 @@ class UploadCollection extends UI5Element {
 				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
 				"uc-drop-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drop,
 			},
+			noFiles: {
+				"uc-no-files": true,
+				"uc-no-files-dnd-overlay": this._showDndOverlay,
+			},
 		};
 	}
 
@@ -336,7 +340,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _showNoData() {
-		return this.items.length === 0 && !this._showDndOverlay;
+		return this.items.length === 0;
 	}
 
 	get _noDataText() {
