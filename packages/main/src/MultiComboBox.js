@@ -625,21 +625,35 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_listSelectionChange(event) {
-		event.target.items.forEach(item => {
+		// sync list items and cb items
+		this.syncItems(event.target.items);
+
+		// don't call selection change right after selection as user can cancel it on phone
+		if (!isPhone()) {
+			this.fireSelectionChange();
+		}
+
+		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
+			this.allItemsPopover.close();
+			this.value = "";
+
+			// if the item (not checkbox) is clicked, call the selection change
+			if (isPhone()) {
+				this.fireSelectionChange();
+			}
+
+			this.fireEvent("input");
+		}
+	}
+
+	syncItems(listItems) {
+		listItems.forEach(item => {
 			this.items.forEach(mcbItem => {
 				if (mcbItem._id === item.getAttribute("data-ui5-token-id")) {
 					mcbItem.selected = item.selected;
 				}
 			});
 		});
-
-		this.fireSelectionChange();
-
-		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
-			this.allItemsPopover.close();
-			this.value = "";
-			this.fireEvent("input");
-		}
 	}
 
 	fireSelectionChange() {
@@ -697,6 +711,15 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_beforeOpen() {
+		this._itemsBeforeOpen = this.items.map(item => {
+			return {
+				ref: item,
+				selected: item.selected,
+			};
+		});
+	}
+
 	async onAfterRendering() {
 		await this._getRespPopover();
 		await this._getList();
@@ -725,6 +748,22 @@ class MultiComboBox extends UI5Element {
 		} else {
 			this.closePopover();
 		}
+	}
+
+	handleCancel() {
+		this._itemsBeforeOpen.forEach(item => {
+			item.ref.selected = item.selected;
+		});
+
+		this.togglePopover();
+	}
+
+	handleOK() {
+		if (isPhone()) {
+			this.fireSelectionChange();
+		}
+
+		this.togglePopover();
 	}
 
 	async openPopover() {
