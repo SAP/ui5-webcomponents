@@ -752,6 +752,14 @@ class Table extends UI5Element {
 	get selectedRows() {
 		return this.rows.filter(row => row.selected);
 	}
+
+	getFocusDomRef() {
+		if (this.busy) {
+			return this.shadowRoot.querySelector("ui5-busy-indicator");
+		}
+
+		return this.getDomRef();
+	}
 }
 
 Table.define();
