@@ -459,10 +459,11 @@ class Table extends UI5Element {
 	}
 
 	onAfterRendering() {
+		const oTableHeader = this.getColumnHeader();
 		if (this.growsOnScroll) {
 			this.observeTableEnd();
 		}
-
+		this.stickyColumnHeader && oTableHeader.firstElementChild.classList.add("ui5-table-select-all-column-sticky");
 		this.checkTableInViewport();
 	}
 

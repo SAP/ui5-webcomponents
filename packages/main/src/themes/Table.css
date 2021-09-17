@@ -79,6 +79,12 @@ tr {
 	text-align: center;
 }
 
+.ui5-table-select-all-column-sticky {
+	position: sticky;
+	top: 0;
+	z-index: 99;
+}
+
 th {
 	background: var(--sapList_HeaderBackground);
 }
