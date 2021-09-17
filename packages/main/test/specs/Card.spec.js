@@ -57,6 +57,16 @@ describe("Card general interaction", () => {
 		assert.strictEqual(content.getAttribute("aria-label"), card.getProperty("_ariaCardContentLabel"));
 		assert.strictEqual(content.getAttribute("role"), "group");
 	});
+
+	it("tests aria-level property", () => {
+		const cardHeader = $("#card2").$("ui5-card-header");
+
+		// Default value
+		assert.strictEqual(cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "3");
+
+		cardHeader.setAttribute("aria-level", 4);
+		assert.strictEqual(cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "4");
+	});
 });
 
 describe("CardHeader", () => {
