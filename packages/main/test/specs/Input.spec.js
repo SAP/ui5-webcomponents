@@ -325,6 +325,33 @@ describe("Input general interaction", () => {
 			"The value is restored as ESC has been pressed.");
 	});
 
+	it("input value should be cleared with ESC", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = $("#myInputEsc").shadow$("input");
+
+		suggestionsInput.click();
+		suggestionsInput.keys("Some value");
+
+		// Close sugggestions
+		suggestionsInput.keys("Escape");
+		// Clear value
+		suggestionsInput.keys("Escape");
+
+		assert.strictEqual(suggestionsInput.getValue(), "", "The value is restored as ESC has been pressed.");
+
+		suggestionsInput.keys("Some value");
+		suggestionsInput.keys("Enter");
+		suggestionsInput.keys("Another value");
+
+		// Close sugggestions
+		suggestionsInput.keys("Escape");
+		// Clear value
+		suggestionsInput.keys("Escape");
+
+		assert.strictEqual(suggestionsInput.getValue(), "Some value", "The value is restored to the last confirmed by 'ENTER' press one.");
+	});
+
 	it("handles group suggestion item via keyboard", () => {
 		const suggestionsInput = $("#myInputGrouping").shadow$("input");
 		const inputResult = $("#inputResultGrouping").shadow$("input");
