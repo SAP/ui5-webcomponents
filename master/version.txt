@@ -1,5 +1,5 @@
-commit 61fe0fe7a4ed03656e74b798bae740caf3c93655
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Fri Sep 17 12:05:55 2021 +0300
+commit 6ebfecbbd6f4613d4ce87c10823d3ff2fe46e69d
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Fri Sep 17 12:48:35 2021 +0300
 
-    fix(ui5-tree, ui5-table, ui5-side-navigation): unnecessary scrollbar in RTL is removed (#3948)
+    fix(ui5-li-notification): fix icon padding in rtl (#3876)
