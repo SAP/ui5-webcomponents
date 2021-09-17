@@ -1,5 +1,12 @@
-commit 19e77da23f88aa7c93db22a0b6304bd5ad83c50b
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Fri Sep 17 07:02:17 2021 +0300
+commit 3f1c26708e5c5a76553e6afe8fbc96596f08f890
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri Sep 17 07:09:36 2021 +0300
 
-    fix: ComboBox arrow now correctly toggles the picker (#3937)
+    fix(ui5-input): Fix value reset on ESC (#3886)
+    
+    Now the component is synced with the desired by specifications behavior.
+    If the suggestions popover is opened: ESC closes it.
+    If the suggestions are not opened: ESC resets the value to the last confirmed by the user with 'ENTER' or if there isn't one - with the initial value of the component when focused by the user.
+    
+    Fixes #3784
+    Closes #3784
