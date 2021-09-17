@@ -444,6 +444,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this.filterSelected = event.target.pressed;
+		this.selectedItems = this._filteredItems.filter(item => item.selected);
 	}
 
 	get _showAllItemsButtonPressed() {
