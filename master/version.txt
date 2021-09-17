@@ -1,7 +1,5 @@
-commit 97d0382cf3589d17463679b5f40e5ee12f2bcb84
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Sep 17 09:59:31 2021 +0300
+commit b2b2ccd9c1966755d8fa1f71e0aea4e8ea0642b3
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Sep 17 11:53:53 2021 +0300
 
-    fix(ui5-multi-combobox): prevent setting max-width of dialog header on mobile (#3943)
-    
-    FIXES: #3763
+    feat(ui5-card-header): implement ariaLevel property (#3878)
