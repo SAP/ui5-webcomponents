@@ -1,5 +1,5 @@
-commit 66901ad537cf141138530487f3ebe933854f354d
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 16 16:50:58 2021 +0300
+commit 19e77da23f88aa7c93db22a0b6304bd5ad83c50b
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Fri Sep 17 07:02:17 2021 +0300
 
-    fix(ui5-toast): Content is announced when ui5-toast is shown (#3939)
+    fix: ComboBox arrow now correctly toggles the picker (#3937)
