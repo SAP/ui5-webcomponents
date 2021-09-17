@@ -1,9 +1,5 @@
-commit 9530a5bee30dd2f946fd41d029e48648900e4660
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Sep 17 13:53:28 2021 +0300
+commit f6dee74efda5bf7e59883f72bbe00aa4cb834b1e
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Fri Sep 17 17:26:17 2021 +0300
 
-    fix(ui5-table): Select all column is now sticky (#3950)
-    
-    * fix(ui5-table): Select all column is now sticky
-    
-    * review comment fix
+    fix(ui5-slider): keyboard handling now works correctly in RTL (#3949)
