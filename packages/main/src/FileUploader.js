@@ -286,7 +286,9 @@ class FileUploader extends UI5Element {
 	}
 
 	_onclick(event) {
-		this._input.click(event);
+		if (event.isMarked === "button") {
+			this._input.click(event);
+		}
 	}
 
 	_onkeydown(event) {
