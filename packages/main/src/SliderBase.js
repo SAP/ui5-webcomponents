@@ -738,9 +738,12 @@ class SliderBase extends UI5Element {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
+		// We need to take into consideration the effective direction of the slider - rtl or ltr.
+		// While in ltr, the left arrow key decreases the value, in rtl it should actually increase it.
+		let step = this.effectiveDir === "rtl" ? -this._effectiveStep : this._effectiveStep;
+
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
-		let step = this._effectiveStep;
 		step = isBigStep && ((max - min) / step > 10) ? (max - min) / 10 : step;
 
 		if (isEnd(event)) {
