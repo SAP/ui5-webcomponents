@@ -240,6 +240,20 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});
+
+		it ("Value should be reset on ESC key", () => {
+			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			
+			const mCombo = $("#another-mcb");
+			const input = mCombo.shadow$("#ui5-multi-combobox-input");
+	
+			input.click();	
+			input.keys("C");
+			input.keys("Escape");
+			input.keys("Escape");
+	
+			assert.strictEqual(mCombo.getProperty("value"), "", "Value should be cleared");
+		});
 	});
 
 	describe("General", () => {

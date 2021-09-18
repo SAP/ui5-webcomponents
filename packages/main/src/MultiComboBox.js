@@ -9,6 +9,7 @@ import {
 	isSpace,
 	isLeft,
 	isRight,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -590,6 +591,10 @@ class MultiComboBox extends UI5Element {
 			this._tokenizer._focusLastToken();
 		}
 
+		if (isEscape(event) && !this.open) {
+			this.value = this._lastValue;
+		}
+
 		this._keyDown = true;
 	}
 
@@ -793,6 +798,8 @@ class MultiComboBox extends UI5Element {
 		if (!isPhone()) {
 			this.focused = true;
 		}
+
+		this._lastValue = this.value;
 	}
 
 	inputFocusOut(event) {
