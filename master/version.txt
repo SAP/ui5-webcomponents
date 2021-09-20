@@ -1,10 +1,17 @@
-commit 159687e979c1dfc55b995c87f993e1db29870ec3
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon Sep 20 14:10:07 2021 +0300
+commit 6d98d0c295c508125ed1e872687df04822bbd975
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon Sep 20 15:13:50 2021 +0300
 
-    fix(ui5-file-uploader): Button is activated with Enter/Space key with screen reader virtual cursor (#3944)
+    fix(ui5-list): change role mappings so no interactive elements are ne… (#3952)
     
-    Upload files button now is activated with Enter/Space key with screen reader virtual cursor ON"
+    Fixes: #3927
     
-    Fixes: #3767
-    Closes: #3767
+    Issue: Interactive elements should not be nested inside element with role option.
+    There are nested interactive elements inside list items in selection mode - ui5-radio-button & ui5-checkbox.
+    
+    Summary of changes:
+    
+    the role mapping is changed from listbox -> option[] to list -> listitem[];
+    the selected state announcement is handled separately with aria-describedby as the listitem role does not support aria-selected;
+    aria-multiselectable is removed because it is not supported on the role list;
+    Note: aria-labelledby should not be used for the "Selected" & "Not Selected" texts as NVDA reads the whole value of the attribute when some of its references changes content. In this case - the whole content of the item.
