@@ -525,8 +525,6 @@ class ComboBox extends UI5Element {
 				});
 
 				this._selectionChanged = false;
-
-				item.focused = true;
 			}
 		}
 

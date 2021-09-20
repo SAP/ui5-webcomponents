@@ -581,6 +581,13 @@ describe("Keyboard navigation", () => {
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
+		input.click();
+		input.keys("A");
+
+		listItem = popover.$("ui5-list").$$("ui5-li")[1];
+
+		assert.strictEqual(listItem.getProperty("focused"), false, "The selected item is not focused");
+
 		arrow.click();
 
 		// Got to the last item and press ENTER
