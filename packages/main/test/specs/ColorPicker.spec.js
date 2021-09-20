@@ -39,6 +39,32 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(hexInput.getProperty("value"), "112233", "Shorthand syntax is supported");
 	});
 
+	it("Alpha value change", () => {
+		const colorPicker = browser.$("#cp1");
+		const alphaInput = colorPicker.shadow$("#alpha");
+
+		colorPicker.setProperty("color", "rgba(100, 100, 100, 1)");
+
+		alphaInput.click();
+		browser.keys(["Control", "A"]);
+		browser.keys("0");
+		browser.keys("Tab");
+
+		assert.strictEqual(colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
+	});
+
+	it("Hue value change", () => {
+		const colorPicker = browser.$("#cp1");
+		const hueSliderHandle = colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
+
+		colorPicker.setProperty("color", "rgba(183, 61, 61, 1)");
+
+		hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(colorPicker.getAttribute("color"), "rgba(183, 61, 183, 0)", "Color properly changed");
+	});
+
+
 	it("tests color property", () => {
 		const colorPicker = browser.$("#cp3");
 		const hexInput = colorPicker.shadow$(".ui5-color-picker-hex-input");
