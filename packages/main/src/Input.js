@@ -836,6 +836,14 @@ class Input extends UI5Element {
 		return !!this._isPopoverOpen;
 	}
 
+	/**
+	 * Checks if the value state popover is open.
+	 * @returns {boolean} true if the value state popover is open, false otherwise
+	 */
+	 isValueStateOpened() {
+		return !!this._isPopoverOpen;
+	}
+
 	async openPopover() {
 		const popover = await this._getPopover();
 
