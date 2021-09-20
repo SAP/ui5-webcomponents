@@ -1,5 +1,10 @@
-commit f6dee74efda5bf7e59883f72bbe00aa4cb834b1e
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Fri Sep 17 17:26:17 2021 +0300
+commit 06c193aecd04760a1ea696bde99a3b7ab290cc33
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Sep 20 11:21:23 2021 +0300
 
-    fix(ui5-slider): keyboard handling now works correctly in RTL (#3949)
+    fix(ui5-select): correct screen reader speech out when popover is opened (#3705)
+    
+    Position of the current focused option is not read when the dropdown of the ui5-select is opened.
+    In addition disabled options are not displayed according to the latest control specification.
+    
+    #3617
