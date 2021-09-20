@@ -231,7 +231,7 @@ const metadata = {
 		 * <b>Note:</b> If you use notification list items,
 		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
 		 *
-		 * @public
+		 * @private
 		 * @type {String}
 		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
