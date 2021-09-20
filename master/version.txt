@@ -1,10 +1,10 @@
-commit 06c193aecd04760a1ea696bde99a3b7ab290cc33
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Sep 20 11:21:23 2021 +0300
+commit 159687e979c1dfc55b995c87f993e1db29870ec3
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Sep 20 14:10:07 2021 +0300
 
-    fix(ui5-select): correct screen reader speech out when popover is opened (#3705)
+    fix(ui5-file-uploader): Button is activated with Enter/Space key with screen reader virtual cursor (#3944)
     
-    Position of the current focused option is not read when the dropdown of the ui5-select is opened.
-    In addition disabled options are not displayed according to the latest control specification.
+    Upload files button now is activated with Enter/Space key with screen reader virtual cursor ON"
     
-    #3617
+    Fixes: #3767
+    Closes: #3767
