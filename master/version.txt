@@ -1,17 +1,5 @@
-commit 6d98d0c295c508125ed1e872687df04822bbd975
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Sep 20 15:13:50 2021 +0300
+commit be362192a1d8b6c950f2ec9a039242f33526cbef
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Sep 20 17:55:19 2021 +0300
 
-    fix(ui5-list): change role mappings so no interactive elements are ne… (#3952)
-    
-    Fixes: #3927
-    
-    Issue: Interactive elements should not be nested inside element with role option.
-    There are nested interactive elements inside list items in selection mode - ui5-radio-button & ui5-checkbox.
-    
-    Summary of changes:
-    
-    the role mapping is changed from listbox -> option[] to list -> listitem[];
-    the selected state announcement is handled separately with aria-describedby as the listitem role does not support aria-selected;
-    aria-multiselectable is removed because it is not supported on the role list;
-    Note: aria-labelledby should not be used for the "Selected" & "Not Selected" texts as NVDA reads the whole value of the attribute when some of its references changes content. In this case - the whole content of the item.
+    fix(ui5-wizard): grouped steps could be activated (#3961)
