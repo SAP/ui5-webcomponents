@@ -807,7 +807,7 @@ class MultiComboBox extends UI5Element {
 			this.focused = false;
 		}
 		if (!this.allowCustomValues) {
-			this.value ="";
+			this.value = "";
 		}
 	}
 
