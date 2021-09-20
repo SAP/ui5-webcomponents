@@ -253,6 +253,10 @@ const metadata = {
 			defaultValue: 0,
 			noAttribute: true,
 		},
+
+		_performingSelectionTwice: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
