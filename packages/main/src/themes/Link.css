@@ -14,8 +14,16 @@
 	text-decoration: var(--_ui5_link_text_decoration);
 }
 
+:host(:hover) {
+	text-decoration: var(--_ui5_link_hover_text_decoration);
+}
+
 :host([disabled]) {
 	pointer-events: none;
+}
+
+:host([disabled]):hover {
+	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
 :host(:not([disabled])) .ui5-link-root:hover {
