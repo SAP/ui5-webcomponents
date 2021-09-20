@@ -16,7 +16,13 @@
 	background:var(--sapList_Hover_Background);
 }
 
-:host([active]) {
+:host([selected]:hover) {
+	background: var(--sapList_Hover_SelectionBackground);
+}
+
+
+:host([active]),
+:host([selected][active])  {
 	background: var(--sapList_Active_Background);
 }
 
