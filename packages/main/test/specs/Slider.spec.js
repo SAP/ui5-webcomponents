@@ -461,6 +461,25 @@ describe("Testing resize handling and RTL support", () => {
 		assert.strictEqual(slider.getProperty("value"), 10, "Slider current value should be 10");
 	});
 
+	it("Testing RTL KBH support", () => {
+		const slider = browser.$("#basic-slider-rtl");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		slider.setProperty("value", 0);
+		assert.strictEqual(sliderHandle.getCSSProperty("right").value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
+
+		slider.keys("ArrowLeft");
+		slider.keys("ArrowLeft");
+
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
+		assert.strictEqual(slider.getProperty("value"), 2, "Slider current value should be 2");
+
+		slider.keys("ArrowRight");
+
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
+		assert.strictEqual(slider.getProperty("value"), 1, "Slider current value should be 1");
+	});
+
 	it("Should hide all labels except the first and the last one, if there is not enough space for all of them", () => {
 		const slider = browser.$("#slider-tickmarks-tooltips-labels");
 
