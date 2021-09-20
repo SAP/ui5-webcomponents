@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.18](https://github.com/SAP/ui5-webcomponents/compare/v0.31.17...v0.31.18) (2021-09-20)
+
+
+### Bug Fixes
+
+* **ui5-list:** change role mappings so no interactive elements are ne… ([#3952](https://github.com/SAP/ui5-webcomponents/issues/3952)) ([82be1de](https://github.com/SAP/ui5-webcomponents/commit/82be1de)), closes [#3927](https://github.com/SAP/ui5-webcomponents/issues/3927)
+* **ui5-tree, ui5-table, ui5-side-navigation:** unnecessary scrollbar in RTL is removed ([#3948](https://github.com/SAP/ui5-webcomponents/issues/3948)) ([bab650a](https://github.com/SAP/ui5-webcomponents/commit/bab650a))
+* **ui5-upload-collection:** fix "no files" heading HTML tag ([#3930](https://github.com/SAP/ui5-webcomponents/issues/3930)) ([5fd731c](https://github.com/SAP/ui5-webcomponents/commit/5fd731c))
+
+
+### Features
+
+* **ui5-upload-collection:** Added "accessibleName" property ([#3917](https://github.com/SAP/ui5-webcomponents/issues/3917)) ([7cb8e04](https://github.com/SAP/ui5-webcomponents/commit/7cb8e04)), closes [#3768](https://github.com/SAP/ui5-webcomponents/issues/3768) [#3768](https://github.com/SAP/ui5-webcomponents/issues/3768)
+
+
+
+
+
 ## [0.31.17](https://github.com/SAP/ui5-webcomponents/compare/v0.31.16...v0.31.17) (2021-09-13)
 
 

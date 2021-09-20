@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.18](https://github.com/SAP/ui5-webcomponents/compare/v0.31.17...v0.31.18) (2021-09-20)
+
+
+### Bug Fixes
+
+* **ui5-badge:** update accent colors ([#3926](https://github.com/SAP/ui5-webcomponents/issues/3926)) ([0304014](https://github.com/SAP/ui5-webcomponents/commit/0304014)), closes [#3923](https://github.com/SAP/ui5-webcomponents/issues/3923) [#3923](https://github.com/SAP/ui5-webcomponents/issues/3923)
+* **ui5-combobox:** announce selected item ([#3358](https://github.com/SAP/ui5-webcomponents/issues/3358)) ([e05826e](https://github.com/SAP/ui5-webcomponents/commit/e05826e))
+* **ui5-file-uploader:** Button is activated with Enter/Space key with screen reader virtual cursor ([#3944](https://github.com/SAP/ui5-webcomponents/issues/3944)) ([af808d4](https://github.com/SAP/ui5-webcomponents/commit/af808d4)), closes [#3767](https://github.com/SAP/ui5-webcomponents/issues/3767) [#3767](https://github.com/SAP/ui5-webcomponents/issues/3767)
+* **ui5-input:** adjust value state paddings according to specifications ([#3833](https://github.com/SAP/ui5-webcomponents/issues/3833)) ([48bd6fe](https://github.com/SAP/ui5-webcomponents/commit/48bd6fe)), closes [#3611](https://github.com/SAP/ui5-webcomponents/issues/3611) [#3611](https://github.com/SAP/ui5-webcomponents/issues/3611)
+* **ui5-label:** adjust colon margins ([#3897](https://github.com/SAP/ui5-webcomponents/issues/3897)) ([556516e](https://github.com/SAP/ui5-webcomponents/commit/556516e))
+* **ui5-link:** the anchor element inherits its text-decoration ([#3911](https://github.com/SAP/ui5-webcomponents/issues/3911)) ([276b142](https://github.com/SAP/ui5-webcomponents/commit/276b142)), closes [#3837](https://github.com/SAP/ui5-webcomponents/issues/3837) [#3837](https://github.com/SAP/ui5-webcomponents/issues/3837)
+* **ui5-list:** change role mappings so no interactive elements are ne… ([#3952](https://github.com/SAP/ui5-webcomponents/issues/3952)) ([82be1de](https://github.com/SAP/ui5-webcomponents/commit/82be1de)), closes [#3927](https://github.com/SAP/ui5-webcomponents/issues/3927)
+* **ui5-toast:** Content is announced when ui5-toast is shown ([#3939](https://github.com/SAP/ui5-webcomponents/issues/3939)) ([cce6ca8](https://github.com/SAP/ui5-webcomponents/commit/cce6ca8))
+* **ui5-tree, ui5-table, ui5-side-navigation:** unnecessary scrollbar in RTL is removed ([#3948](https://github.com/SAP/ui5-webcomponents/issues/3948)) ([bab650a](https://github.com/SAP/ui5-webcomponents/commit/bab650a))
+
+
+### Features
+
+* **invisibleMessage:** introduce invisibleMessage util ([#3192](https://github.com/SAP/ui5-webcomponents/issues/3192)) ([021619b](https://github.com/SAP/ui5-webcomponents/commit/021619b))
+* **ui5-card:** implement ariaLevel property ([5eca9d5](https://github.com/SAP/ui5-webcomponents/commit/5eca9d5))
+
+
+
+
+
 ## [0.31.17](https://github.com/SAP/ui5-webcomponents/compare/v0.31.16...v0.31.17) (2021-09-13)
 
 
