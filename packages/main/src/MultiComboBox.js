@@ -812,7 +812,7 @@ class MultiComboBox extends UI5Element {
 			this.focused = false;
 
 			// remove the value if user focus out the input and focus is not going in the popover
-			if (!this.allowCustomValues && (this.staticAreaItem !== event.relatedTarget)) {
+			if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== event.relatedTarget)) {
 				this.value = "";
 			}
 		}
