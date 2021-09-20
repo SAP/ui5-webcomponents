@@ -778,8 +778,6 @@ class List extends UI5Element {
 	}
 
 	_onfocusin(event) {
-
-		return;
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(this.getNormalizedTarget(event.target))) {
 			event.stopImmediatePropagation();
