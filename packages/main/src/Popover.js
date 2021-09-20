@@ -272,7 +272,7 @@ class Popover extends Popup {
 		return PopoverTemplate;
 	}
 
-	static get MIN_OFFSET() {
+	static get VIEWPORT_MARGIN() {
 		return 10; // px
 	}
 
@@ -401,14 +401,14 @@ class Popover extends Popup {
 
 		const left = clamp(
 			this._left,
-			Popover.MIN_OFFSET,
-			document.documentElement.clientWidth - popoverSize.width - Popover.MIN_OFFSET,
+			Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
 		const top = clamp(
 			this._top,
-			Popover.MIN_OFFSET,
-			document.documentElement.clientHeight - popoverSize.height - Popover.MIN_OFFSET,
+			Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
 
 		let { arrowX, arrowY } = placement;
@@ -416,18 +416,18 @@ class Popover extends Popup {
 		const popoverOnLeftBorder = this._left === 0;
 		const popoverOnRightBorder = this._left + popoverSize.width >= document.documentElement.clientWidth;
 		if (popoverOnLeftBorder) {
-			arrowX -= Popover.MIN_OFFSET;
+			arrowX -= Popover.VIEWPORT_MARGIN;
 		} else if (popoverOnRightBorder) {
-			arrowX += Popover.MIN_OFFSET;
+			arrowX += Popover.VIEWPORT_MARGIN;
 		}
 		this.arrowTranslateX = arrowX;
 
 		const popoverOnTopBorder = this._top === 0;
 		const popoverOnBottomBorder = this._top + popoverSize.height >= document.documentElement.clientHeight;
 		if (popoverOnTopBorder) {
-			arrowY -= Popover.MIN_OFFSET;
+			arrowY -= Popover.VIEWPORT_MARGIN;
 		} else if (popoverOnBottomBorder) {
-			arrowY += Popover.MIN_OFFSET;
+			arrowY += Popover.VIEWPORT_MARGIN;
 		}
 		this.arrowTranslateY = arrowY;
 
@@ -562,7 +562,7 @@ class Popover extends Popup {
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight - Popover.MIN_OFFSET;
+		this._maxContentHeight = maxContentHeight - Popover.VIEWPORT_MARGIN;
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 

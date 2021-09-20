@@ -230,7 +230,9 @@ class CardHeader extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
-	_headerClick() {
+	_headerClick(event) {
+		event.stopImmediatePropagation(); // prevents the native browser "click" event from firing
+
 		if (this.interactive) {
 			this.fireEvent("click");
 		}

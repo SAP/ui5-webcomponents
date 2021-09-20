@@ -42,6 +42,7 @@ import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ColorPalette from "./dist/ColorPalette.js";
 import ColorPaletteItem from "./dist/ColorPaletteItem.js";
+import ColorPalettePopover from "./dist/ColorPalettePopover.js";
 import ColorPicker from "./dist/ColorPicker.js";
 import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";

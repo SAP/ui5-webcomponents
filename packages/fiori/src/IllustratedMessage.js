@@ -3,6 +3,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -205,6 +206,10 @@ class IllustratedMessage extends UI5Element {
 			DIALOG: "dialog",
 			SCENE: "scene",
 		};
+	}
+
+	static get dependencies() {
+		return [Title];
 	}
 
 	onBeforeRendering() {
