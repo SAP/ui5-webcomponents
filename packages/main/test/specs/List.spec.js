@@ -378,15 +378,19 @@ describe("List Tests", () => {
 		assert.strictEqual(nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
 	});
 
-	it('should include selected state text in accInfo', () => {
+	it('should include selected state text', () => {
+		const item = $("#justList #justList-country");
 		const notSelectedItem = $("#listSelectedItem #not-selected-country");
 		const selectedItem = $("#listSelectedItem #selected-country");
 
-		let accInfo = notSelectedItem.getProperty("_accInfo")
-		assert.strictEqual(accInfo.listItemAriaLabel, null, "Item label is empty");
+		let ariaSelectedText = item.getProperty("ariaSelectedText");
+		assert.strictEqual(ariaSelectedText, null, "List is not in select mode, no selected state should be spoken");
 
-		accInfo = selectedItem.getProperty("_accInfo");
-		assert.strictEqual(accInfo.listItemAriaLabel, "Selected", "Selected text is part of the label");
+		ariaSelectedText = notSelectedItem.getProperty("ariaSelectedText");
+		assert.strictEqual(ariaSelectedText, "Not Selected", "Selected false state text is correct");
+
+		ariaSelectedText = selectedItem.getProperty("ariaSelectedText");
+		assert.strictEqual(ariaSelectedText, "Selected", "Selected state text is correct");
 	});
 
 	it('group headers should not be with role options', () => {
