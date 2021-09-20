@@ -245,14 +245,35 @@ describe("MultiComboBox general interaction", () => {
 			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 			
 			const mCombo = $("#another-mcb");
+			const mCombo2 = $("#more-mcb");
 			const input = mCombo.shadow$("#ui5-multi-combobox-input");
-	
-			input.click();	
+			const input2 = mCombo2.shadow$("#ui5-multi-combobox-input");
+
+			input.click();
 			input.keys("C");
 			input.keys("Escape");
 			input.keys("Escape");
 	
-			assert.strictEqual(mCombo.getProperty("value"), "", "Value should be cleared");
+			assert.strictEqual(mCombo.getProperty("value"), "", "Value should be reset to the initial one");
+
+			input.click();
+			input.keys("C");
+
+			// Move focus to another element and bring it back
+			input2.click();
+			input.click();
+
+			input.keys("o");
+			input.keys("Escape");
+			input.keys("Escape");
+
+			assert.strictEqual(mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+
+			input2.click();
+			input2.keys("C");
+			input2.keys("Escape");
+
+			assert.strictEqual(mCombo2.getProperty("value"), "", "Value should be cleared on escape even if the suggesitons are openjed");
 		});
 	});
 

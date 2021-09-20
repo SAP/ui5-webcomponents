@@ -591,7 +591,7 @@ class MultiComboBox extends UI5Element {
 			this._tokenizer._focusLastToken();
 		}
 
-		if (isEscape(event) && !this.open) {
+		if (isEscape(event) && (!this.allowCustomValues || (!this.open && this.allowCustomValues))) {
 			this.value = this._lastValue;
 		}
 
@@ -805,6 +805,9 @@ class MultiComboBox extends UI5Element {
 	inputFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
+		}
+		if (!this.allowCustomValues) {
+			this.value ="";
 		}
 	}
 
