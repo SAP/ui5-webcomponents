@@ -319,21 +319,19 @@ class ColorPicker extends UI5Element {
 
 	_handleAlphaInput(event) {
 		this._alpha = parseFloat(event.target.value);
-		this._setColor({
-			r: this._color.r,
-			g: this._color.g,
-			b: this._color.b,
-		});
+		this._setColor(this._color);
 	}
 
 	_handleHueInput(event) {
 		this.selectedHue = event.target.value;
-		this._setMainColor(this.selectedHue);
-		this._setColor({
-			r: this._mainColor.r,
-			g: this._mainColor.g,
-			b: this._mainColor.b,
-		});
+		this._hue = this.selectedHue;
+		this._setMainColor(this._hue);
+
+		const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
+
+		if (tempColor) {
+			this._setColor(HSLToRGB(tempColor));
+		}
 	}
 
 	_handleHEXChange(event) {
@@ -485,6 +483,11 @@ class ColorPicker extends UI5Element {
 
 	_setValues() {
 		const hslColours = RGBToHSL(this._color);
+		this._selectedCoordinates = {
+			x: ((Math.round(hslColours.l * 100) * 2.56)) - 6.5, // Center the coordinates, because of the width of the circle
+			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
+		};
+
 		this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
 		this._setMainColor(this._hue);
 	}
