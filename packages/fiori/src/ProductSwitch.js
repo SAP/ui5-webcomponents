@@ -157,7 +157,7 @@ class ProductSwitch extends UI5Element {
 	}
 
 	handleProductSwitchItemClick(event) {
-		this.items.forEach(item => { item.selected = false;});
+		this.items.forEach(item => { item.selected = false; });
 		event.target.selected = true;
 	}
 
