@@ -25,7 +25,7 @@ class EventProvider {
 			return;
 		}
 		const indexOfFnToDetach = eventListeners.indexOf(fnFunction);
-		if(~indexOfFnToDetach) eventListeners[eventName].splice(indexOfFnToDetach, 1);
+		if (~indexOfFnToDetach) eventListeners[eventName].splice(indexOfFnToDetach, 1);
 
 		if (eventListeners.length === 0) {
 			eventRegistry.delete(eventName);
