@@ -806,9 +806,6 @@ class MultiComboBox extends UI5Element {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
 		}
-		if (!this.allowCustomValues) {
-			this.value = "";
-		}
 	}
 
 	get editable() {
