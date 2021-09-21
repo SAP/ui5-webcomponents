@@ -657,6 +657,8 @@ class MultiComboBox extends UI5Element {
 
 		firstListItem.focus();
 		firstListItem.addEventListener("keydown", this._handleFirstItemArrowUp.bind(this));
+	}
+
 	handleEnter() {
 		const lowerCaseValue = this.value.toLowerCase();
 		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
