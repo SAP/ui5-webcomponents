@@ -18,6 +18,19 @@ describe("General interaction", () => {
 		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
 	});
 
+	it ("Should close the popover when clicking on the arrow second time", async () => {
+		const combo = await $("#combo");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+
+		await arrow.click();
+
+		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
+	});
+
 	it ("Items filtration", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
@@ -188,17 +201,51 @@ describe("General interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li")[0]).click();
 
-		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should not be empty");
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
 		await arrow.click();
 
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
-
-		await arrow.click();
 
 		await (await popover.$("ui5-list").$$("ui5-li"))[1].click();
 		assert.strictEqual(await counter.getText(), "2", "Call count should be 2");
+	});
+
+	it ("Tests change event with value state and links", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const counter = await browser.$("#change-count");
+		const combo = await browser.$("#value-state-error");
+		const placeholder = await browser.$("#change-placeholder");
+		const arrow = await combo.shadow$("[input-icon]");
+
+		await browser.executeAsync(done => {
+			document.querySelector("[value-state='Error']").addEventListener("ui5-change", function(event) {
+				document.getElementById("change-placeholder").innerHTML = event.target.value;
+				document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
+			});
+			done();
+		});
+
+		// open picker
+		await arrow.click();
+
+		await combo.keys("B");
+		await combo.keys("a");
+
+		assert.strictEqual(await placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
+
+		// click on first item
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-error");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const link = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root a");
+
+		await link.click();
+
+		assert.strictEqual(await placeholder.getText(), "Bahrain", "Text should not be empty");
+		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 	});
 
 	it ("Tests change event after pressing enter key", async () => {
@@ -226,6 +273,35 @@ describe("General interaction", () => {
 
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
+	});
+
+	it ("Value should be reset on ESC key", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo2");
+		const input = await combo.shadow$("[inner-input]");
+
+		await input.click();
+
+		await input.keys("Al");
+		// Close picker
+		await input.keys("Escape");
+		// Reset value
+		await input.keys("Escape");
+
+		assert.strictEqual(await combo.getProperty("value"), "", "Value should be cleared");
+
+		await input.keys("Al");
+		// Chose itemr
+		await input.keys("Enter");
+		// Clear current value
+		await input.keys("");
+		// Enter another value
+		await input.keys("Al");
+		// Reset value
+		await input.keys("Escape");
+
+		assert.strictEqual(await combo.getProperty("value"), "Algeria", "Value should be restored to the last confirmed one");
 	});
 
 	it ("Tests change event after type and item select", async () => {

@@ -324,6 +324,33 @@ describe("Input general interaction", () => {
 			"The value is restored as ESC has been pressed.");
 	});
 
+	it("input value should be cleared with ESC", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInputEsc").shadow$("input");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("Some value");
+
+		// Close sugggestions
+		await suggestionsInput.keys("Escape");
+		// Clear value
+		await suggestionsInput.keys("Escape");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "", "The value is restored as ESC has been pressed.");
+
+		await suggestionsInput.keys("Some value");
+		await suggestionsInput.keys("Enter");
+		await suggestionsInput.keys("Another value");
+
+		// Close sugggestions
+		await suggestionsInput.keys("Escape");
+		// Clear value
+		await suggestionsInput.keys("Escape");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Some value", "The value is restored to the last confirmed by 'ENTER' press one.");
+	});
+
 	it("handles group suggestion item via keyboard", async () => {
 		const suggestionsInput = await browser.$("#myInputGrouping").shadow$("input");
 		const inputResult = await browser.$("#inputResultGrouping").shadow$("input");

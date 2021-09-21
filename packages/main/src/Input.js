@@ -518,6 +518,9 @@ class Input extends UI5Element {
 		// The value that should be highlited.
 		this.highlightValue = "";
 
+		// The last value confirmed by the user with "ENTER"
+		this.lastConfirmedValue = "";
+
 		// Indicates, if the user pressed the BACKSPACE key.
 		this._backspaceKeyDown = false;
 
@@ -656,6 +659,7 @@ class Input extends UI5Element {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
+			this.lastConfirmedValue = this.value;
 		}
 	}
 
@@ -667,6 +671,10 @@ class Input extends UI5Element {
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
+		} else if (this.Suggestions && this.Suggestions.isOpened()) {
+			this.closePopover();
+		} else {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 		}
 	}
 
@@ -700,6 +708,7 @@ class Input extends UI5Element {
 		this.closePopover();
 
 		this.previousValue = "";
+		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
 	}
 
@@ -883,6 +892,7 @@ class Input extends UI5Element {
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
+			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this.fireEvent(this.EVENT_CHANGE);
 

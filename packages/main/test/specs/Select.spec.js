@@ -89,10 +89,9 @@ describe("Select general interaction", () => {
 
 		const btn = await browser.$("#myBtn2");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
+		const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const select = await browser.$("#mySelect2");
-		const selectId = await select.getProperty("_id")
 		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
-		const selectionText = await browser.$("#mySelect2").shadow$(`#${selectId}-selectionText`);
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
@@ -100,33 +99,26 @@ describe("Select general interaction", () => {
 		await select.click();
 		await select.keys("Escape");
 
-		assert.strictEqual(await selectionText.getHTML(false), "", "Selection announcement text should be clear if there is no interaction");
-
 		// change selection with picker closed
 		await select.keys("ArrowUp");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1), "Arrow Up should change selected item");
-		assert.strictEqual(await selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
+		assert.ok((await politeSpan.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up should change selected item");
 
 		// change selection with picker closed
 		await select.keys("ArrowDown");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT2), "Arrow Down should change selected item");
-		assert.strictEqual(await selectionText.getHTML(false), EXPECTED_SELECTION_TEXT2, "Selection announcement text should be equalt to the current selected item's text");
+		assert.ok((await politeSpan.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
 
 		// change previewed item with picker opened
 		await select.click();
 		await select.keys("ArrowUp");
-		assert.strictEqual(await selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
 		await select.keys("Escape");
 
 		// change selection with picker opened
 		await select.click();
 		await select.keys("ArrowUp");
 		await select.keys("Enter");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1), "Arrow Up and Enter should change selected item");
-		assert.strictEqual(await selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
+		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up and Enter should change selected item");
 
 		await btn.click();
-		assert.strictEqual(await selectionText.getHTML(false), "", "Selection announcement text should be cleared on focusout");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "3", "Change event should have fired twice");
 	});
@@ -404,19 +396,5 @@ describe("Select general interaction", () => {
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(await select2.getAttribute("aria-expanded"), "false",
 			"The aria-expanded is false by default.");
-	});
-
-	it('selected options are correctly disabled', async () => {
-		const option2 = await browser.$('#mySelect5 ui5-option:nth-child(2)'),
-			option3 = await browser.$('#mySelect5 ui5-option:nth-child(3)');
-
-		assert.strictEqual(await option2.getProperty("selected"), true, "Second option is initially selected.");
-
-		// act
-		await option2.setProperty("disabled", true);
-
-		// verify
-		assert.strictEqual(await option2.getProperty("selected"), false, "Disabled option is no longer selected.");
-		assert.strictEqual(await option3.getProperty("selected"), true, "The next enabled option is selected.");
 	});
 });
