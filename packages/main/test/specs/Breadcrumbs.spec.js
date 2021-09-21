@@ -152,7 +152,7 @@ describe("Breadcrumbs general interaction", () => {
 		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
 
 		await browser.keys("F4");
-		assert.ok(!(await popover.getProperty("opened")), "Dropdown is closed.");
+		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
@@ -169,7 +169,7 @@ describe("Breadcrumbs general interaction", () => {
 		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(!(await popover.getProperty("opened")), "Dropdown is closed.");
+		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
 	});
 
 	it("renders accessible names of overflowing link items", async () => {

@@ -72,7 +72,8 @@ describe("Calendar general interaction", () => {
 		await calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
 		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const focusedItemTimestamp = await yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
-		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 1997, "The focused year is 1997");
+		const focusedYear = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear();
+		assert.strictEqual(focusedYear, 1997, "The focused year is 1997");
 	});
 
 	it("Calendar focuses the selected month when monthpicker is opened with space", async () => {
@@ -90,7 +91,8 @@ describe("Calendar general interaction", () => {
 		const focusedItemTimestamp = await monthPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
 		const isHidden = await monthPicker.getAttribute("hidden");
 		assert.ok(!isHidden, "The monthpicker is present");
-		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCMonth() === 10, "The focused month is November");
+		const focusedMonth = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCMonth();
+		assert.strictEqual(focusedMonth, 10, "The focused month is November");
 	});
 
 	it("Calendar focuses the selected year when yearpicker is opened with space", async () => {
@@ -109,7 +111,8 @@ describe("Calendar general interaction", () => {
 		const isHidden = await yearPicker.getAttribute("hidden");
 		assert.ok(!isHidden, "The yearpicker is present");
 		const focusedItemTimestamp = await yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
-		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 2000, "The focused year is 2000");
+		const focusedYear = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear();
+		assert.strictEqual(focusedYear, 2000, "The focused year is 2000");
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", async () => {

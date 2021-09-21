@@ -178,8 +178,8 @@ describe("Input general interaction", () => {
 		await input.keys("ArrowUp");
 
 		// assert
-		const scrollTop = await scrollResult.getProperty("value");
-		assert.ok(scrollTop > 0, "The suggestion-scroll event fired");
+		const scrollTop = parseInt(await scrollResult.getProperty("value"));
+		assert.isAbove(scrollTop, 0, "The suggestion-scroll event fired");
 
 		// assert isSuggestionsScrollable
 		const suggestionsScrollable = await browser.executeAsync(async done => {
@@ -440,7 +440,8 @@ describe("Input general interaction", () => {
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(await respPopover.isDisplayedInViewport(), "The popover is visible");
-		assert.ok((await firstListItem.getHTML()).indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.");
+		const firstItemHtml = await firstListItem.getHTML();
+		assert.ok(firstItemHtml.includes(EXPTECTED_TEXT), "The suggestions is highlighted.");
 	});
 
 	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", async () => {

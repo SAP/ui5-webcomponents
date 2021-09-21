@@ -17,7 +17,7 @@ describe("Dialog general interaction", () => {
 		assert.ok(await dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		await btnCloseDialog.click();
-		assert.ok(!await dialog.isDisplayedInViewport(), "Dialog is closed.");
+		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
 	});
 
 	it("tests popover in dialog", async () => {
@@ -36,17 +36,20 @@ describe("Dialog general interaction", () => {
 	it("tests dialog lifecycle", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/DialogLifecycle.html`);
 
-		assert.ok(!await browser.$("ui5-static-area").length, "No static area.");
+		let staticArea = await browser.$("ui5-static-area");
+		assert.notExists(staticArea, "No static area.");
 
 		const openDialogButton = await browser.$("#openDialogButton");
 		await openDialogButton.click();
 
-		assert.ok(await browser.$("ui5-static-area>ui5-static-area-item"), "Static area item exists.");
+		const staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
+		assert.exists(staticAreaItem, "Static area item exists.");
 
 		const closeDialogButton= await browser.$("#closeDialogButton");
 		await closeDialogButton.click();
 
-		assert.ok(!await browser.$("ui5-static-area").length, "No static area.");
+		staticArea = await browser.$("ui5-static-area");
+		assert.notExists(staticArea, "No static area.");
 	});
 
 	it("draggable - mouse support", async () => {
@@ -279,12 +282,12 @@ describe("Acc", () => {
 	it("tests aria-labelledby and aria-label", async () => {
 		const dialog = await browser.$("ui5-dialog");
 		await dialog.removeAttribute("accessible-name");
-		assert.ok((await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby")).length, "dialog has aria-labelledby.");
-		assert.ok(!(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label")), "dialog does not have aria-label.");
+		assert.ok(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog has aria-labelledby.");
+		assert.notOk(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog does not have aria-label.");
 
 		await dialog.setAttribute("accessible-name", "text");
-		assert.ok(!(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby")), "dialog does not have aria-labelledby.");
-		assert.ok((await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label")).length, "dialog has aria-label.");
+		assert.notOk(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
+		assert.ok(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog has aria-label.");
 	});
 
 	it("tests aria-labelledby for slot header", async () => {
@@ -310,7 +313,7 @@ describe("Page scrolling", () => {
 
 		await browser.$("#btnOpenDialog").click();
 
-		assert.ok(await browser.$("body").getProperty("offsetHeight") < offsetHeightBefore, "Body scrolling is blocked");
+		assert.isBelow(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is blocked");
 
 		await browser.$("#btnCloseDialog").click();
 

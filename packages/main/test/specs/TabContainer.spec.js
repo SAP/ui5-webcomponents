@@ -12,7 +12,8 @@ describe("TabContainer general interaction", () => {
 		const selectedFilter = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
 		const SELECTION_CSS_CLASS = "ui5-tab-strip-item--selected";
 
-		assert.ok((await selectedFilter.getHTML()).indexOf(SELECTION_CSS_CLASS) > -1, "The item has the selection css class set.");
+		const selectedFilterHtml = await selectedFilter.getHTML();
+		assert.ok(selectedFilterHtml.includes(SELECTION_CSS_CLASS), "The item has the selection css class set.");
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab filter matches.");
 	});
 
@@ -123,8 +124,8 @@ describe("TabContainer general interaction", () => {
 			});
 		});
 
-		assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
-		assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
+		assert.isBelow(tabHeight, tabScrollHeight, "Tab Content is scrollable");
+		assert.isAtLeast(tcHeight, tcScrollHeight, "TabContainer is not scrollable");
 	});
 
 	it("tests aria attrs", async () => {

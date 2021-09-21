@@ -43,7 +43,7 @@ describe("CheckBox general interaction", () => {
 		const wrappingCbHeight = await wrappingCb.getSize("height");
 
 		assert.strictEqual(truncatingCbHeight, CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is : " + truncatingCbHeight);
-		assert.ok(wrappingCbHeight > CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is more than: " + CHECKBOX_DEFAULT_HEIGHT);
+		assert.isAbove(wrappingCbHeight, CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is more than: " + CHECKBOX_DEFAULT_HEIGHT);
 	});
 
 	it("tests ui5-icon", async () => {

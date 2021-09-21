@@ -429,7 +429,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
 
-		assert.ok(!await combo.getProperty("focused"), "property focused should be false");
+		assert.notOk(await combo.getProperty("focused"), "property focused should be false");
 
 		await arrow.click();
 
@@ -442,7 +442,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		const input = await combo.shadow$("#ui5-combobox-input");
 
-		assert.ok(!await combo.getProperty("focused"), "property focused should be false");
+		assert.notOk(await combo.getProperty("focused"), "property focused should be false");
 
 		await input.click();
 

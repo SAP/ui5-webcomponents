@@ -26,8 +26,10 @@ describe("Rendering", () => {
 		const wrappingTitle = await browser.$("#wrapping-title");
 		const truncatedTitle = await browser.$("#truncated-title");
 
-		assert.strictEqual((await truncatedTitle.getSize()).height, 16, "truncated title should be single line");
+		const truncatedTitleHeight = (await truncatedTitle.getSize()).height;
+		assert.strictEqual(truncatedTitleHeight, 16, "truncated title should be single line");
 
-		assert.ok((await wrappingTitle.getSize()).height > (await truncatedTitle.getSize()).height, "wrapping title should span more than a single line");
+		const wrappingTitleHeight = (await wrappingTitle.getSize()).height;
+		assert.isAbove(wrappingTitleHeight, 16, "wrapping title should span more than a single line");
 	});
 });

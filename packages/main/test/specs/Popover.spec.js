@@ -254,7 +254,7 @@ describe("Popover general interaction", () => {
 
 		activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 
-		assert.ok(activeElementId, popoverId, "Popover remains focused");
+		assert.equal(activeElementId, popoverId, "Popover remains focused");
 	});
 
 	it("tests focus when content, which can't be focused is clicked", async () => {
@@ -296,11 +296,11 @@ describe("Acc", () => {
 	it("tests aria-labelledby and aria-label", async () => {
 		const popover = await browser.$("ui5-popover");
 		await popover.removeAttribute("accessible-name");
-		assert.ok((await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby")).length, "Popover has aria-labelledby.");
+		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover has aria-labelledby.");
 		assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
 
 		await popover.setAttribute("accessible-name", "text");
 		assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
-		assert.ok((await popover.shadow$(".ui5-popup-root").getAttribute("aria-label")).length, "Popover has aria-label.");
+		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover has aria-label.");
 	});
 });

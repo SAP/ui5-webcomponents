@@ -179,7 +179,7 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`\n9`);
 			const sizeAfterGrow = await textArea.getSize();
 
-			assert.ok(sizeBeforeGrow.height < sizeAfterGrow.height, "TextArea should grow");
+			assert.isBelow(sizeBeforeGrow.height, sizeAfterGrow.height, "TextArea should grow");
 		});
 
 		it("Should grow up to 4 lines", async () => {
@@ -197,8 +197,8 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`\n5\n6`);
 			const size6lines = await textArea.getSize();
 
-			assert.ok(initialSize.height < size2lines.height, "TA should grow when having 2 lines of text");
-			assert.ok(size2lines.height < size4lines.height, "TA should grow up to 4 lines");
+			assert.isBelow(initialSize.height, size2lines.height, "TA should grow when having 2 lines of text");
+			assert.isBelow(size2lines.height, size4lines.height, "TA should grow up to 4 lines");
 			assert.strictEqual(size6lines.height, size4lines.height, "TA should not grow more than 4 lines");
 		});
 	});

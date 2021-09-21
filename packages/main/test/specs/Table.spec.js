@@ -54,16 +54,20 @@ describe("Table general interaction", () => {
 		const row2Data = "London";
 
 		await cellInRow1.click();
-		assert.ok((await lbl.getHTML()).indexOf(row1Data), "Event row-click fired and intercepted.");
+		let lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
 		await cellInRow2.click();
-		assert.ok((await lbl.getHTML()).indexOf(row2Data), "Event row-click fired and intercepted.");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 
 		await cellInRow1.keys("Space");
-		assert.ok((await lbl.getHTML()).indexOf(row1Data), "Event row-click fired and intercepted.");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
 		await cellInRow2.keys("Enter");
-		assert.ok((await lbl.getHTML()).indexOf(row2Data), "Event row-click fired and intercepted.");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 	});
 
 	it("tests row aria-label value", async () => {

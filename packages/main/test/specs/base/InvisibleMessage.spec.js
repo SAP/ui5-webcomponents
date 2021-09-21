@@ -29,7 +29,9 @@ describe("InvisibleMessage", () => {
         await checkBox.click();
         await button.click();
 
-        assert.ok((await politeSpan.getHTML()).indexOf("announcement") > -1, "Value has been rendered.");
-        assert.ok((await assertiveSpan.getHTML()).indexOf("announcement") > -1, "Value has been rendered.");
+        const politeSpanHtml = await politeSpan.getHTML();
+        const assertiveSpanHtml = await assertiveSpan.getHTML();
+        assert.ok(politeSpanHtml.includes("announcement"), "Value has been rendered.");
+        assert.ok(assertiveSpanHtml.includes("announcement"), "Value has been rendered.");
     });
 });

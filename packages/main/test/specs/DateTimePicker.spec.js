@@ -60,7 +60,7 @@ describe("DateTimePicker general interaction", () => {
 		await closePickerById("dt");
 
 		// assert
-		assert.ok(!(await isPickerOpen("dt")), "The picker closes programmatically.");
+		assert.notOk(await isPickerOpen("dt"), "The picker closes programmatically.");
 	});
 
 	it("tests selection of new date/time", async () => {
@@ -154,7 +154,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(await inputCounter.getProperty("value"), "1", "Changed counter still shows 1.");
-		assert.ok(!(await isPickerOpen("dt1")), "The picker closes after pressing 'Submit'.");
+		assert.notOk(await isPickerOpen("dt1"), "The picker closes after pressing 'Submit'.");
 	});
 
 	it("tests change event not fired on cancel", async () => {
@@ -168,7 +168,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(await inputCounter.getProperty("value"), "", "Changed should not be called.");
-		assert.ok(!(await isPickerOpen("dt2")), "The picker closes after pressing 'Cancel'.");
+		assert.notOk(await isPickerOpen("dt2"), "The picker closes after pressing 'Cancel'.");
 	});
 
 	it("tests time controls displayed according to format", async () => {
