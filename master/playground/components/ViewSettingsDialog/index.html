@@ -3028,20 +3028,62 @@
 	<div class="snippet">
 		<ui5-button id="btnOpenDialog1">Open ViewSettingsDialog</ui5-button>
 		<ui5-view-settings-dialog id="vsd1">
-			<ui5-li slot="sortItems">Name</ui5-li>
-			<ui5-li slot="sortItems">Position</ui5-li>
-			<ui5-li slot="sortItems">Company</ui5-li>
-			<ui5-li slot="sortItems">Department</ui5-li>
-		</ui5-view-settings-dialog>
+				<ui5-sort-item slot="sortItems" text="Name"></ui5-sort-item>
+				<ui5-sort-item slot="sortItems" text="Position"></ui5-sort-item>
+				<ui5-sort-item slot="sortItems" text="Company"></ui5-sort-item>
+				<ui5-sort-item slot="sortItems" text="Department"></ui5-sort-item>
+		
+				<ui5-filter-item slot="filterItems" text="Position">
+					<ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+				</ui5-filter-item>
+				<ui5-filter-item slot="filterItems" text="Department">
+					<ui5-filter-item-option slot="values" text="Sales"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="Management"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="PR"></ui5-filter-item-option>
+				</ui5-filter-item>
+				<ui5-filter-item slot="filterItems" text="Location">
+					<ui5-filter-item-option slot="values" text="Walldorf"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="New York"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="London"></ui5-filter-item-option>
+				</ui5-filter-item>
+				<ui5-filter-item slot="filterItems" text="Reports to">
+					<ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+				</ui5-filter-item>
+			</ui5-view-settings-dialog>
 		<br />
 		<br />
 		<div id="vsdResults"></div>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">		<span class="nt">&lt;ui5-view-settings-dialog&gt;</span>
-			<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"sortItems"</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/ui5-li&gt;</span>
-			<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"sortItems"</span><span class="nt">&gt;</span>Position<span class="nt">&lt;/ui5-li&gt;</span>
-			<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"sortItems"</span><span class="nt">&gt;</span>Company<span class="nt">&lt;/ui5-li&gt;</span>
-			<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"sortItems"</span><span class="nt">&gt;</span>Department<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-sort-item</span> <span class="na">slot=</span><span class="s">"sortItems"</span> <span class="na">text=</span><span class="s">"Name"</span><span class="nt">&gt;&lt;/ui5-sort-item&gt;</span>
+			<span class="nt">&lt;ui5-sort-item</span> <span class="na">slot=</span><span class="s">"sortItems"</span> <span class="na">text=</span><span class="s">"Position"</span><span class="nt">&gt;&lt;/ui5-sort-item&gt;</span>
+			<span class="nt">&lt;ui5-sort-item</span> <span class="na">slot=</span><span class="s">"sortItems"</span> <span class="na">text=</span><span class="s">"Company"</span><span class="nt">&gt;&lt;/ui5-sort-item&gt;</span>
+			<span class="nt">&lt;ui5-sort-item</span> <span class="na">slot=</span><span class="s">"sortItems"</span> <span class="na">text=</span><span class="s">"Department"</span><span class="nt">&gt;&lt;/ui5-sort-item&gt;</span>
+	
+			<span class="nt">&lt;ui5-filter-item</span> <span class="na">slot=</span><span class="s">"filterItems"</span> <span class="na">text=</span><span class="s">"Position"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"CTO"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"CPO"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"VP"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+			<span class="nt">&lt;/ui5-filter-item&gt;</span>
+			<span class="nt">&lt;ui5-filter-item</span> <span class="na">slot=</span><span class="s">"filterItems"</span> <span class="na">text=</span><span class="s">"Department"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"Sales"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"Management"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"PR"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+			<span class="nt">&lt;/ui5-filter-item&gt;</span>
+			<span class="nt">&lt;ui5-filter-item</span> <span class="na">slot=</span><span class="s">"filterItems"</span> <span class="na">text=</span><span class="s">"Location"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"Walldorf"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"New York"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"London"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+			<span class="nt">&lt;/ui5-filter-item&gt;</span>
+			<span class="nt">&lt;ui5-filter-item</span> <span class="na">slot=</span><span class="s">"filterItems"</span> <span class="na">text=</span><span class="s">"Reports to"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"CTO"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"CPO"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+				<span class="nt">&lt;ui5-filter-item-option</span> <span class="na">slot=</span><span class="s">"values"</span> <span class="na">text=</span><span class="s">"VP"</span><span class="nt">&gt;&lt;/ui5-filter-item-option&gt;</span>
+			<span class="nt">&lt;/ui5-filter-item&gt;</span>
 		<span class="nt">&lt;/ui5-view-settings-dialog&gt;</span>
 		<span class="nt">&lt;script&gt;</span>
 			<span class="kd">let</span> <span class="nx">vsdResults</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">vsdResults</span><span class="dl">"</span><span class="p">);</span>

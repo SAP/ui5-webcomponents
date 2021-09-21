@@ -1,8 +1,5 @@
-commit d5a0a3ada5b06294d2a6e264f75077084caccb55
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Sep 21 15:22:22 2021 +0300
+commit 99d4ffc8f8804a419f029a05caeae33c839b28d6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Sep 21 17:19:39 2021 +0300
 
-    fix(ui5-bar): align of elements is now correct (#3719)
-    
-    Fixes: #3456
-    Closes:  #3456
+    docs(ui5-view-settings-dialog): improve sample (#3971)
