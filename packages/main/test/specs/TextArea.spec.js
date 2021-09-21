@@ -63,7 +63,7 @@ describe("disabled and readonly textarea", () => {
 	it("can not be edited when disabled", async () => {
 		const textAreaInnerDisabled = await browser.$("#disabled-textarea").shadow$("textarea");
 
-		assert.strictEqual(await textAreaInnerDisabled.isEnabled(), false, "Should not be enabled");
+		assert.notOk(await textAreaInnerDisabled.isEnabled(), "Should not be enabled");
 	});
 
 	it("can not be edited when readonly", async () => {

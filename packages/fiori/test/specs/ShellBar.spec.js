@@ -83,16 +83,16 @@ describe("Component Behavior", () => {
 				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XXL", "XXL Breakpoint class should be set");
-				assert.strictEqual(await overflowButton.isDisplayed(), false, "Overflow button should be hidden");
-				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
-				assert.strictEqual(await primaryTitle.isDisplayed(), true, "Primary title should be visible");
-				assert.strictEqual(await secondaryTitle.isDisplayed(), true, "Secondary title should be visible");
-				assert.strictEqual(await searchIcon.isDisplayed(), true, "Search icon should be visible");
-				assert.strictEqual(await customActionIcon1.isDisplayed(), true, "Custom Action 1 should be visible");
-				assert.strictEqual(await customActionIcon2.isDisplayed(), true, "Custom Action 2 should be visible");
-				assert.strictEqual(await notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
-				assert.strictEqual(await profileIcon.isDisplayed(), true, "Profile icon should be visible");
-				assert.strictEqual(await productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+				assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
+				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
+				assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
+				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
+				assert.ok(await customActionIcon1.isDisplayed(), "Custom Action 1 should be visible");
+				assert.ok(await customActionIcon2.isDisplayed(), "Custom Action 2 should be visible");
+				assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
+				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+				assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
 			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
@@ -123,16 +123,16 @@ describe("Component Behavior", () => {
 				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "L", "L Breakpoint class should be set");
-				assert.strictEqual(await overflowButton.isDisplayed(), false, "Overflow button should be hidden");
-				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
-				assert.strictEqual(await primaryTitle.isDisplayed(), true, "Primary title should be visible");
-				assert.strictEqual(await secondaryTitle.isDisplayed(), true, "Secondary title should be visible");
-				assert.strictEqual(await searchIcon.isDisplayed(), true, "Search icon should be visible");
-				assert.strictEqual(await customActionIcon1.isDisplayed(), true, "Custom Action 1 should be visible");
-				assert.strictEqual(await customActionIcon2.isDisplayed(), true, "Custom Action 2 should be visible");
-				assert.strictEqual(await notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
-				assert.strictEqual(await profileIcon.isDisplayed(), true, "Profile icon should be visible");
-				assert.strictEqual(await productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
+				assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
+				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
+				assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
+				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
+				assert.ok(await customActionIcon1.isDisplayed(), "Custom Action 1 should be visible");
+				assert.ok(await customActionIcon2.isDisplayed(), "Custom Action 2 should be visible");
+				assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
+				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+				assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
 			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
@@ -161,17 +161,17 @@ describe("Component Behavior", () => {
 				const listItemsCount = (await overflowPopover.getHTML()).split("</ui5-li>").length - 1;
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
-				assert.strictEqual(await overflowButton.isDisplayed(), true, "Overflow button should be visible");
-				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
-				assert.strictEqual(await primaryTitle.isDisplayed(), true, "Primary title should be visible");
-				assert.strictEqual(await secondaryTitle.isDisplayed(), false, "Secondary title should be hidden");
-				assert.strictEqual(await searchIcon.isDisplayed(), true, "Search icon should be visible");
-				assert.strictEqual(await customActionIcon1.isDisplayed(), false, "Custom Action 1 should be hidden");
-				assert.strictEqual(await customActionIcon2.isDisplayed(), false, "Custom Action 2 should be hidden");
-				assert.strictEqual(await notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
-				assert.strictEqual(await profileIcon.isDisplayed(), true, "Profile icon should be visible");
-				assert.strictEqual(await productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
-				assert.strictEqual(await overflowPopover.isDisplayedInViewport(), true, "Overflow popover should be visible");
+				assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
+				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
+				assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
+				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
+				assert.notOk(await customActionIcon1.isDisplayed(), "Custom Action 1 should be hidden");
+				assert.notOk(await customActionIcon2.isDisplayed(), "Custom Action 2 should be hidden");
+				assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
+				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+				assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
+				assert.ok(await overflowPopover.isDisplayedInViewport(), "Overflow popover should be visible");
 				assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
 				assert.strictEqual(overflowPopoverItem1Icon, await getCustomActionProp("shellbar", 0, "icon"), "Popover items have same sources as corresponding icons");
 				assert.strictEqual(overflowPopoverItem2Icon, await getCustomActionProp("shellbar", 1, "icon"), "Popover items have same sources as corresponding icons");
@@ -223,8 +223,8 @@ describe("Component Behavior", () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 
-				assert.strictEqual(await searchIcon.isDisplayed(), false, "Search should be hidden");
-				assert.strictEqual(await overflowButton.isDisplayed(), true, "Overflow should be visible");
+				assert.notOk(await searchIcon.isDisplayed(), "Search should be hidden");
+				assert.ok(await overflowButton.isDisplayed(), "Overflow should be visible");
 			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
@@ -246,14 +246,14 @@ describe("Component Behavior", () => {
 				const listItemsCount = await overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "S", "S Breakpoint class should be set");
-				assert.strictEqual(await overflowButton.isDisplayed(), true, "Overflow button should be visible");
-				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
-				assert.strictEqual(await primaryTitle.isDisplayed(), false, "Primary title should be hidden");
-				assert.strictEqual(await secondaryTitle.isDisplayed(), false, "Secondary title should be hidden");
-				assert.strictEqual(await searchIcon.isDisplayed(), false, "Search icon should be hidden");
-				assert.strictEqual(await notificationsIcon.isDisplayed(), false, "Notifications icon should be hidden");
-				assert.strictEqual(await profileIcon.isDisplayed(), true, "Profile icon should be visible");
-				assert.strictEqual(await productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
+				assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
+				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+				assert.notOk(await primaryTitle.isDisplayed(), "Primary title should be hidden");
+				assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
+				assert.notOk(await searchIcon.isDisplayed(), "Search icon should be hidden");
+				assert.notOk(await notificationsIcon.isDisplayed(), "Notifications icon should be hidden");
+				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+				assert.notOk(await productSwitchIcon.isDisplayed(), "Product switch should be hidden");
 				assert.strictEqual(listItemsCount, 5, "5 actions should overflow");
 			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
@@ -346,10 +346,10 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
 
 				await searchIcon.click();
-				assert.strictEqual(await searchField.isDisplayed(), true, "Search is visible after clicking on icon");
+				assert.ok(await searchField.isDisplayed(), "Search is visible after clicking on icon");
 
 				await searchIcon.click();
-				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden after clicking again on the icon");
+				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking again on the icon");
 			});
 		});
 
@@ -431,15 +431,15 @@ describe("Component Behavior", () => {
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const searchListItem = await overflowPopover.$("ui5-list ui5-li:nth-child(1)");
 
-				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
+				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
 
 				await overflowButton.click();
 				await searchListItem.click();
 
-				assert.strictEqual(await searchField.isDisplayed(), true, "Search is visible after clicking on the search icon within the overflow");
+				assert.ok(await searchField.isDisplayed(), "Search is visible after clicking on the search icon within the overflow");
 
 				await cancelButton.click();
-				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden after clicking on the search icon agian");
+				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking on the search icon agian");
 			});
 		});
 	});

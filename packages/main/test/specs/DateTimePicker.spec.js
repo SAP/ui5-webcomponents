@@ -203,7 +203,7 @@ describe("DateTimePicker general interaction", () => {
 		// assert
 		const picker = await getPicker("dt");
 		const expanded = await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("expanded");
-		assert.strictEqual(expanded, true, "The  hours slider is expanded.");
+		assert.ok(expanded, "The  hours slider is expanded.");
 
 		await closePickerById("dt");
 	});

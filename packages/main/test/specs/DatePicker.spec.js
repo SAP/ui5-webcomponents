@@ -80,7 +80,7 @@ describe("Date Picker Tests", () => {
 
 		await root.setAttribute("disabled", "");
 
-		assert.equal(await input.getProperty("disabled"), true, "input has disabled property");
+		assert.ok(await input.getProperty("disabled"),  "input has disabled property");
 	});
 
 	it("readonly", async () => {
@@ -90,7 +90,7 @@ describe("Date Picker Tests", () => {
 		await root.setAttribute("readonly", "");
 
 		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("readonly"), true, "input has readonly set");
+		assert.ok(await input.getProperty("readonly"),  "input has readonly set");
 		assert.notOk(await datepicker.hasIcon(), "icon is not displayed");
 	});
 
@@ -898,10 +898,10 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 
 		let displayedDay = await datepicker.getDisplayedDay(9);
-		assert.equal(await displayedDay.hasClass("ui5-dp-item--disabled"), false , "Min date is included");
+		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Min date is included");
 
 		displayedDay = await datepicker.getDisplayedDay(11);
-		assert.equal(await displayedDay.hasClass("ui5-dp-item--disabled"), false, "Max date is included");
+		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Max date is included");
 	});
 
 	it("Tests week numbers column visibility", async () => {
@@ -913,7 +913,7 @@ describe("Date Picker Tests", () => {
 		// assert
 		let dayPicker = await datepicker.getDayPicker();
 		const weekNumbersCol1 = await dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.equal(await weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
+		assert.ok(await weekNumbersCol1.isExisting(), "The week numbers column is visible.");
 
 		// close date picker
 		const innerInput = await datepicker.getInnerInput();
@@ -927,7 +927,7 @@ describe("Date Picker Tests", () => {
 		// assert
 		dayPicker = await datepicker.getDayPicker();
 		const weekNumbersCol2 = await dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.equal(await weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
+		assert.notOk(await weekNumbersCol2.isExisting(), "The week numbers column is hidden.");
 
 		// close date picker
 		await innerInput.click();

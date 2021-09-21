@@ -55,12 +55,12 @@ describe("Component Behavior", () => {
 			await items[3].click();
 
 			assert.strictEqual(await input.getProperty("value"), "7", "Event is not fired");
-			assert.strictEqual(await items[3].getProperty("expanded"), true, "Expanded is toggled");
+			assert.ok(await items[3].getProperty("expanded"), "Expanded is toggled");
 
 			await items[3].click();
 
 			assert.strictEqual(await input.getProperty("value"), "7", "Event is not fired");
-			assert.strictEqual(await items[3].getProperty("expanded"), false, "Expanded is toggled");
+			assert.notOk(await items[3].getProperty("expanded"), "Expanded is toggled");
 
             await items[1].click();
             assert.strictEqual(await input.getProperty("value"), "8", "Event is fired");
@@ -85,7 +85,7 @@ describe("Component Behavior", () => {
 				done(sideNavigation.showHeader);
 			});
 
-			assert.strictEqual(showHeader, true, "Header is displayed");
+			assert.ok(showHeader, "Header is displayed");
 
 			showHeader = await browser.executeAsync(done => {
 				const sideNavigation = document.querySelector("#sn1");
@@ -94,7 +94,7 @@ describe("Component Behavior", () => {
 				done(sideNavigation.showHeader);
 			});
 
-			assert.strictEqual(showHeader, false, "Header is not displayed");
+			assert.notOk(showHeader, "Header is not displayed");
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);

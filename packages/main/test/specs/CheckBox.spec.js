@@ -9,7 +9,7 @@ describe("CheckBox general interaction", () => {
 	it("tests checked default value is false", async () => {
 		const checkBox = await browser.$("#cb1");
 
-		assert.strictEqual(await checkBox.getProperty("checked"), false, "Check if default value for checked is false");
+		assert.notOk(await checkBox.getProperty("checked"), "Check if default value for checked is false");
 	});
 
 	it("tests change event", async () => {

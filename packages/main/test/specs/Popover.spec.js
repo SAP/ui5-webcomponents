@@ -98,11 +98,11 @@ describe("Popover general interaction", () => {
 
 		const itemBeforeLastItem = items[items.length - 2];
 
-		assert.strictEqual(await itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
+		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
 
 		await itemBeforeLastItem.scrollIntoView();
 
-		assert.strictEqual(await itemBeforeLastItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
 
 		await manyItemsSelect.click();
 	});
@@ -116,11 +116,11 @@ describe("Popover general interaction", () => {
 
 		const itemBeforeLastItem = items[items.length - 2];
 
-		assert.strictEqual(await itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
+		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
 
 		await itemBeforeLastItem.scrollIntoView();
 
-		assert.strictEqual(await itemBeforeLastItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
 	});
 
 	it("tests modal popover", async () => {

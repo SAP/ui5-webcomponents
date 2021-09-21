@@ -90,7 +90,7 @@ describe("Calendar general interaction", () => {
 
 		const focusedItemTimestamp = await monthPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
 		const isHidden = await monthPicker.getAttribute("hidden");
-		assert.ok(!isHidden, "The monthpicker is present");
+		assert.notOk(isHidden, "The monthpicker is present");
 		const focusedMonth = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCMonth();
 		assert.strictEqual(focusedMonth, 10, "The focused month is November");
 	});
@@ -109,7 +109,7 @@ describe("Calendar general interaction", () => {
 		await browser.keys("Space");
 
 		const isHidden = await yearPicker.getAttribute("hidden");
-		assert.ok(!isHidden, "The yearpicker is present");
+		assert.notOk(isHidden, "The yearpicker is present");
 		const focusedItemTimestamp = await yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
 		const focusedYear = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear();
 		assert.strictEqual(focusedYear, 2000, "The focused year is 2000");
@@ -243,8 +243,9 @@ describe("Calendar general interaction", () => {
 		}));
 
 		const selectedDates = await calendar.getProperty("selectedDates");
+		const expectedDates = [971136000, 971222400, 971308800];
 
-		assert.deepEqual(selectedDates.sort(), [971136000, 971222400, 971308800].sort(), "Change event is fired with proper data");
+		assert.deepEqual(selectedDates.sort(), expectedDates.sort(), "Change event is fired with proper data");
 	});
 
 	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", async () => {
@@ -287,8 +288,9 @@ describe("Calendar general interaction", () => {
 		assert.ok(await dates[2].hasClass("ui5-dp-item--selected"), `${await dates[2].getAttribute("data-sap-timestamp")} is selected`);
 
 		const selectedDates = await calendar.getProperty("selectedDates");
+		const expectedDates = [971740800, 971913600];
 
-		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
+		assert.deepEqual(selectedDates.sort(), expectedDates.sort(), "Change event is fired with proper data");
 	});
 
 	it("Previous and next buttons are disabled when necessary", async () => {

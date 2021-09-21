@@ -22,11 +22,11 @@ describe("Page general interaction", () => {
         const footer = await browser.$("#page").shadow$(".ui5-page-footer-root");
         const button = await browser.$("#toggleVisibility");
 
-        assert.strictEqual(await footer.isDisplayedInViewport(), true, "Footer should be visible.");
+        assert.ok(await footer.isDisplayedInViewport(), "Footer should be visible.");
 
         await button.click();
         await browser.pause(500);
 
-        assert.strictEqual(await footer.isDisplayedInViewport(), false, "Footer should not be visible.");
+        assert.notOk(await footer.isDisplayedInViewport(), "Footer should not be visible.");
 	});
 });
