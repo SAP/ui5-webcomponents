@@ -438,21 +438,12 @@ class MultiComboBox extends UI5Element {
 	}
 
 	filterSelectedItems(event) {
-		if (this.allItemsSelected) {
-			this.filterSelected = true;
-			return;
-		}
-
 		this.filterSelected = event.target.pressed;
 		this.selectedItems = this._filteredItems.filter(item => item.selected);
 	}
 
 	get _showAllItemsButtonPressed() {
-		return this.filterSelected || this.allItemsSelected;
-	}
-
-	get allItemsSelected() {
-		return this.items.length === this.selectedValues.length;
+		return this.filterSelected;
 	}
 
 	get _inputDom() {
@@ -682,7 +673,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_click(event) {
-		if (isPhone() && !this.readonly && !this._showMorePressed) {
+		if (isPhone() && !this.readonly && !this._showMorePressed && !this._deleting) {
 			this.allItemsPopover.showAt(this);
 		}
 
@@ -732,6 +723,8 @@ class MultiComboBox extends UI5Element {
 
 		this.toggle(this.shouldDisplayOnlyValueStateMessage);
 		this.storeResponsivePopoverWidth();
+
+		this._deleting = false;
 	}
 
 	get _isPhone() {
@@ -823,7 +816,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _isFocusInside() {
-		return this.focused || this._tokenizerFocused;
+		return !isPhone() && (this.focused || this._tokenizerFocused);
 	}
 
 	get selectedItemsListMode() {
