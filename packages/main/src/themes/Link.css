@@ -14,13 +14,12 @@
 	text-decoration: var(--_ui5_link_text_decoration);
 }
 
-:host([disabled]) {
-	pointer-events: none;
+:host(:hover) {
+	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
-:host(:not([disabled])) .ui5-link-root:hover {
-	color: var(--sapLinkColor);
-	text-decoration: var(--_ui5_link_hover_text_decoration);
+:host([disabled]) {
+	pointer-events: none;
 }
 
 :host([disabled]) .ui5-link-root {
