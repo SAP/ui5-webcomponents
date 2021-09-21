@@ -95,6 +95,59 @@ describe("Component Behavior", () => {
 			});
 
 			assert.strictEqual(showHeader, false, "Header is not displayed");
+
+			// clean up
+			await browser.$("#sn1").setProperty("collapsed", false);
+		});
+
+		it("Tests tooltips when expanded", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			const items = await sideNavigation.$$("ui5-side-navigation-item");
+			const renderedItems = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			const secondItemSubItems = await items[1].$$("ui5-side-navigation-sub-item");
+
+			assert.strictEqual(await renderedItems[0].getAttribute("title"), await items[0].getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(await renderedItems[1].getAttribute("title"), await items[1].getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
+
+			// sub items
+			assert.strictEqual(await renderedItems[2].getAttribute("title"), await secondItemSubItems[0].getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.strictEqual(await renderedItems[3].getAttribute("title"), await secondItemSubItems[1].getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
+
+			// fixed items
+			const fixedItems = await sideNavigation.$$("ui5-side-navigation-item[slot=fixedItems]");
+			let renderedFixedItems = await (await sideNavigation.shadow$$("ui5-tree"))[1].shadow$("ui5-list").$$("ui5-li-tree");
+			await renderedFixedItems[0].shadow$("ui5-icon.ui5-li-tree-toggle-icon").click(); // expand the item
+			renderedFixedItems = await (await sideNavigation.shadow$$("ui5-tree"))[1].shadow$("ui5-list").$$("ui5-li-tree");
+			const firstFixedItemSubItems = await fixedItems[0].$$("ui5-side-navigation-sub-item");
+
+			assert.strictEqual(await renderedFixedItems[0].getAttribute("title"), await fixedItems[0].getAttribute("title"), "Title is set as tooltip to root fixed item");
+			assert.strictEqual(await renderedFixedItems[2].getAttribute("title"), await firstFixedItemSubItems[1].getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
+
+			// clean up
+			await renderedFixedItems[0].shadow$("ui5-icon.ui5-li-tree-toggle-icon").click(); // collapse the item
+		});
+
+		it("Tests tooltips when collapsed", async () => {
+			await browser.$("#sn1").setProperty("collapsed", true);
+			const sideNavigation = await browser.$("#sn1");
+			const items = await sideNavigation.$$("ui5-side-navigation-item");
+			const secondItemSubItems = await items[1].$$("ui5-side-navigation-sub-item");
+			const renderedItems = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+
+			assert.strictEqual(await renderedItems[0].getAttribute("title"), await items[0].getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(await renderedItems[1].getAttribute("title"), await items[1].getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
+
+			await renderedItems[1].click();
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popoverItems = await popover.$("ui5-list").$$("ui5-li");
+
+			assert.strictEqual(await popoverItems[0].getAttribute("title"), await items[1].getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
+			assert.strictEqual(await popoverItems[1].getAttribute("title"), await secondItemSubItems[0].getAttribute("title"), "Title is set as tooltip to sub item");
+
+			// clean up
+			await browser.$("#sn1").setProperty("collapsed", false);
 		});
 	});
 });

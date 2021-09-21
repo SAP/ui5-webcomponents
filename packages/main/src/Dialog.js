@@ -280,13 +280,17 @@ class Dialog extends Popup {
 	_show() {
 		super._show();
 		this._center();
-		this._attachResizeHandlers();
 	}
 
 	onBeforeRendering() {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
+		this._detachResizeHandlers();
+	}
+
+	onAfterRendering() {
+		this._attachResizeHandlers();
 	}
 
 	onExitDOM() {
@@ -445,7 +449,7 @@ class Dialog extends Popup {
 			style = window.getComputedStyle(this),
 			minWidth = Number.parseFloat(style.minWidth),
 			minHeight = Number.parseFloat(style.minHeight),
-			maxWidth = 	window.innerWidth - left,
+			maxWidth = window.innerWidth - left,
 			maxHeight = window.innerHeight - top;
 
 		let width = Number.parseFloat(style.width),

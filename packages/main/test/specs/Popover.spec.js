@@ -110,7 +110,7 @@ describe("Popover general interaction", () => {
 	it("tests if overflown content can be reached by scrolling (with header and arrow)", async () => {
 		const bigPopover = await browser.$("#big-popover");
 		const items = await bigPopover.$$("ui5-li");
-		const openBigPopoverButton = await browser.$("#big-popover-button")
+		const openBigPopoverButton = await browser.$("#big-popover-button");
 
 		await openBigPopoverButton.click();
 

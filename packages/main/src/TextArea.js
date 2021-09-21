@@ -449,9 +449,13 @@ class TextArea extends UI5Element {
 		this.previousValue = this.getInputDomRef().value;
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 		this.focused = false;
-		this._openValueStateMsgPopover = false;
+
+		if (!focusedOutToValueStateMessage) {
+			this._openValueStateMsgPopover = false;
+		}
 	}
 
 	_onchange() {

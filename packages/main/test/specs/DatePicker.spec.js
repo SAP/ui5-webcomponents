@@ -922,7 +922,7 @@ describe("Date Picker Tests", () => {
 		const monthpickerContent = (await datepicker.getDayPicker()).shadow$(".ui5-dp-content");
 
 		assert.strictEqual(await monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
-		assert.strictEqual(await monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
+		assert.strictEqual(await monthpickerContent.getAttribute("aria-roledescription"), "Gregorian calendar", "Calendar root have correct roledescription")
 
 	});
 
