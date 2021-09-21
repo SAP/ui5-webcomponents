@@ -21,7 +21,7 @@ describe("Button general interaction", () => {
 		assert.ok(await button.shadow$("ui5-icon").isExisting(), "icon is present");
 
 		await button.setAttribute("icon", "");
-		assert.strictEqual(await button.shadow$("ui5-icon").isExisting(),"icon is not present");
+		assert.notOk(await button.shadow$("ui5-icon").isExisting(),"icon is not present");
 	});
 
 	it("tests button's slot rendering", async () => {
