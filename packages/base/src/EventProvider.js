@@ -19,14 +19,13 @@ class EventProvider {
 
 	detachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		let eventListeners = eventRegistry.get(eventName);
+		const eventListeners = eventRegistry.get(eventName);
 
 		if (!eventListeners) {
 			return;
 		}
-
-		eventListeners = eventListeners.filter(fn => fn !== fnFunction);
-		this._eventRegistry[eventName] = eventListeners;
+		const indexOfFnToDetach = eventListeners.indexOf(fnFunction);
+		if(~indexOfFnToDetach) eventListeners[eventName].splice(indexOfFnToDetach, 1);
 
 		if (eventListeners.length === 0) {
 			eventRegistry.delete(eventName);
