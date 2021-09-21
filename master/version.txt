@@ -1,5 +1,7 @@
-commit be362192a1d8b6c950f2ec9a039242f33526cbef
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon Sep 20 17:55:19 2021 +0300
+commit c9a0d48049165fccbbd898e9fced6346e94d11c4
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Sep 21 00:03:01 2021 -0700
 
-    fix(ui5-wizard): grouped steps could be activated (#3961)
+    chore: translation delivery (#3963)
+    
+    Change-Id: I232b671a78bf4ad0a90277df25f5dcb7eeaa1184
