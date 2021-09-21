@@ -2,31 +2,31 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Page general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Page.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Page.html`);
 	});
 
-	it("tests initial rendering", () => {
-        const page = browser.$("#page");
-        const header = page.shadow$(".ui5-page-header-root");
-        const content = page.shadow$(".ui5-page-content-root");
-        const footer = page.shadow$(".ui5-page-footer-root");
+	it("tests initial rendering", async () => {
+        const page = await browser.$("#page");
+        const header = await page.shadow$(".ui5-page-header-root");
+        const content = await page.shadow$(".ui5-page-content-root");
+        const footer = await page.shadow$(".ui5-page-footer-root");
 
-        assert.ok(page.isExisting(), "The component should have a shadow root.");
-        assert.ok(header.isExisting(), "Header should be rendered.");
-        assert.ok(content.isExisting(), "Content should be rendered.");
-        assert.ok(footer.isExisting(), "Footer should be rendered.");
+        assert.ok(await page.isExisting(), "The component should have a shadow root.");
+        assert.ok(await header.isExisting(), "Header should be rendered.");
+        assert.ok(await content.isExisting(), "Content should be rendered.");
+        assert.ok(await footer.isExisting(), "Footer should be rendered.");
     });
 
-	it("tests footer visibility", () => {
-        const footer = browser.$("#page").shadow$(".ui5-page-footer-root");
-        const button = $("#toggleVisibility");
+	it("tests footer visibility", async () => {
+        const footer = await browser.$("#page").shadow$(".ui5-page-footer-root");
+        const button = await browser.$("#toggleVisibility");
 
-        assert.strictEqual(footer.isDisplayedInViewport(), true, "Footer should be visible.");
+        assert.strictEqual(await footer.isDisplayedInViewport(), true, "Footer should be visible.");
 
-        button.click();
-        browser.pause(500);
+        await button.click();
+        await browser.pause(500);
 
-        assert.strictEqual(footer.isDisplayedInViewport(), false, "Footer should not be visible.");
+        assert.strictEqual(await footer.isDisplayedInViewport(), false, "Footer should not be visible.");
 	});
 });

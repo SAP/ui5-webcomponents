@@ -10,6 +10,7 @@ import {
 	isLeft,
 	isRight,
 	isEscape,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -36,6 +37,7 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
+	VALUE_STATE_ERROR_ALREADY_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -251,6 +253,10 @@ const metadata = {
 			type: Integer,
 			defaultValue: 0,
 			noAttribute: true,
+		},
+
+		_performingSelectionTwice: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
@@ -488,10 +494,7 @@ class MultiComboBox extends UI5Element {
 			input.value = this._inputLastValue;
 			this.valueState = "Error";
 
-			this._validationTimeout = setTimeout(() => {
-				this.valueState = oldValueState;
-				this._validationTimeout = null;
-			}, 2000);
+			this._resetValueState(oldValueState);
 
 			return;
 		}
@@ -595,7 +598,46 @@ class MultiComboBox extends UI5Element {
 			this.value = this._lastValue;
 		}
 
+		if (isEnter(event)) {
+			this.handleEnter();
+		}
+
 		this._keyDown = true;
+	}
+
+	handleEnter() {
+		const lowerCaseValue = this.value.toLowerCase();
+		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
+		const oldValueState = this.valueState;
+
+		if (matchingItem) {
+			if (matchingItem.selected) {
+				if (this._validationTimeout) {
+					return;
+				}
+
+				this.valueState = "Error";
+				this._performingSelectionTwice = true;
+				this._resetValueState(oldValueState, () => {
+					this._performingSelectionTwice = false;
+				});
+			} else {
+				matchingItem.selected = true;
+				this.value = "";
+				this.fireSelectionChange();
+			}
+
+			this.allItemsPopover.close();
+		}
+	}
+
+	_resetValueState(valueState, callback) {
+		this._validationTimeout = setTimeout(() => {
+			this.valueState = valueState;
+			this._validationTimeout = null;
+
+			callback && callback();
+		}, 2000);
 	}
 
 	_onTokenizerKeydown(event) {
@@ -833,7 +875,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get valueStateText() {
-		return this.valueStateTextMappings[this.valueState];
+		let key = this.valueState;
+
+		if (this._performingSelectionTwice) {
+			key = "Error_Selection";
+		}
+
+		return this.valueStateTextMappings[key];
 	}
 
 	get valueStateTextId() {
@@ -871,6 +919,7 @@ class MultiComboBox extends UI5Element {
 		return {
 			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Error_Selection": this.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
 			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
