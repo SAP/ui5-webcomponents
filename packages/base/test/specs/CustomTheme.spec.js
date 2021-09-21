@@ -1,14 +1,14 @@
 const assert = require("chai").assert;
 
 describe("Custom themes can be registered", () => {
-	before(() => {
-		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(async () => {
+		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
 	});
 
-	it("Tests that theme parameters are changed on theme change", () => {
+	it("Tests that theme parameters are changed on theme change", async () => {
 		const newTheme = 'my_custom_theme';
 
-		const res = browser.executeAsync( async (newTheme, done) => {
+		const res = await browser.executeAsync( async (newTheme, done) => {
 			const var1 = "--var1: #555555";
 
 			window.registerThemePropertiesLoader("@ui5/webcomponents-base-test", newTheme, () => `:root{ ${var1}; }`);
@@ -18,7 +18,7 @@ describe("Custom themes can be registered", () => {
 
 			const style = document.querySelector(`style[data-ui5-theme-properties="@ui5/webcomponents-base-test"]`);
 			const varsFound = style && style.textContent.includes(var1);
-			return done(varsFound);
+			done(varsFound);
 		}, newTheme);
 
 		assert.strictEqual(res, true, "Theme parameters changed");
