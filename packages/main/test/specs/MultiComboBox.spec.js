@@ -221,7 +221,7 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("keyboard handling", () => {
-		before(() => {
+		beforeEach(() => {
 			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 		});
 
@@ -239,6 +239,31 @@ describe("MultiComboBox general interaction", () => {
 			tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
+		});
+
+		it ("selects an item when enter is pressed and value matches a text of an item in the list", () => {
+			const mcb = $("#mcb-with-placeholder");
+			const input = mcb.shadow$("input");
+
+			input.click();
+			input.keys(['c', 'o', 'm', 'p', 'a', 'c', 't']);
+			input.keys("Enter");
+
+			let tokens = mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 4, "4 tokens are visible");
+			assert.strictEqual(input.getValue(), "", "Input's value should be empty");
+
+			input.keys(['c', 'o', 's', 'y']);
+			input.keys("Enter");
+
+			assert.strictEqual(input.getValue(), "cosy", "value should remain cosy");
+			assert.strictEqual(input.getAttribute("value-state"), "Error", "Value state is changed to error");
+			assert.strictEqual(mcb.getProperty("valueStateText"), "This value is already selected", "Value state text should be set to already selected");
+
+			browser.waitUntil(() => {
+				return input.getAttribute("value-state") === "None";
+			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 	});
 
