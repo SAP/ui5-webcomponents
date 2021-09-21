@@ -37,10 +37,7 @@ describe("Attributes propagation", () => {
 	it("Value attribute is propagated properly", async () => {
 		const sExpectedValue = "Test test";
 
-		await browser.executeAsync(done => {
-			document.getElementById("input3").value = "Test test";
-			done();
-		});
+		await browser.$("#input3").setProperty("value", "Test test");
 
 		assert.strictEqual(await browser.$("#input3").shadow$(".ui5-input-inner").getValue(), sExpectedValue, "Value property was set correctly");
 	});

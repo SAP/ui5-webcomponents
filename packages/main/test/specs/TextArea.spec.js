@@ -10,10 +10,7 @@ describe("Attributes propagation", () => {
 		const textarea = await browser.$("#basic-textarea");
 		const sExpected = "New placeholder text";
 
-		await browser.executeAsync(done => {
-			document.getElementById("basic-textarea").setAttribute("placeholder", "New placeholder text");
-			done();
-		});
+		await browser.$("#basic-textarea").setAttribute("placeholder", "New placeholder text");
 
 		assert.strictEqual(await textarea.shadow$("textarea").getProperty("placeholder"), sExpected, "The placeholder was set correctly");
 	});
@@ -34,10 +31,7 @@ describe("Attributes propagation", () => {
 	it("Value attribute is propagated properly", async () => {
 		const sExpectedValue = "Test";
 
-		await browser.executeAsync(done => {
-			document.getElementById("basic-textarea").value = "Test";
-			done();
-		});
+		await browser.$("#basic-textarea").setProperty("value", "Test");
 
 		assert.strictEqual(await browser.$("#basic-textarea").shadow$("textarea").getValue(), sExpectedValue, "Value property was set correctly");
 	});
@@ -111,10 +105,7 @@ describe("when enabled", () => {
 		const textarea = await browser.$("#basic-textarea");
 		const textareaInner = await browser.$("#basic-textarea").shadow$("textarea");
 
-		await browser.executeAsync(done => {
-			document.getElementById("basic-textarea").value = "Test";
-			done();
-		}); // set the value again since browser.url reset the page
+		await browser.$("#basic-textarea").setProperty("value", "Test");
 		assert.strictEqual(await textarea.getProperty("value"), "Test", "Initial value is correct");
 
 		await textareaInner.addValue("a");

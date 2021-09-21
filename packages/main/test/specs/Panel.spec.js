@@ -14,11 +14,7 @@ describe("Panel general interaction", () => {
 
 		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
 
-		await browser.executeAsync(done => {
-			document.getElementById("panel-fixed").setAttribute("header-text", "New text");
-			done();
-		});
-		await browser.pause(500);
+		await browser.$("#panel-fixed").setAttribute("header-text", "New text");
 
 		assert.strictEqual(await title.getText(), sNew, "New text");
 	});
@@ -31,17 +27,14 @@ describe("Panel general interaction", () => {
 		assert.ok(await content.isDisplayedInViewport(), "The content is visible");
 
 		await header.click();
-		await browser.pause(500);
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is still visible");
 
 		await header.keys("Space");
-		await browser.pause(500);
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is still visible");
 
 		await header.keys("Enter");
-		await browser.pause(500);
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is still visible");
 	});
@@ -54,17 +47,14 @@ describe("Panel general interaction", () => {
 		assert.ok(await content.isDisplayedInViewport(), "The content is visible");
 
 		await header.click();
-		await browser.pause(500);
 
 		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
 
 		await header.keys("Space");
-		await browser.pause(500);
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is visible");
 
 		await header.keys("Enter");
-		await browser.pause(500);
 
 		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
 	});
@@ -136,10 +126,7 @@ describe("Panel general interaction", () => {
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
 
-			await browser.executeAsync(done => {
-				done(document.getElementById("panel-expandable").setAttribute("accessible-name", "New accessible name"));
-			});
-			await browser.pause(500);
+			await browser.$("#panel-expandable").setAttribute("accessible-name", "New accessible name");
 
 			assert.strictEqual(await panelWithNativeHeader.shadow$(".ui5-panel-root").getAttribute("aria-label"), "New accessible name", "aria-label is set correctly");
 		});
@@ -164,20 +151,12 @@ describe("Panel general interaction", () => {
 			assert.ok(await button.getAttribute("aria-controls"), "aria-controls should be set on the button");
 			assert.ok(await button.getAttribute("title"), "title should be set on the button");
 
-			await browser.executeAsync(done => {
-				document.getElementById("panel2").setAttribute("accessible-name", "New accessible name");
-				done();
-			});
-			await browser.pause(500);
+			await browser.$("#panel2").setAttribute("accessible-name", "New accessible name");
 
 			assert.strictEqual(await panelRoot.getAttribute("aria-label"), "New accessible name", "aria-label should be set on the panel");
 			assert.notOk(await button.getAttribute("aria-label"), "aria-label should not be set on the button");
 
-			await browser.executeAsync(done => {
-				document.getElementById("panel2").setAttribute("use-accessible-name-for-toggle-button", "");
-				done();
-			});
-			await browser.pause(500);
+			await browser.$("#panel2").setAttribute("use-accessible-name-for-toggle-button", "");
 
 			assert.strictEqual(await button.getAttribute("aria-label"), "New accessible name", "aria-label should be set on the button");
 		});

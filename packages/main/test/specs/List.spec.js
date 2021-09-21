@@ -351,10 +351,7 @@ describe("List Tests", () => {
 		await item2.click();
 
 		// disable the second item
-		await browser.executeAsync(done => {
-			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
-			done();
-		});
+		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
 		assert.strictEqual(await item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
 		assert.strictEqual(await item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
@@ -365,10 +362,7 @@ describe("List Tests", () => {
 			item3 = await browser.$('#basicList ui5-li:nth-child(3)');
 
 		// ensure the second item is disabled
-		await browser.executeAsync(done => {
-			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
-			done();
-		});
+		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
 		// navigate from the first item to the next focusable item
 		await item1.click();

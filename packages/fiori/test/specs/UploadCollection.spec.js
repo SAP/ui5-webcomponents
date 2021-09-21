@@ -27,10 +27,7 @@ describe("UploadCollection", () => {
 			assert.notOk(await secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("secondItem").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
 		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", async () => {
@@ -53,10 +50,7 @@ describe("UploadCollection", () => {
 			assert.notOk(await errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("errorState").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#errorState").removeAttribute("_editing");
 		});
 
 		it("visibility of buttons", async () => {
@@ -109,10 +103,7 @@ describe("UploadCollection", () => {
 			assert.strictEqual(parseInt(await browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("secondItem").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
 		it("upload collection should fire 'item-delete'", async () => {
@@ -158,10 +149,7 @@ describe("UploadCollection", () => {
 			// assert.strictEqual(await latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("latestReportsPdf").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#latestReportsPdf").removeAttribute("_editing");
 		});
 
 		it("should be able to add extension, if there isn't such", async () => {
@@ -184,10 +172,7 @@ describe("UploadCollection", () => {
 			assert.strictEqual(await noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("noFileExtension").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#noFileExtension").removeAttribute("_editing");
 		});
 
 		it("should NOT consider hidden file name as extension", async () => {
@@ -199,10 +184,7 @@ describe("UploadCollection", () => {
 			assert.notOk(await secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("secondItem").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
 		it("tests cancelling of name change via keyboard", async () => {
@@ -221,10 +203,7 @@ describe("UploadCollection", () => {
 			assert.strictEqual(await secondItem.shadow$(".ui5-uci-file-name").getText(), "Graph.docx", "The name of the file is not changed");
 
 			// reset the item
-			await browser.executeAsync(done => {
-				document.getElementById("keyboardNavigation").removeAttribute("_editing");
-				done();
-			});
+			await browser.$("#keyboardNavigation").removeAttribute("_editing");
 		});
 	});
 

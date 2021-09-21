@@ -78,21 +78,13 @@ describe("Component Behavior", () => {
 		it("Tests header visibility", async () => {
 			let showHeader = null;
 
-			showHeader = await browser.executeAsync(done => {
-				const sideNavigation = document.querySelector("#sn1");
-				sideNavigation.collapsed = false;
-
-				done(sideNavigation.showHeader);
-			});
+			await browser.$("#sn1").setProperty("collapsed", false);
+			showHeader = await browser.$("#sn1").getProperty("showHeader");
 
 			assert.ok(showHeader, "Header is displayed");
 
-			showHeader = await browser.executeAsync(done => {
-				const sideNavigation = document.querySelector("#sn1");
-				sideNavigation.collapsed = true;
-
-				done(sideNavigation.showHeader);
-			});
+			await browser.$("#sn1").setProperty("collapsed", true);
+			showHeader = await browser.$("#sn1").getProperty("showHeader");
 
 			assert.notOk(showHeader, "Header is not displayed");
 

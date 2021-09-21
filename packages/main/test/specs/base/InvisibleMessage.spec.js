@@ -20,10 +20,7 @@ describe("InvisibleMessage", () => {
         const button = await browser.$("#announce-button");
         const checkBox = await browser.$("#announce-checkbox");
 
-        await browser.executeAsync(done => {
-			document.getElementById("announce-textarea").value = "announcement";
-			done();
-		});
+        await browser.$("#announce-textarea").setProperty("value", "announcement");
 
         await button.click();
         await checkBox.click();
