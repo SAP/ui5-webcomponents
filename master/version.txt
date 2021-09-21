@@ -1,7 +1,7 @@
-commit c9a0d48049165fccbbd898e9fced6346e94d11c4
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Sep 21 00:03:01 2021 -0700
+commit ec4ecc89e40a3ddc33c2a2f1425964970e89c490
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Sep 21 10:56:45 2021 +0300
 
-    chore: translation delivery (#3963)
+    fix(ui5-multi-combobox): select an item when value matches and enter is pressed (#3942)
     
-    Change-Id: I232b671a78bf4ad0a90277df25f5dcb7eeaa1184
+    FIXES: #3809
