@@ -240,6 +240,33 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});
+
+		it ("selects an item when enter is pressed and value matches a text of an item in the list", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-with-placeholder");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await input.keys(['c', 'o', 'm', 'p', 'a', 'c', 't']);
+			await input.keys("Enter");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 4, "4 tokens are visible");
+			assert.strictEqual(await input.getValue(), "", "Input's value should be empty");
+
+			await input.keys(['c', 'o', 's', 'y']);
+			await input.keys("Enter");
+
+			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
+			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
+			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected", "Value state text should be set to already selected");
+
+			await browser.waitUntil(async() => {
+				return await input.getAttribute("value-state") === "None";
+			}, 2500, "expect value state to be different after 2.5 seconds");
+		});
 	});
 
 	describe("General", () => {
