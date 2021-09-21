@@ -594,6 +594,7 @@ class MultiComboBox extends UI5Element {
 			this._tokenizer._focusLastToken();
 		}
 
+		// Reset value on ESC
 		if (isEscape(event) && (!this.allowCustomValues || (!this.open && this.allowCustomValues))) {
 			this.value = this._lastValue;
 		}
