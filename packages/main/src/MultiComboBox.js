@@ -610,7 +610,6 @@ class MultiComboBox extends UI5Element {
 			this._inputDom.focus();
 			this.focused = true;
 		}
-
 	}
 
 	async _handleFirstItemArrowUp(event) {
@@ -638,9 +637,6 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		await this._getList();
-		const firstListItem = this.list.items[0];
-
 		if (isArrowDown && this.focused && this.hasValueState) {
 			valueStateHeader.focus();
 
@@ -648,7 +644,7 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (isArrowDown && this.focused) {
+		if (isArrowDown && this.focused && hasSuggestions) {
 			this._handleArrowDown(event);
 		}
 	}
@@ -860,12 +856,11 @@ class MultiComboBox extends UI5Element {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
-	
+
 	async _getValueStateHeader() {
 		const suggestionsPopover = await this._getSuggestionsPopover();
 		return suggestionsPopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root");
 	}
-
 
 	get _tokenizer() {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
