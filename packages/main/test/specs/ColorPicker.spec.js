@@ -39,7 +39,7 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(hexInput.getProperty("value"), "112233", "Shorthand syntax is supported");
 	});
 
-	it("Alpha value change", () => {
+	it("Alpha value change via the input field", () => {
 		const colorPicker = browser.$("#cp1");
 		const alphaInput = colorPicker.shadow$("#alpha");
 
@@ -53,15 +53,33 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
 	});
 
-	it("Hue value change", () => {
+	it("Alpha value change via the slider", () => {
+		const colorPicker = browser.$("#cp1");
+		const alphaSliderHandle = colorPicker.shadow$(".ui5-color-picker-alpha-slider").shadow$(".ui5-slider-handle");
+		const stepInput = browser.$("#changeEventCounter");
+
+		stepInput.setAttribute("value", 0);
+		colorPicker.scrollIntoView();
+		colorPicker.setAttribute("color", "rgba(183, 61, 61, 1)");
+
+		alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(colorPicker.getAttribute("color"), "rgba(183, 61, 61, 0.83)", "Alpha value propely changed");
+		assert.strictEqual(stepInput.getAttribute("value"), "1", "Change event gets fired on alpha slider change");
+	});
+
+	it("Hue value change via the slider", () => {
 		const colorPicker = browser.$("#cp1");
 		const hueSliderHandle = colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
+		const stepInput = browser.$("#changeEventCounter");
 
-		colorPicker.setProperty("color", "rgba(183, 61, 61, 1)");
+		colorPicker.scrollIntoView();
+		colorPicker.setAttribute("color", "rgba(183, 61, 61, 0.83)");
 
 		hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(colorPicker.getAttribute("color"), "rgba(183, 61, 183, 0)", "Color properly changed");
+		assert.strictEqual(colorPicker.getAttribute("color"), "rgba(183, 61, 183, 0.83)", "Color properly changed");
+		assert.strictEqual(stepInput.getAttribute("value"), "2", "Change event gets fired on hue slider change");
 	});
 
 
