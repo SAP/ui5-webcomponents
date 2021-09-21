@@ -1,5 +1,8 @@
-commit 2847a6097f6b88a875a42d29f9a38142fc4f0e63
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Sep 21 14:49:54 2021 +0300
+commit d5a0a3ada5b06294d2a6e264f75077084caccb55
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue Sep 21 15:22:22 2021 +0300
 
-    docs(ui5-messagestrip): Documentation enhancements (#3967)
+    fix(ui5-bar): align of elements is now correct (#3719)
+    
+    Fixes: #3456
+    Closes:  #3456
