@@ -104,6 +104,18 @@ const metadata = {
 			type: String,
 			defaultValue: UploadCollectionDnDOverlayMode.None,
 		},
+
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleName: {
+			type: String,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
@@ -122,6 +134,10 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-upload-collection</code> header.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided,
+		 * the labelling of the <code>UploadCollection</code> is a responsibility of the application developer.
+		 * <code>accessibleName</code> should be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -312,6 +328,10 @@ class UploadCollection extends UI5Element {
 				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
 				"uc-drop-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drop,
 			},
+			noFiles: {
+				"uc-no-files": true,
+				"uc-no-files-dnd-overlay": this._showDndOverlay,
+			},
 		};
 	}
 
@@ -328,7 +348,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _showNoData() {
-		return this.items.length === 0 && !this._showDndOverlay;
+		return this.items.length === 0;
 	}
 
 	get _noDataText() {

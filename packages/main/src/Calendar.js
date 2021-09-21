@@ -6,6 +6,8 @@ import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
@@ -331,6 +333,65 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderNextPress() {
 		this._currentPickerDOM._showNextPage();
+	}
+
+	get secondaryCalendarTypeButtonText() {
+		if (!this.secondaryCalendarType) {
+			return;
+		}
+
+		const localDate = new Date(this._timestamp * 1000);
+		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
+		const secondYearText = secondYearFormat.format(localDate, true);
+		return {
+			yearButtonText: secondYearText,
+			monthButtonText: secondMonthInfo.text,
+			monthButtonInfo: secondMonthInfo.info,
+		};
+	}
+
+	_getDisplayedSecondaryMonthText() {
+		const month = this._getDisplayedSecondaryMonths();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const pattern = localeData.getIntervalPattern();
+		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
+		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
+
+		if (month.startMonth === month.endMonth) {
+			return {
+				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[month.startMonth],
+				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth],
+			};
+		}
+
+		return {
+			text: pattern.replace(/\{0\}/, secondaryMonthsNames[month.startMonth]).replace(/\{1\}/, secondaryMonthsNames[month.endMonth]),
+			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[month.startMonth]).replace(/\{1\}/, secondaryMonthsNamesWide[month.endMonth]),
+		};
+	}
+
+	_getDisplayedSecondaryMonths() {
+		const localDate = new Date(this._timestamp * 1000);
+		let firstDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
+		firstDate.setDate(1);
+		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
+		const startMonth = firstDate.getMonth();
+
+		let lastDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
+		lastDate.setDate(this._getDaysInMonth(lastDate));
+		lastDate = new CalendarDate(lastDate, this.secondaryCalendarType);
+		const endMonth = lastDate.getMonth();
+
+		return { startMonth, endMonth };
+	}
+
+	_getDaysInMonth(date) {
+		const tempCalendarDate = new CalendarDate(date);
+		tempCalendarDate.setDate(1);
+		tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
+		tempCalendarDate.setDate(0);
+		return tempCalendarDate.getDate();
 	}
 
 	/**

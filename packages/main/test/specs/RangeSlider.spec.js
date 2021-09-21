@@ -959,6 +959,86 @@ describe("Testing resize handling and RTL support", () => {
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "startValue should be 0");
 	});
 
+	it("Testing RTL KBH support", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+		const rangeSliderSelection = rangeSlider.shadow$(".ui5-slider-progress");
+
+		rangeSlider.setAttribute("dir", "rtl");
+		rangeSlider.setProperty("min", 0);
+		rangeSlider.setProperty("max", 10);
+		rangeSlider.setProperty("step", 1);
+		rangeSlider.setProperty("startValue", 3);
+		rangeSlider.setProperty("endValue", 7);
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 30%;", "Initially if no value is set, the start-handle is 30% from the right side of the Range Slider");
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 70%;", "End-handle should be 70% from the right side of the Range Slider");
+
+		// Selection Range
+		rangeSliderSelection.click();
+		rangeSliderSelection.keys("ArrowLeft");
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 40%;", "Start-handle is 40% from the right side of the Range Slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 4, "startValue should be 4");
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 80%;", "End-handle should be 80% from the right side of the Range Slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 8, "startValue should be 8");
+
+		rangeSliderSelection.keys("ArrowRight");
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 30%;", "Start-handle is 30% from the right side of the Range Slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 3, "startValue should be 3");
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 70%;", "End-handle should be 70% from the right side of the Range Slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 7, "startValue should be 7");
+
+		// Start Handle
+		startHandle.click();
+		startHandle.keys("ArrowLeft");
+		startHandle.keys("ArrowLeft");
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 50%;", "Start-handle should be 50% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 5, "startValue should be 5");
+
+		startHandle.keys("ArrowRight");
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 40%;", "Start-handle should be 40% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 4, "startValue should be 4");
+
+		startHandle.keys("Home");
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 0%;", "Start-handle should be 0% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "startValue should be 0");
+
+		startHandle.keys("ArrowRight");
+
+		assert.strictEqual(startHandle.getAttribute("style"), "right: 0%;", "Start-handle should be 0% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "startValue should be 0");
+
+		// End Handle
+		endHandle.click();
+		endHandle.keys("ArrowLeft");
+		endHandle.keys("ArrowLeft");
+
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 90%;", "End-handle should be 90% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 9, "endValue should be 9");
+
+		endHandle.keys("ArrowRight");
+
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 80%;", "End-handle should be 80% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 8, "endValue should be 8");
+
+		endHandle.keys("End");
+
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 100%;", "End-handle should be 100% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 10, "endValue should be 10");
+
+		endHandle.keys("ArrowLeft");
+
+		assert.strictEqual(endHandle.getAttribute("style"), "right: 100%;", "End-handle should be 100% from the right of the range slider");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 10, "endValue should be 10");
+
+	});
+
 	it("Should hide all labels except the first and the last one, if there is not enough space for all of them", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 

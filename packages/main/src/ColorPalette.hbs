@@ -1,12 +1,23 @@
 <div
-	class="ui5-cp-root"
+	class="{{classes.colorPaletteRoot}}"
 	@click={{_onclick}}
 	@keyup={{_onkeyup}}
 	@keydown={{_onkeydown}}
 >
+	{{#if this.showDefaultColor}}
+		<div class="ui5-cp-default-color-button-wrapper">
+			<ui5-button 
+				class="ui5-cp-default-color-button"
+				design="Transparent" 
+				@click={{_onDefaultColorClick}}
+				@keydown={{_onDefaultColorKeyDown}}>Default color</ui5-button>
+			<div class="ui5-cp-separator"></div>
+		</div>
+	{{/if}}
 	<div class="ui5-cp-item-container" 
 		role="region"
 		aria-label="{{colorContainerLabel}}"
+		@keydown="{{_onColorContainerKeyDown}}"
 	>
 		{{#each this.displayedColors}}
 			<slot
@@ -23,16 +34,19 @@
 				design="Transparent"
 				class="ui5-cp-more-colors"
 				@click="{{_openMoreColorsDialog}}"
+				@keydown={{_onMoreColorsKeyDown}}
 			>{{colorPaleteMoreColorsText}}</ui5-button>
 		</div>
 	{{/if}}
 
 	{{#if showRecentColors}}
-		<div class="ui5-cp-separator"></div>
 		<div class="ui5-cp-recent-colors-wrapper">
-			{{#each recentColors}}
-				<ui5-color-palette-item value="{{this}}"></ui5-color-palette-item>
-			{{/each}}
+			<div class="ui5-cp-separator"></div>
+			<div class="ui5-cp-recent-colors-container" @keydown="{{_onRecentColorsContainerKeyDown}}">
+				{{#each recentColors}}
+					<ui5-color-palette-item value="{{this}}"></ui5-color-palette-item>
+				{{/each}}
+			</div>
 		</div>
 	{{/if}}
 </div>

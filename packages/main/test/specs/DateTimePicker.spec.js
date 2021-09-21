@@ -226,7 +226,7 @@ describe("DateTimePicker general interaction", () => {
 		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageDown");// select 00
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).shadow$(`div[tabindex="0"]`).click();
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageDown");// select AM
 
 		picker.$("#ok").click();
@@ -254,7 +254,7 @@ describe("DateTimePicker general interaction", () => {
 		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageDown");// select 00
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).shadow$(`div[tabindex="0"]`).click();
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageUp");// select PM
 
 

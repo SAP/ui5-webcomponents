@@ -84,7 +84,7 @@ const metadata = {
 		},
 
 		/**
-		 * On object of strings that defines several additional accessibility texts for even further customization.
+		 * An object of strings that defines several additional accessibility texts for even further customization.
 		 *
 		 * It supports the following fields:
 		 *  - <code>startColumnAccessibleName</code>: the accessibility name for the <code>startColumn</code> region

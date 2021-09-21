@@ -477,13 +477,7 @@ class ColorPicker extends UI5Element {
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		if (this.selectedHue) {
-			this._hue = this.selectedHue;
-			this.selectedHue = undefined;
-		} else {
-			this._hue = Math.round(hslColours.h * 4.25);
-		}
-
+		this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
 		this._setMainColor(this._hue);
 	}
 

@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -415,10 +414,6 @@ class SliderBase extends UI5Element {
 		const step = this._effectiveStep;
 		const newValue = SliderBase.getValueFromInteraction(event, step, min, max, domRect, directionStart);
 
-		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
-		}
-
 		// Mark start of a user interaction
 		this._isUserInteraction = true;
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
@@ -452,10 +447,6 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	handleUpBase(valueType) {
-		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
-		}
-
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 
@@ -747,9 +738,12 @@ class SliderBase extends UI5Element {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
+		// We need to take into consideration the effective direction of the slider - rtl or ltr.
+		// While in ltr, the left arrow key decreases the value, in rtl it should actually increase it.
+		let step = this.effectiveDir === "rtl" ? -this._effectiveStep : this._effectiveStep;
+
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
-		let step = this._effectiveStep;
 		step = isBigStep && ((max - min) / step > 10) ? (max - min) / 10 : step;
 
 		if (isEnd(event)) {

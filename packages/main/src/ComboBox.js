@@ -15,6 +15,7 @@ import {
 	isUp,
 	isDown,
 	isEnter,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -428,12 +429,20 @@ class ComboBox extends UI5Element {
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
 
-	_focusout() {
-		this.focused = false;
+	_focusout(event) {
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
 		this._fireChangeEvent();
 
-		!isPhone() && this._closeRespPopover();
+		if (focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
+			return;
+		}
+
+		if (!this.shadowRoot.contains(event.relatedTarget)) {
+			this.focused = false;
+			!isPhone() && this._closeRespPopover(event);
+		}
 	}
 
 	_afterOpenPopover() {
@@ -625,6 +634,10 @@ class ComboBox extends UI5Element {
 			this._closeRespPopover();
 		}
 
+		if (isEscape(event) && !this.open) {
+			this.value = this._lastValue;
+		}
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._resetFilter();
@@ -687,25 +700,26 @@ class ComboBox extends UI5Element {
 
 		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
+		let value;
 		if (matchingItems.length) {
-			this.value = matchingItems[0] ? matchingItems[0].text : current;
+			value = matchingItems[0] ? matchingItems[0].text : current;
 		} else {
-			this.value = current;
+			value = current;
 		}
 
-		if (this._isKeyNavigation) {
-			setTimeout(() => {
-				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
-			}, 0);
-		} else if (matchingItems.length) {
-			setTimeout(() => {
-				this.inner.setSelectionRange(this.filterValue.length, this.value.length);
-			}, 0);
-		}
+		this._applyAtomicValueAndSelection(value, this._isKeyNavigation || matchingItems.length);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
+	}
+
+	_applyAtomicValueAndSelection(value, highlightValue) {
+		this.inner.value = value;
+		if (highlightValue) {
+			this.inner.setSelectionRange(this.filterValue.length, value.length);
+		}
+		this.value = value;
 	}
 
 	_selectMatchingItem() {

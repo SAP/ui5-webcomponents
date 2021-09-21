@@ -1,11 +1,11 @@
 <ui5-responsive-popover
 	placement-type="Bottom"
-	horizontal-align="Left"
+	horizontal-align="Stretch"
 	class="ui5-multi-combobox-all-items-responsive-popover"
 	hide-arrow
 	_disable-initial-focus
-	@ui5-selection-change={{_listSelectionChange}}
 	@ui5-after-close={{_toggle}}
+	@ui5-before-open={{_beforeOpen}}
 	@ui5-after-open={{_toggle}}
 >
 	{{#if _isPhone}}
@@ -16,7 +16,7 @@
 					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
-					@click="{{togglePopover}}"
+					@click="{{handleCancel}}"
 				>
 				</ui5-button>
 			</div>
@@ -65,7 +65,7 @@
 		{{/if}}
 	{{/unless}}
 
-	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+	<ui5-list @ui5-selection-change={{_listSelectionChange}} separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
 				<ui5-li
 					type="{{../_listItemsType}}"
@@ -83,7 +83,7 @@
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
 				design="Transparent"
-				@click="{{togglePopover}}"
+				@click="{{handleOK}}"
 			>{{_dialogOkButton}}</ui5-button>
 		</div>
 	{{/if}}

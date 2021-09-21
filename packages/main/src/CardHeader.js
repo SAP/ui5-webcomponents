@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -92,6 +93,18 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Define the <code>aria-level</code> attribute of the component
+		 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
+		 * @private
+		 * @type {Integer}
+		 * @defaultValue 3
+		 */
+		ariaLevel: {
+			type: Integer,
+			defaultValue: 3,
+		},
+
 		_headerActive: {
 			type: Boolean,
 			noAttribute: true,
@@ -141,7 +154,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.CardHeader
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-card-header
- * @appenddocs CardHeader
  * @public
  * @since 1.0.0-rc.15
  */
@@ -180,8 +192,12 @@ class CardHeader extends UI5Element {
 		return this.interactive ? "button" : "heading";
 	}
 
-	get ariaLevel() {
-		return this.interactive ? undefined : "3";
+	get _ariaLevel() {
+		if (this.interactive) {
+			return undefined;
+		}
+
+		return this.ariaLevel;
 	}
 
 	get ariaCardHeaderRoleDescription() {
@@ -194,6 +210,10 @@ class CardHeader extends UI5Element {
 
 	get ariaLabelledByHeader() {
 		const labels = [];
+
+		if (this.titleText) {
+			labels.push(`${this._id}-title`);
+		}
 
 		if (this.subtitleText) {
 			labels.push(`${this._id}-subtitle`);
@@ -226,7 +246,9 @@ class CardHeader extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
-	_headerClick() {
+	_headerClick(event) {
+		event.stopImmediatePropagation(); // prevents the native browser "click" event from firing
+
 		if (this.interactive) {
 			this.fireEvent("click");
 		}

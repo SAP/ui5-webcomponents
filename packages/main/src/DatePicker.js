@@ -153,7 +153,7 @@ const metadata = {
 		 * Defines the visibility of the week numbers column.
 		 * <br><br>
 		 *
-		 * <b>Note:<b> For calendars other than Gregorian,
+		 * <b>Note:</b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.
 		 *
 		 * @type {boolean}
@@ -353,7 +353,7 @@ const metadata = {
  * {
  *	"calendarType": "Japanese"
  * }
- * &lt;/script&gt;
+ * &lt;/script&gt;</code>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -412,6 +412,8 @@ class DatePicker extends DateComponentBase {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		this.liveValue = this.value;
 	}
 
 	/**
@@ -512,6 +514,7 @@ class DatePicker extends DateComponentBase {
 		}
 
 		let executeEvent = true;
+		this.liveValue = value;
 
 		events.forEach(event => {
 			if (!this.fireEvent(event, { value, valid }, true)) {
@@ -784,11 +787,11 @@ class DatePicker extends DateComponentBase {
 	 * @public
 	 */
 	get dateValue() {
-		return this.getFormat().parse(this.value);
+		return this.liveValue ? this.getFormat().parse(this.liveValue) : this.getFormat().parse(this.value);
 	}
 
 	get dateValueUTC() {
-		return this.getFormat().parse(this.value, true);
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true) : this.getFormat().parse(this.value);
 	}
 
 	get styles() {

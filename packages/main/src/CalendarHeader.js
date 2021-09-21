@@ -38,6 +38,26 @@ const metadata = {
 			type: CalendarType,
 		},
 
+		/**
+		 * Already normalized by Calendar
+		 * @sience 1.0.0-rc.16
+		 * @defaultvalue undefined
+		 * @type {CalendarType}
+		 * @public
+		 */
+		secondaryCalendarType: {
+			type: CalendarType,
+		},
+
+		/**
+		 * Stores information for month button for secondary calendar type
+		 * @type {Object}
+		 * @private
+		*/
+		buttonTextForSecondaryCalendarType: {
+			type: Object,
+		},
+
 		isNextButtonDisabled: {
 			type: Boolean,
 		},
@@ -56,6 +76,10 @@ const metadata = {
 
 		_yearButtonText: {
 			type: String,
+		},
+
+		isYearButtonHidden: {
+			type: Boolean,
 		},
 	},
 	events: {
@@ -99,6 +123,11 @@ class CalendarHeader extends UI5Element {
 	onBeforeRendering() {
 		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
 		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
+
+		if (this.hasSecondaryCalendarType) {
+			this._secondMonthButtonText = this.buttonTextForSecondaryCalendarType.monthButtonText;
+			this._secondYearButtonText = this.buttonTextForSecondaryCalendarType.yearButtonText;
+		}
 	}
 
 	onPrevButtonClick(event) {
@@ -151,6 +180,10 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
+	get hasSecondaryCalendarType() {
+		return !!this.secondaryCalendarType;
+	}
+
 	get classes() {
 		return {
 			prevButton: {
@@ -161,6 +194,13 @@ class CalendarHeader extends UI5Element {
 				"ui5-calheader-arrowbtn": true,
 				"ui5-calheader-arrowbtn-disabled": this.isNextButtonDisabled,
 			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			ariaLabelMonthButton: this.hasSecondaryCalendarType
+				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType.info}` : `${this._monthButtonText}`,
 		};
 	}
 }
