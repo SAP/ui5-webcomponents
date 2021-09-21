@@ -577,14 +577,6 @@ class MultiComboBox extends UI5Element {
 			this._toggleRespPopover();
 		}
 
-		// if (isDown(event) && this.allItemsPopover.opened && this.items.length) {
-		// 	event.preventDefault();
-		// 	await this._getList();
-		// 	const firstListItem = this.list.items[0];
-		// 	this.list._itemNavigation.setCurrentItem(firstListItem);
-		// 	firstListItem.focus();
-		// }
-
 		this._handleArrowNavigation(event);
 
 		if (isBackSpace(event) && event.target.value === "") {
