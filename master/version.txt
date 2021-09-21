@@ -1,5 +1,5 @@
-commit a6dd8d55c7d21f24734bdf97dd819d298c1de2a5
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Sep 21 12:23:41 2021 +0300
+commit 2847a6097f6b88a875a42d29f9a38142fc4f0e63
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Sep 21 14:49:54 2021 +0300
 
-    chore: deprecate @wdio/sync (#3896)
+    docs(ui5-messagestrip): Documentation enhancements (#3967)
