@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.18](https://github.com/SAP/ui5-webcomponents/compare/v0.31.17...v0.31.18) (2021-09-20)
+
+
+### Bug Fixes
+
+* **ui5-badge:** update "Accent" colors ([#3926](https://github.com/SAP/ui5-webcomponents/issues/3926)) ([0304014](https://github.com/SAP/ui5-webcomponents/commit/0304014)), closes [#3923](https://github.com/SAP/ui5-webcomponents/issues/3923) [#3923](https://github.com/SAP/ui5-webcomponents/issues/3923)
+* **ui5-file-uploader:** activate on Enter/Space key with screen reader on ([#3944](https://github.com/SAP/ui5-webcomponents/issues/3944)) ([af808d4](https://github.com/SAP/ui5-webcomponents/commit/af808d4)), closes [#3767](https://github.com/SAP/ui5-webcomponents/issues/3767) [#3767](https://github.com/SAP/ui5-webcomponents/issues/3767)
+* **ui5-input:** fix value state paddings ([#3833](https://github.com/SAP/ui5-webcomponents/issues/3833)) ([48bd6fe](https://github.com/SAP/ui5-webcomponents/commit/48bd6fe)), closes [#3611](https://github.com/SAP/ui5-webcomponents/issues/3611) [#3611](https://github.com/SAP/ui5-webcomponents/issues/3611)
+* **ui5-label:** fix colon margins ([#3897](https://github.com/SAP/ui5-webcomponents/issues/3897)) ([556516e](https://github.com/SAP/ui5-webcomponents/commit/556516e)), closes [#3531](https://github.com/SAP/ui5-webcomponents/issues/3531)
+* **ui5-link:** the anchor element inherits its text-decoration ([#3911](https://github.com/SAP/ui5-webcomponents/issues/3911)) ([276b142](https://github.com/SAP/ui5-webcomponents/commit/276b142)), closes [#3837](https://github.com/SAP/ui5-webcomponents/issues/3837) [#3837](https://github.com/SAP/ui5-webcomponents/issues/3837)
+* **ui5-list:** ensure interactive elements are not nested ([#3952](https://github.com/SAP/ui5-webcomponents/issues/3952)) ([82be1de](https://github.com/SAP/ui5-webcomponents/commit/82be1de)), closes [#3927](https://github.com/SAP/ui5-webcomponents/issues/3927)
+* **ui5-toast:** announce content when toast is shown ([#3939](https://github.com/SAP/ui5-webcomponents/issues/3939)) ([cce6ca8](https://github.com/SAP/ui5-webcomponents/commit/cce6ca8)), closes [#3841](https://github.com/SAP/ui5-webcomponents/issues/3841)
+* **ui5-tree, ui5-table, ui5-side-navigation:** fix unnecessary scrollbar in RTL ([#3948](https://github.com/SAP/ui5-webcomponents/issues/3948)) ([bab650a](https://github.com/SAP/ui5-webcomponents/commit/bab650a)), closes [#3947](https://github.com/SAP/ui5-webcomponents/issues/3947) [#3503](https://github.com/SAP/ui5-webcomponents/issues/3503)
+* **ui5-upload-collection:** fix "no files" heading HTML tag ([#3930](https://github.com/SAP/ui5-webcomponents/issues/3930)) ([5fd731c](https://github.com/SAP/ui5-webcomponents/commit/5fd731c)), closes [#3766](https://github.com/SAP/ui5-webcomponents/issues/3766)
+
+### Features
+
+* **ui5-card:** add "ariaLevel" property ([5eca9d5](https://github.com/SAP/ui5-webcomponents/commit/5eca9d5)), closes [#3712](https://github.com/SAP/ui5-webcomponents/issues/3712)
+* **ui5-upload-collection:** add "accessibleName" property ([#3917](https://github.com/SAP/ui5-webcomponents/issues/3917)) ([7cb8e04](https://github.com/SAP/ui5-webcomponents/commit/7cb8e04)), closes [#3768](https://github.com/SAP/ui5-webcomponents/issues/3768) [#3768](https://github.com/SAP/ui5-webcomponents/issues/3768)
+
+
+
+
+
 ## [0.31.17](https://github.com/SAP/ui5-webcomponents/compare/v0.31.16...v0.31.17) (2021-09-13)
 
 

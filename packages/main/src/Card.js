@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -137,6 +138,18 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		/**
+		 * Define the <code>aria-level</code> attribute of the component
+		 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
+		 * @private
+		 * @type {Integer}
+		 * @defaultValue 3
+		 */
+		ariaLevel: {
+			type: Integer,
+			defaultValue: 3,
+		},
+
 		_headerActive: {
 			type: Boolean,
 			noAttribute: true,
@@ -230,8 +243,12 @@ class Card extends UI5Element {
 		return this.headerInteractive ? "button" : "heading";
 	}
 
-	get ariaLevel() {
-		return this.headerInteractive ? undefined : "3";
+	get _ariaLevel() {
+		if (this.interactive) {
+			return undefined;
+		}
+
+		return this.ariaLevel;
 	}
 
 	get hasHeader() {

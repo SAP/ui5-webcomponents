@@ -836,6 +836,14 @@ class Input extends UI5Element {
 		return !!this._isPopoverOpen;
 	}
 
+	/**
+	 * Checks if the value state popover is open.
+	 * @returns {boolean} true if the value state popover is open, false otherwise
+	 */
+	 isValueStateOpened() {
+		return !!this._isPopoverOpen;
+	}
+
 	async openPopover() {
 		const popover = await this._getPopover();
 
@@ -1179,7 +1187,7 @@ class Input extends UI5Element {
 	}
 
 	get styles() {
-		return {
+		const stylesObject = {
 			popoverHeader: {
 				"max-width": `${this._inputWidth}px`,
 			},
@@ -1190,10 +1198,14 @@ class Input extends UI5Element {
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
 			},
-			innerInput: {
-				padding: this.nativeInputWidth < 48 ? "0" : undefined,
-			},
+			innerInput: {},
 		};
+
+		if (this.nativeInputWidth < 48) {
+			stylesObject.innerInput.padding = "0";
+		}
+
+		return stylesObject;
 	}
 
 	get suggestionSeparators() {
