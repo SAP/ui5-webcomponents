@@ -14,8 +14,11 @@ describe("ProductSwitch general interaction", async () => {
 		const fourColumnPSAttrValue = parseInt(await productSwitchFourColumn.getAttribute("desktop-columns"));
 		const threeColumnPSAttrValue = parseInt(await productSwitchThreeColumn.getAttribute("desktop-columns"));
 
-		assert.strictEqual(fourColumnPSItemCount > 6, fourColumnPSAttrValue === 4, "product switch should have 4 columns.");
-		assert.strictEqual(threeColumnPSItemCount <= 6, threeColumnPSAttrValue === 3, "product switch should have 3 columns.");
+		assert.isAbove(fourColumnPSItemCount, 6, "more than 6 items.");
+		assert.strictEqual(fourColumnPSAttrValue, 4, "product switch should have 4 columns.");
+
+		assert.isAtMost(threeColumnPSItemCount, 6, "6 items or less.");
+		assert.strictEqual(threeColumnPSAttrValue, 3, "product switch should have 3 columns.");
 	});
 });
 

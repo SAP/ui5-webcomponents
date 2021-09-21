@@ -82,7 +82,7 @@ describe("Component Behavior", () => {
 				const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "XXL", true, "XXL Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XXL", "XXL Breakpoint class should be set");
 				assert.strictEqual(await overflowButton.isDisplayed(), false, "Overflow button should be hidden");
 				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
 				assert.strictEqual(await primaryTitle.isDisplayed(), true, "Primary title should be visible");
@@ -102,7 +102,7 @@ describe("Component Behavior", () => {
 			setTimeout(async () => {
 				const shellbar = await browser.$("#shellbar");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "XL", true, "XL Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XL", "XL Breakpoint class should be set");
 			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 		});
 
@@ -122,7 +122,7 @@ describe("Component Behavior", () => {
 				const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "L", true, "L Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "L", "L Breakpoint class should be set");
 				assert.strictEqual(await overflowButton.isDisplayed(), false, "Overflow button should be hidden");
 				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
 				assert.strictEqual(await primaryTitle.isDisplayed(), true, "Primary title should be visible");
@@ -160,7 +160,7 @@ describe("Component Behavior", () => {
 
 				const listItemsCount = (await overflowPopover.getHTML()).split("</ui5-li>").length - 1;
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
 				assert.strictEqual(await overflowButton.isDisplayed(), true, "Overflow button should be visible");
 				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
 				assert.strictEqual(await primaryTitle.isDisplayed(), true, "Primary title should be visible");
@@ -187,7 +187,7 @@ describe("Component Behavior", () => {
 				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
 
 				const listItemsCount = (await overflowPopover.getHTML()).split("</ui5-li>").length - 1;
 
@@ -206,7 +206,7 @@ describe("Component Behavior", () => {
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
 
 				const listItemsCount = (await overflowPopover.getHTML().split("</ui5-li>")).length - 1;
 
@@ -245,7 +245,7 @@ describe("Component Behavior", () => {
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const listItemsCount = await overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize") === "S", true, "S Breakpoint class should be set");
+				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "S", "S Breakpoint class should be set");
 				assert.strictEqual(await overflowButton.isDisplayed(), true, "Overflow button should be visible");
 				assert.strictEqual(await backButton.isDisplayed(), true, "Back icon is visible");
 				assert.strictEqual(await primaryTitle.isDisplayed(), false, "Primary title should be hidden");

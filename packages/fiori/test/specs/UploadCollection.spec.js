@@ -61,26 +61,26 @@ describe("UploadCollection", () => {
 
 		it("visibility of buttons", async () => {
 			const defaultItem = await browser.$("#uc3-default");
-			assert.strictEqual(await defaultItem.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
+			assert.ok(await defaultItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is visible");
 
 			const defaultItemHiddenDelete = await browser.$("#uc3-default-hidden-delete");
-			assert.strictEqual(await defaultItemHiddenDelete.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
+			assert.notOk(await defaultItemHiddenDelete.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is not visible");
 
 			const errorItem = await browser.$("#uc3-error");
-			assert.strictEqual(await errorItem.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
-			assert.strictEqual(await errorItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), true, "retry button is visible");
+			assert.ok(await errorItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is visible");
+			assert.ok(await errorItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "retry button is visible");
 
 			const errorItemHiddenRetry = await browser.$("#uc3-error-hidden-retry");
-			assert.strictEqual(await errorItemHiddenRetry.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
-			assert.strictEqual(await errorItemHiddenRetry.shadow$("ui5-button[icon=refresh]").isDisplayed(), false, "retry button is not visible");
+			assert.ok(await errorItemHiddenRetry.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is visible");
+			assert.notOk(await errorItemHiddenRetry.shadow$("ui5-button[icon=refresh]").isDisplayed(), "retry button is not visible");
 
 			const uploadingItem = await browser.$("#uc3-uploading");
-			assert.strictEqual(await uploadingItem.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
-			assert.strictEqual(await uploadingItem.shadow$("ui5-button[icon=stop]").isDisplayed(), true, "terminate button is visible");
+			assert.notOk(await uploadingItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is not visible");
+			assert.ok(await uploadingItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "terminate button is visible");
 
 			const uploadingItemHiddenTerminate = await browser.$("#uc3-uploading-hidden-terminate");
-			assert.strictEqual(await uploadingItemHiddenTerminate.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
-			assert.strictEqual(await uploadingItemHiddenTerminate.shadow$("ui5-button[icon=stop]").isDisplayed(), false, "terminate button is visible");
+			assert.notOk(await uploadingItemHiddenTerminate.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is not visible");
+			assert.notOk(await uploadingItemHiddenTerminate.shadow$("ui5-button[icon=stop]").isDisplayed(), "terminate button is visible");
 		});
 
 		it("should forward 'header' and 'accessible-name' to the inner list", async () => {
