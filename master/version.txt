@@ -1,7 +1,5 @@
-commit ec4ecc89e40a3ddc33c2a2f1425964970e89c490
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Sep 21 10:56:45 2021 +0300
+commit a6dd8d55c7d21f24734bdf97dd819d298c1de2a5
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Sep 21 12:23:41 2021 +0300
 
-    fix(ui5-multi-combobox): select an item when value matches and enter is pressed (#3942)
-    
-    FIXES: #3809
+    chore: deprecate @wdio/sync (#3896)
