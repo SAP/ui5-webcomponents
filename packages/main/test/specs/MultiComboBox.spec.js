@@ -267,6 +267,28 @@ describe("MultiComboBox general interaction", () => {
 				return await input.getAttribute("value-state") === "None";
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
+
+		it ("focuses the value state header on arrow down", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			let valueStateHeader, focusedElement;
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+			const icon = await mcb.shadow$("[input-icon]");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await icon.click();
+			await input.keys("ArrowDown");
+
+			valueStateHeader = await browser.execute(staticArea => staticArea.shadowRoot.querySelector(".ui5-responsive-popover-header.ui5-valuestatemessage-root"), staticArea);
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
+			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should be focused");
+		});
 	});
 
 	describe("General", () => {
