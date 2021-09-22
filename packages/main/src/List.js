@@ -93,7 +93,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the list items are indented.
+		 * Determines whether the component is indented.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -231,14 +231,14 @@ const metadata = {
 		 * <b>Note:</b> If you use notification list items,
 		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
 		 *
-		 * @public
+		 * @private
 		 * @type {String}
-		 * @defaultvalue "listbox"
+		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
 		 */
 		 accessibleRole: {
 			type: String,
-			defaultValue: "listbox",
+			defaultValue: "list",
 		},
 
 		/**

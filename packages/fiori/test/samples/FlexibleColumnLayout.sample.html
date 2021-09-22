@@ -99,27 +99,27 @@
 						<div style="display:flex; flex-direction: row; align-items: center;">
 							<ui5-avatar id="avatar" icon="laptop" color-scheme="Accent5" size="XL" style="margin: 0 1rem; min-width: 7rem;">
 							</ui5-avatar>
-	
+
 							<div>
 								<div class="productInfo">
 									<ui5-title level="H5">Product:</ui5-title>
 									<ui5-title level="H5" id="lblName"></ui5-title>
 								</div>
 								<br>
-	
+
 								<div class="productInfo">
 									<ui5-title level="H5">Description:</ui5-title>
 									<ui5-title level="H5" id="lblDesc"></ui5-title>
 								</div>
 								<br>
-	
+
 								<div class="productInfo">
 									<ui5-title level="H5">Supplier:</ui5-title>
 									<ui5-title level="H5" id="lblSupplier"><b>Titanium</b></ui5-title>
 								</div>
 							</div>
 						</div>
-	
+
 						<div class="productInfo" style="align-self: start">
 							<ui5-title level="H5">Rating:</ui5-title>
 							<ui5-rating-indicator
@@ -128,12 +128,12 @@
 								value="3.5"
 							></ui5-rating-indicator>
 						</div>
-	
+
 						<span></span>
 					</div>
 
 					<br><br><br>
-	
+
 					<ui5-title level="H3">Suppliers</ui5-title>
 					<br>
 					<ui5-list id="col2list">
@@ -157,7 +157,7 @@
 			<div class="col" slot="endColumn">
 				<div class="colHeader">
 					<ui5-title id="col3title" style="min-width: 1px;"></ui5-title>
-	
+
 					<div class="colSubHeader">
 						<ui5-button design="Emphasized">Edit</ui5-button>
 						<ui5-button design="Transparent" icon="add"></ui5-button>
@@ -261,12 +261,12 @@
 
 			function nextLayout(target) {
 				var layout = fcl.layout;
-	
+
 				if (target === "col1") {
 					exitFullScreen()
 					return "TwoColumnsMidExpanded";
 				}
-	
+
 				if (target === "col2") {
 					if (midFullScreen) {
 						enterFullScreen();
@@ -275,7 +275,7 @@
 					exitFullScreen();
 					return "ThreeColumnsMidExpanded";
 				}
-	
+
 				if (target === "col2close") {
 					if (midFullScreen) {
 						enterFullScreen();
@@ -287,6 +287,9 @@
 				}
 
 				if (target === "col3close") {
+					if (fcl.media === "phone") {
+						endFullScreen = true;
+					}
 					if (endFullScreen) {
 						enterFullScreen();
 						return "MidColumnFullScreen";
@@ -300,7 +303,7 @@
 						enterFullScreen();
 						return "MidColumnFullScreen";
 					}
-	
+
 					exitFullScreen();
 					return "ThreeColumnsMidExpandedEndHidden";
 				}
@@ -310,7 +313,7 @@
 						enterFullScreen();
 						return "EndColumnFullScreen";
 					}
-	
+
 					exitFullScreen();
 					return "ThreeColumnsEndExpanded";
 				}

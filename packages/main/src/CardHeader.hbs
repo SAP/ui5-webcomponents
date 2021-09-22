@@ -1,11 +1,12 @@
 <div
 	class="{{classes}}"
+	dir="{{effectiveDir}}"
 	@click="{{_headerClick}}"
 	@keydown="{{_headerKeydown}}"
 	@keyup="{{_headerKeyup}}"
 	role="{{ariaHeaderRole}}"
 	aria-labelledby="{{ariaLabelledByHeader}}"
-	aria-level="{{ariaLevel}}"
+	aria-level="{{_ariaLevel}}"
 	aria-roledescription="{{ariaCardHeaderRoleDescription}}"
 	tabindex="0"
 	id="{{_id}}--header"
@@ -29,6 +30,6 @@
 	{{#if hasAction}}
 		<slot name="action"></slot>
 	{{else}}
-		<span id="{{_id}}-status" part="status" class="ui5-card-header-status">{{status}}</span>
+		<span id="{{_id}}-status" part="status" class="ui5-card-header-status" dir="auto">{{status}}</span>
 	{{/if}}
 </div>

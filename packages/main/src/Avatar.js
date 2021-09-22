@@ -237,7 +237,7 @@ const metadata = {
  *
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
+ * <li>[SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
  * </ul>
  * <br><br>
  *
@@ -343,12 +343,14 @@ class Avatar extends UI5Element {
 		return this._hasImage;
 	}
 
-	_onclick(event) {
-		if (this.interactive) {
-			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation();
-			this.fireEvent("click");
-		}
+	onBeforeRendering() {
+		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+	}
+
+	_onClickHandler(event) {
+		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+		event.stopPropagation();
+		this.fireEvent("click");
 	}
 
 	_onkeydown(event) {

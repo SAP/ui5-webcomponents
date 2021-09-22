@@ -15,6 +15,7 @@ import {
 	isUp,
 	isDown,
 	isEnter,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -426,12 +427,20 @@ class ComboBox extends UI5Element {
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
 
-	_focusout() {
-		this.focused = false;
+	_focusout(event) {
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
 		this._fireChangeEvent();
 
-		!isPhone() && this._closeRespPopover();
+		if (focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
+			return;
+		}
+
+		if (!this.shadowRoot.contains(event.relatedTarget)) {
+			this.focused = false;
+			!isPhone() && this._closeRespPopover(event);
+		}
 	}
 
 	_afterOpenPopover() {
@@ -666,6 +675,10 @@ class ComboBox extends UI5Element {
 			this._fireChangeEvent();
 			this._closeRespPopover();
 			this.focused = true;
+		}
+
+		if (isEscape(event) && !this.open) {
+			this.value = this._lastValue;
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {

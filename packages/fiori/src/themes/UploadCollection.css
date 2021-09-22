@@ -2,28 +2,12 @@
 	display: block;
 }
 
-.ui5-uc-root {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
-
 .ui5-uc-content {
 	position: relative;
-	flex: 1 1 auto;
-}
-
-.ui5-uc-content.ui5-uc-content-no-data {
-    min-height: 20rem;
 }
 
 /* No Files */
 .uc-no-files {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -34,25 +18,28 @@
 }
 
 .uc-no-files .icon-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
 	height: 8rem;
 }
 
 .uc-no-files .icon-container [ui5-icon] {
-	font-size: 6rem;
 	width: 6rem;
 	height: 6rem;
 	color: var(--sapContent_NonInteractiveIconColor);
 	opacity: 0.5;
 }
 
-.uc-no-files [ui5-title] {
-	font-size: var(--ui5_upload_collection_level_2Size);
+.uc-no-files .title {
+	font-size: var(--sapFontHeader2Size);
 	color: var(--sapGroup_TitleTextColor);
 	margin: 1rem 0;
 }
 
 .uc-no-files .subtitle {
-	font-size: var(--ui5_upload_collection_level_5Size);
+	font-size: var(--sapFontHeader5Size);
 	color: var(--sapContent_LabelColor);
     margin-bottom: 2rem;
 }
@@ -124,4 +111,8 @@
 .uc-drop-overlay [ui5-icon],
 .uc-drop-overlay .dnd-overlay-text {
 	color: var(--sapContent_DragAndDropActiveColor);
+}
+
+.uc-no-files-dnd-overlay {
+	visibility: hidden;
 }
