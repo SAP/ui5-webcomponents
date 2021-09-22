@@ -582,109 +582,109 @@ describe("Accessibility", async () => {
 	});
 });
 
-describe("Keyboard navigation", () => {
-	it ("Should focus the first item on arrow down and then the input on arrow up", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+describe("Keyboard navigation", async () => {
+	it ("Should focus the first item on arrow down and then the input on arrow up",  async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
-		const combo = $("#combo-grouping");
-		const input = combo.shadow$("#ui5-combobox-input");
-		const arrow = combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo-grouping");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const combo = await browser.$("#combo-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		let groupItem, listItem;
 
-		arrow.click();
-		input.keys("ArrowDown");
+		await arrow.click();
+		await input.keys("ArrowDown");
 
-		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
-		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
+		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 
-		input.keys("ArrowUp");
-		assert.strictEqual(combo.getProperty("focused"), true, "The input should be focused");
+		await input.keys("ArrowUp");
+		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
 
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
 
-		listItem = popover.$("ui5-list").$$("ui5-li")[0];
+		listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
-		assert.strictEqual(listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
 	
-		input.keys("ArrowUp");
+		await input.keys("ArrowUp");
 
-		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
+		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
 
-	it ("Should focus the value state header and then the input", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+	it ("Should focus the value state header and then the input", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
-		const combo = $("#value-state-grouping");
-		const input = combo.shadow$("#ui5-combobox-input");
-		const arrow = combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#value-state-grouping");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const combo = await browser.$("#value-state-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-grouping");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		let valueStateHeader, groupItem;
 
-		arrow.click();
-		input.keys("ArrowDown");
+		await arrow.click();
+		await input.keys("ArrowDown");
 
-		valueStateHeader = popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
+		valueStateHeader = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 
-		assert.strictEqual(combo.getProperty("_isValueStateFocused"), true, "The value state header should be focused");
-		assert.strictEqual(combo.getProperty("focused"), false, "The input should not be focused");
-		assert.notEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
+		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), true, "The value state header should be focused");
+		assert.strictEqual(await combo.getProperty("focused"), false, "The input should not be focused");
+		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
 
-		input.keys("ArrowUp");
-		assert.strictEqual(combo.getProperty("focused"), true, "The input should be focused");
-		assert.strictEqual(combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
-		assert.strictEqual(valueStateHeader.getAttribute("focused"), null, "The value state header should not be focused");
+		await input.keys("ArrowUp");
+		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
+		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
+		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should not be focused");
 
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
 
-		groupItem = popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
-		assert.strictEqual(groupItem.getProperty("focused"), true, "The first group header should be focused");
+		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
 
-	it ("Previous focus should not remain on the item after reopening the picker and choosing another one", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+	it ("Previous focus should not remain on the item after reopening the picker and choosing another one", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
-		const combo = $("#value-state-grouping");
-		const input = combo.shadow$("#ui5-combobox-input");
-		const arrow = combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#value-state-grouping");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const combo = await browser.$("#value-state-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-grouping");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
-		input.click();
-		input.keys("A");
+		await input.click();
+		await input.keys("A");
 
-		listItem = popover.$("ui5-list").$$("ui5-li")[1];
+		listItem = await popover.$("ui5-list").$$("ui5-li")[1];
 
-		assert.strictEqual(listItem.getProperty("focused"), false, "The selected item is not focused");
+		assert.strictEqual(await listItem.getProperty("focused"), false, "The selected item is not focused");
 
-		arrow.click();
+		await arrow.click();
 
 		// Got to the last item and press ENTER
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
-		input.keys("ArrowDown");
-		input.keys("Enter");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("Enter");
 
-		arrow.click();
+		await arrow.click();
 
-		listItem = popover.$("ui5-list").$$("ui5-li")[3];
+		listItem = await popover.$("ui5-list").$$("ui5-li")[3];
 
-		listItem.click();
+		await listItem.click();
 
-		arrow.click();
-		prevListItem = popover.$("ui5-list").$$("ui5-li")[5];
+		await arrow.click();
+		prevListItem = await popover.$("ui5-list").$$("ui5-li")[5];
 
-		assert.strictEqual(prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
+		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
 	});
 });
