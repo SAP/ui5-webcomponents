@@ -406,6 +406,8 @@ class ComboBox extends UI5Element {
 
 		if (this.shouldClosePopover() && !isPhone()) {
 			this.responsivePopover.close(false, false, true);
+			this._clearFocus();
+			this._itemFocused = false;
 		}
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
@@ -506,6 +508,7 @@ class ComboBox extends UI5Element {
 		if (event.target === this.inner) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
+			this.focused = true;
 		}
 
 		this._filteredItems = this._filterItems(value);
