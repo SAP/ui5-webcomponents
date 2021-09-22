@@ -630,7 +630,6 @@ class MultiComboBox extends UI5Element {
 
 	async _handleArrowNavigation(event) {
 		const isArrowDown = isDown(event);
-		const isArrowUp = isUp(event);
 		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
 		const valueStateHeader = await this._getValueStateHeader();
 
