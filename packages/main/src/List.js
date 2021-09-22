@@ -6,7 +6,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -185,12 +185,14 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -199,10 +201,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -210,10 +212,8 @@ const metadata = {
 		/**
 		 * Defines the accessible role of the component.
 		 * <br><br>
-		 * <b>Note:</b> If you use notification list items,
-		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
 		 *
-		 * @private
+		 * @public
 		 * @type {String}
 		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
@@ -459,6 +459,35 @@ class List extends UI5Element {
 		}
 	}
 
+	getEffectiveAriaLabelText(el) {
+		if (!el.accessibleNameRef) {
+			if (el.accessibleName) {
+				return el.accessibleName;
+			}
+	
+			return undefined;
+		}
+	
+		return this.getAriaLabelledByTexts(el);
+	};
+
+	getAriaLabelledByTexts(el, ownerDocument, readyIds = "") {
+		const ids = (readyIds && readyIds.split(" ")) || el.accessibleNameRef.split(" ");
+		const owner = ownerDocument || findNodeOwner(el);
+		let result = "";
+	
+		ids.forEach((elementId, index) => {
+			const element = owner.querySelector(`[id='${elementId}']`);
+			result += `${element ? element.textContent : ""}`;
+	
+			if (index < ids.length - 1) {
+				result += " ";
+			}
+		});
+	
+		return result;
+	};
+
 	get shouldRenderH1() {
 		return !this.header.length && this.headerText;
 	}
@@ -482,17 +511,17 @@ class List extends UI5Element {
 	get isMultiSelect() {
 		return this.mode === ListMode.MultiSelect;
 	}
-
+	
 	get ariaLabelledBy() {
-		if (this.ariaLabelledby || this.ariaLabel) {
+		if (this.accessibleNameRef || this.accessibleName) {
 			return undefined;
 		}
-
+	
 		return this.shouldRenderH1 ? this.headerID : undefined;
 	}
-
+	
 	get ariaLabelТxt() {
-		return getEffectiveAriaLabelText(this);
+		return this.getEffectiveAriaLabelText(this);
 	}
 
 	get grows() {
