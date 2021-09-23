@@ -262,7 +262,7 @@ describe("List Tests", () => {
 		await btn.click();
 
 		await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
-			timeout: 1000,
+			timeout: 2000,
 			timeoutMsg: "The event loadMore must be fired"
 		});
 	});
