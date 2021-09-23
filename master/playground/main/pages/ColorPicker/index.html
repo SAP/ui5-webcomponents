@@ -29,6 +29,7 @@
 <body style="background-color: var(--sapBackgroundColor);">
 
 	<ui5-color-picker id="cp1"></ui5-color-picker>
+	<ui5-step-input id="changeEventCounter" value="0"></ui5-step-input>
 
 	<br>
 	<br>
@@ -50,10 +51,17 @@
 
 	<script>
 		var colorPicker = document.querySelector("#change-event"),
-			colorLabel = document.querySelector("#color-input");
+			colorLabel = document.querySelector("#color-input"),
+			colorPicker1 = document.getElementById("cp1"),
+			stepInput = document.getElementById("changeEventCounter");
 
 		colorPicker.addEventListener("ui5-change", function(event) {
 			colorLabel.value = event.target.color;
 		});
+
+		colorPicker1.addEventListener("ui5-change", function(event) {
+			stepInput.value += 1;
+		});
+
 	</script>
 </html>

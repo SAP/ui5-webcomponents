@@ -1,5 +1,5 @@
-commit d374cecb506be685420e11ab4d0c87de699567e8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Sep 23 15:41:22 2021 +0300
+commit 9ee329a5aa9a91655d89a12c96db0d30e7bd21b5
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Thu Sep 23 17:35:19 2021 +0300
 
-    refactor: Use custom select strategy in tests (#3985)
+    fix(ui5-color-picker): change event is now fired on opacity change (#3645)
