@@ -260,9 +260,11 @@ describe("List Tests", () => {
 		const loadMoreResult = await browser.$("#loadMoreResult");
 
 		await btn.click();
-		await browser.pause(1000);
 
-		// assert.strictEqual(await loadMoreResult.getProperty("value"), "1", "The event loadMore is fired.");
+		await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
+			timeout: 1000,
+			timeoutMsg: "The event loadMore must be fired"
+		});
 	});
 
 	it("detailPress event is fired", async () => {

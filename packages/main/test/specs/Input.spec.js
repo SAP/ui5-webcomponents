@@ -454,7 +454,6 @@ describe("Input general interaction", () => {
 		await input.keys("3");
 		await input.keys("Tab");
 
-		await browser.pause(500);
 		assert.strictEqual(parseFloat(await input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 

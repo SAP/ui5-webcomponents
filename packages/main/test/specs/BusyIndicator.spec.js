@@ -22,12 +22,14 @@ describe("BusyIndicator general interaction", () => {
 		const busyIndicator = await browser.$("#busy-container");
 		const busyArea = await busyIndicator.shadow$(".ui5-busy-indicator-busy-area");
 
-		await browser.pause(3000);
 		assert.notOk(await busyArea.isExisting(), "busy area is not yet created");
 
 		await busyIndicator.setAttribute("active", "");
-		await browser.pause(3000);
-		assert.ok(await busyArea.isExisting(), "busy area is created");
+
+		await browser.waitUntil(() => busyArea.isExisting(), {
+			timeout: 3000,
+			timeoutMsg: "Busy area must be created after 3000ms"
+		});
 
 		// reset
 		await busyIndicator.removeAttribute("active");

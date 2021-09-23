@@ -308,7 +308,8 @@ exports.config = {
 			"setValue",
 			"setWindowSize",
 			"touchAction",
-			"url"
+			"url",
+			"scrollIntoView"
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
