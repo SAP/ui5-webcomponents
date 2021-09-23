@@ -28,7 +28,7 @@ describe("InvisibleMessage", () => {
 
         const politeSpanHtml = await politeSpan.getHTML();
         const assertiveSpanHtml = await assertiveSpan.getHTML();
-        assert.ok(politeSpanHtml.includes("announcement"), "Value has been rendered.");
-        assert.ok(assertiveSpanHtml.includes("announcement"), "Value has been rendered.");
+        assert.include(politeSpanHtml, "announcement", "Value has been rendered.");
+        assert.include(assertiveSpanHtml, "announcement", "Value has been rendered.");
     });
 });

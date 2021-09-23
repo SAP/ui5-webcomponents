@@ -84,7 +84,7 @@ describe("Toast general interaction", () => {
 		await button.click();
 
 		const styleValue = await toastShadowContent.getAttribute("style");
-		assert.ok(styleValue.includes(EXPECTED_STYLES),
+		assert.include(styleValue, EXPECTED_STYLES,
 			"The correct default inline styles are applied to the shadow ui5-toast-root");
 	});
 
@@ -103,7 +103,7 @@ describe("Toast general interaction", () => {
 		const EXPECTED_STYLES = `transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
 
 		const styleValue = await toastShadowContent.getAttribute("style");
-		assert.ok(styleValue.includes(EXPECTED_STYLES),
+		assert.include(styleValue, EXPECTED_STYLES,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is longer than default. Transition is not longer than allowed (1000ms).");
 	});
@@ -123,7 +123,7 @@ describe("Toast general interaction", () => {
 		const EXPECTED_STYLES = `transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
 
 		const styleValue = await toastShadowContent.getAttribute("style");
-		assert.ok(styleValue.includes(EXPECTED_STYLES),
+		assert.include(styleValue, EXPECTED_STYLES,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is shorter than default. Transition is a third of the duration.");
 	});
