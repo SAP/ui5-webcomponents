@@ -404,6 +404,7 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = [];
 		this.selectedValues = [];
 		this._inputLastValue = "";
+		this._valueBeforeOpen = "";
 		this._deleting = false;
 		this._validationTimeout = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
@@ -700,6 +701,8 @@ class MultiComboBox extends UI5Element {
 			};
 		});
 
+		this._valueBeforeOpen = this.value;
+
 		if (this.filterSelected) {
 			this.selectedItems = this._filteredItems.filter(item => item.selected);
 		}
@@ -755,6 +758,8 @@ class MultiComboBox extends UI5Element {
 		});
 
 		this.togglePopover();
+
+		this.value = this._valueBeforeOpen;
 	}
 
 	handleOK() {
