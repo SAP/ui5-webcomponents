@@ -268,26 +268,69 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
-		it ("focuses the value state header on arrow down", async () => {
+		it ("focuses the value state header and item on arrow down then the value state and the input on arrow up", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
-			let valueStateHeader, focusedElement;
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$("[input-icon]");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
 			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
 			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
 
 			await icon.click();
 			await input.keys("ArrowDown");
 
-			valueStateHeader = await browser.execute(staticArea => staticArea.shadowRoot.querySelector(".ui5-responsive-popover-header.ui5-valuestatemessage-root"), staticArea);
-			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+			let valueStateHeader = await browser.execute(staticArea => staticArea.shadowRoot.querySelector(".ui5-responsive-popover-header.ui5-valuestatemessage-root"), staticArea);
+			let focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
 			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should be focused");
+		
+			await input.keys("ArrowDown");
+
+			let listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should be focused");
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
+			assert.notEqual(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should not be focused");
+
+			await input.keys("ArrowUp");
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is no longer focused");
+			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header is focused again");
+
+			await input.keys("ArrowUp");
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is focused");
+			assert.equal(focusedElement, null, "The value state header or item should not be focused");
+		});
+
+		it ("focuses the first item on arrow down, then the input on arrow up", async () => {
+			const mcb = await browser.$("#mcb-with-placeholder");
+			const input = await mcb.shadow$("input");
+			const icon = await mcb.shadow$("[input-icon]");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-with-placeholder");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await icon.click();
+			await input.keys("ArrowDown");
+
+			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
+
+			await input.keys("ArrowUp");
+
+			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is not focused");
 		});
 	});
 
