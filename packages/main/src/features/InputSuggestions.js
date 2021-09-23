@@ -243,7 +243,7 @@ class Suggestions {
 	}
 
 	_isItemOnTarget() {
-		return this.isOpened() && this.selectedItemIndex !== null;
+		return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1;
 	}
 
 	isOpened() {
@@ -266,28 +266,45 @@ class Suggestions {
 		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
 
-		if ((this.selectedItemIndex === null) || (++this.selectedItemIndex > itemsCount - 1)) {
-			this.selectedItemIndex = 0;
+		if (previousSelectedIdx === null) {
+			--this.selectedItemIndex;
 		}
 
-		this._moveItemSelection(previousSelectedIdx, this.selectedItemIndex);
+		if (previousSelectedIdx + 1 > itemsCount - 1) {
+			return;
+		}
+
+		this._moveItemSelection(previousSelectedIdx, ++this.selectedItemIndex);
 	}
 
 	_selectPreviousItem() {
+		const items = this._getItems();
 		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
 
-		if ((this.selectedItemIndex === null) || (--this.selectedItemIndex < 0)) {
-			this.selectedItemIndex = itemsCount - 1;
+		if (this.selectedItemIndex === -1 || this.selectedItemIndex === null) {
+			return;
 		}
 
-		this._moveItemSelection(previousSelectedIdx, this.selectedItemIndex);
+		if (this.selectedItemIndex - 1 < 0) {
+			items[previousSelectedIdx].selected = false;
+			items[previousSelectedIdx].focused = false;
+			this.component.focused = true;
+			this.component.hasSuggestionItemSelected = false;
+			this.selectedItemIndex -= 1;
+
+			return;
+		}
+
+		this._moveItemSelection(previousSelectedIdx, --this.selectedItemIndex);
 	}
 
 	_moveItemSelection(previousIdx, nextIdx) {
 		const items = this._getItems();
 		const currentItem = items[nextIdx];
 		const previousItem = items[previousIdx];
+
+		this.component.focused = false;
 
 		this.accInfo = {
 			currentPos: nextIdx + 1,
@@ -297,16 +314,19 @@ class Suggestions {
 
 		if (previousItem) {
 			previousItem.selected = false;
+			previousItem.focused = false;
 		}
 
 		if (currentItem) {
 			currentItem.selected = true;
+			currentItem.focused = true;
 
 			if (this.handleFocus) {
 				currentItem.focus();
 			}
 		}
 
+		this.component.hasSuggestionItemSelected = true;
 		this.onItemPreviewed(currentItem);
 
 		if (!this._isItemIntoView(currentItem)) {
