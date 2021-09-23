@@ -598,15 +598,15 @@ class ComboBox extends UI5Element {
 
 	_handleItemNavigation(event, indexOfItem, isForward) {
 		const isOpen = this.responsivePopover.opened;
-		const nextItem = isForward ? indexOfItem  + 1 : indexOfItem - 1;
-		
+		const nextItem = isForward ? indexOfItem + 1 : indexOfItem - 1;
+
 		if (!isOpen && !this._filteredItems[indexOfItem]) {
 			return;
 		}
 
-		const isGroupItem = this._filteredItems[indexOfItem].isGroupItem 
+		const isGroupItem = this._filteredItems[indexOfItem].isGroupItem;
 
-		if (!isOpen && (isGroupItem && !this._filteredItems[nextItem]) || (!isGroupItem && !this._filteredItems[indexOfItem])  ) {
+		if ((!isOpen) && ((isGroupItem && !this._filteredItems[nextItem]) || (!isGroupItem && !this._filteredItems[indexOfItem]))) {
 			return;
 		}
 
@@ -617,16 +617,15 @@ class ComboBox extends UI5Element {
 			this._itemFocused = true;
 			this.value = isGroupItem ? this.filterValue : this._filteredItems[indexOfItem].text;
 			this.focused = false;
-			this._filteredItems[indexOfItem].focused = true
+			this._filteredItems[indexOfItem].focused = true;
 		} else {
 			this.focused = true;
 			this._filteredItems[indexOfItem].focused = false;
-			this.value = isGroupItem ?  this._filteredItems[nextItem].text : this._filteredItems[indexOfItem].text;
+			this.value = isGroupItem ? this._filteredItems[nextItem].text : this._filteredItems[indexOfItem].text;
 		}
 
 		this._isValueStateFocused = false;
 		this._selectionChanged = true;
-
 
 		if (isGroupItem && isOpen) {
 			return;
