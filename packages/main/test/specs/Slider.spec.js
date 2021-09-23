@@ -263,9 +263,7 @@ describe("Accessibility", async () => {
 
 		await slider.click();
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider");
 
 		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
@@ -277,9 +275,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys("Tab");
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-slider-with-tooltip").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider-with-tooltip");
 
 		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
@@ -291,9 +287,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider");
 
 		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");

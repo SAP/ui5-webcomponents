@@ -38,9 +38,7 @@ describe("BusyIndicator general interaction", () => {
 		const busyIndicator = await browser.$("#indicator1");
 		await busyIndicator.click();
 
-		let innerFocusElement = await browser.executeAsync(done => {
-			done(document.getElementById("indicator1").shadowRoot.activeElement);
-		});
+		let innerFocusElement = await browser.custom$("activeElement", "#indicator1");
 
 		innerFocusElement = await browser.$(innerFocusElement);
 
