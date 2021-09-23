@@ -207,6 +207,7 @@ class RatingIndicator extends UI5Element {
 				selected: i <= tempValue,
 				index: i,
 				halfStar,
+				readonly: this.readonly,
 			});
 		}
 	}
