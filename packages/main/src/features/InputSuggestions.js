@@ -289,6 +289,7 @@ class Suggestions {
 		if (this.selectedItemIndex - 1 < 0) {
 			items[previousSelectedIdx].selected = false;
 			items[previousSelectedIdx].focused = false;
+
 			this.component.focused = true;
 			this.component.hasSuggestionItemSelected = false;
 			this.selectedItemIndex -= 1;
