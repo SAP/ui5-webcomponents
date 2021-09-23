@@ -152,8 +152,8 @@ exports.config = {
 	 * @param {Array.<Object>} capabilities list of capabilities details
 	 * @param {Array.<String>} specs List of spec file paths that are to be run
 	 */
-	before: function (capabilities, specs) {
-		browser.addCommand("isFocusedDeep", async function () {
+	before: async function (capabilities, specs) {
+		await browser.addCommand("isFocusedDeep", async function () {
 			return browser.executeAsync(function (elem, done) {
 				let activeElement = document.activeElement;
 
@@ -168,46 +168,50 @@ exports.config = {
 			}, this);
 		}, true);
 
-		browser.addCommand("setProperty", async function(property, value) {
+		await browser.addCommand("setProperty", async function(property, value) {
 			return browser.executeAsync((elem, property, value, done) => {
 				elem[property] = value;
 				done();
 			}, this, property, value);
 		}, true);
 
-		browser.addCommand("setAttribute", async function(attribute, value) {
+		await browser.addCommand("setAttribute", async function(attribute, value) {
 			return browser.executeAsync((elem, attribute, value, done) => {
 				elem.setAttribute(attribute, value);
 				done();
 			}, this, attribute, value);
 		}, true);
 
-		browser.addCommand("removeAttribute", async function(attribute) {
+		await browser.addCommand("removeAttribute", async function(attribute) {
 			return browser.executeAsync((elem, attribute, done) => {
 				elem.removeAttribute(attribute);
 				done();
 			}, this, attribute);
 		}, true);
 
-		browser.addCommand("hasClass", async function(className) {
+		await browser.addCommand("hasClass", async function(className) {
 			return browser.executeAsync((elem, className, done) => {
 				done(elem.classList.contains(className));
 			}, this, className);
 		}, true);
 
-		browser.addCommand("getStaticAreaItemClassName", async function(selector) {
+		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
 			return browser.executeAsync(async (selector, done) => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
 				done(staticAreaItem.host.classList[0]);
 			}, selector);
 		}, false);
+
+		await browser.addLocatorStrategy('activeElement', (selector) => {
+			return document.querySelector(selector).shadowRoot.activeElement;
+		});
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.
 	 * @param {String} commandName hook command name
 	 * @param {Array} args arguments that command would receive
 	 */
-	beforeCommand: function (commandName, args) {
+	beforeCommand: async function (commandName, args) {
 		const waitFor = [
 			"$",
 			"$$",
@@ -230,7 +234,7 @@ exports.config = {
 			"shadow$$",
 		];
 		if (waitFor.includes(commandName)) {
-			browser.executeAsync(function (done) {
+			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
