@@ -150,7 +150,63 @@ Debugging with WDIO is really simple. Just follow these 3 steps:
 Google Chrome will then open in a new window, controlled by WDIO via the ChromeDriver, and your test will pause on your 
 breakpoint of choice. Proceed to debug normally.	 
 
-## 5. Using the synchronous syntax for writing texts
+## 5. Best practices for writing tests
+
+### Do not overuse `assert.ok`
+
+When an `assert.ok` fails, the error you get is "Expected something to be true, but it was false". This is fine when you're passing a Boolean, but not ok when there is an expression inside `assert.ok` and you'd like to know which part of the expression is not as expected.
+
+For example, when `assert.ok(a === b, "They match")` fails, the error just says that an expression that was expected to be true was false. However, if you use `assert.strictEqual(a, b, "They match")`, and it fails, the error will say that `a` was expected to be a certain value, but it was another value, which makes it much easier to debug.
+
+Prefer one of the following, when applicable:
+- `assert.notOk(a)` instead of `assert.ok(!a)`
+- `assert.strictEqual(a, b)` instead of `assert.ok(a === b)`
+- `assert.isBelow(a, b)` instead of `assert.ok(a < b)`
+- `assert.isAbove(a, b)` instead of `assert.ok(a > b)`
+- `assert.exists` / `assert.notExists` when checking for `null` or `undefined`
+
+### Do not overuse `assert.strictEqual`
+
+Use:
+- `assert.ok` instead of `assert.strictEqual(a, true)`
+- `assert.notOk` instead of `assert.strictEqual(a, false)`
+
+### Use `isExisting` to check DOM
+
+Preferred:
+ ```js
+assert.ok(await browser.$(<SELECTOR>).isExisting())
+``` 
+
+instead of:
+
+```js
+assert.ok((await browser.$$(<SELECTOR>)).length)
+```
+
+### Do not use `browser.executeAsync` for properties
+
+We have custom commands such as `getProperty` and `setProperty` to fill in gaps in the WDIO standard command set. Use them instead of manually setting properties with `executeAsync`.
+
+### Use `assert.includes` instead of string functions
+
+Use:
+
+ ```js
+assert.includes(text, EXPECTED_TEXT, "Text found")
+```
+
+instead of:
+
+```js
+assert.ok(text.indexOf(EXPECTED_TEXT) > -1, "Text found")
+```
+
+### Extract variables before asserting
+
+Avoid complex expressions inside `assert`s by extracting parts of them to variables and only asserting the variables.
+
+## 6. Using the synchronous syntax for writing texts
 
 WebdriverIO still supports (although now deprecated) the *synchronous* syntax for writing tests. Click [here](https://webdriver.io/docs/sync-vs-async/) for more information on "sync vs async".
 
