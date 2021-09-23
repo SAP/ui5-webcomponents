@@ -1,5 +1,5 @@
-commit 99d4ffc8f8804a419f029a05caeae33c839b28d6
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Sep 21 17:19:39 2021 +0300
+commit daee5074a9076ab7442f91d11abae758a4ab0a5a
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Sep 22 23:36:27 2021 -0700
 
-    docs(ui5-view-settings-dialog): improve sample (#3971)
+    Translation Delivery (#3972)
