@@ -201,7 +201,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -213,7 +213,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the input
+		 * Defines the IDs of the elements that label the input.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -228,10 +228,7 @@ const metadata = {
 		/**
 		 * Defines the accessible role of the component.
 		 * <br><br>
-		 * <b>Note:</b> If you use notification list items,
-		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
-		 *
-		 * @private
+		 * @public
 		 * @type {String}
 		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
