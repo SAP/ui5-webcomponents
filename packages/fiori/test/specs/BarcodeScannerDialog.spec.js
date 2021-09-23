@@ -1,27 +1,27 @@
-
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 
 describe("BarcodeScannerDialog Behavior", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/BarcodeScannerDialog.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/BarcodeScannerDialog.html`);
 	});
 
-	it("fires scan-error when no permissions granted", () => {
+	it("fires scan-error when no permissions granted", async () => {
 		// Setup: deny permissions to access the camera
-		browser.setPermissions({ name: 'camera'}, 'denied');
-		const btnScan = browser.$("#btnScan"),
-		scanError = browser.$("#scanError");
-		
-		btnScan.click();
+		await browser.setPermissions({ name: 'camera'}, 'denied');
+		const btnScan = await browser.$("#btnScan"),
+		scanError = await browser.$("#scanError");
 
-		browser.waitUntil(() => {
-			return scanError.getText().length > 0;
+		await btnScan.click();
+
+		await browser.waitUntil(async () => {
+			return (await scanError.getText()).length > 0;
 		}, 25000, "expect scan-error output");
 
 		// assert
-		assert.ok(scanError.getText().length > 0, "fires scan-error when no permissions");
+		const scanErrorText = await scanError.getText();
+		assert.ok(scanErrorText.length, "fires scan-error when no permissions");
 	});
 
 });

@@ -153,7 +153,7 @@ const metadata = {
 		 * Defines the visibility of the week numbers column.
 		 * <br><br>
 		 *
-		 * <b>Note:<b> For calendars other than Gregorian,
+		 * <b>Note:</b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.
 		 *
 		 * @type {boolean}
@@ -353,7 +353,7 @@ const metadata = {
  * {
  *	"calendarType": "Japanese"
  * }
- * &lt;/script&gt;
+ * &lt;/script&gt;</code>
  *
  * <h3>ES6 Module Import</h3>
  *

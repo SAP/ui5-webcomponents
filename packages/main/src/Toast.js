@@ -79,6 +79,15 @@ const metadata = {
 		hover: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether the component DOM is rendered.
+		 * @type {boolean}
+		 * @private
+		 */
+		domRendered: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 		/**
@@ -206,6 +215,7 @@ class Toast extends UI5Element {
 	}
 
 	_initiateOpening() {
+		this.domRendered = true;
 		requestAnimationFrame(_ => {
 			this.open = true;
 		});
@@ -215,6 +225,7 @@ class Toast extends UI5Element {
 		if (this.hover) {
 			return;
 		}
+		this.domRendered = false;
 		this.open = false;
 	}
 
