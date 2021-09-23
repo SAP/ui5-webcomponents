@@ -595,7 +595,7 @@ class MultiComboBox extends UI5Element {
 		this._keyDown = true;
 	}
 
-	async _onValueStateKeydown(event) {
+	_onValueStateKeydown(event) {
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
 
