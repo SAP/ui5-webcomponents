@@ -26,10 +26,7 @@ describe("Page general interaction", () => {
 
         await button.click();
 
-		await browser.waitUntil(async () => {
-			const footerVisible = await footer.isDisplayedInViewport();
-			return !footerVisible;
-		}, {
+		await browser.waitUntil(async () => !(await footer.isDisplayedInViewport()), {
 			timeout: 500,
 			timeoutMsg: "expected footer to not be visible after 500ms"
 		});

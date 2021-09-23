@@ -26,7 +26,7 @@ describe("BusyIndicator general interaction", () => {
 
 		await busyIndicator.setAttribute("active", "");
 
-		await browser.waitUntil(() => busyArea.isExisting(), {
+		await busyArea.waitForExist({
 			timeout: 3000,
 			timeoutMsg: "Busy area must be created after 3000ms"
 		});
