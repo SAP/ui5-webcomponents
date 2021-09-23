@@ -60,7 +60,7 @@ describe("DateTimePicker general interaction", () => {
 		await closePickerById("dt");
 
 		// assert
-		assert.ok(!(await isPickerOpen("dt")), "The picker closes programmatically.");
+		assert.notOk(await isPickerOpen("dt"), "The picker closes programmatically.");
 	});
 
 	it("tests selection of new date/time", async () => {
@@ -154,7 +154,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(await inputCounter.getProperty("value"), "1", "Changed counter still shows 1.");
-		assert.ok(!(await isPickerOpen("dt1")), "The picker closes after pressing 'Submit'.");
+		assert.notOk(await isPickerOpen("dt1"), "The picker closes after pressing 'Submit'.");
 	});
 
 	it("tests change event not fired on cancel", async () => {
@@ -168,7 +168,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(await inputCounter.getProperty("value"), "", "Changed should not be called.");
-		assert.ok(!(await isPickerOpen("dt2")), "The picker closes after pressing 'Cancel'.");
+		assert.notOk(await isPickerOpen("dt2"), "The picker closes after pressing 'Cancel'.");
 	});
 
 	it("tests time controls displayed according to format", async () => {
@@ -203,7 +203,7 @@ describe("DateTimePicker general interaction", () => {
 		// assert
 		const picker = await getPicker("dt");
 		const expanded = await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("expanded");
-		assert.strictEqual(expanded, true, "The  hours slider is expanded.");
+		assert.ok(expanded, "The  hours slider is expanded.");
 
 		await closePickerById("dt");
 	});

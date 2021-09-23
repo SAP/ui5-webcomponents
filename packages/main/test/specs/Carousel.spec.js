@@ -141,8 +141,8 @@ describe("Carousel general interaction", () => {
 		const pageIndicator = await carousel.shadow$(".ui5-carousel-navigation-wrapper");
 		const navigationArrows = await carousel.shadow$(".ui5-carousel-navigation-arrows");
 
-		assert.ok(!await pageIndicator.isExisting(), "Page indicator is not rendered");
-		assert.ok(!await navigationArrows.isExisting(), "Navigation arrows are not rendered");
+		assert.notOk(await pageIndicator.isExisting(), "Page indicator is not rendered");
+		assert.notOk(await navigationArrows.isExisting(), "Navigation arrows are not rendered");
 		assert.strictEqual(pages, 1, "There is only 1 page.");
 	});
 

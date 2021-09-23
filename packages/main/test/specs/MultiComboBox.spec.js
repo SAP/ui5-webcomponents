@@ -16,7 +16,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
 
 			await icon.click();
-			assert.ok(!await popover.getProperty("opened"), "Popover should close");
+			assert.notOk(await popover.getProperty("opened"), "Popover should close");
 		});
 
 		it("Checks focus state", async () => {
@@ -52,7 +52,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await callCountInput.getValue(), "1", "Event should be called once");
 
 			await icon.click();
-			assert.ok(!await mcb.getProperty("open"), "MultiComboBox should be closed");
+			assert.notOk(await mcb.getProperty("open"), "MultiComboBox should be closed");
 
 			assert.strictEqual(await eventInput.getValue(), "openChange", "openChange should be called");
 			assert.strictEqual(await callCountInput.getValue(), "2", "Event should be called once");
@@ -121,7 +121,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await icon.click();
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 
 			await firstItem.click();
 
@@ -183,12 +183,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys("c");
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
 
 			await firstItem.click();
 
-			assert.strictEqual(await popover.getProperty("opened"), false, "When the content is clicked, the popover should close");
+			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be removed");
 			assert.ok(await browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
@@ -202,12 +202,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys("c");
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
 
 			await firstItemCheckbox.click();
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "When the content is clicked, the popover should close");
+			assert.ok(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be removed");
 		});
 

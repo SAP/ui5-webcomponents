@@ -120,7 +120,7 @@ describe("Testing Range Slider interactions", () => {
 	it("Disabled Range Slider is not interactive", async () => {
 		const rangeSlider = await browser.$("#disabled-range-slider");
 
-		assert.strictEqual(await rangeSlider.isClickable(), false, "Range Slider should be disabled");
+		assert.notOk(await rangeSlider.isClickable(), "Range Slider should be disabled");
 	});
 });
 
@@ -423,7 +423,7 @@ describe("Accessibility", async () => {
 			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
 		});
 
-		assert.strictEqual(await rangeSlider.isFocused(), true, "Range Slider component is focused");
+		assert.ok(await rangeSlider.isFocused(), "Range Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderSelection.getAttribute("class"), "Range Slider progress tracker has the shadowDom focus");
 	});
 
@@ -464,9 +464,9 @@ describe("Accessibility", async () => {
 			done(document.getElementById("basic-range-slider-with-tooltip").shadowRoot.activeElement);
 		});
 
-		assert.strictEqual(await currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.notOk(await currentRangeSlider.isFocused(), "First RangeSlider component is now not focused");
 
-		assert.strictEqual(await nextRangeSlider.isFocused(), true, "Next RangeSlider is focused");
+		assert.ok(await nextRangeSlider.isFocused(), "Next RangeSlider is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderSelection.getAttribute("class"), "Next Range Slider second handle has the shadowDom focus");
 	});
 
@@ -481,9 +481,9 @@ describe("Accessibility", async () => {
 			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
 		});
 
-		assert.strictEqual(await currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.notOk(await currentRangeSlider.isFocused(), "First RangeSlider component is now not focused");
 
-		assert.strictEqual(await previousRangeSlider.isFocused(), true, "Slider component is focused");
+		assert.ok(await previousRangeSlider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await previousRangeSliderEndHandle.getAttribute("class"), "Previous Range Slider second handle now has the shadowDom focus");
 	});
 
@@ -518,7 +518,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		assert.strictEqual(await rangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.notOk(await rangeSlider.isFocused(), "First RangeSlider component is now not focused");
 	});
 
 	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
@@ -1049,7 +1049,7 @@ describe("Testing resize handling and RTL support", () => {
 
 		await browser.setWindowSize(400, 2000);
 
-		assert.strictEqual(await rangeSlider.getProperty("_labelsOverlapping"), true, "state should reflect if any of the labels is overlapping with another");
-		assert.strictEqual(await rangeSlider.getProperty("_hiddenTickmarks"), true, "state should reflect if the tickmarks has less than 8px space between each of them");
+		assert.ok(await rangeSlider.getProperty("_labelsOverlapping"), "state should reflect if any of the labels is overlapping with another");
+		assert.ok(await rangeSlider.getProperty("_hiddenTickmarks"), "state should reflect if the tickmarks has less than 8px space between each of them");
 	});
 });

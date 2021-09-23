@@ -151,11 +151,11 @@ describe("RadioButton general interaction", () => {
 		const truncatingRbHeight = await truncatingRb.getSize("height");
 		const wrappingRbHeight = await wrappingRb.getSize("height");
 
-		assert.ok(await truncatingRb.getProperty("wrappingType") === "None", "The text should not be wrapped.");
-		assert.ok(await wrappingRb.getProperty("wrappingType") === "Normal", "The text should be wrapped.");
+		assert.strictEqual(await truncatingRb.getProperty("wrappingType"), "None", "The text should not be wrapped.");
+		assert.strictEqual(await wrappingRb.getProperty("wrappingType"), "Normal", "The text should be wrapped.");
 
 		assert.strictEqual(truncatingRbHeight, RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is : " + truncatingRbHeight);
-		assert.ok(wrappingRbHeight > RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is more than: " + RADIOBUTTON_DEFAULT_HEIGHT);
+		assert.isAbove(wrappingRbHeight, RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is more than: " + RADIOBUTTON_DEFAULT_HEIGHT);
 	});
 
 	it("tests accessibleName", async () => {

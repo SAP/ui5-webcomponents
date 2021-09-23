@@ -86,7 +86,7 @@ describe("Notification List Item Tests", () => {
 		const hightAfter = await content.getSize("height");
 
 		// assert
-		assert.ok(hightAfter > hightBefore,
+		assert.isAbove(hightAfter, hightBefore,
 			"The content has been expanded by the ShowMore button.");
 	});
 

@@ -36,7 +36,7 @@ describe("General API", () => {
 		const wrappingLabel = await browser.$("#wrapping-link");
 		const truncatingLabel = await browser.$("#non-wrapping-link");
 
-		assert.ok((await wrappingLabel.getSize()).height > (await truncatingLabel.getSize()).height);
+		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
 		assert.strictEqual((await truncatingLabel.getSize()).height, 16, "The truncated label should be single line.");
 	});
 
@@ -58,6 +58,7 @@ describe("General API", () => {
 		const link = await browser.$("#link-click-prevent-default");
 
 		await link.click();
-		assert.ok((await browser.getUrl()).indexOf("https://www.google.com") === -1);
+		const url = await browser.getUrl();
+		assert.notOk(url.includes("https://www.google.com"), "URL is not google");
 	});
 });

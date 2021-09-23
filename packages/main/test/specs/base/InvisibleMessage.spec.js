@@ -20,16 +20,15 @@ describe("InvisibleMessage", () => {
         const button = await browser.$("#announce-button");
         const checkBox = await browser.$("#announce-checkbox");
 
-        await browser.executeAsync(done => {
-			document.getElementById("announce-textarea").value = "announcement";
-			done();
-		});
+        await browser.$("#announce-textarea").setProperty("value", "announcement");
 
         await button.click();
         await checkBox.click();
         await button.click();
 
-        assert.ok((await politeSpan.getHTML()).indexOf("announcement") > -1, "Value has been rendered.");
-        assert.ok((await assertiveSpan.getHTML()).indexOf("announcement") > -1, "Value has been rendered.");
+        const politeSpanHtml = await politeSpan.getHTML();
+        const assertiveSpanHtml = await assertiveSpan.getHTML();
+        assert.ok(politeSpanHtml.includes("announcement"), "Value has been rendered.");
+        assert.ok(assertiveSpanHtml.includes("announcement"), "Value has been rendered.");
     });
 });

@@ -209,29 +209,29 @@ describe("List Tests", () => {
 		const randomBtn = await browser.$("#randomBtn");
 
 		await headerBtn.click();
-		assert.strictEqual(await headerBtn.isFocused(), true, "header btn is focused");
+		assert.ok(await headerBtn.isFocused(), "header btn is focused");
 
 		// act: TAB from headerButton -> the focus should go to the 1st selected item
 		await headerBtn.keys("Tab");
-		assert.strictEqual(await item.isFocused(), true, "selected item is focused");
+		assert.ok(await item.isFocused(), "selected item is focused");
 
 		// act: TAB from item -> the focus should go to "Click me" button
 		await item.keys("Tab");
-		assert.strictEqual(await itemBtn.isFocused(), true, "the 1st tabbable element (button) is focused");
+		assert.ok(await itemBtn.isFocused(), "the 1st tabbable element (button) is focused");
 
 		// act: TAB from the "Click me" button - the the focus should go to "UI5 Link" anchor
 		await itemBtn.keys("Tab");
-		assert.strictEqual(await itemLink.isFocused(), true, "the 2nd tabbable element (link) is focused");
+		assert.ok(await itemLink.isFocused(), "the 2nd tabbable element (link) is focused");
 
 		// act: TAB from the "UI5 Link" anchor - the the focus should skip the "Disabled" button
 		// and go to the "Option B" radio button
 		await itemLink.keys("Tab");
-		assert.strictEqual(await itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
+		assert.ok(await itemRadioBtn.isFocused(), "the last tabbable element (radio) is focused");
 
 		// act: TAB from the "Option B" radio button - the focus should leave  the ui5-list
 		// and Random button should be focused
 		await itemLink.keys("Tab");
-		assert.strictEqual(await randomBtn.isFocused(), true, "element outside of the list is focused");
+		assert.ok(await randomBtn.isFocused(), "element outside of the list is focused");
 	});
 
 	it("does not focus next / prev item when right / left arrow is pressed", async () => {
@@ -243,7 +243,7 @@ describe("List Tests", () => {
 		await firstListItem.keys("ArrowRight");
 
 		assert.ok(await firstListItem.isFocused(), "First item remains focussed");
-		assert.strictEqual(await secondListItem.isFocused(), false, "Second list item not should be focused");
+		assert.notOk(await secondListItem.isFocused(), "Second list item not should be focused");
 
 		await firstListItem.keys("ArrowLeft");
 
@@ -341,7 +341,7 @@ describe("List Tests", () => {
 		const btnInListHeader = await browser.$("#btnInHeader");
 
 		await btnPopupOpener.click();
-		assert.strictEqual(await btnInListHeader.isFocused(), true, "The List header btn is focused.");
+		assert.ok(await btnInListHeader.isFocused(), "The List header btn is focused.");
 	});
 
 	it('focusable list-items are correctly disabled', async () => {
@@ -351,10 +351,7 @@ describe("List Tests", () => {
 		await item2.click();
 
 		// disable the second item
-		await browser.executeAsync(done => {
-			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
-			done();
-		});
+		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
 		assert.strictEqual(await item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
 		assert.strictEqual(await item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
@@ -365,16 +362,13 @@ describe("List Tests", () => {
 			item3 = await browser.$('#basicList ui5-li:nth-child(3)');
 
 		// ensure the second item is disabled
-		await browser.executeAsync(done => {
-			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
-			done();
-		});
+		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
 		// navigate from the first item to the next focusable item
 		await item1.click();
 		await item1.keys("ArrowDown");
 
-		assert.strictEqual(await item3.getProperty("focused"), true, "disabled item is skipped");
+		assert.ok(await item3.getProperty("focused"),  "disabled item is skipped");
 	});
 
 	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', async () => {
@@ -384,7 +378,7 @@ describe("List Tests", () => {
 		await growingListButton.click() // focus growing button
 		await growingListButton.keys("Tab") // focus next list
 
-		assert.strictEqual(await nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
+		assert.ok(await nextInteractiveElement.isFocused(), "Focus is moved to next interactive element.");
 	});
 
 	it('should include selected state text', async () => {

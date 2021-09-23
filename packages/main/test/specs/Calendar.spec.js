@@ -72,7 +72,8 @@ describe("Calendar general interaction", () => {
 		await calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
 		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const focusedItemTimestamp = await yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
-		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 1997, "The focused year is 1997");
+		const focusedYear = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear();
+		assert.strictEqual(focusedYear, 1997, "The focused year is 1997");
 	});
 
 	it("Calendar focuses the selected month when monthpicker is opened with space", async () => {
@@ -89,8 +90,9 @@ describe("Calendar general interaction", () => {
 
 		const focusedItemTimestamp = await monthPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
 		const isHidden = await monthPicker.getAttribute("hidden");
-		assert.ok(!isHidden, "The monthpicker is present");
-		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCMonth() === 10, "The focused month is November");
+		assert.notOk(isHidden, "The monthpicker is present");
+		const focusedMonth = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCMonth();
+		assert.strictEqual(focusedMonth, 10, "The focused month is November");
 	});
 
 	it("Calendar focuses the selected year when yearpicker is opened with space", async () => {
@@ -107,9 +109,10 @@ describe("Calendar general interaction", () => {
 		await browser.keys("Space");
 
 		const isHidden = await yearPicker.getAttribute("hidden");
-		assert.ok(!isHidden, "The yearpicker is present");
+		assert.notOk(isHidden, "The yearpicker is present");
 		const focusedItemTimestamp = await yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
-		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 2000, "The focused year is 2000");
+		const focusedYear = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear();
+		assert.strictEqual(focusedYear, 2000, "The focused year is 2000");
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", async () => {
@@ -240,8 +243,9 @@ describe("Calendar general interaction", () => {
 		}));
 
 		const selectedDates = await calendar.getProperty("selectedDates");
+		const expectedDates = [971136000, 971222400, 971308800];
 
-		assert.deepEqual(selectedDates.sort(), [971136000, 971222400, 971308800].sort(), "Change event is fired with proper data");
+		assert.deepEqual(selectedDates.sort(), expectedDates.sort(), "Change event is fired with proper data");
 	});
 
 	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", async () => {
@@ -284,8 +288,9 @@ describe("Calendar general interaction", () => {
 		assert.ok(await dates[2].hasClass("ui5-dp-item--selected"), `${await dates[2].getAttribute("data-sap-timestamp")} is selected`);
 
 		const selectedDates = await calendar.getProperty("selectedDates");
+		const expectedDates = [971740800, 971913600];
 
-		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
+		assert.deepEqual(selectedDates.sort(), expectedDates.sort(), "Change event is fired with proper data");
 	});
 
 	it("Previous and next buttons are disabled when necessary", async () => {

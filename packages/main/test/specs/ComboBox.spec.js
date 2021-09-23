@@ -11,7 +11,7 @@ describe("General interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		assert.ok(!await popover.getProperty("opened"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
 
 		await arrow.click();
 
@@ -429,7 +429,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
 
-		assert.ok(!await combo.getProperty("focused"), "property focused should be false");
+		assert.notOk(await combo.getProperty("focused"), "property focused should be false");
 
 		await arrow.click();
 
@@ -442,7 +442,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		const input = await combo.shadow$("#ui5-combobox-input");
 
-		assert.ok(!await combo.getProperty("focused"), "property focused should be false");
+		assert.notOk(await combo.getProperty("focused"), "property focused should be false");
 
 		await input.click();
 
@@ -503,7 +503,7 @@ describe("Grouping", () => {
 
 		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
-		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
+		assert.ok(await groupItem.getProperty("focused"),  "The first group header should be focused");
 	});
 
 	it ("Tests input value while group item is focused", async () => {
@@ -524,7 +524,7 @@ describe("Grouping", () => {
 
 		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[1];
 
-		assert.strictEqual(await groupItem.getProperty("focused"), true, "The second group header should be focused");
+		assert.ok(await groupItem.getProperty("focused"),  "The second group header should be focused");
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
 		assert.strictEqual(await combo.getProperty("value"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
