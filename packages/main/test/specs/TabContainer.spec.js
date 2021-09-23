@@ -13,7 +13,7 @@ describe("TabContainer general interaction", () => {
 		const SELECTION_CSS_CLASS = "ui5-tab-strip-item--selected";
 
 		const selectedFilterHtml = await selectedFilter.getHTML();
-		assert.ok(selectedFilterHtml.includes(SELECTION_CSS_CLASS), "The item has the selection css class set.");
+		assert.include(selectedFilterHtml, SELECTION_CSS_CLASS, "The item has the selection css class set.");
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab filter matches.");
 	});
 

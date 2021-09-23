@@ -188,18 +188,21 @@ assert.ok((await browser.$$(<SELECTOR>)).length)
 
 We have custom commands such as `getProperty` and `setProperty` to fill in gaps in the WDIO standard command set. Use them instead of manually setting properties with `executeAsync`.
 
-### Use `assert.includes` instead of string functions
+### Use `assert.include` instead of string functions
 
 Use:
 
  ```js
-assert.includes(text, EXPECTED_TEXT, "Text found")
+assert.include(text, EXPECTED_TEXT, "Text found")
+assert.notInclude(text, NOT_EXPECTED_TEXT, "Text not found")
 ```
 
 instead of:
 
 ```js
 assert.ok(text.indexOf(EXPECTED_TEXT) > -1, "Text found")
+assert.ok(text.includes(EXPECTED_TEXT), "Text found")
+assert.notOk(text.includes(NOT_EXPECTED_TEXT), "Text not found")
 ```
 
 ### Extract variables before asserting

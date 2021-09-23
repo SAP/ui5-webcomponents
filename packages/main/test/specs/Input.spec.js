@@ -438,7 +438,7 @@ describe("Input general interaction", () => {
 
 		assert.ok(await respPopover.isDisplayedInViewport(), "The popover is visible");
 		const firstItemHtml = await firstListItem.getHTML();
-		assert.ok(firstItemHtml.includes(EXPTECTED_TEXT), "The suggestions is highlighted.");
+		assert.include(firstItemHtml, EXPTECTED_TEXT, "The suggestions is highlighted.");
 	});
 
 	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", async () => {

@@ -59,6 +59,6 @@ describe("General API", () => {
 
 		await link.click();
 		const url = await browser.getUrl();
-		assert.notOk(url.includes("https://www.google.com"), "URL is not google");
+		assert.notInclude(url, "https://www.google.com", "URL is not google");
 	});
 });

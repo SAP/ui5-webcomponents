@@ -124,7 +124,7 @@ describe("UploadCollection", () => {
 			await errorStateItem.shadow$("ui5-button[icon=refresh]").click();
 
 			const eventText = await browser.$("#uploadStateEvent").getText();
-			assert.ok(eventText.includes("Retry"), "Retry event is fired");
+			assert.include(eventText, "Retry", "Retry event is fired");
 		});
 
 		it("item should fire 'terminate'", async () => {
@@ -133,7 +133,7 @@ describe("UploadCollection", () => {
 			await uploadingStateItem.shadow$("ui5-button[icon=stop]").click();
 
 			const eventText = await browser.$("#uploadStateEvent").getText();
-			assert.ok(eventText.includes("Terminate"), "Terminate event is fired");
+			assert.include(eventText, "Terminate", "Terminate event is fired");
 		});
 	});
 
