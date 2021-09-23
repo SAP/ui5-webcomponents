@@ -129,6 +129,13 @@
 			}
 		});
 
+		document.getElementById("tree").addEventListener("itemMouseover", function(event) {
+			console.log("Item mouseover: ", event.detail.item);
+		});
+		document.getElementById("tree").addEventListener("itemMouseout", function(event) {
+			console.log("Item mouseout: ", event.detail.item);
+		});
+
 		document.getElementById("tree").addEventListener("itemClick", function(event) {
 			console.log("Item clicked: ", event.detail.item);
 		});
