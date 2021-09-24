@@ -6,8 +6,9 @@
 	display: block;
 }
 
-:host([active][actionable]) {
-	background-color: var(--sapList_SelectionBackgroundColor);
+:host([active][actionable]) .ui5-uci-file-name ,
+:host([active][actionable]) .ui5-uci-description {
+	color: var(--sapList_Active_TextColor);
 }
 
 .ui5-li-root.ui5-uci-root {
