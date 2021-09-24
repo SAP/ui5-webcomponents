@@ -1,9 +1,5 @@
-commit b1afaf0ffeb4e7d5bfd9caa7d462c3f41a871f08
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 24 11:22:59 2021 +0300
+commit a22ba2af8c382a2f0fcb5ab4a12d1254e3c27cbc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Sep 24 12:57:50 2021 +0300
 
-    feat: introduce sap_horizon theme initial draft (#3991)
-    
-    This is the First Draft of the new "sap_horizon" theme and it keeps the metrics and sizes of FIori 3 and just applies the new CSS Variables. All the -parameters.css  files are copied from fiori_3 to serve as basis and will be changed one by one afterwards.
-    
-    FIXES: #3988
+    chore: remove redundant assert (#3996)
