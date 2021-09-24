@@ -223,57 +223,68 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await nMoreText.getText(), "1 More", "token 1 should be visible");
 		});
 
-		it("tests if clicking n more will prefilter items before opening the popover", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
-			browser.setWindowSize(1920, 1080);
+		it("tests if clicking n more will prefilter items before opening the popover", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
 
-			const mcb = $("#more-mcb");
-			const icon = mcb.shadow$("[input-icon]");
-			const nMoreText = mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			const mcb = await $("#more-mcb");
+			const icon = await mcb.shadow$("[input-icon]");
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
-			mcb.scrollIntoView();
+			await mcb.scrollIntoView();
+			await nMoreText.click();
 
-			nMoreText.click();
+			await browser.waitUntil(async () => mcb.getProperty("open"), {
+				timeout: 500,
+				timeoutMsg: "Popover is open"
+			});
 
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#more-mcb")
-			const popover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const list = popover.$(".ui5-multi-combobox-all-items-list");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
 
-			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown (all selected)");
+			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
 
-			icon.click();
+			await icon.click();
 
-			assert.notOk(mcb.getProperty("open"), "MultiComboBox should be closed");
+			await browser.waitUntil(async () => !(await mcb.getProperty("open")), {
+				timeout: 500,
+				timeoutMsg: "Popover should be closed"
+			});
 
-			icon.click();
+			await icon.click();
 
-			assert.ok(mcb.getProperty("open"), "MultiComboBox should be open");
-			assert.strictEqual(list.getProperty("items").length, 4, "4 items should be shown");
+			await browser.waitUntil(async () => await mcb.getProperty("open"), {
+				timeout: 500,
+				timeoutMsg: "Popover should be open"
+			});
+
+			assert.strictEqual((await list.getProperty("items")).length, 4, "4 items should be shown");
 		});
 
-		it("tests filtering of items when nmore popover is open and user types in the input fueld", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
-			browser.setWindowSize(1920, 1080);
+		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
 
-			const mcb = $("#more-mcb");
-			const nMoreText = mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			const mcb = await $("#more-mcb");
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
-			mcb.scrollIntoView();
+			await mcb.scrollIntoView();
 
-			const input = mcb.shadow$("input");
+			const input = await mcb.shadow$("input");
 
-			nMoreText.click();
+			await nMoreText.click();
 
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#more-mcb")
-			const popover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const list = popover.$(".ui5-multi-combobox-all-items-list");
-			const lastListItem = list.$("ui5-li:last-child");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+			const lastListItem = await list.$("ui5-li:last-child");
 
-			input.click();
-			input.keys("c");
+			await input.click();
+			await input.keys("c");
 
-			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown (all selected)");
-			assert.notOk(lastListItem.getProperty("selected"), "last item should not be selected");
+			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
+			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
 		})
 	});
 
