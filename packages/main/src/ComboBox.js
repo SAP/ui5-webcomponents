@@ -189,6 +189,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Indicates whether the visual focus is on the value state header
+		 * @private
+		 */
 		_isValueStateFocused: {
 			type: Boolean,
 		},
@@ -566,12 +570,11 @@ class ComboBox extends UI5Element {
 	}
 
 	async handleArrowKeyPress(event) {
-		const isOpen = this.responsivePopover.opened;
-
 		if (this.readonly || !this._filteredItems.length) {
 			return;
 		}
 
+		const isOpen = this.responsivePopover.opened;
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
 		const currentItem = this._filteredItems.find(item => {
@@ -598,15 +601,12 @@ class ComboBox extends UI5Element {
 
 	_handleItemNavigation(event, indexOfItem, isForward) {
 		const isOpen = this.responsivePopover.opened;
-		const nextItem = isForward ? indexOfItem + 1 : indexOfItem - 1;
+		const currentItem =this._filteredItems[indexOfItem];
 
-		if (!isOpen && !this._filteredItems[indexOfItem]) {
-			return;
-		}
+		const nextItem = isForward ? this._filteredItems[++indexOfItem] : this._filteredItems[--indexOfItem];
+		const isGroupItem = currentItem && currentItem.isGroupItem;
 
-		const isGroupItem = this._filteredItems[indexOfItem].isGroupItem;
-
-		if ((!isOpen) && ((isGroupItem && !this._filteredItems[nextItem]) || (!isGroupItem && !this._filteredItems[indexOfItem]))) {
+		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
 			return;
 		}
 
@@ -615,13 +615,13 @@ class ComboBox extends UI5Element {
 		if (isOpen) {
 			this.announceSelectedItem(indexOfItem);
 			this._itemFocused = true;
-			this.value = isGroupItem ? this.filterValue : this._filteredItems[indexOfItem].text;
+			this.value = isGroupItem ? this.filterValue : currentItem.text;
 			this.focused = false;
-			this._filteredItems[indexOfItem].focused = true;
+			currentItem.focused = true;
 		} else {
 			this.focused = true;
-			this._filteredItems[indexOfItem].focused = false;
-			this.value = isGroupItem ? this._filteredItems[nextItem].text : this._filteredItems[indexOfItem].text;
+			this.value = isGroupItem ? nextItem.text : currentItem.text;
+			currentItem.focused = false;
 		}
 
 		this._isValueStateFocused = false;
@@ -630,8 +630,6 @@ class ComboBox extends UI5Element {
 		if (isGroupItem && isOpen) {
 			return;
 		}
-
-		this._filteredItems[indexOfItem].selected = true;
 
 		// autocomplete
 		const item = this._autoCompleteValue(this.value);
