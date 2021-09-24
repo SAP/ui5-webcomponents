@@ -46,7 +46,7 @@ bdi {
 }
 
 :host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - .2rem);
+	max-width: calc(100% - .125rem);
 }
 
 :host([show-colon]) .ui5-label-required-colon {
