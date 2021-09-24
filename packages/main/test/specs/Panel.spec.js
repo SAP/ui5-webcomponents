@@ -64,15 +64,28 @@ describe("Panel general interaction", () => {
 		const field = await browser.$("#field1");
 
 		await header.click();
-		await browser.pause(500);
+
+		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
+			timeout: 500,
+			interval: 100,
+			timeoutMsg: "Press called"
+		});
 
 		await header.keys("Space");
-		await browser.pause(500);
+
+		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
+			timeout: 500,
+			interval: 100,
+			timeoutMsg: "Press called"
+		});
 
 		await header.keys("Enter");
-		await browser.pause(500);
 
-		assert.strictEqual(await field.getProperty("value"), "3", "Press should be called 3 times");
+		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
+			timeout: 500,
+			interval: 100,
+			timeoutMsg: "Press called"
+		});
 	});
 
 	it("tests toggle event upon icon click with custom header", async () => {
@@ -80,15 +93,28 @@ describe("Panel general interaction", () => {
 		const field = await browser.$("#field2");
 
 		await icon.click();
-		await browser.pause(500);
+
+		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
+			timeout: 500,
+			interval: 100,
+			timeoutMsg: "Press called"
+		});
 
 		await icon.keys("Space");
-		await browser.pause(500);
+
+		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
+			timeout: 500,
+			interval: 100,
+			timeoutMsg: "Press called"
+		});
 
 		await icon.keys("Enter");
-		await browser.pause(500);
 
-		assert.strictEqual(await field.getProperty("value"), "3", "Press should be called 3 times");
+		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
+			timeout: 500,
+			interval: 100,
+			timeoutMsg: "Press called"
+		});
 	});
 
 	it("tests toggle expand/collapse animation", async () => {

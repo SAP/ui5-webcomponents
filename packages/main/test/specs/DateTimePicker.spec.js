@@ -1,22 +1,20 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
-const openPickerById = async (id, options) => {
-	const res = await browser.executeAsync((id, options, done) => {
+const openPickerById = (id, options) => {
+	return browser.executeAsync((id, options, done) => {
 		done(document.querySelector(`#${id}`).openPicker(options));
 	}, id, options);
-	await browser.pause(1000);
-	return res;
 }
 
-const closePickerById = async id => {
-	return await browser.executeAsync((id, done) => {
+const closePickerById = id => {
+	return browser.executeAsync((id, done) => {
 		done(document.querySelector(`#${id}`).closePicker());
 	}, id);
 }
 
-const isPickerOpen = async id => {
-	return await browser.executeAsync((id, done) => {
+const isPickerOpen = id => {
+	return browser.executeAsync((id, done) => {
 		done(document.querySelector(`#${id}`).isOpen());
 	}, id);
 }

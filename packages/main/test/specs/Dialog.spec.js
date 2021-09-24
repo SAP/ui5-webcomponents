@@ -255,10 +255,13 @@ describe("Dialog general interaction", () => {
 
 		const closeButton = await browser.$("#dynamic-dialog-close-button");
 
-		await browser.pause(500);
-
-		const activeElement = await browser.$(await browser.getActiveElement());
-		assert.strictEqual(await activeElement.getProperty("id"), await closeButton.getProperty("id"), "the active element is the close button");
+		await browser.waitUntil(async () => {
+			const activeElement = await browser.$(await browser.getActiveElement());
+			return await activeElement.getProperty("id") === await closeButton.getProperty("id");
+		}, {
+			timeout: 500,
+			timeoutMsg: "the active element must be the close button"
+		});
 
 		await closeButton.click();
 	});
