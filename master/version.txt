@@ -1,7 +1,7 @@
-commit 6bcbaeda67033925f56a294ee00c0079fbd11d38
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 24 16:19:59 2021 +0300
+commit 9e7928baaf890c39b9f1a311e75bde19842f5cac
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Fri Sep 24 16:30:54 2021 +0300
 
-    chore: add sap_horizon test page (#3998)
+    feat(ui5-product-switch): add selected state to an item (#3872)
     
-    Adding Core Controls test page
+    Now ui5-product-switch-item receives a selected state on click or keydown, which is unique for an ui5-product-switch collection.
