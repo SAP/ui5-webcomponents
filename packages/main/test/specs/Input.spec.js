@@ -66,7 +66,7 @@ describe("Input general interaction", () => {
 		// focus the input field which will display the suggestions
 		await input.click();
 
-		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+		assert.ok(!(await popover.isDisplayedInViewport()), "The popover is not visible");
 	});
 
 	it("fires change", async () => {
@@ -101,6 +101,7 @@ describe("Input general interaction", () => {
 		const inputResult = await browser.$("#inputChangeResult").shadow$("input");
 
 		await input.click();
+		await input.keys("c");
 		await input.keys("ArrowDown");
 		await input.keys("Tab");
 
@@ -355,6 +356,7 @@ describe("Input general interaction", () => {
 		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
+		await suggestionsInput.keys("C");
 		await suggestionsInput.keys("ArrowDown");
 		await suggestionsInput.keys("Enter");
 		await browser.pause(300);
@@ -500,6 +502,8 @@ describe("Input general interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialog = await browser.$("#inputInDialog");
 
+		await input.keys("c");
+
 		//assert
 		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
 
@@ -515,8 +519,8 @@ describe("Input general interaction", () => {
 	it("Suggestions count should be read out when necessary", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
-		const inputDynamicSuggestions = await browser.$("#inputCompact");
-		const inputSuggestions = await browser.$("#myInput2");
+		const inputDynamicSuggestions = await $("#inputCompact");
+		const inputSuggestions = await $("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
 		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
 		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
@@ -533,8 +537,10 @@ describe("Input general interaction", () => {
 		//assert
 		assert.strictEqual(await dynamicSuggestionsCount.getText(), "4 results are available", "Suggestions count is available since value is entered");
 		await dynamicSuggestionsInnerInput.keys("Backspace");
+
 		//act
 		await inputSuggestions.click();
+		await (await inputSuggestions.shadow$("input")).keys("c");
 
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
