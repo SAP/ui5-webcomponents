@@ -1,10 +1,5 @@
-commit d60120d99512644a74bade70a7c0332415e6744a
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Thu Sep 23 19:42:25 2021 +0300
+commit 41b61f544e9a62369b4edfe963d28a7e602062ad
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Sep 24 09:26:05 2021 +0300
 
-    fix(ui5-shellbar): remove unnecessary aria-label from buttons (#3981)
-    
-    The ui5-button component used inside ui5-shellbar have both aria-label and title set with the same value. This may lead to double announcement
-    and trigger warrning by test tools. With this change we remove the aria-label attribute from the ui5-buttons.
-    
-    Fixes: #3953
+    refactor: Use waitUntil in tests (#3989)
