@@ -1,5 +1,9 @@
-commit 41b61f544e9a62369b4edfe963d28a7e602062ad
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Sep 24 09:26:05 2021 +0300
+commit b1afaf0ffeb4e7d5bfd9caa7d462c3f41a871f08
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Sep 24 11:22:59 2021 +0300
 
-    refactor: Use waitUntil in tests (#3989)
+    feat: introduce sap_horizon theme initial draft (#3991)
+    
+    This is the First Draft of the new "sap_horizon" theme and it keeps the metrics and sizes of FIori 3 and just applies the new CSS Variables. All the -parameters.css  files are copied from fiori_3 to serve as basis and will be changed one by one afterwards.
+    
+    FIXES: #3988
