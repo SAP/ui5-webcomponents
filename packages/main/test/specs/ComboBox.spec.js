@@ -687,4 +687,40 @@ describe("Keyboard navigation", async () => {
 
 		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
 	});
+
+	it ("Navigates back and forward through the items when the suggestions are closed", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = await browser.$("#value-state-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-grouping");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItem, prevListItem;
+
+		await input.click();
+		await input.keys("ArrowDown");
+
+		assert.equal(await combo.getProperty("value"), "Argentina", "The value is updated with the first suggestion item text");
+		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await combo.getProperty("value"), "Australia", "The value is updated with the next item text");
+		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
+
+		await input.keys("ArrowUp");
+
+		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is updated with the previous item text");
+		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
+
+		await input.keys("ArrowUp");
+		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is still the first item text");
+		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
+
+		await arrow.click();
+		prevListItem = await popover.$("ui5-list").$$("ui5-li")[5];
+
+		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
+	});
 });

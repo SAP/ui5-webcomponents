@@ -601,7 +601,7 @@ class ComboBox extends UI5Element {
 
 	_handleItemNavigation(event, indexOfItem, isForward) {
 		const isOpen = this.responsivePopover.opened;
-		const currentItem =this._filteredItems[indexOfItem];
+		const currentItem = this._filteredItems[indexOfItem];
 
 		const nextItem = isForward ? this._filteredItems[++indexOfItem] : this._filteredItems[--indexOfItem];
 		const isGroupItem = currentItem && currentItem.isGroupItem;
