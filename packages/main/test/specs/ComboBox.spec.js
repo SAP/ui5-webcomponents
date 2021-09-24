@@ -715,10 +715,12 @@ describe("Keyboard navigation", async () => {
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
 
 		await input.keys("ArrowUp");
+
 		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is still the first item text");
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
 
 		await arrow.click();
+
 		prevListItem = await popover.$("ui5-list").$$("ui5-li")[5];
 
 		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
