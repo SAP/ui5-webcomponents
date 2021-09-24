@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.19](https://github.com/SAP/ui5-webcomponents/compare/v0.31.18...v0.31.19) (2021-09-24)
+
+
+### Bug Fixes
+
+* **ui5-input:** inner input padding is correctly updated ([#3015](https://github.com/SAP/ui5-webcomponents/issues/3015)) ([06f7088](https://github.com/SAP/ui5-webcomponents/commit/06f7088)), closes [#2940](https://github.com/SAP/ui5-webcomponents/issues/2940)
+* **ui5-label:** fix truncation ([#3995](https://github.com/SAP/ui5-webcomponents/issues/3995)) ([0a8d511](https://github.com/SAP/ui5-webcomponents/commit/0a8d511)), closes [#3897](https://github.com/SAP/ui5-webcomponents/issues/3897) [#3980](https://github.com/SAP/ui5-webcomponents/issues/3980)
+* **ui5-timeline:** align indicator in compact mode ([#3902](https://github.com/SAP/ui5-webcomponents/issues/3902)) ([2baf34a](https://github.com/SAP/ui5-webcomponents/commit/2baf34a))
+
+
+### Features
+
+* **ui5-list:** introduce accessibleName, accessibleNameRef, accessibleRole ([e84a3fa](https://github.com/SAP/ui5-webcomponents/commit/e84a3fa))
+
+
+### BREAKING CHANGES
+
+* **ui5-list:** ariaLabel and ariaLabelledby are removed in favor of accessibleName and accessibleNameRef
+
+
+
+
+
 ## [0.31.18](https://github.com/SAP/ui5-webcomponents/compare/v0.31.17...v0.31.18) (2021-09-20)
 
 

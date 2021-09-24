@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.19](https://github.com/SAP/ui5-webcomponents/compare/v0.31.18...v0.31.19) (2021-09-24)
+
+
+### Features
+
+* **ui5-list:** introduce accessibleName, accessibleNameRef, accessibleRole ([e84a3fa](https://github.com/SAP/ui5-webcomponents/commit/e84a3fa))
+
+
+### BREAKING CHANGES
+
+* **ui5-list:** ariaLabel and ariaLabelledby are removed in favor of accessibleName and accessibleNameRef
+
+
+
+
+
 ## [0.31.18](https://github.com/SAP/ui5-webcomponents/compare/v0.31.17...v0.31.18) (2021-09-20)
 
 **Note:** Version bump only for package @ui5/webcomponents-theme-base
