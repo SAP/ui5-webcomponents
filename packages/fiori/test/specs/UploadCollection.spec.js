@@ -3,221 +3,219 @@ const PORT = require("./_port.js");
 
 describe("UploadCollection", () => {
 	describe("Rendering", () => {
-		before(() => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/UploadCollection.html`);
+		before(async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/UploadCollection.html`);
 		});
 
-		it("should show Link when 'fileNameClickable'", () => {
-			const firstItem = browser.$("#firstItem");
-			assert.ok(firstItem.shadow$("ui5-link").isDisplayed(), "Link should be rendered");
+		it("should show Link when 'fileNameClickable'", async () => {
+			const firstItem = await browser.$("#firstItem");
+			assert.ok(await firstItem.shadow$("ui5-link").isDisplayed(), "Link should be rendered");
 		});
 
-		it("should show span when file name is NOT clickable", () => {
-			const secondItem = browser.$("#secondItem");
-			assert.ok(secondItem.shadow$("span.ui5-uci-file-name").isDisplayed(), "span should be rendered");
+		it("should show span when file name is NOT clickable", async () => {
+			const secondItem = await browser.$("#secondItem");
+			assert.ok(await secondItem.shadow$("span.ui5-uci-file-name").isDisplayed(), "span should be rendered");
 		});
 
-		it("should show input and buttons when editing", () => {
-			const secondItem = browser.$("#secondItem");
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
-			editButton.click();
+		it("should show input and buttons when editing", async () => {
+			const secondItem = await browser.$("#secondItem");
+			const editButton = await secondItem.shadow$(".ui5-li-detailbtn");
+			await editButton.click();
 
-			assert.ok(secondItem.shadow$(".ui5-uci-edit-container").isDisplayed(), "edit container should be rendered");
-			assert.ok(secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
-			assert.notOk(secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
+			assert.ok(await secondItem.shadow$(".ui5-uci-edit-container").isDisplayed(), "edit container should be rendered");
+			assert.ok(await secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
+			assert.notOk(await secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("secondItem").removeAttribute("_editing");
-			});
+			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
-		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", () => {
-			const uploadingStateItem = browser.$("#uploadingState");
+		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", async () => {
+			const uploadingStateItem = await browser.$("#uploadingState");
 
-			assert.ok(uploadingStateItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "'Terminate' button is displayed'");
-			assert.notOk(uploadingStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
-			assert.notOk(uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button should be hidden");
+			assert.ok(await uploadingStateItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "'Terminate' button is displayed'");
+			assert.notOk(await uploadingStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
+			assert.notOk(await uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button should be hidden");
 		});
 
-		it("should show 'Retry' button when uploadState is 'Error'", () => {
-			const errorStateItem = browser.$("#errorState");
+		it("should show 'Retry' button when uploadState is 'Error'", async () => {
+			const errorStateItem = await browser.$("#errorState");
 
-			assert.ok(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is displayed");
-			assert.ok(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is also displayed");
+			assert.ok(await errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is displayed");
+			assert.ok(await errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is also displayed");
 
-			errorStateItem.shadow$(".ui5-li-detailbtn").click();
+			await errorStateItem.shadow$(".ui5-li-detailbtn").click();
 
-			assert.notOk(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is NOT displayed when editing");
-			assert.notOk(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
+			assert.notOk(await errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is NOT displayed when editing");
+			assert.notOk(await errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("errorState").removeAttribute("_editing");
-			});
+			await browser.$("#errorState").removeAttribute("_editing");
 		});
 
-		it("visibility of buttons", () => {
-			const defaultItem = browser.$("#uc3-default");
-			assert.strictEqual(defaultItem.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
+		it("visibility of buttons", async () => {
+			const defaultItem = await browser.$("#uc3-default");
+			assert.ok(await defaultItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is visible");
 
-			const defaultItemHiddenDelete = browser.$("#uc3-default-hidden-delete");
-			assert.strictEqual(defaultItemHiddenDelete.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
+			const defaultItemHiddenDelete = await browser.$("#uc3-default-hidden-delete");
+			assert.notOk(await defaultItemHiddenDelete.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is not visible");
 
-			const errorItem = browser.$("#uc3-error");
-			assert.strictEqual(errorItem.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
-			assert.strictEqual(errorItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), true, "retry button is visible");
+			const errorItem = await browser.$("#uc3-error");
+			assert.ok(await errorItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is visible");
+			assert.ok(await errorItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "retry button is visible");
 
-			const errorItemHiddenRetry = browser.$("#uc3-error-hidden-retry");
-			assert.strictEqual(errorItemHiddenRetry.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
-			assert.strictEqual(errorItemHiddenRetry.shadow$("ui5-button[icon=refresh]").isDisplayed(), false, "retry button is not visible");
+			const errorItemHiddenRetry = await browser.$("#uc3-error-hidden-retry");
+			assert.ok(await errorItemHiddenRetry.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is visible");
+			assert.notOk(await errorItemHiddenRetry.shadow$("ui5-button[icon=refresh]").isDisplayed(), "retry button is not visible");
 
-			const uploadingItem = browser.$("#uc3-uploading");
-			assert.strictEqual(uploadingItem.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
-			assert.strictEqual(uploadingItem.shadow$("ui5-button[icon=stop]").isDisplayed(), true, "terminate button is visible");
+			const uploadingItem = await browser.$("#uc3-uploading");
+			assert.notOk(await uploadingItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is not visible");
+			assert.ok(await uploadingItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "terminate button is visible");
 
-			const uploadingItemHiddenTerminate = browser.$("#uc3-uploading-hidden-terminate");
-			assert.strictEqual(uploadingItemHiddenTerminate.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
-			assert.strictEqual(uploadingItemHiddenTerminate.shadow$("ui5-button[icon=stop]").isDisplayed(), false, "terminate button is visible");
+			const uploadingItemHiddenTerminate = await browser.$("#uc3-uploading-hidden-terminate");
+			assert.notOk(await uploadingItemHiddenTerminate.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button is not visible");
+			assert.notOk(await uploadingItemHiddenTerminate.shadow$("ui5-button[icon=stop]").isDisplayed(), "terminate button is visible");
+		});
+
+		it("should forward 'header' and 'accessible-name' to the inner list", async () => {
+			const uploadCollection = await browser.$("#uploadCollection");
+			const innerList = await uploadCollection.shadow$("ui5-list");
+
+			const headerInnerListSlotContent = browser.executeAsync(done => {
+				done(document.getElementById("uploadCollection").shadowRoot.querySelector("ui5-list").shadowRoot.querySelector("slot[name='header']").assignedNodes()[0].assignedNodes()[0].querySelector("#uploadCollectionTitle"));
+			});
+
+			assert.strictEqual(await uploadCollection.getAttribute("accessible-name"), await innerList.getAttribute("accessible-name"), "accessible-name is forwarded");
+			assert.ok(headerInnerListSlotContent, "header is forwarded");
 		});
 	});
 
 	describe("Events", () => {
-		it("item should fire 'rename'", () => {
-			const secondItem = browser.$("#secondItem");
+		it("item should fire 'rename'", async () => {
+			const secondItem = await browser.$("#secondItem");
 			const secondItemIndex = 1;
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+			const editButton = await secondItem.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
-			browser.keys("fileNameSuffix");
-			browser.keys("Enter");
+			await editButton.click();
+			await browser.keys("fileNameSuffix");
+			await browser.keys("Enter");
 
-			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename");
+			assert.strictEqual(parseInt(await browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("secondItem").removeAttribute("_editing");
-			});
+			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
-		it("upload collection should fire 'item-delete'", () => {
-			const uploadCollection = browser.$("#uploadCollection");
-			const firstItem = browser.$("#firstItem");
+		it("upload collection should fire 'item-delete'", async () => {
+			const uploadCollection = await browser.$("#uploadCollection");
+			const firstItem = await browser.$("#firstItem");
 
-			browser.execute(() => {
-				uploadCollection.setAttribute("mode", "Delete");
-			});
+			await uploadCollection.setAttribute("mode", "Delete");
 
-			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
-			deleteBtn.click();
+			const deleteBtn = await firstItem.shadow$(".ui5-li-deletebtn");
+			await deleteBtn.click();
 
-			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'item-delete' event is fired");
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
 		});
 
-		it("item should fire 'retry'", () => {
-			const errorStateItem = browser.$("#errorState");
+		it("item should fire 'retry'", async () => {
+			const errorStateItem = await browser.$("#errorState");
 
-			errorStateItem.shadow$("ui5-button[icon=refresh]").click();
+			await errorStateItem.shadow$("ui5-button[icon=refresh]").click();
 
-			assert.ok(browser.$("#uploadStateEvent").getText().includes("Retry"), "Retry event is fired");
+			const eventText = await browser.$("#uploadStateEvent").getText();
+			assert.include(eventText, "Retry", "Retry event is fired");
 		});
 
-		it("item should fire 'terminate'", () => {
-			const uploadingStateItem = browser.$("#uploadingState");
+		it("item should fire 'terminate'", async () => {
+			const uploadingStateItem = await browser.$("#uploadingState");
 
-			uploadingStateItem.shadow$("ui5-button[icon=stop]").click();
+			await uploadingStateItem.shadow$("ui5-button[icon=stop]").click();
 
-			assert.ok(browser.$("#uploadStateEvent").getText().includes("Terminate"), "Terminate event is fired");
+			const eventText = await browser.$("#uploadStateEvent").getText();
+			assert.include(eventText, "Terminate", "Terminate event is fired");
 		});
 	});
 
-	describe("Edit - various file names", () => {
-		it("should preserve dots in the file name", () => {
-			const latestReportsPdf = browser.$("#latestReportsPdf");
-			const editButton = latestReportsPdf.shadow$(".ui5-li-detailbtn");
+	describe("Edit - various file names", async () => {
+		it("should preserve dots in the file name", async () => {
+			const latestReportsPdf = await browser.$("#latestReportsPdf");
+			const editButton = await latestReportsPdf.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
-			browser.keys("last.reports-edited");
-			browser.keys("Enter");
+			await editButton.click();
+			await browser.keys("last.reports-edited");
+			await browser.keys("Enter");
 
-			// assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
+			// assert.strictEqual(await latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("latestReportsPdf").removeAttribute("_editing");
-			});
+			await browser.$("#latestReportsPdf").removeAttribute("_editing");
 		});
 
-		it("should be able to add extension, if there isn't such", () => {
-			const noFileExtensionItem = browser.$("#noFileExtension");
-			const editButton = noFileExtensionItem.shadow$(".ui5-li-detailbtn");
+		it("should be able to add extension, if there isn't such", async () => {
+			const noFileExtensionItem = await browser.$("#noFileExtension");
+			const editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 			const newFileName = "newFileName.newExtension";
 
-			editButton.click();
-			browser.keys(newFileName);
-			browser.keys("Enter");
+			await editButton.click();
+			await browser.keys(newFileName);
+			await browser.keys("Enter");
 
-			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
+			assert.strictEqual(await noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
 
 			const newFileName2 = "newFileName2";
 
-			editButton.click();
-			browser.keys(newFileName2);
-			browser.keys("Enter");
+			await editButton.click();
+			await browser.keys(newFileName2);
+			await browser.keys("Enter");
 
-			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
+			assert.strictEqual(await noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("noFileExtension").removeAttribute("_editing");
-			});
+			await browser.$("#noFileExtension").removeAttribute("_editing");
 		});
 
-		it("should NOT consider hidden file name as extension", () => {
-			const secondItem = browser.$("#secondItem");
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+		it("should NOT consider hidden file name as extension", async () => {
+			const secondItem = await browser.$("#secondItem");
+			const editButton = await secondItem.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
+			await editButton.click();
 
-			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
+			assert.notOk(await secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("secondItem").removeAttribute("_editing");
-			});
+			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
-		it("tests cancelling of name change via keyboard", () => {
-			const secondItem = browser.$("#keyboardNavigation");
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+		it("tests cancelling of name change via keyboard", async () => {
+			const secondItem = await browser.$("#keyboardNavigation");
+			const editButton = await secondItem.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
+			await editButton.click();
 
-			browser.keys("new name");
+			await browser.keys("new name");
 
-			browser.keys("Tab");
-			browser.keys("Tab");
+			await browser.keys("Tab");
+			await browser.keys("Tab");
 
-			browser.keys("Enter"); // Press cancel button
+			await browser.keys("Enter"); // Press cancel button
 
-			assert.strictEqual(secondItem.shadow$(".ui5-uci-file-name").getText(), "Graph.docx", "The name of the file is not changed");
+			assert.strictEqual(await secondItem.shadow$(".ui5-uci-file-name").getText(), "Graph.docx", "The name of the file is not changed");
 
 			// reset the item
-			browser.execute(() => {
-				document.getElementById("keyboardNavigation").removeAttribute("_editing");
-			});
+			await browser.$("#keyboardNavigation").removeAttribute("_editing");
 		});
 	});
 
 	describe("Drag and Drop", () => {
-		it("should NOT show drag and drop overlay when NOT dragging files", () => {
-			const uploadCollection = browser.$("#uploadCollection");
-			const draggableElement = browser.$("#draggableElement");
+		it("should NOT show drag and drop overlay when NOT dragging files", async () => {
+			const uploadCollection = await browser.$("#uploadCollection");
+			const draggableElement = await browser.$("#draggableElement");
 
-			draggableElement.scrollIntoView();
-			draggableElement.dragAndDrop(uploadCollection);
+			await draggableElement.scrollIntoView();
+			await draggableElement.dragAndDrop(uploadCollection);
 
-			assert.notOk(browser.$(".uc-dnd-overlay").isDisplayed(), "drag and drop overlay is not displayed");
+			assert.notOk(await browser.$(".uc-dnd-overlay").isDisplayed(), "drag and drop overlay is not displayed");
 		});
 	});
 });

@@ -29,9 +29,9 @@
 	--ui5-badge-color-scheme-7-border: var(--sapAccentColor7);
 	--ui5-badge-color-scheme-7-color: var(--sapAccentColor7);
 
-	--ui5-badge-color-scheme-8-background: var(--sapLegendBackgroundColor8);
-	--ui5-badge-color-scheme-8-border: var(--sapAccentColor8);
-	--ui5-badge-color-scheme-8-color: var(--sapAccentColor8);
+	--ui5-badge-color-scheme-8-background: var(--sapLegendBackgroundColor18);
+	--ui5-badge-color-scheme-8-border: var(--sapLegendColor18);
+	--ui5-badge-color-scheme-8-color: var(--sapLegendColor18);
 
 	--ui5-badge-color-scheme-9-background: var(--sapLegendBackgroundColor10);
 	--ui5-badge-color-scheme-9-border: var(--sapAccentColor10);

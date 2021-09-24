@@ -22,6 +22,16 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: flex-start;
+}
+
+.ui5-bar-root .ui5-bar-content-container {
+	min-width: 30%;
+}
+
+.ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
+	min-width: 0px;
+	overflow: hidden;
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
@@ -29,6 +39,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: flex-end;
 }
 .ui5-bar-root .ui5-bar-midcontent-container {
 	padding-left: 0.5rem;
@@ -36,6 +47,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: center;
 }
 
 :host([design="Footer"]){

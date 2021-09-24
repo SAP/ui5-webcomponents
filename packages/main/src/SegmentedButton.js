@@ -209,6 +209,7 @@ class SegmentedButton extends UI5Element {
 
 	_onclick(event) {
 		this._selectItem(event);
+		this.selectedItem.focus();
 	}
 
 	_onkeydown(event) {

@@ -1,12 +1,12 @@
 const assert = require("chai").assert;
 
 describe("Slots work properly", () => {
-	before(() => {
-		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(async () => {
+		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
 	});
 
-	it("Tests that properties exist on the element for each slot", () => {
-		const res = browser.execute(() => {
+	it("Tests that properties exist on the element for each slot", async () => {
+		const res = await browser.executeAsync(done => {
 			const expectedValues = {};
 
 			const el = document.getElementById("withContent");
@@ -17,7 +17,7 @@ describe("Slots work properly", () => {
 			expectedValues.items = el.items.length === 2;
 			expectedValues.named = el.named === undefined;
 
-			return expectedValues;
+			done(expectedValues);
 		});
 
 		assert.strictEqual(res.default, true, "There are elements in the default property");
@@ -27,10 +27,10 @@ describe("Slots work properly", () => {
 		assert.strictEqual(res.named, true, "There is no named property as propertyName changed it to items");
 	});
 
-	it("Tests that individualSlots modifies the slot property of slotted children", () => {
-		assert.strictEqual(browser.$$("#withContent>[slot=individual]").length, 0, "There are no children with slot=individual");
-		assert.strictEqual(browser.$$("#withContent>[slot=individual-1]").length, 1, "The slot of the first child became individual-1");
-		assert.strictEqual(browser.$$("#withContent>[slot=individual-2]").length, 1, "The slot of the second child became individual-2");
+	it("Tests that individualSlots modifies the slot property of slotted children", async () => {
+		assert.strictEqual((await browser.$$("#withContent>[slot=individual]")).length, 0, "There are no children with slot=individual");
+		assert.strictEqual((await browser.$$("#withContent>[slot=individual-1]")).length, 1, "The slot of the first child became individual-1");
+		assert.strictEqual((await browser.$$("#withContent>[slot=individual-2]")).length, 1, "The slot of the second child became individual-2");
 	});
 
 });

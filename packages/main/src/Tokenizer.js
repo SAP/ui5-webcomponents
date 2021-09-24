@@ -155,6 +155,8 @@ class Tokenizer extends UI5Element {
 			const popover = await this.getPopover();
 			popover.close();
 		}
+
+		this._nMoreCount = this.overflownTokens.length;
 	}
 
 	onEnterDOM() {
@@ -198,7 +200,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._nMoreCount = this.overflownTokens.length;
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
