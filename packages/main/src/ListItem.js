@@ -13,6 +13,7 @@ import {
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
 	ARIA_LABEL_LIST_ITEM_RADIO_BUTTON,
 	LIST_ITEM_SELECTED,
+	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -77,13 +78,13 @@ const metadata = {
 		 *
 		 * @private
 		 * @type {String}
-		 * @defaultvalue "option"
+		 * @defaultvalue "listitem"
 		 * @since 1.0.0-rc.9
 		 *
 		 */
 		role: {
 			type: String,
-			defaultValue: "option",
+			defaultValue: "listitem",
 		},
 
 		_mode: {
@@ -335,6 +336,20 @@ class ListItem extends ListItemBase {
 		return undefined;
 	}
 
+	get ariaSelectedText() {
+		let ariaSelectedText;
+
+		// Selected state needs to be supported separately since now the role mapping is list -> listitem[]
+		// to avoid the issue of nesting interactive elements, ex. (option -> radio/checkbox);
+		// The text is added to aria-describedby because as part of the aria-labelledby
+		// the whole content of the item is readout when the aria-labelledby value is changed.
+		if (this.ariaSelected !== undefined) {
+			ariaSelectedText = this.ariaSelected ? this.i18nBundle.getText(LIST_ITEM_SELECTED) : this.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
+		}
+
+		return ariaSelectedText;
+	}
+
 	get deleteText() {
 		return this.i18nBundle.getText(DELETE);
 	}
@@ -346,7 +361,7 @@ class ListItem extends ListItemBase {
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
-			listItemAriaLabel: this.ariaSelected ? this.i18nBundle.getText(LIST_ITEM_SELECTED) : undefined,
+			ariaSelectedText: this.ariaSelectedText,
 		};
 	}
 

@@ -309,7 +309,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _filterByLabel() {
-		return this.i18nBundle.getText();
+		return this.i18nBundle.getText(VSD_FILTER_BY);
 	}
 
 	get _sortByLabel() {

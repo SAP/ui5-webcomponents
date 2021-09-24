@@ -6,3 +6,8 @@
 	top: -1000px;
 	pointer-events: none;
 }
+
+[dir=rtl] .ui5-hidden-text {
+	left: auto;
+	right: -1000px;
+}

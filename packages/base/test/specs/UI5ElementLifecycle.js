@@ -1,13 +1,13 @@
 const assert = require("chai").assert;
 
 describe("Lifecycle works", () => {
-	before(() => {
-		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(async () => {
+		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
 	});
 
-	it("Tests element creation callbacks", () => {
+	it("Tests element creation callbacks", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 			const creationCallbacks = ["onBeforeRendering", "onAfterRendering", "onEnterDOM"];
 			const calledCallbacks = [];
 
@@ -24,7 +24,7 @@ describe("Lifecycle works", () => {
 			document.body.appendChild(el);
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(calledCallbacks);
+			done(calledCallbacks);
 		});
 
 		assert.strictEqual(res.length, 3, "All 3 callbacks called");
@@ -33,9 +33,9 @@ describe("Lifecycle works", () => {
 		assert.strictEqual(res[2], "onEnterDOM", "onEnterDOM called third");
 	});
 
-	it("Tests element invalidation callbacks", () => {
+	it("Tests element invalidation callbacks", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 			const invalidationCallbacks = ["onBeforeRendering", "onAfterRendering"];
 			const calledCallbacks = [];
 
@@ -56,7 +56,7 @@ describe("Lifecycle works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(calledCallbacks);
+			done(calledCallbacks);
 		});
 
 		assert.strictEqual(res.length, 2, "All 2 callbacks called");
@@ -64,9 +64,9 @@ describe("Lifecycle works", () => {
 		assert.strictEqual(res[1], "onAfterRendering", "onAfterRendering called second");
 	});
 
-	it("Tests element destruction callback", () => {
+	it("Tests element destruction callback", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 			const destructionCallbacks = ["onExitDOM"];
 			const calledCallbacks = [];
 
@@ -88,7 +88,7 @@ describe("Lifecycle works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(calledCallbacks);
+			done(calledCallbacks);
 		});
 
 		assert.strictEqual(res.length, 1, "Only 1 callback was called");

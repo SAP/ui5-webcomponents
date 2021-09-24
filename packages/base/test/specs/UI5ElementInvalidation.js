@@ -1,13 +1,13 @@
 const assert = require("chai").assert;
 
 describe("Invalidation works", () => {
-	before(() => {
-		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(async () => {
+		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
 	});
 
-	it("Tests that changing a property invalidates", () => {
+	it("Tests that changing a property invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 
 			const el = document.getElementById("gen");
 
@@ -23,15 +23,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidations);
+			done(invalidations);
 		});
 
 		assert.strictEqual(res, 2, "Invalidated 2 times");
 	});
 
-	it("Tests that setting a property to the same value does not invalidate", () => {
+	it("Tests that setting a property to the same value does not invalidate", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 			const text = "some value";
 
 			const el = document.getElementById("gen");
@@ -48,15 +48,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidations);
+			done(invalidations);
 		});
 
 		assert.strictEqual(res, 0, "Not invalidated");
 	});
 
-	it("Tests that setting a property of type Object always invalidates", () => {
+	it("Tests that setting a property of type Object always invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 			const obj = {};
 			const otherObj = {};
 
@@ -74,15 +74,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidations);
+			done(invalidations);
 		});
 
 		assert.strictEqual(res, 1, "Invalidated");
 	});
 
-	it("Tests that setting an array property always invalidates", () => {
+	it("Tests that setting an array property always invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 			const arr = [];
 			const otherArr = [];
 
@@ -100,15 +100,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidations);
+			done(invalidations);
 		});
 
 		assert.strictEqual(res, 1, "Invalidated");
 	});
 
-	it("Tests that adding a child invalidates", () => {
+	it("Tests that adding a child invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 
 			const el = document.getElementById("gen");
 
@@ -124,15 +124,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidated);
+			done(invalidated);
 		});
 
 		assert.strictEqual(res, true, "Invalidated");
 	});
 
-	it("Tests that removing a child invalidates", () => {
+	it("Tests that removing a child invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 
 			const el = document.getElementById("gen");
 			const div = document.createElement("div");
@@ -150,15 +150,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidated);
+			done(invalidated);
 		});
 
 		assert.strictEqual(res, true, "Invalidated");
 	});
 
-	it("Tests that modifying textContent invalidates", () => {
+	it("Tests that modifying textContent invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
@@ -175,15 +175,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidated);
+			done(invalidated);
 		});
 
 		assert.strictEqual(res, true, "Invalidated");
 	});
 
-	it("Tests that modifying nodeValue invalidates", () => {
+	it("Tests that modifying nodeValue invalidates", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
@@ -200,15 +200,15 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(invalidated);
+			done(invalidated);
 		});
 
 		assert.strictEqual(res, true, "Invalidated");
 	});
 
-	it("Tests that multiple invalidations result in a single rendering", () => {
+	it("Tests that multiple invalidations result in a single rendering", async () => {
 
-		const res = browser.executeAsync( async (done) => {
+		const res = await browser.executeAsync( async (done) => {
 
 			const el = document.getElementById("gen");
 
@@ -232,7 +232,7 @@ describe("Invalidation works", () => {
 
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
-			return done(operations);
+			done(operations);
 		});
 
 		assert.strictEqual(res.invalidation, 2, "Invalidated 2 times");

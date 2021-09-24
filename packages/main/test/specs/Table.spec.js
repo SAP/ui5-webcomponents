@@ -2,442 +2,445 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Table general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
 	});
 
-	it("tests if column disapears when min-width is reacted (650px)", () => {
-		const btn = browser.$("#size-btn-650");
-		const headerTableRow = browser.$("#tbl").shadow$("thead tr");
+	it("tests if column disapears when min-width is reacted (650px)", async () => {
+		const btn = await browser.$("#size-btn-650");
+		const headerTableRow = await browser.$("#tbl").shadow$("thead tr");
 
-		btn.click();
+		await btn.click();
 
-		assert.strictEqual((headerTableRow.getHTML(false).split("</slot>").length - 1), 4, "Columns should be 4");
+		assert.strictEqual((await headerTableRow.getHTML(false)).split("</slot>").length - 1, 4, "Columns should be 4");
 	});
 
-	it("tests if column popins when min-width is reacted (500px)", () => {
-		const btn = browser.$("#size-btn-500");
-		const headerTableRow = browser.$("#tbl").shadow$("thead tr");
-		const popinRows = browser.$("#roll-0").shadow$$(".ui5-table-popin-row");
+	it("tests if column popins when min-width is reacted (500px)", async () => {
+		const btn = await browser.$("#size-btn-500");
+		const headerTableRow = await browser.$("#tbl").shadow$("thead tr");
+		const popinRows = await browser.$("#roll-0").shadow$$(".ui5-table-popin-row");
 
-		btn.click();
+		await btn.click();
 
-		assert.strictEqual((headerTableRow.getHTML(false).split("</slot>").length - 1), 2, "Columns should be 4");
-		assert.strictEqual($("#roll-0").shadow$$(".ui5-table-popin-row").length, 2, "popin rows should be 2");
+		assert.strictEqual((await headerTableRow.getHTML(false)).split("</slot>").length - 1, 2, "Columns should be 4");
+		assert.strictEqual((await browser.$("#roll-0").shadow$$(".ui5-table-popin-row")).length, 2, "popin rows should be 2");
 	});
 
-	it("tests if noData div is displayed for empty table", () => {
-		const noDataRow = browser.$("#tableNoData").shadow$("div.ui5-table-no-data-row");
+	it("tests if noData div is displayed for empty table", async () => {
+		const noDataRow = await browser.$("#tableNoData").shadow$("div.ui5-table-no-data-row");
 
-		assert.strictEqual(noDataRow.isExisting(), true, 'noData div is present');
+		assert.ok(await noDataRow.isExisting(), 'noData div is present');
 	});
 
-	it("tests if table with more columns than cells is rendered", () => {
-		const tblLessCells = browser.$("#tblLessCells");
-		assert.equal(tblLessCells.isExisting(), true, 'table with more columns is rendered without JS errors.');
+	it("tests if table with more columns than cells is rendered", async () => {
+		const tblLessCells = await browser.$("#tblLessCells");
+		assert.ok(await tblLessCells.isExisting(), 'table with more columns is rendered without JS errors.');
 	});
 
-	it("tests if popinChange is fired when min-width is reacted (500px)", () => {
-		let tableLabel = browser.$("#tableLabel");
-		const btn = browser.$("#size-btn-500");
+	it("tests if popinChange is fired when min-width is reacted (500px)", async () => {
+		let tableLabel = await browser.$("#tableLabel");
+		const btn = await browser.$("#size-btn-500");
 
-		btn.click();
+		await btn.click();
 
-		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 4", "popinChange should be fired and columns should be 4");
+		assert.strictEqual(await tableLabel.getHTML(false), "Number of poppedColumns: 4", "popinChange should be fired and columns should be 4");
 	});
 
-	it("tests row-click is fired", () => {
-		const lbl = browser.$("#testRowClickResult");
-		const cellInRow1 = browser.$("#testRowClickCell1");
-		const cellInRow2 = browser.$("#testRowClickCell2");
+	it("tests row-click is fired", async () => {
+		const lbl = await browser.$("#testRowClickResult");
+		const cellInRow1 = await browser.$("#testRowClickCell1");
+		const cellInRow2 = await browser.$("#testRowClickCell2");
 		const row1Data = "Dublin";
 		const row2Data = "London";
 
-		cellInRow1.click();
-		assert.ok(lbl.getHTML().indexOf(row1Data), "Event row-click fired and intercepted.");
+		await cellInRow1.click();
+		let lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
-		cellInRow2.click();
-		assert.ok(lbl.getHTML().indexOf(row2Data), "Event row-click fired and intercepted.");
+		await cellInRow2.click();
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 
-		cellInRow1.keys("Space");
-		assert.ok(lbl.getHTML().indexOf(row1Data), "Event row-click fired and intercepted.");
+		await cellInRow1.keys("Space");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
-		cellInRow2.keys("Enter");
-		assert.ok(lbl.getHTML().indexOf(row2Data), "Event row-click fired and intercepted.");
+		await cellInRow2.keys("Enter");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 	});
 
-	it("tests row aria-label value", () => {
-		const row = browser.$("#roll-0").shadow$(".ui5-table-row-root");
+	it("tests row aria-label value", async () => {
+		const row = await browser.$("#roll-0").shadow$(".ui5-table-row-root");
 
 		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR. 1 of 5";
 
-		assert.strictEqual(row.getAttribute("aria-label"), EXPECTED_TEXT,
+		assert.strictEqual(await row.getAttribute("aria-label"), EXPECTED_TEXT,
 			"The aria-label value is correct.");
 	});
 
 	describe("Growing Table on 'More' button press", () => {
-		it("tests the 'load-more' event", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
+		it("tests the 'load-more' event", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
 
-			const inputResult = browser.$("#inputLoadMoreCounter");
-			const loadMoreTrigger = browser.$("#tbl").shadow$("[growing-button-inner]");
+			const inputResult = await browser.$("#inputLoadMoreCounter");
+			const loadMoreTrigger = await browser.$("#tbl").shadow$("[growing-button-inner]");
 
 			// act
-			loadMoreTrigger.click();
+			await loadMoreTrigger.click();
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "1",
+			assert.strictEqual(await inputResult.getProperty("value"), "1",
 				"The load-more is fired.");
 
 			// act
-			loadMoreTrigger.keys("Space");
+			await loadMoreTrigger.keys("Space");
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "2",
+			assert.strictEqual(await inputResult.getProperty("value"), "2",
 				"The load-more is fired 2nd time.");
 
 			// act
-			loadMoreTrigger.keys("Enter");
+			await loadMoreTrigger.keys("Enter");
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "3",
+			assert.strictEqual(await inputResult.getProperty("value"), "3",
 				"The load-more is fired 3rd time.");
 		});
 	});
 
 	describe("Growing Table on Scroll", () => {
-		it("tests the 'load-more' event", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithScroll.html`);
+		it("tests the 'load-more' event", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithScroll.html`);
 
-			const inputResult = browser.$("#inputLoadMoreCounter");
-			const btnScroll = browser.$("#btnScroll");
+			const inputResult = await browser.$("#inputLoadMoreCounter");
+			const btnScroll = await browser.$("#btnScroll");
 
 			// act
-			btnScroll.click();
+			await btnScroll.click();
 
-			browser.pause(500);
-
-			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "1",
-				"The load-more is fired.");
+			await browser.waitUntil(async () => (await inputResult.getProperty("value")) === "1", {
+				timeout: 1000,
+				timeoutMsg: "The load-more event must be fired."
+			});
 		});
 	});
 
 	describe("Table selection modes", () => {
-		it("test click over Active/Inactive row in SingleSelect mode", () => {
-			browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
-			const table = $("#single");
-			const firstRow = $("#firstRowSingleSelect");
-			const thirdRow = $("#thirdRowSingleSelect");
-			const firstCellFirstRowLabel = $("#firstCellFirstRowSSLabel");
-			const firstCellThirdRowLabel = $("#firstCellThirdRowSSLabel");
-			const contentButton = $("#button1");
-			const rowClickCount = $("#rowClickSSCountField");
-			const selectionChangeCount = $("#selectionChangeSSCountField");
-			const selectedRow = $("#selectionChangeSSSelectedValueField");
-			const previouslySelectedRows = $("#selectionChangeSSPreviousRowField");
+		it("test click over Active/Inactive row in SingleSelect mode", async () => {
+			await browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+			const table = await browser.$("#single");
+			const firstRow = await browser.$("#firstRowSingleSelect");
+			const thirdRow = await browser.$("#thirdRowSingleSelect");
+			const firstCellFirstRowLabel = await browser.$("#firstCellFirstRowSSLabel");
+			const firstCellThirdRowLabel = await browser.$("#firstCellThirdRowSSLabel");
+			const contentButton = await browser.$("#button1");
+			const rowClickCount = await browser.$("#rowClickSSCountField");
+			const selectionChangeCount = await browser.$("#selectionChangeSSCountField");
+			const selectedRow = await browser.$("#selectionChangeSSSelectedValueField");
+			const previouslySelectedRows = await browser.$("#selectionChangeSSPreviousRowField");
 
 			// act
-			firstCellFirstRowLabel.click();
+			await firstCellFirstRowLabel.click();
 
 			// check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(table.getAttribute("mode"), "SingleSelect", "The table's mode is SingleSelect");
-			assert.strictEqual(firstRow.getAttribute("mode"), "SingleSelect", "The row's mode is SingleSelect");
-			assert.strictEqual(firstRow.getAttribute("type"), "Active", "The row's type is Active");
-			assert.strictEqual(thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
+			assert.strictEqual(await table.getAttribute("mode"), "SingleSelect", "The table's mode is SingleSelect");
+			assert.strictEqual(await firstRow.getAttribute("mode"), "SingleSelect", "The row's mode is SingleSelect");
+			assert.strictEqual(await firstRow.getAttribute("type"), "Active", "The row's type is Active");
+			assert.strictEqual(await thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
 
 			// test row-click and selection-change events on click over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Click over an Active row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "firstRowSingleSelect", "The first row is selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Click over an Active row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowSingleSelect", "The first row is selected");
 
 			// act
-			firstCellThirdRowLabel.click();
+			await firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events on click over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inactive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "2", "Click over an Inactive row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "thirdRowSingleSelect", "The second row is selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "2", "Click over an Inactive row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "thirdRowSingleSelect", "The second row is selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
 
 			// act
-			contentButton.click();
+			await contentButton.click();
 
 			// test row-click and selection-change on click over an active table cell content
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an active element within a table cell should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "2", "Click over an active element within a table cell should not trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "thirdRowSingleSelect", "The selected row is not changed");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "The prevously  selected row is not changed");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an active element within a table cell should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "2", "Click over an active element within a table cell should not trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "thirdRowSingleSelect", "The selected row is not changed");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "The prevously  selected row is not changed");
 		});
 
-		it("test Space/Enter key interaction over Active/Inactive row in SingleSelect mode", () => {
-			const firstRow = $("#firstRowSingleSelect");
-			const secondRow = $("#secondRowSingleSelect");
-			const thirdRow = $("#thirdRowSingleSelect");
-			const forthRow = $("#forthRowSingleSelect");
-			const contentButton = $("#button1");
-			const rowClickCount = $("#rowClickSSCountField");
-			const selectionChangeCount = $("#selectionChangeSSCountField");
-			const selectedRow = $("#selectionChangeSSSelectedValueField");
-			const previouslySelectedRows = $("#selectionChangeSSPreviousRowField");
+		it("test Space/Enter key interaction over Active/Inactive row in SingleSelect mode", async () => {
+			const firstRow = await browser.$("#firstRowSingleSelect");
+			const secondRow = await browser.$("#secondRowSingleSelect");
+			const thirdRow = await browser.$("#thirdRowSingleSelect");
+			const forthRow = await browser.$("#forthRowSingleSelect");
+			const contentButton = await browser.$("#button1");
+			const rowClickCount = await browser.$("#rowClickSSCountField");
+			const selectionChangeCount = await browser.$("#selectionChangeSSCountField");
+			const selectedRow = await browser.$("#selectionChangeSSSelectedValueField");
+			const previouslySelectedRows = await browser.$("#selectionChangeSSPreviousRowField");
 
 			// act
-			browser.keys(["Shift", "Tab"]);
-			firstRow.keys("Enter");
+			await browser.keys(["Shift", "Tab"]);
+			await firstRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "3", "Enter key over an Active row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "firstRowSingleSelect", "The first row is selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "3", "Enter key over an Active row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowSingleSelect", "The first row is selected");
 
 			// act
-			firstRow.keys("Enter");
+			await firstRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an already selected row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Enter key over an already selected row should trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "3", "Enter key over an already selected row should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Enter key over an already selected row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "3", "Enter key over an already selected row should not trigger selection-change event");
 
 			// act
-			browser.keys("ArrowDown");
-			browser.keys("ArrowDown");
-			thirdRow.keys("Enter");
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+			await thirdRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Enter key over an Inactive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "4", "Enter key over an Inactive row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "thirdRowSingleSelect", "The third row is selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Enter key over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "4", "Enter key over an Inactive row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "thirdRowSingleSelect", "The third row is selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
 
 			// act
-			thirdRow.keys("Space");
+			await thirdRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an already selected row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Space key over an already selected row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "4", "Space key over an already selected row should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an already selected row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "4", "Space key over an already selected row should not trigger selection-change event");
 
 			// act
-			browser.keys("ArrowDown");
-			forthRow.keys("Space");
+			await browser.keys("ArrowDown");
+			await forthRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Space key over an Inactive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "5", "Space key over an Inactive row should trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "5", "Space key over an Inactive row should trigger selection-change event");
 
 			// act
-			browser.keys("ArrowUp");
-			browser.keys("ArrowUp");
-			secondRow.keys("Space");
+			await browser.keys("ArrowUp");
+			await browser.keys("ArrowUp");
+			await secondRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Space key over an Active row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "6", "Space key over an Active row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "secondRowSingleSelect", "The second row is selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "forthRowSingleSelect", "Prevously the forth row was selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an Active row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "6", "Space key over an Active row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "secondRowSingleSelect", "The second row is selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "forthRowSingleSelect", "Prevously the forth row was selected");
 
 			// act
-			browser.keys(["Shift", "Tab"]);
-			contentButton.keys("Space");
+			await browser.keys(["Shift", "Tab"]);
+			await contentButton.keys("Space");
 
 			// test row-click and selection-change on Space key over an active table cell content
-			assert.strictEqual(rowClickCount.getProperty("value"), "3", "Space key over an active element within a table cell should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "6", "Space key over an active element within a table cell should not trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "secondRowSingleSelect", "The selected row is not changed");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an active element within a table cell should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "6", "Space key over an active element within a table cell should not trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "secondRowSingleSelect", "The selected row is not changed");
 		});
 
-		it("test click over Active/Inactive row in MultiSelect mode", () => {
-			const table = $("#multi");
-			const firstRow = $("#firstRowMultiSelect");
-			const thirdRow = $("#thirdRowMultiSelect");
-			const firstCellFirstRowLabel = $("#firstCellFirstRowMSLabel");
-			const firstCellThirdRowLabel = $("#firstCellThirdRowMSLabel");
-			const checkBoxFirstCell = firstRow.shadow$(".ui5-multi-select-checkbox").shadow$(".ui5-checkbox-root");
-			const contentButton = $("#button2");
-			const rowClickCount = $("#rowClickMSCountField");
-			const selectionChangeCount = $("#selectionChangeMSCountField");
-			const selectedRow = $("#selectionChangeMSSelectedValueField");
-			const previouslySelectedRows = $("#selectionChangeMSPreviousRowField");
+		it("test click over Active/Inactive row in MultiSelect mode", async () => {
+			const table = await browser.$("#multi");
+			const firstRow = await browser.$("#firstRowMultiSelect");
+			const thirdRow = await browser.$("#thirdRowMultiSelect");
+			const firstCellFirstRowLabel = await browser.$("#firstCellFirstRowMSLabel");
+			const firstCellThirdRowLabel = await browser.$("#firstCellThirdRowMSLabel");
+			const checkBoxFirstCell = await firstRow.shadow$(".ui5-multi-select-checkbox").shadow$(".ui5-checkbox-root");
+			const contentButton = await browser.$("#button2");
+			const rowClickCount = await browser.$("#rowClickMSCountField");
+			const selectionChangeCount = await browser.$("#selectionChangeMSCountField");
+			const selectedRow = await browser.$("#selectionChangeMSSelectedValueField");
+			const previouslySelectedRows = await browser.$("#selectionChangeMSPreviousRowField");
 
 			// act
-			firstCellFirstRowLabel.click();
+			await firstCellFirstRowLabel.click();
 
 			// check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(table.getAttribute("mode"), "MultiSelect", "The table's mode is MultiSelect");
-			assert.strictEqual(firstRow.getAttribute("mode"), "MultiSelect", "The row's mode is MultiSelect");
-			assert.strictEqual(firstRow.getAttribute("type"), "Active", "The row's type is Active");
-			assert.strictEqual(thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
+			assert.strictEqual(await table.getAttribute("mode"), "MultiSelect", "The table's mode is MultiSelect");
+			assert.strictEqual(await firstRow.getAttribute("mode"), "MultiSelect", "The row's mode is MultiSelect");
+			assert.strictEqual(await firstRow.getAttribute("type"), "Active", "The row's type is Active");
+			assert.strictEqual(await thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
 
 			// test row-click and selection-change events over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Click over a row in a MultiSelect mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Click over a row in a MultiSelect mode table should not trigger selection-change event");
 
 			// act
-			checkBoxFirstCell.click();
+			await checkBoxFirstCell.click();
 
 			// test click over the selection checkbox within each row in MultiSelect mode
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over the selection checkbox should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Click over the selection checkbox should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "firstRowMultiSelect", "The first row is selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "", "There is no previously selected row");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over the selection checkbox should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Click over the selection checkbox should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowMultiSelect", "The first row is selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "", "There is no previously selected row");
 
 			// act
-			contentButton.click();
+			await contentButton.click();
 
 			// test row-click and selection-change on click over an active table cell content
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an active element within a table cell should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Click over an active element within a table cell should not trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "firstRowMultiSelect", "The selected row is not changed");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an active element within a table cell should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Click over an active element within a table cell should not trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowMultiSelect", "The selected row is not changed");
 
 			// act
-			firstCellThirdRowLabel.click();
+			await firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inactive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Click over an Inactive row should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Click over an Inactive row should not trigger selection-change event");
 		});
 
-		it("test Space/Enter key interaction over Active/Inactive row in MultiSelect mode", () => {
-			const firstRow = $("#firstRowMultiSelect");
-			const secondRow = $("#secondRowMultiSelect");
-			const thirdRow = $("#thirdRowMultiSelect");
-			const checkBoxFirstCell = secondRow.shadow$(".ui5-multi-select-checkbox").shadow$(".ui5-checkbox-root");
-			const contentButton = $("#button2");
-			const selectionChangeCount = $("#selectionChangeMSCountField");
-			const rowClickCount = $("#rowClickMSCountField");
-			const selectedRow = $("#selectionChangeMSSelectedValueField");
-			const previouslySelectedRows = $("#selectionChangeMSPreviousRowField");
+		it("test Space/Enter key interaction over Active/Inactive row in MultiSelect mode", async () => {
+			const firstRow = await browser.$("#firstRowMultiSelect");
+			const secondRow = await browser.$("#secondRowMultiSelect");
+			const thirdRow = await browser.$("#thirdRowMultiSelect");
+			const checkBoxFirstCell = await secondRow.shadow$(".ui5-multi-select-checkbox").shadow$(".ui5-checkbox-root");
+			const contentButton = await browser.$("#button2");
+			const selectionChangeCount = await browser.$("#selectionChangeMSCountField");
+			const rowClickCount = await browser.$("#rowClickMSCountField");
+			const selectedRow = await browser.$("#selectionChangeMSSelectedValueField");
+			const previouslySelectedRows = await browser.$("#selectionChangeMSPreviousRowField");
 
 			// act
-			browser.keys("ArrowUp");
-			browser.keys("ArrowUp");
-			firstRow.keys("Enter");
+			await browser.keys("ArrowUp");
+			await browser.keys("ArrowUp");
+			await firstRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Enter key over an Active row should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Enter key over an Active row should not trigger selection-change event");
 
 			// act
-			browser.keys("Tab");
-			browser.keys("Tab");
-			contentButton.keys("Enter");
+			await browser.keys("Tab");
+			await browser.keys("Tab");
+			await contentButton.keys("Enter");
 
 			// test row-click and selection-change on Enter key over an active table cell content
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an active element within a table cell should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "1", "Enter key over an active element within a table cell should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an active element within a table cell should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Enter key over an active element within a table cell should not trigger selection-change event");
 
 			// act
-			browser.keys("Tab");
-			checkBoxFirstCell.keys("Enter");
+			await browser.keys("Tab");
+			await checkBoxFirstCell.keys("Enter");
 
 			// test Space over the selection checkbox within each row in MultiSelect mode
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over the selection checkbox should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "2", "Enter key over the selection checkbox should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "secondRowMultiSelect", "The second row is currently selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowMultiSelect", "Prevously the first row was selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over the selection checkbox should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "2", "Enter key over the selection checkbox should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "secondRowMultiSelect", "The second row is currently selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowMultiSelect", "Prevously the first row was selected");
 
 			// act
-			checkBoxFirstCell.keys("Space");
+			await checkBoxFirstCell.keys("Space");
 
 			// test Space key over the selection checkbox of already selected row in MultiSelect mode
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over the selection checkbox should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "3", "Space key over the selection checkbox of already selected row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "firstRowMultiSelect", "The second row is not selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "secondRowMultiSelect", "Prevously the second row was selected");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over the selection checkbox should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "3", "Space key over the selection checkbox of already selected row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowMultiSelect", "The second row is not selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "secondRowMultiSelect", "Prevously the second row was selected");
 
 			// act
-			browser.keys(["Shift", "Tab"]);
-			secondRow.keys("Space");
+			await browser.keys(["Shift", "Tab"]);
+			await secondRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Active row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "4", "Space key over an Active row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "secondRowMultiSelect", "The second row is currently selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "firstRowMultiSelect", "The previously selected row is the first row");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over an Active row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "4", "Space key over an Active row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "secondRowMultiSelect", "The second row is currently selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowMultiSelect", "The previously selected row is the first row");
 
 			// act
-			browser.keys("ArrowDown");
-			thirdRow.keys("Space");
+			await browser.keys("ArrowDown");
+			await thirdRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Inactive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "5", "Space key over an Inactive row should trigger selection-change event");
-			assert.strictEqual(selectedRow.getProperty("value"), "thirdRowMultiSelect", "The third row is cuurently selected");
-			assert.strictEqual(previouslySelectedRows.getProperty("value"), "secondRowMultiSelect", "The previously selected row is the second row");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "5", "Space key over an Inactive row should trigger selection-change event");
+			assert.strictEqual(await selectedRow.getProperty("value"), "thirdRowMultiSelect", "The third row is cuurently selected");
+			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "secondRowMultiSelect", "The previously selected row is the second row");
 
 			// act
-			thirdRow.keys("Enter");
+			await thirdRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an already selected row
-			assert.strictEqual(rowClickCount.getProperty("value"), "2",  "Enter key over an already selected Inactive row should not trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "5",  "Enter key over an already selected row should trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2",  "Enter key over an already selected Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "5",  "Enter key over an already selected row should trigger selection-change event");
 		});
 
-		it("test mouse and keyboard interaction over Active/Inactive row in Default mode", () => {
-			const table = $("#default");
-			const firstRow = $("#firstRowDefaultMode");
-			const thirdRow = $("#thirdRowDefaultMode");
-			const firstCellFirstRowLabel = $("#firstCellFirstRowDefaultLabel");
-			const firstCellThirdRowLabel = $("#firstCellThirdRowDefaultLabel");
-			const rowClickCount = $("#rowClickDefaultCountField");
-			const selectionChangeCount = $("#selectionChangeDefaultCountField");
+		it("test mouse and keyboard interaction over Active/Inactive row in Default mode", async () => {
+			const table = await browser.$("#default");
+			const firstRow = await browser.$("#firstRowDefaultMode");
+			const thirdRow = await browser.$("#thirdRowDefaultMode");
+			const firstCellFirstRowLabel = await browser.$("#firstCellFirstRowDefaultLabel");
+			const firstCellThirdRowLabel = await browser.$("#firstCellThirdRowDefaultLabel");
+			const rowClickCount = await browser.$("#rowClickDefaultCountField");
+			const selectionChangeCount = await browser.$("#selectionChangeDefaultCountField");
 
 			// act
-			firstCellFirstRowLabel.click();
+			await firstCellFirstRowLabel.click();
 
 			// Check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(table.getProperty("mode"), "None", "The table's mode is None");
-			assert.strictEqual(firstRow.getProperty("mode"), "None", "The row's mode is None");
-			assert.strictEqual(firstRow.getProperty("type"), "Active", "The row's type is Active");
-			assert.strictEqual(thirdRow.getProperty("type"), "Inactive", "The row's type is Inactive")
+			assert.strictEqual(await table.getProperty("mode"), "None", "The table's mode is None");
+			assert.strictEqual(await firstRow.getProperty("mode"), "None", "The row's mode is None");
+			assert.strictEqual(await firstRow.getProperty("type"), "Active", "The row's type is Active");
+			assert.strictEqual(await thirdRow.getProperty("type"), "Inactive", "The row's type is Inactive")
 
 			// test row-click and selection-change events on click over an Active row
-			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Click over a row in a default mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Click over a row in a default mode table should not trigger selection-change event");
 
 			// act
-			firstRow.keys("Enter");
+			await firstRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Active row
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
 
 			// act
-			firstRow.keys("Space");
+			await firstRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Active row
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Active row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over an Active row should not trigger row-click event");
 
 			// act
-			firstCellThirdRowLabel.click();
+			await firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events on click over an Inactive row
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Click over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Click over an Inactive row should trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Click over a row in a default mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Click over an Inactive row should trigger row-click event");
 
 			// act
-			thirdRow.keys("Enter");
+			await thirdRow.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Inactive row
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Enter key over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Inactive row should not trigger row-click event");
 
 			// act
-			thirdRow.keys("Space");
+			await thirdRow.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
-			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
-			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Inactive row should not trigger row-click event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
+			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over an Inactive row should not trigger row-click event");
 		});
 
-		it ("tests adding spaces to input fields in a row", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+		it ("tests adding spaces to input fields in a row", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
 
-			const input = $("#myInput");
-			const inner = input.shadow$("input");
+			const input = await browser.$("#myInput");
+			const inner = await input.shadow$("input");
 
-			inner.click();
-			inner.keys("a");
-			inner.keys("Space");
-			inner.keys("b");
+			await inner.click();
+			await inner.keys("a");
+			await inner.keys("Space");
+			await inner.keys("b");
 
-			assert.strictEqual(inner.getValue(), "a b", "space should be visible");
+			assert.strictEqual(await inner.getValue(), "a b", "space should be visible");
 		});
 	});
 });
