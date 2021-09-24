@@ -108,7 +108,6 @@
 					data-ui5-text="Search"
 					data-ui5-notifications-count="{{notificationsCount}}"
 					@click={{_handleSearchIconPress}}
-					aria-label="{{_searchText}}"
 					title="{{_searchText}}"
 					._buttonAccInfo="{{accInfo.search}}"
 				></ui5-button>
@@ -138,7 +137,6 @@
 				data-ui5-text="Notifications"
 				data-ui5-notifications-count="{{notificationsCount}}"
 				@click={{_handleNotificationsPress}}
-				aria-label="{{_notificationsText}}"
 				title="{{_notificationsText}}"
 				._buttonAccInfo="{{accInfo.notifications}}"
 				data-ui5-stable="notifications"
@@ -151,7 +149,6 @@
 				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
 				icon="sap-icon://overflow"
 				@click="{{_handleOverflowPress}}"
-				aria-label="{{_overflowText}}"
 				title="{{_overflowText}}"
 				._buttonAccInfo="{{accInfo.overflow}}"
 				data-ui5-stable="overflow"
@@ -163,7 +160,6 @@
 					id="{{this._id}}-item-3"
 					@click={{_handleProfilePress}}
 					style="{{styles.items.profile}}"
-					aria-label="{{_profileText}}"
 					title="{{_profileText}}"
 					._buttonAccInfo="{{accInfo.profile}}"
 					class="ui5-shellbar-button ui5-shellbar-image-button"
@@ -183,7 +179,6 @@
 				icon="sap-icon://grid"
 				data-ui5-text="Product Switch"
 				@click={{_handleProductSwitchPress}}
-				aria-label="{{_productsText}}"
 				title="{{_productsText}}"
 				._buttonAccInfo="{{accInfo.products}}"
 				data-ui5-stable="product-switch"

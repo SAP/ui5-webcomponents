@@ -29,15 +29,15 @@
 <section>
 	<h3>RadioButton in group - navigate via [UP/Right] and [DOWN/Left] arrow keys</h3>
 	<div class="snippet" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-		<div id="radioGroup" class="radio-button-group">
-			<ui5-title>Group of states</ui5-title>
+		<div aria-labelledby="radioGroupTitle1" role="radiogroup" id="radioGroup" class="radio-button-group">
+			<ui5-title id="radioGroupTitle1">Group of states</ui5-title>
 			<ui5-label id="lblRadioGroup">Selected radio: None</ui5-label>
 			<ui5-radio-button text="None" value-state="None" checked name="GroupB"></ui5-radio-button>
 			<ui5-radio-button text="Warning" value-state="Warning" name="GroupB"></ui5-radio-button>
 			<ui5-radio-button text="Error" value-state="Error" name="GroupB"></ui5-radio-button>
 		</div>
-		<div id="radioGroup2" class="radio-button-group">
-			<ui5-title>Group of options</ui5-title>
+		<div aria-labelledby="radioGroupTitle2" role="radiogroup" id="radioGroup2" class="radio-button-group">
+			<ui5-title id="radioGroupTitle2">Group of options</ui5-title>
 			<ui5-label id="lblRadioGroup2">Selected radio: Option A</ui5-label>
 			<ui5-radio-button text="Option A" checked name="GroupC"></ui5-radio-button>
 			<ui5-radio-button text="Option B" value-state="None" name="GroupC"></ui5-radio-button>
@@ -51,15 +51,15 @@ radioGroup.addEventListener("change", function(e) {
 });
 </script>
 
-<div id="radioGroup" class="radio-button-group">
-	<ui5-title>Group of states</ui5-title>
+<div aria-labelledby="radioGroupTitle1" role="radiogroup" id="radioGroup" class="radio-button-group">
+	<ui5-title id="radioGroupTitle1">Group of states</ui5-title>
 	<ui5-label id="lblRadioGroup">Selected radio: None</ui5-label>
 	<ui5-radio-button text="None" value-state="None" checked name="GroupB"></ui5-radio-button>
 	<ui5-radio-button text="Warning" value-state="Warning" name="GroupB"></ui5-radio-button>
 	<ui5-radio-button text="Error" value-state="Error" name="GroupB"></ui5-radio-button>
 </div>
-<div id="radioGroup2" class="radio-button-group">
-	<ui5-title>Group of options</ui5-title>
+<div aria-labelledby="radioGroupTitle2" role="radiogroup" id="radioGroup2" class="radio-button-group">
+	<ui5-title id="radioGroupTitle2">Group of options</ui5-title>
 	<ui5-label id="lblRadioGroup2">Selected radio: Option A</ui5-label>
 	<ui5-radio-button text="Option A" checked name="GroupC"></ui5-radio-button>
 	<ui5-radio-button text="Option B" value-state="None" name="GroupC"></ui5-radio-button>

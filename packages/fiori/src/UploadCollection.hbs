@@ -3,26 +3,27 @@
 	role="region"
 	aria-roledescription="{{_roleDescription}}"
 	@drop="{{_ondrop}}">
-	<div class="ui5-uc-header">
-		<slot name="header"></slot>
-	</div>
 	<div class="{{classes.content}}">
 		<ui5-list
+			accessible-name="{{accessibleName}}"
 			mode="{{mode}}"
 			@ui5-selection-change="{{_onSelectionChange}}"
 			@ui5-item-delete="{{_onItemDelete}}"
 		>
+			{{!-- forward slot header to inner list slot header --}}
+			<slot slot="header" name="header"></slot>
 			<slot></slot>
 		</ui5-list>
 		{{#if _showNoData}}
-			<div class="uc-no-files">
+			<div class="{{classes.noFiles}}">
 				<div class="icon-container">
 					<ui5-icon name="document"></ui5-icon>
 				</div>
-				<ui5-title level="H2" wrapping-type="Normal">{{_noDataText}}</ui5-title>
+				<ui5-label class="title" wrapping-type="Normal">{{_noDataText}}</ui5-label>
 				<ui5-label class="subtitle" wrapping-type="Normal">{{_noDataDescription}}</ui5-label>
 			</div>
-		{{else if _showDndOverlay}}
+		{{/if}}
+		{{#if _showDndOverlay}}
 			<div
 				class="{{classes.dndOverlay}}"
 				@dragenter="{{_ondragenter}}"

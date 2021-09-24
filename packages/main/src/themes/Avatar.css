@@ -206,3 +206,7 @@
 .ui5-avatar-initials {
 	color: inherit;
 }
+
+::slotted(*) {
+	pointer-events: none;
+}
