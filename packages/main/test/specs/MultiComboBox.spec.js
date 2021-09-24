@@ -28,14 +28,18 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await mcb.getProperty("focused"), "MultiComboBox should be focused.");
 
 			await input.keys("ArrowLeft");
-			await browser.pause(300);
 
-			assert.notOk(await mcb.getProperty("focused"), "MultiComboBox should no longer be focused.");
+			await browser.waitUntil(async () => !(await mcb.getProperty("focused")), {
+				timeout: 500,
+				timeoutMsg: "MultiComboBox should no longer be focused"
+			});
 
 			await input.keys("ArrowRight");
-			await browser.pause(500);
 
-			assert.ok(await mcb.getProperty("focused"), "MultiComboBox should be focused again.");
+			await browser.waitUntil(() => mcb.getProperty("focused"), {
+				timeout: 500,
+				timeoutMsg: "MultiComboBox should be focused again"
+			});
 		});
 
 		it("MultiComboBox open property is set correctly", async () => {

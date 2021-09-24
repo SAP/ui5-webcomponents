@@ -303,12 +303,13 @@ exports.config = {
 			"keys",
 			"pause",
 			"removeAttribute", // custom
+			"scrollIntoView",
 			"setAttribute", // custom
 			"setProperty", // custom
 			"setValue",
 			"setWindowSize",
 			"touchAction",
-			"url"
+			"url",
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
