@@ -1,5 +1,7 @@
-commit a22ba2af8c382a2f0fcb5ab4a12d1254e3c27cbc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Sep 24 12:57:50 2021 +0300
+commit 6bcbaeda67033925f56a294ee00c0079fbd11d38
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Sep 24 16:19:59 2021 +0300
 
-    chore: remove redundant assert (#3996)
+    chore: add sap_horizon test page (#3998)
+    
+    Adding Core Controls test page
