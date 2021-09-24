@@ -11,13 +11,13 @@
 	@touchstart="{{_ontouchstart}}"
 	@touchend="{{_ontouchend}}"
 	@click="{{_onclick}}"
-	aria-selected="{{ariaSelected}}"
 	role="{{_accInfo.role}}"
 	aria-expanded="{{_accInfo.ariaExpanded}}"
 	title="{{title}}"
 	aria-level="{{_accInfo.ariaLevel}}"
 	aria-posinset="{{_accInfo.posinset}}"
 	aria-setsize="{{_accInfo.setsize}}"
+	aria-describedby="{{_id}}-invisibleText-describedby"
 	aria-labelledby="{{_id}}-invisibleText {{_id}}-content"
 	aria-disabled="{{ariaDisabled}}"
 	style="list-style-type: none;"
@@ -50,6 +50,7 @@
 		{{/if}}
 
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{_accInfo.listItemAriaLabel}} {{accessibleName}}</span>
+		<span id="{{_id}}-invisibleText-describedby" class="ui5-hidden-text">{{_accInfo.ariaSelectedText}}</span>
 </li>
 
 {{#*inline "listItemPreContent"}}{{/inline}}

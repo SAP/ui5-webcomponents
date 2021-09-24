@@ -2,193 +2,193 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Notification List Item Tests", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/NotificationList_test_page.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/NotificationList_test_page.html`);
 	});
 
-	it("tests itemClick fired", () => {
-		const clickInput = $("#clickInput");
+	it("tests itemClick fired", async () => {
+		const clickInput = await browser.$("#clickInput");
 		const EXPECTED_RESULT = "New order #2201";
-		const firstItem = $("#nli1");
+		const firstItem = await browser.$("#nli1");
 
 		// act
-		firstItem.click();
+		await firstItem.click();
 
 		// assert
-		assert.strictEqual(clickInput.getProperty("value"), EXPECTED_RESULT,
+		assert.strictEqual(await clickInput.getProperty("value"), EXPECTED_RESULT,
 			"The itemClick has been fired.");
 	});
 
-	it("tests itemClose fired", () => {
-		const closeInput = $("#closeInput");
+	it("tests itemClose fired", async () => {
+		const closeInput = await browser.$("#closeInput");
 		const EXPECTED_RESULT_1 = "Orders";
 		const EXPECTED_RESULT_2 = "New order #2201";
-		const firstGroupItem = $("#nlgi1");
-		const firstItem = $("#nli1");
-		const btnListGroupItemClose = firstGroupItem.shadow$("[close-btn]");
-		const btnListItemClose = firstItem.shadow$("[close-btn]");
+		const firstGroupItem = await browser.$("#nlgi1");
+		const firstItem = await browser.$("#nli1");
+		const btnListGroupItemClose = await firstGroupItem.shadow$("[close-btn]");
+		const btnListItemClose = await firstItem.shadow$("[close-btn]");
 
 		// act
-		btnListGroupItemClose.click();
+		await btnListGroupItemClose.click();
 
 		// assert
-		assert.strictEqual(closeInput.getProperty("value"), EXPECTED_RESULT_1,
+		assert.strictEqual(await closeInput.getProperty("value"), EXPECTED_RESULT_1,
 			"The itemClose of list group item has been fired.");
 
 		// act
-		btnListItemClose.click();
+		await btnListItemClose.click();
 
 		// assert
-		assert.strictEqual(closeInput.getProperty("value"), EXPECTED_RESULT_2,
+		assert.strictEqual(await closeInput.getProperty("value"), EXPECTED_RESULT_2,
 			"The itemClose of list item has been fired.");
 	});
 
-	it("tests click fired on custom actions", () => {
-		const customActionInput = $("#customActionInput");
-		const secondItem = $("#nli2");
-		const customAction =  secondItem.shadow$(".ui5-nli-action");
+	it("tests click fired on custom actions", async () => {
+		const customActionInput = await browser.$("#customActionInput");
+		const secondItem = await browser.$("#nli2");
+		const customAction =  await secondItem.shadow$(".ui5-nli-action");
 
 		// act
-		customAction.click();
+		await customAction.click();
 
 		// assert
-		assert.strictEqual(customActionInput.getProperty("value"), "1",
+		assert.strictEqual(await customActionInput.getProperty("value"), "1",
 			"The click on custom action has been fired.");
 	});
 
-	it("tests itemToggle fired", () => {
-		const toggleInput = $("#toggleInput");
+	it("tests itemToggle fired", async () => {
+		const toggleInput = await browser.$("#toggleInput");
 		const EXPECTED_RESULT = "Orders";
-		const firstGroupItem = $("#nlgi1");
-		const btnListGroupItemToggle = firstGroupItem.shadow$(".ui5-nli-group-toggle-btn");
+		const firstGroupItem = await browser.$("#nlgi1");
+		const btnListGroupItemToggle = await firstGroupItem.shadow$(".ui5-nli-group-toggle-btn");
 
 		// act
-		btnListGroupItemToggle.click();
+		await btnListGroupItemToggle.click();
 
 		// assert
-		assert.strictEqual(toggleInput.getProperty("value"), EXPECTED_RESULT,
+		assert.strictEqual(await toggleInput.getProperty("value"), EXPECTED_RESULT,
 			"The itemToggle of list group item has been fired.");
 
 		// reset
-		btnListGroupItemToggle.click();
+		await btnListGroupItemToggle.click();
 	});
 
-	it("tests click on ShowMore", () => {
-		const firstItem = $("#nli1");
-		const btnListItemShowMore = firstItem.shadow$("[showMore-btn]");
-		const content = firstItem.shadow$(".ui5-nli-content");
+	it("tests click on ShowMore", async () => {
+		const firstItem = await browser.$("#nli1");
+		const btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
+		const content = await firstItem.shadow$(".ui5-nli-content");
 
-		const hightBefore = content.getSize("height");
+		const hightBefore = await content.getSize("height");
 
 		// act
-		btnListItemShowMore.click();
+		await btnListItemShowMore.click();
 
-		const hightAfter = content.getSize("height");
+		const hightAfter = await content.getSize("height");
 
 		// assert
-		assert.ok(hightAfter > hightBefore,
+		assert.isAbove(hightAfter, hightBefore,
 			"The content has been expanded by the ShowMore button.");
 	});
 
-	it("tests no ShowMore, when truncate is not enabled", () => {
-		const thirdItem = $("#nli3");
-		const btnListItemShowMore = thirdItem.shadow$("[showMore-btn]");
+	it("tests no ShowMore, when truncate is not enabled", async () => {
+		const thirdItem = await browser.$("#nli3");
+		const btnListItemShowMore = await thirdItem.shadow$("[showMore-btn]");
 
-		assert.strictEqual(btnListItemShowMore.getAttribute("hidden"), "true",
+		assert.strictEqual(await btnListItemShowMore.getAttribute("hidden"), "true",
 			"The ShowMore button is not displayed.");
 	});
 
-	it("tests no custom actions, when group item collapsed", () => {
-		const fifthItem = $("#nlgi3");
-		const overflow = fifthItem.shadow$(".ui5-nli-overflow-btn");
+	it("tests no custom actions, when group item collapsed", async () => {
+		const fifthItem = await browser.$("#nlgi3");
+		const overflow = await fifthItem.shadow$(".ui5-nli-overflow-btn");
 
-		assert.ok(!overflow.isExisting(),
+		assert.notOk(await overflow.isExisting(),
 			"The custom actions are hidden when the group is collapsed");
 	});
 
-	it("tests busy indicator is displayed", () => {
-		const busyItem = $("#nli4");
-		const busyIndicator = busyItem.shadow$(".ui5-nli-busy");
+	it("tests busy indicator is displayed", async () => {
+		const busyItem = await browser.$("#nli4");
+		const busyIndicator = await busyItem.shadow$(".ui5-nli-busy");
 
-		assert.ok(busyIndicator.isExisting(), "The busy indicator is displayed");
+		assert.ok(await busyIndicator.isExisting(), "The busy indicator is displayed");
 	});
 
-	it("tests List Group Item ACC invisible text", () => {
+	it("tests List Group Item ACC invisible text", async () => {
 		const EXPECTED_RESULT = "Notification group unread High Priority Counter 2";
-		const firstGroupItem = $("#nlgi1");
-		const invisibleText = firstGroupItem.shadow$(".ui5-hidden-text");
+		const firstGroupItem = await browser.$("#nlgi1");
+		const invisibleText = await firstGroupItem.shadow$(".ui5-hidden-text");
 
 		// assert
-		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
+		assert.strictEqual((await invisibleText.getText()).toLowerCase(), EXPECTED_RESULT.toLowerCase(),
 			"The invisible text is correct.");
 	});
 
-	it("tests List Group Item aria-expanded aria-label when collapsed and expanded", () => {
-		const groupItem = browser.$("#nlgi3");
-		const goupItemRoot = groupItem.shadow$(".ui5-nli-group-root");
-		const goupItemToggleBtn = groupItem.shadow$(".ui5-nli-group-toggle-btn");
+	it("tests List Group Item aria-expanded aria-label when collapsed and expanded", async () => {
+		const groupItem = await browser.$("#nlgi3");
+		const goupItemRoot = await groupItem.shadow$(".ui5-nli-group-root");
+		const goupItemToggleBtn = await groupItem.shadow$(".ui5-nli-group-toggle-btn");
 		const TOGGLE_BUTTON_EXPAND_GROUP = "Expand Group";
 		const TOGGLE_BUTTON_COLLAPSE_GROUP = "Collapse Group";
 
 		// assert
-		assert.strictEqual(goupItemRoot.getAttribute("aria-expanded"), "false",
+		assert.strictEqual(await goupItemRoot.getAttribute("aria-expanded"), "false",
 			"The aria-expanded value is correct.");
-		assert.strictEqual(goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_EXPAND_GROUP,
+		assert.strictEqual(await goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_EXPAND_GROUP,
 			"The aria-label value is correct.");
 
 		// act
-		goupItemToggleBtn.click();
+		await goupItemToggleBtn.click();
 
 		// assert
-		assert.strictEqual(goupItemRoot.getAttribute("aria-expanded"), "true",
+		assert.strictEqual(await goupItemRoot.getAttribute("aria-expanded"), "true",
 			"The aria-expanded value is correct.");
-		assert.strictEqual(goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_COLLAPSE_GROUP,
+		assert.strictEqual(await goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_COLLAPSE_GROUP,
 			"The aria-label value is correct.");
 	});
 
-	it("tests List Group Item ACC ariaLabelledBy", () => {
-		const firstGroupItem = $("#nlgi1");
-		const firstGroupItemRoot = firstGroupItem.shadow$(".ui5-nli-group-root");
-		const titleTextId = `${firstGroupItem.getProperty("_id")}-title-text`;
-		const inivisbleTextId = `${firstGroupItem.getProperty("_id")}-invisibleText`;
+	it("tests List Group Item ACC ariaLabelledBy", async () => {
+		const firstGroupItem = await browser.$("#nlgi1");
+		const firstGroupItemRoot = await firstGroupItem.shadow$(".ui5-nli-group-root");
+		const titleTextId = `${await firstGroupItem.getProperty("_id")}-title-text`;
+		const inivisbleTextId = `${await firstGroupItem.getProperty("_id")}-invisibleText`;
 		const EXPECTED_ARIA_LABELLED_BY = `${titleTextId} ${inivisbleTextId}`;
 
 		// assert
-		assert.strictEqual(firstGroupItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
+		assert.strictEqual(await firstGroupItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
 			"The ariaLabelledBy text is correct.");
 	});
 
-	it("tests List Item ACC ariaLabelledBy", () => {
-		const firstItem = $("#nli1");
-		const firstItemRoot = firstItem.shadow$(".ui5-nli-root");
+	it("tests List Item ACC ariaLabelledBy", async () => {
+		const firstItem = await browser.$("#nli1");
+		const firstItemRoot = await firstItem.shadow$(".ui5-nli-root");
 
-		const titleTextId = `${firstItem.getProperty("_id")}-title-text`;
-		const descriptionId = `${firstItem.getProperty("_id")}-description`;
-		const footerId = `${firstItem.getProperty("_id")}-footer`;
-		const inivisbleTextId = `${firstItem.getProperty("_id")}-invisibleText`;
+		const titleTextId = `${await firstItem.getProperty("_id")}-title-text`;
+		const descriptionId = `${await firstItem.getProperty("_id")}-description`;
+		const footerId = `${await firstItem.getProperty("_id")}-footer`;
+		const inivisbleTextId = `${await firstItem.getProperty("_id")}-invisibleText`;
 		const EXPECTED_ARIA_LABELLED_BY = `${titleTextId} ${descriptionId} ${footerId} ${inivisbleTextId}`;
 
 		// assert
-		assert.strictEqual(firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
+		assert.strictEqual(await firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
 			"The ariaLabelledBy text is correct.");
 	});
 
-	it("tests List Item ACC invisible text", () => {
+	it("tests List Item ACC invisible text", async () => {
 		const EXPECTED_RESULT = "Notification unread High Priority";
-		const firstItem = $("#nli1");
-		const invisibleText = firstItem.shadow$(".ui5-hidden-text");
+		const firstItem = await browser.$("#nli1");
+		const invisibleText = await firstItem.shadow$(".ui5-hidden-text");
 
 		// assert
-		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
+		assert.strictEqual((await invisibleText.getText()).toLowerCase(), EXPECTED_RESULT.toLowerCase(),
 			"The invisible text is correct.");
 	});
 
-	it("tests List (Group) Item ACC role", () => {
-		const firstItemRoot = $("#nli1").shadow$(".ui5-nli-root");
-		const firstGroupItemRoot = $("#nlgi1").shadow$(".ui5-nli-group-root");
+	it("tests List (Group) Item ACC role", async () => {
+		const firstItemRoot = await browser.$("#nli1").shadow$(".ui5-nli-root");
+		const firstGroupItemRoot = await browser.$("#nlgi1").shadow$(".ui5-nli-group-root");
 		const EXPECTED_ROLE = "listitem";
 
-		assert.strictEqual(firstGroupItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
-		assert.strictEqual(firstItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
+		assert.strictEqual(await firstGroupItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
+		assert.strictEqual(await firstItemRoot.getAttribute("role"), EXPECTED_ROLE, "The role text is correct.");
 	});
 });
