@@ -124,11 +124,7 @@ Project | NPM Package | Description
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
 `theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (the default theme and additional accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
-`ie11` * | [UI5 Web Components IE11](https://www.npmjs.com/package/@ui5/webcomponents-ie11) | Internet Explorer 11 polyfills and adapter code
 `playground` | N/A | The playground application
-
-`*` This package is deprecated as Internet Explorer 11 is no longer supported by UI5 Web Components. While the `@ui5/webcomponents-ie11` package allows UI5 Web Components to run on old browsers (IE11, legacy Edge) today,
-future compatibility is not guaranteed and the project may stop working on old browsers even with the aid of this package. Use at your own risk.
 
 ### How to run the project locally:
 
