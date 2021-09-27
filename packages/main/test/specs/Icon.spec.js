@@ -13,7 +13,7 @@ describe("Icon general interaction", () => {
 		const ICON_TOOLTIP_TEXT = "Save";
 
 		assert.ok(iconRoot, "Icon is rendered");
-		assert.strictEqual((await iconTooltip.getHTML(false)).includes(ICON_TOOLTIP_TEXT), true,
+		assert.include(await iconTooltip.getHTML(false), ICON_TOOLTIP_TEXT,
 			"Built-in tooltip is correct");
 	});
 

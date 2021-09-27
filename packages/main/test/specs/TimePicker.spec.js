@@ -22,7 +22,6 @@ describe("TimePicker general interaction", () => {
 		// act
 		await timepicker.setProperty("value", "11:12:13");
 		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
-		// await browser.pause(500);
 
 		const hoursSliderValue = await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getValue();
 		const minutesSliderValue = await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).getValue();

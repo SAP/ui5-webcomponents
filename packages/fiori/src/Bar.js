@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import BarTemplate from "./generated/templates/BarTemplate.lit.js";
 import BarDesign from "./types/BarDesign.js";
 
@@ -33,6 +34,15 @@ const metadata = {
 		design: {
 			type: BarDesign,
 			defaultValue: BarDesign.Header,
+		},
+
+		/**
+		 * Defines if the component middle area needs to be centered between start and end area
+		 * @type {Boolean}
+		 * @private
+		 */
+		_shrinked: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
@@ -132,6 +142,38 @@ class Bar extends UI5Element {
 		return {
 			"label": this.design,
 		};
+	}
+
+	constructor() {
+		super();
+
+		this._handleResizeBound = this.handleResize.bind(this);
+	}
+
+	handleResize() {
+		const bar = this.getDomRef();
+		const barWidth = bar.offsetWidth;
+
+		this._shrinked = Array.from(bar.children).some(element => {
+			return barWidth / 3 < element.offsetWidth;
+		});
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-bar-root": true,
+				"ui5-bar-root-shrinked": this._shrinked,
+			},
+		};
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 }
 

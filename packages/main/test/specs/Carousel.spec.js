@@ -141,8 +141,8 @@ describe("Carousel general interaction", () => {
 		const pageIndicator = await carousel.shadow$(".ui5-carousel-navigation-wrapper");
 		const navigationArrows = await carousel.shadow$(".ui5-carousel-navigation-arrows");
 
-		assert.ok(!await pageIndicator.isExisting(), "Page indicator is not rendered");
-		assert.ok(!await navigationArrows.isExisting(), "Navigation arrows are not rendered");
+		assert.notOk(await pageIndicator.isExisting(), "Page indicator is not rendered");
+		assert.notOk(await navigationArrows.isExisting(), "Navigation arrows are not rendered");
 		assert.strictEqual(pages, 1, "There is only 1 page.");
 	});
 
@@ -219,17 +219,13 @@ describe("Carousel general interaction", () => {
 
 		await browser.keys("F7");
 
-		let innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("carouselF7").shadowRoot.activeElement);
-		});
+		let innerFocusedElement = await browser.custom$("activeElement", "#carouselF7");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-carousel-root"), "Carousel is focused");
 
 		await browser.keys("F7");
 
-		innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("carouselF7Button").shadowRoot.activeElement);
-		});
+		innerFocusedElement = innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Button");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-button-root"), "Button is focused");
 
@@ -237,17 +233,13 @@ describe("Carousel general interaction", () => {
 
 		await browser.keys("F7");
 
-		innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("carouselF7").shadowRoot.activeElement);
-		});
+		innerFocusedElement = await browser.custom$("activeElement", "#carouselF7");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-carousel-root"), "Carousel is focused");
 
 		await browser.keys("F7");
 
-		innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("carouselF7Input").shadowRoot.activeElement);
-		});
+		innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Input");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
 
@@ -261,9 +253,7 @@ describe("Carousel general interaction", () => {
 
 		await browser.keys("F7");
 
-		innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("carouselF7Input").shadowRoot.activeElement);
-		});
+		innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Input");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
 	});

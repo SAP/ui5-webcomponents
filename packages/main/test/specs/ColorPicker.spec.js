@@ -39,6 +39,49 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(await hexInput.getProperty("value"), "112233", "Shorthand syntax is supported");
 	});
 
+	it("Alpha value change via the input field", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const alphaInput = await colorPicker.shadow$("#alpha");
+
+		await colorPicker.setAttribute("color", "rgba(100, 100, 100, 1)");
+
+		await alphaInput.click();
+		await browser.keys(["Control", "A"]);
+		await browser.keys("0");
+		await browser.keys("Tab");
+
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
+	});
+
+	it("Alpha value change via the slider", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const alphaSliderHandle = await colorPicker.shadow$(".ui5-color-picker-alpha-slider").shadow$(".ui5-slider-handle");
+		const stepInput = await browser.$("#changeEventCounter");
+
+		await stepInput.setAttribute("value", 0);
+		await colorPicker.scrollIntoView();
+		await colorPicker.setAttribute("color", "rgba(183, 61, 61, 1)");
+
+		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 61, 0.83)", "Alpha value propely changed");
+		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on alpha slider change");
+	});
+
+	it("Hue value change via the slider", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const hueSliderHandle = await colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
+		const stepInput = await browser.$("#changeEventCounter");
+
+		await colorPicker.scrollIntoView();
+		await colorPicker.setAttribute("color", "rgba(183, 61, 61, 0.83)");
+
+		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 183, 0.83)", "Color properly changed");
+		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on hue slider change");
+	});
+
 	it("tests color property", async () => {
 		const colorPicker = await browser.$("#cp3");
 		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");

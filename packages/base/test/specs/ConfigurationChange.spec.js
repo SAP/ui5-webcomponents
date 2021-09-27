@@ -22,6 +22,6 @@ describe("Some configuration options can be changed at runtime", () => {
 			config.setNoConflict({events: ["selection-change"]});
 			done(config.getNoConflict());
 		});
-		assert.strictEqual(res.events.includes("selection-change"), true, "selection-change was successfully registered as a no conflict event");
+		assert.include(res.events, "selection-change", "selection-change was successfully registered as a no conflict event");
 	});
 });

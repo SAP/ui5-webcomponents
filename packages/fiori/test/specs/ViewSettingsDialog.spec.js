@@ -11,7 +11,8 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = await browser.$("#vsd");
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText()).includes("Ascending"), "initially sortOrder has correct value");
+		const selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Ascending", "initially sortOrder has correct value");
 		assert.notOk(await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").isExisting(), "initially sortBy should not have an option selected");
 
 		await browser.keys("Escape");
@@ -28,7 +29,8 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText()).includes("Descending"), "SortOrder should properly change value");
+		const selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Descending", "SortOrder should properly change value");
 
 		await browser.keys("Escape");
 	});
@@ -45,7 +47,8 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText()).includes("Name"), "sortBy should  have an option selected");
+		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();
+		assert.include(sortByLiText, "Name", "sortBy should  have an option selected");
 
 		await browser.keys("Escape");
 	});
@@ -55,13 +58,15 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = await browser.$("#vsd");
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText()).includes("Name"), "sortBy should have an option selected");
+		let sortBySelectedLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText();
+		assert.include(sortBySelectedLiText, "Name", "sortBy should have an option selected");
 
 		await (await viewSettingsDialog.shadow$("[sort-by]").$$("ui5-li"))[1].click();
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText()).includes("Position"), "sortBy should change selected option");
+		sortBySelectedLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText();
+		assert.include(sortBySelectedLiText, "Position", "sortBy should change selected option");
 
 		await browser.keys("Escape");
 	})
@@ -71,8 +76,10 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = await browser.$("#vsd");
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText()).includes("Position"),  "sortBy should have an option selected");
-		assert.ok((await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText()).includes("Descending"), "sortOrder should have correct option selected");
+		let sortBySelectedLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText();
+		assert.include(sortBySelectedLiText, "Position",  "sortBy should have an option selected");
+		let selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Descending", "sortOrder should have correct option selected");
 
 		await (await viewSettingsDialog.shadow$("ui5-list").$$("ui5-li"))[0].click();
 		await (await viewSettingsDialog.shadow$$("ui5-li"))[0].click();
@@ -80,8 +87,10 @@ describe("ViewSettingsDialog general interaction", () => {
 		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
 		await btnOpenDialog.click();
 
-		assert.ok((await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText()).includes("Position"), "sortBy should not have a change in the selected option");
-		assert.ok((await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText()).includes("Descending"), "sortOrder should not have a change in the selected option");
+		sortBySelectedLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").getText();
+		assert.include(sortBySelectedLiText, "Position", "sortBy should not have a change in the selected option");
+		selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Descending", "sortOrder should not have a change in the selected option");
 
 		await browser.keys("Escape");
 	})
@@ -93,7 +102,8 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
 
-		assert.ok((await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText()).includes("Ascending"), "sortOrder has returned to the initial state");
+		const selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Ascending", "sortOrder has returned to the initial state");
 		assert.notOk(await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").isExisting(), "sortBy has returned to the initial state");
 
 		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();

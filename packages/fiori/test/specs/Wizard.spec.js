@@ -115,15 +115,15 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		assert.strictEqual(await firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Space");
-		assert.strictEqual(await firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Enter");
-		assert.strictEqual(await firstFocusableElement.getProperty("focused"), true, "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(await step2.getAttribute("selected"), null,
@@ -213,7 +213,6 @@ describe("Wizard general interaction", () => {
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
 		// this test should be reworked.
 		await scrollMarker.scrollIntoView();
-		await browser.pause(500);
 
 		// assert - that second step in the content and in the header are properly selected
 		assert.strictEqual(await step2.getAttribute("selected"), "true", "Second step in the content is selected.");
@@ -243,7 +242,6 @@ describe("Wizard general interaction", () => {
 		await btnToStep2.click(); // click to get back to step 2
 		await sw.click(); // click to dynamically expand content in step 2
 		await scrollMarker.scrollIntoView(); // scroll to step 3
-		await browser.pause(500);
 
 		assert.strictEqual(await step3.getAttribute("selected"), "true",
 			"Third step in the content is selected.");

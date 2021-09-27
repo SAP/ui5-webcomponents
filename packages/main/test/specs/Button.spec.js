@@ -18,15 +18,15 @@ describe("Button general interaction", () => {
 		const button = await browser.$("#button1");
 
 		await button.setAttribute("icon", "add");
-		assert.strictEqual((await button.shadow$$("ui5-icon")).length, 1, "icon is present");
+		assert.ok(await button.shadow$("ui5-icon").isExisting(), "icon is present");
 
 		await button.setAttribute("icon", "");
-		assert.strictEqual((await button.shadow$$("ui5-icon")).length, 0, "icon is not present");
+		assert.notOk(await button.shadow$("ui5-icon").isExisting(),"icon is not present");
 	});
 
 	it("tests button's slot rendering", async () => {
 		const btnImage = await browser.$("#btnImage");
-		assert.strictEqual(await btnImage.isDisplayed(), true, "Btn image is rendered");
+		assert.ok(await btnImage.isDisplayed(),  "Btn image is rendered");
 	});
 
 	it("tests button's icon only rendering", async () => {

@@ -19,7 +19,8 @@ describe("Select general interaction", () => {
 		await firstItem.click();
 
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once.");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) !== -1, "Select label is correct.");
+		const selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
 	});
 
 	it("does not fire change, when clicking on selected item", async () => {
@@ -51,14 +52,16 @@ describe("Select general interaction", () => {
 		await select.keys("Enter");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once more.");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1) !== -1, "Select label is correct.");
+		let selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Select label is correct.");
 
 		await select.click();
 		await select.keys("ArrowDown");
 		await select.keys("Space");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Fired change event is called once more.");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
+		selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
 
 	});
 
@@ -76,10 +79,12 @@ describe("Select general interaction", () => {
 		await select.keys("Escape");
 
 		await select.keys("ArrowUp");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up should change selected item");
+		let selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
 
 		await select.keys("ArrowDown");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
+		selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Change event should have fired twice");
 	});
@@ -101,11 +106,13 @@ describe("Select general interaction", () => {
 
 		// change selection with picker closed
 		await select.keys("ArrowUp");
-		assert.ok((await politeSpan.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up should change selected item");
+		let politeSpanHtml = await politeSpan.getHTML(false);
+		assert.include(politeSpanHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
 
 		// change selection with picker closed
 		await select.keys("ArrowDown");
-		assert.ok((await politeSpan.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
+		politeSpanHtml = await politeSpan.getHTML(false);
+		assert.include(politeSpanHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
 
 		// change previewed item with picker opened
 		await select.click();
@@ -116,7 +123,9 @@ describe("Select general interaction", () => {
 		await select.click();
 		await select.keys("ArrowUp");
 		await select.keys("Enter");
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up and Enter should change selected item");
+
+		const selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up and Enter should change selected item");
 
 		await btn.click();
 
@@ -135,7 +144,8 @@ describe("Select general interaction", () => {
 		await select.keys("Tab");
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Arrow Up should change selected item");
+		const selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Arrow Up should change selected item");
 
 		const focusedElementId = await browser.executeAsync(done => {
 			done(document.activeElement.id);
@@ -156,7 +166,8 @@ describe("Select general interaction", () => {
 		await browser.keys(["Shift", "Tab"]);
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Arrow Down should change selected item");
+		const selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Arrow Down should change selected item");
 
 		const focusedElementId = await browser.executeAsync(done => {
 			done(document.activeElement.id);
@@ -171,11 +182,13 @@ describe("Select general interaction", () => {
 		const selectOptionText = await select.shadow$(".ui5-select-label-root");
 
 		await select.click();
-		assert.ok((await selectOptionText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text is " + EXPECTED_SELECTION_TEXT);
+		let selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text is " + EXPECTED_SELECTION_TEXT);
 
 		// The last item is already selected - pressing ArrowDown should not change the focus or the selection
 		await select.keys("ArrowDown");
-		assert.ok((await selectOptionText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
+		selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
 
 		// Close the select not to cover other components that tests would try to click
 		await select.keys("Escape");
@@ -187,11 +200,13 @@ describe("Select general interaction", () => {
 		const selectOptionText = await select.shadow$(".ui5-select-label-root");
 
 		await select.click();
-		assert.ok((await selectOptionText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text is " + EXPECTED_SELECTION_TEXT);
+		let selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text is " + EXPECTED_SELECTION_TEXT);
 
 		// The last item is already selected - pressing ArrowUp should not change the focus or the selection
 		await select.keys("ArrowUp");
-		assert.ok((await selectOptionText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
+		selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
 
 		// Close the select not to cover other components that tests would try to click
 		await select.keys("Escape");
@@ -206,7 +221,8 @@ describe("Select general interaction", () => {
 
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Typing letter should change selection");
+		const selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Typing letter should change selection");
 	});
 
 	it("changes selection with typing more letters", async () => {
@@ -219,7 +235,8 @@ describe("Select general interaction", () => {
 
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Typing text should change selection");
+		const selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Typing text should change selection");
 	});
 
 	it("opens upon space", async () => {
@@ -371,14 +388,16 @@ describe("Select general interaction", () => {
 
 		await firstItem.click();
 
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT) !== -1, "Select label is correct.");
+		let selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
 
 		// verify that ESC does not interfere when the picker is closed
 		await select.keys("Escape");
 		await select.click();
 		await thirdItem.click();
 
-		assert.ok((await selectText.getHTML(false)).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
+		selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
 	});
 
 	it("Tests aria-label, aria-labelledby and aria-expanded", async () => {

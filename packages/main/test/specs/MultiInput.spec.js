@@ -23,7 +23,7 @@ describe("MultiInput general interaction", () => {
 		await basicInner.click();
 		await basicInner.keys("Tab");
 
-		assert.ok(!await basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
+		assert.notOk(await basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 	});
 
 	it ("tests opening of tokenizer Popover", async () => {

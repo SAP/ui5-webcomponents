@@ -10,10 +10,7 @@ describe("Attributes propagation", () => {
 		const textarea = await browser.$("#basic-textarea");
 		const sExpected = "New placeholder text";
 
-		await browser.executeAsync(done => {
-			document.getElementById("basic-textarea").setAttribute("placeholder", "New placeholder text");
-			done();
-		});
+		await browser.$("#basic-textarea").setAttribute("placeholder", "New placeholder text");
 
 		assert.strictEqual(await textarea.shadow$("textarea").getProperty("placeholder"), sExpected, "The placeholder was set correctly");
 	});
@@ -34,10 +31,7 @@ describe("Attributes propagation", () => {
 	it("Value attribute is propagated properly", async () => {
 		const sExpectedValue = "Test";
 
-		await browser.executeAsync(done => {
-			document.getElementById("basic-textarea").value = "Test";
-			done();
-		});
+		await browser.$("#basic-textarea").setProperty("value", "Test");
 
 		assert.strictEqual(await browser.$("#basic-textarea").shadow$("textarea").getValue(), sExpectedValue, "Value property was set correctly");
 	});
@@ -63,7 +57,7 @@ describe("disabled and readonly textarea", () => {
 	it("can not be edited when disabled", async () => {
 		const textAreaInnerDisabled = await browser.$("#disabled-textarea").shadow$("textarea");
 
-		assert.strictEqual(await textAreaInnerDisabled.isEnabled(), false, "Should not be enabled");
+		assert.notOk(await textAreaInnerDisabled.isEnabled(), "Should not be enabled");
 	});
 
 	it("can not be edited when readonly", async () => {
@@ -111,10 +105,7 @@ describe("when enabled", () => {
 		const textarea = await browser.$("#basic-textarea");
 		const textareaInner = await browser.$("#basic-textarea").shadow$("textarea");
 
-		await browser.executeAsync(done => {
-			document.getElementById("basic-textarea").value = "Test";
-			done();
-		}); // set the value again since browser.url reset the page
+		await browser.$("#basic-textarea").setProperty("value", "Test");
 		assert.strictEqual(await textarea.getProperty("value"), "Test", "Initial value is correct");
 
 		await textareaInner.addValue("a");
@@ -179,7 +170,7 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`\n9`);
 			const sizeAfterGrow = await textArea.getSize();
 
-			assert.ok(sizeBeforeGrow.height < sizeAfterGrow.height, "TextArea should grow");
+			assert.isBelow(sizeBeforeGrow.height, sizeAfterGrow.height, "TextArea should grow");
 		});
 
 		it("Should grow up to 4 lines", async () => {
@@ -197,8 +188,8 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`\n5\n6`);
 			const size6lines = await textArea.getSize();
 
-			assert.ok(initialSize.height < size2lines.height, "TA should grow when having 2 lines of text");
-			assert.ok(size2lines.height < size4lines.height, "TA should grow up to 4 lines");
+			assert.isBelow(initialSize.height, size2lines.height, "TA should grow when having 2 lines of text");
+			assert.isBelow(size2lines.height, size4lines.height, "TA should grow up to 4 lines");
 			assert.strictEqual(size6lines.height, size4lines.height, "TA should not grow more than 4 lines");
 		});
 	});
