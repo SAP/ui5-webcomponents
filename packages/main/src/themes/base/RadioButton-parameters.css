@@ -7,4 +7,16 @@
 	--_ui5_radio_button_checked_error_fill: var(--sapField_InvalidColor);
 	--_ui5_radio_button_checked_warning_fill: var(--sapField_TextColor);
 	--_ui5_radio_button_warning_error_border_dash: 0;
+	--_ui5_radio_button_outer_ring_color: var(--sapContent_FocusColor);
+	--_ui5_radio_button_outer_ring_checked_color: var(--sapContent_FocusColor);
+	--_ui5_radio_button_outer_ring_width: 2;
+	--_ui5_radio_button_outer_ring_bg: var(--sapHighlightTextColor);
+	--_ui5_radio_button_outer_ring_padding: 0 10px 0 6px;
+	--_ui5_radio_button_border_radius: 1rem;
+	--_ui5_radio_button_border: 2px solid transparent;
+	--_ui5_radio_button_focus_border: 2px solid var(--sapContent_FocusColor);
+	--_ui5_radio_button_focus_outline: none;
+	--_ui5_radio_button_hover_shadow: var(--sapContent_Shadow0);
+	--_ui5_radio_button_hover_background: var(--sapHighlightTextColor);
+	--_ui5_radio_button_hover_transition: background-color 300ms ease-in-out;
 }

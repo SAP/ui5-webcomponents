@@ -7,4 +7,16 @@
 	--_ui5_radio_button_hover_fill: var(--sapSelectedColor);
 	--_ui5_radio_button_border_width: 0.125rem;
 	--_ui5_radio_button_warning_error_border_dash: 5;
+	--_ui5_radio_button_outer_ring_color: var(--sapField_BorderColor);
+	--_ui5_radio_button_outer_ring_checked_color: var(--sapField_Hover_BorderColor);
+	--_ui5_radio_button_outer_ring_bg: var(--sapField_Background);
+	--_ui5_radio_button_outer_ring_width: 1;
+	--_ui5_radio_button_border_radius: 0;
+	--_ui5_radio_button_outer_ring_padding: 0 10px;
+	--_ui5_radio_button_border: none;
+	--_ui5_radio_button_focus_border: none;
+	--_ui5_radio_button_hover_shadow: none;
+	--_ui5_radio_button_hover_transition: none;
+	--_ui5_radio_button_focus_outline: block;
+	--_ui5_radio_button_hover_background: inherit;
 }
