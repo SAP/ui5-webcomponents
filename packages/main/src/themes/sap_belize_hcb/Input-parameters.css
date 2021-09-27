@@ -3,6 +3,7 @@
 :root {
 	--_ui5_input_focus_border_width: 0.125rem;
 	--_ui5_input_state_border_width: 1px;
+	--_ui5-input-border: 1px solid var(--sapField_BorderColor);
 	--_ui5_input_error_warning_border_style: dashed;
 	--_ui5_input_error_warning_font_style: italic;
 	--_ui5_input_error_font_weight: bold;
