@@ -218,13 +218,13 @@ class Dialog extends Popup {
 		return ariaLabelledById;
 	}
 
+	/**
+	 * Ensures ariaLabel is never null or empty string
+	 * @returns {String|undefined}
+	 * @protected
+	 */
 	get _ariaLabel() {
-		let ariaLabel;
-
-		if (this.header.length > 0 && !!this.accessibleName) {
-			ariaLabel = this.accessibleName;
-		}
-		return this.ariaLabel ? this.ariaLabel : ariaLabel;
+		return this.accessibleName || undefined;
 	}
 
 	get _ariaModal() { // Required by Popup.js
