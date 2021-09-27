@@ -417,8 +417,8 @@ class ComboBox extends UI5Element {
 
 		if (this._autocomplete && this.filterValue !== this.value) {
 			this.inner.setSelectionRange(
-				this._isKeyNavigation ? "" : this.filterValue.length,
-				this.value.length
+				(this._isKeyNavigation ? 0 : this.filterValue.length),
+				this.value.length,
 			);
 		}
 	}
