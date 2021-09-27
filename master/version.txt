@@ -1,17 +1,9 @@
-commit ed128db134cfc7aafc6ebbe63aa304231be630d9
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Mon Sep 27 14:33:56 2021 +0300
+commit 5857496361b370b4d2ce16e1a136ac73807e289b
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Sep 27 15:53:35 2021 +0300
 
-    fix(ui5-multi-combobox): Fix value reset on ESC (#3958)
+    fix(ui5-calendar): header year picker button has correct text (#3665)
     
-    * Clear value on ESC
+    * fix(ui5-calendar): header year picker button has correct text
     
-    * Always reset value if custom value is not allowed
-    
-    * Linting
-    
-    * Remove the value removal on focusout - it will be fixed with another pull-request
-    
-    * Test updates
-    
-    * Retrigger the build
+    Fixes: #3658
