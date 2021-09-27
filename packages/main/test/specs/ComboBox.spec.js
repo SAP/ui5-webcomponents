@@ -69,8 +69,11 @@ describe("General interaction", () => {
 		await input.click();
 		await input.keys("b");
 
-		await browser.pause(200);
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed");
+		await browser.waitUntil(() => popover.getProperty("opened"), {
+			timeout: 200,
+			timeoutMsg: "Popover should be displayed"
+		});
+
 		assert.strictEqual(await input.getProperty("value"), "Bahrain", "Value should be Bahrain");
 
 

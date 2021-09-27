@@ -25,8 +25,10 @@ describe("Page general interaction", () => {
         assert.ok(await footer.isDisplayedInViewport(), "Footer should be visible.");
 
         await button.click();
-        await browser.pause(500);
 
-        assert.notOk(await footer.isDisplayedInViewport(), "Footer should not be visible.");
+		await browser.waitUntil(async () => !(await footer.isDisplayedInViewport()), {
+			timeout: 500,
+			timeoutMsg: "expected footer to not be visible after 500ms"
+		});
 	});
 });

@@ -1,0 +1,6 @@
+@import "../base/Input-parameters.css";
+
+:root {
+	--_ui5_input_height: 2.25rem;
+	--_ui5_input_disabled_opacity: 0.4;
+}
