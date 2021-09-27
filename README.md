@@ -25,7 +25,6 @@
 
 ## More resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
-- [List of all components and other public APIs](./docs/Public%20Module%20Imports.md)
 - [Configuring UI5 Web Components](./docs/Configuration.md)
 - [Creating a custom theme](./docs/CustomTheming.md)
 - [Creating custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
@@ -83,8 +82,6 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	```
 
 	For more on using UI5 Web Components, click [here](./docs/How%20To%20Use.md).
-
-*Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), see [Public module imports](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md).
 
 ### Is there a CDN I can use?
 

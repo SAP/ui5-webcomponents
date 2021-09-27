@@ -114,9 +114,7 @@ const updatePackageFile = () => {
 		"./src/*": "./src/*",
 		"./dist/*": "./dist/*",
 		"./package.json": "./package.json",
-		"./bundle.esm.js": "./bundle.esm.js",
-		"./bundle.es5.js": "./bundle.es5.js",
-		"./bundle.common.js": "./bundle.common.js",
+		"./bundle.js": "./bundle.js",
 		"./*": "./dist/*"
 	}
 
