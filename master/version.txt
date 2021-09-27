@@ -1,9 +1,5 @@
-commit 5857496361b370b4d2ce16e1a136ac73807e289b
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Mon Sep 27 15:53:35 2021 +0300
+commit 5854e0f8a3ab9d4c44111a687a4db91f9c99f611
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Sep 27 16:30:21 2021 +0300
 
-    fix(ui5-calendar): header year picker button has correct text (#3665)
-    
-    * fix(ui5-calendar): header year picker button has correct text
-    
-    Fixes: #3658
+    fix(ui5-rating-indicator): apply correct color for readonly unselected icon (#3992)
