@@ -1,7 +1,5 @@
-commit 9e7928baaf890c39b9f1a311e75bde19842f5cac
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Fri Sep 24 16:30:54 2021 +0300
+commit a64eaf8c86cd7b31b3621488f87aa2fe02086093
+Author: Maxi Dietz <maxi-dietz96@gmx.de>
+Date:   Mon Sep 27 10:21:11 2021 +0200
 
-    feat(ui5-product-switch): add selected state to an item (#3872)
-    
-    Now ui5-product-switch-item receives a selected state on click or keydown, which is unique for an ui5-product-switch collection.
+    fix(ui5-wizard): check if tab has a focusable element (#3904)
