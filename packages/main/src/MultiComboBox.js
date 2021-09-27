@@ -9,6 +9,7 @@ import {
 	isSpace,
 	isLeft,
 	isRight,
+	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -588,6 +589,11 @@ class MultiComboBox extends UI5Element {
 			this._tokenizer._focusLastToken();
 		}
 
+		// Reset value on ESC
+		if (isEscape(event) && (!this.allowCustomValues || (!this.open && this.allowCustomValues))) {
+			this.value = this._lastValue;
+		}
+
 		if (isEnter(event)) {
 			this.handleEnter();
 		}
@@ -845,6 +851,8 @@ class MultiComboBox extends UI5Element {
 		} else {
 			this._innerInput.blur();
 		}
+
+		this._lastValue = this.value;
 	}
 
 	inputFocusOut(event) {
