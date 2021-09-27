@@ -602,8 +602,7 @@ class ComboBox extends UI5Element {
 	_handleItemNavigation(event, indexOfItem, isForward) {
 		const isOpen = this.responsivePopover.opened;
 		const currentItem = this._filteredItems[indexOfItem];
-
-		const nextItem = isForward ? this._filteredItems[++indexOfItem] : this._filteredItems[--indexOfItem];
+		const nextItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
 		const isGroupItem = currentItem && currentItem.isGroupItem;
 
 		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
@@ -613,7 +612,6 @@ class ComboBox extends UI5Element {
 		this._clearFocus();
 
 		if (isOpen) {
-			this.announceSelectedItem(indexOfItem);
 			this._itemFocused = true;
 			this.value = isGroupItem ? this.filterValue : currentItem.text;
 			this.focused = false;
@@ -630,6 +628,8 @@ class ComboBox extends UI5Element {
 		if (isGroupItem && isOpen) {
 			return;
 		}
+
+		this._announceSelectedItem(indexOfItem);
 
 		// autocomplete
 		const item = this._autoCompleteValue(this.value);
@@ -866,7 +866,7 @@ class ComboBox extends UI5Element {
 		this._itemFocused = true;
 	}
 
-	announceSelectedItem(indexOfItem) {
+	_announceSelectedItem(indexOfItem) {
 		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [indexOfItem + 1], [this._filteredItems.length]);
 		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
 
