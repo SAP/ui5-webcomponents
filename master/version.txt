@@ -1,5 +1,17 @@
-commit a64eaf8c86cd7b31b3621488f87aa2fe02086093
-Author: Maxi Dietz <maxi-dietz96@gmx.de>
-Date:   Mon Sep 27 10:21:11 2021 +0200
+commit ed128db134cfc7aafc6ebbe63aa304231be630d9
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Mon Sep 27 14:33:56 2021 +0300
 
-    fix(ui5-wizard): check if tab has a focusable element (#3904)
+    fix(ui5-multi-combobox): Fix value reset on ESC (#3958)
+    
+    * Clear value on ESC
+    
+    * Always reset value if custom value is not allowed
+    
+    * Linting
+    
+    * Remove the value removal on focusout - it will be fixed with another pull-request
+    
+    * Test updates
+    
+    * Retrigger the build
