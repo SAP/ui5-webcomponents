@@ -128,8 +128,8 @@ const metadata = {
  * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>slider - Used to style the track, where the handle is being slid</li>
- * <li>text-on - Used to style the onText</li>
- * <li>text-off - Used to style the offText</li>
+ * <li>text-on - Used to style the textOn</li>
+ * <li>text-off - Used to style the textOff</li>
  * <li>handle - Used to style the handle of the switch</li>
  * </ul>
  *

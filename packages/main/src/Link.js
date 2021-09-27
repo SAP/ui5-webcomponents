@@ -25,7 +25,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the component cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the click event cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
