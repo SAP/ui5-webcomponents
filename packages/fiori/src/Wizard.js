@@ -95,7 +95,7 @@ const metadata = {
 		 * @defaultvalue 0.7
 		 * @since 1.0.0-rc.13
 		 */
-		 stepSwitchThreshold: {
+		stepSwitchThreshold: {
 			type: Float,
 			defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT,
 		},
@@ -666,8 +666,10 @@ class Wizard extends UI5Element {
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
 
-		// Focus the first focusable element within the step content corresponding to the currently focused tab
-		firstFocusableElement.focus();
+		if (firstFocusableElement) {
+			// Focus the first focusable element within the step content corresponding to the currently focused tab
+			firstFocusableElement.focus();
+		}
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.
