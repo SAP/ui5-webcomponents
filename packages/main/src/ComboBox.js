@@ -574,7 +574,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		const isOpen = this.responsivePopover.opened;
+		const isOpen = this.open;
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
 		const currentItem = this._filteredItems.find(item => {
@@ -600,7 +600,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_handleItemNavigation(event, indexOfItem, isForward) {
-		const isOpen = this.responsivePopover.opened;
+		const isOpen = this.open;
 		const currentItem = this._filteredItems[indexOfItem];
 		const nextItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
 		const isGroupItem = currentItem && currentItem.isGroupItem;
@@ -645,7 +645,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_handleArrowDown(event, indexOfItem) {
-		const isOpen = this.responsivePopover.opened;
+		const isOpen = this.open;
 
 		if (this.focused && indexOfItem === -1 && this.hasValueStateText && isOpen) {
 			this._isValueStateFocused = true;
@@ -659,7 +659,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_handleArrowUp(event, indexOfItem) {
-		const isOpen = this.responsivePopover.opened;
+		const isOpen = this.open;
 
 		if (indexOfItem === 0 && !this.hasValueStateText) {
 			this._clearFocus();
@@ -700,8 +700,9 @@ class ComboBox extends UI5Element {
 			this.focused = true;
 		}
 
-		if (isEscape(event) && !this.open) {
-			this.value = this._lastValue;
+		if (isEscape(event)) {
+			this.focused = true;
+			this.value = !this.open ? this._lastValue : this.value;
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
@@ -714,10 +715,12 @@ class ComboBox extends UI5Element {
 				return item.selected;
 			});
 
-			if (selectedItem) {
+			if (selectedItem && this.open) {
 				this._itemFocused = true;
 				selectedItem.focused = true;
 				this.focused = false;
+			} else {
+				this.focused = true;
 			}
 		}
 	}
