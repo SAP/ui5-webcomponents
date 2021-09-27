@@ -13,22 +13,36 @@
 	<div class="ui5-switch-inner">
 		<div class="ui5-switch-track" part="slider">
 			<div class="ui5-switch-slider">
-				{{#if graphical}}
-					<span class="ui5-switch-text ui5-switch-text--on">
-						<ui5-icon name="accept" dir="ltr" class="ui5-switch-icon-on"></ui5-icon>
-					</span>
-					<span class="ui5-switch-text ui5-switch-text--off">
-						<ui5-icon name="decline" class="ui5-switch-icon-off"></ui5-icon>
-					</span>
-				{{else}}
-					<span class="ui5-switch-text ui5-switch-text--on" part="text-on">{{_textOn}}</span>
-					<span class="ui5-switch-text ui5-switch-text--off" part="text-off">{{_textOff}}</span>
-				{{/if}}
+				{{#unless sap_next}}
+					{{#if graphical}}
+						<span class="ui5-switch-text ui5-switch-text--on">
+							<ui5-icon name="accept" dir="ltr" class="ui5-switch-icon-on"></ui5-icon>
+						</span>
+						<span class="ui5-switch-text ui5-switch-text--off">
+							<ui5-icon name="decline" class="ui5-switch-icon-off"></ui5-icon>
+						</span>
+					{{else}}
+						<span class="ui5-switch-text ui5-switch-text--on" part="text-on">{{_textOn}}</span>
+						<span class="ui5-switch-text ui5-switch-text--off" part="text-off">{{_textOff}}</span>
+					{{/if}}
+				{{/unless}}
 
-				<span class="ui5-switch-handle" part="handle"></span>
+				<span class="ui5-switch-handle" part="handle">
+					{{#if sap_next}}
+						<ui5-icon
+							name="{{sapNextIcon}}"
+							class="ui5-switch-handle-icon"
+						></ui5-icon>
+					{{/if}}
+				</span>
 			</div>
 		</div>
 	</div>
+
+	{{#if sap_next}}
+		<ui5-title level="H6">{{text}}</ui5-title>
+	{{/if}}
+
 	<input type='checkbox' ?checked="{{checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
 	<span id="{{_id}}-hiddenText" class="ui5-hidden-text">{{hiddenText}}</span>
 </div>
