@@ -670,7 +670,7 @@ class Input extends UI5Element {
 	_handleEscape() {
 		const isOpen = this.Suggestions.isOpened();
 		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
-	
+
 		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeItemPreview;
@@ -785,6 +785,8 @@ class Input extends UI5Element {
 		}
 
 		if (event.target === inputDomRef) {
+			this.focused = true;
+
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -880,7 +882,7 @@ class Input extends UI5Element {
 
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
-			&& (this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected)
+			&& ((this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected))
 			&& this.showSuggestions
 			&& !this.suggestionSelectionCanceled);
 	}

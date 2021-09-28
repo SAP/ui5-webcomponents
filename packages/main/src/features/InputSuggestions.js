@@ -138,7 +138,14 @@ class Suggestions {
 
 	async close(preventFocusRestore = false) {
 		this.responsivePopover = await this._respPopover();
+
+		const selectedItem = this._getItems() && this._getItems()[this.selectedItemIndex];
+
 		this.responsivePopover.close(false, false, preventFocusRestore);
+
+		if (selectedItem && selectedItem.focused) {
+			selectedItem.focused = false;
+		}
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -279,7 +286,6 @@ class Suggestions {
 
 	_selectPreviousItem() {
 		const items = this._getItems();
-		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
 
 		if (this.selectedItemIndex === -1 || this.selectedItemIndex === null) {
