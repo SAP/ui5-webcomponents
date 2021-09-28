@@ -309,6 +309,41 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});
 
+		it ("Value should be reset on ESC key", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mCombo = await browser.$("#another-mcb");
+			const mCombo2 = await browser.$("#more-mcb");
+			const input = await mCombo.shadow$("#ui5-multi-combobox-input");
+			const input2 = await mCombo2.shadow$("#ui5-multi-combobox-input");
+
+			await input.click();
+			await input.keys("C");
+			await input.keys("Escape");
+			await input.keys("Escape");
+	
+			assert.strictEqual(await mCombo.getProperty("value"), "", "Value should be reset to the initial one");
+
+			await input.click();
+			await input.keys("C");
+
+			// Move focus to another element and bring it back
+			await input2.click();
+			await input.click();
+
+			await input.keys("o");
+			await input.keys("Escape");
+			await input.keys("Escape");
+
+			assert.strictEqual(await mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+
+			await input2.click();
+			await input2.keys("C");
+			await input2.keys("Escape");
+
+			assert.strictEqual(await mCombo2.getProperty("value"), "", "Value should be cleared on escape even if the suggesitons are openjed");
+		});
+
 		it ("selects an item when enter is pressed and value matches a text of an item in the list", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
