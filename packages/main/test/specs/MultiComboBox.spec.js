@@ -222,6 +222,70 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(await nMoreText.getText(), "1 More", "token 1 should be visible");
 		});
+
+		it("tests if clicking n more will prefilter items before opening the popover", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+
+			const mcb = await $("#more-mcb");
+			const icon = await mcb.shadow$("[input-icon]");
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			await mcb.scrollIntoView();
+			await nMoreText.click();
+
+			await browser.waitUntil(async () => mcb.getProperty("open"), {
+				timeout: 500,
+				timeoutMsg: "Popover is open"
+			});
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+
+			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
+
+			await icon.click();
+
+			await browser.waitUntil(async () => !(await mcb.getProperty("open")), {
+				timeout: 500,
+				timeoutMsg: "Popover should be closed"
+			});
+
+			await icon.click();
+
+			await browser.waitUntil(async () => await mcb.getProperty("open"), {
+				timeout: 500,
+				timeoutMsg: "Popover should be open"
+			});
+
+			assert.strictEqual((await list.getProperty("items")).length, 4, "4 items should be shown");
+		});
+
+		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+
+			const mcb = await $("#more-mcb");
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			await mcb.scrollIntoView();
+
+			const input = await mcb.shadow$("input");
+
+			await nMoreText.click();
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+			const lastListItem = await list.$("ui5-li:last-child");
+
+			await input.click();
+			await input.keys("c");
+
+			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
+			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
+		})
 	});
 
 	describe("keyboard handling", () => {
@@ -243,6 +307,41 @@ describe("MultiComboBox general interaction", () => {
 			tokens = await browser.$("#multi1").shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
+		});
+
+		it ("Value should be reset on ESC key", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mCombo = await browser.$("#another-mcb");
+			const mCombo2 = await browser.$("#more-mcb");
+			const input = await mCombo.shadow$("#ui5-multi-combobox-input");
+			const input2 = await mCombo2.shadow$("#ui5-multi-combobox-input");
+
+			await input.click();
+			await input.keys("C");
+			await input.keys("Escape");
+			await input.keys("Escape");
+	
+			assert.strictEqual(await mCombo.getProperty("value"), "", "Value should be reset to the initial one");
+
+			await input.click();
+			await input.keys("C");
+
+			// Move focus to another element and bring it back
+			await input2.click();
+			await input.click();
+
+			await input.keys("o");
+			await input.keys("Escape");
+			await input.keys("Escape");
+
+			assert.strictEqual(await mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+
+			await input2.click();
+			await input2.keys("C");
+			await input2.keys("Escape");
+
+			assert.strictEqual(await mCombo2.getProperty("value"), "", "Value should be cleared on escape even if the suggesitons are openjed");
 		});
 
 		it ("selects an item when enter is pressed and value matches a text of an item in the list", async () => {

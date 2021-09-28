@@ -74,7 +74,6 @@ describe("General interaction", () => {
 			timeoutMsg: "Popover should be displayed"
 		});
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed");
 		assert.strictEqual(await input.getProperty("value"), "Bahrain", "Value should be Bahrain");
 
 

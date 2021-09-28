@@ -17,7 +17,7 @@ import styles from "./generated/themes/SliderBase.css.js";
 const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
 		/**
-		 * Defines the minimum value of the slider
+		 * Defines the minimum value of the slider.
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
@@ -28,7 +28,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Defines the maximum value of the slider
+		 * Defines the maximum value of the slider.
 		 *
 		 * @type {Float}
 		 * @defaultvalue 100
@@ -67,7 +67,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Enables tick marks visualization for each step.
+		 * Enables tickmarks visualization for each step.
 		 * <br><br>
 		 * <b>Note:</b> The step must be a positive number.
 		 *
