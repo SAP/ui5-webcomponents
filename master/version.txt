@@ -1,5 +1,5 @@
-commit 5854e0f8a3ab9d4c44111a687a4db91f9c99f611
+commit fba71576fedd23d326833703401e9b4e1d068ad0
 Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon Sep 27 16:30:21 2021 +0300
+Date:   Tue Sep 28 13:55:35 2021 +0300
 
-    fix(ui5-rating-indicator): apply correct color for readonly unselected icon (#3992)
+    docs(ui5-textarea): Documentation improvemets (#4011)
