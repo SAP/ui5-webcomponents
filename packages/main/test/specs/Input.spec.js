@@ -545,4 +545,16 @@ describe("Input general interaction", () => {
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
 	});
+
+	it("Should close the Popover when no suggestions are available", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#myInput");
+		const innerInput = await input.shadow$("input");
+
+		await innerInput.keys("A");
+		await innerInput.keys("Space");
+
+		assert.notOk(await input.getProperty("open"), "Input's Suggestion Popover should not be open");
+	});
 });

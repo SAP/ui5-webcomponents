@@ -558,7 +558,10 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
+		this.open = this.open && !!this.suggestionItems.length;
+
 		const FormSupport = getFeature("FormSupport");
+
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
@@ -571,6 +574,8 @@ class Input extends UI5Element {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
 			});
+
+			this._listWidth = await this.Suggestions._getListWidth();
 		}
 
 		if (this.shouldDisplayOnlyValueStateMessage) {
