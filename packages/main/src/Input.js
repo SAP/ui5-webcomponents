@@ -657,23 +657,31 @@ class Input extends UI5Element {
 
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
+
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
 			this.lastConfirmedValue = this.value;
+			return;
 		}
+
+		this.focused = true;
 	}
 
 	_handleEscape() {
-		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
+		const isOpen = this.Suggestions.isOpened();
+		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
+	
+		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
-		} else if (this.Suggestions && this.Suggestions.isOpened()) {
-			this.closePopover();
-		} else {
+			this.focused = true;
+		}
+
+		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 		}
 	}

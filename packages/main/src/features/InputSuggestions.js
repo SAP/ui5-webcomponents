@@ -305,6 +305,10 @@ class Suggestions {
 		const currentItem = items[nextIdx];
 		const previousItem = items[previousIdx];
 
+		if (!currentItem) {
+			return;
+		}
+
 		this.component.focused = false;
 
 		this.accInfo = {
