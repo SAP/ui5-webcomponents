@@ -7,6 +7,33 @@
 
 Contains the base files for all Web Components, most notably `@ui5/webcomponents-base/dist/UI5Element.js`.
 
+## Provided APIs for applications
+
+### `Boot.js`
+
+ - `attachBoot`
+
+### `CustomElementsScope.js`
+
+ - `setCustomElementsScopingSuffix`
+ - `getCustomElementsScopingSuffix`
+ - `setCustomElementsScopingRules`
+ - `getCustomElementsScopingRules`
+
+### `i18nBundle.js`
+
+ - `registerI18nLoader`
+ - `fetchI18nBundle`
+ - `getI18nBundleData`
+
+### `PropertiesFileFormat.js`
+
+ - `parseProperties`
+
+### `Render.js`
+
+ - `renderFinished`
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
