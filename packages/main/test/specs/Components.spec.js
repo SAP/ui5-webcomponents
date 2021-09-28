@@ -2,11 +2,11 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 const assertBooleanProperty = async (el, prop) => {
-	assert.strictEqual(await el.getProperty(prop), false, "the value should be false by default.");
+	assert.notOk(await el.getProperty(prop),  "the value should be false by default.");
 }
 
 const assertHidden = async component => {
-	assert.strictEqual(await component.isDisplayedInViewport(), false, "the component is hidden.");
+	assert.notOk(await component.isDisplayedInViewport(), "the component is hidden.");
 }
 
 describe("General assertions", () => {

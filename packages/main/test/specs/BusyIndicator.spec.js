@@ -22,12 +22,14 @@ describe("BusyIndicator general interaction", () => {
 		const busyIndicator = await browser.$("#busy-container");
 		const busyArea = await busyIndicator.shadow$(".ui5-busy-indicator-busy-area");
 
-		await browser.pause(3000);
 		assert.notOk(await busyArea.isExisting(), "busy area is not yet created");
 
 		await busyIndicator.setAttribute("active", "");
-		await browser.pause(3000);
-		assert.ok(await busyArea.isExisting(), "busy area is created");
+
+		await busyArea.waitForExist({
+			timeout: 3000,
+			timeoutMsg: "Busy area must be created after 3000ms"
+		});
 
 		// reset
 		await busyIndicator.removeAttribute("active");
@@ -38,9 +40,7 @@ describe("BusyIndicator general interaction", () => {
 		const busyIndicator = await browser.$("#indicator1");
 		await busyIndicator.click();
 
-		let innerFocusElement = await browser.executeAsync(done => {
-			done(document.getElementById("indicator1").shadowRoot.activeElement);
-		});
+		let innerFocusElement = await browser.custom$("activeElement", "#indicator1");
 
 		innerFocusElement = await browser.$(innerFocusElement);
 

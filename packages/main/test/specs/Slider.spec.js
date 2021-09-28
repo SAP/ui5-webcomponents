@@ -60,7 +60,7 @@ describe("Slider basic interactions", () => {
 	it("Disabled slider is not interactive", async () => {
 		const slider = await browser.$("#disabled-slider-with-tickmarks");
 
-		assert.strictEqual(await slider.isClickable(), false, "Range Slider should be disabled");
+		assert.notOk(await slider.isClickable(), "Range Slider should be disabled");
 	});
 });
 
@@ -263,11 +263,9 @@ describe("Accessibility", async () => {
 
 		await slider.click();
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider");
 
-		assert.strictEqual(await slider.isFocused(), true, "Slider component is focused");
+		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 
@@ -277,11 +275,9 @@ describe("Accessibility", async () => {
 
 		await browser.keys("Tab");
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-slider-with-tooltip").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider-with-tooltip");
 
-		assert.strictEqual(await slider.isFocused(), true, "Slider component is focused");
+		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 
@@ -291,11 +287,9 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider");
 
-		assert.strictEqual(await slider.isFocused(), true, "Slider component is focused");
+		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 });
@@ -485,7 +479,7 @@ describe("Testing resize handling and RTL support", () => {
 
 		await browser.setWindowSize(400, 2000);
 
-		assert.strictEqual(await slider.getProperty("_labelsOverlapping"), true, "state should reflect if any of the labels is overlapping with another");
-		assert.strictEqual(await slider.getProperty("_hiddenTickmarks"), true, "state should reflect if the tickmarks has less than 8px space between each of them");
+		assert.ok(await slider.getProperty("_labelsOverlapping"), "state should reflect if any of the labels is overlapping with another");
+		assert.ok(await slider.getProperty("_hiddenTickmarks"), "state should reflect if the tickmarks has less than 8px space between each of them");
 	});
 });

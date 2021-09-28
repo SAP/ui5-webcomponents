@@ -120,7 +120,7 @@ describe("Testing Range Slider interactions", () => {
 	it("Disabled Range Slider is not interactive", async () => {
 		const rangeSlider = await browser.$("#disabled-range-slider");
 
-		assert.strictEqual(await rangeSlider.isClickable(), false, "Range Slider should be disabled");
+		assert.notOk(await rangeSlider.isClickable(), "Range Slider should be disabled");
 	});
 });
 
@@ -378,18 +378,14 @@ describe("Accessibility", async () => {
 
 		await rangeSlider.click();
 
-		let innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderEndHandle.getAttribute("class"), "RangeSlider second handle has the shadowDom focus");
 
 		await rangeSlider.setProperty("startValue", 30);
 		await rangeSliderStartHandle.click({ x: -200});
 
-		innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderStartHandle.getAttribute("class"), "RangeSlider second handle has the shadowDom focus");
 	});
@@ -403,9 +399,7 @@ describe("Accessibility", async () => {
 		await rangeSlider.setProperty("endValue", 60);
 		await rangeSlider.click();
 
-		let innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderSelection.getAttribute("class"), "RangeSlider progress bar has the shadowDom focus");
 	});
@@ -419,11 +413,9 @@ describe("Accessibility", async () => {
 
 		await browser.keys("Tab");
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
-		assert.strictEqual(await rangeSlider.isFocused(), true, "Range Slider component is focused");
+		assert.ok(await rangeSlider.isFocused(), "Range Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderSelection.getAttribute("class"), "Range Slider progress tracker has the shadowDom focus");
 	});
 
@@ -433,9 +425,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys("Tab");
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderStartHandle.getAttribute("class"), "Range Slider first handle has the hadowDom focus");
 	});
@@ -446,9 +436,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys("Tab");
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderEndHandle.getAttribute("class"), "Range Slider second handle has the shadowDom focus");
 	});
@@ -460,13 +448,11 @@ describe("Accessibility", async () => {
 
 		await browser.keys("Tab");
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider-with-tooltip").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider-with-tooltip");
 
-		assert.strictEqual(await currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.notOk(await currentRangeSlider.isFocused(), "First RangeSlider component is now not focused");
 
-		assert.strictEqual(await nextRangeSlider.isFocused(), true, "Next RangeSlider is focused");
+		assert.ok(await nextRangeSlider.isFocused(), "Next RangeSlider is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderSelection.getAttribute("class"), "Next Range Slider second handle has the shadowDom focus");
 	});
 
@@ -477,13 +463,11 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
-		assert.strictEqual(await currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.notOk(await currentRangeSlider.isFocused(), "First RangeSlider component is now not focused");
 
-		assert.strictEqual(await previousRangeSlider.isFocused(), true, "Slider component is focused");
+		assert.ok(await previousRangeSlider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await previousRangeSliderEndHandle.getAttribute("class"), "Previous Range Slider second handle now has the shadowDom focus");
 	});
 
@@ -493,9 +477,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderStartHandle.getAttribute("class"), "Range Slider first handle has the shadowDom focus");
 	});
@@ -506,9 +488,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await rangeSliderSelection.getAttribute("class"), "Range Slider first handle has the shadowDom focus");
 	});
@@ -518,7 +498,7 @@ describe("Accessibility", async () => {
 
 		await browser.keys(["Shift", "Tab"]);
 
-		assert.strictEqual(await rangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.notOk(await rangeSlider.isFocused(), "First RangeSlider component is now not focused");
 	});
 
 	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
@@ -527,9 +507,7 @@ describe("Accessibility", async () => {
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		await startHandle.dragAndDrop({ x: 400, y: 1 });
-		const innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 	});
@@ -900,18 +878,14 @@ describe("Accessibility: Testing keyboard handling", async () => {
 		await startHandle.click();
 		await browser.keys("End");
 
-		let innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original end-value is set to min and switched as a start-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 
 		await browser.keys("Home");
 
-		innerFocusedElement = await browser.executeAsync(done => {
-			done(document.getElementById("basic-range-slider").shadowRoot.activeElement);
-		});
+		innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "The original end-value is set to min and switched as a start-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await startHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
@@ -1049,7 +1023,7 @@ describe("Testing resize handling and RTL support", () => {
 
 		await browser.setWindowSize(400, 2000);
 
-		assert.strictEqual(await rangeSlider.getProperty("_labelsOverlapping"), true, "state should reflect if any of the labels is overlapping with another");
-		assert.strictEqual(await rangeSlider.getProperty("_hiddenTickmarks"), true, "state should reflect if the tickmarks has less than 8px space between each of them");
+		assert.ok(await rangeSlider.getProperty("_labelsOverlapping"), "state should reflect if any of the labels is overlapping with another");
+		assert.ok(await rangeSlider.getProperty("_hiddenTickmarks"), "state should reflect if the tickmarks has less than 8px space between each of them");
 	});
 });

@@ -12,7 +12,8 @@ describe("TabContainer general interaction", () => {
 		const selectedFilter = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
 		const SELECTION_CSS_CLASS = "ui5-tab-strip-item--selected";
 
-		assert.ok((await selectedFilter.getHTML()).indexOf(SELECTION_CSS_CLASS) > -1, "The item has the selection css class set.");
+		const selectedFilterHtml = await selectedFilter.getHTML();
+		assert.include(selectedFilterHtml, SELECTION_CSS_CLASS, "The item has the selection css class set.");
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab filter matches.");
 	});
 
@@ -54,15 +55,26 @@ describe("TabContainer general interaction", () => {
 		assert.ok(await arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
 
 		await arrowRight.click();
-		await browser.pause(1000); // TODO: wait for animation finish. Remove when solved on framework level
 
-		assert.ok(await arrowLeft.isDisplayed(), "'Left Arrow' should be visible after 'Right arrow' click");
+		await arrowLeft.waitForDisplayed({
+			timeout: 1000,
+			interval: 100,
+			timeoutMsg: "'Left Arrow' should be visible after 'Right arrow' click"
+		});
 
 		await arrowLeft.click();
-		await browser.pause(1000); // TODO: wait for animation finish. Remove when solved on framework level
 
-		assert.notOk(await arrowLeft.isDisplayed(), "'Left Arrow' should be hidden after 'Left arrow' click");
-		assert.ok(await arrowRight.isDisplayed(), "'Right Arrow' should be visible  after 'Left arrow' click");
+		await arrowLeft.waitForDisplayed({
+			reverse: true,
+			timeout: 1000,
+			interval: 100,
+			timeoutMsg: "'Left Arrow' should be hidden after 'Left arrow' click"
+		});
+		await arrowRight.waitForDisplayed({
+			timeout: 1000,
+			interval: 100,
+			timeoutMsg: "'Right Arrow' should be visible  after 'Left arrow' click"
+		});
 	});
 
 	it("scroll works on textOnly TabContainer", async () => {
@@ -75,15 +87,26 @@ describe("TabContainer general interaction", () => {
 		assert.ok(await arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
 
 		await arrowRight.click();
-		await browser.pause(1000); // TODO: wait for animation finish. Remove when solved on framework level
 
-		assert.ok(await arrowLeft.isDisplayed(), "'Left Arrow' should be visible after 'Right arrow' click");
+		await arrowLeft.waitForDisplayed({
+			timeout: 1000,
+			interval: 100,
+			timeoutMsg: "'Left Arrow' should be visible after 'Right arrow' click"
+		});
 
 		await arrowLeft.click();
-		await browser.pause(1000); // TODO: wait for animation finish. Remove when solved on framework level
 
-		assert.notOk(await arrowLeft.isDisplayed(), "'Left Arrow' should be hidden after 'Left arrow' click");
-		assert.ok(await arrowRight.isDisplayed(), "'Right Arrow' should be visible  after 'Left arrow' click");
+		await arrowLeft.waitForDisplayed({
+			reverse: true,
+			timeout: 1000,
+			interval: 100,
+			timeoutMsg: "'Left Arrow' should be hidden after 'Left arrow' click"
+		});
+		await arrowRight.waitForDisplayed({
+			timeout: 1000,
+			interval: 100,
+			timeoutMsg: "'Right Arrow' should be visible  after 'Left arrow' click"
+		});
 
 		// act: open overflow
 		const overflowBtn = await browser.$("#tabContainerTextOnly").shadow$(".ui-tc__overflowButton");
@@ -97,7 +120,6 @@ describe("TabContainer general interaction", () => {
 
 		// act: resize, so the overflow button is not visible
 		await browser.setWindowSize(1400, 1080);
-		await browser.pause(500);
 
 		// assert: the overflow popover is closed.
 		assert.strictEqual(await overflowPopover.isDisplayedInViewport(), false,
@@ -123,8 +145,8 @@ describe("TabContainer general interaction", () => {
 			});
 		});
 
-		assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
-		assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
+		assert.isBelow(tabHeight, tabScrollHeight, "Tab Content is scrollable");
+		assert.isAtLeast(tcHeight, tcScrollHeight, "TabContainer is not scrollable");
 	});
 
 	it("tests aria attrs", async () => {

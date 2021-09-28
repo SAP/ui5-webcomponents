@@ -29,12 +29,12 @@ describe("Table general interaction", () => {
 	it("tests if noData div is displayed for empty table", async () => {
 		const noDataRow = await browser.$("#tableNoData").shadow$("div.ui5-table-no-data-row");
 
-		assert.strictEqual(await noDataRow.isExisting(), true, 'noData div is present');
+		assert.ok(await noDataRow.isExisting(), 'noData div is present');
 	});
 
 	it("tests if table with more columns than cells is rendered", async () => {
 		const tblLessCells = await browser.$("#tblLessCells");
-		assert.equal(await tblLessCells.isExisting(), true, 'table with more columns is rendered without JS errors.');
+		assert.ok(await tblLessCells.isExisting(), 'table with more columns is rendered without JS errors.');
 	});
 
 	it("tests if popinChange is fired when min-width is reacted (500px)", async () => {
@@ -54,16 +54,20 @@ describe("Table general interaction", () => {
 		const row2Data = "London";
 
 		await cellInRow1.click();
-		assert.ok((await lbl.getHTML()).indexOf(row1Data), "Event row-click fired and intercepted.");
+		let lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
 		await cellInRow2.click();
-		assert.ok((await lbl.getHTML()).indexOf(row2Data), "Event row-click fired and intercepted.");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 
 		await cellInRow1.keys("Space");
-		assert.ok((await lbl.getHTML()).indexOf(row1Data), "Event row-click fired and intercepted.");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
 		await cellInRow2.keys("Enter");
-		assert.ok((await lbl.getHTML()).indexOf(row2Data), "Event row-click fired and intercepted.");
+		lblHtml = await lbl.getHTML();
+		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 	});
 
 	it("tests row aria-label value", async () => {
@@ -112,11 +116,10 @@ describe("Table general interaction", () => {
 			// act
 			await btnScroll.click();
 
-			await browser.pause(500);
-
-			// assert
-			assert.strictEqual(await inputResult.getProperty("value"), "1",
-				"The load-more is fired.");
+			await browser.waitUntil(async () => (await inputResult.getProperty("value")) === "1", {
+				timeout: 1000,
+				timeoutMsg: "The load-more event must be fired."
+			});
 		});
 	});
 

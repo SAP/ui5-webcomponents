@@ -83,7 +83,8 @@ describe("Toast general interaction", () => {
 
 		await button.click();
 
-		assert.ok((await toastShadowContent.getAttribute("style")).indexOf(EXPECTED_STYLES) !== -1,
+		const styleValue = await toastShadowContent.getAttribute("style");
+		assert.include(styleValue, EXPECTED_STYLES,
 			"The correct default inline styles are applied to the shadow ui5-toast-root");
 	});
 
@@ -101,7 +102,8 @@ describe("Toast general interaction", () => {
 
 		const EXPECTED_STYLES = `transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
 
-		assert.ok((await toastShadowContent.getAttribute("style")).indexOf(EXPECTED_STYLES) !== -1,
+		const styleValue = await toastShadowContent.getAttribute("style");
+		assert.include(styleValue, EXPECTED_STYLES,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is longer than default. Transition is not longer than allowed (1000ms).");
 	});
@@ -120,7 +122,8 @@ describe("Toast general interaction", () => {
 
 		const EXPECTED_STYLES = `transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
 
-		assert.ok((await toastShadowContent.getAttribute("style")).indexOf(EXPECTED_STYLES) !== -1,
+		const styleValue = await toastShadowContent.getAttribute("style");
+		assert.include(styleValue, EXPECTED_STYLES,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is shorter than default. Transition is a third of the duration.");
 	});
@@ -131,13 +134,14 @@ describe("Toast general interaction", () => {
 
 		await button.click();
 
-		// Give time for the animation to end and _ontransitionend to be called
-		await browser.pause(1000);
-
-		assert.notOk(await toast.getProperty("open"),
-		"Open property should be false after Toast is closed");
-		assert.notOk(await toast.getProperty("domRendered"),
-		"domRendered property value should be false after Toast is closed");
+		await browser.waitUntil(async () => {
+			const open = await toast.getProperty("open");
+			const domRendered = await toast.getProperty("domRendered");
+			return !open && !domRendered;
+		}, {
+			timeout: 1000,
+			timeoutMsg: "After 1000ms the toast should be closed and domRendered should be false"
+		});
 	});
 
 	it("tests minimum allowed duration", async () => {

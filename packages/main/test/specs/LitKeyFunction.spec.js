@@ -29,12 +29,14 @@ describe("Lit HTML key function for #each", async () => {
 
 		// The first item (<empty>) should not be selected
 		const newFirstItem = (await popover.$$(".ui5-multi-combobox-all-items-list > ui5-li"))[0];
-		assert.ok((await newFirstItem.getHTML(false)).includes("empty"), "First item is <empty>");
-		assert.ok(!(await newFirstItem.getProperty("selected")), "<empty> is not selected");
+		const newFirstItemHtml = await newFirstItem.getHTML(false);
+		assert.include(newFirstItemHtml, "empty", "First item is <empty>");
+		assert.notOk(await newFirstItem.getProperty("selected"), "<empty> is not selected");
 
 		// The last item (USA) should be selected
 		const lastItem = (await popover.$$(".ui5-multi-combobox-all-items-list > ui5-li"))[3];
-		assert.ok((await lastItem.getHTML(false)).includes("USA"), "Last item is USA");
+		const lastItemHtml = await lastItem.getHTML(false);
+		assert.include(lastItemHtml, "USA", "Last item is USA");
 		assert.ok(await lastItem.getProperty("selected"), "USA is  selected");
 	});
 });

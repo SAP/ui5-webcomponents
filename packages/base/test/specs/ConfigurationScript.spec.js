@@ -50,7 +50,7 @@ describe("Configuration script has effect", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getNoConflict());
 		});
-		assert.strictEqual(res.events.includes("selection-change"), true, "selectionChange was successfully registered as a no conflict event");
+		assert.include(res.events, "selection-change", "selectionChange was successfully registered as a no conflict event");
 	});
 
 	it("Tests that animationMode is applied", async () => {

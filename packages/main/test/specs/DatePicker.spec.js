@@ -80,7 +80,7 @@ describe("Date Picker Tests", () => {
 
 		await root.setAttribute("disabled", "");
 
-		assert.equal(await input.getProperty("disabled"), true, "input has disabled property");
+		assert.ok(await input.getProperty("disabled"),  "input has disabled property");
 	});
 
 	it("readonly", async () => {
@@ -90,7 +90,7 @@ describe("Date Picker Tests", () => {
 		await root.setAttribute("readonly", "");
 
 		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("readonly"), true, "input has readonly set");
+		assert.ok(await input.getProperty("readonly"),  "input has readonly set");
 		assert.notOk(await datepicker.hasIcon(), "icon is not displayed");
 	});
 
@@ -246,7 +246,8 @@ describe("Date Picker Tests", () => {
 
 		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
 
-		assert.ok((await firstDisplayedDate.getAttribute("data-sap-timestamp")).indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, "1548633600", "28 Jan is the first displayed date for Feb 2019")
 
 		const calendarDate_3_Feb_2019 = await datepicker.getPickerDate(1549152000);
 
@@ -267,7 +268,8 @@ describe("Date Picker Tests", () => {
 		const firstDisplayedDate = (await datepicker.getFirstDisplayedDate());
 
 		// first displayed date should be Jan 27, 2019, so this is February
-		assert.ok((await firstDisplayedDate.getAttribute("data-sap-timestamp")).indexOf("1548547200") > -1, "Feb is the displayed month");
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, "1548547200", "Feb is the displayed month");
 	});
 
 	it("picker stays open on input click", async () => {
@@ -496,7 +498,9 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click();
 
 		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		assert.ok((await firstDisplayedDate.getAttribute("data-sap-timestamp")).indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _28Nov9999, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("daypicker extreme values min", async () => {
@@ -511,7 +515,8 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click();
 
 		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		assert.ok((await firstDisplayedDate.getAttribute("data-sap-timestamp")).indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _31Dec0000, "Jan 1, 0001 is the second displayed date");
 	});
 
 	it("daypicker prev extreme values min", async () => {
@@ -529,7 +534,8 @@ describe("Date Picker Tests", () => {
 		await btnPrev.click();
 
 		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		assert.ok((await firstDisplayedDate.getAttribute("data-sap-timestamp")).indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _31Dec0000, "Jan 1, 0001 is the second displayed date");
 	});
 
 	it("daypicker next extreme values max", async () => {
@@ -547,7 +553,8 @@ describe("Date Picker Tests", () => {
 		await btnNext.click();
 
 		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		assert.ok((await firstDisplayedDate.getAttribute("data-sap-timestamp")).indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _28Nov9999, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("monthpicker next extreme values max", async () => {
@@ -566,7 +573,8 @@ describe("Date Picker Tests", () => {
 		await btnNext.click();
 
 		const btnYear = await datepicker.getBtnYear();
-		assert.ok((await btnYear.getProperty("innerHTML")).indexOf("9999") > -1, "year button's text is correct");
+		const innerHTML = await btnYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9999", "year button's text is correct");
 	});
 
 	it("monthpicker prev extreme values min", async () => {
@@ -585,7 +593,8 @@ describe("Date Picker Tests", () => {
 		await btnPrev.click();
 
 		const btnYear = await datepicker.getBtnYear();
-		assert.ok((await btnYear.getProperty("innerHTML")).indexOf("0001") > -1, "year button's text is correct");
+		const innerHTML = await btnYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "year button's text is correct");
 	});
 
 	it("yearpicker extreme values max", async () => {
@@ -601,7 +610,8 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 
 		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("9980") > -1, "First year in the year picker is correct");
+		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9980", "First year in the year picker is correct");
 	});
 
 	it("yearpicker extreme values min", async () => {
@@ -617,7 +627,8 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 
 		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("0001") > -1, "First year in the year picker is correct");
+		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "First year in the year picker is correct");
 	});
 
 	it("yearpicker prev page extreme values min", async () => {
@@ -633,13 +644,15 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 
 		let firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("0002") > -1, "First year in the year picker is correct");
+		let innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0002", "First year in the year picker is correct");
 
 		const btnPrev = await datepicker.getBtnPrev();
 		await btnPrev.click();
 
 		firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("0001") > -1, "First year in the year picker is correct");
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "First year in the year picker is correct");
 	});
 
 	it("yearpicker next page extreme values max", async () => {
@@ -655,13 +668,15 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 
 		let firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("9976") > -1, "First year in the year picker is correct");
+		let innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9976", "First year in the year picker is correct");
 
 		const btnNext = await datepicker.getBtnNext();
 		await btnNext.click();
 
 		firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("9980") > -1, "First year in the year picker is correct");
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9980", "First year in the year picker is correct");
 	});
 
 	it("yearpicker click extreme values max", async () => {
@@ -676,14 +691,16 @@ describe("Date Picker Tests", () => {
 		const btnYear = await datepicker.getBtnYear();
 		await btnYear.click();
 
-		var tenthYear = await datepicker.getDisplayedYear(10);
-		assert.ok((await tenthYear.getProperty("innerHTML")).indexOf("9986") > -1, "Tenth year in the year picker is correct");
+		const tenthYear = await datepicker.getDisplayedYear(10);
+		let innerHTML = await tenthYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
 
 		await tenthYear.click();
 		await btnYear.click();
 
 		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("9976") > -1, "First year in the year picker is correct");
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9976", "First year in the year picker is correct");
 	});
 
 	it("yearpicker click extreme values min above 10", async () => {
@@ -698,8 +715,9 @@ describe("Date Picker Tests", () => {
 		const btnYear = await datepicker.getBtnYear();
 		await btnYear.click();
 
-		var thirdYear = await datepicker.getDisplayedYear(2);
-		assert.ok((await thirdYear.getProperty("innerHTML")).indexOf("0004") > -1, "Third year in the year picker is correct");
+		const thirdYear = await datepicker.getDisplayedYear(2);
+		const innerHTML = await thirdYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0004", "Third year in the year picker is correct");
 	});
 
 	it("yearpicker click extreme values min below 10", async () => {
@@ -715,7 +733,8 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 
 		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		assert.ok((await firstDisplayedYear.getProperty("innerHTML")).indexOf("0001") > -1, "First year in the year picker is correct");
+		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "First year in the year picker is correct");
 	});
 
 	it("placeholder, based on the formatPattern", async () => {
@@ -879,10 +898,10 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 
 		let displayedDay = await datepicker.getDisplayedDay(9);
-		assert.equal(await displayedDay.hasClass("ui5-dp-item--disabled"), false , "Min date is included");
+		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Min date is included");
 
 		displayedDay = await datepicker.getDisplayedDay(11);
-		assert.equal(await displayedDay.hasClass("ui5-dp-item--disabled"), false, "Max date is included");
+		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Max date is included");
 	});
 
 	it("Tests week numbers column visibility", async () => {
@@ -894,7 +913,7 @@ describe("Date Picker Tests", () => {
 		// assert
 		let dayPicker = await datepicker.getDayPicker();
 		const weekNumbersCol1 = await dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.equal(await weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
+		assert.ok(await weekNumbersCol1.isExisting(), "The week numbers column is visible.");
 
 		// close date picker
 		const innerInput = await datepicker.getInnerInput();
@@ -908,7 +927,7 @@ describe("Date Picker Tests", () => {
 		// assert
 		dayPicker = await datepicker.getDayPicker();
 		const weekNumbersCol2 = await dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.equal(await weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
+		assert.notOk(await weekNumbersCol2.isExisting(), "The week numbers column is hidden.");
 
 		// close date picker
 		await innerInput.click();

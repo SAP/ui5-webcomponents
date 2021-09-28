@@ -46,7 +46,7 @@ describe("General API", () => {
 		const wrappingLabel = await browser.$("#wrapping-label");
 		const truncatingLabel = await browser.$("#truncated-label");
 
-		assert.ok((await wrappingLabel.getSize()).height > (await truncatingLabel.getSize()).height);
+		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
 		assert.strictEqual((await truncatingLabel.getSize()).height, 16, "truncated label should be single line");
 	});
 
