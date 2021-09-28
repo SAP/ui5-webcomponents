@@ -613,32 +613,31 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	async _onFirstItemArrowUp(event) {
+	 _onFirstItemArrowUp(event) {
 		const isFirstItem = this.list.items[0] === event.target;
+
+		event.preventDefault();
 
 		if (!isUp(event) || !isFirstItem) {
 			return;
 		}
 
-		const valueStateHeader = await this._getValueStateHeader();
-
-		if (valueStateHeader) {
-			valueStateHeader.focus();
+		if (this.valueStateHeader) {
+			this.valueStateHeader.focus();
 			return;
 		}
 
 		this._inputDom.focus();
 	}
 
-	async _handleArrowNavigation(event) {
+	_handleArrowNavigation(event) {
 		const isArrowDown = isDown(event);
 		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
-		const valueStateHeader = await this._getValueStateHeader();
 
 		event.preventDefault();
 
-		if (isArrowDown && this.focused && valueStateHeader) {
-			valueStateHeader.focus();
+		if (isArrowDown && this.focused && this.valueStateHeader) {
+			this.valueStateHeader.focus();
 
 			this.focused = false;
 			return;
@@ -807,6 +806,7 @@ class MultiComboBox extends UI5Element {
 		});
 
 		this._valueBeforeOpen = this.value;
+		this.hasValueStateMessage && this._setValueStateHeader();
 
 		if (this.filterSelected) {
 			this.selectedItems = this._filteredItems.filter(item => item.selected);
@@ -898,14 +898,14 @@ class MultiComboBox extends UI5Element {
 		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
-	async _getSuggestionsPopover() {
+	async _getResponsivePopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
-	async _getValueStateHeader() {
-		const suggestionsPopover = await this._getSuggestionsPopover();
-		return suggestionsPopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root");
+	async _setValueStateHeader() {
+		const responsivePopover = await this._getResponsivePopover();
+		this.valueStateHeader = responsivePopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root");
 	}
 
 	get _tokenizer() {
