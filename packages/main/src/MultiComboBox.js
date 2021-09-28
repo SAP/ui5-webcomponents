@@ -580,7 +580,9 @@ class MultiComboBox extends UI5Element {
 			this._toggleRespPopover();
 		}
 
-		this._handleArrowNavigation(event);
+		if (this.open && (isUp(event) || isDown(event))) {
+			this._handleArrowNavigation(event);
+		}
 
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
@@ -635,7 +637,7 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if (isArrowDown && this.focused && this.hasValueState) {
+		if (isArrowDown && this.focused && valueStateHeader) {
 			valueStateHeader.focus();
 
 			this.focused = false;
