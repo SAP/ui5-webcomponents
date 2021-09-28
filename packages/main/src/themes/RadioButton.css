@@ -11,6 +11,7 @@
 	overflow: hidden;
 	color: var(--_ui5_radio_button_color);
 	cursor: pointer;
+	border-radius: var(--_ui5_radio_button_border_radius);
 }
 
 /* Checked */
@@ -50,15 +51,11 @@
 }
 
 /* Hovered */
-:host(:not([disabled]):hover) {
-	border-radius: var(--_ui5_radio_button_border_radius);
-	box-shadow: var(_ui5_radio_button_hover_shadow);
-}
-
 :host(:not([disabled])) .ui5-radio-root:hover {
 	background: var(--_ui5_radio_button_hover_background);
 	border-radius: var(--_ui5_radio_button_border_radius);
 	transition: var(--_ui5_radio_button_hover_transition);
+	box-shadow: var(--_ui5_radio_button_hover_shadow);
 }
 
 :host(:not([value-state="Error"]):not([value-state="Warning"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {

@@ -22,5 +22,5 @@
 	--_ui5_radio_button_hover_background: inherit;
 	--_ui5_radio_button_color: var(--sapField_BorderColor);
 	--_ui5_radio_button_label_offset: 1px;
-	--_ui5_radio_button_items_align: flex-start;
+	--_ui5_radio_button_items_align: unset;
 }

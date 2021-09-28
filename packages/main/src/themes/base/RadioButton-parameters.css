@@ -18,7 +18,7 @@
 	--_ui5_radio_button_border: 2px solid transparent;
 	--_ui5_radio_button_focus_border: 2px solid var(--sapContent_FocusColor);
 	--_ui5_radio_button_focus_outline: none;
-	--_ui5_radio_button_hover_shadow: var(--sapContent_Shadow0);
+	--_ui5_radio_button_hover_shadow: 0px 0px 2px rgba(131, 150, 168, 0.16), 0px 8px 16px rgba(131, 150, 168, 0.16);
 	--_ui5_radio_button_hover_background: var(--sapHighlightTextColor);
 	--_ui5_radio_button_hover_transition: background-color 300ms ease-in-out;
 	--_ui5_radio_button_label_offset: 3.875rem;
