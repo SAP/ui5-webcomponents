@@ -13,6 +13,7 @@
 	border-left: 1px solid transparent;
 	min-width: 1rem;
 	min-height: 1rem;
+	display: contents;
 }
 
 [input-icon][pressed] {

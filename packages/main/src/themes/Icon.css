@@ -34,3 +34,13 @@
 	transform: scale(-1, 1);
 	transform-origin: center;
 }
+
+/* Input elements need to control Icon's internal paddings to achieve some designs */
+:host([input-icon]) .ui5-icon-root {
+	width: inherit;
+	padding: inherit;
+	height: inherit;
+	border: inherit;
+	background: inherit;
+	color: inherit;
+}
