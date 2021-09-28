@@ -638,8 +638,6 @@ class MultiComboBox extends UI5Element {
 
 		if (isArrowDown && this.focused && this.valueStateHeader) {
 			this.valueStateHeader.focus();
-
-			this.focused = false;
 			return;
 		}
 
@@ -652,8 +650,6 @@ class MultiComboBox extends UI5Element {
 		const firstListItem = this.list.items[0];
 
 		this.list._itemNavigation.setCurrentItem(firstListItem);
-		this.focused = false;
-
 		firstListItem.focus();
 	}
 
