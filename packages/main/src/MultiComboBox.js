@@ -610,12 +610,13 @@ class MultiComboBox extends UI5Element {
 
 		if (isArrowUp) {
 			this._inputDom.focus();
-			this.focused = true;
 		}
 	}
 
-	async _handleFirstItemArrowUp(event) {
-		if (!isUp(event)) {
+	async _onFirstItemArrowUp(event) {
+		const isFirstItem = this.list.items[0] === event.target;
+
+		if (!isUp(event) || !isFirstItem) {
 			return;
 		}
 
@@ -623,12 +624,10 @@ class MultiComboBox extends UI5Element {
 
 		if (valueStateHeader) {
 			valueStateHeader.focus();
-
 			return;
 		}
 
 		this._inputDom.focus();
-		this.focused = true;
 	}
 
 	async _handleArrowNavigation(event) {
@@ -650,15 +649,13 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	async _handleArrowDown(event) {
-		await this._getList();
+	_handleArrowDown(event) {
 		const firstListItem = this.list.items[0];
 
 		this.list._itemNavigation.setCurrentItem(firstListItem);
 		this.focused = false;
 
 		firstListItem.focus();
-		firstListItem.addEventListener("keydown", this._handleFirstItemArrowUp.bind(this));
 	}
 
 	handleEnter() {

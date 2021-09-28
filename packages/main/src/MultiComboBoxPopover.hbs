@@ -123,6 +123,7 @@
 		?selected={{this.selected}}
 		data-ui5-token-id="{{this._id}}"
 		data-ui5-stable="{{this.stableDomRef}}"
+		@keydown="{{../_onFirstItemArrowUp}}"
 	>
 		{{this.text}}
 	</ui5-li>
