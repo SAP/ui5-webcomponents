@@ -1,5 +1,5 @@
-commit fba71576fedd23d326833703401e9b4e1d068ad0
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Sep 28 13:55:35 2021 +0300
+commit 55eb7ba628a564968238a0f2116b8d5471c76fa1
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Sep 28 16:35:17 2021 +0300
 
-    docs(ui5-textarea): Documentation improvemets (#4011)
+    chore: Create a test for EventProvider (#4016)
