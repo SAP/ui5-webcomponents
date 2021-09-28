@@ -34,8 +34,8 @@
 .ui5-input-root::before {
 	content: "";
     position: absolute;
-    width: calc(100% - 16px);
-    left: 8px;
+    width: calc(100% - 2px);
+    left: 1px;
     bottom: -1px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -69,6 +69,11 @@
 	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
+:host([disabled]) .ui5-input-root::before,
+:host([readonly]) .ui5-input-root::before {
+	content: none;
+}
+
 [inner-input] {
 	background: transparent;
 	color: inherit;
@@ -94,6 +99,16 @@
 
 [inner-input][inner-input-with-icon] {
 	padding: var(--_ui5_input_inner_padding_with_icon);
+}
+
+.ui5-input-value-state-icon {
+	height: 100%;
+	display: var(--_ui5-input-value-state-icon-display);
+    align-items: center;
+}
+
+.ui5-input-value-state-icon > svg {
+	margin-right: 8px;
 }
 
 [inner-input]::selection {

@@ -5,7 +5,7 @@
 	--_ui5_input_disabled_opacity: 0.4;
 	--_ui5-input-hover-border: 2px solid transparent;
 	--_ui5-input-hover-box-shadow: 0 0 2px rgb(131 150 168 / 16%), 0 8px 16px rgb(131 150 168 / 16%);
-	--_ui5-input-border-radius: 16px;
+	--_ui5-input-border-radius: 8px;
 	--_ui5-input-placeholder-style: normal;
 	--_ui5-input-placeholder-color: var(--sapNeutralColor);
 	--_ui5-input-bottom-border-height: 2px;
@@ -20,6 +20,7 @@
 	--_ui5-input-focused-value-state-warning-background: #fff;
 	--_ui5-input-focused-value-state-success-background: #fff;
 	--_ui5-input-focused-value-state-information-background: #fff;
+	--_ui5-input-value-state-icon-display: flex;
 	--_ui5-input-value-state-error-border-botom-color: #d20a0a;
 	--_ui5-input-value-state-error-border-color: transparent;
 	--_ui5-input-focused-value-state-error-border-color: var(--_ui5-input-focused-border-color);
@@ -35,18 +36,3 @@
 	--_ui5-input-focused-value-state-information-border-color: var(--_ui5-input-focused-border-color);
 	--_ui5-input-value-state-information-border-width: 2px;
 }
-
-/* 
-Our side:
- - We have no way of styling the icons as in the example
- - How do we want to implement the icons for value-state's: Built in or people should pass it as slots?
-
- Open questions
- - Popups(value state message, suggestions) look really strange since the input now has round borders
- - No example for value-state="Success"
- - No example for interaction with icon
- - No example for disabled
- - No example for readonly
- - No example for interaction with DatePicker(when it opens)
- - Icon for value-state="Information" is not Fiori compatible
-*/

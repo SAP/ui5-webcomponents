@@ -31,6 +31,7 @@
 	--_ui5-input-value-state-outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	--_ui5-input-value-state-outline-offset: -4px;
 	--_ui5-input-transition: none;
+	--_ui5-input-value-state-icon-display: none;
 	--_ui5-input-focused-value-state-error-background: var(--sapField_InvalidBackground);
 	--_ui5-input-focused-value-state-warning-background: var(--sapField_WarningBackground);
 	--_ui5-input-focused-value-state-success-background: var(--sapField_SuccessBackground);
