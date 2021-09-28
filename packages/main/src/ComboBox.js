@@ -522,6 +522,7 @@ class ComboBox extends UI5Element {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 			this.focused = true;
+			this._isValueStateFocused = false;
 		}
 
 		this._filteredItems = this._filterItems(value);
@@ -703,6 +704,7 @@ class ComboBox extends UI5Element {
 		if (isEscape(event)) {
 			this.focused = true;
 			this.value = !this.open ? this._lastValue : this.value;
+			this._isValueStateFocused = false;
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
