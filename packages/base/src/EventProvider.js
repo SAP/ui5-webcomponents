@@ -27,7 +27,7 @@ class EventProvider {
 		const indexOfFnToDetach = eventListeners.indexOf(fnFunction);
 
 		if (indexOfFnToDetach !== -1) {
-			eventListeners[eventName].splice(indexOfFnToDetach, 1);
+			eventListeners.splice(indexOfFnToDetach, 1);
 		}
 
 		if (eventListeners.length === 0) {
