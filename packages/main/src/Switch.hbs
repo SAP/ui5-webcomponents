@@ -13,33 +13,29 @@
 	<div class="ui5-switch-inner">
 		<div class="ui5-switch-track" part="slider">
 			<div class="ui5-switch-slider">
-				{{#unless sap_next}}
-					{{#if graphical}}
-						<span class="ui5-switch-text ui5-switch-text--on">
-							<ui5-icon name="accept" dir="ltr" class="ui5-switch-icon-on"></ui5-icon>
-						</span>
-						<span class="ui5-switch-text ui5-switch-text--off">
-							<ui5-icon name="decline" class="ui5-switch-icon-off"></ui5-icon>
-						</span>
-					{{else}}
-						<span class="ui5-switch-text ui5-switch-text--on" part="text-on">{{_textOn}}</span>
-						<span class="ui5-switch-text ui5-switch-text--off" part="text-off">{{_textOff}}</span>
-					{{/if}}
-				{{/unless}}
+				{{#if graphical}}
+					<span class="ui5-switch-text ui5-switch-text--on">
+						<ui5-icon name="accept" dir="ltr" class="ui5-switch-icon-on"></ui5-icon>
+					</span>
+					<span class="ui5-switch-text ui5-switch-text--off">
+						<ui5-icon name="decline" class="ui5-switch-icon-off"></ui5-icon>
+					</span>
+				{{else}}
+					<span class="ui5-switch-text ui5-switch-text--on" part="text-on">{{_textOn}}</span>
+					<span class="ui5-switch-text ui5-switch-text--off" part="text-off">{{_textOff}}</span>
+				{{/if}}
 
 				<span class="ui5-switch-handle" part="handle">
-					{{#if sap_next}}
-						<ui5-icon
-							name="{{sapNextIcon}}"
-							class="ui5-switch-handle-icon"
-						></ui5-icon>
-					{{/if}}
+					<ui5-icon
+						name="{{sapNextIcon}}"
+						class="ui5-switch-handle-icon"
+					></ui5-icon>
 				</span>
 			</div>
 		</div>
 	</div>
 
-	{{#if sap_next}}
+	{{#if text}}
 		<ui5-title level="H6">{{text}}</ui5-title>
 	{{/if}}
 

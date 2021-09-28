@@ -71,6 +71,10 @@
 	transform-origin: top left;
 }
 
+.ui5-switch-slider > *:not(.ui5-switch-handle) {
+	display: var(--_ui5-switch-slider-texts-display);
+}
+
 .ui5-switch-handle {
 	position: absolute;
 	display: flex;
@@ -86,6 +90,7 @@
 }
 
 .ui5-switch-handle-icon {
+	display: var(--_ui5-switch-handle-icon-display);
 	color: var(--_ui5-switch_track-off-background);
 }
 
@@ -126,7 +131,7 @@
 
 /* switch focused */
 .ui5-switch-desktop.ui5-switch-root:focus::after {
-	content: "";
+	content: var(--_ui5-switch-focus);
 	position: absolute;
 	left: -var(--_ui5_switch_outline);
 	top: 0;
@@ -135,10 +140,6 @@
 	right: 0;
 	border: var(--_ui5_switch_outline) dotted var(--sapContent_FocusColor);
 	pointer-events: none;
-}
-
-:host([sap_next]) .ui5-switch-desktop.ui5-switch-root:focus::after {
-	content: none;
 }
 
 /* switch hidden input */

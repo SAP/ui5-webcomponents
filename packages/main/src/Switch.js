@@ -5,7 +5,6 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
@@ -95,13 +94,6 @@ const metadata = {
 		},
 
 		/**
-		 * @private
-		 */
-		sap_next: {
-			type: Boolean,
-		},
-
-		/**
 		 * @public
 		 * @type {String}
 		 * @defaultvalue ""
@@ -186,10 +178,6 @@ class Switch extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
-	onBeforeRendering() {
-		this.sap_next = getTheme() === "sap_horizon";
 	}
 
 	get sapNextIcon() {
