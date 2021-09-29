@@ -240,7 +240,7 @@
   "35": {
     "id": "35",
     "title": "Combo Box",
-    "content": "&lt;!DOCTYPE html&gt; ComboBox test page Select country: Focus ComboBox Set value Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Information message 2. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Items with grouping: Items with additional text: Lazy Loading - example does not work on IE11 Change event testing Changed value: Change call count: 0 Input event testing Input value: Input call count: 0 Contains filter StartsWith filter ComboBox in Compact",
+    "content": "&lt;!DOCTYPE html&gt; ComboBox test page Select country: Focus ComboBox Set value Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Information message 2. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Items with grouping and value state: Items with grouping: Items with additional text: Lazy Loading - example does not work on IE11 Change event testing Changed value: Change call count: 0 Input event testing Input value: Input call count: 0 Contains filter StartsWith filter ComboBox in Compact",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/ComboBox/",
     "relUrl": "/playground/main/pages/ComboBox/"
   },

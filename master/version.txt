@@ -1,5 +1,9 @@
-commit 55eb7ba628a564968238a0f2116b8d5471c76fa1
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Sep 28 16:35:17 2021 +0300
+commit 9101130a1ff5f737be04254052e6837263c26736
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed Sep 29 00:04:59 2021 -0700
 
-    chore: Create a test for EventProvider (#4016)
+    fix(ui5-icon): decorative icons now have aria-hidden=true (#3983)
+    
+    By design, decorative icons (role=presentation) should also have aria-hidden=true
+    
+    Fixes: #3954
