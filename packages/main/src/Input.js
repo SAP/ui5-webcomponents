@@ -331,6 +331,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Indicates whether the visual focus is on the value state header
+		 * @private
+		 */
+		_isValueStateFocused: {
+			type: Boolean,
+		},
+
 		_input: {
 			type: Object,
 		},
@@ -619,6 +627,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.showSuggestions) {
+			this.Suggestions._clearItemFocus();
 			this.Suggestions._deselectItems();
 		}
 
@@ -882,7 +891,7 @@ class Input extends UI5Element {
 
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
-			&& ((this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected))
+			&& ((this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected) || this._isValueStateFocused)
 			&& this.showSuggestions
 			&& !this.suggestionSelectionCanceled);
 	}

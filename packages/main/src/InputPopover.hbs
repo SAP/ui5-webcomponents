@@ -44,7 +44,7 @@
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
+			<div slot="header" ?focused={{_isValueStateFocused}} tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}

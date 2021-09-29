@@ -272,8 +272,16 @@ class Suggestions {
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
+		const hasValueState = this.component.hasValueStateMessage;
 
-		if (previousSelectedIdx === null) {
+		if (hasValueState && previousSelectedIdx === null) {
+			this.component._isValueStateFocused = true;
+			this.component.focused = false;
+			
+			return;
+		}
+
+		if ((previousSelectedIdx === null && !hasValueState) || this.component._isValueStateFocused) {
 			--this.selectedItemIndex;
 		}
 
@@ -287,12 +295,29 @@ class Suggestions {
 	_selectPreviousItem() {
 		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
+		const hasValueState = this.component.hasValueStateMessage;
 
-		if (this.selectedItemIndex === -1 || this.selectedItemIndex === null) {
+		if (hasValueState && previousSelectedIdx === 0) {
+			this.component._isValueStateFocused = true;
+			items[0].focused = false;
+			items[0].selected = false;
+
 			return;
 		}
 
-		if (this.selectedItemIndex - 1 < 0) {
+		if (previousSelectedIdx === -1 || previousSelectedIdx === null) {
+			return;
+		}
+
+		if (previousSelectedIdx === 0 && hasValueState) {
+			this.component._isValueStateFocused = true;
+			items[0].selected = false;
+			items[0].focused = false;
+
+			return;
+		}
+
+		if (previousSelectedIdx - 1 < 0) {
 			items[previousSelectedIdx].selected = false;
 			items[previousSelectedIdx].focused = false;
 
@@ -350,6 +375,14 @@ class Suggestions {
 		items.forEach(item => {
 			item.selected = false;
 		});
+	}
+	
+	_clearItemFocus() {
+		const focusedItem = this._getItems().find(item => item.focused);
+
+		if (focusedItem) {
+			focusedItem.focused = false;
+		}
 	}
 
 	_isItemIntoView(item) {
