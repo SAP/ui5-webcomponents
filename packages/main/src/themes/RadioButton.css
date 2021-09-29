@@ -65,7 +65,7 @@
 
 :host(:not([value-state="Error"]):not([value-state="Warning"])[checked]) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
 	fill: var(--_ui5_radio_button_hover_fill);
-	stroke: var(--_ui5_radio_button_outer_ring_checked_color);
+	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
 }
 
 /* with label */
@@ -202,6 +202,15 @@
 :host([text]) [dir="rtl"].ui5-radio-root:focus:before {
 	left: 0;
 	right: var(--_ui5_radio_button_rtl_focus_right);
+}
+
+[dir="rtl"] .ui5-radio-inner {
+	padding: var(--_ui5_radio_button_outer_ring_padding_rtl);
+}
+
+[dir="rtl"] [ui5-label].ui5-radio-label {
+	padding-left: var(--_ui5_radio_button_label_offset);
+	padding-right: 0;
 }
 
 /* ListItem Context */
