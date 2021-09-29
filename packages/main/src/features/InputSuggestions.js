@@ -274,18 +274,20 @@ class Suggestions {
 		const previousSelectedIdx = this.selectedItemIndex;
 		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && previousSelectedIdx === null) {
+		if (hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
 			this.component._isValueStateFocused = true;
 			this.component.focused = false;
-			
+			this.component.hasSuggestionItemSelected = false;
+
 			return;
 		}
 
 		if ((previousSelectedIdx === null && !hasValueState) || this.component._isValueStateFocused) {
+			this.component._isValueStateFocused = false;
 			--this.selectedItemIndex;
 		}
 
-		if (previousSelectedIdx + 1 > itemsCount - 1) {
+		if (previousSelectedIdx !== null && previousSelectedIdx + 1 > itemsCount - 1) {
 			return;
 		}
 
@@ -297,23 +299,21 @@ class Suggestions {
 		const previousSelectedIdx = this.selectedItemIndex;
 		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && previousSelectedIdx === 0) {
+		if (hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
+			this.component.hasSuggestionItemSelected = false;
 			this.component._isValueStateFocused = true;
 			items[0].focused = false;
 			items[0].selected = false;
+			return;
+		}
 
+		if (this.component._isValueStateFocused) {
+			this.component.focused = true;
+			this.component._isValueStateFocused = false;
 			return;
 		}
 
 		if (previousSelectedIdx === -1 || previousSelectedIdx === null) {
-			return;
-		}
-
-		if (previousSelectedIdx === 0 && hasValueState) {
-			this.component._isValueStateFocused = true;
-			items[0].selected = false;
-			items[0].focused = false;
-
 			return;
 		}
 
@@ -324,7 +324,6 @@ class Suggestions {
 			this.component.focused = true;
 			this.component.hasSuggestionItemSelected = false;
 			this.selectedItemIndex -= 1;
-
 			return;
 		}
 

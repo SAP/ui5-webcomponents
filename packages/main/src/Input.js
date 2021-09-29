@@ -690,6 +690,12 @@ class Input extends UI5Element {
 			this.focused = true;
 		}
 
+		if (this._isValueStateFocused) {
+			this._isValueStateFocused = false;
+			this.focused = true;
+			this.Suggestions.close()
+		}
+
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 		}
@@ -724,6 +730,7 @@ class Input extends UI5Element {
 
 		this.closePopover();
 
+		this.hasSuggestionItemSelected = false;
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
@@ -809,6 +816,7 @@ class Input extends UI5Element {
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
 		this.hasSuggestionItemSelected = false;
+		this._isValueStateFocused = false;
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
@@ -1183,7 +1191,6 @@ class Input extends UI5Element {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
-				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
