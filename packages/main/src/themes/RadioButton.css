@@ -29,7 +29,12 @@
 
 /* Disabled */
 :host([disabled]) .ui5-radio-root {
+	color: var(--_ui5_radio_button_color);
 	opacity: var(--sapContent_DisabledOpacity);
+}
+
+:host([disabled][checked]) .ui5-radio-svg-outer {
+	stroke: var(--_ui5_radio_button_color);
 }
 
 /* Focused */
