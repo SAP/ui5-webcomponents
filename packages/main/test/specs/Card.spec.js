@@ -41,12 +41,10 @@ describe("Card general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 
-	it("tests aria-labelledby", async () => {
+	it("tests aria-label", async () => {
 		const card = await browser.$("#textAreaAriaLabel").shadow$(".ui5-card-root");
-		const cardId = await browser.$("#textAreaAriaLabel").getProperty("_id");
-		const EXPECTED_ARIA_LABELLEDBY_CARD = `${cardId}-desc`;
 
-		assert.strictEqual(await card.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLEDBY_CARD,
+		assert.strictEqual(await card.getAttribute("aria-label"), "Card",
 			"The aria-labelledby of card is correctly set.");
 	})
 
@@ -86,6 +84,23 @@ describe("CardHeader", () => {
 			"The aria-labelledby is correctly set.");
 		assert.strictEqual(await header2.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLEDBY_HEADER2,
 			"The aria-labelledby is correctly set.");
-	})
+	});
+});
+describe("Card Accessibility", () => {
+    before(async () => {
+        await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+    });
 
+    it("test accessibleName", async () => {
+        const card = await browser.$("#textCard").shadow$(".ui5-card-root");
+
+        assert.strictEqual(await card.getAttribute("aria-label"), "Card Internships",
+            "The aria-label is correctly when accessibleName is used.");
+    });
+    it("test accessibleNameRef", async () => {
+        const card = await browser.$("#textCardRef").shadow$(".ui5-card-root");
+
+        assert.strictEqual(await card.getAttribute("aria-label"), "Card I am the content",
+            "The aria-label is correctly when accessibleNameRef is used.");
+    });
 });

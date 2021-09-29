@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -47,6 +48,32 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
+		/**
+		 * Defines the accessible name of the component.
+         * <b>Note:</b> <code>accessibleName</code> is required for <ui5-card>, provides unique name for the region.
+         * <b>Note:</b> If <code>accessibleNameRef</code> is provided for <ui5-card>, <code>accessibleName</code> is not required.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the input.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -116,8 +143,9 @@ class Card extends UI5Element {
 		return !!this.header.length;
 	}
 
-	get _ariaCardRoleDescription() {
-		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	get _getAriaLabelledby() {
+		const effectiveAriaLabel = getEffectiveAriaLabelText(this) ? ` ${getEffectiveAriaLabelText(this)}` : "";
+		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
 	}
 
 	get _ariaCardContentLabel() {
