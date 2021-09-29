@@ -18,7 +18,7 @@ describe("Tree general interaction", () => {
 
 		await toggleButton.click();
 		const listItemsAfter = await tree.shadow$$("ui5-li-tree").length;
-		assert.ok(listItemsAfter < listItemsBefore, "After collapsing a node, there are less items in the list");
+		assert.isBelow(listItemsAfter, listItemsBefore, "After collapsing a node, there are less items in the list");
 	});
 
 	it("Tree items can be expanded", async () => {
@@ -28,7 +28,7 @@ describe("Tree general interaction", () => {
 
 		await toggleButton.click();
 		const listItemsAfter = await tree.shadow$$("ui5-li-tree").length;
-		assert.ok(listItemsAfter > listItemsBefore, "After expanding a node, there are more items in the list");
+		assert.isAbove(listItemsAfter, listItemsBefore, "After expanding a node, there are more items in the list");
 	})
 
 });
@@ -45,7 +45,7 @@ describe("Tree proxies properties to list", () => {
 		const modes = ["None", "SingleSelect", "SingleSelectBegin", "SingleSelectEnd", "MultiSelect", "Delete"];
 		modes.forEach(async mode => {
 			await tree.setAttribute("mode", mode);
-			assert.ok(await list.getAttribute("mode") === mode, "Mode applied");
+			assert.strictEqual(await list.getAttribute("mode"), mode, "Mode applied");
 		});
 	});
 
@@ -57,9 +57,9 @@ describe("Tree proxies properties to list", () => {
 		await tree.setAttribute("footer-text", "footer text");
 		await tree.setAttribute("no-data-text", "no data text");
 
-		assert.ok(await list.getAttribute("header-text") === "header text", "header text applied");
-		assert.ok(await list.getAttribute("footer-text") === "footer text", "footer text applied");
-		assert.ok(await list.getAttribute("no-data-text") === "no data text", "no data text applied");
+		assert.strictEqual(await list.getAttribute("header-text"), "header text", "header text applied");
+		assert.strictEqual(await list.getAttribute("footer-text"), "footer text", "footer text applied");
+		assert.strictEqual(await list.getAttribute("no-data-text"), "no data text", "no data text applied");
 	})
 
 });

@@ -12,10 +12,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await browser.setWindowSize(1400, 1080);
 
 		const layoutChangeCounter = await browser.$("#testLayoutChange");
-		const visibleColumns = await browser.executeAsync(async done => {
-			const fcl = document.getElementById("fcl3");
-			done(await fcl.getAttribute("_visible-columns"));
-		});
+		const visibleColumns = await browser.$("#fcl3").getAttribute("_visible-columns");
 
 		// assert
 		assert.strictEqual(visibleColumns, "3", "3 columns are visible");
@@ -27,10 +24,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await browser.setWindowSize(1000, 1080);
 
 		const layoutChangeCounter = await browser.$("#testLayoutChange");
-		const visibleColumns = await browser.executeAsync(async done => {
-			const fcl = document.getElementById("fcl3");
-			done(await fcl.getAttribute("_visible-columns"));
-		});
+		const visibleColumns = await browser.$("#fcl3").getAttribute("_visible-columns");
 
 		// assert
 		assert.strictEqual(visibleColumns, "2", "2 columns are visible");
@@ -42,10 +36,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await browser.setWindowSize(500, 1080);
 
 		const layoutChangeCounter = await browser.$("#testLayoutChange");
-		const visibleColumns = await browser.executeAsync(async done => {
-			const fcl = document.getElementById("fcl3");
-			done(await fcl.getAttribute("_visible-columns"));
-		});
+		const visibleColumns = await browser.$("#fcl3").getAttribute("_visible-columns");
 
 		// assert
 		assert.strictEqual(visibleColumns, "1", "1 columns are visible");
@@ -80,10 +71,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const fcl = await browser.$("#fcl1");
 		const btn = await browser.$("#switchBtn1");
 
-		let visibleColumns = await browser.executeAsync(async done => {
-			const fcl = document.getElementById("fcl1");
-			done(await fcl.getAttribute("_visible-columns"));
-		});
+		let visibleColumns = await browser.$("#fcl1").getAttribute("_visible-columns");
 
 		assert.strictEqual(visibleColumns, "2", "2 columns are visible");
 		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
@@ -91,10 +79,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		// act
 		await btn.click(); // fcl1.layout =  "ThreeColumnsMidExpanded"
 
-		visibleColumns = await browser.executeAsync(async done => {
-			const fcl = document.getElementById("fcl1");
-			done(await fcl.getAttribute("_visible-columns"));
-		});
+		visibleColumns = await browser.$("#fcl1").getAttribute("_visible-columns");
 
 		// assert
 		assert.strictEqual(visibleColumns, "3", "3 columns are visible");

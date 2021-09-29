@@ -63,46 +63,16 @@ or
 Make sure you're running the `start` command while running single test specs, as it provides a server and the ability to change
 files, and test the changes on the fly.
 
-## 2.4 Getting the tests to run on Windows
-
-When you first try to run the tests on a Windows machine, you're most likely to get an error saying `node-gyp` is not installed.
-
-Certain modules required by the test setup have a dependency to [Node gyp](https://github.com/nodejs/node-gyp). 
-Normally, it is installed along with the other dependencies from NPM, but for a Windows environment specifically, this is not enough, and
-some manual steps must be performed:
- 1. Install Windows build tools:
-```shell
-npm install --global --production windows-build-tools --vs2015
-```
-Note the `--vs2015` flag.
-
-Also note that this might take some time to complete as several GB might be downloaded in the process.
-
- 2. Configure the right version of Windows build tools for Node.js:
-```shell
-npm config set msvs_version 2015 -–global
-```
-
- 3. Install Python 2.7 if you don't already have it: https://www.python.org/download/releases/2.7/
-
- 4. Set the version of Python to 2.7
-```shell
-npm config set python python2.7
-```
-
-This should be enough to be able to run `yarn test` successfully. If you still get an error about `node-gyp`,
-you should install Windows build tools 2015 (from step 1) manually: https://www.microsoft.com/en-us/download/details.aspx?id=48159.
-
 ## 3. Writing tests
 
 The simplest test would look something like this:
 
 ```js
-describe("ui5-demo rendering", () => {
-	browser.url("http://localhost:8080/test-resources/pages/index.html");
+describe("ui5-demo rendering", async () => {
+	await browser.url("http://localhost:8080/test-resources/pages/index.html");
 
-	it("tests if web component is correctly rendered", () => {
-		const innerContent = browser.$("#myFirstComponent").shadow$("div");
+	it("tests if web component is correctly rendered", async () => {
+		const innerContent = await browser.$("#myFirstComponent").shadow$("div");
 		assert.ok(innerContent, "content rendered");
 	});
 });
@@ -179,3 +149,101 @@ Debugging with WDIO is really simple. Just follow these 3 steps:
 	  
 Google Chrome will then open in a new window, controlled by WDIO via the ChromeDriver, and your test will pause on your 
 breakpoint of choice. Proceed to debug normally.	 
+
+## 5. Best practices for writing tests
+
+### Do not overuse `assert.ok`
+
+When an `assert.ok` fails, the error you get is "Expected something to be true, but it was false". This is fine when you're passing a Boolean, but not ok when there is an expression inside `assert.ok` and you'd like to know which part of the expression is not as expected.
+
+For example, when `assert.ok(a === b, "They match")` fails, the error just says that an expression that was expected to be true was false. However, if you use `assert.strictEqual(a, b, "They match")`, and it fails, the error will say that `a` was expected to be a certain value, but it was another value, which makes it much easier to debug.
+
+Prefer one of the following, when applicable:
+- `assert.notOk(a)` instead of `assert.ok(!a)`
+- `assert.strictEqual(a, b)` instead of `assert.ok(a === b)`
+- `assert.isBelow(a, b)` instead of `assert.ok(a < b)`
+- `assert.isAbove(a, b)` instead of `assert.ok(a > b)`
+- `assert.exists` / `assert.notExists` when checking for `null` or `undefined`
+
+### Do not overuse `assert.strictEqual`
+
+Use:
+- `assert.ok` instead of `assert.strictEqual(a, true)`
+- `assert.notOk` instead of `assert.strictEqual(a, false)`
+
+### Use `isExisting` to check DOM
+
+Preferred:
+ ```js
+assert.ok(await browser.$(<SELECTOR>).isExisting())
+``` 
+
+instead of:
+
+```js
+assert.ok((await browser.$$(<SELECTOR>)).length)
+```
+
+### Do not use `browser.executeAsync` for properties
+
+We have custom commands such as `getProperty` and `setProperty` to fill in gaps in the WDIO standard command set. Use them instead of manually setting properties with `executeAsync`.
+
+### Use `assert.include` instead of string functions
+
+Use:
+
+ ```js
+assert.include(text, EXPECTED_TEXT, "Text found")
+assert.notInclude(text, NOT_EXPECTED_TEXT, "Text not found")
+```
+
+instead of:
+
+```js
+assert.ok(text.indexOf(EXPECTED_TEXT) > -1, "Text found")
+assert.ok(text.includes(EXPECTED_TEXT), "Text found")
+assert.notOk(text.includes(NOT_EXPECTED_TEXT), "Text not found")
+```
+
+### Extract variables before asserting
+
+Avoid complex expressions inside `assert`s by extracting parts of them to variables and only asserting the variables.
+
+## 6. Using the synchronous syntax for writing texts
+
+WebdriverIO still supports (although now deprecated) the *synchronous* syntax for writing tests. Click [here](https://webdriver.io/docs/sync-vs-async/) for more information on "sync vs async".
+
+UI5 Web Components versions up to, including, `1.0.0-rc.15`, used to recommend the *synchronous* syntax, as it is easier to use.
+
+If you have already written tests for your custom UI5 Web Components using the *synchronous* syntax, and you update to a later version than `1.0.0-rc.15`, your tests will no longer run.
+You have 2 options:
+ - Rewrite all tests to use the *asynchronous* syntax. Click the link above to see some examples. This is the **recommended** approach, because the *synchronous* syntax will no longer work with future `nodejs` versions.
+ - For the time being, adapt your WebdriverIO configuration to continue supporting the *synchronous* syntax.
+
+### 5.1 Supporting the synchronous syntax for writing tests
+
+ - Change your `config/wdio.conf.js` file's content from:
+
+ ```js
+ module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
+ ```
+ to:
+
+ ```js
+ module.exports = require("@ui5/webcomponents-tools/components-package/wdio.sync.js");
+ ```
+
+ This will give you the exact same WebdriverIO configuration, but with *synchronous* custom commands (such as `getProperty`, `setProperty`, `hasClass`, etc...).
+
+ - Manually install `@wdio/sync`
+
+ You can install it with `npm`:
+
+ `npm i --save-dev @wdio/sync`
+
+ or with `yarn`:
+
+ `yarn add -D @wdio/sync`
+
+ Just installing the package (with no extra configuration) is enough to let WebdriverIO run the *synchronous* tests.
+ 

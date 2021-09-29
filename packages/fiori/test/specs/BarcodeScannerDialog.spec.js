@@ -20,7 +20,8 @@ describe("BarcodeScannerDialog Behavior", () => {
 		}, 25000, "expect scan-error output");
 
 		// assert
-		assert.ok((await scanError.getText()).length > 0, "fires scan-error when no permissions");
+		const scanErrorText = await scanError.getText();
+		assert.ok(scanErrorText.length, "fires scan-error when no permissions");
 	});
 
 });

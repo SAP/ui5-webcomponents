@@ -16,7 +16,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
 
 			await icon.click();
-			assert.ok(!await popover.getProperty("opened"), "Popover should close");
+			assert.notOk(await popover.getProperty("opened"), "Popover should close");
 		});
 
 		it("Checks focus state", async () => {
@@ -28,14 +28,18 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await mcb.getProperty("focused"), "MultiComboBox should be focused.");
 
 			await input.keys("ArrowLeft");
-			await browser.pause(300);
 
-			assert.notOk(await mcb.getProperty("focused"), "MultiComboBox should no longer be focused.");
+			await browser.waitUntil(async () => !(await mcb.getProperty("focused")), {
+				timeout: 500,
+				timeoutMsg: "MultiComboBox should no longer be focused"
+			});
 
 			await input.keys("ArrowRight");
-			await browser.pause(500);
 
-			assert.ok(await mcb.getProperty("focused"), "MultiComboBox should be focused again.");
+			await browser.waitUntil(() => mcb.getProperty("focused"), {
+				timeout: 500,
+				timeoutMsg: "MultiComboBox should be focused again"
+			});
 		});
 
 		it("MultiComboBox open property is set correctly", async () => {
@@ -52,7 +56,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await callCountInput.getValue(), "1", "Event should be called once");
 
 			await icon.click();
-			assert.ok(!await mcb.getProperty("open"), "MultiComboBox should be closed");
+			assert.notOk(await mcb.getProperty("open"), "MultiComboBox should be closed");
 
 			assert.strictEqual(await eventInput.getValue(), "openChange", "openChange should be called");
 			assert.strictEqual(await callCountInput.getValue(), "2", "Event should be called once");
@@ -121,7 +125,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await icon.click();
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 
 			await firstItem.click();
 
@@ -183,12 +187,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys("c");
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
 
 			await firstItem.click();
 
-			assert.strictEqual(await popover.getProperty("opened"), false, "When the content is clicked, the popover should close");
+			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be removed");
 			assert.ok(await browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
@@ -202,12 +206,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys("c");
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
 
 			await firstItemCheckbox.click();
 
-			assert.strictEqual(await popover.getProperty("opened"), true, "When the content is clicked, the popover should close");
+			assert.ok(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be removed");
 		});
 
@@ -218,6 +222,70 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(await nMoreText.getText(), "1 More", "token 1 should be visible");
 		});
+
+		it("tests if clicking n more will prefilter items before opening the popover", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+
+			const mcb = await $("#more-mcb");
+			const icon = await mcb.shadow$("[input-icon]");
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			await mcb.scrollIntoView();
+			await nMoreText.click();
+
+			await browser.waitUntil(async () => mcb.getProperty("open"), {
+				timeout: 500,
+				timeoutMsg: "Popover is open"
+			});
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+
+			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
+
+			await icon.click();
+
+			await browser.waitUntil(async () => !(await mcb.getProperty("open")), {
+				timeout: 500,
+				timeoutMsg: "Popover should be closed"
+			});
+
+			await icon.click();
+
+			await browser.waitUntil(async () => await mcb.getProperty("open"), {
+				timeout: 500,
+				timeoutMsg: "Popover should be open"
+			});
+
+			assert.strictEqual((await list.getProperty("items")).length, 4, "4 items should be shown");
+		});
+
+		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+
+			const mcb = await $("#more-mcb");
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			await mcb.scrollIntoView();
+
+			const input = await mcb.shadow$("input");
+
+			await nMoreText.click();
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+			const lastListItem = await list.$("ui5-li:last-child");
+
+			await input.click();
+			await input.keys("c");
+
+			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
+			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
+		})
 	});
 
 	describe("keyboard handling", () => {
@@ -239,6 +307,41 @@ describe("MultiComboBox general interaction", () => {
 			tokens = await browser.$("#multi1").shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
+		});
+
+		it ("Value should be reset on ESC key", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mCombo = await browser.$("#another-mcb");
+			const mCombo2 = await browser.$("#more-mcb");
+			const input = await mCombo.shadow$("#ui5-multi-combobox-input");
+			const input2 = await mCombo2.shadow$("#ui5-multi-combobox-input");
+
+			await input.click();
+			await input.keys("C");
+			await input.keys("Escape");
+			await input.keys("Escape");
+	
+			assert.strictEqual(await mCombo.getProperty("value"), "", "Value should be reset to the initial one");
+
+			await input.click();
+			await input.keys("C");
+
+			// Move focus to another element and bring it back
+			await input2.click();
+			await input.click();
+
+			await input.keys("o");
+			await input.keys("Escape");
+			await input.keys("Escape");
+
+			assert.strictEqual(await mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+
+			await input2.click();
+			await input2.keys("C");
+			await input2.keys("Escape");
+
+			assert.strictEqual(await mCombo2.getProperty("value"), "", "Value should be cleared on escape even if the suggesitons are openjed");
 		});
 
 		it ("selects an item when enter is pressed and value matches a text of an item in the list", async () => {

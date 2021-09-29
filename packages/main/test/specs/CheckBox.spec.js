@@ -9,7 +9,7 @@ describe("CheckBox general interaction", () => {
 	it("tests checked default value is false", async () => {
 		const checkBox = await browser.$("#cb1");
 
-		assert.strictEqual(await checkBox.getProperty("checked"), false, "Check if default value for checked is false");
+		assert.notOk(await checkBox.getProperty("checked"), "Check if default value for checked is false");
 	});
 
 	it("tests change event", async () => {
@@ -43,7 +43,7 @@ describe("CheckBox general interaction", () => {
 		const wrappingCbHeight = await wrappingCb.getSize("height");
 
 		assert.strictEqual(truncatingCbHeight, CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is : " + truncatingCbHeight);
-		assert.ok(wrappingCbHeight > CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is more than: " + CHECKBOX_DEFAULT_HEIGHT);
+		assert.isAbove(wrappingCbHeight, CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is more than: " + CHECKBOX_DEFAULT_HEIGHT);
 	});
 
 	it("tests ui5-icon", async () => {

@@ -14,7 +14,7 @@ describe("Avatar", () => {
 
 		// img tag is rendered, ui5-icon - not
 		assert.ok(await image.isExisting(), "img is rendered");
-		assert.ok(!(await icon.isExisting()), "icon is not rendered");
+		assert.notOk(await icon.isExisting(), "icon is not rendered");
 	});
 
 	it("tests rendering of icon", async () => {
@@ -23,7 +23,7 @@ describe("Avatar", () => {
 		const icon = await avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
-		assert.ok(!(await image.isExisting()), "img is not rendered");
+		assert.notOk(await image.isExisting(), "img is not rendered");
 		assert.ok(await icon.isExisting(), "icon is rendered");
 	});
 
@@ -35,8 +35,8 @@ describe("Avatar", () => {
 
 		// ui5-icon tag is rendered, img - not
 		assert.ok(await image.isExisting(), "img is rendered");
-		assert.ok(!(await icon.isExisting()), "icon is not rendered");
-		assert.ok(!(await initials.isExisting()), "initials are not rendered");
+		assert.notOk(await icon.isExisting(), "icon is not rendered");
+		assert.notOk(await initials.isExisting(), "initials are not rendered");
 	});
 
 	it("tests rendering of initials", async () => {
