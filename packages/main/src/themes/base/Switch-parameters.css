@@ -24,9 +24,12 @@
 	--_ui5_switch_track_hover_background_color: var(--sapButton_Track_Background);
 	--_ui5_switch_track_hover_checked_background_color: var(--sapButton_Track_Selected_Background);
 	--_ui5_switch_track_border_radius: 0.75rem;
+	
 
 	--_ui5-switch_track-off-background: var(--sapButton_Track_Background);
 	--_ui5-switch_track-on-background: var(--sapButton_Track_Selected_Background);
+
+	--_ui5-switch_track-off-hover-background: var(--_ui5-switch_track-off-background);
 
 	--_ui5-switch-track-transition: none;
 
