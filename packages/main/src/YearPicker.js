@@ -105,6 +105,7 @@ class YearPicker extends CalendarPart {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
 
 		this._calculateFirstYear();
+		this._lastYear = this._firstYear + PAGE_SIZE - 1;
 
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
