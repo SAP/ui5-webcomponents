@@ -52,7 +52,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-time-picker</code> component provides an input field with assigned sliders which open on user action.
+ * The <code>ui5-time-picker</code> component provides an input field with assigned sliders which are opened on user action.
  * The <code>ui5-time-picker</code> allows users to select a localized time using touch,
  * mouse, or keyboard input. It consists of two parts: the time input field and the
  * sliders.
