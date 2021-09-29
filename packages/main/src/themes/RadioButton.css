@@ -163,6 +163,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	pointer-events: none;
+	color: var(--_ui5_radio_button_label_color);
 }
 
 :host([wrapping-type="Normal"][text]) .ui5-radio-root {

@@ -22,5 +22,7 @@
 	--_ui5_radio_button_hover_background: var(--sapHighlightTextColor);
 	--_ui5_radio_button_hover_transition: background-color 300ms ease-in-out;
 	--_ui5_radio_button_label_offset: 3.875rem;
+	--_ui5_radio_button_label_color: var(--sapTitleColor);
 	--_ui5_radio_button_items_align: center;
+	
 }
