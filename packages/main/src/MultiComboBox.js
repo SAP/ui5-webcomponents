@@ -630,11 +630,15 @@ class MultiComboBox extends UI5Element {
 		this._inputDom.focus();
 	}
 
-	_handleArrowNavigation(event) {
+	async _handleArrowNavigation(event) {
 		const isArrowDown = isDown(event);
 		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
 
 		event.preventDefault();
+
+		if (this.hasValueStateMessage && !this.valueStateHeader) {
+			await this._setValueStateHeader();
+		}
 
 		if (isArrowDown && this.focused && this.valueStateHeader) {
 			this.valueStateHeader.focus();
@@ -802,7 +806,6 @@ class MultiComboBox extends UI5Element {
 		});
 
 		this._valueBeforeOpen = this.value;
-		this.hasValueStateMessage && this._setValueStateHeader();
 
 		if (this.filterSelected) {
 			this.selectedItems = this._filteredItems.filter(item => item.selected);
