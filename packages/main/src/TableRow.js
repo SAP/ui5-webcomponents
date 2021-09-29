@@ -241,7 +241,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
-		if (!this.contains(document.activeElement)) {
+		if (!this.contains(this.getRootNode().activeElement)) {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,
@@ -266,7 +266,7 @@ class TableRow extends UI5Element {
 	}
 
 	_getActiveElementTagName() {
-		return document.activeElement.localName.toLocaleLowerCase();
+		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
 	}
 
 	activate() {
