@@ -60,7 +60,7 @@ const metadata = {
  * <h3>Usage</h3>
  * The user can enter a time by:
  * <ul>
- * <li>Using the sliders that open in a popup</li>
+ * <li>Using the sliders that are displayed in a popup</li>
  * <li>Typing it in directly in the input field</li>
  * </ul>
  * <br><br>
