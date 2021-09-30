@@ -138,7 +138,6 @@
 	height: var(--_ui5_radio_button_height);
 	position: relative;
 	display: inline-flex;
-	align-items: var(--_ui5_radio_button_items_align);
 	flex-wrap: nowrap;
 	outline: none;
 	max-width: 100%;
