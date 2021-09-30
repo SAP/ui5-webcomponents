@@ -1,5 +1,37 @@
-commit 4eb3b11f5490ce3455e23be0bd6ee9d678f1deb2
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 30 16:19:29 2021 +0300
+commit 1c8533b437786dba6e45186e832e1a17e1df55d6
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Sep 30 16:30:17 2021 +0300
 
-    docs(ui5-combobox): Documentation enhancements (#4030)
+    (ui5-multi-combobox): Improve arrow navigation functionality (#3970)
+    
+    * Improve Arrow Navigation Functionality
+    
+    * Add CSS updates
+    
+    * Linting
+    
+    * Remove comented code
+    
+    * Fix formatting error
+    
+    * Remove unused var
+    
+    * Add test
+    
+    * Add more tests
+    
+    * Remove extra async
+    
+    * Fix exception
+    
+    * Clean eventListener usage
+    
+    * Refactor value state header reference storing
+    
+    * Remove the manual setting of the focused property
+    
+    * Fix the dynamic value state header nav case
+    
+    * Improve item keydown handler name
+    
+    * Test fixes
