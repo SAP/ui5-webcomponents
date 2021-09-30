@@ -116,11 +116,10 @@ describe("Table general interaction", () => {
 			// act
 			await btnScroll.click();
 
-			await browser.pause(500);
-
-			// assert
-			assert.strictEqual(await inputResult.getProperty("value"), "1",
-				"The load-more is fired.");
+			await browser.waitUntil(async () => (await inputResult.getProperty("value")) === "1", {
+				timeout: 1000,
+				timeoutMsg: "The load-more event must be fired."
+			});
 		});
 	});
 

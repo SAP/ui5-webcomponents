@@ -134,13 +134,14 @@ describe("Toast general interaction", () => {
 
 		await button.click();
 
-		// Give time for the animation to end and _ontransitionend to be called
-		await browser.pause(1000);
-
-		assert.notOk(await toast.getProperty("open"),
-		"Open property should be false after Toast is closed");
-		assert.notOk(await toast.getProperty("domRendered"),
-		"domRendered property value should be false after Toast is closed");
+		await browser.waitUntil(async () => {
+			const open = await toast.getProperty("open");
+			const domRendered = await toast.getProperty("domRendered");
+			return !open && !domRendered;
+		}, {
+			timeout: 1000,
+			timeoutMsg: "After 1000ms the toast should be closed and domRendered should be false"
+		});
 	});
 
 	it("tests minimum allowed duration", async () => {
