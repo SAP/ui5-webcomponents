@@ -19,6 +19,10 @@
 			flex-direction: column;
 			margin-bottom: 2rem;
 		}
+
+		div {
+			width: 200px;
+		}
 	</style>
 </head>
 
@@ -27,7 +31,7 @@
 	<ui5-title level="H1">Radios within a group</ui5-title><br>
 	<div aria-labelledby="radioGroupTitle1" role="radiogroup" class="radio-section">
 		<ui5-title id="radioGroupTitle1">Group1 - None pre-selection</ui5-title>
-		<ui5-radio-button id="testRbtn" text="N/A" checked disabled name="test"></ui5-radio-button>
+		<ui5-radio-button id="testRbtn" text="N/A" checked name="test"></ui5-radio-button>
 		<ui5-radio-button id="testRbtn1" text="Male" name="test"></ui5-radio-button>
 		<ui5-radio-button id="testRbtn2"text="Female" name="test"></ui5-radio-button>
 	</div>
@@ -104,6 +108,9 @@
 		<ui5-label>- for belize use 'sap-ui-theme=sap_belize'</ui5-label>
 	</p>
 
+		<ui5-radio-button text="N/A" checked disabled name="test"></ui5-radio-button>
+		<ui5-radio-button text="Male" name="test"></ui5-radio-button>
+		<ui5-radio-button text="Female" name="test"></ui5-radio-button>
 	<script>
 		var counter = 0;
 		var groupEventCounter = 0;
