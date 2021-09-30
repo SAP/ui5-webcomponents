@@ -15,7 +15,7 @@ files.forEach((file, fileIndex) => {
 	// Directory with articles
 	if (isDir) {
 		const cleanName = file.replace(/^[0-9 \.]+/, "");
-		const shortName = file.replace(/^[0-9 \.]+/, "").replace(/ /g, "_").toLowerCase(); // becomes "usage-with-frameworks"
+		const shortName = file.replace(/^[0-9 \.]+/, "").replace(/ /g, "-").toLowerCase(); // becomes "usage-with-frameworks"
 		const sectionDir = path.join(destPath, cleanName);
 		rimraf.sync(sectionDir);
 		fs.mkdirSync(sectionDir);
@@ -43,7 +43,7 @@ ${articleContent}
 			} else { // Create a nested item
 
 				const articleClean = article.replace(/^[0-9 \.]+/, "").replace(/\.md$/, "");
-				const articleShortName = article.replace(/^[0-9 \.]+/, "").replace(/ /g, "_").replace(/\.md$/, "").toLowerCase();
+				const articleShortName = article.replace(/^[0-9 \.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
 				articleContent = `---
 layout: docs
 title: ${articleClean}
@@ -61,7 +61,7 @@ ${articleContent}`;
 		});
 	} else { // create a standalone article outside the directory structure (f.e. FAQ)
 		let articleContent = `${fs.readFileSync(srcFilePath)}`;
-		const shortName = file.replace(/^[0-9 \.]+/, "").replace(/ /g, "_").replace(/\.md$/, "").toLowerCase();
+		const shortName = file.replace(/^[0-9 \.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
 		const cleanName = file.replace(/^[0-9 \.]+/, "");
 		articleContent = `---
 layout: docs
