@@ -375,7 +375,7 @@ class Suggestions {
 			item.selected = false;
 		});
 	}
-	
+
 	_clearItemFocus() {
 		const focusedItem = this._getItems().find(item => item.focused);
 

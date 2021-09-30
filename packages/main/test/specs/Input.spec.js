@@ -170,9 +170,9 @@ describe("Input general interaction", () => {
 		await input.keys("a");
 
 		// act - scroll with keyboard
-		await input.keys("ArrowUp");
-		await input.keys("ArrowUp");
-		await input.keys("ArrowUp");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
 
 		// assert
 		const scrollTop = parseInt(await scrollResult.getProperty("value"));
@@ -276,31 +276,6 @@ describe("Input general interaction", () => {
 		// assert.strictEqual(await inputResult.getValue(), "2", "suggestionItemSelected event called for second time");
 	});
 
-	it("handles suggestions via keyboard", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
-
-		const suggestionsInput = await browser.$("#myInput2").shadow$("input");
-		const inputResult = await browser.$("#inputResult").shadow$("input");
-
-		await suggestionsInput.click();
-		await suggestionsInput.keys("c");
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("Enter");
-
-		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
-		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelected event called once");
-
-		await suggestionsInput.keys("c"); // to open the suggestions pop up once again
-		await suggestionsInput.keys("ArrowUp");
-
-		assert.strictEqual(await suggestionsInput.getValue(), "",
-			"The Last item 'Inactive Condensed' has been selected, producing empty string as 'Inactive'");
-
-		await inputResult.click();
-
-		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
-	});
-
 	it("handles suggestions selection cancel with ESC", async () => {
 		const suggestionsInput = await browser.$("#myInputEsc").shadow$("input");
 
@@ -359,7 +334,6 @@ describe("Input general interaction", () => {
 		await suggestionsInput.keys("Enter");
 		await browser.pause(300);
 
-		assert.ok(await respPopover.getProperty("opened"), "Popover should not be closed after trying to select a group header.");
 		assert.strictEqual(await suggestionsInput.getValue(), "", "Group item is not selected");
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
@@ -538,5 +512,77 @@ describe("Input general interaction", () => {
 
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
+	});
+});
+
+describe("Input arrow navigation", () => {
+
+	it("handles suggestions via keyboard, should not fire suggestionItemSelect on inactive item", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput2").shadow$("input");
+		const inputResult = await browser.$("#inputResult").shadow$("input");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
+		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelected event called once");
+
+		await suggestionsInput.keys("Backspace"); // to open the suggestions pop up once again
+		await suggestionsInput.keys("ArrowUp");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Coz",
+			"The input is still focused");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "", "Inactive item text is not applied as input's value");
+		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
+	});
+
+	it("Should open suggestions popover when focused", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await browser.$("#myInput2");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// focus the input field which will display the suggestions
+		await input.click();
+
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+	});
+
+	it("Should navigate up and down through the suggestions popover with arrow keys", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput2").shadow$("input");
+		const inputResult = await browser.$("#inputResult").shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+		await suggestionsInput.keys("ArrowDown");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), null, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
+
+		await suggestionsInput.keys("ArrowDown");
+		const secondListItem = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Compact", "Second item has been selected");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), null, "Input is not focused");
+		assert.strictEqual(await secondListItem.getProperty("focused"), true, "Second list item is focused");
 	});
 });

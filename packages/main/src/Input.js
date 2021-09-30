@@ -627,8 +627,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.showSuggestions) {
-			this.Suggestions._clearItemFocus();
-			this.Suggestions._deselectItems();
+			this._clearPopoverFocusAndSelection();
 		}
 
 		this._keyDown = true;
@@ -677,8 +676,8 @@ class Input extends UI5Element {
 	}
 
 	_handleEscape() {
-		const isOpen = this.Suggestions.isOpened();
 		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
+		const isOpen = hasSuggestions && this.Suggestions.isOpened();
 
 		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
@@ -693,7 +692,7 @@ class Input extends UI5Element {
 		if (this._isValueStateFocused) {
 			this._isValueStateFocused = false;
 			this.focused = true;
-			this.Suggestions.close()
+			this.Suggestions.close();
 		}
 
 		if (!isOpen) {
@@ -729,11 +728,27 @@ class Input extends UI5Element {
 		}
 
 		this.closePopover();
+		this._clearPopoverFocusAndSelection();
 
-		this.hasSuggestionItemSelected = false;
+		if (!this.shouldOpenSuggestions() && this.Suggestions) {
+			this._closeRespPopover(true);
+		} 
+
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
+	}
+
+	_clearPopoverFocusAndSelection() {
+		if (!this.showSuggestions || !this.Suggestions) {
+			return;
+		}
+
+		this._isValueStateFocused = false;
+		this.hasSuggestionItemSelected = false;
+
+		this.Suggestions._deselectItems();
+		this.Suggestions._clearItemFocus();
 	}
 
 	_click(event) {
@@ -899,7 +914,7 @@ class Input extends UI5Element {
 
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
-			&& ((this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected) || this._isValueStateFocused)
+			&& this.containsFocus
 			&& this.showSuggestions
 			&& !this.suggestionSelectionCanceled);
 	}
@@ -1123,6 +1138,10 @@ class Input extends UI5Element {
 
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get containsFocus() {
+		return (this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected) || this._isValueStateFocused;
 	}
 
 	get inputType() {
