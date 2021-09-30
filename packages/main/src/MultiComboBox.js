@@ -613,7 +613,7 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	 _onFirstItemArrowUp(event) {
+	_onItemKeydown(event) {
 		const isFirstItem = this.list.items[0] === event.target;
 
 		event.preventDefault();
