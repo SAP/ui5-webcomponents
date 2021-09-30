@@ -1,5 +1,7 @@
-commit bab54f6b0775b650836a33bc2e87c126b8724fd1
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 30 11:27:44 2021 +0300
+commit 441776e3012e2e38aacb19163a4436a3fcc7ec3c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Sep 30 15:29:57 2021 +0300
 
-    fix(ui5-input): Behaviour on mobile device enhanced (#4025)
+    feat(ui5-popover, ui5-responsive-popover): implement sap_horizon theme (#4020)
+    
+    Related to: https://github.com/SAP/ui5-webcomponents/issues/4032
