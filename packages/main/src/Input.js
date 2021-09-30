@@ -558,7 +558,7 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
-		this.open = this.open && !!this.suggestionItems.length;
+		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
 
 		const FormSupport = getFeature("FormSupport");
 
@@ -713,8 +713,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.open();
-			this.isRespPopoverOpen = true;
+			this.open = true;
 		}
 	}
 
@@ -792,7 +791,10 @@ class Input extends UI5Element {
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
-			this.open = !!inputDomRef.value;
+
+			if (!this._isPhone) {
+				this.open = !!inputDomRef.value;
+			}
 		}
 	}
 
@@ -817,6 +819,7 @@ class Input extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
+			this.focused = false;
 		}
 	}
 
@@ -979,7 +982,7 @@ class Input extends UI5Element {
 
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
-			await this.Suggestions._respPopover();
+			await this.Suggestions._getSuggestionPopover();
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
