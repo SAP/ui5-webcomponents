@@ -7,7 +7,7 @@ describe("Timeline general interaction", () => {
 	});
 
 	it("should fire name-click event on a normal item name", () => {
-		const timelineItemName = browser.$("#test-item").shadow$("ui5-link");
+		const timelineItemName = browser.$("ui5-timeline-item").shadow$("ui5-link");
 		const result = $("#result");
 
 		// disable the click test temporarily, wdio click simulation does not trigger the ui5-link click handler
