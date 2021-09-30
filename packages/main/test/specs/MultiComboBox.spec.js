@@ -395,7 +395,7 @@ describe("MultiComboBox general interaction", () => {
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
 
-			assert.equal(await mcb.getProperty("focused"), false, "The input should be focused");
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
 			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
 			assert.notEqual(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should not be focused");
 
@@ -410,19 +410,19 @@ describe("MultiComboBox general interaction", () => {
 			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
 
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
-			assert.equal(await listItem.getProperty("focused"), false, "The first item is focused");
+			assert.equal(await listItem.getProperty("focused"), false, "The first item should not be focused");
 			assert.equal(focusedElement, null, "The value state header or item should not be focused");
 		});
 
 		it ("focuses the first item on arrow down, then the input on arrow up", async () => {
 			const mcb = await browser.$("#mcb-with-placeholder");
 			const input = await mcb.shadow$("input");
-			const icon = await mcb.shadow$("[input-icon]");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-with-placeholder");
 			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
 
-			await icon.click();
+			await input.click();
+			await input.keys(["Alt", "ArrowDown"]);
 			await input.keys("ArrowDown");
 
 			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
