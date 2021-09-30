@@ -978,7 +978,7 @@ class Input extends UI5Element {
 	}
 
 	async getInputDOMRef() {
-		if (isPhone() && this.Suggestions && this.suggestionItems.length) {
+		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._respPopover();
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}

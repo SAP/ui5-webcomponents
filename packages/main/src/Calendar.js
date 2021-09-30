@@ -77,6 +77,14 @@ const metadata = {
 		_nextButtonDisabled: {
 			type: Boolean,
 		},
+
+		_headerMonthButtonText: {
+			type: String,
+		},
+
+		_headerYearButtonText: {
+			type: String,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
@@ -272,6 +280,21 @@ class Calendar extends CalendarPart {
 		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
+
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		this._headerMonthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
+
+		if (this._currentPicker === "year") {
+			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			rangeStart.setYear(this._currentPickerDOM._firstYear);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+
+			this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
+		} else {
+			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
+		}
 	}
 
 	/**
@@ -370,12 +393,12 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * The month button is only hidden when the month picker is shown
+	 * The month button is hidden when the month picker or year picker is shown
 	 * @returns {boolean}
 	 * @private
 	 */
 	get _isHeaderMonthButtonHidden() {
-		return this._currentPicker === "month";
+		return this._currentPicker === "month" || this._currentPicker === "year";
 	}
 
 	get _isDayPickerHidden() {

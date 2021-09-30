@@ -1,7 +1,3 @@
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -74,6 +70,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_monthButtonText: {
+			type: String,
+		},
+
+		_yearButtonText: {
+			type: String,
+		},
+
 		isYearButtonHidden: {
 			type: Boolean,
 		},
@@ -117,12 +121,6 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
-		const localDate = new Date(this.timestamp * 1000);
-		const calendarDate = CalendarDate.fromTimestamp(localDate.getTime(), this.primaryCalendarType);
-		this._monthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[calendarDate.getMonth()];
-		this._yearButtonText = yearFormat.format(localDate, true);
 		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
 		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 

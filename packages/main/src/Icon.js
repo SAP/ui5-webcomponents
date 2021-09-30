@@ -12,6 +12,7 @@ import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import iconCss from "./generated/themes/Icon.css.js";
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
+const PRESENTATION_ROLE = "presentation";
 
 /**
  * @public
@@ -97,6 +98,7 @@ const metadata = {
 
 		/**
 		 * Defines the aria hidden state of the component.
+		 * Note: If the role is presentation the default value of aria-hidden will be true.
 		 * @private
 		 * @since 1.0.0-rc.15
 		 */
@@ -267,6 +269,10 @@ class Icon extends UI5Element {
 
 	get effectiveAriaHidden() {
 		if (this.ariaHidden === "") {
+			if (this.isDecorative) {
+				return true;
+			}
+
 			return;
 		}
 
@@ -275,6 +281,10 @@ class Icon extends UI5Element {
 
 	get tabIndex() {
 		return this.interactive ? "0" : "-1";
+	}
+
+	get isDecorative() {
+		return this.effectiveAccessibleRole === PRESENTATION_ROLE;
 	}
 
 	get effectiveAccessibleRole() {
@@ -286,7 +296,7 @@ class Icon extends UI5Element {
 			return "button";
 		}
 
-		return this.effectiveAccessibleName ? "img" : "presentation";
+		return this.effectiveAccessibleName ? "img" : PRESENTATION_ROLE;
 	}
 
 	static createGlobalStyle() {
