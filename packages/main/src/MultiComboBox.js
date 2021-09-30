@@ -306,10 +306,10 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-multi-combobox</code> component provides a list box with items and a text field allowing the user to either type a value directly into the control, or choose from the list of existing items.
+ * The <code>ui5-multi-combobox</code> component consists of a list box with items and a text field allowing the user to either type a value directly into the text field, or choose from the list of existing items.
  *
- * It is a drop-down list for selecting and filtering values, commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
- * The select options in the list have checkboxes that permit multi-selection. Entered values are displayed as tokens.
+ * The drop-down list is used for selecting and filtering values, it enables users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow to expand/collapse the list of available options.
+ * The options in the list have checkboxes that permit multi-selection. Entered values are displayed as tokens.
  * <h3>Structure</h3>
  * The <code>ui5-multi-combobox</code> consists of the following elements:
  * <ul>
@@ -339,7 +339,7 @@ const metadata = {
  * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
  * <ul>
  * <li>Every <code>ui5-mcb-item</code> that you provide.
- * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
+ * Example: <code>&lt;ui5-mcb-item stable-dom-ref="item1"&gt;&lt;/ui5-mcb-item&gt;</code></li>
  * </ul>
  *
  * <h3>CSS Shadow Parts</h3>
