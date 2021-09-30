@@ -563,8 +563,7 @@ describe("Input arrow navigation", () => {
 	it("Should navigate up and down through the suggestions popover with arrow keys", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
-		const suggestionsInput = await browser.$("#myInput2").shadow$("input");
-		const inputResult = await browser.$("#inputResult").shadow$("input");
+		const suggestionsInput = await browser.$("#myInput2");
 		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
@@ -575,14 +574,85 @@ describe("Input arrow navigation", () => {
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
-		assert.strictEqual(await suggestionsInput.getProperty("focused"), null, "Input is not focused");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 
 		await suggestionsInput.keys("ArrowDown");
 		const secondListItem = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
 
-		assert.strictEqual(await suggestionsInput.getValue(), "Compact", "Second item has been selected");
-		assert.strictEqual(await suggestionsInput.getProperty("focused"), null, "Input is not focused");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await secondListItem.getProperty("focused"), true, "Second list item is focused");
+	
+		await suggestionsInput.keys("ArrowUp");
+
+		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
+		assert.strictEqual(await secondListItem.getProperty("focused"), false, "Second list item is not focused");
+	
+		await suggestionsInput.keys("ArrowUp");
+
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+	});
+
+	it("Value state header and group headers should be included in the arrow navigation", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#inputError");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("a");
+		await suggestionsInput.keys("ArrowDown");
+
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
+		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+
+		await suggestionsInput.keys("ArrowDown");
+
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
+		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+
+		await suggestionsInput.keys("ArrowDown");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is no longer focused");
+		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+
+		await suggestionsInput.keys("ArrowUp");
+
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
+		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+
+		
+		await suggestionsInput.keys("ArrowUp");
+
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
+		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+
+		await suggestionsInput.keys("ArrowUp");
+
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
 	});
 });

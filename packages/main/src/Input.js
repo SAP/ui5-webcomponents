@@ -732,7 +732,7 @@ class Input extends UI5Element {
 
 		if (!this.shouldOpenSuggestions() && this.Suggestions) {
 			this._closeRespPopover(true);
-		} 
+		}
 
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
