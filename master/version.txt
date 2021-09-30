@@ -1,9 +1,5 @@
-commit 9101130a1ff5f737be04254052e6837263c26736
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed Sep 29 00:04:59 2021 -0700
+commit bab54f6b0775b650836a33bc2e87c126b8724fd1
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Sep 30 11:27:44 2021 +0300
 
-    fix(ui5-icon): decorative icons now have aria-hidden=true (#3983)
-    
-    By design, decorative icons (role=presentation) should also have aria-hidden=true
-    
-    Fixes: #3954
+    fix(ui5-input): Behaviour on mobile device enhanced (#4025)
