@@ -163,6 +163,14 @@ const metadata = {
 		name: {
 			type: String,
 		},
+
+		/**
+		 * Defines the active state (pressed or not) of the component.
+		 * @private
+		 */
+		active: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
@@ -277,13 +285,27 @@ class CheckBox extends UI5Element {
 		this.toggle();
 	}
 
+	_onmousedown() {
+		this.active = true;
+	}
+
+	_onmouseup() {
+		this.active = false;
+	}
+
+	_onfocusout() {
+		this.active = false;
+	}
+
 	_onkeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
+			this.active = true;
 		}
 
 		if (isEnter(event)) {
 			this.toggle();
+			this.active = true;
 		}
 	}
 
@@ -291,6 +313,8 @@ class CheckBox extends UI5Element {
 		if (isSpace(event)) {
 			this.toggle();
 		}
+
+		this.active = false;
 	}
 
 	toggle() {
