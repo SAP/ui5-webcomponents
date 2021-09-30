@@ -21,17 +21,21 @@
 		}
 
 		div {
-			width: 200px;
+			width: 250px;
 		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
 
+	<ui5-radio-button name="simple" text="Option A"></ui5-radio-button>
+	<ui5-radio-button checked name="simple" text="Option B"></ui5-radio-button>
+	<ui5-radio-button name="simple" text="Option C"></ui5-radio-button>
+
 	<ui5-title level="H1">Radios within a group</ui5-title><br>
 	<div aria-labelledby="radioGroupTitle1" role="radiogroup" class="radio-section">
 		<ui5-title id="radioGroupTitle1">Group1 - None pre-selection</ui5-title>
-		<ui5-radio-button id="testRbtn" text="N/A" checked name="test"></ui5-radio-button>
+		<ui5-radio-button id="testRbtn" text="N/A" disabled name="test"></ui5-radio-button>
 		<ui5-radio-button id="testRbtn1" text="Male" name="test"></ui5-radio-button>
 		<ui5-radio-button id="testRbtn2"text="Female" name="test"></ui5-radio-button>
 	</div>
@@ -46,10 +50,10 @@
 	<div aria-labelledby="radioGroupTitle3" role="radiogroup" class="radio-section">
 		<ui5-title id="radioGroupTitle3">Group 3</ui5-title>
 		<ui5-input id="tabField"></ui5-input>
-		<ui5-radio-button id="groupRb1" name="a" text="Option A long long should shrink long long text text text text text text text text"></ui5-radio-button>
+		<ui5-radio-button id="groupRb1" name="a" checked text="Option A long long should shrink long long text text text text text text text text"></ui5-radio-button>
 		<ui5-radio-button id="groupRb2" name="a" disabled text="Option C"></ui5-radio-button>
 		<ui5-radio-button id="groupRb3" name="a" text="Option D"></ui5-radio-button>
-		<ui5-radio-button id="groupRbReadOnly" name="a" checked readonly text="Option E"></ui5-radio-button>
+		<ui5-radio-button id="groupRbReadOnly" name="a" readonly text="Option E"></ui5-radio-button>
 	</div>
 
 	<div aria-labelledby="radioGroupTitle4" role="radiogroup" class="radio-section">
@@ -108,9 +112,6 @@
 		<ui5-label>- for belize use 'sap-ui-theme=sap_belize'</ui5-label>
 	</p>
 
-		<ui5-radio-button text="N/A" checked disabled name="test"></ui5-radio-button>
-		<ui5-radio-button text="Male" name="test"></ui5-radio-button>
-		<ui5-radio-button text="Female" name="test"></ui5-radio-button>
 	<script>
 		var counter = 0;
 		var groupEventCounter = 0;
