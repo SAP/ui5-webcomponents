@@ -1,7 +1,20 @@
-commit 441776e3012e2e38aacb19163a4436a3fcc7ec3c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Sep 30 15:29:57 2021 +0300
+commit 6c292acd24d5f806fd3fdc493641609340055366
+Author: Tereza Chobanova <terezamch@users.noreply.github.com>
+Date:   Thu Sep 30 16:03:29 2021 +0300
 
-    feat(ui5-popover, ui5-responsive-popover): implement sap_horizon theme (#4020)
+    docs: minor documentation fixes (#4012)
     
-    Related to: https://github.com/SAP/ui5-webcomponents/issues/4032
+    * docs: minor documentation fixes
+    
+    The affected components are: ui5-button, ui5-calendar, ui5-color-palette,
+    ui5-color-picker, ui5-date-picker, ui5-date-range-picker, ui5-date-time-picker,
+    ui5-file-uploader, ui5-link, ui5-segmented-button, ui5-switch, ui5-time-picker,
+    ui5-toggle-button, ui5-view-settings-dialog
+    
+    * sample fixed
+    
+    * review applied
+    
+    * review updates
+    
+    * review applied

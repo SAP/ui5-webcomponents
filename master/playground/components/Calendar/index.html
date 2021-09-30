@@ -3122,6 +3122,17 @@
 	</code></pre></figure></pre>
 </section>
 
+<section>
+	<h3>Persian Calendar</h3>
+	<div class="snippet">
+		<div class="datepicker-width">
+			<ui5-calendar primary-calendar-type='Persian'></ui5-calendar>
+		</div>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-calendar</span> <span class="na">primary-calendar-type=</span><span class="s">'Persian'</span><span class="nt">&gt;&lt;/ui5-calendar&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -3134,7 +3145,7 @@ The <code>ui5-calendar</code> component allows users to select one or more dates
 
 The user can navigate to a particular date by: <br> <ul> <li>Pressing over a month inside the months view</li> <li>Pressing over an year inside the years view</li> </ul> <br> The user can confirm a date selection by pressing over a date inside the days view. <br><br>
 
-<h3>Keyboard Handling</h3> The <code>ui5-calendar</code> provides advanced keyboard handling. When a picker is showed and focused the user can use the following keyboard shortcuts in order to perform a navigation: <br> - Day picker: <br> <ul> <li>[F4] - Shows month picker</li> <li>[SHIFT] + [F4] - Shows year picker</li> <li>[PAGEUP] - Navigate to the previous month</li> <li>[PAGEDOWN] - Navigate to the next month</li> <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li> <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li> <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li> <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li> <li>[HOME] - Navigate to the first day of the week</li> <li>[END] - Navigate to the last day of the week</li> <li>[CTRL] + [HOME] - Navigate to the first day of the month</li> <li>[CTRL] + [END] - Navigate to the last day of the month</li> </ul> <br> - Month picker: <br> <ul> <li>[PAGEUP] - Navigate to the previous month</li> <li>[PAGEDOWN] - Navigate to the next month</li> <li>[HOME] - Navigate to the first month of the current row</li> <li>[END] - Navigate to the last month of the current row</li> <li>[CTRL] + [HOME] - Navigate to the first month of the current year</li> <li>[CTRL] + [END] - Navigate to the last month of the year</li> </ul> <br> - Year picker: <br> <ul> <li>[PAGEUP] - Navigate to the previous year range</li> <li>[PAGEDOWN] - Navigate the next year range</li> <li>[HOME] - Navigate to the first year of the current row</li> <li>[END] - Navigate to the last year of the current row</li> <li>[CTRL] + [HOME] - Navigate to the first year of the current year range</li> <li>[CTRL] + [END] - Navigate to the last year of the current year range</li> </ul> <br>
+<h3>Keyboard Handling</h3> The <code>ui5-calendar</code> provides advanced keyboard handling. When a picker is showed and focused the user can use the following keyboard shortcuts in order to perform a navigation: <br> - Day picker: <br> <ul> <li>[F4] - Shows month picker</li> <li>[SHIFT] + [F4] - Shows year picker</li> <li>[PAGEUP] - Navigate to the previous month</li> <li>[PAGEDOWN] - Navigate to the next month</li> <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li> <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li> <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li> <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li> <li>[HOME] - Navigate to the first day of the week</li> <li>[END] - Navigate to the last day of the week</li> <li>[CTRL] + [HOME] - Navigate to the first day of the month</li> <li>[CTRL] + [END] - Navigate to the last day of the month</li> </ul> <br> - Month picker: <br> <ul> <li>[PAGEUP] - Navigate to the previous year</li> <li>[PAGEDOWN] - Navigate to the next year</li> <li>[HOME] - Navigate to the first month of the current row</li> <li>[END] - Navigate to the last month of the current row</li> <li>[CTRL] + [HOME] - Navigate to the first month of the current year</li> <li>[CTRL] + [END] - Navigate to the last month of the year</li> </ul> <br> - Year picker: <br> <ul> <li>[PAGEUP] - Navigate to the previous year range</li> <li>[PAGEDOWN] - Navigate the next year range</li> <li>[HOME] - Navigate to the first year of the current row</li> <li>[END] - Navigate to the last year of the current row</li> <li>[CTRL] + [HOME] - Navigate to the first year of the current year range</li> <li>[CTRL] + [END] - Navigate to the last year of the current year range</li> </ul> <br>
 
 <h3>Calendar types</h3> The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian. By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar, you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules: <br><br>
 
@@ -3218,7 +3229,7 @@ Or, you can use the global configuration and set the <code>calendarType</code> k
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines the мinimum date available for selection.
+                            Determines the minimum date available for selection.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>

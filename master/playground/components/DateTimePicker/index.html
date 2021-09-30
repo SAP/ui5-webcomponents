@@ -3076,7 +3076,7 @@
 			></ui5-datetime-picker>
 
 			<br>
-	
+
 			<ui5-label>d/MM/yyyy, hh:mm:ss aa</ui5-label>
 			<div style="display: flex; flex-direction: row;">
 				<ui5-datetime-picker
@@ -3128,16 +3128,16 @@
 		<ui5-datetime-picker value-state="Information"></ui5-datetime-picker>
 		<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
 		<br><br>
-		<ui5-datetime-picker readonly></ui5-datetime-picker>
-		<ui5-datetime-picker disabled></ui5-datetime-picker>
+		<ui5-datetime-picker readonly value="2020-04-13-04:16:16 AM"></ui5-datetime-picker>
+		<ui5-datetime-picker disabled value="2020-04-13-04:16:16 AM"></ui5-datetime-picker>
 	</div>
 
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 <span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Warning"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 <span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Information"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 <span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Success"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">readonly</span> <span class="na">value=</span><span class="s">"2020-04-13-04:16:16 AM"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">"2020-04-13-04:16:16 AM"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -3151,7 +3151,7 @@
 
 Use the <code>DateTimePicker</code> if you need a combined date and time input component. Don't use it if you want to use either date, or time value. In this case, use the <code>DatePicker</code> or the <code>TimePicker</code> components instead. <br><br> The user can set date/time by: <ul> <li>using the calendar and the time selectors</li> <li>typing in the input field</li> </ul>
 
-Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property <br><br> As most of the input based components, the <code>DateTimePicker</code> supports properties, such as: <code>disabled</code>, <code>readonly</code>, <code>valueState</code> and <code>placeholder</code>.
+Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property
 
 <h3>Formatting</h3>
 
@@ -3358,7 +3358,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines the мinimum date available for selection.
+                            Determines the minimum date available for selection.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>

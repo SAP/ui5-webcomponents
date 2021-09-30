@@ -3106,7 +3106,6 @@
 <span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"call"</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">accessible-name-ref=</span><span class="s">"lblCall"</span> <span class="nt">&gt;&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"camera"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">accessible-name-ref=</span><span class="s">"lblCamera"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"cart"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">accessible-name-ref=</span><span class="s">"lblCart"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
-<span class="nt">&lt;ui5-label</span> <span class="na">style=</span><span class="s">"display:none"</span> <span class="na">id=</span><span class="s">"lblAdd"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/ui5-label&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -3184,7 +3183,7 @@ For the <code>ui5-button</code> UI, you can define text, icon, or both. You can 
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the component design.
             
-            <br><br> <b>Note:</b>
+            <br><br> <b>The available values are:</b>
             
             <ul> <li><code>Default</code></li> <li><code>Emphasized</code></li> <li><code>Positive</code></li> <li><code>Negative</code></li> <li><code>Transparent</code></li> <li><code>Attention</code></li> </ul>
                         </div>
@@ -3197,7 +3196,7 @@ For the <code>ui5-button</code> UI, you can define text, icon, or both. You can 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the component is disabled (default is set to <code>false</code>). A disabled component can't be pressed or focused, and it is not in the tab chain.
+                            Defines whether the component is disabled. A disabled component can't be pressed or focused, and it is not in the tab chain.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -3233,7 +3232,7 @@ For the <code>ui5-button</code> UI, you can define text, icon, or both. You can 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            When set to <code>true</code>, the component will automatically submit the nearest form element upon <code>press</code>. <br><br> <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+                            When set to <code>true</code>, the component will automatically submit the nearest form element upon <code>press</code>. <br><br> <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
                         </div>
                       </div>
             

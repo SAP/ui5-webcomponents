@@ -3087,7 +3087,7 @@
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>DatePicker with format-pattern='short'</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
@@ -3099,7 +3099,7 @@
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>DatePicker with format-pattern='long'</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
@@ -3121,7 +3121,7 @@
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>DatePicker with format-pattern='EEE, M/d/yyyy'</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
@@ -3132,29 +3132,29 @@
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>Disabled DatePicker</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-date-picker disabled></ui5-date-picker>
+				<ui5-date-picker disabled value="8 September 2021"></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">"8 September 2021"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>readonly DatePicker</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-date-picker readonly></ui5-date-picker>
+				<ui5-date-picker readonly value="8 September 2021"></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">readonly</span> <span class="na">value=</span><span class="s">"8 September 2021"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>DatePicker with Japanese Calendar Type</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
@@ -3165,7 +3165,7 @@
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>DatePicker with Islamic Calendar Type</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
@@ -3176,7 +3176,7 @@
 	</code></pre></figure></pre>
 </section>
 
-	<section>
+<section>
 		<h3>DatePicker with Buddhist Calendar Type</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
@@ -3184,6 +3184,17 @@
 			</div>
 		</div>
 			<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">primary-calendar-type=</span><span class="s">'Buddhist'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+    <h3>DatePicker with Persian Calendar Type</h3>
+    <div class="snippet">
+        <div class="datepicker-width">
+            <ui5-date-picker primary-calendar-type='Persian'></ui5-date-picker>
+        </div>
+    </div>
+    <pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">primary-calendar-type=</span><span class="s">'Persian'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -3216,7 +3227,7 @@ The <code>ui5-date-picker</code> component provides an input field with assigned
 
 <h3>Usage</h3>
 
-The user can enter a date by: <ul> <li>Using the calendar that opens in a popup</li> <li>Typing it in directly in the input field</li> </ul> <br><br> When the user makes an entry and chooses the enter key, the calendar shows the corresponding date. When the user directly triggers the calendar display, the actual date is displayed.
+The user can enter a date by: <ul> <li>Using the calendar that opens in a popup</li> <li>Typing it in directly in the input field</li> </ul> <br><br> When the user makes an entry and presses the enter key, the calendar shows the corresponding date. When the user directly triggers the calendar display, the actual date is displayed.
 
 <h3>Formatting</h3>
 
@@ -3425,7 +3436,7 @@ Or, you can use the global configuration and set the <code>calendarType</code> k
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines the мinimum date available for selection.
+                            Determines the minimum date available for selection.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>
