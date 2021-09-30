@@ -38,9 +38,8 @@
     "copy:assets": "copy-and-watch \"../fiori/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
     "copy:samples": "node ./build-scripts/samples-prepare.js",
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
-    "prepare:docs": "node ./build-scripts/docs-prepare.js \"../../docs/\"",
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
-    "prepare:tutorials": "node ./build-scripts/tutorials-prepare.js \"../../docs/\"",
-    "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js"
+    "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
+    "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/playground/\" \"./docs/\""
   }
 }
