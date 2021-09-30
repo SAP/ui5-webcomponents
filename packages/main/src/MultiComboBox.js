@@ -5,6 +5,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isShow,
 	isDown,
+	isUp,
 	isBackSpace,
 	isSpace,
 	isLeft,
@@ -575,12 +576,8 @@ class MultiComboBox extends UI5Element {
 			this.togglePopover();
 		}
 
-		if (isDown(event) && this.allItemsPopover.opened && this.items.length) {
-			event.preventDefault();
-			await this._getList();
-			const firstListItem = this.list.items[0];
-			this.list._itemNavigation.setCurrentItem(firstListItem);
-			firstListItem.focus();
+		if (this.open && (isUp(event) || isDown(event))) {
+			this._handleArrowNavigation(event);
 		}
 
 		if (isBackSpace(event) && event.target.value === "") {
@@ -599,6 +596,65 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this._keyDown = true;
+	}
+
+	_onValueStateKeydown(event) {
+		const isArrowDown = isDown(event);
+		const isArrowUp = isUp(event);
+
+		event.preventDefault();
+
+		if (isArrowDown) {
+			this._handleArrowDown(event);
+		}
+
+		if (isArrowUp) {
+			this._inputDom.focus();
+		}
+	}
+
+	_onItemKeydown(event) {
+		const isFirstItem = this.list.items[0] === event.target;
+
+		event.preventDefault();
+
+		if (!isUp(event) || !isFirstItem) {
+			return;
+		}
+
+		if (this.valueStateHeader) {
+			this.valueStateHeader.focus();
+			return;
+		}
+
+		this._inputDom.focus();
+	}
+
+	async _handleArrowNavigation(event) {
+		const isArrowDown = isDown(event);
+		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
+
+		event.preventDefault();
+
+		if (this.hasValueStateMessage && !this.valueStateHeader) {
+			await this._setValueStateHeader();
+		}
+
+		if (isArrowDown && this.focused && this.valueStateHeader) {
+			this.valueStateHeader.focus();
+			return;
+		}
+
+		if (isArrowDown && this.focused && hasSuggestions) {
+			this._handleArrowDown(event);
+		}
+	}
+
+	_handleArrowDown(event) {
+		const firstListItem = this.list.items[0];
+
+		this.list._itemNavigation.setCurrentItem(firstListItem);
+		firstListItem.focus();
 	}
 
 	handleEnter() {
@@ -839,6 +895,16 @@ class MultiComboBox extends UI5Element {
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-popover]");
+	}
+
+	async _getResponsivePopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
+	}
+
+	async _setValueStateHeader() {
+		const responsivePopover = await this._getResponsivePopover();
+		this.valueStateHeader = responsivePopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root");
 	}
 
 	get _tokenizer() {
