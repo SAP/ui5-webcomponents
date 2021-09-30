@@ -111,7 +111,7 @@ const metadata = {
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
-		 * Defines the sort items against which the user could sort data.
+		 * Defines the list of items against which the user could sort data.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 		 *
 		 * @type {sap.ui.webcomponents.fiori.SortItem[]}

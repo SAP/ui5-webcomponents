@@ -108,7 +108,7 @@ const metadata = {
 		/**
 		 * Defines the tooltip of the button.
 		 * <br>
-		 * <b>Note:</b> Tooltips should only be set to icon only buttons.
+		 * <b>Note:</b> Tooltips should only be set to icon-only buttons.
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @private

@@ -96,7 +96,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
-		 * Defines the <code>ui5-color-palette-item</code>s.
+		 * Defines the <code>ui5-color-palette-item</code> elements.
 		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
 		 * @slot colors
 		 * @public
