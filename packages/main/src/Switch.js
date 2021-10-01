@@ -73,6 +73,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
+		 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -85,6 +86,7 @@ const metadata = {
 		 * Defines the text, displayed when the component is not checked.
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
+		 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
