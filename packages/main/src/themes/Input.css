@@ -65,8 +65,8 @@
 	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
-	background: var(--sapField_ReadOnly_Background);
-	border-color: var(--sapField_ReadOnly_BorderColor);
+	background: var(--_ui5-input-disabled-background);
+	border-color: var(--_ui5_input_disabled_border_color);
 }
 
 :host([disabled]) .ui5-input-root::before,
@@ -198,8 +198,8 @@
 }
 
 :host([readonly]) {
-	border-color: var(--sapField_ReadOnly_BorderColor);
-	background: var(--sapField_ReadOnly_Background);
+	border-color: var(--_ui5_input_readonly_border_color);
+	background: var(--_ui5-input-readonly-background);
 }
 
 :host(:not([value-state]):not([readonly]):hover) {

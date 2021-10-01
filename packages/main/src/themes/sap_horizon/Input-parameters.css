@@ -3,6 +3,10 @@
 :root {
 	--_ui5_input_height: 2.25rem;
 	--_ui5_input_disabled_opacity: 0.4;
+	--_ui5_input_disabled_border_color: transparent;
+	--_ui5-input-disabled-background: var(--sapNeutralBackground);
+	--_ui5-input-readonly-background: var(--sapNeutralBackground);
+	--_ui5_input_readonly_border_color: transparent;
 	--_ui5-input-hover-border: 2px solid transparent;
 	--_ui5-input-hover-box-shadow: 0 0 2px rgb(131 150 168 / 16%), 0 8px 16px rgb(131 150 168 / 16%);
 	--_ui5-input-border-radius: 8px;
