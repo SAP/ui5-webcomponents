@@ -59,7 +59,7 @@
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+			<div slot="header" @keydown="{{_onValueStateKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
@@ -123,6 +123,7 @@
 		?selected={{this.selected}}
 		data-ui5-token-id="{{this._id}}"
 		data-ui5-stable="{{this.stableDomRef}}"
+		@keydown="{{../_onItemKeydown}}"
 	>
 		{{this.text}}
 	</ui5-li>

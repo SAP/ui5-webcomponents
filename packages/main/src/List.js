@@ -24,7 +24,11 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 import listCss from "./generated/themes/List.css.js";
 
 // Texts
-import { LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
+	ARIA_LABEL_LIST_MULTISELECTABLE,
+	ARIA_LABEL_LIST_DELETABLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -171,7 +175,7 @@ const metadata = {
 		 * @since 1.0.0-rc.13
 		 * @public
 		 */
-		 growing: {
+		growing: {
 			type: ListGrowingMode,
 			defaultValue: ListGrowingMode.None,
 		},
@@ -233,7 +237,7 @@ const metadata = {
 		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
 		 */
-		 accessibleRole: {
+		accessibleRole: {
 			type: String,
 			defaultValue: "list",
 		},
@@ -242,7 +246,7 @@ const metadata = {
 		 * Defines if the entire list is in view port.
 		 * @private
 		 */
-		 _inViewport: {
+		_inViewport: {
 			type: Boolean,
 		},
 
@@ -250,7 +254,7 @@ const metadata = {
 		 * Defines the active state of the <code>More</code> button.
 		 * @private
 		 */
-		 _loadMoreActive: {
+		_loadMoreActive: {
 			type: Boolean,
 		},
 	},
@@ -507,6 +511,10 @@ class List extends UI5Element {
 		return `${this._id}-header`;
 	}
 
+	get modeLabelID() {
+		return `${this._id}-modeLabel`;
+	}
+
 	get listEndDOM() {
 		return this.shadowRoot.querySelector(".ui5-list-end-marker");
 	}
@@ -519,6 +527,19 @@ class List extends UI5Element {
 		return !this.hasData && this.noDataText;
 	}
 
+	get isDelete() {
+		return this.mode === ListMode.Delete;
+	}
+
+	get isSingleSelect() {
+		return [
+			ListMode.SingleSelect,
+			ListMode.SingleSelectBegin,
+			ListMode.SingleSelectEnd,
+			ListMode.SingleSelectAuto,
+		].includes(this.mode);
+	}
+
 	get isMultiSelect() {
 		return this.mode === ListMode.MultiSelect;
 	}
@@ -527,12 +548,35 @@ class List extends UI5Element {
 		if (this.accessibleNameRef || this.accessibleName) {
 			return undefined;
 		}
+		const ids = [];
 
-		return this.shouldRenderH1 ? this.headerID : undefined;
+		if (this.isMultiSelect || this.isSingleSelect || this.isDelete) {
+			ids.push(this.modeLabelID);
+		}
+
+		if (this.shouldRenderH1) {
+			ids.push(this.headerID);
+		}
+
+		return ids.length ? ids.join(" ") : undefined;
 	}
 
 	get ariaLabelТxt() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaLabelModeText() {
+		if (this.isMultiSelect) {
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
+		}
+		if (this.isSingleSelect) {
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
+		}
+		if (this.isDelete) {
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+		}
+
+		return undefined;
 	}
 
 	get grows() {

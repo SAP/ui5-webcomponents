@@ -83,10 +83,10 @@ const metadata = {
 		 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 		 * </ui5-input>
 		 * <br><br>
-		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
+		 * <b>Note:</b> The suggestions would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item><code/> are recommended to be used as suggestion items.
+		 * <b>Note:</b> The <code>&lt;ui5-suggestion-item&gt;</code> and <code>&lt;ui5-suggestion-group-item&gt;</code> are recommended to be used as suggestion items.
 		 * <br><br>
 		 * <b>Note:</b> Importing the Input Suggestions Support feature:
 		 * <br>
@@ -118,10 +118,10 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b> If the component has <code>suggestionItems</code>,
 		 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 		 * @type {HTMLElement[]}
@@ -312,7 +312,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the input
+		 * Receives id(or many ids) of the elements that label the input.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -383,7 +383,7 @@ const metadata = {
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-item-select
-		 * @param {HTMLElement} item The selected item
+		 * @param {HTMLElement} item The selected item.
 		 * @public
 		 */
 		"suggestion-item-select": {
@@ -397,7 +397,7 @@ const metadata = {
 		 * as a preview, before the final selection.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
-		 * @param {HTMLElement} item The previewed suggestion item
+		 * @param {HTMLElement} item The previewed suggestion item.
 		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -413,8 +413,8 @@ const metadata = {
 		 * Fired when the user scrolls the suggestion popover.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
-		 * @param {Integer} scrollTop The current scroll position
-		 * @param {HTMLElement} scrollContainer The scroll container
+		 * @param {Integer} scrollTop The current scroll position.
+		 * @param {HTMLElement} scrollContainer The scroll container.
 		 * @public
 		 * @since 1.0.0-rc.8
 		 */
@@ -437,7 +437,7 @@ const metadata = {
  * that are displayed in a popover right under the input.
  * <br><br>
  * The text field can be editable or read-only (<code>readonly</code> property),
- * and it can be enabled or disabled (<code>enabled</code> property).
+ * and it can be enabled or disabled (<code>disabled</code> property).
  * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
@@ -986,7 +986,7 @@ class Input extends UI5Element {
 	}
 
 	async getInputDOMRef() {
-		if (isPhone() && this.Suggestions && this.suggestionItems.length) {
+		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._respPopover();
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
