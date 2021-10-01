@@ -165,18 +165,20 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 /* checked */
-:host([checked][value-state="None"]) .ui5-checkbox-inner,
-:host([checked]:not([value-state])) .ui5-checkbox-inner  {
+:host([checked]:not([value-state])) .ui5-checkbox-inner,
+:host([checked][value-state="None"]) .ui5-checkbox-inner {
 	border-color: var(--_ui5_checkbox_inner_selected_border_color);
 }
 
 /* active, not checked */
-:host([active]:not([checked])) .ui5-checkbox-inner  {
+:host([active]:not([checked]):not([value-state])) .ui5-checkbox-inner,
+:host([active]:not([checked])[value-state="None"]) .ui5-checkbox-inner {
 	border-color: var(--_ui5_checkbox_inner_active_border_color);
 }
 
 /* active, checked */
-:host([active][checked]) .ui5-checkbox-inner  {
+:host([active][checked]:not([value-state])) .ui5-checkbox-inner,
+:host([active][checked][value-state="None"]) .ui5-checkbox-inner {
 	border-color: var(--_ui5_checkbox_inner_selected_border_color);
 }
 
