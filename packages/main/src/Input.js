@@ -713,6 +713,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
+			this.blur();
 			this.open = true;
 		}
 	}
