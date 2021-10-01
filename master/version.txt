@@ -1,5 +1,5 @@
-commit 7707ad0694589a9501ec1f1537648cb911940175
-Author: Ajinkya Patil <ajinkyarangnathpatil@gmail.com>
-Date:   Thu Sep 30 15:46:36 2021 +0200
+commit 54c36ac69d0363282dcafaa2860d4df5ec0e0ed4
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Oct 1 14:48:12 2021 +0300
 
-    Updating the dep5 file - rchanging path for files under BSD license, getting compliance for files under MIT license (#4036)
+    docs(ui5-multi-input): Documentation enhancements (#4051)
