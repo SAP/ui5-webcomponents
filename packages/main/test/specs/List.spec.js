@@ -1,6 +1,25 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
 
+/**
+ *
+ * @param {Array} options.keys The bundle keys of the texts
+ * @param {String} options.id ID of the component to get the texts from
+ * @returns
+ */
+async function getResourceBundleTexts(options) {
+	return browser.executeAsync((options, done) => {
+		const component = document.getElementById(options.id);
+
+		const texts = options.keys.reduce((result, key) => {
+			result[key] = component.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			return result;
+		}, {});
+		done(texts);
+
+	}, options);
+}
+
 describe("List Tests", () => {
 	before(() => {
 		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");

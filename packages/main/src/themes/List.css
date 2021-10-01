@@ -1,4 +1,5 @@
 @import "./LoadMoreRow.css";
+@import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
 	display: block;
