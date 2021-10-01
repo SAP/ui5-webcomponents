@@ -28,15 +28,19 @@
 	--_ui5-input-value-state-error-border-botom-color: #d20a0a;
 	--_ui5-input-value-state-error-border-color: transparent;
 	--_ui5-input-focused-value-state-error-border-color: var(--_ui5-input-focused-border-color);
+	--_ui5-input-value-state-error-box-shadow: 0 0 2px rgba(245, 40, 40, 0.16), 0 8px 16px rgba(245, 40, 40, 0.16);
 	--_ui5-input-value-state-warning-border-botom-color: #c35500;
 	--_ui5-input-value-state-warning-border-color: transparent;
 	--_ui5-input-focused-value-state-warning-border-color: var(--_ui5-input-focused-border-color);
+	--_ui5-input-value-state-warning-box-shadow: 0 0 2px rgba(255, 179, 0, 0.16), 0 8px 16px rgba(255, 179, 0, 0.16);
 	--_ui5-input-value-state-success-border-botom-color: #36a41d;
 	--_ui5-input-value-state-success-border-color: transparent;
 	--_ui5-input-focused-value-state-success-border-color: var(--_ui5-input-focused-border-color);
+	--_ui5-input-value-state-success-box-shadow: 0 0 2px rgba(131, 150, 168, 0.16), 0 8px 16px rgba(131, 150, 168, 0.16);
 	--_ui5-input-value-state-success-border-width: 2px;
 	--_ui5-input-value-success-information-border-botom-color: #0070f2;
 	--_ui5-input-value-state-information-border-color: transparent;
 	--_ui5-input-focused-value-state-information-border-color: var(--_ui5-input-focused-border-color);
+	--_ui5-input-value-state-information-box-shadow: 0 0 2px rgba(27, 144, 255, 0.16), 0 8px 16px rgba(27, 144, 255, 0.16);
 	--_ui5-input-value-state-information-border-width: 2px;
 }

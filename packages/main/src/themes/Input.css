@@ -36,7 +36,7 @@
     position: absolute;
     width: calc(100% - 2px);
     left: 1px;
-    bottom: -1px;
+    bottom: -2px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     height: var(--_ui5-input-bottom-border-height);
@@ -254,6 +254,11 @@
 	background-color: var(--_ui5-input-value-state-error-border-botom-color);
 }
 
+:host([value-state="Error"]:not([readonly]):hover) {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5-input-value-state-error-box-shadow);
+}
+
 :host([value-state="Error"]:not([readonly]):not([disabled])),
 :host([value-state="Warning"]:not([readonly]):not([disabled])),
 :host([value-state="Information"]:not([readonly]):not([disabled])) {
@@ -274,6 +279,11 @@
 	background-color: var(--_ui5-input-value-state-warning-border-botom-color);
 }
 
+:host([value-state="Warning"]:not([readonly]):hover) {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5-input-value-state-warning-box-shadow);
+}
+
 :host([value-state="Success"]:not([readonly])) {
 	background-color: var(--sapField_SuccessBackground);
 	border-color: var(--_ui5-input-value-state-success-border-color);
@@ -289,6 +299,11 @@
 	background-color: var(--_ui5-input-value-state-success-border-botom-color);
 }
 
+:host([value-state="Success"]:not([readonly]):hover) {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5-input-value-state-success-box-shadow);
+}
+
 :host([value-state="Information"]:not([readonly])) {
 	background-color: var(--sapField_InformationBackground);
 	border-color: var(--_ui5-input-value-state-information-border-color);
@@ -302,6 +317,11 @@
 
 :host([value-state="Information"]:not([readonly])) .ui5-input-root::before{
 	background-color: var(--_ui5-input-value-success-information-border-botom-color);
+}
+
+:host([value-state="Information"]:not([readonly]):hover) {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5-input-value-state-information-box-shadow);
 }
 
 /* Remove IE's defaut clear button */
