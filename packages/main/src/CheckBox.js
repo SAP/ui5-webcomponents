@@ -21,6 +21,9 @@ import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
 
+let isGlobalHandlerAttached = false;
+let activeCb = null;
+
 /**
  * @public
  */
@@ -262,6 +265,17 @@ class CheckBox extends UI5Element {
 	constructor() {
 		super();
 
+		this._deactivate = () => {
+			if (activeCb) {
+				activeCb.active = false;
+			}
+		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+			isGlobalHandlerAttached = true;
+		}
+
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -287,6 +301,7 @@ class CheckBox extends UI5Element {
 
 	_onmousedown() {
 		this.active = true;
+		activeCb = this; // eslint-disable-line
 	}
 
 	_onmouseup() {

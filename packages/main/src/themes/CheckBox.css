@@ -102,7 +102,6 @@
 	position: relative;
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
 	width: 100%;
 	min-height: var(--_ui5_checkbox_width_height);
 	min-width: var(--_ui5_checkbox_width_height);
@@ -148,12 +147,12 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox--hoverable:hover .ui5-checkbox-label {
-	color: var(--_ui5_checkbox_hover_label_color);
+	color: var(--_ui5_checkbox_label_color);
 }
 
 /* hover, not active, not checked */
 :host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
-:host(:not([active]):not([checked])[value-state]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_hover_background);
 	border-color: var(--_ui5_checkbox_inner_hover_border_color);
 }
@@ -216,7 +215,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-root .ui5-checkbox-label {
-	margin-left: var(--_ui5_checkbox_wrapper_padding);
+	margin-left: var(--_ui5_checkbox_label_offset);
 	cursor: default;
 	text-overflow: ellipsis;
 	overflow: hidden;
