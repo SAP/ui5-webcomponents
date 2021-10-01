@@ -40,6 +40,6 @@
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
     "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
-    "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/playground/\" \"./docs/\""
+    "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\""
   }
 }
