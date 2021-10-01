@@ -713,7 +713,7 @@ class UI5Element extends HTMLElement {
 
 		const normalEvent = new CustomEvent(name, {
 			detail: data,
-			composed: false,
+			composed: true,
 			bubbles,
 			cancelable,
 		});
