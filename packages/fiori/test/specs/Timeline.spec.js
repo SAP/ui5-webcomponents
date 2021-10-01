@@ -7,7 +7,7 @@ describe("Timeline general interaction", () => {
 	});
 
 	it("should fire name-click event on a normal item name", async () => {
-		const timelineItemName = await browser.$("#test-item").shadow$("ui5-link");
+		const timelineItemName = await browser.$("ui5-timeline-item").shadow$("ui5-link");
 		const result = await browser.$("#result");
 
 		await timelineItemName.click();
