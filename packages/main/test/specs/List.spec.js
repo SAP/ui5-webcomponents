@@ -2,6 +2,25 @@ const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
+/**
+ *
+ * @param {Array} options.keys The bundle keys of the texts
+ * @param {String} options.id ID of the component to get the texts from
+ * @returns
+ */
+async function getResourceBundleTexts(options) {
+	return browser.executeAsync((options, done) => {
+		const component = document.getElementById(options.id);
+
+		const texts = options.keys.reduce((result, key) => {
+			result[key] = component.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			return result;
+		}, {});
+		done(texts);
+
+	}, options);
+}
+
 describe("List Tests", () => {
 	before(async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
@@ -194,7 +213,7 @@ describe("List Tests", () => {
 
 	it("item size and classed, when an item has both text and description", async () => {
 		const ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT = 80;
-		const firstItem =  await browser.$("#listWithDesc ui5-li:first-child");
+		const firstItem = await browser.$("#listWithDesc ui5-li:first-child");
 		const firstItemHeight = await firstItem.getSize("height");
 
 		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
@@ -300,6 +319,25 @@ describe("List Tests", () => {
 			null, "aria-labelledby is not present");
 	});
 
+	it("tests aria-labelledby for mode label", async () => {
+		const justList = await browser.$("#justList");
+		const listDelete = await browser.$("#listDelete");
+		const listMultiSelect = await browser.$("#listMultiSelect");
+		const listSingleSelect = await browser.$("#listSingleSelect");
+
+		const keys = [
+			"ARIA_LABEL_LIST_SELECTABLE",
+			"ARIA_LABEL_LIST_MULTISELECTABLE",
+			"ARIA_LABEL_LIST_DELETABLE",
+		];
+		const texts = await getResourceBundleTexts({ keys, id: "justList" });
+
+		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), null, "aria-label mode message is correct");
+		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
+		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
+		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
+	});
+
 	it("tests title is updated, when initially empty", async () => {
 		const btnChangeEmptyItem = await browser.$("#changeEmptyItem");
 		const emptyItem = await browser.$("#emptyItem");
@@ -356,7 +394,7 @@ describe("List Tests", () => {
 		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
 		assert.strictEqual(await item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
-		assert.strictEqual(await item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
+		assert.strictEqual(await item2.shadow$('li').getAttribute("class"), "ui5-li-root", "disabled item no longer styled as focusable");
 	});
 
 	it('disabled list-items are skipped on navigation', async () => {
@@ -370,7 +408,7 @@ describe("List Tests", () => {
 		await item1.click();
 		await item1.keys("ArrowDown");
 
-		assert.ok(await item3.getProperty("focused"),  "disabled item is skipped");
+		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
 	});
 
 	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', async () => {
