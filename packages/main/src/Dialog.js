@@ -211,7 +211,7 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.ariaLabel) {
+		if (this.headerText !== "" && !this.accessibleName) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 

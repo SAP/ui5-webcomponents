@@ -67,14 +67,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the popup
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		 accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -535,7 +535,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.ariaLabel || undefined;
+		return this.accessibleName || undefined;
 	}
 
 	get _root() {
