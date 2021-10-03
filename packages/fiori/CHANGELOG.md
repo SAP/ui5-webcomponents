@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.20](https://github.com/SAP/ui5-webcomponents/compare/v0.31.19...v0.31.20) (2021-10-03)
+
+
+### Bug Fixes
+
+* **ui5-timeline:** elements with role option have a parent element with role listbox ([#4053](https://github.com/SAP/ui5-webcomponents/issues/4053)) ([2379c97](https://github.com/SAP/ui5-webcomponents/commit/2379c97)), closes [#3459](https://github.com/SAP/ui5-webcomponents/issues/3459)
+
+
+### Features
+
+* add "id" message bundle ([34399c1](https://github.com/SAP/ui5-webcomponents/commit/34399c1))
+
+
+
+
+
 ## [0.31.19](https://github.com/SAP/ui5-webcomponents/compare/v0.31.18...v0.31.19) (2021-09-24)
 
 

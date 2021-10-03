@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.20](https://github.com/SAP/ui5-webcomponents/compare/v0.31.19...v0.31.20) (2021-10-03)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** Fixed "aria-label" text screen reading ([#3936](https://github.com/SAP/ui5-webcomponents/issues/3936)) ([622344d](https://github.com/SAP/ui5-webcomponents/commit/622344d)), closes [#3778](https://github.com/SAP/ui5-webcomponents/issues/3778)
+* **ui5-icon:** decorative icons now have aria-hidden=true ([#3983](https://github.com/SAP/ui5-webcomponents/issues/3983)) ([e558159](https://github.com/SAP/ui5-webcomponents/commit/e558159)), closes [#3954](https://github.com/SAP/ui5-webcomponents/issues/3954)
+
+
+### Features
+
+* **ui5-popover:** add accessibleName proeprty ([4f8c70c](https://github.com/SAP/ui5-webcomponents/commit/4f8c70c))
+* add "id" message bundle ([34399c1](https://github.com/SAP/ui5-webcomponents/commit/34399c1))
+* **ui5-list:** announce the selection mode of the list on entry ([#4018](https://github.com/SAP/ui5-webcomponents/issues/4018)) ([58c36b1](https://github.com/SAP/ui5-webcomponents/commit/58c36b1)), closes [#3806](https://github.com/SAP/ui5-webcomponents/issues/3806)
+
+
+### BREAKING CHANGES
+
+* **ui5-popover:** ariaLabel has been replaced by accessibleName
+
+
+
+
+
 ## [0.31.19](https://github.com/SAP/ui5-webcomponents/compare/v0.31.18...v0.31.19) (2021-09-24)
 
 
