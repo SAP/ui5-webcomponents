@@ -50,8 +50,7 @@ const metadata = {
 
 		/**
 		 * Defines the accessible name of the component.
-         * <b>Note:</b> <code>accessibleName</code> is required for <ui5-card>, provides unique name for the region.
-         * <b>Note:</b> If <code>accessibleNameRef</code> is provided for <ui5-card>, <code>accessibleName</code> is not required.
+         * <b>Note:</b> <code>accessibleName</code> is required for <ui5-card>, it provides unique name for the card region.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -60,19 +59,6 @@ const metadata = {
 		 */
 		accessibleName: {
 			type: String,
-		},
-
-		/**
-		 * Defines the IDs of the elements that label the input.
-		 *
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-			defaultValue: "",
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
