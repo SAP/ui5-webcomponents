@@ -1,5 +1,5 @@
-commit 54c36ac69d0363282dcafaa2860d4df5ec0e0ed4
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Oct 1 14:48:12 2021 +0300
+commit aaf776d8abdcce9e91bbe14c36a26979f569a5fa
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Oct 4 13:07:19 2021 +0300
 
-    docs(ui5-multi-input): Documentation enhancements (#4051)
+    docs: new docs (#3890)
