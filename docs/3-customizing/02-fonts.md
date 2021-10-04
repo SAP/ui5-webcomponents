@@ -4,7 +4,7 @@
 
 Upon `boot`, the UI5 Web Components framework creates a `<style data-ui5-font-face>` tag in the `<head>` in order to load the necessary fonts.
 
-It may look something like this:
+For example:
 
 ```html
 <style type="text/css" data-ui5-font-face="">

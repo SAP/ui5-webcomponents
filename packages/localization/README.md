@@ -7,6 +7,37 @@
 
 Provides date/time and CLDR functionality for the purposes of building UI5 Web Components.
 
+## Provided assets
+
+The assets, provided by this package, are CLDR data:
+
+`import "@ui5/webcomponents-localization/dist/Assets.js";`
+
+*Note:* These assets are already imported by the UI5 Web Components packages that need them.
+
+## Provided features
+
+| Feature Import                                                       | Description               |
+|----------------------------------------------------------------------|---------------------------|
+| `@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js` | Buddhist calendar support |
+| `@ui5/webcomponents-localization/dist/features/calendar/Islamic.js`  | Islamic calendar support  |
+| `@ui5/webcomponents-localization/dist/features/calendar/Japanese.js` | Japanese calendar support |
+| `@ui5/webcomponents-localization/dist/features/calendar/Persian.js`  | Persian calendar support  |
+
+### Advanced Calendar Types Feature
+
+```js
+import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
+```
+
+The `ui5-date-picker` and `ui5-datetime-picker` components supports Gregorian Calendar by default.
+
+In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with these components
+(by setting its `primaryCalendarType` property), you must import one or more of the modules above.
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)

@@ -21,6 +21,7 @@ var THEMES = {
   "sap_belize": "belize",
   "sap_belize_hcb": "hcb",
   "sap_belize_hcw": "hcw",
+  "sap_horizon": "horizon",
 }
 
 function toggleSettings() {

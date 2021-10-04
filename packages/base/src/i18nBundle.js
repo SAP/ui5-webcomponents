@@ -15,6 +15,7 @@ class I18nBundle {
 	/**
 	 * Returns a text in the currently loaded language
 	 *
+	 * @public
 	 * @param {Object|String} textObj key/defaultText pair or just the key
 	 * @param params Values for the placeholders
 	 * @returns {*}

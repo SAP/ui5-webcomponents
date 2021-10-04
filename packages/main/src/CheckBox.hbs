@@ -7,9 +7,12 @@
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
+	@mousedown="{{_onmousedown}}"
+	@mouseup="{{_onmouseup}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
+	@focusout="{{_onfocusout}}"
 	dir="{{effectiveDir}}"
 >
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
