@@ -20,7 +20,7 @@ Then all names can only be used with the supplied suffix:
 </ui5-card-demo>
 ```
 
-Trying to use them with the standard names will not work (the custom elements won't be upgraded), so for example the following
+Trying to use them with the standard names will not work (the custom elements won't be upgraded), so for example the following:
 
 ```html
 <ui5-button>Click me</ui5-button>
@@ -30,12 +30,12 @@ will not have any effect.
 
 ## When do I need to use the `scoping` feature?
 
-The `Scoping` feature is completely optional. It is not needed for application development, but it is strongly recommended when building **libraries** and **micro-frontends**.
+The `scoping` feature is completely optional. It is not needed for application development, but it is strongly recommended when building **libraries** and **micro-frontends**.
 
-It ensures that the custom elements that your code uses have not already been upgraded by another library or an older version of UI5 Web Components.
+It ensures that the custom elements that your code uses have not already been reserved by another library or an older version of UI5 Web Components.
 
 If, for example, your code may be loaded on demand by unknown applications as a third-party service, there is always the risk that the app
-or another third-party library loaded by the app, may use an older version of UI5 Web Components which means that all custom elements will be
+or another third-party library, loaded by the app, may use an older version of UI5 Web Components which means that all custom elements will be
 upgraded with this version, while your code may rely on newer features.
 
 Imagine the following integration scenario of an app, using several third-party libraries, loaded on demand (and not bundled with the app):
@@ -43,7 +43,7 @@ Imagine the following integration scenario of an app, using several third-party 
  ```html
  <body>
 
- 	<!-- Application code, using version 1.0.1 -->
+ 	<!-- Application code, using UI5 Web Components version 1.0.1 -->
  	<div id="application-container">
  		<ui5-title>This is the new app with many third-party extensions!</ui5-title>
  		<ui5-card>
@@ -52,13 +52,13 @@ Imagine the following integration scenario of an app, using several third-party 
  		</ui5-card>
  	</div>
 
- 	<!-- Code inserted by "common help" library, using version 1.2.0 -->
+ 	<!-- Code inserted by "common help" library, using UI5 Web Components version 1.2.0 -->
  	<div id="common-help-container">
  		<ui5-button-chlp new-button-prop="1">Help Menu</ui5-button-chlp>
  		<ui5-input-chlp value="Type your question"></ui5-input-chlp>
  	</div>
 
- 	<!-- Code inserted by "global footer" library, using version 1.3.0 -->
+ 	<!-- Code inserted by "global footer" library, using UI5 Web Components version 1.3.0 -->
  	<footer id="global-footer-container">
  		<global-footer-main>
  			<ui5-button-glob-foot new-button-prop="2" even-newer-button-prop="3">Profile</ui5-button-glob-foot>
@@ -70,9 +70,9 @@ Imagine the following integration scenario of an app, using several third-party 
  ```
 
 In the example above:
- - The app itself is using an old version (`1.0.1`) of UI5 Web Components (which has already upgraded the `ui5-card`, `ui5-button` and `ui5-input` tags).
- - The imaginary "common help" library, based on a newer version (`1.2.0`), uses the scoping suffix `chlp`.
- - The imaginary "global footer" library, based on an even newer version (`1.3.0`), uses the scoping suffix `glob-foot`.
+- The app itself is using an old version (`1.0.1`) of UI5 Web Components (which has already upgraded the `ui5-card`, `ui5-button` and `ui5-input` tags).
+- The imaginary "common help" library, based on a newer version (`1.2.0`), uses the scoping suffix `chlp`.
+- The imaginary "global footer" library, based on an even newer version (`1.3.0`), uses the scoping suffix `glob-foot`.
 
 This allows the libraries to use new `ui5-button` properties such as `newButtonProp` and `evenNewerButtonProp` that are not found in older versions.
 

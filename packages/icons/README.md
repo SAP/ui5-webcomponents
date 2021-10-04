@@ -7,13 +7,15 @@
 
 Provides assets for the rich `SAP-icons` icon collection.
 
-|      Icon asset       |                           Module import                        |
-| ------------------------ |  ---------------------------------------------------------- |
-| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/Assets.js";`      |
-| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/accelerated.js";`  |
-| Accept icon           |  `import "@ui5/webcomponents-icons/dist/accept.js";`  |
-| ...           |  ...  |
-| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/zoom-out.js";`  |
+## Provided icons
+
+| Icon asset                | Module import                                            |
+|---------------------------|----------------------------------------------------------|
+| All icons (~115KB zipped) | `import "@ui5/webcomponents-icons/dist/AllIcons.js";`    |
+| Accelerated icon          | `import "@ui5/webcomponents-icons/dist/accelerated.js";` |
+| Accept icon               | `import "@ui5/webcomponents-icons/dist/accept.js";`      |
+| ...                       | ...                                                      |
+| Zoom out icon             | `import "@ui5/webcomponents-icons/dist/zoom-out.js";`    |
 
 *Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
@@ -21,7 +23,16 @@ just the ones that your app will actually use.
 
 For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
-For a complete list of all public module imports from the `icons` package, click [here](../../docs/Public%20Module%20Imports.md#icons):
+## Provided assets
+
+```js
+import "@ui5/webcomponents-fiori/dist/Assets.js";
+```
+
+| Assets           | Module                                           | Notes                                                                                                                                                                                                            |
+|------------------|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `i18n`           | `@ui5/webcomponents-icons/dist/Assets.js`        | Translations for the tooltips / "aria labels" of several icons                                                                                                                                                   |
+
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
