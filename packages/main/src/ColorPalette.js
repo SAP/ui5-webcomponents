@@ -96,7 +96,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
-		 * Defines the <code>ui5-color-palette-item</code> items.
+		 * Defines the <code>ui5-color-palette-item</code> elements.
 		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
 		 * @slot colors
 		 * @public
@@ -131,11 +131,11 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ColorPalette provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
+ * The <code>ui5-color-palette</code> provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  *
  * <h3>Usage</h3>
  *
- * The Colorpalette is meant for users that needs to select a color from a predefined set.
+ * The <code>ui5-color-palette</code> is meant for users that need to select a color from a predefined set.
  * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
  *
  * <h3>ES6 Module Import</h3>

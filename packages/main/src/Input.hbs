@@ -38,11 +38,16 @@
 			min="{{nativeInputAttributes.min}}"
 			max="{{nativeInputAttributes.max}}"
 		/>
+
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">
 				<slot name="icon"></slot>
 			</div>
 		{{/if}}
+
+		<div class="ui5-input-value-state-icon">
+			{{{_valueStateInputIcon}}}
+		</div>
 
 		{{> postContent }}
 

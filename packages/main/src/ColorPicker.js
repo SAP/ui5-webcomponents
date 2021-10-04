@@ -112,7 +112,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ColorPicker allows users to choose any color and provides different input options for selecting colors.
+ * The <code>ui5-color-picker</code> allows users to choose any color and provides different input options for selecting colors.
  *
  * <h3>Usage</h3>
  *
