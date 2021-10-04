@@ -1,5 +1,7 @@
-commit aaf776d8abdcce9e91bbe14c36a26979f569a5fa
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 4 13:07:19 2021 +0300
+commit 33ee202ddb22a8c66583dac9ba7e5e923a77000b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 4 13:49:19 2021 +0300
 
-    docs: new docs (#3890)
+    feat(ui5-checkbox): implement sap_horizon (#4031)
+    
+    Fixes: #404

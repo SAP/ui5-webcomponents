@@ -345,7 +345,7 @@
   "50": {
     "id": "50",
     "title": "Check Box",
-    "content": "&lt;!DOCTYPE html&gt; ui5-checkbox Text Wrapping Change Event Test ACC Test - aria-label",
+    "content": "&lt;!DOCTYPE html&gt; ui5-checkbox In Container - stretches to the container Text Wrapping Change Event Test ACC Test - aria-label",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/CheckBox/",
     "relUrl": "/playground/main/pages/CheckBox/"
   },
