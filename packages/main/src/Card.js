@@ -50,12 +50,12 @@ const metadata = {
 
 		/**
 		 * Defines the accessible name of the component.
-		 * <b>Note:</b> <code>accessibleName</code> is required for <ui5-card>, it provides unique name for the card region.
+		 * <b>Note:</b> <code>accessibleName</code> is required for the component, it provides unique name for the card region.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.0.0-rc.15
+		 * @since 1.0.0-rc.16
 		 */
 		accessibleName: {
 			type: String,
