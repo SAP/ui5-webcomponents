@@ -15,34 +15,33 @@ or
 
 `yarn init`
 
-The name that you give to your package will be used by the UI5 Web Components tools as the namespace for resource registration.
+The name of your NPM package will be used by the UI5 Web Components tools as the namespace for resource registration.
 
 ## Step 2. Add the UI5 Web Components packages as dependencies
 
 With `npm`:
  - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base`
  - `npm i --save-dev @ui5/webcomponents-tools chromedriver`
- - (Optional) `npm i --save @ui5/webcomponents-ie11`
 
 or with `yarn`:
  - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base`
  - `yarn add -D @ui5/webcomponents-tools chromedriver`
- - (Optional) `yarn add @ui5/webcomponents-ie11`
 
-These three `@ui5/` packages will serve as foundation for your own package and Web Components.
+These three `@ui5/` packages will serve as the foundation of your own package and Web Components.
 
-            Package             |                        Description
-------------------------------- | ----------------------------------------------------------
-`@ui5/webcomponents-base`       | Base classes and framework
-`@ui5/webcomponents-theme-base` | Base theming assets
-`@ui5/webcomponents-tools`      | Build and configuration assets
-`@ui5/webcomponents-ie11`       | (Optional) Internet Explorer 11 polyfills and adapter code
+| Package                         | Type of dependency | Description                    |
+|---------------------------------|--------------------|--------------------------------|
+| `@ui5/webcomponents-base`       | `dependency`         | Base classes and framework     |
+| `@ui5/webcomponents-theme-base` | `dependency`         | Base theming assets            |
+| `@ui5/webcomponents-tools`      | `devDependency`      | Build tools and configuration assets |
+
 
 *Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version,
-if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer not to have
+if necessary. This is useful if, for example, you manually update Chrome on your system, and you'd prefer not to have
 a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`.
 
-*Note:* `@ui5/webcomponents-ie11` is optional and should not be installed unless you need Internet Explorer 11 support.
+*Note:* You can skip the installation of `chromedriver` if you do not intend to use the testing tool of choice (WebdriverIO) that
+comes as part of UI5 Web Components tools.
 
 ## Step 3. Run the package initialization script
 
@@ -130,10 +129,9 @@ The initialization script will create several files in your package's main direc
 ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------
 .eslintignore      | Excludes the `dist/` and `test/` directories from static code scans.
 package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file.
-bundle.esm.js      | Entry point for the ES6 bundle used for development and tests. Intended for modern browsers.
-bundle.es5.js      | Entry point for the ES5 bundle used for development and tests. Intended for IE11 only. Delete this file if you don't need IE11 support.
+bundle.js          | Entry point for the bundle used for development and tests.
 
-You'll likely only need to change `bundle.esm.js` to import your new components there.
+You'll likely only need to change `bundle.js` to import your new components there.
 
 ### The `config/` directory
 
@@ -301,8 +299,3 @@ import "my-ui5-webcomponents/dist/MyFirstComponent.js"; // for my-first-componen
 import "my-ui5-webcomponents/dist/SomeOtherComponent.js";
 import "my-ui5-webcomponents/dist/YetAnotherComponent.js";
 ```
-
-*Note about assets:* The `Assets.js` module may import some relatively big `JSON` modules containing CLDR data, i18n texts and theming parameters.
-Therefore, it is recommended to guide your package users to bundle their apps efficiently by configuring `rollup` or `webpack`,
-depending on their choice, to not include the content of the assets `JSON` modules in their javascript bundle.
-See the [Efficient asset bundling](../Assets.md#bundling) section of our [Assets](../Assets.md) documentation for details.

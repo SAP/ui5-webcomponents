@@ -1,22 +1,25 @@
 # How to Use UI5 Web Components
 
-UI5 Web Components are just HTML. Therefore, their usage is identical
+*UI5 Web Components are just HTML.* Therefore, their usage is identical
 to the usage of standard HTML elements. Usually, Web Components creation and manipulation
 will be done internally by your framework of choice.
 
-Table of Contents:
+*This section explains UI5 Web Components APIs and usage in general terms*
 
-- [How do I create a UI5 Web Component instance?](#create)
-- [How do I set the properties/attributes of UI5 Web Components?](#properties)
-- [How do I set the content of UI5 Web Components?](#content)
-- [How do I listen for events?](#events)
-- [How do I call public methods?](#methods)
-- [Conclusion](#conclusion)
+UI5 Web Components provide the following kinds of APIs:
+
+| API Category                           | Description                                                                                                     |
+|----------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| [properties / attributes](#properties) | Define the look and behavior of the component                                                                   |
+| [slots](#content)                      | Define whether you can put text or other HTML elements (and if yes, what kind) as DOM children of the component |
+| [events](#events)                      | Define what events the component fires due to user interaction                                                  |
+| [public methods](#methods)             | Methods you can call on the component                                                                           |
+
 
 ## 1. How do I create a UI5 Web Component instance?
 <a name="create"></a>
 
-The simplest way is to just add it to the `<body>`.
+The simplest way is to just add it somewhere in the `<body>` of your HTML page.
 
 ```html
 <ui5-button>Click me</ui5-button>
@@ -136,7 +139,7 @@ Again, normally you won't need to do this manually, but your framework will do i
 Now, let's have a look at a Web Component that is intended to have only certain children:
 
 ```html
-<ui5-tabcontainer id="tc1" fixed collapsed show-overflow>
+<ui5-tabcontainer id="tc1">
 	<ui5-tab text="Laptops" additional-text="125"></ui5-tab>
 	<ui5-tab-separator></ui5-tab-separator>
 	<ui5-tab text="Phones" design="Positive" additional-text="25"></ui5-tab>
@@ -212,7 +215,7 @@ myButton.addEventListener("click", () => {
 
 For the events fired by each UI5 Web Component, consult the documentation.
 
-Like with most other tasks, you'll use your framework's syntax to bind to events and you'll rarely,
+Like with most other tasks, you'll use your framework's syntax to bind to events, and you'll rarely,
 if ever, need to call `addEventListener` yourself.
 
 Please, note, however that some frameworks (e.g. React) cannot use their standard syntax

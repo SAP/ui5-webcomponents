@@ -6,7 +6,7 @@ For more information on creating a new package with a demo Web Component inside,
 ## 1. Prerequisites
 
 The test framework of choice for UI5 Web Components is [WebdriverIO](https://webdriver.io/) or WDIO for short.
-It has an easy to use API - [https://webdriver.io/docs/api.html](https://webdriver.io/docs/api.html), and has excellent support for Web Components.
+It has a straightforward API - [https://webdriver.io/docs/api.html](https://webdriver.io/docs/api.html), and has excellent support for Web Components.
 
 The browser of choice for test execution is [Google Chrome](https://www.google.com/chrome/), respectively the used WebDriver is [ChromeDriver](https://chromedriver.chromium.org/).  
 
@@ -84,7 +84,7 @@ Key points:
    - You can access the shadow roots with `shadow$` or `shadow$$`.
    - Simulate mouse interaction with the Web Components by calling the `click` command on the Web Component itself or certain parts of its shadow root.
    - Simulate keyboard with the `keys` command.
-   - You can read the DOM with commands such as `HTML`, `value`, `getProperty`, `getAttribute`, etc.
+   - You can read the DOM with commands such as `getHTML`, `getProperty`, `getAttribute`, etc.
    - You can modify the DOM with commands such as `setProperty`, `setAttribute` etc.
 
 For WDIO capabilities, see:
@@ -120,9 +120,9 @@ Debugging with WDIO is really simple. Just follow these 3 steps:
 2. Set a breakpoint with `browser.debug` somewhere in your test:
 
 	```js
-	it("tests if web component is correctly rendered", () => {
-        const innerContent = browser.$("#myFirstComponent").shadow$("div");
-        browser.debug();
+	it("tests if web component is correctly rendered", async () => {
+        const innerContent = await browser.$("#myFirstComponent").shadow$("div");
+        await browser.debug();
         assert.ok(innerContent, "content rendered");
     });
 	```
