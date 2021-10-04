@@ -91,6 +91,18 @@ const metadata = {
 		},
 
 		/**
+		 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		 noAnimation: {
+			type: Boolean,
+		},
+
+		/**
 		 * Sets the accessible aria role of the component.
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
@@ -195,14 +207,14 @@ const metadata = {
  * </ul>
  *
  * <h3>Structure</h3>
- * A panel consists of a title bar with a header text or custom header.
+ * The panel's header area consists of a title bar with a header text or custom header.
  * <br>
- * The content area can contain an arbitrary set of controls.
- * The header is clickable and can be used to toggle between the expanded and collapsed state.
- * It includes an icon which rotates depending on the state.
+ * The header is clickable and can be used to toggle between the expanded and collapsed state. It includes an icon which rotates depending on the state.
  * <br>
  * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
- * <br><b>Note:</b> the custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
+ * <br>
+ * The content area can contain an arbitrary set of controls.
+ * <br><b>Note:</b> The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
  * <h3>Responsive Behavior</h3>
  * <ul>
@@ -280,8 +292,8 @@ class Panel extends UI5Element {
 		return true;
 	}
 
-	shouldAnimate() {
-		return getAnimationMode() !== AnimationMode.None;
+	shouldNotAnimate() {
+		return this.noAnimation || getAnimationMode() === AnimationMode.None;
 	}
 
 	_headerClick(event) {
@@ -329,7 +341,7 @@ class Panel extends UI5Element {
 
 		this.collapsed = !this.collapsed;
 
-		if (!this.shouldAnimate()) {
+		if (this.shouldNotAnimate()) {
 			this.fireEvent("toggle");
 			return;
 		}
@@ -365,7 +377,7 @@ class Panel extends UI5Element {
 	get classes() {
 		return {
 			headerBtn: {
-				"ui5-panel-header-button-animated": this.shouldAnimate(),
+				"ui5-panel-header-button-animated": !this.shouldNotAnimate(),
 			},
 		};
 	}

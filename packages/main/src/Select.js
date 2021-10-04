@@ -12,6 +12,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -26,6 +27,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	LIST_ITEM_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -334,7 +336,6 @@ class Select extends UI5Element {
 
 	_onfocusout() {
 		this.focused = false;
-		this.itemSelectionAnnounce();
 	}
 
 	get _isPickerOpen() {
@@ -353,7 +354,7 @@ class Select extends UI5Element {
 	 * @public
 	 */
 	get selectedOption() {
-		return this.options.find(option => option.selected);
+		return this._filteredItems.find(option => option.selected);
 	}
 
 	async _toggleRespPopover() {
@@ -373,12 +374,13 @@ class Select extends UI5Element {
 	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
-		const opts = this.options.map((opt, index) => {
+		const options = this._filteredItems;
+		const syncOpts = options.map((opt, index) => {
 			if (opt.selected || opt.textContent === this.value) {
 				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
 				lastSelectedOptionIndex = index;
 			}
-			if (!opt.disabled && (firstEnabledOptionIndex === -1)) {
+			if (firstEnabledOptionIndex === -1) {
 				firstEnabledOptionIndex = index;
 			}
 
@@ -389,7 +391,6 @@ class Select extends UI5Element {
 			return {
 				selected: false,
 				_focused: false,
-				disabled: opt.disabled,
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
@@ -398,27 +399,27 @@ class Select extends UI5Element {
 			};
 		});
 
-		if (lastSelectedOptionIndex > -1 && !opts[lastSelectedOptionIndex].disabled) {
-			opts[lastSelectedOptionIndex].selected = true;
-			opts[lastSelectedOptionIndex]._focused = true;
-			this.options[lastSelectedOptionIndex].selected = true;
-			this.options[lastSelectedOptionIndex]._focused = true;
-			this._text = opts[lastSelectedOptionIndex].textContent;
+		if (lastSelectedOptionIndex > -1 && !syncOpts[lastSelectedOptionIndex].disabled) {
+			syncOpts[lastSelectedOptionIndex].selected = true;
+			syncOpts[lastSelectedOptionIndex]._focused = true;
+			options[lastSelectedOptionIndex].selected = true;
+			options[lastSelectedOptionIndex]._focused = true;
+			this._text = syncOpts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
 			this._text = "";
 			this._selectedIndex = -1;
-			if (opts[firstEnabledOptionIndex]) {
-				opts[firstEnabledOptionIndex].selected = true;
-				opts[firstEnabledOptionIndex]._focused = true;
-				this.options[firstEnabledOptionIndex].selected = true;
-				this.options[firstEnabledOptionIndex]._focused = true;
+			if (syncOpts[firstEnabledOptionIndex]) {
+				syncOpts[firstEnabledOptionIndex].selected = true;
+				syncOpts[firstEnabledOptionIndex]._focused = true;
+				options[firstEnabledOptionIndex].selected = true;
+				options[firstEnabledOptionIndex]._focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = this.options[firstEnabledOptionIndex].textContent;
+				this._text = options[firstEnabledOptionIndex].textContent;
 			}
 		}
 
-		this._syncedOptions = opts;
+		this._syncedOptions = syncOpts;
 	}
 
 	_enableFormSupport() {
@@ -455,14 +456,11 @@ class Select extends UI5Element {
 			this._handleSelectionChange();
 		} else if (isUp(event) || isDown(event)) {
 			this._handleArrowNavigation(event);
-		} else {
-			this._handleKeyboardNavigation(event);
 		}
 	}
 
 	_handleKeyboardNavigation(event) {
-		// Waiting for the actual symbol to trigger the keydown event
-		if (event.shiftKey && event.key === "Shift") {
+		if (isEnter(event)) {
 			return;
 		}
 
@@ -502,7 +500,7 @@ class Select extends UI5Element {
 	}
 
 	_searchNextItemByText(text) {
-		let orderedOptions = this.options.slice(0);
+		let orderedOptions = this._filteredItems.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
@@ -517,7 +515,7 @@ class Select extends UI5Element {
 	}
 
 	_handleEndKey(event) {
-		const lastIndex = this.options.length - 1;
+		const lastIndex = this._filteredItems.length - 1;
 
 		event.preventDefault();
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
@@ -538,9 +536,9 @@ class Select extends UI5Element {
 	}
 
 	_select(index) {
-		this.options[this._selectedIndex].selected = false;
+		this._filteredItems[this._selectedIndex].selected = false;
 		this._selectedIndex = index;
-		this.options[index].selected = true;
+		this._filteredItems[index].selected = true;
 	}
 
 	/**
@@ -597,17 +595,19 @@ class Select extends UI5Element {
 	}
 
 	_changeSelectedItem(oldIndex, newIndex) {
-		this.options[oldIndex].selected = false;
-		this.options[oldIndex]._focused = false;
+		const options = this._filteredItems;
 
-		this.options[newIndex].selected = true;
-		this.options[newIndex]._focused = true;
+		options[oldIndex].selected = false;
+		options[oldIndex]._focused = false;
+
+		options[newIndex].selected = true;
+		options[newIndex]._focused = true;
 
 		this._selectedIndex = newIndex;
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
-			this._fireChangeEvent(this.options[newIndex]);
+			this._fireChangeEvent(options[newIndex]);
 		}
 	}
 
@@ -621,7 +621,7 @@ class Select extends UI5Element {
 
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
-		this._lastSelectedOption = this.options[this._selectedIndex];
+		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 	}
 
 	_afterOpen() {
@@ -636,9 +636,9 @@ class Select extends UI5Element {
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
-		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
-			this._fireChangeEvent(this.options[this._selectedIndex]);
-			this._lastSelectedOption = this.options[this._selectedIndex];
+		} else if (this._lastSelectedOption !== this._filteredItems[this._selectedIndex]) {
+			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
+			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 		}
 	}
 
@@ -682,11 +682,11 @@ class Select extends UI5Element {
 	}
 
 	get _currentSelectedItem() {
-		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
+		return this.shadowRoot.querySelector(`#${this._filteredItems[this._selectedIndex]._id}-li`);
 	}
 
 	get _currentlySelectedOption() {
-		return this.options[this._selectedIndex];
+		return this._filteredItems[this._selectedIndex];
 	}
 
 	get tabIndex() {
@@ -710,11 +710,11 @@ class Select extends UI5Element {
 	get styles() {
 		return {
 			popoverHeader: {
-				"width": `${this.offsetWidth}px`,
+				"max-width": `${this.offsetWidth}px`,
 			},
 			responsivePopoverHeader: {
-				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
+				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
 			},
 		};
 	}
@@ -744,13 +744,19 @@ class Select extends UI5Element {
 		return isPhone();
 	}
 
+	get _filteredItems() {
+		return this.options.filter(option => !option.disabled);
+	}
+
 	itemSelectionAnnounce() {
-		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+		let text;
+		const optionsCount = this._filteredItems.length;
+		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [this._selectedIndex + 1], [optionsCount]);
 
 		if (this.focused && this._currentlySelectedOption) {
-			invisibleText.textContent = this._currentlySelectedOption.textContent;
-		} else {
-			invisibleText.textContent = "";
+			text = `${this._currentlySelectedOption.textContent} ${this._isPickerOpen ? itemPositionText : ""}`;
+
+			announce(text, "Polite");
 		}
 	}
 

@@ -3,6 +3,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -35,6 +36,8 @@ const metadata = {
 		 * Defines the subtitle of the component.
 		 * <br><br>
 		 * <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
+		 * <br><br>
+		 * <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -72,14 +75,35 @@ const metadata = {
 		 * <li><code>NoTasks</code></li>
 		 * <li><code>UnableToLoad</code></li>
 		 * <li><code>UnableToUpload</code></li>
+		 * <li><code>TntCompany</code></li>
+		 * <li><code>TntExternalLink</code></li>
+		 * <li><code>TntFaceID</code></li>
+		 * <li><code>TntFingerprint</code></li>
+		 * <li><code>TntLock</code></li>
+		 * <li><code>TntMission</code></li>
+		 * <li><code>TntNoApplications</code></li>
+		 * <li><code>TntNoFlows</code></li>
+		 * <li><code>TntNoUsers</code></li>
+		 * <li><code>TntRadar</code></li>
+		 * <li><code>TntServices</code></li>
+		 * <li><code>TntSessionExpired</code></li>
+		 * <li><code>TntSessionExpiring</code></li>
+		 * <li><code>TntSuccess</code></li>
+		 * <li><code>TntSuccessfulAuth</code></li>
+		 * <li><code>TntUnlock</code></li>
+		 * <li><code>TntUnsuccessfulAuth</code></li>
 		 * </ul>
 		 * <br><br>
-		 * <b>Note:</b> By default BeforeSearch illustration is loaded. When using illustration type
-		 * it have to be loaded separately (<code>import "@ui5/webcomponents-fiori/dist/illustrations/BeforeSearch.js";</code>).
-		 *
+		 * <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
+		 * <br>
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
+		 * <br><br>
+		 * <b>Note:</b> TNT illustrations cointain <code>Tnt</code> prefix in their name.
+		 * You can import them removing the <code>Tnt</code> prefix like this:
+		 * <br>
+		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -100,6 +124,18 @@ const metadata = {
 			propertyName: "actions",
 			type: HTMLElement,
 		},
+		/**
+		 * Defines the subtitle of the component.
+		 * <br><br>
+		 * <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
+		 * @type {HTMLElement}
+		 * @slot subtitle
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		subtitle: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		//
@@ -117,7 +153,7 @@ const metadata = {
  * Each illustration has default internationalised title and subtitle texts. Also they can be managed with
  * <code>titleText</code> and <code>subtitleText</code> properties.
  *
- * То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
+ * To display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
  * <br><br>
  * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
@@ -194,6 +230,10 @@ class IllustratedMessage extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [Title];
+	}
+
 	onBeforeRendering() {
 		const illustrationData = getIllustrationDataSync(this.name);
 
@@ -245,12 +285,24 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
+	get hasFormattedSubtitle() {
+		return !!this.subtitle.length;
+	}
+
 	get effectiveTitleText() {
 		return this.titleText ? this.titleText : this.illustrationTitle;
 	}
 
 	get effectiveSubitleText() {
 		return this.subtitleText ? this.subtitleText : this.illustrationSubtitle;
+	}
+
+	get hasTitle() {
+		return this.titleText || this.illustrationTitle;
+	}
+
+	get hasSubtitle() {
+		return this.subtitleText || this.illustrationSubtitle;
 	}
 
 	get hasActions() {

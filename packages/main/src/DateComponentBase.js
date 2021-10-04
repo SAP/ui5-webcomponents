@@ -27,7 +27,19 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the мinimum date available for selection.
+		 * Defines the secondary calendar type.
+		 * If not set, the calendar will only show the primary calendar type.
+		 * @type {CalendarType}
+		 * @since 1.0.0-rc.16
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		secondaryCalendarType: {
+			type: CalendarType,
+		},
+
+		/**
+		 * Determines the minimum date available for selection.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""

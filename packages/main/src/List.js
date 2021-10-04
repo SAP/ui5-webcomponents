@@ -24,9 +24,15 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 import listCss from "./generated/themes/List.css.js";
 
 // Texts
-import { LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
+	ARIA_LABEL_LIST_MULTISELECTABLE,
+	ARIA_LABEL_LIST_DELETABLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
+
+const PAGE_UP_DOWN_SIZE = 10;
 
 /**
  * @public
@@ -91,7 +97,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the list items are indented.
+		 * Determines whether the component is indented.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -169,7 +175,7 @@ const metadata = {
 		 * @since 1.0.0-rc.13
 		 * @public
 		 */
-		 growing: {
+		growing: {
 			type: ListGrowingMode,
 			defaultValue: ListGrowingMode.None,
 		},
@@ -199,7 +205,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -211,7 +217,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the input
+		 * Defines the IDs of the elements that label the input.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -226,24 +232,21 @@ const metadata = {
 		/**
 		 * Defines the accessible role of the component.
 		 * <br><br>
-		 * <b>Note:</b> If you use notification list items,
-		 * it's recommended to set <code>accessible-role="list"</code> for better accessibility.
-		 *
 		 * @public
 		 * @type {String}
-		 * @defaultvalue "listbox"
+		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
 		 */
-		 accessibleRole: {
+		accessibleRole: {
 			type: String,
-			defaultValue: "listbox",
+			defaultValue: "list",
 		},
 
 		/**
 		 * Defines if the entire list is in view port.
 		 * @private
 		 */
-		 _inViewport: {
+		_inViewport: {
 			type: Boolean,
 		},
 
@@ -251,7 +254,7 @@ const metadata = {
 		 * Defines the active state of the <code>More</code> button.
 		 * @private
 		 */
-		 _loadMoreActive: {
+		_loadMoreActive: {
 			type: Boolean,
 		},
 	},
@@ -508,6 +511,10 @@ class List extends UI5Element {
 		return `${this._id}-header`;
 	}
 
+	get modeLabelID() {
+		return `${this._id}-modeLabel`;
+	}
+
 	get listEndDOM() {
 		return this.shadowRoot.querySelector(".ui5-list-end-marker");
 	}
@@ -520,6 +527,19 @@ class List extends UI5Element {
 		return !this.hasData && this.noDataText;
 	}
 
+	get isDelete() {
+		return this.mode === ListMode.Delete;
+	}
+
+	get isSingleSelect() {
+		return [
+			ListMode.SingleSelect,
+			ListMode.SingleSelectBegin,
+			ListMode.SingleSelectEnd,
+			ListMode.SingleSelectAuto,
+		].includes(this.mode);
+	}
+
 	get isMultiSelect() {
 		return this.mode === ListMode.MultiSelect;
 	}
@@ -528,12 +548,35 @@ class List extends UI5Element {
 		if (this.accessibleNameRef || this.accessibleName) {
 			return undefined;
 		}
+		const ids = [];
 
-		return this.shouldRenderH1 ? this.headerID : undefined;
+		if (this.isMultiSelect || this.isSingleSelect || this.isDelete) {
+			ids.push(this.modeLabelID);
+		}
+
+		if (this.shouldRenderH1) {
+			ids.push(this.headerID);
+		}
+
+		return ids.length ? ids.join(" ") : undefined;
 	}
 
 	get ariaLabelТxt() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaLabelModeText() {
+		if (this.isMultiSelect) {
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
+		}
+		if (this.isSingleSelect) {
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
+		}
+		if (this.isDelete) {
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+		}
+
+		return undefined;
 	}
 
 	get grows() {
@@ -575,6 +618,7 @@ class List extends UI5Element {
 
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledItems(),
 		});

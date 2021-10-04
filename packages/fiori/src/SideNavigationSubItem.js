@@ -42,6 +42,17 @@ const metadata = {
 		icon: {
 			type: String,
 		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		title: {
+			type: String,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
@@ -71,6 +82,10 @@ const metadata = {
 class SideNavigationSubItem extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	get _tooltip() {
+		return this.title || this.text;
 	}
 }
 

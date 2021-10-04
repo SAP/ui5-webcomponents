@@ -1,4 +1,5 @@
 import { registerThemePropertiesLoader } from "./dist/AssetRegistry.js";
+import EventProvider from "./dist/EventProvider.js";
 
 // ESM bundle targets browsers with native support
 import "./dist/features/OpenUI5Support.js";
@@ -34,6 +35,8 @@ import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
+import applyDirection from "./dist/locale/applyDirection.js";
+
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -51,4 +54,6 @@ window["sap-ui-webcomponents-bundle"] = {
 	fetchI18nBundle,
 	getI18nBundle,
 	renderFinished,
+	applyDirection,
+	EventProvider,
 };

@@ -155,6 +155,8 @@ class Tokenizer extends UI5Element {
 			const popover = await this.getPopover();
 			popover.close();
 		}
+
+		this._nMoreCount = this.overflownTokens.length;
 	}
 
 	onEnterDOM() {
@@ -198,7 +200,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._nMoreCount = this.overflownTokens.length;
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
@@ -212,9 +213,10 @@ class Tokenizer extends UI5Element {
 			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
 		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
-		this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
 
-		if (nextToken) {
+		if (nextToken && !isPhone()) {
+			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
+
 			setTimeout(() => {
 				nextToken.focus();
 			}, 0);

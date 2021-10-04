@@ -10,7 +10,6 @@ import {
 	TREE_ITEM_ARIA_LABEL,
 	TREE_ITEM_EXPAND_NODE,
 	TREE_ITEM_COLLAPSE_NODE,
-	LIST_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -286,7 +285,8 @@ class TreeListItem extends ListItem {
 			ariaLevel: this.level,
 			posinset: this._posinset,
 			setsize: this._setsize,
-			listItemAriaLabel: this.ariaLabelText,
+			ariaSelectedText: this.ariaSelectedText,
+			listItemAriaLabel: this.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
 		};
 	}
 
@@ -313,16 +313,6 @@ class TreeListItem extends ListItem {
 				this.fireEvent("step-out", { item: this });
 			}
 		}
-	}
-
-	get ariaLabelText() {
-		let text = this.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
-
-		if (this.selected) {
-			text += ` ${this.i18nBundle.getText(LIST_ITEM_SELECTED)}`;
-		}
-
-		return text;
 	}
 
 	get iconAccessibleName() {

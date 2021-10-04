@@ -51,7 +51,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Active</code></li>
 		 * <li><code>Inactive</code></li>
-		 * <ul>
+		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
@@ -142,7 +142,7 @@ const metadata = {
  * The <code>ui5-table-row</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>row - Used to style the native <code>tr</code> element</li>
- * <li>popin-row - Used to style the <code>tr</code> element</li> when a row pops in
+ * <li>popin-row - Used to style the <code>tr</code> element when a row pops in</li>
  * </ul>
  *
  * @constructor
@@ -241,7 +241,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
-		if (!this.contains(document.activeElement)) {
+		if (!this.contains(this.getRootNode().activeElement)) {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,
@@ -266,7 +266,7 @@ class TableRow extends UI5Element {
 	}
 
 	_getActiveElementTagName() {
-		return document.activeElement.localName.toLocaleLowerCase();
+		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
 	}
 
 	activate() {

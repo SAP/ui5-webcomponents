@@ -34,7 +34,7 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
-		 * Defines the value of the Web Component.
+		 * Defines the value of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -47,7 +47,7 @@ const metadata = {
 		/**
 		 * Indicates whether the user can interact with the component or not.
 		 * <br><br>
-		 * <b>Note:</b> Disabled components cannot be focused and they are out of the tab chain.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -180,7 +180,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the maximum number of lines that the Web Component can grow.
+		 * Defines the maximum number of lines that the component can grow.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 0
@@ -329,10 +329,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-textarea</code> component provides large spaces for text
- * entries in the form of multiple rows.
- * It has the functionality of the <code>TextField</code> with the additional
- * functionality for multiline texts.
+ * The <code>ui5-textarea</code> component is used to enter multiple lines of text.
  * <br><br>
  * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
  * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
@@ -449,9 +446,13 @@ class TextArea extends UI5Element {
 		this.previousValue = this.getInputDomRef().value;
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 		this.focused = false;
-		this._openValueStateMsgPopover = false;
+
+		if (!focusedOutToValueStateMessage) {
+			this._openValueStateMsgPopover = false;
+		}
 	}
 
 	_onchange() {

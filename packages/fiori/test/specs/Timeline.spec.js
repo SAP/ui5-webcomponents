@@ -2,17 +2,15 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Timeline general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Timeline.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Timeline.html`);
 	});
 
-	it("should fire name-click event on a normal item name", () => {
-		const timelineItemName = browser.$("#test-item").shadow$("ui5-link");
-		const result = $("#result");
+	it("should fire name-click event on a normal item name", async () => {
+		const timelineItemName = await browser.$("ui5-timeline-item").shadow$("ui5-link");
+		const result = await browser.$("#result");
 
-		// disable the click test temporarily, wdio click simulation does not trigger the ui5-link click handler
-		// and triggering the click on the internal <a> element makes wdio throw an error that it is not clickable
-		// timelineItemName.click();
-		// assert.strictEqual(result.getText(), "Stanislava Baltova", "Click event is fired");
+		await timelineItemName.click();
+		assert.strictEqual(await result.getText(), "Stanislava Baltova", "Click event is fired");
 	});
 });

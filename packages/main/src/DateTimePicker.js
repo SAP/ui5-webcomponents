@@ -102,9 +102,6 @@ const metadata = {
  * </ul>
  *
  * Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property
- * <br><br>
- * As most of the input based components, the <code>DateTimePicker</code> supports properties,
- * such as: <code>disabled</code>, <code>readonly</code>, <code>valueState</code> and  <code>placeholder</code>.
  *
  * <h3>Formatting</h3>
  *
@@ -369,7 +366,6 @@ class DateTimePicker extends DatePicker {
 			this.fireEvent("value-changed", { value: this.value, valid });
 		}
 
-		this._focusInputAfterClose = true;
 		this._updateValueState();
 		this.closePicker();
 	}

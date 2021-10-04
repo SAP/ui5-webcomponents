@@ -2,266 +2,264 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 const openPickerById = (id, options) => {
-	const res = browser.execute((id, options) => {
-		return document.querySelector(`#${id}`).openPicker(options);
+	return browser.executeAsync((id, options, done) => {
+		done(document.querySelector(`#${id}`).openPicker(options));
 	}, id, options);
-	browser.pause(1000);
-	return res;
 }
 
 const closePickerById = id => {
-	return browser.execute(id => {
-		return document.querySelector(`#${id}`).closePicker();
+	return browser.executeAsync((id, done) => {
+		done(document.querySelector(`#${id}`).closePicker());
 	}, id);
 }
 
 const isPickerOpen = id => {
-	return browser.execute((id) => {
-		return document.querySelector(`#${id}`).isOpen();
+	return browser.executeAsync((id, done) => {
+		done(document.querySelector(`#${id}`).isOpen());
 	}, id);
 }
 
-const getPicker = id => {
-	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
+const getPicker = async id => {
+	const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${id}`);
 	return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 }
 
-const getSubmitButton = id => {
-	const picker = getPicker(id);
+const getSubmitButton = async id => {
+	const picker = await getPicker(id);
 	return picker.$("#ok");
 }
 
-const getCancelButton = id => {
-	const picker = getPicker(id);
+const getCancelButton = async id => {
+	const picker = await getPicker(id);
 	return picker.$("#cancel");
 }
 
-const getTimeSlidersCount = id => {
-	const picker = getPicker(id);
+const getTimeSlidersCount = async id => {
+	const picker = await getPicker(id);
 
-	return browser.execute( picker => {
-		return picker.querySelector("ui5-time-selection").shadowRoot.querySelectorAll("ui5-wheelslider").length;
+	return await browser.executeAsync( (picker, done) => {
+		done(picker.querySelector("ui5-time-selection").shadowRoot.querySelectorAll("ui5-wheelslider").length);
 	}, picker);
 }
 
 describe("DateTimePicker general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html`);
 	});
 
-	it("tests picker opens/closes programmatically", () => {
+	it("tests picker opens/closes programmatically", async () => {
 		// act
-		openPickerById("dt");
+		await openPickerById("dt");
 
 		// assert
-		assert.ok(isPickerOpen("dt"), "The picker opens programmatically.");
+		assert.ok(await isPickerOpen("dt"), "The picker opens programmatically.");
 
 		// act
-		closePickerById("dt");
+		await closePickerById("dt");
 
 		// assert
-		assert.ok(!isPickerOpen("dt"), "The picker closes programmatically.");
+		assert.notOk(await isPickerOpen("dt"), "The picker closes programmatically.");
 	});
 
-	it("tests selection of new date/time", () => {
+	it("tests selection of new date/time", async () => {
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
-		const dtPicker = browser.$("#dtSeconds");
+		const dtPicker = await browser.$("#dtSeconds");
 
 		// act
-		openPickerById("dtSeconds");
+		await openPickerById("dtSeconds");
 
 		// assert
-		const currentValue = dtPicker.shadow$("ui5-input").getValue();
+		const currentValue = await dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(currentValue, PREVIOUS_VALUE,  "The initial date/time is correctly set.");
 
 		// act
-		const picker = getPicker("dtSeconds");
+		const picker = await getPicker("dtSeconds");
 
 		// select the next day (the right from the selected)
-		const selectedDay = picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--selected");
-		selectedDay.click();
-		browser.keys("ArrowRight");
-		browser.keys("Space");
+		const selectedDay = await picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--selected");
+		await selectedDay.click();
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
 
 		// select new time
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown"); // select 01
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown"); // select 01
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown"); // select 0
-		browser.keys("ArrowDown"); browser.keys("ArrowDown"); // select 02
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown"); // select 0
+		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 02
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown"); // select 0
-		browser.keys("ArrowDown"); browser.keys("ArrowDown"); browser.keys("ArrowDown"); // select 03
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown"); // select 0
+		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 03
 
-		picker.$("#ok").click();
+		await picker.$("#ok").click();
 
 		// assert
-		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "14/04/2020, 01:02:03 AM", "The new date/time is correctly selected.");
 	});
 
-	it("tests selection of new date without changing the time section", () => {
+	it("tests selection of new date without changing the time section", async () => {
 		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 AM";
-		const dtPicker = browser.$("#dtSeconds");
+		const dtPicker = await browser.$("#dtSeconds");
 		// assert
-		const currentValue = dtPicker.shadow$("ui5-input").getValue();
+		const currentValue = await dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(currentValue, PREVIOUS_VALUE,  "The initial date/time is correctly set.");
 
-		browser.keys("Tab");
-		browser.keys(["Shift", "Tab"]);
-		browser.keys("Backspace");
-		browser.keys("wrongtext");
-		browser.keys("Tab");
+		await browser.keys("Tab");
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("Backspace");
+		await browser.keys("wrongtext");
+		await browser.keys("Tab");
 
-		openPickerById("dtSeconds");
+		await openPickerById("dtSeconds");
 		// act
-		const picker = getPicker("dtSeconds");
+		const picker = await getPicker("dtSeconds");
 		// select the next day (the right from the selected)
-		const selectedDay = picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--now");
-		const timestamp = selectedDay.getAttribute("data-sap-timestamp");
+		const selectedDay = await picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--now");
+		const timestamp = await selectedDay.getAttribute("data-sap-timestamp");
 		const date = new Date(timestamp * 1000);
 		const selectedDate = `${date.getDate() < 10 ? "0" : ""}${date.getDate()}/${date.getMonth() + 1 < 10 ? "0" : ""}${date.getMonth() + 1}/${date.getFullYear()}`;
-		selectedDay.click();
-		picker.$("#ok").click();
+		await selectedDay.click();
+		await picker.$("#ok").click();
 		// assert
-		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-input").getValue();
 		const result = newValue.indexOf(selectedDate) > -1;
 		assert.ok(result, "The new date/time is correctly selected.");
 	});
 
-	it("tests change event is fired on submit", () => {
+	it("tests change event is fired on submit", async () => {
 		// test submit from empty value to current date/time value
-		openPickerById("dt1");
+		await openPickerById("dt1");
 
-		const picker = getPicker("dt1");
-		const inputCounter = browser.$("#input1");
-		const submitBtn = getSubmitButton("dt1");
+		const picker = await getPicker("dt1");
+		const inputCounter = await browser.$("#input1");
+		const submitBtn = await getSubmitButton("dt1");
 
 		// act
-		picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$("[data-sap-focus-ref]").click(); // select a date to enable the OK button
-		submitBtn.click();
+		await picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$("[data-sap-focus-ref]").click(); // select a date to enable the OK button
+		await submitBtn.click();
 
 		// assert
-		assert.strictEqual(inputCounter.getProperty("value"), "1", "Changed should be called 1 time.");
+		assert.strictEqual(await inputCounter.getProperty("value"), "1", "Changed should be called 1 time.");
 
 		// tests submit on same value
-		openPickerById("dt1");
+		await openPickerById("dt1");
 
 		// act
-		submitBtn.click();
+		await submitBtn.click();
 
 		// assert
-		assert.strictEqual(inputCounter.getProperty("value"), "1", "Changed counter still shows 1.");
-		assert.ok(!isPickerOpen("dt1"), "The picker closes after pressing 'Submit'.");
+		assert.strictEqual(await inputCounter.getProperty("value"), "1", "Changed counter still shows 1.");
+		assert.notOk(await isPickerOpen("dt1"), "The picker closes after pressing 'Submit'.");
 	});
 
-	it("tests change event not fired on cancel", () => {
-		openPickerById("dt2");
+	it("tests change event not fired on cancel", async () => {
+		await openPickerById("dt2");
 
-		const inputCounter = browser.$("#input3");
-		const cancelBtn = getCancelButton("dt2");
+		const inputCounter = await browser.$("#input3");
+		const cancelBtn = await getCancelButton("dt2");
 
 		// act
-		cancelBtn.click();
+		await cancelBtn.click();
 
 		// assert
-		assert.strictEqual(inputCounter.getProperty("value"), "", "Changed should not be called.");
-		assert.ok(!isPickerOpen("dt2"), "The picker closes after pressing 'Cancel'.");
+		assert.strictEqual(await inputCounter.getProperty("value"), "", "Changed should not be called.");
+		assert.notOk(await isPickerOpen("dt2"), "The picker closes after pressing 'Cancel'.");
 	});
 
-	it("tests time controls displayed according to format", () => {
+	it("tests time controls displayed according to format", async () => {
 		const expectedHoursMinSlidersCount = 3;
 		const expectedHoursMinSecSlidersCount = 4;
 
 		// act
-		openPickerById("dtSeconds");
+		await openPickerById("dtSeconds");
 
 		// assert
-		const hoursMinSecSliders = getTimeSlidersCount("dtSeconds");
+		const hoursMinSecSliders = await getTimeSlidersCount("dtSeconds");
 		assert.strictEqual(hoursMinSecSliders, expectedHoursMinSecSlidersCount,
 			"The picker have 4 sliders - hours, minutes, seconds and periods sliders.");
 
-		closePickerById("dtSeconds");
+		await closePickerById("dtSeconds");
 
 		// act
-		openPickerById("dtMinutes");
+		await openPickerById("dtMinutes");
 
 		// assert
-		const hoursMinSliders = getTimeSlidersCount("dtMinutes");
+		const hoursMinSliders = await getTimeSlidersCount("dtMinutes");
 		assert.strictEqual(hoursMinSliders,	expectedHoursMinSlidersCount,
 			"The picker have 3 sliders - hours, minutes and periods sliders.");
 
-		closePickerById("dtMinutes");
+		await closePickerById("dtMinutes");
 	});
 
-	it("tests hours slider is expanded", () => {
+	it("tests hours slider is expanded", async () => {
 		// act
-		openPickerById("dt");
+		await openPickerById("dt");
 
 		// assert
-		const picker = getPicker("dt");
-		const expanded = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("expanded");
-		assert.strictEqual(expanded, true, "The  hours slider is expanded.");
+		const picker = await getPicker("dt");
+		const expanded = await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("expanded");
+		assert.ok(expanded, "The  hours slider is expanded.");
 
-		closePickerById("dt");
+		await closePickerById("dt");
 	});
 
-	it("tests selection of 12:00:00 AM", () => {
-		const dtPicker = browser.$("#dtTest12AM");
+	it("tests selection of 12:00:00 AM", async () => {
+		const dtPicker = await browser.$("#dtTest12AM");
 
 		// act
-		openPickerById("dtTest12AM");
+		await openPickerById("dtTest12AM");
 
-		const picker = getPicker("dtTest12AM");
+		const picker = await getPicker("dtTest12AM");
 
 		// select new time
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageUp"); // select 12
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageUp"); // select 12
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown");// select 00
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown");// select 00
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown");// select 00
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown");// select 00
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown");// select AM
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown");// select AM
 
-		picker.$("#ok").click();
+		await picker.$("#ok").click();
 
 		// assert
-		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 AM", "The new date/time is correctly selected.");
 	});
 
-	it("tests selection of 12:00:00 PM", () => {
-		const dtPicker = browser.$("#dtTest12PM");
+	it("tests selection of 12:00:00 PM", async () => {
+		const dtPicker = await browser.$("#dtTest12PM");
 
 		// act
-		openPickerById("dtTest12PM");
+		await openPickerById("dtTest12PM");
 
-		const picker = getPicker("dtTest12PM");
+		const picker = await getPicker("dtTest12PM");
 
 		// select new time
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageUp"); // select 12
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageUp"); // select 12
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown");// select 00
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown");// select 00
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown");// select 00
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageDown");// select 00
 
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageUp");// select PM
+		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).shadow$(`div[tabindex="0"]`).click();
+		await browser.keys("PageUp");// select PM
 
 
-		picker.$("#ok").click();
+		await picker.$("#ok").click();
 
 		// assert
-		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 PM", "The new date/time is correctly selected.");
 	});
 });

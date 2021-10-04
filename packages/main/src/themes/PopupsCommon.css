@@ -4,7 +4,7 @@
     min-width: 6.25rem;
     background: var(--sapGroup_ContentBackground);
     box-shadow: var(--sapContent_Shadow2);
-    border-radius: 0.25rem;
+    border-radius: var(--_ui5-popup-border-radius);
     min-height: 2rem;
     box-sizing: border-box;
 }
@@ -18,8 +18,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    max-height: 94vh;
-    max-width: 90vw;
     outline: none;
 }
 
