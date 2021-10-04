@@ -101,7 +101,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled component is completely uninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -133,7 +133,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the component is readonly.
+		 * Defines whether the component is read-only.
 		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
@@ -259,7 +259,7 @@ const metadata = {
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the <code>ui5-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
@@ -321,7 +321,7 @@ const metadata = {
  *
  * The <code>ui5-combobox</code> component represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
  *
- * It is commonly used to enable users to select one or more options from a predefined list.
+ * It is commonly used to enable users to select an option from a predefined list.
  * <h3>Structure</h3>
  * The <code>ui5-combobox</code> consists of the following elements:
  * <ul>
