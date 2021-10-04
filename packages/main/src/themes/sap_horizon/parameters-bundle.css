@@ -2,6 +2,7 @@
 @import "../base/Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
 @import "./Button-parameters.css";
+@import "./Badge-parameters.css";
 @import "../base/Card-parameters.css";
 @import "../base/Carousel-parameters.css";
 @import "./CheckBox-parameters.css";
