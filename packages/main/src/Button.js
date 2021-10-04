@@ -30,7 +30,7 @@ const metadata = {
 		 * Defines the component design.
 		 *
 		 * <br><br>
-		 * <b>Note:</b>
+		 * <b>The available values are:</b>
 		 *
 		 * <ul>
 		 * <li><code>Default</code></li>
@@ -51,8 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the component is disabled
-		 * (default is set to <code>false</code>).
+		 * Defines whether the component is disabled.
 		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
@@ -95,7 +94,7 @@ const metadata = {
 		 * When set to <code>true</code>, the component will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 * <br><br>
-		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
+		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
@@ -109,7 +108,7 @@ const metadata = {
 		/**
 		 * Defines the tooltip of the button.
 		 * <br>
-		 * <b>Important:</b> Tooltips should only be set to icon only buttons.
+		 * <b>Note:</b> Tooltips should only be set to icon-only buttons.
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @private
