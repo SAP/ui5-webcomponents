@@ -8,7 +8,7 @@ In this tutorial, you will learn how to add UI5 Web Components to your applicati
 npm install -g @angular/cli
 ```
 
-### Step 2. Create new Angular application
+### Step 2. Create a new Angular application
 
 ```bash
 ng new ui5-web-components-application
@@ -43,7 +43,7 @@ schemas: [
 ### Step 5. Import the components you are going to use
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/dist/Button.js";
 ```
 
 ### Step 6. Use the imported elements in your application

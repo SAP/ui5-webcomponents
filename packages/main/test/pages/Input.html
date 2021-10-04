@@ -123,7 +123,7 @@
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
 		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
-		<ui5-icon slot="icon" name="message-error"></ui5-icon>
+		<ui5-icon slot="icon" name="sys-cancel"></ui5-icon>
 	</ui5-input>
 	<h3> 'input' test result</h3>
 	<ui5-input id="inputLiveChangeResult"></ui5-input>
@@ -337,6 +337,33 @@
 	<ui5-input id="input-number32" type="Number" value="4.3"></ui5-input><br>
 	<ui5-input id="input-number33" type="Number" value=".33"></ui5-input><br>
 	<ui5-input id="input-number34" type="Number" value="-1.33"></ui5-input><br>
+
+	<h3>sap_horizon</h3>
+
+	<div class="sap_horizon">
+		<style>
+			.sap_horizon {
+				background: #fff
+			}
+
+			.sap_horizon > ui5-input {
+				margin: 10px;
+			}
+		</style>
+		<ui5-input placeholder="No Value State"></ui5-input>
+		<ui5-input placeholder="Disabled" disabled></ui5-input>
+		<ui5-input placeholder="ReadnOnly" readonly></ui5-input>
+		<ui5-input placeholder="Error ValueState" value-state="Error"></ui5-input>
+		<ui5-input placeholder="Warning ValueState" value-state="Warning"></ui5-input>
+		<ui5-input placeholder="Success ValueState" value-state="Success"></ui5-input>
+		<ui5-input placeholder="Information ValueState" value-state="Information"></ui5-input>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
