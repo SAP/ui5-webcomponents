@@ -82,12 +82,18 @@
 
 					popAvatar.colorScheme = avatarGroup.colorScheme[avatarIndex];
 					popAvatar.initials = avatarRef.initials;
-					popAvatar.image = avatarRef.image;
+					while (popAvatar.firstChild) {
+						popAvatar.removeChild(popAvatar.firstChild);
+					}
+
+					for (let i = 0; i < avatarRef.image.length; i++) {
+						popAvatar.appendChild(avatarRef.image[i])
+					}
+
 					popAvatar.icon = avatarRef.icon;
-	
+
 					personPopover.showAt(avatarRef);
 				}
-	
 				function onButtonClicked(targetRef) {
 					const hiddenItems = avatarGroup.hiddenItems;
 					const placeholder = peoplePopover.querySelector(".placeholder");
@@ -241,7 +247,7 @@
 						const avatarColor = avatarGroup.colorScheme[index];
 
 						html += `<div class="avatar-slot" style="padding: 5px">
-									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme"${color}">`;
+									<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" color-scheme="${avatarColor}">`;
 						if (avatar.image.length > 0) {
 							html += `<img src="${avatar.image[0].src}">`
 						}

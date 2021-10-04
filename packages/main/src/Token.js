@@ -73,7 +73,7 @@ const metadata = {
 
 		/**
 		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
-		 * Accepts <code>ui5-icon</code>
+		 * Accepts <code>ui5-icon</code>.
 		 *
 		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot

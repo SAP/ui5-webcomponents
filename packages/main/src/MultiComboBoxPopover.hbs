@@ -4,9 +4,10 @@
 	class="ui5-multi-combobox-all-items-responsive-popover"
 	hide-arrow
 	_disable-initial-focus
-	@ui5-after-close={{_toggle}}
+	@ui5-selection-change={{_listSelectionChange}}
+	@ui5-after-close={{_afterClosePicker}}
 	@ui5-before-open={{_beforeOpen}}
-	@ui5-after-open={{_toggle}}
+	@ui5-after-open={{_afterOpenPicker}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
@@ -44,7 +45,6 @@
 						icon="multiselect-all"
 						design="Transparent"
 						?pressed={{_showAllItemsButtonPressed}}
-						?disabled={{allItemsSelected}}
 						@click="{{filterSelectedItems}}"
 					></ui5-toggle-button>
 				</div>
@@ -59,25 +59,25 @@
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+			<div slot="header" @keydown="{{_onValueStateKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
 	{{/unless}}
 
-	<ui5-list @ui5-selection-change={{_listSelectionChange}} separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
-		{{#each _filteredItems}}
-				<ui5-li
-					type="{{../_listItemsType}}"
-					additional-text={{this.additionalText}}
-					?selected={{this.selected}}
-					data-ui5-token-id="{{this._id}}"
-					data-ui5-stable="{{this.stableDomRef}}"
-				>
-					{{this.text}}
-				</ui5-li>
-		{{/each}}
-	</ui5-list>
+	{{#if filterSelected}}
+		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+			{{#each selectedItems}}
+				{{> listItem}}
+			{{/each}}
+		</ui5-list>
+	{{else}}
+		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+			{{#each _filteredItems}}
+				{{> listItem}}
+			{{/each}}
+		</ui5-list>
+	{{/if}}
 
 	{{#if _isPhone}}
 		<div slot="footer" class="ui5-responsive-popover-footer">
@@ -114,4 +114,17 @@
 			{{this}}
 		{{/each}}
 	{{/if}}
+{{/inline}}
+
+{{#*inline "listItem"}}
+	<ui5-li
+		type="{{../_listItemsType}}"
+		additional-text={{this.additionalText}}
+		?selected={{this.selected}}
+		data-ui5-token-id="{{this._id}}"
+		data-ui5-stable="{{this.stableDomRef}}"
+		@keydown="{{../_onItemKeydown}}"
+	>
+		{{this.text}}
+	</ui5-li>
 {{/inline}}

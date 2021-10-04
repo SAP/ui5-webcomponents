@@ -111,7 +111,7 @@ const metadata = {
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
-		 * Defines the <code>sortItems</code> list.
+		 * Defines the list of items against which the user could sort data.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 		 *
 		 * @type {sap.ui.webcomponents.fiori.SortItem[]}
@@ -141,7 +141,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
 		 * @param {String} sortOrder The current sort order selected.
-		 * @param {String} sortBy The current sort by selected.
+		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
 		 * @public
 		 */
 		confirm: {
@@ -157,7 +157,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
 		 * @param {String} sortOrder The current sort order selected.
-		 * @param {String} sortBy The current sort by selected.
+		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
 		 * @public
 		 */
 		cancel: {
@@ -309,7 +309,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _filterByLabel() {
-		return this.i18nBundle.getText();
+		return this.i18nBundle.getText(VSD_FILTER_BY);
 	}
 
 	get _sortByLabel() {

@@ -14,6 +14,10 @@
 	cursor: initial;
 }
 
+:host([readonly]) .ui5-rating-indicator-icon.ui5-rating-indicator-readonly-unselected-icon {
+	color: var(--sapContent_UnratedColor);
+}
+
 :host([_focused]) {
 	outline: 1px dotted var(--sapContent_FocusColor);
 }
@@ -34,11 +38,11 @@
 
 .ui5-rating-indicator-icon.ui5-rating-indicator-half-icon:before {
 	content: "\2605";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
 	color: var(--sapContent_RatedColor);
 	overflow: hidden;
 }

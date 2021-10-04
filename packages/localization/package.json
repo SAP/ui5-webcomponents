@@ -29,15 +29,15 @@
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "^0.16.0",
-    "@openui5/sap.ui.core": "1.87.3",
+    "@openui5/sap.ui.core": "1.94.0",
     "@ui5/webcomponents-tools": "1.0.0-rc.15",
-    "chromedriver": "93.0.1",
+    "chromedriver": "94.0.0",
     "copy-and-watch": "^0.1.5",
     "escodegen": "^2.0.0",
     "esprima": "^4.0.1",
     "glob": "^7.1.6",
     "mkdirp": "^1.0.4",
-    "path-exists-cli": "^1.0.0",
+    "path-exists-cli": "^2.0.0",
     "replace-in-file": "^6.2.0",
     "rimraf": "^3.0.2"
   },
