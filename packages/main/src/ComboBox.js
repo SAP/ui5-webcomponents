@@ -976,7 +976,6 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.9125rem 1rem",
 			},
 		};
 	}
@@ -984,6 +983,7 @@ class ComboBox extends UI5Element {
 	get classes() {
 		return {
 			popoverValueState: {
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
