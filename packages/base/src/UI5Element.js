@@ -607,15 +607,14 @@ class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns the DOM Element inside the Shadow Root that corresponds to the opening tag in the UI5 Web Component's template
+	 * *Note:* For logical (abstract) elements (items, options, etc...), returns the part of the parent's DOM that represents this option
 	 * Use this method instead of "this.shadowRoot" to read the Shadow DOM, if ever necessary
-	 * If called on element with no renderer(abstract element), it will return the DOM element that is built with the props of the abstract element.
 	 *
-	 * @function
 	 * @public
-	 * @since 1.0.0-rc.16
 	 */
 	getDomRef() {
-		if (!(this.constructor._needsShadowDOM() || this.constructor._needsStaticArea())) {
+		// If a component set _getRealDomRef to its children, use the return value of this function
+		if (typeof this._getRealDomRef === "function") {
 			return this._getRealDomRef();
 		}
 
