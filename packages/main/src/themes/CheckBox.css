@@ -8,11 +8,22 @@
 	overflow: hidden;
 	max-width: 100%;
 	outline: none;
+	border-radius: var(--_ui5_checkbox_border_radius);
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
 }
 
 /* disabled */
 :host([disabled]) .ui5-checkbox-root {
 	opacity: .5;
+}
+
+:host([disabled]) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_disabled_border_color);
+}
+
+:host([disabled]) .ui5-checkbox-label {
+	color: var(--_ui5_checkbox_disabled_label_color);
 }
 
 /* readonly */
@@ -91,7 +102,6 @@
 	position: relative;
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
 	width: 100%;
 	min-height: var(--_ui5_checkbox_width_height);
 	min-width: var(--_ui5_checkbox_width_height);
@@ -99,6 +109,9 @@
 	box-sizing: border-box;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	transition: background 0.3s ease-in-out;
+	border: var(--_ui5_checkbox_default_focus_border);
+	box-sizing: border-box;
 }
 
 /* Fixes IE11 bug for flex + min-height
@@ -110,7 +123,9 @@ https://github.com/philipwalton/flexbugs/issues/231
 	font-size: 0;
 }
 
+/* focused */
 .ui5-checkbox-root:focus::before {
+	display: var(--_ui5_checkbox_focus_outline_display);
 	content: "";
 	position: absolute;
 	top: var(--_ui5_checkbox_focus_position);
@@ -120,9 +135,51 @@ https://github.com/philipwalton/flexbugs/issues/231
 	border: var(--_ui5_checkbox_focus_outline);
 }
 
-.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host .ui5-checkbox-root:focus {
+	border: var(--_ui5_checkbox_focus_border);
+	border-radius: 0.5rem;
+}
+
+/* hover */
+:host(:hover:not([disabled])) {
+	background: var(--_ui5_checkbox_outer_hover_background);
+	box-shadow: var(--_ui5_checkbox_box_shadow);
+}
+
+.ui5-checkbox--hoverable:hover .ui5-checkbox-label {
+	color: var(--_ui5_checkbox_label_color);
+}
+
+/* hover, not active, not checked */
+:host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
+:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_hover_background);
-	border-color: var(--sapField_Hover_BorderColor);
+	border-color: var(--_ui5_checkbox_inner_hover_border_color);
+}
+
+/* hover, not active, checked */
+:host(:not([active])[checked]:not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
+:host(:not([active])[checked][value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--_ui5_checkbox_hover_background);
+	border-color: var(--_ui5_checkbox_inner_hover_checked_border_color);
+}
+
+/* checked */
+:host([checked]:not([value-state])) .ui5-checkbox-inner,
+:host([checked][value-state="None"]) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_selected_border_color);
+}
+
+/* active, not checked */
+:host([active]:not([checked]):not([value-state]):not([disabled])) .ui5-checkbox-inner,
+:host([active]:not([checked])[value-state="None"]:not([disabled])) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_active_border_color);
+}
+
+/* active, checked */
+:host([active][checked]:not([value-state]):not([disabled])) .ui5-checkbox-inner,
+:host([active][checked][value-state="None"]:not([disabled])) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_selected_border_color);
 }
 
 .ui5-checkbox-inner {
@@ -135,7 +192,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	max-height: var(--_ui5_checkbox_inner_width_height);
 	border: var(--_ui5_checkbox_inner_border);
 	border-radius: var(--_ui5_checkbox_inner_border_radius);
-	background: var(--sapField_Background);
+	background: var(--_ui5_checkbox_inner_background);
 	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;
@@ -160,7 +217,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-root .ui5-checkbox-label {
-	margin-left: var(--_ui5_checkbox_wrapper_padding);
+	margin-left: var(--_ui5_checkbox_label_offset);
 	cursor: default;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -168,6 +225,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	user-select: none;
 	-ms-user-select: none;
 	-webkit-user-select: none;
+	color: var(--_ui5_checkbox_label_color);
 }
 
 .ui5-checkbox-icon {

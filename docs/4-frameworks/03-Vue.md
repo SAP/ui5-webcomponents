@@ -32,7 +32,7 @@ Vue.config.ignoredElements = [/^ui5-/];
 ### Step 5. Import the components that you are going to use
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/dist/Button.js";
 ```
 
 ### Step 6. Use the imported elements in your application
@@ -51,7 +51,7 @@ yarn serve
 
 ### Two-Way Data Binding
 
-`v-model` binding doesn't work as expected for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:
+`v-model` binding doesn't work for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:
 
 ```html
 <ui5-input
