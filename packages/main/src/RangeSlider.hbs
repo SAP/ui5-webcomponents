@@ -1,7 +1,9 @@
 {{>include "./SliderBase.hbs"}}
 
+{{#*inline "handlesAriaDescription"}}
 <span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
 <span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
+{{/inline}}
 
 {{#*inline "progressBar"}}
 	<div class="ui5-slider-progress-container">
