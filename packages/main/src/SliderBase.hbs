@@ -8,7 +8,7 @@
 	@keyup="{{_onkeyup}}"
 	dir="{{effectiveDir}}"
 >
-	{{> handlesAriaDescription}}
+	{{> handlesAriaText}}
 
 	<div class="ui5-slider-inner">
 		{{#if step}}
@@ -33,6 +33,6 @@
 </div>
 
 
-{{#*inline "handlesAriaDescription"}}{{/inline}}
+{{#*inline "handlesAriaText"}}{{/inline}}
 {{#*inline "progressBar"}}{{/inline}}
 {{#*inline "handles"}}{{/inline}}
