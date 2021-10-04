@@ -970,6 +970,7 @@ class MultiComboBox extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -983,7 +984,6 @@ class MultiComboBox extends UI5Element {
 			popoverValueStateMessage: {
 				"width": `${this._listWidth}px`,
 				"display": this._listWidth === 0 ? "none" : "inline-block",
-				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
 				"max-width": isPhone() ? "100%" : `${this._inputWidth}px`,
