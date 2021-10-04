@@ -85,6 +85,10 @@
 	box-shadow: var(--ui5-badge-color-scheme-1-shadow);
 }
 
+:host([active][color-scheme="1"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-1-active-shadow);
+}
+
 /* Scheme 2 */
 :host([color-scheme="2"]) {
 	background-color: var(--ui5-badge-color-scheme-2-background);
@@ -95,6 +99,10 @@
 :host([color-scheme="2"]:hover) {
 	background-color: var(--ui5-badge-color-scheme-2-hover-background);
 	box-shadow: var(--ui5-badge-color-scheme-2-shadow);
+}
+
+:host([active][color-scheme="2"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-2-active-shadow);
 }
 
 /* Scheme 3 */
@@ -109,6 +117,10 @@
 	box-shadow: var(--ui5-badge-color-scheme-3-shadow);
 }
 
+:host([active][color-scheme="3"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-3-active-shadow);
+}
+
 /* Scheme 4 */
 :host([color-scheme="4"]) {
 	background-color: var(--ui5-badge-color-scheme-4-background);
@@ -119,6 +131,10 @@
 :host([color-scheme="4"]:hover) {
 	background-color: var(--ui5-badge-color-scheme-4-hover-background);
 	box-shadow: var(--ui5-badge-color-scheme-4-shadow);
+}
+
+:host([active][color-scheme="4"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-4-active-shadow);
 }
 
 /* Scheme 5 */
@@ -133,6 +149,10 @@
 	box-shadow: var(--ui5-badge-color-scheme-5-shadow);
 }
 
+:host([active][color-scheme="5"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-5-active-shadow);
+}
+
 /* Scheme 6 */
 :host([color-scheme="6"]) {
 	background-color: var(--ui5-badge-color-scheme-6-background);
@@ -143,6 +163,10 @@
 :host([color-scheme="6"]:hover) {
 	background-color: var(--ui5-badge-color-scheme-6-hover-background);
 	box-shadow: var(--ui5-badge-color-scheme-6-shadow);
+}
+
+:host([active][color-scheme="6"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-6-active-shadow);
 }
 
 /* Scheme 7 */
@@ -157,6 +181,10 @@
 	box-shadow: var(--ui5-badge-color-scheme-7-shadow);
 }
 
+:host([active][color-scheme="7"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-7-active-shadow);
+}
+
 /* Scheme 8 */
 :host([color-scheme="8"]) {
 	background-color: var(--ui5-badge-color-scheme-8-background);
@@ -167,6 +195,10 @@
 :host([color-scheme="8"]:hover) {
 	background-color: var(--ui5-badge-color-scheme-8-hover-background);
 	box-shadow: var(--ui5-badge-color-scheme-8-shadow);
+}
+
+:host([active][color-scheme="8"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-8-active-shadow);
 }
 
 /* Scheme 9 */
@@ -181,6 +213,10 @@
 	box-shadow: var(--ui5-badge-color-scheme-9-shadow);
 }
 
+:host([active][color-scheme="9"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-9-active-shadow);
+}
+
 /* Scheme 10 */
 :host([color-scheme="10"]) {
 	background-color: var(--ui5-badge-color-scheme-10-background);
@@ -191,4 +227,8 @@
 :host([color-scheme="10"]:hover) {
 	background-color: var(--ui5-badge-color-scheme-10-hover-background);
 	box-shadow: var(--ui5-badge-color-scheme-10-shadow);
+}
+
+:host([active][color-scheme="10"]:hover) {
+	box-shadow: var(--ui5-badge-color-scheme-10-active-shadow);
 }
