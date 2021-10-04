@@ -22,7 +22,7 @@
 @import "../base/PopupsCommon-parameters.css";
 @import "./Popover-parameters.css";
 @import "../base/ProgressIndicator-parameters.css";
-@import "../base/RadioButton-parameters.css";
+@import "./RadioButton-parameters.css";
 @import "../base/Select-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
