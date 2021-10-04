@@ -1,8 +1,7 @@
-commit e137de3f7e4e91002159a46680ea0cfcc683eccb
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Oct 4 15:24:45 2021 +0300
+commit 6cb3eb0dbd639e588f463fdb90992796426d0574
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 4 17:47:49 2021 +0300
 
-    feat(ui5-input, ui5-date-picker): implement sap_horizon theme (#4006)
+    feat(ui5-radio-button): implement sap_horizon theme (#4008)
     
-    Fixes: #4040
-    Fixes: #4046
+    Fixes: #4042
