@@ -1,3 +1,4 @@
+@import "./InvisibleTextStyles.css";
 @import "./GrowingButton.css";
 
 :host(:not([hidden])) {
