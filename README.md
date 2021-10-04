@@ -25,7 +25,6 @@
 
 ## More resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
-- [List of all components and other public APIs](./docs/Public%20Module%20Imports.md)
 - [Configuring UI5 Web Components](./docs/Configuration.md)
 - [Creating a custom theme](./docs/CustomTheming.md)
 - [Creating custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
@@ -84,8 +83,6 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 
 	For more on using UI5 Web Components, click [here](./docs/How%20To%20Use.md).
 
-*Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), see [Public module imports](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md).
-
 ### Is there a CDN I can use?
 
 No, you are expected to import only the components (or other public APIs) that you are going to use and bundle them along with the rest
@@ -127,11 +124,7 @@ Project | NPM Package | Description
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
 `theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (the default theme and additional accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
-`ie11` * | [UI5 Web Components IE11](https://www.npmjs.com/package/@ui5/webcomponents-ie11) | Internet Explorer 11 polyfills and adapter code
 `playground` | N/A | The playground application
-
-`*` This package is deprecated as Internet Explorer 11 is no longer supported by UI5 Web Components. While the `@ui5/webcomponents-ie11` package allows UI5 Web Components to run on old browsers (IE11, legacy Edge) today,
-future compatibility is not guaranteed and the project may stop working on old browsers even with the aid of this package. Use at your own risk.
 
 ### How to run the project locally:
 
@@ -159,7 +152,7 @@ yarn start:playground
 # open http://localhost:4000/
 ```
 
-*Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](/docs/dev/Playground.md)*
+*Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](/docs/Playground.md)*
 
 If you wish to run the tests locally on a Windows machine, you must also manually install `Windows Build Tools 2015` and `Python 2.7`.
 See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this.

@@ -2,9 +2,9 @@
 
 In this tutorial, you will learn how to add UI5 Web Components to your application. You can add UI5 Web Components both to new React applications and to already existing ones.
 
-In order to have a better development expierence, we would also recommend to take a look at our dedicated wrapper for UI5 Web Components in React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and check out [their tutorial](https://developers.sap.com/mission.react-spa.html) as well.
+In order to have a better development experience, we would recommend you take a look at our dedicated wrapper for UI5 Web Components in React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and check out [their tutorial](https://developers.sap.com/mission.react-spa.html) as well.
 
-### Step 1. Start a new application. For example, with `create-react-app`
+### Step 1. Create a new application. For example, with `create-react-app`
 
 ```bash
 npx create-react-app ui5-web-components-application
@@ -20,7 +20,7 @@ npm install @ui5/webcomponents --save
 ### Step 3. Import the components that you are going to use
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/dist/Button.js";
 ```
 
 ### Step 4. Use the imported elements in your application
@@ -37,9 +37,7 @@ yarn start
 
 ## Additional
 
-### UI5 Web Components for React
-
-If your framework of choice is React and you plan to use UI5 Web components, it is worth checking out the [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) project. This wrapper project enables some additional functionalities when it comes to the usage of UI5 Web Components in React environment. For example, typescript definitions, event handling, boolean properties binding, etc.
+When developing with React, there are two slight React limitations you should know about. These are not related to UI5 Web Components per se, but with using custom elements in React in general.
 
 ### Event Binding
 
@@ -76,3 +74,7 @@ For boolean properties like ```collapsed```  in ```ui5-panel```, instead of sett
     <!-- Content of ui5-panel -->
 </ui5-panel>
 ```
+
+### UI5 Web Components for React
+
+As mentioned above, for a better development experience (and to elegantly work around these 2 React limitations), check out UI5 Web Components for React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and [this tutorial](https://developers.sap.com/mission.react-spa.html).

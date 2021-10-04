@@ -56,31 +56,32 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 
 #### Property configuration settings
 
-Setting | Type | Default | Description
---------|------|--------| -----------
-`type`    | Property type | N/A | The type of the property. For more information on types see the table below. 
-`defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML
-`multiple` | Boolean | false | Indicates whether the property represents a single value or is an array of values of the given type
-`noAttribute` | Boolean | false | No attribute equivalent will be created for that property. Always false for properties of type Object.
+| Setting        | Type                         | Default   | Description                                                                                                   |
+|----------------|------------------------------|-----------|---------------------------------------------------------------------------------------------------------------|
+| `type`         | Property type                | N/A       | The type of the property. For more information on types see the table below.                                  |
+| `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML |
+| `multiple`     | Boolean                      | false     | Indicates whether the property represents a single value or is an array of values of the given type           |
+| `noAttribute`  | Boolean                      | false     | No attribute equivalent will be created for that property. Always false for properties of type Object.        |
 
 The `type` setting is required.
 
 #### Types
 
-Type | Class to use | Description
------|-------|------
-string | `String` | String value
-boolean | `Boolean` | Boolean value - always false by default
-object | `Object` | JS Object
-custom type | Extend `@ui5/webcomponents-base/dist/types/DataType.js` | Used mainly for enumerations
+| Type        | Class to use                                            | Description                             |
+|-------------|---------------------------------------------------------|-----------------------------------------|
+| string      | `String`                                                | String value                            |
+| boolean     | `Boolean`                                               | Boolean value - always false by default |
+| object      | `Object`                                                | JS Object                               |
+| custom type | Extend `@ui5/webcomponents-base/dist/types/DataType.js` | Used mainly for enumerations            |
+
 
 #### Examples of prebuilt custom types
 
-Type | Class to use | Description
------|-------|------
-Integer | `@ui5/webcomponents-base/dist/types/Integer.js` | Integer value
-CSSSize | `@ui5/webcomponents-base/dist/types/CSSSize.js` | Any valid CSS size definition (`px`, `rem`, etc...)
-ValueState | `@ui5/webcomponents-base/dist/types/ValueState.js` | Enumeration with: `None`, `Error`, `Warning`, `Success` values
+| Type       | Class to use                                       | Description                                                    |
+|------------|----------------------------------------------------|----------------------------------------------------------------|
+| Integer    | `@ui5/webcomponents-base/dist/types/Integer.js`    | Integer value                                                  |
+| CSSSize    | `@ui5/webcomponents-base/dist/types/CSSSize.js`    | Any valid CSS size definition (`px`, `rem`, etc...)            |
+| ValueState | `@ui5/webcomponents-base/dist/types/ValueState.js` | Enumeration with: `None`, `Error`, `Warning`, `Success` values |
 
 ## Slots
 
@@ -107,12 +108,12 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 #### Slot configuration settings
 
-Setting | Type | Default | Description
---------|------|--------|-----------
-`type` *    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
-`individualSlots` | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
-`propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored. 
-`invalidateOnChildChange` ** | `Boolean` or `Object` | false | **Experimental, do not use.** Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component.
+| Setting                      | Type                    | Default | Description                                                                                                                                                          |
+|------------------------------|-------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type` *                     | `HTMLElement` or `Node` | N/A     | The type of the children that can go into that slot                                                                                                                  |
+| `individualSlots`            | `Boolean`               | false   | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.                                                          |
+| `propertyName`               | `String`                | N/A     | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.                                               |
+| `invalidateOnChildChange` ** | `Boolean` or `Object`   | false   | **Experimental, do not use.** Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component. |
 
 `*` The `type` setting is required.
 
@@ -214,11 +215,11 @@ Notes:
  For example, if your default slot has a `propertyName: "items"`, then "this.items" will hold all children that were assigned to the default slot.
  
  #### Allowed slot types
- 
- Type | Description
- -----|-------------
- Node | Accepts both Text nodes and HTML Elements
- HTMLElement | Accepts HTML Elements only
+
+| Type        | Description                               |
+|-------------|-------------------------------------------|
+| Node        | Accepts both Text nodes and HTML Elements |
+| HTMLElement | Accepts HTML Elements only                |
 
 ## Managed slots
 
