@@ -85,7 +85,7 @@ export default Demo;
 
 ### The metadata object
 
-Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc...).
+Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, slots, events, etc...).
 
 Metadata is passed via the `metadata` static getter:
 
@@ -310,7 +310,9 @@ export default Demo;
 
 There are 3 steps to do that:
  1. Fetch an i18n bundle during component definition
- `await fetchI18nBundle("my-ui5-web-components");`
+ ```js
+ await fetchI18nBundle("my-ui5-web-components");
+ ```
 
  2. (optional) Get a reference to the bundle in the constructor for convenience
  `this.i18nBundle = getI18nBundle("my-ui5-web-components");`

@@ -321,7 +321,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("C");
 			await input.keys("Escape");
 			await input.keys("Escape");
-	
+
 			assert.strictEqual(await mCombo.getProperty("value"), "", "Value should be reset to the initial one");
 
 			await input.click();
@@ -364,7 +364,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
 			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
-			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected", "Value state text should be set to already selected");
+			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected.", "Value state text should be set to already selected");
 
 			await browser.waitUntil(async() => {
 				return await input.getAttribute("value-state") === "None";
@@ -389,7 +389,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
 			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should be focused");
-		
+
 			await input.keys("ArrowDown");
 
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[0];
