@@ -364,7 +364,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
 			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
-			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected", "Value state text should be set to already selected");
+			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected.", "Value state text should be set to already selected");
 
 			await browser.waitUntil(async() => {
 				return await input.getAttribute("value-state") === "None";
