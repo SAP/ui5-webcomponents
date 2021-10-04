@@ -1,7 +1,8 @@
-commit 33ee202ddb22a8c66583dac9ba7e5e923a77000b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 4 13:49:19 2021 +0300
+commit e137de3f7e4e91002159a46680ea0cfcc683eccb
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Oct 4 15:24:45 2021 +0300
 
-    feat(ui5-checkbox): implement sap_horizon (#4031)
+    feat(ui5-input, ui5-date-picker): implement sap_horizon theme (#4006)
     
-    Fixes: #404
+    Fixes: #4040
+    Fixes: #4046
