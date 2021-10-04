@@ -129,7 +129,7 @@ class Card extends UI5Element {
 		return !!this.header.length;
 	}
 
-	get _getAriaLabelledby() {
+	get _getAriaLabel() {
 		const effectiveAriaLabel = getEffectiveAriaLabelText(this) ? ` ${getEffectiveAriaLabelText(this)}` : "";
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
 	}
