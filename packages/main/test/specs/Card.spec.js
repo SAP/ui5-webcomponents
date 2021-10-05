@@ -87,14 +87,14 @@ describe("CardHeader", () => {
 	});
 });
 describe("Card Accessibility", () => {
-    before(async () => {
-        await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
-    });
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+	});
 
-    it("test accessibleName", async () => {
-        const card = await browser.$("#textCard").shadow$(".ui5-card-root");
+	it("test accessibleName", async () => {
+		const card = await browser.$("#textCard").shadow$(".ui5-card-root");
 
-        assert.strictEqual(await card.getAttribute("aria-label"), "Card Internships",
-            "The aria-label is correctly when accessibleName is used.");
-    });
+		assert.strictEqual(await card.getAttribute("aria-label"), "Card Internships",
+			"The aria-label is correctly when accessibleName is used.");
+	});
 });

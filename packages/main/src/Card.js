@@ -49,8 +49,8 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Defines the accessible name of the component.
-		 * <b>Note:</b> <code>accessibleName</code> is required for the component, it provides unique name for the card region.
+		 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
+		 * <b>Note:</b> <code>accessibleName</code> should be always set.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -130,7 +130,8 @@ class Card extends UI5Element {
 	}
 
 	get _getAriaLabel() {
-		const effectiveAriaLabel = getEffectiveAriaLabelText(this) ? ` ${getEffectiveAriaLabelText(this)}` : "";
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this),
+			effectiveAriaLabel = effectiveAriaLabelText ? ` ${effectiveAriaLabelText}` : "";
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
 	}
 
