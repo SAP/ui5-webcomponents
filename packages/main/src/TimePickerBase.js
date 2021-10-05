@@ -345,6 +345,7 @@ class TimePickerBase extends UI5Element {
 		if (isShow(e)) {
 			e.preventDefault();
 			this.togglePicker();
+			this._getInput().focus();
 		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
 			this._modifyValueBy(1, "second");
