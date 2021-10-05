@@ -42,10 +42,6 @@
 	box-shadow: var(--_ui5-switch-root-box-shadow);
 }
 
-[ui5-title] {
-	cursor: default;
-}
-
 .ui5-switch-track {
 	height: var(--_ui5_switch_track_height);
 	width: 100%;
