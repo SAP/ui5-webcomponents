@@ -94,18 +94,6 @@ const metadata = {
 		textOff: {
 			type: String,
 		},
-
-		/**
-		 * @public
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @since 1.0.0-rc.16
-		 *
-		 * Defines the text that is rendered next to the switch
-		 */
-		text: {
-			type: String,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
