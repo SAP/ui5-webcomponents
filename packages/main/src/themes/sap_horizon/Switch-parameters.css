@@ -17,6 +17,7 @@
     --_ui5-switch_track-on-background: var(--sapActiveColor);
     --_ui5-switch-track-transition: all .2s ease-in-out;
     --_ui5_switch_track_disabled_checked_bg: var(--_ui5-switch_track-on-background);
+    --_ui5_switch_disabled_opacity: 1;
 
     --_ui5_switch_handle_width: 25px;
     --_ui5_switch_handle_height: 20px;
@@ -30,4 +31,8 @@
     /* Hover effects */
     --_ui5-switch_track-off-hover-background: var(--sapNeutralColor);
     --_ui5-switch_track-on-hover-background: var(--sapContent_Selected_TextColor);
+
+    /* Active effects */
+    --_ui5-switch_track-off-active-background: var(--sapTile_TitleTextColor);
+    --_ui5-switch_track-on-active-background: #0040B0;
 }

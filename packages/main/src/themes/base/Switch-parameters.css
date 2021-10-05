@@ -35,6 +35,7 @@
 
 	--_ui5-switch-track-transition: none;
 
+	--_ui5_switch_disabled_opacity: .4;
 	--_ui5_switch_track_disabled_checked_bg: var(--_ui5_switch_track_checked_bg);
 	--_ui5_switch_track_disabled_border_color: var(--sapContent_ForegroundBorderColor);
 	--_ui5_switch_track_disabled_semantic_checked_bg: var(--sapSuccessBackground);
