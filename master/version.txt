@@ -1,5 +1,5 @@
-commit 62ded2e718aff63113ccb2d997bf8ba13f0c0ecf
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Oct 5 10:51:07 2021 +0300
+commit 8b1fff5b094f6cf407aca9fb6a0b63e234a5af24
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Oct 5 12:18:50 2021 +0300
 
-    (ui5-range-slider): Fix resize handling and 'The shadow DOM does not have a top level element' warning (#4064)
+    chore(ui5-badge): update active state (#4068)

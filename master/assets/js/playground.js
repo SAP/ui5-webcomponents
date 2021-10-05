@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var contentDensity = window.localStorage.getItem("contentDensity");
     var isCompact = (contentDensity === "Compact");
-    document.body.className = isCompact ? "ui5-content-density-compact": ""
+    document.body.classList.add(isCompact ? "ui5-content-density-compact": "");
 });
 
 var THEMES = {
