@@ -55,3 +55,11 @@ packages/playground/docs/tutorials
 
 packages/playground/docs/pages/content/main/*
 packages/playground/docs/pages/content/fiori/*
+
+packages/playground/docs/advanced
+packages/playground/docs/contributing/
+packages/playground/docs/customizing/
+packages/playground/docs/development/
+packages/playground/docs/frameworks/
+packages/playground/docs/getting-started/
+packages/playground/docs/FAQ.md
