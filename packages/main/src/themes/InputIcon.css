@@ -6,7 +6,7 @@
 */
 
 [input-icon] {
-	color: var(--sapContent_IconColor);
+	color: var(--_ui5_input_icon_color);
 	cursor: pointer;
 	outline: none;
 	padding: var(--_ui5_input_icon_padding);
@@ -16,17 +16,17 @@
 }
 
 [input-icon][pressed] {
-	background: var(--sapButton_Selected_Background);
-	color: var(--sapButton_Active_TextColor);
+	background: var(--_ui5_input_icon_pressed_bg);
+	color: var(--_ui5_input_icon_pressed_color);
 }
 
 [input-icon]:active {
 	background-color: var(--sapButton_Active_Background);
-	color: var(--sapButton_Active_TextColor);
+	color: var(--_ui5_input_icon_pressed_color);
 }
 
 [input-icon]:not([pressed]):not(:active):hover {
-	background: var(--sapButton_Lite_Hover_Background);
+	background: var(--_ui5_input_icon_hover_bg);
 }
 
 [input-icon]:hover {
