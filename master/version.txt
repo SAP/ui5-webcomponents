@@ -1,5 +1,5 @@
-commit 8b1fff5b094f6cf407aca9fb6a0b63e234a5af24
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Oct 5 12:18:50 2021 +0300
+commit 54fdb3a32f63f59c8169428d03ae9eeab37a75d3
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Tue Oct 5 14:50:42 2021 +0300
 
-    chore(ui5-badge): update active state (#4068)
+    feat(ui5-card): introduce accessibleName property (#4021)
