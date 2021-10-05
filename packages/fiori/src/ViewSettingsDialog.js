@@ -4,6 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import Label from "@ui5/webcomponents/dist/Label.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
@@ -11,6 +12,9 @@ import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 import Bar from "./Bar.js";
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
+import "@ui5/webcomponents-icons/dist/sort.js";
+import "@ui5/webcomponents-icons/dist/filter.js";
+import "@ui5/webcomponents-icons/dist/nav-back.js";
 
 import {
 	VSD_DIALOG_TITLE_SORT,
@@ -245,6 +249,7 @@ class ViewSettingsDialog extends UI5Element {
 			Bar,
 			Button,
 			Dialog,
+			Label,
 			List,
 			StandardListItem,
 			GroupHeaderListItem,
