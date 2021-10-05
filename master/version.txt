@@ -1,7 +1,5 @@
-commit 6cb3eb0dbd639e588f463fdb90992796426d0574
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 4 17:47:49 2021 +0300
+commit 62ded2e718aff63113ccb2d997bf8ba13f0c0ecf
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Oct 5 10:51:07 2021 +0300
 
-    feat(ui5-radio-button): implement sap_horizon theme (#4008)
-    
-    Fixes: #4042
+    (ui5-range-slider): Fix resize handling and 'The shadow DOM does not have a top level element' warning (#4064)
