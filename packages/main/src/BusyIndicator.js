@@ -215,14 +215,6 @@ class BusyIndicator extends UI5Element {
 		};
 	}
 
-	getFocusDomRef() {
-		if (this._isBusy) {
-			return this.shadowRoot.querySelector(".ui5-busy-indicator-busy-area");
-		}
-
-		return this.getDomRef();
-	}
-
 	onBeforeRendering() {
 		if (this.active) {
 			if (!this._isBusy && !this._busyTimeoutId) {
