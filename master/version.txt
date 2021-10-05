@@ -1,7 +1,5 @@
-commit 0bb04ce644b28c1293c9e4306641797a0b51322d
+commit 23a7a5ce3f5354b0d7e9551723deb75012c73507
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 5 16:17:21 2021 +0300
+Date:   Tue Oct 5 17:44:36 2021 +0300
 
-    feat(ui5-select): adjust input and icon to sap_horizon (#4071)
-    
-    The icon's background and color, and the selected option's text within the input field had to be updated to full fill the sap_horizon design. The options will be updated with the list item implementation.
+    chore: fix eslint (#4076)
