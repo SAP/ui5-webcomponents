@@ -255,14 +255,6 @@ class NotificationListItemBase extends ListItemBase {
 		return this.actions.find(action => action._id === id);
 	}
 
-	getFocusDomRef() {
-		if (this.busy) {
-			return this.shadowRoot.querySelector("ui5-busy-indicator");
-		}
-
-		return this.getDomRef();
-	}
-
 	async openOverflow() {
 		const overflowPopover = await this.getOverflowPopover();
 		overflowPopover.showAt(this.overflowButtonDOM);

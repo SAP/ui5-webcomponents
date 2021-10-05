@@ -1053,14 +1053,6 @@ class List extends UI5Element {
 
 		return this.growingIntersectionObserver;
 	}
-
-	getFocusDomRef() {
-		if (this.busy) {
-			return this.shadowRoot.querySelector("ui5-busy-indicator");
-		}
-
-		return this.getDomRef();
-	}
 }
 
 List.define();
