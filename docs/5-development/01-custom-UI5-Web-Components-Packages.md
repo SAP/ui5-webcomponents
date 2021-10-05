@@ -20,7 +20,7 @@ The name of your NPM package will be used by the UI5 Web Components tools as the
 ## Step 2. Add the UI5 Web Components packages as dependencies
 
 With `npm`:
- - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base`
+ - `npm i @ui5/webcomponents-base @ui5/webcomponents-theme-base`
  - `npm i --save-dev @ui5/webcomponents-tools chromedriver`
 
 or with `yarn`:
@@ -29,11 +29,11 @@ or with `yarn`:
 
 These three `@ui5/` packages will serve as the foundation of your own package and Web Components.
 
-| Package                         | Type of dependency | Description                    |
-|---------------------------------|--------------------|--------------------------------|
-| `@ui5/webcomponents-base`       | `dependency`         | Base classes and framework     |
-| `@ui5/webcomponents-theme-base` | `dependency`         | Base theming assets            |
-| `@ui5/webcomponents-tools`      | `devDependency`      | Build tools and configuration assets |
+| Package                         | Type of dependency | Description                          |
+|---------------------------------|--------------------|--------------------------------------|
+| `@ui5/webcomponents-base`       | `dependency`       | Base classes and framework           |
+| `@ui5/webcomponents-theme-base` | `dependency`       | Base theming assets                  |
+| `@ui5/webcomponents-tools`      | `devDependency`    | Build tools and configuration assets |
 
 
 *Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version,
@@ -47,10 +47,10 @@ comes as part of UI5 Web Components tools.
 
 Run the initialization script, optionally with parameters from the following table:
 
-Parameter |             Description             |   Default value
---------- | ----------------------------------- | ------------------
-port      | Dev server port                     | 8080
-tag       | The sample web component's tag name | my-first-component
+| Parameter | Description                         | Default value      |
+|-----------|-------------------------------------|--------------------|
+| port      | Dev server port                     | 8080               |
+| tag       | The sample web component's tag name | my-first-component |
 
 For example:
 
@@ -110,26 +110,26 @@ That's it!
 
 The initialization script will create several NPM scripts for you in `package.json`.
 
-       Task        |                                   Purpose
------------------- | ----------------------------------------------------------------------------
-clean              | Delete the `dist/` directory with the build output.
-build              | Production build to the `dist/` directory.
-lint               | Run a static code scan with `eslint`.
-start              | Build the project for development, run the dev server and watch for changes.
-watch              | Watch for changes only.
-serve              | Run the dev server only.
-test               | Run the dev server and execute the specs from the `test/specs/` directory.
-create-ui5-element | Create an empty Web Component with the given name.
+| Task               | Purpose                                                                      |
+|--------------------|------------------------------------------------------------------------------|
+| clean              | Delete the `dist/` directory with the build output.                          |
+| build              | Production build to the `dist/` directory.                                   |
+| lint               | Run a static code scan with `eslint`.                                        |
+| start              | Build the project for development, run the dev server and watch for changes. |
+| watch              | Watch for changes only.                                                      |
+| serve              | Run the dev server only.                                                     |
+| test               | Run the dev server and execute the specs from the `test/specs/` directory.   |
+| create-ui5-element | Create an empty Web Component with the given name.                           |
 
 ### Files in the main directory
 
 The initialization script will create several files in your package's main directory.
 
-       File        |                                                                 Purpose
------------------- | ---------------------------------------------------------------------------------------------------------------------------------------
-.eslintignore      | Excludes the `dist/` and `test/` directories from static code scans.
-package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file.
-bundle.js          | Entry point for the bundle used for development and tests.
+| File               | Purpose                                                                         |
+|--------------------|---------------------------------------------------------------------------------|
+| .eslintignore      | Excludes the `dist/` and `test/` directories from static code scans.            |
+| package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file. |
+| bundle.js          | Entry point for the bundle used for development and tests.                      |
 
 You'll likely only need to change `bundle.js` to import your new components there.
 
@@ -196,10 +196,10 @@ This is where you'll do most of the development. Let's see the necessary files f
 
 The main files describing a Web Component are:
 
-           File            |       Purpose
--------------------------- | -------------------
-`src/MyFirstComponent.js`  | Web Component class
-`src/MyFirstComponent.hbs` | Handlebars template
+| File                       | Purpose             |
+|----------------------------|---------------------|
+| `src/MyFirstComponent.js`  | Web Component class |
+| `src/MyFirstComponent.hbs` | Handlebars template |
 
 In order to understand how a UI5 Web Component works and what lies behind these two files, make sure you check the
 [Developing Web Components](./Developing%20Web%20Components.md) section of the documentation.
@@ -214,16 +214,16 @@ Some CSS Vars, such as `--sapBackgroundColor` and `--sapTextColor` are standard 
 In addition, you can define your own CSS Vars and provide different values for them for the different themes. Set these CSS Vars in the
 `parameters-bundle.css` file for each theme. These files are the entry points for the styles build script.
 
-                       File                         |                                            Purpose
---------------------------------------------------- | ----------------------------------------------------------------------------------------------
-`src/themes/MyFirstComponent.css`                   | All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.
-`src/themes/sap_belize/parameters-bundle.css`       | Values for the component-specific CSS Vars for the `sap_belize` theme
-`src/themes/sap_belize_hcb/parameters-bundle.css`   | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme
-`src/themes/sap_belize_hcw/parameters-bundle.css`   | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme
-`src/themes/sap_fiori_3/parameters-bundle.css`      | Values for the component-specific CSS Vars for the `sap_fiori_3` theme
-`src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme
-`src/themes/sap_fiori_3_hcb/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme
-`src/themes/sap_fiori_3_hcw/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcw` theme
+| File                                                | Purpose                                                                                        |
+|-----------------------------------------------------|------------------------------------------------------------------------------------------------|
+| `src/themes/MyFirstComponent.css`                   | All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root. |
+| `src/themes/sap_belize/parameters-bundle.css`       | Values for the component-specific CSS Vars for the `sap_belize` theme                          |
+| `src/themes/sap_belize_hcb/parameters-bundle.css`   | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme                      |
+| `src/themes/sap_belize_hcw/parameters-bundle.css`   | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme                      |
+| `src/themes/sap_fiori_3/parameters-bundle.css`      | Values for the component-specific CSS Vars for the `sap_fiori_3` theme                         |
+| `src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme                    |
+| `src/themes/sap_fiori_3_hcb/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme                     |
+| `src/themes/sap_fiori_3_hcw/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcw` theme                     |
 
 *Note:* It's up to you whether to put the CSS Vars directly in the `parameters-bundle.css` files for the different themes or to
 import them from separate `.css` files. You could have, for example, a `MyFirstComponent-params.css` file for each theme and
@@ -236,12 +236,26 @@ Again, to know more about how these files work, you could have a look at the [De
 You can define translatable texts as key-value pairs, separated by `=` in the `messagebundle.properties` file. Then you can provide translations for as many languages
 as needed.
 
-                 File                  |                Purpose
--------------------------------------- | --------------------------------------
-`src/i18n/messagebundle.properties`    | Source file for all translatable texts
-`src/i18n/messagebundle_de.properties` | Translations in German
-`src/i18n/messagebundle_en.properties` | Translations in English
-etc...                                 | etc...
+Markdown Table Formatter
+This tool formats basic MultiMarkdown style tables for easier plain text reading. It adds padding to all the cells to line up the pipe separators when using a mono-space font.
+
+To see what it's all about, try one of these examples, or format your own.
+
+Load: Example 1 - Example 2 - Example 3
+
+| File                                   | Purpose                                |
+|----------------------------------------|----------------------------------------|
+| `src/i18n/messagebundle.properties`    | Source file for all translatable texts |
+| `src/i18n/messagebundle_de.properties` | Translations in German                 |
+| `src/i18n/messagebundle_en.properties` | Translations in English                |
+| etc...                                 | etc...                                 |
+
+For more information:
+I'm on Twitter as @TheIdOfAlan
+I sometimes post on my personal site alanwsmith.com
+This is an Open Source GitHub Project.
+It has a Jasmine Test Suite.
+What to show your appreciation? Buy me a book
 
 Let's have a look at the sample `messagebundle.properties` file, generated by the script.
 
@@ -260,9 +274,10 @@ PLEASE_WAIT=Espere
 
 #### Assets (additional themes, i18n texts, etc...)
 
-     File       |               Purpose
---------------- | ------------------------------------
-`src/Assets.js` | Entry point for your package assets.
+| File            | Purpose                              |
+|-----------------|--------------------------------------|
+| `src/Assets.js` | Entry point for your package assets. |
+
 
 This module imports all base assets (such as `CLDR` and the base theme parameters), but also your own
 package assets (i18n and package-specific theme parameters). Users of your package will have to import this module in their production applications in order to get additional themes support and i18n support.
@@ -271,10 +286,10 @@ package assets (i18n and package-specific theme parameters). Users of your packa
 
 ### The `test/` directory
 
-     File      |                                               Purpose
--------------- | ---------------------------------------------------------------------------------------------------
-`test/pages/*` | Simple `.html` pages used for development and tests.
-`src/specs/*`  | Test specs, based on [WDIO](https://www.npmjs.com/package/wdio). They use the test pages for setup.
+| File           | Purpose                                                                                             |
+|----------------|-----------------------------------------------------------------------------------------------------|
+| `test/pages/*` | Simple `.html` pages used for development and tests.                                                |
+| `src/specs/*`  | Test specs, based on [WDIO](https://www.npmjs.com/package/wdio). They use the test pages for setup. |
 
 You can execute all specs by running `yarn test` or `npm run test`.
 
