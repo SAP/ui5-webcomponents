@@ -1,5 +1,7 @@
-commit 54fdb3a32f63f59c8169428d03ae9eeab37a75d3
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Tue Oct 5 14:50:42 2021 +0300
+commit 0bb04ce644b28c1293c9e4306641797a0b51322d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Oct 5 16:17:21 2021 +0300
 
-    feat(ui5-card): introduce accessibleName property (#4021)
+    feat(ui5-select): adjust input and icon to sap_horizon (#4071)
+    
+    The icon's background and color, and the selected option's text within the input field had to be updated to full fill the sap_horizon design. The options will be updated with the list item implementation.
