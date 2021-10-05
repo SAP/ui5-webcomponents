@@ -175,8 +175,8 @@ const metadata = {
  * <br>
  * - Month picker: <br>
  * <ul>
- * <li>[PAGEUP] - Navigate to the previous month</li>
- * <li>[PAGEDOWN] - Navigate to the next month</li>
+ * <li>[PAGEUP] - Navigate to the previous year</li>
+ * <li>[PAGEDOWN] - Navigate to the next year</li>
  * <li>[HOME] - Navigate to the first month of the current row</li>
  * <li>[END] - Navigate to the last month of the current row</li>
  * <li>[CTRL] + [HOME] - Navigate to the first month of the current year</li>
