@@ -114,7 +114,7 @@ const metadata = {
 		 * Defines the list of items against which the user could sort data.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.SortItem[]}
+		 * @type {sap.ui.webcomponents.fiori.ISortItem[]}
 		 * @slot sortItems
 		 * @public
 		 */
@@ -126,7 +126,7 @@ const metadata = {
 		 * Defines the <code>filterItems</code> list.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.FilterItem[]}
+		 * @type {sap.ui.webcomponents.fiori.IFilterItem[]}
 		 * @slot filterItems
 		 * @public
 		 */
