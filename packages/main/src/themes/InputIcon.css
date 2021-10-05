@@ -13,6 +13,7 @@
 	border-left: 1px solid transparent;
 	min-width: 1rem;
 	min-height: 1rem;
+	border-radius: var(--_ui5_input_icon_border_radius);
 }
 
 [input-icon][pressed] {

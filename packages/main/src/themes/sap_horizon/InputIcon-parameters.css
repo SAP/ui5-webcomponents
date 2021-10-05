@@ -5,4 +5,5 @@
 	--_ui5_input_icon_pressed_color: var(--sapNeutralColor); /*#5B738B */
 	--_ui5_input_icon_pressed_bg: transparent;
 	--_ui5_input_icon_hover_bg: transparent;
+	--_ui5_input_icon_border_radius: 0.5rem;
 }
