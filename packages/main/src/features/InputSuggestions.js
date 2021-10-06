@@ -276,6 +276,7 @@ class Suggestions {
 			this.component._isValueStateFocused = true;
 			this.component.focused = false;
 			this.component.hasSuggestionItemSelected = false;
+			this.selectedItemIndex = null;
 
 			return;
 		}
@@ -300,14 +301,19 @@ class Suggestions {
 		if (hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
 			this.component.hasSuggestionItemSelected = false;
 			this.component._isValueStateFocused = true;
+			this.selectedItemIndex = null;
+
 			items[0].focused = false;
 			items[0].selected = false;
+
 			return;
 		}
 
 		if (this.component._isValueStateFocused) {
 			this.component.focused = true;
 			this.component._isValueStateFocused = false;
+			this.selectedItemIndex = null;
+
 			return;
 		}
 
