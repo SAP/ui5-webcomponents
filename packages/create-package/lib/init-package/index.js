@@ -1,3 +1,6 @@
+console.log("HERER");
+process.exit();
+
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");

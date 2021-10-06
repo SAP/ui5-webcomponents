@@ -1,0 +1,28 @@
+{
+  "name": "@ui5/create-webcomponents-package",
+  "version": "1.0.0-rc.15",
+  "description": "UI5 Web Components: create package",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "private": false,
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "scripts": {},
+  "bin": {
+    "create-wc-ui5-package": "bin/init-ui5-package.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/create-package"
+  },
+  "dependencies": {
+
+  },
+  "peerDependencies": {
+
+  }
+}
