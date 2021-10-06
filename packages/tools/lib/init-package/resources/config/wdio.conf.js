@@ -1,1 +1,1 @@
-module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
+module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js"); // eslint-disable-line
