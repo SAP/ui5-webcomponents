@@ -107,15 +107,15 @@ const IUploadCollectionItem = "sap.ui.webcomponents.fiori.IUploadCollectionItem"
 const IWizardStep = "sap.ui.webcomponents.fiori.IWizardStep";
 
 export {
-    IFilterItem,
-    IFilterItemOption,
+	IFilterItem,
+	IFilterItemOption,
 	INotificationAction,
 	INotificationListItem,
 	IProductSwitchItem,
 	IShellBarItem,
 	ISideNavigationItem,
 	ISideNavigationSubItem,
-    ISortItem,
+	ISortItem,
 	ITimelineItem,
 	IUploadCollectionItem,
 	IWizardStep,
