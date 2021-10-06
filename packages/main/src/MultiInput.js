@@ -20,7 +20,7 @@ const metadata = {
 	tag: "ui5-multi-input",
 	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
-		 * Determines whether a value help icon will be should in the end of the input.
+		 * Determines whether a value help icon will be visualized in the end of the input.
 		 * Pressing the icon will fire <code>value-help-trigger</code> event.
 		 *
 		 * @type {boolean}

@@ -7,12 +7,12 @@
 
 Provides assets for the rich `tnt` icon collection.
 
-|        Icon asset        |                           Module import                            |
-| ------------------------ | ------------------------------------------------------------------ |
-| All icons (~33KB zipped) | `import "@ui5/webcomponents-icons-tnt/dist/Assets.js";`                |
+| Icon asset               | Module import                                                    |
+|--------------------------|------------------------------------------------------------------|
+| All icons (~33KB zipped) | `import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`        |
 | Actor icon               | `import "@ui5/webcomponents-icons-tnt/dist/actor.js";`           |
 | Ad hoc actor icon        | `import "@ui5/webcomponents-icons-tnt/dist/ad-hoc-actor.js";`    |
-| ...                      | ...                                                                |
+| ...                      | ...                                                              |
 | Workflow editor icon     | `import "@ui5/webcomponents-icons-tnt/dist/workflow-editor.js";` |
 
 *Note:* The `@ui5/webcomponents-icons-tnt` package does not provide any web components per se, but rather icon assets,
@@ -30,8 +30,6 @@ Example usage with `<ui5-icon>` web component:
 ```
 
 For a full list of the icons in the `tnt` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
-
-For a complete list of all public module imports from the `icons` package, click [here](../../docs/Public%20Module%20Imports.md#icons):
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)

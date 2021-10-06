@@ -7,11 +7,22 @@
 	background:var(--sapList_Background);
 }
 
+:host([selected]) {
+	background: var(--sapList_SelectionBackgroundColor);
+	border: 0.125rem solid var(--sapList_SelectionBorderColor);
+}
+
 :host(:hover) {
 	background:var(--sapList_Hover_Background);
 }
 
-:host([active]) {
+:host([selected]:hover) {
+	background: var(--sapList_Hover_SelectionBackground);
+}
+
+
+:host([active]),
+:host([selected][active])  {
 	background: var(--sapList_Active_Background);
 }
 
@@ -49,6 +60,10 @@
 
 :host([icon]) .ui5-product-switch-item-root {
 	padding-top: .5rem;
+}
+
+:host([selected]) .ui5-product-switch-item-root {
+	padding: .375rem;
 }
 
 .ui5-product-switch-item-root .ui5-product-switch-item-icon {
