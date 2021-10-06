@@ -224,6 +224,7 @@
 
 /* switch semantic icon */
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-text {
+	display: flex;
 	justify-content: center;
 	font-size: var(--sapFontSmallSize);
 }
