@@ -9,7 +9,7 @@
 	max-width: 100%;
 	outline: none;
 	border-radius: var(--_ui5_checkbox_border_radius);
-	transition: all 0.3s ease-in-out;
+	transition: var(--_ui5_checkbox_transition);
 	cursor: pointer;
 }
 
@@ -109,7 +109,7 @@
 	box-sizing: border-box;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	transition: background 0.3s ease-in-out;
+	transition: var(--_ui5_checkbox_transition);
 	border: var(--_ui5_checkbox_default_focus_border);
 	box-sizing: border-box;
 }
