@@ -543,7 +543,7 @@ describe("Input arrow navigation", () => {
 		await suggestionsInput.keys("ArrowDown");
 		await suggestionsInput.keys("Enter");
 
-		assert.strictEqual(await suggestionsInput.getValue(), "", "Inactive item text is not applied as input's value");
+		assert.strictEqual(await suggestionsInput.getValue(), "Coz", "Inactive item text is not applied as input's value");
 		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
 	});
 

@@ -960,7 +960,7 @@ class Input extends UI5Element {
 	 */
 	updateValueOnPreview(item) {
 		const noPreview = item.type === "Inactive" || item.group;
-		const itemValue = noPreview ? "" : (item.effectiveTitle || item.textContent);
+		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent);
 		this.value = itemValue;
 	}
 
