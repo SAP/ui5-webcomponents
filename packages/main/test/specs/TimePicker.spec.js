@@ -214,4 +214,21 @@ describe("TimePicker general interaction", () => {
 		assert.strictEqual(await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).getAttribute("expanded"),
 			"", "the periods slider should be expanded");
 	});
+
+	it("test closing the picker with the keyboard", async () => {
+		// arrange
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html`);
+
+		const timepicker = await browser.$("#timepicker3");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
+
+		// act
+		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await browser.keys(["Alt", "ArrowUp"]);
+
+		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// assert
+		assert.notOk(await timepickerPopover.isDisplayed(), "the picker should be collapsed");
+	});
 });
