@@ -3,6 +3,7 @@
 	--_ui5_tc_header_height: 4.6875rem;
 	--_ui5_tc_header_height_compact: 3.6875rem;
 	--_ui5_tc_header_height_text_only: 3rem;
+	--_ui5_tc_header_height_text_with_additional_text: var(--_ui5_tc_header_height_text_only);
 	--_ui5_tc_header_height_text_only_compact: 2rem;
 	--_ui5_tc_header_box_shadow: var(--sapContent_HeaderShadow);
 	--_ui5_tc_header_border_bottom: 0.125rem solid var(--sapObjectHeader_Background);
