@@ -5,7 +5,22 @@
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides a create script for a new UI5 Webcomponents Package 
+Provides an `npm init` script for creating new UI5 Webcomponents Packages
+
+## Usage
+
+with `npm`
+
+- `npm init @ui5/webcomponents-package` (the user will be asked for **name**, **port**, **tag**)
+- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port** and **tag** only)
+
+and with `yarn`
+
+- `yarn create @ui5/webcomponents-package`
+- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`
+
+The script creates a new directory, and fills it with a `package.json` file and all necessary source files and resources for a new
+components package.
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
