@@ -200,6 +200,11 @@
     align-items: center;
     line-height: var(--_ui5_tc_item_text_line_height);
 }
+
+.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAddionalText.ui5-tab-strip-item--standard {
+	height: var(--_ui5_tc_item_text_only_with_additional_text_height);
+}
+
 /*** END TextOnly Tab styles ***/
 
 /*** Mixed Mode Tab styles ***/

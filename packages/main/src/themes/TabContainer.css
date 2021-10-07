@@ -40,6 +40,10 @@
 	height: var(--_ui5_tc_header_height_text_only);
 }
 
+.ui5-tc-root.ui5-tc--textOnly.ui5-tc--withAdditonalText.ui5-tc--standardTabLayout .ui5-tc__header {
+	height: var(--_ui5_tc_header_height_text_with_additional_text);
+}
+
 .ui-tc__headerScrollContainer {
 	box-sizing: border-box;
 	overflow: hidden;
