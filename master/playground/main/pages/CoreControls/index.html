@@ -104,24 +104,20 @@
 
 	<section class="row-center">
 			<ui5-input  value="input" value-state="Error">
-				<ui5-icon slot="icon" name="message-error"></ui5-icon>
 			</ui5-input>
 			<ui5-input  value="input" value-state="Warning">
-				<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 			</ui5-input>
 			<ui5-input  value="input" value-state="Success">
-				<ui5-icon slot="icon" name="message-success"></ui5-icon>
 			</ui5-input>
 
 			<ui5-input  value="input" value-state="Information">
-				<ui5-icon slot="icon" name="message-information"></ui5-icon>
 			</ui5-input>
 	</section>
 
 	<section class="row-center">
 			<ui5-combobox show-suggestions placeholder="Standard">
 				<ui5-cb-item text="Chromium"></ui5-cb-item>
-				<ui5-cb-item text="Titanium"></ui5-cb-item>
+				<ui5-cb-item selected text="Titanium"></ui5-cb-item>
 				<ui5-cb-item text="Iron"></ui5-cb-item>
 				<ui5-cb-item text="Gold"></ui5-cb-item>
 				<ui5-cb-item text="Silver"></ui5-cb-item>
@@ -144,6 +140,18 @@
 				<ui5-cb-item text="Gold"></ui5-cb-item>
 				<ui5-cb-item text="Silver"></ui5-cb-item>
 			</ui5-combobox>
+	</section>
+
+	<section class="row-center">
+		<ui5-select>
+			<ui5-option>Cozy</ui5-option>
+			<ui5-option selected>Compact</ui5-option>
+			<ui5-option >Condensed</ui5-option>
+		</ui5-select>
+
+		<ui5-date-picker placeholder='Delivery Date...'></ui5-date-picker>
+
+		<ui5-date-picker value-state="Error"></ui5-date-picker>
 	</section>
 
 	<section>
@@ -172,50 +180,13 @@
 			</ui5-tab>
 			<ui5-tab text="Twelve">
 			</ui5-tab>
-		</ui5-tabcontainer>
-	</section>
-
-	<section>
-		<ui5-tabcontainer show-overflow collapsed fixed>
-			<ui5-tab icon="sap-icon://card" selected>
-				<ui5-button>Button 11</ui5-button>
-				<ui5-button>Button 12</ui5-button>
+			<ui5-tab text="Thirteen">
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
+			<ui5-tab text="Fourteen">
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
+			<ui5-tab text="Fiveteen">
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2">
-				<ui5-button>Button 2</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2">
-				<ui5-button>Button 2</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2">
-				<ui5-button>Button 2</ui5-button>
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://employee">
-				<ui5-button>Button 3</ui5-button>
+			<ui5-tab text="Sixteen">
 			</ui5-tab>
 		</ui5-tabcontainer>
 	</section>
