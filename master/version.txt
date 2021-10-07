@@ -1,11 +1,7 @@
-commit 6e51776776fd1af75f82150c46162781d2809d4f
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Oct 7 12:21:39 2021 +0300
+commit d4acbeb806cb784c4adcd961f30462ef64cccbb5
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Oct 7 02:53:24 2021 -0700
 
-    feat(ui5-switch): implement sap_horizon theme (#4007)
+    chore: translation delivery (#4083)
     
-    To be done:
-    - active state - not confirmed by UX
-    - graphical - the design is not available
-    
-    Fixes: #4039
+    Change-Id: If6457ff22037b42c554bd22d7bc1ffa2fed21927
