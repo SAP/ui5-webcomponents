@@ -7,69 +7,54 @@ This tutorial explains how to:
 
 *Note:* Whether you use `npm` or `yarn` is a matter of preference.
 
-## Step 1. Create an empty NPM package
+## Step 1. Create an NPM package
 
-`npm init`
+### Run the init command
 
-or
+*Note:* The following command will **create a new directory** and initialize your package there.
+Make sure you haven't created a directory yourself.
 
-`yarn init`
+ - With **npm**:
 
-The name of your NPM package will be used by the UI5 Web Components tools as the namespace for resource registration.
-
-## Step 2. Add the UI5 Web Components packages as dependencies
-
-With `npm`:
- - `npm i @ui5/webcomponents-base @ui5/webcomponents-theme-base`
- - `npm i --save-dev @ui5/webcomponents-tools chromedriver`
-
-or with `yarn`:
- - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base`
- - `yarn add -D @ui5/webcomponents-tools chromedriver`
-
-These three `@ui5/` packages will serve as the foundation of your own package and Web Components.
-
-| Package                         | Type of dependency | Description                          |
-|---------------------------------|--------------------|--------------------------------------|
-| `@ui5/webcomponents-base`       | `dependency`       | Base classes and framework           |
-| `@ui5/webcomponents-theme-base` | `dependency`       | Base theming assets                  |
-| `@ui5/webcomponents-tools`      | `devDependency`    | Build tools and configuration assets |
+	`npm init @ui5/webcomponents-package`
+   
+	or
+   
+    `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>`
 
 
-*Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version,
-if necessary. This is useful if, for example, you manually update Chrome on your system, and you'd prefer not to have
-a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`.
+ - With **yarn**:
 
-*Note:* You can skip the installation of `chromedriver` if you do not intend to use the testing tool of choice (WebdriverIO) that
-comes as part of UI5 Web Components tools.
+	`yarn create @ui5/webcomponents-package`
 
-## Step 3. Run the package initialization script
+    or
 
-Run the initialization script, optionally with parameters from the following table:
+    `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`
 
-| Parameter | Description                         | Default value      |
-|-----------|-------------------------------------|--------------------|
-| port      | Dev server port                     | 8080               |
-| tag       | The sample web component's tag name | my-first-component |
+where `<NEW-PACKAGE-NAME>` is the name of your new package (and the name of the directory to be created), for example:
 
-For example:
+`npm init @ui5/webcomponents-package my-components`
 
-`npx wc-init-ui5-package`
+will create a `my-components` directory and initialize the package there.
 
-to get all the default values, or:
+### Follow the prompts
 
-`npx wc-init-ui5-package --port=8081 --tag=my-new-component`
+The initialization script will ask you to choose:
+ - The **name** of your package (if you did not pass a name already when running the command above)
+ - The **port** for your dev server (`8080` by default - just press Enter to select this) 
+ - The **tag** of the sample web component that will be created (`my-first-component` by default - just press Enter to select this).
 
-to change the port and the tag of the sample Web Component that will be created in the empty package.
+### Your package is ready!
 
-*Please, note that the usage of the `ui5-` prefix is strongly discouraged, although not forbidden, for third-party components.
-This is due to the possibility of name clashes in the future.*
+Just follow the instructions:
 
-The initialization script will set the directory structure and copy a couple of files.
+ - `cd <NEW-PACKAGE-NAME>`
+ - `npm i` (or `yarn` if you prefer)
+ - `npm start` (or `yarn start` if you prefer)
 
-## Step 4. Run the dev server and test the build
+## Step 2. Run the dev server and test the build
 
-To run the dev server:
+To run the dev server, as instructed above:
 
 `npm run start`
 
@@ -99,14 +84,22 @@ or
 
 `yarn build`.
 
-*Note:* In order to run the tests for the first time, you must have built the project with either `start` or `build`,
-and you must have installed `chromedriver`, as described in the previous step.
+*Note:* In order to run the tests for the first time, you must have built the project with either `start` or `build`.
 
 That's it!
 
 ## Understanding the project structure
 
 ### `package.json`
+
+The initialization script will add several packages as dependencies.
+These three `@ui5/` packages will serve as the foundation of your own package and Web Components.
+
+| Package                         | Type of dependency | Description                          |
+|---------------------------------|--------------------|--------------------------------------|
+| `@ui5/webcomponents-base`       | `dependency`       | Base classes and framework           |
+| `@ui5/webcomponents-theme-base` | `dependency`       | Base theming assets                  |
+| `@ui5/webcomponents-tools`      | `devDependency`    | Build tools and configuration assets |
 
 The initialization script will create several NPM scripts for you in `package.json`.
 
