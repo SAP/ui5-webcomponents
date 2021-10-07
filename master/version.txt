@@ -1,5 +1,11 @@
-commit 853f2e7164b0bf3ed1eec3a9d6847183f4c30264
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Oct 7 10:14:02 2021 +0300
+commit 6e51776776fd1af75f82150c46162781d2809d4f
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Oct 7 12:21:39 2021 +0300
 
-    Adjust value state header paddings according to fiori specifications (#4061)
+    feat(ui5-switch): implement sap_horizon theme (#4007)
+    
+    To be done:
+    - active state - not confirmed by UX
+    - graphical - the design is not available
+    
+    Fixes: #4039
