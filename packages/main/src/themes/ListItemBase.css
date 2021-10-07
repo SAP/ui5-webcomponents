@@ -8,21 +8,31 @@
 	box-sizing: border-box;
 	border-bottom: var(--_ui5-listitem-initial-border-bottom);
 	border-left: var(--_ui5-listitem-border-left);
-	border-radius: var(--_ui5-listitem-border-radius);
 }
 
 :host([active][actionable]) {
 	background-color: var(--ui5-listitem-active-background-color);
 }
 
+:host(:hover),
+:host([active]),
+:host([selected]) {
+	border-radius: var(--_ui5-listitem-border-radius);
+}
+
+:host(:not([selected])[actionable]:hover) {
+	border-left: var(--_ui5-listitem-border-left-color);
+}
+
+:host(:not([selected])[active][actionable]:hover) {
+	border-left: var(--_ui5-listitem-border-pressed-left-color);
+	background: var(--_ui5-listitem-hover-background-color);
+}
+
 /* selected */
 :host([selected]) {
 	background: var(--_ui5-listitem-selected-background);
 	border-left: var(--_ui5-listitem-selected-border-left);
-}
-
-:host([selected]) .ui5-li-title {
-	color: var(--_ui5-listitem-selected-color);
 }
 
 :host([selected]:hover) .ui5-li-title {

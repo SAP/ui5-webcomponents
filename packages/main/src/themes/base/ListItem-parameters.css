@@ -2,4 +2,5 @@
 	--_ui5-listitem-selected-active-color: var(--sapList_Active_TextColor);
     --_ui5-listitem-selected-active-background: var(--sapList_Active_Background);
     --_ui5-listitem-selected-background: var(--sapList_Hover_SelectionBackground);
+    --_ui5-listitem-color: var(--sapTextColor);
 }
