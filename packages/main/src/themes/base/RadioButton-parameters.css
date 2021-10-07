@@ -21,7 +21,7 @@
 	--_ui5_radio_button_focus_border: none;
 	--_ui5_radio_button_focus_outline: block;
 	--_ui5_radio_button_hover_shadow: none;
-	--_ui5_radio_button_hover_transition: none;
+	--_ui5_radio_button_transition: none;
 	--_ui5_radio_button_hover_background: inherit;
 	--_ui5_radio_button_color: var(--sapField_BorderColor);
 	--_ui5_radio_button_label_offset: 1px;

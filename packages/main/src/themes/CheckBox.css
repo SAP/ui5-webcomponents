@@ -111,6 +111,7 @@
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	transition: var(--_ui5_checkbox_transition);
 	border: var(--_ui5_checkbox_default_focus_border);
+	border-radius: var(--_ui5_checkbox_border_radius);
 	box-sizing: border-box;
 }
 
