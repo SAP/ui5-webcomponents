@@ -7,3 +7,7 @@
 	height: auto;
 	display: inline-block;
 }
+
+[ui5-list] {
+	padding: var(--_ui5-select-list-padding) 4px 0;
+}

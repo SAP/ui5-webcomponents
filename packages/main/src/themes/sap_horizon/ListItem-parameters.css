@@ -1,0 +1,7 @@
+:root {
+    --_ui5-listitem-selected-hovered-color: #0040B0;
+    --_ui5-listitem-pressed-color: var(--sapInformationBackground);
+    --_ui5-listitem-selected-active-background: var(--sapInformationBackground);
+    --_ui5-listitem-selected-active-color: #002A86;
+    --_ui5-listitem-selected-background: var(--sapInformationBackground);
+}
