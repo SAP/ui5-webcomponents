@@ -39,15 +39,14 @@ const copyFile = (vars, sourcePath, destPath) => {
 	console.log(destPath);
 };
 
-const copyResources = (vars, sourcePath) => {
-	const destPath = sourcePath.substr(RESOURCES_DIR.length);
+const copyResources = (vars, sourcePath, destPath) => {
 	const isDir = fs.lstatSync(sourcePath).isDirectory();
 	if (isDir) {
 		if (destPath) {
 			mkdirp.sync(destPath);
 		}
 		fs.readdirSync(sourcePath).forEach(file => {
-			copyResources(vars, path.join(sourcePath, file));
+			copyResources(vars, path.join(sourcePath, file), path.join(destPath, file));
 		});
 	} else {
 		copyFile(vars, sourcePath, destPath);
@@ -107,7 +106,7 @@ const initPackage = async () => {
 		name,
 		version: "0.0.1",
 		ui5: {
-			webComponentsPackage: true
+			webComponentsPackage: true,
 		},
 		scripts: {
 			"clean": "wc-dev clean",
@@ -128,17 +127,27 @@ const initPackage = async () => {
 			"./bundle.js": "./bundle.js",
 			"./*": "./dist/*",
 		},
+		"dependencies": {
+			"@ui5/webcomponents-base": "*",
+			"@ui5/webcomponents-theme-base": "*",
+		},
+		"devDependencies": {
+			"@ui5/webcomponents-tools": "*",
+			"chromedriver": "*",
+		},
 	};
 
-	// Copy files
-	copyResources(vars, RESOURCES_DIR);
-
 	// Update package.json
-	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
+	const destDir = path.join(`./`, name);
+	mkdirp.sync(destDir);
+	fs.writeFileSync(path.join(destDir, "package.json"), beautify(packageContent, null, 2, 100));
+	// Copy files
+	copyResources(vars, RESOURCES_DIR, destDir);
 
 	console.log("Package successfully initialized.\n\n");
 	console.log(`cd ${name}`);
 	console.log(`npm i`);
+	console.log(`npm start\n\n`);
 };
 
 initPackage();

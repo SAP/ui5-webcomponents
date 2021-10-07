@@ -1,6 +1,6 @@
 {
   "name": "@ui5/create-webcomponents-package",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "UI5 Web Components: create package",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -20,7 +20,6 @@
     "directory": "packages/create-package"
   },
   "dependencies": {
-    "command-line-args": "^5.2.0",
     "json-beautify": "^1.1.1",
     "mkdirp": "^1.0.4",
     "prompts": "^2.4.1"
