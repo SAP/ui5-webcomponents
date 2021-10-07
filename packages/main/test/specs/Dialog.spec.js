@@ -326,6 +326,22 @@ describe("Page scrolling", () => {
 		await browser.$("#cbScrollable").click();
 	});
 
+	it("tests that page scrolling is blocked and restored after multiple opening of same dialog", async () => {
+		await browser.$("#cbScrollable").click();
+		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
+
+		await browser.$("#btnOpenDialog").click();
+		await browser.$("#btnOpenDialog").click();
+		await browser.$("#btnOpenDialog").click();
+
+		assert.isBelow(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is blocked");
+
+		await browser.$("#btnCloseDialog").click();
+
+		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+		await browser.$("#cbScrollable").click();
+	});
+
 	it("test page scrolling is restored after close with ESC", async () => {
 		await browser.$("#cbScrollable").click();
 		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
