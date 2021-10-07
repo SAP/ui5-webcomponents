@@ -1,7 +1,5 @@
-commit d4acbeb806cb784c4adcd961f30462ef64cccbb5
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Oct 7 02:53:24 2021 -0700
+commit 0aa7b77c3fa305db6e47b295d891ea58323d998f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Oct 7 13:52:19 2021 +0300
 
-    chore: translation delivery (#4083)
-    
-    Change-Id: If6457ff22037b42c554bd22d7bc1ffa2fed21927
+    chore: docs update test page (#4086)

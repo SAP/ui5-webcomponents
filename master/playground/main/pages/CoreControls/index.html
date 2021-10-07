@@ -29,7 +29,7 @@
 		body, html {
 			margin: 0;
 			padding: 2rem;
-			background-color: var(--sapBackgroundColor);
+			background-color: #fff;
 		}
 
 		*:not(:defined) {
@@ -61,25 +61,21 @@
 			flex-wrap: wrap;
 		}
 
-		ui5-input {
-			margin: 0.25rem;
-		}
-
-		ui5-combobox {
-			margin: 0.25rem;
-		}
-
-		ui5-button {
-			margin: 0.25rem;
-		}
-
+		ui5-input,
+		ui5-combobox,
+		ui5-button,
+		ui5-switch,
 		ui5-radio-button {
 			margin: 0.25rem;
+		}
+
+		ui5-checkbox {
+			width: 100%;
 		}
 	</style>
 </head>
 
-<body dir="rtl">
+<body>
 	<section class="row-space-between">
 		<ui5-badge color-scheme="1">Mango</ui5-badge><br>
 		<ui5-badge color-scheme="2">Redd</ui5-badge><br>
@@ -151,43 +147,30 @@
 	</section>
 
 	<section>
-		<ui5-tabcontainer show-overflow collapsed fixed>
-			<ui5-tab text="Products ID" selected>
-				<ui5-button>Button 11</ui5-button>
-				<ui5-button>Button 12</ui5-button>
+		<ui5-tabcontainer collapsed fixed>
+			<ui5-tab text="One" selected>
 			</ui5-tab>
-			<ui5-tab text="Avaialability">
-				<ui5-button>Button 2</ui5-button>
+			<ui5-tab text="Two">
 			</ui5-tab>
-			<ui5-tab text="Date of Expire">
-				<ui5-button>Button 3</ui5-button>
+			<ui5-tab text="Three">
 			</ui5-tab>
-			<ui5-tab text="Date of Delivery">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Four">
 			</ui5-tab>
-			<ui5-tab text="Date of Manifacture">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Five">
 			</ui5-tab>
-			<ui5-tab text="Value">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Six">
 			</ui5-tab>
-			<ui5-tab text="Price">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Seven">
 			</ui5-tab>
-			<ui5-tab text="Net profit">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Eight">
 			</ui5-tab>
-			<ui5-tab text="Company name">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Nine">
 			</ui5-tab>
-			<ui5-tab text="Warehouse Location">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Ten">
 			</ui5-tab>
-			<ui5-tab text="Address">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Eleven">
 			</ui5-tab>
-			<ui5-tab text="Country">
-				<ui5-button>Button 4</ui5-button>
+			<ui5-tab text="Twelve">
 			</ui5-tab>
 		</ui5-tabcontainer>
 	</section>
@@ -266,11 +249,11 @@
 		</section>
 			
 		<section>
-			<ui5-checkbox disabled text="First"></ui5-checkbox>
-			<ui5-checkbox readonly text="Second"></ui5-checkbox>
-			<ui5-checkbox text="Third"></ui5-checkbox>
-			<ui5-checkbox checked text="Fourth"></ui5-checkbox>
-			<ui5-checkbox text="Fifth"></ui5-checkbox>
+			<ui5-checkbox text="Option C"></ui5-checkbox>
+			<ui5-checkbox checked text="Option D"></ui5-checkbox>
+			<ui5-checkbox text="Option E"></ui5-checkbox>
+			<ui5-checkbox disabled text="Option A"></ui5-checkbox>
+			<ui5-checkbox readonly text="Option B"></ui5-checkbox>
 		</section>
 
 		<section>
@@ -282,8 +265,11 @@
 		</section>
 
 		<section>
-			<ui5-switch text="Group One" checked name="test"></ui5-switch>
-			<ui5-switch text="Group One" name="test"></ui5-switch>
+			<ui5-switch checked name="test"></ui5-switch>
+			<ui5-switch name="test"></ui5-switch>
+			<ui5-switch name="test"></ui5-switch>
+			<ui5-switch checked name="test"></ui5-switch>
+			<ui5-switch name="test"></ui5-switch>
 		</section>
 	</section>
 	
