@@ -33,12 +33,8 @@
 	will-change: transform;
 }
 
-:host([text]) .ui5-switch-inner {
-	margin-inline-end: 10px;
-}
-
 :host([checked]) .ui5-switch-inner {
-	border-radius: 100px;
+	border-radius: 6.25rem;
 	box-shadow: var(--_ui5-switch-root-box-shadow);
 }
 
