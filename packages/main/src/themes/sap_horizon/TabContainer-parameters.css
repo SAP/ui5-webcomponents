@@ -1,13 +1,13 @@
 @import "../base/TabContainer-parameters.css";
 
 :root {
-	/* HEader */
-	--_ui5_tc_header_height_text_only: 2.5rem;
+	/* Header */
+	--_ui5_tc_header_height_text_with_additional_text: 3.625rem;
 	--_ui5_tc_header_box_shadow: none;
 	--_ui5_tc_header_border_bottom: 0.0625rem solid var(--sapObjectHeader_Background);
 
 	/* Header Item */
-	--_ui5_tc_item_text_only_height: 2.5rem;
+	--_ui5_tc_item_text_only_with_additional_text_height: 3.625rem;
 	--_ui5_tc_headeritem_padding: 0;
 	--_ui5_tc_headerItem_color: var(--sapNeutralTextColor); /* #5B738B; */
 	--_ui5_tc_headeritem_text_font_weight: bold;
