@@ -1,13 +1,5 @@
-commit 89d945aefcdc69d2b52e2c2df0f6661532407470
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Oct 6 15:39:47 2021 +0300
+commit 853f2e7164b0bf3ed1eec3a9d6847183f4c30264
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Oct 7 10:14:02 2021 +0300
 
-    feat(ui5-tabcontainer): implement sap_horizon theme (#4079)
-    
-    The change implements one of the three suggested designs in Fiori Next Figma Alpha design, the one that is closest to the current design (Note: There is single parameter extraction in CheckBox - you can skip that part).
-    
-    Note:
-    pressed state - not implemented as would require additional JS
-    disabled state - not implemented as would required new API
-    
-    Fixes: #4045
+    Adjust value state header paddings according to fiori specifications (#4061)
