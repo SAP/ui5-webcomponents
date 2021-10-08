@@ -364,14 +364,13 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
-	it("checks if the suggestions popover width is the same as the input width when there is a long suggestion", async () => {
-		const input = await browser.$("#suggestionsPopoverWidth");
-		const nativeInput = await browser.$("#suggestionsPopoverWidth").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#suggestionsPopoverWidth");
+	it("checks if the suggestions popover width is minimum the size of the input field", async () => {
+		const input = await browser.$("#myInputGrouping");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
-		await nativeInput.click();
-		await nativeInput.keys("a");
+		await input.click();
+		await input.keys("a");
 
 		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'));
 	})
