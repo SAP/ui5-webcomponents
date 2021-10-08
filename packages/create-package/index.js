@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
 const prompts = require("prompts");
-const beautify = require("json-beautify");
 const parser = require("npm-config-user-agent-parser");
 
 // from where all the files will be copied
@@ -131,11 +130,11 @@ const createWebcomponentsPackage = async () => {
 			"./*": "./dist/*",
 		},
 		"dependencies": {
-			"@ui5/webcomponents-base": "*",
-			"@ui5/webcomponents-theme-base": "*",
+			"@ui5/webcomponents-base": "1.0.0-rc.15",
+			"@ui5/webcomponents-theme-base": "1.0.0-rc.15",
 		},
 		"devDependencies": {
-			"@ui5/webcomponents-tools": "*",
+			"@ui5/webcomponents-tools": "1.0.0-rc.15",
 			"chromedriver": "*",
 		},
 	};
@@ -143,7 +142,7 @@ const createWebcomponentsPackage = async () => {
 	// Update package.json
 	const destDir = path.join(`./`, name);
 	mkdirp.sync(destDir);
-	fs.writeFileSync(path.join(destDir, "package.json"), beautify(packageContent, null, 2, 100));
+	fs.writeFileSync(path.join(destDir, "package.json"), JSON.stringify(packageContent, null, 2));
 	// Copy files
 	copyFiles(vars, TEMPLATE_DIR, destDir);
 
