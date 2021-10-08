@@ -1184,7 +1184,7 @@ class Input extends UI5Element {
 				"width": `${this._listWidth}px`,
 			},
 			suggestionsPopover: {
-				"max-width": `${this._inputWidth}px`,
+				"min-width": `${this._inputWidth}px`,
 			},
 			innerInput: {},
 		};
