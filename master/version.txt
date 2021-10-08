@@ -1,9 +1,5 @@
-commit 5ce5948499626cb3b2c480864aa7f75f941f78fd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Oct 7 14:21:33 2021 +0300
+commit ea8ef59d0cba3ae37c16595fa386caa080f019af
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Fri Oct 8 08:45:38 2021 +0300
 
-    chore: Update docs (#4087)
-    
-    * chore: update
-    
-    * update
+    fix(ui5-avatar): Fixed font-size and color-scheme (#3799)
