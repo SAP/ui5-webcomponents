@@ -162,7 +162,7 @@ const createBlockingStyle = () => {
 
 createBlockingStyle();
 
-let bodyScrollingBlockers = new Set();
+const bodyScrollingBlockers = new Set();
 
 /**
  * @class
