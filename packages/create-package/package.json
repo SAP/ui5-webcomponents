@@ -1,6 +1,6 @@
 {
   "name": "@ui5/create-webcomponents-package",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "UI5 Web Components: create package",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -10,9 +10,8 @@
     "sapui5",
     "ui5"
   ],
-  "scripts": {},
   "bin": {
-    "create-webcomponents-package": "bin/init-ui5-package.js"
+    "create-webcomponents-package": "index.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,7 @@
   "dependencies": {
     "json-beautify": "^1.1.1",
     "mkdirp": "^1.0.4",
+    "npm-config-user-agent-parser": "^1.0.0",
     "prompts": "^2.4.1"
-  },
-  "peerDependencies": {}
+  }
 }

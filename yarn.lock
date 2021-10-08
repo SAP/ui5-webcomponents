@@ -6491,6 +6491,13 @@ npm-bundled@^1.1.1:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
+npm-config-user-agent-parser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/npm-config-user-agent-parser/-/npm-config-user-agent-parser-1.0.0.tgz#09d6a2fb3ab5c59af4135c6ee2da9c13ba7007d7"
+  integrity sha512-9cODT2ALnKGiNU4OR/dCnsEiZDzFEPMiEXD69pVH38FEzbF/GzP+MlJPIYVMjx5bzbP5sbMA7b7Wgo8MGfIncA==
+  dependencies:
+    semver "^5.5.0"
+
 npm-install-checks@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/npm-install-checks/-/npm-install-checks-4.0.0.tgz#a37facc763a2fde0497ef2c6d0ac7c3fbe00d7b4"

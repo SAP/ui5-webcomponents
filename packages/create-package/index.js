@@ -3,6 +3,10 @@ const path = require("path");
 const mkdirp = require("mkdirp");
 const prompts = require("prompts");
 const beautify = require("json-beautify");
+const parser = require("npm-config-user-agent-parser");
+
+// from where all the files will be copied
+const TEMPLATE_DIR = path.join(`${__dirname}`, `template/`);
 
 // String utils
 const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
@@ -36,27 +40,24 @@ const copyFile = (vars, sourcePath, destPath) => {
 	content = replaceVarsInFileContent(vars, content);
 	destPath = replaceVarsInFileName(vars, destPath);
 	fs.writeFileSync(destPath, content);
-	console.log(destPath);
 };
 
-const copyResources = (vars, sourcePath, destPath) => {
+const copyFiles = (vars, sourcePath, destPath) => {
 	const isDir = fs.lstatSync(sourcePath).isDirectory();
 	if (isDir) {
 		if (destPath) {
 			mkdirp.sync(destPath);
 		}
 		fs.readdirSync(sourcePath).forEach(file => {
-			copyResources(vars, path.join(sourcePath, file), path.join(destPath, file));
+			copyFiles(vars, path.join(sourcePath, file), path.join(destPath, file));
 		});
 	} else {
 		copyFile(vars, sourcePath, destPath);
 	}
 };
 
-// from where all the files will be copied
-const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);
-
-const initPackage = async () => {
+// Main function
+const createWebcomponentsPackage = async () => {
 	let response;
 
 	// Get the name
@@ -66,7 +67,7 @@ const initPackage = async () => {
 		response = await prompts({
 			type: "text",
 			name: "name",
-			message: `Enter the name of the new package\n A directory with this name will be created, and this will be the "name" field in "package.json":`,
+			message: "Package name:",
 			validate: isNameValid,
 		});
 		name = response.name;
@@ -76,7 +77,7 @@ const initPackage = async () => {
 	response = await prompts({
 		type: "text",
 		name: "port",
-		message: "Choose the port where the test server will run\n Press Enter for default:",
+		message: "Dev server port:",
 		validate: isPortValid,
 		initial: "8080",
 	});
@@ -86,7 +87,7 @@ const initPackage = async () => {
 	response = await prompts({
 		type: "text",
 		name: "tag",
-		message: "Enter the name of your first component (must contain at least one dash)\n Press Enter for default:",
+		message: "Demo component name:",
 		initial: "my-first-component",
 		validate: isTagValid,
 	});
@@ -142,12 +143,25 @@ const initPackage = async () => {
 	mkdirp.sync(destDir);
 	fs.writeFileSync(path.join(destDir, "package.json"), beautify(packageContent, null, 2, 100));
 	// Copy files
-	copyResources(vars, RESOURCES_DIR, destDir);
+	copyFiles(vars, TEMPLATE_DIR, destDir);
 
-	console.log("Package successfully initialized.\n\n");
-	console.log(`cd ${name}`);
-	console.log(`npm i`);
-	console.log(`npm start\n\n`);
+	console.log("Package successfully created!\nNext steps:\n\n");
+	console.log(`$ cd ${name}`);
+
+	let userAgentInfo;
+	try {
+		userAgentInfo = parser(process.env.npm_config_user_agent);
+	} catch (e) {}
+
+	if (userAgentInfo && userAgentInfo.yarn) {
+		console.log(`$ yarn`);
+		console.log(`$ yarn start`);
+	} else {
+		console.log(`$ npm i`);
+		console.log(`$ npm start`);
+	}
+
+	console.log("\n\n");
 };
 
-initPackage();
+createWebcomponentsPackage();
