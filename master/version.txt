@@ -1,5 +1,9 @@
-commit 5608e0413ee3885a985515adbc1755897b363d03
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Oct 8 14:41:33 2021 +0300
+commit e66ab796a050426ad182b7dcd36be004f30fd403
+Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
+Date:   Fri Oct 8 14:58:31 2021 +0300
 
-    feat(tools): create an npm init script (#4090)
+    fix(ui5-dialog): fix in scroll blocking (#4092)
+    
+    Now scroll is released correctly even after multiple calls to show() on the same dialog.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/4065
