@@ -40,8 +40,8 @@ will create a `my-components` directory and initialize the package there.
 ### Follow the prompts
 
 The initialization script will ask you to choose:
- - The **name** of your package (if you did not pass a name already when running the command above)
- - The **port** for your dev server (`8080` by default - just press Enter to select this) 
+ - The **name** of your package (if you did not already pass a name when running the command above);
+ - The **port** for your dev server (`8080` by default - just press Enter to select this);
  - The **tag** of the sample web component that will be created (`my-first-component` by default - just press Enter to select this).
 
 ### Your package is ready!
@@ -95,7 +95,7 @@ That's it!
 The initialization script will add several packages as dependencies.
 These three `@ui5/` packages will serve as the foundation of your own package and Web Components.
 
-| Package                         | Type of dependency | Description                          |
+| Package                         | Type of Dependency | Description                          |
 |---------------------------------|--------------------|--------------------------------------|
 | `@ui5/webcomponents-base`       | `dependency`       | Base classes and framework           |
 | `@ui5/webcomponents-theme-base` | `dependency`       | Base theming assets                  |

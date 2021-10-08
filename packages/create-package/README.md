@@ -1,25 +1,25 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
-# UI5 Web Components - Create package
+# UI5 Web Components - Create Package
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides an `npm init` script for creating new UI5 Webcomponents Packages
+Provides an `npm init` script for creating new "UI5 Web Components" packages.
 
 ## Usage
 
 with `npm`
 
-- `npm init @ui5/webcomponents-package` (the user will be asked for **name**, **port**, **tag**)
-- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port** and **tag** only)
+- `npm init @ui5/webcomponents-package` (the user will be asked for **name**, **port**, **tag**);
+- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port** and **tag** only).
 
-and with `yarn`
+And with `yarn`
 
 - `yarn create @ui5/webcomponents-package`
-- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`
+- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`.
 
-The script creates a new directory, and fills it with a `package.json` file and all necessary source files and resources for a new
+The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
 components package.
 
 ## Resources
