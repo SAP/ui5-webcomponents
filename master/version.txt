@@ -1,9 +1,5 @@
-commit e9c5287f8a1e7dc33d9742aa52c75a1b269b3653
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Oct 8 09:59:26 2021 +0300
+commit 5608e0413ee3885a985515adbc1755897b363d03
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Oct 8 14:41:33 2021 +0300
 
-    fix(ui5-list): preventing space keydown (#4088)
-    
-    Preventing the Space key on keydown is redundant since it should be already handled in its children separately.
-    
-    Fixes: #4049
+    feat(tools): create an npm init script (#4090)

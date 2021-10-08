@@ -5078,110 +5078,62 @@
 
 <p><em>Note:</em> Whether you use <code class="highlighter-rouge">npm</code> or <code class="highlighter-rouge">yarn</code> is a matter of preference.</p>
 
-<h2 id="step-1-create-an-empty-npm-package">Step 1. Create an empty NPM package</h2>
+<h2 id="step-1-create-an-npm-package">Step 1. Create an NPM package</h2>
 
-<p><code class="highlighter-rouge">npm init</code></p>
+<h3 id="run-the-init-command">Run the init command</h3>
 
-<p>or</p>
+<p><em>Note:</em> The following command will <strong>create a new directory</strong> and initialize your package there.
+Make sure you haven’t created a directory yourself.</p>
 
-<p><code class="highlighter-rouge">yarn init</code></p>
-
-<p>The name of your NPM package will be used by the UI5 Web Components tools as the namespace for resource registration.</p>
-
-<h2 id="step-2-add-the-ui5-web-components-packages-as-dependencies">Step 2. Add the UI5 Web Components packages as dependencies</h2>
-
-<p>With <code class="highlighter-rouge">npm</code>:</p>
 <ul>
-  <li><code class="highlighter-rouge">npm i @ui5/webcomponents-base @ui5/webcomponents-theme-base</code></li>
-  <li><code class="highlighter-rouge">npm i --save-dev @ui5/webcomponents-tools chromedriver</code></li>
+  <li>
+    <p>With <strong>npm</strong>:</p>
+
+    <p><code class="highlighter-rouge">npm init @ui5/webcomponents-package</code></p>
+
+    <p>or</p>
+
+    <p><code class="highlighter-rouge">npm init @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
+  </li>
+  <li>
+    <p>With <strong>yarn</strong>:</p>
+
+    <p><code class="highlighter-rouge">yarn create @ui5/webcomponents-package</code></p>
+
+    <p>or</p>
+
+    <p><code class="highlighter-rouge">yarn create @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
+  </li>
 </ul>
 
-<p>or with <code class="highlighter-rouge">yarn</code>:</p>
+<p>where <code class="highlighter-rouge">&lt;NEW-PACKAGE-NAME&gt;</code> is the name of your new package (and the name of the directory to be created), for example:</p>
+
+<p><code class="highlighter-rouge">npm init @ui5/webcomponents-package my-components</code></p>
+
+<p>will create a <code class="highlighter-rouge">my-components</code> directory and initialize the package there.</p>
+
+<h3 id="follow-the-prompts">Follow the prompts</h3>
+
+<p>The initialization script will ask you to choose:</p>
 <ul>
-  <li><code class="highlighter-rouge">yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base</code></li>
-  <li><code class="highlighter-rouge">yarn add -D @ui5/webcomponents-tools chromedriver</code></li>
+  <li>The <strong>name</strong> of your package (if you did not already pass a name when running the command above);</li>
+  <li>The <strong>port</strong> for your dev server (<code class="highlighter-rouge">8080</code> by default - just press Enter to select this);</li>
+  <li>The <strong>tag</strong> of the sample web component that will be created (<code class="highlighter-rouge">my-first-component</code> by default - just press Enter to select this).</li>
 </ul>
 
-<p>These three <code class="highlighter-rouge">@ui5/</code> packages will serve as the foundation of your own package and Web Components.</p>
+<h3 id="your-package-is-ready">Your package is ready!</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Package</th>
-      <th>Type of dependency</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base</code></td>
-      <td><code class="highlighter-rouge">dependency</code></td>
-      <td>Base classes and framework</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-theme-base</code></td>
-      <td><code class="highlighter-rouge">dependency</code></td>
-      <td>Base theming assets</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-tools</code></td>
-      <td><code class="highlighter-rouge">devDependency</code></td>
-      <td>Build tools and configuration assets</td>
-    </tr>
-  </tbody>
-</table>
+<p>Just follow the instructions:</p>
 
-<p><em>Note:</em> <code class="highlighter-rouge">chromedriver</code> is a peer dependency of <code class="highlighter-rouge">@ui5/webcomponents-tools</code> so that you get to choose the exact version,
-if necessary. This is useful if, for example, you manually update Chrome on your system, and you’d prefer not to have
-a fixed <code class="highlighter-rouge">chromedriver</code> version packaged with <code class="highlighter-rouge">@ui5/webcomponents-tools</code>.</p>
+<ul>
+  <li><code class="highlighter-rouge">cd &lt;NEW-PACKAGE-NAME&gt;</code></li>
+  <li><code class="highlighter-rouge">npm i</code> (or <code class="highlighter-rouge">yarn</code> if you prefer)</li>
+  <li><code class="highlighter-rouge">npm start</code> (or <code class="highlighter-rouge">yarn start</code> if you prefer)</li>
+</ul>
 
-<p><em>Note:</em> You can skip the installation of <code class="highlighter-rouge">chromedriver</code> if you do not intend to use the testing tool of choice (WebdriverIO) that
-comes as part of UI5 Web Components tools.</p>
+<h2 id="step-2-run-the-dev-server-and-test-the-build">Step 2. Run the dev server and test the build</h2>
 
-<h2 id="step-3-run-the-package-initialization-script">Step 3. Run the package initialization script</h2>
-
-<p>Run the initialization script, optionally with parameters from the following table:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Default value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>port</td>
-      <td>Dev server port</td>
-      <td>8080</td>
-    </tr>
-    <tr>
-      <td>tag</td>
-      <td>The sample web component’s tag name</td>
-      <td>my-first-component</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>For example:</p>
-
-<p><code class="highlighter-rouge">npx wc-init-ui5-package</code></p>
-
-<p>to get all the default values, or:</p>
-
-<p><code class="highlighter-rouge">npx wc-init-ui5-package --port=8081 --tag=my-new-component</code></p>
-
-<p>to change the port and the tag of the sample Web Component that will be created in the empty package.</p>
-
-<p><em>Please, note that the usage of the <code class="highlighter-rouge">ui5-</code> prefix is strongly discouraged, although not forbidden, for third-party components.
-This is due to the possibility of name clashes in the future.</em></p>
-
-<p>The initialization script will set the directory structure and copy a couple of files.</p>
-
-<h2 id="step-4-run-the-dev-server-and-test-the-build">Step 4. Run the dev server and test the build</h2>
-
-<p>To run the dev server:</p>
+<p>To run the dev server, as instructed above:</p>
 
 <p><code class="highlighter-rouge">npm run start</code></p>
 
@@ -5211,14 +5163,43 @@ This is due to the possibility of name clashes in the future.</em></p>
 
 <p><code class="highlighter-rouge">yarn build</code>.</p>
 
-<p><em>Note:</em> In order to run the tests for the first time, you must have built the project with either <code class="highlighter-rouge">start</code> or <code class="highlighter-rouge">build</code>,
-and you must have installed <code class="highlighter-rouge">chromedriver</code>, as described in the previous step.</p>
+<p><em>Note:</em> In order to run the tests for the first time, you must have built the project with either <code class="highlighter-rouge">start</code> or <code class="highlighter-rouge">build</code>.</p>
 
 <p>That’s it!</p>
 
 <h2 id="understanding-the-project-structure">Understanding the project structure</h2>
 
 <h3 id="packagejson"><code class="highlighter-rouge">package.json</code></h3>
+
+<p>The initialization script will add several packages as dependencies.
+These three <code class="highlighter-rouge">@ui5/</code> packages will serve as the foundation of your own package and Web Components.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Type of Dependency</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-base</code></td>
+      <td><code class="highlighter-rouge">dependency</code></td>
+      <td>Base classes and framework</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-theme-base</code></td>
+      <td><code class="highlighter-rouge">dependency</code></td>
+      <td>Base theming assets</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-tools</code></td>
+      <td><code class="highlighter-rouge">devDependency</code></td>
+      <td>Build tools and configuration assets</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>The initialization script will create several NPM scripts for you in <code class="highlighter-rouge">package.json</code>.</p>
 
