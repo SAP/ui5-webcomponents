@@ -7,8 +7,5 @@
 	--_ui5_product_switch_item_border: none;
 	--_ui5-listitem-initial-border-bottom: 1px solid transparent;
 	--_ui5-listitem-selected-background: var(--sapList_SelectionBackgroundColor);
-	--_ui5-listitem-selected-border-left: 2px solid var(--sapField_Focus_BorderColor);
-	--_ui5-listitem-border-radius: 4px;
-	--_ui5-listitem-selected-hovered-border-color: var(--sapHighlightColor);
 	--_ui5-listitem-focus-outline: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
 }

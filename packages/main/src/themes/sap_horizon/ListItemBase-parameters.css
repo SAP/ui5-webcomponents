@@ -1,18 +1,10 @@
 :root {
     --ui5-listitem-background-color: var(--sapBaseColor);
-    --ui5-listitem-active-background-color: #A9B4BE;
-    --_ui5-listitem-hover-background-color: var(--sapBackgroundColor);
     --_ui5-listitem-active-background-color: var(--sapBackgroundColor);
-    --_ui5-listitem-border-left: 2px solid #fff;
-    --_ui5-listitem-border-left-color: 2px solid var(--sapButton_Track_Background);
-    --_ui5-listitem-border-pressed-left-color: 2px solid var(--sapButton_Active_BorderColor);
     --_ui5-listitem-initial-border-bottom: 2px solid transparent;
     --ui5-listitem-border-bottom: none;
     --_ui5-listitem-border-bottom: 2px solid transparent;
     --ui5-listitem-selected-border-bottom: none;
-    --_ui5-listitem-selected-active-border-color: #0057D2;
-    --_ui5-listitem-selected-background: var(--sapInformationBackground);
     --_ui5-listitem-selected-color: var(--sapContent_Selected_TextColor);
-    --_ui5-listitem-selected-hovered-color: #0040B0;
-    --_ui5-listitem-focus-outline: none;
+    --_ui5-listitem-focus-border-color: .25rem;
 }

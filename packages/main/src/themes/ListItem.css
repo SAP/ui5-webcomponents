@@ -1,5 +1,73 @@
 @import "./InvisibleTextStyles.css";
 
+:host(:not([selected])) .ui5-li-root {
+	border-inline-start: var(--_ui5-listitem-border-left);
+}
+
+:host([active][actionable]) {
+	background-color: var(--ui5-listitem-active-background-color);
+}
+
+:host(:hover) .ui5-li-root,
+:host([active]) .ui5-li-root,
+:host([selected]) .ui5-li-root {
+	border-radius: var(--_ui5-listitem-border-radius);
+}
+
+:host(:not([selected])[actionable]:hover) .ui5-li-root {
+	border-inline-start: var(--_ui5-listitem-border-left-color);
+}
+
+:host(:not([selected])[active][actionable]:hover) .ui5-li-root {
+	border-inline-start: var(--_ui5-listitem-border-pressed-left-color);
+}
+
+:host(:not([selected])[active][actionable]:hover) {
+	background: var(--_ui5-listitem-hover-background-color);
+}
+
+:host([selected]) .ui5-li-root {
+	border-inline-start: var(--_ui5-listitem-selected-border-left);
+}
+
+:host([selected]) {
+	background: var(--_ui5-listitem-selected-background);
+	color: var(--_ui5-listitem-selected-color);
+}
+
+:host([selected]) .ui5-li-title {
+	color: var(--_ui5-listitem-selected-color);
+}
+
+:host([selected]:hover) .ui5-li-title {
+	color: var(--_ui5-listitem-selected-hovered-color);
+}
+
+:host([selected]:hover) .ui5-li-root {
+	border-color: var(--_ui5-listitem-selected-hovered-border-color);
+}
+
+:host([selected][active]) .ui5-li-root,
+:host([selected][active]:hover) .ui5-li-root {
+	border-color: var(--_ui5-listitem-selected-active-border-color);
+}
+
+:host(:not([selected]):not([active]):not([focused])) .ui5-li-root,
+:host([selected]:not([active]):not([focused])) .ui5-li-root {
+	padding-left: var(--_ui5-listitem-focused-padding-left);
+}
+
+:host([focused][selected]) .ui5-li-root.ui5-li--focusable,
+:host([focused][active]) .ui5-li-root,
+:host(:not([selected])[focused][active][actionable]) .ui5-li-root,
+:host(:not([selected])[focused][actionable]) .ui5-li-root,
+:host(:not([selected])[focused][active]) .ui5-li-root,
+:host(:not([selected])[focused]) .ui5-li-root {
+	border: var(--_ui5-listitem-focus-outline);
+	border-inline-start-width: 4px;
+	border-radius: var(--_ui5-listitem-focus-border-color);
+}
+
 /* actionable (type="Active" + desktop) */
 :host([actionable]:not([disabled])) {
 	cursor: pointer;
