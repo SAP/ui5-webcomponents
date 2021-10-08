@@ -1,5 +1,5 @@
-commit ea8ef59d0cba3ae37c16595fa386caa080f019af
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Fri Oct 8 08:45:38 2021 +0300
+commit 39fa58a89db529020312b18ffbe72c264a35be04
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Oct 8 08:56:42 2021 +0300
 
-    fix(ui5-avatar): Fixed font-size and color-scheme (#3799)
+    chore: align transition effect of radio and cb (#4091)
