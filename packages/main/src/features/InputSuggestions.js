@@ -177,11 +177,7 @@ class Suggestions {
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
 		// to have consistency with the way "Inactive" items behave in the ui5-list
-		if (item.type === "Inactive") {
-			return;
-		}
-
-		if (item.group) {
+		if (item.type === "Inactive" || item.group) {
 			return;
 		}
 
@@ -248,7 +244,12 @@ class Suggestions {
 	}
 
 	_isItemOnTarget() {
-		return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1;
+		return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1 && !this._isGroupOrInactiveItem;
+	}
+
+	get _isGroupOrInactiveItem() {
+		const items = this._getItems();
+		return !!items && !!items[this.selectedItemIndex] && (items[this.selectedItemIndex].group || items[this.selectedItemIndex].type === "Inactive");
 	}
 
 	isOpened() {
