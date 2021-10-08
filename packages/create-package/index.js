@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
@@ -145,7 +147,7 @@ const createWebcomponentsPackage = async () => {
 	// Copy files
 	copyFiles(vars, TEMPLATE_DIR, destDir);
 
-	console.log("Package successfully created!\nNext steps:\n\n");
+	console.log("\nPackage successfully created!\nNext steps:\n");
 	console.log(`$ cd ${name}`);
 
 	let userAgentInfo;
@@ -161,7 +163,7 @@ const createWebcomponentsPackage = async () => {
 		console.log(`$ npm start`);
 	}
 
-	console.log("\n\n");
+	console.log("\n");
 };
 
 createWebcomponentsPackage();
