@@ -11,6 +11,7 @@
 	--_ui5_checkbox_default_focus_border: 0.125rem solid transparent;
 	--_ui5_checkbox_box_shadow: 0 0 2px rgb(131 150 168 / 16%), 0 8px 16px rgb(131 150 168 / 16%);
 	--_ui5_checkbox_border_radius: 0.5rem;
+	--_ui5_checkbox_transition: all 0.2s ease-in-out;
 	--_ui5_checkbox_inner_border: 0.125rem solid var(--sapNeutralColor);
 	--_ui5_checkbox_hover_background: var(--sapHighlightTextColor);
 	--_ui5_checkbox_outer_hover_background: var(--sapHighlightTextColor);
@@ -19,7 +20,7 @@
 	--_ui5_checkbox_inner_disabled_border_color: #A9B4BE;
 	--_ui5_checkbox_inner_active_border_color: #354A5F;
 	--_ui5_checkbox_focus_position: 0.5625rem;
-	--_ui5_checkbox_inner_border_radius: .125rem;
+	--_ui5_checkbox_inner_border_radius: 0.25rem;
 	--_ui5_checkbox_inner_success_border: 0.125rem solid var(--sapField_SuccessColor);
 	--_ui5_checkbox_inner_readonly_border: 0.125rem solid var(--sapField_ReadOnly_BorderColor);
 	--_ui5_checkbox_inner_background: var(--sapHighlightTextColor);

@@ -87,6 +87,7 @@
 
 :host([active][color-scheme="1"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-1-active-shadow);
+	color: var(--ui5-badge-color-scheme-1-active-color);
 }
 
 /* Scheme 2 */
@@ -103,6 +104,7 @@
 
 :host([active][color-scheme="2"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-2-active-shadow);
+	color: var(--ui5-badge-color-scheme-2-active-color);
 }
 
 /* Scheme 3 */
@@ -119,6 +121,7 @@
 
 :host([active][color-scheme="3"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-3-active-shadow);
+	color: var(--ui5-badge-color-scheme-3-active-color);
 }
 
 /* Scheme 4 */
@@ -135,6 +138,7 @@
 
 :host([active][color-scheme="4"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-4-active-shadow);
+	color: var(--ui5-badge-color-scheme-4-active-color);
 }
 
 /* Scheme 5 */
@@ -151,6 +155,7 @@
 
 :host([active][color-scheme="5"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-5-active-shadow);
+	color: var(--ui5-badge-color-scheme-5-active-color);
 }
 
 /* Scheme 6 */
@@ -167,6 +172,7 @@
 
 :host([active][color-scheme="6"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-6-active-shadow);
+	color: var(--ui5-badge-color-scheme-6-active-color);
 }
 
 /* Scheme 7 */
@@ -183,6 +189,7 @@
 
 :host([active][color-scheme="7"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-7-active-shadow);
+	color: var(--ui5-badge-color-scheme-7-active-color);
 }
 
 /* Scheme 8 */
@@ -199,6 +206,7 @@
 
 :host([active][color-scheme="8"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-8-active-shadow);
+	color: var(--ui5-badge-color-scheme-8-active-color);
 }
 
 /* Scheme 9 */
@@ -215,6 +223,7 @@
 
 :host([active][color-scheme="9"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-9-active-shadow);
+	color: var(--ui5-badge-color-scheme-9-active-color);
 }
 
 /* Scheme 10 */
@@ -231,4 +240,5 @@
 
 :host([active][color-scheme="10"]:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-10-active-shadow);
+	color: var(--ui5-badge-color-scheme-10-active-color);
 }

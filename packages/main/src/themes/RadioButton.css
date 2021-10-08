@@ -12,7 +12,7 @@
 	color: var(--_ui5_radio_button_color);
 	cursor: pointer;
 	border-radius: var(--_ui5_radio_button_border_radius);
-	transition: var(--_ui5_radio_button_hover_transition);
+	transition: var(--_ui5_radio_button_transition);
 }
 
 /* checked */
@@ -144,6 +144,8 @@
 	width: var(--_ui5_radio_button_inner_width);
 	box-sizing: border-box;
 	border: var(--_ui5_radio_button_border);
+	border-radius: var(--_ui5_radio_button_border_radius);
+	transition: var(--_ui5_radio_button_transition);
 	cursor: pointer;
 }
 
