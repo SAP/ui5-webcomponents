@@ -563,6 +563,8 @@ class TabContainer extends UI5Element {
 			root: {
 				"ui5-tc-root": true,
 				"ui5-tc--textOnly": this.textOnly,
+				"ui5-tc--withAdditonalText": this.withAdditonalText,
+				"ui5-tc--standardTabLayout": this.standardTabLayout,
 			},
 			header: {
 				"ui5-tc__header": true,
@@ -603,6 +605,14 @@ class TabContainer extends UI5Element {
 
 	get textOnly() {
 		return this.items.every(item => !item.icon);
+	}
+
+	get withAdditonalText() {
+		return this.items.some(item => !!item.additionalText);
+	}
+
+	get standardTabLayout() {
+		return this.tabLayout === TabLayout.Standard;
 	}
 
 	get previousIconACCName() {

@@ -1,6 +1,3 @@
-import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
-// setAssetsPath("/my-resources/");
-
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 
 
@@ -125,8 +122,6 @@ const testAssets = {
 		setNoConflict,
 		getRTL,
 		getFirstDayOfWeek,
-		getAssetsPath,
-		setAssetsPath
 	},
 	invisibleMessage : {
 		announce,

@@ -11,6 +11,11 @@
 :host {
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
+	border-radius: var(--_ui5-datepicker_border_radius)
+}
+
+:host(:not([disabled]):hover) {
+	background: var(--_ui5-datepicker-hover-background);
 }
 
 :host .ui5-date-picker-input {
@@ -21,4 +26,9 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+}
+
+[slot="icon"] {
+	border-top-right-radius: var(--_ui5-datepicker_border_radius);
+    border-bottom-right-radius: var(--_ui5-datepicker_border_radius);
 }

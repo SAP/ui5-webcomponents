@@ -25,6 +25,9 @@ import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-de
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
 
+let isGlobalHandlerAttached = false;
+let activeRadio = null;
+
 /**
  * @public
  */
@@ -188,6 +191,14 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
+		/**
+		 * Defines the active state (pressed or not) of the component.
+		 * @private
+		 */
+		 active: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 		/**
@@ -252,6 +263,17 @@ class RadioButton extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this._deactivate = () => {
+			if (activeRadio) {
+				activeRadio.active = false;
+			}
+		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+			isGlobalHandlerAttached = true;
+		}
 	}
 
 	static get metadata() {
@@ -352,10 +374,12 @@ class RadioButton extends UI5Element {
 
 	_onkeydown(event) {
 		if (isSpace(event)) {
+			this.active = true;
 			return event.preventDefault();
 		}
 
 		if (isEnter(event)) {
+			this.active = true;
 			return this.toggle();
 		}
 
@@ -372,6 +396,21 @@ class RadioButton extends UI5Element {
 		if (isSpace(event)) {
 			this.toggle();
 		}
+
+		this.active = false;
+	}
+
+	_onmousedown() {
+		this.active = true;
+		activeRadio = this; // eslint-disable-line
+	}
+
+	_onmouseup() {
+		this.active = false;
+	}
+
+	_onfocusout() {
+		this.active = false;
 	}
 
 	toggle() {
