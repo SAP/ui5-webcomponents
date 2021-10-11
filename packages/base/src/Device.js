@@ -92,7 +92,7 @@ const isDesktop = () => {
 };
 
 const isCombi = () => {
-	return isTablet() && isWindows8OrAbove();
+	return isTablet() && isDesktop();
 }
 
 export {
