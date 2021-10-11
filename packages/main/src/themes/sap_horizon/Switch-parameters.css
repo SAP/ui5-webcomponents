@@ -34,5 +34,5 @@
 
     /* Active effects */
     --_ui5-switch_track-off-active-background: var(--sapTile_TitleTextColor);
-    --_ui5-switch_track-on-active-background: #0040B0;
+    --_ui5-switch_track-on-active-color: #0040B0;
 }
