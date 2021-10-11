@@ -1,5 +1,5 @@
-commit b2cfcc5218db22ffbd93465beba37fab72a5e746
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 11 14:58:56 2021 +0300
+commit 0b3e12f3331105de89160b675ec06826929b421e
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Oct 11 16:55:22 2021 +0300
 
-    chore: clean up dependencies (#4101)
+    fix(ui5-input): prevent suggestion popover open on focusin (#3997)
