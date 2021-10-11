@@ -180,6 +180,7 @@ class SliderBase extends UI5Element {
 			sap_belize: "#bfbfbf",
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
+			sap_horizon: "#d5dadd",
 		};
 	}
 
@@ -673,7 +674,7 @@ class SliderBase extends UI5Element {
 		const maxStr = String(this._effectiveMax);
 		const minStr = String(this._effectiveMin);
 		const stepStr = String(this._effectiveStep);
-		const tickmarkWidth = "1px";
+		const tickmarkWidth = getTheme() === "sap_horizon" ? "2px" : "1px";
 
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
