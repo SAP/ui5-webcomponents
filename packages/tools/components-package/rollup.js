@@ -157,6 +157,7 @@ const getES6Config = (input = "bundle.esm.js") => {
 			dir: "dist/resources",
 			format: "esm",
 			sourcemap: true,
+			inlineDynamicImports: !!process.env.DEV,
 		},
 		moduleContext: id => {
 			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
