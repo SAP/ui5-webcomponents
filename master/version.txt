@@ -1,11 +1,5 @@
-commit 7028b6c8ef4e13b04871661270b9c82064b79233
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Mon Oct 11 12:09:22 2021 +0300
+commit b2cfcc5218db22ffbd93465beba37fab72a5e746
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Oct 11 14:58:56 2021 +0300
 
-    fix(ui5-upload-collection): exploratory testing issues (#3797)
-    
-    Edit and delete buttons are aligned
-    Added code that shows the usage of the "delete" buttons.
-    The color of upload collection item is changed when active so the item's text is visible.
-    
-    Fixes: #3625
+    chore: clean up dependencies (#4101)
