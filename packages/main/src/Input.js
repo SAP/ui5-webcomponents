@@ -1176,7 +1176,7 @@ class Input extends UI5Element {
 
 	get styles() {
 		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
-	
+
 		const stylesObject = {
 			popoverHeader: {
 				"max-width": `${this._inputWidth}px`,
