@@ -107,6 +107,7 @@
   "--sapContent_Shadow1",
   "--sapContent_Shadow2",
   "--sapContent_Shadow3",
+  "--sapContent_ShadowColor",
   "--sapContent_TextShadow",
   "--sapContent_UnratedColor",
   "--sapCriticalColor",

@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.0.0-rc.14",
+  "version": "1.0.0-rc.15",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -16,9 +16,7 @@
   },
   "devDependencies": {
     "copy-and-watch": "^0.1.5",
-    "cross-env": "^7.0.3",
     "npm-run-all": "^4.1.5",
-    "nps": "^5.10.0",
     "prepend-file": "^2.0.0",
     "replace-in-file": "^6.2.0",
     "rimraf": "^3.0.2",
