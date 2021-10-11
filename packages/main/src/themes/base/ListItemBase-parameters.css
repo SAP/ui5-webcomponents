@@ -8,4 +8,7 @@
 	--_ui5-listitem-initial-border-bottom: 1px solid transparent;
 	--_ui5-listitem-selected-background: var(--sapList_SelectionBackgroundColor);
 	--_ui5-listitem-focus-outline: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	--_ui5-listitem-focused-padding-left: 1rem;
+	--_ui5-listitem-root-margin: 1px;
+	--_ui5-listitem-root-width: calc(100% - 2px);
 }

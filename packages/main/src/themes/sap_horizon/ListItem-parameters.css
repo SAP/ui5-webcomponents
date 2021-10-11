@@ -17,5 +17,7 @@
     --_ui5-listitem-selected-background: var(--sapInformationBackground);
     --_ui5-listitem-color: var(--sapTitleColor);
     --_ui5-listitem-focused-padding-left: 1.125rem;
-    --_ui5-listitem-focus-outline: 2px solid var(--sapContent_FocusColor);
+    --_ui5-listitem-focus-border: 2px solid var(--sapContent_FocusColor);
+    --_ui5-listitem-focus-border-inline: 4px;
+    --_ui5-listitem-focus-outline: none;
 }
