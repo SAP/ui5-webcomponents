@@ -93,7 +93,7 @@ const isDesktop = () => {
 
 const isCombi = () => {
 	return isTablet() && isDesktop();
-}
+};
 
 export {
 	supportsTouch,
