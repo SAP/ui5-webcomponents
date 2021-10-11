@@ -71,7 +71,6 @@ function ui5DevReadyMessagePlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-
 	if (!process.env.DEV) {
 		plugins.push(filesize(
 			{

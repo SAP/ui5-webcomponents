@@ -3,7 +3,7 @@ const emptyModulePlugin = require("@ui5/webcomponents-tools/components-package/r
 
 if (process.env.DEV) {
 	// Empty the CLDR assets file for better performance during development
-	config[0].plugins.prepend(emptyModulePlugin({
+	config[0].plugins.unshift(emptyModulePlugin({
 		emptyModules: [
 			"localization/dist/Assets.js",
 		],
