@@ -18,7 +18,7 @@ const M_ISO639_OLD_TO_NEW = {
 
 const _showAssetsWarningOnce = localeId => {
 	if (!warningShown) {
-		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`); /* eslint-disable-line */
+		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using. Note: in dev mode, CLDR assets might be disabled for performance reasons - check your rollup configuration.`); /* eslint-disable-line */
 		warningShown = true;
 	}
 };
