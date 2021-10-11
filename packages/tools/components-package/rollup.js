@@ -9,6 +9,7 @@ const json = require("@rollup/plugin-json");
 const colors = require("colors/safe");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
+const slash = require("slash");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
@@ -69,8 +70,30 @@ function ui5DevReadyMessagePlugin() {
 	};
 }
 
+function emptyModulePlugin({ emptyModules }) {
+	return {
+		name: 'ui5-dev-empty-module-plugin',
+		load ( id ) {
+			if (emptyModules.some(mod => slash(id).includes(mod))) {
+				return 'export default ""';
+			}
+			return null;
+		}
+	};
+}
+
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
+
+	if (process.env.DEV) {
+		// The following modules will become empty
+		plugins.push(emptyModulePlugin({
+			emptyModules: [
+				"localization/dist/Assets.js"
+			]
+		}));
+	}
+
 	if (!process.env.DEV) {
 		plugins.push(filesize(
 			{
@@ -157,7 +180,6 @@ const getES6Config = (input = "bundle.esm.js") => {
 			dir: "dist/resources",
 			format: "esm",
 			sourcemap: true,
-			inlineDynamicImports: !!process.env.DEV,
 		},
 		moduleContext: id => {
 			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
