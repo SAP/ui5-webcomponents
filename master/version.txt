@@ -1,9 +1,5 @@
-commit e66ab796a050426ad182b7dcd36be004f30fd403
-Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
-Date:   Fri Oct 8 14:58:31 2021 +0300
+commit fccf5e40c363ed554785c3f0fd97c35abd00bd4b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Oct 11 11:43:10 2021 +0300
 
-    fix(ui5-dialog): fix in scroll blocking (#4092)
-    
-    Now scroll is released correctly even after multiple calls to show() on the same dialog.
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/4065
+    chore(ui5-switch): adapt component to sap_horizon specs (#4098)
