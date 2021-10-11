@@ -86,6 +86,7 @@
     "packages/icons-tnt",
     "packages/ie11",
     "packages/tools",
-    "packages/playground"
+    "packages/playground",
+    "packages/create-package"
   ]
 }

@@ -13,8 +13,7 @@
   "scripts": {},
   "bin": {
     "wc-dev": "bin/dev.js",
-    "wc-create-ui5-element": "bin/create-ui5-element.js",
-    "wc-init-ui5-package": "bin/init-ui5-package.js"
+    "wc-create-ui5-element": "bin/create-ui5-element.js"
   },
   "repository": {
     "type": "git",

@@ -162,7 +162,7 @@ const createBlockingStyle = () => {
 
 createBlockingStyle();
 
-let bodyScrollingBlockers = 0;
+const bodyScrollingBlockers = new Set();
 
 /**
  * @class
@@ -230,7 +230,7 @@ class Popup extends UI5Element {
 
 	onExitDOM() {
 		if (this.isOpen()) {
-			Popup.unblockBodyScrolling();
+			Popup.unblockBodyScrolling(this);
 			this._removeOpenedPopup();
 		}
 	}
@@ -250,10 +250,10 @@ class Popup extends UI5Element {
 	 * Temporarily removes scrollbars from the body
 	 * @protected
 	 */
-	static blockBodyScrolling() {
-		bodyScrollingBlockers++;
+	static blockBodyScrolling(popup) {
+		bodyScrollingBlockers.add(popup);
 
-		if (bodyScrollingBlockers !== 1) {
+		if (bodyScrollingBlockers.size !== 1) {
 			return;
 		}
 
@@ -267,10 +267,10 @@ class Popup extends UI5Element {
 	 * Restores scrollbars on the body, if needed
 	 * @protected
 	 */
-	static unblockBodyScrolling() {
-		bodyScrollingBlockers--;
+	static unblockBodyScrolling(popup) {
+		bodyScrollingBlockers.delete(popup);
 
-		if (bodyScrollingBlockers !== 0) {
+		if (bodyScrollingBlockers.size !== 0) {
 			return;
 		}
 
@@ -406,7 +406,7 @@ class Popup extends UI5Element {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
-			Popup.blockBodyScrolling();
+			Popup.blockBodyScrolling(this);
 		}
 
 		this._zIndex = getNextZIndex();
@@ -451,7 +451,7 @@ class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling();
+			Popup.unblockBodyScrolling(this);
 		}
 
 		this.hide();

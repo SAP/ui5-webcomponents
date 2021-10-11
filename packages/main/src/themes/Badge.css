@@ -29,6 +29,7 @@
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
+	pointer-events: var(--_ui5_badge_pointer_events);
 }
 
 .ui5-badge-text {
