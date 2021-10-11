@@ -5098,7 +5098,7 @@
 <section>
 	<h3>UploadCollection</h3>
 	<div class="snippet">
-		<ui5-upload-collection id="uploadCollection" accessible-name="Uploaded (2)">
+		<ui5-upload-collection id="uploadCollection" mode="Delete" accessible-name="Uploaded (2)">
 			<div slot="header" class="header">
 				<ui5-title>Uploaded (2)</ui5-title>
 				<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
@@ -5169,9 +5169,13 @@
 					}
 				});
 			});
+
+			uploadCollection.addEventListener("ui5-item-delete", function (event) {
+					uploadCollection.removeChild(event.detail.item)
+			});
 		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-upload-collection</span> <span class="na">id=</span><span class="s">"uploadCollection"</span> <span class="na">accessible-name=</span><span class="s">"Uploaded (2)"</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-upload-collection</span> <span class="na">id=</span><span class="s">"uploadCollection"</span> <span class="na">mode=</span><span class="s">"Delete"</span> <span class="na">accessible-name=</span><span class="s">"Uploaded (2)"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"header"</span> <span class="na">class=</span><span class="s">"header"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-title&gt;</span>Uploaded (2)<span class="nt">&lt;/ui5-title&gt;</span>
 		<span class="nt">&lt;ui5-label&gt;</span>Add new files and press to start uploading pending files:<span class="nt">&lt;/ui5-label&gt;</span>
@@ -5241,6 +5245,10 @@
 				<span class="nx">item</span><span class="p">.</span><span class="nx">uploadState</span><span class="o">=</span><span class="dl">"</span><span class="s2">Uploading</span><span class="dl">"</span><span class="p">;</span>
 			<span class="p">}</span>
 		<span class="p">});</span>
+	<span class="p">});</span>
+
+	<span class="nx">uploadCollection</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-item-delete</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+			<span class="nx">uploadCollection</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">)</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>

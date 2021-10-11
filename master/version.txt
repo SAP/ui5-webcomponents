@@ -1,5 +1,11 @@
-commit fccf5e40c363ed554785c3f0fd97c35abd00bd4b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Oct 11 11:43:10 2021 +0300
+commit 7028b6c8ef4e13b04871661270b9c82064b79233
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Mon Oct 11 12:09:22 2021 +0300
 
-    chore(ui5-switch): adapt component to sap_horizon specs (#4098)
+    fix(ui5-upload-collection): exploratory testing issues (#3797)
+    
+    Edit and delete buttons are aligned
+    Added code that shows the usage of the "delete" buttons.
+    The color of upload collection item is changed when active so the item's text is visible.
+    
+    Fixes: #3625
