@@ -44,7 +44,6 @@
 }
 
 .ui5-slider-progress-container::before {
-	/* display: none; */
 	display: var(--_ui5_slider_progress_container_dot_display);
 	content: "";
 	position: absolute;
@@ -141,7 +140,7 @@
 	transform: translate(-50%);
 	bottom: var(--_ui5_slider_tooltip_bottom);
 	background: var(--_ui5_slider_tooltip_background);
-	border: 1px solid var(--_ui5_slider_tooltip_border_color);
+	border: var(--_ui5_slider_tooltip_border);
 	border-radius: var(--_ui5_slider_tooltip_border_radius);
 	box-shadow: var(--_ui5_slider_tooltip_box_shadow);
 	font-size: var(--_ui5_slider_tooltip_fontsize);
