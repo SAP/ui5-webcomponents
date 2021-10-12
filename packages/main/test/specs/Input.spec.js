@@ -58,7 +58,7 @@ describe("Input general interaction", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 	});
 
-	it("Should open suggestions popover when focused", async () => {
+	it("Should not open suggestions popover when focused", async () => {
 		const input = await browser.$("#myInput2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -336,7 +336,7 @@ describe("Input general interaction", () => {
 		await suggestionsInput.keys("Enter");
 		await browser.pause(300);
 
-		assert.strictEqual(await suggestionsInput.getValue(), "", "Group item is not selected");
+		assert.strictEqual(await suggestionsInput.getValue(), "C", "Group item is not selected");
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
@@ -563,19 +563,6 @@ describe("Input arrow navigation", () => {
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Coz", "Inactive item text is not applied as input's value");
 		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
-	});
-
-	it("Should open suggestions popover when focused", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
-
-		const input = await browser.$("#myInput2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
-		// focus the input field which will display the suggestions
-		await input.click();
-
-		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
 	});
 
 	it("Should navigate up and down through the suggestions popover with arrow keys", async () => {

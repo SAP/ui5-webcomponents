@@ -676,6 +676,11 @@ class Input extends UI5Element {
 		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
 		const isOpen = hasSuggestions && this.open;
 
+		if (!isOpen) {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			return;
+		}
+
 		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeItemPreview;
@@ -684,18 +689,14 @@ class Input extends UI5Element {
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
 			this.focused = true;
-			this.open = false;
 		}
 
 		if (this._isValueStateFocused) {
 			this._isValueStateFocused = false;
 			this.focused = true;
-			this.Suggestions.close();
 		}
 
-		if (!isOpen) {
-			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
-		}
+		this.open = false;
 	}
 
 	async _onfocusin(event) {
