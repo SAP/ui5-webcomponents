@@ -1,5 +1,17 @@
-commit ddde6b6e7af5da2f46abd31ea8fca8f922af5704
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Oct 12 15:43:06 2021 +0300
+commit 4608a98d6893b6315d29980c9836ea47dfd20a3a
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Oct 12 18:31:55 2021 +0300
 
-    chore: do not bundle CLDR assets during development (#4104)
+    [u5-input] Adjust min-width of the suggestions popover to be the width of the input field (#4095)
+    
+    * Adjust min-width of the suggestions popover to be the width of the input field
+    
+    * Add test
+    
+    * Set fixed max-width according to the specs
+    
+    * Calculate the root font size as it can vary
+    
+    * Linting
+    
+    * Fix review comments
