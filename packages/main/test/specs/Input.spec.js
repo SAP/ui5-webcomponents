@@ -328,7 +328,7 @@ describe("Input general interaction", () => {
 		const suggestionsInput = await browser.$("#myInputEsc").shadow$("input");
 
 		await suggestionsInput.click();
-		await suggestionsInput.keys("Some value"); 
+		await suggestionsInput.keys("Some value");
 
 		// Close sugggestions
 		await suggestionsInput.keys("Escape");
@@ -377,7 +377,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'), "Suggestions' popover width is minimum the size of the input");
 	});
 
-	it("checks if suggestions popover width is maximum 40rem if input isn't bigger", async () => {
+	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
 		const input = await browser.$("#long-sugg");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#long-sugg");
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
