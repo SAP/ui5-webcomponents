@@ -54,7 +54,7 @@
 
 :host(:not([selected]):not([active]):not([focused])) .ui5-li-root,
 :host([selected]:not([active]):not([focused])) .ui5-li-root {
-	padding-left: var(--_ui5-listitem-focused-padding-left);
+	padding-inline-start: var(--_ui5-listitem-focused-padding-left);
 }
 
 :host([focused][selected]) .ui5-li-root.ui5-li--focusable,
@@ -111,9 +111,10 @@
 }
 
 /* [ui5-li]: title, description, additionalTextState */
-:host([active][actionable]) .ui5-li-title,
 :host([active][actionable]) .ui5-li-desc,
-:host([active][actionable]) .ui5-li-additional-text {
+:host([active][actionable]) .ui5-li-additional-text,
+:host(:not([selected])[active][actionable]:hover) .ui5-li-title,
+:host([selected][active][actionable]:hover) .ui5-li-title {
 	color: var(--_ui5-listitem-selected-active-color);
 }
 
@@ -260,14 +261,19 @@
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
-:host([_mode="SingleSelectBegin"]) .ui5-li-root {
+:host([_mode="SingleSelectBegin"][focused]) .ui5-li-root,
+:host([_mode="MultiSelect"][focused]) .ui5-li-root {
+	padding-inline-start: 1rem;
+}
+
+:host([_mode="SingleSelectBegin"]) .ui5-li-root,
+:host([_mode="MultiSelect"]) .ui5-li-root {
 	padding-right: 1rem;
 	padding-left: 0;
 }
 
-:host([_mode="MultiSelect"]) .ui5-li-root {
-	padding-right: 1rem;
-	padding-left: 0;
+:host([_mode="SingleSelectEnd"][focused]) .ui5-li-root {
+	padding-inline-end: 0;
 }
 
 :host([_mode="SingleSelectEnd"]) .ui5-li-root {
@@ -293,11 +299,7 @@
 	text-align: left;
 }
 
-:host([_mode="SingleSelectBegin"]) [dir="rtl"].ui5-li-root {
-	padding-right: 0;
-	padding-left: 1rem;
-}
-
+:host([_mode="SingleSelectBegin"]) [dir="rtl"].ui5-li-root,
 :host([_mode="MultiSelect"]) [dir="rtl"].ui5-li-root {
 	padding-right: 0;
 	padding-left: 1rem;
