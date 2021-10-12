@@ -1,0 +1,35 @@
+{
+  "name": "@ui5/webcomponents-testsuite",
+  "version": "1.0.0-rc.15",
+  "description": "UI5 Web Components: Testsuite",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "private": false,
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "scripts": {
+    "clean": "nps clean",
+    "build": "nps build",
+    "start": "nps start",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/testsuite"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "1.0.0-rc.15",
+    "@ui5/webcomponents-fiori": "1.0.0-rc.15",
+    "@ui5/webcomponents-icons": "1.0.0-rc.15",
+    "@ui5/webcomponents-icons-tnt": "1.0.0-rc.15",
+    "@ui5/webcomponents-icons-business-suite": "1.0.0-rc.15"
+  },
+  "devDependencies": {
+    "@ui5/webcomponents-tools": "1.0.0-rc.15"
+
+  }
+}

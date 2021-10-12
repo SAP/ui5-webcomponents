@@ -87,6 +87,7 @@
     "packages/ie11",
     "packages/tools",
     "packages/playground",
+    "packages/testsuite",
     "packages/create-package"
   ]
 }
