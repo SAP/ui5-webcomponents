@@ -10,6 +10,7 @@ const replace = require("@rollup/plugin-replace");
 const colors = require("colors/safe");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
+const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
@@ -79,6 +80,15 @@ const getPlugins = ({ transpile }) => {
 				'const DEV_MODE = false': 'const DEV_MODE = true',
 			},
 			preventAssignment: false,
+		}));
+	}
+
+	if (process.env.DEV && !process.env.ENABLE_CLDR) {
+		// Empty the CLDR assets file for better performance during development
+		plugins.push(emptyModulePlugin({
+			emptyModules: [
+				"localization/dist/Assets.js",
+			],
 		}));
 	}
 
