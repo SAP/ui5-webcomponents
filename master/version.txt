@@ -1,17 +1,7 @@
-commit 4608a98d6893b6315d29980c9836ea47dfd20a3a
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Oct 12 18:31:55 2021 +0300
+commit 18dab92ceb453afc85652bcb4e7aa22a5eef903d
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Tue Oct 12 18:50:10 2021 +0300
 
-    [u5-input] Adjust min-width of the suggestions popover to be the width of the input field (#4095)
+    fix(ui5-*): add global styles for tap-highlight-color
     
-    * Adjust min-width of the suggestions popover to be the width of the input field
-    
-    * Add test
-    
-    * Set fixed max-width according to the specs
-    
-    * Calculate the root font size as it can vary
-    
-    * Linting
-    
-    * Fix review comments
+    Added styles that remove tap highlight color for some components on mobile.
