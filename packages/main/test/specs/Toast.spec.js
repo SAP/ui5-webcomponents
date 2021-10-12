@@ -139,8 +139,8 @@ describe("Toast general interaction", () => {
 			const domRendered = await toast.getProperty("domRendered");
 			return !open && !domRendered;
 		}, {
-			timeout: 1000,
-			timeoutMsg: "After 1000ms the toast should be closed and domRendered should be false"
+			timeout: 2000,
+			timeoutMsg: "After 2000ms the toast should be closed and domRendered should be false"
 		});
 	});
 

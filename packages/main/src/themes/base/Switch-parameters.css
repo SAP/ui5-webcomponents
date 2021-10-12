@@ -25,13 +25,14 @@
 	--_ui5_switch_track_hover_border_color: var(--_ui5_switch_track_checked_border_color);
 	--_ui5_switch_track_hover_background_color: var(--sapButton_Track_Background);
 	--_ui5_switch_track_hover_checked_background_color: var(--sapButton_Track_Selected_Background);
+	--_ui5-switch_track-on-hover-background: var(--_ui5-switch_track-on-background);
 	--_ui5_switch_track_border_radius: 0.75rem;
 	
 
 	--_ui5-switch_track-off-background: var(--sapButton_Track_Background);
 	--_ui5-switch_track-on-background: var(--sapButton_Track_Selected_Background);
 
-	--_ui5-switch_track-off-hover-background: var(--_ui5-switch_track-off-background);
+	--_ui5-switch_track-off-hover-color: var(--_ui5-switch_track-off-background);
 
 	--_ui5-switch-track-transition: none;
 

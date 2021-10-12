@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -339,6 +338,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		open: {
+			type: Boolean,
+		},
+
 		_input: {
 			type: Object,
 		},
@@ -563,7 +566,10 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
+		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
+
 		const FormSupport = getFeature("FormSupport");
+
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
@@ -572,28 +578,19 @@ class Input extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		if (!this.firstRendering && !isPhone() && this.Suggestions) {
-			const shouldOpenSuggestions = this.shouldOpenSuggestions();
-
-			this.Suggestions.toggle(shouldOpenSuggestions, {
-				preventFocusRestore: !this.hasSuggestionItemSelected,
+		if (this.Suggestions) {
+			this.Suggestions.toggle(this.open, {
+				preventFocusRestore: true,
 			});
 
-			await renderFinished();
 			this._listWidth = await this.Suggestions._getListWidth();
-
-			if (!isPhone() && shouldOpenSuggestions) {
-				// Set initial focus to the native input
-
-				(await this.getInputDOMRef()).focus();
-			}
 		}
 
-		if (!this.firstRendering && this.hasValueStateMessage) {
-			this.toggle(this.shouldDisplayOnlyValueStateMessage);
+		if (this.shouldDisplayOnlyValueStateMessage) {
+			this.openPopover();
+		} else {
+			this.closePopover();
 		}
-
-		this.firstRendering = false;
 	}
 
 	_onkeydown(event) {
@@ -677,7 +674,7 @@ class Input extends UI5Element {
 
 	_handleEscape() {
 		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
-		const isOpen = hasSuggestions && this.Suggestions.isOpened();
+		const isOpen = hasSuggestions && this.open;
 
 		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
@@ -687,6 +684,7 @@ class Input extends UI5Element {
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
 			this.focused = true;
+			this.open = false;
 		}
 
 		if (this._isValueStateFocused) {
@@ -737,6 +735,7 @@ class Input extends UI5Element {
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
+		this.open = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -753,8 +752,8 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.open();
-			this.isRespPopoverOpen = true;
+			this.blur();
+			this.open = true;
 		}
 	}
 
@@ -835,6 +834,10 @@ class Input extends UI5Element {
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
+
+			if (!this._isPhone) {
+				this.open = !!inputDomRef.value;
+			}
 		}
 	}
 
@@ -859,14 +862,7 @@ class Input extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
-		}
-	}
-
-	toggle(isToggled) {
-		if (isToggled && !this.isRespPopoverOpen) {
-			this.openPopover();
-		} else {
-			this.closePopover();
+			this.focused = false;
 		}
 	}
 
@@ -1028,7 +1024,7 @@ class Input extends UI5Element {
 
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
-			await this.Suggestions._respPopover();
+			await this.Suggestions._getSuggestionPopover();
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
@@ -1249,7 +1245,7 @@ class Input extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.shouldOpenSuggestions() && this.focused;
+		return this.hasValueStateMessage && !this.open && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
