@@ -6,12 +6,15 @@
 
 .ui5-switch-root {
 	position: relative;
+	display: flex;
+    align-items: center;
 	width: 100%;
 	height: var(--_ui5_switch_height);
 	min-width: var(--_ui5_switch_width);
 	cursor: pointer;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
+    border-radius: var(--_ui5-switch-root-border-radius);
 }
 
 .ui5-switch-root.ui5-switch--no-label {
@@ -23,9 +26,16 @@
 	align-items: center;
 	justify-content: center;
 	height: 100%;
+	width: 100%;
+	min-width: inherit;
 	overflow: hidden;
 	pointer-events: none;
 	will-change: transform;
+}
+
+:host([checked]) .ui5-switch-inner {
+	border-radius: 6.25rem;
+	box-shadow: var(--_ui5-switch-root-box-shadow);
 }
 
 .ui5-switch-track {
@@ -33,11 +43,12 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
-	background: var(--sapButton_Track_Background);
-	border: 1px solid;
+	background: var(--_ui5-switch_track-off-background);
+	border: var(--_ui5-switch-track-border);
 	border-color: var(--sapContent_ForegroundBorderColor);
 	border-radius: var(--_ui5_switch_track_border_radius);
 	box-sizing: border-box;
+	transition: var(--_ui5-switch-track-transition);
 }
 
 .ui5-switch--no-label .ui5-switch-track {
@@ -52,15 +63,32 @@
 	transform-origin: top left;
 }
 
+.ui5-switch-slider > *:not(.ui5-switch-handle) {
+	display: var(--_ui5-switch-slider-texts-display);
+}
+
 .ui5-switch-handle {
 	position: absolute;
-	left: -1px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	left: var(--_ui5-switch-handle-left);
 	width: var(--_ui5_switch_handle_width);
 	height: var(--_ui5_switch_handle_height);
 	background: var(--_ui5_switch_handle_bg);
-	border: var(--_ui5_switch_handle_border_width) solid var(--sapContent_ForegroundBorderColor);
+	border: var(--_ui5-switch-handle-border);
 	border-radius: var(--_ui5_switch_handle_border_radius);
 	box-sizing: border-box;
+}
+
+.ui5-switch-handle-icon {
+	display: var(--_ui5-switch-handle-icon-display);
+	color: var(--_ui5-switch_track-off-background);
+	transition: var(--_ui5-switch-track-transition);
+}
+
+:host([checked]) .ui5-switch-handle-icon {
+	color: var(--_ui5-switch_track-on-background)
 }
 
 .ui5-switch-text {
@@ -98,13 +126,16 @@
 .ui5-switch-desktop.ui5-switch-root:focus::after {
 	content: "";
 	position: absolute;
-	left: -var(--_ui5_switch_outline);
-	top: 0;
+	left: var(--_ui5_switch_outline);
+	width: var(--_ui5_switch_focus_size);
+	height: var(--_ui5_switch_focus_size);
+	top: var(--_ui5_switch_outline);
 	bottom: 0;
-	left: 0;
 	right: 0;
-	border: var(--_ui5_switch_outline) dotted var(--sapContent_FocusColor);
+	border: var(--_ui5_switch_focus_outline) ;
+	border-radius: var(--_ui5-switch-root-border-radius);
 	pointer-events: none;
+	transition: var(--_ui5-switch-track-transition);
 }
 
 /* switch hidden input */
@@ -120,10 +151,9 @@
 
 /* switch disabled */
 .ui5-switch-root.ui5-switch--disabled {
-	opacity: 0.4;
+	opacity: var(--_ui5_switch_disabled_opacity);
 	cursor: default;
 }
-
 
 .ui5-switch-root.ui5-switch--disabled.ui5-switch--checked .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_checked_bg);
@@ -160,7 +190,7 @@
 }
 
 .ui5-switch-root.ui5-switch--checked .ui5-switch-track {
-	background: var(--sapButton_Track_Selected_Background);
+	background: var(--_ui5-switch_track-on-background);
 }
 
 .ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
@@ -190,6 +220,7 @@
 
 /* switch semantic icon */
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-text {
+	display: flex;
 	justify-content: center;
 	font-size: var(--sapFontSmallSize);
 }
@@ -221,12 +252,29 @@
 	background: var(--sapButton_Background);
 }
 
+/* switch active effects */
+
+/* active & off */
+
+:host([active]) .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled) .ui5-switch-track {
+	background: var( --_ui5-switch_track-off-active-background);
+}
+
+/* active & on */
+
+:host([active]) .ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-track {
+	background: var(--_ui5-switch_track-on-active-background);
+}
+
 /* switch hover effects */
 
 /* switch on hover, when switched off */
 .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-track {
 	border-color: var(--sapButton_Hover_BorderColor);
-	background: var(--sapButton_Track_Background);
+}
+
+.ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-handle-icon {
+	color: var(--_ui5-switch_track-off-hover-color);
 }
 
 .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-handle {
@@ -242,7 +290,11 @@
 
 .ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-track {
 	border-color: var(--sapButton_Hover_BorderColor);
-	background: var(--_ui5_switch_track_hover_checked_background_color);
+	background: var(--_ui5-switch_track-on-hover-background);
+}
+
+.ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-handle-icon {
+	color: var(--_ui5-switch_track-on-hover-color);
 }
 
 /* semantic switch on hover, when switched off */
@@ -263,6 +315,7 @@
 
 .ui5-switch-desktop.ui5-switch-root.ui5-switch--semantic.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-track {
 	border-color: var(--_ui5_switch_handle_semantic_checked_hover_border_color);
+	background: var(--sapSuccessBackground);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-icon--on,
