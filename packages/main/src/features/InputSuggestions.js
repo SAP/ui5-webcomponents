@@ -360,8 +360,11 @@ class Suggestions {
 		}
 
 		if (currentItem) {
-			currentItem.selected = currentItem.type === "Active" ? true : false;
 			currentItem.focused = true;
+
+			if (currentItem.type === "Active") {
+				currentItem.selected = true;
+			}
 
 			if (this.handleFocus) {
 				currentItem.focus();
