@@ -1,4 +1,3 @@
-const path = require("path");
 const resolve = require("resolve");
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
@@ -12,13 +11,7 @@ const buildThemesCommandsNames = allThemes.map(theme => `build.themes.${theme}`)
 buildThemesCommands["prepare"] = allThemes.map(theme => `mkdirp dist/themes/${theme}`).join(" && ");
 allThemes.forEach(theme => {
 	buildThemesCommands[theme] = `nps build.themes.copy_${theme}_vars build.themes.copy_${theme}_bundle`;
-
-	if (theme === "sap_horizon") {
-		buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "src/themes/${theme}/css_variables.css" dist/themes/${theme}/`;
-	} else {
-		buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${theme}/css_variables.css" dist/themes/${theme}/`;
-	}
-
+	buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${theme}/css_variables.css" dist/themes/${theme}/`;
 	buildThemesCommands[`copy_${theme}_bundle`] = `copy-and-watch "src/themes/${theme}/parameters-bundle.css" dist/themes/${theme}/`;
 });
 
