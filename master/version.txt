@@ -1,7 +1,5 @@
-commit 18dab92ceb453afc85652bcb4e7aa22a5eef903d
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Tue Oct 12 18:50:10 2021 +0300
+commit ecf9563bb67602568a3eb2863e9054301acff9b3
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Oct 13 14:10:18 2021 +0300
 
-    fix(ui5-*): add global styles for tap-highlight-color
-    
-    Added styles that remove tap highlight color for some components on mobile.
+    fix(ui5-illustrated-message): generation script (#3903)
