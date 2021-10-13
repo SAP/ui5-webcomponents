@@ -95,7 +95,7 @@ const metadata = {
 		 * @defaultvalue 0.7
 		 * @since 1.0.0-rc.13
 		 */
-		 stepSwitchThreshold: {
+		stepSwitchThreshold: {
 			type: Float,
 			defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT,
 		},
@@ -136,9 +136,9 @@ const metadata = {
 		 * or by clicking on the steps within the component header.
 		 *
 		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
-		 * @param {HTMLElement} step the new step
-		 * @param {HTMLElement} previousStep the previous step
-		 * @param {Boolean} changeWithClick the step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation
+		 * @param {HTMLElement} step The new step.
+		 * @param {HTMLElement} previousStep The previous step.
+		 * @param {Boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
 		 * @public
 		 */
 		"step-change": {
@@ -156,7 +156,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-wizard</code> helps users complete a complex task by dividing it into sections and guiding the user through it.
+ * The <code>ui5-wizard</code> helps users to complete a complex task by dividing it into sections and guiding them through it.
  * It has two main areas - a navigation area at the top showing the step sequence and a content area below it.
  *
  * <h3>Structure</h3>
@@ -166,7 +166,7 @@ const metadata = {
  * <ul>
  * <li> Steps can have different visual representations - numbers or icons.
  * <li> Steps might have labels for better readability - titleText and subTitleText.</li>
- * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
+ * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.</li>
  * </ul>
  *
  * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
@@ -194,7 +194,7 @@ const metadata = {
  * <h4>Moving to next step</h4>
  * The <code>ui5-wizard-step</code> provides the necessary API and it's up to the user of the component to use it to move to the next step.
  * You have to set its <code>selected</code> property (and remove the <code>disabled</code> one if set) to <code>true</code>.
- * And, the <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
+ * The <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
  * <br><br>
  *
  * The Fiori 3 guidelines recommends having a "nextStep" button in the content area.
@@ -203,14 +203,14 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * <h4>When to use:</h4>
- * When the user has to accomplish a long set of tasks.
+ * When the user has to accomplish a long or unfamiliar task.
  *
  * <h4>When not to use:</h4>
  * When the task has less than 3 steps.
  *
  * <h3>Responsive Behavior</h3>
- * On small widths the step's titleText, subtitleText and separators in the navigation area
- * will start truncate and shrink and from particular point they will hide to free as much space as possible.
+ * On small widths the step's titleText, subtitleText and separators in the navigation area shrink and from particular point the steps are grouped together and overlap.
+ * Tapping on them will show a popover to select the step to navigate to. On mobile device, the grouped steps are presented within a dialog.
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
@@ -666,8 +666,10 @@ class Wizard extends UI5Element {
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
 
-		// Focus the first focusable element within the step content corresponding to the currently focused tab
-		firstFocusableElement.focus();
+		if (firstFocusableElement) {
+			// Focus the first focusable element within the step content corresponding to the currently focused tab
+			firstFocusableElement.focus();
+		}
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.

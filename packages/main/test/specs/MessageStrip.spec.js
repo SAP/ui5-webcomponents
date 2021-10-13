@@ -2,19 +2,19 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("MessageStrip general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/MessageStrip.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/MessageStrip.html`);
 	});
 
-	it("tests close event", () => {
+	it("tests close event", async () => {
 
-		const closeButton = browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-button");
-		const input = browser.$("#inputField");
+		const closeButton = await browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-button");
+		const input = await browser.$("#inputField");
 
-		closeButton.click();
-		closeButton.keys("Space");
-		closeButton.keys("Enter");
+		await closeButton.click();
+		await closeButton.keys("Space");
+		await closeButton.keys("Enter");
 
-		assert.strictEqual(input.getProperty("value"), "3", "Close should be called 3 times");
+		assert.strictEqual(await input.getProperty("value"), "3", "Close should be called 3 times");
 	});
 });

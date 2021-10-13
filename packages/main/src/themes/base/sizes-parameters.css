@@ -16,7 +16,13 @@
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
 
-	/* DateTimePicker */
+	/* ColorPalette */
+	 --_ui5_color-palette-item-height: 1.75rem;
+	 --_ui5_color-palette-item-hover-height: 2.375rem;
+	 --_ui5_color-palette-item-margin: calc((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2);
+	 --_ui5_color-palette-row-width: 12rem;
+	 
+	 /* DateTimePicker */
 	--_ui5_datetime_picker_width: 40.0625rem;
 	--_ui5_datetime_picker_height: 25rem;
 	--_ui5_datetime_timeview_width: 17rem;
@@ -60,7 +66,8 @@
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
 	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
 	--_ui5_tc_item_text: 3rem;
-	--_ui5_tc_item_text_text_only: 3rem;
+	--_ui5_tc_item_text_only_height: 3rem;
+	--_ui5_tc_item_text_only_with_additional_text_height: var(--_ui5_tc_item_text_only_height);
 	--_ui5_tc_item_text_line_height: normal;
 	--_ui5_tc_item_icon_size: 1.5rem;
 	--_ui5_tc_item_add_text_margin_top: 0.625rem;
@@ -140,9 +147,10 @@
 	--_ui5_color-palette-item-focus-height: 1rem;
 	--_ui5_color-palette-item-container-sides-padding: 0.1875rem;
 	--_ui5_color-palette-item-container-rows-padding: 0.8125rem;
-	--_ui5_color-palette-item-hover-height: 1.65rem;
-	--_ui5_color-palette-item-hover-margin: 0.3125rem;
-	--_ui5_color-palette-row-width: 12rem;
+	--_ui5_color-palette-item-hover-height: 1.625rem;
+	--_ui5_color-palette-item-margin: calc((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2);
+	--_ui5_color-palette-row-width: 8.125rem;
+	--_ui5_color-palette-item-hover-margin: 0;
 	--_ui5_color-palette-row-height: 7.5rem;
 	--_ui5_color-palette-button-height: 2rem;
 

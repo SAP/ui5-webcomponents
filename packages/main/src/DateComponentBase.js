@@ -39,7 +39,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the мinimum date available for selection.
+		 * Determines the minimum date available for selection.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""

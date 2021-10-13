@@ -29,7 +29,7 @@
 <section>
 	<h3>UploadCollection</h3>
 	<div class="snippet">
-		<ui5-upload-collection id="uploadCollection">
+		<ui5-upload-collection id="uploadCollection" mode="Delete" accessible-name="Uploaded (2)">
 			<div slot="header" class="header">
 				<ui5-title>Uploaded (2)</ui5-title>
 				<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
@@ -88,7 +88,7 @@
 					// if there is a file ready to be uploaded send request
 					if (item.uploadState === "Ready" && item.file) {
 						var oXHR = new XMLHttpRequest();
-						
+
 						oXHR.open("POST", "/upload", true);
 						oXHR.onreadystatechange = function () {
 							if (this.status !== 200) {
@@ -100,10 +100,14 @@
 					}
 				});
 			});
+
+			uploadCollection.addEventListener("ui5-item-delete", function (event) {
+					uploadCollection.removeChild(event.detail.item)
+			});
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-upload-collection id="uploadCollection">
+<ui5-upload-collection id="uploadCollection" mode="Delete" accessible-name="Uploaded (2)">
 	<div slot="header" class="header">
 		<ui5-title>Uploaded (2)</ui5-title>
 		<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
@@ -128,7 +132,7 @@
 		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 		Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
 	</ui5-upload-collection-item>
-</ui5-upload-collection>	
+</ui5-upload-collection>
 
 <script>
 	const createThumbnail = fileName => {
@@ -162,7 +166,7 @@
 			// if there is a file ready to be uploaded send request
 			if (item.uploadState === "Ready" && item.file) {
 				const oXHR = new XMLHttpRequest();
-				
+
 				oXHR.open("POST", "/upload", true);
 				oXHR.onreadystatechange  = function () {
 					if (this.status !== 200) {
@@ -173,6 +177,10 @@
 				item.uploadState="Uploading";
 			}
 		});
+	});
+
+	uploadCollection.addEventListener("ui5-item-delete", event => {
+			uploadCollection.removeChild(event.detail.item)
 	});
 </script>
 	</xmp></pre>
@@ -203,7 +211,7 @@
 				<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 				Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
 			</ui5-upload-collection-item>
-		</ui5-upload-collection>	
+		</ui5-upload-collection>
 
 		<script>
 			uploadCollectionWithRenaming.addEventListener("rename", function(event) {
@@ -234,7 +242,7 @@
 		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 		Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
 	</ui5-upload-collection-item>
-</ui5-upload-collection>	
+</ui5-upload-collection>
 
 <script>
 	uploadCollectionWithRenaming.addEventListener("rename", event => {
@@ -287,7 +295,7 @@
 			uploadCollectionStates.addEventListener("retry", function(event) {
 				alert("Retry uploading: " + event.target.fileName);
 			});
-		
+
 			uploadCollectionStates.addEventListener("terminate", function(event) {
 				alert("Terminate uploading of: " + event.target.fileName);
 			});

@@ -153,7 +153,7 @@ const metadata = {
 		 * Defines the visibility of the week numbers column.
 		 * <br><br>
 		 *
-		 * <b>Note:<b> For calendars other than Gregorian,
+		 * <b>Note:</b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.
 		 *
 		 * @type {boolean}
@@ -296,7 +296,7 @@ const metadata = {
  * <li>Typing it in directly in the input field</li>
  * </ul>
  * <br><br>
- * When the user makes an entry and chooses the enter key, the calendar shows the corresponding date.
+ * When the user makes an entry and presses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.
  *
  * <h3>Formatting</h3>
@@ -353,7 +353,7 @@ const metadata = {
  * {
  *	"calendarType": "Japanese"
  * }
- * &lt;/script&gt;
+ * &lt;/script&gt;</code>
  *
  * <h3>ES6 Module Import</h3>
  *

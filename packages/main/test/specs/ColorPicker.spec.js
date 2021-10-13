@@ -3,60 +3,103 @@ const PORT = require("./_port.js");
 
 
 describe("Color Picker general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPicker.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPicker.html`);
 	});
 
-	it("tests color picker rendering", () => {
-		const circle = browser.$("#cp1").shadow$(".ui5-color-picker-circle");
+	it("tests color picker rendering", async () => {
+		const circle = await browser.$("#cp1").shadow$(".ui5-color-picker-circle");
 
 		assert.ok(circle, "Circle is rendered");
 	});
 
-	it("tests change event", () => {
-		const colorPicker = browser.$("#change-event");
-		const redInput = colorPicker.shadow$("#red");
-		const input = browser.$("#color-input");
+	it("tests change event", async () => {
+		const colorPicker = await browser.$("#change-event");
+		const redInput = await colorPicker.shadow$("#red");
+		const input = await browser.$("#color-input");
 
-		redInput.click();
-		browser.keys("Tab");
-		browser.keys("0");
-		browser.keys("Tab");
+		await redInput.click();
+		await browser.keys("Tab");
+		await browser.keys("0");
+		await browser.keys("Tab");
 
-		assert.strictEqual(input.getProperty("value"), "rgba(255, 0, 255, 1)", "Change event is fired");
+		assert.strictEqual(await input.getProperty("value"), "rgba(255, 0, 255, 1)", "Change event is fired");
 	});
 
-	it("tests setting hex input", () => {
-		const colorPicker = browser.$("#cp3");
-		const redInput = colorPicker.shadow$("#red");
-		const hexInput = colorPicker.shadow$(".ui5-color-picker-hex-input");
+	it("tests setting hex input", async () => {
+		const colorPicker = await browser.$("#cp3");
+		const redInput = await colorPicker.shadow$("#red");
+		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
 
-		redInput.click();
-		browser.keys(["Shift", "Tab"]);
-		browser.keys("123");
-		browser.keys("Tab");
+		await redInput.click();
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("123");
+		await browser.keys("Tab");
 
-		assert.strictEqual(hexInput.getProperty("value"), "112233", "Shorthand syntax is supported");
+		assert.strictEqual(await hexInput.getProperty("value"), "112233", "Shorthand syntax is supported");
 	});
 
-	it("tests color property", () => {
-		const colorPicker = browser.$("#cp3");
-		const hexInput = colorPicker.shadow$(".ui5-color-picker-hex-input");
+	it("Alpha value change via the input field", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const alphaInput = await colorPicker.shadow$("#alpha");
 
-		colorPicker.setProperty("color", "rgb(0, 255, 0)");
-		assert.strictEqual(hexInput.getProperty("value"), "00ff00", "RGB value is parsed correctly");
+		await colorPicker.setAttribute("color", "rgba(100, 100, 100, 1)");
 
-		colorPicker.setProperty("color", "rgba(255, 0, 255, 1)");
-		assert.strictEqual(hexInput.getProperty("value"), "ff00ff", "RGBA value is parsed correctly");
+		await alphaInput.click();
+		await browser.keys(["Control", "A"]);
+		await browser.keys("0");
+		await browser.keys("Tab");
 
-		colorPicker.setProperty("color", "#fafafa");
-		assert.strictEqual(hexInput.getProperty("value"), "fafafa", "HEX value is parsed correctly");
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
+	});
 
-		colorPicker.setProperty("color", "#123");
-		assert.strictEqual(hexInput.getProperty("value"), "112233", "HEX shorthand value is parsed correctly");
+	it("Alpha value change via the slider", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const alphaSliderHandle = await colorPicker.shadow$(".ui5-color-picker-alpha-slider").shadow$(".ui5-slider-handle");
+		const stepInput = await browser.$("#changeEventCounter");
 
-		colorPicker.setProperty("color", "grey");
-		assert.strictEqual(hexInput.getProperty("value"), "808080", "CSS values are parsed correctly");
+		await stepInput.setAttribute("value", 0);
+		await colorPicker.scrollIntoView();
+		await colorPicker.setAttribute("color", "rgba(183, 61, 61, 1)");
+
+		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 61, 0.83)", "Alpha value propely changed");
+		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on alpha slider change");
+	});
+
+	it("Hue value change via the slider", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const hueSliderHandle = await colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
+		const stepInput = await browser.$("#changeEventCounter");
+
+		await colorPicker.scrollIntoView();
+		await colorPicker.setAttribute("color", "rgba(183, 61, 61, 0.83)");
+
+		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 183, 0.83)", "Color properly changed");
+		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on hue slider change");
+	});
+
+	it("tests color property", async () => {
+		const colorPicker = await browser.$("#cp3");
+		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
+
+		await colorPicker.setProperty("color", "rgb(0, 255, 0)");
+		assert.strictEqual(await hexInput.getProperty("value"), "00ff00", "RGB value is parsed correctly");
+
+		await colorPicker.setProperty("color", "rgba(255, 0, 255, 1)");
+		assert.strictEqual(await hexInput.getProperty("value"), "ff00ff", "RGBA value is parsed correctly");
+
+		await colorPicker.setProperty("color", "#fafafa");
+		assert.strictEqual(await hexInput.getProperty("value"), "fafafa", "HEX value is parsed correctly");
+
+		await colorPicker.setProperty("color", "#123");
+		assert.strictEqual(await hexInput.getProperty("value"), "112233", "HEX shorthand value is parsed correctly");
+
+		await colorPicker.setProperty("color", "grey");
+		assert.strictEqual(await hexInput.getProperty("value"), "808080", "CSS values are parsed correctly");
 	});
 
 });

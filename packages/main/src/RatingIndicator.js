@@ -29,7 +29,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.RatingIndicator.prototype */ {
 
 		/**
-		 * The indicated value of the rating
+		 * The indicated value of the rating.
 		 * <br><br>
 		 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
 		 * <ul>
@@ -47,7 +47,7 @@ const metadata = {
 		},
 
 		/**
-		 * The number of displayed rating symbols
+		 * The number of displayed rating symbols.
 		 * @type {Integer}
 		 * @defaultvalue 5
 		 * @public
@@ -132,7 +132,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The RatingIndicator is used to display a specific number of icons that are used to rate an item.
+ * The Rating Indicator is used to display a specific number of icons that are used to rate an item.
  * Additionally, it is also used to display the average and overall ratings.
  *
  * <h3>Usage</h3>
