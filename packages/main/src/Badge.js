@@ -48,6 +48,13 @@ const metadata = {
 		_iconOnly: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether the component is pressed.
+		 */
+		active: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
@@ -132,6 +139,14 @@ class Badge extends UI5Element {
 	onBeforeRendering() {
 		this._hasIcon = this.hasIcon;
 		this._iconOnly = this.iconOnly;
+	}
+
+	_onmousedown() {
+		this.active = true;
+	}
+
+	_onmouseup() {
+		this.active = false;
 	}
 
 	get hasText() {

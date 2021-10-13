@@ -1,4 +1,5 @@
 @import "./InvisibleTextStyles.css";
+@import "./TapHighlightColor.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -9,7 +10,7 @@
 	max-width: 100%;
 	outline: none;
 	border-radius: var(--_ui5_checkbox_border_radius);
-	transition: all 0.3s ease-in-out;
+	transition: var(--_ui5_checkbox_transition);
 	cursor: pointer;
 }
 
@@ -108,9 +109,9 @@
 	padding: 0 var(--_ui5_checkbox_wrapper_padding);
 	box-sizing: border-box;
 	outline: none;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	transition: background 0.3s ease-in-out;
+	transition: var(--_ui5_checkbox_transition);
 	border: var(--_ui5_checkbox_default_focus_border);
+	border-radius: var(--_ui5_checkbox_border_radius);
 	box-sizing: border-box;
 }
 

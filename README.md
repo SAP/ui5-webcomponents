@@ -10,7 +10,7 @@
 
  - A rich set of **enterprise-grade reusable UI elements** driven by a **lightweight framework** (~20K gzipped).
  - Suitable for building anything from **static web sites** to **complex web applications**.
- - Usable with any current or future **web development framework** (React, Angular, Vue, etc...).
+ - Usable with any current or future **web development framework** (React, Angular, Vue, etc.).
  - Implement the [SAP Fiori design](https://experience.sap.com/fiori-design/) and follow the [SAP Fiori Design Guidelines](https://experience.sap.com/fiori-design-web/) for a consistent UX.
  - Created and maintained by [SAP](https://sap.com) as part of the [UI5](https://openui5.org/) product family.
 
@@ -112,19 +112,20 @@ This is because it offers functionality that the otherwise preferred [npm](https
 
 ### Structure
 
-UI5 Web Components contains several projects (NPM packages):
+The UI5 Web Components project contains several packages:
 
-Project | NPM Package | Description
------------|-----------|------------
-`main` | [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents) | Bread-and-butter components (buttons, inputs, popups, pickers, tables, etc...) that are generally found in web apps.
-`fiori` | [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | More semantic components, specific to the Fiori UX (shell bar, side navigation, etc...) that are commonly found in SAP apps.
-`icons` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) | A rich icons collection (`SAP-icons`), suitable for enterprise-grade apps
-`icons-tnt` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt) | A rich icons collection (`SAP-icons-TNT`), suitable for more technical apps
-`icons-business-suite` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) | A rich icons collection (`BusinessSuiteInAppSymbols`), suitable for SAP Fiori apps
-`base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
-`theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (the default theme and additional accessibility themes)
-`localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
-`playground` | N/A | The playground application
+| Project                | NPM Package                                                                                                      | Description                                                                                                                  |
+|------------------------|------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `main`                 | [UI5 Web Components - Main](https://www.npmjs.com/package/@ui5/webcomponents)                                           | Bread-and-butter components (buttons, inputs, popups, pickers, tables, etc.) that are generally found in web apps.         |
+| `fiori`                | [UI5 Web Components - Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori)                               | More semantic components, specific to the Fiori UX (shell bar, side navigation, etc.) that are commonly found in SAP apps. |
+| `icons`                | [UI5 Web Components - Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons)                               | A rich icons collection (`SAP-icons`), suitable for enterprise-grade apps                                                    |
+| `icons-tnt`            | [UI5 Web Components - Icons TNT](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt)                       | A rich icons collection (`SAP-icons-TNT`), suitable for more technical apps                                                  |
+| `icons-business-suite` | [UI5 Web Components - Icons Business Suite](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) | A rich icons collection (`BusinessSuiteInAppSymbols`), suitable for SAP Fiori apps                                           |
+| `base`                 | [UI5 Web Components - Base](https://www.npmjs.com/package/@ui5/webcomponents-base)                                 | The UI5 Web Components framework itself                                                                                      |
+| `theme-base`           | [UI5 Web Components - Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)                     | Theming assets (the default theme and additional accessibility themes)                                                       |
+| `localization`         | [UI5 Web Components - Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization)                 | `i18n` functionality and `CLDR` assets                                                                                       |
+| `create-package`       | [Create Webcomponents Package](https://www.npmjs.com/package/@ui5/create-webcomponents-package)                  | An `npm init` script for creating new UI5 Webcomponents Packages                                                             |
+| `playground`           | N/A                                                                                                              | The playground application                                                                                                   |
 
 ### How to run the project locally:
 

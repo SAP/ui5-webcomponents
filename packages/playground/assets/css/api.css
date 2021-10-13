@@ -51,6 +51,9 @@ body {
 .belize .snippet {	
 	background-color: #fafafa;	
 }
+.horizon .snippet {
+	background: #fff;
+}
 
 .panel-snippet {
 	display: flex;

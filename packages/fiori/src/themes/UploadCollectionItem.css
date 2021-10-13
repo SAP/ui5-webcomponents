@@ -6,8 +6,21 @@
 	display: block;
 }
 
+:host([active][actionable]) .ui5-uci-file-name,
+:host([active][actionable]) .ui5-uci-description,
+:host([active][actionable]) .ui5-uci-edit-buttons ui5-button,
+:host([active][actionable]) .ui5-li-deletebtn ui5-button,
+:host([active][actionable]) .ui5-uci-progress-labels ui5-label {
+	color: var(--sapList_Active_TextColor);
+}
+
+
 .ui5-li-root.ui5-uci-root {
 	padding: 1rem;
+}
+
+.ui5-uci-edit-buttons {
+	display: flex;
 }
 
 /* Thumbnail */
@@ -15,6 +28,10 @@
 	width: 3rem;
 	height: 3rem;
 	margin-right: 0.75rem;
+}
+
+:host([active][actionable]) ::slotted([ui5-icon][slot=thumbnail]) {
+	color: var(--sapList_Active_TextColor);
 }
 
 ::slotted([ui5-icon][slot="thumbnail"]) {
@@ -28,7 +45,7 @@
 	height: 3rem;
 }
 
-:host([actionable]) ::slotted([ui5-icon][slot="thumbnail"])  {
+:host([actionable]) ::slotted([ui5-icon][slot="thumbnail"]) {
 	color: var(--sapContent_IconColor);
 }
 
@@ -101,7 +118,7 @@
 .ui5-uci-root-editing .ui5-li-detailbtn,
 .ui5-uci-root-editing .ui5-li-deletebtn,
 .ui5-uci-root-uploading .ui5-li-detailbtn,
-.ui5-uci-root-uploading .ui5-li-deletebtn  {
+.ui5-uci-root-uploading .ui5-li-deletebtn {
 	display: none;
 }
 

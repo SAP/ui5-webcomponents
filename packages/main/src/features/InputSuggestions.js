@@ -40,6 +40,8 @@ class Suggestions {
 		this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
 		this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
 
+		this._getSuggestionPopover();
+
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
 		this.selectedItemIndex = null;
@@ -128,14 +130,15 @@ class Suggestions {
 	}
 
 	async open() {
-		this.responsivePopover = await this._respPopover();
+		this._getComponent().open = true;
 		this._beforeOpen();
 
 		this.responsivePopover.showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
-		this.responsivePopover = await this._respPopover();
+		this._getComponent().open = false;
+		this.responsivePopover = await this._getSuggestionPopover();
 		this.responsivePopover.close(false, false, preventFocusRestore);
 	}
 
@@ -180,7 +183,7 @@ class Suggestions {
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
-		this.close();
+		this._getComponent().open = false;
 	}
 
 	onItemPreviewed(item) {
@@ -215,12 +218,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._respPopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
+			this._getSuggestionPopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._respPopover.addEventListener("ui5-after-close", this._onClose.bind(this));
+			this._getSuggestionPopover.addEventListener("ui5-after-close", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -335,7 +338,7 @@ class Suggestions {
 
 	async _getScrollContainer() {
 		if (!this._scrollContainer) {
-			await this._respPopover();
+			await this._getSuggestionPopover();
 			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popup-content");
 		}
 
@@ -351,7 +354,7 @@ class Suggestions {
 	}
 
 	async _getList() {
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = await this._getSuggestionPopover();
 		return this.responsivePopover.querySelector("[ui5-list]");
 	}
 
@@ -364,7 +367,7 @@ class Suggestions {
 		return this._getComponent().getSlottedNodes(this.slotName);
 	}
 
-	async _respPopover() {
+	async _getSuggestionPopover() {
 		if (this.responsivePopover) {
 			return this.responsivePopover;
 		}
