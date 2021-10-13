@@ -312,6 +312,7 @@ class TabContainer extends UI5Element {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
+			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 		});
 
 		if (!this._animationRunning) {
