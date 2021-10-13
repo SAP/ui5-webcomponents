@@ -418,7 +418,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [...this.responsivePopover.querySelector("[ui5-list]").children];
+		return !!this.responsivePopover && [...this.responsivePopover.querySelector("[ui5-list]").children];
 	}
 
 	_getComponent() {
