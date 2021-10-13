@@ -28,3 +28,8 @@
 [ui5-radio-button].ui5-li-singlesel-radiobtn {
 	min-width: var(--_ui5_custom_list_item_rb_min_width);
 }
+
+:host([selected]:not([active]):not([focused])) .ui5-li-root.ui5-custom-li-root,
+:host(:not([selected]):not([active]):not([focused])) .ui5-li-root.ui5-custom-li-root {
+	padding: 0;
+}
