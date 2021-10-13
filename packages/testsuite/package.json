@@ -11,10 +11,23 @@
     "ui5"
   ],
   "scripts": {
-    "clean": "nps clean",
-    "build": "nps build",
-    "start": "nps start",
-    "prepublishOnly": "npm run clean && npm run build"
+    "start": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori dev",
+    "build:base": "cd ../base && nps build",
+    "build:localization": "cd ../localization && yarn build",
+    "build:ie11": "cd ../ie11 && yarn build",
+    "build:theme-base": "cd ../theme-base && yarn build",
+    "build:icons": "cd ../icons && yarn build",
+    "build:icons-business-suite": "cd ../icons-business-suite && yarn build",
+    "build:icons-tnt": "cd ../icons-tnt && yarn build",
+    "prepare:main": "cd ../main && nps prepare",
+    "prepare:fiori": "cd ../fiori && nps prepare",
+    "dev": "npm-run-all --parallel watch:base watch:localization watch:main watch:fiori bundle serve",
+    "watch:base": "cd ../base && nps watch.light",
+    "watch:localization": "cd ../localization && nps watch",
+    "watch:main": "cd ../main && nps watch.light",
+    "watch:fiori": "cd ../fiori && nps watch.light",
+    "bundle": "rollup --config rollup.config.js -w --environment DEV,DEPLOY_PUBLIC_PATH:/resources/",
+    "serve": "serve ../"
   },
   "repository": {
     "type": "git",
@@ -25,11 +38,11 @@
     "@ui5/webcomponents": "1.0.0-rc.15",
     "@ui5/webcomponents-fiori": "1.0.0-rc.15",
     "@ui5/webcomponents-icons": "1.0.0-rc.15",
-    "@ui5/webcomponents-icons-tnt": "1.0.0-rc.15",
-    "@ui5/webcomponents-icons-business-suite": "1.0.0-rc.15"
+    "@ui5/webcomponents-icons-business-suite": "1.0.0-rc.15",
+    "@ui5/webcomponents-icons-tnt": "1.0.0-rc.15"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.15"
-
+    "@ui5/webcomponents-tools": "1.0.0-rc.15",
+    "npm-run-all": "^4.1.5"
   }
 }

@@ -63,6 +63,7 @@ const getScripts = (options) => {
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.i18n"',
+			light: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.src" "nps watch.styles" "nps watch.i18n"',
 			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles" "nps watch.i18n"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',

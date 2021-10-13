@@ -41,6 +41,7 @@ const scripts = {
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle"',
+		light: 'concurrently "nps watch.src"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
 		test: 'nps "copy.test --watch --skip-initial-copy"',
 		bundle: "rollup --config config/rollup.config.js -w --environment DEV",
