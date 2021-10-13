@@ -1171,6 +1171,8 @@ class Input extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
+
 		const stylesObject = {
 			popoverHeader: {
 				"max-width": `${this._inputWidth}px`,
@@ -1180,7 +1182,8 @@ class Input extends UI5Element {
 				"width": `${this._listWidth}px`,
 			},
 			suggestionsPopover: {
-				"max-width": `${this._inputWidth}px`,
+				"min-width": `${this._inputWidth}px`,
+				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 			innerInput: {},
 		};
