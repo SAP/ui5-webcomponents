@@ -11,8 +11,9 @@
     "ui5"
   ],
   "scripts": {
-    "start": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori dev",
-    "build:base": "cd ../base && nps build",
+    "start": "npm-run-all --sequential clean build:base build:ie11 build:localization build:theme-base build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori dev",
+    "clean": "rimraf dist && rimraf .port",
+    "build:base": "cd ../base && nps build.light",
     "build:localization": "cd ../localization && yarn build",
     "build:ie11": "cd ../ie11 && yarn build",
     "build:theme-base": "cd ../theme-base && yarn build",
@@ -27,7 +28,7 @@
     "watch:main": "cd ../main && nps watch.light",
     "watch:fiori": "cd ../fiori && nps watch.light",
     "bundle": "rollup --config rollup.config.js -w --environment DEV,DEPLOY_PUBLIC_PATH:/resources/",
-    "serve": "serve ../"
+    "serve": "node ../tools/lib/serve/index.js --dir=../ --port=8080 --portStep=2 --packageName=testsuite"
   },
   "repository": {
     "type": "git",

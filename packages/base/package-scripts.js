@@ -31,6 +31,7 @@ const scripts = {
 	},
 	build: {
 		default: `${UP_TO_DATE} || nps lint prepare build.bundle hash`,
+		light: `${UP_TO_DATE} || nps lint prepare hash`,
 		bundle: "rollup --config config/rollup.config.js",
 	},
 	copy: {
