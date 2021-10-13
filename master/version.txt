@@ -1,5 +1,5 @@
-commit ecf9563bb67602568a3eb2863e9054301acff9b3
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Oct 13 14:10:18 2021 +0300
+commit fb61e98892a8099a80a41f55ad4f334eca2d4e05
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Oct 13 18:32:07 2021 +0300
 
-    fix(ui5-illustrated-message): generation script (#3903)
+    chore: update sap_horizon styles (#4114)
