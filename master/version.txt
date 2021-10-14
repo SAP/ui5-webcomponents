@@ -1,5 +1,7 @@
-commit 81d7815e270a0f80285ac67f5055cc0d40b91085
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Oct 14 15:30:59 2021 +0300
+commit a91807651bb84c58851be13d482c41590417c090
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Oct 14 08:13:19 2021 -0700
 
-    fix(ui5-avatar): correct background when image slot is used (#4117)
+    chore: translation delivery (#4115)
+    
+    Change-Id: I9c8e7552ec4805fa3579e249fc4ca9a1faff7432
