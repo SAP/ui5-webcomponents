@@ -1,0 +1,40 @@
+@import "../base/TabContainer-parameters.css";
+
+:root {
+	/* Header */
+	--_ui5_tc_header_height_text_with_additional_text: 3.625rem;
+	--_ui5_tc_header_box_shadow: none;
+	--_ui5_tc_header_border_bottom: 0.0625rem solid var(--sapObjectHeader_Background);
+
+	/* Header Item */
+	--_ui5_tc_item_text_only_with_additional_text_height: 3.625rem;
+	--_ui5_tc_headeritem_padding: 0;
+	--_ui5_tc_headerItem_color: var(--sapNeutralTextColor); /* #5B738B; */
+	--_ui5_tc_headeritem_text_font_weight: bold;
+	--_ui5_tc_headerItem_text_hover_color: var(--sapTile_TitleTextColor); /* #475E75; */
+	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapContent_Selected_TextColor); /* #0057D2; */
+	--_ui5_tc_headerItem_focus_border: none;
+	--_ui5_tc_headerItem_transition: all 0.2s ease-in-out;
+	--_ui5_tc_headerItemContent_border_radius: 0.125rem;
+	--_ui5_tc_headerItemContent_border_bottom: none; /* #1B90FF; */
+	--_ui5_tc_headerItemContent_border_bg: var(--sapContent_FocusColor); /* #1B90FF; */
+	--_ui5_tc_headerItem_neutral_border_bg: var(--_ui5_tc_headerItem_neutral_color);
+	--_ui5_tc_headerItem_positive_border_bg: var(--_ui5_tc_headerItem_positive_color);
+	--_ui5_tc_headerItem_negative_border_bg: var(--_ui5_tc_headerItem_negative_color);
+	--_ui5_tc_headerItem_critical_border_bg: var(--_ui5_tc_headerItem_critical_color);
+	--_ui5_tc_headerItem_hover_border_bg: var(--sapTile_TitleTextColor); /* #475E75; */
+	--_ui5_tc_headerItem_hover_selected_hover_border_bg: var(--sapContent_Selected_TextColor); /* #0057D2; */
+	--_ui5_tc_headerItem_hover_border_visibility: visible;
+
+	--_ui5_tc_headerItemContent_border_height: 0.125rem;
+	--_ui5_tc_headerItemContent_offset: 0.25rem;
+	--_ui5_tc_headerItemContent_focus_offset: 0.25rem;
+	--_ui5_tc_headerItemContent_padding: 0.25rem 0.5rem;
+	--_ui5_tc_headerItemContent_focus_border: 0.125rem solid var(--sapContent_FocusColor);
+	--_ui5_tc_headerItemContent_default_focus_border: 0.125rem solid transparent;
+	--_ui5_tc_headerItemContent_focus_border_radius: 0.5rem;
+
+	--_ui5_tc_overflowItem_default_color: var(--sapHighlightColor);
+	--_ui5_tc_overflowItem_current_color: CurrentColor;
+	--_ui5_tc_content_border_bottom: 0.0625rem solid var(--sapObjectHeader_BorderColor);
+}
