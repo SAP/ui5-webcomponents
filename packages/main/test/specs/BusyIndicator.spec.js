@@ -15,7 +15,7 @@ describe("BusyIndicator general interaction", () => {
 		await dynamicItem.click();
 		await dynamicItem.keys("Space");
 
-		assert.strictEqual(await input.getProperty("value"), "0", "itemClick is not thrown");
+		assert.strictEqual(await input.getProperty("value"), "2", "itemClick is not thrown");
 	});
 
 	it("test activation", async () => {
