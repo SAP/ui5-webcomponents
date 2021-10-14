@@ -98,6 +98,10 @@
 		</ui5-tree-item>
 
 	</ui5-tree>
+	Mouseover counter
+	<ui5-input id="mouseover-counter" value="0"></ui5-input>
+	Mouseout counter
+	<ui5-input id="mouseout-counter" value="0"></ui5-input>
 
 	<br><br>
 
@@ -119,6 +123,8 @@
 	</ui5-busy-indicator>
 
 	<script>
+		const mouseOverInput = document.getElementById("mouseover-counter");
+		const mouseOutInput = document.getElementById("mouseout-counter");
 
 		document.getElementById("density").addEventListener("selectionChange", function(event) {
 			var selectedButton = event.detail.selectedButton;
@@ -129,11 +135,13 @@
 			}
 		});
 
-		document.getElementById("tree").addEventListener("itemMouseover", function(event) {
+		document.getElementById("tree").addEventListener("ui5-itemMouseover", function(event) {
 			console.log("Item mouseover: ", event.detail.item);
+			mouseOverInput.value++;
 		});
-		document.getElementById("tree").addEventListener("itemMouseout", function(event) {
+		document.getElementById("tree").addEventListener("ui5-itemMouseout", function(event) {
 			console.log("Item mouseout: ", event.detail.item);
+			mouseOutInput.value++;
 		});
 
 		document.getElementById("tree").addEventListener("itemClick", function(event) {
