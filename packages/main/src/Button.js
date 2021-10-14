@@ -4,7 +4,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
-import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -323,7 +323,7 @@ class Button extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this._isTouch = isPhone() || isTablet();
+		this._isTouch = (isPhone() || isTablet()) && !isCombi();
 	}
 
 	onBeforeRendering() {

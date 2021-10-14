@@ -267,12 +267,12 @@ bdi {
 	border-color: var(--sapButton_Lite_BorderColor);
 }
 
-:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):hover){
+:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered){
+:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 }
