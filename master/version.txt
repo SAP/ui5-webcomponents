@@ -1,5 +1,5 @@
-commit 6ab905cc9927113da0c2444e84ed1c2ee325430b
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Thu Oct 14 14:22:46 2021 +0300
+commit 81d7815e270a0f80285ac67f5055cc0d40b91085
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Oct 14 15:30:59 2021 +0300
 
-    fix(ui5-button): fix hover state for combi device(#4100)
+    fix(ui5-avatar): correct background when image slot is used (#4117)
