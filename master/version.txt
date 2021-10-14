@@ -1,5 +1,13 @@
-commit fb61e98892a8099a80a41f55ad4f334eca2d4e05
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Oct 13 18:32:07 2021 +0300
+commit 36f00d539bc5d14603a825c043c24f853068ae7e
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Oct 14 09:46:34 2021 +0300
 
-    chore: update sap_horizon styles (#4114)
+    (ui5-slider, ui5-range-slider) Implement Horizon theme styling (#4106)
+    
+    * Adapt Sliders to Horizon theme
+    
+    * Style the tooltips, add RangeSlider styles
+    
+    * Fix color of the border hover of the handle and the border radius of the tooltip to match the popover's one by specs
+    
+    * Call getTheme() once
