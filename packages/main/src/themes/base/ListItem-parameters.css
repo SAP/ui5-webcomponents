@@ -5,4 +5,5 @@
     --_ui5-listitem-selected-active-background: var(--sapList_Active_Background);
     --_ui5-listitem-selected-background: var(--sapList_Hover_SelectionBackground);
     --_ui5-listitem-color: var(--sapTextColor);
+    --_ui5-listitem-rtl-selected-padding-right: .9375rem;
 }

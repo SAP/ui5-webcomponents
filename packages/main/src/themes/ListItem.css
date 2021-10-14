@@ -1,7 +1,7 @@
 @import "./InvisibleTextStyles.css";
 
 :host(:not([selected])) .ui5-li-root {
-	border-inline-start: var(--_ui5-listitem-border-left);
+	border-left: var(--_ui5-listitem-border-left);
 }
 
 :host([active][actionable]) {
@@ -15,11 +15,11 @@
 }
 
 :host(:not([selected])[actionable]:hover) .ui5-li-root {
-	border-inline-start: var(--_ui5-listitem-border-left-color);
+	border-left: var(--_ui5-listitem-border-left-color);
 }
 
 :host(:not([selected])[active][actionable]:hover) .ui5-li-root {
-	border-inline-start: var(--_ui5-listitem-border-pressed-left-color);
+	border-left: var(--_ui5-listitem-border-pressed-left-color);
 }
 
 :host(:not([selected])[active][actionable]:hover) {
@@ -27,7 +27,7 @@
 }
 
 :host([selected]) .ui5-li-root {
-	border-inline-start: var(--_ui5-listitem-selected-border-left);
+	border-left: var(--_ui5-listitem-selected-border-left);
 }
 
 :host([selected]) {
@@ -54,7 +54,7 @@
 
 :host(:not([selected]):not([active]):not([focused])) .ui5-li-root,
 :host([selected]:not([active]):not([focused])) .ui5-li-root {
-	padding-inline-start: var(--_ui5-listitem-focused-padding-left);
+	padding-left: var(--_ui5-listitem-focused-padding-left);
 }
 
 :host([focused][selected]) .ui5-li-root.ui5-li--focusable,
@@ -64,7 +64,7 @@
 :host(:not([selected])[focused][active]) .ui5-li-root,
 :host(:not([selected])[focused]) .ui5-li-root {
 	border: var(--_ui5-listitem-focus-border);
-	border-inline-start-width: var(--_ui5-listitem-focus-border-inline);
+	border-left-width: var(--_ui5-listitem-focus-border-inline);
 	border-radius: var(--_ui5-listitem-focus-border-color);
 }
 
@@ -263,7 +263,8 @@
 
 :host([_mode="SingleSelectBegin"][focused]) .ui5-li-root,
 :host([_mode="MultiSelect"][focused]) .ui5-li-root {
-	padding-inline-start: 1rem;
+	padding-left: 1rem;
+	padding-right: 0;
 }
 
 :host([_mode="SingleSelectBegin"]) .ui5-li-root,
@@ -307,5 +308,31 @@
 
 :host([_mode="SingleSelectEnd"]) [dir="rtl"].ui5-li-root {
 	padding-right: 1rem;
+	padding-left: 0;
+}
+
+:host([focused]) [dir="rtl"].ui5-li-root.ui5-li--focusable {
+	left: -1px;
+	padding-right: var(--_ui5-listitem-rtl-selected-padding-right);
+}
+
+:host([focused][selected]) [dir="rtl"].ui5-li-root.ui5-li--focusable,
+:host([focused][active]) [dir="rtl"].ui5-li-root,
+:host(:not([selected])[focused][active][actionable]) [dir="rtl"].ui5-li-root,
+:host(:not([selected])[focused][actionable]) [dir="rtl"].ui5-li-root,
+:host(:not([selected])[focused][active]) [dir="rtl"].ui5-li-root,
+:host(:not([selected])[focused]) [dir="rtl"].ui5-li-root {
+	border: var(--_ui5-listitem-focus-border);
+	border-left-width: .125rem;
+	border-right-width: .25rem;
+}
+
+:host(:not([selected]):not([active]):not([focused])) [dir="rtl"].ui5-li-root,
+:host([selected]:not([active]):not([focused])) [dir="rtl"].ui5-li-root {
+	padding-right: var(--_ui5-listitem-focused-padding-left);
+}
+
+:host([_mode="SingleSelectBegin"][focused]) [dir="rtl"].ui5-li-root,
+:host([_mode="MultiSelect"][focused]) [dir="rtl"].ui5-li-root {
 	padding-left: 0;
 }
