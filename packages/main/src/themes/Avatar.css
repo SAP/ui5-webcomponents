@@ -179,6 +179,10 @@
 	background-color: var(--ui5-avatar-placeholder);
 }
 
+:host([_has-image]) {
+	background-color: transparent;
+}
+
 :host([image-fit-type="Contain"]) .ui5-avatar-img {
 	background-size: contain;
 }
