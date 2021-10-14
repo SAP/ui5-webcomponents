@@ -79,6 +79,12 @@ tr {
 	text-align: center;
 }
 
+:host([sticky-column-header]) .ui5-table-select-all-column {
+	position: sticky;
+	top: 0;
+	z-index: 99;
+}
+
 th {
 	background: var(--sapList_HeaderBackground);
 }

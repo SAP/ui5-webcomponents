@@ -152,9 +152,9 @@ exports.config = {
 	 * @param {Array.<Object>} capabilities list of capabilities details
 	 * @param {Array.<String>} specs List of spec file paths that are to be run
 	 */
-	before: function (capabilities, specs) {
-		browser.addCommand("isFocusedDeep", function () {
-			return browser.execute(function (elem) {
+	before: async function (capabilities, specs) {
+		await browser.addCommand("isFocusedDeep", async function () {
+			return browser.executeAsync(function (elem, done) {
 				let activeElement = document.activeElement;
 
 				while (activeElement.shadowRoot) {
@@ -164,47 +164,54 @@ exports.config = {
 						break;
 					}
 				}
-				return elem === activeElement;
+				done(elem === activeElement);
 			}, this);
 		}, true);
 
-		browser.addCommand("setProperty", function(property, value) {
-			return browser.execute((elem, property, value) => {
-				return elem[property] = value;
+		await browser.addCommand("setProperty", async function(property, value) {
+			return browser.executeAsync((elem, property, value, done) => {
+				elem[property] = value;
+				done();
 			}, this, property, value);
 		}, true);
 
-		browser.addCommand("setAttribute", function(attribute, value) {
-			return browser.execute((elem, attribute, value) => {
-				return elem.setAttribute(attribute, value);
+		await browser.addCommand("setAttribute", async function(attribute, value) {
+			return browser.executeAsync((elem, attribute, value, done) => {
+				elem.setAttribute(attribute, value);
+				done();
 			}, this, attribute, value);
 		}, true);
 
-		browser.addCommand("removeAttribute", function(attribute) {
-			return browser.execute((elem, attribute) => {
-				return elem.removeAttribute(attribute);
+		await browser.addCommand("removeAttribute", async function(attribute) {
+			return browser.executeAsync((elem, attribute, done) => {
+				elem.removeAttribute(attribute);
+				done();
 			}, this, attribute);
 		}, true);
 
-		browser.addCommand("hasClass", function(className) {
-			return browser.execute((elem, className) => {
-				return elem.classList.contains(className);
+		await browser.addCommand("hasClass", async function(className) {
+			return browser.executeAsync((elem, className, done) => {
+				done(elem.classList.contains(className));
 			}, this, className);
 		}, true);
 
-		browser.addCommand("getStaticAreaItemClassName", function(selector) {
-			return browser.execute(async (selector) => {
+		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
+			return browser.executeAsync(async (selector, done) => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				return staticAreaItem.host.classList[0];
+				done(staticAreaItem.host.classList[0]);
 			}, selector);
 		}, false);
+
+		await browser.addLocatorStrategy('activeElement', (selector) => {
+			return document.querySelector(selector).shadowRoot.activeElement;
+		});
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.
 	 * @param {String} commandName hook command name
 	 * @param {Array} args arguments that command would receive
 	 */
-	beforeCommand: function (commandName, args) {
+	beforeCommand: async function (commandName, args) {
 		const waitFor = [
 			"$",
 			"$$",
@@ -227,7 +234,7 @@ exports.config = {
 			"shadow$$",
 		];
 		if (waitFor.includes(commandName)) {
-			browser.executeAsync(function (done) {
+			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
@@ -277,12 +284,13 @@ exports.config = {
 	 * @param {Number} result 0 - command success, 1 - command error
 	 * @param {Object} error error object if any
 	 */
-	afterCommand: function (commandName, args, result, error) {
+	afterCommand: async function (commandName, args, result, error) {
 
 		// url -> set configuration first
 		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
-			browser.execute(function() {
+			await browser.executeAsync(function(done) {
 				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
+				done();
 			});
 		}
 
@@ -295,15 +303,16 @@ exports.config = {
 			"keys",
 			"pause",
 			"removeAttribute", // custom
+			"scrollIntoView",
 			"setAttribute", // custom
 			"setProperty", // custom
 			"setValue",
 			"setWindowSize",
 			"touchAction",
-			"url"
+			"url",
 		];
 		if (waitFor.includes(commandName)) {
-			browser.executeAsync(function (done) {
+			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}

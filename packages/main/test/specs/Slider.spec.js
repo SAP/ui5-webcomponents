@@ -3,470 +3,483 @@ const PORT = require("./_port.js");
 
 describe("Slider basic interactions", () => {
 
-	it("Changing the current value is reflected", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Slider.html`);
+	it("Changing the current value is reflected", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Slider.html`);
 
-		const slider = browser.$("#basic-slider");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+		const slider = await browser.$("#basic-slider");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		assert.strictEqual(sliderHandle.getCSSProperty("left").value, "0px", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
+		assert.strictEqual((await sliderHandle.getCSSProperty("left")).value, "0px", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
 
-		browser.setWindowSize(1257, 2000);
-		slider.setProperty("value", 3);
+		await browser.setWindowSize(1257, 2000);
+		await slider.setProperty("value", 3);
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 30%;", "Slider handle should be 30% from the start");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 30%;", "Slider handle should be 30% from the start");
 
-		slider.click();
+		await slider.click();
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 50%;", "Slider handle should be in the middle of the slider");
-		assert.strictEqual(slider.getProperty("value"), 5, "Slider current value should be 5");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 50%;", "Slider handle should be in the middle of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 5, "Slider current value should be 5");
 
-		sliderHandle.dragAndDrop({ x: 300, y: 1 });
+		await sliderHandle.dragAndDrop({ x: 300, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be 80% from the start of the slider");
-		assert.strictEqual(slider.getProperty("value"), 8, "Slider current value should be 8");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be 80% from the start of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 
-		sliderHandle.dragAndDrop({ x: 100, y: 1 });
+		await sliderHandle.dragAndDrop({ x: 100, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 90%;", "Slider handle should be 90% from the start");
-		assert.strictEqual(slider.getProperty("value"), 9, "Slider current value should be 9");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 90%;", "Slider handle should be 90% from the start");
+		assert.strictEqual(await slider.getProperty("value"), 9, "Slider current value should be 9");
 
-		sliderHandle.dragAndDrop({ x:-100, y: 1 });
+		await sliderHandle.dragAndDrop({ x:-100, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
-		assert.strictEqual(slider.getProperty("value"), 8, "Slider current value should be 8");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
+		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 	});
 
-	it("Slider with floating min, max and step property", () => {
-		const slider = browser.$("#basic-slider");
+	it("Slider with floating min, max and step property", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		slider.setProperty("min", -12.5);
-		slider.setProperty("max", 47.5);
-		slider.setProperty("step", 1.25);
-		slider.setProperty("value", 21.25);
+		await slider.setProperty("min", -12.5);
+		await slider.setProperty("max", 47.5);
+		await slider.setProperty("step", 1.25);
+		await slider.setProperty("value", 21.25);
 
-		slider.click({ x: -100 });
-		assert.strictEqual(slider.getProperty("value"), 12.5, "Slider value should be lowered to 12.5");
+		await slider.click({ x: -100 });
+		assert.strictEqual(await slider.getProperty("value"), 12.5, "Slider value should be lowered to 12.5");
 	});
 
-	it("Slider should not be interactive if the step property is 0", () => {
-		const slider = browser.$("#inactive-slider");
+	it("Slider should not be interactive if the step property is 0", async () => {
+		const slider = await browser.$("#inactive-slider");
 
-		slider.click();
+		await slider.click();
 
-		assert.strictEqual(slider.getProperty("value"), 0, "Slider with 0 step should still has its default value of 0");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Slider with 0 step should still has its default value of 0");
 	});
 
-	it("Disabled slider is not interactive", () => {
-		const slider = browser.$("#disabled-slider-with-tickmarks");
+	it("Disabled slider is not interactive", async () => {
+		const slider = await browser.$("#disabled-slider-with-tickmarks");
 
-		assert.strictEqual(slider.isClickable(), false, "Range Slider should be disabled");
+		assert.notOk(await slider.isClickable(), "Range Slider should be disabled");
 	});
 });
 
 describe("Properties synchronization and normalization", () => {
 
-	it("If a negative number is set to the step property its positive equivalent should be used as effective value", () => {
-		const slider = browser.$("#slider-tickmarks-labels");
+	it("If a negative number is set to the step property its positive equivalent should be used as effective value", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
 
-		slider.setProperty("step", -7);
+		await slider.setProperty("step", -7);
 
-		assert.strictEqual(slider.getProperty("step"), -7, "The step property should not be changed itself");
+		assert.strictEqual(await slider.getProperty("step"), -7, "The step property should not be changed itself");
 
-		slider.click();
+		await slider.click();
 
-		assert.strictEqual(slider.getProperty("value"), 1, "The current value should be 'stepified' by 7");
+		assert.strictEqual(await slider.getProperty("value"), 1, "The current value should be 'stepified' by 7");
 	});
 
-	it("If step property is not a valid number its value should fallback to 1", () => {
-		const slider = browser.$("#slider-tickmarks-labels");
+	it("If step property is not a valid number its value should fallback to 1", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
 
-		slider.setProperty("step", 2);
-		slider.setProperty("step", "String value");
-		slider.click();
+		await slider.setProperty("step", 2);
+		await slider.setProperty("step", "String value");
+		await slider.click();
 
-		assert.strictEqual(slider.getProperty("step"), 1, "Step property should be set to its defaut value");
-		assert.strictEqual(slider.getProperty("value"), 0, "The current value should be 'stepified' by 1");
+		assert.strictEqual(await slider.getProperty("step"), 1, "Step property should be set to its defaut value");
+		assert.strictEqual(await slider.getProperty("value"), 0, "The current value should be 'stepified' by 1");
 	});
 
-	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", () => {
-		const slider = browser.$("#slider-tickmarks-labels");
+	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
 
-		assert.strictEqual(slider.getProperty("_labels").length, 21, "Labels must be 21 - 1 for every 2 tickmarks (and steps)");
+		assert.strictEqual((await slider.getProperty("_labels")).length, 21, "Labels must be 21 - 1 for every 2 tickmarks (and steps)");
 
-		slider.setProperty("step", 2);
+		await slider.setProperty("step", 2);
 
-		assert.strictEqual(slider.getProperty("_labels").length, 11, "Labels must be 12 - 1 for every 2 tickmarks (and 4 current value points)");
+		assert.strictEqual((await slider.getProperty("_labels")).length, 11, "Labels must be 12 - 1 for every 2 tickmarks (and 4 current value points)");
 
-		slider.setProperty("labelInterval", 4);
+		await slider.setProperty("labelInterval", 4);
 
-		assert.strictEqual(slider.getProperty("_labels").length, 6, "Labels must be 6 - 1 for every 4 tickmarks (and 8 current value points)");
+		assert.strictEqual((await slider.getProperty("_labels")).length, 6, "Labels must be 6 - 1 for every 4 tickmarks (and 8 current value points)");
 	});
 
-	it("If min property is set to a greater number than the max property their effective values should be swapped, their real ones - not", () => {
-		const slider = browser.$("#basic-slider");
+	it("If min property is set to a greater number than the max property their effective values should be swapped, their real ones - not", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		slider.setProperty("value", 2);
-		slider.setProperty("max", 10);
-		slider.setProperty("min", 100);
+		await slider.setProperty("value", 2);
+		await slider.setProperty("max", 10);
+		await slider.setProperty("min", 100);
 
-		assert.strictEqual(slider.getProperty("max"), 10, "min property itself should not be normalized");
-		assert.strictEqual(slider.getProperty("min"), 100, "max property itself should not be normalized");
-		assert.strictEqual(slider.getProperty("value"), 10, "value property should be within the boundaries of the normalized 'effective' min and max values");
+		assert.strictEqual(await slider.getProperty("max"), 10, "min property itself should not be normalized");
+		assert.strictEqual(await slider.getProperty("min"), 100, "max property itself should not be normalized");
+		assert.strictEqual(await slider.getProperty("value"), 10, "value property should be within the boundaries of the normalized 'effective' min and max values");
 	});
 
-	it("Should keep the current value between the boundaries of min and max properties", () => {
-		const slider = browser.$("#basic-slider");
+	it("Should keep the current value between the boundaries of min and max properties", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		slider.setProperty("min", 100);
-		slider.setProperty("max", 200);
-		slider.setProperty("value", 300);
+		await slider.setProperty("min", 100);
+		await slider.setProperty("max", 200);
+		await slider.setProperty("value", 300);
 
-		assert.strictEqual(slider.getProperty("value"), 200, "value prop should always be lower than the max value");
+		assert.strictEqual(await slider.getProperty("value"), 200, "value prop should always be lower than the max value");
 
-		slider.setProperty("value", 99);
+		await slider.setProperty("value", 99);
 
-		assert.strictEqual(slider.getProperty("value"), 100, "value prop should always be greater than the min value");
+		assert.strictEqual(await slider.getProperty("value"), 100, "value prop should always be greater than the min value");
 	});
 });
 
 describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 
-	it("Slider Tooltip is displayed showing the current value", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
-		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
-		const sliderTooltipValue = slider.shadow$(".ui5-slider-tooltip-value");
+	it("Slider Tooltip is displayed showing the current value", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
+		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderTooltipValue = await slider.shadow$(".ui5-slider-tooltip-value");
 
-		slider.moveTo();
+		await slider.moveTo();
 
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "visible", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
 
-		sliderHandle.dragAndDrop({ x: 100, y: 1 });
+		await sliderHandle.dragAndDrop({ x: 100, y: 1 });
 
-		assert.strictEqual(sliderTooltipValue.getText(), "2", "Slider tooltip should display value of 2");
+		assert.strictEqual(await sliderTooltipValue.getText(), "2", "Slider tooltip should display value of 2");
 	});
 
-	it("Slider Tooltip should become visible when slider is focused", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
-		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
-		const basicSlider = browser.$("#basic-slider");
+	it("Slider Tooltip should become visible when slider is focused", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
+		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
+		const basicSlider = await browser.$("#basic-slider");
 
-		basicSlider.click();
+		await basicSlider.click();
 
 		// initial state
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "hidden", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "hidden", "Slider tooltip should be shown");
 
-		slider.click();
+		await slider.click();
 
 		// slider is focused
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "visible", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
 	});
 
-	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
-		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
+	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
+		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
 
-		slider.click();
+		await slider.click();
 
 		// slider is focused
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "visible", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
 
 		// move mouse away - fires mouseout
-		slider.moveTo(0, -100);
+		await slider.moveTo(0, -100);
 
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "visible", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
 	});
 
-	it("Slider Tooltip should become hidden when slider is looses focus", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
-		const anotherSlider = browser.$("#basic-slider");
-		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
+	it("Slider Tooltip should become hidden when slider is looses focus", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
+		const anotherSlider = await browser.$("#basic-slider");
+		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
 
-		slider.click();
+		await slider.click();
 
 		// slider is focused
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "visible", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
 
 		// move mouse away - fires mouseout
-		anotherSlider.click();
+		await anotherSlider.click();
 
-		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual(sliderTooltip.getCSSProperty("visibility").value, "hidden", "Slider tooltip should be shown");
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "hidden", "Slider tooltip should be shown");
 	});
 
-	it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {
-		const slider = browser.$("#slider-tickmarks-tooltips-labels");
-		const labelsContainer = slider.shadow$(".ui5-slider-labels");
-		const numberOfLabels = labelsContainer.$$("li").length;
+	it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", async () => {
+		const slider = await browser.$("#slider-tickmarks-tooltips-labels");
+		const labelsContainer = await slider.shadow$(".ui5-slider-labels");
+		const numberOfLabels = (await labelsContainer.$$("li")).length;
 
 		assert.strictEqual(numberOfLabels, 17, "17 labels should be rendered, 1 between each 3 tickmarks");
 	});
 
-	it("Should not 'stepify' current value if it is not in result of user interaction", () => {
-		const slider = browser.$("#tickmarks-slider");
+	it("Should not 'stepify' current value if it is not in result of user interaction", async () => {
+		const slider = await browser.$("#tickmarks-slider");
 
-		slider.setProperty("value", 13);
+		await slider.setProperty("value", 13);
 
-		assert.strictEqual(slider.getProperty("value"), 13, "current value should not be stepped to the next step (14)");
+		assert.strictEqual(await slider.getProperty("value"), 13, "current value should not be stepped to the next step (14)");
 	});
 });
 
 describe("Testing events", () => {
 
-	it("Should fire input event on use interaction and change event after user interaction finish", () => {
-		const slider = browser.$("#test-slider");
-		const eventResultSlider = browser.$("#test-result-slider");
+	it("Should fire input event on use interaction and change event after user interaction finish", async () => {
+		const slider = await browser.$("#test-slider");
+		const eventResultSlider = await browser.$("#test-result-slider");
 
-		slider.click();
+		await slider.click();
 
-		assert.strictEqual(eventResultSlider.getProperty("value") , 3, "Both input event and change event are fired after user interaction");
+		assert.strictEqual(await eventResultSlider.getProperty("value") , 3, "Both input event and change event are fired after user interaction");
 	});
 
-	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", () => {
-		const slider = browser.$("#test-slider");
-		const eventResultSlider = browser.$("#test-result-slider");
+	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", async () => {
+		const slider = await browser.$("#test-slider");
+		const eventResultSlider = await browser.$("#test-result-slider");
 
-		slider.click();
+		await slider.click();
 
-		assert.strictEqual(eventResultSlider.getProperty("value") , 3, "Change event is not fired if the value is the same as before the start of the action");
+		assert.strictEqual(await eventResultSlider.getProperty("value") , 3, "Change event is not fired if the value is the same as before the start of the action");
 	});
 });
 
-describe("Accessibility", () => {
-	it("Aria attributes are set correctly", () => {
-		const slider = browser.$("#basic-slider");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
-		const sliderId = slider.getProperty("_id");
+describe("Accessibility", async () => {
+	it("Aria attributes are set correctly", async () => {
+		const slider = await browser.$("#basic-slider");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderId = await slider.getProperty("_id");
 
-		assert.strictEqual(sliderHandle.getAttribute("aria-labelledby"),
+		assert.strictEqual(await sliderHandle.getAttribute("aria-labelledby"),
 			`${sliderId}-sliderDesc`, "aria-labelledby is set correctly");
-		assert.strictEqual(sliderHandle.getAttribute("aria-valuemin"),
-			`${slider.getProperty("min")}`, "aria-valuemin is set correctly");
-		assert.strictEqual(sliderHandle.getAttribute("aria-valuemax"),
-			`${slider.getProperty("max")}`, "aria-valuemax is set correctly");
-		assert.strictEqual(sliderHandle.getAttribute("aria-valuenow"),
-			`${slider.getProperty("value")}`, "aria-valuenow is set correctly");
+		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemin"),
+			`${await slider.getProperty("min")}`, "aria-valuemin is set correctly");
+		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemax"),
+			`${await slider.getProperty("max")}`, "aria-valuemax is set correctly");
+		assert.strictEqual(await sliderHandle.getAttribute("aria-valuenow"),
+			`${await slider.getProperty("value")}`, "aria-valuenow is set correctly");
 	});
 
-	it("Click anywhere in the Slider should focus the Slider's handle", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Slider.html`);
+	it("Click anywhere in the Slider should focus the Slider's handle", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Slider.html`);
 
-		const slider = browser.$("#basic-slider");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+		const slider = await browser.$("#basic-slider");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		slider.click();
+		await slider.click();
 
-		const innerFocusedElement = browser.execute(() => {
-			return document.getElementById("basic-slider").shadowRoot.activeElement;
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider");
 
-		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+		assert.ok(await slider.isFocused(), "Slider component is focused");
+		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 
-	it("Tab should focus the Slider and move the visible focus outline to the slider's handle", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+	it("Tab should focus the Slider and move the visible focus outline to the slider's handle", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		browser.keys("Tab");
+		await browser.keys("Tab");
 
-		const innerFocusedElement = browser.execute(() => {
-			return document.getElementById("basic-slider-with-tooltip").shadowRoot.activeElement;
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider-with-tooltip");
 
-		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+		assert.ok(await slider.isFocused(), "Slider component is focused");
+		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 
-	it("Shift+Tab should focus the previous Slider and move the visible focus outline to the previous slider's handle", () => {
-		const slider = browser.$("#basic-slider");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+	it("Shift+Tab should focus the previous Slider and move the visible focus outline to the previous slider's handle", async () => {
+		const slider = await browser.$("#basic-slider");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
-		const innerFocusedElement = browser.execute(() => {
-			return document.getElementById("basic-slider").shadowRoot.activeElement;
-		});
+		const innerFocusedElement = await browser.custom$("activeElement", "#basic-slider");
 
-		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+		assert.ok(await slider.isFocused(), "Slider component is focused");
+		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 });
 
 
-describe("Accessibility: Testing keyboard handling", () => {
-	it("Right arrow should increase the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider");
+describe("Accessibility: Testing keyboard handling", async () => {
+	it("Right arrow should increase the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		slider.setProperty("value", 0);
-		browser.keys("ArrowRight");
+		await slider.setProperty("value", 0);
+		await browser.keys("ArrowRight");
 
-		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+		assert.strictEqual(await slider.getProperty("value"), 1, "Value is increased");
 	});
 
-	it("Left arrow should decrease the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider");
+	it("Left arrow should decrease the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		browser.keys("ArrowLeft");
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys("ArrowLeft");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("Up arrow should increase the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider");
+	it("Up arrow should increase the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		browser.keys("ArrowUp");
-		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+		await browser.keys("ArrowUp");
+		assert.strictEqual(await slider.getProperty("value"), 1, "Value is increased");
 	});
 
-	it("Down arrow should increase the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider");
+	it("Down arrow should increase the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider");
 
-		browser.keys("ArrowDown");
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys("ArrowDown");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("Ctrl + Right arrow should increase the value of the slider with a big increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("Ctrl + Right arrow should increase the value of the slider with a big increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("Tab");
-		browser.keys(["Control", "ArrowRight"]);
+		await browser.keys("Tab");
+		await browser.keys(["Control", "ArrowRight"]);
 
-		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
+		assert.strictEqual(await slider.getProperty("value"), 2, "Value is increased");
 	});
 
-	it("Ctrl + Left arrow should decrease the value of the slider with a big increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("Ctrl + Left arrow should decrease the value of the slider with a big increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys(["Control", "ArrowLeft"]);
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys(["Control", "ArrowLeft"]);
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("Ctrl + Up arrow should increase the value of the slider with a big increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("Ctrl + Up arrow should increase the value of the slider with a big increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys(["Control", "ArrowUp"]);
-		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
+		await browser.keys(["Control", "ArrowUp"]);
+		assert.strictEqual(await slider.getProperty("value"), 2, "Value is increased");
 	});
 
-	it("Ctrl + Down arrow should increase the value of the slider with a big increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("Ctrl + Down arrow should increase the value of the slider with a big increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys(["Control", "ArrowDown"]);
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys(["Control", "ArrowDown"]);
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("PageUp should increase the value of the slider with a big increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("PageUp should increase the value of the slider with a big increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("PageUp");
-		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
+		await browser.keys("PageUp");
+		assert.strictEqual(await slider.getProperty("value"), 2, "Value is increased");
 	});
 
-	it("PageDown should decrease the value of the slider with a big increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("PageDown should decrease the value of the slider with a big increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("PageDown");
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys("PageDown");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("A '+' key press should increase the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("A '+' key press should increase the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("+");
-		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+		await browser.keys("+");
+		assert.strictEqual(await slider.getProperty("value"), 1, "Value is increased");
 	});
 
-	it("A '-' key press should decrease the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("A '-' key press should decrease the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("-");
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys("-");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("A numpad '+' key press should increase the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("A numpad '+' key press should increase the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 		const numpadAdd = "\uE025";
 
-		browser.keys(numpadAdd);
-		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+		await browser.keys(numpadAdd);
+		assert.strictEqual(await slider.getProperty("value"), 1, "Value is increased");
 	});
 
-	it("A numpad '-' key press should decrease the value of the slider with a small increment step", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("A numpad '-' key press should decrease the value of the slider with a small increment step", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 		const numpadSubtract = "\uE027";
 
-		browser.keys(numpadSubtract);
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+		await browser.keys(numpadSubtract);
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 
-	it("An 'End' key press should increase the value of the slider to its max", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("An 'End' key press should increase the value of the slider to its max", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("End");
-		assert.strictEqual(slider.getProperty("value"), 20, "Value is decreased");
+		await browser.keys("End");
+		assert.strictEqual(await slider.getProperty("value"), 20, "Value is decreased");
 	});
 
-	it("A 'Home' key press should set the value of the slider to its minimum", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("A 'Home' key press should set the value of the slider to its minimum", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		browser.keys("Home");
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
+		await browser.keys("Home");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is increased");
 	});
 
-	it("A 'Esc' key press should return the value of the slider at its initial point at the time of its focusing", () => {
-		const slider = browser.$("#basic-slider-with-tooltip");
+	it("A 'Esc' key press should return the value of the slider at its initial point at the time of its focusing", async () => {
+		const slider = await browser.$("#basic-slider-with-tooltip");
 
-		slider.setProperty("value", 12);
+		await slider.setProperty("value", 12);
 
-		browser.keys("Escape");
-		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
+		await browser.keys("Escape");
+		assert.strictEqual(await slider.getProperty("value"), 0, "Value is increased");
 	});
 });
 
 describe("Testing resize handling and RTL support", () => {
-	it("Testing RTL support", () => {
-		const slider = browser.$("#basic-slider-rtl");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+	it("Testing RTL support", async () => {
+		const slider = await browser.$("#basic-slider-rtl");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		assert.strictEqual(sliderHandle.getCSSProperty("right").value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
+		assert.strictEqual((await sliderHandle.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
-		slider.setProperty("value", 3);
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
+		await slider.setProperty("value", 3);
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
 
-		slider.click();
+		await slider.click();
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 50%;", "Slider handle should be in the middle of the slider");
-		assert.strictEqual(slider.getProperty("value"), 5, "Slider current value should be 5");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 50%;", "Slider handle should be in the middle of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 5, "Slider current value should be 5");
 
-		sliderHandle.dragAndDrop({ x: -300, y: 1 });
+		await sliderHandle.dragAndDrop({ x: -300, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the right of the slider");
-		assert.strictEqual(slider.getProperty("value"), 8, "Slider current value should be 8");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the right of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 
-		sliderHandle.dragAndDrop({ x: -100, y: 1 });
+		await sliderHandle.dragAndDrop({ x: -100, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 90%;", "Slider handle should be 90% from the right");
-		assert.strictEqual(slider.getProperty("value"), 9, "Slider current value should be 9");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 90%;", "Slider handle should be 90% from the right");
+		assert.strictEqual(await slider.getProperty("value"), 9, "Slider current value should be 9");
 
-		sliderHandle.dragAndDrop({ x: -150, y: 1 });
+		await sliderHandle.dragAndDrop({ x: -150, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 100%;", "Slider handle should be at the left of the slider and not beyond its boundaries");
-		assert.strictEqual(slider.getProperty("value"), 10, "Slider current value should be 10");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 100%;", "Slider handle should be at the left of the slider and not beyond its boundaries");
+		assert.strictEqual(await slider.getProperty("value"), 10, "Slider current value should be 10");
 	});
 
-	it("Should hide all labels except the first and the last one, if there is not enough space for all of them", () => {
-		const slider = browser.$("#slider-tickmarks-tooltips-labels");
+	it("Testing RTL KBH support", async () => {
+		const slider = await browser.$("#basic-slider-rtl");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		browser.setWindowSize(400, 2000);
+		await slider.setProperty("value", 0);
+		assert.strictEqual((await sliderHandle.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
-		assert.strictEqual(slider.getProperty("_labelsOverlapping"), true, "state should reflect if any of the labels is overlapping with another");
-		assert.strictEqual(slider.getProperty("_hiddenTickmarks"), true, "state should reflect if the tickmarks has less than 8px space between each of them");
+		await slider.keys("ArrowLeft");
+		await slider.keys("ArrowLeft");
+
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 2, "Slider current value should be 2");
+
+		await slider.keys("ArrowRight");
+
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 1, "Slider current value should be 1");
+	});
+
+	it("Should hide all labels except the first and the last one, if there is not enough space for all of them", async () => {
+		const slider = await browser.$("#slider-tickmarks-tooltips-labels");
+
+		await browser.setWindowSize(400, 2000);
+
+		assert.ok(await slider.getProperty("_labelsOverlapping"), "state should reflect if any of the labels is overlapping with another");
+		assert.ok(await slider.getProperty("_hiddenTickmarks"), "state should reflect if the tickmarks has less than 8px space between each of them");
 	});
 });

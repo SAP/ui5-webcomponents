@@ -53,20 +53,19 @@ const metadata = {
 /**
  * @class
  *
- * Represents a numerical interval and two handles (grips) to select a sub-range within it.
- *
  * <h3 class="comment-api-title">Overview</h3>
+ * Represents a numerical interval and two handles (grips) to select a sub-range within it.
  * The purpose of the component to enable visual selection of sub-ranges within a given interval.
  *
  * <h3>Structure</h3>
  * The most important properties of the Range Slider are:
  * <ul>
- * <li>min - The minimum value of the slider range</li>
- * <li>max - The maximum value of the slider range</li>
- * <li>value - The current value of the slider</li>
- * <li>step - Determines the increments in which the slider will move</li>
- * <li>showTooltip - Determines if a tooltip should be displayed above the handle</li>
- * <li>showTickmarks - Displays a visual divider between the step values</li>
+ * <li>min - The minimum value of the slider range.</li>
+ * <li>max - The maximum value of the slider range.</li>
+ * <li>value - The current value of the slider.</li>
+ * <li>step - Determines the increments in which the slider will move.</li>
+ * <li>showTooltip - Determines if a tooltip should be displayed above the handle.</li>
+ * <li>showTickmarks - Displays a visual divider between the step values.</li>
  * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
  * </ul>
  * <h4>Notes:</h4>
@@ -87,12 +86,12 @@ const metadata = {
  * <li><code>Right or Up Arrow</code> - Moves a component's handle or the entire selection one step to the right;</li>
  * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
  * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
- * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
- * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
+ * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code>;</li>
+ * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code>;</li>
  * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the component's range;</li>
  * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the component's range;</li>
- * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code></li>
- * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code></li>
+ * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code>;</li>
+ * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code>;</li>
  * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> properties to the values prior the component focusing;</li>
  * </ul>
  *

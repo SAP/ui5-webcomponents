@@ -1,4 +1,22 @@
 /**
+ * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items
+ *
+ * @name sap.ui.webcomponents.fiori.IFilterItem
+ * @interface
+ * @public
+ */
+const IFilterItem = "sap.ui.webcomponents.fiori.IFilterItem";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-filter-item</code> as values
+ *
+ * @name sap.ui.webcomponents.fiori.IFilterItemOption
+ * @interface
+ * @public
+ */
+const IFilterItemOption = "sap.ui.webcomponents.fiori.IFilterItemOption";
+
+/**
  * Interface for components that may be slotted as an action inside <code>ui5-li-notification</code> and <code>ui5-li-notification-group</code>
  *
  * @name sap.ui.webcomponents.fiori.INotificationAction
@@ -53,6 +71,15 @@ const ISideNavigationItem = "sap.ui.webcomponents.fiori.ISideNavigationItem";
 const ISideNavigationSubItem = "sap.ui.webcomponents.fiori.ISideNavigationSubItem";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as sort items
+ *
+ * @name sap.ui.webcomponents.fiori.ISortItem
+ * @interface
+ * @public
+ */
+const ISortItem = "sap.ui.webcomponents.fiori.ISortItem";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-timeline</code> as items
  *
  * @name sap.ui.webcomponents.fiori.ITimelineItem
@@ -80,12 +107,15 @@ const IUploadCollectionItem = "sap.ui.webcomponents.fiori.IUploadCollectionItem"
 const IWizardStep = "sap.ui.webcomponents.fiori.IWizardStep";
 
 export {
+	IFilterItem,
+	IFilterItemOption,
 	INotificationAction,
 	INotificationListItem,
 	IProductSwitchItem,
 	IShellBarItem,
 	ISideNavigationItem,
 	ISideNavigationSubItem,
+	ISortItem,
 	ITimelineItem,
 	IUploadCollectionItem,
 	IWizardStep,

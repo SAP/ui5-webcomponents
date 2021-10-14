@@ -59,6 +59,9 @@
 	<br>
 	<br>
 	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="multiple-show">Open dialog calling show() multiple times</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -457,6 +460,12 @@
 
 			dialog.show();
 		});
+
+		window["multiple-show"].addEventListener("click", function () {
+			dialog.show();
+			dialog.show();
+		});
+
 	</script>
 </body>
 

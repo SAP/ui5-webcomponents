@@ -10,10 +10,6 @@
 **A:** There are several resources:
 - [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/)
 - [How to get started?](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/)
-- [List of all public module imports](https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/)
-- [How to use](https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/)
-- [How to configure](https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/)
-
 
 **Q: Is there a CDN to load UI5 Web Components from?**
 

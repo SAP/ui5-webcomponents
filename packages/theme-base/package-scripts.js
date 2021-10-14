@@ -1,4 +1,3 @@
-const path = require("path");
 const resolve = require("resolve");
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 

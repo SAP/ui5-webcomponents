@@ -7,4 +7,5 @@
 	--_ui5_select_rtl_hover_icon_left_border: none;
 	--_ui5_select_rtl_hover_icon_right_border: none;
 	--_ui5_select_focus_width: 1px;
+	--_ui5_select_label_olor: var(--sapField_TextColor);
 }

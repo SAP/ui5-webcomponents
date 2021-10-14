@@ -17,7 +17,7 @@ import styles from "./generated/themes/SliderBase.css.js";
 const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
 		/**
-		 * Defines the minimum value of the slider
+		 * Defines the minimum value of the slider.
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
@@ -28,7 +28,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Defines the maximum value of the slider
+		 * Defines the maximum value of the slider.
 		 *
 		 * @type {Float}
 		 * @defaultvalue 100
@@ -67,7 +67,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Enables tick marks visualization for each step.
+		 * Enables tickmarks visualization for each step.
 		 * <br><br>
 		 * <b>Note:</b> The step must be a positive number.
 		 *
@@ -180,6 +180,7 @@ class SliderBase extends UI5Element {
 			sap_belize: "#bfbfbf",
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
+			sap_horizon: "#d5dadd",
 		};
 	}
 
@@ -673,11 +674,11 @@ class SliderBase extends UI5Element {
 		const maxStr = String(this._effectiveMax);
 		const minStr = String(this._effectiveMin);
 		const stepStr = String(this._effectiveStep);
-		const tickmarkWidth = "1px";
 
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
 		const currentTheme = getTheme();
+		const tickmarkWidth = currentTheme === "sap_horizon" ? "2px" : "1px";
 		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
@@ -738,9 +739,12 @@ class SliderBase extends UI5Element {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
+		// We need to take into consideration the effective direction of the slider - rtl or ltr.
+		// While in ltr, the left arrow key decreases the value, in rtl it should actually increase it.
+		let step = this.effectiveDir === "rtl" ? -this._effectiveStep : this._effectiveStep;
+
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
-		let step = this._effectiveStep;
 		step = isBigStep && ((max - min) / step > 10) ? (max - min) / 10 : step;
 
 		if (isEnd(event)) {
