@@ -1,7 +1,10 @@
-import { registerI18nLoader, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
+import { registerI18nLoader, fetchI18nBundle as originalFetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
+
+let customFetchI18nBundle;
+let customGetI18nBundle;
 
 /**
  * @class
@@ -40,6 +43,10 @@ class I18nBundle {
 }
 
 const getI18nBundle = packageName => {
+	if (customGetI18nBundle) {
+		return customGetI18nBundle(packageName);
+	}
+
 	if (I18nBundleInstances.has(packageName)) {
 		return I18nBundleInstances.get(packageName);
 	}
@@ -49,8 +56,22 @@ const getI18nBundle = packageName => {
 	return i18nBundle;
 };
 
+const fetchI18nBundle = async packageName => {
+	if (customFetchI18nBundle) {
+		return customFetchI18nBundle(packageName);
+	}
+
+	return originalFetchI18nBundle(packageName);
+};
+
+const registerCustomI18nHandlers = ({ fetch, get }) => {
+	customFetchI18nBundle = fetch;
+	customGetI18nBundle = get;
+};
+
 export {
 	registerI18nLoader,
 	fetchI18nBundle,
 	getI18nBundle,
+	registerCustomI18nHandlers,
 };
