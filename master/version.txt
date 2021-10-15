@@ -1,7 +1,24 @@
-commit a91807651bb84c58851be13d482c41590417c090
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Oct 14 08:13:19 2021 -0700
+commit 7aa4290f48294ddc07fce654169ad8cbfbd44e2d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Oct 15 11:59:01 2021 +0300
 
-    chore: translation delivery (#4115)
+    chore: fork sap_horizon and introduce sap_horizon_exp (#4116)
     
-    Change-Id: I9c8e7552ec4805fa3579e249fc4ca9a1faff7432
+    **Background**
+    
+    The current state of the "sap_horizon" theme has been compliant to the Fiori Next Alpha Figma Design,
+    that suggests a lot of changes in metrics and new interactions (new states). We have been able to implement all the core components (except for the Button).
+    
+    But, as the whole design is not yet validated and subject to change, we have decided not to do any changes in metrics or adding new states for now and keep the standard FIori_3 metrics and just consume the new theme variables and apply changes, that are validated and explicitly defined by the Design Team.
+    
+    However, to keep the current implementation, we are going to introduce a new experimental theme, called **"sap_horizon_exp"** (private and hidden) that will serve as base for testing the Fiori Next vision within the technology.  And, **"sap_horizon"** will be restored to its initial state - using the standard Fiori 3 metrics.
+    
+    **With this change:**
+    - `!` _**"sap_horizon"**_ uses the standard Fiori_3 metrics and developers are meant to start work on and apply the Designers' Feedback
+    - `!` **_"sap_horizon_exp"_** is an experiment and private theme, implementing the Fiori Next Alpha Figma Design.
+    
+    Note: to test the change, checkout the PR, rebuild, start and use the following pages (or use the respective query param):
+    - Displays the core components in _**"sap_horizon"**_
+    http://localhost:8080/test-resources/pages/CoreControls.html
+    - Displays the core components in **_"sap_horizon_exp"_**
+    http://localhost:8080/test-resources/pages/CoreControls_exp.html
