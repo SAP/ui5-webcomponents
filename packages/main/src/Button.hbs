@@ -28,10 +28,11 @@
 			name="{{icon}}"
 			part="icon"
 			?show-tooltip={{showIconTooltip}}
+			tabindex={{tabIndexValue}}
 		></ui5-icon>
 	{{/if}}
 
-	<span id="{{_id}}-content" class="ui5-button-text">
+	<span id="{{_id}}-content" class="ui5-button-text" tabindex={{tabIndexValue}}>
 		<bdi>
 			<slot></slot>
 		</bdi>

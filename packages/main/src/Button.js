@@ -337,7 +337,7 @@ class Button extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (this.nonInteractive) {
+		if (this.isInteractable) {
 			return;
 		}
 		event.isMarked = "button";
@@ -348,7 +348,7 @@ class Button extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		if (this.nonInteractive || this._isTouch) {
+		if (this.isInteractable || this._isTouch) {
 			return;
 		}
 
@@ -359,7 +359,7 @@ class Button extends UI5Element {
 
 	_ontouchstart(event) {
 		event.isMarked = "button";
-		if (this.nonInteractive) {
+		if (this.isInteractable) {
 			return;
 		}
 
@@ -384,6 +384,10 @@ class Button extends UI5Element {
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
 		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
 	}
 
 	_onkeyup(event) {
@@ -393,17 +397,22 @@ class Button extends UI5Element {
 	}
 
 	_onfocusout(_event) {
-		if (this.nonInteractive) {
+		if (this.isInteractable) {
 			return;
 		}
+
+		console.log("focus out");
+
 		this.active = false;
 		this.focused = false;
 	}
 
 	_onfocusin(event) {
-		if (this.nonInteractive) {
+		if (this.isInteractable) {
 			return;
 		}
+
+		console.log("focus in");
 
 		event.isMarked = "button";
 		this.focused = true;
@@ -448,11 +457,15 @@ class Button extends UI5Element {
 			return tabindex;
 		}
 
-		return this.nonInteractive ? "-1" : this._tabIndex;
+		return this.isInteractable ? "-1" : this._tabIndex;
 	}
 
 	get showIconTooltip() {
 		return this.iconOnly && !this.title;
+	}
+
+	get isInteractable() {
+		return this.nonInteractive || this.disabled;
 	}
 
 	static async onDefine() {
