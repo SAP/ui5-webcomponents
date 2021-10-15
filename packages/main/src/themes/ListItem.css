@@ -263,7 +263,7 @@
 
 :host([_mode="SingleSelectBegin"][focused]) .ui5-li-root,
 :host([_mode="MultiSelect"][focused]) .ui5-li-root {
-	padding-left: 1rem;
+	padding-left: var(--_ui5-listitem-focused-padding-left);
 	padding-right: 0;
 }
 
@@ -274,7 +274,8 @@
 }
 
 :host([_mode="SingleSelectEnd"][focused]) .ui5-li-root {
-	padding-inline-end: 0;
+	padding-left: 1rem;
+	right: var(--_ui5-listitem-single-select-end-focused-right)
 }
 
 :host([_mode="SingleSelectEnd"]) .ui5-li-root {

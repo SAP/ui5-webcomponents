@@ -21,4 +21,6 @@
     --_ui5-listitem-focus-border-inline: .25rem;
     --_ui5-listitem-focus-outline: none;
     --_ui5-listitem-rtl-selected-padding-right: .8125rem;
+    --_ui5-listitem-focused-padding: 1rem;
+    --_ui5-listitem-single-select-end-focused-right: -2px;
 }
