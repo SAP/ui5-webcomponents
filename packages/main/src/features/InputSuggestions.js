@@ -98,11 +98,18 @@ class Suggestions {
 		return false;
 	}
 
-	onEnter(event) {
+	onEnter(event) {		
+		if (this._isGroupOrInactiveItem) {
+			event.preventDefault();
+			return false;
+		}
+
 		if (this._isItemOnTarget()) {
 			this.onItemSelected(null, true /* keyboardUsed */);
 			return true;
 		}
+
+
 		return false;
 	}
 
