@@ -82,3 +82,5 @@ Example 2:
 (compact mode will be set for Button 2 and Button 3)
 
 Unlike RTL, compact mode does not require additional APIs when its markers are changed dynamically.
+
+Next: [Micro-Frontends and Custom Elements Scoping](03-scoping.md)

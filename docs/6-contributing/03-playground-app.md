@@ -1,4 +1,4 @@
-# Running the UI5 Web Components Playground Locally
+# Running the UI5 Web Components Playground app locally
 
 The [deployed](https://sap.github.io/ui5-webcomponents/) playground can be run locally to test your changes and samples.
 In order to do so, you have to follow the steps below:
