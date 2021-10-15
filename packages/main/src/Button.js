@@ -401,8 +401,6 @@ class Button extends UI5Element {
 			return;
 		}
 
-		console.log("focus out");
-
 		this.active = false;
 		this.focused = false;
 	}
@@ -411,8 +409,6 @@ class Button extends UI5Element {
 		if (this.isInteractable) {
 			return;
 		}
-
-		console.log("focus in");
 
 		event.isMarked = "button";
 		this.focused = true;
