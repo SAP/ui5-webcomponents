@@ -154,7 +154,7 @@ slot[name="profile"] {
 	flex-shrink: 0;
 }
 
-.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-middle {
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-middle {
 	width: 3rem;
 }
 
@@ -242,7 +242,7 @@ slot[name="profile"] {
 	flex-grow: 0;
 }
 
-.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
 }
@@ -282,7 +282,7 @@ slot[name="profile"] {
 	max-width: 100%;
 }
 
-.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-right {
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-right {
 	flex-basis: 0%;
 }
 
