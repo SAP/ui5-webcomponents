@@ -2,5 +2,5 @@
 
 :root {
 	--_ui5_select_label_olor: var(--sapTitleColor); /* #223548; */
-	--_ui5-select-list-padding: 4px 0;
+	--_ui5-select-list-padding: .25rem 0;
 }
