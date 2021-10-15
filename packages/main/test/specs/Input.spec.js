@@ -366,17 +366,27 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
-	it("checks if the suggestions popover width is the same as the input width when there is a long suggestion", async () => {
-		const input = await browser.$("#suggestionsPopoverWidth");
-		const nativeInput = await browser.$("#suggestionsPopoverWidth").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#suggestionsPopoverWidth");
+	it("checks if the suggestions popover width is minimum the size of the input", async () => {
+		const input = await browser.$("#myInputGrouping");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
-		await nativeInput.click();
-		await nativeInput.keys("a");
+		await input.click();
+		await input.keys("a");
 
-		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'));
-	})
+		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'), "Suggestions' popover width is minimum the size of the input");
+	});
+
+	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
+		const input = await browser.$("#long-sugg");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#long-sugg");
+		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		await input.click();
+		await input.keys("a");
+
+		assert.strictEqual(await listItem.getSize('width'), 640, "Suggestions popover's width is maximum 40rem if the input isn't wider than that");
+	});
 
 	it("Input's maxlength property is set correctly", async () => {
 		const input5 = await browser.$("#input-tel");
