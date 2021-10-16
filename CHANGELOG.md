@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.21](https://github.com/SAP/ui5-webcomponents/compare/v0.31.20...v0.31.21) (2021-10-16)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** fix speech output on layout arrows ([#4034](https://github.com/SAP/ui5-webcomponents/issues/4034)) ([abfee41](https://github.com/SAP/ui5-webcomponents/commit/abfee41)), closes [#3699](https://github.com/SAP/ui5-webcomponents/issues/3699)
+* **ui5-input:** fix suggestiions interaction on mobile ([#4025](https://github.com/SAP/ui5-webcomponents/issues/4025)) ([ebd2065](https://github.com/SAP/ui5-webcomponents/commit/ebd2065))
+* **ui5-list:** remove unnecessary scrollbar on RTL in MultiSelect mode ([#4085](https://github.com/SAP/ui5-webcomponents/issues/4085)) ([023081e](https://github.com/SAP/ui5-webcomponents/commit/023081e)), closes [#3947](https://github.com/SAP/ui5-webcomponents/issues/3947)
+* **ui5-list, ui5-table, ui5-notification, ui5-busy-indicator:** getFocusDomRef returns the correct element when busy ([#3951](https://github.com/SAP/ui5-webcomponents/issues/3951)) ([feaa63f](https://github.com/SAP/ui5-webcomponents/commit/feaa63f)), closes [#3922](https://github.com/SAP/ui5-webcomponents/issues/3922)
+
+
+### Features
+
+* **ui5-card:** add "accessibleName" property ([c6f75c7](https://github.com/SAP/ui5-webcomponents/commit/c6f75c7))
+* **ui5-static-area-item:** introduce scoping for StaticAreaItem ([#3076](https://github.com/SAP/ui5-webcomponents/issues/3076)) ([10108aa](https://github.com/SAP/ui5-webcomponents/commit/10108aa))
+
+
+
+
+
 ## [0.31.20](https://github.com/SAP/ui5-webcomponents/compare/v0.31.19...v0.31.20) (2021-10-03)
 
 

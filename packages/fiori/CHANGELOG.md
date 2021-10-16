@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.21](https://github.com/SAP/ui5-webcomponents/compare/v0.31.20...v0.31.21) (2021-10-16)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** speech output on layout arrows ([#4034](https://github.com/SAP/ui5-webcomponents/issues/4034)) ([abfee41](https://github.com/SAP/ui5-webcomponents/commit/abfee41)), closes [#3699](https://github.com/SAP/ui5-webcomponents/issues/3699)
+* **ui5-list:** remove unnecessary scrollbar in RTL for Multiselect mode ([#4085](https://github.com/SAP/ui5-webcomponents/issues/4085)) ([023081e](https://github.com/SAP/ui5-webcomponents/commit/023081e)), closes [#3947](https://github.com/SAP/ui5-webcomponents/issues/3947)
+* **ui5-list, ui5-table, ui5-notification, ui5-busy-indicator:** getFocusDomRef returns the correct element when the state is busy ([#3951](https://github.com/SAP/ui5-webcomponents/issues/3951)) ([feaa63f](https://github.com/SAP/ui5-webcomponents/commit/feaa63f)), closes [#3922](https://github.com/SAP/ui5-webcomponents/issues/3922)
+
+
+### Features
+
+* **ui5-static-area-item:** StaticAreaItem can now be scoped ([#3076](https://github.com/SAP/ui5-webcomponents/issues/3076)) ([10108aa](https://github.com/SAP/ui5-webcomponents/commit/10108aa))
+
+
+
+
+
 ## [0.31.20](https://github.com/SAP/ui5-webcomponents/compare/v0.31.19...v0.31.20) (2021-10-03)
 
 
