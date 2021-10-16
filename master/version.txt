@@ -1,5 +1,9 @@
-commit 31e30f8ce1aec6ed0d227216860a30c2a74f8ee2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Oct 15 16:01:12 2021 +0300
+commit 04c09daf053e7a88569b33806f9f917b10340259
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Sat Oct 16 15:25:25 2021 +0300
 
-    feat(framework): Implement better custom theme support (#4121)
+    fix(ui5-list): remove unnecessary scrollbar in RTL for Multiselect mode (#4085)
+    
+    Unnecessary scrollbar that appeared in RTL mode of ui5-list is now removed.
+    
+    Fixes: #3947
