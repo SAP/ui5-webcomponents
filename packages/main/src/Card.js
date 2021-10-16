@@ -66,6 +66,19 @@ const metadata = {
 		action: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
+		 * <b>Note:</b> <code>accessibleName</code> should be always set.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleName: {
+			type: String,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -255,12 +268,39 @@ class Card extends UI5Element {
 		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
-	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
-	}
+	getEffectiveAriaLabelText(el) {
+		if (!el.accessibleNameRef) {
+			if (el.accessibleName) {
+				return el.accessibleName;
+			}
+	
+			return undefined;
+		}
+	
+		return this.getAriaLabelledByTexts(el);
+	};
 
-	get ariaCardRoleDescription() {
-		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	getAriaLabelledByTexts(el, ownerDocument, readyIds = "") {
+		const ids = (readyIds && readyIds.split(" ")) || el.accessibleNameRef.split(" ");
+		const owner = ownerDocument || findNodeOwner(el);
+		let result = "";
+	
+		ids.forEach((elementId, index) => {
+			const element = owner.querySelector(`[id='${elementId}']`);
+			result += `${element ? element.textContent : ""}`;
+	
+			if (index < ids.length - 1) {
+				result += " ";
+			}
+		});
+	
+		return result;
+	};
+	
+	get ariaLabelText() {
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this),
+			effectiveAriaLabel = effectiveAriaLabelText ? ` ${effectiveAriaLabelText}` : "";
+		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
 	}
 
 	get ariaCardHeaderRoleDescription() {
@@ -291,10 +331,6 @@ class Card extends UI5Element {
 		}
 
 		return labels.length !== 0 ? labels.join(" ") : undefined;
-	}
-
-	get ariaLabelledByCard() {
-		return this.heading ? `${this._id}-heading ${this._id}-desc` : `${this._id}-desc`;
 	}
 
 	get hasAvatar() {

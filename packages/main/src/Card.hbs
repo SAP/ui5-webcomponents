@@ -2,8 +2,7 @@
 	class="{{classes.main}}"
 	dir="{{effectiveDir}}"
 	role="region"
-	aria-label="{{ariaLabelText}}"
-	aria-labelledby="{{ariaLabelledByCard}}">
+	aria-label="{{ariaLabelText}}">
 	{{#if hasHeader}}
 		<div class="{{classes.header}}"
 			@click="{{_headerClick}}"
@@ -42,5 +41,4 @@
 	<section role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</section>
-	<span id="{{_id}}-desc" class="ui5-hidden-text">{{ariaCardRoleDescription}}</span>
 </div>
