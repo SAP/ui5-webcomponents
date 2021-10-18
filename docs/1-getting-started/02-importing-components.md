@@ -8,7 +8,7 @@ The UI5 Web Components project currently offers 2 NPM packages with Web Componen
 
 This separation is purely logical, as you can, and should, only import the components you are going to need from both packages. 
 
-| Project | NPM Package                                                                        | Description                                                                          | Application           | Components list                                                   |
+| Project | NPM Package                                                                        | Description                                                                          | Application           | Components List                                                   |
 |---------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-----------------------|-------------------------------------------------------------------|
 | `main`  | [@ui5/webcomponents](https://www.npmjs.com/package/@ui5/webcomponents)             | "Bread-and-butter" components, such as buttons, pickers, inputs, list, table, etc. | General web apps      | [Explore](https://www.npmjs.com/package/@ui5/webcomponents)       |
 | `fiori` | [@ui5/webcomponents-fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | More semantic, higher-order components that implement Fiori patterns                 | Mostly SAP Fiori apps | [Explore](https://www.npmjs.com/package/@ui5/webcomponents-fiori) |
