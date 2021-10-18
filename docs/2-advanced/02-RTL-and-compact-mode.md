@@ -1,4 +1,4 @@
-# Right-To-Left (RTL) And Compact Mode
+# Right-To-Left (RTL) and Compact Mode
 
 *This section explains how to make UI5 Web Components render in **RTL** and **compact mode**.*
 
@@ -83,4 +83,4 @@ Example 2:
 
 Unlike RTL, compact mode does not require additional APIs when its markers are changed dynamically.
 
-Next: [Micro-Frontends And Custom Elements Scoping](03-scoping.md)
+Next: [Micro-Frontends and Custom Elements Scoping](03-scoping.md)
