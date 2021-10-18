@@ -73,3 +73,4 @@ For example:
 <ui5-avatar icon="business-suite/coins"></ui5-avatar>
 ```
 
+Next: [Using additional assets](05-using-assets.md)

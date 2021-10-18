@@ -1,4 +1,4 @@
-# How to Use UI5 Web Components
+# Understanding UI5 Web Components APIs
 
 *UI5 Web Components are just HTML.* Therefore, their usage is identical
 to the usage of standard HTML elements. Usually, Web Components creation and manipulation
@@ -242,3 +242,5 @@ Consult the documentation for the available public methods for each UI5 Web Comp
 As you can see from this article, UI5 Web Components, being HTML elements in the first place,
 comply with the same rules. There are some novelties that come with the Web Components standard,
 such as `slot`, but otherwise everything else is what you already know and use from HTML.
+
+Next: [Using icons](04-using-icons.md)

@@ -1,6 +1,6 @@
-# Using components
+# Importing UI5 Web Components
 
-*This section explains how to load and use UI5 Web Components in your projects*
+*This section explains how to import UI5 Web Components to your projects*
 
 ## Components packages
 
@@ -55,5 +55,4 @@ For example:
 *Note: For most components the name of the module (f.e. `Button.js`, `Icon.js`) coincides with the name of the tag (`ui5-button`, `ui5-icon`), 
 but for others this is not the case (f.e. `StandardListItem.js` and `ui5-li`). Always consult the documentation when in doubt.*
 
-## Next steps
-- [Using icons](./3.%20Using%20Icons.md)
+Next: [Understanding UI5 Web Components APIs](03-understanding-components-APIs.md)

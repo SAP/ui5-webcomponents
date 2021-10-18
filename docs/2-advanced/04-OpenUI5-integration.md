@@ -20,3 +20,5 @@ When you import the above module:
 
 Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
+
+Next: [Using the framework](05-other-framework-level-APIs.md)
