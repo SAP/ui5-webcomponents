@@ -1,0 +1,56 @@
+---
+title: UI5 Web Components
+permalink: /
+nav_exclude: true
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>UI5 Web Components</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{"/assets/css/NEW-landing-page.css" | absolute_url}}">
+    <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3,react,angular,vue">
+    <link type="image/x-icon" href="{{"assets/images/favicon.ico" | absolute_url}}" rel="shortcut icon">
+    <script id="sap-ui-config" type="application/json">
+        {
+            "theme": "sap_fiori_3",
+            "language": "EN"
+        }
+    </script>
+
+    <script src="{{"/assets/js/webcomponentsjs/webcomponents-loader.js" | absolute_url }}"></script>
+    <script type="module" src="{{"/assets/js/ui5-webcomponents/bundle.esm.js" | absolute_url}}"></script>
+    <script nomodule src="{{"/assets/js/ui5-webcomponents/bundle.es5.js" | absolute_url}}"></script>
+
+    <style>
+        .page-header,
+        .side-bar {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="sapUiBody">
+    <nav class="top-bar">
+        <a href="{{ page.documentation | absolute_url }}">Documentation</a>
+        <a href="{{ page.samples | absolute_url }}">Components</a>
+        <a href="{{ page.blog | absolute_url }}" class="blog">Blog</a>
+        <a href="https://github.com/SAP/ui5-webcomponents" class="github-link">
+            <img src="{{ "/assets/images/github.png" | absolute_url }}" alt="GithHub Repository">
+        </a>
+    </nav>
+
+    <section class="content">
+       <section class="header">
+            <div class="title">
+                <h1>UI5&nbsp;</h1>
+                <h1>Web Components</h1>
+            </div>
+            <h2 class="subtitle">Enterprise-flavored sugar on top of native APIs!</h2>
+
+            <a href="{{ page.documentation }}" class="get-started-button">Get Started</a>
+       </section>
+    </section>
+</body>
+</html>
