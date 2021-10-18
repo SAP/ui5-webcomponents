@@ -379,7 +379,7 @@ class Suggestions {
 
 	get itemSelectionAnnounce() {
 		const i18nBundle = this.i18nBundle,
-			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, [this.accInfo.currentPos], [this.accInfo.listSize]),
+			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
 			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;

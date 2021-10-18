@@ -273,7 +273,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
-		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
+		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
 	}
 
 	get showNMore() {
