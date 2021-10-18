@@ -9,6 +9,14 @@ Provides common theming assets, used by other UI5 Web Components packages, such 
 
 This package is intended for UI5 Web Component development and currently provides no app development related public APIs.
 
+## Provided assets
+
+The assets, provided by this package, are additional themes:
+
+`import "@ui5/webcomponents-theming/dist/Assets.js";`
+
+*Note:* These assets are already imported by the UI5 Web Components packages that need them.
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
@@ -18,7 +26,7 @@ This package is intended for UI5 Web Component development and currently provide
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/docs/6-contributing/02-conventions-and-guidelines.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
