@@ -1,4 +1,4 @@
-# Creating a Custom UI5 Web Components Package
+# Creating a custom UI5 Web Components Package
 
 This tutorial explains how to:
  - Create an NPM package for your own UI5 Web Components.
@@ -293,3 +293,5 @@ import "my-ui5-webcomponents/dist/MyFirstComponent.js"; // for my-first-componen
 import "my-ui5-webcomponents/dist/SomeOtherComponent.js";
 import "my-ui5-webcomponents/dist/YetAnotherComponent.js";
 ```
+
+Next: [Developing custom UI5 Web Components](02-custom-UI5-Web-Components.md)

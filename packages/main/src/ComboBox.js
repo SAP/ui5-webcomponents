@@ -872,7 +872,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem) {
-		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [indexOfItem + 1], [this._filteredItems.length]);
+		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");

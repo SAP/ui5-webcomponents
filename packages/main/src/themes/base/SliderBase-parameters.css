@@ -1,6 +1,7 @@
 
 :root {
 	--_ui5_slider_progress_container_background: var(--sapField_BorderColor);
+	--_ui5_slider_progress_container_dot_display: none;
 	--_ui5_slider_progress_border: none;
 	--_ui5_slider_inner_height: 0.25rem;
 	--_ui5_slider_outer_height: 1.6875rem;
@@ -9,6 +10,8 @@
 	--_ui5_slider_handle_height: 1.625rem;
 	--_ui5_slider_handle_width: 1.625rem;
 	--_ui5_slider_handle_border: solid 0.125rem var(--sapField_BorderColor);
+	--_ui5_slider_handle_border_radius: 1rem;
+	--_ui5_slider_handle_box_shadow: none;
 	--_ui5_slider_handle_background: var(--sapButton_Background);
 	/* --_ui5_range_slider_handle_background: rgba(var(--sapButton_Background), 0.25); - doesn't work on IE */
 	--_ui5_range_slider_handle_background: rgba(255, 255, 255, 0.25);
@@ -30,6 +33,7 @@
 	--_ui5_slider_tooltip_background: var(--sapField_Background);
 	--_ui5_slider_tooltip_border_radius: var(--sapElement_BorderCornerRadius);
 	--_ui5_slider_tooltip_border_color: var(--sapField_BorderColor);
+	--_ui5_slider_tooltip_border: 1px solid var(--_ui5_slider_tooltip_border_color);
 	--_ui5_slider_tooltip_padding: 0.4125rem;
 	--_ui5_slider_tooltip_height: 1rem;
 	--_ui5_slider_tooltip_box_shadow: none;

@@ -1,4 +1,4 @@
-# Metadata
+# Understanding UI5 Web Components metadata
 
 Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc...)
 
@@ -249,3 +249,5 @@ When `managedSlots` is set to `true`:
  An example of a component that would benefit from `managedSlots` is a Tab Container that monitors its children (Tabs)
  in order to display a link on its Tab Strip for each Tab child. Therefore it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.
+
+Next: [Testing UI5 Web Components](04-testing-UI5-Web-Components.md)

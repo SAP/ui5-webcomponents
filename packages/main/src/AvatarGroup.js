@@ -310,7 +310,7 @@ class AvatarGroup extends UI5Element {
 		let text = this.i18nBundle.getText(typeLabelKey);
 
 		// add displayed-hidden avatars label
-		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, [this._itemsCount - hiddenItemsCount], [hiddenItemsCount])}`;
+		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, this._itemsCount - hiddenItemsCount, hiddenItemsCount)}`;
 
 		if (this._isGroup) {
 			// the container role is "button", add the message for complete list activation

@@ -8,7 +8,7 @@
 
 ## What are [UI5 Web Components](https://sap.github.io/ui5-webcomponents)?
 
- - A rich set of **enterprise-grade reusable UI elements** driven by a **lightweight framework** (~20K gzipped).
+ - A rich set of **enterprise-grade reusable UI elements** driven by a **lightweight framework** (~20K gzipped for the framework part).
  - Suitable for building anything from **static web sites** to **complex web applications**.
  - Usable with any current or future **web development framework** (React, Angular, Vue, etc.).
  - Implement the [SAP Fiori design](https://experience.sap.com/fiori-design/) and follow the [SAP Fiori Design Guidelines](https://experience.sap.com/fiori-design-web/) for a consistent UX.
@@ -25,11 +25,11 @@
 
 ## More resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
-- [Configuring UI5 Web Components](./docs/Configuration.md)
-- [Creating a custom theme](./docs/CustomTheming.md)
-- [Creating custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
-- [Creating custom UI5 Web Components NPM packages](./docs/dev/Creating%20UI5%20Web%20Components%20Packages.md)
-- [Micro-frontends and Custom elements scoping](./docs/Scoping.md)
+- [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
+- [Creating a custom theme](./docs/3-customizing/01-theme.md)
+- [Creating custom UI5 Web Components](./docs/5-development/02-custom-UI5-Web-Components.md)
+- [Creating custom UI5 Web Components NPM packages](./docs/5-development/01-custom-UI5-Web-Components-Packages.md)
+- [Micro-frontends and Custom elements scoping](./docs/2-advanced/03-scoping.md)
 - [F.A.Q.](./docs/FAQ.md)
 
 ## Related Projects
@@ -81,7 +81,7 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	<ui5-button>Hello world!</ui5-button>
 	```
 
-	For more on using UI5 Web Components, click [here](./docs/How%20To%20Use.md).
+	For more information, see [Importig](./docs/1-getting-started/02-importing-components.md) and [Using](./docs/1-getting-started/03-understanding-components-APIs.md) UI5 Web Components.
 
 ### Is there a CDN I can use?
 
@@ -153,10 +153,7 @@ yarn start:playground
 # open http://localhost:4000/
 ```
 
-*Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](/docs/Playground.md)*
-
-If you wish to run the tests locally on a Windows machine, you must also manually install `Windows Build Tools 2015` and `Python 2.7`.
-See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this.
+*Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)*
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:
@@ -170,7 +167,7 @@ Afterwards, you can find the build output in the `dist` folder of the correspond
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## Limitations
-None as of 1.0.0-rc.8
+None as of 1.0.0-rc.15
 
 ## Known Issues
 No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/SAP/ui5-webcomponents/issues).
@@ -179,4 +176,4 @@ No major bugs known. To report an issue or view the currently open issues, click
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](./docs/6-contributing/02-conventions-and-guidelines.md).

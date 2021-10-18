@@ -270,3 +270,5 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 ```js
 import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 ```
+
+Next: [Right-to-left (RTL) and compact mode](02-RTL-and-compact-mode.md)

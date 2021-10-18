@@ -597,7 +597,7 @@ class Carousel extends UI5Element {
 		for (let index = 0; index < pages; index++) {
 			dots.push({
 				active: index === this._selectedIndex,
-				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
+				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, index + 1, pages),
 			});
 		}
 

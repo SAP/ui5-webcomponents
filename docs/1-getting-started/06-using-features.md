@@ -35,3 +35,5 @@ For example:
 ```js
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
 ```
+
+Next: [Wrapping up](07-wrapping-up.md)

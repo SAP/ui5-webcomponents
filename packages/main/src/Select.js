@@ -758,7 +758,7 @@ class Select extends UI5Element {
 	itemSelectionAnnounce() {
 		let text;
 		const optionsCount = this._filteredItems.length;
-		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [this._selectedIndex + 1], [optionsCount]);
+		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
 			text = `${this._currentlySelectedOption.textContent} ${this._isPickerOpen ? itemPositionText : ""}`;
