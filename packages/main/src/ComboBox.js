@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -417,7 +417,9 @@ class ComboBox extends UI5Element {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
 
-		if (this._autocomplete && this.filterValue !== this.value) {
+		// Safari is quite slow and does not preserve text highlighting on control rerendering.
+		// That's why we need to restore it "manually".
+		if (isSafari() && this._autocomplete && this.filterValue !== this.value) {
 			this.inner.setSelectionRange(
 				(this._isKeyNavigation ? 0 : this.filterValue.length),
 				this.value.length,
