@@ -545,9 +545,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, leftCharactersCount);
 				} else {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, Math.abs(leftCharactersCount));
 				}
 			}
 		} else {
