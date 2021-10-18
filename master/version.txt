@@ -1,9 +1,5 @@
-commit 04c09daf053e7a88569b33806f9f917b10340259
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Sat Oct 16 15:25:25 2021 +0300
+commit aea5b030fe8115fac4c020c48b40f3941be96c23
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Oct 18 11:23:49 2021 +0300
 
-    fix(ui5-list): remove unnecessary scrollbar in RTL for Multiselect mode (#4085)
-    
-    Unnecessary scrollbar that appeared in RTL mode of ui5-list is now removed.
-    
-    Fixes: #3947
+    docs: fix documentation bugs and create links (#4122)
