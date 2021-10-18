@@ -5,7 +5,7 @@ const i18n = {
 	load: async () => {
 		await Promise.resolve();
 		return {
-			get: () => "Some third-party text",
+			get: (key, paramsArr, defaultText) => `key: ${key}, params: ${paramsArr.join(", ")}, defaultText: ${defaultText}`,
 		};
 	},
 };
@@ -19,7 +19,9 @@ registerCustomI18nHandlers({
 	// register get (custom getI18nBundle implementation) - return an object that has a "getText" function (used by all components) that proxies to the "get" function of the third-party
 	get: packageName => {
 		return {
-			getText: instance.get, // potentially use the packageName parameter too
+			getText: (keyObj, ...params) => {
+				return instance.get(keyObj.key, params, keyObj.defaultText);
+			},
 		};
 	},
 });
