@@ -91,6 +91,10 @@ const isDesktop = () => {
 	return (!isTablet() && !isPhone()) || isWindows8OrAbove();
 };
 
+const isCombi = () => {
+	return isTablet() && isDesktop();
+};
+
 export {
 	supportsTouch,
 	isIE,
@@ -99,4 +103,5 @@ export {
 	isPhone,
 	isTablet,
 	isDesktop,
+	isCombi,
 };

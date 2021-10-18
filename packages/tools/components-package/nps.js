@@ -10,7 +10,7 @@ const getScripts = (options) => {
 
 	const port = options.port || 8080; // preferred port
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
-	let illustrations = options.illustrationsPath || [];
+	let illustrations = options.illustrationsData || [];
 
 	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 
@@ -48,9 +48,7 @@ const getScripts = (options) => {
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
 			},
-			illustrations: {
-				default: illustrationsScript
-			}
+			illustrations: illustrationsScript
 		},
 		copy: {
 			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill-placeholder",

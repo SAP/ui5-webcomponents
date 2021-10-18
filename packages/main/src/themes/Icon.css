@@ -1,3 +1,5 @@
+@import "./TapHighlightColor.css";
+
 :host([hidden]) {
 	display: none;
 }

@@ -6,9 +6,11 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
+const replace = require("@rollup/plugin-replace");
 const colors = require("colors/safe");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
+const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
@@ -71,6 +73,25 @@ function ui5DevReadyMessagePlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
+
+	if (process.env.DEV) {
+		plugins.push(replace({
+			values: {
+				'const DEV_MODE = false': 'const DEV_MODE = true',
+			},
+			preventAssignment: false,
+		}));
+	}
+
+	if (process.env.DEV && !process.env.ENABLE_CLDR) {
+		// Empty the CLDR assets file for better performance during development
+		plugins.push(emptyModulePlugin({
+			emptyModules: [
+				"localization/dist/Assets.js",
+			],
+		}));
+	}
+
 	if (!process.env.DEV) {
 		plugins.push(filesize(
 			{

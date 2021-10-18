@@ -13,7 +13,6 @@ let initialConfig = {
 	noConflict: false, // no URL
 	formatSettings: {},
 	fetchDefaultLanguage: false,
-	assetsPath: "",
 };
 
 /* General settings */
@@ -62,11 +61,6 @@ const getFormatSettings = () => {
 	return initialConfig.formatSettings;
 };
 
-const getAssetsPath = () => {
-	initConfiguration();
-	return initialConfig.assetsPath;
-};
-
 const booleanMapping = new Map();
 booleanMapping.set("true", true);
 booleanMapping.set("false", false);
@@ -112,6 +106,14 @@ const parseURLParameters = () => {
 	});
 };
 
+const normalizeParamValue = (param, value) => {
+	if (param === "theme" && value.includes("@")) { // the theme parameter might have @<URL-TO-THEME> in the value - strip this
+		return value.split("@")[0];
+	}
+
+	return value;
+};
+
 const applyURLParam = (key, value, paramType) => {
 	const lowerCaseValue = value.toLowerCase();
 	const param = key.split(`${paramType}-`)[1];
@@ -119,6 +121,9 @@ const applyURLParam = (key, value, paramType) => {
 	if (booleanMapping.has(value)) {
 		value = booleanMapping.get(lowerCaseValue);
 	}
+
+	value = normalizeParamValue(param, value);
+
 	initialConfig[param] = value;
 };
 
@@ -158,5 +163,4 @@ export {
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,
-	getAssetsPath,
 };

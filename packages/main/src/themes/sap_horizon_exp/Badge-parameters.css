@@ -1,0 +1,91 @@
+:root {
+    --_ui5-badge-height: 1.5rem;
+    --_ui5-badge-border: none;
+    --_ui5-badge-left-border: 2px solid transparent;
+    --_ui5-badge-border-radius: .25rem;
+	--_ui5-badge-font-weight: bold;
+	--_ui5-badge-font-weight: 400;
+	--_ui5-badge-text-transform: none;
+
+	--_ui5-badge-cursor: pointer;
+
+	--ui5-badge-color-scheme-1-background: var(--sapNeutralBackground);
+	--ui5-badge-color-scheme-1-hover-background: #fff;
+	--ui5-badge-color-scheme-1-border: var(--sapContent_ForegroundBorderColor);
+	--ui5-badge-color-scheme-1-color: #4D5E71;
+	--ui5-badge-color-scheme-1-shadow: 0 0 2px var(--sapNeutralBackground), 0 4px 8px var(--sapNeutralBackground);
+	--ui5-badge-color-scheme-1-active-shadow: 0 2px 4px rgba(131, 150, 168, 0.16), 0 0 2px 0 rgba(131, 150, 168, 0.16);
+	--ui5-badge-color-scheme-1-active-color: #354A5F;
+
+	--ui5-badge-color-scheme-2-background: var(--sapInformationBackground);
+	--ui5-badge-color-scheme-2-hover-background: #fff;
+	--ui5-badge-color-scheme-2-border: #1890ff;
+	--ui5-badge-color-scheme-2-color: var(--sapContent_Selected_TextColor);
+	--ui5-badge-color-scheme-2-shadow: 0 0 2px var(--sapInformationBackground), 0 4px 8px var(--sapInformationBackground);
+	--ui5-badge-color-scheme-2-active-shadow: 0 2px 4px rgba(27, 144, 255, 0.16), 0 0 2px 0 rgba(27, 144, 255, 0.16);
+	--ui5-badge-color-scheme-2-active-color: #0040B0;
+
+	--ui5-badge-color-scheme-3-background: #dafdf5;
+	--ui5-badge-color-scheme-3-hover-background: #fff;
+	--ui5-badge-color-scheme-3-border: var(--sapChart_Sequence_6);
+	--ui5-badge-color-scheme-3-color: #046c7a;
+	--ui5-badge-color-scheme-3-shadow: 0 0 2px #dafdf5, 0 4px 8px #dafdf5;
+	--ui5-badge-color-scheme-3-active-shadow: 0 2px 4px rgba(4, 172, 167, 0.16), 0 0 2px 0 rgba(4, 172, 167, 0.16);
+	--ui5-badge-color-scheme-3-active-color: #035663;
+
+	--ui5-badge-color-scheme-4-background: var(--sapSuccessBackground);
+	--ui5-badge-color-scheme-4-hover-background: #fff;
+	--ui5-badge-color-scheme-4-border: var(--sapChart_Good);
+	--ui5-badge-color-scheme-4-color: var(--sapButton_Accept_TextColor);
+	--ui5-badge-color-scheme-4-shadow: 0 0 2px var(--sapSuccessBackground), 0 4px 8px var(--sapSuccessBackground);
+	--ui5-badge-color-scheme-4-active-shadow: 0 2px 4px rgba(93, 193, 34, 0.16), 0 0 2px 0 rgba(93, 193, 34, 0.16);
+	--ui5-badge-color-scheme-4-active-color: #1E592F;
+
+	--ui5-badge-color-scheme-5-background: var(--sapWarningBackground);
+	--ui5-badge-color-scheme-5-hover-background: #fff;
+	--ui5-badge-color-scheme-5-border: var(--sapAccentColor1);
+	--ui5-badge-color-scheme-5-color: var(--sapCriticalTextColor);
+	--ui5-badge-color-scheme-5-shadow: 0 0 2px var(--sapWarningBackground), 0 4px 8px var(--sapWarningBackground);
+	--ui5-badge-color-scheme-5-active-shadow: 0 2px 4px rgba(255, 179, 0, 0.16), 0 0 2px 0 rgba(255, 179, 0, 0.16);
+	--ui5-badge-color-scheme-5-active-color: #8D2A00;
+
+	--ui5-badge-color-scheme-6-background: var(--sapErrorBackground);
+	--ui5-badge-color-scheme-6-hover-background: #fff;
+	--ui5-badge-color-scheme-6-border: #ee3939;
+	--ui5-badge-color-scheme-6-color: var(--sapButton_Reject_TextColor);
+	--ui5-badge-color-scheme-6-shadow: 0 0 2px var(--sapErrorBackground), 0 4px 8px var(--sapErrorBackground);
+	--ui5-badge-color-scheme-6-active-shadow: 0 2px 4px rgba(245, 40, 40, 0.16), 0 0 2px 0 rgba(245, 40, 40, 0.16);
+	--ui5-badge-color-scheme-6-active-color: #840606;
+
+	--ui5-badge-color-scheme-7-background: #fff0fa;
+	--ui5-badge-color-scheme-7-hover-background: #fff;
+	--ui5-badge-color-scheme-7-border: #f31ded;
+	--ui5-badge-color-scheme-7-color: #a100c2;
+	--ui5-badge-color-scheme-7-shadow: 0 0 2px #fff0fa, 0 4px 8px #fff0fa;
+	--ui5-badge-color-scheme-7-active-shadow: 0 2px 4px rgba(252, 0, 245, 0.16), 0 0 2px 0 rgba(252, 0, 245, 0.16);
+	--ui5-badge-color-scheme-7-active-color: #7800A4;
+
+	--ui5-badge-color-scheme-8-background: #f1ecff;
+	--ui5-badge-color-scheme-8-hover-background: #fff;
+	--ui5-badge-color-scheme-8-border: #9b76ff;
+	--ui5-badge-color-scheme-8-color: #5d36ff;
+	--ui5-badge-color-scheme-8-shadow: 0 0 2px #f1ecff, 0 4px 8px #f1ecff;
+	--ui5-badge-color-scheme-8-active-shadow: 0 2px 4px rgba(155, 118, 255, 0.16), 0 0 2px 0 rgba(155, 118, 255, 0.16);
+	--ui5-badge-color-scheme-8-active-color: #470CED;
+
+	--ui5-badge-color-scheme-9-background: var(--ui5-badge-color-scheme-1-background);
+	--ui5-badge-color-scheme-9-hover-background: #fff;
+	--ui5-badge-color-scheme-9-border: var(--ui5-badge-color-scheme-1-border);
+	--ui5-badge-color-scheme-9-color: var(--ui5-badge-color-scheme-1-color);
+	--ui5-badge-color-scheme-9-shadow: var(--ui5-badge-color-scheme-1-shadow);
+	--ui5-badge-color-scheme-9-active-shadow: var(--ui5-badge-color-scheme-1-active-shadow);
+	--ui5-badge-color-scheme-9-active-color: var(--ui5-badge-color-scheme-1-active-color);
+
+	--ui5-badge-color-scheme-10-background: var(--ui5-badge-color-scheme-2-background);
+	--ui5-badge-color-scheme-10-hover-background: #fff;
+	--ui5-badge-color-scheme-10-border: var(--ui5-badge-color-scheme-2-border);
+	--ui5-badge-color-scheme-10-color: var(--ui5-badge-color-scheme-2-color);
+	--ui5-badge-color-scheme-10-shadow: var(--ui5-badge-color-scheme-2-shadow);
+	--ui5-badge-color-scheme-10-active-shadow: var(--ui5-badge-color-scheme-2-active-shadow);
+	--ui5-badge-color-scheme-10-active-color: var(--ui5-badge-color-scheme-2-active-color);
+}

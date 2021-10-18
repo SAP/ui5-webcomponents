@@ -18,6 +18,8 @@
 			<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
 		{{/if}}
 
+		<span id="{{_id}}-modeLabel" class="ui5-hidden-text">{{ariaLabelModeText}}</span>
+
 		<ul id="{{_id}}-listUl"
 			class="ui5-list-ul"
 			role="{{accessibleRole}}"
@@ -60,6 +62,7 @@
 				size="Medium"
 				class="ui5-list-busy-ind" 
 				style="{{styles.busyInd}}"
+				data-sap-focus-ref
 			></ui5-busy-indicator>
 		</div>
 	{{/if}}

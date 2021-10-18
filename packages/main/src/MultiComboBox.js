@@ -5,6 +5,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isShow,
 	isDown,
+	isUp,
 	isBackSpace,
 	isSpace,
 	isLeft,
@@ -306,10 +307,10 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-multi-combobox</code> component provides a list box with items and a text field allowing the user to either type a value directly into the control, or choose from the list of existing items.
+ * The <code>ui5-multi-combobox</code> component consists of a list box with items and a text field allowing the user to either type a value directly into the text field, or choose from the list of existing items.
  *
- * It is a drop-down list for selecting and filtering values, commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
- * The select options in the list have checkboxes that permit multi-selection. Entered values are displayed as tokens.
+ * The drop-down list is used for selecting and filtering values, it enables users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow to expand/collapse the list of available options.
+ * The options in the list have checkboxes that permit multi-selection. Entered values are displayed as tokens.
  * <h3>Structure</h3>
  * The <code>ui5-multi-combobox</code> consists of the following elements:
  * <ul>
@@ -339,7 +340,7 @@ const metadata = {
  * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
  * <ul>
  * <li>Every <code>ui5-mcb-item</code> that you provide.
- * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
+ * Example: <code>&lt;ui5-mcb-item stable-dom-ref="item1"&gt;&lt;/ui5-mcb-item&gt;</code></li>
  * </ul>
  *
  * <h3>CSS Shadow Parts</h3>
@@ -575,12 +576,8 @@ class MultiComboBox extends UI5Element {
 			this.togglePopover();
 		}
 
-		if (isDown(event) && this.allItemsPopover.opened && this.items.length) {
-			event.preventDefault();
-			await this._getList();
-			const firstListItem = this.list.items[0];
-			this.list._itemNavigation.setCurrentItem(firstListItem);
-			firstListItem.focus();
+		if (this.open && (isUp(event) || isDown(event))) {
+			this._handleArrowNavigation(event);
 		}
 
 		if (isBackSpace(event) && event.target.value === "") {
@@ -599,6 +596,65 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this._keyDown = true;
+	}
+
+	_onValueStateKeydown(event) {
+		const isArrowDown = isDown(event);
+		const isArrowUp = isUp(event);
+
+		event.preventDefault();
+
+		if (isArrowDown) {
+			this._handleArrowDown(event);
+		}
+
+		if (isArrowUp) {
+			this._inputDom.focus();
+		}
+	}
+
+	_onItemKeydown(event) {
+		const isFirstItem = this.list.items[0] === event.target;
+
+		event.preventDefault();
+
+		if (!isUp(event) || !isFirstItem) {
+			return;
+		}
+
+		if (this.valueStateHeader) {
+			this.valueStateHeader.focus();
+			return;
+		}
+
+		this._inputDom.focus();
+	}
+
+	async _handleArrowNavigation(event) {
+		const isArrowDown = isDown(event);
+		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
+
+		event.preventDefault();
+
+		if (this.hasValueStateMessage && !this.valueStateHeader) {
+			await this._setValueStateHeader();
+		}
+
+		if (isArrowDown && this.focused && this.valueStateHeader) {
+			this.valueStateHeader.focus();
+			return;
+		}
+
+		if (isArrowDown && this.focused && hasSuggestions) {
+			this._handleArrowDown(event);
+		}
+	}
+
+	_handleArrowDown(event) {
+		const firstListItem = this.list.items[0];
+
+		this.list._itemNavigation.setCurrentItem(firstListItem);
+		firstListItem.focus();
 	}
 
 	handleEnter() {
@@ -841,6 +897,16 @@ class MultiComboBox extends UI5Element {
 		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
+	async _getResponsivePopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
+	}
+
+	async _setValueStateHeader() {
+		const responsivePopover = await this._getResponsivePopover();
+		this.valueStateHeader = responsivePopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root");
+	}
+
 	get _tokenizer() {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
@@ -970,6 +1036,7 @@ class MultiComboBox extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -983,7 +1050,6 @@ class MultiComboBox extends UI5Element {
 			popoverValueStateMessage: {
 				"width": `${this._listWidth}px`,
 				"display": this._listWidth === 0 ? "none" : "inline-block",
-				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
 				"max-width": isPhone() ? "100%" : `${this._inputWidth}px`,

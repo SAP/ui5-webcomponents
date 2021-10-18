@@ -66,7 +66,7 @@ describe("Input general interaction", () => {
 		// focus the input field which will display the suggestions
 		await input.click();
 
-		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+		assert.ok(!(await popover.isDisplayedInViewport()), "The popover is not visible");
 	});
 
 	it("fires change", async () => {
@@ -101,6 +101,7 @@ describe("Input general interaction", () => {
 		const inputResult = await browser.$("#inputChangeResult").shadow$("input");
 
 		await input.click();
+		await input.keys("c");
 		await input.keys("ArrowDown");
 		await input.keys("Tab");
 
@@ -355,6 +356,7 @@ describe("Input general interaction", () => {
 		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
+		await suggestionsInput.keys("C");
 		await suggestionsInput.keys("ArrowDown");
 		await suggestionsInput.keys("Enter");
 		await browser.pause(300);
@@ -364,17 +366,27 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
-	it("checks if the suggestions popover width is the same as the input width when there is a long suggestion", async () => {
-		const input = await browser.$("#suggestionsPopoverWidth");
-		const nativeInput = await browser.$("#suggestionsPopoverWidth").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#suggestionsPopoverWidth");
+	it("checks if the suggestions popover width is minimum the size of the input", async () => {
+		const input = await browser.$("#myInputGrouping");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
-		await nativeInput.click();
-		await nativeInput.keys("a");
+		await input.click();
+		await input.keys("a");
 
-		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'));
-	})
+		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'), "Suggestions' popover width is minimum the size of the input");
+	});
+
+	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
+		const input = await browser.$("#long-sugg");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#long-sugg");
+		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		await input.click();
+		await input.keys("a");
+
+		assert.strictEqual(await listItem.getSize('width'), 640, "Suggestions popover's width is maximum 40rem if the input isn't wider than that");
+	});
 
 	it("Input's maxlength property is set correctly", async () => {
 		const input5 = await browser.$("#input-tel");
@@ -500,6 +512,8 @@ describe("Input general interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialog = await browser.$("#inputInDialog");
 
+		await input.keys("c");
+
 		//assert
 		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
 
@@ -515,8 +529,8 @@ describe("Input general interaction", () => {
 	it("Suggestions count should be read out when necessary", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
-		const inputDynamicSuggestions = await browser.$("#inputCompact");
-		const inputSuggestions = await browser.$("#myInput2");
+		const inputDynamicSuggestions = await $("#inputCompact");
+		const inputSuggestions = await $("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
 		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
 		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
@@ -533,10 +547,24 @@ describe("Input general interaction", () => {
 		//assert
 		assert.strictEqual(await dynamicSuggestionsCount.getText(), "4 results are available", "Suggestions count is available since value is entered");
 		await dynamicSuggestionsInnerInput.keys("Backspace");
+
 		//act
 		await inputSuggestions.click();
+		await (await inputSuggestions.shadow$("input")).keys("c");
 
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
+	});
+
+	it("Should close the Popover when no suggestions are available", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#myInput");
+		const innerInput = await input.shadow$("input");
+
+		await innerInput.keys("A");
+		await innerInput.keys("Space");
+
+		assert.notOk(await input.getProperty("open"), "Input's Suggestion Popover should not be open");
 	});
 });

@@ -11,6 +11,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **playground:** fix links ([#3295](https://github.com/SAP/ui5-webcomponents/issues/3295)) ([62a0cc3](https://github.com/SAP/ui5-webcomponents/commit/62a0cc3))
 
 
+# [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-10-11)
+
 
 # [1.0.0-rc.14](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.13...v1.0.0-rc.14) (2021-04-01)
 

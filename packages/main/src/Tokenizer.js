@@ -273,7 +273,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
-		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
+		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
 	}
 
 	get showNMore() {
@@ -353,7 +353,6 @@ class Tokenizer extends UI5Element {
 			popoverValueStateMessage: {
 				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
 				"min-height": "2rem",
-				"padding": isPhone() ? "0.25rem 1rem" : "0.3rem 0.625rem",
 			},
 			popoverHeader: {
 				"min-height": "2rem",
