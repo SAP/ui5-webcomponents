@@ -13,7 +13,7 @@
 	background: var(--sapButton_Accept_Active_Background);
 	border-color: var(--sapButton_Accept_Active_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapButton_Active_BorderColor);
 }
 
 :host([design="Positive"][pressed][active]),
@@ -27,7 +27,7 @@
 	background: var(--sapButton_Reject_Active_Background);
 	border-color: var(--sapButton_Reject_Active_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapButton_Active_BorderColor);
 }
 
 :host([design="Negative"][pressed][active]),
@@ -46,10 +46,26 @@
 	background: var(--sapButton_Selected_Background);
 	border-color: var(--sapButton_Selected_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapButton_Active_BorderColor);
 }
 
 :host([pressed][active]),
 :host([pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background: var(--sapButton_Selected_Hover_Background);
+}
+
+:host([design="Emphasized"][pressed]:not([active]):not([non-interactive]):not([_is-touch])) {
+	box-shadow: var(--sapContent_Informative_Shadow);
+}
+
+:host([design="Positive"][pressed]){
+	box-shadow: var(--sapContent_Positive_Shadow);
+}
+
+:host([design="Negative"][pressed]){
+	box-shadow: var(--sapContent_Negative_Shadow);
+}
+
+:host([design="Attention"][pressed]){
+	box-shadow: var(--sapContent_Critical_Shadow);
 }
