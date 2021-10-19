@@ -603,6 +603,7 @@ class Input extends UI5Element {
 		}
 
 		if (isEnter(event)) {
+			this._changeFired = false;
 			return this._handleEnter(event);
 		}
 
@@ -619,6 +620,7 @@ class Input extends UI5Element {
 			this.Suggestions._deselectItems();
 		}
 
+		this._changeFired = true;
 		this._keyDown = true;
 	}
 
@@ -704,6 +706,15 @@ class Input extends UI5Element {
 		}
 
 		this.closePopover();
+
+		const areAllValuesEmpty = !this.previousValue && !this.value && !this.lastConfirmedValue;
+		const isInputChanged = this.previousValue !== this.value;
+		const isTheValueAlreadyConfirmed = this.lastConfirmedValue === this.value;
+
+		this._changeFired = false;
+		if (!areAllValuesEmpty && isInputChanged !== isTheValueAlreadyConfirmed) {
+			this._handleChange(event);
+		}
 
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
