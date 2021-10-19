@@ -692,7 +692,7 @@ class DayPicker extends CalendarPart {
 
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
-		return (target.DayPicker.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
 	}
 
 	_getSecondaryDay(tempDate) {
