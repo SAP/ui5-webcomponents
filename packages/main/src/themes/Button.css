@@ -69,6 +69,7 @@
 :host(:not([active]):not([non-interactive]):not([_is-touch]):hover),
 :host(:not([hidden]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
+	box-shadow: var(--sapContent_Interaction_Shadow);
 }
 
 .ui5-button-icon {
@@ -154,6 +155,7 @@ bdi {
 :host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border-color: var(--sapButton_Accept_Hover_BorderColor);
+	box-shadow: var(--sapContent_Positive_Shadow)
 }
 
 :host([ui5-button][design="Positive"][active]:not([non-interactive])) {
@@ -184,6 +186,7 @@ bdi {
 :host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border-color: var(--sapButton_Reject_Hover_BorderColor);
+	box-shadow: var(--sapContent_Negative_Shadow);
 }
 
 :host([design="Negative"][focused]) {
@@ -215,6 +218,7 @@ bdi {
 	background-color: var(--sapButton_Attention_Hover_Background);
 	border-color: var(--sapButton_Attention_Hover_BorderColor);
 	color: var(--sapButton_Attention_Hover_TextColor);
+	box-shadow: var(--sapContent_Critical_Shadow)
 }
 
 :host([ui5-button][design="Attention"][active]:not([non-interactive])) {
@@ -246,6 +250,7 @@ bdi {
 :host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
+	box-shadow: var(--sapContent_Informative_Shadow)
 }
 
 :host([ui5-button][design="Empasized"][active]:not([non-interactive])) {
@@ -255,9 +260,17 @@ bdi {
 	text-shadow: none;
 }
 
-:host([design="Emphasized"][focused]) {
-	outline-color: var(--sapContent_ContrastFocusColor);
-	border-color: var(--_ui5_button_emphasized_focused_border_color);
+:host([design="Emphasized"][focused]) .ui5-button-root:after {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	border: var(--sap_button_emphasized_focused_border);
+	pointer-events: none;
+	border-radius: 0.35rem;
 }
 
 :host([design="Transparent"]) {
@@ -275,6 +288,7 @@ bdi {
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
+	box-shadow: var(--sapContent_Critical_Shadow)
 }
 
 :host([ui5-button][design="Transparent"][active]:not([non-interactive])) {
