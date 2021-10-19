@@ -1,5 +1,20 @@
-commit dfa62a1693611015d5478454de2c11be5dcb1292
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 18 15:12:51 2021 +0300
+commit 2ee4febfc5deaa565622e76977f0ad912fd09823
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Tue Oct 19 15:02:00 2021 +0300
 
-    chore: fix DatePicker docs (#4125)
+    fix(ui5-combobox): Autocomplete on Safari (#3999)
+    
+    * fix(ui5-combobox): Autocomplete on Safari
+    
+    Safari losses input's text highlighting after invalidation of the ComboBox web component.
+    In order to restore the highlighting we need to duplicate the highligh functionality onAfterRendering
+    
+    * fix(ui5-combobox): Autocomplete on Safari
+    
+    Safari losses input's text highlighting after invalidation of the ComboBox web component.
+    In order to restore the highlighting we need to duplicate the highligh functionality onAfterRendering
+    
+    * fix(ui5-combobox): Autocomplete on Safari
+    
+    Safari losses input's text highlighting after invalidation of the ComboBox web component.
+    In order to restore the highlighting we need to duplicate the highligh functionality onAfterRendering
