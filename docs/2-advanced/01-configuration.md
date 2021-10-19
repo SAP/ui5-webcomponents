@@ -96,7 +96,7 @@ Animation modes allow to specify different animation scenarios or levels.
 - When `minimal`, animations of fundamental functionalities are included.
 - When `none`, all animations are completely suspended.
 
-*Please, note that each component determines which animations would run for a specific mode.*
+**Note:** Please, note that each component determines which animations would run for a specific mode.
 
 ### calendarType
 <a name="calendarType"></a>
@@ -149,7 +149,7 @@ The `noConflict` configuration setting allows certain control over this behavior
 	 "events": ["selection-change", "header-click"]
  }
  ```
-*Please, note that other keys may be added to this object in the future for the purpose of name conflict resolution.*
+**Note:** Please, note that other keys may be added to this object in the future for the purpose of name conflict resolution.
 
 In the above example, only the `selection-change` and `header-click` events will be fired with a prefix.
 You can still use them by listening to `ui5-selection-change` and `ui5-header-click`, but the names `selection-change` and `header-click` will be
@@ -174,7 +174,7 @@ Setting     |             Values              |    Default Value    |           
 -------------- | ------------------------------- | ------------------- | ----------------------------------------------
 firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *Depends on locale* | When set, overrides the locale's default value
 
-*Currently, only `firstDayOfWeek` is supported. More settings may be added in the future.*
+**Note:** Currently, only `firstDayOfWeek` is supported. More settings may be added in the future.
 
 ### fetchDefaultLanguage
 <a name="fetchDefaultLanguage"></a>
