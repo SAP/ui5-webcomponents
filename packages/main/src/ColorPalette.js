@@ -182,7 +182,12 @@ class ColorPalette extends UI5Element {
 	}
 
 	static async onDefine() {
-		ColorPalette.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
+
+		[ColorPalette.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			ColorPaletteMoreColors ? ColorPaletteMoreColors.init() : Promise.resolve(),
+		]);
 	}
 
 	constructor() {

@@ -39,12 +39,6 @@ class I18nBundle {
 	}
 }
 
-/**
- * Returns the I18nBundle instance for the given package
- *
- * @param packageName
- * @returns {I18nBundle}
- */
 const getI18nBundleSync = packageName => {
 	if (I18nBundleInstances.has(packageName)) {
 		return I18nBundleInstances.get(packageName);
@@ -69,6 +63,5 @@ const getI18nBundle = async packageName => {
 
 export {
 	registerI18nLoader,
-	getI18nBundleSync,
 	getI18nBundle,
 };

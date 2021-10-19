@@ -1,5 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getI18nBundleSync } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
@@ -376,9 +376,8 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const i18nBundle = getI18nBundleSync("@ui5/webcomponents"),
-			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
-			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
+			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
 	}
@@ -431,6 +430,10 @@ class Suggestions {
 			GroupHeaderListItem,
 			Button,
 		];
+	}
+
+	static async init() {
+		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

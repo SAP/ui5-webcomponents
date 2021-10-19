@@ -1317,7 +1317,12 @@ class Input extends UI5Element {
 	}
 
 	static async onDefine() {
-		Input.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		const Suggestions = getFeature("InputSuggestions");
+
+		[Input.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			Suggestions ? Suggestions.init() : Promise.resolve(),
+		]);
 	}
 }
 
