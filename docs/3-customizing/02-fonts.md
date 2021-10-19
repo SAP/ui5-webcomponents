@@ -21,7 +21,7 @@ For example:
 </style>
 ```
 
-*Important: * Notice the `data-ui5-font-face` attribute. It is unique and recognized by UI5 Web Components.
+**Important:** Notice the `data-ui5-font-face` attribute. It is unique and recognized by UI5 Web Components.
 
 ## Customizing Fonts
 
