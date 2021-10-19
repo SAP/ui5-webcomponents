@@ -3,15 +3,15 @@ This document aims to explain the steps component developers would have to perfo
 on daily basis from forking the project to merging a change, emphasising on the Github workflow.
 
 
-## 1. Fork the UI5 Web Components repository
+## 1. Fork the UI5 Web Components repository.
 See how to fork a repo [here](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo).
 
 
-## 2. Clone the UI5 Web Components repository
+## 2. Clone the UI5 Web Components repository.
 See how to clone a repo [here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 
-## 3. Run the project
+## 3. Run the project.
 
 **3.0.** Make sure you have the following prerequisites installed:
 - [Yarn](https://yarnpkg.com/en);
@@ -37,7 +37,7 @@ The server will reload the pages whenever you make changes in the code.
 
 **Note:** If these ports are unavailable to be opened, then the pages will be served on the next available ports. See the console output for the available URLs.
 
-## 4. Develop 
+## 4. Develop. 
 
 **4.1.** Read the dedicated tutorials for component developers:
 
@@ -61,7 +61,7 @@ $ cd packages/main
 $ yarn test test/specs/Button.spec.js
 ```
 
-## 5. Open pull request (PR) from fork
+## 5. Open pull request (PR) from fork.
 
 You can open a pull request to the upstream repository from any branch or commit in your fork.
 We recommend that you make changes in a topic branch (not in your local master), so that you can push followup commits if you receive feedback on your pull request. 
@@ -87,7 +87,7 @@ In case you are interested in the build output, you can follow the link at the b
 After the PR is approved, the UI5 Web Components team will merge the change into the master.
 
 
-## 6. Update pull request, created from a fork
+## 6. Update pull request, created from a fork.
 
 You often would need to update your pull request, especially when you need to address review comments.
 To update your pull request, you have to push commits to the branch, that the pull request is based on
@@ -97,7 +97,7 @@ and the changes will be reflected in the pull request.
 
 **Note:** The full guide on how to update PR can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork).
 
-## 7. Sync the fork
+## 7. Sync the fork.
 
 With the time your fork will be out of sync with the original repository
 and you would need to update it.
