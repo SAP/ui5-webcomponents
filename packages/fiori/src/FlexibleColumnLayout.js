@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
@@ -259,7 +259,6 @@ class FlexibleColumnLayout extends UI5Element {
 		this._prevLayout = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -283,7 +282,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		FlexibleColumnLayout.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -656,15 +655,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.accessibilityTexts.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.accessibilityTexts.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.accessibilityTexts.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {
@@ -675,20 +674,20 @@ class FlexibleColumnLayout extends UI5Element {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.startArrowDirection === "mirror") {
-			return customTexts.startArrowLeftText || this.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+			return customTexts.startArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return customTexts.startArrowRightText || this.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
+		return customTexts.startArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 
 	get accEndArrowText() {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.endArrowDirection === "mirror") {
-			return customTexts.endArrowRightText || this.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+			return customTexts.endArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return customTexts.endArrowLeftText || this.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
+		return customTexts.endArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 }
 
