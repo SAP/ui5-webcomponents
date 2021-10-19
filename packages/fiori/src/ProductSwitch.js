@@ -121,7 +121,7 @@ class ProductSwitch extends UI5Element {
 	}
 
 	static async onDefine() {
-		ProductSwitch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		ProductSwitch.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get _ariaLabelText() {
