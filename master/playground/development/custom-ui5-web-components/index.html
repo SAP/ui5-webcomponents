@@ -5097,7 +5097,7 @@ For more information on creating a new package with a demo Web Component inside,
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// Template</span>
 <span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5119,16 +5119,6 @@ For more information on creating a new package with a demo Web Component inside,
 <span class="p">};</span>
 
 <span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-
-	<span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">super</span><span class="p">();</span>
-		<span class="k">this</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
-	<span class="p">}</span>
-
-	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
-	<span class="p">}</span>
-
 	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
 	<span class="p">}</span>
@@ -5146,7 +5136,11 @@ For more information on creating a new package with a demo Web Component inside,
 	<span class="p">}</span>
 
 	<span class="kd">static</span> <span class="k">async</span> <span class="nx">onDefine</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
+		<span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 
@@ -5408,27 +5402,23 @@ Vars for each theme in the respective theme directory in <code class="highlighte
 
 <h3 id="adding-i18n-support">Adding i18n support</h3>
 
-<p>There are 3 steps to do that:</p>
+<p>There are 2 steps to do that:</p>
 <ol>
-  <li>Fetch an i18n bundle during component definition
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
+  <li>Get and assign an i18n bundle during component definition
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">await</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div>    </div>
   </li>
-  <li>
-    <p>(optional) Get a reference to the bundle in the constructor for convenience
- <code class="highlighter-rouge">this.i18nBundle = getI18nBundle("my-ui5-web-components");</code></p>
-  </li>
   <li>Get texts from the bundle, according to the currently <a href="../Configuration.md">configured</a> language
- <code class="highlighter-rouge">return this.i18nBundle.getText(PLEASE_WAIT);</code></li>
+ <code class="highlighter-rouge">return Demo.i18nBundle.getText(PLEASE_WAIT);</code></li>
 </ol>
 
-<p>The <code class="highlighter-rouge">fetchI18nBundle</code> and <code class="highlighter-rouge">getI18nBundle</code> methods are provided by the <code class="highlighter-rouge">i18nBundle.js</code> module from the <code class="highlighter-rouge">@ui5/webcomponents-base</code> package.</p>
+<p>The <code class="highlighter-rouge">getI18nBundle</code> method is provided by the <code class="highlighter-rouge">i18nBundle.js</code> module from the <code class="highlighter-rouge">@ui5/webcomponents-base</code> package.</p>
 
 <p>So the final source code is:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// Template</span>
 <span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5450,16 +5440,6 @@ Vars for each theme in the respective theme directory in <code class="highlighte
 <span class="p">};</span>
 
 <span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-
-	<span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">super</span><span class="p">();</span>
-		<span class="k">this</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
-	<span class="p">}</span>
-
-	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
-	<span class="p">}</span>
-
 	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
 	<span class="p">}</span>
@@ -5477,7 +5457,11 @@ Vars for each theme in the respective theme directory in <code class="highlighte
 	<span class="p">}</span>
 
 	<span class="kd">static</span> <span class="k">async</span> <span class="nx">onDefine</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
+		<span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 

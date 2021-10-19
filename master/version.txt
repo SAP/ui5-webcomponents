@@ -1,20 +1,5 @@
-commit 2ee4febfc5deaa565622e76977f0ad912fd09823
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Tue Oct 19 15:02:00 2021 +0300
+commit ed9eecc3126a4a3cd5c6c32037b7912f5933ad1a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Oct 19 18:02:24 2021 +0300
 
-    fix(ui5-combobox): Autocomplete on Safari (#3999)
-    
-    * fix(ui5-combobox): Autocomplete on Safari
-    
-    Safari losses input's text highlighting after invalidation of the ComboBox web component.
-    In order to restore the highlighting we need to duplicate the highligh functionality onAfterRendering
-    
-    * fix(ui5-combobox): Autocomplete on Safari
-    
-    Safari losses input's text highlighting after invalidation of the ComboBox web component.
-    In order to restore the highlighting we need to duplicate the highligh functionality onAfterRendering
-    
-    * fix(ui5-combobox): Autocomplete on Safari
-    
-    Safari losses input's text highlighting after invalidation of the ComboBox web component.
-    In order to restore the highlighting we need to duplicate the highligh functionality onAfterRendering
+    refactor(framework): Simplify i18nBundle usage (#4128)

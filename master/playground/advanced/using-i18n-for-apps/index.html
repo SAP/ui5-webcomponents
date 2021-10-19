@@ -5133,7 +5133,7 @@ but for apps as well.</p>
 <h3 id="2-import-the-following-i18n-related-modules-to-your-app">2. Import the following <code class="highlighter-rouge">i18n</code>-related modules to your app:</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">parseProperties</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/PropertiesFileFormat.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>The first one provides support for <code class="highlighter-rouge">.properties</code> files, as used in the example, and the second one - the functions
@@ -5156,16 +5156,9 @@ that will allow you to take advantage of the <code class="highlighter-rouge">i18
 
 <p><em>Note:</em> This step takes care of registering assets only, no data will be fetched at this point.</p>
 
-<h3 id="4-tell-the-framework-to-fetch-the-texts-for-the-current-language">4. Tell the framework to fetch the texts for the current language:</h3>
+<h3 id="4-get-and-use-the-bundle">4. Get and use the bundle:</h3>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>This will fetch the appropriate texts for the currently configured language and store them internally.</p>
-
-<h3 id="5-get-and-use-the-bundle">5. Get and use the bundle:</h3>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
 </code></pre></div></div>
@@ -5184,14 +5177,14 @@ that will allow you to take advantage of the <code class="highlighter-rouge">i18
 
 <p><code class="highlighter-rouge">Item 5 of 20 displayed</code>.</p>
 
-<h3 id="6-test-your-page-using-different-languages-eg-set-sap-ui-languagede-in-the-url-or-change-the-configuration">6. Test your page using different languages, e.g. set <code class="highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</h3>
+<h3 id="5-test-your-page-using-different-languages-eg-set-sap-ui-languagede-in-the-url-or-change-the-configuration">5. Test your page using different languages, e.g. set <code class="highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</h3>
 
 <h2 id="summary">Summary</h2>
 
 <p>The whole code would look like this:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">parseProperties</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/PropertiesFileFormat.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">en</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">de</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">es</span><span class="dl">"</span><span class="p">];</span>
 <span class="nx">supportedLocales</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">localeToRegister</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -5201,9 +5194,7 @@ that will allow you to take advantage of the <code class="highlighter-rouge">i18
 	<span class="p">});</span>
 <span class="p">});</span>
 
-<span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
