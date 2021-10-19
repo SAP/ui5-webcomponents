@@ -11,7 +11,7 @@ The most commonly used ones are:
  - `@ui5/webcomponents-fiori` - components library, containing semantic, higher-order components;
  - `@ui5/webcomponents-icons` - icons collection, containing general-purpose and business-oriented icons.
 
-*Important: There is no CDN for UI5 Web Components*. Each application is expected to **import** and **bundle** only the components (and any other resources) it is going to use.
+**Important: There is no CDN for UI5 Web Components**. Each application is expected to **import** and **bundle** only the components (and any other resources) it is going to use.
 
 ## Bundling UI5 Web Components
 
