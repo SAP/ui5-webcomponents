@@ -1,5 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundleSync } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
@@ -45,8 +45,6 @@ class Suggestions {
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
 		this.selectedItemIndex = null;
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this.accInfo = {};
 	}
@@ -378,7 +376,7 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const i18nBundle = this.i18nBundle,
+		const i18nBundle = getI18nBundleSync("@ui5/webcomponents"),
 			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
 			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
 

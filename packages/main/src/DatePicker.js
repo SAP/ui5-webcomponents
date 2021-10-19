@@ -641,7 +641,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get phone() {
@@ -674,7 +674,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get openIconTitle() {
-		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
+		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
 	get openIconName() {
@@ -682,7 +682,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundleSync } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import Dialog from "../Dialog.js";
 import Button from "../Button.js";
@@ -13,7 +13,7 @@ import {
 
 class ColorPaletteMoreColors {
 	constructor() {
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundleSync("@ui5/webcomponents");
 	}
 
 	static get dependencies() {
