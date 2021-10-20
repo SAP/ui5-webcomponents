@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import {
 	isEnter,
@@ -80,26 +80,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines predefined size of the <code>ui5-avatar</code>.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>XS</code></li>
-		 * <li><code>S</code></li>
-		 * <li><code>M</code></li>
-		 * <li><code>L</code></li>
-		 * <li><code>XL</code></li>
-		 * </ul>
-		 * @type {AvatarSize}
-		 * @defaultValue "S"
-		 * @public
-		 */
-		avatarSize: {
-			type: String,
-			defaultValue: AvatarSize.S,
-		},
-
-		/**
 		 * Defines the aria-haspopup value of the component on:
 		 * <br><br>
 		 * <ul>
@@ -122,7 +102,6 @@ const metadata = {
 			type: String,
 			noAttribute: true,
 		},
-
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
@@ -267,8 +246,6 @@ class AvatarGroup extends UI5Element {
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -294,7 +271,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		AvatarGroup.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -328,24 +305,24 @@ class AvatarGroup extends UI5Element {
 		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
 
 		// avatar type label
-		let text = this.i18nBundle.getText(typeLabelKey);
+		let text = AvatarGroup.i18nBundle.getText(typeLabelKey);
 
 		// add displayed-hidden avatars label
-		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, [this._itemsCount - hiddenItemsCount], [hiddenItemsCount])}`;
+		text += ` ${AvatarGroup.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, this._itemsCount - hiddenItemsCount, hiddenItemsCount)}`;
 
 		if (this._isGroup) {
 			// the container role is "button", add the message for complete list activation
-			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
+			text += ` ${AvatarGroup.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
 		} else {
 			// the container role is "group", add the "how to navigate" message
-			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
+			text += ` ${AvatarGroup.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
 		}
 
 		return text;
 	}
 
 	get _overflowButtonAriaLabelText() {
-		return this._isGroup ? undefined : this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
+		return this._isGroup ? undefined : AvatarGroup.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
 	}
 
 	get _containerAriaHasPopup() {
@@ -409,6 +386,23 @@ class AvatarGroup extends UI5Element {
 		}
 
 		return button.offsetWidth;
+	}
+
+	get firstAvatarSize() {
+		return this.items[0].size;
+	}
+
+	get classes() {
+		return {
+			overflowButton: {
+				"ui5-avatar-group-overflow-btn": true,
+				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === "XS",
+				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === "S",
+				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === "M",
+				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === "L",
+				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === "XL",
+			},
+		};
 	}
 
 	onAfterRendering() {
@@ -501,11 +495,6 @@ class AvatarGroup extends UI5Element {
 			if (!avatar.getAttribute("_color-scheme")) {
 				// AvatarGroup respects colors set to ui5-avatar
 				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}`]);
-			}
-
-			if (!avatar.getAttribute("size")) {
-				// AvatarGroup respects sizes set to ui5-avatar
-				avatar.setAttribute("_size", this.avatarSize);
 			}
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly

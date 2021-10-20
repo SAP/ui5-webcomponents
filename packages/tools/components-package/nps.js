@@ -10,14 +10,19 @@ const getScripts = (options) => {
 
 	const port = options.port || 8080; // preferred port
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
+	let illustrations = options.illustrationsData || [];
+
+	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+
+	let illustrationsScript = illustrations.join(" && ");
 
 	const scripts = {
 		clean: "rimraf dist && rimraf .port",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: {
-			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
-			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples"
+			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples build.illustrations",
+			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples build.illustrations"
 		},
 		build: {
 			default: "nps lint prepare.es5 build.bundle",
@@ -42,7 +47,8 @@ const getScripts = (options) => {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
-			}
+			},
+			illustrations: illustrationsScript
 		},
 		copy: {
 			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill-placeholder",
@@ -51,7 +57,7 @@ const getScripts = (options) => {
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
 			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" dist/webcomponentsjs/`,
-			"webcomponents-polyfill-placeholder": `node ${LIB}/polyfill-placeholder/index.js`
+			"webcomponents-polyfill-placeholder": `node "${LIB}/polyfill-placeholder/index.js"`
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.i18n"',

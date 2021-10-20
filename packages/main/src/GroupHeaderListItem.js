@@ -1,4 +1,4 @@
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
 
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -72,24 +72,20 @@ class GroupHeaderListItem extends ListItemBase {
 		return [ListItemBase.styles, groupheaderListItemCss];
 	}
 
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	get group() {
 		return true;
 	}
 
 	get groupHeaderText() {
-		return this.i18nBundle.getText(GROUP_HEADER_TEXT);
+		return GroupHeaderListItem.i18nBundle.getText(GROUP_HEADER_TEXT);
+	}
+
+	get ariaLabelText() {
+		return [this.textContent, this.accessibleName].filter(Boolean).join(" ");
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		GroupHeaderListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -227,6 +227,7 @@ class SideNavigation extends UI5Element {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
 
+		item.fireEvent("click");
 		if (item.selected) {
 			return;
 		}
@@ -241,7 +242,7 @@ class SideNavigation extends UI5Element {
 
 	async openPicker(opener) {
 		const responsivePopover = await this.getPicker();
-		responsivePopover.open(opener);
+		responsivePopover.showAt(opener);
 	}
 
 	async closePicker(opener) {

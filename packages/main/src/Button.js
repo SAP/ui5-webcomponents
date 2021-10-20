@@ -2,10 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
-import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -31,7 +30,7 @@ const metadata = {
 		 * Defines the component design.
 		 *
 		 * <br><br>
-		 * <b>Note:</b>
+		 * <b>The available values are:</b>
 		 *
 		 * <ul>
 		 * <li><code>Default</code></li>
@@ -39,6 +38,7 @@ const metadata = {
 		 * <li><code>Positive</code></li>
 		 * <li><code>Negative</code></li>
 		 * <li><code>Transparent</code></li>
+		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
 		 * @type {ButtonDesign}
@@ -51,8 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the component is disabled
-		 * (default is set to <code>false</code>).
+		 * Defines whether the component is disabled.
 		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
@@ -95,7 +94,7 @@ const metadata = {
 		 * When set to <code>true</code>, the component will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 * <br><br>
-		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
+		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
@@ -109,7 +108,7 @@ const metadata = {
 		/**
 		 * Defines the tooltip of the button.
 		 * <br>
-		 * <b>Important:</b> Tooltips should only be set to icon only buttons.
+		 * <b>Note:</b> Tooltips should only be set to icon-only buttons.
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @private
@@ -152,27 +151,16 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the button
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue: ""
-		 * @private
-		 * @since 1.0.0-rc.7
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the button
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.7
-		 */
-		ariaLabelledby: {
-			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -330,12 +318,10 @@ class Button extends UI5Element {
 
 			isGlobalHandlerAttached = true;
 		}
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
-		this._isTouch = isPhone() || isTablet();
+		this._isTouch = (isPhone() || isTablet()) && !isCombi();
 	}
 
 	onBeforeRendering() {
@@ -441,10 +427,6 @@ class Button extends UI5Element {
 		};
 	}
 
-	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
-	}
-
 	static typeTextMappings() {
 		return {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
@@ -454,7 +436,7 @@ class Button extends UI5Element {
 	}
 
 	get buttonTypeText() {
-		return this.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	get tabIndexValue() {
@@ -472,7 +454,7 @@ class Button extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Button.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

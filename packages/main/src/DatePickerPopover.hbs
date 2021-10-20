@@ -7,7 +7,6 @@
 	?disable-scrolling="{{_isIE}}"
 	hide-arrow
 	with-padding
-	no-stretch
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
 	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
@@ -42,12 +41,15 @@
 	<ui5-calendar
 		id="{{_id}}-calendar"
 		primary-calendar-type="{{_primaryCalendarType}}"
+		secondary-calendar-type="{{secondaryCalendarType}}"
 		format-pattern="{{_formatPattern}}"
 		timestamp="{{_calendarTimestamp}}"
 		.selectionMode="{{_calendarSelectionMode}}"
 		.minDate="{{minDate}}"
 		.maxDate="{{maxDate}}"
 		@ui5-selected-dates-change="{{onSelectedDatesChange}}"
+		@ui5-show-month-press="{{onHeaderShowMonthPress}}"
+		@ui5-show-year-press="{{onHeaderShowYearPress}}"
 		?hide-week-numbers="{{hideWeekNumbers}}"
 		._currentPicker="{{_calendarCurrentPicker}}"
 	>
@@ -58,3 +60,4 @@
 {{/inline}}
 
 {{#*inline "footer"}}{{/inline}}
+

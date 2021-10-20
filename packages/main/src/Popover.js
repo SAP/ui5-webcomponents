@@ -187,7 +187,14 @@ const metadata = {
 			defaultValue: PopoverPlacementType.Right,
 		},
 
-		_maxContentHeight: { type: Integer },
+		_maxContentHeight: {
+			type: Integer,
+			noAttribute: true,
+		},
+		_maxContentWidth: {
+			type: Integer,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
@@ -272,7 +279,7 @@ class Popover extends Popup {
 		return PopoverTemplate;
 	}
 
-	static get MIN_OFFSET() {
+	static get VIEWPORT_MARGIN() {
 		return 10; // px
 	}
 
@@ -290,14 +297,14 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Opens the popover.
-	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * Shows the popover.
+	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 * @async
 	 * @returns {Promise} Resolved when the popover is open
 	 */
-	async openBy(opener, preventInitialFocus = false) {
+	async showAt(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
@@ -305,7 +312,7 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._openerRect = opener.getBoundingClientRect();
 
-		await super.open(preventInitialFocus);
+		await super._open(preventInitialFocus);
 	}
 
 	/**
@@ -337,7 +344,7 @@ class Popover extends Popup {
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if (closedPopupParent.openBy) {
+		if (closedPopupParent.showAt) {
 			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
@@ -360,10 +367,10 @@ class Popover extends Popup {
 	}
 
 	reposition() {
-		this.show();
+		this._show();
 	}
 
-	show() {
+	_show() {
 		let placement;
 		const popoverSize = this.getPopoverSize();
 
@@ -391,53 +398,60 @@ class Popover extends Popup {
 			return this.close();
 		}
 
-		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			super.show();
-			this.style.width = this._width;
-			return;
+		this._oldPlacement = placement;
+		this.actualPlacementType = placement.placementType;
+
+		let left = clamp(
+			this._left,
+			Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
+		);
+
+		if (this.actualPlacementType === PopoverPlacementType.Right) {
+			left = Math.max(left, this._left);
 		}
 
-		this._oldPlacement = placement;
-
-		const left = clamp(
-			this._left,
-			Popover.MIN_OFFSET,
-			document.documentElement.clientWidth - popoverSize.width - Popover.MIN_OFFSET,
-		);
-
-		const top = clamp(
+		let top = clamp(
 			this._top,
-			Popover.MIN_OFFSET,
-			document.documentElement.clientHeight - popoverSize.height - Popover.MIN_OFFSET,
+			Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
+
+		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
+			top = Math.max(top, this._top);
+		}
 
 		let { arrowX, arrowY } = placement;
+		const isVertical = this.actualPlacementType === PopoverPlacementType.Top
+			|| this.actualPlacementType === PopoverPlacementType.Bottom;
 
-		const popoverOnLeftBorder = this._left === 0;
-		const popoverOnRightBorder = this._left + popoverSize.width >= document.documentElement.clientWidth;
-		if (popoverOnLeftBorder) {
-			arrowX -= Popover.MIN_OFFSET;
-		} else if (popoverOnRightBorder) {
-			arrowX += Popover.MIN_OFFSET;
+		if (isVertical) {
+			const popoverOnLeftBorderOffset = Popover.VIEWPORT_MARGIN - this._left;
+			const popoverOnRightBorderOffset = this._left + popoverSize.width + Popover.VIEWPORT_MARGIN - document.documentElement.clientWidth;
+			if (popoverOnLeftBorderOffset > 0) {
+				arrowX -= popoverOnLeftBorderOffset;
+			} else if (popoverOnRightBorderOffset > 0) {
+				arrowX += popoverOnRightBorderOffset;
+			}
 		}
-		this.arrowTranslateX = arrowX;
+		this.arrowTranslateX = Math.round(arrowX);
 
-		const popoverOnTopBorder = this._top === 0;
-		const popoverOnBottomBorder = this._top + popoverSize.height >= document.documentElement.clientHeight;
-		if (popoverOnTopBorder) {
-			arrowY -= Popover.MIN_OFFSET;
-		} else if (popoverOnBottomBorder) {
-			arrowY += Popover.MIN_OFFSET;
+		if (!isVertical) {
+			const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - this._top;
+			const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
+			if (popoverOnTopBorderOffset > 0) {
+				arrowY -= popoverOnTopBorderOffset;
+			} else if (popoverOnBottomBorderOffset > 0) {
+				arrowY += popoverOnBottomBorderOffset;
+			}
 		}
-		this.arrowTranslateY = arrowY;
-
-		this.actualPlacementType = placement.placementType;
+		this.arrowTranslateY = Math.round(arrowY);
 
 		Object.assign(this.style, {
 			top: `${top}px`,
 			left: `${left}px`,
 		});
-		super.show();
+		super._show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;
@@ -477,6 +491,7 @@ class Popover extends Popup {
 		const clientHeight = document.documentElement.clientHeight;
 
 		let maxHeight = clientHeight;
+		let maxWidth = clientWidth;
 
 		let width = "";
 		let height = "";
@@ -524,12 +539,17 @@ class Popover extends Popup {
 		case PopoverPlacementType.Left:
 			left = Math.max(targetRect.left - popoverSize.width - arrowOffset, 0);
 			top = this.getHorizontalTop(targetRect, popoverSize);
+
+			if (!allowTargetOverlap) {
+				maxWidth = targetRect.left - arrowOffset;
+			}
 			break;
 		case PopoverPlacementType.Right:
 			if (allowTargetOverlap) {
 				left = Math.max(Math.min(targetRect.left + targetRect.width + arrowOffset, clientWidth - popoverSize.width), 0);
 			} else {
 				left = targetRect.left + targetRect.width + arrowOffset;
+				maxWidth = clientWidth - targetRect.right - arrowOffset;
 			}
 
 			top = this.getHorizontalTop(targetRect, popoverSize);
@@ -551,18 +571,19 @@ class Popover extends Popup {
 			}
 		}
 
-		let maxContentHeight = Math.round(maxHeight);
+		let maxContentHeight = maxHeight;
 
 		if (this._displayHeader) {
 			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
 			if (headerDomRef) {
-				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
+				maxContentHeight = maxHeight - headerDomRef.offsetHeight;
 			}
 		}
 
-		this._maxContentHeight = maxContentHeight - Popover.MIN_OFFSET;
+		this._maxContentHeight = Math.round(maxContentHeight - Popover.VIEWPORT_MARGIN);
+		this._maxContentWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
@@ -725,7 +746,7 @@ class Popover extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this.ariaLabel ? undefined : "ui5-popup-header";
+		return this.accessibleName ? undefined : "ui5-popup-header";
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -737,6 +758,7 @@ class Popover extends Popup {
 			...super.styles,
 			content: {
 				"max-height": `${this._maxContentHeight}px`,
+				"max-width": `${this._maxContentWidth}px`,
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,

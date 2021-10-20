@@ -1,0 +1,42 @@
+<nav class="ui5-breadcrumbs-root"
+    aria-label="{{_accessibleNameText}}">
+    <ol @focusin="{{_onfocusin}}" 
+        @keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}">
+
+        <li class="ui5-breadcrumbs-dropdown-arrow-link-wrapper"
+            ?hidden="{{_isOverflowEmpty}}">
+            <ui5-link @click="{{_openRespPopover}}"
+                accessible-role="button"
+                aria-label="{{_dropdownArrowAccessibleNameText}}"
+                aria-haspopup="{{_ariaHasPopup}}">
+                <ui5-icon name="slim-arrow-down"
+                    title="{{_dropdownArrowAccessibleNameText}}"></ui5-icon>
+            </ui5-link>
+        </li>
+
+        {{#each _linksData}}
+            <li class="ui5-breadcrumbs-link-wrapper" @click="{{../_onLinkPress}}">
+                <ui5-link
+                    href="{{this.href}}"
+                    target="{{this.target}}"
+                    id="{{this._id}}-link"
+                    aria-label="{{this.accessibleName}}"
+                    data-ui5-stable="{{this.stableDomRef}}">
+                    {{this.innerText}}
+                </ui5-link>
+            </li>
+        {{/each}}
+
+        {{#if _endsWithCurrentLocationLabel}}
+        <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelPress}}">
+            <span id={{this._id}}-labelWrapper>
+                <ui5-label
+                    aria-current="page">
+                    {{_currentLocationText}}
+                </ui5-label>
+            </span>
+        </li>
+        {{/if}}
+    </ol>
+</nav>

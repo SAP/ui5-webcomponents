@@ -1,6 +1,7 @@
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -66,14 +67,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the popup
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -155,6 +156,8 @@ const createBlockingStyle = () => {
 
 createBlockingStyle();
 
+const bodyScrollingBlockers = new Set();
+
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -221,7 +224,7 @@ class Popup extends UI5Element {
 
 	onExitDOM() {
 		if (this.isOpen()) {
-			Popup.unblockBodyScrolling();
+			Popup.unblockBodyScrolling(this);
 			this._removeOpenedPopup();
 		}
 	}
@@ -241,8 +244,16 @@ class Popup extends UI5Element {
 	 * Temporarily removes scrollbars from the body
 	 * @protected
 	 */
-	static blockBodyScrolling() {
-		document.body.style.top = `-${window.pageYOffset}px`;
+	static blockBodyScrolling(popup) {
+		bodyScrollingBlockers.add(popup);
+
+		if (bodyScrollingBlockers.size !== 1) {
+			return;
+		}
+
+		if (window.pageYOffset > 0) {
+			document.body.style.top = `-${window.pageYOffset}px`;
+		}
 		document.body.classList.add("ui5-popup-scroll-blocker");
 	}
 
@@ -250,7 +261,13 @@ class Popup extends UI5Element {
 	 * Restores scrollbars on the body, if needed
 	 * @protected
 	 */
-	static unblockBodyScrolling() {
+	static unblockBodyScrolling(popup) {
+		bodyScrollingBlockers.delete(popup);
+
+		if (bodyScrollingBlockers.size !== 0) {
+			return;
+		}
+
 		document.body.classList.remove("ui5-popup-scroll-blocker");
 		window.scrollTo(0, -parseFloat(document.body.style.top));
 		document.body.style.top = "";
@@ -270,10 +287,30 @@ class Popup extends UI5Element {
 	}
 
 	_onfocusout(e) {
-		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root.
+		// This happens after the mouse is released in order to not interrupt text selection.
 		if (!e.relatedTarget) {
-			this._root.tabIndex = -1;
-			this._root.focus();
+			this._shouldFocusRoot = true;
+		}
+	}
+
+	_onmousedown(e) {
+		this._root.removeAttribute("tabindex");
+
+		if (this.shadowRoot.contains(e.target)) {
+			this._shouldFocusRoot = true;
+		} else {
+			this._shouldFocusRoot = false;
+		}
+	}
+
+	_onmouseup() {
+		this._root.tabIndex = -1;
+		if (this._shouldFocusRoot) {
+			if (isChrome()) {
+				this._root.focus();
+			}
+			this._shouldFocusRoot = false;
 		}
 	}
 
@@ -353,7 +390,7 @@ class Popup extends UI5Element {
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
 	 */
-	async open(preventInitialFocus) {
+	async _open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 		if (prevented) {
 			return;
@@ -363,14 +400,14 @@ class Popup extends UI5Element {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
-			Popup.blockBodyScrolling();
+			Popup.blockBodyScrolling(this);
 		}
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.show();
+		this._show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
 			this.applyInitialFocus();
@@ -408,7 +445,7 @@ class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling();
+			Popup.unblockBodyScrolling(this);
 		}
 
 		this.hide();
@@ -450,7 +487,7 @@ class Popup extends UI5Element {
 	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
 	 * @protected
 	 */
-	show() {
+	_show() {
 		this.style.display = this._displayProp;
 	}
 
@@ -504,7 +541,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.ariaLabel || undefined;
+		return this.accessibleName || undefined;
 	}
 
 	get _root() {

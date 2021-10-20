@@ -1,196 +1,205 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
-const getTokenizerPopoverId = (inputId) => {
-	return browser.execute(async (inputId) => {
-		const input = await document.querySelector(`#${inputId}`);
+const getTokenizerPopoverId = async (inputId) => {
+	return await browser.executeAsync(async (inputId, done) => {
+		const input = document.querySelector(`#${inputId}`);
 		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
 
-		return staticAreaItem.host.classList[0];
+		done(staticAreaItem.host.classList[0]);
 	}, inputId);
 }
 
 describe("MultiInput general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
 	});
 
-	it("tests expanding of tokenizer", () => {
-		const basic = $("#basic-overflow");
-		const basicInner = basic.shadow$("input");
-		const basicTokenizer = basic.shadow$("ui5-tokenizer");
+	it("tests expanding of tokenizer", async () => {
+		const basic = await browser.$("#basic-overflow");
+		const basicInner = await basic.shadow$("input");
+		const basicTokenizer = await basic.shadow$("ui5-tokenizer");
 
-		basicInner.click();
-		basicInner.keys("Tab");
+		await basicInner.click();
+		await basicInner.keys("Tab");
 
-		assert.ok(!basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
+		assert.notOk(await basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 	});
 
-	it ("tests opening of tokenizer Popover", () => {
-		const tokenizer = $("#basic-overflow").shadow$("ui5-tokenizer");
-		const nMoreLabel = tokenizer.shadow$(".ui5-tokenizer-more-text");
+	it ("tests opening of tokenizer Popover", async () => {
+		const tokenizer = await browser.$("#basic-overflow").shadow$("ui5-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
 
-		nMoreLabel.click();
+		await nMoreLabel.click();
 
-		const rpoClassName = getTokenizerPopoverId("basic-overflow");
-		const rpo = $(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpoClassName = await getTokenizerPopoverId("basic-overflow");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
-		assert.ok(rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
 	});
 
-	it ("fires value-help-trigger on icon press", () => {
-		const label = $("#basic-event-listener");
-		const icon = $("#basic-overflow-and-icon").shadow$("ui5-icon");
+	it ("fires value-help-trigger on icon press", async () => {
+		const label = await browser.$("#basic-event-listener");
+		const icon = await browser.$("#basic-overflow-and-icon").shadow$("ui5-icon");
 		const EXPECTED_TEXT = "value help icon press"
 
-		assert.strictEqual(label.getText(), "", "event is not fired");
+		assert.strictEqual(await label.getText(), "", "event is not fired");
 
 		// act
-		icon.click();
+		await icon.click();
 
 		// assert
-		assert.strictEqual(label.getText(), EXPECTED_TEXT, "value help press event is fired");
+		assert.strictEqual(await label.getText(), EXPECTED_TEXT, "value help press event is fired");
 
 	});
 
-	it ("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", () => {
-		const eventCounter = $("#value-help-trigger-counter");
-		const multiInputInner = $("#multi-with-value-help-icon").shadow$(".ui5-input-inner");
+	it ("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", async () => {
+		const eventCounter = await browser.$("#value-help-trigger-counter");
+		const multiInputInner = await browser.$("#multi-with-value-help-icon").shadow$(".ui5-input-inner");
 
 		// act
-		multiInputInner.click();
-		browser.keys(["Alt", "ArrowUp", "NULL"]);
+		await multiInputInner.click();
+		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 
 		// assert
-		assert.strictEqual(eventCounter.getProperty("value"), "1", "value help press event is fired");
+		assert.strictEqual(await eventCounter.getProperty("value"), "1", "value help press event is fired");
 
 		// act
-		browser.keys("F4");
+		await browser.keys("F4");
 
 		// assert
-		assert.strictEqual(eventCounter.getProperty("value"), "2", "value help press event is fired");
+		assert.strictEqual(await eventCounter.getProperty("value"), "2", "value help press event is fired");
 	});
 
-	it ("adds a token to multi input", () => {
-		const mi = $("#single-token");
-		const btn = $("#add-to-single");
+	it ("adds a token to multi input", async () => {
+		const mi = await browser.$("#single-token");
+		const btn = await browser.$("#add-to-single");
 
-		assert.strictEqual(mi.$$("ui5-token").length, 1, "should have 1 token");
+		assert.strictEqual((await mi.$$("ui5-token")).length, 1, "should have 1 token");
+		await browser.$("#suggestion-token").scrollIntoView();
+
+		let allTokens = await mi.$$("ui5-token");
+		assert.notOk(await allTokens[0].getProperty("overflows"), "Token should not overflow");
+
+		await btn.click();
+
+		allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 2, "should have 2 tokens");
+		assert.notOk(await allTokens[0].getProperty("overflows"), "Token should not overflow");
+		assert.notOk(await allTokens[1].getProperty("overflows"), "Token should not overflow");
+	});
+
+	it ("adds an overflowing token to multi input", async () => {
+		const mi = await browser.$("#multiple-token");
+		const btn = await browser.$("#add-to-multiple");
+
+		assert.strictEqual(await mi.$$("ui5-token").length, 5, "should have 5 token");
 		$("#suggestion-token").scrollIntoView();
 
-		assert.ok(!mi.$$("ui5-token")[0].getProperty("overflows"), "Token should not overflow");
-
-		btn.click();
-
-		assert.strictEqual(mi.$$("ui5-token").length, 2, "should have 2 tokens");
-		assert.ok(!mi.$$("ui5-token")[0].getProperty("overflows"), "Token should not overflow");
-		assert.ok(!mi.$$("ui5-token")[1].getProperty("overflows"), "Token should not overflow");
-	});
-
-	it ("adds an overflowing token to multi input", () => {
-		const mi = $("#multiple-token");
-		const btn = $("#add-to-multiple");
-
-		assert.strictEqual(mi.$$("ui5-token").length, 5, "should have 5 token");
-		$("#suggestion-token").scrollIntoView();
-
-		assert.ok(!mi.$$("ui5-token")[0].getProperty("overflows"), "Token should not overflow");
+		let allTokens = await mi.$$("ui5-token");
+		assert.notOk(await allTokens[0].getProperty("overflows"), "Token should not overflow");
 
 		for (let i = 1; i <= 4; i++) {
-			assert.ok(mi.$$("ui5-token")[i].getProperty("overflows"), "Token should overflow");
+			assert.ok(await allTokens[i].getProperty("overflows"), "Token should overflow");
 		}
 
-		btn.click();
+		await btn.click();
 
-		assert.strictEqual(mi.$$("ui5-token").length, 6, "should have 6 tokens");
+		allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 6, "should have 6 tokens");
 
 		for (let i = 1; i <= 5; i++) {
-			assert.ok(mi.$$("ui5-token")[i].getProperty("overflows"), "Token should overflow");
+			assert.ok(await allTokens[i].getProperty("overflows"), "Token should overflow");
 		}
 	});
 
-	it ("adds a token after selection change", () => {
-		const mi = $("#suggestion-token");
-		const input = mi.shadow$("input");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#suggestion-token");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+	it ("adds a token after selection change", async () => {
+		const mi = await browser.$("#suggestion-token");
+		const input = await mi.shadow$("input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#suggestion-token");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		input.click();
-		input.keys("c");
+		await input.click();
+		await input.keys("c");
 
-		assert.ok(popover.getProperty("opened"), "Suggestion Popovoer is open");
-		assert.strictEqual(mi.$$("ui5-token").length, 0, "0 tokens");
+		assert.ok(await popover.getProperty("opened"), "Suggestion Popovoer is open");
+		let allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 0, "0 tokens");
 
-		popover.$("ui5-li-suggestion-item").click();
+		await popover.$("ui5-li-suggestion-item").click();
 
-		assert.ok(!popover.getProperty("opened"), "Suggestion Popovoer is closed");
-		assert.strictEqual(mi.$$("ui5-token").length, 1, "a token is added after selection");
+		allTokens = await mi.$$("ui5-token");
+		assert.notOk(await popover.getProperty("opened"), "Suggestion Popovoer is closed");
+		assert.strictEqual(allTokens.length, 1, "a token is added after selection");
 	});
 
-	it ("Placeholder", () => {
-		const mi1 = browser.$("#empty-mi").shadow$(".ui5-input-inner");
-		const mi2 = browser.$("#mi-with-tokens-customicon").shadow$(".ui5-input-inner");
+	it ("Placeholder", async () => {
+		const mi1 = await browser.$("#empty-mi").shadow$(".ui5-input-inner");
+		const mi2 = await browser.$("#mi-with-tokens-customicon").shadow$(".ui5-input-inner");
 
-		assert.strictEqual(mi1.getAttribute("placeholder"), "Placeholder", "a token is added after selection");
-		assert.strictEqual(mi2.getAttribute("placeholder"), "", "a token is added after selection");
+		assert.strictEqual(await mi1.getAttribute("placeholder"), "Placeholder", "a token is added after selection");
+		assert.strictEqual(await mi2.getAttribute("placeholder"), "", "a token is added after selection");
 	});
 });
 
 describe("ARIA attributes", () => {
-	it ("aria-describedby value according to the tokens count", () => {
-		const mi = $("#no-tokens");
-		const innerInput = mi.shadow$("input");
-		const btn = $("#add-tokens");
-		const invisibleText = mi.shadow$(".ui5-hidden-text");
-		const inivisbleTextId = invisibleText.getProperty("id");
+	it ("aria-describedby value according to the tokens count", async () => {
+		const mi = await browser.$("#no-tokens");
+		const innerInput = await mi.shadow$("input");
+		const btn = await browser.$("#add-tokens");
+		const invisibleText = await mi.shadow$(".ui5-hidden-text");
+		const inivisbleTextId = await invisibleText.getProperty("id");
 		let resourceBundleText = null;
 
-		resourceBundleText = browser.execute(() => {
+		resourceBundleText = await browser.executeAsync(done => {
 			const mi = document.getElementById("no-tokens");
-			return mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN);
+			done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
 		});
 
-		assert.strictEqual(mi.$$("ui5-token").length, 0, "should not have tokens");
-		assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
-		assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+		let allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 0, "should not have tokens");
+		assert.strictEqual(await innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
+		assert.strictEqual(await invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
 
-		$("#add-tokens").scrollIntoView();
-		btn.click();
+		await browser.$("#add-tokens").scrollIntoView();
+		await btn.click();
 
-		resourceBundleText = browser.execute(() => {
+		resourceBundleText = await browser.executeAsync(done => {
 			const mi = document.getElementById("no-tokens");
-			return mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+			done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
 		});
 
-		assert.strictEqual(mi.$$("ui5-token").length, 1, "should have one token");
-		assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+		allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 1, "should have one token");
+		assert.strictEqual(await invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
 
-		btn.click();
-		assert.strictEqual(mi.$$("ui5-token").length, 2, "should have two tokens");
-		assert.strictEqual(invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
+		await btn.click();
+		allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 2, "should have two tokens");
+		assert.strictEqual(await invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
 	});
 
-	it ("aria-describedby value according to the tokens and suggestions count", () => {
-		const mi = $("#suggestion-token");
-		const innerInput = mi.shadow$("input");
-		const tokensCountITextId = `${mi.getProperty("_id")}-hiddenText-nMore`;
-		const suggestionsITextId = `${mi.getProperty("_id")}-suggestionsText`;
+	it ("aria-describedby value according to the tokens and suggestions count", async () => {
+		const mi = await browser.$("#suggestion-token");
+		const innerInput = await mi.shadow$("input");
+		const tokensCountITextId = `${await mi.getProperty("_id")}-hiddenText-nMore`;
+		const suggestionsITextId = `${await mi.getProperty("_id")}-suggestionsText`;
 		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
 
-		$("#suggestion-token").scrollIntoView();
-		innerInput.click();
-		innerInput.keys("a");
-		innerInput.keys("ArrowDown");
-		innerInput.keys("Enter");
+		await browser.$("#suggestion-token").scrollIntoView();
+		await innerInput.click();
+		await innerInput.keys("a");
+		await innerInput.keys("ArrowDown");
+		await innerInput.keys("Enter");
 
-		assert.strictEqual(innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
+		assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
 	});
 
-	it ("aria-roledescription is set properly", () => {
-		const mi = $("#no-tokens");
-		const innerInput = mi.shadow$("input");
+	it ("aria-roledescription is set properly", async () => {
+		const mi = await browser.$("#no-tokens");
+		const innerInput = await mi.shadow$("input");
 
-		assert.strictEqual(innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
+		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
 	});
 });
 

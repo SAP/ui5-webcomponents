@@ -11,6 +11,20 @@ let isNodeValue = false;
 // matches event handlers @click= and boolean attrs ?disabled=
 const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
 
+if (!String.prototype.replaceAll) {
+	String.prototype.replaceAll = function(str, newStr){
+
+		// If a regex pattern
+		if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+			return this.replace(str, newStr);
+		}
+
+		// If a string
+		return this.replace(new RegExp(str, 'g'), newStr);
+
+	};
+}
+
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];
@@ -18,7 +32,7 @@ function HTMLLitVisitor(debug) {
 	this.result = "";
 	this.mainBlock = "";
 	this.blockPath = "context";
-	this.blockParameters = ["context"];
+	this.blockParameters = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
 	if (this.debug) {
@@ -34,7 +48,7 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.keys.push(key);
 	this.debug && this.blockByNumber.push(key);
 
-	this.blocks[this.currentKey()] = "const " + this.currentKey() + " = (" + this.blockParameters.join(", ") + ") => { return ";
+	this.blocks[this.currentKey()] = "const " + this.currentKey() + " = (" + this.blockParameters.join(", ") + ") => ";
 
 	if (this.keys.length > 1) { //it's a nested block
 		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
@@ -45,7 +59,7 @@ HTMLLitVisitor.prototype.Program = function(program) {
 
 	this.blocks[this.currentKey()] += "html`";
 	Visitor.prototype.Program.call(this, program);
-	this.blocks[this.currentKey()] += "`; };";
+	this.blocks[this.currentKey()] += "`;";
 
 	this.keys.pop(key);
 };
@@ -55,15 +69,20 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
 	let contentStatement = content.original;
-	if (contentStatement.match(/style="?$/)) {
-		contentStatement = contentStatement.replace(/style=("?)$/, `data-ui5-style-ref=$1`);
-	}
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
 	const closingIndex = contentStatement.lastIndexOf(">");
 	const openingIndex = contentStatement.lastIndexOf("<");
 	if (closingIndex !== -1 || openingIndex !== -1) { // Only change isNodeValue whenever < or > is found in the content statement
 		isNodeValue = closingIndex > openingIndex;
+	}
+
+	// Scope custom element tags
+	contentStatement = contentStatement.replaceAll(/(<\/?\s*)([a-zA-Z0-9_]+-[a-zA-Z0-9_-]+)/g, "$1\${scopeTag(\"$2\", tags, suffix)}");
+
+	// Apply style marker
+	if (contentStatement.match(/style="?$/)) {
+		contentStatement = contentStatement.replace(/style=("?)$/, `data-ui5-style-ref=$1`);
 	}
 
 	this.blocks[this.currentKey()] += contentStatement;
@@ -86,7 +105,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
-			parsedCode = path.replace(/^context\.styles\./, "");
+			parsedCode = path.replace(/^context\.styles\./, ""); //`\${styleMap(${path})}`;
 		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;
 		} else {

@@ -31,7 +31,7 @@
 			var popoverCloser = document.getElementById("closePopoverButton");
 
 			popoverOpener.addEventListener("click", function() {
-				popover.open(popoverOpener);
+				popover.showAt(popoverOpener);
 			});
 			popoverCloser.addEventListener("click", function() {
 				popover.close();
@@ -61,7 +61,7 @@
 	var popoverCloser = document.getElementById("closePopoverButton");
 
 	popoverOpener.addEventListener("click", function() {
-		popover.open(popoverOpener);
+		popover.showAt(popoverOpener);
 	});
 	popoverCloser.addEventListener("click", function() {
 		popover.close();

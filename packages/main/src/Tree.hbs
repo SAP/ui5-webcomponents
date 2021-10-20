@@ -3,7 +3,7 @@
     .headerText="{{headerText}}"
     .footerText="{{footerText}}"
     .noDataText="{{noDataText}}"
-    .accRole="{{_role}}"
+    .accessibleRole="{{_role}}"
     @ui5-item-click="{{_onListItemClick}}"
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-selection-change="{{_onListSelectionChange}}"
@@ -17,6 +17,7 @@
             icon="{{this.treeItem.icon}}"
             additional-text="{{this.treeItem.additionalText}}"
             additional-text-state="{{this.treeItem.additionalTextState}}"
+            title="{{this.treeItem.title}}"
             ?_toggle-button-end="{{ ../_toggleButtonEnd}}"
             ?_minimal="{{../_minimal}}"
             .treeItem="{{this.treeItem}}"
@@ -28,6 +29,8 @@
             @ui5-toggle="{{../_onListItemToggle}}"
             @ui5-step-in="{{../_onListItemStepIn}}"
             @ui5-step-out="{{../_onListItemStepOut}}"
+            @mouseover="{{../_onListItemMouseOver}}"
+            @mouseout="{{../_onListItemMouseOut}}"
         >
             {{> treeListItemContent}}
         </ui5-li-tree>

@@ -52,7 +52,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-time-picker</code> component provides an input field with assigned sliders which opens on user action.
+ * The <code>ui5-time-picker</code> component provides an input field with assigned sliders which are opened on user action.
  * The <code>ui5-time-picker</code> allows users to select a localized time using touch,
  * mouse, or keyboard input. It consists of two parts: the time input field and the
  * sliders.
@@ -60,7 +60,7 @@ const metadata = {
  * <h3>Usage</h3>
  * The user can enter a time by:
  * <ul>
- * <li>Using the sliders that opens in a popup</li>
+ * <li>Using the sliders that are displayed in a popup</li>
  * <li>Typing it in directly in the input field</li>
  * </ul>
  * <br><br>
@@ -157,7 +157,7 @@ class TimePicker extends TimePickerBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 }
 

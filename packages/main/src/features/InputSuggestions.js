@@ -40,11 +40,11 @@ class Suggestions {
 		this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
 		this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
 
+		this._getSuggestionPopover();
+
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
 		this.selectedItemIndex = null;
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this.accInfo = {};
 	}
@@ -104,6 +104,14 @@ class Suggestions {
 		return false;
 	}
 
+	onTab(event) {
+		if (this._isItemOnTarget()) {
+			this.onItemSelected(null, true);
+			return true;
+		}
+		return false;
+	}
+
 	toggle(bToggle, { preventFocusRestore }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
@@ -120,16 +128,15 @@ class Suggestions {
 	}
 
 	async open() {
-		this.responsivePopover = await this._respPopover();
+		this._getComponent().open = true;
 		this._beforeOpen();
 
-		if (this._getItems().length) {
-			this.responsivePopover.open(this._getComponent());
-		}
+		this.responsivePopover.showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
-		this.responsivePopover = await this._respPopover();
+		this._getComponent().open = false;
+		this.responsivePopover = await this._getSuggestionPopover();
 		this.responsivePopover.close(false, false, preventFocusRestore);
 	}
 
@@ -174,7 +181,7 @@ class Suggestions {
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
-		this.close();
+		this._getComponent().open = false;
 	}
 
 	onItemPreviewed(item) {
@@ -209,12 +216,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._respPopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
+			this._getSuggestionPopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._respPopover.addEventListener("ui5-after-close", this._onClose.bind(this));
+			this._getSuggestionPopover.addEventListener("ui5-after-close", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -329,7 +336,7 @@ class Suggestions {
 
 	async _getScrollContainer() {
 		if (!this._scrollContainer) {
-			await this._respPopover();
+			await this._getSuggestionPopover();
 			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popup-content");
 		}
 
@@ -345,7 +352,7 @@ class Suggestions {
 	}
 
 	async _getList() {
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = await this._getSuggestionPopover();
 		return this.responsivePopover.querySelector("[ui5-list]");
 	}
 
@@ -358,7 +365,7 @@ class Suggestions {
 		return this._getComponent().getSlottedNodes(this.slotName);
 	}
 
-	async _respPopover() {
+	async _getSuggestionPopover() {
 		if (this.responsivePopover) {
 			return this.responsivePopover;
 		}
@@ -369,9 +376,8 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const i18nBundle = this.i18nBundle,
-			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, [this.accInfo.currentPos], [this.accInfo.listSize]),
-			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
+			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
 	}
@@ -424,6 +430,10 @@ class Suggestions {
 			GroupHeaderListItem,
 			Button,
 		];
+	}
+
+	static async init() {
+		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

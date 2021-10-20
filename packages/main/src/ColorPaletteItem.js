@@ -1,7 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
@@ -30,15 +31,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @type {String}
-		 * @public
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Defines the tab-index of the element, helper information for the ItemNavigation.
 		 * @private
 		 */
@@ -55,6 +47,15 @@ const metadata = {
 		 */
 		index: {
 			type: String,
+		},
+
+		/**
+		 * Defines if the ColorPalette is on phone mode.
+		 * @private
+		 * @type {Boolean}
+		 */
+		phone: {
+			type: Boolean,
 		},
 
 		/**
@@ -106,20 +107,20 @@ class ColorPaletteItem extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ColorPaletteItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		this._disabled = !this.value;
+		this.phone = isPhone();
 	}
 
 	get colorLabel() {
-		return this.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
+		return ColorPaletteItem.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
 	}
 
 	get styles() {

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -51,7 +51,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Active</code></li>
 		 * <li><code>Inactive</code></li>
-		 * <ul>
+		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
@@ -101,6 +101,11 @@ const metadata = {
 		_busy: {
 			type: Boolean,
 		},
+		_ariaPosition: {
+			type: String,
+			defaultValue: "",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -137,7 +142,7 @@ const metadata = {
  * The <code>ui5-table-row</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>row - Used to style the native <code>tr</code> element</li>
- * <li>popin-row - Used to style the <code>tr</code> element</li> when a row pops in
+ * <li>popin-row - Used to style the <code>tr</code> element when a row pops in</li>
  * </ul>
  *
  * @constructor
@@ -163,12 +168,6 @@ class TableRow extends UI5Element {
 
 	static get template() {
 		return TableRowTemplate;
-	}
-
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onmouseup() {
@@ -236,7 +235,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
-		if (!this.contains(document.activeElement)) {
+		if (!this.contains(this.getRootNode().activeElement)) {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,
@@ -261,7 +260,7 @@ class TableRow extends UI5Element {
 	}
 
 	_getActiveElementTagName() {
-		return document.activeElement.localName.toLocaleLowerCase();
+		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
 	}
 
 	activate() {
@@ -341,15 +340,16 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.cells.map((cell, index) => {
+		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {
-		return this.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
+		return TableRow.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
 	}
 
 	get isSingleSelect() {
@@ -379,7 +379,7 @@ class TableRow extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

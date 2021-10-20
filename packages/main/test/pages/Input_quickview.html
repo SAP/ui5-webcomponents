@@ -107,7 +107,7 @@
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
-			quickViewCard.openBy(targetRef, true /* preventInitialFocus */);
+			quickViewCard.showAt(targetRef, true /* preventInitialFocus */);
 		});
 
 		/*
@@ -118,7 +118,7 @@
 				const targetRef = event.detail.targetRef;
 
 				quickViewCard.close();
-				quickViewCard.openBy(targetRef, true /* preventInitialFocus */);
+				quickViewCard.showAt(targetRef, true /* preventInitialFocus */);
 			});
 
 			el.addEventListener("mouseout", function (event) {
@@ -158,7 +158,7 @@
 		inputPreview2.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
 			quickViewCard2.close();
-			quickViewCard2.openBy(item, true /* preventInitialFocus */);
+			quickViewCard2.showAt(item, true /* preventInitialFocus */);
 
 			// log info
 			suggestionItemPreviewRes.value = item.textContent;
@@ -182,7 +182,7 @@
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 				quickViewCard2.close();
-				quickViewCard2.openBy(targetRef, true /* preventInitialFocus */);
+				quickViewCard2.showAt(targetRef, true /* preventInitialFocus */);
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;

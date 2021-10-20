@@ -2,35 +2,53 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("ResponsivePopover general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ResponsivePopover.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ResponsivePopover.html`);
 	});
 
-	it("header and footer are displayed by default", () => {
-		const btnOpenPopover = $("#btnOpen");
-		const btnClosePopover = $("#btnClose");
+	it("header and footer are displayed by default", async () => {
+		const btnOpenPopover = await browser.$("#btnOpen");
+		const btnClosePopover = await browser.$("#btnClose");
 
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		const popover = browser.$("#respPopover");
-		const header = popover.shadow$(".ui5-popup-header-root");
+		const popover = await browser.$("#respPopover");
+		const header = await popover.shadow$(".ui5-popup-header-root");
 
-		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
-		assert.ok(header.isExisting(), "Header is displayed.");
+		assert.ok(await popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
+		assert.ok(await header.isExisting(), "Header is displayed.");
 
-		btnClosePopover.click();
-		assert.ok(!popover.isDisplayedInViewport(), "ResponsivePopover is closed.");
+		await btnClosePopover.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "ResponsivePopover is closed.");
 	});
 
-	it("header and footer are hidden on desktop", () => {
-		const btnOpenPopover = $("#btnOpen3");
+	it("header and footer are hidden on desktop", async () => {
+		const btnOpenPopover = await browser.$("#btnOpen3");
 
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		const popover = browser.$("#respPopover3");
-		const header = popover.shadow$(".ui5-popup-header-root");
+		const popover = await browser.$("#respPopover3");
+		const header = await popover.shadow$(".ui5-popup-header-root");
 
-		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
-		assert.ok(!header.isExisting(), "Header is not displayed.");
+		assert.ok(await popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
+		assert.notOk(await header.isExisting(), "Header is not displayed.");
+	});
+
+	it("Initial focus prevented", async () => {
+		const btnOpenPopover = await browser.$("#btnInitialFocus");
+		await btnOpenPopover.click();
+
+		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		assert.strictEqual(activeElementId, "simpleRPInitialFocus", "Initial focus is not prevented");
+
+	});
+
+	it("Initial focus not prevented", async () => {
+		const btnOpenPopover = await browser.$("#btnInitialFocusPrevented");
+		await btnOpenPopover.click();
+
+		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		assert.strictEqual(activeElementId, "btnInitialFocusPrevented", "Initial focus is prevented");
+
 	});
 });

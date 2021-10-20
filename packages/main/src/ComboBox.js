@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -15,6 +15,7 @@ import {
 	isUp,
 	isDown,
 	isEnter,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -47,6 +48,7 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
+import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 
 /**
  * @public
@@ -70,14 +72,14 @@ const metadata = {
 		/**
 		 * Defines the "live" value of the component.
 		 * <br><br>
-		 * <b>Note:</b> The property is updated upon typing.
+		 * <b>Note:</b> If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Initially the filter value is synced with value.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @public
+		 * @private
 		 */
 		filterValue: {
 			type: String,
@@ -99,7 +101,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled component is completely uninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -131,7 +133,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the component is readonly.
+		 * Defines whether the component is read-only.
 		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
@@ -188,13 +190,22 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the combo box
+		 * Indicates whether the visual focus is on the value state header
+		 * @private
+		 */
+		_isValueStateFocused: {
+			type: Boolean,
+		},
+
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
 		 * @type {String}
 		 * @defaultvalue: ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 			defaultValue: undefined,
 		},
@@ -203,10 +214,10 @@ const metadata = {
 		 * Receives id(or many ids) of the elements that label the combo box
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -214,11 +225,6 @@ const metadata = {
 		_iconPressed: {
 			type: Boolean,
 			noAttribute: true,
-		},
-
-		_tempValue: {
-			type: String,
-			defaultValue: "",
 		},
 
 		_filteredItems: {
@@ -253,7 +259,7 @@ const metadata = {
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the <code>ui5-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
@@ -315,7 +321,7 @@ const metadata = {
  *
  * The <code>ui5-combobox</code> component represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
  *
- * It is commonly used to enable users to select one or more options from a predefined list.
+ * It is commonly used to enable users to select an option from a predefined list.
  * <h3>Structure</h3>
  * The <code>ui5-combobox</code> consists of the following elements:
  * <ul>
@@ -343,7 +349,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ComboBox
  * @extends UI5Element
  * @tagname ui5-combobox
- * @appenddocs ComboBoxItem
+ * @appenddocs ComboBoxItem ComboBoxGroupItem
  * @public
  * @since 1.0.0-rc.6
  */
@@ -378,33 +384,12 @@ class ComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._initialRendering = true;
 		this._itemFocused = false;
-		this._tempFilterValue = "";
 		this._selectionChanged = false;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		let domValue;
-
 		if (this._initialRendering) {
-			domValue = this.value;
 			this._filteredItems = this.items;
-		} else {
-			domValue = this.filterValue;
-		}
-
-		if (this._autocomplete && domValue !== "") {
-			const item = this._autoCompleteValue(domValue);
-
-			if (!this._selectionChanged && (item && !item.selected)) {
-				this.fireEvent("selection-change", {
-					item,
-				});
-
-				this._selectionChanged = false;
-			}
-		} else {
-			this._tempValue = domValue;
 		}
 
 		if (!this._initialRendering && this.popover && document.activeElement === this && !this._filteredItems.length) {
@@ -412,15 +397,7 @@ class ComboBox extends UI5Element {
 		}
 
 		this._selectMatchingItem();
-
-		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
-			this.focused = false;
-		} else if (this.shadowRoot.activeElement) {
-			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
-		}
-
 		this._initialRendering = false;
-		this._isKeyNavigation = false;
 	}
 
 	async onAfterRendering() {
@@ -432,53 +409,69 @@ class ComboBox extends UI5Element {
 
 		if (this.shouldClosePopover() && !isPhone()) {
 			this.responsivePopover.close(false, false, true);
+			this._clearFocus();
+			this._itemFocused = false;
 		}
-
-		this._itemFocused = false;
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
+
+		// Safari is quite slow and does not preserve text highlighting on control rerendering.
+		// That's why we need to restore it "manually".
+		if (isSafari() && this._autocomplete && this.filterValue !== this.value) {
+			this.inner.setSelectionRange(
+				(this._isKeyNavigation ? 0 : this.filterValue.length),
+				this.value.length,
+			);
+		}
 	}
 
 	shouldClosePopover() {
-		return this.responsivePopover.opened && !this.focused && !this._itemFocused;
+		return this.responsivePopover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(event) {
 		this.focused = true;
 
-		if (this.filterValue !== this.value) {
-			this.filterValue = this.value;
-		}
+		this._lastValue = this.value;
+
+		this._autocomplete = false;
 
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
 
-	_focusout() {
-		this.focused = false;
+	_focusout(event) {
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
-		this._inputChange();
-		!isPhone() && this._closeRespPopover();
+		this._fireChangeEvent();
+
+		if (focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
+			return;
+		}
+
+		if (!this.shadowRoot.contains(event.relatedTarget)) {
+			this.focused = false;
+			!isPhone() && this._closeRespPopover(event);
+		}
 	}
 
 	_afterOpenPopover() {
 		this._iconPressed = true;
-
-		if (isPhone() && this.value) {
-			this.filterValue = this.value;
-		}
-
-		this._clearFocus();
 	}
 
 	_afterClosePopover() {
 		this._iconPressed = false;
 		this._filteredItems = this.items;
-		this._tempFilterValue = "";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
+		}
+
+		if (this._selectionPerformed) {
+			this._lastValue = this.value;
+			this._selectionPerformed = false;
 		}
 	}
 
@@ -506,7 +499,7 @@ class ComboBox extends UI5Element {
 
 	async openValueStatePopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.openBy(this);
+		this.popover && this.popover.showAt(this);
 	}
 
 	async closeValueStatePopover() {
@@ -537,20 +530,38 @@ class ComboBox extends UI5Element {
 		if (event.target === this.inner) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
+			this.focused = true;
+			this._isValueStateFocused = false;
 		}
 
-		this._clearFocus();
-		this._tempFilterValue = value;
-		this.filterValue = value;
-		this.fireEvent("input");
-
 		this._filteredItems = this._filterItems(value);
+
+		this.value = value;
+		this.filterValue = value;
+
+		this._clearFocus();
+
+		// autocomplete
+		if (this._autocomplete) {
+			const item = this._getFirstMatchingItem(value);
+			this._applyAtomicValueAndSelection(item, value, true);
+
+			if (value !== "" && !this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
+				this.fireEvent("selection-change", {
+					item,
+				});
+
+				this._selectionChanged = false;
+			}
+		}
+
+		this.fireEvent("input");
 
 		if (isPhone()) {
 			return;
 		}
 
-		if (!this._filteredItems.length) {
+		if (!this._filteredItems.length || value === "") {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -569,63 +580,162 @@ class ComboBox extends UI5Element {
 		});
 	}
 
-	handleArrowKeyPress(event) {
+	async handleArrowKeyPress(event) {
 		if (this.readonly || !this._filteredItems.length) {
 			return;
 		}
 
+		const isOpen = this.open;
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
 		const currentItem = this._filteredItems.find(item => {
-			return this.responsivePopover.opened ? item.focused : item.selected;
+			return isOpen ? item.focused : item.selected;
 		});
-		let indexOfItem = this._filteredItems.indexOf(currentItem);
+		const indexOfItem = this._filteredItems.indexOf(currentItem);
 
 		event.preventDefault();
 
-		if ((indexOfItem === 0 && isArrowUp) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
+		if ((this.focused === true && isArrowUp && isOpen) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
+			return;
+		}
+
+		this._isKeyNavigation = true;
+
+		if (isArrowDown) {
+			this._handleArrowDown(event, indexOfItem);
+		}
+
+		if (isArrowUp) {
+			this._handleArrowUp(event, indexOfItem);
+		}
+	}
+
+	_handleItemNavigation(event, indexOfItem, isForward) {
+		const isOpen = this.open;
+		const currentItem = this._filteredItems[indexOfItem];
+		const nextItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
+		const isGroupItem = currentItem && currentItem.isGroupItem;
+
+		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
 			return;
 		}
 
 		this._clearFocus();
 
-		indexOfItem += isArrowDown ? 1 : -1;
-		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
-
-		if (this.responsivePopover.opened) {
-			this.announceSelectedItem(indexOfItem);
+		if (isOpen) {
+			this._itemFocused = true;
+			this.value = isGroupItem ? this.filterValue : currentItem.text;
+			this.focused = false;
+			currentItem.focused = true;
+		} else {
+			this.focused = true;
+			this.value = isGroupItem ? nextItem.text : currentItem.text;
+			currentItem.focused = false;
 		}
 
-		this._filteredItems[indexOfItem].focused = true;
-		this.filterValue = this._filteredItems[indexOfItem].text;
-		this._isKeyNavigation = true;
-		this._itemFocused = true;
-		this.fireEvent("input");
-
-		this.fireEvent("selection-change", {
-			item: this._filteredItems[indexOfItem],
-		});
-
+		this._isValueStateFocused = false;
 		this._selectionChanged = true;
+
+		if (isGroupItem && isOpen) {
+			return;
+		}
+
+		this._announceSelectedItem(indexOfItem);
+
+		// autocomplete
+		const item = this._getFirstMatchingItem(this.value);
+		this._applyAtomicValueAndSelection(item, "", true);
+
+		if ((item && !item.selected)) {
+			this.fireEvent("selection-change", {
+				item,
+			});
+		}
+
+		this.fireEvent("input");
+		this._fireChangeEvent();
+	}
+
+	_handleArrowDown(event, indexOfItem) {
+		const isOpen = this.open;
+
+		if (this.focused && indexOfItem === -1 && this.hasValueStateText && isOpen) {
+			this._isValueStateFocused = true;
+			this.focused = false;
+			return;
+		}
+
+		indexOfItem = !isOpen && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+
+		this._handleItemNavigation(event, ++indexOfItem, true /* isForward */);
+	}
+
+	_handleArrowUp(event, indexOfItem) {
+		const isOpen = this.open;
+
+		if (indexOfItem === 0 && !this.hasValueStateText) {
+			this._clearFocus();
+			this.focused = true;
+			this._itemFocused = false;
+			return;
+		}
+
+		if (indexOfItem === 0 && this.hasValueStateText && isOpen) {
+			this._clearFocus();
+			this._itemFocused = false;
+			this._isValueStateFocused = true;
+			this._filteredItems[0].selected = false;
+			return;
+		}
+
+		if (this._isValueStateFocused) {
+			this.focused = true;
+			this._isValueStateFocused = false;
+			return;
+		}
+
+		indexOfItem = !isOpen && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(event, --indexOfItem, false /* isForward */);
 	}
 
 	_keydown(event) {
 		const isArrowKey = isDown(event) || isUp(event);
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
+		this._isKeyNavigation = false;
 
 		if (isArrowKey) {
 			this.handleArrowKeyPress(event);
 		}
 
 		if (isEnter(event)) {
-			this._inputChange();
+			this._fireChangeEvent();
 			this._closeRespPopover();
+			this.focused = true;
+		}
+
+		if (isEscape(event)) {
+			this.focused = true;
+			this.value = !this.open ? this._lastValue : this.value;
+			this._isValueStateFocused = false;
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
+
 			this._resetFilter();
 			this._toggleRespPopover();
+
+			const selectedItem = this._filteredItems.find(item => {
+				return item.selected;
+			});
+
+			if (selectedItem && this.open) {
+				this._itemFocused = true;
+				selectedItem.focused = true;
+				this.focused = false;
+			} else {
+				this.focused = true;
+			}
 		}
 	}
 
@@ -639,60 +749,91 @@ class ComboBox extends UI5Element {
 		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
 			this.value = this._selectedItemText;
 			this.filterValue = this._selectedItemText;
-			this._tempValue = this._selectedItemText;
 		}
+
+		this._isValueStateFocused = false;
+		this._clearFocus();
 
 		this.responsivePopover.close();
 	}
 
 	_openRespPopover() {
-		this.responsivePopover.open(this);
+		this.responsivePopover.showAt(this);
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+
+		// Return the filtered items and their group items
+		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
 	}
 
-	_autoCompleteValue(current) {
-		const currentValue = current;
-		const matchingItems = this._startsWithMatchingItems(currentValue);
-		const selectionValue = this._tempFilterValue ? this._tempFilterValue : currentValue;
+	/**
+	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
+	 *
+	 * @private
+	 */
+	static _groupItemFilter(item, idx, allItems, filteredItems) {
+		if (item.isGroupItem) {
+			let groupHasFilteredItems;
 
-		if (matchingItems.length) {
-			this._tempValue = matchingItems[0] ? matchingItems[0].text : current;
-		} else {
-			this._tempValue = current;
+			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
+				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
+				idx++;
+			}
+
+			return groupHasFilteredItems;
+		}
+	}
+
+	_getFirstMatchingItem(current) {
+		const currentlyFocusedItem = this.items.find(item => item.focused === true);
+
+		if (currentlyFocusedItem && currentlyFocusedItem.isGroupItem) {
+			this.value = this.filterValue;
+			return;
 		}
 
-		if (matchingItems.length && (selectionValue !== this._tempValue && this.value !== this._tempValue)) {
-			setTimeout(() => {
-				this.inner.setSelectionRange(selectionValue.length, this._tempValue.length);
-			}, 0);
-		} else if (this._isKeyNavigation) {
-			setTimeout(() => {
-				this.inner.setSelectionRange(0, this._tempValue.length);
-			}, 0);
-		}
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
 	}
 
-	_selectMatchingItem() {
-		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = (item.text === this._tempValue);
+	_applyAtomicValueAndSelection(item, filterValue, highlightValue) {
+		if (!item) {
+			return;
+		}
 
+		const value = (item && item.text) || "";
+		this.inner.value = value;
+		if (highlightValue) {
+			this.inner.setSelectionRange(filterValue.length, value.length);
+		}
+		this.value = value;
+	}
+
+	_selectMatchingItem() {
+		const currentlyFocusedItem = this.items.find(item => item.focused);
+		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
+
+		this._filteredItems = this._filteredItems.map(item => {
+			item.selected = !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
 			return item;
 		});
 	}
 
-	_inputChange() {
-		if (this.value !== this._tempValue) {
-			this.value = this._tempValue;
+	_fireChangeEvent() {
+		if (this.value !== this._lastValue) {
 			this.fireEvent("change");
-			this.inner.setSelectionRange(this.value.length, this.value.length);
+			this._lastValue = this.value;
 		}
+	}
+
+	_inputChange(event) {
+		event.preventDefault();
 	}
 
 	_itemMousedown(event) {
@@ -702,9 +843,17 @@ class ComboBox extends UI5Element {
 	_selectItem(event) {
 		const listItem = event.detail.item;
 
-		this._tempValue = listItem.mappedItem.text;
 		this._selectedItemText = listItem.mappedItem.text;
-		this.filterValue = this._tempValue;
+		this._selectionPerformed = true;
+
+		const sameItemSelected = this.value === this._selectedItemText;
+		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
+
+		if (sameItemSelected && sameSelectionPerformed) {
+			return this._closeRespPopover();
+		}
+
+		this.value = this._selectedItemText;
 
 		if (!listItem.mappedItem.selected) {
 			this.fireEvent("selection-change", {
@@ -715,32 +864,34 @@ class ComboBox extends UI5Element {
 		}
 
 		this._filteredItems.map(item => {
-			item.selected = (item === listItem.mappedItem);
-
+			item.selected = (item === listItem.mappedItem && !item.isGroupItem);
 			return item;
 		});
 
-		this._inputChange();
+		this._fireChangeEvent();
 		this._closeRespPopover();
+
+		// reset selection
+		this.inner.setSelectionRange(this.value.length, this.value.length);
 	}
 
 	_onItemFocus(event) {
 		this._itemFocused = true;
 	}
 
-	announceSelectedItem(indexOfItem) {
-		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [indexOfItem + 1], [this._filteredItems.length]);
-		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
+	_announceSelectedItem(indexOfItem) {
+		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
+		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return ComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(SELECT_OPTIONS);
+		return ComboBox.i18nBundle.getText(SELECT_OPTIONS);
 	}
 
 	get inner() {
@@ -779,10 +930,10 @@ class ComboBox extends UI5Element {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Information": this.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Success": ComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
@@ -821,7 +972,12 @@ class ComboBox extends UI5Element {
 			Button,
 			StandardListItem,
 			Popover,
+			ComboBoxGroupItem,
 		];
+	}
+
+	static async onDefine() {
+		ComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get styles() {
@@ -832,7 +988,6 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.9125rem 1rem",
 			},
 		};
 	}
@@ -840,6 +995,7 @@ class ComboBox extends UI5Element {
 	get classes() {
 		return {
 			popoverValueState: {
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,

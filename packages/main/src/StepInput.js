@@ -13,7 +13,7 @@ import {
 	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -187,13 +187,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the component.
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -202,9 +202,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -360,7 +361,6 @@ const INITIAL_SPEED = 120; // milliseconds
 class StepInput extends UI5Element {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -387,7 +387,7 @@ class StepInput extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get type() {
@@ -397,7 +397,7 @@ class StepInput extends UI5Element {
 	// icons-related
 
 	get decIconTitle() {
-		return this.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
+		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
 	}
 
 	get decIconName() {
@@ -405,7 +405,7 @@ class StepInput extends UI5Element {
 	}
 
 	get incIconTitle() {
-		return this.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
+		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
 	}
 
 	get incIconName() {
@@ -502,8 +502,10 @@ class StepInput extends UI5Element {
 	}
 
 	_fireChangeEvent() {
-		this._previousValue = this.value;
-		this.fireEvent("change", { value: this.value });
+		if (this._previousValue !== this.value) {
+			this._previousValue = this.value;
+			this.fireEvent("change", { value: this.value });
+		}
 	}
 
 	/**
@@ -553,6 +555,9 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputChange(event) {
+		if (this.input.value === "") {
+			this.input.value = this.min || 0;
+		}
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
 			this.value = inputValue;

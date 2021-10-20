@@ -56,7 +56,7 @@
 			<ui5-li type="Active" id="ch1" icon="developer-settings">ui5-li</ui5-li>
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-panel</ui5-li>
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-popover</ui5-li>
-			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-radiobutton</ui5-li>
+			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-radio-button</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-tabcontainer</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-table</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-textarea</ui5-li>
@@ -79,11 +79,10 @@
 
 		<section class="row">
 			<ui5-card
-				style="flex-basis:20%;"
-				heading="Wolly King"
-				subtitle="Back-end developer"
-				status="1 of 3">
-				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				style="flex-basis:20%;">
+				<ui5-card-header slot="header" title-text="Wolly King" subtitle-text="Back-end developer" status="1 of 3">
+					<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				</ui5-card-header>
 
 				<ui5-list id="myList12" separators="Inner">
 					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Java EE</ui5-li>
@@ -92,11 +91,10 @@
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
-				style="flex-basis:20%;"
-				heading="Lee, Y.Song"
-				subtitle="Full-stack developer"
-				status="2 of 3">
-				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				style="flex-basis:20%;">
+				<ui5-card-header slot="header" title-text="Lee, Y.Song" subtitle-text="Full-stack developer" status="2 of 3">
+					<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				</ui5-card-header>
 
 				<ui5-list id="myList12" separators="Inner">
 					<ui5-li image="./img/HT-1030.jpg" icon="source-code">C/C++</ui5-li>
@@ -105,10 +103,10 @@
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
-				style="flex-basis:20%;"
-				heading="Anna P."
-				subtitle="Visioner">
-				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				style="flex-basis:20%;">
+				<ui5-card-header slot="header" title-text="Anna P." subtitle-text="Visioner">
+					<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				</ui5-card-header>
 
 				<ui5-list id="myList13" separators="Inner">
 					<ui5-li icon="camera" icon-end>Photoshop</ui5-li>
@@ -117,11 +115,10 @@
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
-				style="flex-basis:20%;"
-				heading="Medved I."
-				subtitle="Enthusiast"
-				status="3 of 3">
-				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				style="flex-basis:20%;">
+				<ui5-card-header slot="header" title-text="Medved I." subtitle-text="Enthusiast" status="3 of 3">
+					<ui5-icon name="employee" slot="avatar"></ui5-icon>
+				</ui5-card-header>
 
 				<ui5-list id="myList13" separators="Inner">
 					<ui5-li icon="syntax">JavaScript</ui5-li>
@@ -213,15 +210,15 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-radiobutton id="myRb1" checked text="Default"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb2" read-only text="read only"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb3" disabled text="disabled"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb4" read-only text="read only" checked></ui5-radiobutton>
-			<ui5-radiobutton id="myRb5" disabled text="disabled" checked></ui5-radiobutton>
-			<ui5-radiobutton id="myRb6" value-state="Warning" checked text="warning"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb7" value-state="Error" checked text="error"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb6" value-state="Warning" text="warning"></ui5-radiobutton>
-			<ui5-radiobutton id="myRb7" value-state="Error" text="error long text should truncate"></ui5-radiobutton>
+			<ui5-radio-button id="myRb1" checked text="Default"></ui5-radio-button>
+			<ui5-radio-button id="myRb2" read-only text="read only"></ui5-radio-button>
+			<ui5-radio-button id="myRb3" disabled text="disabled"></ui5-radio-button>
+			<ui5-radio-button id="myRb4" read-only text="read only" checked></ui5-radio-button>
+			<ui5-radio-button id="myRb5" disabled text="disabled" checked></ui5-radio-button>
+			<ui5-radio-button id="myRb6" value-state="Warning" checked text="warning"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" value-state="Error" checked text="error"></ui5-radio-button>
+			<ui5-radio-button id="myRb6" value-state="Warning" text="warning"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" value-state="Error" text="error long text should truncate"></ui5-radio-button>
 		</section>
 
 		<section class="row row-centered">
@@ -323,7 +320,7 @@
 					<ui5-toggle-button pressed type="Negative">Tomato</ui5-toggle-button>
 				</ui5-tab>
 
-                <ui5-tab-separator></ui5-tab-separator>
+				<ui5-tab-separator></ui5-tab-separator>
 
 				<ui5-tab key="item2" text="Drinks" icon="pharmacy" design="Critical">
 					<ui5-button>Wine</ui5-button>
@@ -389,7 +386,7 @@
 				style="flex: 0 0 400px"
 				show-exceeded-text
 			>
-            </ui5-textarea>
+			</ui5-textarea>
 		</section>
 
 		<section class="row">

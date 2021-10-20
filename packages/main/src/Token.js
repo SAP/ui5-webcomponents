@@ -8,7 +8,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -73,7 +73,7 @@ const metadata = {
 
 		/**
 		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
-		 * Accepts <code>ui5-icon</code>
+		 * Accepts <code>ui5-icon</code>.
 		 *
 		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
@@ -148,12 +148,6 @@ class Token extends UI5Element {
 		return styles;
 	}
 
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	_handleSelect() {
 		this.selected = !this.selected;
 		this.fireEvent("select");
@@ -184,7 +178,7 @@ class Token extends UI5Element {
 	}
 
 	get tokenDeletableText() {
-		return this.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
+		return Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
 	}
 
 	get iconURI() {
@@ -196,7 +190,7 @@ class Token extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Token.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

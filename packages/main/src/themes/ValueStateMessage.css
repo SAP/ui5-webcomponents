@@ -1,5 +1,4 @@
 .ui5-valuestatemessage-popover {
-	min-height: 1rem;
 	box-shadow: none;
 }
 
@@ -9,11 +8,17 @@
 	color: var(--sapTextColor);
 	font-size: var(--sapFontSmallSize);
 	font-family: "72override", var(--sapFontFamily);
-	padding: .3rem .625rem;
+	height: auto;
+	padding: .5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	min-width: 6.25rem;
 	border: var(--_ui5_value_state_message_border);
+}
+
+ui5-responsive-popover .ui5-valuestatemessage-header {
+	min-height: 2rem;
+	padding: .5625rem 1rem;
 }
 
 .ui5-valuestatemessage--success {
@@ -31,3 +36,10 @@
 .ui5-valuestatemessage--information {
 	background: var(--sapInformationBackground);
 }
+
+.ui5-responsive-popover-header[focused], .ui5-responsive-popover-header:focus {
+	outline-width: 0.0625rem;
+	outline-style: dotted;
+	outline-offset: -0.125rem;
+	outline-color: initial;
+} 

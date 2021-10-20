@@ -17,6 +17,18 @@
 	transform: rotate(-45deg);
 }
 
+:host {
+	max-width: calc(100vw - (100vw - 100%) - 2 * var(--_ui5_popup_viewport_margin));
+}
+
+:host([opened][actual-placement-type="Top"]) {
+	margin-top: var(--_ui5-popover-margin-bottom);
+}
+
+:host([opened][actual-placement-type="Bottom"]) {
+	margin-top: var(--_ui5-popover-margin-top);
+}
+
 /* pointing upward arrow */
 :host([actual-placement-type="Bottom"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
@@ -55,7 +67,7 @@
 :host([actual-placement-type="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	height: 0.5625rem;
-	bottom: calc(-1 * (var(--_ui5_popup_content_padding) + 2px));
+	top: 100%;
 }
 
 :host([actual-placement-type="Top"]) .ui5-popover-arrow:after {

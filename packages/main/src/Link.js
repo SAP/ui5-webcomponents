@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getAriaLabelledByTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -25,7 +25,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the component cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the click event cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -103,33 +103,57 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the link.
-		 *
-		 * @type {String}
-		 * @since 1.0.0-rc.10
-		 * @private
-		 * @defaultvalue ""
-		 */
-		ariaLabel: {
-			type: String,
-		},
-
-		/**
 		 * Receives id(or many ids) of the elements that label the input
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.10
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * Defines the aria-haspopup value of the component.
+		 *
+		 * @type String
+		 * @defaultvalue undefined
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		 ariaHaspopup: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the accessibility role of the component.
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		 accessibleRole: {
+			type: String,
 		},
 
 		_rel: {
 			type: String,
 			noAttribute: true,
+		},
+
+		_tabIndex: {
+			type: String,
+			noAttribute: true,
+		},
+
+		/**
+		 * Indicates if the element is on focus.
+		 * @private
+		 */
+		 focused: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
@@ -203,7 +227,6 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -241,11 +264,14 @@ class Link extends UI5Element {
 	}
 
 	get tabIndex() {
+		if (this._tabIndex) {
+			return this._tabIndex;
+		}
 		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return getAriaLabelledByTexts(this);
 	}
 
 	get hasLinkType() {
@@ -260,15 +286,19 @@ class Link extends UI5Element {
 	}
 
 	get linkTypeText() {
-		return this.i18nBundle.getText(Link.typeTextMappings()[this.design]);
+		return Link.i18nBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {
 		return (this.href && this.href.length > 0) ? this.href : undefined;
 	}
 
+	get effectiveAccRole() {
+		return this.accessibleRole || "link";
+	}
+
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Link.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onclick(event) {
@@ -277,6 +307,11 @@ class Link extends UI5Element {
 
 	_onfocusin(event) {
 		event.isMarked = "link";
+		this.focused = true;
+	}
+
+	_onfocusout(event) {
+		this.focused = false;
 	}
 
 	_onkeydown(event) {

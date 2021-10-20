@@ -94,7 +94,7 @@
 			var langCbs = Array.from(document.querySelectorAll("[id^=cb]"));
 
 			langCbs.forEach(cbEl => {
-				cbEl.addEventListener("ui5-change", event => {
+				cbEl.addEventListener("change", event => {
 					const hasChecked = langCbs.some(cb => cb.checked);
 					const hasUnchecked = langCbs.some(cb => !cb.checked);
 
@@ -103,7 +103,7 @@
 				});
 			});
 
-			resultCb.addEventListener("ui5-change", event => {
+			resultCb.addEventListener("change", event => {
 				langCbs.forEach(cb => cb.checked = event.target.checked);
 			});
 		</script>
@@ -121,7 +121,7 @@
 	var langCbs = Array.from(document.querySelectorAll("[id^=cb]"));
 
 	langCbs.forEach(function (cbEl) {
-		cbEl.addEventListener("ui5-change", function (event) {
+		cbEl.addEventListener("change", function (event) {
 			const hasChecked = langCbs.some(function (cb) { return cb.checked });
 			const hasUnchecked = langCbs.some(function (cb) { return !cb.checked });
 
@@ -130,7 +130,7 @@
 		});
 	});
 
-	resultCb.addEventListener("ui5-change", function (event) {
+	resultCb.addEventListener("change", function (event) {
 		langCbs.forEach(function (cb) {
 			cb.checked = event.target.checked;
 		});

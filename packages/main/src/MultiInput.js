@@ -20,7 +20,7 @@ const metadata = {
 	tag: "ui5-multi-input",
 	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
-		 * Determines whether a value help icon will be should in the end of the input.
+		 * Determines whether a value help icon will be visualized in the end of the input.
 		 * Pressing the icon will fire <code>value-help-trigger</code> event.
 		 *
 		 * @type {boolean}
@@ -49,7 +49,6 @@ const metadata = {
 		 */
 		tokens: {
 			type: HTMLElement,
-			multiple: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
@@ -284,7 +283,7 @@ class MultiInput extends Input {
 	}
 
 	get ariaRoleDescription() {
-		return this.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
+		return MultiInput.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
 	}
 
 	static get dependencies() {

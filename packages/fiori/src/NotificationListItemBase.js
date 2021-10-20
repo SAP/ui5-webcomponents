@@ -1,6 +1,5 @@
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
@@ -26,12 +25,12 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
 
 		/**
-		 * Defines the <code>heading</code> of the item.
+		 * Defines the <code>titleText</code> of the item.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
@@ -66,7 +65,7 @@ const metadata = {
 		/**
 		 * Defines if the <code>notification</code> is new or has been already read.
 		 * <br><br>
-		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
 		 * if set to true - it has a normal font.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -141,12 +140,6 @@ const metadata = {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
-	constructor() {
-		super();
-
-		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -167,8 +160,8 @@ class NotificationListItemBase extends ListItemBase {
 		};
 	}
 
-	get hasHeading() {
-		return !!this.heading.length;
+	get hasTitleText() {
+		return !!this.titleText.length;
 	}
 
 	get hasPriority() {
@@ -257,7 +250,7 @@ class NotificationListItemBase extends ListItemBase {
 
 	async openOverflow() {
 		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover.openBy(this.overflowButtonDOM);
+		overflowPopover.showAt(this.overflowButtonDOM);
 	}
 
 	async closeOverflow() {
@@ -268,6 +261,10 @@ class NotificationListItemBase extends ListItemBase {
 	async getOverflowPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector(".ui5-notification-overflow-popover");
+	}
+
+	static async onDefine() {
+		NotificationListItemBase.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

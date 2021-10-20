@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import Icon from "./Icon.js";
@@ -73,6 +73,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
+		 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -85,6 +86,7 @@ const metadata = {
 		 * Defines the text, displayed when the component is not checked.
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
+		 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -128,8 +130,8 @@ const metadata = {
  * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>slider - Used to style the track, where the handle is being slid</li>
- * <li>text-on - Used to style the onText</li>
- * <li>text-off - Used to style the offText</li>
+ * <li>text-on - Used to style the <code>textOn</code> property text</li>
+ * <li>text-off - Used to style the <code>textOff</code> property text</li>
  * <li>handle - Used to style the handle of the switch</li>
  * </ul>
  *
@@ -162,10 +164,8 @@ class Switch extends UI5Element {
 		return SwitchTemplate;
 	}
 
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	get sapNextIcon() {
+		return this.checked ? "accept" : "less";
 	}
 
 	_onclick(event) {
@@ -232,11 +232,11 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || this.i18nBundle.getText(SWITCH_ON);
+		return this._textOn || Switch.i18nBundle.getText(SWITCH_ON);
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || this.i18nBundle.getText(SWITCH_OFF);
+		return this._textOff || Switch.i18nBundle.getText(SWITCH_OFF);
 	}
 
 	get hiddenText() {
@@ -248,7 +248,7 @@ class Switch extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Switch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

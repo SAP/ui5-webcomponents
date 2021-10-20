@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -104,6 +104,18 @@ const metadata = {
 			type: String,
 			defaultValue: UploadCollectionDnDOverlayMode.None,
 		},
+
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleName: {
+			type: String,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
@@ -122,6 +134,10 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-upload-collection</code> header.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided,
+		 * the labelling of the <code>UploadCollection</code> is a responsibility of the application developer.
+		 * <code>accessibleName</code> should be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -224,12 +240,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		UploadCollection.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._bodyDnDHandler = event => {
 			if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
 				this._dndOverlayMode = event.mode;
@@ -312,6 +327,10 @@ class UploadCollection extends UI5Element {
 				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
 				"uc-drop-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drop,
 			},
+			noFiles: {
+				"uc-no-files": true,
+				"uc-no-files-dnd-overlay": this._showDndOverlay,
+			},
 		};
 	}
 
@@ -328,27 +347,27 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _showNoData() {
-		return this.items.length === 0 && !this._showDndOverlay;
+		return this.items.length === 0;
 	}
 
 	get _noDataText() {
-		return this.noDataText || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_TEXT);
+		return this.noDataText || UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_TEXT);
 	}
 
 	get _noDataDescription() {
-		return this.noDataDescription || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_DESCRIPTION);
+		return this.noDataDescription || UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_DESCRIPTION);
 	}
 
 	get _roleDescription() {
-		return this.i18nBundle.getText(UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION);
+		return UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get _dndOverlayText() {
 		if (this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag) {
-			return this.i18nBundle.getText(UPLOADCOLLECTION_DRAG_FILE_INDICATOR);
+			return UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_DRAG_FILE_INDICATOR);
 		}
 
-		return this.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_INDICATOR);
+		return UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_INDICATOR);
 	}
 }
 

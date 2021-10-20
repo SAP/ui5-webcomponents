@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import encodeCSS from "@ui5/webcomponents-base/dist/util/encodeCSS.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
@@ -15,7 +14,6 @@ import AvatarCss from "./generated/themes/Avatar.css.js";
 import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
-import AvatarFitType from "./types/AvatarFitType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 /**
@@ -24,6 +22,7 @@ import AvatarColorScheme from "./types/AvatarColorScheme.js";
 const metadata = {
 	tag: "ui5-avatar",
 	languageAware: true,
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
@@ -45,19 +44,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the source path to the desired image.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		image: {
-			type: String,
-		},
-
-		/**
 		 * Defines the name of the UI5 Icon, that would be displayed.
 		 * <br>
-		 * <b>Note:</b> If <code>image</code> is set, the property would be ignored.
+		 * <b>Note:</b> If <code>image</code> slot is provided, the property would be ignored.
 		 * <br>
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
@@ -133,24 +122,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the fit type of the desired image.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Cover</code></li>
-		 * <li><code>Contain</code></li>
-		 * </ul>
-		 * @type {AvatarFitType}
-		 * @defaultvalue "Cover"
-		 * @public
-		 */
-		imageFitType: {
-			type: AvatarFitType,
-			defaultValue: AvatarFitType.Cover,
-		},
-
-		/**
-		 * Defines the background color of the content.
+		 * Defines the background color of the desired image.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -211,8 +183,31 @@ const metadata = {
 			type: String,
 			noAttribute: true,
 		},
+
+		_hasImage: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
+		/**
+		 * Receives the desired <code>&lt;img&gt;</code> tag
+		 *
+		 * <b>Note:</b> If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
+		 * <br /> <br />
+		 * <code>
+		 *		ui5-avatar:not(:defined) { <br />
+		 *			&nbsp;visibility: hidden; <br />
+		 *		} <br />
+		 * </code>
+		 * @type {HTMLElement}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		"default": {
+			propertyName: "image",
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 		/**
@@ -242,7 +237,7 @@ const metadata = {
  *
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
+ * <li>[SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
  * </ul>
  * <br><br>
  *
@@ -260,11 +255,6 @@ const metadata = {
  * @public
  */
 class Avatar extends UI5Element {
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -286,7 +276,7 @@ class Avatar extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get tabindex() {
@@ -340,23 +330,22 @@ class Avatar extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
+		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
 	}
 
-	get styles() {
-		return {
-			img: {
-				"background-image": `url("${encodeCSS(this.image)}")`,
-			},
-		};
+	get hasImage() {
+		this._hasImage = !!this.image.length;
+		return this._hasImage;
 	}
 
-	_onclick(event) {
-		if (this.interactive) {
-			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation();
-			this.fireEvent("click");
-		}
+	onBeforeRendering() {
+		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+	}
+
+	_onClickHandler(event) {
+		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+		event.stopPropagation();
+		this.fireEvent("click");
 	}
 
 	_onkeydown(event) {

@@ -1,8 +1,7 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -21,6 +20,9 @@ import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
+
+let isGlobalHandlerAttached = false;
+let activeCb = null;
 
 /**
  * @public
@@ -166,27 +168,11 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the <code>aria-label</code>, set on the component root tag.
-		 * @type {string}
-		 * @defaultvalue undefined
+		 * Defines the active state (pressed or not) of the component.
 		 * @private
-		 * @since 1.0.0-rc.8
 		 */
-		ariaLabel: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the checkbox
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
-		 */
-		ariaLabelledby: {
-			type: String,
-			defaultValue: "",
+		active: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
@@ -279,7 +265,16 @@ class CheckBox extends UI5Element {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._deactivate = () => {
+			if (activeCb) {
+				activeCb.active = false;
+			}
+		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+			isGlobalHandlerAttached = true;
+		}
 	}
 
 	onBeforeRendering() {
@@ -302,13 +297,28 @@ class CheckBox extends UI5Element {
 		this.toggle();
 	}
 
+	_onmousedown() {
+		this.active = true;
+		activeCb = this; // eslint-disable-line
+	}
+
+	_onmouseup() {
+		this.active = false;
+	}
+
+	_onfocusout() {
+		this.active = false;
+	}
+
 	_onkeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
+			this.active = true;
 		}
 
 		if (isEnter(event)) {
 			this.toggle();
+			this.active = true;
 		}
 	}
 
@@ -316,6 +326,8 @@ class CheckBox extends UI5Element {
 		if (isSpace(event)) {
 			this.toggle();
 		}
+
+		this.active = false;
 	}
 
 	toggle() {
@@ -339,12 +351,10 @@ class CheckBox extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 
@@ -364,20 +374,12 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
-	}
-
 	get ariaChecked() {
 		return this.indeterminate && this.checked ? "mixed" : this.checked;
 	}
 
 	get ariaLabelledBy() {
-		if (!this.ariaLabelText) {
-			return this.text ? `${this._id}-label` : undefined;
-		}
-
-		return undefined;
+		return this.text ? `${this._id}-label` : undefined;
 	}
 
 	get ariaDescribedBy() {
@@ -409,7 +411,7 @@ class CheckBox extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		CheckBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

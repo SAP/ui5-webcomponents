@@ -9,7 +9,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
@@ -305,8 +305,6 @@ class TabContainer extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this._getTabs(),
 		});
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -497,7 +495,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.open(button);
+			this.responsivePopover.showAt(button);
 		}
 	}
 
@@ -563,6 +561,8 @@ class TabContainer extends UI5Element {
 			root: {
 				"ui5-tc-root": true,
 				"ui5-tc--textOnly": this.textOnly,
+				"ui5-tc--withAdditonalText": this.withAdditonalText,
+				"ui5-tc--standardTabLayout": this.standardTabLayout,
 			},
 			header: {
 				"ui5-tc__header": true,
@@ -605,16 +605,24 @@ class TabContainer extends UI5Element {
 		return this.items.every(item => !item.icon);
 	}
 
+	get withAdditonalText() {
+		return this.items.some(item => !!item.additionalText);
+	}
+
+	get standardTabLayout() {
+		return this.tabLayout === TabLayout.Standard;
+	}
+
 	get previousIconACCName() {
-		return this.i18nBundle.getText(TABCONTAINER_PREVIOUS_ICON_ACC_NAME);
+		return TabContainer.i18nBundle.getText(TABCONTAINER_PREVIOUS_ICON_ACC_NAME);
 	}
 
 	get nextIconACCName() {
-		return this.i18nBundle.getText(TABCONTAINER_NEXT_ICON_ACC_NAME);
+		return TabContainer.i18nBundle.getText(TABCONTAINER_NEXT_ICON_ACC_NAME);
 	}
 
 	get overflowMenuTitle() {
-		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
+		return TabContainer.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
 	}
 
 	get tabsAtTheBottom() {
@@ -639,7 +647,7 @@ class TabContainer extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TabContainer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

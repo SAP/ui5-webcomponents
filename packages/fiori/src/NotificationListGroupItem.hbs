@@ -3,7 +3,7 @@
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	@keydown="{{_onkeydown}}"
-	role="option"
+	role="listitem"
 	tabindex="{{_tabIndex}}"
 	dir="{{effectiveDir}}"
 	aria-expanded="{{ariaExpanded}}"
@@ -26,8 +26,8 @@
 			</ui5-icon>
 		{{/if}}
 
-		<div id="{{_id}}-heading" class="ui5-nli-group-heading" part="heading">
-			{{heading}}
+		<div id="{{_id}}-title-text" class="ui5-nli-group-title-text" part="title-text">
+			{{titleText}}
 		</div>
 
 		{{#if showCounter}}

@@ -102,9 +102,6 @@ const metadata = {
  * </ul>
  *
  * Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property
- * <br><br>
- * As most of the input based components, the <code>DateTimePicker</code> supports properties,
- * such as: <code>disabled</code>, <code>readonly</code>, <code>valueState</code> and  <code>placeholder</code>.
  *
  * <h3>Formatting</h3>
  *
@@ -265,19 +262,19 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get btnOKLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get btnCancelLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	get btnDateLabel() {
-		return this.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
 	}
 
 	get btnTimeLabel() {
-		return this.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
 	}
 
 	get showFooter() {
@@ -297,7 +294,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATETIME_DESCRIPTION);
+		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
 	}
 
 	/**
@@ -369,7 +366,6 @@ class DateTimePicker extends DatePicker {
 			this.fireEvent("value-changed", { value: this.value, valid });
 		}
 
-		this._focusInputAfterClose = true;
 		this._updateValueState();
 		this.closePicker();
 	}

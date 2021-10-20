@@ -99,33 +99,60 @@
 		Content
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnRpTopWithArrow">RP on Top with downward pointing arrow</ui5-button>
+	<ui5-responsive-popover placement-type="Top" id="rpTopWithArrow">
+		<div>text</div>
+	</ui5-responsive-popover>
+
+	<ui5-button id="btnInitialFocus">Open RP and Focus</ui5-button>
+	<ui5-responsive-popover id="simpleRPInitialFocus">
+		Content
+	</ui5-responsive-popover>
+
+	<ui5-button id="btnInitialFocusPrevented">Open RP and prevent initial focus</ui5-button>
+	<ui5-responsive-popover id="simpleRPInitialFocusPrevented">
+		Content
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
-			respPopover.open(btnOpen);
+			respPopover.showAt(btnOpen);
 		});
 		btnClose.addEventListener("click", function(event) {
 			respPopover.close();
 		});
 
 		btnOpen2.addEventListener("click", function(event) {
-			respPopover2.open(btnOpen2);
+			respPopover2.showAt(btnOpen2);
 		});
 		btnClose2.addEventListener("click", function(event) {
 			respPopover2.close();
 		});
 
 		btnOpen3.addEventListener("click", function(event) {
-			respPopover3.open(btnOpen3);
+			respPopover3.showAt(btnOpen3);
 		});
 		btnClose3.addEventListener("click", function(event) {
 			respPopover3.close();
 		});
 		btnOpenDialog.addEventListener('click', function (event) {
-			dialog.open(btnOpenDialog);
+			dialog.show();
 		});
 
 		btnSimpleRP.addEventListener("click", function(event) {
-			simpleRP.open(btnSimpleRP);
+			simpleRP.showAt(btnSimpleRP);
+		});
+
+		btnRpTopWithArrow.addEventListener("click", function(event) {
+			rpTopWithArrow.showAt(btnRpTopWithArrow);
+		});
+
+		btnInitialFocus.addEventListener("click", function(event) {
+			simpleRPInitialFocus.showAt(event.target, false);
+		});
+
+		btnInitialFocusPrevented.addEventListener("click", function(event) {
+			simpleRPInitialFocusPrevented.showAt(event.target, true);
 		});
 	</script>
 </body>

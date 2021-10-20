@@ -9,7 +9,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -33,6 +33,8 @@ import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTempla
 
 // Styles
 import styles from "./generated/themes/ShellBar.css.js";
+
+const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * @public
@@ -458,18 +460,26 @@ class ShellBar extends UI5Element {
 
 				if (this.hasMenuItems) {
 					const menuPopover = await this._getMenuPopover();
-					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
+					menuPopover.showAt(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
 		};
 
 		this._handleResize = async event => {
-			await this._getResponsivePopover();
-			this.overflowPopover.close();
-			this._overflowActions();
+			this._debounce(async () => {
+				await this._getResponsivePopover();
+				this.overflowPopover.close();
+				this._overflowActions();
+			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
+	}
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+	_debounce(fn, delay) {
+		clearTimeout(this._debounceInterval);
+		this._debounceInterval = setTimeout(() => {
+			this._debounceInterval = null;
+			fn();
+		}, delay);
 	}
 
 	_menuItemPress(event) {
@@ -676,7 +686,7 @@ class ShellBar extends UI5Element {
 
 	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		this.overflowPopover.openBy(overflowButton);
+		this.overflowPopover.showAt(overflowButton);
 	}
 
 	onEnterDOM() {
@@ -686,6 +696,8 @@ class ShellBar extends UI5Element {
 	onExitDOM() {
 		this.menuItemsObserver.disconnect();
 		ResizeHandler.deregister(this, this._handleResize);
+		clearTimeout(this._debounceInterval);
+		this._debounceInterval = null;
 	}
 
 	_handleSearchIconPress(event) {
@@ -903,6 +915,7 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
 				"ui5-shellbar-menu-button": true,
 			},
+			title: {},
 			items: {
 				notification: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("bell"),
@@ -1007,23 +1020,23 @@ class ShellBar extends UI5Element {
 	}
 
 	get _shellbarText() {
-		return this.i18nBundle.getText(SHELLBAR_LABEL);
+		return ShellBar.i18nBundle.getText(SHELLBAR_LABEL);
 	}
 
 	get _logoText() {
-		return this.i18nBundle.getText(SHELLBAR_LOGO);
+		return ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
 	}
 
 	get _copilotText() {
-		return this.i18nBundle.getText(SHELLBAR_COPILOT);
+		return ShellBar.i18nBundle.getText(SHELLBAR_COPILOT);
 	}
 
 	get _notificationsText() {
-		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
+		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
 	}
 
 	get _cancelBtnText() {
-		return this.i18nBundle.getText(SHELLBAR_CANCEL);
+		return ShellBar.i18nBundle.getText(SHELLBAR_CANCEL);
 	}
 
 	get _showFullWidthSearch() {
@@ -1034,19 +1047,19 @@ class ShellBar extends UI5Element {
 	}
 
 	get _profileText() {
-		return this.i18nBundle.getText(SHELLBAR_PROFILE);
+		return ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
 
 	get _productsText() {
-		return this.i18nBundle.getText(SHELLBAR_PRODUCTS);
+		return ShellBar.i18nBundle.getText(SHELLBAR_PRODUCTS);
 	}
 
 	get _searchText() {
-		return this.i18nBundle.getText(SHELLBAR_SEARCH);
+		return ShellBar.i18nBundle.getText(SHELLBAR_SEARCH);
 	}
 
 	get _overflowText() {
-		return this.i18nBundle.getText(SHELLBAR_OVERFLOW);
+		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
 	get accInfo() {
@@ -1082,7 +1095,7 @@ class ShellBar extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		ShellBar.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

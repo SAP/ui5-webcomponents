@@ -2,137 +2,272 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Dialog general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 	});
 
-	it("tests dialog toggling", () => {
-		const btnOpenDialog = $("#btnOpenDialog");
-		const btnCloseDialog= $("#btnCloseDialog");
+	it("tests dialog toggling", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialog");
+		const btnCloseDialog= await browser.$("#btnCloseDialog");
 
-		btnOpenDialog.click();
+		await btnOpenDialog.click();
 
-		const dialog = browser.$("#dialog");
+		const dialog = await browser.$("#dialog");
 
-		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
+		assert.ok(await dialog.isDisplayedInViewport(), "Dialog is opened.");
 
-		btnCloseDialog.click();
-		assert.ok(!dialog.isDisplayedInViewport(), "Dialog is closed.");
+		await btnCloseDialog.click();
+		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
 	});
 
-	it("tests popover in dialog", () => {
-		const btnOpenDialog = $("#btnOpenDialog");
-		const select = $("#mySelect");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+	it("tests popover in dialog", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialog");
+		const select = await browser.$("#mySelect");
 
-		btnOpenDialog.click();
-		select.click();
+		await btnOpenDialog.click();
+		await select.click();
 
-		const dialogZIndex = parseInt(browser.$("#dialog").getCSSProperty("z-index").value);
-		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty("z-index").value);
+		const dialogZIndex = parseInt((await browser.$("#dialog").getCSSProperty("z-index")).value);
+		const popoverZIndex = parseInt((await browser.$(`.${await select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty("z-index")).value);
 
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
 	});
 
-	it("tests dialog lifecycle", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DialogLifecycle.html`);
+	it("tests dialog lifecycle", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DialogLifecycle.html`);
 
-		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
+		let staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
+		assert.notOk(await staticAreaItem.isExisting(), "No static area item.");
 
-		const openDialogButton = browser.$("#openDialogButton");
-		openDialogButton.click();
+		const openDialogButton = await browser.$("#openDialogButton");
+		await openDialogButton.click();
 
-		assert.ok(browser.$("ui5-static-area>ui5-static-area-item"), "Static area item exists.");
+		staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
+		assert.ok(await staticAreaItem.isExisting(), "Static area item exists.");
 
-		const closeDialogButton= browser.$("#closeDialogButton");
-		closeDialogButton.click();
+		const closeDialogButton = await browser.$("#closeDialogButton");
+		await closeDialogButton.click();
 
-		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
+		/* To be returned when renderFinished correctly awaits for disconnectedCallback to be fired and processed
+		staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
+		assert.notOk(await staticAreaItem.isExisting(), "No static area item.");
+		 */
 	});
 
-	it("draggable", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	it("draggable - mouse support", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 
-		const openDraggableDialogButton = browser.$("#draggable-open");
-		openDraggableDialogButton.click();
+		// Setup
+		const openDraggableDialogButton = await browser.$("#draggable-open");
+		await openDraggableDialogButton.click();
 
-		const dialog = browser.$("#draggable-dialog");
-		const topBeforeDragging = parseInt(dialog.getCSSProperty("top").value);
-		const leftBeforeDragging = parseInt(dialog.getCSSProperty("left").value);
+		// Assert
+		const dialog = await browser.$("#draggable-dialog");
+		const topBeforeDragging = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftBeforeDragging = parseInt((await dialog.getCSSProperty("left")).value);
 
-		const header = browser.$("#draggable-dialog").shadow$(".ui5-popup-header-root");
+		const header = await browser.$("#draggable-dialog").shadow$(".ui5-popup-header-root");
 
-		header.dragAndDrop({ x: -200, y: -200 });
+		// Act
+		await header.dragAndDrop({ x: -50, y: -50 });
 
-		const topAfterDragging = parseInt(dialog.getCSSProperty("top").value);
-		const leftAfterDragging = parseInt(dialog.getCSSProperty("left").value);
-
+		// Assert
+		const topAfterDragging = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterDragging = parseInt((await dialog.getCSSProperty("left")).value);
 		assert.notStrictEqual(topBeforeDragging, topAfterDragging, "top position has changed");
 		assert.notStrictEqual(leftBeforeDragging, leftAfterDragging, "left position has changed");
 
-		const closeDraggableDialogButton = browser.$("#draggable-close");
-		closeDraggableDialogButton.click();
+		const closeDraggableDialogButton = await browser.$("#draggable-close");
 
-		openDraggableDialogButton.click();
+		// Act
+		await closeDraggableDialogButton.click();
+		await openDraggableDialogButton.click();
 
-		const topAfterReopening = parseInt(dialog.getCSSProperty("top").value);
-		const leftAfterReopening = parseInt(dialog.getCSSProperty("left").value);
-
+		// Assert
+		const topAfterReopening = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterReopening = parseInt((await dialog.getCSSProperty("left")).value);
 		assert.strictEqual(topBeforeDragging, topAfterReopening, "top position has been reset back to initial");
 		assert.strictEqual(leftBeforeDragging, leftAfterReopening, "left position has been reset back to initial");
 
-		closeDraggableDialogButton.click();
+		// Clean-up
+		await closeDraggableDialogButton.click();
 	});
 
-	it("resizable", () => {
-		const openResizableDialogButton = browser.$("#resizable-open");
-		openResizableDialogButton.click();
+	it("draggable - keyboard support", async () => {
+		// Setup
+		const openDraggableDialogButton = await browser.$("#draggable-open");
+		await openDraggableDialogButton.click();
 
-		const dialog = browser.$("#resizable-dialog");
-		const widthBeforeResizing = parseInt(dialog.getCSSProperty("width").value);
-		const heightBeforeResizing = parseInt(dialog.getCSSProperty("height").value);
+		const dialog = await browser.$("#draggable-dialog");
+		const initialTop = parseInt((await dialog.getCSSProperty("top")).value);
+		const initialLeft = parseInt((await dialog.getCSSProperty("left")).value);
 
-		const handle = browser.$("#resizable-dialog").shadow$(".ui5-popup-resize-handle");
+		// Act
+		await browser.keys("ArrowUp");
 
-		handle.dragAndDrop({ x: 200, y: 200});
+		// Assert
+		let topAfterDragging = parseInt((await dialog.getCSSProperty("top")).value);
+		let leftAfterDragging = parseInt((await dialog.getCSSProperty("left")).value);
+		assert.notStrictEqual(initialTop, topAfterDragging, "top position has changed after ArrowUp");
+		assert.strictEqual(initialLeft, leftAfterDragging, "left position has not changed after ArrowUp");
 
-		const widthAfterResizing = parseInt(dialog.getCSSProperty("width").value);
-		const heightAfterResizing = parseInt(dialog.getCSSProperty("height").value);
+		// Setup
+		const topBeforeDraggingSecondTime = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftBeforeDraggingSecondTime = parseInt((await dialog.getCSSProperty("left")).value);
+
+		// Act
+		await browser.keys("ArrowLeft");
+
+		// Assert
+		topAfterDragging = parseInt((await dialog.getCSSProperty("top")).value);
+		leftAfterDragging = parseInt((await dialog.getCSSProperty("left")).value);
+		assert.strictEqual(topBeforeDraggingSecondTime, topAfterDragging, "top position has not changed after ArrowLeft");
+		assert.notStrictEqual(leftBeforeDraggingSecondTime, leftAfterDragging, "left position has changed after ArrowLeft");
+
+		const closeDraggableDialogButton = await browser.$("#draggable-close");
+
+		// Act
+		await closeDraggableDialogButton.click();
+		await openDraggableDialogButton.click();
+
+		// Assert
+		const topAfterReopening = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterReopening = parseInt((await dialog.getCSSProperty("left")).value);
+
+		assert.strictEqual(initialTop, topAfterReopening, "top position has been reset back to initial");
+		assert.strictEqual(initialLeft, leftAfterReopening, "left position has been reset back to initial");
+
+		// Clean-up
+		await closeDraggableDialogButton.click();
+	});
+
+	it("resizable - mouse support", async () => {
+		// Setup
+		const openResizableDialogButton = await browser.$("#resizable-open");
+		await openResizableDialogButton.click();
+
+		const dialog = await browser.$("#resizable-dialog");
+		const widthBeforeResizing = parseInt((await dialog.getCSSProperty("width")).value);
+		const heightBeforeResizing = parseInt((await dialog.getCSSProperty("height")).value);
+		const topBeforeResizing = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftBeforeResizing = parseInt((await dialog.getCSSProperty("left")).value);
+
+		const handle = await browser.$("#resizable-dialog").shadow$(".ui5-popup-resize-handle");
+
+		// Act
+		await handle.dragAndDrop({ x: 50, y: 50});
+
+		// Assert
+		const widthAfterResizing = parseInt((await dialog.getCSSProperty("width")).value);
+		const heightAfterResizing = parseInt((await dialog.getCSSProperty("height")).value);
+		const topAfterResizing = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterResizing = parseInt((await dialog.getCSSProperty("left")).value);
 
 		assert.notStrictEqual(widthBeforeResizing, widthAfterResizing, "width has changed");
 		assert.notStrictEqual(heightBeforeResizing, heightAfterResizing, "height has changed");
+		assert.strictEqual(topBeforeResizing, topAfterResizing, "top position has not changed");
+		assert.strictEqual(leftBeforeResizing, leftAfterResizing, "left position has not changed");
 
-		const closeResizableDialogButton = browser.$("#resizable-close");
-		closeResizableDialogButton.click();
+		const closeResizableDialogButton = await browser.$("#resizable-close");
 
-		openResizableDialogButton.click();
+		// Act
+		await closeResizableDialogButton.click();
+		await openResizableDialogButton.click();
 
-		const widthAfterReopening = parseInt(dialog.getCSSProperty("width").value);
-		const heightAfterReopening = parseInt(dialog.getCSSProperty("height").value);
+		// Assert
+		const widthAfterReopening = parseInt((await dialog.getCSSProperty("width")).value);
+		const heightAfterReopening = parseInt((await dialog.getCSSProperty("height")).value);
+		const topAfterReopening = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterReopening = parseInt((await dialog.getCSSProperty("left")).value);
 
 		assert.strictEqual(widthBeforeResizing, widthAfterReopening, "width has been reset back to initial");
 		assert.strictEqual(heightBeforeResizing, heightAfterReopening, "height has been reset back to initial");
+		assert.strictEqual(topBeforeResizing, topAfterReopening, "top position has been reset back to initial");
+		assert.strictEqual(leftBeforeResizing, leftAfterReopening, "left position has been reset back to initial");
 
-		closeResizableDialogButton.click();
+		// Clean-up
+		await closeResizableDialogButton.click();
 	});
 
-	it("initial focus after dynamic dialog creation", () => {
-		const openDynamicDialog = browser.$("#dynamic-open");
-		openDynamicDialog.click();
+	it("resizable - keyboard support", async () => {
+		// Setup
+		const openResizableDialogButton = await browser.$("#resizable-open");
+		await openResizableDialogButton.click();
 
-		const closeButton = browser.$("#dynamic-dialog-close-button");
+		const dialog = await browser.$("#resizable-dialog");
+		const initialWidth = parseInt((await dialog.getCSSProperty("width")).value);
+		const initialHeight = parseInt((await dialog.getCSSProperty("height")).value);
+		const initialTop = parseInt((await dialog.getCSSProperty("top")).value);
+		const initialLeft = parseInt((await dialog.getCSSProperty("left")).value);
 
-		browser.pause(500);
+		// Act
+		await browser.keys(["Shift", "ArrowDown"]);
 
-		const activeElement = $(browser.getActiveElement());
-		assert.strictEqual(activeElement.getProperty("id"), closeButton.getProperty("id"), "the active element is the close button");
+		// Assert
+		const widthAfterResizing = parseInt((await dialog.getCSSProperty("width")).value);
+		const heightAfterResizing = parseInt((await dialog.getCSSProperty("height")).value);
+		const topAfterResizing = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterResizing = parseInt((await dialog.getCSSProperty("left")).value);
 
-		closeButton.click();
+		assert.strictEqual(initialWidth, widthAfterResizing, "width has not changed after Shift+ArrowDown");
+		assert.notStrictEqual(initialHeight, heightAfterResizing, "height has changed after Shift+ArrowDown");
+		assert.strictEqual(initialTop, topAfterResizing, "top position has not changed after Shift+ArrowDown");
+		assert.strictEqual(initialLeft, leftAfterResizing, "left position has not changed after Shift+ArrowDown");
+
+		// Act
+		await browser.keys(["Shift", "ArrowRight"]);
+
+		// Assert
+		const widthAfterResizingSecondTime = parseInt((await dialog.getCSSProperty("width")).value);
+		const heightAfterResizingSecondTime = parseInt((await dialog.getCSSProperty("height")).value);
+		const topAfterResizingSecondTime = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterResizingSecondTime = parseInt((await dialog.getCSSProperty("left")).value);
+
+		assert.notStrictEqual(widthAfterResizing, widthAfterResizingSecondTime, "width has changed after Shift+ArrowRight");
+		assert.strictEqual(heightAfterResizing, heightAfterResizingSecondTime, "height has not changed after Shift+ArrowRight")
+		assert.strictEqual(topAfterResizing, topAfterResizingSecondTime, "top position has not changed after Shift+ArrowRight");
+		assert.strictEqual(leftAfterResizing, leftAfterResizingSecondTime, "left position has not changed after Shift+ArrowRight");
+
+		const closeResizableDialogButton = await browser.$("#resizable-close");
+
+		// Act
+		await closeResizableDialogButton.click();
+		await openResizableDialogButton.click();
+
+		// Assert
+		const widthAfterReopening = parseInt((await dialog.getCSSProperty("width")).value);
+		const heightAfterReopening = parseInt((await dialog.getCSSProperty("height")).value);
+		const topAfterReopening = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterReopening = parseInt((await dialog.getCSSProperty("left")).value);
+
+		assert.strictEqual(initialWidth, widthAfterReopening, "width has been reset back to initial");
+		assert.strictEqual(initialHeight, heightAfterReopening, "height has been reset back to initial");
+		assert.strictEqual(initialTop, topAfterReopening, "top position has been reset back to initial");
+		assert.strictEqual(initialLeft, leftAfterReopening, "left position has been reset back to initial");
+
+		// Clean-up
+		await closeResizableDialogButton.click();
 	});
 
-	it("test dialog overlay when dialog isn't open", () => {
-		const isBlockLayerHidden = browser.executeAsync(async (done) => {
+	it("initial focus after dynamic dialog creation", async () => {
+		const openDynamicDialog = await browser.$("#dynamic-open");
+		await openDynamicDialog.click();
+
+		const closeButton = await browser.$("#dynamic-dialog-close-button");
+
+		await browser.waitUntil(async () => {
+			const activeElement = await browser.$(await browser.getActiveElement());
+			return await activeElement.getProperty("id") === await closeButton.getProperty("id");
+		}, {
+			timeout: 500,
+			timeoutMsg: "the active element must be the close button"
+		});
+
+		await closeButton.click();
+	});
+
+	it("test dialog overlay when dialog isn't open", async () => {
+		const isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialog");
 			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
@@ -145,29 +280,94 @@ describe("Dialog general interaction", () => {
 
 
 describe("Acc", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 	});
 
-	it("tests aria-labelledby and aria-label", () => {
-		const dialog = browser.$("ui5-dialog");
-		dialog.removeAttribute("aria-label");
-		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "dialog has aria-labelledby.");
-		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog does not have aria-label.");
+	it("tests aria-labelledby and aria-label", async () => {
+		const dialog = await browser.$("ui5-dialog");
+		await dialog.removeAttribute("accessible-name");
+		assert.ok(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog has aria-labelledby.");
+		assert.notOk(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog does not have aria-label.");
 
-		dialog.setAttribute("aria-label", "text");
-		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
-		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "dialog has aria-label.");
+		await dialog.setAttribute("accessible-name", "text");
+		assert.notOk(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
+		assert.ok(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog has aria-label.");
 	});
 
-	it("tests aria-labelledby for slot header", () => {
-		const openDraggableDialog = browser.$("#draggable-open");
-		openDraggableDialog.click();
+	it("tests aria-labelledby for slot header", async () => {
+		const openDraggableDialog = await browser.$("#draggable-open");
+		await openDraggableDialog.click();
 
-		const dialog = browser.$("#draggable-dialog");
+		const dialog = await browser.$("#draggable-dialog");
 		const accName = "Draggable" ;
 
-		assert.strictEqual(dialog.getAttribute("accessible-name"), accName, "dialog has correct attribute set");
-		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
+		assert.strictEqual(await dialog.getAttribute("accessible-name"), accName, "dialog has correct attribute set");
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
+	});
+});
+
+describe("Page scrolling", () => {
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	});
+
+	it("tests that page scrolling is blocked and restored", async () => {
+		await browser.$("#cbScrollable").click();
+		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
+
+		await browser.$("#btnOpenDialog").click();
+
+		assert.isBelow(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is blocked");
+
+		await browser.$("#btnCloseDialog").click();
+
+		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+		await browser.$("#cbScrollable").click();
+	});
+
+	it("tests that page scrolling is blocked and restored after multiple show() of same dialog", async () => {
+		await browser.$("#cbScrollable").click();
+		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
+
+		await browser.$("#multiple-show").click();
+
+		assert.isBelow(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is blocked");
+
+		await browser.$("#btnCloseDialog").click();
+
+		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+		await browser.$("#cbScrollable").click();
+	});
+
+	it("test page scrolling is restored after close with ESC", async () => {
+		await browser.$("#cbScrollable").click();
+		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
+
+		await browser.$("#btnOpenDialog").click();
+		await browser.keys("Escape");
+		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+
+		await browser.$("#cbScrollable").click();
+	});
+
+	it("tests multiple dialogs page scrolling", async () => {
+		const preventButtonBefore = await browser.$("#prevent");
+
+		await browser.setWindowSize(400, 400);
+		await preventButtonBefore.scrollIntoView();
+
+		const offsetBefore = await preventButtonBefore.getLocation('y');
+
+		await preventButtonBefore.click();
+
+		await browser.keys("Escape");
+		const confirmButton = await browser.$("#yes");
+		await confirmButton.click();
+
+		await browser.setTimeout({ script: 5000 });
+		const offsetAfter = await preventButtonBefore.getLocation('y');
+
+		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
 	});
 });

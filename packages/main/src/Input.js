@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -12,9 +11,10 @@ import {
 	isEnter,
 	isBackSpace,
 	isEscape,
+	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -55,7 +55,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the component.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webcomponents.main.IIcon[]}
 		 * @slot
 		 * @public
 		 */
@@ -82,16 +82,16 @@ const metadata = {
 		 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 		 * </ui5-input>
 		 * <br><br>
-		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
+		 * <b>Note:</b> The suggestions would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> are recommended to be used as suggestion items.
+		 * <b>Note:</b> The <code>&lt;ui5-suggestion-item&gt;</code> and <code>&lt;ui5-suggestion-group-item&gt;</code> are recommended to be used as suggestion items.
 		 * <br><br>
 		 * <b>Note:</b> Importing the Input Suggestions Support feature:
 		 * <br>
 		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
 		 * <br>
-		 * automatically imports the &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> for your convenience.
+		 * automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.
 		 *
 		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
@@ -117,10 +117,10 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b> If the component has <code>suggestionItems</code>,
 		 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 		 * @type {HTMLElement[]}
@@ -300,26 +300,25 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the input
+		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.8
-		 * @private
-		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabel: {
+		accessibleName: {
 			type: String,
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the input
+		 * Receives id(or many ids) of the elements that label the input.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -328,6 +327,10 @@ const metadata = {
 		 * @private
 		 */
 		focused: {
+			type: Boolean,
+		},
+
+		open: {
 			type: Boolean,
 		},
 
@@ -383,7 +386,7 @@ const metadata = {
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-item-select
-		 * @param {HTMLElement} item The selected item
+		 * @param {HTMLElement} item The selected item.
 		 * @public
 		 */
 		"suggestion-item-select": {
@@ -397,7 +400,7 @@ const metadata = {
 		 * as a preview, before the final selection.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
-		 * @param {HTMLElement} item The previewed suggestion item
+		 * @param {HTMLElement} item The previewed suggestion item.
 		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -413,8 +416,8 @@ const metadata = {
 		 * Fired when the user scrolls the suggestion popover.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
-		 * @param {Integer} scrollTop The current scroll position
-		 * @param {HTMLElement} scrollContainer The scroll container
+		 * @param {Integer} scrollTop The current scroll position.
+		 * @param {HTMLElement} scrollContainer The scroll container.
 		 * @public
 		 * @since 1.0.0-rc.8
 		 */
@@ -437,7 +440,7 @@ const metadata = {
  * that are displayed in a popover right under the input.
  * <br><br>
  * The text field can be editable or read-only (<code>readonly</code> property),
- * and it can be enabled or disabled (<code>enabled</code> property).
+ * and it can be enabled or disabled (<code>disabled</code> property).
  * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
@@ -506,6 +509,9 @@ class Input extends UI5Element {
 		// Indicates if the user selection has been canceled with [ESC].
 		this.suggestionSelectionCanceled = false;
 
+		// Indicates if the change event has already been fired
+		this._changeFired = false;
+
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
 
@@ -514,6 +520,9 @@ class Input extends UI5Element {
 
 		// The value that should be highlited.
 		this.highlightValue = "";
+
+		// The last value confirmed by the user with "ENTER"
+		this.lastConfirmedValue = "";
 
 		// Indicates, if the user pressed the BACKSPACE key.
 		this._backspaceKeyDown = false;
@@ -529,8 +538,6 @@ class Input extends UI5Element {
 
 		// Suggestions array initialization
 		this.suggestionsTexts = [];
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._handleResizeBound = this._handleResize.bind(this);
 	}
@@ -549,7 +556,10 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
+		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
+
 		const FormSupport = getFeature("FormSupport");
+
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
@@ -558,28 +568,19 @@ class Input extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		if (!this.firstRendering && !isPhone() && this.Suggestions) {
-			const shouldOpenSuggestions = this.shouldOpenSuggestions();
-
-			this.Suggestions.toggle(shouldOpenSuggestions, {
-				preventFocusRestore: !this.hasSuggestionItemSelected,
+		if (this.Suggestions) {
+			this.Suggestions.toggle(this.open, {
+				preventFocusRestore: true,
 			});
 
-			await renderFinished();
 			this._listWidth = await this.Suggestions._getListWidth();
-
-			if (!isPhone() && shouldOpenSuggestions) {
-				// Set initial focus to the native input
-
-				(await this.getInputDOMRef()).focus();
-			}
 		}
 
-		if (!this.firstRendering && this.hasValueStateMessage) {
-			this.toggle(this.shouldDisplayOnlyValueStateMessage);
+		if (this.shouldDisplayOnlyValueStateMessage) {
+			this.openPopover();
+		} else {
+			this.closePopover();
 		}
-
-		this.firstRendering = false;
 	}
 
 	_onkeydown(event) {
@@ -593,6 +594,10 @@ class Input extends UI5Element {
 
 		if (isSpace(event)) {
 			return this._handleSpace(event);
+		}
+
+		if (isTabNext(event)) {
+			return this._handleTab(event);
 		}
 
 		if (isEnter(event)) {
@@ -639,10 +644,17 @@ class Input extends UI5Element {
 		}
 	}
 
+	_handleTab(event) {
+		if (this.Suggestions && (this.previousValue !== this.value)) {
+			this.Suggestions.onTab(event);
+		}
+	}
+
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
+			this.lastConfirmedValue = this.value;
 		}
 	}
 
@@ -654,6 +666,11 @@ class Input extends UI5Element {
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
+			this.open = false;
+		} else if (this.Suggestions && this.Suggestions.isOpened()) {
+			this.closePopover();
+		} else {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 		}
 	}
 
@@ -687,18 +704,25 @@ class Input extends UI5Element {
 		this.closePopover();
 
 		this.previousValue = "";
+		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
+		this.open = false;
 	}
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.Suggestions.open(this);
-			this.isRespPopoverOpen = true;
+			this.blur();
+			this.open = true;
 		}
 	}
 
 	_handleChange(event) {
-		this.fireEvent(this.EVENT_CHANGE);
+		if (!this._changeFired) {
+			this.fireEvent(this.EVENT_CHANGE);
+		}
+
+		// Set event as no longer marked
+		this._changeFired = false;
 	}
 
 	_scroll(event) {
@@ -766,6 +790,10 @@ class Input extends UI5Element {
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
+
+			if (!this._isPhone) {
+				this.open = !!inputDomRef.value;
+			}
 		}
 	}
 
@@ -790,14 +818,7 @@ class Input extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
-		}
-	}
-
-	toggle(isToggled) {
-		if (isToggled && !this.isRespPopoverOpen) {
-			this.openPopover();
-		} else {
-			this.closePopover();
+			this.focused = false;
 		}
 	}
 
@@ -814,7 +835,7 @@ class Input extends UI5Element {
 
 		if (popover) {
 			this._isPopoverOpen = true;
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 
@@ -865,8 +886,12 @@ class Input extends UI5Element {
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
+			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this.fireEvent(this.EVENT_CHANGE);
+
+			// Mark the change event to avoid double firing
+			this._changeFired = true;
 		}
 
 		this.valueBeforeItemPreview = "";
@@ -955,8 +980,8 @@ class Input extends UI5Element {
 	}
 
 	async getInputDOMRef() {
-		if (isPhone() && this.Suggestions && this.suggestionItems.length) {
-			await this.Suggestions._respPopover();
+		if (isPhone() && this.Suggestions) {
+			await this.Suggestions._getSuggestionPopover();
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
@@ -1040,13 +1065,11 @@ class Input extends UI5Element {
 	onClose() {}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1065,7 +1088,7 @@ class Input extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get inputType() {
@@ -1133,6 +1156,7 @@ class Input extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage-header": true,
 				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
@@ -1143,6 +1167,8 @@ class Input extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
+
 		const stylesObject = {
 			popoverHeader: {
 				"max-width": `${this._inputWidth}px`,
@@ -1150,10 +1176,10 @@ class Input extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.925rem 1rem",
 			},
 			suggestionsPopover: {
-				"max-width": `${this._inputWidth}px`,
+				"min-width": `${this._inputWidth}px`,
+				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 			innerInput: {},
 		};
@@ -1174,7 +1200,7 @@ class Input extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.shouldOpenSuggestions() && this.focused;
+		return this.hasValueStateMessage && !this.open && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
@@ -1196,20 +1222,20 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
 			case 1:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
 			default:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
 			}
 		}
 
@@ -1230,6 +1256,26 @@ class Input extends UI5Element {
 	 */
 	get _placeholder() {
 		return this.placeholder;
+	}
+
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateInputIcon() {
+		const iconPerValueState = {
+			Error: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20ZM7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071C5.90237 13.3166 5.90237 12.6834 6.29289 12.2929L8.58579 10L6.29289 7.70711C5.90237 7.31658 5.90237 6.68342 6.29289 6.29289C6.68342 5.90237 7.31658 5.90237 7.70711 6.29289L10 8.58579L12.2929 6.29289C12.6834 5.90237 13.3166 5.90237 13.7071 6.29289C14.0976 6.68342 14.0976 7.31658 13.7071 7.70711L11.4142 10L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L10 11.4142L7.70711 13.7071Z" fill="#EE3939"/>`,
+			Warning: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M11.8619 0.49298C11.6823 0.187541 11.3544 0 11 0C10.6456 0 10.3177 0.187541 10.1381 0.49298L0.138066 17.493C-0.0438112 17.8022 -0.0461447 18.1851 0.13195 18.4965C0.310046 18.8079 0.641283 19 1 19H21C21.3587 19 21.69 18.8079 21.868 18.4965C22.0461 18.1851 22.0438 17.8022 21.8619 17.493L11.8619 0.49298ZM11 6C11.5523 6 12 6.44772 12 7V10C12 10.5523 11.5523 11 11 11C10.4477 11 10 10.5523 10 10V7C10 6.44772 10.4477 6 11 6ZM11 16C11.8284 16 12.5 15.3284 12.5 14.5C12.5 13.6716 11.8284 13 11 13C10.1716 13 9.5 13.6716 9.5 14.5C9.5 15.3284 10.1716 16 11 16Z" fill="#F58B00"/>`,
+			Success: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10ZM14.7071 6.29289C14.3166 5.90237 13.6834 5.90237 13.2929 6.29289L8 11.5858L6.70711 10.2929C6.31658 9.90237 5.68342 9.90237 5.29289 10.2929C4.90237 10.6834 4.90237 11.3166 5.29289 11.7071L7.29289 13.7071C7.68342 14.0976 8.31658 14.0976 8.70711 13.7071L14.7071 7.70711C15.0976 7.31658 15.0976 6.68342 14.7071 6.29289Z" fill="#36A41D"/>`,
+			Information: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M3 0C1.34315 0 0 1.34315 0 3V15C0 16.6569 1.34315 18 3 18H15C16.6569 18 18 16.6569 18 15V3C18 1.34315 16.6569 0 15 0H3ZM9 6.5C9.82843 6.5 10.5 5.82843 10.5 5C10.5 4.17157 9.82843 3.5 9 3.5C8.17157 3.5 7.5 4.17157 7.5 5C7.5 5.82843 8.17157 6.5 9 6.5ZM9 8.5C9.55228 8.5 10 8.94772 10 9.5V13.5C10 14.0523 9.55228 14.5 9 14.5C8.44771 14.5 8 14.0523 8 13.5V9.5C8 8.94772 8.44771 8.5 9 8.5Z" fill="#1B90FF"/>`,
+		};
+
+		const result = `
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 20 20" fill="none">
+			${iconPerValueState[this.valueState]};
+		</svg>
+		`;
+
+		return this.valueState !== ValueState.None ? result : "";
 	}
 
 	/**
@@ -1271,7 +1317,12 @@ class Input extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		const Suggestions = getFeature("InputSuggestions");
+
+		[Input.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			Suggestions ? Suggestions.init() : Promise.resolve(),
+		]);
 	}
 }
 

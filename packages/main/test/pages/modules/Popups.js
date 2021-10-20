@@ -3,7 +3,7 @@ function onload() {
 	var wcBtnOpenDialog = document.querySelector('.wcBtnOpenDialog');
 	wcBtnOpenDialog.addEventListener('click', function () {
 		var wcDialog = document.querySelector('.wcDialog');
-		wcDialog.open();
+		wcDialog.show();
 	});
 
 	var wcBtnCloseDialog = document.querySelector('.wcBtnCloseDialog');
@@ -15,20 +15,20 @@ function onload() {
 	var wcBtnOpenNewDialog = document.querySelector('.wcBtnOpenNewDialog');
 	wcBtnOpenNewDialog.addEventListener('click', function () {
 		var wcNewDialog = document.querySelector('.wcNewDialog');
-		wcNewDialog.open();
+		wcNewDialog.show();
 	});
 
 	var wcBtnOpenNewDialogPopover = document.querySelector('.wcBtnOpenNewDialogPopover');
 	wcBtnOpenNewDialogPopover.addEventListener('click', function () {
 		var wcNewDialogPopover = document.querySelector('.wcNewDialogPopover');
-		wcNewDialogPopover.openBy(wcBtnOpenNewDialogPopover);
+		wcNewDialogPopover.showAt(wcBtnOpenNewDialogPopover);
 	});
 
 	// web component popover
 	var wcBtnOpenPopover = document.querySelector('.wcBtnOpenPopover');
 	wcBtnOpenPopover.addEventListener('click', function () {
 		var wcPopover = document.querySelector('.wcPopover');
-		wcPopover.openBy(wcBtnOpenPopover);
+		wcPopover.showAt(wcBtnOpenPopover);
 	});
 
 	var wcBtnClosePopover = document.querySelector('.wcBtnClosePopover');
@@ -40,12 +40,12 @@ function onload() {
 	var wcBtnOpenNewPopover = document.querySelector('.wcBtnOpenNewPopover');
 	wcBtnOpenNewPopover.addEventListener('click', function () {
 		var wcNewPopover = document.querySelector('.wcNewPopover');
-		wcNewPopover.openBy(wcBtnOpenNewPopover);
+		wcNewPopover.showAt(wcBtnOpenNewPopover);
 	});
 
 	var wcBtnOpenNewPopoverDialog11 = document.querySelector('.wcBtnOpenNewPopoverDialog11');
 	wcBtnOpenNewPopoverDialog11.addEventListener('click', function () {
 		var wcNewPopoverDialog11 = document.querySelector('.wcNewPopoverDialog11');
-		wcNewPopoverDialog11.open();
+		wcNewPopoverDialog11.show();
 	});
 }

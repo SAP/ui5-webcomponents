@@ -2,10 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import {
-	fetchI18nBundle,
-	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
@@ -60,7 +57,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabledcomponent is completely noninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -269,8 +266,6 @@ class FileUploader extends UI5Element {
 		if (this._canUseNativeFormSupport) {
 			this._internals = this.attachInternals();
 		}
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onmouseover() {
@@ -285,15 +280,23 @@ class FileUploader extends UI5Element {
 		});
 	}
 
+	_onclick(event) {
+		if (event.isMarked === "button") {
+			this._input.click(event);
+		}
+	}
+
 	_onkeydown(event) {
 		if (isEnter(event)) {
 			this._input.click(event);
+			event.preventDefault();
 		}
 	}
 
 	_onkeyup(event) {
 		if (isSpace(event)) {
 			this._input.click(event);
+			event.preventDefault();
 		}
 	}
 
@@ -386,7 +389,7 @@ class FileUploader extends UI5Element {
 		const popover = await this._getPopover();
 
 		if (popover) {
-			popover.openBy(this);
+			popover.showAt(this);
 		}
 	}
 
@@ -416,11 +419,11 @@ class FileUploader extends UI5Element {
 	}
 
 	get browseText() {
-		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
+		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}
 
 	get titleText() {
-		return this.i18nBundle.getText(FILEUPLOADER_TITLE);
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
 	get _canUseNativeFormSupport() {
@@ -445,13 +448,11 @@ class FileUploader extends UI5Element {
 	}
 
 	get valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -508,7 +509,7 @@ class FileUploader extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

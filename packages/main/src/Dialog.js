@@ -1,6 +1,10 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import {
+	isUp, isDown, isLeft, isRight,
+	isUpShift, isDownShift, isLeftShift, isRightShift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import Icon from "./Icon.js";
@@ -11,6 +15,11 @@ import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
+
+/**
+ * Defines the step size at which this component would change by when being dragged or resized with the keyboard.
+ */
+const STEP_SIZE = 16;
 
 /**
  * @public
@@ -58,11 +67,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible name of the dialog when <code>header</code> slot is provided.
-		 * <br><br>
+		 * Sets the accessible aria name of the component.
 		 *
-		 * <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
-
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -163,6 +169,9 @@ const metadata = {
  * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>) inside <code>ui5-dialog</code>.
  * Ideally you should create all popups on the same level inside your HTML page and just open them from one another, rather than nesting them.
  *
+ * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>) inside other components containing z-index.
+ * This might break z-index management.
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Dialog
@@ -201,16 +210,20 @@ class Dialog extends Popup {
 		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
 	}
 
+	static _isHeader(element) {
+		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
+	}
+
 	/**
-	 * Opens the dialog
+	 * Shows the dialog.
 	 *
 	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @async
 	 * @returns {Promise} Resolves when the dialog is open
 	 * @public
 	 */
-	async open(preventInitialFocus) {
-		await super.open(preventInitialFocus);
+	async show(preventInitialFocus = false) {
+		await super._open(preventInitialFocus);
 	}
 
 	get isModal() { // Required by Popup.js
@@ -224,7 +237,7 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.ariaLabel) {
+		if (this.headerText !== "" && !this.accessibleName) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
@@ -237,7 +250,8 @@ class Dialog extends Popup {
 		if (this.header.length > 0 && !!this.accessibleName) {
 			ariaLabel = this.accessibleName;
 		}
-		return this.ariaLabel ? this.ariaLabel : ariaLabel;
+
+		return this.accessibleName ? this.accessibleName : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -248,12 +262,23 @@ class Dialog extends Popup {
 		return "flex";
 	}
 
+	/**
+	 * Determines if the header of the dialog should be shown.
+	 */
 	get _displayHeader() {
-		return this.header.length || this.headerText;
+		return this.header.length || this.headerText || this.draggable || this.resizable;
 	}
 
-	show() {
-		super.show();
+	get _movable() {
+		return !this.stretch && this.onDesktop && (this.draggable || this.resizable);
+	}
+
+	get _headerTabIndex() {
+		return this._movable ? "0" : undefined;
+	}
+
+	_show() {
+		super._show();
 		this._center();
 	}
 
@@ -261,18 +286,24 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
+		this._detachResizeHandlers();
 	}
 
-	onEnterDOM() {
-		super.onEnterDOM();
-
-		ResizeHandler.register(this, this._screenResizeHandler);
-		ResizeHandler.register(document.body, this._screenResizeHandler);
+	onAfterRendering() {
+		this._attachResizeHandlers();
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
+		this._detachResizeHandlers();
+	}
 
+	_attachResizeHandlers() {
+		ResizeHandler.register(this, this._screenResizeHandler);
+		ResizeHandler.register(document.body, this._screenResizeHandler);
+	}
+
+	_detachResizeHandlers() {
 		ResizeHandler.deregister(this, this._screenResizeHandler);
 		ResizeHandler.deregister(document.body, this._screenResizeHandler);
 	}
@@ -301,13 +332,8 @@ class Dialog extends Popup {
 	 * Event handlers
 	 */
 	_onDragMouseDown(event) {
-		if (!(this.draggable && this.onDesktop)) {
-			return;
-		}
-
-		// only allow dragging on the header's whitespace
-		if (!event.target.classList.contains("ui5-popup-header-root")
-			&& event.target.getAttribute("slot") !== "header") {
+		// allow dragging only on the header
+		if (!this._movable || !this.draggable || !Dialog._isHeader(event.target)) {
 			return;
 		}
 
@@ -332,7 +358,7 @@ class Dialog extends Popup {
 		this._x = event.clientX;
 		this._y = event.clientY;
 
-		this._attachDragHandlers();
+		this._attachMouseDragHandlers();
 	}
 
 	_onDragMouseMove(event) {
@@ -358,24 +384,115 @@ class Dialog extends Popup {
 		this._x = null;
 		this._y = null;
 
-		this._detachDragHandlers();
+		this._detachMouseDragHandlers();
 	}
 
-	_attachDragHandlers() {
-		ResizeHandler.deregister(this, this._screenResizeHandler);
-		ResizeHandler.deregister(document.body, this._screenResizeHandler);
+	_onDragOrResizeKeyDown(event) {
+		if (!this._movable || !Dialog._isHeader(event.target)) {
+			return;
+		}
+
+		if (this.draggable && [isUp, isDown, isLeft, isRight].some(key => key(event))) {
+			this._dragWithEvent(event);
+			return;
+		}
+
+		if (this.resizable && [isUpShift, isDownShift, isLeftShift, isRightShift].some(key => key(event))) {
+			this._resizeWithEvent(event);
+		}
+	}
+
+	_dragWithEvent(event) {
+		const {
+			top,
+			left,
+			width,
+			height,
+		} = this.getBoundingClientRect();
+
+		let newPos,
+			posDirection;
+
+		switch (true) {
+		case isUp(event):
+			newPos = top - STEP_SIZE;
+			posDirection = "top";
+			break;
+		case isDown(event):
+			newPos = top + STEP_SIZE;
+			posDirection = "top";
+			break;
+		case isLeft(event):
+			newPos = left - STEP_SIZE;
+			posDirection = "left";
+			break;
+		case isRight(event):
+			newPos = left + STEP_SIZE;
+			posDirection = "left";
+			break;
+		}
+
+		newPos = clamp(
+			newPos,
+			0,
+			posDirection === "left" ? window.innerWidth - width : window.innerHeight - height,
+		);
+
+		this.style[posDirection] = `${newPos}px`;
+	}
+
+	_resizeWithEvent(event) {
+		this._detachResizeHandlers();
+		this.addEventListener("ui5-before-close", this._revertSize);
+
+		const { top, left } = this.getBoundingClientRect(),
+			style = window.getComputedStyle(this),
+			minWidth = Number.parseFloat(style.minWidth),
+			minHeight = Number.parseFloat(style.minHeight),
+			maxWidth = window.innerWidth - left,
+			maxHeight = window.innerHeight - top;
+
+		let width = Number.parseFloat(style.width),
+			height = Number.parseFloat(style.height);
+
+		switch (true) {
+		case isUpShift(event):
+			height -= STEP_SIZE;
+			break;
+		case isDownShift(event):
+			height += STEP_SIZE;
+			break;
+		case isLeftShift(event):
+			width -= STEP_SIZE;
+			break;
+		case isRightShift(event):
+			width += STEP_SIZE;
+			break;
+		}
+
+		width = clamp(width, minWidth, maxWidth);
+		height = clamp(height, minHeight, maxHeight);
+
+		Object.assign(this.style, {
+			width: `${width}px`,
+			height: `${height}px`,
+		});
+	}
+
+	_attachMouseDragHandlers() {
+		this._detachResizeHandlers();
 
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
 	}
 
-	_detachDragHandlers() {
+	_detachMouseDragHandlers() {
 		window.removeEventListener("mousemove", this._dragMouseMoveHandler);
 		window.removeEventListener("mouseup", this._dragMouseUpHandler);
 	}
 
 	_onResizeMouseDown(event) {
-		if (!(this.resizable && this.onDesktop)) {
+		if (!this._movable || !this.resizable) {
 			return;
 		}
 
@@ -406,14 +523,14 @@ class Dialog extends Popup {
 			left: `${left}px`,
 		});
 
-		this._attachResizeHandlers();
+		this._attachMouseResizeHandlers();
 	}
 
 	_onResizeMouseMove(event) {
 		const { clientX, clientY } = event;
 
-		let newWidth;
-		let newLeft;
+		let newWidth,
+			newLeft;
 
 		if (this._isRTL) {
 			newWidth = clamp(
@@ -458,19 +575,18 @@ class Dialog extends Popup {
 		this._minWidth = null;
 		this._minHeight = null;
 
-		this._detachResizeHandlers();
+		this._detachMouseResizeHandlers();
 	}
 
-	_attachResizeHandlers() {
-		ResizeHandler.deregister(this, this._screenResizeHandler);
-		ResizeHandler.deregister(document.body, this._screenResizeHandler);
+	_attachMouseResizeHandlers() {
+		this._detachResizeHandlers();
 
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
 		this.addEventListener("ui5-before-close", this._revertSize);
 	}
 
-	_detachResizeHandlers() {
+	_detachMouseResizeHandlers() {
 		window.removeEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.removeEventListener("mouseup", this._resizeMouseUpHandler);
 	}

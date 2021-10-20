@@ -6,10 +6,10 @@
 	allow-target-overlap
 	_hide-header
 	hide-arrow
-	no-stretch
 	stay-open-on-scroll
 	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
 	@wheel="{{_handleWheel}}"
+	@keydown="{{_onkeydown}}"
 >
 
 	<ui5-time-selection

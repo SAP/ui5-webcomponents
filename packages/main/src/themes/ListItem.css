@@ -140,6 +140,10 @@
 	border-radius: 0.25rem;
 }
 
+.ui5-li-img-inner {
+	object-fit: contain;
+}
+
 .ui5-li-icon {
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);
@@ -157,6 +161,7 @@
 	pointer-events: none; /* IE specific */
 }
 
+.ui5-li-detailbtn,
 .ui5-li-deletebtn {
 	display: flex;
 	align-items: center;

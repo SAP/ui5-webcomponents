@@ -18,7 +18,7 @@ tagNameMap = {
     "List": "ui5-list",
     "Panel": "ui5-panel",
     "Popover": "ui5-popover",
-    "RadioButton": "ui5-radiobutton",
+    "RadioButton": "ui5-radio-button",
     "Select": "ui5-select",
     "Switch": "ui5-switch",
     "TabContainer": "ui5-tabcontainer",

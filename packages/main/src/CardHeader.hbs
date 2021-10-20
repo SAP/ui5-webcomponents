@@ -1,0 +1,35 @@
+<div
+	class="{{classes}}"
+	dir="{{effectiveDir}}"
+	@click="{{_headerClick}}"
+	@keydown="{{_headerKeydown}}"
+	@keyup="{{_headerKeyup}}"
+	role="{{ariaHeaderRole}}"
+	aria-labelledby="{{ariaLabelledByHeader}}"
+	aria-level="{{_ariaLevel}}"
+	aria-roledescription="{{ariaCardHeaderRoleDescription}}"
+	tabindex="0"
+	id="{{_id}}--header"
+>
+	{{#if hasAvatar}}
+		<div id="{{_id}}-avatar" class="ui5-card-header-avatar" aria-label="{{ariaCardAvatarLabel}}">
+			<slot name="avatar"></slot>
+		</div>
+	{{/if}}
+
+	<div class="ui5-card-header-text">
+		{{#if titleText}}
+			<div id="{{_id}}-title" class="ui5-card-header-title" part="title">{{titleText}}</div>
+		{{/if}}
+
+		{{#if subtitleText}}
+			<div id="{{_id}}-subtitle" class="ui5-card-header-subtitle" part="subtitle">{{subtitleText}}</div>
+		{{/if}}
+	</div>
+
+	{{#if hasAction}}
+		<slot name="action"></slot>
+	{{else}}
+		<span id="{{_id}}-status" part="status" class="ui5-card-header-status" dir="auto">{{status}}</span>
+	{{/if}}
+</div>

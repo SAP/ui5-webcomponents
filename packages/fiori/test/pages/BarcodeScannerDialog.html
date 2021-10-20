@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Barcode Scanner</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+
+	<script>delete Document.prototype.adoptedStyleSheets</script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-barcode-scanner-dialog id="dlgScan"></ui5-barcode-scanner-dialog>
+
+	<ui5-button id="btnScan" icon="camera" title="Start Camera">Scan</ui5-button>
+	<div>
+		<ui5-label id="scanResult"></ui5-label>
+		<ui5-label id="scanError"></ui5-label>
+	</div>
+
+	<script>
+		btnScan.addEventListener("click", function(event) {
+			dlgScan.show();
+		});
+
+		dlgScan.addEventListener("ui5-scan-success", function(event) {
+			scanResult.innerHTML = event.detail.text;
+			dlgScan.close();
+		});
+
+		dlgScan.addEventListener("ui5-scan-error", function(event) {
+			scanError.innerHTML = event.detail.message;
+			dlgScan.close();
+		});
+	</script>
+</body>
+</html>

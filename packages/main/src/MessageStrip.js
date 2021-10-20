@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -53,7 +53,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the MessageStrip renders close icon.
+		 * Defines whether the MessageStrip renders close button.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -88,7 +88,7 @@ const metadata = {
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {sap.ui.webcomponents.main.IIcon}
-         * @slot
+		 * @slot
 		 * @public
 		 */
 		"icon": {
@@ -154,7 +154,6 @@ class MessageStrip extends UI5Element {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_closeClick() {
@@ -169,7 +168,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		MessageStrip.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	static designClassesMappings() {
@@ -195,7 +194,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {

@@ -61,13 +61,13 @@
 				id="nlgi1"
 				show-close
 				show-counter
-				heading="Orders"
+				title-text="Orders"
 				priority="High"
 			>
 				<ui5-li-notification
 					id="nli1"
 					show-close
-					heading="New order #2201"
+					title-text="New order #2201"
 					priority="High"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -83,7 +83,7 @@
 				<ui5-li-notification
 					id="nli2"
 					show-close
-					heading="New order #2202"
+					title-text="New order #2202"
 					priority="High"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -102,14 +102,14 @@
 			<ui5-li-notification-group
 				show-close
 				show-counter
-				heading="Payments"
+				title-text="Payments"
 				priority="High"
 			>
 				<ui5-li-notification
 					id="nli3"
 					show-close
-					wrap
-					heading="New payment #2900"
+					wrapping-type="Normal"
+					title-text="New payment #2900"
 					priority="High"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -125,9 +125,9 @@
 				<ui5-li-notification
 					id="nli4"
 					busy
-					wrap
+					wrapping-type="Normal"
 					show-close
-					heading="New payment #2901"
+					title-text="New payment #2901"
 					priority="High"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -144,15 +144,15 @@
 				id="nlgi3"
 				show-close
 				show-counter
-				heading="Collapsed"
+				title-text="Collapsed"
 				priority="High"
 				collapsed
 			>
 			<ui5-li-notification
 				id="nli5"
-				wrap
+				wrapping-type="Normal"
 				show-close
-				heading="New payment #2900"
+				title-text="New payment #2900"
 				priority="High"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -173,15 +173,15 @@
 
 	<script>
 		notificationList.addEventListener("ui5-itemClick", function(event) {
-			clickInput.value = event.detail.item.heading;
+			clickInput.value = event.detail.item.titleText;
 		});
 
 		notificationList.addEventListener("ui5-itemClose", function(event) {
-			closeInput.value = event.detail.item.heading;
+			closeInput.value = event.detail.item.titleText;
 		});
 
 		notificationList.addEventListener("ui5-itemToggle", function(event) {
-			toggleInput.value = event.detail.item.heading;
+			toggleInput.value = event.detail.item.titleText;
 		});
 
 		var counter = 0;

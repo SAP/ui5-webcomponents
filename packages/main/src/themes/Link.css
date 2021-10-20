@@ -11,15 +11,15 @@
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
+	text-decoration: var(--_ui5_link_text_decoration);
+}
+
+:host(:hover) {
+	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
 :host([disabled]) {
 	pointer-events: none;
-}
-
-:host(:not([disabled])) .ui5-link-root:hover {
-	color: var(--sapLinkColor);
-	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
 :host([disabled]) .ui5-link-root {
@@ -56,9 +56,8 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-wrap: normal;
-	text-decoration: none;
 	outline: none;
-	text-decoration: var(--_ui5_link_text_decoration);
+	text-decoration: inherit;
 }
 
 .ui5-link-root,
@@ -67,7 +66,7 @@
 	color: currentColor;
 }
 
-.ui5-link-root:focus {
+:host([focused]) .ui5-link-root {
 	outline-offset: -1px;
 	outline: 1px dotted var(--sapContent_FocusColor);
 	text-decoration: underline;

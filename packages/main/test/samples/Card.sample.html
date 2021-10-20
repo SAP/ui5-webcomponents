@@ -70,9 +70,11 @@
 <section>
 	<h3>Card with List</h3>
 	<div class="snippet card-container">
-		<ui5-card title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10" class="medium">
-			<ui5-icon name="group" slot="avatar"></ui5-icon>
-			<ui5-button design="Emphasized" slot="action">View All</ui5-button>
+		<ui5-card class="medium">
+			<ui5-card-header slot="header" title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
+				<ui5-button design="Emphasized" slot="action">View All</ui5-button>
+			</ui5-card-header>
 
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
@@ -80,12 +82,14 @@
 					<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
 					<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Isabella Adams</ui5-li>
 				</ui5-list>
-				
+
 			</div>
 		</ui5-card>
-		<ui5-card title-text="This header is interactive" header-interactive subtitle-text="Click, press Enter or Space" status="3 of 6" class="medium">
-			<ui5-icon name="group" slot="avatar"></ui5-icon>
-			
+		<ui5-card class="medium">
+			<ui5-card-header slot="header" title-text="This header is interactive" interactive subtitle-text="Click, press Enter or Space" status="3 of 6">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			</ui5-card-header>
+
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
 					<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
@@ -105,9 +109,11 @@
 }
 </style>
 
-<ui5-card avatar="group" title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10" class="medium">
-	<ui5-icon name="group" slot="avatar"></ui5-icon>
-	<ui5-button design="Emphasized" slot="action">View All</ui5-button>
+<ui5-card class="medium">
+	<ui5-card-header slot="header" title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
+				<ui5-button design="Emphasized" slot="action">View All</ui5-button>
+	</ui5-card-header>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
@@ -117,8 +123,10 @@
 
 	</div>
 </ui5-card>
-<ui5-card avatar="group" title-text="This header is interactive" header-interactive subtitle-text="Click, press Enter or Space" status="3 of 6" class="medium">
-	<ui5-icon name="group" slot="avatar"></ui5-icon>
+<ui5-card class="medium">
+		<ui5-card-header slot="header" title-text="This header is interactive" interactive subtitle-text="Click, press Enter or Space" status="3 of 6">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
+		</ui5-card-header>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
@@ -133,7 +141,9 @@
 <section>
 	<h3>Card with Table</h3>
 	<div class="snippet card-container">
-		<ui5-card title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15">
+		<ui5-card>
+			<ui5-card-header slot="header" title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15">
+			</ui5-card-header>
 			<ui5-table class="demo-table content-padding">
 				<!-- Columns -->
 				<ui5-table-column slot="columns">
@@ -206,23 +216,25 @@
 .status-warning {color: #e9730c;}
 .status-success {color: #107e3e;}
 </style>
-<ui5-card title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15" class="medium">
+<ui5-card class="medium">
+	<ui5-card-header slot="header" title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15">
+	</ui5-card-header>
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
 		<ui5-table-column slot="columns">
-            <ui5-label>Sales Order</ui5-label>
+			<ui5-label>Sales Order</ui5-label>
 		</ui5-table-column>
 
 		<ui5-table-column slot="columns">
-            <ui5-label>Customer</ui5-label>
+			<ui5-label>Customer</ui5-label>
 		</ui5-table-column>
 
 		<ui5-table-column slot="columns">
-            <ui5-label>Net Amount</ui5-label>
+			<ui5-label>Net Amount</ui5-label>
 		</ui5-table-column>
 
 		<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
-            <ui5-label>Status</ui5-label>
+			<ui5-label>Status</ui5-label>
 		</ui5-table-column>
 
 		<!-- Rows -->
@@ -249,7 +261,9 @@
 <section>
 	<h3>Card with Timeline</h3>
 	<div class="snippet card-container">
-		<ui5-card title-text="Upcoming Activities" subtitle-text="For Today" class="medium">
+		<ui5-card class="medium">
+			<ui5-card-header slot="header" title-text="Upcoming Activities" subtitle-text="For Today">
+			</ui5-card-header>
 			<ui5-timeline>
 				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 				<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
@@ -263,10 +277,9 @@
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-card
-	title-text="Upcoming Activities"
-	subtitle-text="For Today"
-	class="meidum">
+<ui5-card class="meidum">
+		<ui5-card-header slot="header" title-text="Upcoming Activities" subtitle-text="For Today">
+		</ui5-card-header>
 	<ui5-timeline>
 		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" name="John Smith" name-clickable></ui5-timeline-item>
 		<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
@@ -283,8 +296,10 @@
 <section>
 	<h3>More Cards</h3>
 	<div class="snippet card-container">
-		<ui5-card title-text="David Willams" subtitle-text="Sales Manager" class="small">
-			<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+		<ui5-card class="small">
+			<ui5-card-header slot="header" title-text="David Willams" subtitle-text="Sales Manager">
+				<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+			</ui5-card-header>
 
 			<ui5-list separators="Inner" class="content-padding">
 				<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
@@ -293,11 +308,9 @@
 			</ui5-list>
 		</ui5-card>
 
-		<ui5-card
-			title-text="Project Cloud Transformation"
-			subtitle-text="Revenue per Product | EUR"
-			status="3 of 3"
-			class="small">
+		<ui5-card class="small">
+			<ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3">
+			</ui5-card-header>
 			<ui5-list separators="None" class="content-padding">
 				<ui5-li-custom>
 					<div class="item">
@@ -337,9 +350,11 @@
 			</ui5-list>
 		</ui5-card>
 
-		<ui5-card title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive" class="small">
-			<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
-			
+		<ui5-card class="small">
+			<ui5-card-header slot="header" title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive">
+				<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+			</ui5-card-header>
+
 			<div class="content content-padding">
 				<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
 
@@ -362,9 +377,11 @@
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-card title-text="David Willams" subtitle-text="Sales Manager" class="small">
-	<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
-	
+<ui5-card class="small">
+	<ui5-card-header slot="header" title-text="David Willams" subtitle-text="Sales Manager" >
+				<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+	</ui5-card-header>
+
 	<ui5-list separators="Inner" class="content-padding">
 		<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
 		<ui5-li icon="wallet" icon-end>Finance</ui5-li>
@@ -391,7 +408,9 @@
 .status-success {color: #107e3e;}
 </style>
 
-<ui5-card title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3" class="small">
+<ui5-card class="small">
+	   <ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3">
+	   </ui5-card-header>
 	<ui5-list separators="None" class="content-padding">
 		<ui5-li-custom>
 			<div class="item">
@@ -408,9 +427,11 @@
 	</ui5-list>
 </ui5-card>
 
-<ui5-card title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive" class="small">
-	<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
-	
+<ui5-card class="small">
+	<ui5-card-header slot="header" title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive">
+		<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+	</ui5-card-header>
+
 	<div class="content content-padding">
 		<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
 

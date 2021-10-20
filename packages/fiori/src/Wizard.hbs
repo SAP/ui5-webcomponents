@@ -1,6 +1,6 @@
 <div class="ui5-wiz-root" aria-label="{{ariaLabelText}}" role="region">
 	<nav class="ui5-wiz-nav" aria-label="{{navAriaLabelText}}" tabindex="-1">
-		<div class="ui5-wiz-nav-list" role="list" aria-label="{{listAriaLabelText}}" aria-controls="{{_id}}-wiz-content">
+		<div class="ui5-wiz-nav-list" role="list" aria-label="{{listAriaLabelText}}" aria-describedby="wiz-nav-descr" aria-controls="{{_id}}-wiz-content">
 			{{#each _stepsInHeader}}
 				<ui5-wizard-tab
 					title-text="{{titleText}}"
@@ -23,6 +23,8 @@
 			{{/each}}
 		</div>
 	</nav>
+
+	<span id="wiz-nav-descr" class="ui5-hidden-text">{{navAriaDescribedbyText}}</span>
 
 	<div id="{{_id}}-wiz-content" class="ui5-wiz-content" @scroll="{{onScroll}}">
 	{{#each _steps}}

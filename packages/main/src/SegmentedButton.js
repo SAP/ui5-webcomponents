@@ -1,11 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
@@ -32,7 +35,7 @@ const metadata = {
 		 * <b>Note:</b> Multiple items are allowed.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
-		 * @type {sap.ui.webcomponents.main.IButton[]}
+		 * @type {sap.ui.webcomponents.main.ISegmentedButtonItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -104,7 +107,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -119,7 +122,6 @@ class SegmentedButton extends UI5Element {
 		this.hasPreviouslyFocusedItem = false;
 
 		this._handleResizeBound = this._doLayout.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -127,7 +129,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
+		if (this.parentNode) {
+			ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
+		}
 	}
 
 	onBeforeRendering() {
@@ -204,6 +208,7 @@ class SegmentedButton extends UI5Element {
 
 	_onclick(event) {
 		this._selectItem(event);
+		this.selectedItem.focus();
 	}
 
 	_onkeydown(event) {
@@ -243,7 +248,7 @@ class SegmentedButton extends UI5Element {
 			await this.measureItemsWidth();
 		}
 
-		const parentWidth = this.parentNode.offsetWidth;
+		const parentWidth = this.parentNode ? this.parentNode.offsetWidth : 0;
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.items.length}px`;
@@ -272,11 +277,11 @@ class SegmentedButton extends UI5Element {
 	}
 
 	get ariaDescribedBy() {
-		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
+		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
 	}
 
 	get ariaDescription() {
-		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
+		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
 	}
 }
 
