@@ -97,12 +97,23 @@
 	border: var(--_ui5_slider_handle_border);
 	border-radius: var(--_ui5_slider_handle_border_radius);
 	box-shadow: var(--_ui5_slider_handle_box_shadow);
+	font-family: var(--_ui5_slider_handle_font_family);
 	margin-left: var(--_ui5_slider_handle_margin_left);
 	top: var(--_ui5_slider_handle_top);
 	position: absolute;
 	outline: none;
 	height: var(--_ui5_slider_handle_height);
 	width: var(--_ui5_slider_handle_width);
+}
+
+.ui5-slider-handle:after {
+	font-size: 14px;
+	font-weight: bold;
+	content: var(--_ui5_slider_handle_icon);
+	color: #2d8ae6;
+	position: relative;
+	left: 8px;
+	vertical-align: middle;
 }
 
 .ui5-slider-handle--start, .ui5-slider-handle--end {
@@ -116,6 +127,11 @@
 
 [dir="rtl"] .ui5-slider-handle {
 	margin-right: var(--_ui5_slider_handle_margin_left);
+}
+
+[dir="rtl"] .ui5-slider-handle:after {
+	right:9px;
+	left: 0;
 }
 
 .ui5-slider-root:hover .ui5-slider-handle,
@@ -153,7 +169,6 @@
 .ui5-slider-tooltip-value {
 	position: relative;
 }
-
 
 .ui5-slider-labels {
 	position: absolute;
