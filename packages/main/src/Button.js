@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -318,8 +318,6 @@ class Button extends UI5Element {
 
 			isGlobalHandlerAttached = true;
 		}
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -438,7 +436,7 @@ class Button extends UI5Element {
 	}
 
 	get buttonTypeText() {
-		return this.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	get tabIndexValue() {
@@ -456,7 +454,7 @@ class Button extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Button.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

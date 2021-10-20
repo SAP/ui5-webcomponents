@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getAriaLabelledByTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -227,7 +227,6 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -287,7 +286,7 @@ class Link extends UI5Element {
 	}
 
 	get linkTypeText() {
-		return this.i18nBundle.getText(Link.typeTextMappings()[this.design]);
+		return Link.i18nBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {
@@ -299,7 +298,7 @@ class Link extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Link.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onclick(event) {

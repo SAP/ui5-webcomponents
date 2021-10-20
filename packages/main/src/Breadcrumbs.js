@@ -193,7 +193,6 @@ class Breadcrumbs extends UI5Element {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._initItemNavigation();
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
@@ -531,15 +530,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _accessibleNameText() {
-		return this.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
 	}
 
 	get _dropdownArrowAccessibleNameText() {
-		return this.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
 	}
 
 	get _cancelButtonText() {
-		return this.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
 	}
 
 	static get dependencies() {
@@ -552,6 +551,10 @@ class Breadcrumbs extends UI5Element {
 			StandardListItem,
 			Icon,
 		];
+	}
+
+	static async onDefine() {
+		Breadcrumbs.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
