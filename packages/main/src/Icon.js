@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundleData, fetchI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -352,10 +351,7 @@ class Icon extends UI5Element {
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;
 		} else if (this.accData) {
-			if (!getI18nBundleData(this.packageName)) {
-				await fetchI18nBundle(this.packageName);
-			}
-			const i18nBundle = getI18nBundle(this.packageName);
+			const i18nBundle = await getI18nBundle(this.packageName);
 			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
 		}
 	}

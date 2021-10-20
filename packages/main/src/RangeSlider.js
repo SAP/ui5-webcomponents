@@ -1,5 +1,5 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isEscape,
 	isHome,
@@ -128,7 +128,6 @@ class RangeSlider extends SliderBase {
 		super();
 		this._stateStorage.startValue = null;
 		this._stateStorage.endValue = null;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	get tooltipStartValue() {
@@ -146,7 +145,7 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return this.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
 	}
 
 	get _ariaHandlesText() {
@@ -155,11 +154,11 @@ class RangeSlider extends SliderBase {
 		const ariaHandlesText = {};
 
 		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
-			ariaHandlesText.startHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
-			ariaHandlesText.endHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
 		} else {
-			ariaHandlesText.startHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
-			ariaHandlesText.endHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
 		}
 
 		return ariaHandlesText;
@@ -761,7 +760,7 @@ class RangeSlider extends SliderBase {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		RangeSlider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

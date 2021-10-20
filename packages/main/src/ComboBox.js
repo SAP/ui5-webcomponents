@@ -385,7 +385,6 @@ class ComboBox extends UI5Element {
 		this._initialRendering = true;
 		this._itemFocused = false;
 		this._selectionChanged = false;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -881,18 +880,18 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem) {
-		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
-		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
+		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return ComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(SELECT_OPTIONS);
+		return ComboBox.i18nBundle.getText(SELECT_OPTIONS);
 	}
 
 	get inner() {
@@ -931,10 +930,10 @@ class ComboBox extends UI5Element {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Information": this.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Success": ComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
@@ -975,6 +974,10 @@ class ComboBox extends UI5Element {
 			Popover,
 			ComboBoxGroupItem,
 		];
+	}
+
+	static async onDefine() {
+		ComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get styles() {
