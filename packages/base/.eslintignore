@@ -4,6 +4,7 @@ lib
 overlay
 dist
 src/thirdparty
+src/renderer/directives/style-map.js
 bundle.esm.js
 bundle.es5.js
 rollup.config*.js

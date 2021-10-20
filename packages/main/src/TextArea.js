@@ -576,8 +576,8 @@ class TextArea extends UI5Element {
 				"max-height": this._maxHeight,
 			},
 			main: {
-				width: "100%",
-				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+				"width": "100%",
+				"height": (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),

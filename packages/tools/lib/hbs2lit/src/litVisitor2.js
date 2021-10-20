@@ -80,11 +80,6 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	// Scope custom element tags
 	contentStatement = contentStatement.replaceAll(/(<\/?\s*)([a-zA-Z0-9_]+-[a-zA-Z0-9_-]+)/g, "$1\${scopeTag(\"$2\", tags, suffix)}");
 
-	// Apply style marker
-	if (contentStatement.match(/style="?$/)) {
-		contentStatement = contentStatement.replace(/style=("?)$/, `data-ui5-style-ref=$1`);
-	}
-
 	this.blocks[this.currentKey()] += contentStatement;
 };
 
@@ -105,7 +100,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
-			parsedCode = path.replace(/^context\.styles\./, ""); //`\${styleMap(${path})}`;
+			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;
 		} else {
