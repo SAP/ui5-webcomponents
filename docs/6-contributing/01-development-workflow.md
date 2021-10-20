@@ -42,9 +42,9 @@ The server will reload the pages whenever you make changes in the code.
 **4.1.** Read the dedicated tutorials for component developers:
 
 - [Development Conventions and Guidelines](../Guidelines.md);
-- [Developing UI5 Web Components](./Developing&#32;Web&#32;Components.md);
+- [Developing Custom UI5 Web Components](./Developing&#32;Web&#32;Components.md);
 - [Testing UI5 Web Components](./Testing&#32;Web&#32;Components.md);
-- [Metadata](./Metadata.md).
+- [Understanding UI5 Web Components Metadata](./Metadata.md).
 
 **4.2.** Create a local branch within your fork and work with it as usual.
 
