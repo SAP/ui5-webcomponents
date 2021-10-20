@@ -1,0 +1,24 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--sapBackgroundColor);
+}
+.step-wrapper {
+    display: flex; min-height: 200px; flex-direction: column;
+}
+.step-body {
+    display: flex; flex-direction: column;
+}
+.block1 {
+    display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem;
+}
+.block2 {
+    display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;
+}
+.wiz {
+    height: 700px;
+}
+.openWiz {
+    width: 150px; align-self: flex-end;
+}
