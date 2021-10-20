@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
@@ -149,8 +149,6 @@ const metadata = {
 class BusyIndicator extends UI5Element {
 	constructor() {
 		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._keydownHandler = this._handleKeydown.bind(this);
 		this._preventEventHandler = this._preventEvent.bind(this);
 	}
@@ -195,11 +193,11 @@ class BusyIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		BusyIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get ariaTitle() {
-		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
+		return BusyIndicator.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 
 	get labelId() {

@@ -156,7 +156,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATERANGE_DESCRIPTION);
+		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
 	}
 
 	/**

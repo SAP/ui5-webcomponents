@@ -1,9 +1,8 @@
-import { registerI18nLoader, fetchI18nBundle as originalFetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
+import { registerI18nLoader, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
 
-let customFetchI18nBundle;
 let customGetI18nBundle;
 
 /**
@@ -42,11 +41,7 @@ class I18nBundle {
 	}
 }
 
-const getI18nBundle = packageName => {
-	if (customGetI18nBundle) {
-		return customGetI18nBundle(packageName);
-	}
-
+const getI18nBundleSync = packageName => {
 	if (I18nBundleInstances.has(packageName)) {
 		return I18nBundleInstances.get(packageName);
 	}
@@ -56,22 +51,36 @@ const getI18nBundle = packageName => {
 	return i18nBundle;
 };
 
-const fetchI18nBundle = async packageName => {
-	if (customFetchI18nBundle) {
-		return customFetchI18nBundle(packageName);
-	}
-
-	return originalFetchI18nBundle(packageName);
+/**
+ * Allows developers to provide a custom getI18nBundle implementation
+ * If this function is called, the custom implementation will be used for all components and will completely
+ * replace the default implementation.
+ *
+ * @public
+ * @param customGet the function to use instead of the standard getI18nBundle implementation
+ */
+const registerCustomGetI18nBundle = customGet => {
+	customGetI18nBundle = customGet;
 };
 
-const registerCustomI18nHandlers = ({ fetch, get }) => {
-	customFetchI18nBundle = fetch;
-	customGetI18nBundle = get;
+/**
+ * Fetches and returns the I18nBundle instance for the given package
+ *
+ * @public
+ * @param packageName
+ * @returns {Promise<I18nBundle>}
+ */
+const getI18nBundle = async packageName => {
+	if (customGetI18nBundle) {
+		return customGetI18nBundle(packageName);
+	}
+
+	await fetchI18nBundle(packageName);
+	return getI18nBundleSync(packageName);
 };
 
 export {
 	registerI18nLoader,
-	fetchI18nBundle,
 	getI18nBundle,
-	registerCustomI18nHandlers,
+	registerCustomGetI18nBundle,
 };
