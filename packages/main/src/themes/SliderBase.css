@@ -97,7 +97,6 @@
 	border: var(--_ui5_slider_handle_border);
 	border-radius: var(--_ui5_slider_handle_border_radius);
 	box-shadow: var(--_ui5_slider_handle_box_shadow);
-	font-family: var(--_ui5_slider_handle_font_family);
 	margin-left: var(--_ui5_slider_handle_margin_left);
 	top: var(--_ui5_slider_handle_top);
 	position: absolute;
@@ -107,12 +106,14 @@
 }
 
 .ui5-slider-handle:after {
+	font-family: var(--_ui5_slider_handle_font_family);
 	font-size: 14px;
 	font-weight: bold;
 	content: var(--_ui5_slider_handle_icon);
 	color: #2d8ae6;
 	position: relative;
-	left: 8px;
+	top: 1px;
+	left: 9px;
 	vertical-align: middle;
 }
 
@@ -134,7 +135,7 @@
 	border: var(--_ui5_slider_handle_hover_border);
 }
 
-.ui5-slider-handle:focus {
+.ui5-slider-root:focus .ui5-slider-inner .ui5-slider-handle, .ui5-slider-inner .ui5-slider-handle:focus {
 	outline: var(--_ui5_slider_handle_outline);
 	outline-offset: var(--_ui5_slider_handle_outline_offset);
 	border: var(--_ui5_slider_handle_focus_border);
@@ -168,7 +169,6 @@
 	background: var(--_ui5_slider_tooltip_background);
 	border: var(--_ui5_slider_tooltip_border);
 	border-radius: var(--_ui5_slider_tooltip_border_radius);
-	box-shadow: var(--_ui5_slider_tooltip_box_shadow);
 	font-size: var(--_ui5_slider_tooltip_fontsize);
 	color: var(--_ui5_slider_tooltip_color);
 	height: var(--_ui5_slider_tooltip_height);
