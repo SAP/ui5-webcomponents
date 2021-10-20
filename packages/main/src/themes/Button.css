@@ -8,7 +8,7 @@
 	min-width: var(--_ui5_button_base_min_width);
 	height: var(--_ui5_button_base_height);
 	line-height: normal;
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--_ui5_button_fontFamily);
 	font-size: var(--sapFontSize);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
@@ -140,7 +140,7 @@ bdi {
 }
 
 :host([active]:not([_is-touch])) {
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapContent_FocusColor);
 }
 
 :host([design="Positive"]) {
@@ -171,7 +171,7 @@ bdi {
 }
 
 :host([design="Positive"][active][focused]) {
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapContent_FocusColor);
 }
 
 :host([design="Negative"]) {
@@ -202,7 +202,7 @@ bdi {
 }
 
 :host([design="Negative"][active][focused]) {
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapContent_FocusColor);
 }
 
 :host([design="Attention"]) {
@@ -229,12 +229,12 @@ bdi {
 }
 
 :host([design="Attention"][focused]:not([_is-touch])) {
-	outline-color: var(--_ui5_button_attention_border_focus_hover_color);
+	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 	border-color: var(--_ui5_button_attention_focus_border_color);
 }
 
 :host([design="Attention"][active][focused]) {
-	outline-color: var(--sapContent_ContrastFocusColor);
+	outline-color: var(--sapContent_FocusColor);
 }
 
 :host([design="Emphasized"]) {
@@ -268,7 +268,7 @@ bdi {
 	top: 0.0625rem;
 	right: 0.0625rem;
 	bottom: 0.0625rem;
-	border: var(--sap_button_emphasized_focused_border);
+	border: var(--_ui5_button_emphasized_focused_border);
 	pointer-events: none;
 	border-radius: 0.35rem;
 }

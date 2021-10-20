@@ -11,6 +11,6 @@
 	--_ui5_button_text_shadow: none;
 	--_ui5_button_outline: 0.125rem solid #0070F2;
 	--_ui5_button_outline_offset: -0.125rem;
-	--sap_button_emphasized_focused_border: 0.125rem solid var(--sapContent_ContrastFocusColor);
-
+	--_ui5_button_emphasized_focused_border: 0.125rem solid var(--sapContent_ContrastFocusColor);
+	--_ui5_button_fontFamily:  "72override", var(--sapFontBoldFamily);
 }
