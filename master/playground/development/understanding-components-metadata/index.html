@@ -5085,11 +5085,11 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="understanding-ui5-web-components-metadata">Understanding UI5 Web Components metadata</h1>
+          <h1 id="understanding-ui5-web-components-metadata">Understanding UI5 Web Components Metadata</h1>
 
-<p>Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc…)</p>
+<p>Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc.).</p>
 
-<p><em>Disclaimer: The information below is for UI5 Web Components development only. It is experimental and may change</em></p>
+<p><em>Disclaimer: The information below is for UI5 Web Components development only. It is experimental and may change.</em></p>
 
 <h2 id="tag">Tag</h2>
 
@@ -5106,7 +5106,7 @@
 
 <p>Defines the HTML properties for the Web Component.</p>
 
-<p><em>Note about attributes:</em> By default, for each property an equivalent attribute is supported. Attributes have the same names as properties, but in <code class="highlighter-rouge">kebab-case</code> rather than <code class="highlighter-rouge">camelCase</code>.
+<p><strong>Note about attributes:</strong> By default, for each property an equivalent attribute is supported. Attributes have the same names as properties, but in <code class="highlighter-rouge">kebab-case</code> rather than <code class="highlighter-rouge">camelCase</code>.
 Properties of type <code class="highlighter-rouge">Object</code>, properties with <code class="highlighter-rouge">multiple</code> set to<code class="highlighter-rouge">true</code> and properties with <code class="highlighter-rouge">noAttribute</code> set to <code class="highlighter-rouge">true</code> do not have an attribute equivalent.</p>
 
 <h4 id="example-1">Example</h4>
@@ -5161,13 +5161,13 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
       <td><code class="highlighter-rouge">defaultValue</code></td>
       <td>Any valid value for the type</td>
       <td>undefined</td>
-      <td>Default value of the property. Cannot be set for type “Boolean”. Booleans are always false by default in HTML</td>
+      <td>Default value of the property. Cannot be set for type “Boolean”. Booleans are always false by default in HTML.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">multiple</code></td>
       <td>Boolean</td>
       <td>false</td>
-      <td>Indicates whether the property represents a single value or is an array of values of the given type</td>
+      <td>Indicates whether the property represents a single value or is an array of values of the given type.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">noAttribute</code></td>
@@ -5186,7 +5186,7 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   <thead>
     <tr>
       <th>Type</th>
-      <th>Class to use</th>
+      <th>Class to Use</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -5220,7 +5220,7 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   <thead>
     <tr>
       <th>Type</th>
-      <th>Class to use</th>
+      <th>Class to Use</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -5233,7 +5233,7 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
     <tr>
       <td>CSSSize</td>
       <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/types/CSSSize.js</code></td>
-      <td>Any valid CSS size definition (<code class="highlighter-rouge">px</code>, <code class="highlighter-rouge">rem</code>, etc…)</td>
+      <td>Any valid CSS size definition (<code class="highlighter-rouge">px</code>, <code class="highlighter-rouge">rem</code>, etc.)</td>
     </tr>
     <tr>
       <td>ValueState</td>
@@ -5281,7 +5281,7 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
       <td><code class="highlighter-rouge">type</code> *</td>
       <td><code class="highlighter-rouge">HTMLElement</code> or <code class="highlighter-rouge">Node</code></td>
       <td>N/A</td>
-      <td>The type of the children that can go into that slot</td>
+      <td>The type of the children that can go into that slot.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">individualSlots</code></td>
@@ -5444,14 +5444,14 @@ rendering on the presence/absence/type of children.</p>
   <li>The framework will create properties for each slot on this UI5 Web Component’s instances for easier access
  to the slotted children. For example, if there are <code class="highlighter-rouge">header</code>, <code class="highlighter-rouge">content</code> and <code class="highlighter-rouge">footer</code> slots, there will be
  respectively <code class="highlighter-rouge">header</code>, <code class="highlighter-rouge">content</code> and <code class="highlighter-rouge">footer</code> properties of type <code class="highlighter-rouge">Array</code> holding the slotted children for each slot.
- <em>Note:</em> You can use the <code class="highlighter-rouge">propertyName</code> metadata entity, described above, to modify these.</li>
+ <strong>Note:</strong> You can use the <code class="highlighter-rouge">propertyName</code> metadata entity, described above, to modify these.</li>
 </ul>
 
 <p>In essence, set this to <code class="highlighter-rouge">true</code> if the UI5 Web Component you’re developing should be aware of its children
  for the purposes of its own state management and rendering (contrary to just displaying them).</p>
 
 <p>An example of a component that would benefit from <code class="highlighter-rouge">managedSlots</code> is a Tab Container that monitors its children (Tabs)
- in order to display a link on its Tab Strip for each Tab child. Therefore it would need to be invalidated whenever
+ in order to display a link on its Tab Strip for each Tab child. Therefore, it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.</p>
 
 <p>Next: <a href="04-testing-UI5-Web-Components.md">Testing UI5 Web Components</a></p>

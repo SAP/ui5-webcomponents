@@ -5087,11 +5087,11 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="importing-ui5-web-components">Importing UI5 Web Components</h1>
 
-<p><em>This section explains how to import UI5 Web Components to your projects</em></p>
+<p><em>This section explains how to import UI5 Web Components to your projects.</em></p>
 
-<h2 id="components-packages">Components packages</h2>
+<h2 id="components-packages">Components Packages</h2>
 
-<p>The UI5 Web Components project currently offers 2 NPM packages with web components.</p>
+<p>The UI5 Web Components project currently offers 2 NPM packages with Web Components.</p>
 
 <p>This separation is purely logical, as you can, and should, only import the components you are going to need from both packages.</p>
 
@@ -5102,14 +5102,14 @@
       <th>NPM Package</th>
       <th>Description</th>
       <th>Application</th>
-      <th>Components list</th>
+      <th>Components List</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code class="highlighter-rouge">main</code></td>
       <td><a href="https://www.npmjs.com/package/@ui5/webcomponents">@ui5/webcomponents</a></td>
-      <td>“Bread-and-butter” components, such as buttons, pickers, inputs, list, table, etc…</td>
+      <td>“Bread-and-butter” components, such as buttons, pickers, inputs, list, table, etc.</td>
       <td>General web apps</td>
       <td><a href="https://www.npmjs.com/package/@ui5/webcomponents">Explore</a></td>
     </tr>
@@ -5126,7 +5126,7 @@
 <h2 id="usage">Usage</h2>
 
 <ol>
-  <li>Add one or both of the above packages as dependencies to your project</li>
+  <li>Add one or both of the above packages as dependencies to your project.</li>
 </ol>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i @ui5/webcomponents
@@ -5134,7 +5134,7 @@ npm i @ui5/webcomponents-fiori
 </code></pre></div></div>
 
 <ol>
-  <li>Import the components your app is going to use</li>
+  <li>Import the components your app is going to use.</li>
 </ol>
 
 <p><code class="highlighter-rouge">import "@ui5/&lt;PACKAGE-NAME&gt;/dist/&lt;COMPONENT-NAME&gt;.js";</code></p>
@@ -5150,7 +5150,7 @@ npm i @ui5/webcomponents-fiori
 </code></pre></div></div>
 
 <ol>
-  <li>Use the components in your app</li>
+  <li>Use the components in your app.</li>
 </ol>
 
 <p>Once a component is imported, it is <strong>automatically</strong> registered and ready to use.</p>
@@ -5164,8 +5164,8 @@ npm i @ui5/webcomponents-fiori
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
 
-<p><em>Note: For most components the name of the module (f.e. <code class="highlighter-rouge">Button.js</code>, <code class="highlighter-rouge">Icon.js</code>) coincides with the name of the tag (<code class="highlighter-rouge">ui5-button</code>, <code class="highlighter-rouge">ui5-icon</code>), 
-but for others this is not the case (f.e. <code class="highlighter-rouge">StandardListItem.js</code> and <code class="highlighter-rouge">ui5-li</code>). Always consult the documentation when in doubt.</em></p>
+<p><strong>Note:</strong> For most components the name of the module (f.e. <code class="highlighter-rouge">Button.js</code>, <code class="highlighter-rouge">Icon.js</code>) coincides with the name of the tag (<code class="highlighter-rouge">ui5-button</code>, <code class="highlighter-rouge">ui5-icon</code>), 
+whereas for others this is not the case (f.e. <code class="highlighter-rouge">StandardListItem.js</code> and <code class="highlighter-rouge">ui5-li</code>). Always consult the documentation when in doubt.</p>
 
 <p>Next: <a href="03-understanding-components-APIs.md">Understanding UI5 Web Components APIs</a></p>
 

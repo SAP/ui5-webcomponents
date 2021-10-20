@@ -5089,25 +5089,25 @@
 <p>This document aims to explain the steps component developers would have to perform
 on daily basis from forking the project to merging a change, emphasising on the Github workflow.</p>
 
-<h2 id="1-fork-the-ui5-web-components-repository">1. Fork the UI5 Web Components repository</h2>
+<h2 id="1-fork-the-ui5-web-components-repository">1. Fork the UI5 Web Components repository.</h2>
 <p>See how to fork a repo <a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo">here</a>.</p>
 
-<h2 id="2-clone-the-ui5-web-components-repository">2. Clone the UI5 Web Components repository</h2>
+<h2 id="2-clone-the-ui5-web-components-repository">2. Clone the UI5 Web Components repository.</h2>
 <p>See how to clone a repo <a href="https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository">here</a>.</p>
 
-<h2 id="3-run-the-project">3. Run the project</h2>
+<h2 id="3-run-the-project">3. Run the project.</h2>
 
-<p><em>3.0.</em> Make sure you have the following prerequisites installed:</p>
+<p><strong>3.0.</strong> Make sure you have the following prerequisites installed:</p>
 <ul>
   <li><a href="https://yarnpkg.com/en">Yarn</a>;</li>
   <li><a href="https://nodejs.org/">Node.js</a> (<strong>version 14 or higher</strong>).</li>
 </ul>
 
-<p><em>3.1.</em> Install all dependencies.</p>
+<p><strong>3.1.</strong> Install all dependencies.</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn
 </code></pre></div></div>
 
-<p><em>3.2.</em> Build and serve the project.</p>
+<p><strong>3.2.</strong> Build and serve the project.</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn start
 </code></pre></div></div>
 <p>Once the project is served, you can explore the components 
@@ -5120,95 +5120,95 @@ on:</p>
 
 <p>The server will reload the pages whenever you make changes in the code.</p>
 
-<p><em>Note: If these ports are unavailable to be opened, then the pages will be served on the next available ports. See the console output for the available URLs.</em></p>
+<p><strong>Note:</strong> If these ports are unavailable to be opened, then the pages will be served on the next available ports. See the console output for the available URLs.</p>
 
-<h2 id="4-develop">4. Develop</h2>
+<h2 id="4-develop">4. Develop.</h2>
 
-<p><em>4.1.</em> Read the dedicated tutorials for component developers:</p>
+<p><strong>4.1.</strong> Read the dedicated tutorials for component developers:</p>
 
 <ul>
-  <li><a href="../Guidelines.md">Development Conventions and Guidelines</a>;</li>
-  <li><a href="./Developing&#32;Web&#32;Components.md">Developing UI5 Web Components</a>;</li>
-  <li><a href="./Testing&#32;Web&#32;Components.md">Testing UI5 Web Components</a>;</li>
-  <li><a href="./Metadata.md">Metadata</a>.</li>
+  <li><a href="./docs/6-contributing/02-conventions-and-guidelines.md">Development Conventions and Guidelines</a>;</li>
+  <li><a href="./docs/5-development/02-custom-UI5-Web-Components.md">Developing Custom UI5 Web Components</a>;</li>
+  <li><a href="./docs/5-development/04-testing-UI5-Web-Components.md">Testing UI5 Web Components</a>;</li>
+  <li><a href="./docs/5-development/03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>.</li>
 </ul>
 
-<p><em>4.2.</em> Create a local branch within your fork and work with it as usual.</p>
+<p><strong>4.2.</strong> Create a local branch within your fork and work with it as usual.</p>
 
-<p><em>4.3.</em> Before committing, run the linter to check if your code is written according to the project eslint configuration.</p>
+<p><strong>4.3.</strong> Before committing, run the linter to check if your code is written according to the project eslint configuration.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yarn lint
 </code></pre></div></div>
 
-<p><em>4.4.</em> Before committing, run the test of the component you are working on (see the article for testing above) to catch issues as soon as possible.</p>
+<p><strong>4.4.</strong> Before committing, run the test of the component you are working on (see the article for testing above) to catch issues as soon as possible.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>packages/main
 <span class="nv">$ </span>yarn <span class="nb">test test</span>/specs/Button.spec.js
 </code></pre></div></div>
 
-<h2 id="5-open-pull-request-pr-from-fork">5. Open pull request (PR) from fork</h2>
+<h2 id="5-open-pull-request-pr-from-fork">5. Open pull request (PR) from fork.</h2>
 
 <p>You can open a pull request to the upstream repository from any branch or commit in your fork.
 We recommend that you make changes in a topic branch (not in your local master), so that you can push followup commits if you receive feedback on your pull request.</p>
 
 <p>You can open a pull request from the Github UI.</p>
 
-<p><em>5.1.</em> Find the “Pull requests” tab and then press the “New pull request” button.</p>
+<p><strong>5.1.</strong> Find the “Pull requests” tab and then press the “New pull request” button.</p>
 
-<p><em>5.2.</em> Compare the master branch of the upstream with a branch from your fork.</p>
+<p><strong>5.2.</strong> Compare the master branch of the upstream with a branch from your fork.</p>
 
-<p><em>Note: The full guide on how to open PR from fork can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork">here</a>.</em></p>
+<p><strong>Note:</strong> The full guide on how to open PR from fork can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork">here</a>.</p>
 
-<p><em>5.3.</em> Once the PR is created you would have to accept a Developer Certificate of Origin (DCO).
+<p><strong>5.3.</strong> Once the PR is created you would have to accept a Developer Certificate of Origin (DCO).
 Just follow the link posted in the PR by the CLA assistant.</p>
 
-<p><em>Note: This is required only for your first PR.</em></p>
+<p><strong>Note:</strong> This is required only for your first PR.</p>
 
-<p><em>5.4.</em> Immediately after the PR is created, a central build process starts to verify the change,
+<p><strong>5.4.</strong> Immediately after the PR is created, a central build process starts to verify the change,
 building the project and running all tests.
 In case you are interested in the build output, you can follow the link at the bottom of the PR page, called “continuous-integration/travis-ci/pr”.</p>
 
-<p><em>5.5.</em> Wait for our code review and approval. 
+<p><strong>5.5.</strong> Wait for our code review and approval. 
 After the PR is approved, the UI5 Web Components team will merge the change into the master.</p>
 
-<h2 id="6-update-pull-request-created-from-a-fork">6. Update pull request, created from a fork</h2>
+<h2 id="6-update-pull-request-created-from-a-fork">6. Update pull request, created from a fork.</h2>
 
 <p>You often would need to update your pull request, especially when you need to address review comments.
 To update your pull request, you have to push commits to the branch, that the pull request is based on
 and the changes will be reflected in the pull request.</p>
 
-<p><em>Note: We recommend syncing your fork before pushing commits to resolve merge conflicts beforehand.</em></p>
+<p><strong>Note:</strong> We recommend syncing your fork before pushing commits to resolve merge conflicts beforehand.</p>
 
-<p><em>Note: The full guide on how to update PR can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork">here</a>.</em></p>
+<p><strong>Note:</strong> The full guide on how to update PR can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork">here</a>.</p>
 
-<h2 id="7-sync-the-fork">7. Sync the fork</h2>
+<h2 id="7-sync-the-fork">7. Sync the fork.</h2>
 
 <p>With the time your fork will be out of sync with the original repository
 and you would need to update it.</p>
 
-<p><em>7.1.</em> Specify a new remote upstream repository that will be synced with the fork.</p>
+<p><strong>7.1.</strong> Specify a new remote upstream repository that will be synced with the fork.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git remote add upstream https://github.com/SAP/ui5-webcomponents.git
 </code></pre></div></div>
 
-<p><em>7.2.</em> Fetch the branches and their respective commits from the upstream repository.
+<p><strong>7.2.</strong> Fetch the branches and their respective commits from the upstream repository.
 Commits to master will be stored in a local branch, upstream/master.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git fetch upstream
 </code></pre></div></div>
 
-<p><em>7.3.</em> Check out your fork’s local master branch.</p>
+<p><strong>7.3.</strong> Check out your fork’s local master branch.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
 </code></pre></div></div>
 
-<p><em>7.4.</em> Merge the changes from upstream/master into your local master branch.
+<p><strong>7.4.</strong> Merge the changes from upstream/master into your local master branch.
 This brings your fork’s master branch into sync with the upstream repository, without losing your local changes.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git merge upstream/master
 </code></pre></div></div>
 
-<p><em>Note: The full guide on how to sync a fork can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork">here</a>.</em></p>
+<p><strong>Note:</strong> The full guide on how to sync a fork can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork">here</a>.</p>
 
 
 <footer class="footer-wrapper">

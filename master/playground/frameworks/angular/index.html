@@ -5085,27 +5085,27 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="get-started-with-ui5-web-components--angular">Get started with UI5 Web Components &amp; Angular</h1>
+          <h1 id="get-started-with-ui5-web-components--angular">Get Started with UI5 Web Components &amp; Angular</h1>
 
 <p>In this tutorial, you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new Angular applications and to already existing ones.</p>
 
-<h3 id="step-1-install-angular-cli">Step 1. Install Angular CLI</h3>
+<h3 id="step-1-install-angular-cli">Step 1. Install Angular CLI.</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">-g</span> @angular/cli
 </code></pre></div></div>
 
-<h3 id="step-2-create-a-new-angular-application">Step 2. Create a new Angular application</h3>
+<h3 id="step-2-create-a-new-angular-application">Step 2. Create a new Angular application.</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ng new ui5-web-components-application
 <span class="nb">cd </span>ui5-web-components-application
 </code></pre></div></div>
 
-<h3 id="step-3-add-ui5-web-components">Step 3. Add UI5 Web Components</h3>
+<h3 id="step-3-add-ui5-web-components">Step 3. Add UI5 Web Components.</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents <span class="nt">--save</span>
 </code></pre></div></div>
 
-<h3 id="step-4-allow-the-use-of-custom-elements-in-angular">Step 4. Allow the use of custom elements in Angular</h3>
+<h3 id="step-4-allow-the-use-of-custom-elements-in-angular">Step 4. Allow the use of custom elements in Angular.</h3>
 
 <p>Before using UI5 Web Components, you have to allow the use of custom elements in Angular. To do so, import CUSTOM_ELEMENTS_SCHEMA in <code class="highlighter-rouge">app.module.ts</code> :</p>
 
@@ -5122,22 +5122,22 @@
 <span class="p">]</span>
 </code></pre></div></div>
 
-<h3 id="step-5-import-the-components-you-are-going-to-use">Step 5. Import the components you are going to use</h3>
+<h3 id="step-5-import-the-components-you-are-going-to-use">Step 5. Import the components you are going to use.</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Button.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<h3 id="step-6-use-the-imported-elements-in-your-application">Step 6. Use the imported elements in your application</h3>
+<h3 id="step-6-use-the-imported-elements-in-your-application">Step 6. Use the imported elements in your application.</h3>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button&gt;</span>Hello world!<span class="nt">&lt;/ui5-button&gt;</span>
 </code></pre></div></div>
 
-<h3 id="step-7-launch-the-application">Step 7. Launch the application</h3>
+<h3 id="step-7-launch-the-application">Step 7. Launch the application.</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ng serve <span class="nt">-o</span>
 </code></pre></div></div>
 
-<h2 id="additional">Additional</h2>
+<h2 id="additional-info">Additional Info</h2>
 
 <h3 id="two-way-data-binding">Two-Way Data Binding</h3>
 
@@ -5146,12 +5146,12 @@ In order to use it, you have to use a library called <a href="https://github.com
 
 <p>Example:</p>
 
-<h4 id="1-install-origami">1. Install Origami</h4>
+<h4 id="1-install-origami">1. Install Origami.</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @codebakery/origami
 </code></pre></div></div>
 
-<h4 id="2-import-the-origamiformsmodule-from-origami">2. Import the OrigamiFormsModule from Origami</h4>
+<h4 id="2-import-the-origamiformsmodule-from-origami">2. Import the OrigamiFormsModule from Origami.</h4>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NgModule</span><span class="p">,</span> <span class="nx">CUSTOM_ELEMENTS_SCHEMA</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">BrowserModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/platform-browser</span><span class="dl">'</span><span class="p">;</span>
@@ -5167,12 +5167,12 @@ In order to use it, you have to use a library called <a href="https://github.com
 <span class="k">export</span> <span class="kd">class</span> <span class="nx">AppModule</span> <span class="p">{}</span>
 </code></pre></div></div>
 
-<h4 id="3-use-origami-in-your-template">3. Use Origami in your template</h4>
+<h4 id="3-use-origami-in-your-template">3. Use Origami in your template.</h4>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-input</span> <span class="na">[(ngModel)]=</span><span class="s">"value"</span> <span class="na">origami</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 </code></pre></div></div>
 
-<h4 id="4-make-angular-boot-after-ui5-web-components-are-defined">4. Make Angular boot after UI5 Web Components are defined</h4>
+<h4 id="4-make-angular-boot-after-ui5-web-components-are-defined">4. Make Angular boot after UI5 Web Components are defined.</h4>
 
 <p>Add the <code class="highlighter-rouge">APP_INITIALIZER</code> provider to the module where you are using UI5 Web Components. In order to do so, import <code class="highlighter-rouge">APP_INITIALIZER</code> and add it to the providers array like this (in this example we will add it to the <code class="highlighter-rouge">app.module.ts</code>):</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="p">...,</span> <span class="nx">APP_INITIALIZER</span>  <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>

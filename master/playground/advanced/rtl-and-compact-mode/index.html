@@ -5085,13 +5085,13 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="right-to-left-rtl-and-compact-mode">Right-to-left (RTL) and compact mode</h1>
+          <h1 id="right-to-left-rtl-and-compact-mode">Right-To-Left (RTL) and Compact Mode</h1>
 
 <p><em>This section explains how to make UI5 Web Components render in <strong>RTL</strong> and <strong>compact mode</strong>.</em></p>
 
-<p><strong>Note:</strong> both of these settings are not properties of the components per se, but rather markers you set on some part the HTML page that affect all components inside.</p>
+<p><strong>Note:</strong> Both of these settings are not properties of the components per se, but rather markers you set on some part of the HTML page that affect all components inside.</p>
 
-<h2 id="1-rtl-support">1. RTL support</h2>
+<h2 id="rtl-support">RTL Support</h2>
 
 <p>Some UI5 Web Components are RTL-aware, meaning they render differently when placed in an RTL-designated part of the DOM tree.</p>
 
@@ -5104,7 +5104,7 @@
     ...
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
-<p>(RTL will be set for all UI5 Web Components on the page)</p>
+<p>(RTL will be set for all UI5 Web Components on the page.)</p>
 
 <p>Example 2:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
@@ -5116,9 +5116,9 @@
     <span class="nt">&lt;ui5-button</span> <span class="na">dir=</span><span class="s">"rtl"</span><span class="nt">&gt;</span>Button 3<span class="nt">&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
-<p>(RTL will be set for Button 2 and Button 3)</p>
+<p>(RTL will be set for Button 2 and Button 3.)</p>
 
-<h3 id="changing-rtl-dynamically">Changing RTL dynamically</h3>
+<h3 id="changing-rtl-dynamically">Changing RTL Dynamically</h3>
 
 <p>The first time UI5 Web Components are rendered, they will take into account the <code class="highlighter-rouge">dir</code> attribute  of the respective part of the DOM tree they are placed in.</p>
 
@@ -5131,11 +5131,11 @@
 <span class="nx">applyDirection</span><span class="p">();</span>
 </code></pre></div></div>
 
-<p><em>Technical note:</em> whenever you change the <code class="highlighter-rouge">dir</code> attribute, the browser will automatically re-render that part of the DOM tree (including any web components) by default.
+<p><em>Technical Note:</em> Whenever you change the <code class="highlighter-rouge">dir</code> attribute, the browser will automatically re-render that part of the DOM tree (including any Web Components) by default.
 The <code class="highlighter-rouge">applyDirection</code> call is only needed to adjust paddings, margins and other CSS selectors that are not affected by <code class="highlighter-rouge">dir</code>. As more advanced CSS
 features become available in the near future, <code class="highlighter-rouge">applyDirection</code> will not be needed and will eventually be deprecated.</p>
 
-<h2 id="2-compact-mode">2. Compact mode</h2>
+<h2 id="compact-mode">Compact Mode</h2>
 
 <p>Some UI5 Web Components support compact mode, meaning they can be rendered with smaller sizes, margins and paddings in order to preserve as much space as possible.</p>
 
@@ -5151,7 +5151,7 @@ features become available in the near future, <code class="highlighter-rouge">ap
 ...
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
-<p>(compact mode is set for all UI5 Web Components on the page)</p>
+<p>(Compact mode is set for all UI5 Web Components on the page.)</p>
 
 <p>Example 2:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
@@ -5163,7 +5163,7 @@ features become available in the near future, <code class="highlighter-rouge">ap
     <span class="nt">&lt;ui5-button</span> <span class="na">class=</span><span class="s">"ui5-content-density-compact"</span><span class="nt">&gt;</span>Button 3<span class="nt">&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
-<p>(compact mode will be set for Button 2 and Button 3)</p>
+<p>(Compact mode will be set for Button 2 and Button 3.)</p>
 
 <p>Unlike RTL, compact mode does not require additional APIs when its markers are changed dynamically.</p>
 

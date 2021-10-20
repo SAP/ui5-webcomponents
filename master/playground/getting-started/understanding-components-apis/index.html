@@ -5091,7 +5091,7 @@
 to the usage of standard HTML elements. Usually, Web Components creation and manipulation
 will be done internally by your framework of choice.</p>
 
-<p><em>This section explains UI5 Web Components APIs and usage in general terms</em></p>
+<p><em>This section explains UI5 Web Components APIs and usage in general terms.</em></p>
 
 <p>UI5 Web Components provide the following kinds of APIs:</p>
 
@@ -5137,13 +5137,13 @@ the element to the HTML document.</p>
 <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">myButton</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>In most real-world scenarios the above will be done by your framework of choice.</p>
+<p>In most real-world scenarios, the above will be done by your framework of choice.</p>
 
 <h2 id="2-how-do-i-set-the-propertiesattributes-of-ui5-web-components">2. How do I set the properties/attributes of UI5 Web Components?</h2>
 <p><a name="properties"></a></p>
 
 <p>You can use attributes and properties to the same effect. Keep in mind that attribute
-names are “kebab-case” (e.g. <code class="highlighter-rouge">value-state</code>) while property names are “camelCase” (f.e. <code class="highlighter-rouge">valueState</code>).</p>
+names are “kebab-case” (e.g. <code class="highlighter-rouge">value-state</code>) while property names are “camelCase” (e.g. <code class="highlighter-rouge">valueState</code>).</p>
 
 <p>Attributes can be set directly on the web component in HTML.</p>
 
@@ -5242,7 +5242,7 @@ provided by the framework you’re using, and the framework will be the one upda
 
 <p>The <code class="highlighter-rouge">&lt;ui5-tabcontainer&gt;</code> should only contain <code class="highlighter-rouge">&lt;ui5-tab&gt;</code> and <code class="highlighter-rouge">&lt;ui5-tab-separator&gt;</code>.</p>
 
-<p>The manipulation is exactly the same as with the other Web Components. For example to add a new tab:</p>
+<p>The manipulation is exactly the same as with the other Web Components. For example, to add a new tab:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">tc</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">tc1</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">newTab</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-tab</span><span class="dl">"</span><span class="p">);</span>
@@ -5285,20 +5285,20 @@ has at least a default slot.</p>
 <table>
   <thead>
     <tr>
-      <th>Slot type</th>
-      <th>Allowed children</th>
+      <th>Slot Type</th>
+      <th>Allowed Children</th>
       <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code class="highlighter-rouge">Node</code></td>
-      <td>All HTML Elements and text</td>
+      <td>All HTML elements and text</td>
       <td><code class="highlighter-rouge">ui5-button</code> default slot</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">HTMLElement</code></td>
-      <td>HTML Elements only (no text)</td>
+      <td>HTML elements only (no text)</td>
       <td><code class="highlighter-rouge">ui5-popover</code> <code class="highlighter-rouge">header</code> slot</td>
     </tr>
   </tbody>
@@ -5349,7 +5349,7 @@ So, for custom events in React you’d have to get a reference to the element an
 comply with the same rules. There are some novelties that come with the Web Components standard,
 such as <code class="highlighter-rouge">slot</code>, but otherwise everything else is what you already know and use from HTML.</p>
 
-<p>Next: <a href="04-using-icons.md">Using icons</a></p>
+<p>Next: <a href="04-using-icons.md">Using Icons</a></p>
 
 
 <footer class="footer-wrapper">

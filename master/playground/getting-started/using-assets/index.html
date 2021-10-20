@@ -5085,17 +5085,17 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="using-additional-assets">Using additional assets</h1>
+          <h1 id="using-additional-assets">Using Additional Assets</h1>
 
 <p><em>Most UI5 Web Components packages offer <strong>additional assets</strong>. This section explains what these are and how to use them.</em></p>
 
-<h2 id="what-are-additional-assets">What are additional assets</h2>
+<h2 id="what-are-additional-assets">What Are Additional Assets</h2>
 
-<p>These are <strong>themes</strong>, <strong>text translations</strong>, <strong>locale data</strong> etc… that are not shipped as part of the components/icons themselves, but can be loaded separately, if needed.</p>
+<p>These are <strong>themes</strong>, <strong>text translations</strong>, <strong>locale data</strong> etc. that are not shipped as part of the components/icons themselves, but can be loaded separately, if needed.</p>
 
 <p>These assets are important for <strong>accessibility</strong> and <strong>globalization</strong>.</p>
 
-<h2 id="importing-additional-assets">Importing additional assets</h2>
+<h2 id="importing-additional-assets">Importing Additional Assets</h2>
 
 <p>Import the <code class="highlighter-rouge">dist/Assets.js</code> file of the respective NPM package:</p>
 
@@ -5164,7 +5164,7 @@
   </tbody>
 </table>
 
-<p><code class="highlighter-rouge">*</code> Only listed for completeness, included automatically by other packages</p>
+<p><code class="highlighter-rouge">*</code> Only listed for completeness, included automatically by other packages.</p>
 
 <p>For example:</p>
 
@@ -5185,14 +5185,14 @@
 <span class="nx">setTheme</span><span class="p">(</span><span class="dl">"</span><span class="s2">sap_fiori_3_hcb</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">ui5-date-picker</code> component will have all translatable texts in Spanish, and the Spanish format settings (f.e. date format) will be used, and will be rendered with the <code class="highlighter-rouge">sap_fiori_3_hcb</code> accessibility theme instead of the default theme.</p>
+<p>The <code class="highlighter-rouge">ui5-date-picker</code> component will have all translatable texts in Spanish, and the Spanish format settings (e.g. date format) will be used, and will be rendered with the <code class="highlighter-rouge">sap_fiori_3_hcb</code> accessibility theme instead of the default theme.</p>
 
-<h2 id="technical-aspects">Technical aspects</h2>
+<h2 id="technical-aspects">Technical Aspects</h2>
 
 <p>Additional assets are <code class="highlighter-rouge">.json</code> files with the respective data. When you import the <code class="highlighter-rouge">dist/Assets.js</code> file of a given package, assets are only <strong>registered</strong>, but not yet fetched.
 When they are needed, they are loaded on the fly with <strong>dymamic imports</strong>, and then used.</p>
 
-<p>Next: <a href="06-using-features.md">Using additional features</a></p>
+<p>Next: <a href="06-using-features.md">Using Additional Features</a></p>
 
 
 <footer class="footer-wrapper">

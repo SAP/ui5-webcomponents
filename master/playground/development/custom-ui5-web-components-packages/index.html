@@ -5085,7 +5085,7 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="creating-a-custom-ui5-web-components-package">Creating a custom UI5 Web Components Package</h1>
+          <h1 id="creating-a-custom-ui5-web-components-package">Creating a Custom UI5 Web Components Package</h1>
 
 <p>This tutorial explains how to:</p>
 <ul>
@@ -5094,13 +5094,13 @@
   <li>Gain all <code class="highlighter-rouge">@ui5/webcomponents</code> capabilities such as HBS template support, i18n, theming, test setup, etc.</li>
 </ul>
 
-<p><em>Note:</em> Whether you use <code class="highlighter-rouge">npm</code> or <code class="highlighter-rouge">yarn</code> is a matter of preference.</p>
+<p><strong>Note:</strong> Whether you use <code class="highlighter-rouge">npm</code> or <code class="highlighter-rouge">yarn</code> is a matter of preference.</p>
 
-<h2 id="step-1-create-an-npm-package">Step 1. Create an NPM package</h2>
+<h2 id="step-1-create-an-npm-package">Step 1. Create an NPM package.</h2>
 
-<h3 id="run-the-init-command">Run the init command</h3>
+<h3 id="run-the-init-command">Run the init command.</h3>
 
-<p><em>Note:</em> The following command will <strong>create a new directory</strong> and initialize your package there.
+<p><strong>Note:</strong> The following command will <strong>create a new directory</strong> and initialize your package there.
 Make sure you haven’t created a directory yourself.</p>
 
 <ul>
@@ -5130,7 +5130,7 @@ Make sure you haven’t created a directory yourself.</p>
 
 <p>will create a <code class="highlighter-rouge">my-components</code> directory and initialize the package there.</p>
 
-<h3 id="follow-the-prompts">Follow the prompts</h3>
+<h3 id="follow-the-prompts">Follow the prompts.</h3>
 
 <p>The initialization script will ask you to choose:</p>
 <ul>
@@ -5149,7 +5149,7 @@ Make sure you haven’t created a directory yourself.</p>
   <li><code class="highlighter-rouge">npm start</code> (or <code class="highlighter-rouge">yarn start</code> if you prefer)</li>
 </ul>
 
-<h2 id="step-2-run-the-dev-server-and-test-the-build">Step 2. Run the dev server and test the build</h2>
+<h2 id="step-2-run-the-dev-server-and-test-the-build">Step 2. Run the dev server and test the build.</h2>
 
 <p>To run the dev server, as instructed above:</p>
 
@@ -5163,7 +5163,7 @@ Make sure you haven’t created a directory yourself.</p>
 
 <p><code class="highlighter-rouge">http://localhost:8080/test-resources/pages/index.html</code></p>
 
-<p><em>Note:</em> If you’ve chosen a different <code class="highlighter-rouge">port</code> earlier, change <code class="highlighter-rouge">8080</code> to its value.</p>
+<p><strong>Note:</strong> If you’ve chosen a different <code class="highlighter-rouge">port</code> earlier, change <code class="highlighter-rouge">8080</code> to its value.</p>
 
 <p>You can also run the tests:</p>
 
@@ -5181,11 +5181,11 @@ Make sure you haven’t created a directory yourself.</p>
 
 <p><code class="highlighter-rouge">yarn build</code>.</p>
 
-<p><em>Note:</em> In order to run the tests for the first time, you must have built the project with either <code class="highlighter-rouge">start</code> or <code class="highlighter-rouge">build</code>.</p>
+<p><strong>Note:</strong> In order to run the tests for the first time, you must have built the project with either <code class="highlighter-rouge">start</code> or <code class="highlighter-rouge">build</code>.</p>
 
 <p>That’s it!</p>
 
-<h2 id="understanding-the-project-structure">Understanding the project structure</h2>
+<h2 id="understanding-the-project-structure">Understanding the Project Structure</h2>
 
 <h3 id="packagejson"><code class="highlighter-rouge">package.json</code></h3>
 
@@ -5432,7 +5432,7 @@ In addition, you can define your own CSS Vars and provide different values for t
   </tbody>
 </table>
 
-<p><em>Note:</em> It’s up to you whether to put the CSS Vars directly in the <code class="highlighter-rouge">parameters-bundle.css</code> files for the different themes or to
+<p><strong>Note:</strong> It’s up to you whether to put the CSS Vars directly in the <code class="highlighter-rouge">parameters-bundle.css</code> files for the different themes or to
 import them from separate <code class="highlighter-rouge">.css</code> files. You could have, for example, a <code class="highlighter-rouge">MyFirstComponent-params.css</code> file for each theme and
 import it into the <code class="highlighter-rouge">parameters-bundle.css</code> file: <code class="highlighter-rouge">@import "MyFirstComponent-params.css";</code>.</p>
 
@@ -5464,8 +5464,8 @@ as needed.</p>
       <td>Translations in English</td>
     </tr>
     <tr>
-      <td>etc…</td>
-      <td>etc…</td>
+      <td>etc.</td>
+      <td>etc.</td>
     </tr>
   </tbody>
 </table>
@@ -5483,7 +5483,7 @@ PLEASE_WAIT=wait
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLEASE_WAIT=Espere
 </code></pre></div></div>
 
-<h4 id="assets-additional-themes-i18n-texts-etc">Assets (additional themes, i18n texts, etc…)</h4>
+<h4 id="assets-additional-themes-i18n-texts-etc">Assets (additional themes, i18n texts, etc.)</h4>
 
 <table>
   <thead>
@@ -5503,7 +5503,7 @@ PLEASE_WAIT=wait
 <p>This module imports all base assets (such as <code class="highlighter-rouge">CLDR</code> and the base theme parameters), but also your own
 package assets (i18n and package-specific theme parameters). Users of your package will have to import this module in their production applications in order to get additional themes support and i18n support.</p>
 
-<p><em>Note:</em> For easier development and testing, <code class="highlighter-rouge">Assets.js</code> is also imported in the dev/test bundle <code class="highlighter-rouge">bundle.esm.js</code> by the initialization script.</p>
+<p><strong>Note:</strong> For easier development and testing, <code class="highlighter-rouge">Assets.js</code> is also imported in the dev/test bundle <code class="highlighter-rouge">bundle.esm.js</code> by the initialization script.</p>
 
 <h3 id="the-test-directory">The <code class="highlighter-rouge">test/</code> directory</h3>
 
@@ -5530,7 +5530,7 @@ package assets (i18n and package-specific theme parameters). Users of your packa
 
 <p>For more on testing, see our <a href="./Testing%20Web%20Components.md">Testing Web Components</a> section.</p>
 
-<h2 id="public-consumption-of-your-custom-ui5-web-components-package">Public consumption of your custom UI5 Web Components package</h2>
+<h2 id="public-consumption-of-your-custom-ui5-web-components-package">Public Consumption of Your Custom UI5 Web Components Package</h2>
 
 <p>Once you’ve developed your package and published it to NPM, application developers can import from the <code class="highlighter-rouge">dist/</code> directory
 of your package any of your Web Components, and optionally the <code class="highlighter-rouge">Assets.js</code> module, if they want additional themes and i18n.</p>
@@ -5548,7 +5548,7 @@ of your package any of your Web Components, and optionally the <code class="high
 <span class="k">import</span> <span class="dl">"</span><span class="s2">my-ui5-webcomponents/dist/YetAnotherComponent.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Next: <a href="02-custom-UI5-Web-Components.md">Developing custom UI5 Web Components</a></p>
+<p>Next: <a href="02-custom-UI5-Web-Components.md">Developing Custom UI5 Web Components</a></p>
 
 
 <footer class="footer-wrapper">

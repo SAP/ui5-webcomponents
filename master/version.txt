@@ -1,5 +1,89 @@
-commit f00ab4b74eda8bf80d296cfc7c4dbc72c8fc376b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Oct 20 13:40:09 2021 +0300
+commit 3af88bc690c0bae4b6e7fa58c9d250e58e18d70e
+Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
+Date:   Wed Oct 20 13:50:40 2021 +0300
 
-    chore: rename theme-base to theming (#4133)
+    docs: UA review  (#4134)
+    
+    * Update 01-first-steps.md
+    
+    * Update 02-importing-components.md
+    
+    * Update 03-understanding-components-APIs.md
+    
+    * Update 02-importing-components.md
+    
+    * Update 04-using-icons.md
+    
+    * Update 05-using-assets.md
+    
+    * Update 06-using-features.md
+    
+    * Update 07-wrapping-up.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update 01-configuration.md
+    
+    * Update 02-RTL-and-compact-mode.md
+    
+    * Update 02-RTL-and-compact-mode.md
+    
+    * Update 04-OpenUI5-integration.md
+    
+    * Update 05-other-framework-level-APIs.md
+    
+    * Update README.md
+    
+    * Update 01-theme.md
+    
+    * Update 02-fonts.md
+    
+    * Update README.md
+    
+    * Update 01-theme.md
+    
+    * Update 03-scoping.md
+    
+    * Update README.md
+    
+    * Update 01-React.md
+    
+    * Update 02-Angular.md
+    
+    * Update 03-Vue.md
+    
+    * Update 01-custom-UI5-Web-Components-Packages.md
+    
+    * Update 01-first-steps.md
+    
+    * Update 02-importing-components.md
+    
+    * Update 01-configuration.md
+    
+    * Update 02-fonts.md
+    
+    * Update 02-custom-UI5-Web-Components.md
+    
+    * Update 03-understanding-components-metadata.md
+    
+    * Update 04-testing-UI5-Web-Components.md
+    
+    * Update README.md
+    
+    * Update 01-development-workflow.md
+    
+    * Update 03-playground-app.md
+    
+    * Update 01-development-workflow.md
+    
+    * Update FAQ.md
+    
+    * Update 01-development-workflow.md
+    
+    * Update README.md
+    
+    * Update 04-using-icons.md
+    
+    * Update 01-development-workflow.md

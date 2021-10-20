@@ -5085,38 +5085,38 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="first-steps">First steps</h1>
+          <h1 id="first-steps">First Steps</h1>
 
-<p><em>This section explains how to try out UI5 Web Components for the first time</em></p>
+<p><em>This section explains how to get started with UI5 Web Components.</em></p>
 
-<h2 id="distribution-model">Distribution model</h2>
+<h2 id="distribution-model">Distribution Model</h2>
 
 <p>UI5 Web Components are distributed as <strong>ES6 modules</strong> across several <strong>NPM packages</strong>:</p>
 
 <p>The most commonly used ones are:</p>
 <ul>
-  <li><code class="highlighter-rouge">@ui5/webcomponents</code> - components library, containing bread-and-butter components (buttons, inputs, pickers, etc…)</li>
-  <li><code class="highlighter-rouge">@ui5/webcomponents-fiori</code> - components library, containing semantic, higher-order components</li>
-  <li><code class="highlighter-rouge">@ui5/webcomponents-icons</code> - icons collection, containing general-purpose and business-oriented icons</li>
+  <li><code class="highlighter-rouge">@ui5/webcomponents</code> - components library, containing bread-and-butter components (buttons, inputs, pickers, etc.);</li>
+  <li><code class="highlighter-rouge">@ui5/webcomponents-fiori</code> - components library, containing semantic, higher-order components;</li>
+  <li><code class="highlighter-rouge">@ui5/webcomponents-icons</code> - icons collection, containing general-purpose and business-oriented icons.</li>
 </ul>
 
-<p><em>Important: There is no CDN for UI5 Web Components</em>. Each application is expected to <strong>import</strong> and <strong>bundle</strong> only the components (and any other resources) it is going to use.</p>
+<p><strong>Important: There is no CDN for UI5 Web Components</strong>. Each application is expected to <strong>import</strong> and <strong>bundle</strong> only the components (and any other resources) it is going to use.</p>
 
 <h2 id="bundling-ui5-web-components">Bundling UI5 Web Components</h2>
 
 <p>To build your UI5 Web Components project you can use any bundling tool that supports the following features:</p>
 <ul>
-  <li><code class="highlighter-rouge">.json</code> imports</li>
-  <li>dynamic ES6 imports</li>
+  <li><code class="highlighter-rouge">.json</code> imports;</li>
+  <li>dynamic ES6 imports.</li>
 </ul>
 
 <p>This is true of all modern bundlers.</p>
 
 <p>UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to <a href="#installation">Installation</a> or check the Tutorials section.</p>
 
-<h3 id="creating-a-project">Creating a project</h3>
+<h3 id="creating-a-project">Creating a Project</h3>
 
-<p>Any ES6 module-capable front-end tooling can be used, but in case you don’t already have a preference, you can start a new project using <a href="https://vitejs.dev">Vite</a>. The only prerequisite is to have <a href="https://nodejs.org/">Node.js</a> installed.</p>
+<p>You can use any ES6 module-capable front-end tooling, but in case you don’t have a preference yet, you can start a new project using <a href="https://vitejs.dev">Vite</a>. The only prerequisite is to have <a href="https://nodejs.org/">Node.js</a> installed.</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">npm init vite
 </span></code></pre></div></div>
@@ -5137,6 +5137,7 @@ npm run dev​
 <p>You should see a message that a server is running on <code class="highlighter-rouge">Local: http://localhost:3000/</code>. Launch your favourite IDE and change some code, the browser page will be automatically refreshed.</p>
 
 <h3 id="installation">Installation</h3>
+
 <p><a name="installation"></a></p>
 
 <p>Install <code class="highlighter-rouge">@ui5/webcomponents</code></p>
@@ -5144,7 +5145,7 @@ npm run dev​
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents
 </code></pre></div></div>
 
-<p>This command downloads the published source code of the UI5 Web Components to the <code class="highlighter-rouge">node_modules</code> folder. Now you can add them to your code to get them on the web page.</p>
+<p>This command downloads the published source code of the UI5 Web Components to the <code class="highlighter-rouge">node_modules</code> folder. Now, you can add them to your code to get them on the web page.</p>
 
 <h3 id="documentation">Documentation</h3>
 
@@ -5158,7 +5159,7 @@ npm run dev​
 <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Button.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>This line runs the code that registers the <code class="highlighter-rouge">&lt;ui5-button&gt;</code> tag with the browser. Now when the browser sees such a tag, it knows how to render it.</p>
+<p>This line runs the code that registers the <code class="highlighter-rouge">&lt;ui5-button&gt;</code> tag with the browser. Now, when the browser sees such a tag, it knows how to render it.</p>
 
 <h4 id="2-instantiate-the-web-component">2. Instantiate the Web Component.</h4>
 
@@ -5172,7 +5173,7 @@ npm run dev​
 
 <p>Check the browser to see the displayed button. You can now use UI5 Web Components just like normal HTML elements - set attributes on them, attach events, and more as described in the documentation.</p>
 
-<h4 id="3-run-a-production-build">3. Run a Production Build</h4>
+<h4 id="3-run-a-production-build">3. Run a production build.</h4>
 
 <p>If you want to deploy your project on a static hosting or in a Node.js project, run:</p>
 

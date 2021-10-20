@@ -5087,7 +5087,7 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="configuration">Configuration</h1>
 
-<p>This section explains how you can configure UI5 Web Components globally, and what configuration settings are available.</p>
+<p><em>This section explains how you can configure UI5 Web Components globally, and what configuration settings are available.</em></p>
 
 <h2 id="configuration-settings">Configuration Settings</h2>
 
@@ -5098,9 +5098,9 @@
     <tr>
       <th>Setting</th>
       <th>Values</th>
-      <th>Default value</th>
+      <th>Default Value</th>
       <th>Description</th>
-      <th>Applies to</th>
+      <th>Applies To</th>
     </tr>
   </thead>
   <tbody>
@@ -5123,14 +5123,14 @@
       <td><code class="highlighter-rouge">full</code>, <code class="highlighter-rouge">basic</code>, <code class="highlighter-rouge">minimal</code>, <code class="highlighter-rouge">none</code></td>
       <td><code class="highlighter-rouge">full</code></td>
       <td>Amount/intensity of animations to be played for some components</td>
-      <td>Components with animations (<code class="highlighter-rouge">ui5-panel</code>, <code class="highlighter-rouge">ui5-carousel</code>, etc…)</td>
+      <td>Components with animations (<code class="highlighter-rouge">ui5-panel</code>, <code class="highlighter-rouge">ui5-carousel</code>, etc.)</td>
     </tr>
     <tr>
       <td><a href="#calendarType">calendarType</a></td>
       <td><code class="highlighter-rouge">Gregorian</code>, <code class="highlighter-rouge">Islamic</code>, <code class="highlighter-rouge">Buddhist</code>, <code class="highlighter-rouge">Japanese</code>, <code class="highlighter-rouge">Persian</code></td>
       <td><code class="highlighter-rouge">Gregorian</code></td>
       <td>Default calendar type to be used for date-related components</td>
-      <td>Date/time components (<code class="highlighter-rouge">ui5-date-picker</code>, etc…)</td>
+      <td>Date/time components (<code class="highlighter-rouge">ui5-date-picker</code>, etc.)</td>
     </tr>
     <tr>
       <td><a href="#noConflict">noConflict</a></td>
@@ -5144,7 +5144,7 @@
       <td>See the <a href="#formatSettings">Format settings</a> section below</td>
       <td><code class="highlighter-rouge">{}</code></td>
       <td>Allows to override locale-specific configuration</td>
-      <td>Date/time components (<code class="highlighter-rouge">ui5-date-picker</code>, etc…)</td>
+      <td>Date/time components (<code class="highlighter-rouge">ui5-date-picker</code>, etc.)</td>
     </tr>
     <tr>
       <td><a href="#fetchDefaultLanguage">fetchDefaultLanguage</a></td>
@@ -5175,7 +5175,7 @@ Configuring another theme will additionally fetch and use that theme. Any theme 
 
 <p>To use additional themes (other than <code class="highlighter-rouge">sap_fiori_3</code>):</p>
 <ul>
-  <li>Import the <code class="highlighter-rouge">Assets.js</code> module of each components library you’re using, for example:</li>
+  <li>Import the <code class="highlighter-rouge">Assets.js</code> module of each component library you’re using, for example:</li>
 </ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Assets.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5202,7 +5202,7 @@ Configuring another theme will additionally fetch and use that theme. Any theme 
 <ul>
   <li>If a language is <em>configured</em>, it will be used.</li>
   <li>If no language is configured (the setting is <code class="highlighter-rouge">null</code>), the user’s <em>browser language</em> is checked, and if in the supported list, used.</li>
-  <li>If the user’s browser language is not in the supported list, but is a variation of a supported language, this language will be used (f.e. <code class="highlighter-rouge">fr_**</code> -&gt; <code class="highlighter-rouge">fr</code> )</li>
+  <li>If the user’s browser language is not in the supported list, but is a variation of a supported language, this language will be used (e.g. <code class="highlighter-rouge">fr_**</code> -&gt; <code class="highlighter-rouge">fr</code> )</li>
   <li>The <code class="highlighter-rouge">en</code> language will be used.</li>
 </ul>
 
@@ -5211,7 +5211,7 @@ Configuring another language will additionally fetch and use that language. Any 
 
 <p>To use additional languages (other than <code class="highlighter-rouge">en</code>):</p>
 <ul>
-  <li>Import the <code class="highlighter-rouge">Assets.js</code> module of each components/icons library you’re using (in general, each library that provides languages assets), 
+  <li>Import the <code class="highlighter-rouge">Assets.js</code> module of each component/icon library you’re using (in general, each library that provides languages assets), 
 for example:</li>
 </ul>
 
@@ -5244,21 +5244,21 @@ for example:</li>
   <li>When <code class="highlighter-rouge">none</code>, all animations are completely suspended.</li>
 </ul>
 
-<p><em>Please, note that each component determines which animations would run for a specific mode.</em></p>
+<p><strong>Note:</strong> Please, note that each component determines which animations would run for a specific mode.</p>
 
 <h3 id="calendartype">calendarType</h3>
 <p><a name="calendarType"></a></p>
 
-<p>This setting determines the default calendar type for all date-related components such as <code class="highlighter-rouge">ui5-date-picker</code>, <code class="highlighter-rouge">ui5-datetime-picker</code>, etc…</p>
+<p>This setting determines the default calendar type for all date-related components such as <code class="highlighter-rouge">ui5-date-picker</code>, <code class="highlighter-rouge">ui5-datetime-picker</code>, etc.</p>
 
 <p>You can always override the calendar type for each instance via component-specific properties. See the documentation of each component for details.</p>
 
 <p>The <code class="highlighter-rouge">Gregorian</code> calendar type is built in all date-related UI5 Web Components.</p>
 
-<p>Calendar types are opt-in features, see <a href="./5.%20Basic%20-%20Using%20features.md">Using features</a> for details.
+<p>Calendar types are opt-in features, see <a href="./5.%20Basic%20-%20Using%20features.md">Using Features</a> for details.
 Setting another calendar type via configuration or component properties requires that the respective calendar type be explicitly imported.</p>
 
-<p>Example</p>
+<p>Example:</p>
 
 <ul>
   <li>Make sure you’ve bundled the required calendar type:</li>
@@ -5281,6 +5281,7 @@ Setting another calendar type via configuration or component properties requires
 <p>Now all date-related components will use the <code class="highlighter-rouge">Islamic</code> calendar type by default.</p>
 
 <p><a name="noConflict"></a></p>
+
 <h3 id="noconflict">noConflict</h3>
 
 <p>By default, UI5 Web Components fire all custom events twice - once with the documented name (e.g. <code class="highlighter-rouge">change</code>), and once more with a <code class="highlighter-rouge">ui5-</code> prefix (e.g. <code class="highlighter-rouge">ui5-change</code>).
@@ -5298,7 +5299,7 @@ The format of this object is as follows:
    </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"selection-change"</span><span class="p">,</span><span class="w"> </span><span class="s2">"header-click"</span><span class="p">]</span><span class="w">
  </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
-    <p><em>Please, note that other keys may be added to this object in the future for the purpose of name conflict resolution.</em></p>
+    <p><strong>Note:</strong> Please, note that other keys may be added to this object in the future for the purpose of name conflict resolution.</p>
   </li>
 </ul>
 
@@ -5325,7 +5326,7 @@ free for use by other UI components and libraries without name collision.</p>
     <tr>
       <th>Setting</th>
       <th>Values</th>
-      <th>Default value</th>
+      <th>Default Value</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -5339,7 +5340,7 @@ free for use by other UI components and libraries without name collision.</p>
   </tbody>
 </table>
 
-<p><em>Currently only <code class="highlighter-rouge">firstDayOfWeek</code> is supported. More settings may be added in the future.</em></p>
+<p><strong>Note:</strong> Currently, only <code class="highlighter-rouge">firstDayOfWeek</code> is supported. More settings may be added in the future.</p>
 
 <h3 id="fetchdefaultlanguage">fetchDefaultLanguage</h3>
 <p><a name="fetchDefaultLanguage"></a></p>
@@ -5416,7 +5417,7 @@ However, reading/modifying the configuration reliably can only be done programma
 </code></pre></div></div>
 
 <ul>
-  <li><code class="highlighter-rouge">calendarType</code> - can only be set initially in the configuration script</li>
+  <li><code class="highlighter-rouge">calendarType</code> - can only be set initially in the configuration script.</li>
 </ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getCalendarType</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CalendarType.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5430,7 +5431,7 @@ However, reading/modifying the configuration reliably can only be done programma
 </code></pre></div></div>
 
 <ul>
-  <li><code class="highlighter-rouge">formatSettings</code> - can only be set initially in the configuration script</li>
+  <li><code class="highlighter-rouge">formatSettings</code> - can only be set initially in the configuration script.</li>
 </ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getFirstDayOfWeek</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/FormatSettings.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5443,7 +5444,7 @@ However, reading/modifying the configuration reliably can only be done programma
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getFetchDefaultLanguage</span><span class="p">,</span> <span class="nx">setFetchDefaultLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Next: <a href="02-RTL-and-compact-mode.md">Right-to-left (RTL) and compact mode</a></p>
+<p>Next: <a href="02-RTL-and-compact-mode.md">Right-To-Left (RTL) And Compact Mode</a></p>
 
 
 <footer class="footer-wrapper">
