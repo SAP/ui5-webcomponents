@@ -141,7 +141,6 @@
 	box-shadow: var(--_ui5_slider_handle_box_shadow_focus);
 }
 
-
 .ui5-slider-root:active .ui5-slider-handle, .ui5-slider-handle:active {
 	background: var(--_ui5_slider_handle_hover_background);
 	border: var(--_ui5_slider_handle_active_border);
