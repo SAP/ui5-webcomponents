@@ -1,0 +1,24 @@
+body {
+    background-color: var(--sapBackgroundColor);
+}
+h2 {
+    margin-top: 2rem;
+}
+.block1 {
+    display:inline-block;margin-left:0.5rem;
+}
+.block2rem {
+    width:2rem;display:inline-block;
+}
+.btn {
+    width:1rem;height:1rem;
+}
+.wrapper {
+    width: 200px;border: 1px solid lightgray;padding-top: 0.5rem;margin-top: 0.5rem;
+}
+.smallBlock {
+    width:1rem;display:inline-block
+}
+.marginTop {
+    margin-top:0.5rem;
+}

@@ -1,0 +1,11 @@
+body {
+    background-color: var(--sapBackgroundColor);
+}
+
+ui5-date-picker {
+    width: 100%;
+}
+
+.downThere {
+    position:absolute; top:3000px;
+}
