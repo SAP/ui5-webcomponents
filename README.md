@@ -23,13 +23,13 @@
 ## Where can I see them in action?
 - [Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
-## More resources
+## More Resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
 - [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
-- [Creating a custom theme](./docs/3-customizing/01-theme.md)
-- [Creating custom UI5 Web Components](./docs/5-development/02-custom-UI5-Web-Components.md)
-- [Creating custom UI5 Web Components NPM packages](./docs/5-development/01-custom-UI5-Web-Components-Packages.md)
-- [Micro-frontends and Custom elements scoping](./docs/2-advanced/03-scoping.md)
+- [Customizing with `UI Theme Designer`](./docs/3-customizing/01-theme.md)
+- [Developing Custom UI5 Web Components](./docs/5-development/02-custom-UI5-Web-Components.md)
+- [Creating a Custom UI5 Web Components Package](./docs/5-development/01-custom-UI5-Web-Components-Packages.md)
+- [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/03-scoping.md)
 - [F.A.Q.](./docs/FAQ.md)
 
 ## Related Projects
@@ -43,16 +43,16 @@
 #### 2. How do UI5 Web Components relate to OpenUI5?
 
 UI5 Web Components…
-* …are **not built on top** of UI5, but rather lightweight and independent UI elements
-* …are **not a successor** of UI5, but rather a complementary offering
-* …bring the relevant **UI5 qualities and SAP Fiori UX to the HTML level**, usable with any web framework
+* …are **not built on top** of UI5, but rather lightweight and independent UI elements.
+* …are **not a successor** of UI5, but rather a complementary offering.
+* …bring the relevant **UI5 qualities and SAP Fiori UX to the HTML level**, usable with any web framework.
 
 UI5 Web Components are good for…
-* …web applications which **already use a different web framework**
-* …**static web sites** built without web frameworks, to just add a few interactive UI elements
+* …web applications which **already use a different web framework**.
+* …**static web sites** built without web frameworks, to just add a few interactive UI elements.
 
 UI5 remains what it is: the best choice for…
-* …building complete **enterprise-ready and responsive web applications**
+* …building complete **enterprise-ready and responsive web applications**.
 
 ### UI5 Web Components for React
 
@@ -61,7 +61,7 @@ UI5 Web Components which makes using them in React even more comfortable. The cu
 shortcomings when it comes to handling Custom Elements, namely the binding of `boolean` attributes as well as adding event listeners to custom event names like `selection-change`. With the help of UI5 Web Components for React, you can use the UI5 Web Components in React as if they were native React components. In addition to that, this library is also offering TypeScript definitions for all components, some complex layout components built on top of UI5 Web Components as well as Charting Components.
 
 
-## How to use
+## How to Use
 
 1. Install the NPM module(s) that ship the desired UI5 Web Component(s), for example if you need `ui5-button`:
 
@@ -81,14 +81,14 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	<ui5-button>Hello world!</ui5-button>
 	```
 
-	For more information, see [Importig](./docs/1-getting-started/02-importing-components.md) and [Using](./docs/1-getting-started/03-understanding-components-APIs.md) UI5 Web Components.
+	For more information, see [Importing UI5 Web Components](./docs/1-getting-started/02-importing-components.md) and [Understanding Ui5 Web Components APIs](./docs/1-getting-started/03-understanding-components-APIs.md).
 
 ### Is there a CDN I can use?
 
 No, you are expected to import only the components (or other public APIs) that you are going to use and bundle them along with the rest
 of your application.
 
-## Browser support
+## Browser Support
 
 UI5 Web Components are supported by all major modern browsers.
 
@@ -99,7 +99,7 @@ Firefox | Latest
 Safari | Latest
 Edge | Latest
 
-## Project structure, development and build
+## Project Structure, Development and Build
 
 This section might be of interest to you mainly if you need to run or build the project locally
 
@@ -154,7 +154,7 @@ yarn start:playground
 # open http://localhost:4000/
 ```
 
-*Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)*
+**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:
@@ -168,7 +168,7 @@ Afterwards, you can find the build output in the `dist` folder of the correspond
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## Limitations
-None as of 1.0.0-rc.15
+None as of 1.0.0-rc.15.
 
 ## Known Issues
 No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/SAP/ui5-webcomponents/issues).

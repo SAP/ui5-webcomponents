@@ -13,7 +13,7 @@ from OpenUI5 configuration and resources.
 
 When you import the above module:
 - OpenUI5 configuration takes precedence over UI5 Web Components configuration
-  for all common entities (theme, language, etc...). In addition, changing the theme
+  for all common entities (theme, language, etc.). In addition, changing the theme
   in OpenUI5 will also change the theme in UI5 Web Components.
 - Fonts will not be loaded twice (just once by OpenUI5, and reused).
 - Locale data assets will not be fetched twice (just once by OpenUI5, and reused).
@@ -21,4 +21,4 @@ When you import the above module:
 Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
 
-Next: [Using the framework](05-other-framework-level-APIs.md)
+Next: [Using the Framework](05-other-framework-level-APIs.md)
