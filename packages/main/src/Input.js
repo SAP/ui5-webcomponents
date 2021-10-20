@@ -414,13 +414,13 @@ const metadata = {
 
 		/**
 		 * Fired when the user scrolls the suggestion popover.
-		 *
+		 * 
+		 * This event has restricted usage and shall not be removed.
+		 * 
 		 * @private
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
 		 */
-		"suggestion-scroll": {
-			// This event has restricted usage and shall not be removed.
-		},
+		"suggestion-scroll": {},
 	},
 };
 
