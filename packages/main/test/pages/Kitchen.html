@@ -9,15 +9,6 @@
 
 	<link rel="stylesheet" type="text/css" href="./kitchen-styles.css">
 
-	<style>
-		*:not(:defined) {
-			visibility: hidden;
-		}
-		.body-bg {
-			background-color: var(--sapBackgroundColor);
-		}
-	</style>
-
 	<!-- CUSTOM THEME: my_custom_theme
 	<link rel="stylesheet" type="text/css" href="./css/css_variables.css">
 	 -->
@@ -90,7 +81,7 @@
 
 		<section class="row">
 			<ui5-card
-				style="flex-basis:20%;">
+				class="flexBasis20">
 				<ui5-card-header slot="header" title-text="Wolly King" subtitle-text="Back-end developer" status="1 of 3">
 					<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				</ui5-card-header>
@@ -102,7 +93,7 @@
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
-				style="flex-basis:20%;">
+				class="flexBasis20">
 				<ui5-card-header slot="header" title-text="Lee, Y.Song" subtitle-text="Full-stack developer" status="2 of 3">
 					<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				</ui5-card-header>
@@ -114,7 +105,7 @@
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
-				style="flex-basis:20%;">
+				class="flexBasis20">
 				<ui5-card-header slot="header" title-text="Anna P." subtitle-text="Visioner">
 					<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				</ui5-card-header>
@@ -125,7 +116,7 @@
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
-				style="flex-basis:20%;">
+				class="flexBasis20">
 				<ui5-card-header slot="header" title-text="Medved I." subtitle-text="Enthusiast" status="3 of 3">
 					<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				</ui5-card-header>
@@ -138,14 +129,14 @@
 			</ui5-card>
 
 			<ui5-card
-				style="flex-basis:20%;">
+				class="flexBasis20">
 				<ui5-card-header slot="header" title-text="Goerge M." subtitle-text="Visioner">
 					<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				</ui5-card-header>
 			</ui5-card>
 
 			<ui5-card
-				style="flex-basis:20%;">
+				class="flexBasis20">
 				<ui5-card-header slot="header" title-text="Linda M." subtitle-text="Enthusiast" status="1 of 3">
 					<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				</ui5-card-header>
@@ -183,7 +174,7 @@
 			<ui5-toggle-button pressed design="Negative" icon="menu">Menu</ui5-toggle-button>
 			<ui5-button id="openPopoverButton">Open Popover</ui5-button>
 			<ui5-popover header-text="Popover" id="hello-popover">
-				<div style="padding: 1rem;text-align: center;">
+				<div class="paddedAndCentered">
 					<ui5-title level="H2">Hello World!</ui5-title>
 				</div>
 				<ui5-textarea
@@ -191,15 +182,15 @@
 					max-length="2"
 					show-exceeded-text>
 				</ui5-textarea>
-				<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
-					<div style="flex: 1;"></div>
+				<div slot="footer" class="dialogFooter">
+					<div class="flex1"></div>
 					<ui5-button id="closePopoverButton">Close</ui5-button>
 				</div>
 			</ui5-popover>
 
 			<ui5-button id="openDialogButton">Open Dialog</ui5-button>
 			<ui5-dialog id="hello-dialog" header-text="Dialog">
-				<div style="padding: 1rem;text-align: center;">
+				<div class="paddedAndCentered">
 					<ui5-title level="H2">Hello World!</ui5-title>
 				</div>
 				<ui5-textarea
@@ -207,14 +198,14 @@
 					max-length="2"
 					show-exceeded-text>
 				</ui5-textarea>
-				<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
-					<div style="flex: 1;"></div>
+				<div slot="footer" class="dialogFooter">
+					<div class="flex1"></div>
 					<ui5-button id="closeDialogButton">Close</ui5-button>
 				</div>
 			</ui5-dialog>
 			<ui5-button id="openDialogStretched">Open Dialog Stretched</ui5-button>
 			<ui5-dialog id="hello-dialog2" header-text="Dialog" stretch>
-				<div style="padding: 1rem;text-align: center;">
+				<div class="paddedAndCentered">
 					<ui5-title level="H2">Hello World!</ui5-title>
 				</div>
 				<ui5-textarea
@@ -222,8 +213,8 @@
 					max-length="2"
 					show-exceeded-text>
 				</ui5-textarea>
-				<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
-					<div style="flex: 1;"></div>
+				<div slot="footer" class="dialogFooter">
+					<div class="flex1"></div>
 					<ui5-button id="closeDialogStretched">Close</ui5-button>
 				</div>
 			</ui5-dialog>
@@ -312,13 +303,13 @@
 		</section>
 
 		<section class="row">
-			<div style="display:flex;flex-direction:column;width:40%;">
+			<div class="flexCol40">
 				<ui5-label required for="user">user:</ui5-label>
 				<ui5-input id="user" value-state="Warning" show-suggestions placeholder="username ...">
 					<ui5-icon id="user-icon" slot="icon" name="message-warning"></ui5-icon>
 				</ui5-input>
 			</div>
-			<div style="display:flex;flex-direction:column;width:40%;">
+			<div class="flexCol40">
 				<ui5-label required for="pass">pass:</ui5-label>
 				<ui5-input id="pass" value-state="Error" type="Password" placeholder="pwd ...">
 						<ui5-icon slot="icon" name="message-error"></ui5-icon>
@@ -326,23 +317,23 @@
 			</div>
 		</section>
 
-		<section style="display: flex;flex-direction: row; justify-content: space-around">
-			<ui5-date-picker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
-			<ui5-date-picker style="width:40%" id="myDatepicker1"></ui5-date-picker>
+		<section class="spaceAround">
+			<ui5-date-picker class="width40" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
+			<ui5-date-picker class="width40" id="myDatepicker1"></ui5-date-picker>
 		</section>
 
-		<section style="display: flex;flex-direction: row; justify-content: space-around">
-			<ui5-datetime-picker style="width:40%" id="myDateTimepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datetime-picker>
-			<ui5-datetime-picker style="width:40%" id="myDateTimepicker1"></ui5-datetime-picker>
+		<section class="spaceAround">
+			<ui5-datetime-picker class="width40" id="myDateTimepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datetime-picker>
+			<ui5-datetime-picker class="width40" id="myDateTimepicker1"></ui5-datetime-picker>
 		</section>
 
-		<section style="display: flex;flex-direction: row; justify-content: space-around">
+		<section class="spaceAround">
 			<ui5-duration-picker value="05:10:02" seconds-step="5" id="duration-picker6"></ui5-duration-picker>
 			<ui5-time-picker></ui5-time-picker>
 		</section>
 
 		<section class="row">
-			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item1">
+			<ui5-tabcontainer class="width80" show-overflow selected-key="item1">
 				<ui5-tab key="item1" text="Products" icon="product" semantic-color="Negative">
 					<ui5-toggle-button pressed design="Positive">Cucumber</ui5-toggle-button>
 					<ui5-button>Banana</ui5-button>
@@ -368,7 +359,7 @@
 				</ui5-tab>
 			</ui5-tabcontainer>
 
-			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item2">
+			<ui5-tabcontainer class="width80" show-overflow selected-key="item2">
 					<ui5-tab key="item1" text="Products">
 						<ui5-toggle-button pressed design="Positive">Cucumber</ui5-toggle-button>
 						<ui5-button>Banana</ui5-button>
@@ -393,8 +384,8 @@
 				</ui5-tabcontainer>
 
 
-				<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" style="margin-top: 5rem;">
-					<div slot="header" style="margin: .25rem; display: flex; align-items: center; justify-content: space-around;">
+				<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" class="tree">
+					<div slot="header" class="treeHeader">
 						<ui5-title>My tree</ui5-title>
 						<div class="spacer"></div>
 						<ui5-select id="modeSelect">
@@ -442,14 +433,14 @@
 			<ui5-textarea id="myTextarea1"
 				placeholder="Type some text"
 				max-length="2"
-				style="flex: 0 0 400px"
+				class="flex400"
 				show-exceeded-text
 			>
 			</ui5-textarea>
 			<ui5-textarea id="myTextarea2"
 				placeholder="Type some text"
 				max-length="5"
-				style="flex: 0 0 400px"
+				class="flex400"
 				show-exceeded-text
 			>
 			</ui5-textarea>
@@ -457,7 +448,7 @@
 				id="myTextarea3"
 				placeholder="Type some text"
 				max-length="10"
-				style="flex: 0 0 400px"
+				class="flex400"
 				show-exceeded-text
 			>
 			</ui5-textarea>
@@ -466,19 +457,19 @@
 		<section class="row">
 			<ui5-list header-text="Products" mode="SingleSelectEnd">
 				<ui5-li-custom>
-					<div style="width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between">
+					<div class="customLi">
 						<span>Laptop HP 2GB RAM Dual-core</span>
 						<ui5-link>Go to SAP</ui5-link>
 					</div>
 				</ui5-li-custom>
 				<ui5-li-custom>
-					<div style="width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between">
+					<div class="customLi">
 						<span>Laptop HP 2GB RAM Dual-core</span>
 						<ui5-link>Go to SAP</ui5-link>
 					</div>
 				</ui5-li-custom>
 				<ui5-li-custom>
-					<div style="width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between">
+					<div class="customLi">
 						<span>Laptop HP 2GB RAM Dual-core</span>
 						<ui5-link>Go to SAP</ui5-link>
 					</div>
@@ -487,19 +478,19 @@
 
 			<ui5-list header-text="Products" mode="MultiSelect">
 					<ui5-li-custom>
-						<div style="width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between">
+						<div class="customLi2">
 							<span>Laptop HP 2GB RAM Dual-core</span>
 							<ui5-link>Go to SAP</ui5-link>
 						</div>
 					</ui5-li-custom>
 					<ui5-li-custom>
-						<div style="width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between">
+						<div class="customLi2">
 							<span>Laptop HP 2GB RAM Dual-core</span>
 							<ui5-link>Go to SAP</ui5-link>
 						</div>
 					</ui5-li-custom>
 					<ui5-li-custom>
-						<div style="width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between">
+						<div class="customLi2">
 							<span>Laptop HP 2GB RAM Dual-core</span>
 							<ui5-link>Go to SAP</ui5-link>
 						</div>
@@ -508,21 +499,21 @@
 		</section>
 
 		<section class="row">
-			<ui5-table style=" display: inline-block; width: 100%;">
+			<ui5-table class="table">
 				<ui5-table-column demand-popin min-width="600px" popin-text="Component" slot="columns">
-					<span style="line-height: 3rem" >Component</span>
+					<span class="tableColumn" >Component</span>
 				</ui5-table-column>
 				<ui5-table-column demand-popin min-width="1000px" popin-text="Accessibility" slot="columns">
-					<span style="line-height: 3rem" >Accessibility</span>
+					<span class="tableColumn" >Accessibility</span>
 				</ui5-table-column>
 				<ui5-table-column demand-popin min-width="800px" popin-text="Text Coverage" slot="columns">
-					<span style="line-height: 3rem">Test Coverage</span>
+					<span class="tableColumn">Test Coverage</span>
 				</ui5-table-column>
 				<ui5-table-column demand-popin min-width="600px" popin-text="RTL" slot="columns">
-					<span style="line-height: 3rem">RTL</span>
+					<span class="tableColumn">RTL</span>
 				</ui5-table-column>
 				<ui5-table-column demand-popin min-width="600px" popin-text="i18n" slot="columns">
-					<span style="line-height: 3rem">i18n</span>
+					<span class="tableColumn">i18n</span>
 				</ui5-table-column>
 
 				<ui5-table-row >

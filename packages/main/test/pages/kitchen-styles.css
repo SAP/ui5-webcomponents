@@ -32,7 +32,7 @@ section {
 	z-index: 1;
 	top: 0;
 	left: 0;
-	overflow-x: hidden;	
+	overflow-x: hidden;
 	transition: 0.5s;
 	margin-top: 3rem;
 	box-shadow: 6px 0 8px -5px rgba(31, 73, 125, 0.8);
@@ -115,4 +115,60 @@ section {
 .icon-red:hover {
 	color: #fff;
 	background-color: #a20000;
+}
+
+
+*:not(:defined) {
+    visibility: hidden;
+}
+.body-bg {
+    background-color: var(--sapBackgroundColor);
+}
+.flexBasis20 {
+    flex-basis: 20%;
+}
+.paddedAndCentered {
+    padding: 1rem;
+    text-align: center;
+}
+.dialogFooter {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+}
+.flex1 {
+    flex: 1;
+}
+.flexCol40 {
+    display:flex;flex-direction:column;width:40%;
+}
+.spaceAround {
+    display: flex;flex-direction: row; justify-content: space-around;
+}
+.width40 {
+    width: 40%;
+}
+.width80 {
+    width: 80%;
+}
+.tree {
+    margin-top: 5rem;
+}
+.treeHeader {
+    margin: .25rem; display: flex; align-items: center; justify-content: space-around;
+}
+.flex400 {
+    flex: 0 0 400px;
+}
+.customLi {
+    width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between;
+}
+.customLi2 {
+    width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between;
+}
+.table {
+    display: inline-block; width: 100%;
+}
+.tableColumn {
+    line-height: 3rem;
 }
