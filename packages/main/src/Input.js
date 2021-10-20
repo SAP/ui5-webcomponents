@@ -415,17 +415,11 @@ const metadata = {
 		/**
 		 * Fired when the user scrolls the suggestion popover.
 		 *
+		 * @private
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
-		 * @param {Integer} scrollTop The current scroll position.
-		 * @param {HTMLElement} scrollContainer The scroll container.
-		 * @public
-		 * @since 1.0.0-rc.8
 		 */
 		"suggestion-scroll": {
-			detail: {
-				scrollTop: { type: Integer },
-				scrollContainer: { type: HTMLElement },
-			},
+			// This event has restricted usage and shall not be removed.
 		},
 	},
 };
