@@ -148,15 +148,24 @@
 	border: var(--_ui5_slider_handle_active_border);
 }
 
-.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, .ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end,
-.ui5-slider-root:active  .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, .ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end,
-.ui5-slider-handle--start:active, .ui5-slider-handle--end:active  {
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, 
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end,
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, 
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end,
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus, 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus,
+.ui5-slider-handle--start:active, .ui5-slider-handle--end:active {
 	background: var(--_ui5_range_slider_handle_hover_background);
+	
 }
 
-.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, .ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end:after,
-.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, .ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end:after,
-.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active:after  {
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, 
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end:after,
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, 
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end:after,
+.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active:after,
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus:after, 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus:after {
 	display: none;
 }
 
