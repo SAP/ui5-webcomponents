@@ -8,7 +8,7 @@ describe("Theming works", () => {
 	it("Tests that the parameters for the default theme are embedded on boot", async () => {
 
 		const res = await browser.executeAsync(done => {
-			const style = document.head.querySelector("ui5-shared-resources").ManagedStyles.allAdopted.get('data-ui5-theme-properties|@ui5/webcomponents-base-test').cssRules[0].cssText;
+			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
 			done(style && style.includes("--var1: red")); // see test/assets/Themes.js
 		});
 
@@ -22,7 +22,7 @@ describe("Theming works", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			await config.setTheme(newTheme);
 
-			const style = document.head.querySelector("ui5-shared-resources").ManagedStyles.allAdopted.get('data-ui5-theme-properties|@ui5/webcomponents-base-test').cssRules[0].cssText;
+			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
 			const varsFound = style && style.includes("--var1: orange"); // see test/assets/Themes.js
 			done(varsFound);
 		}, newTheme);
