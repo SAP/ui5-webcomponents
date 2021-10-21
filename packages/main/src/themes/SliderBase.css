@@ -106,6 +106,7 @@
 }
 
 .ui5-slider-handle:after {
+	display: var(--_ui5_slider_handle_icon_display);
 	font-family: var(--_ui5_slider_handle_font_family);
 	font-size: 14px;
 	font-weight: bold;
@@ -147,10 +148,16 @@
 	border: var(--_ui5_slider_handle_active_border);
 }
 
-.ui5-slider-root:hover .ui5-slider-handle--start, .ui5-slider-root:hover .ui5-slider-handle--end,
-.ui5-slider-root:active .ui5-slider-handle--start, .ui5-slider-root:active .ui5-slider-handle--end,
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, .ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end,
+.ui5-slider-root:active  .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, .ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end,
 .ui5-slider-handle--start:active, .ui5-slider-handle--end:active  {
 	background: var(--_ui5_range_slider_handle_hover_background);
+}
+
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, .ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end:after,
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, .ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end:after,
+.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active:after  {
+	display: none;
 }
 
 .ui5-slider-root:focus:hover .ui5-slider-handle, .ui5-slider-handle:focus:hover {

@@ -7,6 +7,7 @@
 	--_ui5_slider_outer_height: 1.6875rem;
 	--_ui5_slider_progress_border_radius: 0.25rem;
 	--_ui5_slider_progress_background: var(--sapActiveColor);
+	--_ui5_slider_handle_icon_display: none;
 	--_ui5_slider_handle_height: 1.625rem;
 	--_ui5_slider_handle_width: 1.625rem;
 	--_ui5_slider_handle_border: solid 0.125rem var(--sapField_BorderColor);
@@ -14,7 +15,7 @@
 	--_ui5_slider_handle_box_shadow: none;
 	--_ui5_slider_handle_box_shadow_focus: none;
 	--_ui5_slider_handle_background: var(--sapButton_Background);
-	--_ui5_range_slider_handle_background: rgba(var(--sapButton_Background), 0.25);
+	--_ui5_range_slider_handle_background: #FFF;
 	--_ui5_slider_handle_top: -0.825rem;
 	--_ui5_slider_handle_margin_left: -0.9725rem;
 	--_ui5_slider_handle_hover_background: var(--sapButton_Hover_Background);
