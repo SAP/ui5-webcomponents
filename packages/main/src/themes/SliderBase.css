@@ -159,13 +159,13 @@
 	
 }
 
-.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, 
-.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end:after,
-.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, 
-.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end:after,
-.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active:after,
-.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus:after, 
-.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus:after {
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start [slider-icon],
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end [slider-icon],
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start [slider-icon],
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end [slider-icon],
+.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active [slider-icon],
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus [slider-icon], 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus [slider-icon] {
 	display: none;
 }
 

@@ -10,7 +10,6 @@ import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";
-import Icon from "./Icon.js";
 
 /**
  * @public
