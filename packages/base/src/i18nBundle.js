@@ -59,7 +59,7 @@ const getI18nBundleSync = packageName => {
  * @public
  * @param customGet the function to use instead of the standard getI18nBundle implementation
  */
-const registerCustomGetI18nBundle = customGet => {
+const registerCustomI18nBundleGetter = customGet => {
 	customGetI18nBundle = customGet;
 };
 
@@ -82,5 +82,5 @@ const getI18nBundle = async packageName => {
 export {
 	registerI18nLoader,
 	getI18nBundle,
-	registerCustomGetI18nBundle,
+	registerCustomI18nBundleGetter,
 };
