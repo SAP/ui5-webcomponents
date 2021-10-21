@@ -17,7 +17,34 @@ registerCustomI18nBundleGetter(async packageName => {
 	}
 	return {
 		getText: (keyObj, ...params) => {
-			return bundle.get(keyObj.key, params, keyObj.defaultText);
+			const key = typeof keyObj === "string" ? keyObj : keyObj.key;
+			return bundle.get(key, params, keyObj.defaultText);
 		},
 	};
 });
+
+/*
+// Example with the i18next library
+
+import i18next from "i18next";
+registerCustomI18nBundleGetter(async packageName => {
+	await i18next.init({
+		lng: "en", // pass the desired language
+		debug: true,
+		resources: { // potentially use packageName to determine which translations to load - hardcoded for this example
+			en: {
+				translation: {
+					"key": "hello world",
+				},
+			},
+		},
+	});
+	return {
+		getText: (keyObj, ...params) => {
+			let key = typeof keyObj === "string" ? keyObj : keyObj.key;
+			key = key.replace(/{{/g, "{").replace(/}}/g, "}"); // the key will be with {{0}}, {{1}}, etc. placeholders
+			return i18next.t(key); // also pass the parameters, with keys "0", "1", etc.
+		},
+	};
+});
+*/
