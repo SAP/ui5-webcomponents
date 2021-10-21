@@ -1,9 +1,5 @@
-commit 3a0abee56e5508920864be3974ce7d5150553954
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Thu Oct 21 11:27:45 2021 +0300
+commit 56f366f8939b272cb8e0cd98afb2b0d3efbe3de9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Oct 21 12:48:13 2021 +0300
 
-    refactor(ui5-input): make suggestion-scroll event protected (#4141)
-    
-    The usage of suggestion-scroll is unclear and there is no UX pattern where such an event is needed. However, in order to keep the event compatible with frameworks, we've decided on making it protected.
-    
-    BREAKING CHANGE: The "suggestion-scroll" event has been removed as there is no such UX specified.
+    feat(framework): allow using a custom i18n library (#4119)
