@@ -2,6 +2,7 @@ import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/confi
 // setAssetsPath("/my-resources/");
 
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
+// import "./customI18n.js";
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
