@@ -11,4 +11,4 @@ wdio.conf.js
 postcss.config.js
 package-scripts.js
 .eslintrc.js
-src/renderer/
+src/renderer/directives/style-map.js
