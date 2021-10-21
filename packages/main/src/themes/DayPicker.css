@@ -42,6 +42,10 @@
 	color: var(--_ui5_daypicker_weekname_color);
 }
 
+.ui5-dp-weeks-row {
+    display: flex;
+}
+
 .ui5-dp-content {
 	display: flex;
 	flex-basis: 87.5%;
