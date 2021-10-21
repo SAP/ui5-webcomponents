@@ -1,7 +1,7 @@
 /**
  * CSS font face used for the texts provided by SAP.
  */
-import createStyleInHead from "./util/createStyleInHead.js";
+import { hasStyle, createStyle } from "./ManagedStyles.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 /* CDN Locations */
@@ -26,7 +26,7 @@ const fontFaceCSS = `
 			url(${font72RegularWoff2}) format("woff2"),
 			url(${font72RegularWoff}) format("woff");
 	}
-	
+
 	@font-face {
 		font-family: "72full";
 		font-style: normal;
@@ -34,9 +34,9 @@ const fontFaceCSS = `
 		src: local('72-full'),
 			url(${font72RegularFullWoff2}) format("woff2"),
 			url(${font72RegularFullWoff}) format("woff");
-		
+
 	}
-	
+
 	@font-face {
 		font-family: "72";
 		font-style: normal;
@@ -45,7 +45,7 @@ const fontFaceCSS = `
 			url(${font72BoldWoff2}) format("woff2"),
 			url(${font72BoldWoff}) format("woff");
 	}
-	
+
 	@font-face {
 		font-family: "72full";
 		font-style: normal;
@@ -104,14 +104,14 @@ const insertFontFace = () => {
 };
 
 const insertMainFontFace = () => {
-	if (!document.querySelector(`head>style[data-ui5-font-face]`)) {
-		createStyleInHead(fontFaceCSS, { "data-ui5-font-face": "" });
+	if (!hasStyle("data-ui5-font-face")) {
+		createStyle(fontFaceCSS, "data-ui5-font-face");
 	}
 };
 
 const insertOverrideFontFace = () => {
-	if (!document.querySelector(`head>style[data-ui5-font-face-override]`)) {
-		createStyleInHead(overrideFontFaceCSS, { "data-ui5-font-face-override": "" });
+	if (!hasStyle("data-ui5-font-face-override")) {
+		createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
 	}
 };
 
