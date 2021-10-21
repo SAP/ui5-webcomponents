@@ -19,7 +19,7 @@ const createStyle = (content, name, value = "") => {
 
 const updateStyle = (content, name, value = "") => {
 	if (document.adoptedStyleSheets) {
-		document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value)).replaceSync(content);
+		document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value)).replaceSync(content || "");
 	} else {
 		document.querySelector(`head>style[${name}="${value}"]`).textContent = content || "";
 	}
