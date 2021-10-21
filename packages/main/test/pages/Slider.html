@@ -80,7 +80,7 @@
 		<script>
 			const eventTargetSlider = document.getElementById("test-slider");
 			const eventResultSlider = document.getElementById("test-result-slider");
-		
+
 			eventTargetSlider.addEventListener("ui5-input", () => {
 				eventResultSlider.setAttribute("value", parseInt(eventResultSlider.getAttribute("value")) + 1);
 			});

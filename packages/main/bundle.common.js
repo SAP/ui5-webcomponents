@@ -1,5 +1,5 @@
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
-
+// import "./customI18n.js";
 
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
