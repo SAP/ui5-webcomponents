@@ -1,8 +1,8 @@
-# Using additional features
+# Using Additional Features
 
 *Several UI5 Web Components packages offer **additional features**. This section explains what these are and how to use them.*
 
-## What are additional features
+## What Are Additional Features
 
 These are features that **logically belong** to a component, but are not needed for the component's most common use cases, thus not part of the component's code by default.
 
@@ -10,7 +10,7 @@ The goal of features is to keep the components' code base minimal and allow user
 
 If you intend to use a component's additional feature, your app must import it explicitly.
 
-## Importing additional features
+## Importing Additional Features
 
 Import the feature file from the respective NPM package:
 
@@ -36,4 +36,4 @@ For example:
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
 ```
 
-Next: [Wrapping up](07-wrapping-up.md)
+Next: [Wrapping Up](07-wrapping-up.md)

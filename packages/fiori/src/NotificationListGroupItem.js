@@ -1,4 +1,3 @@
-import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -167,41 +166,37 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		];
 	}
 
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	get itemsCount() {
 		return this.items.length;
 	}
 
 	get overflowBtnAccessibleName() {
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
 	get closeBtnAccessibleName() {
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE);
 	}
 
 	get toggleBtnAccessibleName() {
 		if (this.collapsed) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
 		}
 
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
 	}
 
 	get priorityText() {
 		if (this.priority === Priority.High) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Medium) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Low) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
 		}
 
 		return "";
@@ -213,18 +208,18 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get readText() {
 		if (this.read) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ);
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ);
 		}
 
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 	}
 
 	get groupText() {
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
 	}
 
 	get counterText() {
-		const text = this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
+		const text = NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
 		return this.showCounter ? `${text} ${this.itemsCount}` : "";
 	}
 

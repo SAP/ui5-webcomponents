@@ -4,7 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -147,7 +147,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	async onBeforeRendering() {
@@ -273,7 +272,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
-		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
+		return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
 	}
 
 	get showNMore() {
@@ -285,11 +284,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get tokenizerLabel() {
-		return this.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
 	}
 
 	get morePopoverTitle() {
-		return this.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
 	}
 
 	get overflownTokens() {
@@ -367,14 +366,14 @@ class Tokenizer extends UI5Element {
 		const iTokenCount = this._getTokens().length;
 
 		if (iTokenCount === 0) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
 		}
 
 		if (iTokenCount === 1) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
 		}
 
-		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
 	/**
@@ -399,7 +398,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Tokenizer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	async getPopover() {

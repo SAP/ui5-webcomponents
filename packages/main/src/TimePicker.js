@@ -157,7 +157,7 @@ class TimePicker extends TimePickerBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 }
 

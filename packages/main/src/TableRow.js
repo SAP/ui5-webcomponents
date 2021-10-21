@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -168,12 +168,6 @@ class TableRow extends UI5Element {
 
 	static get template() {
 		return TableRowTemplate;
-	}
-
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onmouseup() {
@@ -355,7 +349,7 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelRowSelection() {
-		return this.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
+		return TableRow.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
 	}
 
 	get isSingleSelect() {
@@ -385,7 +379,7 @@ class TableRow extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
