@@ -418,8 +418,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
 		 * @param {Integer} scrollTop The current scroll position.
 		 * @param {HTMLElement} scrollContainer The scroll container.
-		 * @private
-		 * @deprecated - This event has restricted usage and may be removed in future versions.
+		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
 		"suggestion-scroll": {
