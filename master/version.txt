@@ -1,89 +1,9 @@
-commit 3af88bc690c0bae4b6e7fa58c9d250e58e18d70e
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Wed Oct 20 13:50:40 2021 +0300
+commit 3a0abee56e5508920864be3974ce7d5150553954
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Thu Oct 21 11:27:45 2021 +0300
 
-    docs: UA review  (#4134)
+    refactor(ui5-input): make suggestion-scroll event protected (#4141)
     
-    * Update 01-first-steps.md
+    The usage of suggestion-scroll is unclear and there is no UX pattern where such an event is needed. However, in order to keep the event compatible with frameworks, we've decided on making it protected.
     
-    * Update 02-importing-components.md
-    
-    * Update 03-understanding-components-APIs.md
-    
-    * Update 02-importing-components.md
-    
-    * Update 04-using-icons.md
-    
-    * Update 05-using-assets.md
-    
-    * Update 06-using-features.md
-    
-    * Update 07-wrapping-up.md
-    
-    * Update README.md
-    
-    * Update README.md
-    
-    * Update 01-configuration.md
-    
-    * Update 02-RTL-and-compact-mode.md
-    
-    * Update 02-RTL-and-compact-mode.md
-    
-    * Update 04-OpenUI5-integration.md
-    
-    * Update 05-other-framework-level-APIs.md
-    
-    * Update README.md
-    
-    * Update 01-theme.md
-    
-    * Update 02-fonts.md
-    
-    * Update README.md
-    
-    * Update 01-theme.md
-    
-    * Update 03-scoping.md
-    
-    * Update README.md
-    
-    * Update 01-React.md
-    
-    * Update 02-Angular.md
-    
-    * Update 03-Vue.md
-    
-    * Update 01-custom-UI5-Web-Components-Packages.md
-    
-    * Update 01-first-steps.md
-    
-    * Update 02-importing-components.md
-    
-    * Update 01-configuration.md
-    
-    * Update 02-fonts.md
-    
-    * Update 02-custom-UI5-Web-Components.md
-    
-    * Update 03-understanding-components-metadata.md
-    
-    * Update 04-testing-UI5-Web-Components.md
-    
-    * Update README.md
-    
-    * Update 01-development-workflow.md
-    
-    * Update 03-playground-app.md
-    
-    * Update 01-development-workflow.md
-    
-    * Update FAQ.md
-    
-    * Update 01-development-workflow.md
-    
-    * Update README.md
-    
-    * Update 04-using-icons.md
-    
-    * Update 01-development-workflow.md
+    BREAKING CHANGE: The "suggestion-scroll" event has been removed as there is no such UX specified.
