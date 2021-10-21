@@ -644,7 +644,7 @@ class ComboBox extends UI5Element {
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
-		this._applyAtomicValueAndSelection(item, "", true);
+		this._applyAtomicValueAndSelection(item, this._userTypedValue, true);
 
 		if ((item && !item.selected)) {
 			this.fireEvent("selection-change", {
@@ -696,6 +696,10 @@ class ComboBox extends UI5Element {
 
 		indexOfItem = !isOpen && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
 		this._handleItemNavigation(event, --indexOfItem, false /* isForward */);
+	}
+
+	_keyup(event) {
+		this._userTypedValue = this.value.substring(0, this.inner.selectionStart);
 	}
 
 	_keydown(event) {
