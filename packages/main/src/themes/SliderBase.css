@@ -105,16 +105,12 @@
 	width: var(--_ui5_slider_handle_width);
 }
 
-.ui5-slider-handle:after {
+[slider-icon] {
 	display: var(--_ui5_slider_handle_icon_display);
-	font-family: var(--_ui5_slider_handle_font_family);
-	font-size: 14px;
-	font-weight: bold;
-	content: var(--_ui5_slider_handle_icon);
 	color: #2d8ae6;
 	position: relative;
 	top: 1px;
-	left: 9px;
+	left: 8px;
 	vertical-align: middle;
 }
 
