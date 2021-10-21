@@ -60,7 +60,7 @@ const fontFaceCSS = `
 
 	@font-face {
 		font-family: "72Black";
-		font-style: normal;
+		font-style: bold;
 		font-weight: 900;
 		src: local('72Black'),
 			url(${font72BlackWoff2}) format("woff2"),
