@@ -16,7 +16,7 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
@@ -415,7 +415,6 @@ class MultiComboBox extends UI5Element {
 		this._valueBeforeOpen = "";
 		this._deleting = false;
 		this._validationTimeout = null;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
@@ -999,10 +998,10 @@ class MultiComboBox extends UI5Element {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Error_Selection": this.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
-			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": MultiComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Error_Selection": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
+			"Warning": MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1017,15 +1016,15 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return MultiComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(SELECT_OPTIONS);
+		return MultiComboBox.i18nBundle.getText(SELECT_OPTIONS);
 	}
 
 	get _dialogOkButton() {
-		return this.i18nBundle.getText(MULTICOMBOBOX_DIALOG_OK_BUTTON);
+		return MultiComboBox.i18nBundle.getText(MULTICOMBOBOX_DIALOG_OK_BUTTON);
 	}
 
 	get _tokenizerExpanded() {
@@ -1058,7 +1057,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		MultiComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

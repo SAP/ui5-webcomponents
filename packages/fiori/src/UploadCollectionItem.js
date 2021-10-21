@@ -1,4 +1,4 @@
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
@@ -274,12 +274,10 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
-	}
-
-	constructor() {
-		super();
-		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		[UploadCollectionItem.i18nFioriBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents-fiori"),
+			super.onDefine(),
+		]);
 	}
 
 	async _initInputField() {
@@ -443,11 +441,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _renameBtnText() {
-		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
 	}
 
 	get _cancelRenameBtnText() {
-		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
 	}
 
 	get _showProgressIndicator() {
@@ -456,14 +454,14 @@ class UploadCollectionItem extends ListItem {
 
 	get _progressText() {
 		if (this.uploadState === UploadState.Uploading) {
-			return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
+			return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
 		}
 
 		if (this.uploadState === UploadState.Error) {
-			return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
+			return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
 		}
 
-		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
 	}
 
 	get _showRetry() {
@@ -475,15 +473,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _retryButtonTooltip() {
-		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
 	}
 
 	get _terminateButtonTooltip() {
-		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
 	}
 
 	get _editButtonTooltip() {
-		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
 	}
 
 	get valueStateName() {

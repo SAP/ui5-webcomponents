@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
@@ -151,12 +151,11 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ColorPalettePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_respPopover() {
@@ -208,11 +207,11 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	get _colorPaletteTitle() {
-		return this.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE);
+		return ColorPalettePopover.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE);
 	}
 
 	get _cancelButtonLabel() {
-		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
+		return ColorPalettePopover.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 }
 
