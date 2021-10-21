@@ -95,6 +95,12 @@ describe("Card Accessibility", () => {
 		const card = await browser.$("#textCard").shadow$(".ui5-card-root");
 
 		assert.strictEqual(await card.getAttribute("aria-label"), "Card Internships",
-			"The aria-label is correctly when accessibleName is used.");
+			"The aria-label is correct when accessibleName is used.");
+	});
+	it("test accessibleNameRef", async () => {
+		const card = await browser.$("#textCardRef").shadow$(".ui5-card-root");
+
+		assert.strictEqual(await card.getAttribute("aria-label"), "Card I am the content",
+			"The aria-label is correct when accessibleNameRef is used.");
 	});
 });
