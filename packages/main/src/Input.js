@@ -707,9 +707,8 @@ class Input extends UI5Element {
 
 		const areAllValuesEmpty = !this.previousValue && !this.value && !this.lastConfirmedValue;
 		const isInputChanged = this.previousValue !== this.value;
-		const isTheValueAlreadyConfirmed = this.lastConfirmedValue === this.value;
+		const isTheValueAlreadyConfirmed = !!this.lastConfirmedValue && this.lastConfirmedValue === this.value;
 
-		this._changeFired = false;
 		if (!areAllValuesEmpty && isInputChanged !== isTheValueAlreadyConfirmed) {
 			this._handleChange(event);
 		}
