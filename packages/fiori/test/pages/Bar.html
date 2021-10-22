@@ -13,11 +13,7 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-bar {
-			margin: 0.25rem 0;
-		}
-	</style>
+	<link type="text/css" href="styles/Bar.css">
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -33,7 +29,7 @@
 		<ui5-title level="3">Subheader design</ui5-title>
 		<br>
 		<ui5-bar design="Subheader">
-			<div slot="startContent" style="display: flex; align-items: center;">
+			<div slot="startContent" class="bar2auto">
 				<ui5-button>Start Button</ui5-button>
 				<ui5-label>Basic Label</ui5-label>
 			</div>

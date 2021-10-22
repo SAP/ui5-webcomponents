@@ -13,17 +13,7 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		.radio-section {
-			display: flex;
-			flex-direction: column;
-			margin-bottom: 2rem;
-		}
-
-		div {
-			width: 250px;
-		}
-	</style>
+	<link type="text/css" href="styles/RadioButton.css">
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -95,7 +85,7 @@
 		<ui5-radio-button id="rb4" disabled text="Option D"></ui5-radio-button>
 		<ui5-radio-button id="truncatingRb" text="Long long long text that should truncate at some point"></ui5-radio-button>
 		<br/>
-		<ui5-radio-button id="wrappingRb" wrapping-type="Normal" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." style="width: 300px"></ui5-radio-button>
+		<ui5-radio-button id="wrappingRb" wrapping-type="Normal" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." class="radiobutton2auto"></ui5-radio-button>
 		<ui5-input id="field"></ui5-input>
 	</div>
 

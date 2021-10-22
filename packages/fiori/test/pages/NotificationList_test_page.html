@@ -12,14 +12,7 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		.test-section {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
-	</style>
+	<link type="text/css" href="styles/NotificationList_test_page.css">
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -56,7 +49,7 @@
 
 	<div class="test-section">
 
-		<ui5-list id="notificationList" style="width: 500px" header-text="Notifications grouped">
+		<ui5-list id="notificationList" class="notificationlist_test_page2auto" header-text="Notifications grouped">
 			<ui5-li-notification-group
 				id="nlgi1"
 				show-close
