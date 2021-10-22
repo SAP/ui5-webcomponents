@@ -38,6 +38,6 @@ ui5-card {
     width: 300px;
 }
 
-timeline1auto {
+.timeline1auto {
     background-color: var(--sapBackgroundColor);
 }

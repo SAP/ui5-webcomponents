@@ -34,53 +34,53 @@ html, body {
     flex-wrap: wrap;
 }
 
-fcl1auto {
+.fcl1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-fcl2auto {
+.fcl2auto {
     width: 600px
 }
 
-fcl3auto {
+.fcl3auto {
     height: 500px
 }
 
-fcl4auto {
+.fcl4auto {
     box-sizing: border-box;
 }
 
-fcl5auto {
+.fcl5auto {
     padding: 1rem
 }
 
-fcl6auto {
+.fcl6auto {
     box-sizing: border-box;
     height: 100%
 }
 
-fcl7auto {
+.fcl7auto {
     display: flex;
     min-height: 200px;
     flex-direction: column;
 }
 
-fcl8auto {
+.fcl8auto {
     width: 150px;
     align-self: flex-end;
 }
 
-fcl9auto {
+.fcl9auto {
     display: flex;
     flex-direction: column
 }
 
-fcl10auto {
+.fcl10auto {
     display: flex;
     flex-direction: column;
 }
 
-fcl11auto {
+.fcl11auto {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -88,7 +88,7 @@ fcl11auto {
     margin-top: 1rem
 }
 
-fcl12auto {
+.fcl12auto {
     display: flex;
     flex-direction: row;
     margin-top: 1rem;
@@ -96,25 +96,25 @@ fcl12auto {
     align-items: center;
 }
 
-fcl13auto {
+.fcl13auto {
     padding: 1rem;
     display: flex;
     justify-content: space-between;
 }
 
-fcl14auto {
+.fcl14auto {
     height: 600px;
 }
 
-fcl15auto {
+.fcl15auto {
     min-width: 1px;
 }
 
-fcl16auto {
+.fcl16auto {
     padding: 1rem 1rem;
 }
 
-fcl17auto {
+.fcl17auto {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -122,22 +122,22 @@ fcl17auto {
     flex-wrap: wrap
 }
 
-fcl18auto {
+.fcl18auto {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-fcl19auto {
+.fcl19auto {
     margin: 0 1rem;
     min-width: 7rem;
 }
 
-fcl20auto {
+.fcl20auto {
     align-self: start
 }
 
-fcl21auto {
+.fcl21auto {
     padding: 1rem 1rem;
     background: var(--sapList_Background);
 }

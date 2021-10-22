@@ -2,15 +2,15 @@
     display: none;
 }
 
-notificationlistitem1auto {
+.notificationlistitem1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-notificationlistitem2auto {
+.notificationlistitem2auto {
     max-width: 400px
 }
 
-notificationlistitem3auto {
+.notificationlistitem3auto {
     display: flex;
     justify-content: flex-end;
     padding: 0.25rem;

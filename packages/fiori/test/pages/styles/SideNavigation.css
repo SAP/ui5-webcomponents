@@ -25,6 +25,6 @@ ui5-shellbar::part(root) {
     box-sizing: border-box;
 }
 
-sidenavigation1auto {
+.sidenavigation1auto {
     background-color: var(--sapBackgroundColor);
 }

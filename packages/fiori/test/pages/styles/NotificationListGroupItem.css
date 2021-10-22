@@ -1,12 +1,12 @@
-notificationlistgroupitem1auto {
+.notificationlistgroupitem1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-notificationlistgroupitem2auto {
+.notificationlistgroupitem2auto {
     max-width: 400px
 }
 
-notificationlistgroupitem3auto {
+.notificationlistgroupitem3auto {
     display: flex;
     justify-content: flex-end;
     padding: 0.25rem;

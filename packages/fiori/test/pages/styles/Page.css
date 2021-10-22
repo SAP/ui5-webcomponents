@@ -5,10 +5,10 @@ body, html {
     margin: 0;
 }
 
-page1auto {
+.page1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-page2auto {
+.page2auto {
     width: 100%;
 }

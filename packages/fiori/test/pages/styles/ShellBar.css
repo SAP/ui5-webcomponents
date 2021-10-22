@@ -17,14 +17,14 @@ ui5-avatar:not(:defined) {
     visibility: hidden;
 }
 
-shellbar1auto {
+.shellbar1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-shellbar2auto {
+.shellbar2auto {
     padding: 0.25rem 1rem 0rem 1rem
 }
 
-shellbar3auto {
+.shellbar3auto {
     margin-top: 2rem;
 }

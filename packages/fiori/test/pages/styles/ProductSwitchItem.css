@@ -1,7 +1,7 @@
-productswitchitem1auto {
+.productswitchitem1auto {
     height: 100%
 }
 
-productswitchitem2auto {
+.productswitchitem2auto {
     background-color: var(--sapBackgroundColor);
 }

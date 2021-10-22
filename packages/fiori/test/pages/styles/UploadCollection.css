@@ -16,6 +16,6 @@ ui5-upload-collection {
     margin: 1rem;
 }
 
-uploadcollection1auto {
+.uploadcollection1auto {
     background-color: var(--sapBackgroundColor);
 }

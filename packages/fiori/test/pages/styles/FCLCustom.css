@@ -34,14 +34,14 @@ html, body {
     flex-wrap: wrap;
 }
 
-fclcustom1auto {
+.fclcustom1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-fclcustom2auto {
+.fclcustom2auto {
     box-sizing: border-box;
 }
 
-fclcustom3auto {
+.fclcustom3auto {
     padding: 1rem
 }

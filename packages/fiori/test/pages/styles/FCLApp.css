@@ -53,10 +53,10 @@ ui5-busy-indicator {
     color: var(--sapNeutralColor);
 }
 
-fclapp1auto {
+.fclapp1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-fclapp2auto {
+.fclapp2auto {
     font-size: 1rem;
 }

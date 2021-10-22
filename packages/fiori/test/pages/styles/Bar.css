@@ -2,11 +2,11 @@ ui5-bar {
     margin: 0.25rem 0;
 }
 
-bar1auto {
+.bar1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-bar2auto {
+.bar2auto {
     display: flex;
     align-items: center;
 }
