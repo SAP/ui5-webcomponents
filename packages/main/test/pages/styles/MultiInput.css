@@ -29,10 +29,10 @@ ui5-multi-input {
     margin-bottom: 1rem;
 }
 
-multiinput1auto {
+.multiinput1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-multiinput2auto {
+.multiinput2auto {
     width: 500px;
 }

@@ -15,18 +15,18 @@ ui5-multi-combobox:not(:defined) {
     display: none;
 }
 
-multicombobox1auto {
+.multicombobox1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-multicombobox2auto {
+.multicombobox2auto {
     width: 100%
 }
 
-multicombobox3auto {
+.multicombobox3auto {
     width: 320px
 }
 
-multicombobox4auto {
+.multicombobox4auto {
     width: 360px;
 }

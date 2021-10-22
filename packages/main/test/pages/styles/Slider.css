@@ -12,23 +12,23 @@ h2 {
     padding: 1rem;
 }
 
-slider1auto {
+.slider1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-slider2auto {
+.slider2auto {
     width: 200px;
 }
 
-slider3auto {
+.slider3auto {
     width: 300px;
 }
 
-slider4auto {
+.slider4auto {
     text-align: center;
 }
 
-slider5auto {
+.slider5auto {
     width: 60%;
     margin-left: 20%;
     margin-top: 50px;

@@ -23,22 +23,22 @@ code {
     flex-wrap: wrap;
 }
 
-avatargroup1auto {
+.avatargroup1auto {
     width: 400px
 }
 
-avatargroup2auto {
+.avatargroup2auto {
     display: flex;
 }
 
-avatargroup3auto {
+.avatargroup3auto {
     width: 300px
 }
 
-avatargroup4auto {
+.avatargroup4auto {
     width: 400px;
 }
 
-avatargroup5auto {
+.avatargroup5auto {
     padding: 5px
 }

@@ -24,6 +24,6 @@
     color: var(--sapNeutralColor);
 }
 
-messagepage1auto {
+.messagepage1auto {
     background-color: var(--sapBackgroundColor);
 }

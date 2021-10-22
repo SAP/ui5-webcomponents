@@ -1,7 +1,7 @@
-formsupport1auto {
+.formsupport1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-formsupport2auto {
+.formsupport2auto {
     width: 200px;
 }

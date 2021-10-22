@@ -4,23 +4,23 @@ section {
     margin: 10px;
 }
 
-rtl1auto {
+.rtl1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-rtl2auto {
+.rtl2auto {
     display: flex;
     align-items: center;
 }
 
-rtl3auto {
+.rtl3auto {
     flex: auto;
 }
 
-rtl4auto {
+.rtl4auto {
     margin: 0 5px;
 }
 
-rtl5auto {
+.rtl5auto {
     width: 500px;
 }

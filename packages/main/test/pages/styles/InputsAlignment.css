@@ -1,11 +1,11 @@
-inputsalignment1auto {
+.inputsalignment1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-inputsalignment2auto {
+.inputsalignment2auto {
     width: auto;
 }
 
-inputsalignment3auto {
+.inputsalignment3auto {
     width: 100%;
 }

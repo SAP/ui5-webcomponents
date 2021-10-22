@@ -13,6 +13,6 @@ body, html {
     margin-top: 1px;
 }
 
-colorpalettepopover1auto {
+.colorpalettepopover1auto {
     background-color: var(--sapBackgroundColor);
 }

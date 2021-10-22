@@ -17,20 +17,20 @@ h3 {
  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
-stepinput1auto {
+.stepinput1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-stepinput2auto {
+.stepinput2auto {
     text-align: right;
     width: 250px
 }
 
-stepinput3auto {
+.stepinput3auto {
     display: block
 }
 
-stepinput4auto {
+.stepinput4auto {
     text-align: center;
     width: 250px
 }

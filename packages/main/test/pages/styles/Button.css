@@ -10,18 +10,18 @@
     justify-content: flex-end;
 }
 
-button1auto {
+.button1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-button2auto {
+.button2auto {
     height: auto
 }
 
-button3auto {
+.button3auto {
     color: red;
 }
 
-button4auto {
+.button4auto {
     width: 6rem;
 }

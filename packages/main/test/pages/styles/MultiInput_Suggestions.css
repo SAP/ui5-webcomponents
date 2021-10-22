@@ -29,6 +29,6 @@ ui5-multi-input {
     margin-bottom: 1rem;
 }
 
-multiinput_suggestions1auto {
+.multiinput_suggestions1auto {
     background-color: var(--sapBackgroundColor);
 }

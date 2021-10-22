@@ -12,15 +12,15 @@ h2 {
     padding: 2rem;
 }
 
-rangeslider1auto {
+.rangeslider1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-rangeslider2auto {
+.rangeslider2auto {
     text-align: center;
 }
 
-rangeslider3auto {
+.rangeslider3auto {
     width: 60%;
     margin-left: 20%;
     margin-top: 50px;

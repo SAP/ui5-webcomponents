@@ -13,6 +13,6 @@ body, html {
     margin-top: 1px;
 }
 
-colorpalette1auto {
+.colorpalette1auto {
     background-color: var(--sapBackgroundColor);
 }

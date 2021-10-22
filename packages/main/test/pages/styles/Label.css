@@ -7,38 +7,38 @@ html,
     padding: 1rem;
 }
 
-label1auto {
+.label1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-label2auto {
+.label2auto {
     width: 100px
 }
 
-label3auto {
+.label3auto {
     width: 200px
 }
 
-label4auto {
+.label4auto {
     width: 600px;
     text-align: right;
 }
 
-label5auto {
+.label5auto {
     display: flex;
     align-items: center
 }
 
-label6auto {
+.label6auto {
     width: 320px;
     margin: 0 16px;
 }
 
-label7auto {
+.label7auto {
     display: flex;
     flex-direction: column
 }
 
-label8auto {
+.label8auto {
     font-style: italic
 }

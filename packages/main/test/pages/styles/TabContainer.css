@@ -21,14 +21,14 @@ html,
     font-family: "72", Arial, Helvetica, sans-serif;
 }
 
-tabcontainer1auto {
+.tabcontainer1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-tabcontainer2auto {
+.tabcontainer2auto {
     height: 300px
 }
 
-tabcontainer3auto {
+.tabcontainer3auto {
     height: 100%;
 }

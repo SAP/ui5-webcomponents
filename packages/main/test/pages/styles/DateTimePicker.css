@@ -6,10 +6,10 @@ ui5-datetime-picker {
     margin-bottom: 0.25rem;
 }
 
-datetimepicker1auto {
+.datetimepicker1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-datetimepicker2auto {
+.datetimepicker2auto {
     width: 300px
 }

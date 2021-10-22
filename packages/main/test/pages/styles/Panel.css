@@ -4,6 +4,6 @@
     width: 100%;
 }
 
-panel1auto {
+.panel1auto {
     background-color: var(--sapBackgroundColor);
 }

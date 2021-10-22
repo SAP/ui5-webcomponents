@@ -1,7 +1,7 @@
-form1auto {
+.form1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-form2auto {
+.form2auto {
     width: 100%
 }

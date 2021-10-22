@@ -1,21 +1,21 @@
-list1auto {
+.list1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-list2auto {
+.list2auto {
     font-size: 2rem;
 }
 
-list3auto {
+.list3auto {
     height: 300px;
 }
 
-list4auto {
+.list4auto {
     display: flex;
     align-items: center;
 }
 
-list5auto {
+.list5auto {
     width: 100%;
     height: 3rem;
     display: flex;

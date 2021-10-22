@@ -28,6 +28,6 @@ html,
     background: bisque;
 }
 
-textarea1auto {
+.textarea1auto {
     background-color: var(--sapBackgroundColor);
 }

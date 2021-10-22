@@ -10,24 +10,24 @@
     object-fit: contain;
 }
 
-avatar1auto {
+.avatar1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-avatar2auto {
+.avatar2auto {
     border: 1px dashed red;
 }
 
-avatar3auto {
+.avatar3auto {
     width: 250px;
     height: 250px;
     border: 1px solid var(--sapField_BorderColor)
 }
 
-avatar4auto {
+.avatar4auto {
     object-fit: cover;
 }
 
-avatar5auto {
+.avatar5auto {
     object-fit: contain;
 }

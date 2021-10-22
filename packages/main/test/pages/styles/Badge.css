@@ -15,6 +15,6 @@ html,
     margin: 10px;
 }
 
-badge1auto {
+.badge1auto {
     background-color: var(--sapBackgroundColor);
 }

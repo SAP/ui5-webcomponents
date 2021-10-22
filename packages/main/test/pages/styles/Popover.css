@@ -5,61 +5,61 @@ ui5-date-picker,
     width: 100%;
 }
 
-popover1auto {
+.popover1auto {
     height: 100%
 }
 
-popover2auto {
+.popover2auto {
     background-color: var(--sapBackgroundColor);
 }
 
-popover3auto {
+.popover3auto {
     padding: 1rem;
     text-align: center;
 }
 
-popover4auto {
+.popover4auto {
     display: flex;
     align-items: center;
     padding: 0.25rem 0.5rem
 }
 
-popover5auto {
+.popover5auto {
     flex: 1;
 }
 
-popover6auto {
+.popover6auto {
     width: 300px
 }
 
-popover7auto {
+.popover7auto {
     width: 100%
 }
 
-popover8auto {
+.popover8auto {
     height: 400px
 }
 
-popover9auto {
+.popover9auto {
     height: 3rem;
     background: red;
 }
 
-popover10auto {
+.popover10auto {
     height: 3rem;
     background: yellow;
 }
 
-popover11auto {
+.popover11auto {
     text-align: right;
 }
 
-popover12auto {
+.popover12auto {
     height: 6rem;
     text-align: center;
 }
 
-popover13auto {
+.popover13auto {
     display: flex;
     justify-content: flex-end;
 }

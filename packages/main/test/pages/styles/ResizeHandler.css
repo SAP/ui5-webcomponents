@@ -57,10 +57,10 @@
     padding: 30px;
 }
 
-resizehandler1auto {
+.resizehandler1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-resizehandler2auto {
+.resizehandler2auto {
     display: flex;
 }

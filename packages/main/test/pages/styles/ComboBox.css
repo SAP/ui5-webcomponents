@@ -11,10 +11,10 @@ ui5-combobox:not(:defined) {
     display: none;
 }
 
-combobox1auto {
+.combobox1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-combobox2auto {
+.combobox2auto {
     width: 360px;
 }

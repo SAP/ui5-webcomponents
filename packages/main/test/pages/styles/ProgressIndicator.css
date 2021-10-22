@@ -1,8 +1,8 @@
-progressindicator1auto {
+.progressindicator1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-progressindicator2auto {
+.progressindicator2auto {
     height: 50px;
     width: 200px;
 }

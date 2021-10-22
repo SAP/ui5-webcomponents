@@ -34,6 +34,6 @@ html,
     flex-grow: 4;
 }
 
-togglebutton1auto {
+.togglebutton1auto {
     background-color: var(--sapBackgroundColor);
 }

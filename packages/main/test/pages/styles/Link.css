@@ -7,10 +7,10 @@ html,
     padding: 1rem;
 }
 
-link1auto {
+.link1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-link2auto {
+.link2auto {
     width: 100px
 }

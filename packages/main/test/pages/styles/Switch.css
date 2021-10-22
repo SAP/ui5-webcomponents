@@ -44,34 +44,34 @@ ui5-switch {
     border-color: white;
 }
 
-switch1auto {
+.switch1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-switch2auto {
+.switch2auto {
     display: flex
 }
 
-switch3auto {
+.switch3auto {
     width: 200px
 }
 
-switch4auto {
+.switch4auto {
     width: 120px;
     height: 80px;
 }
 
-switch5auto {
+.switch5auto {
     width: 150px;
     height: 100px;
 }
 
-switch6auto {
+.switch6auto {
     width: 200px;
     height: 100px;
 }
 
-switch7auto {
+.switch7auto {
     width: 200px;
     height: 200px;
 }

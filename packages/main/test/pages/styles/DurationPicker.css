@@ -1,7 +1,7 @@
-durationpicker1auto {
+.durationpicker1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-durationpicker2auto {
+.durationpicker2auto {
     width: 100%
 }

@@ -47,19 +47,19 @@ body,
     display: flex;
 }
 
-table1auto {
+.table1auto {
     background-color: var(--sapBackgroundColor);
 }
 
-table2auto {
+.table2auto {
     display: flex;
     align-items: center;
 }
 
-table3auto {
+.table3auto {
     height: 32px
 }
 
-table4auto {
+.table4auto {
     width: 100%
 }

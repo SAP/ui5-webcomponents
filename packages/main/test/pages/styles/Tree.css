@@ -19,7 +19,7 @@ html,
     width: 100%;
 }
 
-tree1auto {
+.tree1auto {
     padding: 5px;
     background-color: var(--sapBackgroundColor);
 }
