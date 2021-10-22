@@ -1,5 +1,5 @@
-commit dba508a9c01a46f55aa50526a0276f07e2666ef7
+commit 5b6259a58aa2b97cc0f12294d6c36d4b386cc50d
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Oct 22 16:54:27 2021 +0300
+Date:   Fri Oct 22 17:12:06 2021 +0300
 
-    refactor: CSP-compliance part 3 (#4153)
+    refactor: allow single quotes for style in hbs (#4154)
