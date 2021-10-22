@@ -58,7 +58,7 @@
 				<h5>Business card</h5>
 			</div>
 
-			<div class="placeholder  "avatargroup2auto>
+			<div class="placeholder avatargroup2auto" >
 				<!-- TODO -->
 			</div>
 
@@ -280,7 +280,7 @@
 
 		hiddenItems.forEach(function (avatar, index) {
 			var color = avatarGroup.colorScheme[firstHiddenIndex + index];
-			html += `<div class="avatar-slot  "avatargroup5auto>
+			html += `<div class="avatar-slot avatargroup5auto" >
 						<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
 			if (avatar.image.length > 0) {
 				html += `<img src="${avatar.image[0].src}">`
@@ -291,7 +291,7 @@
 		for (var index = 0; index < hiddenItems; index++) {
 			var avatarRef = items[index];
 
-			html += `<div class="avatar-slot  "avatargroup5auto>
+			html += `<div class="avatar-slot avatargroup5auto" >
 						<ui5-avatar interactive icon="${avatarRef.icon}" initials="${avatarRef.initials}" background-color="${color}">`;
 			if (avatarRef.image.length > 0) {
 				html += `<img src="${avatarRef.image[0].src}">`
