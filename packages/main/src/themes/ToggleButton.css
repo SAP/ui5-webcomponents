@@ -13,7 +13,7 @@
 	background: var(--sapButton_Accept_Active_Background);
 	border-color: var(--sapButton_Accept_Active_BorderColor);
 	color: var(--_ui5_toggle_button_selected_positive_text_color);
-	outline-color: var(--sapButton_Active_BorderColor);
+	outline-color: var(--_ui5_toggle_button_emphasized_pressed_focussed_hovered);
 }
 
 :host([design="Positive"][pressed][active]),
@@ -27,7 +27,7 @@
 	background: var(--sapButton_Reject_Active_Background);
 	border-color: var(--sapButton_Reject_Active_BorderColor);
 	color: var(--_ui5_toggle_button_selected_negative_text_color);
-	outline-color: var(--sapButton_Active_BorderColor);
+	outline-color: var(--_ui5_toggle_button_emphasized_pressed_focussed_hovered);
 }
 
 :host([design="Negative"][pressed][active]),
@@ -46,7 +46,7 @@
 	background: var(--sapButton_Selected_Background);
 	border-color: var(--sapButton_Selected_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
-	outline-color: var(--sapButton_Active_BorderColor);
+	outline-color: var(--_ui5_toggle_button_emphasized_pressed_focussed_hovered);
 }
 
 :host([pressed][active]),
