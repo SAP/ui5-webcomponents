@@ -20,7 +20,7 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<style>
 		html,
@@ -70,7 +70,7 @@
 		<script>
 			const eventTargetSlider = document.getElementById("test-slider");
 			const eventResultSlider = document.getElementById("test-result-slider");
-		
+
 			eventTargetSlider.addEventListener("ui5-input", () => {
 				eventResultSlider.setAttribute("end-value", parseInt(eventResultSlider.getAttribute("end-value")) + 1);
 			});
