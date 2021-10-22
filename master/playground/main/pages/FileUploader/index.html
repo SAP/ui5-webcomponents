@@ -13,11 +13,7 @@
 <script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
 <script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
                     
-	<style>
-		body > div {
-			margin-bottom: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/FileUploader.css">
 	<script>
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
@@ -93,7 +89,7 @@
 	<div>
 		<ui5-title>Form support</ui5-title>
 		<form
-			style="border: 1px solid black; padding: 1rem;"
+			class="fileuploader1auto"
 			method="POST"
 			action="http://localhost:3000/echo"
 			enctype="multipart/form-data"
@@ -115,7 +111,7 @@
 	</div>
 	<div>
 		<ui5-title>Upload files async using fetch</ui5-title>
-		<div style="border: 1px solid black; padding: 1rem;">
+		<div class="fileuploader1auto">
 			<ui5-file-uploader id="fuFetch"></ui5-file-uploader>
 			<ui5-button id="uploadBtn">Upload</ui5-button>
 		</div>

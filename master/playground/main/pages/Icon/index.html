@@ -24,16 +24,12 @@
 <script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
                     
 
-	<style>
-		section {
-			border: dashed 2px red;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Icon.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="icon1auto">
 
-	<ui5-icon title="add equipment" style="width: 50px; height: 50px; border: 1px solid red;" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
+	<ui5-icon title="add equipment" class="icon2auto" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
 	<ui5-icon name="add-employee" class="icon-red"></ui5-icon>
@@ -49,7 +45,7 @@
 		id="myInteractiveIcon"
 		interactive
 		name="add-equipment"
-		style="width: 50px; height: 50px">
+		class="icon3auto">
 	</ui5-icon>
 	<br>
 	<ui5-input id="click-event-2"></ui5-input>
@@ -57,8 +53,8 @@
 	<br>
 	<ui5-icon name="add-employee"></ui5-icon>
 	<br>
-	<ui5-icon style="width: 1rem; height: 1rem;" name="add-employee"></ui5-icon>
-	<ui5-icon style="width: 2rem; height: 2rem;" name="factory"></ui5-icon>
+	<ui5-icon class="icon4auto" name="add-employee"></ui5-icon>
+	<ui5-icon class="icon5auto" name="factory"></ui5-icon>
 	<br>
 
 	<ui5-button icon="add-equipment"></ui5-button>
@@ -70,16 +66,16 @@
 
 	<br />
 
-	<ui5-date-picker style="margin-top: 10px" placeholder="test" value="Value State None">
+	<ui5-date-picker class="icon6auto" placeholder="test" value="Value State None">
 	</ui5-date-picker>
 
-	<ui5-date-picker style="margin-top: 10px" value-state="Success" value="Value State Success">
+	<ui5-date-picker class="icon6auto" value-state="Success" value="Value State Success">
 	</ui5-date-picker>
 
-	<ui5-date-picker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
+	<ui5-date-picker class="icon6auto" value-state="Warning" value="Value State Warning">
 	</ui5-date-picker>
 
-	<ui5-date-picker style="margin-top: 10px" value-state="Error" value="Value State Error">
+	<ui5-date-picker class="icon6auto" value-state="Error" value="Value State Error">
 	</ui5-date-picker>
 
 	<br/><br/>
@@ -92,7 +88,7 @@
 	<br/>
 
 	<ui5-button icon="overflow"></ui5-button>
-	<ui5-icon name="overflow" style="border:1px solid red;"></ui5-icon>
+	<ui5-icon name="overflow" class="icon7auto"></ui5-icon>
 	<br>
 	<br>
 
