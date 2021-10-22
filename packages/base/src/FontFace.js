@@ -1,7 +1,7 @@
 /**
  * CSS font face used for the texts provided by SAP.
  */
-import createStyleInHead from "./util/createStyleInHead.js";
+import { hasStyle, createStyle } from "./ManagedStyles.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 /* CDN Locations */
@@ -17,6 +17,9 @@ const font72BoldWoff2 = `https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sa
 const font72BoldFullWoff = `https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold-full.woff?ui5-webcomponents`;
 const font72BoldFullWoff2 = `https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold-full.woff2?ui5-webcomponents`;
 
+const font72BlackWoff = `https://openui5nightly.hana.ondemand.com/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black.woff?ui5-webcomponents`;
+const font72BlackWoff2 = `https://openui5nightly.hana.ondemand.com/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black.woff2?ui5-webcomponents`;
+
 const fontFaceCSS = `
 	@font-face {
 		font-family: "72";
@@ -26,7 +29,7 @@ const fontFaceCSS = `
 			url(${font72RegularWoff2}) format("woff2"),
 			url(${font72RegularWoff}) format("woff");
 	}
-	
+
 	@font-face {
 		font-family: "72full";
 		font-style: normal;
@@ -34,9 +37,9 @@ const fontFaceCSS = `
 		src: local('72-full'),
 			url(${font72RegularFullWoff2}) format("woff2"),
 			url(${font72RegularFullWoff}) format("woff");
-		
+
 	}
-	
+
 	@font-face {
 		font-family: "72";
 		font-style: normal;
@@ -45,7 +48,7 @@ const fontFaceCSS = `
 			url(${font72BoldWoff2}) format("woff2"),
 			url(${font72BoldWoff}) format("woff");
 	}
-	
+
 	@font-face {
 		font-family: "72full";
 		font-style: normal;
@@ -53,6 +56,15 @@ const fontFaceCSS = `
 		src: local('72-Bold-full'),
 			url(${font72BoldFullWoff2}) format("woff2"),
 			url(${font72BoldFullWoff}) format("woff");
+	}
+
+	@font-face {
+		font-family: "72Black";
+		font-style: bold;
+		font-weight: 900;
+		src: local('72Black'),
+			url(${font72BlackWoff2}) format("woff2"),
+			url(${font72BlackWoff}) format("woff");
 	}
 `;
 
@@ -104,14 +116,14 @@ const insertFontFace = () => {
 };
 
 const insertMainFontFace = () => {
-	if (!document.querySelector(`head>style[data-ui5-font-face]`)) {
-		createStyleInHead(fontFaceCSS, { "data-ui5-font-face": "" });
+	if (!hasStyle("data-ui5-font-face")) {
+		createStyle(fontFaceCSS, "data-ui5-font-face");
 	}
 };
 
 const insertOverrideFontFace = () => {
-	if (!document.querySelector(`head>style[data-ui5-font-face-override]`)) {
-		createStyleInHead(overrideFontFaceCSS, { "data-ui5-font-face-override": "" });
+	if (!hasStyle("data-ui5-font-face-override")) {
+		createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
 	}
 };
 

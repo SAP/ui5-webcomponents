@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
@@ -141,23 +141,16 @@ const metadata = {
 	},
 };
 
-let customBlockingStyleInserted = false;
-
 const createBlockingStyle = () => {
-	if (customBlockingStyleInserted) {
-		return;
-	}
-
-	createStyleInHead(`
+	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
+		createStyle(`
 		.ui5-popup-scroll-blocker {
 			width: 100%;
 			height: 100%;
 			position: fixed;
 			overflow: hidden;
-		}
-	`, { "data-ui5-popup-scroll-blocker": "" });
-
-	customBlockingStyleInserted = true;
+		}`, "data-ui5-popup-scroll-blocker");
+	}
 };
 
 createBlockingStyle();
