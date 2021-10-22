@@ -2,7 +2,8 @@
 
 :root {
 	/* Switch */
-	--_ui5_switch_outline: 0.125rem;
+	--_ui5_switch_root_outline_top: 0.125rem;
+	--_ui5_switch_root_outline_left: 0.125rem;
 
 	/* Switch Track */
 	--_ui5_switch_track_hover_border_color: var(--sapTextColor);
