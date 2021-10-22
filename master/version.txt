@@ -1,5 +1,5 @@
-commit a50247a18834a579dcbe5fdeaeaae2ec6ae906fb
+commit 7e75da2cc26f6696c6fc83783c0d1d79abe1c466
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Oct 22 08:38:21 2021 +0300
+Date:   Fri Oct 22 14:57:44 2021 +0300
 
-    refactor: CSP-compliance part 1 (#4144)
+    refactor: CSP-compliance part 2 (#4149)
