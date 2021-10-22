@@ -82,6 +82,10 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 
 	isStyleAttribute = !isNodeValue && contentStatement.match(/style="?$/);
 
+	if (!isStyleAttribute && contentStatement.match(/style=/)) {
+		console.log("WARNING: style hard-coded", contentStatement);
+	}
+
 	// Scope custom element tags
 	contentStatement = contentStatement.replaceAll(/(<\/?\s*)([a-zA-Z0-9_]+-[a-zA-Z0-9_-]+)/g, "$1\${scopeTag(\"$2\", tags, suffix)}");
 

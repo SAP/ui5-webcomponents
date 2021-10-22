@@ -155,3 +155,13 @@
 .sapIllus_PatternHighlight {
     fill: var(--sapIllus_PatternHighlight);
 }
+
+.sapIllus_NoColor_Fill {
+    fill: var(--sapIllus_NoColor);
+}
+.sapIllus_BrandColorPrimary_Fill {
+    fill: var(--sapIllus_BrandColorPrimary);
+}
+.sapIllus_ObjectFillColor_Fill {
+    fill: var(--sapIllus_ObjectFillColor);
+}
