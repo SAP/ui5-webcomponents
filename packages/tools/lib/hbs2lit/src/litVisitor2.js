@@ -91,7 +91,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 	} else {
 		const path = normalizePath.call(this, mustache.path.original);
 		const hasCalculatingClasses = path.includes("context.classes");
-		const hasStylesCalculation = path.includes("context.styles");
+		const hasStylesCalculation = path.includes("context.styles") || path.endsWith(".styles");
 
 		let parsedCode = "";
 
