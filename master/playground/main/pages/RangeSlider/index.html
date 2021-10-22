@@ -24,7 +24,7 @@
 <script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
 <script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
                     
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<style>
 		html,
@@ -74,7 +74,7 @@
 		<script>
 			const eventTargetSlider = document.getElementById("test-slider");
 			const eventResultSlider = document.getElementById("test-result-slider");
-		
+
 			eventTargetSlider.addEventListener("ui5-input", () => {
 				eventResultSlider.setAttribute("end-value", parseInt(eventResultSlider.getAttribute("end-value")) + 1);
 			});

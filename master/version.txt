@@ -1,5 +1,5 @@
-commit 56f366f8939b272cb8e0cd98afb2b0d3efbe3de9
+commit a50247a18834a579dcbe5fdeaeaae2ec6ae906fb
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Oct 21 12:48:13 2021 +0300
+Date:   Fri Oct 22 08:38:21 2021 +0300
 
-    feat(framework): allow using a custom i18n library (#4119)
+    refactor: CSP-compliance part 1 (#4144)
