@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>MultiComboBox test page</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -20,30 +20,13 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-multi-combobox {
-			max-width: 560px;
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/MultiComboBox.css">
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="multicombobox1auto">
 
-	<style>
-		.demo-section {
-			margin-top: 30px;
-		}
-
-		.demo-section ui5-multi-combobox {
-			margin-top: 10px;
-		}
-
-		ui5-multi-combobox:not(:defined) {
-			display: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/MultiComboBox.css">
 	<!-- <ui5-token>UI5 WebComponents</ui5-token> -->
 
 	<!-- <ui5-token selected>UI5 WebComponents</ui5-token> -->
@@ -51,7 +34,7 @@
 	<!-- <br />
 	<br />
 
-	<ui5-tokenizer style="width: 100%">
+	<ui5-tokenizer class="multicombobox2auto">
 		<ui5-token>Hello</ui5-token>
 		<ui5-token>UI5</ui5-token>
 		<ui5-token>webcomponents</ui5-token>
@@ -59,7 +42,7 @@
 
 	<span>value </span>
 
-	<ui5-tokenizer show-more style="width: 100%">
+	<ui5-tokenizer show-more class="multicombobox2auto">
 		<ui5-token>World!</ui5-token>
 		<ui5-token>Martin</ui5-token>
 		<ui5-token>Hristovthelong</ui5-token>
@@ -67,7 +50,7 @@
 
 	<span>value </span>
 
-	<ui5-tokenizer show-more style="width: 100%">
+	<ui5-tokenizer show-more class="multicombobox2auto">
 		<ui5-token>B</ui5-token>
 		<ui5-token>A</ui5-token>
 		<ui5-token>A</ui5-token>
@@ -221,7 +204,7 @@
 	<div class="demo-section">
 		<span>MultiComboBox n more</span> </br>
 
-		<ui5-multi-combobox style="width: 320px" placeholder="Some initial text" id="more-mcb">
+		<ui5-multi-combobox class="multicombobox3auto" placeholder="Some initial text" id="more-mcb">
 			<ui5-mcb-item text="Cosy" selected></ui5-mcb-item>
 			<ui5-mcb-item text="Compact" selected></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -282,7 +265,7 @@
 	<div class="demo-section">
 		<ui5-label>Two-column items </ui5-label>
 		<br/>
-		<ui5-multi-combobox id="mcb-two-column-layout" style="width: 360px;">
+		<ui5-multi-combobox id="mcb-two-column-layout" class="multicombobox4auto">
 			<ui5-mcb-item text="Algeria" additional-text="DZ"></ui5-mcb-item>
 			<ui5-mcb-item text="Argentina" additional-text="AR"></ui5-mcb-item>
 			<ui5-mcb-item text="Australia" additional-text="AU"></ui5-mcb-item>

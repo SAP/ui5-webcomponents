@@ -7,70 +7,15 @@
 
 	<title>Flexible Column Layout</title>
 
-	<script>delete Document.prototype.adoptedStyleSheets</script>
+	<script>// delete Document.prototype.adoptedStyleSheets</script>
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html, body {
-			padding: 0;
-			margin: 0;
-			height: 100%;
-		}
-
-		#fcl {
-			width: 100%;
-			height: 100%;
-		}
-
-		#fcl>div.column {
-			height: 100%;
-		}
-
-		ui5-busy-indicator {
-			display: block;
-		}
-
-		.header {
-			padding: 1rem;
-			display: flex;
-		}
-
-		.separator {
-			flex: auto;
-		}
-
-		.ui5-message-page {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			width: 30rem;
-			margin: auto;
-		}
-
-		.ui5-message-page-icon {
-			width: 6rem;
-			height: 6rem;
-		}
-
-		.ui5-message-page-title {
-			font-family: var(--sapFontFamily);
-			font-size: var(--sapFontHeader2Size);
-			color: var(--sapTextColor);
-			margin: 1rem;
-		}
-
-		.ui5-message-page-description {
-			font-family: var(--sapFontFamily);
-			font-size: var(--sapFontLargeSize);
-			color: var(--sapNeutralColor);
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/FCLApp.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="fclapp1auto">
 
 <!-- COMPANIES LIST -->
 <template id="companiesTemplate">
@@ -135,7 +80,7 @@
 			Read the manual
 		</ui5-tab>
 		<ui5-tab icon="sap-icon://menu2" text="Reviews" design="Negative" additional-text="15">
-			<ui5-rating-indicator style="font-size: 1rem;"></ui5-rating-indicator>
+			<ui5-rating-indicator class="fclapp2auto"></ui5-rating-indicator>
 		</ui5-tab>
 		<ui5-tab icon="sap-icon://menu2" disabled text="Buy (Not available)" design="Negative" additional-text="40">
 

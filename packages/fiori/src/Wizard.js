@@ -859,7 +859,9 @@ class Wizard extends UI5Element {
 				accInfo,
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
-				styles: `z-index: ${isAfterCurrent ? --inintialZIndex : 1}`,
+				styles: {
+					zIndex: isAfterCurrent ? --inintialZIndex : 1,
+				},
 			};
 		});
 	}
