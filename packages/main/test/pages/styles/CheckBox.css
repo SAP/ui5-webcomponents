@@ -1,0 +1,17 @@
+ui5-checkbox:not(.ui5-cb-testing-wrap) {
+			/* border: 1px solid red; */
+}
+
+.checkbox1auto {
+    background-color: var(--sapBackgroundColor);
+}
+
+.checkbox2auto {
+    width: 300px
+}
+
+.checkbox3auto {
+    display: flex;
+    flex-direction: column;
+    width: 250px
+}

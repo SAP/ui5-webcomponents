@@ -6,20 +6,16 @@
 		<meta charset="utf-8">
 
 		<script>
-			delete Document.prototype.adoptedStyleSheets;
+			// delete Document.prototype.adoptedStyleSheets;
 		</script>
-		<style>
-			html,body {
-				height: 100%;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="styles/TimePicker.css">
 
 		<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 		<script src="../../resources/bundle.esm.js" type="module"></script>
 		<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	</head>
-	<body style="background-color: var(--sapBackgroundColor);">
+	<body class="timepicker1auto">
 		<ui5-time-picker id="timepicker" format-pattern="HH:mm:ss"></ui5-time-picker>
 		<ui5-time-picker></ui5-time-picker>
 		<ui5-time-picker id="timepicker2" format-pattern="hh:mm:ss" value=""></ui5-time-picker>
@@ -27,7 +23,7 @@
 		<ui5-time-picker id="timepicker4" format-pattern="HH:mm" value="12:05"></ui5-time-picker>
 		<ui5-time-picker id="timepicker5" format-pattern="hh:mm:ss" value="12:00:01"></ui5-time-picker>
 		<br>
-		<ui5-time-picker style="width:100%"></ui5-time-picker>
+		<ui5-time-picker class="timepicker2auto"></ui5-time-picker>
 
 		<br /><br />
 		<ui5-title>Test "change" event</ui5-title>

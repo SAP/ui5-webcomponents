@@ -8,7 +8,7 @@
 
 	<title>Busy Indicator</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -21,9 +21,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/BusyIndicator.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="busyindicator1auto">
 	<ui5-title>Large ui5-busy-indicator</ui5-title>
 	<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
 	<br/>
@@ -40,7 +41,7 @@
 
 	<br />
 	<br />
-	<ui5-busy-indicator active text="Loading" style="width: 10rem; border: 1px solid red"></ui5-busy-indicator>
+	<ui5-busy-indicator active text="Loading" class="busyindicator2auto"></ui5-busy-indicator>
 
 	<br />
 	<br />
@@ -62,11 +63,11 @@
 	<br />
 	<br />
 
-	<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
+	<ui5-button id="fetch-btn" class="busyindicator3auto">Fetch List Data</ui5-button>
 	<br>
 	<br>
-	<ui5-busy-indicator id="busy-container" style="width: 520px" size="Medium" text="Loading">
-		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" style="width: 100%"></ui5-list>
+	<ui5-busy-indicator id="busy-container" class="busyindicator4auto" size="Medium" text="Loading">
+		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" class="busyindicator5auto"></ui5-list>
 	</ui5-busy-indicator>
 
 
@@ -75,16 +76,16 @@
 	<br>
 	<br>
 
-	<ui5-busy-indicator size="Medium" active style="width: 500px; margin-left: 100px">
-		<ui5-list style="width: 100%; border: 1px solid black;">
+	<ui5-busy-indicator size="Medium" active class="busyindicator6auto">
+		<ui5-list class="busyindicator7auto">
 			<ui5-li>Item 1</ui5-li>
 			<ui5-li>Item 2</ui5-li>
 			<ui5-li>Item 3</ui5-li>
 		</ui5-list>
 	</ui5-busy-indicator>
 
-	<ui5-busy-indicator size="Medium" active style="width: 500px; margin-left: 100px" text="Custom loading text">
-		<ui5-list style="width: 100%; border: 1px solid black;">
+	<ui5-busy-indicator size="Medium" active class="busyindicator6auto" text="Custom loading text">
+		<ui5-list class="busyindicator7auto">
 			<ui5-li>Item 1</ui5-li>
 			<ui5-li>Item 2</ui5-li>
 			<ui5-li>Item 3</ui5-li>
@@ -124,7 +125,7 @@
 	<br>
 	<br>
 
-	<ui5-busy-indicator id="busy-tree" style="width: 100%;">
+	<ui5-busy-indicator id="busy-tree" class="busyindicator8auto">
 		<ui5-tree id="treeDynamic">
 			<div slot="header">
 				<ui5-title>Dynamic tree</ui5-title>

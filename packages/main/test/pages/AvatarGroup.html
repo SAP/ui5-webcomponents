@@ -20,30 +20,7 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-    <style>
-		code { color: blue; font-size: small; }
-
-		#individual-pop .avatar-slot,
-		#groupPop .avatar-slot {
-			display: inline-block;
-		}
-
-		#group-pop .avatar-slot {
-			padding: 3px;
-		}
-
-		#group-pop .title-slot,
-		#individual-pop .title-slot {
-			display: inline-block;
-			vertical-align: middle;
-		}
-
-		#group-pop .placeholder {
-			display: flex;
-			flex-wrap: wrap;
-		}
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles/AvatarGroup.css">
 
 </head>
 
@@ -76,12 +53,12 @@
 
 	<div id="avatar-group-wrapper">
 
-		<ui5-popover header-text="My Heading" id="group-pop" style="width: 400px" placement-type="Bottom" accessible-name="This popover is important">
+		<ui5-popover header-text="My Heading" id="group-pop" class="avatargroup1auto" placement-type="Bottom" accessible-name="This popover is important">
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
 
-			<div class="placeholder" style="display: flex;">
+			<div class="placeholder avatargroup2auto" >
 				<!-- TODO -->
 			</div>
 
@@ -90,7 +67,7 @@
 			</div>
 		</ui5-popover>
 
-		<ui5-popover header-text="My Heading" id="individual-pop" style="width: 300px" placement-type="Bottom" accessible-name="This popover is important" prevent-focus-restore>
+		<ui5-popover header-text="My Heading" id="individual-pop" class="avatargroup3auto" placement-type="Bottom" accessible-name="This popover is important" prevent-focus-restore>
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
@@ -156,7 +133,7 @@
 
 		<h3>Test Fired Events</h3>
 		<br>
-		<div style="width: 400px;">
+		<div class="avatargroup4auto">
 			<ui5-avatar-group type="Individual" id="avatar-group-individual-events">
 				<ui5-avatar size="XL" interactive icon="home" initials="XL" id="avatar-1-test-events"></ui5-avatar>
 				<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
@@ -165,7 +142,7 @@
 			</ui5-avatar-group>
 		</div>
 		<br>
-		<div style="width: 400px;">
+		<div class="avatargroup4auto">
 			<ui5-avatar-group type="Group" id="avatar-group-group-events">
 				<ui5-avatar size="XL" interactive icon="home" initials="XL"></ui5-avatar>
 				<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
@@ -303,7 +280,7 @@
 
 		hiddenItems.forEach(function (avatar, index) {
 			var color = avatarGroup.colorScheme[firstHiddenIndex + index];
-			html += `<div class="avatar-slot" style="padding: 5px">
+			html += `<div class="avatar-slot avatargroup5auto" >
 						<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
 			if (avatar.image.length > 0) {
 				html += `<img src="${avatar.image[0].src}">`
@@ -314,7 +291,7 @@
 		for (var index = 0; index < hiddenItems; index++) {
 			var avatarRef = items[index];
 
-			html += `<div class="avatar-slot" style="padding: 5px">
+			html += `<div class="avatar-slot avatargroup5auto" >
 						<ui5-avatar interactive icon="${avatarRef.icon}" initials="${avatarRef.initials}" background-color="${color}">`;
 			if (avatarRef.image.length > 0) {
 				html += `<img src="${avatarRef.image[0].src}">`

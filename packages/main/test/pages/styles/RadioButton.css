@@ -1,0 +1,17 @@
+.radio-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+div {
+    width: 250px;
+}
+
+.radiobutton1auto {
+    background-color: var(--sapBackgroundColor);
+}
+
+.radiobutton2auto {
+    width: 300px
+}
