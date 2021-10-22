@@ -1,0 +1,16 @@
+html,
+		body {
+    margin: 0;
+}
+
+.group {
+    padding: 1rem;
+}
+
+.link1auto {
+    background-color: var(--sapBackgroundColor);
+}
+
+.link2auto {
+    width: 100px
+}
