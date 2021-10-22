@@ -14,17 +14,8 @@
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor); padding: 1rem;">
-	<style>
-		ui5-carousel {
-			height: 25rem;
-			margin-bottom: 1rem;
-		}
-
-		.myCard {
-			height: 100%;
-		}
-	</style>
+<body class="carousel1auto">
+	<link rel="stylesheet" type="text/css" href="styles/Carousel.css">
 	<ui5-carousel id="carouselCards" items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
 		<ui5-card id="card"
 			class="myCard">
@@ -458,7 +449,7 @@
 	</ui5-carousel>
 	<ui5-input id="visible-items" value="0"></ui5-input>
 
-	<ui5-title style="margin-top: 2rem;">Carousel with hidden page indicator</ui5-title>
+	<ui5-title class="carousel2auto">Carousel with hidden page indicator</ui5-title>
 	<ui5-label>arrows-placement="Navigation"</ui5-label>
 	<ui5-carousel id="carouselHiddenPageIndicator" arrows-placement="Navigation" hide-page-indicator>
 		<ui5-button>Button 1</ui5-button>
@@ -466,7 +457,7 @@
 		<ui5-button>Button 3</ui5-button>
 	</ui5-carousel>
 
-	<ui5-title style="margin-top: 2rem;">Carousel with hidden page indicator and hidden navigation arrows</ui5-title>
+	<ui5-title class="carousel2auto">Carousel with hidden page indicator and hidden navigation arrows</ui5-title>
 	<ui5-label>arrows-placement="Navigation"</ui5-label>
 	<ui5-carousel id="carouselHiddenPageIndicatorHiddenArrows" arrows-placement="Navigation" hide-page-indicator hide-navigation-arrows>
 		<ui5-button>Button 1</ui5-button>
@@ -474,7 +465,7 @@
 		<ui5-button>Button 3</ui5-button>
 	</ui5-carousel>
 
-	<ui5-title style="margin-top: 2rem;">F7 keyboard navigation testing</ui5-title>
+	<ui5-title class="carousel2auto">F7 keyboard navigation testing</ui5-title>
 	<ui5-carousel id="carouselF7" items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
 		<ui5-card class="myCard">
 			<div>

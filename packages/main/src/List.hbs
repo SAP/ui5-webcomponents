@@ -29,7 +29,7 @@
 			<slot></slot>
 
 			{{#if showNoDataText}}
-				<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}" style="list-style-type: none;">
+				<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}">
 					<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
 						{{noDataText}}
 					</div>
@@ -60,7 +60,7 @@
 				delay="{{busyDelay}}"
 				active
 				size="Medium"
-				class="ui5-list-busy-ind" 
+				class="ui5-list-busy-ind"
 				style="{{styles.busyInd}}"
 				data-sap-focus-ref
 			></ui5-busy-indicator>
@@ -71,7 +71,7 @@
 
 {{#*inline "moreRow"}}
 	<div growing-button>
-		<div 
+		<div
 			tabindex="0"
 			role="button"
 			aria-labelledby="{{_id}}-growingButton-text"
