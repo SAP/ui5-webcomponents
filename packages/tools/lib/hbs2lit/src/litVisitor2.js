@@ -80,7 +80,7 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 		isNodeValue = closingIndex > openingIndex;
 	}
 
-	isStyleAttribute = !isNodeValue && contentStatement.match(/style="?$/);
+	isStyleAttribute = !isNodeValue && contentStatement.match(/style *= *["']?$/);
 
 	if (!isStyleAttribute && contentStatement.match(/style=/)) {
 		console.log("WARNING: style hard-coded", contentStatement);
