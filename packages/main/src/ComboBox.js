@@ -814,6 +814,7 @@ class ComboBox extends UI5Element {
 		const value = (item && item.text) || "";
 		this.inner.value = value;
 		if (highlightValue) {
+			filterValue = filterValue || "";
 			this.inner.setSelectionRange(filterValue.length, value.length);
 		}
 		this.value = value;
