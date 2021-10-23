@@ -1,10 +1,23 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
+import {
+	createStyle,
+	hasStyle,
+	updateStyle,
+	removeStyle,
+} from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
+
+const createThemePropertiesStyleTag = (cssText, packageName) => {
+	if (hasStyle("data-ui5-theme-properties", packageName)) {
+		updateStyle(cssText, "data-ui5-theme-properties", packageName);
+	} else {
+		createStyle(cssText, "data-ui5-theme-properties", packageName);
+	}
+};
 
 const isThemeBaseRegistered = () => {
 	const registeredPackages = getRegisteredPackages();
@@ -21,10 +34,7 @@ const loadThemeBase = async theme => {
 };
 
 const deleteThemeBase = () => {
-	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${BASE_THEME_PACKAGE}"]`);
-	if (styleElement) {
-		styleElement.parentElement.removeChild(styleElement);
-	}
+	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
 
 const loadComponentPackages = async theme => {

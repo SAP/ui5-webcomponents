@@ -33,4 +33,20 @@ const hasStyle = (name, value = "") => {
 	return !!document.querySelector(`head>style[${name}="${value}"]`);
 };
 
-export { createStyle, hasStyle, updateStyle };
+const removeStyle = (name, value = "") => {
+	if (document.adoptedStyleSheets) {
+		document.adoptedStyleSheets = document.adoptedStyleSheets.filter(sh => sh._ui5StyleId !== getStyleId(name, value));
+	}
+
+	const styleElement = document.querySelector(`head>style[${name}="${value}"]`);
+	if (styleElement) {
+		styleElement.parentElement.removeChild(styleElement);
+	}
+};
+
+export {
+	createStyle,
+	hasStyle,
+	updateStyle,
+	removeStyle,
+};
