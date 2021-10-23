@@ -1,23 +1,10 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import {
-	createStyle,
-	hasStyle,
-	updateStyle,
-	removeStyle,
-} from "../ManagedStyles.js";
+import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
-
-const createThemePropertiesStyleTag = (cssText, packageName) => {
-	if (hasStyle("data-ui5-theme-properties", packageName)) {
-		updateStyle(cssText, "data-ui5-theme-properties", packageName);
-	} else {
-		createStyle(cssText, "data-ui5-theme-properties", packageName);
-	}
-};
 
 const isThemeBaseRegistered = () => {
 	const registeredPackages = getRegisteredPackages();
@@ -30,7 +17,7 @@ const loadThemeBase = async theme => {
 	}
 
 	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE);
+	createOrUpdateStyle(cssText, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
 
 const deleteThemeBase = () => {
@@ -45,7 +32,7 @@ const loadComponentPackages = async theme => {
 		}
 
 		const cssText = await getThemeProperties(packageName, theme);
-		createThemePropertiesStyleTag(cssText, packageName);
+		createOrUpdateStyle(cssText, "data-ui5-theme-properties", packageName);
 	});
 };
 

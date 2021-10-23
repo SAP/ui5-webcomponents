@@ -44,9 +44,18 @@ const removeStyle = (name, value = "") => {
 	}
 };
 
+const createOrUpdateStyle = (content, name, value = "") => {
+	if (hasStyle(name, value)) {
+		updateStyle(content, name, value);
+	} else {
+		createStyle(content, name, value);
+	}
+};
+
 export {
 	createStyle,
 	hasStyle,
 	updateStyle,
 	removeStyle,
+	createOrUpdateStyle,
 };
