@@ -319,7 +319,7 @@ class DateTimePicker extends DatePicker {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
 			calendarValue: event.detail.values[0],
-			timeSelectionValue: event.path[1].lastChild.value,
+			timeSelectionValue: event.composedPath()[1].lastChild.value,
 		};
 	}
 
