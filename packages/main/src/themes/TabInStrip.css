@@ -9,6 +9,8 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+	justify-content: center;
+	min-width: 2rem;
 }
 
 .ui5-tab-strip-itemContent {
@@ -201,7 +203,12 @@
     line-height: var(--_ui5_tc_item_text_line_height);
 }
 
-.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAddionalText.ui5-tab-strip-item--standard {
+.ui5-tab-strip-item--textOnly:not(.ui5-tab-strip-item--withAddionalText) .ui5-tab-strip-itemText {
+	padding: 0 0.188rem;
+}
+
+.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAddionalText {
+	justify-content: flex-start;
 	height: var(--_ui5_tc_item_text_only_with_additional_text_height);
 }
 
