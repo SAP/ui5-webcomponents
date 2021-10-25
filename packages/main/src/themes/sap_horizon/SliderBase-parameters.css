@@ -14,13 +14,13 @@
 	--_ui5_slider_handle_height: 1.5rem;
 	--_ui5_slider_handle_width: 2rem;
 	--_ui5_slider_handle_top: -0.75rem;
+	--_ui5_slider_handle_focused_top: -0.688rem;
+	--_ui5_slider_handle_focused_margin_left: -0.938rem;
 	--_ui5_slider_handle_font_family: "SAP-icons";
 	--_ui5_slider_handle_hover_border: 1px solid var(--sapContent_Selected_ForegroundColor);
-	--_ui5_slider_handle_focus_border: 2px solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_slider_handle_focus_border:  none;
 	--_ui5_slider_handle_active_border: var(--_ui5_slider_handle_focus_border);
-	--_ui5_slider_handle_outline: none: 
+	--_ui5_slider_handle_box_shadow_focus: 0 0 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor);
+	--_ui5_slider_handle_outline: none;
 	--_ui5_slider_tooltip_background: #FFF;
-	--_ui5_slider_tooltip_border: none;
-	--_ui5_slider_tooltip_border_radius: 0.75rem;
-	--_ui5_slider_tooltip_color: #8396A8;
-}
+} 
