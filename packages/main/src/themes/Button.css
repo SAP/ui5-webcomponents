@@ -120,6 +120,10 @@
 	outline-offset: var(--_ui5_button_outline_offset);
 }
 
+:host([design="Emphasized"][focused]) {
+	outline: var(--_ui5_button_еmphasized_outline);
+}
+
 .ui5-button-root::-moz-focus-inner {
 	border: 0;
 }
