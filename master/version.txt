@@ -1,5 +1,10 @@
-commit 273a51f0598b3fa8664414df8fedab1055d4e208
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 25 10:04:26 2021 +0300
+commit c2ad212f99f1d7675a56418162bd9db340cf6013
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Oct 25 10:31:34 2021 +0100
 
-    refactor: Extract all styles (#4159)
+    fix(ui5-datetime-picker): console error not thrown on Firefox browser (#4161)
+    
+    Console error isn't thrown now, when user is selecting a date from
+    the calendar part of the component in Firefox browser.
+    
+    Fixes: #4136
