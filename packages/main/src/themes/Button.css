@@ -270,7 +270,7 @@ bdi {
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_emphasized_focused_border);
 	pointer-events: none;
-	border-radius: 0.35rem;
+	border-radius: var(--_ui5_button_emphasized_focused_border_radius);
 }
 
 :host([design="Transparent"]) {
