@@ -1,5 +1,5 @@
-commit 5b6259a58aa2b97cc0f12294d6c36d4b386cc50d
+commit 273a51f0598b3fa8664414df8fedab1055d4e208
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Oct 22 17:12:06 2021 +0300
+Date:   Mon Oct 25 10:04:26 2021 +0300
 
-    refactor: allow single quotes for style in hbs (#4154)
+    refactor: Extract all styles (#4159)
