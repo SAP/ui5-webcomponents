@@ -570,7 +570,7 @@ class TextArea extends UI5Element {
 
 	get styles() {
 		const lineHeight = 1.4 * 16;
-		let mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
+		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
 
 		return {
 			mirror: {
