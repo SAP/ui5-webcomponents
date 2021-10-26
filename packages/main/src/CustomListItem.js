@@ -67,6 +67,12 @@ class CustomListItem extends ListItem {
 		return [ListItem.styles, customListItemCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": [ListItem.links["@ui5/webcomponents"], "themes/CustomListItem.css"],
+		};
+	}
+
 	_onkeydown(event) {
 		const isTab = isTabNext(event) || isTabPrevious(event);
 

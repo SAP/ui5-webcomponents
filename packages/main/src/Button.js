@@ -292,6 +292,12 @@ class Button extends UI5Element {
 		return [buttonCss, isLegacyBrowser() && buttonIECss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": ["themes/Button.css", isLegacyBrowser() && "themes/Button.ie11.css"],
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}

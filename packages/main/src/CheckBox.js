@@ -262,6 +262,12 @@ class CheckBox extends UI5Element {
 		return checkboxCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/CheckBox.css",
+		};
+	}
+
 	constructor() {
 		super();
 

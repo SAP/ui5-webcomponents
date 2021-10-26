@@ -89,6 +89,12 @@ class YearPicker extends CalendarPart {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/YearPicker.css",
+		};
+	}
+
 	static get template() {
 		return YearPickerTemplate;
 	}

@@ -214,6 +214,16 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
+	static get packageName() {
+		return "@ui5/webcomponents";
+	}
+
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Icon.css",
+		};
+	}
+
 	static async onDefine() {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
 	}

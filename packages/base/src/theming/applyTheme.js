@@ -1,5 +1,7 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
+import { removeLink, createOrUpdateLink } from "../ManagedLinks.js";
+import { shouldUseLinks, getUrl } from "../CSP.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
@@ -16,12 +18,21 @@ const loadThemeBase = async theme => {
 		return;
 	}
 
-	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createOrUpdateStyle(cssText, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	if (shouldUseLinks()) {
+		const href = getUrl(BASE_THEME_PACKAGE, `themes/${theme}/parameters-bundle.css`);
+		createOrUpdateLink(href, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	} else {
+		const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
+		createOrUpdateStyle(cssText, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	}
 };
 
 const deleteThemeBase = () => {
-	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	if (shouldUseLinks()) {
+		removeLink("data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	} else {
+		removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	}
 };
 
 const loadComponentPackages = async theme => {
@@ -31,8 +42,13 @@ const loadComponentPackages = async theme => {
 			return;
 		}
 
-		const cssText = await getThemeProperties(packageName, theme);
-		createOrUpdateStyle(cssText, "data-ui5-theme-properties", packageName);
+		if (shouldUseLinks()) {
+			const href = getUrl(packageName, `themes/${theme}/parameters-bundle.css`);
+			createOrUpdateLink(href, "data-ui5-theme-properties", packageName);
+		} else {
+			const cssText = await getThemeProperties(packageName, theme);
+			createOrUpdateStyle(cssText, "data-ui5-theme-properties", packageName);
+		}
 	});
 };
 

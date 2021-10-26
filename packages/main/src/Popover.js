@@ -275,6 +275,12 @@ class Popover extends Popup {
 		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": ["themes/BrowserScrollbar.css", "themes/PopupsCommon.css", "themes/Popover.css"],
+		};
+	}
+
 	static get template() {
 		return PopoverTemplate;
 	}

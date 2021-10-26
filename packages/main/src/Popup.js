@@ -6,6 +6,8 @@ import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcompo
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import { shouldUseLinks, getUrl } from "@ui5/webcomponents-base/dist/CSP.js";
+import { hasLink, createLink } from "@ui5/webcomponents-base/dist/ManagedLinks.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -143,6 +145,14 @@ const metadata = {
 };
 
 const createBlockingStyle = () => {
+	if (shouldUseLinks()) {
+		if (!hasLink("data-ui5-popup-scroll-blocker")) {
+			const href = getUrl("@ui5/webcomponents", "themes/PopupGlobal.css");
+			createLink(href, "data-ui5-popup-scroll-blocker");
+		}
+		return;
+	}
+
 	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
 		createStyle(globalStyles, "data-ui5-popup-scroll-blocker");
 	}

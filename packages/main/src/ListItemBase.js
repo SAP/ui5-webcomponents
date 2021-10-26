@@ -88,6 +88,12 @@ class ListItemBase extends UI5Element {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/ListItemBase.css",
+		};
+	}
+
 	_onfocusin(event) {
 		if (event.isMarked === "button" || event.isMarked === "link") {
 			return;

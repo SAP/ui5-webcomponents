@@ -126,6 +126,12 @@ class ListItem extends ListItemBase {
 		return [ListItemBase.styles, styles];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": [ListItemBase.links["@ui5/webcomponents"], "themes/ListItem.css"],
+		};
+	}
+
 	static get dependencies() {
 		return [
 			Button,

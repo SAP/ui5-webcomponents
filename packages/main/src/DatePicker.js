@@ -387,6 +387,18 @@ class DatePicker extends DateComponentBase {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/DatePicker.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": ["themes/ResponsivePopoverCommon.css", "themes/DatePickerPopover.css"],
+		};
+	}
+
 	/**
 	 * @protected
 	 */

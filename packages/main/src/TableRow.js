@@ -162,6 +162,12 @@ class TableRow extends UI5Element {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/TableRow.css",
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}

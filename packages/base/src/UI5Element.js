@@ -615,17 +615,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		this._assertShadowRootStructure();
-
-		return this.shadowRoot.children.length === 1
-			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
-	}
-
-	_assertShadowRootStructure() {
-		const expectedChildrenCount = document.adoptedStyleSheets || isLegacyBrowser() ? 1 : 2;
-		if (this.shadowRoot.children.length !== expectedChildrenCount) {
+		const children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
+		if (children.length !== 1) {
 			console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
 		}
+
+		return children[0];
 	}
 
 	/**

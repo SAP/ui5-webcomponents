@@ -245,6 +245,12 @@ class Link extends UI5Element {
 		return linkCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Link.css",
+		};
+	}
+
 	onBeforeRendering() {
 		const needsNoReferrer = this.target === "_blank"
 			&& this.href

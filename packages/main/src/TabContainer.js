@@ -34,6 +34,8 @@ const SCROLL_STEP = 128;
 
 const tabStyles = [];
 const staticAreaTabStyles = [];
+const tabLinks = [];
+const staticAreaTabLinks = [];
 
 /**
  * @public
@@ -272,6 +274,18 @@ class TabContainer extends UI5Element {
 		return [ResponsivePopoverCommonCss, staticAreaTabStyles];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": [tabLinks, "themes/TabContainer.css"],
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": ["themes/ResponsivePopoverCommon.css", staticAreaTabLinks],
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}
@@ -290,6 +304,14 @@ class TabContainer extends UI5Element {
 
 	static registerStaticAreaTabStyles(styles) {
 		staticAreaTabStyles.push(styles);
+	}
+
+	static registerTabLinks(links) {
+		tabLinks.push(links);
+	}
+
+	static registerStaticAreaTabLinks(links) {
+		staticAreaTabLinks.push(links);
 	}
 
 	constructor() {

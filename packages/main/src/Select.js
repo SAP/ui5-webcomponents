@@ -310,6 +310,18 @@ class Select extends UI5Element {
 		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SelectPopoverCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Select.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": ["themes/ResponsivePopoverCommon.css", "themes/ValueStateMessage.css", "themes/SelectPopover.css"],
+		};
+	}
+
 	constructor() {
 		super();
 

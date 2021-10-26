@@ -172,6 +172,12 @@ class Tab extends UI5Element {
 		return css;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Tab.css",
+		};
+	}
+
 	static get dependencies() {
 		return [
 			Icon,
@@ -316,5 +322,7 @@ Tab.define();
 
 TabContainer.registerTabStyles(stripCss);
 TabContainer.registerStaticAreaTabStyles(overflowCss);
+TabContainer.registerTabLinks("themes/TabInStrip.css");
+TabContainer.registerStaticAreaTabLinks("themes/TabInOverflow.css");
 
 export default Tab;

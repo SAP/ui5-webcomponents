@@ -363,6 +363,22 @@ class TextArea extends UI5Element {
 		return styles;
 	}
 
+	static get staticAreaStyles() {
+		return valueStateMessageStyles;
+	}
+
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/TextArea.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": "themes/ValueStateMessage.css",
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}
@@ -373,10 +389,6 @@ class TextArea extends UI5Element {
 
 	static get staticAreaTemplate() {
 		return TextAreaPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return valueStateMessageStyles;
 	}
 
 	constructor() {

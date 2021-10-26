@@ -191,6 +191,18 @@ class Breadcrumbs extends UI5Element {
 		return breadcrumbsPopoverCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Breadcrumbs.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": "themes/BreadcrumbsPopover.css",
+		};
+	}
+
 	constructor() {
 		super();
 		this._initItemNavigation();

@@ -264,6 +264,12 @@ class AvatarGroup extends UI5Element {
 		return AvatarGroupCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/AvatarGroup.css",
+		};
+	}
+
 	static get dependencies() {
 		return [
 			Button,

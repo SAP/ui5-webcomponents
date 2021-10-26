@@ -93,6 +93,12 @@ class MonthPicker extends CalendarPart {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/MonthPicker.css",
+		};
+	}
+
 	onBeforeRendering() {
 		this._buildMonths();
 	}

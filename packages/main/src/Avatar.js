@@ -267,6 +267,12 @@ class Avatar extends UI5Element {
 		return AvatarCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Avatar.css",
+		};
+	}
+
 	static get template() {
 		return AvatarTemplate;
 	}

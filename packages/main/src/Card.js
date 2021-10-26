@@ -125,6 +125,12 @@ class Card extends UI5Element {
 		return cardCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Card.css",
+		};
+	}
+
 	get classes() {
 		return {
 			"ui5-card-root": true,

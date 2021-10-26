@@ -430,6 +430,12 @@ class List extends UI5Element {
 		return listCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/List.css",
+		};
+	}
+
 	static async onDefine() {
 		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}

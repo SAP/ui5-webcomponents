@@ -174,6 +174,12 @@ class CardHeader extends UI5Element {
 		return cardHeaderCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/CardHeader.css",
+		};
+	}
+
 	get classes() {
 		return {
 			"ui5-card-header": true,

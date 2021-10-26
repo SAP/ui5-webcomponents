@@ -297,6 +297,12 @@ class Tree extends UI5Element {
 		return TreeCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Tree.css",
+		};
+	}
+
 	static get template() {
 		return TreeTemplate;
 	}

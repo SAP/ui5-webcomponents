@@ -164,6 +164,22 @@ class TimePickerBase extends UI5Element {
 		return TimePickerCss;
 	}
 
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
+	}
+
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/TimePicker.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": ["themes/ResponsivePopoverCommon.css", "themes/TimePickerPopover.css"],
+		};
+	}
+
 	static get staticAreaTemplate() {
 		return TimePickerPopoverTemplate;
 	}
@@ -187,10 +203,6 @@ class TimePickerBase extends UI5Element {
 			getI18nBundle("@ui5/webcomponents"),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
 	}
 
 	constructor() {

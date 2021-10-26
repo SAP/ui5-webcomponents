@@ -268,6 +268,12 @@ class Panel extends UI5Element {
 		return panelCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Panel.css",
+		};
+	}
+
 	constructor() {
 		super();
 

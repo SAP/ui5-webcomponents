@@ -290,6 +290,12 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/RadioButton.css",
+		};
+	}
+
 	static get dependencies() {
 		return [Label];
 	}

@@ -166,6 +166,12 @@ class DayPicker extends CalendarPart {
 		return dayPickerCSS;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/DayPicker.css",
+		};
+	}
+
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._buildWeeks(localeData);

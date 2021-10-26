@@ -152,6 +152,12 @@ class WheelSlider extends UI5Element {
 		return WheelSliderCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/WheelSlider.css",
+		};
+	}
+
 	static get template() {
 		return WheelSliderTemplate;
 	}

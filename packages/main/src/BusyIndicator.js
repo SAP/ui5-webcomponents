@@ -180,6 +180,13 @@ class BusyIndicator extends UI5Element {
 		return busyIndicatorCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/BusyIndicator.css",
+		};
+	}
+
+
 	static get render() {
 		return litRender;
 	}

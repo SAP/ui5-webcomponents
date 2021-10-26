@@ -174,6 +174,12 @@ class TimeSelection extends UI5Element {
 		return timeSelectionCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/TimeSelection.css",
+		};
+	}
+
 	static get template() {
 		return timeSelectionTemplate;
 	}

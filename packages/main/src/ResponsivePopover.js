@@ -90,6 +90,12 @@ class ResponsivePopover extends Popover {
 		return [Popover.styles, ResponsivePopoverCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": [Popover.links["@ui5/webcomponents"], "themes/ResponsivePopover.css"],
+		};
+	}
+
 	get classes() {
 		const allClasses = super.classes;
 

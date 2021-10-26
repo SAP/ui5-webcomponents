@@ -105,6 +105,12 @@ class TableGroupRow extends UI5Element {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/TableGroupRow.css",
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}

@@ -64,6 +64,7 @@
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
     "hash": "wsrun --exclude-missing hash",
+
     "prerelease": "node ./.github/actions/pre-release.js"
   },
   "devDependencies": {

@@ -210,6 +210,12 @@ class Dialog extends Popup {
 		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": ["themes/BrowserScrollbar.css", "themes/PopupsCommon.css", "themes/Dialog.css"],
+		};
+	}
+
 	static _isHeader(element) {
 		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
 	}

@@ -98,6 +98,12 @@ class Title extends UI5Element {
 		return titleCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Title.css",
+		};
+	}
+
 	get normalizedLevel() {
 		return this.level.toLowerCase();
 	}

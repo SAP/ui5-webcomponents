@@ -228,6 +228,12 @@ class TreeListItem extends ListItem {
 		return [ListItem.styles, treeListItemCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": [ListItem.links["@ui5/webcomponents"], "themes/TreeListItem.css"],
+		};
+	}
+
 	static get metadata() {
 		return metadata;
 	}

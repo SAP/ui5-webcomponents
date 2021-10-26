@@ -130,6 +130,12 @@ class Label extends UI5Element {
 		return labelCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Label.css",
+		};
+	}
+
 	get classes() {
 		return {
 			textWrapper: {

@@ -390,6 +390,12 @@ class Table extends UI5Element {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Table.css",
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}

@@ -490,6 +490,18 @@ class Input extends UI5Element {
 		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Input.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": ["themes/ResponsivePopoverCommon.css", "themes/ValueStateMessage.css"],
+		};
+	}
+
 	constructor() {
 		super();
 		// Indicates if there is selected suggestionItem.

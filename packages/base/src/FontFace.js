@@ -1,4 +1,6 @@
 import { hasStyle, createStyle } from "./ManagedStyles.js";
+import { hasLink, createLink } from "./ManagedLinks.js";
+import { shouldUseLinks, getUrl } from "./CSP.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import fontFaceCSS from "./generated/css/FontFace.css.js";
 import overrideFontFaceCSS from "./generated/css/OverrideFontFace.css.js";
@@ -16,12 +18,28 @@ const insertFontFace = () => {
 };
 
 const insertMainFontFace = () => {
+	if (shouldUseLinks()) {
+		if (!hasLink("data-ui5-font-face")) {
+			const href = getUrl("@ui5/webcomponents-base", "FontFace.css");
+			createLink(href, "data-ui5-font-face");
+		}
+		return;
+	}
+
 	if (!hasStyle("data-ui5-font-face")) {
 		createStyle(fontFaceCSS, "data-ui5-font-face");
 	}
 };
 
 const insertOverrideFontFace = () => {
+	if (shouldUseLinks()) {
+		if (!hasLink("data-ui5-font-face-override")) {
+			const href = getUrl("@ui5/webcomponents-base", "OverrideFontFace.css");
+			createLink(href, "data-ui5-font-face-override");
+		}
+		return;
+	}
+
 	if (!hasStyle("data-ui5-font-face-override")) {
 		createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
 	}

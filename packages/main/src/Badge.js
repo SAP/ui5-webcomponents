@@ -126,6 +126,12 @@ class Badge extends UI5Element {
 		return badgeCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Badge.css",
+		};
+	}
+
 	static async onDefine() {
 		Badge.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}

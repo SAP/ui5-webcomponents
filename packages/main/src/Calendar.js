@@ -246,6 +246,12 @@ class Calendar extends CalendarPart {
 		return calendarCSS;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Calendar.css",
+		};
+	}
+
 	/**
 	 * @private
 	 */
