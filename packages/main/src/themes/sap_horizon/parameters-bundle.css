@@ -5,7 +5,7 @@
 @import "../base/Card-parameters.css";
 @import "../base/Carousel-parameters.css";
 @import "./CheckBox-parameters.css";
-@import "../base/ColorPalette-parameters.css";
+@import "./ColorPalette-parameters.css";
 @import "./ColorPicker-parameters.css";
 @import "../base/DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
@@ -29,7 +29,7 @@
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./WheelSlider-parameters.css";
-@import "../base/ToggleButton-parameters.css";
+@import "./ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "../base/Table-parameters.css";
