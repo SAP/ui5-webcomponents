@@ -67,7 +67,7 @@
 }
 
 :host([focused]) .ui5-link-root {
-	outline-offset: -1px;
-	outline: 1px dotted var(--sapContent_FocusColor);
+	border: var(--_ui5_link_focus);
+	border-radius: var(--_ui5_link_focus_border-radius);
 	text-decoration: underline;
 }
