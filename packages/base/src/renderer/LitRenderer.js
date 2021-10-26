@@ -5,9 +5,11 @@ import {
 	unsafeStatic,
 } from "lit-html/static.js";
 
-const litRender = (templateResult, domNode, styles, { host } = {}) => {
-	if (styles) {
-		templateResult = html`<style>${styles}</style>${templateResult}`;
+const litRender = (templateResult, domNode, styleOrLinks, { host } = {}) => {
+	if (typeof styleOrLinks === "string") {
+		templateResult = html`<style>${styleOrLinks}</style>${templateResult}`;
+	} else if (Array.isArray(styleOrLinks) && styleOrLinks.length) {
+		templateResult = html`${styleOrLinks.map(link => html`<link type="text/css" rel="stylesheet" href="${link}">`)}${templateResult}`;
 	}
 	render(templateResult, domNode, { host });
 };
