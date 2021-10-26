@@ -19,8 +19,8 @@
 	--_ui5_slider_handle_top: -0.825rem;
 	--_ui5_slider_handle_margin_left: -0.9725rem;
 	--_ui5_slider_handle_hover_background: var(--sapButton_Hover_Background);
-	--_ui5_slider_handle_hover_border: 2px solid var(--sapButton_Hover_BorderColor);
-	--_ui5_slider_handle_outline: 1px dotted var(--sapContent_FocusColor);
+	--_ui5_slider_handle_hover_border: 0.125rem solid var(--sapButton_Hover_BorderColor);
+	--_ui5_slider_handle_outline: 0.063rem dotted var(--sapContent_FocusColor);
 	--_ui5_slider_handle_focus_border: var(--_ui5_slider_handle_hover_border);
 	--_ui5_slider_handle_active_border: var(--_ui5_slider_handle_hover_border);
 	--_ui5_slider_handle_focused_top: var(--_ui5_slider_handle_top);
@@ -37,7 +37,7 @@
 	--_ui5_slider_tooltip_background: var(--sapField_Background);
 	--_ui5_slider_tooltip_border_radius: var(--sapElement_BorderCornerRadius);
 	--_ui5_slider_tooltip_border_color: var(--sapField_BorderColor);
-	--_ui5_slider_tooltip_border: 1px solid var(--_ui5_slider_tooltip_border_color);
+	--_ui5_slider_tooltip_border: 0.063rem solid var(--_ui5_slider_tooltip_border_color);
 	--_ui5_slider_tooltip_padding: 0.4125rem;
 	--_ui5_slider_tooltip_height: 1rem;
 	--_ui5_slider_tooltip_min_width: 2rem;
