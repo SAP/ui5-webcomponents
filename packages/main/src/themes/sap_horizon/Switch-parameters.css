@@ -2,10 +2,11 @@
 :root {
 	--_ui5_switch_root_after_outline: 0.125rem solid #0070f2;
 	--_ui5_switch_root_after_boreder: none;
-	--_ui5_switch_root_outline_top: 0.3125rem;
+	--_ui5_switch_focus_outline:none;
+	--_ui5_switch_root_outline_top: 0.25rem;
 	--_ui5_switch_root_outline_left: -0.0625rem;
 	--_ui5_switch_root_outline_right: -0.0625rem;
-	--_ui5_switch_root_outline_bottom: 0.3125rem;
+	--_ui5_switch_root_outline_bottom: 0.25rem;
 	--_ui5_switch_root_after_boreder_radius: 0.25rem;
 	--_ui5_switch_handle_semantic_checked_hover_bg: var(--_ui5_switch_handle_checked_bg);
 	--_ui5_switch_handle_semantic_hover_bg: var(--_ui5_switch_handle_checked_bg);

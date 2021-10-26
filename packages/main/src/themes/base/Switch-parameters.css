@@ -12,7 +12,7 @@
 	--_ui5_switch_compact_no_label_width: 2.5rem;
 
 	--_ui5_switch_focus_outline: 1px dotted var(--sapContent_FocusColor);
-
+	--_ui5_switch_root_after_boreder: var(--_ui5_switch_outline) dotted var(--sapContent_FocusColor);
 	--_ui5-switch-root-border-radius: 0;
 	--_ui5-switch-root-box-shadow: none;
 	--_ui5_switch_root_after_outline: none;
