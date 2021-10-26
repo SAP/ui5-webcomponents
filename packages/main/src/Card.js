@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
@@ -127,16 +126,15 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the <code>ui5-card</code>
+		 * Defines the IDs of the elements that label the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.9
+		 * @public
+		 * @since 1.0.0-rc.16
 		 */
-		ariaLabelledby: {
+		accessibleNameRef: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -256,6 +254,9 @@ class Card extends UI5Element {
 		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
+	// As in 0.31 we don't have all the accessibleNameRef, accessibleName related changes downported,
+	// we manually add getEffectiveAriaLabelText and getAriaLabelledByTexts methods and change them,
+	// so they work with accessibleName and accessibleNameRef, isntead of ariaLabel and ariaLabelledby
 	getEffectiveAriaLabelText(el) {
 		if (!el.accessibleNameRef) {
 			if (el.accessibleName) {
@@ -267,7 +268,7 @@ class Card extends UI5Element {
 	
 		return this.getAriaLabelledByTexts(el);
 	};
-
+	
 	getAriaLabelledByTexts(el, ownerDocument, readyIds = "") {
 		const ids = (readyIds && readyIds.split(" ")) || el.accessibleNameRef.split(" ");
 		const owner = ownerDocument || findNodeOwner(el);
@@ -284,7 +285,7 @@ class Card extends UI5Element {
 	
 		return result;
 	};
-	
+
 	get ariaLabelText() {
 		const effectiveAriaLabelText = this.getEffectiveAriaLabelText(this),
 			effectiveAriaLabel = effectiveAriaLabelText ? ` ${effectiveAriaLabelText}` : "";
