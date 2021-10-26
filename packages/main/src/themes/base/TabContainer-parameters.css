@@ -68,4 +68,7 @@
 	--_ui5_tc_overflowItem_default_color: var(--sapHighlightColor);
 	--_ui5_tc_overflowItem_current_color: CurrentColor;
 	--_ui5_tc_content_border_bottom: 0.125rem solid var(--sapObjectHeader_BorderColor);
+
+	--_ui5_tc_headerItem_focus_border_offset: -2px;
+	--_ui5_tc_headerItemIcon_focus_border_radius: 0;
 }
