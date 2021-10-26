@@ -143,8 +143,8 @@ bdi {
 	text-shadow: none;
 }
 
-:host([active]:not([_is-touch])) {
-	outline-color: var(--sapContent_FocusColor);
+:host([ui5-button]:not([design="Emphasized"])[active]:not([_is-touch])) {
+	outline-color: var(--_ui5_button_focus_outline_focus_color);
 }
 
 :host([design="Positive"]) {
@@ -175,7 +175,7 @@ bdi {
 }
 
 :host([design="Positive"][active][focused]) {
-	outline-color: var(--sapContent_FocusColor);
+	outline-color: var(--_ui5_button_focus_outline_focus_color);
 }
 
 :host([design="Negative"]) {
@@ -206,7 +206,7 @@ bdi {
 }
 
 :host([design="Negative"][active][focused]) {
-	outline-color: var(--sapContent_FocusColor);
+	outline-color: var(--_ui5_button_focus_outline_focus_color);
 }
 
 :host([design="Attention"]) {
@@ -238,7 +238,7 @@ bdi {
 }
 
 :host([design="Attention"][active][focused]) {
-	outline-color: var(--sapContent_FocusColor);
+	outline-color: var(--_ui5_button_focus_outline_focus_color);
 }
 
 :host([design="Emphasized"]) {
@@ -285,12 +285,12 @@ bdi {
 }
 
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
-	background-color: var(--sapButton_Lite_Hover_Background);
+	background-color: var(--_ui5_button_transparent_hover);
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
-	background-color: var(--sapButton_Lite_Hover_Background);
+	background-color: var(--_ui5_button_transparent_hover);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	box-shadow: var(--sapContent_Critical_Shadow)
 }
