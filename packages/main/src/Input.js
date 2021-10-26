@@ -40,6 +40,7 @@ import {
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
 
@@ -487,7 +488,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	constructor() {

@@ -49,6 +49,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
  * @public
@@ -388,7 +389,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	static get dependencies() {
