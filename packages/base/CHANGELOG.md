@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.22](https://github.com/SAP/ui5-webcomponents/compare/v0.31.21...v0.31.22) (2021-10-26)
+
+
+### Features
+
+* **framework:** allow using a custom i18n library ([#4119](https://github.com/SAP/ui5-webcomponents/issues/4119)) ([947889a](https://github.com/SAP/ui5-webcomponents/commit/947889a))
+
+
+### Reverts
+
+* feat(framework): allow using a custom i18n library ([debc848](https://github.com/SAP/ui5-webcomponents/commit/debc848))
+
+
+
+
+
 ## [0.31.21](https://github.com/SAP/ui5-webcomponents/compare/v0.31.20...v0.31.21) (2021-10-16)
 
 

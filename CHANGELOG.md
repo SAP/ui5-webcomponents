@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.22](https://github.com/SAP/ui5-webcomponents/compare/v0.31.21...v0.31.22) (2021-10-26)
+
+
+### Bug Fixes
+
+* **ui5-card:** fix  a11y "unique landmark" issue ([32e1477](https://github.com/SAP/ui5-webcomponents/commit/32e1477))
+([0769850](https://github.com/SAP/ui5-webcomponents/commit/0769850))
+
+
+### Features
+
+* **ui5-card:** introduce accessible-name-ref to replace aria-labelledby ([3f7138c](https://github.com/SAP/ui5-webcomponents/commit/3f7138c))
+
+
+### BREAKING CHANGE
+* **ui5-card:** introduce accessible-name-ref ([3f7138c](https://github.com/SAP/ui5-webcomponents/commit/3f7138c))
+If previously used "aria-labelledby", not you have to change it to accessible-name-ref
+
+
+
 ## [0.31.21](https://github.com/SAP/ui5-webcomponents/compare/v0.31.20...v0.31.21) (2021-10-16)
 
 
