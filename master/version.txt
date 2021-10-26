@@ -1,9 +1,8 @@
-commit daba3f0390d194931b6464c7011b1e8735298bd9
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Oct 26 15:36:41 2021 +0300
+commit f914d59cab0188fb37bbc74c61b0bf287339f647
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Oct 26 16:33:15 2021 +0300
 
-    feat(ui5-rating-indicator): SAP Horizon theme implementation (#4173)
+    chore: comment unstable test (#4184)
     
-    * feat(ui5-rating-indicator): SAP Horizon theme implementation
-    
-    * opacity enhaanced
+    Issue to investigate the test failure has been created
+    #4185
