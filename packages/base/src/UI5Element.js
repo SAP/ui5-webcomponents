@@ -18,7 +18,6 @@ import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
 
 let autoId = 0;
 
