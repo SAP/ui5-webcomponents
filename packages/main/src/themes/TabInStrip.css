@@ -195,7 +195,8 @@
 /*** END Icon and text Tab styles ***/
 
 /*** TextOnly Tab styles ***/
-.ui5-tab-strip-item--textOnly {
+.ui5-tab-strip-item--textOnly,
+.ui5-tab-strip-item.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--inline {
     font-size: var(--sapFontSize);
     height: var(--_ui5_tc_item_text_only_height);
     display: flex;

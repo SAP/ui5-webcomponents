@@ -179,6 +179,16 @@ class Tab extends UI5Element {
 		];
 	}
 
+	get displayText() {
+		let text = this.text;
+
+		if (this._isInline && this.additionalText) {
+			text += ' (' + this.additionalText + ')';
+		}
+
+		return text;
+	}
+
 	get isSeparator() {
 		return false;
 	}
