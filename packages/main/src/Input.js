@@ -1155,6 +1155,10 @@ class Input extends UI5Element {
 
 	get classes() {
 		return {
+			popover: {
+				"ui5-suggestions-popover": !this.isPhone && this.showSuggestions,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.showSuggestions && this.hasValueStateMessage,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
