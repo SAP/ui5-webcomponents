@@ -134,6 +134,12 @@ class Bar extends UI5Element {
 		return BarCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/Bar.css",
+		};
+	}
+
 	static get template() {
 		return BarTemplate;
 	}

@@ -186,7 +186,6 @@ class BusyIndicator extends UI5Element {
 		};
 	}
 
-
 	static get render() {
 		return litRender;
 	}

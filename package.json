@@ -64,11 +64,12 @@
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
     "hash": "wsrun --exclude-missing hash",
-
+    "copy-css": "copy-and-watch \"packages/base/dist/css/**/*\" packages/main/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/main/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/main/dist/resources/css/main/ && copy-and-watch \"packages/base/dist/css/**/*\" packages/fiori/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/fiori/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/fiori/dist/resources/css/main/",
     "prerelease": "node ./.github/actions/pre-release.js"
   },
   "devDependencies": {
     "command-line-args": "^5.1.1",
+    "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",
     "glob": "^7.2.0",
     "glob-promise": "^4.1.0",
