@@ -532,7 +532,7 @@ class Popover extends Popup {
 			if (allowTargetOverlap) {
 				top = Math.max(Math.min(targetRect.bottom + arrowOffset, clientHeight - popoverSize.height), 0);
 			} else {
-				top =  this._opener.offsetTop + this._opener.offsetHeight + arrowOffset;
+				top = targetRect.bottom + document.documentElement.scrollTop + arrowOffset;
 				maxHeight = clientHeight - targetRect.bottom - arrowOffset;
 			}
 			break;
