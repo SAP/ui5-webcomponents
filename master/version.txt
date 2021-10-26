@@ -1,8 +1,5 @@
-commit f914d59cab0188fb37bbc74c61b0bf287339f647
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 26 16:33:15 2021 +0300
+commit 49396e7c3606eabc73977280d7ca5abf2f9edc10
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Tue Oct 26 17:35:59 2021 +0300
 
-    chore: comment unstable test (#4184)
-    
-    Issue to investigate the test failure has been created
-    #4185
+    chore: fix UI5 typo in readme (#4186)
