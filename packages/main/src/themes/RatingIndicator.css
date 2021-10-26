@@ -19,7 +19,8 @@
 }
 
 :host([_focused]) {
-	outline: 1px dotted var(--sapContent_FocusColor);
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	border-radius: var(--_ui5_rating_indicator_border_radius);
 }
 
 .ui5-rating-indicator-root {
