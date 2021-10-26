@@ -1,0 +1,5 @@
+@import "../base/ColorPalette-parameters.css";
+
+:root {
+    --_ui5_color_picker_slider_handle_border-focus: 0.125rem solid var(--sapContent_FocusColor);
+}
