@@ -174,7 +174,7 @@
 
 .ui5-color-picker-alpha-slider::part(handle):hover,
 .ui5-color-picker-hue-slider::part(handle):hover {
-    border: 0.125rem solid var(--sapButton_Hover_BorderColor);
+    border: var(--_ui5_color_picker_slider_handle_border-hover);
 }
 
 .ui5-color-picker-alpha-slider::part(handle):focus,
