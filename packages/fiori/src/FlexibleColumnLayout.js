@@ -273,6 +273,12 @@ class FlexibleColumnLayout extends UI5Element {
 		return FlexibleColumnLayoutCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/FlexibleColumnLayout.css",
+		};
+	}
+
 	static get template() {
 		return FlexibleColumnLayoutTemplate;
 	}

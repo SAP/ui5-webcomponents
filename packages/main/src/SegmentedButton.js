@@ -102,6 +102,12 @@ class SegmentedButton extends UI5Element {
 		return SegmentedButtonCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/SegmentedButton.css",
+		};
+	}
+
 	static get dependencies() {
 		return [SegmentedButtonItem];
 	}

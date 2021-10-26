@@ -398,6 +398,12 @@ class ShellBar extends UI5Element {
 		return styles;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/ShellBar.css",
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}

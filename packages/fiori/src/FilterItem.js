@@ -83,6 +83,13 @@ class FilterItem extends ListItem {
 		return [ListItem.styles, FilterItemCSS];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": ListItem.links["@ui5/webcomponents"],
+			"@ui5/webcomponents-fiori": "themes/FilterItem.css",
+		};
+	}
+
 	static get template() {
 		return FilterItemTemplate;
 	}

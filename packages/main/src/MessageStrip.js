@@ -152,6 +152,12 @@ class MessageStrip extends UI5Element {
 		return messageStripCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/MessageStrip.css",
+		};
+	}
+
 	constructor() {
 		super();
 	}

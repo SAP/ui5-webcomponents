@@ -156,6 +156,12 @@ class Switch extends UI5Element {
 		return switchCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Switch.css",
+		};
+	}
+
 	static get render() {
 		return litRender;
 	}

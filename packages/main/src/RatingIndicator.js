@@ -168,6 +168,12 @@ class RatingIndicator extends UI5Element {
 		return RatingIndicatorCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/RatingIndicator.css",
+		};
+	}
+
 	static get template() {
 		return RatingIndicatorTemplate;
 	}

@@ -265,6 +265,12 @@ class ViewSettingsDialog extends UI5Element {
 		return viewSettingsDialogCSS;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/ViewSettingsDialog.css",
+		};
+	}
+
 	static async onDefine() {
 		ViewSettingsDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}

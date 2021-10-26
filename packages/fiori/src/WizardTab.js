@@ -164,6 +164,12 @@ class WizardTab extends UI5Element {
 		return WizardTabCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/WizardTab.css",
+		};
+	}
+
 	static get template() {
 		return WizardTabTemplate;
 	}

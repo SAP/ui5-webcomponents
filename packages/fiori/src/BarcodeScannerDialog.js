@@ -137,6 +137,12 @@ class BarcodeScannerDialog extends UI5Element {
 		return [barcodeScannerDialogCss];
 	}
 
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/BarcodeScannerDialog.css",
+		};
+	}
+
 	static async onDefine() {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}

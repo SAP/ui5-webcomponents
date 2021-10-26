@@ -208,16 +208,28 @@ class Popup extends UI5Element {
 		return styles;
 	}
 
+	static get staticAreaStyles() {
+		return staticAreaStyles;
+	}
+
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Popup.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": "themes/PopupStaticAreaStyles.css",
+		};
+	}
+
 	static get template() {
 		return PopupTemplate;
 	}
 
 	static get staticAreaTemplate() {
 		return PopupBlockLayer;
-	}
-
-	static get staticAreaStyles() {
-		return staticAreaStyles;
 	}
 
 	onEnterDOM() {

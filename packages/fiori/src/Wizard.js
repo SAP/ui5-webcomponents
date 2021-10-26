@@ -289,6 +289,18 @@ class Wizard extends UI5Element {
 		return WizardPopoverCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/Wizard.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/WizardPopover.css",
+		};
+	}
+
 	static get template() {
 		return WizardTemplate;
 	}
