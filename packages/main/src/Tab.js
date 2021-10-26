@@ -183,7 +183,7 @@ class Tab extends UI5Element {
 		let text = this.text;
 
 		if (this._isInline && this.additionalText) {
-			text += ' (' + this.additionalText + ')';
+			text += ` (${this.additionalText})`;
 		}
 
 		return text;
