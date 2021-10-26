@@ -532,7 +532,7 @@ class Popover extends Popup {
 			if (allowTargetOverlap) {
 				top = Math.max(Math.min(targetRect.bottom + arrowOffset, clientHeight - popoverSize.height), 0);
 			} else {
-				top = targetRect.bottom + arrowOffset;
+				top =  this._opener.offsetTop + this._opener.offsetHeight + arrowOffset;
 				maxHeight = clientHeight - targetRect.bottom - arrowOffset;
 			}
 			break;
@@ -595,6 +595,7 @@ class Popover extends Popup {
 			this._top = Math.round(top);
 		}
 
+		// this._opener.value = `top: ${top}; offsetTop: ${this._opener.offsetTop}; pageYOffset: ${window.pageYOffset}`;
 		return {
 			arrowX: arrowPos.x,
 			arrowY: arrowPos.y,
