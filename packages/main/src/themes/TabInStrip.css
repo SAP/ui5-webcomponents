@@ -108,6 +108,7 @@
 
 .ui5-tab-strip-item--withIcon:focus .ui5-tab-strip-item-icon-outer::before {
 	content: "";
+	pointer-events: none;
 	position: absolute;
 	border: var(--_ui5_tc_headerItem_focus_border);
 	left: var(--_ui5_tc_headerItem_focus_border_offset);
