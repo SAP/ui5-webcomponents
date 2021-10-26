@@ -1,5 +1,9 @@
-commit 1b6f3d4fb529cc24e32edffd0c0e1d6db85e3da7
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Tue Oct 26 11:06:18 2021 +0300
+commit daba3f0390d194931b6464c7011b1e8735298bd9
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Oct 26 15:36:41 2021 +0300
 
-    SAP Horzion applied to color-palette (#4163)
+    feat(ui5-rating-indicator): SAP Horizon theme implementation (#4173)
+    
+    * feat(ui5-rating-indicator): SAP Horizon theme implementation
+    
+    * opacity enhaanced
