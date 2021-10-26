@@ -23,4 +23,6 @@
 	--_ui5_slider_handle_box_shadow_focus: 0 0 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor);
 	--_ui5_slider_handle_outline: none;
 	--_ui5_slider_tooltip_background: #FFF;
+	--_ui5_range_slider_legacy_progress_focus_display: none;
+	--_ui5_range_slider_progress_focus_display: block;
 } 

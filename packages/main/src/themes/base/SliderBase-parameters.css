@@ -44,4 +44,6 @@
 	--_ui5_slider_tooltip_bottom: 2rem;
 	--_ui5_slider_label_fontsize: var(--sapFontSmallSize);
 	--_ui5_slider_label_color: var(--sapContent_LabelColor);
+	--_ui5_range_slider_progress_focus_display: none;
+	--_ui5_range_slider_legacy_progress_focus_display: block;
 }
