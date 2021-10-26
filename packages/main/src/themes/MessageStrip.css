@@ -89,11 +89,6 @@
 	position: absolute;
 	right: 0.125rem;
 	top: 0.125rem;
-	color: var(--sapTextColor);
-}
-
-.ui5-messagestrip-close-button[active] {
-	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-messagestrip-close-button::part(icon) {
