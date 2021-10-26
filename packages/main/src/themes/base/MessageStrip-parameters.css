@@ -1,10 +1,10 @@
 :root{
 	--_ui5_messagestrip_icon_width: 2.5rem;
 	--_ui5_messagestrip_border_radius: 0.1875rem;
-	--ui5_messagestrip_success_border_color: var(--sapSuccessBorderColor);
-	--ui5_messagestrip_error_border_color: var(--sapErrorBorderColor);
-	--ui5_messagestrip_warning_border_color: var(--sapWarningBorderColor);
-	--ui5_messagestrip_information_border_color: var(--sapInformationBorderColor);
+	--_ui5_messagestrip_success_border_color: var(--sapSuccessBorderColor);
+	--_ui5_messagestrip_error_border_color: var(--sapErrorBorderColor);
+	--_ui5_messagestrip_warning_border_color: var(--sapWarningBorderColor);
+	--_ui5_messagestrip_information_border_color: var(--sapInformationBorderColor);
 	--_ui5_messagestrip_button_border_width: 0;
 	--_ui5_messagestrip_button_border_style: none;
 	--_ui5_messagestrip_button_border_color: transparent;

@@ -28,7 +28,7 @@
 
 .ui5-messagestrip-root--info {
 	background-color: var(--sapInformationBackground);
-	border-color: var(--ui5_messagestrip_information_border_color);
+	border-color: var(--_ui5_messagestrip_information_border_color);
 	color: var(--sapTextColor);
 }
 
@@ -38,7 +38,7 @@
 
 .ui5-messagestrip-root--positive {
 	background-color: var(--sapSuccessBackground);
-	border-color: var(--ui5_messagestrip_success_border_color);
+	border-color: var(--_ui5_messagestrip_success_border_color);
 }
 
 .ui5-messagestrip-root--positive .ui5-messagestrip-icon {
@@ -47,7 +47,7 @@
 
 .ui5-messagestrip-root--negative {
 	background-color: var(--sapErrorBackground);
-	border-color: var(--ui5_messagestrip_error_border_color);
+	border-color: var(--_ui5_messagestrip_error_border_color);
 }
 
 .ui5-messagestrip-root--negative .ui5-messagestrip-icon {
@@ -56,7 +56,7 @@
 
 .ui5-messagestrip-root--warning {
 	background-color: var(--sapWarningBackground);
-	border-color: var(--ui5_messagestrip_warning_border_color);
+	border-color: var(--_ui5_messagestrip_warning_border_color);
 }
 
 .ui5-messagestrip-root--warning .ui5-messagestrip-icon {
