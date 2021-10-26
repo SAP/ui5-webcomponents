@@ -34,12 +34,8 @@
 
 .ui5-popup-header-root:focus {
 	outline: var(--_ui5_dialog_outline);
+    border-radius: var(--_ui5_dialog_header_border_radius);
 	outline-offset: var(--_ui5_dialog_header_focus_offset);
-}
-
-.ui5-popup-header-root:focus {
-    border-radius: var(--_ui5_dialog_border_radius);
-    border: var(--_ui5_dialog_focus_border);
 }
 
 .ui5-popup-root {
