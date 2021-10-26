@@ -226,6 +226,12 @@ class UploadCollection extends UI5Element {
 		return UploadCollectionCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/UploadCollection.css",
+		};
+	}
+
 	static get template() {
 		return UploadCollectionTemplate;
 	}

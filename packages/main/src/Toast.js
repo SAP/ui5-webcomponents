@@ -155,6 +155,12 @@ class Toast extends UI5Element {
 		return ToastCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/Toast.css",
+		};
+	}
+
 	static get template() {
 		return ToastTemplate;
 	}

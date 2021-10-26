@@ -249,16 +249,28 @@ class FileUploader extends UI5Element {
 		return FileUploaderCss;
 	}
 
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+	}
+
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/FileUploader.css",
+		};
+	}
+
+	static get staticAreaLinks() {
+		return {
+			"@ui5/webcomponents": ["themes/ResponsivePopoverCommon.css", "themes/ValueStateMessage.css"],
+		};
+	}
+
 	static get template() {
 		return FileUploaderTemplate;
 	}
 
 	static get staticAreaTemplate() {
 		return FileUploaderPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	constructor() {

@@ -258,6 +258,13 @@ class UploadCollectionItem extends ListItem {
 		return [ListItem.styles, UploadCollectionItemCss];
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": ListItem.links["@ui5/webcomponents"],
+			"@ui5/webcomponents-fiori": "themes/UploadCollectionItem.css",
+		};
+	}
+
 	static get template() {
 		return UploadCollectionItemTemplate;
 	}

@@ -204,6 +204,12 @@ class IllustratedMessage extends UI5Element {
 		return IllustratedMessageCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/IllustratedMessage.css",
+		};
+	}
+
 	static get template() {
 		return IllustratedMessageTemplate;
 	}

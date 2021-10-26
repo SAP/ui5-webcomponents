@@ -136,6 +136,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return NotificationListGroupItemCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/NotificationListGroupItem.css",
+		};
+	}
+
 	static get template() {
 		return NotificationListGroupItemTemplate;
 	}

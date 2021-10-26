@@ -172,6 +172,12 @@ class Page extends UI5Element {
 		return PageCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents-fiori": "themes/Page.css",
+		};
+	}
+
 	static get template() {
 		return PageTemplate;
 	}

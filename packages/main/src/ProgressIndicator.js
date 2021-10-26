@@ -134,6 +134,12 @@ class ProgressIndicator extends UI5Element {
 		return ProgressIndicatorCss;
 	}
 
+	static get links() {
+		return {
+			"@ui5/webcomponents": "themes/ProgressIndicator.css",
+		};
+	}
+
 	static get template() {
 		return ProgressIndicatorTemplate;
 	}
