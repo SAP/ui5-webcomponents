@@ -18,6 +18,7 @@ import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import preloadLinks from "./theming/preloadLinks.js";
 
 let autoId = 0;
 
@@ -982,6 +983,7 @@ class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			window.customElements.define(tag, this);
+			preloadLinks(this);
 
 			if (altTag && !customElements.get(altTag)) {
 				registerTag(altTag);
