@@ -61,6 +61,8 @@
 	--_ui5_tl_indicator_before_bottom: -1.625rem;
 	--_ui5_tl_padding: 1rem 1rem 1rem .5rem;
 	--_ui5_tl_li_margin_bottom: 1.625rem;
+
+	/*switch*/
 	--_ui5_switch_text_on_left: calc(-100% + 1.9125rem);
 	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.875rem);
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
@@ -221,6 +223,7 @@
 	--_ui5_wheelslider_arrows_visibility: visible;
 	--_ui5_wheelslider_mobile_selection_frame_margin_top: 128px;
 
+	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
 	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
@@ -228,7 +231,7 @@
 	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
 	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
 	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
-	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_compact_no_label_height);
+	--_ui5_switch_no_label_width_horizon: var(--_ui5_switch_compact_no_label_width_horizon);
 	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
 	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
 

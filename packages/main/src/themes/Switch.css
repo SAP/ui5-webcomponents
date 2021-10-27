@@ -236,8 +236,9 @@
 	background: var(--_ui5_switch_semantic_button_background);
 }
 
-/* switch semantic icon */
-.ui5-switch-root.ui5-switch--semantic .ui5-switch-text {
+/* switch semantic icon and type noLabel icon in horizon theme */
+.ui5-switch-root.ui5-switch--semantic .ui5-switch-text,
+.ui5-switch-root.ui5-switch--no-label .ui5-switch-text {
 	display: flex;
 	justify-content: center;
 	font-size: var(--sapFontSmallSize);

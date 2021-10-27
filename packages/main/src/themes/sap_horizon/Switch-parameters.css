@@ -16,7 +16,9 @@
 	--_ui5_switch_track_semantic_not_checked_border_color: transparent;
 	--_ui5_switch_track_semantic_checked_hover_border_color: transparent;
 	--_ui5_switch_track_semantic_hover_border_color:transparent;
-	--_ui5_switch_no_label_width: var(--_ui5_switch_width);
+	--_ui5_switch_no_label_width: var(--_ui5_switch_no_label_width_horizon);
+	--_ui5_switch_compact_no_label_width: var(--_ui5_switch_compact_no_label_width_horizon);
+	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_no_label_height_horizont);
 	--_ui5_switch_handle_hover_border_color: transparent;
 	--_ui5-switch-track-icon-display: inline-block;
 }
