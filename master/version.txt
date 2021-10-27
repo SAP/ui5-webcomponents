@@ -1,5 +1,5 @@
-commit 1865ffa24f192db00f821717040538657caf8871
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed Oct 27 09:50:31 2021 +0300
+commit 3618617743a4c2c0874703c9b414f37323eb49c5
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Wed Oct 27 10:17:42 2021 +0300
 
-    feat(ui5-panel): SAP Horizon theme implementation (#4170)
+    feat(ui5-toast): SAP Horizon theme implementation (#4174)
