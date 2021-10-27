@@ -11,20 +11,20 @@ import { shouldUseLinks } from "./CSP.js";
  * @param forStaticArea
  */
 const updateShadowRoot = (element, forStaticArea = false) => {
-	let styleStringOrLinksHrefs;
+	let styleStrOrHrefsArr;
 	const template = forStaticArea ? "staticAreaTemplate" : "template";
 	const shadowRoot = forStaticArea ? element.staticAreaItem.shadowRoot : element.shadowRoot;
 	const renderResult = executeTemplate(element.constructor[template], element);
 
 	if (shouldUseLinks()) {
-		styleStringOrLinksHrefs = getEffectiveLinksHrefs(element.constructor, forStaticArea);
+		styleStrOrHrefsArr = getEffectiveLinksHrefs(element.constructor, forStaticArea);
 	} else if (document.adoptedStyleSheets) { // Chrome
 		shadowRoot.adoptedStyleSheets = getConstructableStyle(element.constructor, forStaticArea);
 	} else if (!isLegacyBrowser()) { // FF, Safari
-		styleStringOrLinksHrefs = getEffectiveStyle(element.constructor, forStaticArea);
+		styleStrOrHrefsArr = getEffectiveStyle(element.constructor, forStaticArea);
 	}
 
-	element.constructor.render(renderResult, shadowRoot, styleStringOrLinksHrefs, { host: element });
+	element.constructor.render(renderResult, shadowRoot, styleStrOrHrefsArr, { host: element });
 };
 
 export default updateShadowRoot;
