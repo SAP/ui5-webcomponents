@@ -5,7 +5,7 @@ const getStylesString = styles => {
 		}).join(" ");
 	}
 
-	return styles.content;
+	return typeof styles === "string" ? styles : styles.content;
 };
 
 const flatten = arr => {

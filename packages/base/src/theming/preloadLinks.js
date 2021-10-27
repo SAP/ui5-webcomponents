@@ -1,4 +1,4 @@
-import getEffectiveLinks from "./getEffectiveLinks.js";
+import getEffectiveLinksHrefs from "./getEffectiveLinksHrefs.js";
 import createLinkInHead from "../util/createLinkInHead.js";
 import { shouldUseLinks, shouldPreloadLinks } from "../CSP.js";
 
@@ -7,11 +7,11 @@ const preloadLinks = ElementClass => {
 		return;
 	}
 
-	const styles = getEffectiveLinks(ElementClass, false) || [];
-	const staticAreaStyles = getEffectiveLinks(ElementClass, true) || [];
+	const linksHrefs = getEffectiveLinksHrefs(ElementClass, false) || [];
+	const staticAreaLinksHrefs = getEffectiveLinksHrefs(ElementClass, true) || [];
 
-	[...styles, ...staticAreaStyles].forEach(href => {
-		createLinkInHead(href, { rel: "preload" });
+	[...linksHrefs, ...staticAreaLinksHrefs].forEach(href => {
+		createLinkInHead(href, { rel: "preload", as: "style" });
 	});
 };
 
