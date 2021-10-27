@@ -1,0 +1,6 @@
+@import "../base/DayPicker-parameters.css";
+
+:root {
+	--_ui5_daypicker_item_border_radius: 0.25rem;
+	--_ui5_daypicker_item_now_inner_border_radius: 0.125rem;
+}

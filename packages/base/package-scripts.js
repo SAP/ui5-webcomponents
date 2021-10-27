@@ -1,6 +1,7 @@
 const resolve = require("resolve");
 
 const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate-asset-parameters/index.js");
+const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/index.js");
 const serve = resolve.sync("@ui5/webcomponents-tools/lib/serve/index.js");
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
@@ -12,7 +13,7 @@ const UP_TO_DATE = `node "${hashIsUpToDate}" dist/ hash.txt && echo "Up to date.
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
 	lint: "eslint . --config config/.eslintrc.js",
-	prepare: "nps clean integrate copy generateAssetParameters",
+	prepare: "nps clean integrate copy generateAssetParameters generateStyles",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.copy-overlay integrate.replace-amd integrate.replace-export-true integrate.replace-export-false integrate.amd-to-es6 integrate.replace-global-core-usage integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -35,15 +36,17 @@ const scripts = {
 	},
 	copy: {
 		default: "nps copy.src copy.test",
-		src: `copy-and-watch "src/**/*.js" dist/`,
+		src: `copy-and-watch "src/**/*.{js,css}" dist/`,
 		test: `copy-and-watch "test/**/*.*" dist/test-resources`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
+	generateStyles: `node "${stylesScript}"`,
 	watch: {
-		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle"',
+		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
 		test: 'nps "copy.test --watch --skip-initial-copy"',
 		bundle: "rollup --config config/rollup.config.js -w --environment DEV",
+		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	dev: 'concurrently "nps serve" "nps watch"',
 	start: "nps prepare dev",

@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -385,7 +385,6 @@ class TextArea extends UI5Element {
 		this._firstRendering = true;
 		this._openValueStateMsgPopover = false;
 		this._fnOnResize = this._onResize.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -545,9 +544,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
+					exceededText = TextArea.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, leftCharactersCount);
 				} else {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
+					exceededText = TextArea.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, Math.abs(leftCharactersCount));
 				}
 			}
 		} else {
@@ -657,12 +656,10 @@ class TextArea extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -671,7 +668,7 @@ class TextArea extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

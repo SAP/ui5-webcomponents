@@ -7,56 +7,20 @@
 
 	<title>Flexible Column Layout</title>
 
-	<script>delete Document.prototype.adoptedStyleSheets</script>
+	<script>// delete Document.prototype.adoptedStyleSheets</script>
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html, body {
-			padding: 0;
-			margin: 0;
-		}
-
-		.sectionTitle, ui5-input, .testButton {
-			margin-left: 1rem;
-		}
-
-		.col {
-			height: 100%;
-		}
-
-		.colHeader {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			height: 2.75rem;
-			padding: 0.25rem 1rem 0.25rem 1rem;
-			background: var(--sapList_Background);
-			box-sizing: border-box;
-		}
-
-		.colSubHeader {
-			display: flex;
-			align-items: center;
-			box-sizing: border-box;
-		}
-
-		.productInfo {
-			display:flex;
-			flex-direction: row;
-			align-items: center;
-			flex-wrap: wrap;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/FCLCustom.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="fclcustom1auto">
 
 	<ui5-flexible-column-layout id="fcl3" layout="ThreeColumnsMidExpanded">
 		<!-- start column -->
-		<div style="box-sizing: border-box;" slot="startColumn">
-			<div style="padding: 1rem">
+		<div class="fclcustom2auto" slot="startColumn">
+			<div class="fclcustom3auto">
 				<ui5-title>Column 1</ui5-title>
 			</div>
 			<ui5-list>
@@ -72,8 +36,8 @@
 		</div>
 
 		<!-- mid column -->
-		<div style="box-sizing: border-box;" slot="midColumn">
-			<div style="padding: 1rem">
+		<div class="fclcustom2auto" slot="midColumn">
+			<div class="fclcustom3auto">
 				<ui5-title>Column 2</ui5-title>
 			</div>
 			<ui5-list>
@@ -89,8 +53,8 @@
 		</div>
 
 		<!-- end column -->
-		<div style="box-sizing: border-box;" slot="endColumn">
-			<div style="padding: 1rem">
+		<div class="fclcustom2auto" slot="endColumn">
+			<div class="fclcustom3auto">
 				<ui5-title>Column 3</ui5-title>
 			</div>
 

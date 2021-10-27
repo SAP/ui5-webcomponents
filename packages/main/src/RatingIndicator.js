@@ -8,7 +8,7 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
@@ -173,14 +173,13 @@ class RatingIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		RatingIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
 
 		this._liveValue = null; // stores the value to determine when to fire change
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -271,11 +270,11 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get defaultTooltip() {
-		return this.i18nBundle.getText(RATING_INDICATOR_TOOLTIP_TEXT);
+		return RatingIndicator.i18nBundle.getText(RATING_INDICATOR_TOOLTIP_TEXT);
 	}
 
 	get _ariaRoleDescription() {
-		return this.i18nBundle.getText(RATING_INDICATOR_TEXT);
+		return RatingIndicator.i18nBundle.getText(RATING_INDICATOR_TEXT);
 	}
 
 	get _ariaDisabled() {

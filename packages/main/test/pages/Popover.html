@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="height: 100%">
+<html class="popover1auto">
 
 <head>
 	<meta charset="UTF-8">
@@ -18,25 +18,18 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-date-picker,
-		ui5-select,
-		ui5-input,
-		ui5-multi-combobox {
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Popover.css">
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="popover2auto">
 	<!-- <ui5-button id="btnOpenPopover" design="Emphasized" icon="employee">Open Popover</ui5-button>
 
 	<ui5-popover id="popoverToOpen" header-text="Popover">
-		<div style="padding: 1rem;text-align: center;">
+		<div class="popover3auto">
 			<ui5-title level="H2">Hello World!</ui5-title>
 		</div>
 		<ui5-textarea
@@ -44,8 +37,8 @@
 			max-length="2"
 			show-exceeded-text>
 		</ui5-textarea>
-		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
-			<div style="flex: 1;"></div>
+		<div slot="footer" class="popover4auto">
+			<div class="popover5auto"></div>
 			<ui5-button id="btnInPopover">Close</ui5-button>
 
 
@@ -60,7 +53,7 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top" accessible-name="This popover is important">
+	<ui5-popover header-text="My Heading" id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -208,36 +201,36 @@
 	<br>
 	<ui5-title>placement-type="Right", but no space on the right</ui5-title>
 	<p>No space on the Right, try Left, Bottom, Top</p>
-	<ui5-button id="btnFullWidth" style="width: 100%">Click me !</ui5-button>
+	<ui5-button id="btnFullWidth" class="popover7auto">Click me !</ui5-button>
 	<br>
 	<br>
 	<ui5-title>placement-type="Right" (default) and allow-target-overlap=true </ui5-title>
 	<p>No space on the right, try Left, Bottom, Top and if nothing works, the target will be overlapped</p>
-	<ui5-button id="btnFullWidthTargetOverlap" style="width: 100%">Click me !</ui5-button>
+	<ui5-button id="btnFullWidthTargetOverlap" class="popover7auto">Click me !</ui5-button>
 
 	<br>
 	<br>
 	<ui5-title>placement-type="Left", but no space on the left</ui5-title>
 	<p>No space on the Left, try Right, Bottom, Top</p>
-	<ui5-button id="btnFullWidthLeft" style="width: 100%">Click me !</ui5-button>
+	<ui5-button id="btnFullWidthLeft" class="popover7auto">Click me !</ui5-button>
 
 	<br>
 	<br>
 	<ui5-title>placement-type="Left" and allow-target-overlap=true</ui5-title>
 	<p>No space on the right, try Roght, Bottom, Top and if nothing works, the target will be overlapped</p>
-	<ui5-button id="btnFullWidthLeftTargetOverlap" style="width: 100%">Click me !</ui5-button>
+	<ui5-button id="btnFullWidthLeftTargetOverlap" class="popover7auto">Click me !</ui5-button>
 
 	<br>
 	<br>
 	<ui5-title>placement-type="Top"</ui5-title>
-	<ui5-button id="btnFullWidthTop" style="width: 100%">Click me !</ui5-button>
+	<ui5-button id="btnFullWidthTop" class="popover7auto">Click me !</ui5-button>
 
 	<br>
 	<br>
 	<ui5-title>placement-type="Bottom"</ui5-title>
-	<ui5-button id="btnFullWidthBottom" style="width: 100%">Click me !</ui5-button>
+	<ui5-button id="btnFullWidthBottom" class="popover7auto">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="popFullWidth" style="width: 300px" >
+	<ui5-popover header-text="My Heading" id="popFullWidth" class="popover6auto" >
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -249,32 +242,7 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover allow-target-overlap header-text="My Heading" id="popFullWidthTargetOverlap" style="width: 300px" >
-		<div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-
-		<ui5-list>
-			<ui5-li>Hello</ui5-li>
-			<ui5-li>World</ui5-li>
-			<ui5-li>Again</ui5-li>
-		</ui5-list>
-	</ui5-popover>
-
-
-	<ui5-popover header-text="My Heading" id="popFullWidthLeft" style="width: 300px" placement-type="Left">
-		<div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-
-		<ui5-list>
-			<ui5-li>Hello</ui5-li>
-			<ui5-li>World</ui5-li>
-			<ui5-li>Again</ui5-li>
-		</ui5-list>
-	</ui5-popover>
-
-	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" style="width: 300px" placement-type="Left" allow-target-overlap>
+	<ui5-popover allow-target-overlap header-text="My Heading" id="popFullWidthTargetOverlap" class="popover6auto" >
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -287,7 +255,7 @@
 	</ui5-popover>
 
 
-	<ui5-popover header-text="My Heading" id="popFullWidthTop" style="width: 300px" placement-type="Top">
+	<ui5-popover header-text="My Heading" id="popFullWidthLeft" class="popover6auto" placement-type="Left">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -299,7 +267,32 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover header-text="My Heading" id="popFullWidthBottom" style="width: 300px" placement-type="Bottom">
+	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" class="popover6auto" placement-type="Left" allow-target-overlap>
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover header-text="My Heading" id="popFullWidthTop" class="popover6auto" placement-type="Top">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover header-text="My Heading" id="popFullWidthBottom" class="popover6auto" placement-type="Bottom">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -313,10 +306,10 @@
 
 
 	<ui5-popover id="quickViewCard" placement-type="Right" height="500px">
-		<ui5-input id="searchInput" style="width: 300px">
+		<ui5-input id="searchInput" class="popover6auto">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
-		<ui5-list style="height: 400px">
+		<ui5-list class="popover8auto">
 			<ui5-li-groupheader>Actions</ui5-li-groupheader>
 			<ui5-li>Delete Product</ui5-li>
 			<ui5-li>Audit Log Settings</ui5-li>
@@ -330,14 +323,14 @@
 
 	<br>
 	<br>
-	<div id="targetOpener" style="height: 3rem; background: red;"></div>
+	<div id="targetOpener" class="popover9auto"></div>
 
 	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
 
 	<ui5-popover
 		header-text="My Heading"
 		id="popXLeft" horizontal-align="Left"
-		style="width: 300px">
+		class="popover6auto">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -349,14 +342,14 @@
 		</div>
 	</ui5-popover>
 
-	<div id="targetOpener2" style="height: 3rem; background: yellow;"></div>
+	<div id="targetOpener2" class="popover10auto"></div>
 
 	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
 
 	<ui5-popover
 		header-text="My Heading"
 		id="popXRight" horizontal-align="Right"
-		style="width: 300px">
+		class="popover6auto">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -368,7 +361,7 @@
 		</div>
 	</ui5-popover>
 
-	<div style="text-align: right;">
+	<div class="popover11auto">
 		<p>Right-aligned Popover, wider than button, arrow should be centered on the button</p>
 		<ui5-button id="btnOpenXRightWide">Open</ui5-button>
 	</div>
@@ -387,7 +380,7 @@
 	<br>
 	<br>
 
-	<div style="height: 6rem; text-align: center;">
+	<div class="popover12auto">
 		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
 	</div>
 
@@ -402,7 +395,7 @@
 		</div>
 	</ui5-popover>
 
-	<div style="display: flex; justify-content: flex-end;">
+	<div class="popover13auto">
 		<ui5-button id="btnRightEdge">Popover on right edge of screen</ui5-button>
 	</div>
 

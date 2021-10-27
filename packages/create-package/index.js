@@ -131,7 +131,7 @@ const createWebcomponentsPackage = async () => {
 		},
 		"dependencies": {
 			"@ui5/webcomponents-base": "1.0.0-rc.15",
-			"@ui5/webcomponents-theme-base": "1.0.0-rc.15",
+			"@ui5/webcomponents-theming": "1.0.0-rc.15",
 		},
 		"devDependencies": {
 			"@ui5/webcomponents-tools": "1.0.0-rc.15",

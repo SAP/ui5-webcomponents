@@ -262,19 +262,19 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get btnOKLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get btnCancelLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	get btnDateLabel() {
-		return this.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
 	}
 
 	get btnTimeLabel() {
-		return this.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
 	}
 
 	get showFooter() {
@@ -294,7 +294,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATETIME_DESCRIPTION);
+		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
 	}
 
 	/**
@@ -314,12 +314,13 @@ class DateTimePicker extends DatePicker {
 	 */
 	onSelectedDatesChange(event) {
 		event.preventDefault();
+		const dateTimePickerContent = event.path ? event.path[1] : event.composedPath()[1];
 
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
 			calendarValue: event.detail.values[0],
-			timeSelectionValue: event.path[1].lastChild.value,
+			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
 	}
 

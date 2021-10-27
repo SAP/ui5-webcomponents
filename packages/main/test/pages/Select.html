@@ -7,16 +7,17 @@
 	<title>ui5-select</title>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/Select.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="select1auto">
 	<ui5-toggle-button id="myBtn">turn lights</ui5-toggle-button>
 	<ui5-button id="add-items-btn">Add new Items</ui5-button>
 	<ui5-button id="restore-items-btn">Restore Items</ui5-button>

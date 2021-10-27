@@ -8,10 +8,11 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+<link rel="stylesheet" type="text/css" href="styles/Input_quickview.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="input_quickview1auto">
 	<h1> Quick View sample</h1>
 	<ul>
 		<li>hover on item to see quick view</li>
@@ -19,13 +20,13 @@
 		<li>press [ctrl + shift + 1] to enter the quick view</li>
 	</ul>
 
-	<div style="display: flex; align-items: center">
+	<div class="input_quickview2auto">
 		<ui5-label>focusable element: </ui5-label><ui5-button>before</ui5-button>
 	</div>
 	<br>
 	<br>
 
-	<ui5-input id="inputPreview" show-suggestions style="width: 200px;">
+	<ui5-input id="inputPreview" show-suggestions class="input_quickview3auto">
 		<ui5-suggestion-item class="suggestionItem" text="Laptop Lenovo"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="HP Monitor 24"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="IPhone 6s"></ui5-suggestion-item>
@@ -35,10 +36,10 @@
 
 	<ui5-popover id="quickViewCard" hide-arrow placement-type="Right" height="500px" prevent-focus-restore>
 		<button>hello</button>
-		<ui5-input id="searchInput" style="width: 300px">
+		<ui5-input id="searchInput" class="input_quickview4auto">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
-		<ui5-list style="height: 400px">
+		<ui5-list class="input_quickview5auto">
 			<ui5-li-groupheader>Actions</ui5-li-groupheader>
 			<ui5-li>Delete Product</ui5-li>
 			<ui5-li>Audit Log Settings</ui5-li>
@@ -52,13 +53,13 @@
 
 	<br>
 	<br>
-	<div style="display: flex; align-items: center">
+	<div class="input_quickview2auto">
 		<ui5-label>focusable element: </ui5-label><ui5-button>after</ui5-button>
 	</div>
 
 	<h1> Test Quick View sample</h1>
 
-	<ui5-input id="inputPreview2" show-suggestions style="width: 200px">
+	<ui5-input id="inputPreview2" show-suggestions class="input_quickview6auto">
 		<ui5-suggestion-item class="suggestionItem" text="Laptop Lenovo"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="HP Monitor 24"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="IPhone 6s"></ui5-suggestion-item>
@@ -67,22 +68,22 @@
 	</ui5-input>
 	<br><br>
 
-	<div style="width: 200px">Test keyup</div>
-	<ui5-input id="keyupResult" style="width: 100%"></ui5-input>
+	<div class="input_quickview6auto">Test keyup</div>
+	<ui5-input id="keyupResult" class="input_quickview7auto"></ui5-input>
 	<br><br>
 
-	<div style="width: 200px">Test suggestion-item-preview</div>
-	<ui5-input id="suggestionItemPreviewRes" style="width:100%"></ui5-input>
+	<div class="input_quickview6auto">Test suggestion-item-preview</div>
+	<ui5-input id="suggestionItemPreviewRes" class="input_quickview8auto"></ui5-input>
 	<br><br>
 
-	<div style="width: 200px">Test mouseover on item</div>
-	<ui5-input id="mouseoverResult" style="width: 100%"></ui5-input>
+	<div class="input_quickview6auto">Test mouseover on item</div>
+	<ui5-input id="mouseoverResult" class="input_quickview7auto"></ui5-input>
 
 	<ui5-popover id="quickViewCard2" hide-arrow placement-type="Right" height="500px">
-		<ui5-input id="searchInput2" style="width: 300px">
+		<ui5-input id="searchInput2" class="input_quickview4auto">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
-		<ui5-list style="height: 400px">
+		<ui5-list class="input_quickview5auto">
 			<ui5-li-groupheader>Actions</ui5-li-groupheader>
 			<ui5-li>Delete Product</ui5-li>
 			<ui5-li>Audit Log Settings</ui5-li>
