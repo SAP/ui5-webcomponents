@@ -19,6 +19,6 @@ module.exports = {
 			},
 		),
 		postcssCSStoJSON({toReplace: `dist`}),
-		postcssCSStoESM({toReplace: `dist`}),
+		postcssCSStoESM({toReplace: `dist`, packageName: "@ui5/webcomponents-theming"}),
 	]
 };

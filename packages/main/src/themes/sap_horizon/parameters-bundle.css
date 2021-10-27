@@ -41,3 +41,6 @@
 @import "./SliderBase-parameters.css";
 @import "./ValueStateMessage-parameters.css";
 @import "./Suggestions-parameters.css";
+@import "./Table-parameters.css";
+@import "./TableRow-parameters.css";
+@import "./TableColumn-parameters.css";

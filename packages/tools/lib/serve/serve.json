@@ -1,3 +1,12 @@
 {
-  "cleanUrls": false
+  "cleanUrls": false,
+  "headers": [
+	{
+	  "source" : "**/*.*",
+	  "headers" : [{
+		"key" : "Content-Security-Policy",
+		"value" : "style-src 'self'"
+	  }]
+	}
+  ]
 }
