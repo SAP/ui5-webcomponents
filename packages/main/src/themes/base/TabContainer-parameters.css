@@ -1,6 +1,6 @@
 :root {
 	/* Header */
-	--_ui5_tc_header_height: 4.6875rem;
+	--_ui5_tc_header_height: var(--_ui5_tc_item_height);
 	--_ui5_tc_header_height_text_only: var(--_ui5_tc_item_text_only_height);
 	--_ui5_tc_header_height_text_with_additional_text: var(--_ui5_tc_item_text_only_with_additional_text_height);
 	--_ui5_tc_header_box_shadow: var(--sapContent_HeaderShadow);

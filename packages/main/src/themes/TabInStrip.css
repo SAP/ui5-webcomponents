@@ -11,6 +11,7 @@
     align-items: center;
 	justify-content: center;
 	min-width: 2rem;
+	height: var(--_ui5_tc_header_height);
 }
 
 .ui5-tab-strip-itemContent {
@@ -149,11 +150,6 @@
 }
 
 /*** Icon and text Tab styles ***/
-.ui5-tab-strip-item--withIcon,
-.ui5-tab-strip-item--mixedMode {
-    margin-top: 0.75rem;
-    padding-bottom: 0.75rem;
-}
 
 .ui5-tab-strip-item-icon-outer {
     display: flex;
