@@ -1,6 +1,6 @@
 :root {
 	--_ui5_card_box_shadow: var(--sapContent_Shadow0);
-	--_ui5_card_hover_box_shadow: unset;
+	--_ui5_card_hover_box_shadow: var(--_ui5_card_box_shadow);
 	--_ui5_card_border_color: var(--sapTile_BorderColor);
 	--_ui5_card_border-radius: .25rem;
 	--_ui5_card_content_padding: 1rem;
