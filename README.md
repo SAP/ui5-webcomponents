@@ -81,7 +81,7 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	<ui5-button>Hello world!</ui5-button>
 	```
 
-	For more information, see [Importing UI5 Web Components](./docs/1-getting-started/02-importing-components.md) and [Understanding Ui5 Web Components APIs](./docs/1-getting-started/03-understanding-components-APIs.md).
+	For more information, see [Importing UI5 Web Components](./docs/1-getting-started/02-importing-components.md) and [Understanding UI5 Web Components APIs](./docs/1-getting-started/03-understanding-components-APIs.md).
 
 ### Is there a CDN I can use?
 
