@@ -1,6 +1,6 @@
 :host {
     display: none;
-    position: absolute;
+    position: fixed;
     min-width: 6.25rem;
     background: var(--sapGroup_ContentBackground);
     box-shadow: var(--sapContent_Shadow2);

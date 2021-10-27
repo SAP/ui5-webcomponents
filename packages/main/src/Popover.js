@@ -389,7 +389,7 @@ class Popover extends Popup {
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
 		} else {
-			placement = this.calcPlacement(this._openerRect, popoverSize);
+			placement = this._calcPlacement(this._openerRect, popoverSize);
 		}
 
 		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
@@ -428,9 +428,9 @@ class Popover extends Popup {
 		if (isVertical) {
 			const popoverOnLeftBorderOffset = Popover.VIEWPORT_MARGIN - this._left;
 			const popoverOnRightBorderOffset = this._left + popoverSize.width + Popover.VIEWPORT_MARGIN - document.documentElement.clientWidth;
-			if (popoverOnLeftBorderOffset > 0) {
+			if (popoverOnLeftBorderOffset > document.documentElement.scrollLeft) {
 				arrowX -= popoverOnLeftBorderOffset;
-			} else if (popoverOnRightBorderOffset > 0) {
+			} else if (popoverOnRightBorderOffset > document.documentElement.scrollLeft) {
 				arrowX += popoverOnRightBorderOffset;
 			}
 		}
@@ -439,9 +439,9 @@ class Popover extends Popup {
 		if (!isVertical) {
 			const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - this._top;
 			const popoverOnBottomBorderOffset = this._top + popoverSize.height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
-			if (popoverOnTopBorderOffset > 0) {
+			if (popoverOnTopBorderOffset > document.documentElement.scrollTop) {
 				arrowY -= popoverOnTopBorderOffset;
-			} else if (popoverOnBottomBorderOffset > 0) {
+			} else if (popoverOnBottomBorderOffset > document.documentElement.scrollTop) {
 				arrowY += popoverOnBottomBorderOffset;
 			}
 		}
@@ -482,7 +482,12 @@ class Popover extends Popup {
 		return this.shadowRoot.querySelector(".ui5-popover-arrow");
 	}
 
-	calcPlacement(targetRect, popoverSize) {
+	/**
+	 * Calculates the placement of the popover.
+	 * The returned position is relative to the document.documentElement.
+	 * Later calculations, using this result should consider the scrollTop/scrollLeft values.
+	 */
+	_calcPlacement(targetRect, popoverSize) {
 		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 		const isVertical = placementType === PopoverPlacementType.Top || placementType === PopoverPlacementType.Bottom;
 		const allowTargetOverlap = this.allowTargetOverlap;

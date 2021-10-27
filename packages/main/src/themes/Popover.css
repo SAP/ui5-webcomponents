@@ -18,6 +18,7 @@
 }
 
 :host {
+	position: absolute;
 	max-width: calc(100vw - (100vw - 100%) - 2 * var(--_ui5_popup_viewport_margin));
 }
 

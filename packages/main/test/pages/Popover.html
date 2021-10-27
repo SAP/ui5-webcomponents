@@ -199,7 +199,7 @@
 	<ui5-button id="btnMoveFocus">focusable element</ui5-button>
 	<br>
 	<br>
-	<ui5-title>placement-type="Right", but no space on the right</ui5-title>
+	<ui5-title>placement-type="Right" (default)</ui5-title>
 	<p>No space on the Right, try Left, Bottom, Top</p>
 	<ui5-button id="btnFullWidth" class="popover7auto">Click me !</ui5-button>
 	<ui5-button id="btnNormalWidth">Click me !</ui5-button>
@@ -212,7 +212,7 @@
 
 	<br>
 	<br>
-	<ui5-title>placement-type="Left", but no space on the left</ui5-title>
+	<ui5-title>placement-type="Left"</ui5-title>
 	<p>No space on the Left, try Right, Bottom, Top</p>
 	<ui5-button id="btnFullWidthLeft" class="popover7auto">Click me !</ui5-button>
 	<div class="popover13auto">
@@ -238,7 +238,7 @@
 	<ui5-title>placement-type="Bottom"</ui5-title>
 	<ui5-button id="btnFullWidthBottom" class="popover7auto">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="popFullWidth" class="popover6auto"  vertical-align="Stretch">
+	<ui5-popover header-text="My Heading" id="popFullWidth" class="popover6auto">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -469,7 +469,7 @@
 			popFullWidthTargetOverlap.showAt(btnFullWidthTargetOverlap);
 		});
 		btnNormalWidthTargetOverlap.addEventListener("click", function (event) {
-			popFullWidth.showAt(btnNormalWidthTargetOverlap);
+			popFullWidthTargetOverlap.showAt(btnNormalWidthTargetOverlap);
 		});
 
 		btnFullWidthLeft.addEventListener("click", function (event) {
