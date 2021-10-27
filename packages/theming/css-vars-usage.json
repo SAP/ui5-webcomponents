@@ -82,6 +82,7 @@
   "--sapContent_DisabledTextColor",
   "--sapContent_DragAndDropActiveColor",
   "--sapContent_FocusColor",
+  "--sapContent_FocusWidth",
   "--sapContent_ForegroundBorderColor",
   "--sapContent_ForegroundTextColor",
   "--sapContent_HeaderShadow",
