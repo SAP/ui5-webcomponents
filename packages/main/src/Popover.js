@@ -414,7 +414,7 @@ class Popover extends Popup {
 		let top = clamp(
 			this._top,
 			Popover.VIEWPORT_MARGIN,
-			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientHeight + document.documentElement.scrollTop - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
 
 		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
@@ -483,38 +483,25 @@ class Popover extends Popup {
 	}
 
 	calcPlacement(targetRect, popoverSize) {
-		let left = 0;
-		let top = 0;
+		const placementType = this.getActualPlacementType(targetRect, popoverSize);
+		const isVertical = placementType === PopoverPlacementType.Top || placementType === PopoverPlacementType.Bottom;
 		const allowTargetOverlap = this.allowTargetOverlap;
-
+		const arrowOffset = this.hideArrow ? 0 : arrowSize;
 		const clientWidth = document.documentElement.clientWidth;
 		const clientHeight = document.documentElement.clientHeight;
-
+		let left = 0;
+		let top = 0;
 		let maxHeight = clientHeight;
 		let maxWidth = clientWidth;
 
-		let width = "";
-		let height = "";
-
-		const placementType = this.getActualPlacementType(targetRect, popoverSize);
-
 		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
-
-		const isVertical = placementType === PopoverPlacementType.Top
-			|| placementType === PopoverPlacementType.Bottom;
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && isVertical) {
 			popoverSize.width = targetRect.width;
-			width = `${targetRect.width}px`;
+			this._width = `${targetRect.width}px`;
 		} else if (this.verticalAlign === PopoverVerticalAlign.Stretch && !isVertical) {
 			popoverSize.height = targetRect.height;
-			height = `${targetRect.height}px`;
 		}
-
-		this._width = width;
-		this._height = height;
-
-		const arrowOffset = this.hideArrow ? 0 : arrowSize;
 
 		// calc popover positions
 		switch (placementType) {
@@ -528,11 +515,11 @@ class Popover extends Popup {
 			break;
 		case PopoverPlacementType.Bottom:
 			left = this.getVerticalLeft(targetRect, popoverSize);
+			top = targetRect.bottom + arrowOffset;
 
 			if (allowTargetOverlap) {
-				top = Math.max(Math.min(targetRect.bottom + arrowOffset, clientHeight - popoverSize.height), 0);
+				top = Math.max(Math.min(top, clientHeight - popoverSize.height), 0);
 			} else {
-				top = targetRect.bottom + document.documentElement.scrollTop + arrowOffset;
 				maxHeight = clientHeight - targetRect.bottom - arrowOffset;
 			}
 			break;
@@ -545,14 +532,14 @@ class Popover extends Popup {
 			}
 			break;
 		case PopoverPlacementType.Right:
+			left = targetRect.left + targetRect.width + arrowOffset;
+			top = this.getHorizontalTop(targetRect, popoverSize);
+
 			if (allowTargetOverlap) {
-				left = Math.max(Math.min(targetRect.left + targetRect.width + arrowOffset, clientWidth - popoverSize.width), 0);
+				left = Math.max(Math.min(left, clientWidth - popoverSize.width), 0);
 			} else {
-				left = targetRect.left + targetRect.width + arrowOffset;
 				maxWidth = clientWidth - targetRect.right - arrowOffset;
 			}
-
-			top = this.getHorizontalTop(targetRect, popoverSize);
 			break;
 		}
 
@@ -571,21 +558,10 @@ class Popover extends Popup {
 			}
 		}
 
-		let maxContentHeight = maxHeight;
-
-		if (this._displayHeader) {
-			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
-				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
-
-			if (headerDomRef) {
-				maxContentHeight = maxHeight - headerDomRef.offsetHeight;
-			}
-		}
-
-		this._maxContentHeight = Math.round(maxContentHeight - Popover.VIEWPORT_MARGIN);
-		this._maxContentWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
-
+		this._setMaxDimensions(maxHeight, maxWidth);
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
+		left += document.documentElement.scrollLeft;
+		top += document.documentElement.scrollTop;
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
 			this._left = Math.round(left);
@@ -595,7 +571,6 @@ class Popover extends Popup {
 			this._top = Math.round(top);
 		}
 
-		// this._opener.value = `top: ${top}; offsetTop: ${this._opener.offsetTop}; pageYOffset: ${window.pageYOffset}`;
 		return {
 			arrowX: arrowPos.x,
 			arrowY: arrowPos.y,
@@ -736,6 +711,22 @@ class Popover extends Popup {
 		}
 
 		return top;
+	}
+
+	_setMaxDimensions(maxHeight, maxWidth) {
+		let maxContentHeight = maxHeight;
+
+		if (this._displayHeader) {
+			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
+				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
+
+			if (headerDomRef) {
+				maxContentHeight = maxHeight - headerDomRef.offsetHeight;
+			}
+		}
+
+		this._maxContentHeight = Math.round(maxContentHeight - Popover.VIEWPORT_MARGIN);
+		this._maxContentWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
 	}
 
 	get isModal() { // Required by Popup.js
