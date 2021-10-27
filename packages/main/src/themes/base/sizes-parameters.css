@@ -21,7 +21,7 @@
 	 --_ui5_color-palette-item-hover-height: 2.375rem;
 	 --_ui5_color-palette-item-margin: calc((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2);
 	 --_ui5_color-palette-row-width: 12rem;
-	 
+
 	 /* DateTimePicker */
 	--_ui5_datetime_picker_width: 40.0625rem;
 	--_ui5_datetime_picker_height: 25rem;
@@ -68,8 +68,8 @@
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
 	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
 	--_ui5_tc_item_text: 3rem;
-	--_ui5_tc_item_text_only_height: 3rem;
-	--_ui5_tc_item_text_only_with_additional_text_height: var(--_ui5_tc_item_text_only_height);
+	--_ui5_tc_item_text_only_height: 2.75rem;
+	--_ui5_tc_item_text_only_with_additional_text_height: 3.75rem;
 	--_ui5_tc_item_text_line_height: normal;
 	--_ui5_tc_item_icon_size: 1.5rem;
 	--_ui5_tc_item_add_text_margin_top: 0.625rem;
