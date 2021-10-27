@@ -1,46 +1,48 @@
 <button
 	type="button"
 	class="ui5-button-root"
-	?disabled="{{disabled}}"
-	data-sap-focus-ref
-	{{> ariaPressed}}
-	dir="{{effectiveDir}}"
-	@focusout={{_onfocusout}}
-	@focusin={{_onfocusin}}
-	@click={{_onclick}}
-	@mousedown={{_onmousedown}}
-	@mouseup={{_onmouseup}}
-	@keydown={{_onkeydown}}
-	@keyup={{_onkeyup}}
-	@touchstart="{{_ontouchstart}}"
-	@touchend="{{_ontouchend}}"
-	tabindex={{tabIndexValue}}
-	aria-expanded="{{accInfo.ariaExpanded}}"
-	aria-controls="{{accInfo.ariaControls}}"
-	aria-haspopup="{{accInfo.ariaHaspopup}}"
-	aria-label="{{accessibleName}}"
-	title="{{accInfo.title}}"
-	part="button"
+	tabindex="-1"
 >
-	{{#if icon}}
-		<ui5-icon
-			class="ui5-button-icon"
-			name="{{icon}}"
-			part="icon"
-			?show-tooltip={{showIconTooltip}}
-			tabindex={{tabIndexValue}}
-		></ui5-icon>
-	{{/if}}
+	<span class="ui5-button-inner"
+		tabindex={{tabIndexValue}}
+		aria-expanded="{{accInfo.ariaExpanded}}"
+		aria-controls="{{accInfo.ariaControls}}"
+		aria-haspopup="{{accInfo.ariaHaspopup}}"
+		aria-label="{{accessibleName}}"
+		title="{{accInfo.title}}"
+		part="button"
+		{{> ariaPressed}}
+		?disabled="{{disabled}}"
+		data-sap-focus-ref
+		dir="{{effectiveDir}}"
+		@focusout={{_onfocusout}}
+		@focusin={{_onfocusin}}
+		@click={{_onclick}}
+		@mousedown={{_onmousedown}}
+		@mouseup={{_onmouseup}}
+		@keydown={{_onkeydown}}
+		@keyup={{_onkeyup}}
+		@touchstart="{{_ontouchstart}}"
+		@touchend="{{_ontouchend}}">
+		{{#if icon}}
+			<ui5-icon
+				class="ui5-button-icon"
+				name="{{icon}}"
+				part="icon"
+				?show-tooltip={{showIconTooltip}}
+			></ui5-icon>
+		{{/if}}
 
-	<span id="{{_id}}-content" class="ui5-button-text" tabindex={{tabIndexValue}}>
-		<bdi>
-			<slot></slot>
-		</bdi>
+		<span id="{{_id}}-content" class="ui5-button-text">
+			<bdi>
+				<slot></slot>
+			</bdi>
+		</span>
+
+		{{#if hasButtonType}}
+			<span class="ui5-hidden-text">{{buttonTypeText}}</span>
+		{{/if}}
 	</span>
-
-	{{#if hasButtonType}}
-		<span class="ui5-hidden-text">{{buttonTypeText}}</span>
-	{{/if}}
 </button>
 
 {{#*inline "ariaPressed"}}{{/inline}}

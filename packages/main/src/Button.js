@@ -391,6 +391,11 @@ class Button extends UI5Element {
 	_onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.active = false;
+			this._onclick(event);
+		}
+
+		if (isSpace(event)) {
+			this.fireEvent("click");
 		}
 	}
 
