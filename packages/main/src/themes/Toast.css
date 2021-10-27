@@ -17,7 +17,7 @@
 	padding: 1rem;
 	background: var(--_ui5_toast_background);
 	box-shadow: var(--_ui5_toast_shadow);
-	border-radius: .25rem;
+	border-radius: var(--sapElement_BorderCornerRadius);
 	transition-property: opacity;
 	opacity: 1;
 	font-family: inherit;
