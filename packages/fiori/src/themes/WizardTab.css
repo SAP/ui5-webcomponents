@@ -22,7 +22,7 @@
 }
 
 :host([selected]:not([disabled])) .ui5-wiz-step-icon {
-	color: var(--sapContent_ContrastTextColor);
+	color: var(--sapContent_ContrastIconColor);
 }
 
 :host([selected]:not([disabled])) .ui5-wiz-step-number {
