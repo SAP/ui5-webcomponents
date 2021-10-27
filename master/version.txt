@@ -1,5 +1,5 @@
-commit 49396e7c3606eabc73977280d7ca5abf2f9edc10
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Tue Oct 26 17:35:59 2021 +0300
+commit 1865ffa24f192db00f821717040538657caf8871
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Oct 27 09:50:31 2021 +0300
 
-    chore: fix UI5 typo in readme (#4186)
+    feat(ui5-panel): SAP Horizon theme implementation (#4170)
