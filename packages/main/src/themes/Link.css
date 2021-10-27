@@ -66,8 +66,12 @@
 	color: currentColor;
 }
 
-:host([focused]) .ui5-link-root {
-	border: var(--_ui5_link_focus);
+:host .ui5-link-root {
+	border: var(--_ui5_link_border);
 	border-radius: var(--_ui5_link_focus_border-radius);
+}
+
+:host([focused]) .ui5-link-root {
+	border: var(--_ui5_link_border_focus);
 	text-decoration: underline;
 }
