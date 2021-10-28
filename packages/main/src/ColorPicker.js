@@ -30,7 +30,7 @@ const metadata = {
 		 * Defines the currently selected color of the component.
 		 * <br><br>
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-		 * @type {String}
+		 * @type {CSSColor}
 		 * @public
 		 */
 		color: {
