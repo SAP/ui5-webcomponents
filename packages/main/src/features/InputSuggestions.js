@@ -181,6 +181,7 @@ class Suggestions {
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
+		item.focused = false;
 		this._getComponent().open = false;
 	}
 
@@ -296,10 +297,12 @@ class Suggestions {
 
 		if (previousItem) {
 			previousItem.selected = false;
+			previousItem.focused = false;
 		}
 
 		if (currentItem) {
 			currentItem.selected = true;
+			currentItem.focused = true;
 
 			if (this.handleFocus) {
 				currentItem.focus();
@@ -317,6 +320,7 @@ class Suggestions {
 		const items = this._getItems();
 		items.forEach(item => {
 			item.selected = false;
+			item.focused = false;
 		});
 	}
 
