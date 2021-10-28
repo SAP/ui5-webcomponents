@@ -10,4 +10,4 @@ const loadIconsBundle = async () => {
 	return (await fetch(SAPIconsUrl)).json();
 }
 
-registerIconLoader("horizon", loadIconsBundle);
+registerIconLoader("SAP-icons-horizon", loadIconsBundle);

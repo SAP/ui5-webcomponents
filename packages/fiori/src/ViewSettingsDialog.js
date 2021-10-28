@@ -15,6 +15,9 @@ import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
 import "@ui5/webcomponents-icons/dist/filter.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
+import "@ui5/webcomponents-icons-horizon/dist/sort.js";
+import "@ui5/webcomponents-icons-horizon/dist/filter.js";
+import "@ui5/webcomponents-icons-horizon/dist/nav-back.js";
 
 import {
 	VSD_DIALOG_TITLE_SORT,

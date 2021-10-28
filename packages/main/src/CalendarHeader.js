@@ -6,6 +6,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import "@ui5/webcomponents-icons-horizon/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons-horizon/dist/slim-arrow-right.js";
 import Icon from "./Icon.js";
 import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
 import {

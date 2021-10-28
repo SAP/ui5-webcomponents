@@ -8,6 +8,8 @@ import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
+import "@ui5/webcomponents-icons-horizon/dist/upload-to-cloud.js";
+import "@ui5/webcomponents-icons-horizon/dist/document.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,

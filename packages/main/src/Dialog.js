@@ -7,6 +7,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
+import "@ui5/webcomponents-icons-horizon/dist/resize-corner.js";
 import Icon from "./Icon.js";
 
 // Template

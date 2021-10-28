@@ -1,5 +1,6 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/fob-watch.js";
+import "@ui5/webcomponents-icons-horizon/dist/fob-watch.js";
 import TimePickerBase from "./TimePickerBase.js";
 
 import {

@@ -1,11 +1,13 @@
 import getSharedResource from "../getSharedResource.js";
+import { getTheme } from "../config/Theme.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
 const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
-
+const currentTheme = getTheme();
+const SAP_HORIZON = currentTheme === "sap_horizon" || currentTheme === "sap_horizon_exp";
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-const DEFAULT_COLLECTION = "SAP-icons";
+const DEFAULT_COLLECTION = SAP_HORIZON ? "SAP-icons-horizon" : "SAP-icons";
 
 /**
  * @deprecated
@@ -51,6 +53,7 @@ const registerIcon = (name, { pathData, ltr, accData, collection, packageName } 
 	}
 
 	const key = `${collection}/${name}`;
+	console.log(`${collection}/${packageName}/${name}`); // eslint-disable-line
 	registry.set(key, {
 		pathData,
 		ltr,
@@ -73,6 +76,7 @@ const _parseName = name => {
 	if (collection === "SAP-icons-TNT") {
 		collection = "tnt";
 	}
+
 	// hardcoded alias in case icon explorer is used, resolve `BusinessSuiteInAppSymbols` to `business-suite`
 	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
 	if (collection === "BusinessSuiteInAppSymbols") {

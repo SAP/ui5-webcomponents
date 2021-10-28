@@ -10,6 +10,11 @@ import "@ui5/webcomponents-icons/dist/message-success.js";
 import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/message-warning.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
+import "@ui5/webcomponents-icons-horizon/dist/decline.js";
+import "@ui5/webcomponents-icons-horizon/dist/message-success.js";
+import "@ui5/webcomponents-icons-horizon/dist/message-error.js";
+import "@ui5/webcomponents-icons-horizon/dist/message-warning.js";
+import "@ui5/webcomponents-icons-horizon/dist/overflow.js";
 
 // Templates
 import NotifactionOverflowActionsPopoverTemplate from "./generated/templates/NotifactionOverflowActionsPopoverTemplate.lit.js";

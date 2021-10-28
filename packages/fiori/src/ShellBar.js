@@ -14,6 +14,10 @@ import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
+import "@ui5/webcomponents-icons-horizon/dist/search.js";
+import "@ui5/webcomponents-icons-horizon/dist/bell.js";
+import "@ui5/webcomponents-icons-horizon/dist/overflow.js";
+import "@ui5/webcomponents-icons-horizon/dist/grid.js";
 
 import {
 	SHELLBAR_LABEL,

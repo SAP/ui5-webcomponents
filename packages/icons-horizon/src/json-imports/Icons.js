@@ -8,4 +8,4 @@ const loadIconsBundle = async () => {
     return iconData;
 }
 
-registerIconLoader("horizon", loadIconsBundle);
+registerIconLoader("SAP-icons-horizon", loadIconsBundle);

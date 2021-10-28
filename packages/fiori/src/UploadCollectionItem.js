@@ -14,6 +14,9 @@ import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/refresh.js";
 import "@ui5/webcomponents-icons/dist/stop.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import "@ui5/webcomponents-icons-horizon/dist/refresh.js";
+import "@ui5/webcomponents-icons-horizon/dist/stop.js";
+import "@ui5/webcomponents-icons-horizon/dist/edit.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,

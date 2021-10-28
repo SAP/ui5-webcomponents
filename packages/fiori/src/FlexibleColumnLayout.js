@@ -10,6 +10,8 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import "@ui5/webcomponents-icons-horizon/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons-horizon/dist/slim-arrow-right.js";
 import FCLLayout from "./types/FCLLayout.js";
 import {
 	getLayoutsByMedia,

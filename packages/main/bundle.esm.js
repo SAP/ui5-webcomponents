@@ -16,6 +16,10 @@ import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";
 import "@ui5/webcomponents-icons-business-suite/dist/Assets.js";
 import "@ui5/webcomponents-icons-business-suite/dist/AllIcons.js";
 
+// Fiori Next Icons
+import "@ui5/webcomponents-icons-horizon/dist/Assets.js";
+import "@ui5/webcomponents-icons-horizon/dist/AllIcons.js";
+
 import testAssets from "./bundle.common.js";
 
 export default testAssets;

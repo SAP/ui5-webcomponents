@@ -7,6 +7,8 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons-horizon/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons-horizon/dist/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isBackSpace,

@@ -6,6 +6,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
+import "@ui5/webcomponents-icons-horizon/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
 import WrappingType from "./types/WrappingType.js";
