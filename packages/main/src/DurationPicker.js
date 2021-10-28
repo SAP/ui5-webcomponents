@@ -292,7 +292,7 @@ class DurationPicker extends TimePickerBase {
 	}
 
 	get dateAriaDescription() {
-		return DurationPicker.i18nBundle.getText(DURATION_INPUT_DESCRIPTION);
+		return this.i18nBundle.getText(DURATION_INPUT_DESCRIPTION);
 	}
 
 	get accInfo() {

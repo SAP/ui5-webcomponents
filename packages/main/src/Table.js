@@ -6,7 +6,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
@@ -403,7 +403,7 @@ class Table extends UI5Element {
 	}
 
 	static async onDefine() {
-		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -425,6 +425,8 @@ class Table extends UI5Element {
 
 		this._handleResize = this.popinContent.bind(this);
 
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
 		this.tableEndObserved = false;
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
@@ -440,7 +442,7 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
+			row._ariaPosition = this.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
@@ -707,11 +709,11 @@ class Table extends UI5Element {
 	}
 
 	get _growingButtonText() {
-		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.growingButtonText || this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText() {
-		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");
@@ -720,7 +722,7 @@ class Table extends UI5Element {
 	}
 
 	get ariaLabelSelectAllText() {
-		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
+		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {

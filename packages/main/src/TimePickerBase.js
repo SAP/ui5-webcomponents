@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
@@ -183,9 +183,9 @@ class TimePickerBase extends UI5Element {
 	}
 
 	static async onDefine() {
-		[TimePickerBase.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
+		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
 
@@ -195,6 +195,7 @@ class TimePickerBase extends UI5Element {
 
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -445,11 +446,11 @@ class TimePickerBase extends UI5Element {
 	}
 
 	get submitButtonLabel() {
-		return TimePickerBase.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get cancelButtonLabel() {
-		return TimePickerBase.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	/**

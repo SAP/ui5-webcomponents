@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -101,6 +101,7 @@ class DateComponentBase extends UI5Element {
 
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	get _primaryCalendarType() {
@@ -160,9 +161,9 @@ class DateComponentBase extends UI5Element {
 	}
 
 	static async onDefine() {
-		[DateComponentBase.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
+		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
 }

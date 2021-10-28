@@ -5,7 +5,7 @@ import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import TitleLevel from "./types/TitleLevel.js";
@@ -272,6 +272,7 @@ class Panel extends UI5Element {
 		super();
 
 		this._header = {};
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -382,7 +383,7 @@ class Panel extends UI5Element {
 	}
 
 	get toggleButtonTitle() {
-		return Panel.i18nBundle.getText(PANEL_ICON);
+		return this.i18nBundle.getText(PANEL_ICON);
 	}
 
 	get expanded() {
@@ -453,7 +454,7 @@ class Panel extends UI5Element {
 	}
 
 	static async onDefine() {
-		Panel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

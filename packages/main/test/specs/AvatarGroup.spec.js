@@ -6,7 +6,7 @@ async function getResourceBundleTexts(keys) {
 		const avatarGroup = document.getElementById("avatar-group-group");
 
 		const texts = keys.reduce((result, key) => {
-			result[key] = avatarGroup.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			result[key] = avatarGroup.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
 			return result;
 		}, {});
 		done(texts);

@@ -2,7 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	fetchI18nBundle,
+	getI18nBundle,
+} from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
@@ -266,6 +269,8 @@ class FileUploader extends UI5Element {
 		if (this._canUseNativeFormSupport) {
 			this._internals = this.attachInternals();
 		}
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onmouseover() {
@@ -419,11 +424,11 @@ class FileUploader extends UI5Element {
 	}
 
 	get browseText() {
-		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE);
+		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}
 
 	get titleText() {
-		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
+		return this.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
 	get _canUseNativeFormSupport() {
@@ -448,11 +453,13 @@ class FileUploader extends UI5Element {
 	}
 
 	get valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
 		return {
-			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -509,7 +516,7 @@ class FileUploader extends UI5Element {
 	}
 
 	static async onDefine() {
-		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

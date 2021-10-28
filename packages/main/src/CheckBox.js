@@ -1,7 +1,7 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -275,6 +275,8 @@ class CheckBox extends UI5Element {
 			document.addEventListener("mouseup", this._deactivate);
 			isGlobalHandlerAttached = true;
 		}
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -351,10 +353,12 @@ class CheckBox extends UI5Element {
 	}
 
 	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
 		return {
-			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 
@@ -411,7 +415,7 @@ class CheckBox extends UI5Element {
 	}
 
 	static async onDefine() {
-		CheckBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

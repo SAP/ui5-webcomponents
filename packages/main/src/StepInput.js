@@ -13,7 +13,7 @@ import {
 	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -361,6 +361,7 @@ const INITIAL_SPEED = 120; // milliseconds
 class StepInput extends UI5Element {
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -387,7 +388,7 @@ class StepInput extends UI5Element {
 	}
 
 	static async onDefine() {
-		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	get type() {
@@ -397,7 +398,7 @@ class StepInput extends UI5Element {
 	// icons-related
 
 	get decIconTitle() {
-		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
+		return this.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
 	}
 
 	get decIconName() {
@@ -405,7 +406,7 @@ class StepInput extends UI5Element {
 	}
 
 	get incIconTitle() {
-		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
+		return this.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
 	}
 
 	get incIconName() {

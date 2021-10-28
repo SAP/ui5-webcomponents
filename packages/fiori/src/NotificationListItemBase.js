@@ -1,5 +1,6 @@
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
@@ -140,6 +141,12 @@ const metadata = {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
+	constructor() {
+		super();
+
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -261,10 +268,6 @@ class NotificationListItemBase extends ListItemBase {
 	async getOverflowPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector(".ui5-notification-overflow-popover");
-	}
-
-	static async onDefine() {
-		NotificationListItemBase.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

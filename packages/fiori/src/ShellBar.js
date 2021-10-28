@@ -9,7 +9,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -472,6 +472,8 @@ class ShellBar extends UI5Element {
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	_debounce(fn, delay) {
@@ -1020,23 +1022,23 @@ class ShellBar extends UI5Element {
 	}
 
 	get _shellbarText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_LABEL);
+		return this.i18nBundle.getText(SHELLBAR_LABEL);
 	}
 
 	get _logoText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
+		return this.i18nBundle.getText(SHELLBAR_LOGO);
 	}
 
 	get _copilotText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_COPILOT);
+		return this.i18nBundle.getText(SHELLBAR_COPILOT);
 	}
 
 	get _notificationsText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
+		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
 	}
 
 	get _cancelBtnText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_CANCEL);
+		return this.i18nBundle.getText(SHELLBAR_CANCEL);
 	}
 
 	get _showFullWidthSearch() {
@@ -1047,19 +1049,19 @@ class ShellBar extends UI5Element {
 	}
 
 	get _profileText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
+		return this.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
 
 	get _productsText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_PRODUCTS);
+		return this.i18nBundle.getText(SHELLBAR_PRODUCTS);
 	}
 
 	get _searchText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_SEARCH);
+		return this.i18nBundle.getText(SHELLBAR_SEARCH);
 	}
 
 	get _overflowText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
+		return this.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
 	get accInfo() {
@@ -1095,7 +1097,7 @@ class ShellBar extends UI5Element {
 	}
 
 	static async onDefine() {
-		ShellBar.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

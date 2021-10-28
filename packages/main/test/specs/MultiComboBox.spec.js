@@ -505,7 +505,7 @@ describe("MultiComboBox general interaction", () => {
 
 			resourceBundleText = await browser.executeAsync(done => {
 				const mcb = document.getElementById("mcb-compact");
-				done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
+				done(mcb.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
 			});
 
 			assert.strictEqual(tokens.length, 1, "should have one token");
@@ -518,7 +518,7 @@ describe("MultiComboBox general interaction", () => {
 
 			resourceBundleText = await browser.executeAsync(done => {
 				const mcb = document.getElementById("mcb-compact");
-				done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
+				done(mcb.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
 			});
 
 			assert.strictEqual(tokens.length, 0, "should not have tokens");

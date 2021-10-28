@@ -11,7 +11,7 @@ The main file representing the Web Component is `Demo.js`.
 ```js
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
@@ -33,6 +33,16 @@ const metadata = {
 };
 
 class Demo extends UI5Element {
+
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("my-ui5-web-components");
+	}
+
+	get pleaseWaitText() {
+		return this.i18nBundle.getText(PLEASE_WAIT);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -50,11 +60,7 @@ class Demo extends UI5Element {
 	}
 
 	static async onDefine() {
-		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
-	}
-
-	get pleaseWaitText() {
-		return Demo.i18nBundle.getText(PLEASE_WAIT);
+		await fetchI18nBundle("my-ui5-web-components");
 	}
 }
 
@@ -302,23 +308,26 @@ export default Demo;
 
 ### Adding i18n support
 
-There are 2 steps to do that:
- 1. Get and assign an i18n bundle during component definition
+There are 3 steps to do that:
+ 1. Fetch an i18n bundle during component definition
  ```js
- await Demo.i18nBundle = getI18nBundle("my-ui5-web-components");
+ await fetchI18nBundle("my-ui5-web-components");
  ```
 
- 3. Get texts from the bundle, according to the currently [configured](../Configuration.md) language
- `return Demo.i18nBundle.getText(PLEASE_WAIT);`
+ 2. (optional) Get a reference to the bundle in the constructor for convenience
+ `this.i18nBundle = getI18nBundle("my-ui5-web-components");`
 
-The `getI18nBundle` method is provided by the `i18nBundle.js` module from the `@ui5/webcomponents-base` package.
+ 3. Get texts from the bundle, according to the currently [configured](../Configuration.md) language
+ `return this.i18nBundle.getText(PLEASE_WAIT);`
+
+The `fetchI18nBundle` and `getI18nBundle` methods are provided by the `i18nBundle.js` module from the `@ui5/webcomponents-base` package.
 
 So the final source code is:
 
 ```js
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
@@ -340,6 +349,16 @@ const metadata = {
 };
 
 class Demo extends UI5Element {
+
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("my-ui5-web-components");
+	}
+
+	get pleaseWaitText() {
+		return this.i18nBundle.getText(PLEASE_WAIT);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -357,11 +376,7 @@ class Demo extends UI5Element {
 	}
 
 	static async onDefine() {
-		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
-	}
-
-	get pleaseWaitText() {
-		return Demo.i18nBundle.getText(PLEASE_WAIT);
+		await fetchI18nBundle("my-ui5-web-components");
 	}
 }
 

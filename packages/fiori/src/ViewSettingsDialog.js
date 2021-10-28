@@ -1,4 +1,4 @@
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -208,6 +208,7 @@ const metadata = {
 class ViewSettingsDialog extends UI5Element {
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._currentSettings = {
 			sortOrder: [],
 			sortBy: [],
@@ -266,7 +267,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	static async onDefine() {
-		ViewSettingsDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get _selectedFilter() {
@@ -280,44 +281,44 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _filterByTitle() {
-		return `${ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
+		return `${this.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
 	}
 
 	get _dialogTitle() {
 		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
-		return ViewSettingsDialog.i18nBundle.getText(currentModeText);
+		return this.i18nBundle.getText(currentModeText);
 	}
 
 	get _okButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SUBMIT_BUTTON);
+		return this.i18nBundle.getText(VSD_SUBMIT_BUTTON);
 	}
 
 	get _cancelButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_CANCEL_BUTTON);
+		return this.i18nBundle.getText(VSD_CANCEL_BUTTON);
 	}
 
 	get _resetButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON);
+		return this.i18nBundle.getText(VSD_RESET_BUTTON);
 	}
 
 	get _ascendingLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_ASCENDING);
+		return this.i18nBundle.getText(VSD_ORDER_ASCENDING);
 	}
 
 	get _descendingLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_DESCENDING);
+		return this.i18nBundle.getText(VSD_ORDER_DESCENDING);
 	}
 
 	get _sortOrderLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_ORDER);
+		return this.i18nBundle.getText(VSD_SORT_ORDER);
 	}
 
 	get _filterByLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY);
+		return this.i18nBundle.getText(VSD_FILTER_BY);
 	}
 
 	get _sortByLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY);
+		return this.i18nBundle.getText(VSD_SORT_BY);
 	}
 
 	get _isPhone() {

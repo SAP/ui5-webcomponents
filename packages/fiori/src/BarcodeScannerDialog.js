@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -110,6 +110,7 @@ const metadata = {
 class BarcodeScannerDialog extends UI5Element {
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._codeReader = new BrowserMultiFormatReader();
 	}
 
@@ -138,7 +139,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	static async onDefine() {
-		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	/**
@@ -241,11 +242,11 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	get _cancelButtonText() {
-		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT);
+		return this.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT);
 	}
 
 	get _busyIndicatorText() {
-		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
+		return this.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
 	}
 
 	static get dependencies() {

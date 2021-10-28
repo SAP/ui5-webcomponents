@@ -9,7 +9,7 @@ import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.j
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListMode from "./types/ListMode.js";
@@ -431,7 +431,7 @@ class List extends UI5Element {
 	}
 
 	static async onDefine() {
-		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	static get dependencies() {
@@ -466,6 +466,7 @@ class List extends UI5Element {
 		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
 
 		this._handleResize = this.checkListInViewport.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
@@ -566,13 +567,13 @@ class List extends UI5Element {
 
 	get ariaLabelModeText() {
 		if (this.isMultiSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
 		}
 		if (this.isSingleSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
 		}
 		if (this.isDelete) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+			return this.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
 		}
 
 		return undefined;
@@ -596,7 +597,7 @@ class List extends UI5Element {
 	}
 
 	get _growingButtonText() {
-		return List.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get busyIndPosition() {

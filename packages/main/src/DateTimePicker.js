@@ -262,19 +262,19 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get btnOKLabel() {
-		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get btnCancelLabel() {
-		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	get btnDateLabel() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
+		return this.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
 	}
 
 	get btnTimeLabel() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
+		return this.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
 	}
 
 	get showFooter() {
@@ -294,7 +294,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
+		return this.i18nBundle.getText(DATETIME_DESCRIPTION);
 	}
 
 	/**

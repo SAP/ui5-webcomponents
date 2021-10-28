@@ -1,5 +1,5 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 
@@ -116,6 +116,7 @@ class Slider extends SliderBase {
 		super();
 		this._stateStorage.value = null;
 		this._setInitialValue("value", null);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -307,11 +308,11 @@ class Slider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
+		return this.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
 	}
 
 	static async onDefine() {
-		Slider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -46,6 +46,8 @@ class Suggestions {
 		// that changes due to user interaction.
 		this.selectedItemIndex = null;
 
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
 		this.accInfo = {};
 	}
 
@@ -376,8 +378,9 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
-			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const i18nBundle = this.i18nBundle,
+			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
+			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
 	}
@@ -430,10 +433,6 @@ class Suggestions {
 			GroupHeaderListItem,
 			Button,
 		];
-	}
-
-	static async init() {
-		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

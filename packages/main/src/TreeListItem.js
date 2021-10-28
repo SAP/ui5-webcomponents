@@ -1,6 +1,6 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
@@ -238,6 +238,12 @@ class TreeListItem extends ListItem {
 		];
 	}
 
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	onBeforeRendering() {
 		this.actionable = false;
 	}
@@ -280,7 +286,7 @@ class TreeListItem extends ListItem {
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
-			listItemAriaLabel: TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
+			listItemAriaLabel: this.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
 		};
 	}
 
@@ -310,11 +316,11 @@ class TreeListItem extends ListItem {
 	}
 
 	get iconAccessibleName() {
-		return this.expanded ? TreeListItem.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeListItem.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
+		return this.expanded ? this.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : this.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
 
 	static async onDefine() {
-		TreeListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

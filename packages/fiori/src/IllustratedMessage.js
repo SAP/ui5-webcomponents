@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
@@ -189,6 +189,7 @@ class IllustratedMessage extends UI5Element {
 	constructor() {
 		super();
 
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._handleResize = this.handleResize.bind(this);
 	}
 
@@ -209,7 +210,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	static async onDefine() {
-		IllustratedMessage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -247,8 +248,8 @@ class IllustratedMessage extends UI5Element {
 		this.dialogSvg = illustrationData.dialogSvg;
 		this.sceneSvg = illustrationData.sceneSvg;
 
-		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData.title);
-		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData.subtitle);
+		this.illustrationTitle = this.i18nBundle.getText(illustrationData.title);
+		this.illustrationSubtitle = this.i18nBundle.getText(illustrationData.subtitle);
 	}
 
 	onEnterDOM() {

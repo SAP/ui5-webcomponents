@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -154,6 +154,7 @@ class MessageStrip extends UI5Element {
 
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_closeClick() {
@@ -168,7 +169,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	static async onDefine() {
-		MessageStrip.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	static designClassesMappings() {
@@ -194,7 +195,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {

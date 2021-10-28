@@ -1,4 +1,4 @@
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -95,6 +95,8 @@ class ProductSwitch extends UI5Element {
 			rowSize: this._rowSize,
 			getItemsCallback: () => this.items,
 		});
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -121,11 +123,11 @@ class ProductSwitch extends UI5Element {
 	}
 
 	static async onDefine() {
-		ProductSwitch.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	get _ariaLabelText() {
-		return ProductSwitch.i18nBundle.getText(PRODUCT_SWITCH_CONTAINER_LABEL);
+		return this.i18nBundle.getText(PRODUCT_SWITCH_CONTAINER_LABEL);
 	}
 
 	onEnterDOM() {

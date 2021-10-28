@@ -13,7 +13,7 @@ async function getResourceBundleTexts(options) {
 		const component = document.getElementById(options.id);
 
 		const texts = options.keys.reduce((result, key) => {
-			result[key] = component.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			result[key] = component.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
 			return result;
 		}, {});
 		done(texts);

@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import Icon from "./Icon.js";
@@ -164,6 +164,12 @@ class Switch extends UI5Element {
 		return SwitchTemplate;
 	}
 
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	get sapNextIcon() {
 		return this.checked ? "accept" : "less";
 	}
@@ -236,11 +242,11 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || Switch.i18nBundle.getText(SWITCH_ON);
+		return this._textOn || this.i18nBundle.getText(SWITCH_ON);
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || Switch.i18nBundle.getText(SWITCH_OFF);
+		return this._textOff || this.i18nBundle.getText(SWITCH_OFF);
 	}
 
 	get hiddenText() {
@@ -252,7 +258,7 @@ class Switch extends UI5Element {
 	}
 
 	static async onDefine() {
-		Switch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -8,7 +8,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -148,6 +148,12 @@ class Token extends UI5Element {
 		return styles;
 	}
 
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	_handleSelect() {
 		this.selected = !this.selected;
 		this.fireEvent("select");
@@ -178,7 +184,7 @@ class Token extends UI5Element {
 	}
 
 	get tokenDeletableText() {
-		return Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
+		return this.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
 	}
 
 	get iconURI() {
@@ -190,7 +196,7 @@ class Token extends UI5Element {
 	}
 
 	static async onDefine() {
-		Token.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

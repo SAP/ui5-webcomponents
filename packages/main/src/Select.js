@@ -320,6 +320,7 @@ class Select extends UI5Element {
 		this._lastSelectedOption = null;
 		this._typedChars = "";
 		this._typingTimeoutID = -1;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -657,11 +658,13 @@ class Select extends UI5Element {
 	}
 
 	get valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
 		return {
-			"Success": Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": Select.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": Select.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -682,7 +685,7 @@ class Select extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return Select.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _currentSelectedItem() {
@@ -755,7 +758,7 @@ class Select extends UI5Element {
 	itemSelectionAnnounce() {
 		let text;
 		const optionsCount = this._filteredItems.length;
-		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
+		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
 			text = `${this._currentlySelectedOption.textContent} ${this._isPickerOpen ? itemPositionText : ""}`;
@@ -803,10 +806,6 @@ class Select extends UI5Element {
 			Icon,
 			Button,
 		];
-	}
-
-	static async onDefine() {
-		Select.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -2,7 +2,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isSpace,
@@ -262,6 +262,8 @@ class RadioButton extends UI5Element {
 	constructor() {
 		super();
 
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
 		this._deactivate = () => {
 			if (activeRadio) {
 				activeRadio.active = false;
@@ -295,7 +297,7 @@ class RadioButton extends UI5Element {
 	}
 
 	static async onDefine() {
-		RadioButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -431,9 +433,11 @@ class RadioButton extends UI5Element {
 	}
 
 	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
 		return {
-			"Error": RadioButton.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": RadioButton.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 

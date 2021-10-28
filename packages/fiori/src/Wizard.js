@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -261,6 +261,8 @@ class Wizard extends UI5Element {
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -303,7 +305,7 @@ class Wizard extends UI5Element {
 	}
 
 	static async onDefine() {
-		Wizard.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get PHONE_BREAKPOINT() {
@@ -693,7 +695,7 @@ class Wizard extends UI5Element {
 	}
 
 	getStepAriaLabelText(step, ariaLabel) {
-		return Wizard.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
+		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
 	}
 
 	get stepsDOM() {
@@ -770,43 +772,43 @@ class Wizard extends UI5Element {
 	}
 
 	get navAriaRoleDescription() {
-		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get navAriaLabelText() {
-		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
+		return this.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
 	}
 
 	get navAriaDescribedbyText() {
-		return Wizard.i18nBundle.getText(WIZARD_LIST_ARIA_DESCRIBEDBY);
+		return this.i18nBundle.getText(WIZARD_LIST_ARIA_DESCRIBEDBY);
 	}
 
 	get listAriaLabelText() {
-		return Wizard.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
+		return this.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
 	}
 
 	get actionSheetStepsText() {
-		return Wizard.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
+		return this.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
 	}
 
 	get navStepDefaultHeading() {
-		return Wizard.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
+		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
 	}
 
 	get optionalStepText() {
-		return Wizard.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
+		return this.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
 	}
 
 	get activeStepText() {
-		return Wizard.i18nBundle.getText(WIZARD_STEP_ACTIVE);
+		return this.i18nBundle.getText(WIZARD_STEP_ACTIVE);
 	}
 
 	get inactiveStepText() {
-		return Wizard.i18nBundle.getText(WIZARD_STEP_INACTIVE);
+		return this.i18nBundle.getText(WIZARD_STEP_INACTIVE);
 	}
 
 	get ariaLabelText() {
-		return this.accessibleName || Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return this.accessibleName || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {

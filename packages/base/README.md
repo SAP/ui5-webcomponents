@@ -23,7 +23,8 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
 ### `i18nBundle.js`
 
  - `registerI18nLoader`
- - `getI18nBundle`
+ - `fetchI18nBundle`
+ - `getI18nBundleData`
 
 ### `PropertiesFileFormat.js`
 

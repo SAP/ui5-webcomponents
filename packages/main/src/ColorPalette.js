@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
@@ -182,16 +182,12 @@ class ColorPalette extends UI5Element {
 	}
 
 	static async onDefine() {
-		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
-
-		[ColorPalette.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			ColorPaletteMoreColors ? ColorPaletteMoreColors.init() : Promise.resolve(),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.displayedColors,
 			rowSize: this.rowSize,
@@ -408,11 +404,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorContainerLabel() {
-		return ColorPalette.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
+		return this.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
 	}
 
 	get colorPaleteMoreColorsText() {
-		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
+		return this.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
 	}
 
 	get _showMoreColors() {

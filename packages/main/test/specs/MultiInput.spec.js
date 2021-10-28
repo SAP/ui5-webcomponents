@@ -153,7 +153,7 @@ describe("ARIA attributes", () => {
 
 		resourceBundleText = await browser.executeAsync(done => {
 			const mi = document.getElementById("no-tokens");
-			done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
+			done(mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
 		});
 
 		let allTokens = await mi.$$("ui5-token");
@@ -166,7 +166,7 @@ describe("ARIA attributes", () => {
 
 		resourceBundleText = await browser.executeAsync(done => {
 			const mi = document.getElementById("no-tokens");
-			done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
+			done(mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
 		});
 
 		allTokens = await mi.$$("ui5-token");
