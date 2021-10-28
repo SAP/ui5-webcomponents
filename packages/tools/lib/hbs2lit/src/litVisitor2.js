@@ -8,9 +8,6 @@ let skipIfDefined = false;
 // when true => an HTML node value, when false => an attribute value
 let isNodeValue = false;
 
-// when true => the current attribute is "style"
-let isStyleAttribute = false;
-
 // matches event handlers @click= and boolean attrs ?disabled=
 const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
 
@@ -80,12 +77,6 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 		isNodeValue = closingIndex > openingIndex;
 	}
 
-	isStyleAttribute = !isNodeValue && contentStatement.match(/style="?$/);
-
-	if (!isStyleAttribute && contentStatement.match(/style=/)) {
-		console.log("WARNING: style hard-coded", contentStatement);
-	}
-
 	// Scope custom element tags
 	contentStatement = contentStatement.replaceAll(/(<\/?\s*)([a-zA-Z0-9_]+-[a-zA-Z0-9_-]+)/g, "$1\${scopeTag(\"$2\", tags, suffix)}");
 
@@ -100,6 +91,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 	} else {
 		const path = normalizePath.call(this, mustache.path.original);
 		const hasCalculatingClasses = path.includes("context.classes");
+		const hasStylesCalculation = path.includes("context.styles");
 
 		let parsedCode = "";
 
@@ -107,7 +99,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 			parsedCode = `\${unsafeHTML(${path})}`;
 		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
-		} else if (isStyleAttribute) {
+		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;

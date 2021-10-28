@@ -687,9 +687,6 @@ class Table extends UI5Element {
 
 	get styles() {
 		return {
-			table: {
-				height: "48px",
-			},
 			busy: {
 				position: this.busyIndPosition,
 			},

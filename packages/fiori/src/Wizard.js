@@ -331,6 +331,9 @@ class Wizard extends UI5Element {
 	}
 
 	onAfterRendering() {
+		this._stepsInHeader.forEach(step => {
+			this.getDomRef().querySelector(`[data-ui5-content-ref-id="${step.refStepId}"]`).style.zIndex = step.zIndex;
+		});
 		this.storeStepScrollOffsets();
 
 		if (this.previouslySelectedStepIndex !== this.selectedStepIndex) {
@@ -859,9 +862,7 @@ class Wizard extends UI5Element {
 				accInfo,
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
-				styles: {
-					zIndex: isAfterCurrent ? --inintialZIndex : 1,
-				},
+				zIndex: isAfterCurrent ? --inintialZIndex : 1,
 			};
 		});
 	}
