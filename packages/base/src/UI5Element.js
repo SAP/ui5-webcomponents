@@ -18,7 +18,7 @@ import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import preloadLinks from "./theming/preloadLinks.js";
+import isLegacyBrowser from "./isLegacyBrowser.js";
 
 let autoId = 0;
 
@@ -615,12 +615,17 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		const children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
-		if (children.length !== 1) {
+		this._assertShadowRootStructure();
+
+		return this.shadowRoot.children.length === 1
+			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
+	}
+
+	_assertShadowRootStructure() {
+		const expectedChildrenCount = document.adoptedStyleSheets || isLegacyBrowser() ? 1 : 2;
+		if (this.shadowRoot.children.length !== expectedChildrenCount) {
 			console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
 		}
-
-		return children[0];
 	}
 
 	/**
@@ -983,7 +988,6 @@ class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			window.customElements.define(tag, this);
-			preloadLinks(this);
 
 			if (altTag && !customElements.get(altTag)) {
 				registerTag(altTag);

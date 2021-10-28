@@ -38,7 +38,7 @@ module.exports = function (opts) {
 
 			const filePath = `${targetFile}.js`;
 			const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : ``;
-			fs.writeFileSync(filePath, `${defaultTheme}export default {packageName:"${opts.packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}}`);
+			fs.writeFileSync(filePath, `${defaultTheme}export default ${css};`);
 		}
 	};
 };

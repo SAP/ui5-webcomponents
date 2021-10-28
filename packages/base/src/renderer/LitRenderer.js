@@ -5,11 +5,9 @@ import {
 	unsafeStatic,
 } from "lit-html/static.js";
 
-const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
-	if (typeof styleStrOrHrefsArr === "string") {
-		templateResult = html`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
-	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
-		templateResult = html`${styleStrOrHrefsArr.map(href => html`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
+const litRender = (templateResult, domNode, styles, { host } = {}) => {
+	if (styles) {
+		templateResult = html`<style>${styles}</style>${templateResult}`;
 	}
 	render(templateResult, domNode, { host });
 };
