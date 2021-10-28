@@ -113,8 +113,8 @@
 	display: var(--_ui5_slider_handle_icon_display);
 	color: #2d8ae6;
 	position: relative;
-	top: 1px;
-	left: 8px;
+	top: 0.125rem;
+	left: 0.5rem;
 	vertical-align: middle;
 }
 
@@ -129,6 +129,11 @@
 [dir="rtl"] .ui5-slider-handle:after {
 	right:9px;
 	left: 0;
+}
+
+[dir="rtl"] [slider-icon] {
+	left: 0;
+	right: 0.5rem;
 }
 
 .ui5-slider-root:hover .ui5-slider-handle:not(:focus), .ui5-slider-handle:hover  {
@@ -166,7 +171,7 @@
 .ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active [slider-icon],
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus [slider-icon], 
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus [slider-icon] {
-	display: none;
+	display: var(--_ui5_range_slider_handle_hover_icon_display);
 }
 
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus, 

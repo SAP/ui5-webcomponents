@@ -3,7 +3,7 @@
 }
 
 :host([active]) {
-	color: var(--sapContent_IconColor);
+	color: var(--_ui5_busy_indicator_color);
 }
 
 :host([active]) :not(.ui5-busy-indicator-root--ie) ::slotted(:not([class^="ui5-busy-indicator-"])) {
@@ -85,8 +85,9 @@
 }
 
 .ui5-busy-indicator-busy-area:focus {
-	outline: 1px dotted var(--sapContent_FocusColor);
+	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
+    border-radius: var(--_ui5_busy_indicator_focus_border_radius);
 }
 
 .ui5-busy-indicator-circles-wrapper {

@@ -1,6 +1,7 @@
 @import "../base/sizes-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
+@import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/Card-parameters.css";
 @import "../base/Carousel-parameters.css";
@@ -40,3 +41,6 @@
 @import "../base/ValueStateMessage-parameters.css";
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
+@import "./Table-parameters.css";
+@import "./TableRow-parameters.css";
+@import "./TableColumn-parameters.css";
