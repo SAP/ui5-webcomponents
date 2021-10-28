@@ -22,11 +22,11 @@
 }
 
 :host([selected]:not([disabled])) .ui5-wiz-step-icon {
-	color: var(--sapContent_ContrastIconColor);
+	color: var(--sapList_Active_TextColor);
 }
 
 :host([selected]:not([disabled])) .ui5-wiz-step-number {
-	color: var(--sapContent_ContrastTextColor);
+	color: var(--sapList_Active_TextColor);
 }
 
 /* Disabled step */
@@ -64,7 +64,6 @@
 .ui5-wiz-step-root:focus .ui5-wiz-step-main {
 	outline: var(--_ui5_wiz_tab_focus_outline);
 	outline-offset: 1px;
-	border-radius: var(--_ui5_wiz_tab_focus_border_radius);
 }
 
 /* Icon */
@@ -110,14 +109,10 @@
 
 .ui5-wiz-step-title-text,
 .ui5-wiz-step-subtitle-text {
-	color: var(--_ui5_wiz_tab_title_color);
+	color: var(--sapContent_LabelColor);
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-}
-
-.ui5-wiz-step-title-text {
-	font-weight: var(--_ui5_wiz_tab_title_font_weight);
 }
 
 :host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-title-text,
