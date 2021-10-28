@@ -33,6 +33,7 @@ import Button from "./Button.js";
 
 import {
 	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
@@ -1000,6 +1001,7 @@ class MultiComboBox extends UI5Element {
 	get valueStateTextMappings() {
 		return {
 			"Success": MultiComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": MultiComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Error_Selection": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
 			"Warning": MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
