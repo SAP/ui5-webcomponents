@@ -24,6 +24,8 @@
 	bottom: var(--_ui5_card_header_focus_offset);
 	border-top-left-radius: var(--_ui5_card_header_focus_radius);
 	border-top-right-radius: var(--_ui5_card_header_focus_radius);
+	border-bottom-left-radius: var(--_ui5_card_header_focus_bottom_radius);
+	border-bottom-right-radius: var(--_ui5_card_header_focus_bottom_radius);
 }
 
 .ui5-card-header.ui5-card-header--interactive:hover {

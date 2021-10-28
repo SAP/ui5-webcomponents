@@ -9,6 +9,7 @@
 	--_ui5_card_header_border_color: var(--sapTile_SeparatorColor);
 	--_ui5_card_header_focus_border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	--_ui5_card_header_focus_radius: 0px;
+	--_ui5_card_header_focus_bottom_radius: 0px;
 	--_ui5_card_header_focus_offset: 1px;
 	--_ui5_card_header_title_font_family: "72override", var(--sapFontFamily);
 	--_ui5_card_header_title_font_size: var(--sapFontHeader5Size);

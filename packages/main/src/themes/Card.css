@@ -32,6 +32,10 @@
     border-bottom: none;
 }
 
+.ui5-card--nocontent ::slotted([ui5-card-header]) {
+	--_ui5_card_header_focus_bottom_radius: var(--_ui5_card_header_focus_radius);
+}
+
 .ui5-card-root .ui5-card-header-root  {
     display: block;
     border-bottom: 1px solid var(--_ui5_card_header_border_color);
