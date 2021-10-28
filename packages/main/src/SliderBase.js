@@ -678,7 +678,7 @@ class SliderBase extends UI5Element {
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
 		const currentTheme = getTheme();
-		const tickmarkWidth = "1px";
+		const tickmarkWidth = currentTheme === "sap_horizon" ? "2px" : "1px";
 		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
