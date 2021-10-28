@@ -301,15 +301,11 @@ class Dialog extends Popup {
 	_attachResizeHandlers() {
 		ResizeHandler.register(this, this._screenResizeHandler);
 		ResizeHandler.register(document.body, this._screenResizeHandler);
-		this._resizeHandlersAttached = true;
 	}
 
 	_detachResizeHandlers() {
-		if (this._resizeHandlersAttached) {
-			ResizeHandler.deregister(this, this._screenResizeHandler);
-			ResizeHandler.deregister(document.body, this._screenResizeHandler);
-			this._resizeHandlersAttached = false;
-		}
+		ResizeHandler.deregister(this, this._screenResizeHandler);
+		ResizeHandler.deregister(document.body, this._screenResizeHandler);
 	}
 
 	_center() {
