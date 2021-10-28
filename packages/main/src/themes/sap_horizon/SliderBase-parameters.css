@@ -16,7 +16,7 @@
 	--_ui5_slider_handle_top: -0.75rem;
 	--_ui5_slider_handle_font_family: "SAP-icons";
 	--_ui5_slider_handle_hover_border: 1px solid var(--sapContent_Selected_ForegroundColor);
-	--_ui5_slider_handle_focus_border: 0.125rem solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_slider_handle_focus_border: 2px solid var(--sapContent_Selected_ForegroundColor);
 	--_ui5_slider_handle_active_border: var(--_ui5_slider_handle_focus_border);
 	--_ui5_slider_handle_outline: none: 
 	--_ui5_slider_tooltip_background: #FFF;
