@@ -5,7 +5,7 @@
 }
 
 :host([disabled]) {
-	opacity: .4;
+	opacity: .6;
 	cursor: initial;
 	outline: none;
 }
@@ -19,8 +19,7 @@
 }
 
 :host([_focused]) {
-	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	border-radius: var(--_ui5_rating_indicator_border_radius);
+	outline: 1px dotted var(--sapContent_FocusColor);
 }
 
 .ui5-rating-indicator-root {
