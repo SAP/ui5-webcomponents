@@ -22,9 +22,13 @@
 }
 
 ::slotted([ui5-segmented-button-item]:nth-child(odd)) {
-	border: var(--_ui5_segmented_btn_inner_border);
 	border-right: 0;
 	border-left: 0;
+}
+
+::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)) {
+	border-right: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
+	border-left: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
 }
 
 ::slotted([ui5-segmented-button-item]:last-child) {
@@ -76,8 +80,4 @@
 	border-bottom-right-radius: var(--_ui5_segmented_btn_border_radius);
 	border-top-left-radius: var(--_ui5_segmented_btn_border_radius);
 	border-bottom-left-radius: var(--_ui5_segmented_btn_border_radius);
-}
-
-::slotted([ui5-segmented-button-item][pressed]) {
-	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
