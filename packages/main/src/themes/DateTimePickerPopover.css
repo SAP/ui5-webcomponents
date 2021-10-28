@@ -7,10 +7,6 @@
 	justify-content: center;
 }
 
-.ui5-dt-picker-toggle-button {
-    width: 8rem;
-}
-
 .ui5-dt-cal {
 	width: auto;
 	padding: 0.5rem 0.25rem 0 0.25rem; /* both cozy and compact */

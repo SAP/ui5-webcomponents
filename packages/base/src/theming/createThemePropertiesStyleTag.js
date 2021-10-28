@@ -1,4 +1,4 @@
-import { hasStyle, createStyle, updateStyle } from "../ManagedStyles.js";
+import createStyleInHead from "../util/createStyleInHead.js";
 
 /**
  * Creates/updates a style element holding all CSS Custom Properties
@@ -6,10 +6,14 @@ import { hasStyle, createStyle, updateStyle } from "../ManagedStyles.js";
  * @param packageName
  */
 const createThemePropertiesStyleTag = (cssText, packageName) => {
-	if (hasStyle("data-ui5-theme-properties", packageName)) {
-		updateStyle(cssText, "data-ui5-theme-properties", packageName);
+	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${packageName}"]`);
+	if (styleElement) {
+		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		createStyle(cssText, "data-ui5-theme-properties", packageName);
+		const attributes = {
+			"data-ui5-theme-properties": packageName,
+		};
+		createStyleInHead(cssText, attributes);
 	}
 };
 

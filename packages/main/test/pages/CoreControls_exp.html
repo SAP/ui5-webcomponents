@@ -11,7 +11,7 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -206,7 +206,7 @@
 			<ui5-radio-button text="Group One" disabled name="test2"></ui5-radio-button>
 			<ui5-radio-button text="Group One" readonly name="test2"></ui5-radio-button>
 		</section>
-
+		
 		<section>
 			<ui5-radio-button value-state="Error" checked text="Group Two" name="test2"></ui5-radio-button>
 			<ui5-radio-button value-state="Error" disabled text="Group Two" name="test2"></ui5-radio-button>
@@ -214,7 +214,7 @@
 			<ui5-radio-button value-state="Success" text="Group Two" name="test2"></ui5-radio-button>
 			<ui5-radio-button value-state="Information" text="Group Two" name="test2"></ui5-radio-button>
 		</section>
-
+			
 		<section>
 			<ui5-checkbox text="Option C"></ui5-checkbox>
 			<ui5-checkbox checked text="Option D"></ui5-checkbox>
@@ -239,7 +239,7 @@
 			<ui5-switch name="test"></ui5-switch>
 		</section>
 	</section>
-
+	
 	<section class="row-center">
 		<section style="width: 400px">
 			<ui5-slider min="0" max="20" show-tooltip></ui5-slider>
