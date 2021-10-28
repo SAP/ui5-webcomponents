@@ -109,12 +109,16 @@
 	width: var(--_ui5_slider_handle_width);
 }
 
-[slider-icon] {
+.ui5-slider-handle:after {
 	display: var(--_ui5_slider_handle_icon_display);
+	font-family: var(--_ui5_slider_handle_font_family);
+	font-size: 14px;
+	font-weight: bold;
+	content: var(--_ui5_slider_handle_icon);
 	color: #2d8ae6;
 	position: relative;
 	top: 1px;
-	left: 8px;
+	left: 9px;
 	vertical-align: middle;
 }
 
@@ -159,13 +163,13 @@
 	
 }
 
-.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start [slider-icon],
-.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end [slider-icon],
-.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start [slider-icon],
-.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end [slider-icon],
-.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active [slider-icon],
-.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus [slider-icon], 
-.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus [slider-icon] {
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, 
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end:after,
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:after, 
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end:after,
+.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active:after,
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus:after, 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus:after {
 	display: none;
 }
 
