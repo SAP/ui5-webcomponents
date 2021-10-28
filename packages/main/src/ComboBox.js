@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -399,6 +399,7 @@ class ComboBox extends UI5Element {
 
 		this._selectMatchingItem();
 		this._initialRendering = false;
+		this._isKeyNavigation = false;
 	}
 
 	async onAfterRendering() {
@@ -416,15 +417,6 @@ class ComboBox extends UI5Element {
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
-
-		// Safari is quite slow and does not preserve text highlighting on control rerendering.
-		// That's why we need to restore it "manually".
-		if (isSafari() && this._autocomplete && this.filterValue !== this.value) {
-			this.inner.setSelectionRange(
-				(this._isKeyNavigation ? 0 : this.filterValue.length),
-				this.value.length,
-			);
-		}
 	}
 
 	shouldClosePopover() {
@@ -435,8 +427,6 @@ class ComboBox extends UI5Element {
 		this.focused = true;
 
 		this._lastValue = this.value;
-
-		this._autocomplete = false;
 
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
@@ -543,11 +533,10 @@ class ComboBox extends UI5Element {
 		this._clearFocus();
 
 		// autocomplete
-		if (this._autocomplete) {
-			const item = this._getFirstMatchingItem(value);
-			this._applyAtomicValueAndSelection(item, value, true);
+		if (this._autocomplete && value !== "") {
+			const item = this._autoCompleteValue(value);
 
-			if (value !== "" && !this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
+			if (!this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent("selection-change", {
 					item,
 				});
@@ -562,7 +551,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!this._filteredItems.length || value === "") {
+		if (!this._filteredItems.length) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -644,8 +633,7 @@ class ComboBox extends UI5Element {
 		this._announceSelectedItem(indexOfItem);
 
 		// autocomplete
-		const item = this._getFirstMatchingItem(this.value);
-		this._applyAtomicValueAndSelection(item, "", true);
+		const item = this._autoCompleteValue(this.value);
 
 		if ((item && !item.selected)) {
 			this.fireEvent("selection-change", {
@@ -702,7 +690,6 @@ class ComboBox extends UI5Element {
 	_keydown(event) {
 		const isArrowKey = isDown(event) || isUp(event);
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
-		this._isKeyNavigation = false;
 
 		if (isArrowKey) {
 			this.handleArrowKeyPress(event);
@@ -788,7 +775,7 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	_getFirstMatchingItem(current) {
+	_autoCompleteValue(current) {
 		const currentlyFocusedItem = this.items.find(item => item.focused === true);
 
 		if (currentlyFocusedItem && currentlyFocusedItem.isGroupItem) {
@@ -798,20 +785,24 @@ class ComboBox extends UI5Element {
 
 		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
+		let value;
+		if (matchingItems.length) {
+			value = matchingItems[0] ? matchingItems[0].text : current;
+		} else {
+			value = current;
+		}
+
+		this._applyAtomicValueAndSelection(value, this._isKeyNavigation || matchingItems.length);
+
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
 	}
 
-	_applyAtomicValueAndSelection(item, filterValue, highlightValue) {
-		if (!item) {
-			return;
-		}
-
-		const value = (item && item.text) || "";
+	_applyAtomicValueAndSelection(value, highlightValue) {
 		this.inner.value = value;
 		if (highlightValue) {
-			this.inner.setSelectionRange(filterValue.length, value.length);
+			this.inner.setSelectionRange(this.filterValue.length, value.length);
 		}
 		this.value = value;
 	}
