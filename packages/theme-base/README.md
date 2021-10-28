@@ -5,14 +5,6 @@
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-**DEPRECATED as of version 1.0.0-rc.16**
-
-**This package was renamed from *theme-base* to *theming* to better reflect its purpose.**
-
-**Use `@ui5/webcomponents-theming` instead.**
-
-
-
 Provides common theming assets, used by other UI5 Web Components packages, such as `main` and `fiori`.
 
 This package is intended for UI5 Web Component development and currently provides no app development related public APIs.

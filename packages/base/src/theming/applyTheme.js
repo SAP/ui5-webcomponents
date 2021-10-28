@@ -4,7 +4,7 @@ import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
-const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
+const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
 const isThemeBaseRegistered = () => {
 	const registeredPackages = getRegisteredPackages();
