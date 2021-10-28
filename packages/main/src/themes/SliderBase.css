@@ -52,7 +52,7 @@
 	width: 0.375rem;
 	height: 0.375rem;
 	left: -0.875rem;
-	top: -0.063rem;
+	top: -0.0625rem;
 }
 
 [dir="rtl"] .ui5-slider-progress-container::before {
@@ -69,7 +69,7 @@
 	width: 0.375rem;
 	height: 0.375rem;
 	right: -0.875rem;
-	top: -0.063rem;
+	top: -0.0625rem;
 }
 
 [dir="rtl"] .ui5-slider-progress-container::after {
@@ -136,8 +136,8 @@
 	display: var(--_ui5_slider_handle_icon_display);
 	color: #2d8ae6;
 	position: relative;
-	top: 0.063rem;
-	left: 0.5rem;
+	top: var(--_ui5_slider_icon_top);
+	left: var(--_ui5_slider_icon_left);
 	vertical-align: middle;
 }
 
@@ -150,7 +150,7 @@
 }
 
 [dir="rtl"] .ui5-slider-handle [slider-icon] {
-	right: 0.5rem;
+	right: var(--_ui5_slider_icon_left);
 	left: 0;
 }
 
@@ -196,7 +196,7 @@
 
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus, 
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus {
-	border: -_ui5_slider_handle_focus_border;
+	border: var(--_ui5_slider_handle_focus_border);
 }
 
 .ui5-slider-root:focus:hover .ui5-slider-handle, .ui5-slider-handle:focus:hover {
