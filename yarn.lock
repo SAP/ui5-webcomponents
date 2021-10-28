@@ -2384,6 +2384,19 @@ chromedriver@94.0.0:
     proxy-from-env "^1.1.0"
     tcp-port-used "^1.0.1"
 
+chromedriver@95.0.0:
+  version "95.0.0"
+  resolved "https://registry.npmjs.org/chromedriver/-/chromedriver-95.0.0.tgz#ecf854cac6df5137a651dcc132edf55612d3db7f"
+  integrity sha512-HwSg7S0ZZYsHTjULwxFHrrUqEpz1+ljDudJM3eOquvqD5QKnR5pSe/GlBTY9UU2tVFRYz8bEHYC4Y8qxciQiLQ==
+  dependencies:
+    "@testim/chrome-version" "^1.0.7"
+    axios "^0.21.2"
+    del "^6.0.0"
+    extract-zip "^2.0.1"
+    https-proxy-agent "^5.0.0"
+    proxy-from-env "^1.1.0"
+    tcp-port-used "^1.0.1"
+
 clean-css@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-5.2.2.tgz#d3a7c6ee2511011e051719838bdcf8314dc4548d"

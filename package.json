@@ -85,6 +85,7 @@
     "packages/fiori",
     "packages/icons",
     "packages/icons-business-suite",
+	"packages/icons-horizon",
     "packages/icons-tnt",
     "packages/ie11",
     "packages/tools",
