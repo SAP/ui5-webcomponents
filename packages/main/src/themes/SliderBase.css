@@ -191,7 +191,7 @@
 .ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active [slider-icon],
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus [slider-icon], 
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus [slider-icon] {
-	display: none;
+	display: var(--_ui5_range_slider_handle_hover_icon_display);
 }
 
 .ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus, 
