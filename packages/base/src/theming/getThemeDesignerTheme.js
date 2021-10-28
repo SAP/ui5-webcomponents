@@ -1,6 +1,6 @@
 const getThemeMetadata = () => {
 	// Check if the class was already applied, most commonly to the link/style tag with the CSS Variables
-	let el = document.querySelector(".sapThemeMetaData-Base-baseLib");
+	let el = document.querySelector(".sapThemeMetaData-Base-baseLib") || document.querySelector(".sapThemeMetaData-UI5-sap-ui-core");
 	if (el) {
 		return getComputedStyle(el).backgroundImage;
 	}
@@ -8,6 +8,7 @@ const getThemeMetadata = () => {
 	el = document.createElement("span");
 	el.style.display = "none";
 	el.classList.add("sapThemeMetaData-Base-baseLib");
+	el.classList.add("sapThemeMetaData-UI5-sap-ui-core");
 	document.body.appendChild(el);
 	const metadata = getComputedStyle(el).backgroundImage;
 	document.body.removeChild(el);

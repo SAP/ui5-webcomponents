@@ -16,17 +16,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		body, html {
-			width: 100%;
-			height: 100%;
-			padding: 0;
-			margin: 0;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Page.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);"></body>
+<body class="page1auto"></body>
 	<ui5-page id="page" background-design="List" floating-footer show-footer>
 		<ui5-bar design="Header" slot="header">
 			<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
@@ -35,7 +28,7 @@
 		</ui5-bar>
 
 		<div>
-			<div style="width: 100%;">
+			<div class="page2auto">
 				<ui5-button id="toggleVisibility">Toggle visibility</ui5-button>
 				<ui5-button id="toggleFloating">Toggle floating footer</ui5-button>
 				<ui5-button id="toggleScrolling">Toggle scrolling</ui5-button>

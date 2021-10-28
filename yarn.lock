@@ -1127,10 +1127,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.31":
-  version "11.1.31"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.31.tgz#0c23390b3b103a40abe5472b7f27a3e8fdaf3acb"
-  integrity sha512-ePVChOam4vL/m+TeTrn6yeBFGxOUv0FK1HQtHJTQsugSCOdHAXXsa06kObPBPAn9k1HenUbF4IFmxMjEnjgd+g==
+"@sap-theming/theming-base-content@11.1.34":
+  version "11.1.34"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.34.tgz#8fcd96c5c464fa1474786e6a50fec5ca5172b8b3"
+  integrity sha512-xzJ6eZHyxzJCuve6IVAhBkWoCUpM81Vgmfc4H1EJ/+gY7VTsJK4AXcHm/RTby+33zp4+b6NzM7tSL2RmxwsJtA==
 
 "@sindresorhus/is@^4.0.0":
   version "4.2.0"
@@ -2383,6 +2383,13 @@ chromedriver@94.0.0:
     https-proxy-agent "^5.0.0"
     proxy-from-env "^1.1.0"
     tcp-port-used "^1.0.1"
+
+clean-css@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-5.2.2.tgz#d3a7c6ee2511011e051719838bdcf8314dc4548d"
+  integrity sha512-/eR8ru5zyxKzpBLv9YZvMXgTSSQn7AdkMItMYynsFgGwTveCRVam9IUPFloE85B4vAIj05IuKmmEoV7/AQjT0w==
+  dependencies:
+    source-map "~0.6.0"
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -7158,7 +7165,7 @@ source-map@^0.5.0:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
 
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
+source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
