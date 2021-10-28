@@ -1,14 +1,14 @@
-# Using Additional Assets
+# Using additional assets
 
 *Most UI5 Web Components packages offer **additional assets**. This section explains what these are and how to use them.*
 
-## What Are Additional Assets
+## What are additional assets
 
-These are **themes**, **text translations**, **locale data** etc. that are not shipped as part of the components/icons themselves, but can be loaded separately, if needed.
+These are **themes**, **text translations**, **locale data** etc... that are not shipped as part of the components/icons themselves, but can be loaded separately, if needed.
 
 These assets are important for **accessibility** and **globalization**.
 
-## Importing Additional Assets
+## Importing additional assets
 
 Import the `dist/Assets.js` file of the respective NPM package:
 
@@ -24,7 +24,7 @@ Import the `dist/Assets.js` file of the respective NPM package:
 | `localization` *       | [@ui5/webcomponents-localization](https://www.npmjs.com/package/@ui5/webcomponents-localization)                 | `CLDR`           | `@ui5/webcomponents-localization/dist/Assets.js` | Locale data, needed for date/time/currency-related components <br><br> *You don't need to import the assets of this package directly.*                                                                           |
 | `theme-base` *         | [@ui5/webcomponents-theme-base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)                     | `themes`         | `@ui5/webcomponents-theme-base/dist/Assets.js`   | Additional themes' base parameters <br><br> *You don't need to import the assets of this package directly.*                                                                                                      |
 
-`*` Only listed for completeness, included automatically by other packages.
+`*` Only listed for completeness, included automatically by other packages
 
 For example:
 
@@ -48,11 +48,11 @@ setLanguage("es");
 setTheme("sap_fiori_3_hcb");
 ```
 
-The `ui5-date-picker` component will have all translatable texts in Spanish, and the Spanish format settings (e.g. date format) will be used, and will be rendered with the `sap_fiori_3_hcb` accessibility theme instead of the default theme.
+The `ui5-date-picker` component will have all translatable texts in Spanish, and the Spanish format settings (f.e. date format) will be used, and will be rendered with the `sap_fiori_3_hcb` accessibility theme instead of the default theme.
 
-## Technical Aspects
+## Technical aspects
 
 Additional assets are `.json` files with the respective data. When you import the `dist/Assets.js` file of a given package, assets are only **registered**, but not yet fetched.
 When they are needed, they are loaded on the fly with **dymamic imports**, and then used.
 
-Next: [Using Additional Features](06-using-features.md)
+Next: [Using additional features](06-using-features.md)

@@ -1,4 +1,4 @@
-# UI5 Web Components Documentation
+# UI5 Web Components documentation
 
 Welcome to the UI5 Web Components documentation!
 

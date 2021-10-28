@@ -1,31 +1,31 @@
-# First Steps
+# First steps
 
-*This section explains how to get started with UI5 Web Components.*
+*This section explains how to try out UI5 Web Components for the first time*
 
-## Distribution Model
+## Distribution model
 
 UI5 Web Components are distributed as **ES6 modules** across several **NPM packages**:
 
 The most commonly used ones are:
- - `@ui5/webcomponents` - components library, containing bread-and-butter components (buttons, inputs, pickers, etc.);
- - `@ui5/webcomponents-fiori` - components library, containing semantic, higher-order components;
- - `@ui5/webcomponents-icons` - icons collection, containing general-purpose and business-oriented icons.
+ - `@ui5/webcomponents` - components library, containing bread-and-butter components (buttons, inputs, pickers, etc...)
+ - `@ui5/webcomponents-fiori` - components library, containing semantic, higher-order components
+ - `@ui5/webcomponents-icons` - icons collection, containing general-purpose and business-oriented icons
 
-**Important: There is no CDN for UI5 Web Components**. Each application is expected to **import** and **bundle** only the components (and any other resources) it is going to use.
+*Important: There is no CDN for UI5 Web Components*. Each application is expected to **import** and **bundle** only the components (and any other resources) it is going to use.
 
 ## Bundling UI5 Web Components
 
 To build your UI5 Web Components project you can use any bundling tool that supports the following features:
- - `.json` imports;
- - dynamic ES6 imports.
+ - `.json` imports
+ - dynamic ES6 imports
 
 This is true of all modern bundlers.  
 
 UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to [Installation](#installation) or check the Tutorials section.
 
-### Creating a Project
+### Creating a project
 
-You can use any ES6 module-capable front-end tooling, but in case you don’t have a preference yet, you can start a new project using [Vite](https://vitejs.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
+Any ES6 module-capable front-end tooling can be used, but in case you don’t already have a preference, you can start a new project using [Vite](https://vitejs.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
 
 ```console
 npm init vite
@@ -46,7 +46,6 @@ npm run dev​
 You should see a message that a server is running on `Local: http://localhost:3000/`. Launch your favourite IDE and change some code, the browser page will be automatically refreshed.
 
 ### Installation
-
 <a name="installation"></a>
 
 Install ```@ui5/webcomponents```
@@ -55,7 +54,7 @@ Install ```@ui5/webcomponents```
 npm install @ui5/webcomponents
 ```
 
-This command downloads the published source code of the UI5 Web Components to the `node_modules` folder. Now, you can add them to your code to get them on the web page.
+This command downloads the published source code of the UI5 Web Components to the `node_modules` folder. Now you can add them to your code to get them on the web page.
 
 ### Documentation
 
@@ -70,7 +69,7 @@ Take a look at the available UI5 Web Components documentation in the [playground
 import "@ui5/webcomponents/dist/Button.js";
 ```
 
-This line runs the code that registers the `<ui5-button>` tag with the browser. Now, when the browser sees such a tag, it knows how to render it.
+This line runs the code that registers the `<ui5-button>` tag with the browser. Now when the browser sees such a tag, it knows how to render it.
 
 #### 2. Instantiate the Web Component.
 
@@ -85,7 +84,7 @@ document.querySelector('#app').innerHTML = `
 
 Check the browser to see the displayed button. You can now use UI5 Web Components just like normal HTML elements - set attributes on them, attach events, and more as described in the documentation.
 
-#### 3. Run a production build.
+#### 3. Run a Production Build
 
 If you want to deploy your project on a static hosting or in a Node.js project, run:
 

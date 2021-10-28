@@ -1,4 +1,4 @@
-# Contributing to the UI5 Web Components Project
+# Contributing to the UI5 Web Components project
 
 Contributions are welcome!
 

@@ -1,23 +1,24 @@
-# Using Icons
+# Using icons
 
-*This section explains how to load and use icons in your UI5 Web Components projects.*
+One of the most commonly used UI5 Web Components is `ui5-icon`.
 
-One of the most commonly used UI5 Web Components is `ui5-icon`. Additionally, several UI5 Web Components have an `icon` property that expects an icon name as a value.
+Additionally, several UI5 Web Components have an `icon` property that expects an icon name as a value.
 
+*This section explains how to load and use icons in your UI5 Web Components projects*
 
-## Icon Collections
+## Icons collections
 
-The UI5 Web Components project currently offers 3 icon collections, provided as NPM packages:
+The UI5 Web Components project currently offers 3 icons collections, provided as NPM packages:
 
 Project | NPM Package | Description | Icons list
 -----------|-----------|------------|-------------
-`icons` | [UI5 Web Components - Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) | A rich icon collection (`SAP-icons`), suitable for enterprise-grade apps |[Explore](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons)
-`icons-tnt` | [UI5 Web Components - Icons TNT](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt) | A rich icon collection (`SAP-icons-TNT`), suitable for more technical apps | [Explore](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT)
-`icons-business-suite` | [UI5 Web Components - Icons Business Suite](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) | A rich icon collection (`BusinessSuiteInAppSymbols`), suitable for SAP Fiori apps | [Explore](https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols)
+`icons` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) | A rich icons collection (`SAP-icons`), suitable for enterprise-grade apps |[Explore](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons)
+`icons-tnt` | [UI5 Web Components Icons TNT](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt) | A rich icons collection (`SAP-icons-TNT`), suitable for more technical apps | [Explore](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT)
+`icons-business-suite` | [UI5 Web Components Icons Business Suite](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) | A rich icons collection (`BusinessSuiteInAppSymbols`), suitable for SAP Fiori apps | [Explore](https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols)
 
 ## Usage
 
- 1. Add one or more of the above packages as dependencies to your project.
+ 1. Add one or more of the above packages as dependencies to your project
 
 ```
 npm i @ui5/webcomponents-icons
@@ -27,7 +28,7 @@ npm i @ui5/webcomponents-icons-business-suite
 
  2. Import either all icons from a package, or better - only the ones your app is going to use.
 
-**Important: It is strongly recommended that you only import the icons that your app is going to use. This will keep your bundle small.
+**Important: it is strongly recommended that you only import the icons that your app is going to use. This will keep your bundle small.
 Generally, importing all icons is required only if you do not know in advance which icons you are going to need.**
 
  - To import all icons from a package, use the `dist/AllIcons.js` module of that package:
@@ -72,4 +73,4 @@ For example:
 <ui5-avatar icon="business-suite/coins"></ui5-avatar>
 ```
 
-Next: [Using Additional Assets](05-using-assets.md)
+Next: [Using additional assets](05-using-assets.md)
