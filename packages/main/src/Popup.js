@@ -13,7 +13,6 @@ import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsReg
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
-import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 /**
  * @public
@@ -144,7 +143,13 @@ const metadata = {
 
 const createBlockingStyle = () => {
 	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
-		createStyle(globalStyles, "data-ui5-popup-scroll-blocker");
+		createStyle(`
+		.ui5-popup-scroll-blocker {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			overflow: hidden;
+		}`, "data-ui5-popup-scroll-blocker");
 	}
 };
 
