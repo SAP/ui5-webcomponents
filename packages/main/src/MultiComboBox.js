@@ -49,6 +49,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
  * @public
@@ -388,7 +389,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	static get dependencies() {
@@ -1033,6 +1034,11 @@ class MultiComboBox extends UI5Element {
 
 	get classes() {
 		return {
+			popover: {
+				"ui5-multi-combobox-all-items-responsive-popover": true,
+				"ui5-suggestions-popover": !this.isPhone,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.hasValueStateMessage,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,

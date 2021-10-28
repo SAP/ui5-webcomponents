@@ -54,6 +54,7 @@ const metadata = {
  * @extends UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-sort-item
+ * @implements sap.ui.webcomponents.fiori.ISortItem
  * @public
  */
 class SortItem extends UI5Element {

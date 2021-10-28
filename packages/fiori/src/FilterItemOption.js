@@ -55,6 +55,7 @@ const metadata = {
  * @extends UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item-option
+ * @implements sap.ui.webcomponents.fiori.IFilterItemOption
  * @public
  */
 class FilterItemOption extends UI5Element {
