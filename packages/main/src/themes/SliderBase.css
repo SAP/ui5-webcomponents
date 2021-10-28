@@ -113,7 +113,6 @@
 }
 
 .ui5-slider-tickmarks {
-	color: var(--_ui5_slider_tickmark_color);
 	position: absolute;
 	width: 100%;
 	height: 1rem;
@@ -216,6 +215,7 @@
 	background: var(--_ui5_slider_tooltip_background);
 	border: var(--_ui5_slider_tooltip_border);
 	border-radius: var(--_ui5_slider_tooltip_border_radius);
+	box-shadow: var(--_ui5_slider_tooltip_box_shadow);
 	font-size: var(--_ui5_slider_tooltip_fontsize);
 	color: var(--_ui5_slider_tooltip_color);
 	height: var(--_ui5_slider_tooltip_height);
