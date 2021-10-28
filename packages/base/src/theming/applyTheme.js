@@ -1,5 +1,5 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
+import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
@@ -17,11 +17,14 @@ const loadThemeBase = async theme => {
 	}
 
 	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createOrUpdateStyle(cssText, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE);
 };
 
 const deleteThemeBase = () => {
-	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${BASE_THEME_PACKAGE}"]`);
+	if (styleElement) {
+		styleElement.parentElement.removeChild(styleElement);
+	}
 };
 
 const loadComponentPackages = async theme => {
@@ -32,7 +35,7 @@ const loadComponentPackages = async theme => {
 		}
 
 		const cssText = await getThemeProperties(packageName, theme);
-		createOrUpdateStyle(cssText, "data-ui5-theme-properties", packageName);
+		createThemePropertiesStyleTag(cssText, packageName);
 	});
 };
 
