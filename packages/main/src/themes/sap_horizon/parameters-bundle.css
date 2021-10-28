@@ -10,7 +10,6 @@
 @import "../base/DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
-@import "./Dialog-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "../base/InputIcon-parameters.css";
@@ -21,7 +20,6 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
-@import "./PopupsCommon-parameters.css";
 @import "../base/ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
