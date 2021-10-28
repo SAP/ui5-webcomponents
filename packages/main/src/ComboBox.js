@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -385,7 +385,6 @@ class ComboBox extends UI5Element {
 		this._initialRendering = true;
 		this._itemFocused = false;
 		this._selectionChanged = false;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -399,7 +398,6 @@ class ComboBox extends UI5Element {
 
 		this._selectMatchingItem();
 		this._initialRendering = false;
-		this._isKeyNavigation = false;
 	}
 
 	async onAfterRendering() {
@@ -417,6 +415,15 @@ class ComboBox extends UI5Element {
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
+
+		// Safari is quite slow and does not preserve text highlighting on control rerendering.
+		// That's why we need to restore it "manually".
+		if (isSafari() && this._autocomplete && this.filterValue !== this.value) {
+			this.inner.setSelectionRange(
+				(this._isKeyNavigation ? 0 : this.filterValue.length),
+				this.value.length,
+			);
+		}
 	}
 
 	shouldClosePopover() {
@@ -427,6 +434,8 @@ class ComboBox extends UI5Element {
 		this.focused = true;
 
 		this._lastValue = this.value;
+
+		this._autocomplete = false;
 
 		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
@@ -533,10 +542,11 @@ class ComboBox extends UI5Element {
 		this._clearFocus();
 
 		// autocomplete
-		if (this._autocomplete && value !== "") {
-			const item = this._autoCompleteValue(value);
+		if (this._autocomplete) {
+			const item = this._getFirstMatchingItem(value);
+			this._applyAtomicValueAndSelection(item, value, true);
 
-			if (!this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
+			if (value !== "" && !this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent("selection-change", {
 					item,
 				});
@@ -551,7 +561,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!this._filteredItems.length) {
+		if (!this._filteredItems.length || value === "") {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -633,7 +643,8 @@ class ComboBox extends UI5Element {
 		this._announceSelectedItem(indexOfItem);
 
 		// autocomplete
-		const item = this._autoCompleteValue(this.value);
+		const item = this._getFirstMatchingItem(this.value);
+		this._applyAtomicValueAndSelection(item, "", true);
 
 		if ((item && !item.selected)) {
 			this.fireEvent("selection-change", {
@@ -690,6 +701,7 @@ class ComboBox extends UI5Element {
 	_keydown(event) {
 		const isArrowKey = isDown(event) || isUp(event);
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
+		this._isKeyNavigation = false;
 
 		if (isArrowKey) {
 			this.handleArrowKeyPress(event);
@@ -775,7 +787,7 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	_autoCompleteValue(current) {
+	_getFirstMatchingItem(current) {
 		const currentlyFocusedItem = this.items.find(item => item.focused === true);
 
 		if (currentlyFocusedItem && currentlyFocusedItem.isGroupItem) {
@@ -785,24 +797,20 @@ class ComboBox extends UI5Element {
 
 		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem);
 
-		let value;
-		if (matchingItems.length) {
-			value = matchingItems[0] ? matchingItems[0].text : current;
-		} else {
-			value = current;
-		}
-
-		this._applyAtomicValueAndSelection(value, this._isKeyNavigation || matchingItems.length);
-
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
 	}
 
-	_applyAtomicValueAndSelection(value, highlightValue) {
+	_applyAtomicValueAndSelection(item, filterValue, highlightValue) {
+		if (!item) {
+			return;
+		}
+
+		const value = (item && item.text) || "";
 		this.inner.value = value;
 		if (highlightValue) {
-			this.inner.setSelectionRange(this.filterValue.length, value.length);
+			this.inner.setSelectionRange(filterValue.length, value.length);
 		}
 		this.value = value;
 	}
@@ -872,18 +880,18 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem) {
-		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
-		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
+		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return ComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(SELECT_OPTIONS);
+		return ComboBox.i18nBundle.getText(SELECT_OPTIONS);
 	}
 
 	get inner() {
@@ -922,10 +930,10 @@ class ComboBox extends UI5Element {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Information": this.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Success": ComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
@@ -966,6 +974,10 @@ class ComboBox extends UI5Element {
 			Popover,
 			ComboBoxGroupItem,
 		];
+	}
+
+	static async onDefine() {
+		ComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get styles() {

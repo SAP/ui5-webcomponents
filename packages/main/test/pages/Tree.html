@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -22,31 +22,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
-
-		.hdr {
-			display: flex;
-		}
-
-		.hdr>* {
-			margin: 0.25rem;
-		}
-
-		.spacer {
-			flex: 1;
-		}
-
-		.full-width {
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Tree.css">
 </head>
 
-<body style="padding: 5px; background-color: var(--sapBackgroundColor);">
+<body class="tree1auto">
 
 	<ui5-segmented-button id="density">
 		<ui5-toggle-button pressed>Cozy</ui5-toggle-button>

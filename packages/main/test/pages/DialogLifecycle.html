@@ -21,16 +21,17 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/DialogLifecycle.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="dialoglifecycle1auto">
 
 <ui5-button id="openDialogButton">Open Dialog</ui5-button>
 <br />
 
 <template id="dt">
 	<ui5-dialog id="hello-dialog" header-text="Dialogs are easy!">
-		<div style="padding: 2rem; display:flex; justify-content: center;">
+		<div class="dialoglifecycle2auto">
 			Hello World!
 			<ui5-button id="closeDialogButton">Dismiss</ui5-button>
 		</div>

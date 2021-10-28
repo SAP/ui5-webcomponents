@@ -30,8 +30,7 @@ will not have any effect.
 
 ## When do I need to use the `scoping` feature?
 
-The `scoping` feature is completely optional. It is not needed for application development, but it is strongly recommended when building **libraries** and **micro-frontends**.
-
+The `scoping` feature is completely optional. It is not needed for application development, but it is strongly recommended when building **libraries** and **micro-frontends**. 
 It ensures that the custom elements that your code uses have not already been reserved by another library or an older version of UI5 Web Components.
 
 If, for example, your code may be loaded on demand by unknown applications as a third-party service, there is always the risk that the app

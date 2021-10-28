@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
@@ -158,12 +158,6 @@ const metadata = {
  * @since 1.0.0-rc.15
  */
 class CardHeader extends UI5Element {
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -201,11 +195,11 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaCardHeaderRoleDescription() {
-		return this.interactive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
+		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaCardAvatarLabel() {
-		return this.i18nBundle.getText(AVATAR_TOOLTIP);
+		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaLabelledByHeader() {
@@ -243,7 +237,7 @@ class CardHeader extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		CardHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_headerClick(event) {

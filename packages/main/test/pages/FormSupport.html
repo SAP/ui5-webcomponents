@@ -10,9 +10,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
     <script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/FormSupport.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="formsupport1auto">
 
 <form method="get">
 
@@ -32,8 +33,8 @@
     <ui5-radio-button name="radio" text="B" value="b" checked></ui5-radio-button>
     <ui5-radio-button name="radio" text="C" value="c"></ui5-radio-button>
 	<br><br>
-	<ui5-step-input style="width: 200px;" name="si" value="5" min="0" max="10" step="1"></ui5-step-input>
-	<ui5-step-input style="width: 200px;" name="si_diabled" value="7" min="0" max="10" step="1" disabled></ui5-step-input>
+	<ui5-step-input class="formsupport2auto" name="si" value="5" min="0" max="10" step="1"></ui5-step-input>
+	<ui5-step-input class="formsupport2auto" name="si_diabled" value="7" min="0" max="10" step="1" disabled></ui5-step-input>
 	<br><br>
     <ui5-button id="b1">Does not submit forms</ui5-button>
     <ui5-button id="b2" submits>Submits forms</ui5-button>

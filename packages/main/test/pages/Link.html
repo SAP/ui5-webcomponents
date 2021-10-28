@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -22,19 +22,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
-
-		.group {
-			padding: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Link.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="link1auto">
 	<div class="group">
 		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
 		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
@@ -64,8 +55,8 @@
 
 	<section class="group">
 		<h2>Wrapping link</h2>
-		<ui5-link style="width: 100px" id="wrapping-link" wrapping-type="Normal">Eu enim consectetur do amet elit.</ui5-link>
-		<ui5-link style="width: 100px" id="non-wrapping-link">Eu enim consectetur do amet elit.</ui5-link>
+		<ui5-link class="link2auto" id="wrapping-link" wrapping-type="Normal">Eu enim consectetur do amet elit.</ui5-link>
+		<ui5-link class="link2auto" id="non-wrapping-link">Eu enim consectetur do amet elit.</ui5-link>
 	</section>
 
 	<section class="group">

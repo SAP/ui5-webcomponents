@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import "@ui5/webcomponents-icons/dist/source-code.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -678,7 +679,7 @@ class SliderBase extends UI5Element {
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
 		const currentTheme = getTheme();
-		const tickmarkWidth = currentTheme === "sap_horizon" ? "2px" : "1px";
+		const tickmarkWidth = "1px";
 		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;

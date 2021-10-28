@@ -9,10 +9,11 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+<link rel="stylesheet" type="text/css" href="styles/InputsAlignment.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="inputsalignment1auto">
 	<h2>The way the components will be rendered out of the box</h2>
 	<ui5-input placeholder="I am ui5-input" value-state="Error"></ui5-input>
 
@@ -49,25 +50,25 @@
 	<hr>
 	<h2>Explicitly width:auto set</h2>
 	<section>
-		<ui5-input style="width:auto;" placeholder="I am ui5-input" value-state="Error"></ui5-input>
+		<ui5-input class="inputsalignment2auto" placeholder="I am ui5-input" value-state="Error"></ui5-input>
 
-		<ui5-input style="width:auto;" placeholder="I am ui5-input">
+		<ui5-input class="inputsalignment2auto" placeholder="I am ui5-input">
 			<ui5-icon slot="icon" name="message-error"></ui5-icon>
 		</ui5-input>
 
-		<ui5-date-picker style="width:auto;"></ui5-date-picker>
+		<ui5-date-picker class="inputsalignment2auto"></ui5-date-picker>
 
-		<ui5-select style="width:auto;">
+		<ui5-select class="inputsalignment2auto">
 			<ui5-option>short option</ui5-option>
 			<ui5-option selected>average long option</ui5-option>
 			<ui5-option>very very very very very long option</ui5-option>
 		</ui5-select>
 
-		<ui5-multi-combobox style="width:auto;" value="com">
+		<ui5-multi-combobox class="inputsalignment2auto" value="com">
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 		</ui5-multi-combobox>
 
-		<ui5-multi-combobox style="width:auto;" value="com">
+		<ui5-multi-combobox class="inputsalignment2auto" value="com">
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</section>
@@ -75,23 +76,23 @@
 	<hr>
 	<h2>Explicitly width:100% set</h2>
 	<section>
-		<ui5-input style="width:100%;" placeholder="I am ui5-input">
+		<ui5-input class="inputsalignment3auto" placeholder="I am ui5-input">
 			<ui5-icon slot="icon" name="message-error"></ui5-icon>
 		</ui5-input>
 
-		<ui5-date-picker style="width:100%;"></ui5-date-picker>
+		<ui5-date-picker class="inputsalignment3auto"></ui5-date-picker>
 
-		<ui5-select style="width:100%;">
+		<ui5-select class="inputsalignment3auto">
 			<ui5-option>short option</ui5-option>
 			<ui5-option selected>average long option</ui5-option>
 			<ui5-option>very very very very very long option</ui5-option>
 		</ui5-select>
 
-		<ui5-multi-combobox style="width:100%;">
+		<ui5-multi-combobox class="inputsalignment3auto">
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 		</ui5-multi-combobox>
 
-		<ui5-multi-combobox style="width:100%;">
+		<ui5-multi-combobox class="inputsalignment3auto">
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</section>
