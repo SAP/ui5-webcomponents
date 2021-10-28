@@ -119,7 +119,7 @@ describe("TabContainer general interaction", () => {
 			"Popover is open.");
 
 		// act: resize, so the overflow button is not visible
-		await browser.setWindowSize(1600, 1080);
+		await browser.setWindowSize(1400, 1080);
 
 		// assert: the overflow popover is closed.
 		assert.strictEqual(await overflowPopover.isDisplayedInViewport(), false,

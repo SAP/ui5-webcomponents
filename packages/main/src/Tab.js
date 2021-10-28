@@ -179,16 +179,6 @@ class Tab extends UI5Element {
 		];
 	}
 
-	get displayText() {
-		let text = this.text;
-
-		if (this._isInline && this.additionalText) {
-			text += ` (${this.additionalText})`;
-		}
-
-		return text;
-	}
-
 	get isSeparator() {
 		return false;
 	}
@@ -266,6 +256,8 @@ class Tab extends UI5Element {
 
 		if (this._isInline) {
 			classes.push("ui5-tab-strip-item--inline");
+		} else {
+			classes.push("ui5-tab-strip-item--standard");
 		}
 
 		if (this.additionalText) {

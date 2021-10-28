@@ -27,8 +27,12 @@
 		{{#if this.text}}
 			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
 				<span class="{{this.headerSemanticIconClasses}}"></span>
-				{{this.displayText}}
+				{{this.text}}
 			</span>
+		{{/if}}
+
+		{{#if this._isInline}}
+			{{> additionalText}}
 		{{/if}}
 
 	</div>
