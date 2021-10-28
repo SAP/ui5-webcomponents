@@ -50,8 +50,7 @@ const metadata = {
 
 		/**
 		 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
-		 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
-		 *
+		 * <b>Note:</b> <code>accessibleName</code> should be always set.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -59,18 +58,6 @@ const metadata = {
 		 * @since 1.0.0-rc.16
 		 */
 		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines the IDs of the elements that label the component.
-		 *
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.16
-		 */
-		accessibleNameRef: {
 			type: String,
 		},
 	},
