@@ -16,10 +16,25 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/ColorPalettePopover.css">
+	<style>
+		body, html {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+
+		.popover-content {
+			margin-top: 1rem;
+		}
+
+		.shellbar-example {
+			margin-top: 1px;
+		}
+	</style>
 </head>
 
-<body class="colorpalettepopover1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 
 </body>
 	<ui5-button id="colorPaletteBtn" >Open ColorPalettePopover</ui5-button>

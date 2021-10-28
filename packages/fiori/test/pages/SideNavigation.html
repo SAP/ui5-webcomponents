@@ -19,10 +19,37 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/SideNavigation.css">
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.content {
+			height: 100%;
+			display: flex;
+		}
+
+		ui5-shellbar::part(root) {
+			padding-left: .5rem;
+		}
+
+		.header {
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+			box-sizing: border-box;
+		}
+	</style>
 </head>
 
-<body class="sidenavigation1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 	<ui5-shellbar
 		primary-title="UI5 Web Components"
 		secondary-title="The Best Run SAP"

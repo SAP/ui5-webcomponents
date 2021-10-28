@@ -12,10 +12,14 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<link rel="stylesheet" type="text/css" href="styles/NotificationListItem.css">
+	<style>
+		:not(:defined) {
+			display: none;
+		}
+	</style>
 </head>
 
-<body class="notificationlistitem1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
@@ -179,7 +183,7 @@
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
-	<ui5-popover id="notificationsPopover" class="notificationlistitem2auto" placement-type="Bottom" horizontal-align="Right">
+	<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
 		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'">
 			<ui5-li-notification
 				show-close
@@ -242,7 +246,7 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<div class="notificationlistitem3auto">
+	<div style="display: flex; justify-content: flex-end; padding: 0.25rem; border-bottom: 1px solid grey;">
 		<ui5-button id="openNotifications" design="Transparent" icon="bell"></ui5-button>
 	</div>
 

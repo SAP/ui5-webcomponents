@@ -14,11 +14,21 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="styles/Button.css">
+    <style>
+        .long-button {
+            width: 1000px;
+        }
+        .long-button-begin::part(button) {
+            justify-content: flex-start;
+        }
+        .long-button-end::part(button) {
+            justify-content: flex-end;
+        }
+    </style>
 
 </head>
 
-<body class="button1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
 	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
 	<ui5-button>
@@ -30,8 +40,8 @@
 	<ui5-button design="Emphasized" icon="invalid_name">Press</ui5-button>
 
 	<ui5-button id="button1" design="Emphasized" aria-expanded="true">Action Bar Button</ui5-button>
-	<ui5-button class="button2auto">Primary <br> button</ui5-button>
-	<ui5-button class="button2auto button3auto" design="Transparent">Secondary <span >button</span></ui5-button>
+	<ui5-button style="height: auto">Primary <br> button</ui5-button>
+	<ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
 	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
 	<ui5-button design="Positive">Accept</ui5-button>
 	<ui5-button design="Negative">Decline</ui5-button>
@@ -49,7 +59,7 @@
 
 	<ui5-input id="click-counter"></ui5-input>
 
-	<ui5-button class="button2auto" design="Emphasized">Action<br> <i>Bar</i><br> Button</ui5-button>
+	<ui5-button style="height: auto" design="Emphasized">Action<br> <i>Bar</i><br> Button</ui5-button>
 	<ui5-button>Primary button</ui5-button>
 	<ui5-button design="Transparent">Secondary button</ui5-button>
 	<ui5-button disabled>Inactive</ui5-button>
@@ -66,8 +76,8 @@
 	<ui5-button icon="employee" accessible-name="Download book">Action Bar Button</ui5-button>
 	<ui5-button icon="download"></ui5-button>
 
-	<ui5-button icon="employee" accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
-	<ui5-button icon="employee" icon-end accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
+	<ui5-button icon="employee" accessible-name="Download book" style="width: 6rem;">Action Bar Button</ui5-button>
+	<ui5-button icon="employee" icon-end accessible-name="Download book" style="width: 6rem;">Action Bar Button</ui5-button>
 
 	<br />
 	<br />

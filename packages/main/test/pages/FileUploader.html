@@ -9,7 +9,11 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-	<link rel="stylesheet" type="text/css" href="styles/FileUploader.css">
+	<style>
+		body > div {
+			margin-bottom: 1rem;
+		}
+	</style>
 	<script>
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
@@ -85,7 +89,7 @@
 	<div>
 		<ui5-title>Form support</ui5-title>
 		<form
-			class="fileuploader1auto"
+			style="border: 1px solid black; padding: 1rem;"
 			method="POST"
 			action="http://localhost:3000/echo"
 			enctype="multipart/form-data"
@@ -107,7 +111,7 @@
 	</div>
 	<div>
 		<ui5-title>Upload files async using fetch</ui5-title>
-		<div class="fileuploader1auto">
+		<div style="border: 1px solid black; padding: 1rem;">
 			<ui5-file-uploader id="fuFetch"></ui5-file-uploader>
 			<ui5-button id="uploadBtn">Upload</ui5-button>
 		</div>

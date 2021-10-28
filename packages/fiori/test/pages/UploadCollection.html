@@ -13,10 +13,28 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/UploadCollection.css">
+	<style>
+		.header {
+			display: flex;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.header > * {
+			margin: 4px;
+		}
+
+		.spacer {
+			flex: 1 1 auto;
+		}
+
+		ui5-upload-collection {
+			margin: 1rem;
+		}
+	</style>
 	<script src="./uploadCollectionScript.js" defer></script>
 </head>
-<body class="uploadcollection1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 	<div class="header">
 		<ui5-label>UC Mode:</ui5-label>
 		<ui5-select id="changeMode">

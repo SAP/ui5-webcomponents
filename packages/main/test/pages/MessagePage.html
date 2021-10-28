@@ -21,11 +21,37 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
     <script nomodule src="../../resources/bundle.es5.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="styles/MessagePage.css">
+    <style>
+        .ui5-message-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30rem;
+            margin: auto;
+        }
+
+        .ui5-message-page-icon {
+            width: 6rem;
+            height: 6rem;
+        }
+
+        .ui5-message-page-title {
+            font-family: var(--sapFontFamily);
+            font-size: var(--sapFontHeader2Size);
+            color: var(--sapTextColor);
+            margin: 1rem;
+        }
+
+        .ui5-message-page-description {
+            font-family: var(--sapFontFamily);
+            font-size: var(--sapFontLargeSize);
+            color: var(--sapNeutralColor);
+        }
+    </style>
 
 </head>
 
-<body class="messagepage1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 
 <div class="ui5-message-page">
     <ui5-icon class="ui5-message-page-icon" name="filter"></ui5-icon>

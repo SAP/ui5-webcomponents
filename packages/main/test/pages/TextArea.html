@@ -24,10 +24,40 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/TextArea.css">
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.group {
+			padding: 1rem;
+		}
+
+		.group-title {
+			color: #333;
+		}
+
+		.small-margin {
+			margin: 2px;
+		}
+
+		.fixed-width {
+			display: inline-block;
+			width: 280px;
+		}
+
+		.fixed-height {
+			height: 160px;
+		}
+
+		.customTextArea::part(textarea) {
+			background: bisque;
+		}
+	</style>
 	</head>
 
-	<body class="textarea1auto">
+	<body style="background-color: var(--sapBackgroundColor);">
 
 	<section class="group">
 		<ui5-title>Value State Message</ui5-title>

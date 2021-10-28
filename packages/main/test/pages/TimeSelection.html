@@ -8,14 +8,18 @@
 		<script>
 			// delete Document.prototype.adoptedStyleSheets;
 		</script>
-		<link rel="stylesheet" type="text/css" href="styles/TimeSelection.css">
+		<style>
+			html,body {
+				height: 100%;
+			}
+		</style>
 
 		<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 		<script src="../../resources/bundle.esm.js" type="module"></script>
 		<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	</head>
-	<body class="timeselection1auto">
+	<body style="background-color: var(--sapBackgroundColor);">
 		<ui5-time-selection id="timepicker" format-pattern="HH:mm:ss"></ui5-time-selection>
 		<br><br>
 		<ui5-time-selection id="timepicker2" format-pattern="hh:mm:ss" value=""></ui5-time-selection>

@@ -12,25 +12,61 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/FCL.css">
+	<style>
+		html, body {
+			padding: 0;
+			margin: 0;
+		}
+
+		.sectionTitle, ui5-input, .testButton {
+			margin-left: 1rem;
+		}
+
+		.col {
+			height: 100%;
+		}
+
+		.colHeader {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 2.75rem;
+			padding: 0.25rem 1rem 0.25rem 1rem;
+			background: var(--sapList_Background);
+			box-sizing: border-box;
+		}
+
+		.colSubHeader {
+			display: flex;
+			align-items: center;
+			box-sizing: border-box;
+		}
+
+		.productInfo {
+			display:flex;
+			flex-direction: row;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+	</style>
 </head>
 
-<body class="fcl1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 	<!-- ex1 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail: Master Expanded</ui5-title>
 	<ui5-toggle-button id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-toggle-button><br>
-	<ui5-input id="layoutChangeRes" placeholder="layout..." class="fcl2auto"></ui5-input><br>
-	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." class="fcl2auto"></ui5-input><br>
-	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." class="fcl2auto"></ui5-input><br>
-	<ui5-input id="layoutChangeRes4" placeholder="change counter..." class="fcl2auto"></ui5-input><br>
+	<ui5-input id="layoutChangeRes" placeholder="layout..." style="width: 600px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." style="width: 600px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." style="width: 600px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes4" placeholder="change counter..." style="width: 600px"></ui5-input><br>
 	<br><br>
 
-	<ui5-flexible-column-layout id="fcl1" class="fcl3auto" layout="TwoColumnsStartExpanded">
+	<ui5-flexible-column-layout id="fcl1" style="height: 500px" layout="TwoColumnsStartExpanded">
 
 		<!-- start column -->
-		<div class="fcl4auto" slot="startColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 1</ui5-title>
 			</div>
 			<ui5-list>
@@ -46,10 +82,10 @@
 		</div>
 
 		<!-- mid column -->
-		<div class="fcl6auto" slot="midColumn">
+		<div style="box-sizing: border-box; height: 100%" slot="midColumn">
 			<ui5-wizard id="wiz">
 				<ui5-wizard-step icon="sap-icon://home" title-text="Product type">
-					<div class="fcl7auto">
+					<div style="display: flex; min-height: 200px; flex-direction: column;">
 						<ui5-title>1. Product Type</ui5-title><br>
 
 						<ui5-messagestrip>
@@ -58,31 +94,31 @@
 
 						<ui5-label wrapping-type="Normal">Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 						</ui5-label>
-						<ui5-button id="btnOpenDialog" class="fcl8auto">Open Wizard Dialog</ui5-button>
+						<ui5-button id="btnOpenDialog" style="width: 150px; align-self: flex-end;">Open Wizard Dialog</ui5-button>
 					</div>
 
 					<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 				</ui5-wizard-step>
 
 				<ui5-wizard-step title-text="Product Information">
-					<div class="fcl9auto">
+					<div style="display: flex;flex-direction: column">
 						<ui5-title>2. Product Information</ui5-title><br>
 						<ui5-label wrapping-type="Normal">
 							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 						</ui5-label>
 
-						<div class="fcl10auto">
-							<div class="fcl11auto">
+						<div style="display: flex; flex-direction: column;">
+							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Name</ui5-label>
 								<ui5-input placeholder="product name..."></ui5-input>
 							</div>
 
-							<div class="fcl12auto">
+							<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 								<ui5-label>Weight</ui5-label>
 								<ui5-input value="3.65"></ui5-input>
 							</div>
 
-							<div class="fcl12auto">
+							<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 								<ui5-label>Manifacturer</ui5-label>
 								<ui5-select>
 									<ui5-option selected>Apple</ui5-option>
@@ -91,7 +127,7 @@
 								</ui5-select>
 							</div>
 
-							<div class="fcl12auto">
+							<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 								<ui5-label>5 years guarantee included</ui5-label>
 								<ui5-switch id="sw"></ui5-switch>
 							</div>
@@ -102,7 +138,7 @@
 				</ui5-wizard-step>
 
 				<ui5-wizard-step title-text="Options">
-					<div class="fcl10auto">
+					<div style="display: flex; flex-direction: column;">
 						<ui5-title>3. Options</ui5-title><br>
 
 						<ui5-label wrapping-type="Normal">
@@ -112,13 +148,13 @@
 							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 						</ui5-messagestrip><br>
 
-						<div class="fcl10auto">
-							<div class="fcl11auto">
+						<div style="display: flex; flex-direction: column;">
+							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Manifacture date</ui5-label>
 								<ui5-date-picker></ui5-date-picker>
 							</div>
 
-							<div class="fcl11auto">
+							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Availability</ui5-label>
 								<ui5-segmented-button id="segButton1">
 									<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
@@ -128,7 +164,7 @@
 								</ui5-segmented-button>
 							</div>
 
-							<div class="fcl11auto">
+							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Size</ui5-label>
 								<ui5-segmented-button id="sb">
 									<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
@@ -143,7 +179,7 @@
 				</ui5-wizard-step>
 
 				<ui5-wizard-step title-text="Pricing">
-					<div class="fcl10auto">
+					<div style="display: flex; flex-direction: column;">
 						<ui5-title>4. Pricing</ui5-title><br>
 						<ui5-label wrapping-type="Normal">
 							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
@@ -152,18 +188,18 @@
 							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 						</ui5-messagestrip><br>
 
-						<div class="fcl10auto">
-							<div class="fcl11auto">
+						<div style="display: flex; flex-direction: column;">
+							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Price</ui5-label>
 								<ui5-input placeholder="product price..."></ui5-input>
 							</div>
 
-							<div class="fcl11auto">
+							<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 								<ui5-label>Quantity</ui5-label>
 								<ui5-input placeholder="product quantity..."></ui5-input>
 							</div>
 
-							<div class="fcl12auto">
+							<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 								<ui5-label>Vat included</ui5-label>
 								<ui5-switch checked></ui5-switch>
 							</div>
@@ -176,8 +212,8 @@
 		</div>
 
 		<!-- end column -->
-		<div class="fcl4auto" slot="endColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 3</ui5-title>
 			</div>
 
@@ -197,8 +233,8 @@
 
 	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" hide-arrows>
 			<!-- start column -->
-			<div class="fcl4auto" slot="startColumn">
-				<div class="fcl5auto">
+			<div style="box-sizing: border-box;" slot="startColumn">
+				<div style="padding: 1rem">
 					<ui5-title>Column 1</ui5-title>
 				</div>
 				<ui5-list>
@@ -214,8 +250,8 @@
 			</div>
 
 			<!-- mid column -->
-			<div class="fcl4auto" slot="midColumn">
-				<div class="fcl5auto">
+			<div style="box-sizing: border-box;" slot="midColumn">
+				<div style="padding: 1rem">
 					<ui5-title>Column 2</ui5-title>
 				</div>
 				<ui5-list>
@@ -231,8 +267,8 @@
 			</div>
 
 			<!-- end column -->
-			<div class="fcl4auto" slot="endColumn">
-				<div class="fcl5auto">
+			<div style="box-sizing: border-box;" slot="endColumn">
+				<div style="padding: 1rem">
 					<ui5-title>Column 3</ui5-title>
 				</div>
 
@@ -247,13 +283,13 @@
 	<!-- ex3 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail-Detail: Detail Expanded</ui5-title>
-	<ui5-input id="testLayoutChange" placeholder="change counter..." class="fcl2auto"></ui5-input><br>
+	<ui5-input id="testLayoutChange" placeholder="change counter..." style="width: 600px"></ui5-input><br>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl3" layout="ThreeColumnsMidExpanded">
 		<!-- start column -->
-		<div class="fcl4auto" slot="startColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 1</ui5-title>
 			</div>
 			<ui5-list>
@@ -269,8 +305,8 @@
 		</div>
 
 		<!-- mid column -->
-		<div class="fcl4auto" slot="midColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 2</ui5-title>
 			</div>
 			<ui5-list>
@@ -286,8 +322,8 @@
 		</div>
 
 		<!-- end column -->
-		<div class="fcl4auto" slot="endColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 3</ui5-title>
 			</div>
 
@@ -306,8 +342,8 @@
 
 	<ui5-flexible-column-layout layout="ThreeColumnsEndExpanded">
 		<!-- start column -->
-		<div class="fcl4auto" slot="startColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 1</ui5-title>
 			</div>
 			<ui5-list>
@@ -323,8 +359,8 @@
 		</div>
 
 		<!-- mid column -->
-		<div class="fcl4auto" slot="midColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 2</ui5-title>
 			</div>
 			<ui5-list>
@@ -340,8 +376,8 @@
 		</div>
 
 		<!-- end column -->
-		<div class="fcl4auto" slot="endColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 3</ui5-title>
 			</div>
 
@@ -360,8 +396,8 @@
 
 	<ui5-flexible-column-layout id="fclAcc" layout="ThreeColumnsMidExpandedEndHidden">
 		<!-- start column -->
-		<div class="fcl4auto" slot="startColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Products list</ui5-title>
 			</div>
 			<ui5-list>
@@ -377,8 +413,8 @@
 		</div>
 
 		<!-- mid column -->
-		<div class="fcl4auto" slot="midColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Product information</ui5-title>
 			</div>
 			<ui5-list>
@@ -394,8 +430,8 @@
 		</div>
 
 		<!-- end column -->
-		<div class="fcl4auto" slot="endColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Product detailed information</ui5-title>
 			</div>
 
@@ -414,8 +450,8 @@
 
 	<ui5-flexible-column-layout id="fcl6">
 		<!-- start column -->
-		<div class="fcl4auto" slot="startColumn">
-			<div class="fcl5auto">
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
 				<ui5-title>Column 1</ui5-title>
 			</div>
 			<ui5-list id="list">
@@ -430,8 +466,8 @@
 			</ui5-list>
 		</div>
 
-		<div class="fcl4auto" slot="midColumn">
-			<div class="fcl13auto">
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 2</ui5-title>
 
 				<div>
@@ -451,8 +487,8 @@
 			</ui5-list>
 		</div>
 
-		<div class="fcl4auto" slot="endColumn">
-			<div class="fcl13auto">
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 3</ui5-title>
 				<div>
 					<ui5-toggle-button id="expandEndColumn" icon="full-screen" design="Transparent"></ui5-toggle-button>
@@ -473,7 +509,7 @@
 
 	<br><br>
 	<!-- ex7 -->
-	<ui5-flexible-column-layout id="fclApp" class="fcl14auto">
+	<ui5-flexible-column-layout id="fclApp" style="height: 600px;">
 		<!-- start column -->
 		<div class="col" slot="startColumn">
 			<ui5-shellbar
@@ -516,7 +552,7 @@
 		<!-- mid column -->
 		<div class="col" slot="midColumn">
 			<div class="colHeader">
-				<ui5-title id="col2title" level="H2" class="fcl15auto"></ui5-title>
+				<ui5-title id="col2title" level="H2" style="min-width: 1px;"></ui5-title>
 
 				<div class="colSubHeader">
 					<ui5-button design="Emphasized">Edit</ui5-button>
@@ -527,13 +563,13 @@
 			</div>
 			<br>
 
-			<section class="fcl16auto">
+			<section style="padding: 1rem 1rem;">
 				<ui5-title level="H3">General Information</ui5-title>
 				<br>
 
-				<div class="fcl17auto">
-					<div class="fcl18auto">
-						<ui5-avatar id="avatar" icon="laptop" background-color="Accent5" size="XL" class="fcl19auto">
+				<div style="display:flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap">
+					<div style="display:flex; flex-direction: row; align-items: center;">
+						<ui5-avatar id="avatar" icon="laptop" background-color="Accent5" size="XL" style="margin: 0 1rem; min-width: 7rem;">
 						</ui5-avatar>
 
 						<div>
@@ -556,7 +592,7 @@
 						</div>
 					</div>
 
-					<div class="productInfo fcl20auto" >
+					<div class="productInfo" style="align-self: start">
 						<ui5-title level="H5">Rating:</ui5-title>
 						<ui5-rating-indicator
 							id="productRating"
@@ -592,7 +628,7 @@
 		<!-- end column -->
 		<div class="col" slot="endColumn">
 			<div class="colHeader">
-				<ui5-title id="col3title" class="fcl15auto"></ui5-title>
+				<ui5-title id="col3title" style="min-width: 1px;"></ui5-title>
 
 				<div class="colSubHeader">
 					<ui5-button design="Emphasized">Edit</ui5-button>
@@ -621,7 +657,7 @@
 				</ui5-tab>
 			</ui5-tabcontainer>
 
-			<section class="fcl21auto">
+			<section style="padding: 1rem 1rem; background: var(--sapList_Background);">
 				<p>
 					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

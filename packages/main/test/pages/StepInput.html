@@ -23,9 +23,22 @@
 		}
 	</script>
 
-	<link rel="stylesheet" type="text/css" href="styles/StepInput.css">
+	<style>
+		.sapUiTheme-sap_fiori3 body {
+			background: #f7f7f7;
+		}
+
+		h3 {
+			-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Old versions of Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+		}
+	</style>
 </head>
-<body class="stepinput1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 
 	<h3> StepInput</h3>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
@@ -34,7 +47,7 @@
 		<h3>StepInput in Cozy</h3>
 		<ui5-step-input id="stepInputCozy"
 			placeholder="Enter number"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 
@@ -42,7 +55,7 @@
 		<h3>StepInput in Compact</h3>
 		<ui5-step-input id="stepInputCompact"
 			placeholder="Enter number"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 
@@ -53,9 +66,9 @@
 			min="0"
 			max="10"
 			step="1"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		>
-			<div slot="valueStateMessage" class="stepinput3auto">Wrong Value</div>
+			<div slot="valueStateMessage" style="display: block">Wrong Value</div>
 		</ui5-step-input>
 	</div>
 
@@ -67,9 +80,9 @@
 			max="10"
 			step="0.05"
 			value-precision="2"
-			class="stepinput4auto"
+			style="text-align: center; width: 250px"
 			>
-			<div slot="valueStateMessage" class="stepinput3auto">Wrong Value</div>
+			<div slot="valueStateMessage" style="display: block">Wrong Value</div>
 		</ui5-step-input>
 	</div>
 
@@ -77,7 +90,7 @@
 		<h3>Disabled StepInput</h3>
 		<ui5-step-input id="stepInputDisabled"
 			placeholder="Enter number"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 			disabled
 		/>
 	</div>
@@ -86,7 +99,7 @@
 		<h3>Readonly StepInput</h3>
 		<ui5-step-input id="stepInputReadOnly"
 			placeholder="Enter number"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 			readonly
 		/>
 	</div>
@@ -96,7 +109,7 @@
 		<ui5-step-input id="stepInputNone"
 			placeholder="Enter number"
 			value-state="None"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 
@@ -105,7 +118,7 @@
 		<ui5-step-input id="stepInputSuccess"
 			placeholder="Enter number"
 			value-state="Success"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 
@@ -114,7 +127,7 @@
 		<ui5-step-input id="stepInputInformation"
 			placeholder="Enter number"
 			value-state="Information"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 
@@ -123,7 +136,7 @@
 		<ui5-step-input id="stepInputWarning"
 			placeholder="Enter number"
 			value-state="Warning"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 
@@ -132,7 +145,7 @@
 		<ui5-step-input id="stepInputError"
 			placeholder="Enter number"
 			value-state="Error"
-			class="stepinput2auto"
+			style="text-align: right; width: 250px"
 		/>
 	</div>
 

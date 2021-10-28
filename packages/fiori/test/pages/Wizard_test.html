@@ -11,15 +11,27 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/Wizard_test.css">
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.stretch {
+			position: absolute;
+			overflow: hidden;
+			height: 100%;
+			width: 100%;
+		}
+	</style>
 </head>
 
-<body class="wizard_test1auto">
+<body style="background-color: var(--sapBackgroundColor);">
 
 	<div class="stretch">
 		<ui5-wizard id="wizTest">
 			<ui5-wizard-step id="st1" icon="sap-icon://product" selected title-text="Product type">
-				<div class="wizard_test2auto">
+				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
 					<ui5-messagestrip>
@@ -30,9 +42,9 @@
 					</ui5-label>
 
 					<ui5-input id="inpStepChangeCounter"></ui5-input>
-					<ui5-button id="btnOpenDialog" class="wizard_test3auto">Open Wizard Dialog</ui5-button>
+					<ui5-button id="btnOpenDialog" style="width: 150px; align-self: flex-end;">Open Wizard Dialog</ui5-button>
 
-					<div class="wizard_test4auto">
+					<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 						<ui5-label>Configure step-switch-threshold</ui5-label>
 						<ui5-segmented-button id="setting">
 							<ui5-toggle-button threshold="0.3">0.5</ui5-toggle-button>
@@ -47,7 +59,7 @@
 			</ui5-wizard-step>
 
 			<ui5-wizard-step  id="st2" title-text="Product Information" disabled>
-				<div class="wizard_test5auto">
+				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrapping-type="Normal">
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
@@ -55,18 +67,18 @@
 
 					<ui5-input id="inpStepChangeCause" placeholder="step changed via click"></ui5-input>
 
-					<div class="wizard_test6auto">
-						<div class="wizard_test7auto">
+					<div style="display: flex; flex-direction: column;">
+						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Name</ui5-label>
 							<ui5-input placeholder="product name..."></ui5-input>
 						</div>
 
-						<div class="wizard_test4auto">
+						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>Weight</ui5-label>
 							<ui5-input value="3.65"></ui5-input>
 						</div>
 
-						<div class="wizard_test4auto">
+						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>Manifacturer</ui5-label>
 							<ui5-select>
 								<ui5-option selected>Apple</ui5-option>
@@ -75,13 +87,13 @@
 							</ui5-select>
 						</div>
 
-						<div class="wizard_test4auto">
+						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>5 years guarantee included</ui5-label>
 							<ui5-switch id="sw"></ui5-switch>
 						</div>
 
 						<span id="scrollMarkerSt2"></span>
-						<div id="pureContent" class="wizard_test8auto">
+						<div id="pureContent" style="height: 1800px; background-color: red; display:none;">
 						</div>
 					</div>
 				</div>
@@ -90,7 +102,7 @@
 			</ui5-wizard-step>
 
 			<ui5-wizard-step  id="st3" title-text="Options" disabled>
-				<div class="wizard_test6auto">
+				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 
 					<ui5-label wrapping-type="Normal">
@@ -100,13 +112,13 @@
 						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 					</ui5-messagestrip><br>
 
-					<div class="wizard_test6auto">
-						<div class="wizard_test7auto">
+					<div style="display: flex; flex-direction: column;">
+						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Manifacture date</ui5-label>
 							<ui5-date-picker></ui5-date-picker>
 						</div>
 
-						<div class="wizard_test7auto">
+						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Availability</ui5-label>
 							<ui5-segmented-button id="segButton1">
 								<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
@@ -116,7 +128,7 @@
 							</ui5-segmented-button>
 						</div>
 
-						<div class="wizard_test7auto">
+						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Size</ui5-label>
 							<ui5-segmented-button id="sb">
 								<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
@@ -134,7 +146,7 @@
 			</ui5-wizard-step>
 
 			<ui5-wizard-step  id="st4" title-text="Pricing" disabled>
-				<div class="wizard_test6auto">
+				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrapping-type="Normal">
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
@@ -143,18 +155,18 @@
 						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 					</ui5-messagestrip><br>
 
-					<div class="wizard_test6auto">
-						<div class="wizard_test7auto">
+					<div style="display: flex; flex-direction: column;">
+						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Price</ui5-label>
 							<ui5-input placeholder="product price..."></ui5-input>
 						</div>
 
-						<div class="wizard_test7auto">
+						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Quantity</ui5-label>
 							<ui5-input placeholder="product quantity..."></ui5-input>
 						</div>
 
-						<div class="wizard_test4auto">
+						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>Vat included</ui5-label>
 							<ui5-switch checked></ui5-switch>
 						</div>
@@ -168,7 +180,7 @@
 		<ui5-dialog id="dialog" stretch header-heading="Wizard">
 				<ui5-wizard id="wizInDialog">
 					<ui5-wizard-step icon="sap-icon://product" selected title-text="Product type">
-						<div class="wizard_test2auto">
+						<div style="display: flex; min-height: 200px; flex-direction: column;">
 							<ui5-title>1. Product Type</ui5-title><br>
 
 							<ui5-messagestrip>
@@ -185,24 +197,24 @@
 					</ui5-wizard-step>
 
 					<ui5-wizard-step title-text="Product Information">
-						<div class="wizard_test5auto">
+						<div style="display: flex;flex-direction: column">
 							<ui5-title>2. Product Information</ui5-title><br>
 							<ui5-label wrapping-type="Normal">
 								Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 							</ui5-label>
 
-							<div class="wizard_test6auto">
-								<div class="wizard_test7auto">
+							<div style="display: flex; flex-direction: column;">
+								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Name</ui5-label>
 									<ui5-input placeholder="product name..."></ui5-input>
 								</div>
 
-								<div class="wizard_test4auto">
+								<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 									<ui5-label>Weight</ui5-label>
 									<ui5-input value="3.65"></ui5-input>
 								</div>
 
-								<div class="wizard_test4auto">
+								<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 									<ui5-label>Manifacturer</ui5-label>
 									<ui5-select>
 										<ui5-option selected>Apple</ui5-option>
@@ -211,13 +223,13 @@
 									</ui5-select>
 								</div>
 
-								<div class="wizard_test4auto">
+								<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 									<ui5-label>5 years guarantee included</ui5-label>
 									<ui5-switch id="sw2"></ui5-switch>
 								</div>
 
 
-								<div id="pureContent2" class="wizard_test8auto">
+								<div id="pureContent2" style="height: 1800px; background-color: red; display:none;">
 								</div>
 							</div>
 						</div>
@@ -226,7 +238,7 @@
 					</ui5-wizard-step>
 
 					<ui5-wizard-step title-text="Options">
-						<div class="wizard_test6auto">
+						<div style="display: flex; flex-direction: column;">
 							<ui5-title>3. Options</ui5-title><br>
 
 							<ui5-label wrapping-type="Normal">
@@ -236,13 +248,13 @@
 								The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 							</ui5-messagestrip><br>
 
-							<div class="wizard_test6auto">
-								<div class="wizard_test7auto">
+							<div style="display: flex; flex-direction: column;">
+								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Manifacture date</ui5-label>
 									<ui5-date-picker></ui5-date-picker>
 								</div>
 
-								<div class="wizard_test7auto">
+								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Availability</ui5-label>
 									<ui5-segmented-button>
 										<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
@@ -252,7 +264,7 @@
 									</ui5-segmented-button>
 								</div>
 
-								<div class="wizard_test7auto">
+								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Size</ui5-label>
 									<ui5-segmented-button>
 										<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
@@ -267,7 +279,7 @@
 					</ui5-wizard-step>
 
 					<ui5-wizard-step title-text="Pricing">
-						<div class="wizard_test6auto">
+						<div style="display: flex; flex-direction: column;">
 							<ui5-title>4. Pricing</ui5-title><br>
 							<ui5-label wrapping-type="Normal">
 								Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
@@ -276,18 +288,18 @@
 								The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 							</ui5-messagestrip><br>
 
-							<div class="wizard_test6auto">
-								<div class="wizard_test7auto">
+							<div style="display: flex; flex-direction: column;">
+								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Price</ui5-label>
 									<ui5-input placeholder="product price..."></ui5-input>
 								</div>
 
-								<div class="wizard_test7auto">
+								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Quantity</ui5-label>
 									<ui5-input placeholder="product quantity..."></ui5-input>
 								</div>
 
-								<div class="wizard_test4auto">
+								<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 									<ui5-label>Vat included</ui5-label>
 									<ui5-switch checked></ui5-switch>
 								</div>
