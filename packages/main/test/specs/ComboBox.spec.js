@@ -728,4 +728,24 @@ describe("Keyboard navigation", async () => {
 
 		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
 	});
+
+	it ("Should focus the next/previous focusable element on TAB/SHIFT+TAB",  async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$("[input-icon]");
+
+		const prevCombo = await browser.$("#value-state-grouping");
+		const nextCombo = await browser.$("#combobox-two-column-layout");
+
+		await arrow.click();
+		await combo.keys("Tab");
+
+		assert.strictEqual(await nextCombo.getProperty("focused"), true, "The first group header should be focused");
+
+		await arrow.click();
+		await browser.keys(["Shift", "Tab"]);
+
+		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The input should be focused");		
+	});
 });
