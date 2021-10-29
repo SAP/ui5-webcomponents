@@ -38,8 +38,7 @@ ui5-responsive-popover .ui5-valuestatemessage-header {
 }
 
 .ui5-responsive-popover-header[focused], .ui5-responsive-popover-header:focus {
-	outline-width: 0.0625rem;
-	outline-style: dotted;
 	outline-offset: -0.125rem;
-	outline-color: initial;
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	border-radius: var(--_ui5_value_state_message_focus_border_radius);
 } 

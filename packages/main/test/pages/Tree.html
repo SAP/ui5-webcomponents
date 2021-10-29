@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -22,31 +22,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
-
-		.hdr {
-			display: flex;
-		}
-
-		.hdr>* {
-			margin: 0.25rem;
-		}
-
-		.spacer {
-			flex: 1;
-		}
-
-		.full-width {
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Tree.css">
 </head>
 
-<body style="padding: 5px; background-color: var(--sapBackgroundColor);">
+<body class="tree1auto">
 
 	<ui5-segmented-button id="density">
 		<ui5-toggle-button pressed>Cozy</ui5-toggle-button>
@@ -98,6 +77,10 @@
 		</ui5-tree-item>
 
 	</ui5-tree>
+	Mouseover counter
+	<ui5-input id="mouseover-counter" value="0"></ui5-input>
+	Mouseout counter
+	<ui5-input id="mouseout-counter" value="0"></ui5-input>
 
 	<br><br>
 
@@ -119,6 +102,8 @@
 	</ui5-busy-indicator>
 
 	<script>
+		const mouseOverInput = document.getElementById("mouseover-counter");
+		const mouseOutInput = document.getElementById("mouseout-counter");
 
 		document.getElementById("density").addEventListener("selectionChange", function(event) {
 			var selectedButton = event.detail.selectedButton;
@@ -127,6 +112,15 @@
 			} else {
 				document.body.classList.remove("sapUiSizeCompact");
 			}
+		});
+
+		document.getElementById("tree").addEventListener("ui5-itemMouseover", function(event) {
+			console.log("Item mouseover: ", event.detail.item);
+			mouseOverInput.value++;
+		});
+		document.getElementById("tree").addEventListener("ui5-itemMouseout", function(event) {
+			console.log("Item mouseout: ", event.detail.item);
+			mouseOutInput.value++;
 		});
 
 		document.getElementById("tree").addEventListener("itemClick", function(event) {

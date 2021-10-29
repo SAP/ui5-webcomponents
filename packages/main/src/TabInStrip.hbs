@@ -10,7 +10,6 @@
 	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	data-ui5-stable="{{this.stableDomRef}}"
-	style="list-style-type: none;"
 >
 
 	{{#if this.icon}}
@@ -28,12 +27,8 @@
 		{{#if this.text}}
 			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
 				<span class="{{this.headerSemanticIconClasses}}"></span>
-				{{this.text}}
+				{{this.displayText}}
 			</span>
-		{{/if}}
-
-		{{#if this._isInline}}
-			{{> additionalText}}
 		{{/if}}
 
 	</div>

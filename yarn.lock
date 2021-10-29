@@ -1069,7 +1069,7 @@
   resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.94.0.tgz#1f679dc2d60e0e0494904bf0ca353ed29cd13843"
   integrity sha512-NZKuqxvXL63oLk9F/6/tUC0awg3B0UCdT1kh3bL1fxmAwT0CTsHfSldkayFYEJkTiRwNz69XDAau4d1JRwYF9A==
 
-"@openui5/sap.ui.core@^1.95.0":
+"@openui5/sap.ui.core@1.95.0":
   version "1.95.0"
   resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.95.0.tgz#f6917796dc4495307f03d53bf027bdaad3f98533"
   integrity sha512-5OQ72QjJvRcdCykSVSnZHqzLNzmBVxNgHaJ83ypI/smxV4WIKSQI5AhScwbtWLhzAGlxkFDmsHR62Q30SwE2Ug==
@@ -1101,6 +1101,14 @@
     is-module "^1.0.0"
     resolve "^1.19.0"
 
+"@rollup/plugin-replace@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-replace/-/plugin-replace-3.0.0.tgz#3a4c9665d4e7a4ce2c360cf021232784892f3fac"
+  integrity sha512-3c7JCbMuYXM4PbPWT4+m/4Y6U60SgsnDT/cCyAyUKwFHg7pTSfsSQzIpETha3a3ig6OdOKzZz87D9ZXIK3qsDg==
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    magic-string "^0.25.7"
+
 "@rollup/plugin-url@^6.0.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-url/-/plugin-url-6.1.0.tgz#1234bba9aa30b5972050bdfcf8fcbb1cb8070465"
@@ -1119,10 +1127,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.31":
-  version "11.1.31"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.31.tgz#0c23390b3b103a40abe5472b7f27a3e8fdaf3acb"
-  integrity sha512-ePVChOam4vL/m+TeTrn6yeBFGxOUv0FK1HQtHJTQsugSCOdHAXXsa06kObPBPAn9k1HenUbF4IFmxMjEnjgd+g==
+"@sap-theming/theming-base-content@11.1.34":
+  version "11.1.34"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.34.tgz#8fcd96c5c464fa1474786e6a50fec5ca5172b8b3"
+  integrity sha512-xzJ6eZHyxzJCuve6IVAhBkWoCUpM81Vgmfc4H1EJ/+gY7VTsJK4AXcHm/RTby+33zp4+b6NzM7tSL2RmxwsJtA==
 
 "@sindresorhus/is@^4.0.0":
   version "4.2.0"
@@ -2363,10 +2371,10 @@ chrome-launcher@^0.14.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@94.0.0:
-  version "94.0.0"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-94.0.0.tgz#f6a3533976ba72413a01672954040c3544ea9d30"
-  integrity sha512-x4hK7R7iOyAhdLHJEcOyGBW/oa2kno6AqpHVLd+n3G7c2Vk9XcAXMz84XhNItqykJvTc6E3z/JRIT1eHYH//Eg==
+chromedriver@95.0.0:
+  version "95.0.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-95.0.0.tgz#ecf854cac6df5137a651dcc132edf55612d3db7f"
+  integrity sha512-HwSg7S0ZZYsHTjULwxFHrrUqEpz1+ljDudJM3eOquvqD5QKnR5pSe/GlBTY9UU2tVFRYz8bEHYC4Y8qxciQiLQ==
   dependencies:
     "@testim/chrome-version" "^1.0.7"
     axios "^0.21.2"
@@ -2375,6 +2383,13 @@ chromedriver@94.0.0:
     https-proxy-agent "^5.0.0"
     proxy-from-env "^1.1.0"
     tcp-port-used "^1.0.1"
+
+clean-css@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-5.2.2.tgz#d3a7c6ee2511011e051719838bdcf8314dc4548d"
+  integrity sha512-/eR8ru5zyxKzpBLv9YZvMXgTSSQn7AdkMItMYynsFgGwTveCRVam9IUPFloE85B4vAIj05IuKmmEoV7/AQjT0w==
+  dependencies:
+    source-map "~0.6.0"
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -5075,6 +5090,13 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+magic-string@^0.25.7:
+  version "0.25.7"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
+  integrity sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==
+  dependencies:
+    sourcemap-codec "^1.4.4"
+
 make-dir@^3.0.0, make-dir@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-3.1.0.tgz#415e967046b3a7f1d185277d84aa58203726a13f"
@@ -7079,7 +7101,7 @@ sisteransi@^1.0.5:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
 
-slash@^3.0.0:
+slash@3.0.0, slash@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
@@ -7143,10 +7165,15 @@ source-map@^0.5.0:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
 
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
+source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
+
+sourcemap-codec@^1.4.4:
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
+  integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
 
 spawn-command-with-kill@^1.0.0:
   version "1.0.2"
