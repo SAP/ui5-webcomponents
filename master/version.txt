@@ -1,5 +1,5 @@
-commit 3618617743a4c2c0874703c9b414f37323eb49c5
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Wed Oct 27 10:17:42 2021 +0300
+commit 5f6447b199ae7ae6432d2093d0bad5eb5483185f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Oct 29 13:55:43 2021 +0300
 
-    feat(ui5-toast): SAP Horizon theme implementation (#4174)
+    chore: temporarily disable CSP configuration by default (#4223)

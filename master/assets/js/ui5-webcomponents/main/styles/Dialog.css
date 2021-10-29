@@ -1,0 +1,44 @@
+.dialog1auto {
+    --sapScrollBar_Dimension: 20px
+}
+
+.dialog2auto {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: .25rem 1rem;
+}
+
+.dialog3auto {
+    padding: 1rem;
+    text-align: center;
+}
+
+.dialog4auto {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    width: 100%
+}
+
+.dialog5auto {
+    flex: 1;
+}
+
+.dialog6auto {
+    width: 100%
+}
+
+.dialog7auto {
+    flex: 1 0 0;
+    height: 2.5rem;
+}
+
+.dialog8auto {
+    width: 300px
+}
+
+.dialog9auto {
+    display: none;
+    margin-top: 1000px;
+}
