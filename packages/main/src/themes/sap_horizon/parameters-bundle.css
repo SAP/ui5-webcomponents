@@ -1,4 +1,4 @@
-@import "../base/sizes-parameters.css";
+@import "./sizes-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
 @import "./BusyIndicator-parameters.css";
@@ -25,6 +25,7 @@
 @import "../base/ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
+@import "./RadioButton-parameters.css";
 @import "../base/Select-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
