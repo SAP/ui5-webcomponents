@@ -480,6 +480,13 @@ class List extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareListItems();
+
+
+		const slottedItems = this.getSlottedNodes("items");
+
+		slottedItems[0].setAttribute("_first", true);
+
+		slottedItems[slottedItems.length - 1].setAttribute("_last", true);
 	}
 
 	onAfterRendering() {
