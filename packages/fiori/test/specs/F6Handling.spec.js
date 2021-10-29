@@ -1,10 +1,9 @@
 // const assert = require("chai").assert;
-// const PORT = require("./_port.js");
-
+// 
 
 // describe("Button general interaction", () => {
 // 	before(async () => {
-// 		await browser.url(`http://localhost:${PORT}/test-resources/pages/F6TestPage.html`);
+// 		await browser.url(`test/pages/F6TestPage.html`);
 // 	});
 
 // 	it("Tests F6/Shift + F6", async () => {

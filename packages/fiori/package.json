@@ -28,7 +28,6 @@
     "lint": "wc-dev lint",
     "start": "wc-dev start",
     "watch": "wc-dev watch",
-    "serve": "wc-dev serve",
     "build": "wc-dev build",
     "test": "wc-dev test",
     "create-ui5-element": "wc-create-ui5-element",
@@ -48,6 +47,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.4.0",
-    "chromedriver": "101.0.0"
+    "chromedriver": "102.0.0"
   }
 }

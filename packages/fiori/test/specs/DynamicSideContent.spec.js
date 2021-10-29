@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("'sideContentPosition' property: ", () => {
 	it("set to 'End'", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-position", "End");
@@ -12,7 +11,7 @@ describe("'sideContentPosition' property: ", () => {
 	});
 
 	it("set to 'Start'", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-position", "Start");
@@ -23,7 +22,7 @@ describe("'sideContentPosition' property: ", () => {
 
 describe("'equalSplit' property: ", () => {
 	it("set to 'true'", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1440 (XL)
@@ -36,7 +35,7 @@ describe("'equalSplit' property: ", () => {
 
 describe("'hideMainContent' property: ", () => {
 	it("set to 'true'", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1440 (XL)
@@ -59,7 +58,7 @@ describe("'hideMainContent' property: ", () => {
 
 describe("'hideSideContent' property: ", () => {
 	it("set to 'true'", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1440 (XL)
@@ -82,7 +81,7 @@ describe("'hideSideContent' property: ", () => {
 
 describe("containers widths on XL size: ", () => {
 	it("check for proper width", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1440 (XL)
@@ -94,7 +93,7 @@ describe("containers widths on XL size: ", () => {
 
 describe("containers widths on L size: ", () => {
 	it("check for proper width", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1024 and < 1440 (L)
@@ -106,7 +105,7 @@ describe("containers widths on L size: ", () => {
 
 describe("containers widths on M size: ", () => {
 	it("check for proper width", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 960 and < 1024 (M1)
@@ -123,7 +122,7 @@ describe("containers widths on M size: ", () => {
 
 describe("containers widths on S size: ", () => {
 	it("check for proper width", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to < 720 (S)
@@ -135,7 +134,7 @@ describe("containers widths on S size: ", () => {
 
 describe("'sideContentVisibility' property: ", () => {
 	it("'AlwaysShow' - side content is always visible", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-visibility", "AlwaysShow");
@@ -157,7 +156,7 @@ describe("'sideContentVisibility' property: ", () => {
 	});
 
 	it("'ShowAboveL' - side content is visible only on XL size", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-visibility", "ShowAboveL");
@@ -179,7 +178,7 @@ describe("'sideContentVisibility' property: ", () => {
 	});
 
 	it("'ShowAboveM' - side content is visible on L and XL sizes", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-visibility", "ShowAboveM");
@@ -201,7 +200,7 @@ describe("'sideContentVisibility' property: ", () => {
 	});
 
 	it("'ShowAboveS' - side content is visible on M, L and XL sizes", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-visibility", "ShowAboveS");
@@ -223,7 +222,7 @@ describe("'sideContentVisibility' property: ", () => {
 	});
 
 	it("'NeverShow' - side content is not visible on any size", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-visibility", "NeverShow");
@@ -247,7 +246,7 @@ describe("'sideContentVisibility' property: ", () => {
 
 describe("'sideContentFallDown' property: ", () => {
 	it("'BelowXL' - side content falls down on sizes below XL", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-fall-down", "BelowXL");
@@ -269,7 +268,7 @@ describe("'sideContentFallDown' property: ", () => {
 	});
 
 	it("'BelowL' - side content falls down on sizes below L", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-fall-down", "BelowL");
@@ -291,7 +290,7 @@ describe("'sideContentFallDown' property: ", () => {
 	});
 
 	it("'BelowM' - side content falls down on sizes below M", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-fall-down", "BelowM");
@@ -313,7 +312,7 @@ describe("'sideContentFallDown' property: ", () => {
 	});
 
 	it("'onMinimumWidth' - side content falls down on sizes below M1 (960px)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		await dynamicSideContent.setAttribute("side-content-fall-down", "OnMinimumWidth");
@@ -337,7 +336,7 @@ describe("'sideContentFallDown' property: ", () => {
 
 describe("'toggleContents' method: ", () => {
 	it("toggles contents on S size", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to < 720 (S)
@@ -364,7 +363,7 @@ describe("'toggleContents' method: ", () => {
 	});
 
 	it("does nothing on M size", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 720 (M)
@@ -383,7 +382,7 @@ describe("'toggleContents' method: ", () => {
 	});
 
 	it("does nothing on L size", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1024 (L)
@@ -402,7 +401,7 @@ describe("'toggleContents' method: ", () => {
 	});
 
 	it("does nothing on XL size", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		// set outer container width to > 1440 (XL)
@@ -423,7 +422,7 @@ describe("'toggleContents' method: ", () => {
 
 describe("'layout-change' event: ", () => {
 	it("fired when change the breakpoint", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 		const currentBreakpoint = await browser.$("#currentBreakpoint");
 		const previousBreakpoint = await browser.$("#previousBreakpoint");
@@ -465,7 +464,7 @@ describe("'layout-change' event: ", () => {
 
 describe("ARIA attributes: ", () => {
 	it("exist", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DynamicSideContent.html`);
+		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
 
 		assert.strictEqual(await dynamicSideContent.shadow$(".ui5-dsc-side").getAttribute("aria-label"), "Side Content", "'aria-label' attribute is set correctly");

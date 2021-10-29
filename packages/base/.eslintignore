@@ -12,3 +12,4 @@ package-scripts.js
 .eslintrc.js
 src/renderer/directives/style-map.js
 src/util/metaUrl.js
+vite.config.js

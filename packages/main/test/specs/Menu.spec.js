@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Menu interaction", () => {
 
 	it("Menu opens after button click", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
@@ -15,7 +14,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Top level menu items appearance", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
 
@@ -34,7 +33,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Sub-menu creation, opening, closing and destroying", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
@@ -56,7 +55,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Event firing after 'click' on menu item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
@@ -72,7 +71,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Event firing after [Space] on menu item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
@@ -88,7 +87,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Event firing after [Enter] on menu item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
@@ -106,7 +105,7 @@ describe("Menu interaction", () => {
 
 describe("Menu Accessibility", () => {
 	it("Menu and Menu items accessibility attributes", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
+		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
 

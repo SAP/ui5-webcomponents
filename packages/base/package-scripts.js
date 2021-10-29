@@ -1,11 +1,13 @@
 const resolve = require("resolve");
+const path = require("path");
 
 const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate-asset-parameters/index.js");
 const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/index.js");
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
-const serve = resolve.sync("@ui5/webcomponents-tools/lib/serve/index.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
+
+const LIB = path.join(__dirname, `../tools/lib/`);
 
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
@@ -25,7 +27,7 @@ const scripts = {
 	},
 	build: {
 		default: `nps lint prepare build.bundle`,
-		bundle: "rollup --config config/rollup.config.js",
+		bundle: "vite build -c config/vite.config.js",
 	},
 	copy: {
 		default: "nps copy.src copy.test",
@@ -36,20 +38,14 @@ const scripts = {
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
 	watch: {
-		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
+		default: 'concurrently "nps watch.src" "nps watch.styles"',
+		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
-		test: 'nps "copy.test --watch --skip-initial-copy"',
-		bundle: "rollup --config config/rollup.config.js -w --environment DEV",
+		bundle: "vite -c config/vite.config.js --open",
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
-	dev: 'concurrently "nps serve" "nps watch"',
-	start: "nps prepare dev",
-	serve: `node "${serve}" --dir="dist/" --port=9191 --packageName="@ui5/webcomponents-base"`,
-	test: {
-		// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
-		default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
-		run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
-	},
+	start: "nps prepare watch.withBundle",
+	test: `node "${LIB}/test-runner/test-runner.js"`,
 };
 
 

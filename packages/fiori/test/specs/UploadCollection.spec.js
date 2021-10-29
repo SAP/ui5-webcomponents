@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("UploadCollection", () => {
 	describe("Rendering", () => {
 		before(async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/UploadCollection.html`);
+			await browser.url(`test/pages/UploadCollection.html`);
 		});
 
 		it("should show Link when 'fileNameClickable'", async () => {

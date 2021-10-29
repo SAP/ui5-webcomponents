@@ -5,7 +5,11 @@ tmp
 temp
 target
 dist
-.port
+.dev-server-port
+
+# scoping feature generated entry points for vite consumption
+packages/main/test/pages/scoped
+packages/fiori/test/pages/scoped
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5

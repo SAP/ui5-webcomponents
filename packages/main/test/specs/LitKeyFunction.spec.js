@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Lit HTML key function for #each", async () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/LitKeyFunction.html`);
+		await browser.url(`test/pages/LitKeyFunction.html`);
 	});
 
 	it("LIT HTML does not mess up keys when looping over lists", async () => {

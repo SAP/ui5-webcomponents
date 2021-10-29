@@ -1,6 +1,5 @@
 const datepicker = require("../pageobjects/DatePickerTestPage");
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Date Picker Tests", () => {
 	before(async () => {
@@ -33,7 +32,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("input receives value in format pattern depending on the set language", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp16";
 
 		const setDateButton = await browser.$("#b1");
@@ -218,7 +217,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("respect first day of the week - monday", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp7_1";
 
 		const root = await datepicker.getRoot();
@@ -937,7 +936,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPicker day name attribute", async () => {
-		// await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		// await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		// datepicker.id = "#dp13";
@@ -956,7 +955,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPiker day number attribute", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
@@ -978,7 +977,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DatePicker dates and week number", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
@@ -1109,7 +1108,7 @@ describe("Date Picker Tests", () => {
 	// });
 
 	it("Value state changes only on submit", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
@@ -1138,7 +1137,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp7_1";
 
 		const input = await datepicker.getInput();

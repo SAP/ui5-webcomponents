@@ -18,7 +18,6 @@
     "lint": "wc-dev lint",
     "start": "wc-dev start",
     "watch": "wc-dev watch",
-    "serve": "wc-dev serve",
     "build": "wc-dev build",
     "test": "wc-dev test",
     "test:suite-1": "wc-dev test-suite-1",
@@ -49,6 +48,7 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.4.0",
-    "chromedriver": "101.0.0"
+    "chromedriver": "102.0.0",
+    "vite": "^2.9.10"
   }
 }
