@@ -722,7 +722,7 @@ class ComboBox extends UI5Element {
 			this._isValueStateFocused = false;
 		}
 
-		if (isTabNext(event) || isTabPrevious(event)) {
+		if ((isTabNext(event) || isTabPrevious(event)) && this.open) {
 			this._closeRespPopover();
 		}
 
