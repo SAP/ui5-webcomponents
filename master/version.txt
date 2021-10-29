@@ -1,5 +1,5 @@
-commit 2309c30e90f611bdde60d4a962a7011851feb690
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Fri Oct 29 14:01:53 2021 +0300
+commit 7c8acae6f0ee518837839ce0d1f15f7b387096cf
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Oct 29 15:55:48 2021 +0300
 
-    feat(ui5-radio-button): SAP Horizon theme implementation (#4181)
+    feat(ui5-li): adjust focus styles to sap_horizon (#4220)
