@@ -1,5 +1,5 @@
-commit 7c8acae6f0ee518837839ce0d1f15f7b387096cf
+commit fdde4d08d511b6b4a0257ad7fd8ddac3cc818ef8
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Oct 29 15:55:48 2021 +0300
+Date:   Fri Oct 29 16:02:26 2021 +0300
 
-    feat(ui5-li): adjust focus styles to sap_horizon (#4220)
+    feat(ui5-progress-indicator): implement sap_horizon (#4226)
