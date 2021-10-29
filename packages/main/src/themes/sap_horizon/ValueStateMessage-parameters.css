@@ -1,0 +1,5 @@
+@import "../base/ValueStateMessage-parameters.css";
+
+:root {
+	--_ui5_value_state_message_focus_border_radius: var(--sapElement_BorderCornerRadius) var(--sapElement_BorderCornerRadius) 0 0;
+}

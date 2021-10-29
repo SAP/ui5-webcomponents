@@ -20,7 +20,7 @@ module.exports = {
 				},
 			]
 		},),
-		postcssCSStoJSON({toReplace: 'src'}),
+		postcssCSStoJSON({toReplace: 'src', packageName}),
 		postcssCSStoESM({toReplace: 'src', packageName}),
 	]
 };

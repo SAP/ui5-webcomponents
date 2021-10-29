@@ -1,9 +1,17 @@
 :root {
 	--_ui5_card_box_shadow: var(--sapContent_Shadow0);
-	--_ui5_card_border_color: var(--sapTile_BorderColor); 
+	--_ui5_card_hover_box_shadow: var(--_ui5_card_box_shadow);
+	--_ui5_card_border_color: var(--sapTile_BorderColor);
+	--_ui5_card_border-radius: .25rem;
 	--_ui5_card_content_padding: 1rem;
 	--_ui5_card_header_hover_bg: var(--sapList_Hover_Background);
 	--_ui5_card_header_active_bg: var(--_ui5_card_header_hover_bg);
 	--_ui5_card_header_border_color: var(--sapTile_SeparatorColor);
-	--_ui5_card_header_focus_border:  1px dotted var(--sapContent_FocusColor);
+	--_ui5_card_header_focus_border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	--_ui5_card_header_focus_radius: 0px;
+	--_ui5_card_header_focus_bottom_radius: 0px;
+	--_ui5_card_header_focus_offset: 1px;
+	--_ui5_card_header_title_font_family: "72override", var(--sapFontFamily);
+	--_ui5_card_header_title_font_size: var(--sapFontHeader5Size);
+	--_ui5_card_header_title_font_weight: normal;
 }
