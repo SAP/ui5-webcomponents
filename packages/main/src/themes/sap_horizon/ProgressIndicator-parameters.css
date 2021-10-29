@@ -13,5 +13,11 @@
     --_ui5_progress_indicator_value_state_success: var(--sapPositiveElementColor);
     --_ui5_progress_indicator_value_state_information: var(--sapInformativeElementColor);
 
+    --_ui5_progress_indicator_border: 0.0625rem solid var(--sapNeutralBorderColor);
+    --_ui5_progress_indicator_border_color_error: var(--sapErrorBorderColor);
+    --_ui5_progress_indicator_border_color_warning: var(--sapWarningBorderColor);
+    --_ui5_progress_indicator_border_color_success: var(--sapSuccessBorderColor);
+    --_ui5_progress_indicator_border_color_information: var(--sapInformationBorderColor);
+
     --_ui5_progress_indicator_color: var(----sapField_TextColor);
 }
