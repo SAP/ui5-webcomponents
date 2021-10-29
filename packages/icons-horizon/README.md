@@ -5,7 +5,7 @@
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides assets for the rich `Fiori Next (Horizon)` icon collection.
+Provides assets for `SAP-icons-horizon` collection icon collection, that is based on the `SAPIcons-5.0` font face.
 
 ## Provided icons
 
@@ -21,16 +21,24 @@ Provides assets for the rich `Fiori Next (Horizon)` icon collection.
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
 just the ones that your app will actually use.
 
+The icons within the `SAP-icons-horizon` collection have the same names as the icons in `SAP-icons` collection (@ui5/webcomponents-icon)
+but viusally different as based on different font faces.
 
-## Provided assets
-
-```js
-import "@ui5/webcomponents-fiori/dist/Assets.js";
+And, if you don't specify a collection name, but only the icon name (as in the example below), the collection in use depends on the current theme - `SAP-icons` for SAP Quartz Light, SAP Quartz Dark, SAP Quartz HCB and SAP Quartz HCW themes, or from `SAP-icons-horizon` in SAP Horizon theme.
+```html
+<ui5-icon name="accept">
 ```
 
-| Assets           | Module                                           | Notes                                                                                                                                                                                                            |
-|------------------|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `i18n`           | `@ui5/webcomponents-icons-horizon/dist/Assets.js`        | Translations for the tooltips / "aria labels" of several icons                                                                                                                                                   |
+To enforce the collection in use, no matter the current theme, you have to specify the collection within the Icon's name:
+```html
+<ui5-icon name="SAP-icons/accept">
+```
+```html
+<ui5-icon name="SAP-icons-horizon/accept">
+```
+
+For a full list of the icons in the `SAP-icons-horizon` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
+
 
 
 ## Resources

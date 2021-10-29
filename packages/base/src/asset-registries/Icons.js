@@ -53,7 +53,6 @@ const registerIcon = (name, { pathData, ltr, accData, collection, packageName } 
 	}
 
 	const key = `${collection}/${name}`;
-	console.log(`${collection}/${packageName}/${name}`); // eslint-disable-line
 	registry.set(key, {
 		pathData,
 		ltr,
