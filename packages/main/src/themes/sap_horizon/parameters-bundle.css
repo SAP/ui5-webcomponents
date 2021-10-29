@@ -14,7 +14,7 @@
 @import "./Dialog-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
-@import "../base/InputIcon-parameters.css";
+@import "./InputIcon-parameters.css";
 @import "./Link-parameters.css";
 @import "./List-parameters.css";
 @import "../base/ListItemBase-parameters.css";
@@ -27,10 +27,10 @@
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
-@import "../base/Select-parameters.css";
+@import "./Select-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
-@import "../base/TextArea-parameters.css";
+@import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./WheelSlider-parameters.css";
@@ -42,6 +42,7 @@
 @import "../base/GrowingButton-parameters.css";
 @import "../base/Title-parameters.css";
 @import "./Token-parameters.css";
+@import "./Tokenizer-parameters.css";
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "./ValueStateMessage-parameters.css";

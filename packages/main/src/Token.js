@@ -62,6 +62,14 @@ const metadata = {
 		selected: { type: Boolean },
 
 		/**
+		 * Defines whether the component is focused or not.
+		 *
+		 * @type {boolean}
+		 * @private
+		 */
+		focused: { type: Boolean },
+
+		/**
 		 * Defines the tabIndex of the component.
 		 * @type {string}
 		 * @private
@@ -153,6 +161,14 @@ class Token extends UI5Element {
 		this.fireEvent("select");
 	}
 
+	_focusin() {
+		this.focused = true;
+	}
+
+	_focusout() {
+		this.focused = !this.focused;
+	}
+
 	 _delete() {
 		this.fireEvent("delete");
 	 }
@@ -182,7 +198,7 @@ class Token extends UI5Element {
 	}
 
 	get iconURI() {
-		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
+		return getTheme() === "sap_fiori_3" || "sap_horizon" ? "decline" : "sys-cancel";
 	}
 
 	static get dependencies() {

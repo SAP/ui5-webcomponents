@@ -35,6 +35,7 @@ import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_INFORMATION,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
@@ -932,6 +933,10 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_readonlyIconClick() {
+		this._inputDom.focus();
+	}
+
 	get editable() {
 		return !this.readonly;
 	}
@@ -974,6 +979,20 @@ class MultiComboBox extends UI5Element {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	 get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get _tokensCountText() {
 		if (!this._tokenizer) {
 			return;
@@ -1003,6 +1022,7 @@ class MultiComboBox extends UI5Element {
 			"Error": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Error_Selection": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
 			"Warning": MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": MultiComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
