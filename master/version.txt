@@ -1,5 +1,5 @@
-commit 4ac73c31030ab96bb8e6a13b12f9eb36a5aed7ec
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Oct 29 18:22:58 2021 +0300
+commit e2a4bdcab7c14c0c98590576836af56b7bbe2d2a
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Fri Oct 29 19:05:06 2021 +0300
 
-    feat(ui5-select): implement sap_horizon in dropdown (#4229)
+    feat(ui5-tab-container): adjust focus styles in overflow to sap_horizon
