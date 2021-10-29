@@ -1,0 +1,17 @@
+@import "../base/ProgressIndicator-parameters.css";
+
+:root {
+    --_ui5_progress_indicator_background_none: var(--sapNeutralBackground);
+    --_ui5_progress_indicator_background_error: var(--sapErrorBackground);
+    --_ui5_progress_indicator_background_warning: var(--sapWarningBackground);
+    --_ui5_progress_indicator_background_success: var(--sapSuccessBackground);
+    --_ui5_progress_indicator_background_information: var(--sapInformationBackground);
+
+    --_ui5_progress_indicator_value_state_none: var(--sapNeutralElementColor);
+    --_ui5_progress_indicator_value_state_error: var(--sapNegativeElementColor);
+    --_ui5_progress_indicator_value_state_warning: var(--sapCriticalElementColor);
+    --_ui5_progress_indicator_value_state_success: var(--sapPositiveElementColor);
+    --_ui5_progress_indicator_value_state_information: var(--sapInformativeElementColor);
+
+    --_ui5_progress_indicator_color: var(----sapField_TextColor);
+}
