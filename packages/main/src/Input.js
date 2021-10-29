@@ -728,10 +728,6 @@ class Input extends UI5Element {
 		this.closePopover();
 		this._clearPopoverFocusAndSelection();
 
-		if (!this.shouldOpenSuggestions() && this.Suggestions) {
-			this._closeRespPopover(true);
-		}
-
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
@@ -906,13 +902,6 @@ class Input extends UI5Element {
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
-	}
-
-	shouldOpenSuggestions() {
-		return !!(this.suggestionItems.length
-			&& this.containsFocus
-			&& this.showSuggestions
-			&& !this.suggestionSelectionCanceled);
 	}
 
 	selectSuggestion(item, keyboardUsed) {
@@ -1135,7 +1124,9 @@ class Input extends UI5Element {
 	}
 
 	get containsFocus() {
-		return (this.focused && !this.hasSuggestionItemSelected) || (!this.focused && this.hasSuggestionItemSelected) || this._isValueStateFocused;
+		console.warn(document.activeElement);
+		console.warn(this);
+		return document.activeElement === this;
 	}
 
 	get inputType() {
