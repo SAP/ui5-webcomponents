@@ -1,9 +1,18 @@
 :root {
+    --_ui5_progress_indicator_background_none: var(--sapField_Background);
+    --_ui5_progress_indicator_background_error: var(--sapField_Background);
+    --_ui5_progress_indicator_background_warning: var(--sapField_Background);
+    --_ui5_progress_indicator_background_success: var(--sapField_Background);
+    --_ui5_progress_indicator_background_information: var(--sapField_Background);
     --_ui5_progress_indicator_value_state_none: var(--sapNeutralElementColor);
     --_ui5_progress_indicator_value_state_error: var(--sapNegativeElementColor);
     --_ui5_progress_indicator_value_state_warning: var(--sapCriticalElementColor);
     --_ui5_progress_indicator_value_state_success: var(--sapPositiveElementColor);
     --_ui5_progress_indicator_value_state_information: var(--sapInformativeElementColor);
+    --_ui5_progress_indicator_border_color_error: var(--sapField_BorderColor);
+    --_ui5_progress_indicator_border_color_warning: var(--sapField_BorderColor);
+    --_ui5_progress_indicator_border_color_success: var(--sapField_BorderColor);
+    --_ui5_progress_indicator_border_color_information: var(--sapField_BorderColor);
     --_ui5_progress_indicator_color: var(--sapTextColor);
     --_ui5_progress_indicator_bar_color: var(--sapContent_ContrastTextColor);
     --_ui5_progress_indicator_border: 0.0625rem solid var(--sapField_BorderColor);
