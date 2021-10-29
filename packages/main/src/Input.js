@@ -1123,12 +1123,6 @@ class Input extends UI5Element {
 		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	get containsFocus() {
-		console.warn(document.activeElement);
-		console.warn(this);
-		return document.activeElement === this;
-	}
-
 	get inputType() {
 		return this.type.toLowerCase();
 	}
