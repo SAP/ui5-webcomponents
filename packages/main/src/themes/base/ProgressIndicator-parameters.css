@@ -1,9 +1,4 @@
 :root {
-    --_ui5_progress_indicator_background_none: var(--sapField_Background);
-    --_ui5_progress_indicator_background_error: var(--sapField_Background);
-    --_ui5_progress_indicator_background_warning: var(--sapField_Background);
-    --_ui5_progress_indicator_background_success: var(--sapField_Background);
-    --_ui5_progress_indicator_background_information: var(--sapField_Background);
     --_ui5_progress_indicator_value_state_none: var(--sapNeutralElementColor);
     --_ui5_progress_indicator_value_state_error: var(--sapNegativeElementColor);
     --_ui5_progress_indicator_value_state_warning: var(--sapCriticalElementColor);
