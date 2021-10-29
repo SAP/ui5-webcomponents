@@ -256,7 +256,12 @@ class Suggestions {
 
 	get _isGroupOrInactiveItem() {
 		const items = this._getItems();
-		return !!items && !!items[this.selectedItemIndex] && (items[this.selectedItemIndex].group || items[this.selectedItemIndex].type === "Inactive");
+
+		if (!items || !items[this.selectedItemIndex]) {
+			return false;
+		}
+
+		return (items[this.selectedItemIndex].group || items[this.selectedItemIndex].type === "Inactive");
 	}
 
 	isOpened() {
