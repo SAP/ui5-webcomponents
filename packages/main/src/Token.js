@@ -198,7 +198,11 @@ class Token extends UI5Element {
 	}
 
 	get iconURI() {
-		return getTheme() === "sap_fiori_3" || "sap_horizon" ? "decline" : "sys-cancel";
+		if (getTheme().includes("sap_belize")) {
+			return "sys-cancel";
+		}
+
+		return "decline";
 	}
 
 	static get dependencies() {
