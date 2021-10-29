@@ -1,5 +1,5 @@
-commit 13a168ef77faea98ae862c9048242438a7c79af9
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Fri Oct 29 17:29:25 2021 +0300
+commit 4ac73c31030ab96bb8e6a13b12f9eb36a5aed7ec
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Oct 29 18:22:58 2021 +0300
 
-    feat(ui5-timeline): implement sap_horizon theme
+    feat(ui5-select): implement sap_horizon in dropdown (#4229)
