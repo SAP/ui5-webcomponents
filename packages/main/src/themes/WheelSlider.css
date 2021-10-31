@@ -156,14 +156,14 @@
 :host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-item {
 	background: var(--_ui5_wheelslider_item_background_color);
 	color: var(--_ui5_wheelslider_item_text_color);
-	border: 1px solid var(--_ui5_wheelslider_item_border_color);
+	border: 1px solid var(--_ui5_wheelslider_item_expanded_border_color);
 	border-radius: var(--_ui_wheelslider_item_border_radius);
 	offset-position: auto;
 	cursor: auto;
 }
 
 :host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
-	background: var(--sapList_Hover_Background);
+	background: var(--_ui_wheelslider_item_expanded_hover_color);
 	border-color: var(--_ui5_wheelslider_item_hovered_border_color);
 }
 
@@ -190,10 +190,11 @@
 	margin-top: var(--_ui5_wheelslider_mobile_selection_frame_margin_top);
 }
 
-:host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:hover + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
-	background: var(--_ui_wheelslider_item_hover_color);
+:host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:hover + .ui5-wheelslider-wrapper ul > li.ui5-wheelslider-item[aria-selected="true"] {
+	background: var(--_ui_wheelslider_item_expanded_hover_color);
 }
-:host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:active + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
+
+:host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:active + ul > li.ui5-wheelslider-item[aria-selected="true"] {
 	background: var(--_ui5_wheelslider_selected_item_background_color);
 	color: lightgray;
 }
