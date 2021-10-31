@@ -1,5 +1,5 @@
-commit e2a4bdcab7c14c0c98590576836af56b7bbe2d2a
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Fri Oct 29 19:05:06 2021 +0300
+commit d7c298b0a92e7db395d4b4e868aaaebeba837a22
+Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
+Date:   Sun Oct 31 17:45:44 2021 +0200
 
-    feat(ui5-tab-container): adjust focus styles in overflow to sap_horizon
+    docs(ui5-card): Update list card samples (#4227)
