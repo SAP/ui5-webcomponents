@@ -375,10 +375,8 @@ class Select extends UI5Element {
 	async _attachRealDomRefs() {
 		this.responsivePopover = await this._respPopover();
 
-		this.options.map(option => {
+		this.options.forEach(option => {
 			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`);
-
-			return option;
 		});
 	}
 
