@@ -327,6 +327,8 @@ class Select extends UI5Element {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
 		}
+
+		this._attachRealDomRefs();
 	}
 
 	_onfocusin() {
@@ -370,12 +372,20 @@ class Select extends UI5Element {
 		}
 	}
 
-	async _syncSelection() {
+	async _attachRealDomRefs() {
+		this.responsivePopover = await this._respPopover();
+
+		this.options.map(option => {
+			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`);
+
+			return option;
+		});
+	}
+
+	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
 		const options = this._filteredItems;
-		this.responsivePopover = await this._respPopover();
-
 		const syncOpts = options.map((opt, index) => {
 			if (opt.selected || opt.textContent === this.value) {
 				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
@@ -387,7 +397,6 @@ class Select extends UI5Element {
 
 			opt.selected = false;
 			opt._focused = false;
-			opt._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${opt.stableDomRef}]`);
 
 			return {
 				selected: false,
