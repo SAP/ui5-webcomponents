@@ -70,7 +70,6 @@
 }
 
 .ui5-yp-item.ui5-yp-item--selected:hover {
-	
 	background-color: var(--_ui5_yearpicker_item_selected_hover_color);
 }
 

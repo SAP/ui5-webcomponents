@@ -43,7 +43,7 @@
 }
 
 .ui5-dp-weeks-row {
-    display: flex;
+	display: flex;
 }
 
 .ui5-dp-content {
@@ -154,7 +154,6 @@
 }
 
 .ui5-dp-item.ui5-dp-item--now.ui5-dp-item--selected {
-	/*--_ui5_daypicker_item_now_box_shadow*/
 	box-shadow: var(--_ui5_daypicker_item_now_box_shadow);
 }
 
@@ -234,7 +233,7 @@
 .ui5-dp-item.ui5-dp-item--selected-between,
 .ui5-dp-item[hovered] {
 	border: 1px solid var(--sapContent_Selected_Background);
-	border-radius:var(--_ui5_daypicker_item_selected_between_border);
+	border-radius: var(--_ui5_daypicker_item_selected_between_border);
 	background: var(--_ui5_daypicker_item_selected_between_background);
 	box-shadow: var(--_ui5_daypicker_item_selected_box_shadow);
 }
@@ -264,7 +263,6 @@
 	outline-offset: -0.1875rem;
 	border-radius: 0.1875rem;
 }
-
 
 .ui5-dp-item.ui5-dp-item--now.ui5-dp-item--selected.ui5-dp-item--withsecondtype .ui5-dp-daytext {
 	outline: none;

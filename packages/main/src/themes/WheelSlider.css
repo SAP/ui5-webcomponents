@@ -60,7 +60,6 @@
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item {
-	/*#0070f2;*/
 	height: var(--_ui5_wheelslider_item_height);
 	line-height: var(--_ui5_wheelslider_item_height);
 	width: var(--_ui5_wheelslider_item_width);
@@ -157,8 +156,7 @@
 :host([expanded]) .ui5-wheelslider-inner .ui5-wheelslider-item {
 	background: var(--_ui5_wheelslider_item_background_color);
 	color: var(--_ui5_wheelslider_item_text_color);
-	/*--_ui5_wheelslider_item_border*/
-	border: var(--_ui5_wheelslider_item_border);
+	border: 1px solid var(--_ui5_wheelslider_item_border_color);
 	border-radius: var(--_ui_wheelslider_item_border_radius);
 	offset-position: auto;
 	cursor: auto;
