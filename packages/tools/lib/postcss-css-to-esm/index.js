@@ -8,10 +8,10 @@ const DEFAULT_THEME = assets.themes.default;
 const getDefaultThemeCode = packageName => {
 	return `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
-import defaultThemeBase from "@ui5/webcomponents-theme-base/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
+import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
 import defaultTheme from "./${DEFAULT_THEME}/parameters-bundle.css.js";
 
-registerThemePropertiesLoader("@ui5/webcomponents-theme-base", "${DEFAULT_THEME}", () => defaultThemeBase);
+registerThemePropertiesLoader("@ui5/webcomponents-theming", "${DEFAULT_THEME}", () => defaultThemeBase);
 registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", () => defaultTheme);
 `;
 };
@@ -38,7 +38,7 @@ module.exports = function (opts) {
 
 			const filePath = `${targetFile}.js`;
 			const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : ``;
-			fs.writeFileSync(filePath, `${defaultTheme}export default ${css};`);
+			fs.writeFileSync(filePath, `${defaultTheme}export default {packageName:"${opts.packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}}`);
 		}
 	};
 };

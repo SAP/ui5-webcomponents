@@ -14,7 +14,7 @@ import {
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -40,6 +40,7 @@ import {
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
 
@@ -418,7 +419,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
 		 * @param {Integer} scrollTop The current scroll position.
 		 * @param {HTMLElement} scrollContainer The scroll container.
-		 * @public
+		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
 		"suggestion-scroll": {
@@ -487,7 +488,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	constructor() {
@@ -538,8 +539,6 @@ class Input extends UI5Element {
 
 		// Suggestions array initialization
 		this.suggestionsTexts = [];
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._handleResizeBound = this._handleResize.bind(this);
 	}
@@ -1067,13 +1066,11 @@ class Input extends UI5Element {
 	onClose() {}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1092,7 +1089,7 @@ class Input extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get inputType() {
@@ -1158,6 +1155,10 @@ class Input extends UI5Element {
 
 	get classes() {
 		return {
+			popover: {
+				"ui5-suggestions-popover": !this.isPhone && this.showSuggestions,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.showSuggestions && this.hasValueStateMessage,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
@@ -1226,20 +1227,20 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
 			case 1:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
 			default:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
 			}
 		}
 
@@ -1321,7 +1322,12 @@ class Input extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		const Suggestions = getFeature("InputSuggestions");
+
+		[Input.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			Suggestions ? Suggestions.init() : Promise.resolve(),
+		]);
 	}
 }
 

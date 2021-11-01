@@ -283,7 +283,7 @@ class MultiInput extends Input {
 	}
 
 	get ariaRoleDescription() {
-		return this.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
+		return MultiInput.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
 	}
 
 	static get dependencies() {

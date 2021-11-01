@@ -8,10 +8,7 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import {
-	fetchI18nBundle,
-	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -283,8 +280,6 @@ class Carousel extends UI5Element {
 		this._scrollEnablement.attachEvent("touchend", event => {
 			this._updateScrolling(event);
 		});
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._onResizeBound = this._onResize.bind(this);
 		this._resizing = false; // indicates if the carousel is in process of resizing
 
@@ -499,7 +494,9 @@ class Carousel extends UI5Element {
 				tabIndex: visible ? "0" : "-1",
 				posinset: idx + 1,
 				setsize: this.content.length,
-				width: this._itemWidth,
+				styles: {
+					width: `${this._itemWidth}px`,
+				},
 				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
 		});
@@ -597,7 +594,7 @@ class Carousel extends UI5Element {
 		for (let index = 0; index < pages; index++) {
 			dots.push({
 				active: index === this._selectedIndex,
-				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
+				ariaLabel: Carousel.i18nBundle.getText(CAROUSEL_DOT_TEXT, index + 1, pages),
 			});
 		}
 
@@ -634,7 +631,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ofText() {
-		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
 	get ariaActiveDescendant() {
@@ -642,11 +639,11 @@ class Carousel extends UI5Element {
 	}
 
 	get nextPageText() {
-		return this.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
 	}
 
 	get previousPageText() {
-		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
 	}
 
 	/**
@@ -675,7 +672,7 @@ class Carousel extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Carousel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

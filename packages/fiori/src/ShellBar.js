@@ -9,7 +9,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -472,8 +472,6 @@ class ShellBar extends UI5Element {
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	_debounce(fn, delay) {
@@ -621,7 +619,9 @@ class ShellBar extends UI5Element {
 			return {
 				...info,
 				classes: `${info.classes} ${shouldStayOnScreen ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-button`,
-				style: `order: ${shouldStayOnScreen ? 1 : -1}`,
+				styles: {
+					order: shouldStayOnScreen ? 1 : -1,
+				},
 			};
 		});
 
@@ -668,7 +668,9 @@ class ShellBar extends UI5Element {
 		for (let i = 0; i < itemsByPriority.length; i++) {
 			if (i < overflowCount) {
 				itemsByPriority[i].classes = `${itemsByPriority[i].classes} ui5-shellbar-hidden-button`;
-				itemsByPriority[i].style = `order: -1`;
+				itemsByPriority[i].styles = {
+					order: -1,
+				};
 			}
 		}
 
@@ -782,7 +784,9 @@ class ShellBar extends UI5Element {
 				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
 				priority: 4,
 				domOrder: this.searchField.length ? (++domOrder) : -1,
-				style: `order: ${this.searchField.length ? 1 : -10}`,
+				styles: {
+					order: this.searchField.length ? 1 : -10,
+				},
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
 				show: !!this.searchField.length,
@@ -797,7 +801,9 @@ class ShellBar extends UI5Element {
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",
 					priority: 1,
 					domOrder: (++domOrder),
-					style: `order: ${2}`,
+					styles: {
+						order: 2,
+					},
 					show: true,
 					press: this._handleCustomActionPress.bind(this),
 					custom: true,
@@ -810,7 +816,9 @@ class ShellBar extends UI5Element {
 				text: "Notifications",
 				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
 				priority: 3,
-				style: `order: ${this.showNotifications ? 3 : -10}`,
+				styles: {
+					order: this.showNotifications ? 3 : -10,
+				},
 				id: `${this._id}-item-${2}`,
 				show: this.showNotifications,
 				domOrder: this.showNotifications ? (++domOrder) : -1,
@@ -822,7 +830,9 @@ class ShellBar extends UI5Element {
 				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button ui5-shellbar-button`,
 				priority: 5,
 				order: 4,
-				style: `order: ${showOverflowButton ? 4 : -1}`,
+				styles: {
+					order: showOverflowButton ? 4 : -1,
+				},
 				domOrder: showOverflowButton ? (++domOrder) : -1,
 				id: `${this.id}-item-${5}`,
 				press: this._handleOverflowPress.bind(this),
@@ -832,7 +842,9 @@ class ShellBar extends UI5Element {
 				text: "Person",
 				classes: `${this.hasProfile ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-image-button ui5-shellbar-button`,
 				priority: 4,
-				style: `order: ${this.hasProfile ? 5 : -10};`,
+				styles: {
+					order: this.hasProfile ? 5 : -10,
+				},
 				profile: true,
 				id: `${this._id}-item-${3}`,
 				domOrder: this.hasProfile ? (++domOrder) : -1,
@@ -844,7 +856,9 @@ class ShellBar extends UI5Element {
 				text: "Product Switch",
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-button-product-switch`,
 				priority: 2,
-				style: `order: ${this.showProductSwitch ? 6 : -10}`,
+				styles: {
+					order: this.showProductSwitch ? 6 : -10,
+				},
 				id: `${this._id}-item-${4}`,
 				show: this.showProductSwitch,
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
@@ -911,7 +925,6 @@ class ShellBar extends UI5Element {
 			wrapper: {
 				"ui5-shellbar-root": true,
 				"ui5-shellbar-with-searchfield": this.searchField.length,
-				"ui5-shellbar-with-coPilot": this.showCoPilot,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
@@ -1022,23 +1035,23 @@ class ShellBar extends UI5Element {
 	}
 
 	get _shellbarText() {
-		return this.i18nBundle.getText(SHELLBAR_LABEL);
+		return ShellBar.i18nBundle.getText(SHELLBAR_LABEL);
 	}
 
 	get _logoText() {
-		return this.i18nBundle.getText(SHELLBAR_LOGO);
+		return ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
 	}
 
 	get _copilotText() {
-		return this.i18nBundle.getText(SHELLBAR_COPILOT);
+		return ShellBar.i18nBundle.getText(SHELLBAR_COPILOT);
 	}
 
 	get _notificationsText() {
-		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
+		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
 	}
 
 	get _cancelBtnText() {
-		return this.i18nBundle.getText(SHELLBAR_CANCEL);
+		return ShellBar.i18nBundle.getText(SHELLBAR_CANCEL);
 	}
 
 	get _showFullWidthSearch() {
@@ -1049,19 +1062,19 @@ class ShellBar extends UI5Element {
 	}
 
 	get _profileText() {
-		return this.i18nBundle.getText(SHELLBAR_PROFILE);
+		return ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
 
 	get _productsText() {
-		return this.i18nBundle.getText(SHELLBAR_PRODUCTS);
+		return ShellBar.i18nBundle.getText(SHELLBAR_PRODUCTS);
 	}
 
 	get _searchText() {
-		return this.i18nBundle.getText(SHELLBAR_SEARCH);
+		return ShellBar.i18nBundle.getText(SHELLBAR_SEARCH);
 	}
 
 	get _overflowText() {
-		return this.i18nBundle.getText(SHELLBAR_OVERFLOW);
+		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
 	get accInfo() {
@@ -1097,7 +1110,7 @@ class ShellBar extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		ShellBar.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

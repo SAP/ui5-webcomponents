@@ -3,4 +3,5 @@
 :root {
 	--_ui5_toggle_button_pressed_focussed: transparent;
 	--_ui5_toggle_button_pressed_focussed_hovered: transparent;
+	--_ui5_toggle_button_emphasized_pressed_focussed_hovered: var(--sapContent_ContrastFocusColor);
 }

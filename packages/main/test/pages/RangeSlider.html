@@ -20,26 +20,12 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		html,
-		body {
-			font-family: sans-serif;
-			margin: 0;
-		}
-
-		h2 {
-			margin: 50px 0 25px;
-		}
-
-		.group {
-			padding: 2rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/RangeSlider.css">
 </head>
 
-	<body style="background-color: var(--sapBackgroundColor);">
+	<body class="rangeslider1auto">
 		<section class="group">
 			<h2>Basic Range Slider</h2>
 			<ui5-range-slider id="basic-range-slider" end-value="20"></ui5-range-slider>
@@ -56,8 +42,8 @@
 			<h2>Disabled Range Slider</h2>
 			<ui5-range-slider id="disabled-range-slider" disabled min="0" max="30" step="0" start-value="3" end-value="13" show-tooltip></ui5-range-slider>
 
-			<h2 style="text-align: center;">Range Slider with steps, tooltips, tickmarks and labels</h2>
-			<ui5-range-slider id="range-slider-tickmarks-labels" min="0" max="44" step="2" start-value="2" end-value="12" show-tooltip label-interval="2" show-tickmarks style="width: 60%; margin-left: 20%; margin-top: 50px;"></ui5-range-slider>
+			<h2 class="rangeslider2auto">Range Slider with steps, tooltips, tickmarks and labels</h2>
+			<ui5-range-slider id="range-slider-tickmarks-labels" min="0" max="44" step="2" start-value="2" end-value="12" show-tooltip label-interval="2" show-tickmarks class="rangeslider3auto"></ui5-range-slider>
 		</section>
 
 		<section class="group">
@@ -70,7 +56,7 @@
 		<script>
 			const eventTargetSlider = document.getElementById("test-slider");
 			const eventResultSlider = document.getElementById("test-result-slider");
-		
+
 			eventTargetSlider.addEventListener("ui5-input", () => {
 				eventResultSlider.setAttribute("end-value", parseInt(eventResultSlider.getAttribute("end-value")) + 1);
 			});

@@ -5,9 +5,11 @@ import {
 	unsafeStatic,
 } from "lit-html/static.js";
 
-const litRender = (templateResult, domNode, styles, { host } = {}) => {
-	if (styles) {
-		templateResult = html`<style>${styles}</style>${templateResult}`;
+const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
+	if (typeof styleStrOrHrefsArr === "string") {
+		templateResult = html`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
+	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
+		templateResult = html`${styleStrOrHrefsArr.map(href => html`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
 	}
 	render(templateResult, domNode, { host });
 };
@@ -25,7 +27,7 @@ export {
 export { scopeTag };
 export { repeat } from "lit-html/directives/repeat.js";
 export { classMap } from "lit-html/directives/class-map.js";
-export { styleMap } from "lit-html/directives/style-map.js";
+export { styleMap } from "./directives/style-map.js";
 export { ifDefined } from "lit-html/directives/if-defined.js";
 export { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 

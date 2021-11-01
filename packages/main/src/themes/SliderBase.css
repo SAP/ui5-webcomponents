@@ -55,6 +55,10 @@
 	top: -0.125rem;
 }
 
+:host([ui5-range-slider]) .ui5-slider-progress-container::before {
+	background-color: #8396A8;
+}
+
 .ui5-slider-progress-container::after {
 	display: var(--_ui5_slider_progress_container_dot_display);
 	content: "";
@@ -105,29 +109,78 @@
 	width: var(--_ui5_slider_handle_width);
 }
 
-.ui5-slider-handle--start, .ui5-slider-handle--end {
-	background: var(--_ui5_range_slider_handle_background);
+[slider-icon] {
+	display: var(--_ui5_slider_handle_icon_display);
+	color: #2d8ae6;
+	position: relative;
+	top: 0.125rem;
+	left: 0.5rem;
+	vertical-align: middle;
 }
 
-.ui5-slider-handle:focus {
-	outline: var(--_ui5_slider_handle_outline);
-	outline-offset: var(--_ui5_slider_handle_outline_offset);
+.ui5-slider-handle--start, .ui5-slider-handle--end {
+	background: var(--_ui5_range_slider_handle_background);
 }
 
 [dir="rtl"] .ui5-slider-handle {
 	margin-right: var(--_ui5_slider_handle_margin_left);
 }
 
-.ui5-slider-root:hover .ui5-slider-handle,
-.ui5-slider-root:active .ui5-slider-handle, .ui5-slider-handle:active {
-	background: var(--_ui5_slider_handle_hover_background);
-	border-color: var(--_ui5_slider_handle_hover_border);
+[dir="rtl"] .ui5-slider-handle:after {
+	right:9px;
+	left: 0;
 }
 
-.ui5-slider-root:hover .ui5-slider-handle--start, .ui5-slider-root:hover .ui5-slider-handle--end,
-.ui5-slider-root:active .ui5-slider-handle--start, .ui5-slider-root:active .ui5-slider-handle--end,
-.ui5-slider-handle--start:active, .ui5-slider-handle--end:active  {
+[dir="rtl"] [slider-icon] {
+	left: 0;
+	right: 0.5rem;
+}
+
+.ui5-slider-root:hover .ui5-slider-handle:not(:focus), .ui5-slider-handle:hover  {
+	background: var(--_ui5_slider_handle_hover_background);
+	border: var(--_ui5_slider_handle_hover_border);
+}
+
+.ui5-slider-root:focus .ui5-slider-inner .ui5-slider-handle, .ui5-slider-inner .ui5-slider-handle:focus {
+	outline: var(--_ui5_slider_handle_outline);
+	outline-offset: var(--_ui5_slider_handle_outline_offset);
+	border: var(--_ui5_slider_handle_focus_border);
+	box-shadow: var(--_ui5_slider_handle_box_shadow_focus);
+}
+
+.ui5-slider-root:active .ui5-slider-handle, .ui5-slider-handle:active {
+	background: var(--_ui5_slider_handle_hover_background);
+	border: var(--_ui5_slider_handle_active_border);
+}
+
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, 
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end,
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start, 
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end,
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus, 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus,
+.ui5-slider-handle--start:active, .ui5-slider-handle--end:active {
 	background: var(--_ui5_range_slider_handle_hover_background);
+	
+}
+
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start [slider-icon],
+.ui5-slider-root:hover .ui5-slider-inner .ui5-slider-handle--end [slider-icon],
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start [slider-icon],
+.ui5-slider-root:active .ui5-slider-inner .ui5-slider-handle--end [slider-icon],
+.ui5-slider-handle--start:active:after, .ui5-slider-handle--end:active [slider-icon],
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus [slider-icon], 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus [slider-icon] {
+	display: var(--_ui5_range_slider_handle_hover_icon_display);
+}
+
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle.ui5-slider-handle--start:focus, 
+.ui5-slider-root .ui5-slider-inner .ui5-slider-handle--end:focus {
+	border: -_ui5_slider_handle_focus_border;
+}
+
+.ui5-slider-root:focus:hover .ui5-slider-handle, .ui5-slider-handle:focus:hover {
+	border: var(--_ui5_slider_handle_focus_border);
 }
 
 .ui5-slider-tooltip {
@@ -142,7 +195,6 @@
 	background: var(--_ui5_slider_tooltip_background);
 	border: var(--_ui5_slider_tooltip_border);
 	border-radius: var(--_ui5_slider_tooltip_border_radius);
-	box-shadow: var(--_ui5_slider_tooltip_box_shadow);
 	font-size: var(--_ui5_slider_tooltip_fontsize);
 	color: var(--_ui5_slider_tooltip_color);
 	height: var(--_ui5_slider_tooltip_height);
@@ -153,7 +205,6 @@
 .ui5-slider-tooltip-value {
 	position: relative;
 }
-
 
 .ui5-slider-labels {
 	position: absolute;

@@ -46,8 +46,6 @@ class Suggestions {
 		// that changes due to user interaction.
 		this.selectedItemIndex = null;
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
 		this.accInfo = {};
 	}
 
@@ -183,6 +181,7 @@ class Suggestions {
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
+		item.focused = false;
 		this._getComponent().open = false;
 	}
 
@@ -298,10 +297,12 @@ class Suggestions {
 
 		if (previousItem) {
 			previousItem.selected = false;
+			previousItem.focused = false;
 		}
 
 		if (currentItem) {
 			currentItem.selected = true;
+			currentItem.focused = true;
 
 			if (this.handleFocus) {
 				currentItem.focus();
@@ -319,6 +320,7 @@ class Suggestions {
 		const items = this._getItems();
 		items.forEach(item => {
 			item.selected = false;
+			item.focused = false;
 		});
 	}
 
@@ -378,9 +380,8 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const i18nBundle = this.i18nBundle,
-			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, [this.accInfo.currentPos], [this.accInfo.listSize]),
-			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
+			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
 	}
@@ -433,6 +434,10 @@ class Suggestions {
 			GroupHeaderListItem,
 			Button,
 		];
+	}
+
+	static async init() {
+		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

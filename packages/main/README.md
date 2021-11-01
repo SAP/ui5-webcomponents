@@ -86,7 +86,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 
 | Assets | Module | Notes
 |------------|-----------|----------- 
-| `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br><br> *Automatically imports also:<br> `@ui5/webcomponents-localization/dist/Assets.js` <br> and <br> `@ui5/webcomponents-theme-base/dist/Assets.js`*
+| `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br><br> *Automatically imports also:<br> `@ui5/webcomponents-localization/dist/Assets.js` <br> and <br> `@ui5/webcomponents-theming/dist/Assets.js`*
 
 ## Provided features
 
@@ -159,7 +159,7 @@ In addition, the `ui5-button` element will be able to submit the closest ```form
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/docs/6-contributing/02-conventions-and-guidelines.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.

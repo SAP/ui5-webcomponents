@@ -6,12 +6,13 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
+import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
 import {
@@ -399,11 +400,11 @@ class Table extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [BusyIndicator];
+		return [BusyIndicator, CheckBox];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -425,8 +426,6 @@ class Table extends UI5Element {
 
 		this._handleResize = this.popinContent.bind(this);
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
 		this.tableEndObserved = false;
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
@@ -442,7 +441,7 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = this.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
+			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
@@ -689,6 +688,9 @@ class Table extends UI5Element {
 
 	get styles() {
 		return {
+			table: {
+				height: "48px",
+			},
 			busy: {
 				position: this.busyIndPosition,
 			},
@@ -709,11 +711,11 @@ class Table extends UI5Element {
 	}
 
 	get _growingButtonText() {
-		return this.growingButtonText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText() {
-		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");
@@ -722,7 +724,7 @@ class Table extends UI5Element {
 	}
 
 	get ariaLabelSelectAllText() {
-		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
+		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {

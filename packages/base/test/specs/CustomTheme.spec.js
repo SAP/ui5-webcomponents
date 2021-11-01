@@ -16,8 +16,8 @@ describe("Custom themes can be registered", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			await config.setTheme(newTheme);
 
-			const style = document.querySelector(`style[data-ui5-theme-properties="@ui5/webcomponents-base-test"]`);
-			const varsFound = style && style.textContent.includes(var1);
+			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText;
+			const varsFound = style && style.includes(var1);
 			done(varsFound);
 		}, newTheme);
 
