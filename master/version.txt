@@ -1,5 +1,7 @@
-commit 33d0f6087c86d6b74a0e7ccd625cadd426af25ab
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Mon Nov 1 16:28:14 2021 +0200
+commit f83073c274e0fb239ed62d6baefff907acf858fb
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Mon Nov 1 16:39:08 2021 +0200
 
-    feat(ui5-segmented-button): implement sap_horizon theme (#4197)
+    text will be bold only when header-text is set (#4231)
+    
+    By design the header text should be bold. As we do not know what will be set in the header slot of the popup, by developers or components developers, we will only make bold the when it is set with header-text.
