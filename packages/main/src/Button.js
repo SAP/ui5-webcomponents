@@ -4,7 +4,12 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
-import { isPhone, isTablet, isCombi, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isPhone,
+	isTablet,
+	isCombi,
+	isSafari,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
