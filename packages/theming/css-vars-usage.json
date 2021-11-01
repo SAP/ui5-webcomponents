@@ -227,6 +227,7 @@
   "--sapNegativeElementColor",
   "--sapNegativeTextColor",
   "--sapNeutralBackground",
+  "--sapNeutralBorderColor",
   "--sapNeutralColor",
   "--sapNeutralElementColor",
   "--sapNeutralTextColor",
