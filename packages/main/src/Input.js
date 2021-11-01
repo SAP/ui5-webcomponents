@@ -1284,6 +1284,20 @@ class Input extends UI5Element {
 	}
 
 	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	/**
 	 * Returns the caret position inside the native input
 	 * @protected
 	 */

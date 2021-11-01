@@ -23,6 +23,7 @@
 @import "../base/PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
+@import "../base/SegmentedButtton-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";
 @import "./TabContainer-parameters.css";
@@ -37,6 +38,7 @@
 @import "./WheelSlider-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
+@import "../base/Tokenizer-parameters.css";
 @import "./ValueStateMessage-parameters.css";
 @import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
