@@ -1,7 +1,5 @@
-commit f83073c274e0fb239ed62d6baefff907acf858fb
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Mon Nov 1 16:39:08 2021 +0200
+commit aac92fafa721a9681adc16fe00a7b51cce90a84b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Nov 1 17:05:39 2021 +0200
 
-    text will be bold only when header-text is set (#4231)
-    
-    By design the header text should be bold. As we do not know what will be set in the header slot of the popup, by developers or components developers, we will only make bold the when it is set with header-text.
+    chore: create skeleton for horizon_exp for fiori (#4239)
