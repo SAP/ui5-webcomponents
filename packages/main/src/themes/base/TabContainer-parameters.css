@@ -56,6 +56,7 @@
 	--_ui5_tc_overflowItem_positive_color: var(--sapPositiveColor);
 	--_ui5_tc_overflowItem_negative_color: var(--sapNegativeColor);
 	--_ui5_tc_overflowItem_critical_color: var(--sapCriticalColor);
+	--_ui5_tc_overflowItem_focus_border: 0px;
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapHighlightColor);

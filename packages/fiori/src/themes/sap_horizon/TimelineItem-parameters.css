@@ -1,0 +1,13 @@
+@import "../base/TimelineItem-parameters.css";
+
+:root {
+	--_ui5_TimelineItem_bubble_border_width: 0.125rem;
+	--_ui5_TimelineItem_bubble_border_style: solid;
+	--_ui5_TimelineItem_bubble_border_radius: 0.4rem;
+	--_ui5_TimelineItem_bubble_border_top: -0.25rem;
+	--_ui5_TimelineItem_bubble_border_right: -0.25rem;
+	--_ui5_TimelineItem_bubble_border_bottom: -0.25rem;
+	--_ui5_TimelineItem_bubble_border_left: -0.75rem;
+	--_ui5_TimelineItem_bubble_rtl_left_offset: -0.25rem;
+	--_ui5_TimelineItem_bubble_rtl_right_offset: -0.75rem;
+}
