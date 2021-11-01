@@ -1,5 +1,5 @@
-commit aac92fafa721a9681adc16fe00a7b51cce90a84b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Nov 1 17:05:39 2021 +0200
+commit d1ebea30c59f532cdccd14e5ae2552eb1fe536cd
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 1 17:12:04 2021 +0200
 
-    chore: create skeleton for horizon_exp for fiori (#4239)
+    feat: rework stableDomRef concept (#4210)

@@ -5319,8 +5319,6 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
 
 You can use the following stable DOM refs for the <code>ui5-shellbar</code>: <ul> <li>logo</li> <li>copilot</li> <li>notifications</li> <li>overflow</li> <li>profile</li> <li>product-switch</li> </ul>
 
-In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM refs for: <ul> <li>Every <code>ui5-shellbar-item</code> that you provide. Example: <code><ui5-shellbar-item stable-dom-ref="messages"></ui5-shellbar-item></code></li> </ul>
-
 <h3>CSS Shadow Parts</h3>
 
 <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM. <br> The <code>ui5-shellbar</code> exposes the following CSS Shadow Parts: <ul> <li>root - Used to style the outermost wrapper of the <code>ui5-shellbar</code></li> </ul>
@@ -5341,6 +5339,32 @@ In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          copilotDomRef
+                            <br>
+                            <code>copilot-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.16</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          logoDomRef
+                            <br>
+                            <code>logo-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.16</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           notificationsCount
                             <br>
                             <code>notifications-count</code>
@@ -5353,6 +5377,32 @@ In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          notificationsDomRef
+                            <br>
+                            <code>notifications-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.16</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          overflowlogoDomRef
+                            <br>
+                            <code>overflowlogo-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.16</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           primaryTitle
                             <br>
                             <code>primary-title</code>
@@ -5361,6 +5411,32 @@ In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the <code>primaryTitle</code>. <br><br> <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          productSwitchDomRef
+                            <br>
+                            <code>product-switch-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.16</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          profileDomRef
+                            <br>
+                            <code>profile-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.16</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -5616,19 +5692,6 @@ In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          stableDomRef
-                            <br>
-                            <code>stable-dom-ref</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the stable selector that you can use via getStableDomRef method.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>

@@ -5254,8 +5254,6 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
 
 <h4>Tokens</h4> <ul> <li> Left/Right arrow keys - moves the focus selection form the currently focused token to the previous/next one (if available). </li> <li> Delete - deletes the token and focuses the previous token. </li> <li> Backspace - deletes the token and focus the next token. </li> </ul>
 
-In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for: <ul> <li>Every <code>ui5-mcb-item</code> that you provide. Example: <code>&lt;ui5-mcb-item stable-dom-ref="item1"&gt;&lt;/ui5-mcb-item&gt;</code></li> </ul>
-
 <h3>CSS Shadow Parts</h3>
 
 <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM. <br> The <code>ui5-multi-combobox</code> exposes the following CSS Shadow Parts: <ul> <li>token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)</li> </ul>
@@ -5498,19 +5496,6 @@ In the context of <code>ui5-multi-combobox</code>, you can provide a custom stab
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          stableDomRef
-                            <br>
-                            <code>stable-dom-ref</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the stable selector that you can use via getStableDomRef method.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           additionalText
                             <br>
                             <code>additional-text</code>
@@ -5522,7 +5507,7 @@ In the context of <code>ui5-multi-combobox</code>, you can provide a custom stab
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>
