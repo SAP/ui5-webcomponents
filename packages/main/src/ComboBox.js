@@ -525,6 +525,10 @@ class ComboBox extends UI5Element {
 		this._toggleRespPopover();
 	}
 
+	_readonlyIconClick() {
+		this.inner.focus();
+	}
+
 	_input(event) {
 		const { value } = event.target;
 
@@ -945,6 +949,20 @@ class ComboBox extends UI5Element {
 
 	get shouldDisplayDefaultValueStateMessage() {
 		return !this.valueStateMessage.length && this.hasValueStateText;
+	}
+
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get open() {
