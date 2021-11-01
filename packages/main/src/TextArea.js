@@ -655,6 +655,20 @@ class TextArea extends UI5Element {
 		return this.valueStateTextMappings()[this.valueState];
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	valueStateTextMappings() {
 		return {
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
