@@ -26,7 +26,7 @@ table {
 
 .ui5-table-header-row:focus {
 	outline: var(--ui5_table_header_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	outline-offset: -0.125rem;
+	outline-offset: -0.0625rem;
 }
 
 tr {
@@ -80,7 +80,7 @@ tr {
 	text-align: center;
 }
 
-:host([sticky-column-header]) .ui5-table-select-all-column {
+:host([sticky-column-header]) .ui5-table-header-row {
 	position: sticky;
 	top: 0;
 	z-index: 99;
