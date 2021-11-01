@@ -39,6 +39,8 @@
 	--_ui5_switch_track_no_label_height_horizont:var(--_ui5_switch_track_height);
 	--_ui5-switch-track-border: 1px solid;
 	--_ui5-switch-track-border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5-switch_handle-off-hover_box_shadow: none;
+	--_ui5-switch_handle-on-hover_box_shadow: none;
 	--_ui5_switch_track_semantic_success_backgroud_color: var(--sapSuccessBackground);
 	--_ui5_switch_track_semantic_error_backgroud_color: var(----sapErrorBackground);
 	--_ui5_switch_track_semantic_border_color: var(--sapSuccessBorderColor);

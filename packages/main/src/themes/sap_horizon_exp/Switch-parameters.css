@@ -1,9 +1,14 @@
+@import "../base/Switch-parameters.css";
+
 :root {
 	--_ui5_switch_width: 40px;
 	--_ui5_switch_no_label_width: 40px;
 	--_ui5_switch_height: 24px;
 	--_ui5_switch_outline: -4px;
-	--_ui5_switch_focus_size: calc(100% + 4px);
+
+	--_ui5_switch_focus_width_size: var(--_ui5_switch_focus_width_size_horizon_exp);
+	--_ui5_switch_focus_height_size: var(--_ui5_switch_focus_height_size_horizon_exp);
+
 	--_ui5_switch_focus_outline: 2px solid var(--sapContent_FocusColor);
 	
 	--_ui5-switch-root-border-radius: 100px;

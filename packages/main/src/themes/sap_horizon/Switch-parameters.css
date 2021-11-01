@@ -26,4 +26,6 @@
 	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_no_label_height_horizont);
 	--_ui5_switch_handle_hover_border_color: transparent;
 	--_ui5-switch-track-icon-display: inline-block;
+	--_ui5-switch_handle-off-hover_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5-switch_handle-on-hover_box_shadow: var(--sapContent_Selected_Shadow);
 }
