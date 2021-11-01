@@ -259,8 +259,13 @@ class DayPicker extends CalendarPart {
 			if (isWeekend) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
+
 			if (isDisabled) {
 				day.classes += " ui5-dp-item--disabled";
+			}
+
+			if (this.hasSecondaryCalendarType) {
+				day.classes += " ui5-dp-item--withsecondtype"
 			}
 
 			week.push(day);

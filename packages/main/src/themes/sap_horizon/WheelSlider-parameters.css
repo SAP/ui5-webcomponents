@@ -13,4 +13,10 @@
 	--_ui5_wheelslider_active_item_text_color: var(--sapContent_Selected_TextColor);
 	--_ui5_wheelslider_selection_frame_color: var(--sapList_SelectionBorderColor);
 	--_ui_wheelslider_item_border_radius: var(--_ui5_button_border_radius);
+	--_ui5_wheelslider_collapsed_item_text_color: #0070f2;
+	--_ui5_wheelslider_item_border_color: #0070f2;
+	--_ui5_wheelslider_item_border: none;
+	--_ui_wheelslider_item_hover_color: var(--sapList_Hover_Background);
+	--_ui5_wheelslider_item_expanded_hovered_border_color: var(--sapList_Hover_Background);
+	--_ui5_wheelslider_item_hovered_border_color: var(--_ui5_wheelslider_item_border_color);
 }

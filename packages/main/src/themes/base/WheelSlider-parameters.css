@@ -10,4 +10,6 @@
 	--_ui5_wheelslider_item_width: 48px;
 	--_ui5_wheelslider_item_height: 46px;
 	--_ui5_wheelslider_arrows_visibility: hidden;
+	--_ui5_wheelslider_item_border: 1px solid var(--_ui5_wheelslider_item_border_color);
+	--_ui5_wheelslider_item_expanded_hovered_border_color: inherit;
 }

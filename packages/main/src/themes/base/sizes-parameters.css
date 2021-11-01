@@ -15,6 +15,7 @@
 	--_ui5_day_picker_item_width: 2.25rem;
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
+	--_ui5_day_picker_item_justify_content: space-between;
 
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
@@ -163,6 +164,7 @@
 	--_ui5_day_picker_item_width: 2rem;
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
+	--_ui5_day_picker_item_justify_content: flex-end;
 
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 17rem;
