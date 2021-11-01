@@ -19,11 +19,16 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	border: var(--_ui5_segmented_btn_inner_border);
+}
+
+::slotted([ui5-segmented-button-item][pressed]) {
+	border: 0.0625rem solid var(--sapButton_Selected_BorderColor)
 }
 
 ::slotted([ui5-segmented-button-item]:nth-child(odd)) {
-	border-right: 0;
-	border-left: 0;
+	border-right: var(--_ui5_segmented_btn_inner_border_odd_child);
+	border-left: var(--_ui5_segmented_btn_inner_border_odd_child);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)) {
