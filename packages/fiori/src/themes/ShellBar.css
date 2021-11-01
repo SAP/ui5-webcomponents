@@ -150,8 +150,12 @@ slot[name="profile"] {
 .ui5-shellbar-overflow-container-middle {
 	align-self: center;
 	height: 2.5rem;
-	width: 3rem;
+	width: 0;
 	flex-shrink: 0;
+}
+
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-middle {
+	width: 3rem;
 }
 
 @keyframes Behind_layer {
@@ -231,15 +235,18 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
-
 	justify-content: flex-start;
 	margin-right: 0.5rem;
+	max-width: 75%;
+	flex-shrink: 0;
+	flex-grow: 0;
 }
 
-.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
 }
+
 
 .ui5-shellbar-menu-button {
 	white-space: nowrap;
@@ -271,7 +278,12 @@ slot[name="profile"] {
 	overflow: hidden;
 	box-sizing: border-box;
 	white-space: nowrap;
-	flex: 1;
+	flex: 1 1 auto;
+	max-width: 100%;
+}
+
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-right {
+	flex-basis: 0%;
 }
 
 :host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
