@@ -12,6 +12,7 @@ import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.j
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
+import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
 import {
@@ -399,7 +400,7 @@ class Table extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [BusyIndicator];
+		return [BusyIndicator, CheckBox];
 	}
 
 	static async onDefine() {
