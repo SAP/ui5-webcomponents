@@ -1,5 +1,7 @@
-commit d7c298b0a92e7db395d4b4e868aaaebeba837a22
-Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
-Date:   Sun Oct 31 17:45:44 2021 +0200
+commit 0f6e224d961c1e2926dfe779afe41c8615c5926b
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Mon Nov 1 10:04:51 2021 +0200
 
-    docs(ui5-card): Update list card samples (#4227)
+    fix(ui5-table): Add missing dependency to Checkbox (#4199)
+    
+    Fixes: #4094
