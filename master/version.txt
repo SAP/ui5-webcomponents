@@ -1,5 +1,11 @@
-commit 5b167f42882958249e4d2715dd1e415a7280f3b2
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Mon Nov 1 10:46:00 2021 +0200
+commit 66d17f77052322c5551f01de7df8cf8b81cd4f2b
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Nov 1 15:14:02 2021 +0200
 
-    fix(ui5-shellbar): fixed growing of left container (#4105)
+    feat(inputs): SAP Horizon theme implementation (#4222)
+    
+    * feat(inputs): SAP Horizon theme implementation
+    
+    * Get correct token icon
+    
+    * remove incorrect parameters import
