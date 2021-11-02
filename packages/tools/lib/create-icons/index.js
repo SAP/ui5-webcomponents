@@ -41,7 +41,8 @@ export default { pathData, accData };`;
 const collectionTemplate = (name) => `import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import pathDataV4 from "./v5/${name}.js";
 import pathDataV5 from "./v4/${name}.js";
-const pathData = getTheme() === "sap_horizon" ? pathDataV5 : pathDataV4;
+const SAP_HORIZON = getTheme() === "sap_horizon" || getTheme() === "sap_horizon_exp";
+const pathData = SAP_HORIZON ? pathDataV5 : pathDataV4;
 export default { pathData };`;
 
 
