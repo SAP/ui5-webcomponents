@@ -58,7 +58,6 @@ const metadata = {
 		 * Defines the default color of the component.
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
 		 * @type {CSSColor}
-		 * @defaultValue ""
 		 * @public
 		 */
 		defaultColor: {

@@ -1,11 +1,20 @@
 import createStyleInHead from "./util/createStyleInHead.js";
+import createLinkInHead from "./util/createLinkInHead.js";
+import { shouldUseLinks, getUrl } from "./CSP.js";
 
 const getStyleId = (name, value) => {
 	return value ? `${name}|${value}` : name;
 };
 
-const createStyle = (content, name, value = "") => {
-	if (document.adoptedStyleSheets) {
+const createStyle = (data, name, value = "") => {
+	const content = typeof data === "string" ? data : data.content;
+
+	if (shouldUseLinks()) {
+		const attributes = {};
+		attributes[name] = value;
+		const href = getUrl(data.packageName, data.fileName);
+		createLinkInHead(href, attributes);
+	} else if (document.adoptedStyleSheets) {
 		const stylesheet = new CSSStyleSheet();
 		stylesheet.replaceSync(content);
 		stylesheet._ui5StyleId = getStyleId(name, value); // set an id so that we can find the style later
@@ -17,8 +26,12 @@ const createStyle = (content, name, value = "") => {
 	}
 };
 
-const updateStyle = (content, name, value = "") => {
-	if (document.adoptedStyleSheets) {
+const updateStyle = (data, name, value = "") => {
+	const content = typeof data === "string" ? data : data.content;
+
+	if (shouldUseLinks()) {
+		document.querySelector(`head>link[${name}="${value}"]`).href = getUrl(data.packageName, data.fileName);
+	} else if (document.adoptedStyleSheets) {
 		document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value)).replaceSync(content || "");
 	} else {
 		document.querySelector(`head>style[${name}="${value}"]`).textContent = content || "";
@@ -26,6 +39,10 @@ const updateStyle = (content, name, value = "") => {
 };
 
 const hasStyle = (name, value = "") => {
+	if (shouldUseLinks()) {
+		return !!document.querySelector(`head>link[${name}="${value}"]`);
+	}
+
 	if (document.adoptedStyleSheets) {
 		return !!document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value));
 	}
@@ -34,21 +51,26 @@ const hasStyle = (name, value = "") => {
 };
 
 const removeStyle = (name, value = "") => {
-	if (document.adoptedStyleSheets) {
+	if (shouldUseLinks()) {
+		const linkElement = document.querySelector(`head>link[${name}="${value}"]`);
+		if (linkElement) {
+			linkElement.parentElement.removeChild(linkElement);
+		}
+	} else if (document.adoptedStyleSheets) {
 		document.adoptedStyleSheets = document.adoptedStyleSheets.filter(sh => sh._ui5StyleId !== getStyleId(name, value));
-	}
-
-	const styleElement = document.querySelector(`head>style[${name}="${value}"]`);
-	if (styleElement) {
-		styleElement.parentElement.removeChild(styleElement);
+	} else {
+		const styleElement = document.querySelector(`head > style[${name}="${value}"]`);
+		if (styleElement) {
+			styleElement.parentElement.removeChild(styleElement);
+		}
 	}
 };
 
-const createOrUpdateStyle = (content, name, value = "") => {
+const createOrUpdateStyle = (data, name, value = "") => {
 	if (hasStyle(name, value)) {
-		updateStyle(content, name, value);
+		updateStyle(data, name, value);
 	} else {
-		createStyle(content, name, value);
+		createStyle(data, name, value);
 	}
 };
 

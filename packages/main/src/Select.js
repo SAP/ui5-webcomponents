@@ -264,14 +264,6 @@ const metadata = {
  * </ul>
  * <br>
  *
- * <h3>Stable DOM Refs</h3>
- *
- * In the context of <code>ui5-select</code>, you can provide a custom stable DOM ref for:
- * <ul>
- * <li>Every <code>ui5-option</code> that you provide.
- * Example: <code><ui5-option stable-dom-ref="option1"></ui5-option></code></li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
@@ -335,6 +327,8 @@ class Select extends UI5Element {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
 		}
+
+		this._attachRealDomRefs();
 	}
 
 	_onfocusin() {
@@ -376,6 +370,14 @@ class Select extends UI5Element {
 		} else {
 			this.responsivePopover.showAt(this);
 		}
+	}
+
+	async _attachRealDomRefs() {
+		this.responsivePopover = await this._respPopover();
+
+		this.options.forEach(option => {
+			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`);
+		});
 	}
 
 	_syncSelection() {

@@ -7,7 +7,7 @@
 
 .ui5-table-root {
 	position: relative;
-	border-bottom: 1px solid var(--sapList_BorderColor);
+	border-bottom: var(--ui5_table_bottom_border);
 }
 
 table {
@@ -21,10 +21,11 @@ table {
 	height: 3rem;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
+	font-weight: var(--ui5_table_header_row_font_weight);
 }
 
 .ui5-table-header-row:focus {
-	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapContent_FocusColor);
+	outline: var(--ui5_table_header_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 }
 

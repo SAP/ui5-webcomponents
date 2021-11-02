@@ -58,6 +58,8 @@
 	cursor: pointer;
 	white-space: nowrap;
 	font-size: var(--sapFontSize);
+	font-weight: var(--_ui5_tokenizer_n_more_indicator_font_weight);
+	color: var(--_ui5_tokenizer_n_more_indicator_color);
 }
 
 :host([expanded]) .ui5-tokenizer--content {

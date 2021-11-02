@@ -89,16 +89,25 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
 
-	it("tests if overflown content can be reached by scrolling", async () => {
+	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
-		const items = await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li");
+		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+		const items = await staticAreaItem.shadow$$("ui5-li");
 
 		await manyItemsSelect.click();
 
 		const itemBeforeLastItem = items[items.length - 2];
 
 		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
+	});
+
+	it("tests if overflown content can be reached by scrolling 2", async () => {
+		const manyItemsSelect = await browser.$("#many-items");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
+		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+		const items = await staticAreaItem.shadow$$("ui5-li");
+		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
 
@@ -107,7 +116,7 @@ describe("Popover general interaction", () => {
 		await manyItemsSelect.click();
 	});
 
-	it("tests if overflown content can be reached by scrolling (with header and arrow)", async () => {
+	it("tests if overflown content can be reached by scrolling (with header and arrow) 1", async () => {
 		const bigPopover = await browser.$("#big-popover");
 		const items = await bigPopover.$$("ui5-li");
 		const openBigPopoverButton = await browser.$("#big-popover-button");
@@ -117,6 +126,13 @@ describe("Popover general interaction", () => {
 		const itemBeforeLastItem = items[items.length - 2];
 
 		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
+	});
+
+	it("tests if overflown content can be reached by scrolling (with header and arrow) 2", async () => {
+		const bigPopover = await browser.$("#big-popover");
+		const items = await bigPopover.$$("ui5-li");
+
+		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
 
