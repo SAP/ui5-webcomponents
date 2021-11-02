@@ -1,25 +1,5 @@
-commit a19159b13ae2297c31e5466795fa6764049f5cd3
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Nov 2 11:21:28 2021 +0200
+commit 37e87c86858710a0acd320682c6aff21561359c3
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Nov 2 11:31:14 2021 +0200
 
-    feat(ui5-slider, ui5-range-slider): SAP Horizon theme implementation (#4168)
-    
-    * Implement Horizon Theme
-    
-    * Minor corrections and convertion of all units to rem
-    
-    * Fix old themes' bugs
-    
-    * Improve styling according to the code review comments
-    
-    * Correction of example margins
-    
-    * Fix comppact styles of the handle
-    
-    * Remove compact class from the test page
-    
-    * Fixes for the comments
-    
-    * Fix compact progress focus outline
-    
-    * Apply fixes from the code reviews
+    feat(ui5-textarea): SAP Horizon theme implementation (#4237)
