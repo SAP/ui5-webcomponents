@@ -1,5 +1,25 @@
-commit d1ebea30c59f532cdccd14e5ae2552eb1fe536cd
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 1 17:12:04 2021 +0200
+commit a19159b13ae2297c31e5466795fa6764049f5cd3
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Nov 2 11:21:28 2021 +0200
 
-    feat: rework stableDomRef concept (#4210)
+    feat(ui5-slider, ui5-range-slider): SAP Horizon theme implementation (#4168)
+    
+    * Implement Horizon Theme
+    
+    * Minor corrections and convertion of all units to rem
+    
+    * Fix old themes' bugs
+    
+    * Improve styling according to the code review comments
+    
+    * Correction of example margins
+    
+    * Fix comppact styles of the handle
+    
+    * Remove compact class from the test page
+    
+    * Fixes for the comments
+    
+    * Fix compact progress focus outline
+    
+    * Apply fixes from the code reviews
