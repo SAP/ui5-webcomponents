@@ -28,7 +28,7 @@
 	--_ui5_slider_handle_focused_margin_left: var(--_ui5_slider_handle_margin_left);
 	--_ui5_slider_handle_outline_offset: 0.075rem;
 	--_ui5_slider_icon_left: 0.5rem;
-	--_ui5_slider_icon_top: 0.0625rem;
+	--_ui5_slider_icon_top: 0.125rem;
 	--_ui5_range_slider_handle_hover_background: rgba(var(--sapButton_Background), 0.25);
 	--_ui5_range_slider_handle_hover_icon_display: none;
 	--_ui5_slider_progress_outline: 0.0625rem dotted var(--sapContent_FocusColor);
