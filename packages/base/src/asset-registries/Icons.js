@@ -1,11 +1,14 @@
 import getSharedResource from "../getSharedResource.js";
+import { getTheme } from "../config/Theme.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
 const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-const DEFAULT_COLLECTION = "SAP-icons";
+const theme = getTheme();
+const SAP_HORIZON = theme === "sap_horizon" || theme === "sap_horizon_exp";
+const DEFAULT_COLLECTION = SAP_HORIZON ? "SAP-icons-v5" : "SAP-icons";
 
 /**
  * @deprecated
@@ -45,7 +48,7 @@ const _fillRegistry = bundleData => {
 };
 
 // set
-const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
+const registerIcon = (name, { pathData, ltr, accData, collection, packageName, version } = {}) => { // eslint-disable-line
 	if (!collection) {
 		collection = DEFAULT_COLLECTION;
 	}
@@ -56,6 +59,7 @@ const registerIcon = (name, { pathData, ltr, accData, collection, packageName } 
 		ltr,
 		accData,
 		packageName,
+		version,
 	});
 };
 
