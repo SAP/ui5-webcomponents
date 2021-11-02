@@ -11,6 +11,7 @@ import SideNavigationItemPopoverContentTemplate from "./generated/templates/Side
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 
+const staticAreaSideNavigationStyles = [];
 /**
  * @public
  */
@@ -141,6 +142,10 @@ class SideNavigation extends UI5Element {
 		return metadata;
 	}
 
+	static get staticAreaStyles() {
+		return [staticAreaSideNavigationStyles];
+	}
+
 	static get render() {
 		return litRender;
 	}
@@ -165,6 +170,10 @@ class SideNavigation extends UI5Element {
 			TreeItem,
 			ResponsivePopover,
 		];
+	}
+
+	static registerStaticAreaSideNavigationStyles(styles) {
+		staticAreaSideNavigationStyles.push(styles);
 	}
 
 	onBeforeRendering() {
@@ -286,5 +295,6 @@ class SideNavigation extends UI5Element {
 }
 
 SideNavigation.define();
+SideNavigation.registerStaticAreaSideNavigationStyles(SideNavigationCss);
 
 export default SideNavigation;
