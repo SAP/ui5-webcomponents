@@ -58,16 +58,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.11
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Defines the focused state of the component.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -113,6 +103,10 @@ const metadata = {
 class Option extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 }
 

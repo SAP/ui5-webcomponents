@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import "@ui5/webcomponents-icons/dist/source-code.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -180,7 +181,7 @@ class SliderBase extends UI5Element {
 			sap_belize: "#bfbfbf",
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
-			sap_horizon: "#d5dadd",
+			sap_horizon: "#89919a",
 		};
 	}
 

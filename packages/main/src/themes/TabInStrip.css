@@ -104,6 +104,8 @@
 .ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent,
 .ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemContent {
     outline: var(--_ui5_tc_headerItem_focus_border);
+	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
+	outline-offset: var(--_ui5_tc_headerItem_focus_offset);
 }
 
 .ui5-tab-strip-item--withIcon:focus .ui5-tab-strip-item-icon-outer::before {
@@ -115,7 +117,7 @@
 	right: var(--_ui5_tc_headerItem_focus_border_offset);
 	top: var(--_ui5_tc_headerItem_focus_border_offset);
 	bottom: var(--_ui5_tc_headerItem_focus_border_offset);
-	border-radius: var(--_ui5_tc_headerItemIcon_focus_border_radius);;
+	border-radius: var(--_ui5_tc_headerItemIcon_focus_border_radius);
 }
 
 
@@ -327,7 +329,9 @@
     border-color: var(--_ui5_tc_headerItem_neutral_border_color);
 	background-color: var(--_ui5_tc_headerItem_neutral_border_bg);
 }
-
+.ui5-tab-strip-item .ui5-tab-strip-itemAdditionalText {
+	font-weight: var(--_ui5_tc_headeritem_additional_text_font_weight);
+}
 /*** RTL ***/
 
 [dir=rtl] .ui5-tab-strip-item-semanticIcon::before {
