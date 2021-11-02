@@ -32,13 +32,27 @@
 }
 
 :host([focused]) .ui5-textarea-inner {
-	outline: var(--_ui5_textarea_focus_after_width) dotted var(--sapContent_FocusColor);
+	outline: var(--_ui5_textarea_focus_outline);
 	outline-offset: -3px;
+}
+
+:host([focused]:not([exceeding])) .ui5-textarea-inner {
+	background-color: var(--sapField_Focus_Background);
+	background-image: none;
+	box-shadow: var(--_ui5_textarea_focus_box_shadow);
+}
+
+:host(:not([value-state]):not([exceeding]):not([readonly]):not([focused]):hover) .ui5-textarea-inner {
+	box-shadow: var(--_ui5_textarea_hover_box_shadow);
+	background-image: var(--_ui5_textarea_background_image);
+	background-size: 100% var(--sapField_BorderWidth);
+	background-repeat: repeat-x;
+	background-position: bottom;
 }
 
 :host([value-state]:not([value-state="None"])[focused]) .ui5-textarea-inner,
 :host([exceeding]) .ui5-textarea-inner {
-	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
+	outline: var(--_ui5_textarea_value_state_focus_outline);
 	outline-offset: -4px;
 }
 
@@ -49,7 +63,6 @@
 	display: inline-flex;
 	vertical-align: top;
 	outline: none;
-	overflow: hidden;
 	box-sizing: border-box;
 	border-radius: inherit;
 	border-color: inherit;
@@ -72,11 +85,15 @@
 	border-color: inherit;
 	border-radius: inherit;
 	background-color: var(--sapField_Background);
-	border-width: 1px;
+	border-width: var(--_ui5_textarea_inner_border_width);
 	border-style: solid;
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	background-image: var(--_ui5_textarea_background_image);
+	background-size: 100% var(--sapField_BorderWidth);
+	background-repeat: repeat-x;
+	background-position: bottom;
 }
 
 :host([growing]) .ui5-textarea-root {
@@ -105,7 +122,7 @@
 	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
-:host([readonly]) .ui5-textarea-inner {
+:host([readonly]) .ui5-textarea-root .ui5-textarea-inner {
 	background: var(--sapField_ReadOnly_Background);
 }
 
@@ -116,19 +133,19 @@
 
 .ui5-textarea-inner::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
-	font-style: italic;
+	font-style: var(--_ui5_textarea_placeholder_font_style);
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner::-moz-placeholder {
 	/* Firefox 19+ */
-	font-style: italic;
+	font-style: var(--_ui5_textarea_placeholder_font_style);
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner:-ms-input-placeholder {
 	/* IE 10+ */
-	font-style: italic;
+	font-style: var(--_ui5_textarea_placeholder_font_style);
 	color: var(--sapField_PlaceholderTextColor);
 }
 
@@ -156,8 +173,80 @@
 	font-style: var(--_ui5_input_error_warning_font_style);
 }
 
-:host([value-state="Error"]) .ui5-textarea-inner {
+:host([value-state="Warning"]:not([readonly])) .ui5-textarea-inner,
+:host([exceeding]) .ui5-textarea-inner {
+	background-image: var(--_ui5_textarea_warning_background_image);
+	background-size: 100% var(--sapField_WarningBorderWidth);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+:host([value-state="Warning"]:not([exceeding]):not([readonly]):not([focused]):hover) .ui5-textarea-inner,
+:host([exceeding]:not([focused]):hover) .ui5-textarea-inner {
+	box-shadow: var(--sapContent_Critical_Shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Warning"][focused]:not([exceeding]):not([readonly])) .ui5-textarea-inner,
+:host([exceeding][focused]) .ui5-textarea-inner {
+	background-image: none;
+	box-shadow: var(--_ui5_textarea_value_state_warning_focus_box_shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Error"]:not([readonly])) .ui5-textarea-inner {
 	font-weight: var(--_ui5_input_error_font_weight);
+	background-image: var(--_ui5_textarea_error_background_image);
+	background-size: 100% var(--sapField_InvalidBorderWidth);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+:host([value-state="Error"]:not([exceeding]):not([readonly]):not([focused]):hover) .ui5-textarea-inner {
+	box-shadow: var(--sapContent_Negative_Shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Error"][focused]:not([exceeding]):not([readonly])) .ui5-textarea-inner {
+	background-image: none;
+	box-shadow: var(--_ui5_textarea_value_state_error_focus_box_shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Information"]:not([readonly])) .ui5-textarea-inner {
+	background-image: var(--_ui5_textarea_information_background_image);
+	background-size: 100% var(--sapField_InformationBorderWidth);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+:host([value-state="Information"]:not([exceeding]):not([readonly]):not([focused]):hover) .ui5-textarea-inner {
+	box-shadow: var(--sapContent_Informative_Shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Information"][focused]:not([exceeding]):not([readonly])) .ui5-textarea-inner {
+	background-image: none;
+	box-shadow: var(--_ui5_textarea_focus_box_shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Success"]:not([readonly])) .ui5-textarea-inner {
+	background-image: var(--_ui_textarea_success_background_image);
+	background-size: 100% var(--sapField_SuccessBorderWidth);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+:host([value-state="Success"]:not([exceeding]):not([readonly]):not([focused]):hover) .ui5-textarea-inner {
+	box-shadow: var(--sapContent_Positive_Shadow);
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state="Success"][focused]:not([exceeding]):not([readonly])) .ui5-textarea-inner {
+	background-image: none;
+	box-shadow: var(--_ui5_textarea_value_state_success_focus_box_shadow);
+	background-color: var(--sapField_Hover_Background);
 }
 
 :host([value-state="Error"]:not([readonly])) {
@@ -190,7 +279,7 @@
 
 :host([value-state="Success"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
 	background-color: var(--sapField_SuccessBackground);
-	border-width: 1px;
+	border-width: var(--_ui5_textarea_success_border_width);
 }
 
 :host([value-state="Information"]:not([readonly]):not([exceeding])) {

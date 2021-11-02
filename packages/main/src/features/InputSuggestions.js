@@ -97,10 +97,16 @@ class Suggestions {
 	}
 
 	onEnter(event) {
+		if (this._isGroupOrInactiveItem) {
+			event.preventDefault();
+			return false;
+		}
+
 		if (this._isItemOnTarget()) {
 			this.onItemSelected(null, true /* keyboardUsed */);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -135,9 +141,15 @@ class Suggestions {
 	}
 
 	async close(preventFocusRestore = false) {
+		const selectedItem = this._getItems() && this._getItems()[this.selectedItemIndex];
+
 		this._getComponent().open = false;
 		this.responsivePopover = await this._getSuggestionPopover();
 		this.responsivePopover.close(false, false, preventFocusRestore);
+
+		if (selectedItem && selectedItem.focused) {
+			selectedItem.focused = false;
+		}
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -171,11 +183,7 @@ class Suggestions {
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
 		// to have consistency with the way "Inactive" items behave in the ui5-list
-		if (item.type === "Inactive") {
-			return;
-		}
-
-		if (item.group) {
+		if (item.type === "Inactive" || item.group) {
 			return;
 		}
 
@@ -243,7 +251,17 @@ class Suggestions {
 	}
 
 	_isItemOnTarget() {
-		return this.isOpened() && this.selectedItemIndex !== null;
+		return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1 && !this._isGroupOrInactiveItem;
+	}
+
+	get _isGroupOrInactiveItem() {
+		const items = this._getItems();
+
+		if (!items || !items[this.selectedItemIndex]) {
+			return false;
+		}
+
+		return (items[this.selectedItemIndex].group || items[this.selectedItemIndex].type === "Inactive");
 	}
 
 	isOpened() {
@@ -265,29 +283,80 @@ class Suggestions {
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
+		const hasValueState = this.component.hasValueStateMessage;
 
-		if ((this.selectedItemIndex === null) || (++this.selectedItemIndex > itemsCount - 1)) {
-			this.selectedItemIndex = 0;
+		if (hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
+			this.component._isValueStateFocused = true;
+			this.component.focused = false;
+			this.component.hasSuggestionItemSelected = false;
+			this.selectedItemIndex = null;
+
+			return;
 		}
 
-		this._moveItemSelection(previousSelectedIdx, this.selectedItemIndex);
+		if ((previousSelectedIdx === null && !hasValueState) || this.component._isValueStateFocused) {
+			this.component._isValueStateFocused = false;
+			--this.selectedItemIndex;
+		}
+
+		if (previousSelectedIdx !== null && previousSelectedIdx + 1 > itemsCount - 1) {
+			return;
+		}
+
+		this._moveItemSelection(previousSelectedIdx, ++this.selectedItemIndex);
 	}
 
 	_selectPreviousItem() {
-		const itemsCount = this._getItems().length;
+		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
+		const hasValueState = this.component.hasValueStateMessage;
 
-		if ((this.selectedItemIndex === null) || (--this.selectedItemIndex < 0)) {
-			this.selectedItemIndex = itemsCount - 1;
+		if (hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
+			this.component.hasSuggestionItemSelected = false;
+			this.component._isValueStateFocused = true;
+			this.selectedItemIndex = null;
+
+			items[0].focused = false;
+			items[0].selected = false;
+
+			return;
 		}
 
-		this._moveItemSelection(previousSelectedIdx, this.selectedItemIndex);
+		if (this.component._isValueStateFocused) {
+			this.component.focused = true;
+			this.component._isValueStateFocused = false;
+			this.selectedItemIndex = null;
+
+			return;
+		}
+
+		if (previousSelectedIdx === -1 || previousSelectedIdx === null) {
+			return;
+		}
+
+		if (previousSelectedIdx - 1 < 0) {
+			items[previousSelectedIdx].selected = false;
+			items[previousSelectedIdx].focused = false;
+
+			this.component.focused = true;
+			this.component.hasSuggestionItemSelected = false;
+			this.selectedItemIndex -= 1;
+			return;
+		}
+
+		this._moveItemSelection(previousSelectedIdx, --this.selectedItemIndex);
 	}
 
 	_moveItemSelection(previousIdx, nextIdx) {
 		const items = this._getItems();
 		const currentItem = items[nextIdx];
 		const previousItem = items[previousIdx];
+
+		if (!currentItem) {
+			return;
+		}
+
+		this.component.focused = false;
 
 		this.accInfo = {
 			currentPos: nextIdx + 1,
@@ -301,14 +370,18 @@ class Suggestions {
 		}
 
 		if (currentItem) {
-			currentItem.selected = true;
 			currentItem.focused = true;
+
+			if (currentItem.type === "Active") {
+				currentItem.selected = true;
+			}
 
 			if (this.handleFocus) {
 				currentItem.focus();
 			}
 		}
 
+		this.component.hasSuggestionItemSelected = true;
 		this.onItemPreviewed(currentItem);
 
 		if (!this._isItemIntoView(currentItem)) {
@@ -322,6 +395,14 @@ class Suggestions {
 			item.selected = false;
 			item.focused = false;
 		});
+	}
+
+	_clearItemFocus() {
+		const focusedItem = this._getItems().find(item => item.focused);
+
+		if (focusedItem) {
+			focusedItem.focused = false;
+		}
 	}
 
 	_isItemIntoView(item) {
@@ -348,7 +429,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [...this.responsivePopover.querySelector("[ui5-list]").children];
+		return !!this.responsivePopover && [...this.responsivePopover.querySelector("[ui5-list]").children];
 	}
 
 	_getComponent() {

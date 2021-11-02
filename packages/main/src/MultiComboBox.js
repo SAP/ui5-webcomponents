@@ -339,12 +339,6 @@ const metadata = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
- * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
- * <ul>
- * <li>Every <code>ui5-mcb-item</code> that you provide.
- * Example: <code>&lt;ui5-mcb-item stable-dom-ref="item1"&gt;&lt;/ui5-mcb-item&gt;</code></li>
- * </ul>
- *
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
@@ -820,6 +814,10 @@ class MultiComboBox extends UI5Element {
 		if (input && !input.value) {
 			this._filteredItems = this.items;
 		}
+
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+		});
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
