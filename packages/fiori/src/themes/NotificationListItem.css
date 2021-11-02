@@ -44,7 +44,7 @@
 	max-height: inherit;
 }
 
-:host(:first-of-type){
+:host(:first-of-type) {
 	border-top-left-radius: var(--_ui5-notification_item-border-raius);
 	border-top-right-radius: var(--_ui5-notification_item-border-raius);
 }
