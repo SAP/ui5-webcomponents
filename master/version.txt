@@ -1,5 +1,5 @@
-commit 37e87c86858710a0acd320682c6aff21561359c3
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Nov 2 11:31:14 2021 +0200
+commit 289df145264c2e4f26cc086fd319365c9b0551f2
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Tue Nov 2 11:40:30 2021 +0200
 
-    feat(ui5-textarea): SAP Horizon theme implementation (#4237)
+    feat(ui5-panel, ui5-table): SAP Horizon focus outline (#4236)
