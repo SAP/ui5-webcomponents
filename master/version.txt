@@ -1,5 +1,5 @@
-commit 289df145264c2e4f26cc086fd319365c9b0551f2
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Tue Nov 2 11:40:30 2021 +0200
+commit df8c29c3bfcb3f1ee8d3421d131da013279defb5
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Nov 2 15:23:39 2021 +0200
 
-    feat(ui5-panel, ui5-table): SAP Horizon focus outline (#4236)
+     feat(ui5-checkbox): implement sap_horizon (#4238)
