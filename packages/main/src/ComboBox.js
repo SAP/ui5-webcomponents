@@ -39,6 +39,7 @@ import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
@@ -367,7 +368,7 @@ class ComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, ComboBoxPopoverCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, ComboBoxPopoverCss, SuggestionsCss];
 	}
 
 	static get template() {
@@ -522,6 +523,10 @@ class ComboBox extends UI5Element {
 		this._resetFilter();
 
 		this._toggleRespPopover();
+	}
+
+	_readonlyIconClick() {
+		this.inner.focus();
 	}
 
 	_input(event) {
@@ -946,6 +951,20 @@ class ComboBox extends UI5Element {
 		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get open() {
 		return this.responsivePopover ? this.responsivePopover.opened : false;
 	}
@@ -994,6 +1013,10 @@ class ComboBox extends UI5Element {
 
 	get classes() {
 		return {
+			popover: {
+				"ui5-suggestions-popover": !this.isPhone,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.hasValueStateText,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage-root": true,

@@ -86,3 +86,7 @@
 	width: var(--_ui5_panel_button_root_width);
 	margin-right: .25rem;
 }
+
+:host([fixed]:not([collapsed]):not([_has-header])) .ui5-panel-header {
+	border-bottom: 0.0625rem solid var(--sapGroup_TitleBorderColor);
+}
