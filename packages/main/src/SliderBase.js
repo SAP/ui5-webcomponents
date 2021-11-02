@@ -181,7 +181,7 @@ class SliderBase extends UI5Element {
 			sap_belize: "#bfbfbf",
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
-			sap_horizon: "#d5dadd",
+			sap_horizon: "#89919a",
 		};
 	}
 

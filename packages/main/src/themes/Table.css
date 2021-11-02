@@ -80,7 +80,7 @@ tr {
 	text-align: center;
 }
 
-:host([sticky-column-header]) .ui5-table-select-all-column {
+:host([sticky-column-header]) .ui5-table-header-row {
 	position: sticky;
 	top: 0;
 	z-index: 99;
