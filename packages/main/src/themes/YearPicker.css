@@ -50,8 +50,10 @@
 }
 
 .ui5-yp-item.ui5-yp-item--selected {
-	background-color: var(--sapSelectedColor);
-	color: var(--sapContent_ContrastTextColor);
+	background-color: var(--_ui5_yearpicker_item_selected_background_color);
+	color: var(--_ui5_yearpicker_item_selected_text_color);
+	box-shadow: var(--_ui5_yearpicker_item_selected_box_shadow);
+	font-weight: bold;
 }
 
 .ui5-yp-item.ui5-yp-item--disabled {
@@ -68,7 +70,7 @@
 }
 
 .ui5-yp-item.ui5-yp-item--selected:hover {
-	background-color: var(--_ui5_yearpicker_item_selected_focus);
+	background-color: var(--_ui5_yearpicker_item_selected_hover_color);
 }
 
 .ui5-yp-item:focus::after {
@@ -79,4 +81,6 @@
 	border: var(--_ui5_yearpicker_item_focus_after_border);
 	top: var(--_ui5_yearpicker_item_focus_after_offset);
 	left: var(--_ui5_yearpicker_item_focus_after_offset);
+	border-radius: var(--_ui5_yearpicker_item_focus_after_border_radius);
+	outline: var(--_ui5_yearpicker_item_focus_after_outline);
 }
