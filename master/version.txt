@@ -1,5 +1,5 @@
-commit 16f83d7fc6eb96a5b98598886abd66fed6f98de3
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Wed Nov 3 07:07:08 2021 +0200
+commit e3f82a8749461f4e0944be4c23faf67aacb9bfb0
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Wed Nov 3 07:56:19 2021 +0200
 
-    feat(ui5-time-picker): implement sap_horizon theme
+    feat(ui5-switch): implement sap_horizon theme (#4156)
