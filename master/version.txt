@@ -1,5 +1,5 @@
-commit f7d91138261a5c472637c582371b66321efbddff
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Wed Nov 3 08:19:35 2021 +0200
+commit bf2495bea5ae83d98a69ec86e354031e7797e08c
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Wed Nov 3 08:48:46 2021 +0200
 
-    feat(ui5-calendar): implement horizon theme (#4233)
+    fix(ui5-table): Hide row columns on minWidth (#4193)
