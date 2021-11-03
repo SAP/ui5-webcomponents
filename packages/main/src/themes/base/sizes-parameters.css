@@ -61,6 +61,10 @@
 	--_ui5_tl_indicator_before_bottom: -1.625rem;
 	--_ui5_tl_padding: 1rem 1rem 1rem .5rem;
 	--_ui5_tl_li_margin_bottom: 1.625rem;
+
+	/*switch*/
+	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
+	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_text_on_left: calc(-100% + 1.9125rem);
 	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.875rem);
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
@@ -224,6 +228,7 @@
 	--_ui5_wheelslider_arrows_visibility: visible;
 	--_ui5_wheelslider_mobile_selection_frame_margin_top: 128px;
 
+	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
 	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
@@ -231,10 +236,22 @@
 	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
 	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
 	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
-	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_compact_no_label_height);
+	--_ui5_switch_no_label_width_horizon: var(--_ui5_switch_compact_no_label_width_horizon);
 	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
 	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
 
+	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom);
+	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right);
+	--_ui5_switch_root_outline_top_bottom_horizon: var(--_ui5_switch_compact_root_outline_top_bottom_horizon);
+	--_ui5_switch_root_outline_left_right_horizon: var(--_ui5_switch_compact_root_outline_left_right_horizon);
+	--_ui5_switch_root_outline_top_bottom_hcb: var(--_ui5_switch_compact_root_outline_top_bottom_hcb);
+	--_ui5_switch_root_outline_left_right_hcb: var(--_ui5_switch_compact_root_outline_left_right_hcb);
+
+	--_ui5_tc_item_text: 2rem;
+	--_ui5_tc_item_text_line_height: 1.325rem;
+	--_ui5_tc_item_icon_size: 1rem;
+	--_ui5_tc_item_add_text_margin_top: 0.3125rem;
+	--_ui5_tc_header_height: var(--_ui5_tc_header_height_compact);
 	--_ui5_tc_item_height: 4rem;
 	--_ui5_tc_item_icon_circle_size: 2rem;
 	--_ui5_tc_item_icon_size: 1rem;

@@ -201,6 +201,10 @@ class Switch extends UI5Element {
 		return this.design === SwitchDesign.Graphical;
 	}
 
+	get hasNoLabel() {
+		return !(this.graphical || this.textOn || this.textOff);
+	}
+
 	get _textOn() {
 		return this.graphical ? "" : this.textOn;
 	}
