@@ -1,14 +1,11 @@
 import getSharedResource from "../getSharedResource.js";
-import { getTheme } from "../config/Theme.js";
+import { isTheme } from "../config/Theme.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
 const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-const theme = getTheme();
-const SAP_HORIZON = theme === "sap_horizon" || theme === "sap_horizon_exp";
-const DEFAULT_COLLECTION = SAP_HORIZON ? "SAP-icons-v5" : "SAP-icons";
 
 /**
  * @deprecated
@@ -48,9 +45,9 @@ const _fillRegistry = bundleData => {
 };
 
 // set
-const registerIcon = (name, { pathData, ltr, accData, collection, packageName, version } = {}) => { // eslint-disable-line
+const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
 	if (!collection) {
-		collection = DEFAULT_COLLECTION;
+		collection = _getDefaultCollection();
 	}
 
 	const key = `${collection}/${name}`;
@@ -59,7 +56,6 @@ const registerIcon = (name, { pathData, ltr, accData, collection, packageName, v
 		ltr,
 		accData,
 		packageName,
-		version,
 	});
 };
 
@@ -71,7 +67,7 @@ const _parseName = name => {
 
 	let collection;
 	[name, collection] = name.split("/").reverse();
-	collection = collection || DEFAULT_COLLECTION;
+	collection = collection || _getDefaultCollection();
 	// hardcoded alias in case icon explorer is used, resolve `SAP-icons-TNT` to `tnt`
 	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
 	if (collection === "SAP-icons-TNT") {
@@ -120,6 +116,10 @@ const _getRegisteredNames = async () => {
 	await getIconData("tnt/arrow");
 	await getIconData("business-suite/3d");
 	return Array.from(registry.keys());
+};
+
+const _getDefaultCollection = () => {
+	return isTheme("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
 };
 
 export {

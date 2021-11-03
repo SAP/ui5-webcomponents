@@ -24,7 +24,8 @@
 </head>
 
 <body class="icon1auto">
-
+	<ui5-toggle-button id="myBtn">Fiori 3/Next</ui5-toggle-button>
+	<br>
 	<ui5-icon title="add equipment" class="icon2auto" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
@@ -208,5 +209,13 @@
 		<ui5-icon name="undo"></ui5-icon>
 		<ui5-icon name="step"></ui5-icon>
 	</section>
+
+	<script>
+		myBtn.addEventListener("click", function(event) {
+			var theme = event.target.pressed ? "sap_horizon" : "sap_fiori_3";
+			var Conf = window["sap-ui-webcomponents-bundle"].configuration;
+			Conf.setTheme(theme);
+		});
+	</script>
 </body>
 </html>
