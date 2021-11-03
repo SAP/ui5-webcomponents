@@ -141,6 +141,10 @@ class SideNavigation extends UI5Element {
 		return metadata;
 	}
 
+	static get staticAreaStyles() {
+		return [SideNavigationCss];
+	}
+
 	static get render() {
 		return litRender;
 	}
