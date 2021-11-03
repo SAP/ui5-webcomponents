@@ -1,5 +1,5 @@
-commit df8c29c3bfcb3f1ee8d3421d131da013279defb5
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Nov 2 15:23:39 2021 +0200
+commit 16f83d7fc6eb96a5b98598886abd66fed6f98de3
+Author: Tereza Chobanova <terezamch@users.noreply.github.com>
+Date:   Wed Nov 3 07:07:08 2021 +0200
 
-     feat(ui5-checkbox): implement sap_horizon (#4238)
+    feat(ui5-time-picker): implement sap_horizon theme
