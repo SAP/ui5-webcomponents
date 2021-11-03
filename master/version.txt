@@ -1,5 +1,5 @@
-commit 1a201d6a218563c0d8b6be70cdf472d8703ea2c2
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Wed Nov 3 08:10:43 2021 +0200
+commit f7d91138261a5c472637c582371b66321efbddff
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Wed Nov 3 08:19:35 2021 +0200
 
-    feat(ui5-color-picker): implement sap_horizon theme (#4177)
+    feat(ui5-calendar): implement horizon theme (#4233)
