@@ -45,18 +45,25 @@
 	background: var(--sapShell_Hover_Background);
 }
 
+
+::slotted([ui5-button][slot="startButton"]:hover),
+.ui5-shellbar-button:hover,
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover {
+	box-shadow: var(--_ui5_shellbar_button_box_shadow);
+}
+
 ::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
 	background: var(--sapShell_Active_Background);
-	color: var(--sapShell_Active_TextColor);
+	color: var(--_ui5_shellbar_button_active_color);
 }
 
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
-	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
+	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
 
 slot[name="profile"] {
@@ -194,7 +201,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
-	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
+	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
 
 .ui5-shellbar-button {
