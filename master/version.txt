@@ -1,5 +1,5 @@
-commit bf2495bea5ae83d98a69ec86e354031e7797e08c
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Wed Nov 3 08:48:46 2021 +0200
+commit b25ce73b90a4c05d29e07927f398413c1f150b08
+Author: Tereza Chobanova <terezamch@users.noreply.github.com>
+Date:   Wed Nov 3 09:18:49 2021 +0200
 
-    fix(ui5-table): Hide row columns on minWidth (#4193)
+    feat(ui5-file-uploader): implement sap_horizon theme (#4243)
