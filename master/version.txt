@@ -1,5 +1,5 @@
-commit b25ce73b90a4c05d29e07927f398413c1f150b08
-Author: Tereza Chobanova <terezamch@users.noreply.github.com>
-Date:   Wed Nov 3 09:18:49 2021 +0200
+commit 99e962c425976c3b172783787ff823c091d71ffd
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Wed Nov 3 09:50:45 2021 +0200
 
-    feat(ui5-file-uploader): implement sap_horizon theme (#4243)
+    feat(ui5-side-navigation): adjust focus styles in overflow to sap_horizon (#4240)
