@@ -1,5 +1,5 @@
-commit 99e962c425976c3b172783787ff823c091d71ffd
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Wed Nov 3 09:50:45 2021 +0200
+commit 9404c730584ce53c3f72642f09c033092f0a594a
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Wed Nov 3 11:25:52 2021 +0200
 
-    feat(ui5-side-navigation): adjust focus styles in overflow to sap_horizon (#4240)
+    fix(ui5-datetime-picker): aligning the focus borders (#4250)
