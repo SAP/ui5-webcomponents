@@ -9,7 +9,7 @@
 :host {
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
-	border: 1px solid var(--sapField_BorderColor);
+	border: var(--_ui5_step-input_border_style);
 	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
 	height: var(--_ui5_input_height);
@@ -23,14 +23,7 @@
 :host(:not([value-state]):not([readonly]):not([disabled]):hover),
 :host([value-state=None]:not([readonly]):not([disabled]):hover) {
 	background-color: var(--sapField_Hover_Background);
-	border: 1px solid var(--sapField_Hover_BorderColor);
-}
-
-:host([value-state=Success]:not([readonly]):not([disabled]):hover),
-:host([value-state=Error]:not([readonly]):not([disabled]):hover),
-:host([value-state=Information]:not([readonly]):not([disabled]):hover),
-:host([value-state=Warning]:not([readonly]):not([disabled]):hover) {
-	background-color: var(--_ui5-step_input_button_state_hover_backgroun_color);
+	border: var(--_ui5_step-input_border_style_hover);
 }
 
 :host([value-state=Success]:not([readonly]):not([disabled]))::after,
@@ -79,7 +72,9 @@
 :host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input {
 	background-color: var(--sapField_InvalidBackground);
 }
-
+:host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input:hover {
+	background-color: var(--_ui5_step-input-input_error_background_color);
+}
 :host([value-state]:not([value-state="None"]) .ui5-step-input-input[focused]) {
 		outline: none;
 }
@@ -88,10 +83,10 @@
 	width: 100%;
 	color: inherit;
 	background-color: inherit;
-	border: 1px solid transparent;
+	border: var(--_ui5_step-input-input_border);
 	box-sizing: border-box;
 	vertical-align: top;
-	margin-top: -0.0625rem;
+	margin-top: var(--_ui5_step-input-input_margin_top);
 	min-width: 9.125rem;
 	position: relative;
 	padding: 0px 2.5rem 0px 2.4375rem;
@@ -116,10 +111,10 @@
 
 :host .ui5-step-icon {
 	position: absolute;
-	display: inline-block;
+	display: var(--_ui5_step-input_button_display);
 	height: 2rem;
 	height: 100%;
-	background-color: var(--_ui5-step_input_button_backgroun_color);
+	background-color: var(--_ui5_step-input_button_background-color);
 	z-index: 2;
 }
 
@@ -129,15 +124,11 @@
 }
 
 :host .ui5-step-icon.ui5-step-dec {
-	left: 0;
+	left: var(--_ui5_step-input_button_left);
 }
 
 :host .ui5-step-icon.ui5-step-inc {
-	right: 0;
-}
-:host .ui5-step-icon [input-icon]:not([pressed]):not(:active):hover {
-	box-shadow: none;
-	background: transparent;
+	right: var(--_ui5_step-input_button_right);
 }
 
 :host .ui5-step-icon *:not([clickable]),
@@ -154,31 +145,33 @@
 	color: var(--sapContent_IconColor);
 }
 
+:host .ui5-step-icon [input-icon]:not([pressed]):not(:active):hover,
+:host .ui5-step-icon [input-icon]:not([pressed]):hover {
+	box-shadow: none;
+}
+
 :host .ui5-step-input-input[focused]::after {
 	position: absolute;
 	content: "";
-	border: var(--_ui5-step_input-input_button_after_border);
-	top: var(--_ui5-step_input-input_button_after_top_bottom);
-	right: var(--_ui5-step_input-input_button_after_left_right);
-	bottom: var(--_ui5-step_input-input_button_after_top_bottom);
-	left: var(--_ui5-step_input-input_button_after_left_right);
-	outline: var(--_ui5-step_input-input_button_after_outline);
-	border-radius: var(--_ui5-step_input-input_button_after_border-radius);
+	border: var(--_ui5_step-input-input_border_focused_after);
+	top: 1px;
+	right: 0px;
+	bottom: 1px;
+	left: 0px;
+	outline: none;
 	pointer-events: none;
 	z-index: 3;
 }
 
 :host .ui5-step-input-input[focused] {
 	outline: none;
-	box-shadow: none;
-	background-color: var(--_ui5-step_input-input_focused_background_color);
 }
 
 :host([value-state]:not([value-state=None]):not([value-state=Success]):not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	top: var(--_ui5-step_input-input_button_focused_after_top_bottom);
-	right: var(--_ui5-step_input-input_button_focused_after_left_right);
-	bottom: var(--_ui5-step_input-input_button_focused_after_top_bottom);
-	left: var(--_ui5-step_input-input_button_focused_after_left_right);
+	top: 2px;
+	right: 1px;
+	bottom: 2px;
+	left: 1px;
 }
 
 :host([value-state=Information]:not([readonly]):not([disabled]))::after {
@@ -196,24 +189,7 @@
 }
 
 :host([value-state=Error]:not([readonly]):not([disabled]))::after {
-	border-color: var(--sapField_InvalidColor);
-}
-
-:host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	outline-color: var(--_ui5-step_input-input_error_state_after_outline_color);
-}
-
-:host([value-state=Success]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	outline-color: var(--_ui5-step_input-input_success_state_after_outline_color);
-}
-
-:host([value-state=Warning]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	outline-color: var(--_ui5-step_input-input_warning_state_after_outline_color);
-}
-
-:host([value-state=Information]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	outline-color: var(--_ui5-step_input-input_information_state_after_outline_color);
-
+    border-color: var(--sapField_InvalidColor);
 }
 
 /* Disable spin buttons in Chrome, Safari, Edge, Opera */
@@ -239,3 +215,22 @@
 	color: var(--sapField_ReadOnly_BorderColor);
 }
 
+:host([value-state=Success]:not([readonly]):not([disabled]):hover),
+:host([value-state=Error]:not([readonly]):not([disabled]):hover),
+:host([value-state=Information]:not([readonly]):not([disabled]):hover),
+:host([value-state=Warning]:not([readonly]):not([disabled]):hover) {
+	background-color: var(--_ui5-step_input_button_state_hover_backgroun_color);
+}
+
+:host([value-state=Success]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_SuccessBackground);
+}
+:host([value-state=Error]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_SuccessBackground);
+}
+:host([value-state=Information]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_InformationBackground);
+}
+:host([value-state=Warning]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_WarningBackground);
+}

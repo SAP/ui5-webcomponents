@@ -1,18 +1,15 @@
 @import "../base/StepInput-parameters.css";
 
 :root {
-	--_ui5-step_input_button_backgroun_color: transparent;
-	--_ui5-step_input-input_button_after_border:none;
-	--_ui5-step_input-input_button_after_left_right: -0.0625rem;
-	--_ui5-step_input-input_button_after_top_bottom: 0.0625rem;
-	--_ui5-step_input-input_button_after_outline: 0.125rem solid #0070f2;
-	--_ui5-step_input-input_button_focused_after_left_right: -0.0625rem;
-	--_ui5-step_input-input_button_focused_after_top_bottom: 0.0625rem;
+	--_ui5_step-input-input_error_background_color: inherit;
 	--_ui5-step_input_button_state_hover_backgroun_color: var(--sapField_Hover_Background);
-	--_ui5-step_input-input_error_state_after_outline_color: var(--sapField_InvalidColor);
-	--_ui5-step_input-input_success_state_after_outline_color: var(--sapField_SuccessColor);
-	--_ui5-step_input-input_warning_state_after_outline_color: var(--sapField_WarningColor);
-	--_ui5-step_input-input_information_state_after_outline_color: var(--sapField_InformationColor);
-	--_ui5-step_input-input_focused_background_color: var(--sapField_Hover_Background);
-	--_ui5-step_input-input_button_after_border-radius: 0.25rem
+	--_ui5_step-input_border_style: none;
+	--_ui5_step-input_border_style_hover: none;
+	--_ui5_step-input_button_background-color: transparent;
+	--_ui5_step-input-input_border: none;
+	--_ui5_step-input-input_margin_top: 0;
+	--_ui5_step-input_button_display: inline-flex;
+	--_ui5_step-input_button_left: 0.125rem;
+	--_ui5_step-input_button_right: 0.0625rem;
+	--_ui5_step-input-input_border_focused_after: none;
 }

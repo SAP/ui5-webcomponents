@@ -1,17 +1,13 @@
 :root {
-	--_ui5-step_input_button_backgroun_color: var(--sapField_Background);
-	--_ui5-step_input-input_button_after_border: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
-	--_ui5-step_input-input_button_after_left_right: 0rem;
-	--_ui5-step_input-input_button_after_top_bottom: 0.0625rem;
-	--_ui5-step_input-input_button_after_outline: none;
-	--_ui5-step_input-input_button_focused_after_left_right: 0.0625rem;
-	--_ui5-step_input-input_button_focused_after_top_bottom: 0.125rem;
+	--_ui5_step-input-input_error_background_color: var(--sapField_InvalidBackground);
 	--_ui5-step_input_button_state_hover_backgroun_color: var(--sapField_Background);
-	--_ui5-step_input-input_error_state_after_outline_color: none;
-	--_ui5-step_input-input_success_state_after_outline_color:none;
-	--_ui5-step_input-input_warning_state_after_outline_color: none;
-	--_ui5-step_input-input_information_state_after_outline_color: none;
-	--_ui5-step_input-input_focused_background_color: inherit;
-	--_ui5-step_input-input_button_after_border-radius: 0;
-
+	--_ui5_step-input_border_style: 1px solid var(--sapField_BorderColor);
+	--_ui5_step-input_border_style_hover: 1px solid var(--sapField_Hover_BorderColor);
+	--_ui5_step-input_button_background-color:var(--sapField_Background);
+	--_ui5_step-input-input_border: 1px solid transparent;
+	--_ui5_step-input-input_margin_top: -0.0625rem;
+	--_ui5_step-input_button_display: inline-block;
+	--_ui5_step-input_button_left: 0;
+	--_ui5_step-input_button_right: 0;
+	--_ui5_step-input-input_border_focused_after: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 }
