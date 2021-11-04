@@ -741,11 +741,11 @@ describe("Keyboard navigation", async () => {
 		await arrow.click();
 		await combo.keys("Tab");
 
-		assert.strictEqual(await nextCombo.getProperty("focused"), true, "The first group header should be focused");
+		assert.strictEqual(await nextCombo.getProperty("focused"), true, "The next combobox should be focused");
 
 		await arrow.click();
 		await browser.keys(["Shift", "Tab"]);
 
-		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The input should be focused");		
+		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The previous combobox should be focused");
 	});
 });
