@@ -1,5 +1,5 @@
-commit 9404c730584ce53c3f72642f09c033092f0a594a
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Wed Nov 3 11:25:52 2021 +0200
+commit f2b5f64e49c7841c3a91761bf4f1a811017225f9
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Nov 4 10:28:32 2021 +0200
 
-    fix(ui5-datetime-picker): aligning the focus borders (#4250)
+    fix(inputs): SAP Horizon disabled state enhanced (#4263)
