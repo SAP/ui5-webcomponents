@@ -90,6 +90,10 @@
 	outline: none;
 }
 
+:host .ui5-step-input-input[readonly] { 
+	padding: 0;
+}
+
 :host .ui5-step-input-root {
 	white-space: nowrap;
 }

@@ -622,6 +622,10 @@ class StepInput extends UI5Element {
 		}
 	}
 
+	get hasNotReadOnly() {
+		return !this.readonly;
+	}
+
 	/**
 	 * Calculates the time which should be waited until _spinValue function is called.
 	 */
