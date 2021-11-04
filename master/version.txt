@@ -1,5 +1,11 @@
-commit f2b5f64e49c7841c3a91761bf4f1a811017225f9
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Nov 4 10:28:32 2021 +0200
+commit 00c308fa82019ae163b99a546acdb246d3eb4a64
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Nov 4 10:36:31 2021 +0200
 
-    fix(inputs): SAP Horizon disabled state enhanced (#4263)
+    fix(ui5-combobox) always focus the next/previous element on TAB/SHIFT+TAB (#4218)
+    
+    * Fix TAB handling when picker is opened
+    
+    * Add additional check
+    
+    * Fix test asserts
