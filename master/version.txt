@@ -1,11 +1,10 @@
-commit 00c308fa82019ae163b99a546acdb246d3eb4a64
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Nov 4 10:36:31 2021 +0200
+commit 7fa969b44b54dc745e2abe312322c80b384abef7
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Thu Nov 4 10:54:38 2021 +0200
 
-    fix(ui5-combobox) always focus the next/previous element on TAB/SHIFT+TAB (#4218)
+    fix(ui5-wizard): remove unneeded aria properties (#4262)
     
-    * Fix TAB handling when picker is opened
+    - Remove accessible-name on Wizard level as it is unneeded, the region has a default aria-label and the wizard itself should be used along with a page with title.
+    - Remove accessible-name and accessible-name-ref from Wizard Step, as it does not work and also again not needed. The wizard step title is used as a label of the element.
     
-    * Add additional check
-    
-    * Fix test asserts
+    BREAKING CHANGE: accessible-name has been removed
