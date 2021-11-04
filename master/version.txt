@@ -1,5 +1,5 @@
-commit 60f19ad769d412a5c349ed54fb9673ff4feb5be7
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Nov 4 14:58:27 2021 +0200
+commit 3419db34b0ef27b6fee473587a35bc8a77ad95c7
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Nov 4 19:13:54 2021 +0200
 
-    chore: do not bundle the barcode scanner component for IE11 (#4265)
+    fix(ui5-date-picker): Alignment of input controls (#4267)
