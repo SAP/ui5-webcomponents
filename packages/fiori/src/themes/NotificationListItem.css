@@ -43,6 +43,25 @@
 :host([_show-more-pressed]) .ui5-nli-content--ie .ui5-nli-description  {
 	max-height: inherit;
 }
+
+:host(:first-of-type) {
+	border-top-left-radius: var(--_ui5-notification_item-border-raius);
+	border-top-right-radius: var(--_ui5-notification_item-border-raius);
+}
+
+:host(:last-of-type) {
+	border-bottom-left-radius: var(--_ui5-notification_item-border-raius);
+	border-bottom-right-radius: var(--_ui5-notification_item-border-raius);
+}
+
+:host(:first-of-type) .ui5-nli-focusable:after {
+	border-top-left-radius: var(--_ui5-notification_item-border-raius);
+	border-top-right-radius: var(--_ui5-notification_item-border-raius);
+}
+:host(:last-of-type) .ui5-nli-focusable:after {
+	border-bottom-left-radius: var(--_ui5-notification_item-border-raius);
+	border-bottom-right-radius: var(--_ui5-notification_item-border-raius);
+}
 /* End */
 
 .ui5-nli-root {

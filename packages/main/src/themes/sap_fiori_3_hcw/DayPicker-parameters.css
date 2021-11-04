@@ -15,4 +15,5 @@
 	--_ui5_daypicker_item_now_selected_focus_after_width: calc(100% - .375rem);
 	--_ui5_daypicker_item_now_selected_focus_after_height: calc(100% - .375rem);
 	--_ui5_daypicker_item_selected_border_color: transparent;
+	--_ui5_daypicker_item_selected_box_shadow: none;
 }

@@ -8,6 +8,7 @@
 @import "../base/Carousel-parameters.css";
 @import "./CheckBox-parameters.css";
 @import "./ColorPalette-parameters.css";
+@import "./ColorPicker-parameters.css";
 @import "../base/DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
@@ -28,11 +29,11 @@
 @import "./RatingIndicator-parameters.css";
 @import "./SegmentedButtton-parameters.css";
 @import "./RadioButton-parameters.css";
+@import "./Switch-parameters.css";
 @import "./Select-parameters.css";
 @import "./SelectPopover-parameters.css";
-@import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
-@import "../base/TextArea-parameters.css";
+@import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./WheelSlider-parameters.css";
@@ -41,7 +42,6 @@
 @import "./CalendarHeader-parameters.css";
 @import "../base/Table-parameters.css";
 @import "../base/TableRow-parameters.css";
-@import "../base/GrowingButton-parameters.css";
 @import "../base/Title-parameters.css";
 @import "./Token-parameters.css";
 @import "./Tokenizer-parameters.css";
@@ -52,3 +52,4 @@
 @import "./Table-parameters.css";
 @import "./TableRow-parameters.css";
 @import "./TableColumn-parameters.css";
+@import "./GrowingButton-parameters.css";

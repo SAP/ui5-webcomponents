@@ -60,7 +60,7 @@
     height: 1.25rem;
     background: transparent;
     margin-left: -2px;
-    margin-top: 1px;
+    margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
 }
 
 [ui5-slider]::part(handle)::after {
@@ -156,4 +156,35 @@
     width: 2.5rem;
     min-width: 2.5rem;
     text-align: center;
+}
+
+.ui5-color-picker-hue-slider::part(progress-container)::before,
+.ui5-color-picker-alpha-slider::part(progress-container)::before,
+.ui5-color-picker-hue-slider::part(progress-container)::after,
+.ui5-color-picker-alpha-slider::part(progress-container)::after,
+[ui5-slider].ui5-color-picker-hue-slider::part(icon-slider),
+[ui5-slider].ui5-color-picker-alpha-slider::part(icon-slider) {
+     display: none;
+}
+
+.ui5-color-picker-alpha-slider::part(handle),
+.ui5-color-picker-hue-slider::part(handle) {
+    box-shadow: var(--_ui5_color_picker_slider_handle_box_shadow);
+    border: var(--_ui5_color_picker_slider_handle_border);
+}
+
+.ui5-color-picker-alpha-slider::part(handle):hover,
+.ui5-color-picker-hue-slider::part(handle):hover {
+    border: var(--_ui5_color_picker_slider_handle_outline_hover);
+}
+
+.ui5-color-picker-alpha-slider::part(handle):focus,
+.ui5-color-picker-hue-slider::part(handle):focus {
+    outline: var(--_ui5_color_picker_slider_handle_outline_focus);
+    outline-offset: 0.0625rem;
+}
+
+.ui5-color-picker-alpha-slider::part(handle):focus,
+.ui5-color-picker-hue-slider::part(handle):focus {
+    margin-top: var(--_ui5_color_picker_slider_handle_focus_margin_top);
 }

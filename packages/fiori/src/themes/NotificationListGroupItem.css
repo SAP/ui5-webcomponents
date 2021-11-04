@@ -1,6 +1,10 @@
 @import "./NotificationListItemBase.css";
 @import "./NotificationPrioIcon.css";
 
+:host {
+	--_ui5-notification_item-border-raius: 0px;
+}
+
 :host(:not([collapsed])) .ui5-nli-group-toggle-btn {
 	transform: rotate(90deg);
 }
