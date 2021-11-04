@@ -16,6 +16,8 @@ import {
 	isDown,
 	isEnter,
 	isEscape,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -722,6 +724,10 @@ class ComboBox extends UI5Element {
 			this.focused = true;
 			this.value = !this.open ? this._lastValue : this.value;
 			this._isValueStateFocused = false;
+		}
+
+		if ((isTabNext(event) || isTabPrevious(event)) && this.open) {
+			this._closeRespPopover();
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
