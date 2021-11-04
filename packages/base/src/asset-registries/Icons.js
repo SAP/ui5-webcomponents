@@ -1,4 +1,5 @@
 import getSharedResource from "../getSharedResource.js";
+import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
 import { isTheme } from "../config/Theme.js";
 
 const loaders = new Map();
@@ -68,17 +69,15 @@ const _parseName = name => {
 	let collection;
 	[name, collection] = name.split("/").reverse();
 	collection = collection || _getDefaultCollection();
-	// hardcoded alias in case icon explorer is used, resolve `SAP-icons-TNT` to `tnt`
-	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
-	if (collection === "SAP-icons-TNT") {
-		collection = "tnt";
-	}
-	// hardcoded alias in case icon explorer is used, resolve `BusinessSuiteInAppSymbols` to `business-suite`
-	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
-	if (collection === "BusinessSuiteInAppSymbols") {
-		collection = "business-suite";
-		name = name.replace("icon-", "");
-	}
+
+	// Normalize collection name.
+	// - resolve `SAP-icons-TNT` to `tnt`.
+	// - resolve `BusinessSuiteInAppSymbols` to `business-suite`.
+	// - resolve `horizon` to `SAP-icons-v5`,
+	// Note: aliases can be made as a feature, if more collections need it or more aliases are needed.
+	collection = _normalizeCollection(collection);
+	name = name.replace("icon-", "");
+
 	const registryKey = `${collection}/${name}`;
 	return { name, collection, registryKey };
 };
@@ -120,6 +119,14 @@ const _getRegisteredNames = async () => {
 
 const _getDefaultCollection = () => {
 	return isTheme("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
+};
+
+const _normalizeCollection = (collectionName) => {
+	if (IconCollectionsAlias[collectionName]) {
+		return IconCollectionsAlias[collectionName];
+	}
+
+	return collectionName;
 };
 
 export {

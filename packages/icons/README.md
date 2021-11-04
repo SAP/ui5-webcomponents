@@ -32,7 +32,30 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 | Assets           | Module                                           | Notes                                                                                                                                                                                                            |
 |------------------|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `i18n`           | `@ui5/webcomponents-icons/dist/Assets.js`        | Translations for the tooltips / "aria labels" of several icons                                                                                                                                                   |
+## SAP-icons4.0 and SAP-icons5.0
+The package provides two versions of each icon. If you don't specify a collection name, for example:
+```html
+<ui5-icon name="accept"></ui5-icon>
+```
 
+the framework will detect the current theme and render the corresponding icon - SAP-icons5.0 for Fiori Next (sap_horizon) theme, and SAP-icons4.0 for all the rest (sap_fiori_3, sap_fiori_3_hcb...).
+
+In case you want to display the SAP-icons5.0 icons, no matter what theme is set,
+you need to import the icon:
+
+```js
+// imports both v4/accept and v5/accept icons.
+import "@ui5/webcomponents-icons/dist/accept.js";
+// imports v5/accept icon only.
+import "@ui5/webcomponents-icons/dist/v5/accept.js";
+```
+
+and then, specify a collection name - "horizon" or "SAP-icons-v5":
+
+```html
+<ui5-icon name="horizon/accept"></ui5-icon>
+<ui5-icon name="SAP-icons-v5/accept"></ui5-icon>
+```
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
