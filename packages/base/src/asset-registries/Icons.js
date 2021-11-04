@@ -121,7 +121,7 @@ const _getDefaultCollection = () => {
 	return isTheme("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
 };
 
-const _normalizeCollection = (collectionName) => {
+const _normalizeCollection = collectionName => {
 	if (IconCollectionsAlias[collectionName]) {
 		return IconCollectionsAlias[collectionName];
 	}

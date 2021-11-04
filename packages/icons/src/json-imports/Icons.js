@@ -1,11 +1,10 @@
 import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { isTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 
-const loadIconsBundle = async () => {
+const loadIconsBundle = async (collection) => {
     let iconData = null;
 
-	if (isTheme("sap_horizon")) {
+	if (collection === "SAP-icons-v5") {
 		iconData = (await import(`../generated/assets/v5/SAP-icons.json`)).default;
 	} else {
 		iconData = (await import(`../generated/assets/v4/SAP-icons.json`)).default;
@@ -17,9 +16,10 @@ const loadIconsBundle = async () => {
     return iconData;
 }
 
-const registerLoader = () => {
-	registerIconLoader(isTheme("sap_horizon") ? "SAP-icons-v5" : "SAP-icons", loadIconsBundle)
+const registerLoaders = () => {
+	registerIconLoader("SAP-icons", loadIconsBundle);
+	registerIconLoader("SAP-icons-v5", loadIconsBundle);
 };
 
-registerLoader();
-attachThemeLoaded(registerLoader);
+registerLoaders();
+attachThemeLoaded(registerLoaders);
