@@ -1,5 +1,5 @@
-commit cb33faa22cc827fb75ea242d577b8cc1d705d1fb
+commit 60f19ad769d412a5c349ed54fb9673ff4feb5be7
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Nov 4 13:27:28 2021 +0200
+Date:   Thu Nov 4 14:58:27 2021 +0200
 
-    chore: remove cyrillic characters (#4264)
+    chore: do not bundle the barcode scanner component for IE11 (#4265)
