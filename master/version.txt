@@ -1,10 +1,5 @@
-commit 7fa969b44b54dc745e2abe312322c80b384abef7
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Thu Nov 4 10:54:38 2021 +0200
+commit cb33faa22cc827fb75ea242d577b8cc1d705d1fb
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Nov 4 13:27:28 2021 +0200
 
-    fix(ui5-wizard): remove unneeded aria properties (#4262)
-    
-    - Remove accessible-name on Wizard level as it is unneeded, the region has a default aria-label and the wizard itself should be used along with a page with title.
-    - Remove accessible-name and accessible-name-ref from Wizard Step, as it does not work and also again not needed. The wizard step title is used as a label of the element.
-    
-    BREAKING CHANGE: accessible-name has been removed
+    chore: remove cyrillic characters (#4264)
