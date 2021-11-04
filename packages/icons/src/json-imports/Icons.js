@@ -1,5 +1,4 @@
 import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 
 const loadIconsBundle = async (collection) => {
     let iconData = null;
@@ -22,4 +21,3 @@ const registerLoaders = () => {
 };
 
 registerLoaders();
-attachThemeLoaded(registerLoaders);

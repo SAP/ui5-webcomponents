@@ -1,5 +1,4 @@
 import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 import SAPIconsV4Url from "../generated/assets/v4/SAP-icons.json";
 import SAPIconsV5Url from "../generated/assets/v5/SAP-icons.json";
 
@@ -26,4 +25,3 @@ const registerLoaders = () => {
 };
 
 registerLoaders();
-attachThemeLoaded(registerLoaders);
