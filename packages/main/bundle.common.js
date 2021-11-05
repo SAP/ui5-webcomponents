@@ -100,6 +100,7 @@ import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/uti
 window.sanitizeHTML = sanitizeHTML;
 window.URLListValidator = URLListValidator;
 
+import { escapeHTML, escapeRegex, generateHighlightedMarkup, replaceAll } from "@ui5/webcomponents/dist/util/Strings.js";
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
@@ -138,6 +139,10 @@ const testAssets = {
 	getIconNames,
 	renderFinished,
 	defaultTexts,
+	escapeHTML,
+	escapeRegex,
+	generateHighlightedMarkup,
+	replaceAll
 };
 
 window["sap-ui-webcomponents-bundle"] = testAssets;

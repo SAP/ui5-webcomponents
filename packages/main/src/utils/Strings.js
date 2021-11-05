@@ -19,13 +19,13 @@ export function replaceAll(text, find, replace, caseInsensitive) {
 	return text.replace(new RegExp(escapeRegex(find), `${caseInsensitive ? "i" : ""}g`), replace);
 }
 
-// HTML needs to escape all attribute special characters, plus a few extras
+// HTML needs to escape all characters that are used to delimit markup
 const dangerousReplacements = {
 	'&lt;': /</g,
 	'&amp;': /&/g,
 	'&quot;': /"/g,
 	'&gt;': />/g,
-	'&#39;': /'/g
+	'&apos;': /'/g
 };
 
 /**
