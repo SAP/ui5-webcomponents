@@ -33,7 +33,7 @@ Navigation with the keyboard and screen reader should work properly together. In
 
 By doing so, you receive an input element with `role="combobox"` with all aria attributes relevant for this role in the shadow DOM. Also, if you set the `disabled` property, this will automatically add `aria-disabled="true"` to the shadow `combobox` element. Attribute mapping is available for all relevant properties - `required`, `disabled`, `readonly`, and more.
 
-In order to ease the setting of aria attributes, we have introduced properties, that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility API's section below.
+In order to ease the setting of aria attributes, we have introduced properties that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility APIs section below.
 
 
 ### **Keyboard Handling**
