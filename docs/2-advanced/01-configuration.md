@@ -20,7 +20,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 <a name="theme"></a>
 
 The `theme` setting values above are the technical names of the supported themes:
-- The `sap_horizon` is known as `Horizon` and it's the latest - currently as "preview".
+- The `sap_horizon` is known as `Horizon` and it's the latest theme currently available as a preview version
 - The `sap_fiori_3` is known as `Quartz Light` and it`s the default theme.
 - The `sap_fiori_3_dark` is known as `Quartz Dark`.
 - The `sap_fiori_3_hcb` is known as `Quartz High Contrast Black`.
