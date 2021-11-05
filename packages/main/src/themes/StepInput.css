@@ -125,6 +125,9 @@
 :host([value-state])::after {
 	border-width: var(--_ui5_input_state_border_width);
 }
+:host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-step-input-input {
+	background-color: var(--_ui5_input_input_background_color);
+}
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-step-input-input:hover {
 	background-color: var(--_ui5_step_input_input_error_background_color);
