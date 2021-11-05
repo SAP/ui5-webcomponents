@@ -20,5 +20,5 @@
 	--_ui5_step_input_input_warning_border_color_focused_after: var(--sapField_WarningColor);
 	--_ui5_step_input_input_success_border_color_focused_after: var(--sapField_SuccessColor);
 	--_ui5_step_input_input_error_border_color_focused_after: var(--sapField_InvalidColor);
-	
+	--_ui5_step_input_disabled_button_background: none;
 }

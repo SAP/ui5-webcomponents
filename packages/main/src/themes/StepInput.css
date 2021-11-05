@@ -254,7 +254,7 @@
 }
 
 :host([disabled]) .ui5-step-icon {
-	background: var(--sapField_ReadOnly_Background);
+	background-color: var(--_ui5_step_input_disabled_button_background);
 }
 
 :host([disabled]) .ui5-step-icon [ui5-icon] {
