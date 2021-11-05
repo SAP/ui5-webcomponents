@@ -482,7 +482,7 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputFocusIn() {
-		this.focused=true
+		this.focused = true;
 		this._inputFocused = true;
 	}
 
