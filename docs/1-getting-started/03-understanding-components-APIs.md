@@ -202,7 +202,7 @@ Here's a summary of `slot` types:
 For this task, you can again use standard DOM methods:
 
 ```js
-const myMessage = document.getElementsByTagName("ui5-messagestrip")[0];
+const myMessage = document.getElementsByTagName("ui5-message-strip")[0];
 myMessage.addEventListener("close", () => {
 	console.log("The user dismissed the message");
 });
