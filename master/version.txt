@@ -1,5 +1,7 @@
-commit b053ad005ebc24c1909b4e40918078d336dd92f9
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Nov 5 12:20:39 2021 +0200
+commit 535d0e54723a273a255a985fa662322faf5a275c
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Nov 5 13:52:42 2021 +0200
 
-    fix(ui5-product-switch): adapt focus styles to sap_horizon (#4276)
+    fix(ui5-date-picker): Hover state on readonly is now fixed (#4272)
+    
+    fix(ui5-date-picker): Hover state on readonly is now fixed
