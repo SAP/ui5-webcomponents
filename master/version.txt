@@ -1,5 +1,5 @@
-commit bdef1e154b307a1e0c0a53b3ff8663202be2eae3
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Fri Nov 5 11:13:53 2021 +0200
+commit 24ff1458020fb1ba1fa023fcfd33bf71132c7748
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Fri Nov 5 11:44:09 2021 +0200
 
-    docs: add accessibility documentation (#4271)
+    fix(ui5-tab-container): selector fixed (#4261) (#4273)
