@@ -1,5 +1,5 @@
-commit f9c881b9287fb891104afe3c00c9e29efed47ce9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 5 17:15:48 2021 +0200
+commit 4180fe799343978212441f848518e07f42f73c0b
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Fri Nov 5 18:43:12 2021 +0200
 
-    chore: add missing import (#4280)
+    feat(ui5-step-input): implement sap_horizon theme (#4247)
