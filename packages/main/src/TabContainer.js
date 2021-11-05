@@ -458,7 +458,7 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
-		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > ui5-button");
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > [ui5-button]");
 
 		if (event.target !== button) {
 			return;
