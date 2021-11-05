@@ -1,9 +1,9 @@
 :root {
 	--_ui5_step_input_input_error_background_color: var(--sapField_InvalidBackground);
-	--_ui5-step_input_button_state_hover_backgroun_color: var(--sapField_Background);
+	--_ui5-step_input_button_state_hover_background_color: var(--sapField_Background);
 	--_ui5_step_input_border_style: 1px solid var(--sapField_BorderColor);
 	--_ui5_step_input_border_style_hover: 1px solid var(--sapField_Hover_BorderColor);
-	--_ui5_step_input_button_background-color:var(--sapField_Background);
+	--_ui5_step_input_button_background_color:var(--sapField_Background);
 	--_ui5_step_input_input_border: 1px solid transparent;
 	--_ui5_step_input_input_margin_top: -0.0625rem;
 	--_ui5_step_input_button_display: inline-block;

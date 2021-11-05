@@ -187,7 +187,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates whether the input is focssed
+		 * Indicates whether the input is focused
 		 * @private
 		 */
 		focused: {
@@ -542,7 +542,6 @@ class StepInput extends UI5Element {
 			this._setButtonState();
 			this._focused = true;
 			this.focused = true;
-			this.setAttribute("focused", "");
 			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
 				this._fireChangeEvent();

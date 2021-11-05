@@ -67,7 +67,7 @@
 :host([value-state=Error]:not([readonly]):not([disabled]):hover),
 :host([value-state=Information]:not([readonly]):not([disabled]):hover),
 :host([value-state=Warning]:not([readonly]):not([disabled]):hover) {
-	background-color: var(--_ui5_step_input_button_state_hover_backgroun_color);
+	background-color: var(--_ui5-step_input_button_state_hover_background_color);
 }
 
 :host(:not([value-state]):not([readonly]):not([disabled])[focused]),
@@ -173,7 +173,7 @@
 	display: var(--_ui5_step_input_button_display);
 	height: 2rem;
 	height: 100%;
-	background-color: var(--_ui5_step_input_button_background-color);
+	background-color: var(--_ui5_step_input_button_background_color);
 	z-index: 2;
 }
 
