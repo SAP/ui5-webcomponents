@@ -50,7 +50,7 @@ Theming is an important aspect when it comes to a UI5 Web Components application
 For more information regarding the available themes and how to use them, see the [Configuration](01-configuration.md) section.
 
 
-## Accessibility API's
+## Accessibility APIs
 
 The mapping of the accessibility APIs to ARIA attributes is described in the following table:
 
