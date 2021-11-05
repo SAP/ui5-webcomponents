@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Title - UI5 Web Components</title>
+    <title>Accessibility - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | UI5 Web Components</title>
+<title>Accessibility | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="Accessibility" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/advanced/accessibility/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/advanced/accessibility/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Title/","headline":"Title","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/advanced/accessibility/","headline":"Accessibility","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -882,7 +882,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced" class="navigation-list-link">Advanced</a>
             
@@ -1262,9 +1262,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced/accessibility/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced/accessibility/" class="navigation-list-link active">
                         <div class="component-name">Accessibility</div>
                         
                       </a>
@@ -3924,7 +3924,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -4850,9 +4850,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" class="navigation-list-link">
                         <div class="component-name">Title</div>
                         
                       </a>
@@ -5106,199 +5106,347 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced">Advanced</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Title</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Accessibility</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header>
-	<h2 class="control-header">Title</h2>
-</header>
+          <h1 id="accessibility-in-ui5-web-components">Accessibility in UI5 Web Components</h1>
 
-<div class="component-package">@ui5/webcomponents</div>
+<p>Accessibility refers to the possibility for everyone, including and especially people with disabilities, to access and use IT products. Making software work for more people should be of high priority. All users should be able to operate our software without loss of meaningful content, functionality, and efficiency when using assistive technologies.</p>
 
-<div class="control-tag">&lt;ui5-title&gt;</div>
+<p>Following those principles in an ongoing approach, we at UI5 Web Components aim to bring accessibility to life by providing the appropriate accessibility features, and following precise accessibility requirements and processes.</p>
 
-<section>
-	<h3>Title in All Available Levels</h3>
-	<div class="snippet flex-column">
-		<ui5-title level="H1">Title level 1</ui5-title>
-		<ui5-title level="H2">Title level 2</ui5-title>
-		<ui5-title level="H3">Title level 3</ui5-title>
-		<ui5-title level="H4">Title level 4</ui5-title>
-		<ui5-title level="H5">Title level 5</ui5-title>
-		<ui5-title level="H6">Title level 6</ui5-title>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H1"</span><span class="nt">&gt;</span>Title level 1<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H2"</span><span class="nt">&gt;</span>Title level 2<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H3"</span><span class="nt">&gt;</span>Title level 3<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H4"</span><span class="nt">&gt;</span>Title level 4<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H5"</span><span class="nt">&gt;</span>Title level 5<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H6"</span><span class="nt">&gt;</span>Title level 6<span class="nt">&lt;/ui5-title&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<h2 id="web-components--accessibility">Web Components &amp; Accessibility</h2>
+
+<p>Web Components allow developers to make their own custom components with native HTML and JavaScript with the usage of custom elements, shadow DOM, and templates. In HTML you can define an element using a role.  When you use semantic elements, you don’t need to define a role as these elements receive all relevant aria mappings out of the box. However, this is not the case when you use custom elements where you should add all relevant accessibility attributes yourselves.</p>
+
+<p>This is not needed in UI5 Web Components, because when using our elements, all relevant accessibility attributes for a certain component will be applied in the shadow DOM, without further setup. Additionally, many accessibility-related APIs are available. They can be used to enhance the accessibility in the context of each application.</p>
+
+<p>As the Web Components are a new standard, there are still some gaps in regard to accessibility. For example - setting IDRef relationships is currently not possible due to the nature of the custom elements and their shadow DOM. This is a limitation in the ARIA support and there is a draft of a new <a href="https://github.com/WICG/aom">AOM (Accessibility Object Model)</a>, which addresses this issue and many more, and aims at a better JS-based accessibility support for all web elements. We are continuously working on improving the existing limitations. For example, in order to create a Label-Input relationship, you could simply use the <code class="highlighter-rouge">accessible-name</code> or <code class="highlighter-rouge">accessible-name-ref</code> properties of the input components in order to set the accessible name for the desired input.</p>
+
+<h2 id="accessibility-features">Accessibility Features</h2>
+
+<p>Many accessibility features are built into the core design elements upfront and are available to app teams out of the box. Keyboard navigation and interaction, tab and reading order, as well as screen reader support are fundamental features enabled in UI5 Web Components. Visualization features like high contrast themes, consistency of icons, keyboard focus visualization, layout adaptation, and support for text resizing are also available.</p>
+
+<h3 id="screen-reader-support"><strong>Screen Reader Support</strong></h3>
+
+<p>UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards support in order to aid people using screen reader software.</p>
+
+<p>Navigation with the keyboard and screen reader should work properly together. In order for this to happen, you need to use the correct ARIA attributes and to map them to their HTML counterparts. With UI5 Web Components you will receive ARIA mapped elements out of the box. For example let’s add a <code class="highlighter-rouge">ui5-combobox</code> component:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-combobox&gt;</span>
+    <span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span>
+</code></pre></div></div>
+
+<p>By doing so, you receive an input element with <code class="highlighter-rouge">role="combobox"</code> with all aria attributes relevant for this role in the shadow DOM. Also, if you set the <code class="highlighter-rouge">disabled</code> property, this will automatically add <code class="highlighter-rouge">aria-disabled="true"</code> to the shadow <code class="highlighter-rouge">combobox</code> element. Attribute mapping is available for all relevant properties - <code class="highlighter-rouge">required</code>, <code class="highlighter-rouge">disabled</code>, <code class="highlighter-rouge">readonly</code>, and more.</p>
+
+<p>In order to ease the setting of aria attributes, we have introduced properties that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility APIs section below.</p>
+
+<h3 id="keyboard-handling"><strong>Keyboard Handling</strong></h3>
+
+<p>All standard UI elements and controls are designed to be keyboard-enabled. All suitable input channels (such as mouse, keyboard, or touch) are treated equally according to the capabilities of the device or the individual preferences of the user. For example, some users may prefer using the keyboard instead of a mouse, which lets them work faster.</p>
+
+<p>Support for standard keystrokes, based on the role of the component element is available. Complex components also provide advanced keyboard handling, which is described in the Overview section of each component.</p>
+
+<h3 id="theming"><strong>Theming</strong></h3>
+
+<p>Theming is an important aspect when it comes to a UI5 Web Components application. The different colors shown on the UI need to have a good contrast to each other in order to be easily distinguishable. We ensure that the requirements for color contrast are fulfilled in all themes. High Contrast White and High Contrast Black themes are also available to support people with visual impairments.</p>
+
+<p>For more information regarding the available themes and how to use them, see the <a href="01-configuration.md">Configuration</a> section.</p>
+
+<h2 id="accessibility-apis">Accessibility APIs</h2>
+
+<p>The mapping of the accessibility APIs to ARIA attributes is described in the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>UI5 Web Components Property</th>
+      <th>HTML attribute</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">accessibleName</code></td>
+      <td><code class="highlighter-rouge">aria-label</code></td>
+      <td>Defines the text alternative of the component. If not provided a default text alternative will be set, if present.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">accessibleNameRef</code></td>
+      <td><code class="highlighter-rouge">aria-label</code></td>
+      <td>Alternative for <code class="highlighter-rouge">aria-labelledby</code>. Receives id (or many ids) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the <code class="highlighter-rouge">aria-label</code> attribute.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">accessibleRole</code></td>
+      <td><code class="highlighter-rouge">role</code></td>
+      <td>Sets the accessible aria role of the component.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">accessibilityTexts</code> (FlexibleColumnLayout)</td>
+      <td><code class="highlighter-rouge">aria-label</code></td>
+      <td>An object of strings that define several additional accessibility texts for even further customization.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">required</code></td>
+      <td><code class="highlighter-rouge">aria-required</code></td>
+      <td>Defines whether the component is required.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">readonly</code></td>
+      <td><code class="highlighter-rouge">aria-readonly</code></td>
+      <td>Defines whether the component is read-only.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">disabled</code></td>
+      <td><code class="highlighter-rouge">aria-disabled</code></td>
+      <td>Defines whether the component is disabled.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">checked</code></td>
+      <td><code class="highlighter-rouge">aria-checked</code></td>
+      <td>Defines whether the component is checked.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">level</code>, <code class="highlighter-rouge">headerLevel</code></td>
+      <td><code class="highlighter-rouge">aria-level</code></td>
+      <td>Defines the heading level of a title. Available options are: “H6” to “H1”.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">interactive</code></td>
+      <td><code class="highlighter-rouge">tabindex</code></td>
+      <td>Defines if the component is interactive (focusable and pressable).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="accessiblename">accessibleName</h3>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-combobox</span> <span class="na">accessible-name=</span><span class="s">"Enter Value"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">role=</span><span class="s">"combobox"</span> <span class="na">aria-label=</span><span class="s">"Enter value"</span> <span class="err">...</span> <span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">accessible-name</code> property is currently supported in:</p>
+<ul>
+  <li>Popups: <a href="https://sap.github.io/ui5-webcomponents/playground/components/Dialog">Dialog</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/Popover">Popover</a></li>
+  <li>User input components (e.g. <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input">Input</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton">RadioButton</a>)</li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel">Panel</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Breadcrumbs">Breadcrumbs</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Button">Button</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Icon">Icon</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/List">List</a></li>
+</ul>
+
+<hr />
+
+<h3 id="accessiblenameref">accessibleNameRef</h3>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"myLabel"</span> <span class="na">for=</span><span class="s">"myInput"</span><span class="nt">&gt;</span>Date of birth<span class="nt">&lt;/ui5-label&gt;</span>
+<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"myInput"</span> <span class="na">accessible-name-ref=</span><span class="s">"myLabel"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">aria-label=</span><span class="s">"Date of birth"</span> <span class="err">...</span> <span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">accessible-name-ref</code> property is currently supported in:</p>
+<ul>
+  <li>User input components (e.g. <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input">Input</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton">RadioButton</a>)</li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Link">Link</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Button">Button</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/List">List</a></li>
+</ul>
+
+<hr />
+
+<h3 id="accessibilitytexts">accessibilityTexts</h3>
+
+<p>This property accepts <code class="highlighter-rouge">object</code> with properties values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-flexible-column-layout</span> <span class="na">id=</span><span class="s">"component"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-flexible-column-layout&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElemetnById</span><span class="p">(</span><span class="dl">"</span><span class="s2">component</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">component</span><span class="p">.</span><span class="nx">accessibilityTexts</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">startColumnAccessibleName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Products list</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">"region"</span> <span class="na">aria-labelledby=</span><span class="s">"component-startColumnText"</span> <span class="err">...</span> <span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"component-startColumnText"</span> <span class="na">class=</span><span class="s">"ui5-hidden-text"</span> <span class="err">...</span> <span class="nt">&gt;</span>
+        Products list
+    <span class="nt">&lt;/span&gt;</span>
+    ...
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="accessiblerole">accessibleRole</h3>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-panel</span> <span class="na">accessible-role=</span><span class="s">"Complementary"</span><span class="nt">&gt;</span>
+    ...
+<span class="nt">&lt;/ui5-panel&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">"complementary"</span> <span class="err">...</span> <span class="nt">&gt;</span>
+    ...
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">accessible-role</code> property is currently supported in:</p>
+<ul>
+  <li>User input components (e.g. <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input">Input</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton">RadioButton</a>)</li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel">Panel</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/List">List</a></li>
+</ul>
+
+<hr />
+
+<h3 id="level-headerlevel">level, headerLevel</h3>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H3"</span><span class="nt">&gt;</span>Title<span class="nt">&lt;/ui5-title&gt;</span>
+...
+<span class="nt">&lt;ui5-panel</span> <span class="na">header-text=</span><span class="s">"Panel Header"</span> <span class="na">header-level=</span><span class="s">"H3"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ui5-panel&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"ui5-title-root"</span> <span class="err">...</span> <span class="nt">&gt;</span>...<span class="nt">&lt;/h3&gt;</span>
+...
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ui5-panel-root"</span> <span class="err">...</span> <span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">"heading"</span> <span class="na">aria-level=</span><span class="s">"3"</span> <span class="err">...</span><span class="nt">&gt;</span>
+        Panel Header
+    <span class="nt">&lt;/div&gt;</span>
+    ...
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p>The <code class="highlighter-rouge">level</code> property is currently supported in:</p>
+<ul>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Title">Title</a></li>
+</ul>
+
+<p>The <code class="highlighter-rouge">header-level</code> property is currently supported in:</p>
+<ul>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel">Panel</a></li>
+</ul>
+
+<hr />
+
+<h3 id="interactive">interactive</h3>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-icon</span> <span class="na">interactive</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;svg</span> <span class="na">tabindex=</span><span class="s">"0"</span> <span class="na">role=</span><span class="s">"button"</span> <span class="err">...</span> <span class="nt">&gt;&lt;/svg&gt;</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">interactive</code> property is currently supported in:</p>
+<ul>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Avatar">Avatar</a></li>
+  <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Icon">Icon</a></li>
+</ul>
+
+<hr />
+
+<h2 id="testing-accessibility">Testing Accessibility</h2>
+
+<p>UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.</p>
+
+<p>For Screen Reader Support, we recommend using JAWS 2021 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA implementation following the WCAG standards.</p>
+
+<p>Please note that reference testing environments may change over time to reflect changes in the usage of different browsers, their maintenance period, and increased accessibility compliance.</p>
+
+<p>When reporting issues with different testing environments, please ensure that the issue is not false positive, a real accessibility concern is present, and there is an impact over the users. Therefore, we recommend to retest the issue using the mentioned reference testing tools and additionally with plain HTML.</p>
+
+<p>In order to process the issues correctly, we would like to have the following information provided:</p>
+
+<p>•	Issue description</p>
+
+<p>•	Reference to the suspected violated accessibility requirement (e.g. Web Content Accessibility Guidelines, WCAG 2.0, BITV 2.0, EN 301 549)</p>
+
+<p>•	Isolated example</p>
+
+<p>•	Steps to reproduce</p>
+
+<p>•	UI5 Web Components version</p>
+
+<p>•	OS/Platform: {…}</p>
+
+<p>•	Browser: {…}</p>
+
+<p>•	Testing Tool</p>
 
 
-    <div class="page-container">
-      <div class="api-container">
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-title</code> component is used to display titles inside a page. It is a simple, large-sized text with explicit header/title semantics.
-
-<h3>ES6 Module Import</h3>
-
-<code>import "@ui5/webcomponents/dist/Title";</code>
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          level
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">TitleLevel</div>
-                        <div class="cell api-table-content-cell">&quot;H2&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the component level. Available options are: <code>"H6"</code> to <code>"H1"</code>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          wrappingType
-                            <br>
-                            <code>wrapping-type</code>
-                        </div>
-                        <div class="cell api-table-content-cell">WrappingType</div>
-                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines how the text of a component will be displayed when there is not enough space. Available options are: <ul> <li><code>None</code> - The text will be truncated with an ellipsis.</li> <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li> </ul>
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the component. <br><br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
-                    </div>
-            
-                </div>
-            
-            
-            
-          </section>
-        </section>
-      </div>
-    </div>
-    <footer class="footer-wrapper">
-      <div class="footer-links">
+<footer class="footer-wrapper">
+    <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
-      </div>
-      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
-    </footer>
-
-
-<div class="settings" id="settings-button">
-    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
-    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
-    xml:space="preserve">
-        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
-        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
-        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
-        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
-        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
-        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
-        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
-        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
-        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
-        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
-    </svg>
-</div>
-<ui5-dialog id="settings-dialog" header-text="Settings">
-    <section class="settings-form">
-        <div class="settings-content">
-            <div class="setting">
-                <ui5-label for="themeSwitch">Theme:</ui5-label>
-                <ui5-select id="themeSwitch">
-                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
-                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
-                    <ui5-option value="sap_fiori_3_hcb">Quartz High Contrast Black</ui5-option>
-                    <ui5-option value="sap_fiori_3_hcw">Quartz High Contrast White</ui5-option>
-                    <ui5-option value="sap_belize">Belize</ui5-option>
-                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
-                    <ui5-option value="sap_belize_hcw">High Contrast White</ui5-option>
-                    <ui5-option value="sap_horizon">Horizon</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
-                <ui5-select id="contentDensitySwitch">
-                    <ui5-option>Cozy</ui5-option>
-                    <ui5-option>Compact</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
-                <ui5-select id="textDirectionSwitch">
-                    <ui5-option>LTR</ui5-option>
-                    <ui5-option>RTL</ui5-option>
-                </ui5-select>
-            </div>
-        </div>
-    </section>
-    <div slot="footer" class="closing-buttons">
-        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
-        <ui5-button id="cancelButton">Cancel</ui5-button>
     </div>
-</ui5-dialog>
-
-<!-- UI5 Web Components Assests -->
-<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-
-<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
+	<img src="https://sap.github.io/ui5-webcomponents/master/ui5-webcomponents/assets/images/sap-logo-svg.svg" alt="SAP Logo" />
+</footer>
 
 <style>
-    pre {
-        margin-bottom: 0;
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
     }
-    pre.highlight {
-        padding: 1.5rem;
-        padding-bottom: 0;
-        border: 0.0625rem solid #C1C1C1;
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
     }
 </style>
+
 
           
         </div>

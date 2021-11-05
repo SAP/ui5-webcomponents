@@ -1,18 +1,5 @@
-commit c0a226efee7b6b33b83e6074e8a3b458007d8e0c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 5 09:47:42 2021 +0200
+commit bdef1e154b307a1e0c0a53b3ff8663202be2eae3
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Fri Nov 5 11:13:53 2021 +0200
 
-    feat: add SAP-icons5.0 (#4244)
-    
-    The change adds a new set of icons, based on the newly introduced **SAP-Icons5.0 font** as part of the existing **"icons" package**. The goal is to display the new icons only in Fiori Next sap_horizon theme and keep using the old icons for the rest of the themes.
-    Components and applications will keep using the current icon imports and the framework will detect the theme and render the corresponding icon from SAP-icons4.0 for Fiori 3, and SAP-icons5.0 for Fiori Next. No changes are required neither by the component developers, nor by the app developers - **backward compatible icon imports.**
-    
-    BREAKING CHANGE: The icons SVG imports are changed. If you previously had
-    ```js
-    import "@ui5/webcomponents-icons/dist/accept.svg";
-    ```
-     you have to import the SVGs from the **v4/**  or the **v5/** directory:
-    ```js
-    import "@ui5/webcomponents-icons/dist/v4/accept.svg"; //  for SAPIcons4.0
-    import "@ui5/webcomponents-icons/dist/v5/accept.svg"; // for SAPIcons5.0
-    ```
+    docs: add accessibility documentation (#4271)
