@@ -1,7 +1,5 @@
-commit 535d0e54723a273a255a985fa662322faf5a275c
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Nov 5 13:52:42 2021 +0200
+commit 847a83d309750273e2ac9ceb746608233a893b67
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Nov 5 14:39:03 2021 +0200
 
-    fix(ui5-date-picker): Hover state on readonly is now fixed (#4272)
-    
-    fix(ui5-date-picker): Hover state on readonly is now fixed
+    chore: lit-html 2 works fully on IE11 (#4277)
