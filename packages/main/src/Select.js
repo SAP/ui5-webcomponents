@@ -701,6 +701,20 @@ class Select extends UI5Element {
 		&& this.responsivePopover.opened) ? "-1" : "0";
 	}
 
+	 /**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get classes() {
 		return {
 			popoverValueState: {
@@ -709,6 +723,9 @@ class Select extends UI5Element {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+			popover: {
+				"ui5-valuestatemessage-popover": this.hasValueState,
 			},
 		};
 	}
