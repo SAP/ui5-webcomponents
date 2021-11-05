@@ -6,8 +6,8 @@ const fnToHex = (iChar, iLength) => {
 	return sHex;
 };
 
-const rHtml = /[\x00-\x2b\x2f\x3a-\x40\x5b-\x5e\x60\x7b-\xff\u2028\u2029]/g,
-	rHtmlReplace = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]/,
+const rHtml = /[\x00-\x2b\x2f\x3a-\x40\x5b-\x5e\x60\x7b-\xff\u2028\u2029]/g, // eslint-disable-line
+	rHtmlReplace = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]/, // eslint-disable-line
 	mHtmlLookup = {
 		"<": "&lt;",
 		">": "&gt;",

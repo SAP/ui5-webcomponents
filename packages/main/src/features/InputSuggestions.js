@@ -481,14 +481,14 @@ class Suggestions {
 		let text = suggestion.text || suggestion.textContent;
 		text = this.sanitizeText(text);
 
-		return this.hightlightInput(text, input);
+		return this.hightlightInput(text, this.sanitizeText(input));
 	}
 
 	getHighlightedDesc(suggestion, input) {
-		let text = suggestion.description;
+		let text = suggestion.description || "";
 		text = this.sanitizeText(text);
 
-		return this.hightlightInput(text, input);
+		return this.hightlightInput(text, this.sanitizeText(input));
 	}
 
 	hightlightInput(text, input) {

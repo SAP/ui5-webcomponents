@@ -677,10 +677,31 @@ describe("XSS tests for suggestions", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		const btn = await $("#xss-btn");
-		const span = await $("xss-result");
+		const span = await $("#xss-result");
 
 		await btn.click();
 
-		assert.strictEqual(span.text(), "NO XSS", "No XSS issues found")
+		assert.strictEqual(await span.getText(), "NO XSS", "No XSS issues found")
+	});
+
+	it("Tests dangerous items highlighting", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#xss-input");
+
+		await input.keys("[");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#xss-input");
+		const listItems = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
+		const expected = [
+			"",
+			"<b></b>",
+			"[b]test[/b]",
+			"[[[b]]]",
+		];
+
+		listItems.forEach(async (item, index) => {
+			assert.strictEqual(await item.getText(), expected[index], "Items text should be escaped");
+		});
 	});
 });
