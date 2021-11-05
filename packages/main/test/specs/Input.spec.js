@@ -671,3 +671,16 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
 	});
 });
+
+describe("XSS tests for suggestions", () => {
+	it("add suggestion item with XSS", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const btn = await $("#xss-btn");
+		const span = await $("xss-result");
+
+		await btn.click();
+
+		assert.strictEqual(span.text(), "NO XSS", "No XSS issues found")
+	});
+});
