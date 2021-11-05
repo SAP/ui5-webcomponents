@@ -9,7 +9,7 @@
 :host {
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
-	border: var(--_ui5_step-input_border_style);
+	border: var(--_ui5_step_input_border_style);
 	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
 	height: var(--_ui5_input_height);
@@ -20,11 +20,64 @@
 	text-align: inherit;
 }
 
-:host(:not([value-state]):not([readonly]):not([disabled]):hover),
-:host([value-state=None]:not([readonly]):not([disabled]):hover) {
-	background-color: var(--sapField_Hover_Background);
-	border: var(--_ui5_step-input_border_style_hover);
+:host(:not([value-state]):not([readonly]):not([disabled])){
+	box-shadow: none;
 }
+
+:host([value-state=Success]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_SuccessBackground);
+}
+
+:host([value-state=Error]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_InvalidBackground);
+}
+
+:host([value-state=Information]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_InformationBackground);
+}
+
+:host([value-state=Warning]:not([readonly]):not([disabled])) {
+	background-color: var(--sapField_WarningBackground);
+}
+
+:host(:not([value-state]):not([readonly]):not([disabled]):not([focused]):hover),
+:host([value-state=None]:not([readonly]):not([disabled]):not([focused]):hover) {
+	background-color: var(--sapField_Hover_Background);
+	border: var(--_ui5_step_input_border_style_hover);
+	box-shadow: var(--_ui5-input-hover-box-shadow);
+}
+
+:host([value-state=Success]:not([readonly]):not([disabled]):not([focused]):hover) {
+	box-shadow: var(--_ui5-input-value-state-success-hover-box-shadow);
+}
+
+:host([value-state=Information]:not([readonly]):not([disabled]):not([focused]):hover) {
+	box-shadow: var(--_ui5-input-value-state-information-hover-box-shadow);
+}
+
+:host([value-state=Warning]:not([readonly]):not([disabled]):not([focused]):hover) {
+	box-shadow: var(--_ui5-input-value-state-warning-hover-box-shadow);
+}
+
+:host([value-state=Error]:not([readonly]):not([disabled]):not([focused]):hover) {
+	box-shadow: var(--_ui5-input-value-state-error-hover-box-shadow);
+}
+
+:host([value-state=Success]:not([readonly]):not([disabled]):hover),
+:host([value-state=Error]:not([readonly]):not([disabled]):hover),
+:host([value-state=Information]:not([readonly]):not([disabled]):hover),
+:host([value-state=Warning]:not([readonly]):not([disabled]):hover) {
+	background-color: var(--_ui5_step_input_button_state_hover_backgroun_color);
+}
+
+:host(:not([value-state]):not([readonly]):not([disabled])[focused]),
+:host([value-state=None]:not([readonly]):not([disabled])[focused]),
+:host([value-state=Success]:not([readonly]):not([disabled])[focused]),
+:host([value-state=Error]:not([readonly]):not([disabled])[focused]),
+:host([value-state=Information]:not([readonly]):not([disabled])[focused]),
+:host([value-state=Warning]:not([readonly]):not([disabled])[focused]){
+	background-color: var(--sapField_Focus_Background);
+} 
 
 :host([value-state=Success]:not([readonly]):not([disabled]))::after,
 :host([value-state=Error]:not([readonly]):not([disabled]))::after,
@@ -70,7 +123,7 @@
 }
 
 :host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input:hover {
-	background-color: var(--_ui5_step-input-input_error_background_color);
+	background-color: var(--_ui5_step_input_input_error_background_color);
 }
 :host([value-state]:not([value-state="None"]) .ui5-step-input-input[focused]) {
 		outline: none;
@@ -80,10 +133,10 @@
 	width: 100%;
 	color: inherit;
 	background-color: inherit;
-	border: var(--_ui5_step-input-input_border);
+	border: var(--_ui5_step_input_input_border);
 	box-sizing: border-box;
 	vertical-align: top;
-	margin-top: var(--_ui5_step-input-input_margin_top);
+	margin-top: var(--_ui5_step_input_input_margin_top);
 	min-width: 9.125rem;
 	position: relative;
 	padding: 0px 2.5rem 0px 2.4375rem;
@@ -92,6 +145,11 @@
 
 :host .ui5-step-input-input[readonly] { 
 	padding: 0;
+}
+
+:host .ui5-step-input-input:hover,
+:host .ui5-step-input-input[focused]{
+	box-shadow: none;
 }
 
 :host .ui5-step-input-root {
@@ -112,10 +170,10 @@
 
 :host .ui5-step-icon {
 	position: absolute;
-	display: var(--_ui5_step-input_button_display);
+	display: var(--_ui5_step_input_button_display);
 	height: 2rem;
 	height: 100%;
-	background-color: var(--_ui5_step-input_button_background-color);
+	background-color: var(--_ui5_step_input_button_background-color);
 	z-index: 2;
 }
 
@@ -125,11 +183,11 @@
 }
 
 :host .ui5-step-icon.ui5-step-dec {
-	left: var(--_ui5_step-input_button_left);
+	left: var(--_ui5_step_input_button_left);
 }
 
 :host .ui5-step-icon.ui5-step-inc {
-	right: var(--_ui5_step-input_button_right);
+	right: var(--_ui5_step_input_button_right);
 }
 
 :host .ui5-step-icon *:not([clickable]),
@@ -146,18 +204,14 @@
 	color: var(--sapContent_IconColor);
 }
 
-:host .ui5-step-icon [input-icon]:not([pressed]):not(:active):hover,
-:host .ui5-step-icon [input-icon]:not([pressed]):hover {
-	box-shadow: none;
-}
-
 :host .ui5-step-input-input[focused]::after {
 	position: absolute;
 	content: "";
-	border: var(--_ui5_step-input-input_border_focused_after);
-	top: 1px;
+	border: var(--_ui5_step_input_input_border_focused_after);
+	top: var(--_ui5_step_input_input_border_top_bottom_focused_after);
 	right: 0px;
-	bottom: 1px;
+	bottom: var(--_ui5_step_input_input_border_top_bottom_focused_after);
+	border-radius: var(--_ui5_step_input_input_border_radius_focused_after);
 	left: 0px;
 	outline: none;
 	pointer-events: none;
@@ -168,29 +222,20 @@
 	outline: none;
 }
 
-:host([value-state]:not([value-state=None]):not([value-state=Success]):not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	top: 2px;
-	right: 1px;
-	bottom: 2px;
-	left: 1px;
+:host([value-state=Information]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
+	border-color: var(--_ui5_step_input_input_information_border_color_focused_after);
 }
 
-:host([value-state=Information]:not([readonly]):not([disabled]))::after {
-	border-color: var(--sapField_InformationColor);
-	border-width: var(--_ui5-input-information_border_width);
+:host([value-state=Warning]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
+	border-color: var(--_ui5_step_input_input_warning_border_color_focused_after);
 }
 
-:host([value-state=Warning]:not([readonly]):not([disabled]))::after {
-	border-color: var(--sapField_WarningColor);
+:host([value-state=Success]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
+	border-color: var(--_ui5_step_input_input_success_border_color_focused_after);
 }
 
-:host([value-state=Success]:not([readonly]):not([disabled]))::after {
-	border-color: var(--sapField_SuccessColor);
-	border-width: 1px;
-}
-
-:host([value-state=Error]:not([readonly]):not([disabled]))::after {
-	border-color: var(--sapField_InvalidColor);
+:host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
+	border-color: var(--_ui5_step_input_input_error_border_color_focused_after);
 }
 
 /* Disable spin buttons in Chrome, Safari, Edge, Opera */
@@ -214,27 +259,4 @@
 
 :host([disabled]) .ui5-step-icon [ui5-icon] {
 	color: var(--sapField_ReadOnly_BorderColor);
-}
-
-:host([value-state=Success]:not([readonly]):not([disabled]):hover),
-:host([value-state=Error]:not([readonly]):not([disabled]):hover),
-:host([value-state=Information]:not([readonly]):not([disabled]):hover),
-:host([value-state=Warning]:not([readonly]):not([disabled]):hover) {
-	background-color: var(--_ui5-step_input_button_state_hover_backgroun_color);
-}
-
-:host([value-state=Success]:not([readonly]):not([disabled])) {
-	background-color: var(--sapField_SuccessBackground);
-}
-
-:host([value-state=Error]:not([readonly]):not([disabled])) {
-	background-color: var(--sapField_InvalidBackground);
-}
-
-:host([value-state=Information]:not([readonly]):not([disabled])) {
-	background-color: var(--sapField_InformationBackground);
-}
-
-:host([value-state=Warning]:not([readonly]):not([disabled])) {
-	background-color: var(--sapField_WarningBackground);
 }

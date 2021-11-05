@@ -187,6 +187,14 @@ const metadata = {
 		},
 
 		/**
+		 * Indicates whether the input is focssed
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
 		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
@@ -474,11 +482,13 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputFocusIn() {
+		this.focused=true
 		this._inputFocused = true;
 	}
 
 	_onInputFocusOut() {
 		this._inputFocused = false;
+		this.focused = false;
 		this._onInputChange();
 	}
 
@@ -531,6 +541,8 @@ class StepInput extends UI5Element {
 			this._validate();
 			this._setButtonState();
 			this._focused = true;
+			this.focused = true;
+			this.setAttribute("focused", "");
 			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
 				this._fireChangeEvent();
@@ -568,10 +580,12 @@ class StepInput extends UI5Element {
 	}
 
 	_onfocusin() {
+		this.focused = true;
 		this._focused = true;
 	}
 
 	_onfocusout() {
+		this.focused = false;
 		this._focused = false;
 	}
 
@@ -620,10 +634,6 @@ class StepInput extends UI5Element {
 		if (!this._incIconDisabled) {
 			this._spinValue(true, true);
 		}
-	}
-
-	get hasNotReadOnly() {
-		return !this.readonly;
 	}
 
 	/**
