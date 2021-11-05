@@ -1,5 +1,5 @@
-commit 24ff1458020fb1ba1fa023fcfd33bf71132c7748
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Fri Nov 5 11:44:09 2021 +0200
+commit b053ad005ebc24c1909b4e40918078d336dd92f9
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Nov 5 12:20:39 2021 +0200
 
-    fix(ui5-tab-container): selector fixed (#4261) (#4273)
+    fix(ui5-product-switch): adapt focus styles to sap_horizon (#4276)
