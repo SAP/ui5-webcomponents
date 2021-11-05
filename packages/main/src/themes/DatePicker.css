@@ -36,7 +36,11 @@
 	word-spacing: inherit;
 }
 
+:host .ui5-date-picker-input[focused] {
+	background-color: var(--_ui5-datepicker-hover-background);
+}
+
 [slot="icon"] {
-	border-top-right-radius: var(--_ui5-datepicker_border_radius);
-    border-bottom-right-radius: var(--_ui5-datepicker_border_radius);
+	border-top-right-radius: var(--_ui5-datepicker_icon_border_radius);
+    border-bottom-right-radius: var(--_ui5-datepicker_icon_border_radius);
 }
