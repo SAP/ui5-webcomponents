@@ -5309,7 +5309,7 @@ has at least a default slot.</p>
 
 <p>For this task, you can again use standard DOM methods:</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">myMessage</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">myMessage</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-message-strip</span><span class="dl">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 <span class="nx">myMessage</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
 	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">The user dismissed the message</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">});</span>

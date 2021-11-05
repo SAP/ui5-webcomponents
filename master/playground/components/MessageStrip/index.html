@@ -5094,22 +5094,22 @@
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-messagestrip&gt;</div>
+<div class="control-tag">&lt;ui5-message-strip&gt;</div>
 
 <section>
 	<h3>MessageStrip</h3>
 	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom" design="Information">Information MessageStrip</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Positive">Positive MessageStrip</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Negative">Negative MessageStrip</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Warning">Warning MessageStrip</ui5-messagestrip>
+		<ui5-message-strip class="samples-margin-bottom" design="Information">Information MessageStrip</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Positive">Positive MessageStrip</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Negative">Negative MessageStrip</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Warning">Warning MessageStrip</ui5-message-strip>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Information"</span><span class="nt">&gt;</span>Information MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>Positive MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Negative MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Warning MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Information"</span><span class="nt">&gt;</span>Information MessageStrip<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>Positive MessageStrip<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Negative MessageStrip<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Warning MessageStrip<span class="nt">&lt;/ui5-message-strip&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-message-strip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 			<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
 		<span class="p">});</span>
@@ -5121,32 +5121,32 @@
 <section>
 	<h3>MessageStrip With No Close Button</h3>
 	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom" design="Information" hide-close-button>Information MessageStrip With No Close Button</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Positive" hide-close-button>Positive MessageStrip With No Close Button</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Negative" hide-close-button>Negative MessageStrip With No Close Button</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Warning" hide-close-button>Warning MessageStrip With No Close Button</ui5-messagestrip>
+		<ui5-message-strip class="samples-margin-bottom" design="Information" hide-close-button>Information MessageStrip With No Close Button</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Positive" hide-close-button>Positive MessageStrip With No Close Button</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Negative" hide-close-button>Negative MessageStrip With No Close Button</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Warning" hide-close-button>Warning MessageStrip With No Close Button</ui5-message-strip>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Information"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Information MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Positive MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Negative MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Warning MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Information"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Information MessageStrip With No Close Button<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Positive MessageStrip With No Close Button<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Negative MessageStrip With No Close Button<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Warning MessageStrip With No Close Button<span class="nt">&lt;/ui5-message-strip&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
 	<h3>MessageStrip With No Icon</h3>
 	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom" design="Information" hide-icon>Information MessageStrip With No Icon</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Positive" hide-icon>Positive MessageStrip With No Icon</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Negative" hide-icon>Negative MessageStrip With No Icon</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" design="Warning" hide-icon>Warning MessageStrip With No Icon</ui5-messagestrip>
+		<ui5-message-strip class="samples-margin-bottom" design="Information" hide-icon>Information MessageStrip With No Icon</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Positive" hide-icon>Positive MessageStrip With No Icon</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Negative" hide-icon>Negative MessageStrip With No Icon</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom" design="Warning" hide-icon>Warning MessageStrip With No Icon</ui5-message-strip>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Information"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Information MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Positive MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Negative MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Warning MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Information"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Information MessageStrip With No Icon<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Positive MessageStrip With No Icon<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Negative MessageStrip With No Icon<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Warning MessageStrip With No Icon<span class="nt">&lt;/ui5-message-strip&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-message-strip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 			<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
 		<span class="p">});</span>
@@ -5158,21 +5158,21 @@
 <section>
 	<h3>Custom MessageStrip</h3>
 	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Information" hide-icon hide-close-button>You have new message.</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Positive" hide-close-button>Successfull login!</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Negative" hide-icon>Access denied!</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Warning">Update is required.</ui5-messagestrip>
-        <ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Warning"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-messagestrip>
-        <ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Positive"><img src="../../../assets/images/loading.gif" width="16" height="16" slot="icon">Custom animated gif</ui5-messagestrip>
+		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Information" hide-icon hide-close-button>You have new message.</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Positive" hide-close-button>Successfull login!</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Negative" hide-icon>Access denied!</ui5-message-strip>
+		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Warning">Update is required.</ui5-message-strip>
+        <ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Warning"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-message-strip>
+        <ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Positive"><img src="../../../assets/images/loading.gif" width="16" height="16" slot="icon">Custom animated gif</ui5-message-strip>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Information"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">hide-icon</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>You have new message.<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Successfull login!<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Access denied!<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;</span>Update is required.<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"palette"</span> <span class="na">slot=</span><span class="s">"icon"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>Custom icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"../../../assets/images/loading.gif"</span> <span class="na">width=</span><span class="s">"16"</span> <span class="na">height=</span><span class="s">"16"</span> <span class="na">slot=</span><span class="s">"icon"</span><span class="nt">&gt;</span>Custom animated gif<span class="nt">&lt;/ui5-messagestrip&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Information"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">hide-icon</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>You have new message.<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">hide-close-button</span><span class="nt">&gt;</span>Successfull login!<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">hide-icon</span><span class="nt">&gt;</span>Access denied!<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;</span>Update is required.<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Warning"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"palette"</span> <span class="na">slot=</span><span class="s">"icon"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>Custom icon<span class="nt">&lt;/ui5-message-strip&gt;</span>
+<span class="nt">&lt;ui5-message-strip</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"../../../assets/images/loading.gif"</span> <span class="na">width=</span><span class="s">"16"</span> <span class="na">height=</span><span class="s">"16"</span> <span class="na">slot=</span><span class="s">"icon"</span><span class="nt">&gt;</span>Custom animated gif<span class="nt">&lt;/ui5-message-strip&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-message-strip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 			<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
 		<span class="p">});</span>
@@ -5182,7 +5182,7 @@
 </section>
 
 	<script>
-		[].slice.call(document.querySelectorAll("ui5-messagestrip")).forEach(function(messageStrip) {
+		[].slice.call(document.querySelectorAll("ui5-message-strip")).forEach(function(messageStrip) {
 			messageStrip.addEventListener("close", function() {
 				messageStrip.parentNode.removeChild(messageStrip);
 			});
@@ -5195,11 +5195,11 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-messagestrip</code> component enables the embedding of app-related messages. It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative. Each message can have a Close button, so that it can be removed from the UI, if needed.
+The <code>ui5-message-strip</code> component enables the embedding of app-related messages. It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative. Each message can have a Close button, so that it can be removed from the UI, if needed.
 
 <h3>Usage</h3>
 
-For the <code>ui5-messagestrip</code> component, you can define whether it displays an icon in the beginning and a close button. Moreover, its size and background can be controlled with CSS.
+For the <code>ui5-message-strip</code> component, you can define whether it displays an icon in the beginning and a close button. Moreover, its size and background can be controlled with CSS.
 
 <h3>ES6 Module Import</h3>
 
