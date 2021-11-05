@@ -187,14 +187,6 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates whether the input is focused
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
-
-		/**
 		 * Sets the accessible aria name of the component.
 		 *
 		 * @type {String}
@@ -228,9 +220,12 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_focused: {
+		/**
+		 * @type {Boolean}
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
-			noAttribute: true,
 		},
 
 		_inputFocused: {
@@ -429,7 +424,7 @@ class StepInput extends UI5Element {
 	}
 
 	get _isFocused() {
-		return this._focused;
+		return this.focused;
 	}
 
 	get _valuePrecisioned() {
@@ -482,13 +477,11 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputFocusIn() {
-		this.focused = true;
 		this._inputFocused = true;
 	}
 
 	_onInputFocusOut() {
 		this._inputFocused = false;
-		this.focused = false;
 		this._onInputChange();
 	}
 
@@ -540,7 +533,6 @@ class StepInput extends UI5Element {
 			this.value = value;
 			this._validate();
 			this._setButtonState();
-			this._focused = true;
 			this.focused = true;
 			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
@@ -580,12 +572,10 @@ class StepInput extends UI5Element {
 
 	_onfocusin() {
 		this.focused = true;
-		this._focused = true;
 	}
 
 	_onfocusout() {
 		this.focused = false;
-		this._focused = false;
 	}
 
 	_onkeydown(event) {
