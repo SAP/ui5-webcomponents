@@ -1,5 +1,5 @@
-commit 847a83d309750273e2ac9ceb746608233a893b67
+commit d72c353bbbecc8de54b89d8be7f2e40c146c73b6
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Nov 5 14:39:03 2021 +0200
+Date:   Fri Nov 5 15:28:43 2021 +0200
 
-    chore: lit-html 2 works fully on IE11 (#4277)
+    chore: fix font format (#4279)
