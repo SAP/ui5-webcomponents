@@ -1,10 +1,18 @@
-commit ec30ec2191e3a1d4fa98449e41fd3d8481693486
+commit c0a226efee7b6b33b83e6074e8a3b458007d8e0c
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 5 08:58:51 2021 +0200
+Date:   Fri Nov 5 09:47:42 2021 +0200
 
-    refactor(ui5-message-strip): rename tag name (#4268)
+    feat: add SAP-icons5.0 (#4244)
     
-    Change tag name to ui5-message-strip to be consistent with components that may come in future, such as ui5-message-popover, ui5-message-dialog, ui5-message-*.
-    Thanks to the altTag metadata entry, the old tag will still work, not to break consumers immediately, and later-on we can remove the altTag as well.
+    The change adds a new set of icons, based on the newly introduced **SAP-Icons5.0 font** as part of the existing **"icons" package**. The goal is to display the new icons only in Fiori Next sap_horizon theme and keep using the old icons for the rest of the themes.
+    Components and applications will keep using the current icon imports and the framework will detect the theme and render the corresponding icon from SAP-icons4.0 for Fiori 3, and SAP-icons5.0 for Fiori Next. No changes are required neither by the component developers, nor by the app developers - **backward compatible icon imports.**
     
-    BREAKING CHANGE: MessageStrip component's tag name has been renamed from ui5-messagestrip to ui5-message-strip.
+    BREAKING CHANGE: The icons SVG imports are changed. If you previously had
+    ```js
+    import "@ui5/webcomponents-icons/dist/accept.svg";
+    ```
+     you have to import the SVGs from the **v4/**  or the **v5/** directory:
+    ```js
+    import "@ui5/webcomponents-icons/dist/v4/accept.svg"; //  for SAPIcons4.0
+    import "@ui5/webcomponents-icons/dist/v5/accept.svg"; // for SAPIcons5.0
+    ```
