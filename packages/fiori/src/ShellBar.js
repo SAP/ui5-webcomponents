@@ -765,7 +765,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>logo</code> DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get logoDomRef() {
@@ -773,7 +776,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>copilot</code> DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get copilotDomRef() {
@@ -781,7 +787,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>notifications</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get notificationsDomRef() {
@@ -789,15 +798,21 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>overflow</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get overflowlogoDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="notifications"]`);
+	get overflowDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="overflow"]`);
 	}
 
 	/**
+	 * Returns the <code>profile</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get profileDomRef() {
@@ -805,7 +820,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>product-switch</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get productSwitchDomRef() {
