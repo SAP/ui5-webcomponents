@@ -12,6 +12,7 @@ nav_exclude: true
     <link rel="stylesheet" href="{{"/assets/css/NEW-landing-page.css" | absolute_url}}">
     <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3,react,angular,vue">
     <link type="image/x-icon" href="{{"assets/images/favicon.ico" | absolute_url}}" rel="shortcut icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism.css">
     <script id="sap-ui-config" type="application/json">
         {
             "theme": "sap_fiori_3",
@@ -19,6 +20,7 @@ nav_exclude: true
         }
     </script>
 
+    <script src="{{ "/assets/js/landing-page.js" | absolute_url }}"></script>
     <script src="{{"/assets/js/webcomponentsjs/webcomponents-loader.js" | absolute_url }}"></script>
     <script type="module" src="{{"/assets/js/ui5-webcomponents/bundle.esm.js" | absolute_url}}"></script>
     <script nomodule src="{{"/assets/js/ui5-webcomponents/bundle.es5.js" | absolute_url}}"></script>
@@ -41,10 +43,12 @@ nav_exclude: true
         </a>
     </nav>
 
-    <div class="background-1">
-        <img src="{{ "/assets/images/background1.png" | absolute_url }}">
-    </div>
     <section class="content">
+        <div class="background">
+            <img src="{{ "/assets/images/background-1440.png" | absolute_url }}">
+            <img src="{{ "/assets/images/background-768.png" | absolute_url }}" class="background-small">
+        </div>
+
        <section class="header">
            <div class="title-wrapper">
                 <div class="title">
@@ -55,10 +59,165 @@ nav_exclude: true
 
                 <a href="{{ page.documentation }}" class="get-started-button">Get Started</a>
            </div>
-           <div class="huge-logo-wrapper">
+           <div>
                <img src="{{ "/assets/images/huge_logo.png" | absolute_url }}">
            </div>
        </section>
+
+        <section class="illustration-sections-wrapper">
+            <section class="illustration-section">
+                <img src="{{ "/assets/images/frame.png" | absolute_url }}">
+                <div class="text-wrapper">
+                    <h2>Easy to consume</h2>
+                    <span>Based on web standards - just HTML!</span>
+                    <span>Future-proof.</span>
+                    <span>Easy to add to your project.</span>
+                </div>
+            </section>
+
+            <section class="illustration-section">
+                <div class="text-wrapper right-align">
+                    <h2>Lightweight</h2>
+                    <span>Tiny - come with a minimal footprint.</span>
+                    <span>Modular - take only the parts you need.</span>
+                    <span>Fast - built with performance in mind.</span>
+                </div>
+                <img src="{{ "/assets/images/hand.png" | absolute_url }}">
+            </section>
+
+            <section class="illustration-section">
+                <img src="{{ "/assets/images/buildings.png" | absolute_url }}">
+                <div class="text-wrapper">
+                    <h2>Enterprise Ready</h2>
+                    <span>Implement the SAP Fiori design language.</span>
+                    <span>Feature-rich</span>
+                    <span>Secure, accessible, themeable, i18n-ready.</span>
+                </div>
+            </section>
+        </section>
+
+        <section class="example">
+            <h2>Test the UI5 Web Components</h2>
+            <div>
+                <div class="example-field">
+                    <ui5-date-picker></ui5-date-picker>
+                </div>
+                <div class="example-field">
+                    <pre><code class="language-html">&lt;ui5-date-picker>&lt;/ui5-date-picker></code></pre>
+                </div>
+
+            </div>
+            <a class="codesandbox-link" href="https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html" target="_blank">CodeSandBox</a>
+        </section>
+
+        <section class="frameworks-section">
+            <h2>Try Out the Demo Apps</h2>
+            <div class="frameworks">
+                <div class="framework-wrapper">
+                    <img src="{{ "/assets/images/react.svg" | absolute_url }}" alt="ReactJS">
+                    <a href="https://github.com/SAP-samples/ui5-webcomponents-sample-react">Explore the Code</a>
+                    <a href="https://sap-samples.github.io/ui5-webcomponents-sample-react/">Run the Demo App</a>
+                </div>
+
+                <div class="framework-wrapper">
+                    <img src="{{ "/assets/images/angular.svg" | absolute_url }}" alt="ReactJS">
+                    <a href="https://github.com/SAP-samples/ui5-webcomponents-sample-angular">Explore the Code</a>
+                    <a href="https://sap-samples.github.io/ui5-webcomponents-sample-angular/">Run the Demo App</a>
+                </div>
+
+                <div class="framework-wrapper">
+                    <img src="{{ "/assets/images/vue.svg" | absolute_url }}" alt="ReactJS">
+                    <a href="https://github.com/SAP-samples/ui5-webcomponents-sample-vue">Explore the Code</a>
+                    <a href="https://sap-samples.github.io/ui5-webcomponents-sample-vue/">Run the Demo App</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="compatibility">
+            <div>
+                <h2>Framework Compatibility</h2>
+                <div>
+                    <img src="{{ "/assets/images/logo.png" | absolute_url }}" alt="OpenUI5">
+                    <img src="{{ "/assets/images/angular.svg" | absolute_url }}" alt="Angular">
+                    <img src="{{ "/assets/images/vue.svg" | absolute_url }}" alt="Vue">
+                    <img src="{{ "/assets/images/react.svg" | absolute_url }}" alt="React">
+                </div>
+            </div>
+            <div>
+                <h2>Browser Compatibility</h2>
+                <div>
+                    <img src="{{ "/assets/images/chrome.svg" | absolute_url }}" alt="Chrome">
+                    <img src="{{ "/assets/images/firefox.svg" | absolute_url }}" alt="Firefox">
+                    <img src="{{ "/assets/images/edge.png" | absolute_url }}" alt="Edge">
+                    <img src="{{ "/assets/images/safari.svg" | absolute_url }}" alt="Safari">
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2>Testimonials</h2>
+
+            <div>
+                <ui5-icon name="navigation-left-arrow" interactive></ui5-icon>
+
+                <div class="dynamic-testimonials">
+                    <div class="testimonial visible">
+                        <div>1. Lorem ex elit deserunt proident et aute do excepteur.</div>
+                        <img src="{{ "/assets/images/successfactor-logo.png" | absolute_url }}" alt="SuccessFactors Logo">
+                    </div>
+                    
+                    <div class="testimonial">
+                        <div>2. Ex culpa id ea qui sint ut nisi.</div>
+                        <img src="{{ "/assets/images/fieldglass-logo.png" | absolute_url }}" alt="SuccessFactors Logo">
+                    </div>
+                    
+                    <div class="testimonial">
+                        <div>3. Est mollit incididunt irure sunt cupidatat officia.</div>
+                        <img src="{{ "/assets/images/successfactor-logo.png" | absolute_url }}" alt="SuccessFactors Logo">
+                    </div>
+                </div>
+
+                <ui5-icon name="navigation-right-arrow" interactive></ui5-icon>
+            </div>
+        </section>
+
+        <footer>
+            <div>
+                <img src="{{ "/assets/images/sap-negative.png" | absolute_url }}" alt="SAP Logo">
+            </div>
+            <div class="footer-community">
+                <h2>Community</h2>
+                <div>
+                    <img src="{{ "/assets/images/twitter-negative.png" | absolute_url }}" alt="Twitter Link">
+                    <img src="{{ "/assets/images/slack-negative.png" | absolute_url }}" alt="Slack Link">
+                    <img src="{{ "/assets/images/youtube-negative.png" | absolute_url }}" alt="YouTube Link">
+                    <img src="{{ "/assets/images/github.png" | absolute_url }}" alt="GitHub Link">
+                </div>
+            </div>
+            <div>
+                <h2>Docs</h2>
+                <div class="links-wrapper">
+                    <a href="https://sap.github.io/ui5-webcomponents/master/playground/">Playground</a>
+                    <a href="https://sap.github.io/ui5-webcomponents/master/playground/getting-started">Documentation</a>
+                    <a href="https://sap.github.io/ui5-webcomponents/master/playground/faq">FAQ</a>
+                </div>
+            </div>
+            <div>
+                <h2>Legal & Privacy</h2>
+                <div class="links-wrapper">
+                    <a href="https://www.sap.com/about/legal/impressum.html">Legal Disclosure</a>
+                    <a href="https://www.sap.com/about/legal/privacy.html">Privacy</a>
+                </div>
+            </div>
+            <div>
+                <h2>Contact Us</h2>
+                <div class="links-wrapper">
+                    <a href="https://github.com/SAP/ui5-webcomponents/issues/new">Report issue</a>
+                    <a href="https://openui5.slack.com/">Techincal Questions</a>
+                    <a href="mailto:openui5@sap.com?subject=[UI5 Web Components]">Product Questions</a>
+                </div>
+            </div>
+        </footer>
     </section>
 </body>
 </html>
