@@ -229,6 +229,10 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
+	onBeforeRendering() {
+		this._preprocessItems();
+	}
+
 	onAfterRendering() {
 		this._cacheWidths();
 		this._updateOverflow();
@@ -434,6 +438,16 @@ class Breadcrumbs extends UI5Element {
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
 	}
 
+	_preprocessItems() {
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.getDomRef().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
+			item._getOverflowDomRef = async () => {
+				this.responsivePopover = await this._respPopover();
+				return this.responsivePopover.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
+			};
+		});
+	}
+
 	getCurrentLocationLabelWrapper() {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
 	}
@@ -539,6 +553,10 @@ class Breadcrumbs extends UI5Element {
 
 	get _cancelButtonText() {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
+	}
+
+	get moreLinkDomRef() {
+		return this.shadowRoot.querySelector(`[data-ui5-stable*="moreLink"]`);
 	}
 
 	static get dependencies() {
