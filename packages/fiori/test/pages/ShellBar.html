@@ -270,6 +270,12 @@
 			window["result-key"].value = item.getAttribute("data-key");
 		});
 
+		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
+			item.addEventListener("item-click", function(event) {
+				wcToastTC.show();
+			});
+		});
+
 		["disc", "call"].forEach(function(id) {
 			var currenItem = window[id][0] || window[id];
 			currenItem.addEventListener("ui5-click", function(event) {
