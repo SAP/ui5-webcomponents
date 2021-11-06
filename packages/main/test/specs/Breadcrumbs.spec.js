@@ -6,28 +6,19 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 	});
 
-	it("tests getDomRef and getOverflowDomRef", async () => {
-		const testData = await browser.executeAsync(async (done) => {
-			const breadCrumbsItemInOverflow = document.getElementById("firstItemWithACCName");
+	it("tests getDomRef", async () => {
+		const res = await browser.executeAsync(async (done) => {
 			const breadCrumbsItemOutOfOverflow = document.getElementById("lastItemWithACCName");
 
 			// act
-			const res1 = {
-				item: breadCrumbsItemInOverflow,
-				realDomRef: await breadCrumbsItemInOverflow.getOverflowDomRef(),
-			};
-			const res2 = {
+			done({
 				item: breadCrumbsItemOutOfOverflow,
 				realDomRef: breadCrumbsItemOutOfOverflow.getDomRef(),
-			};
-
-			done([res1, res2]);
+			});
 		});
 
 		// assert
-		assert.strictEqual(testData[0].item["_id"], testData[0].realDomRef["_id"],
-			"getOverflowDomRef corrcetly returns the matching 'ui5-li' inside the overflow.");
-		assert.strictEqual(testData[1].item["_id"], testData[1].realDomRef["_id"],
+		assert.strictEqual(res.item["_id"], res.realDomRef["_id"],
 			"getDomRef corrcetly returns the matching ui5-link outside the overflow.");
 	});
 

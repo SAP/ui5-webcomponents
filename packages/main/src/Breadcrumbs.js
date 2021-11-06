@@ -441,10 +441,6 @@ class Breadcrumbs extends UI5Element {
 	_preprocessItems() {
 		this.items.forEach(item => {
 			item._getRealDomRef = () => this.getDomRef().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
-			item._getOverflowDomRef = async () => {
-				this.responsivePopover = await this._respPopover();
-				return this.responsivePopover.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
-			};
 		});
 	}
 
@@ -553,10 +549,6 @@ class Breadcrumbs extends UI5Element {
 
 	get _cancelButtonText() {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
-	}
-
-	get moreLinkDomRef() {
-		return this.shadowRoot.querySelector(`[data-ui5-stable*="moreLink"]`);
 	}
 
 	static get dependencies() {

@@ -96,16 +96,6 @@ class BreadcrumbsItem extends UI5Element {
 	get stableDomRef() {
 		return `${this._id}-stable-dom-ref`;
 	}
-
-	/**
-	 * Returns the <code>ui5-shellbar-item</code> matching DOM ref
-	 * (list item) inside the overflow area.
-	 * @private
-	 */
-	async getOverflowDomRef() {
-		const domRef = await this._getOverflowDomRef();
-		return domRef;
-	}
 }
 
 BreadcrumbsItem.define();
