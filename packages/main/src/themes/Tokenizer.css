@@ -13,7 +13,6 @@
 
 .ui5-tokenizer-root {
 	height: 100%;
-	min-width: 3.25rem;
 	display: flex;
 	align-items: center;
 	padding: var(--_ui5_tokenizer_root_padding);
@@ -54,6 +53,7 @@
 }
 
 .ui5-tokenizer-more-text {
+	min-width: 3.25rem;
 	display: inline-block;
 	margin-left: .25rem;
 	cursor: pointer;
@@ -74,7 +74,7 @@
 
 /* RTL */
 
-[dir="rtl"] .ui5-tokenizer-more-text  {
+[dir="rtl"] .ui5-tokenizer-more-text {
 	margin-right: .25rem;
 	margin-left: 0;
 }
