@@ -13,6 +13,7 @@
 
 .ui5-tokenizer-root {
 	height: 100%;
+	min-width: 3.25rem;
 	display: flex;
 	align-items: center;
 	padding: var(--_ui5_tokenizer_root_padding);
