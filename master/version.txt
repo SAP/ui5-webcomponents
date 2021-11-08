@@ -1,9 +1,7 @@
-commit 4cd86b1c79140ab4a274527840bcac7cf8069137
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 8 14:09:47 2021 +0200
+commit 2a4919eb691f781aa56904b1cf6c97718a9910a1
+Author: Scott McGhee <codefactor@users.noreply.github.com>
+Date:   Mon Nov 8 06:40:28 2021 -0800
 
-    refactor(ui5-shellbar-item): rename "item-click" to "click" (#4282)
+    fix(ui5-input): escape HTML before highlighting suggestions (XSS)
     
-    Change event name from "item-click" to "click" as it belongs to the ShellBarItem, not the ShellBar and using "item" in the event's name does not make sense and this is also the rule we used throughout the major API change activity in RC.15.
-    
-    BREAKING CHANGE: ShellBarItem's event "item-click" has been renamed to "click".
+    FIXES: #4245
