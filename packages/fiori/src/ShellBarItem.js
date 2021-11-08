@@ -47,6 +47,7 @@ const metadata = {
 		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef DOM ref of the clicked element
 		 * @public
+		 * @native
 		 */
 		"click": {
 			detail: {
