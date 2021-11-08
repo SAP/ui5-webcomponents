@@ -1,5 +1,5 @@
 import { reRenderAllUI5Elements } from "../Render.js";
-import getSharedResource from "@ui5/webcomponents-base/dist/getSharedResource.js";
+import getSharedResource from "../getSharedResource.js";
 import EventProvider from "../EventProvider.js";
 
 const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider());
@@ -23,7 +23,7 @@ const customCSSFor = getSharedResource("CustomStyle.customCSSFor", {});
 // event, and this copy would therefore need to reRender the ui5 webcomponents; but
 // don't reRender if it was this copy that fired the event to begin with.
 let skipRerender;
-attachCustomCSSChange(() => {
+attachCustomCSSChange(tag => {
 	if (!skipRerender) {
 		reRenderAllUI5Elements({ tag });
 	}
