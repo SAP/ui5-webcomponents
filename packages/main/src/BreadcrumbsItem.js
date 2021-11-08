@@ -54,16 +54,6 @@ const metadata = {
 		 accessibleName: {
 			type: String,
 		},
-
-		/**
-		 * Defines the stable selector that you can use via <code>getStableDomRef</code> method.
-		 * @type {string}
-		 * @public
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
 	},
 	slots: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
 		/**
@@ -101,6 +91,10 @@ const metadata = {
 class BreadcrumbsItem extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 }
 

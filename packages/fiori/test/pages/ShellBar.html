@@ -213,6 +213,8 @@
 		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"/>
 	</ui5-shellbar>
 
+	<ui5-toast id="wcToastTC">Custom Action Fired</ui5-toast>
+	
 	<script>
 		mySearch.addEventListener("suggestionItemSelect", function (event) {
 			 console.log(event);
@@ -269,14 +271,14 @@
 		});
 
 		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
-			item.addEventListener("item-click", function(event) {
-				console.log(event.detail.targetRef);
+			item.addEventListener("ui5-click", function(event) {
+				wcToastTC.show();
 			});
 		});
 
 		["disc", "call"].forEach(function(id) {
 			var currenItem = window[id][0] || window[id];
-			currenItem.addEventListener("ui5-itemClick", function(event) {
+			currenItem.addEventListener("ui5-click", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
 				window["custom-item-popover"].showAt(event.detail.targetRef);
