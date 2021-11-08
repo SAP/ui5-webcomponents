@@ -512,3 +512,38 @@ describe("Input general interaction", () => {
 		assert.strictEqual(suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
 	});
 });
+
+describe("XSS tests for suggestions", () => {
+	it("add suggestion item with XSS", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const btn = await $("#xss-btn");
+		const span = await $("#xss-result");
+
+		await btn.click();
+
+		assert.strictEqual(await span.getText(), "NO XSS", "No XSS issues found")
+	});
+
+	it("tests dangerous items highlighting", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#xss-input");
+
+		await input.keys("a");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#xss-input");
+		const listItems = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
+		const expected = [
+			"",
+			"<b></b>",
+			"3412test1234",
+			"[[[b]]]",
+			"&amp;",
+		];
+
+		await Promise.all(listItems.map(async (item, index) => {
+			assert.strictEqual(await item.getProperty("innerText"), expected[index], "Items text should be escaped");
+		}));
+	});
+});
