@@ -19,6 +19,7 @@ const PRESENTATION_ROLE = "presentation";
 const metadata = {
 	tag: "ui5-icon",
 	languageAware: true,
+	themeAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 		/**
 		 * Defines if the icon is interactive (focusable and pressable)

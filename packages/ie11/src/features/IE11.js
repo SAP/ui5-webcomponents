@@ -1,5 +1,9 @@
 import "../globalThis.js";
 
+// MakeDOM collections iterable
+import "core-js/features/symbol/index.js";
+import "core-js/features/dom-collections/iterator.js";
+
 // CSS Custom Properties
 import cssVars from "css-vars-ponyfill/dist/css-vars-ponyfill.esm.js";
 

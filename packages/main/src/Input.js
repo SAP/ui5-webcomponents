@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/not-editable.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 // Templates
@@ -951,7 +952,7 @@ class Input extends UI5Element {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type { ui5-suggestion-item }
+	 * @type { sap.ui.webcomponents.main.IInputSuggestionItem }
 	 * @readonly
 	 * @public
 	 */
