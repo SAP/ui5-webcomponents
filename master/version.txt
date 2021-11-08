@@ -1,7 +1,5 @@
-commit 2a4919eb691f781aa56904b1cf6c97718a9910a1
-Author: Scott McGhee <codefactor@users.noreply.github.com>
-Date:   Mon Nov 8 06:40:28 2021 -0800
+commit e5167c5be0970f08e9a09ad7aaa182319c0e1923
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Nov 8 17:10:21 2021 +0200
 
-    fix(ui5-input): escape HTML before highlighting suggestions (XSS)
-    
-    FIXES: #4245
+    chore: upgrade playground IE11 polyfill to the latest version (#4290)
