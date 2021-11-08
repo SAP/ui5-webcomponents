@@ -1,11 +1,9 @@
-commit ecec275a472b7778d850136fa18209dfabbb701e
+commit 4cd86b1c79140ab4a274527840bcac7cf8069137
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 8 11:41:04 2021 +0200
+Date:   Mon Nov 8 14:09:47 2021 +0200
 
-    refactor(ui5-breadcrumbs-item): remove stableDomRef public property (#4284)
+    refactor(ui5-shellbar-item): rename "item-click" to "click" (#4282)
     
-    Remove BreadcrumbsItem's stableDomRef public property, as calling getDomRef on BreadcrumbsItem's now returns the matching actual DOM ref, typically ui5-link.
-    In case it is requested we can later add API to get the "showMore" link DOM Ref and the matching actual DOM Ref inside the overflow area.
+    Change event name from "item-click" to "click" as it belongs to the ShellBarItem, not the ShellBar and using "item" in the event's name does not make sense and this is also the rule we used throughout the major API change activity in RC.15.
     
-    BREAKING CHANGE: BreadcrumbsItem's stableDomRef property has been removed - use
-    getDomRef to get the matching actual DOM ref
+    BREAKING CHANGE: ShellBarItem's event "item-click" has been renamed to "click".
