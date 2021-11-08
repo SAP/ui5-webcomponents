@@ -298,6 +298,10 @@ class CheckBox extends UI5Element {
 	}
 
 	_onmousedown() {
+		if (this.readonly || this.disabled) {
+			return;
+		}
+
 		this.active = true;
 		activeCb = this; // eslint-disable-line
 	}

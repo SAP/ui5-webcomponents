@@ -9,4 +9,6 @@
 	--_ui5_button_icon_font_size: 1rem;
 	--_ui5_button_emphasized_font_weight: bold;
 	--_ui5_button_text_shadow: none;
+	--_ui5_button_emphasized_focused_border: 0.0625rem dotted var(--sapContent_ContrastFocusColor);
+	--_ui5_button_emphasized_outline: 1px solid var(--sapContent_FocusColor);
 }

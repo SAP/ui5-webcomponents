@@ -7,6 +7,7 @@ const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
 const replace = require("@rollup/plugin-replace");
+const commonjs = require("@rollup/plugin-commonjs");
 const colors = require("colors/safe");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
@@ -137,10 +138,11 @@ const getPlugins = ({ transpile }) => {
 	}
 
 	if (transpile) {
+		plugins.push(commonjs());
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
 			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, // exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
-			sourcemap: true,
+			sourcemap: false,
 			babelHelpers: "bundled",
 		}));
 	}

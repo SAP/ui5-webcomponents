@@ -27,6 +27,9 @@ import styles from "./generated/themes/Tokenizer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
+// reuse suggestions focus styling for NMore popup
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
+
 /**
  * @public
  */
@@ -125,7 +128,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	static get staticAreaTemplate() {

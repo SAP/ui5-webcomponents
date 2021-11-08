@@ -103,16 +103,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.8
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Specifies if the component is selected.
 		 *
 		 * @type {boolean}
@@ -179,6 +169,16 @@ class Tab extends UI5Element {
 		];
 	}
 
+	get displayText() {
+		let text = this.text;
+
+		if (this._isInline && this.additionalText) {
+			text += ` (${this.additionalText})`;
+		}
+
+		return text;
+	}
+
 	get isSeparator() {
 		return false;
 	}
@@ -189,6 +189,22 @@ class Tab extends UI5Element {
 
 	get overflowPresentation() {
 		return executeTemplate(this.constructor.overflowTemplate, this);
+	}
+
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
+	}
+
+	/**
+	 * Returns the DOM reference of the tab that is placed in the header.
+	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
+	 *
+	 * @function
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	getTabInStripDomRef() {
+		return this._getTabInStripDomRef;
 	}
 
 	getFocusDomRef() {
@@ -256,8 +272,6 @@ class Tab extends UI5Element {
 
 		if (this._isInline) {
 			classes.push("ui5-tab-strip-item--inline");
-		} else {
-			classes.push("ui5-tab-strip-item--standard");
 		}
 
 		if (this.additionalText) {

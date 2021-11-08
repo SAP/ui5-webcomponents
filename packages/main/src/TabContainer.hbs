@@ -30,7 +30,12 @@
 							{{this.stripPresentation}}
 						{{/unless}}
 						{{#if this.isSeparator}}
-							<li id="{{this._id}}" role="separator" class="{{../classes.separator}}"></li>
+							<li
+								id="{{this._id}}"
+								data-ui5-stable="{{this.stableDomRef}}"
+								role="separator"
+								class="{{../classes.separator}}"
+							></li>
 						{{/if}}
 					{{/each}}
 				</ul>

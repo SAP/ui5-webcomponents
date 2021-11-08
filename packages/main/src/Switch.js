@@ -5,6 +5,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/less.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
@@ -199,6 +200,10 @@ class Switch extends UI5Element {
 
 	get graphical() {
 		return this.design === SwitchDesign.Graphical;
+	}
+
+	get hasNoLabel() {
+		return !(this.graphical || this.textOn || this.textOff);
 	}
 
 	get _textOn() {

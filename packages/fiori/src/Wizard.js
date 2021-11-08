@@ -58,19 +58,6 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @defaultvalue undefined
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
 		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
 		 */
@@ -806,7 +793,7 @@ class Wizard extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return this.accessibleName || Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {

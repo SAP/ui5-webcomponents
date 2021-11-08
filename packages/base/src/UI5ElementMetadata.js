@@ -213,6 +213,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element has any theme dependant carachteristics.
+	 * @returns {boolean}
+	 */
+	 isThemeAware() {
+		return !!this.metadata.themeAware;
+	}
+
+	/**
 	 * Matches a changed entity (property/slot) with the given name against the "invalidateOnChildChange" configuration
 	 * and determines whether this should cause and invalidation
 	 *

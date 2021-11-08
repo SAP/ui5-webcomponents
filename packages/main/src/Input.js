@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/not-editable.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 // Templates
@@ -40,6 +41,7 @@ import {
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
 
@@ -330,6 +332,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Indicates whether the visual focus is on the value state header
+		 * @private
+		 */
+		_isValueStateFocused: {
+			type: Boolean,
+		},
+
 		open: {
 			type: Boolean,
 		},
@@ -487,7 +497,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	constructor() {
@@ -615,7 +625,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.showSuggestions) {
-			this.Suggestions._deselectItems();
+			this._clearPopoverFocusAndSelection();
 		}
 
 		this._changeFired = true;
@@ -654,26 +664,41 @@ class Input extends UI5Element {
 
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
+
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
 			this.lastConfirmedValue = this.value;
+			return;
 		}
+
+		this.focused = true;
 	}
 
 	_handleEscape() {
-		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
+		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
+		const isOpen = hasSuggestions && this.open;
+
+		if (!isOpen) {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			return;
+		}
+
+		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
-			this.open = false;
-		} else if (this.Suggestions && this.Suggestions.isOpened()) {
-			this.closePopover();
-		} else {
-			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			this.focused = true;
 		}
+
+		if (this._isValueStateFocused) {
+			this._isValueStateFocused = false;
+			this.focused = true;
+		}
+
+		this.open = false;
 	}
 
 	async _onfocusin(event) {
@@ -704,6 +729,7 @@ class Input extends UI5Element {
 		}
 
 		this.closePopover();
+		this._clearPopoverFocusAndSelection();
 
 		const areAllValuesEmpty = !this.previousValue && !this.value && !this.lastConfirmedValue;
 		const isInputChanged = this.previousValue !== this.value;
@@ -717,6 +743,18 @@ class Input extends UI5Element {
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
 		this.open = false;
+	}
+
+	_clearPopoverFocusAndSelection() {
+		if (!this.showSuggestions || !this.Suggestions) {
+			return;
+		}
+
+		this._isValueStateFocused = false;
+		this.hasSuggestionItemSelected = false;
+
+		this.Suggestions._deselectItems();
+		this.Suggestions._clearItemFocus();
 	}
 
 	_click(event) {
@@ -784,6 +822,8 @@ class Input extends UI5Element {
 		}
 
 		if (event.target === inputDomRef) {
+			this.focused = true;
+
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -797,6 +837,7 @@ class Input extends UI5Element {
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
 		this.hasSuggestionItemSelected = false;
+		this._isValueStateFocused = false;
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
@@ -874,14 +915,6 @@ class Input extends UI5Element {
 		}
 	}
 
-	shouldOpenSuggestions() {
-		return !!(this.suggestionItems.length
-			&& this.focused
-			&& this.showSuggestions
-			&& !this.hasSuggestionItemSelected
-			&& !this.suggestionSelectionCanceled);
-	}
-
 	selectSuggestion(item, keyboardUsed) {
 		if (item.group) {
 			return;
@@ -923,7 +956,7 @@ class Input extends UI5Element {
 	 */
 	updateValueOnPreview(item) {
 		const noPreview = item.type === "Inactive" || item.group;
-		const itemValue = noPreview ? "" : (item.effectiveTitle || item.textContent);
+		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent);
 		this.value = itemValue;
 	}
 
@@ -1164,10 +1197,13 @@ class Input extends UI5Element {
 
 	get classes() {
 		return {
+			popover: {
+				"ui5-suggestions-popover": !this.isPhone && this.showSuggestions,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.showSuggestions && this.hasValueStateMessage,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
-				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -1286,6 +1322,20 @@ class Input extends UI5Element {
 		`;
 
 		return this.valueState !== ValueState.None ? result : "";
+	}
+
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	/**

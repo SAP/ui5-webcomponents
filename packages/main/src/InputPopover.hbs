@@ -1,5 +1,6 @@
 {{#if showSuggestions}}
 	<ui5-responsive-popover
+		class="{{classes.popover}}"
 		hide-arrow
 		_disable-initial-focus
 		placement-type="Bottom"
@@ -44,7 +45,8 @@
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
+			<div slot="header" ?focused={{_isValueStateFocused}} class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
@@ -74,6 +76,7 @@
 			horizontal-align="Left"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		</ui5-popover>
