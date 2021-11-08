@@ -34,6 +34,7 @@ import "../thirdparty/Number.parseInt.js";
 // Element
 import "../thirdparty/Element.prototype.matches.js";
 import "../thirdparty/Element.prototype.closest.js";
+import "../thirdparty/Element.prototype.getAttributeNames.js";
 
 // WeakSet
 import "../thirdparty/WeakSet.js";
