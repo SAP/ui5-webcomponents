@@ -1,10 +1,11 @@
-commit d90daf5ed454600cb651ca459aea4d8d96664a72
+commit ecec275a472b7778d850136fa18209dfabbb701e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 8 10:16:02 2021 +0200
+Date:   Mon Nov 8 11:41:04 2021 +0200
 
-    fix(ui5-shellbar): fix public readonly getters (#4283)
+    refactor(ui5-breadcrumbs-item): remove stableDomRef public property (#4284)
     
-    add proper JS docs
-    fix one of the public getter name + return the correct DOM ref:
-    overflowlogoDomRef -> overflowDomRef
-    [data-ui5-stable="notifications"] -> [data-ui5-stable="overflow"]
+    Remove BreadcrumbsItem's stableDomRef public property, as calling getDomRef on BreadcrumbsItem's now returns the matching actual DOM ref, typically ui5-link.
+    In case it is requested we can later add API to get the "showMore" link DOM Ref and the matching actual DOM Ref inside the overflow area.
+    
+    BREAKING CHANGE: BreadcrumbsItem's stableDomRef property has been removed - use
+    getDomRef to get the matching actual DOM ref
