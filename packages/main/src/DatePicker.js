@@ -561,7 +561,9 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	_onInputChange(event) {
-		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+		if (this.value !== event.target.value) {
+			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+		}
 	}
 
 	/**
