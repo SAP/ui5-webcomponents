@@ -38,6 +38,8 @@ const addCustomCSS = (tag, css) => {
 	skipRerender = true;
 	try {
 		// The event is fired and the attached event listeners are all called synchronously
+		// The skipRerender flag will be used to avoid calling reRenderAllUI5Elements twice when it is this copy
+		// of CustomStyle.js which is firing the `CustomCSSChange` event.
 		fireCustomCSSChange(tag);
 	} finally {
 		skipRerender = false;
