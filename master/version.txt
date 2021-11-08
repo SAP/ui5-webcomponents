@@ -1,5 +1,5 @@
-commit e5167c5be0970f08e9a09ad7aaa182319c0e1923
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Nov 8 17:10:21 2021 +0200
+commit e374dd295b2d731d7dfd7749eef182c43fbdec58
+Author: Sebastian Wolf <sebastian.wolf@sap.com>
+Date:   Mon Nov 8 17:20:23 2021 +0100
 
-    chore: upgrade playground IE11 polyfill to the latest version (#4290)
+    chore(reuse): add standard BSD-3-clause license, fixes #4157 (#4291)
