@@ -684,7 +684,7 @@ describe("XSS tests for suggestions", () => {
 		assert.strictEqual(await span.getText(), "NO XSS", "No XSS issues found")
 	});
 
-	it("Tests dangerous items highlighting", async () => {
+	it("tests dangerous items highlighting", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		const input = await $("#xss-input");
@@ -702,9 +702,7 @@ describe("XSS tests for suggestions", () => {
 		];
 
 		await Promise.all(listItems.map(async (item, index) => {
-			// TODO: the `item.getText()` is returning empty string all the time, which is breaking the unit test.
-			// The error is like this: Items text should be escaped: expected '' to equal '<b></b>'
-			assert.strictEqual(await item.getText(), expected[index], "Items text should be escaped");
+			assert.strictEqual(await item.getProperty("innerText"), expected[index], "Items text should be escaped");
 		}));
 	});
 });

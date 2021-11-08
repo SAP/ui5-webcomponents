@@ -2,7 +2,6 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import encodeXML from "@ui5/webcomponents-base/dist/util/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
