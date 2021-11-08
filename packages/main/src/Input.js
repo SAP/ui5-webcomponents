@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import {isIE, isPhone, isSafari} from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import {getFeature} from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -14,9 +14,9 @@ import {
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
+import {getI18nBundle} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {getEffectiveAriaLabelText} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {getCaretPosition, setCaretPosition} from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
 import InputType from "./types/InputType.js";
@@ -401,7 +401,7 @@ const metadata = {
 		 */
 		"suggestion-item-select": {
 			detail: {
-				item: { type: HTMLElement },
+				item: {type: HTMLElement},
 			},
 		},
 
@@ -417,8 +417,8 @@ const metadata = {
 		 */
 		"suggestion-item-preview": {
 			detail: {
-				item: { type: HTMLElement },
-				targetRef: { type: HTMLElement },
+				item: {type: HTMLElement},
+				targetRef: {type: HTMLElement},
 			},
 		},
 
@@ -433,8 +433,8 @@ const metadata = {
 		 */
 		"suggestion-scroll": {
 			detail: {
-				scrollTop: { type: Integer },
-				scrollContainer: { type: HTMLElement },
+				scrollTop: {type: Integer},
+				scrollContainer: {type: HTMLElement},
 			},
 		},
 	},
@@ -611,7 +611,7 @@ class Input extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._changeFired = false;
+			this._changeFired = (this.previousValue === this.value);
 			return this._handleEnter(event);
 		}
 
@@ -717,7 +717,7 @@ class Input extends UI5Element {
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -940,7 +940,7 @@ class Input extends UI5Element {
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
-		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
+		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, {item});
 	}
 
 	previewSuggestion(item) {
@@ -1009,7 +1009,7 @@ class Input extends UI5Element {
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
-			this.fireEvent(this.EVENT_CHANGE);
+			this._handleChange();
 		}
 	}
 
@@ -1071,7 +1071,8 @@ class Input extends UI5Element {
 	}
 
 	/* Suggestions interface  */
-	onItemFocused() {}
+	onItemFocused() {
+	}
 
 	onItemMouseOver(event) {
 		const item = event.target;
@@ -1103,9 +1104,11 @@ class Input extends UI5Element {
 		});
 	}
 
-	onOpen() {}
+	onOpen() {
+	}
 
-	onClose() {}
+	onClose() {
+	}
 
 	valueStateTextMappings() {
 		return {
@@ -1260,7 +1263,7 @@ class Input extends UI5Element {
 	get hasValueStateMessage() {
 		return this.hasValueState && this.valueState !== ValueState.Success
 			&& (!this._inputIconFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
-			|| (this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
+				|| (this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
 	}
 
 	get valueStateText() {
@@ -1274,14 +1277,14 @@ class Input extends UI5Element {
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
-			case 0:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+				case 0:
+					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
-			case 1:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+				case 1:
+					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
-			default:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+				default:
+					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
 			}
 		}
 
