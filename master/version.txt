@@ -1,13 +1,10 @@
-commit c73294b54af4c6e158c2b666da8e34e370cfd17c
+commit d90daf5ed454600cb651ca459aea4d8d96664a72
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 8 09:46:23 2021 +0200
+Date:   Mon Nov 8 10:16:02 2021 +0200
 
-    fix(ui5-shellbar): press on custom action throws JS error (#4281)
+    fix(ui5-shellbar): fix public readonly getters (#4283)
     
-    Pressing on custom action throws JS error
-    To reproduce, open the link and click on random ui5-shellbar-item
-    https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/ShellBar/
-    
-    The ShellBarItem used to have template before, but we have recently remove it, and any access to the shadowRoot that previously worked, now resolves to null as the ShellBarItem.
-    
-    In addition, make the overflow popover open safely by always requiring it explicitly, not relying on a side effect, that other will be called and initialise the popover beforehand.
+    add proper JS docs
+    fix one of the public getter name + return the correct DOM ref:
+    overflowlogoDomRef -> overflowDomRef
+    [data-ui5-stable="notifications"] -> [data-ui5-stable="overflow"]
