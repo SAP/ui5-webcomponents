@@ -682,9 +682,10 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(newItems);
 	}
 
-	_toggleActionPopover() {
+	async _toggleActionPopover() {
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		this.overflowPopover.showAt(overflowButton);
+		const overflowPopover = await this._getOverflowPopover();
+		overflowPopover.showAt(overflowButton);
 	}
 
 	onEnterDOM() {
@@ -725,7 +726,7 @@ class ShellBar extends UI5Element {
 
 		if (refItemId) {
 			const shellbarItem = this.items.find(item => {
-				return item.shadowRoot.querySelector(`#${refItemId}`);
+				return item.__id === refItemId;
 			});
 
 			const prevented = !shellbarItem.fireEvent("item-click", { targetRef: event.target }, true);
@@ -946,6 +947,11 @@ class ShellBar extends UI5Element {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		this.overflowPopover = staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
 		this.menuPopover = staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
+	}
+
+	async _getOverflowPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
 	}
 
 	async _getMenuPopover() {
