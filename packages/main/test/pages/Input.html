@@ -343,9 +343,10 @@
 		<ui5-button id="xss-btn">add xss item</ui5-button>
 		<ui5-input show-suggestions id="xss-input">
 			<ui5-suggestion-item text=""></ui5-suggestion-item>
-			<ui5-suggestion-item text="<b></b>"></ui5-suggestion-item>
-			<ui5-suggestion-item text="[b]test[/b]"></ui5-suggestion-item>
+			<ui5-suggestion-item text="&lt;b&gt;&lt;/b&gt;"></ui5-suggestion-item>
+			<ui5-suggestion-item text="3412test1234"></ui5-suggestion-item>
 			<ui5-suggestion-item text="[[[b]]]"></ui5-suggestion-item>
+			<ui5-suggestion-item text="&amp;amp;"></ui5-suggestion-item>
 		</ui5-input>
 		<span id="xss-result">NO XSS</span>
 	</div>

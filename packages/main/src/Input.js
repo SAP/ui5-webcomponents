@@ -952,7 +952,7 @@ class Input extends UI5Element {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type { ui5-suggestion-item }
+	 * @type { sap.ui.webcomponents.main.IInputSuggestionItem }
 	 * @readonly
 	 * @public
 	 */

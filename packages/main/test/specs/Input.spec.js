@@ -689,19 +689,22 @@ describe("XSS tests for suggestions", () => {
 
 		const input = await $("#xss-input");
 
-		await input.keys("[");
+		await input.keys("a");
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#xss-input");
 		const listItems = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
 		const expected = [
 			"",
 			"<b></b>",
-			"[b]test[/b]",
+			"3412test1234",
 			"[[[b]]]",
+			"&amp;",
 		];
 
-		listItems.forEach(async (item, index) => {
+		await Promise.all(listItems.map(async (item, index) => {
+			// TODO: the `item.getText()` is returning empty string all the time, which is breaking the unit test.
+			// The error is like this: Items text should be escaped: expected '' to equal '<b></b>'
 			assert.strictEqual(await item.getText(), expected[index], "Items text should be escaped");
-		});
+		}));
 	});
 });
