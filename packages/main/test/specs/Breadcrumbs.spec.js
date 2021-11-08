@@ -6,6 +6,22 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 	});
 
+	it("tests getDomRef", async () => {
+		const res = await browser.executeAsync(async (done) => {
+			const breadCrumbsItemOutOfOverflow = document.getElementById("lastItemWithACCName");
+
+			// act
+			done({
+				item: breadCrumbsItemOutOfOverflow,
+				realDomRef: breadCrumbsItemOutOfOverflow.getDomRef(),
+			});
+		});
+
+		// assert
+		assert.strictEqual(res.item["_id"], res.realDomRef["_id"],
+			"getDomRef corrcetly returns the matching ui5-link outside the overflow.");
+	});
+
 	it("fires link-click event", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbs1"),
 			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
