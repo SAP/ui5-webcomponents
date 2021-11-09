@@ -1,5 +1,5 @@
-commit 8abe080321919cf120b9675969554b15f2e5c981
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Nov 9 16:21:35 2021 +0200
+commit 610bc31b34e358c58f42b85fc1dadc9599f2869b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Nov 9 16:45:06 2021 +0200
 
-    chore: fix csp article (#4300)
+    chore: release 1.0.0-rc.16 (#4299)
