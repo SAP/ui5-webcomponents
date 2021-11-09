@@ -374,9 +374,7 @@ class FileUploader extends UI5Element {
 			formData.append(this.name, this.files[i]);
 		}
 
-		if (this._internals.setFormValue) {
-			this._internals.setFormValue(formData);
-		}
+		this._internals.setFormValue(formData);
 	}
 
 	toggleValueStatePopover(open) {
