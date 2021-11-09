@@ -656,10 +656,8 @@ class MultiComboBox extends UI5Element {
 		const firstListItem = this.list.items[0];
 
 		if (isOpen) {
-			firstListItem.focus();
-			firstListItem.selected = true;
 			this.list._itemNavigation.setCurrentItem(firstListItem);
-			this.fireSelectionChange();
+			firstListItem.focus();
 		} else if (!this.readonly) {
 			this._navigateToNextItem();
 		}
