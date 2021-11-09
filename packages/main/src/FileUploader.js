@@ -264,7 +264,7 @@ class FileUploader extends UI5Element {
 	constructor() {
 		super();
 		if (this._canUseNativeFormSupport) {
-			this._internals = this.attachInternals();
+			this._internals = this.attachInternals && this.attachInternals();
 		}
 	}
 
@@ -429,7 +429,7 @@ class FileUploader extends UI5Element {
 	}
 
 	get _canUseNativeFormSupport() {
-		return !!this.attachInternals;
+		return this._internals && this.internals.setFormValue;
 	}
 
 	get _keepInputInShadowDOM() {
