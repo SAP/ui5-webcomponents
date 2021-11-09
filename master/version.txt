@@ -1,5 +1,8 @@
-commit 610bc31b34e358c58f42b85fc1dadc9599f2869b
+commit 8553293eca2ccaf4a0ead3bb406e060144a46265
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Nov 9 16:45:06 2021 +0200
+Date:   Tue Nov 9 17:21:51 2021 +0200
 
-    chore: release 1.0.0-rc.16 (#4299)
+    chore: remove deprecated `theme-base` package (#4301)
+    
+    Remove from source code. Last version: 1.0.0-rc.16.
+    Deprecated since 1.0.0-rc.16, use the theming package.
