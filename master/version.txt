@@ -1,5 +1,5 @@
-commit e374dd295b2d731d7dfd7749eef182c43fbdec58
-Author: Sebastian Wolf <sebastian.wolf@sap.com>
-Date:   Mon Nov 8 17:20:23 2021 +0100
+commit 4ce8bd2a28f37688ed29184c1397bc147ffaca75
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Nov 9 12:20:48 2021 +0200
 
-    chore(reuse): add standard BSD-3-clause license, fixes #4157 (#4291)
+    chore: add theme-base to the namespace (#4295)
