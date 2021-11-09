@@ -243,3 +243,5 @@ In order to process the issues correctly, we would like to have the following in
 •	Browser: {...}
 
 •	Testing Tool
+
+Next: [CSP](08-CSP.md)
