@@ -5147,7 +5147,7 @@
 
 <p>To learn about Content Security Policy (CSP), click <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">here</a>.</p>
 
-<p><em>Read this section if your site needs to be CSP-compliant</em></p>
+<p><em>Read this section if your site needs to be CSP-compliant. This article focuses on styles compliance.</em></p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setUseLinks</span><span class="p">,</span> <span class="nx">setPackageCSSRoot</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CSP.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
@@ -5195,9 +5195,9 @@ Therefore, browsers that can use them (Chrome, Edge) are CSP-compliant out of th
 on the other hand, use <code class="highlighter-rouge">&lt;style&gt;</code> tags by default, for both the shadow roots of web components, and in the HTML document’s head,
 and are therefore <strong>not</strong> CSP-compliant by default.</p>
 
-<h2 id="turning-on-csp-compliance-for-firefox-and-safari">Turning on CSP compliance for Firefox and Safari</h2>
+<h2 id="turning-on-csp-compliance-for-firefox-and-safari">Turning on CSP Compliance for Firefox and Safari</h2>
 
-<p>To make UI5 Web Componetns CSP-compliant also on Firefox and Safari, you need to copy the CSS resources for all relevant
+<p>To make UI5 Web Components CSP-compliant also on Firefox and Safari, you need to copy the CSS resources for all relevant
 UI5 Web Components packages to where you can serve them, and use the <code class="highlighter-rouge">setUseLinks</code> and <code class="highlighter-rouge">setPackageCSSRoot</code> functions.</p>
 
 <p>Example:</p>
@@ -5245,7 +5245,7 @@ served. You can pass relative paths to your HTML page, as in the example above, 
 conveniently point to a directory, relative to it. However, in case components will be used in different
 pages across your site, or you are using URL re-writing, it would be safest to use fully qualified paths.</p>
 
-<h2 id="links-preloading">Links preloading</h2>
+<h2 id="links-preloading">Links Preloading</h2>
 
 <p>By default, when using <code class="highlighter-rouge">&lt;link&gt;</code>s, they are preloaded in the browser’s <code class="highlighter-rouge">&lt;head&gt;</code> (even the ones for shadow roots) in order to avoid
 flashing of un-styled content. These preloads have the form: <code class="highlighter-rouge">&lt;link rel="preload" as="style" ...&gt;</code>.</p>
@@ -5258,7 +5258,7 @@ flashing of un-styled content. These preloads have the form: <code class="highli
 
 <h2 id="summary">Summary</h2>
 
-<p>By default, UI5 Web Components manages CSS resources either with Constructable Stylesheets, or with <code class="highlighter-rouge">&lt;style&gt;</code> tags.
+<p>By default, the UI5 Web Components framework manages CSS resources either with Constructable Stylesheets, or with <code class="highlighter-rouge">&lt;style&gt;</code> tags.
 Since Constructable Stylesheets are CSP-compliant, UI5 Web Components is CSP-compliant on browsers
 that support them (Chrome, Edge) out of the box. For the other browsers (Firefox, Safari), in order to
 achieve CSP-compliance, you must instruct the framework to use <code class="highlighter-rouge">&lt;link&gt;</code> instead of <code class="highlighter-rouge">&lt;style&gt;</code> tags, but

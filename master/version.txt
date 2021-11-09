@@ -1,5 +1,5 @@
-commit 768d3c605c477eb6eac275b2e0fb88896ace6293
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Tue Nov 9 14:57:42 2021 +0100
+commit 8abe080321919cf120b9675969554b15f2e5c981
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Nov 9 16:21:35 2021 +0200
 
-    docs(AvatarGroup): use `AvatarColorScheme[]` as type for colorScheme getter (#4302)
+    chore: fix csp article (#4300)
