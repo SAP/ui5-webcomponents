@@ -854,7 +854,6 @@ class Wizard extends UI5Element {
 				selected: step.selected,
 				disabled: step.disabled,
 				hideSeparator,
-				stretch: idx === lastEnabledStepIndex,
 				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
 				pos,
