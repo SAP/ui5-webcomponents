@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Custom UI5 Web Components Packages - UI5 Web Components</title>
+    <title>CSP - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Custom UI5 Web Components Packages | UI5 Web Components</title>
+<title>CSP | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Custom UI5 Web Components Packages" />
+<meta property="og:title" content="CSP" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components-packages/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components-packages/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/advanced/csp/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/advanced/csp/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components-packages/","headline":"Custom UI5 Web Components Packages","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/advanced/csp/","headline":"CSP","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -884,7 +884,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced" class="navigation-list-link">Advanced</a>
             
@@ -1281,9 +1281,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced/csp/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced/csp/" class="navigation-list-link active">
                         <div class="component-name">CSP</div>
                         
                       </a>
@@ -2420,7 +2420,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/development" class="navigation-list-link">Development</a>
             
@@ -2674,9 +2674,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
                         <div class="component-name">Custom UI5 Web Components Packages</div>
                         
                       </a>
@@ -5135,478 +5135,134 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/development">Development</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/advanced">Advanced</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Custom UI5 Web Components Packages</span></li>
+                <li class="breadcrumb-nav-list-item"><span>CSP</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="creating-a-custom-ui5-web-components-package">Creating a Custom UI5 Web Components Package</h1>
+          <h1 id="csp">CSP</h1>
 
-<p>This tutorial explains how to:</p>
-<ul>
-  <li>Create an NPM package for your own UI5 Web Components.</li>
-  <li>Use UI5 Web Components’ standard build tools: <code class="highlighter-rouge">@ui5/webcomponents-tools</code>.</li>
-  <li>Gain all <code class="highlighter-rouge">@ui5/webcomponents</code> capabilities such as HBS template support, i18n, theming, test setup, etc.</li>
-</ul>
+<p>To learn about Content Security Policy (CSP), click <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">here</a>.</p>
 
-<p><strong>Note:</strong> Whether you use <code class="highlighter-rouge">npm</code> or <code class="highlighter-rouge">yarn</code> is a matter of preference.</p>
+<p><em>Read this section if your site needs to be CSP-compliant</em></p>
 
-<h2 id="step-1-create-an-npm-package">Step 1. Create an NPM package.</h2>
-
-<h3 id="run-the-init-command">Run the init command.</h3>
-
-<p><strong>Note:</strong> The following command will <strong>create a new directory</strong> and initialize your package there.
-Make sure you haven’t created a directory yourself.</p>
-
-<ul>
-  <li>
-    <p>With <strong>npm</strong>:</p>
-
-    <p><code class="highlighter-rouge">npm init @ui5/webcomponents-package</code></p>
-
-    <p>or</p>
-
-    <p><code class="highlighter-rouge">npm init @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
-  </li>
-  <li>
-    <p>With <strong>yarn</strong>:</p>
-
-    <p><code class="highlighter-rouge">yarn create @ui5/webcomponents-package</code></p>
-
-    <p>or</p>
-
-    <p><code class="highlighter-rouge">yarn create @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
-  </li>
-</ul>
-
-<p>where <code class="highlighter-rouge">&lt;NEW-PACKAGE-NAME&gt;</code> is the name of your new package (and the name of the directory to be created), for example:</p>
-
-<p><code class="highlighter-rouge">npm init @ui5/webcomponents-package my-components</code></p>
-
-<p>will create a <code class="highlighter-rouge">my-components</code> directory and initialize the package there.</p>
-
-<h3 id="follow-the-prompts">Follow the prompts.</h3>
-
-<p>The initialization script will ask you to choose:</p>
-<ul>
-  <li>The <strong>name</strong> of your package (if you did not already pass a name when running the command above);</li>
-  <li>The <strong>port</strong> for your dev server (<code class="highlighter-rouge">8080</code> by default - just press Enter to select this);</li>
-  <li>The <strong>tag</strong> of the sample web component that will be created (<code class="highlighter-rouge">my-first-component</code> by default - just press Enter to select this).</li>
-</ul>
-
-<h3 id="your-package-is-ready">Your package is ready!</h3>
-
-<p>Just follow the instructions:</p>
-
-<ul>
-  <li><code class="highlighter-rouge">cd &lt;NEW-PACKAGE-NAME&gt;</code></li>
-  <li><code class="highlighter-rouge">npm i</code> (or <code class="highlighter-rouge">yarn</code> if you prefer)</li>
-  <li><code class="highlighter-rouge">npm start</code> (or <code class="highlighter-rouge">yarn start</code> if you prefer)</li>
-</ul>
-
-<h2 id="step-2-run-the-dev-server-and-test-the-build">Step 2. Run the dev server and test the build.</h2>
-
-<p>To run the dev server, as instructed above:</p>
-
-<p><code class="highlighter-rouge">npm run start</code></p>
-
-<p>or</p>
-
-<p><code class="highlighter-rouge">yarn start</code></p>
-
-<p>and once the project is built for the first time, open in your browser:</p>
-
-<p><code class="highlighter-rouge">http://localhost:8080/test-resources/pages/index.html</code></p>
-
-<p><strong>Note:</strong> If you’ve chosen a different <code class="highlighter-rouge">port</code> earlier, change <code class="highlighter-rouge">8080</code> to its value.</p>
-
-<p>You can also run the tests:</p>
-
-<p><code class="highlighter-rouge">npm run test</code></p>
-
-<p>or</p>
-
-<p><code class="highlighter-rouge">yarn test</code></p>
-
-<p>and the production build:</p>
-
-<p><code class="highlighter-rouge">npm run build</code></p>
-
-<p>or</p>
-
-<p><code class="highlighter-rouge">yarn build</code>.</p>
-
-<p><strong>Note:</strong> In order to run the tests for the first time, you must have built the project with either <code class="highlighter-rouge">start</code> or <code class="highlighter-rouge">build</code>.</p>
-
-<p>That’s it!</p>
-
-<h2 id="understanding-the-project-structure">Understanding the Project Structure</h2>
-
-<h3 id="packagejson"><code class="highlighter-rouge">package.json</code></h3>
-
-<p>The initialization script will add several packages as dependencies.
-These three <code class="highlighter-rouge">@ui5/</code> packages will serve as the foundation of your own package and Web Components.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Package</th>
-      <th>Type of Dependency</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base</code></td>
-      <td><code class="highlighter-rouge">dependency</code></td>
-      <td>Base classes and framework</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-theming</code></td>
-      <td><code class="highlighter-rouge">dependency</code></td>
-      <td>Base theming assets</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-tools</code></td>
-      <td><code class="highlighter-rouge">devDependency</code></td>
-      <td>Build tools and configuration assets</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>The initialization script will create several NPM scripts for you in <code class="highlighter-rouge">package.json</code>.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Task</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>clean</td>
-      <td>Delete the <code class="highlighter-rouge">dist/</code> directory with the build output.</td>
-    </tr>
-    <tr>
-      <td>build</td>
-      <td>Production build to the <code class="highlighter-rouge">dist/</code> directory.</td>
-    </tr>
-    <tr>
-      <td>lint</td>
-      <td>Run a static code scan with <code class="highlighter-rouge">eslint</code>.</td>
-    </tr>
-    <tr>
-      <td>start</td>
-      <td>Build the project for development, run the dev server and watch for changes.</td>
-    </tr>
-    <tr>
-      <td>watch</td>
-      <td>Watch for changes only.</td>
-    </tr>
-    <tr>
-      <td>serve</td>
-      <td>Run the dev server only.</td>
-    </tr>
-    <tr>
-      <td>test</td>
-      <td>Run the dev server and execute the specs from the <code class="highlighter-rouge">test/specs/</code> directory.</td>
-    </tr>
-    <tr>
-      <td>create-ui5-element</td>
-      <td>Create an empty Web Component with the given name.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="files-in-the-main-directory">Files in the main directory</h3>
-
-<p>The initialization script will create several files in your package’s main directory.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>.eslintignore</td>
-      <td>Excludes the <code class="highlighter-rouge">dist/</code> and <code class="highlighter-rouge">test/</code> directories from static code scans.</td>
-    </tr>
-    <tr>
-      <td>package-scripts.js</td>
-      <td>An <a href="https://www.npmjs.com/package/nps">nps</a> package scripts configuration file.</td>
-    </tr>
-    <tr>
-      <td>bundle.js</td>
-      <td>Entry point for the bundle used for development and tests.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>You’ll likely only need to change <code class="highlighter-rouge">bundle.js</code> to import your new components there.</p>
-
-<h3 id="the-config-directory">The <code class="highlighter-rouge">config/</code> directory</h3>
-
-<p>The <code class="highlighter-rouge">config/</code> directory serves as a central place for most build and test tools configuration assets. Normally, you
-don’t need to change any files there.</p>
-
-<h4 id="custom-configuration">Custom configuration</h4>
-
-<p>The files in the <code class="highlighter-rouge">config/</code> directory simply import UI5 Web Components default configuration for all tasks: <code class="highlighter-rouge">rollup</code>, <code class="highlighter-rouge">wdio</code>, <code class="highlighter-rouge">eslint</code>, etc.</p>
-
-<p>If you need to customize any configuration, simply put your own content into the respective file in <code class="highlighter-rouge">config/</code>.</p>
-
-<p>Examples:</p>
-<ul>
-  <li>
-    <p>Modifying <code class="highlighter-rouge">eslint</code> settings.</p>
-
-    <p>Open <code class="highlighter-rouge">config/.eslintrc.js</code>. It should look like this:</p>
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-tools/components-package/eslint.js</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div>    </div>
-    <p>As you can see, this is just a proxy to UI5 Web Components default configuration.
- Put your own content instead:</p>
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
- 	<span class="dl">"</span><span class="s2">env</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
- 		<span class="dl">"</span><span class="s2">browser</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
- 		<span class="dl">"</span><span class="s2">es6</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span>
- 	<span class="p">},</span>
- 	<span class="dl">"</span><span class="s2">root</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
- 	<span class="dl">"</span><span class="s2">extends</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">airbnb-base</span><span class="dl">"</span><span class="p">,</span>
-		<span class="p">.............</span>
-  	<span class="p">}</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Modifying <code class="highlighter-rouge">wdio</code> settings.</p>
-
-    <p>Open <code class="highlighter-rouge">config/wdio.conf.js</code>. It should look like this:</p>
-
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-tools/components-package/wdio.js</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div>    </div>
-
-    <p>Again, this is a proxy to UI5 Web Components default configuration.</p>
-
-    <p>You could just paste the content of <code class="highlighter-rouge">@ui5/webcomponents-tools/components-package/wdio.js</code> here and modify at will.</p>
-
-    <p>However, let’s not replace the whole file by hand this time, but just modify the exported configuration object.</p>
-
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-tools/components-package/wdio.js</span><span class="dl">"</span><span class="p">);</span>
- <span class="nx">result</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">capabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="dl">"</span><span class="s2">goog:chromeOptions</span><span class="dl">"</span><span class="p">].</span><span class="nx">args</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">--disable-gpu</span><span class="dl">'</span><span class="p">];</span> <span class="c1">// From: ['--disable-gpu', '--headless']</span>
- <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">result</span><span class="p">;</span>
-</code></pre></div>    </div>
-
-    <p>In this example, what we did was simply replace one option in the configuration object to disable <code class="highlighter-rouge">headless</code> mode
- so that we can use <code class="highlighter-rouge">browser.debug()</code> in our <code class="highlighter-rouge">*.spec.js</code> files. For more on testing, see <a href="./Testing%20Web%20Components.md">Testing Web Components</a>.</p>
-  </li>
-</ul>
-
-<h3 id="the-src-directory">The <code class="highlighter-rouge">src/</code> directory</h3>
-
-<p>This is where you’ll do most of the development. Let’s see the necessary files for a <code class="highlighter-rouge">my-first-component</code> component.</p>
-
-<h4 id="class-and-template-files">Class and template files</h4>
-
-<p>The main files describing a Web Component are:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">src/MyFirstComponent.js</code></td>
-      <td>Web Component class</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/MyFirstComponent.hbs</code></td>
-      <td>Handlebars template</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>In order to understand how a UI5 Web Component works and what lies behind these two files, make sure you check the
-<a href="./Developing%20Web%20Components.md">Developing Web Components</a> section of the documentation.</p>
-
-<p>For the purposes of this tutorial, however, you don’t need to understand their internals, as they are automatically generated by the
-script and are in a working state already.</p>
-
-<h4 id="theming-related-files">Theming-related files</h4>
-
-<p>A single set of CSS rules will be used for all themes. The only difference between themes may be the values of CSS Variables.
-Some CSS Vars, such as <code class="highlighter-rouge">--sapBackgroundColor</code> and <code class="highlighter-rouge">--sapTextColor</code> are standard and automatically managed by the framework.
-In addition, you can define your own CSS Vars and provide different values for them for the different themes. Set these CSS Vars in the
-<code class="highlighter-rouge">parameters-bundle.css</code> file for each theme. These files are the entry points for the styles build script.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/MyFirstComponent.css</code></td>
-      <td>All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_belize/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize</code> theme</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_belize_hcb/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize_hcb</code> theme</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_belize_hcw/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize_hcw</code> theme</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3</code> theme</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3_dark/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_dark</code> theme</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3_hcb/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_hcb</code> theme</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3_hcw/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_hcw</code> theme</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><strong>Note:</strong> It’s up to you whether to put the CSS Vars directly in the <code class="highlighter-rouge">parameters-bundle.css</code> files for the different themes or to
-import them from separate <code class="highlighter-rouge">.css</code> files. You could have, for example, a <code class="highlighter-rouge">MyFirstComponent-params.css</code> file for each theme and
-import it into the <code class="highlighter-rouge">parameters-bundle.css</code> file: <code class="highlighter-rouge">@import "MyFirstComponent-params.css";</code>.</p>
-
-<p>Again, to know more about how these files work, you could have a look at the <a href="./Developing%20Web%20Components.md#css">Developing Web Components</a> section of the documentation.</p>
-
-<h4 id="i18n-files">i18n files</h4>
-
-<p>You can define translatable texts as key-value pairs, separated by <code class="highlighter-rouge">=</code> in the <code class="highlighter-rouge">messagebundle.properties</code> file. Then you can provide translations for as many languages
-as needed.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">src/i18n/messagebundle.properties</code></td>
-      <td>Source file for all translatable texts</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/i18n/messagebundle_de.properties</code></td>
-      <td>Translations in German</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/i18n/messagebundle_en.properties</code></td>
-      <td>Translations in English</td>
-    </tr>
-    <tr>
-      <td>etc.</td>
-      <td>etc.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Let’s have a look at the sample <code class="highlighter-rouge">messagebundle.properties</code> file, generated by the script.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#please wait text for the sample component
-PLEASE_WAIT=wait
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setUseLinks</span><span class="p">,</span> <span class="nx">setPackageCSSRoot</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CSP.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Here’s where you define all i18n texts, optionally with comments for the translators (<code class="highlighter-rouge"># Comment</code>).</p>
+<p>These functions affect the way the UI5 Web Components framework manages CSS. This is important if you are aiming for CSP-compliance, since in order to be CSP-compliant, in the most general case, a site cannot use <code class="highlighter-rouge">&lt;style&gt;</code> tags.</p>
 
-<p>And now let’s have a look at a sample file with translations, for example <code class="highlighter-rouge">messagebundle_es.properties</code>:</p>
+<h2 id="background">Background</h2>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLEASE_WAIT=Espere
-</code></pre></div></div>
-
-<h4 id="assets-additional-themes-i18n-texts-etc">Assets (additional themes, i18n texts, etc.)</h4>
+<p>The UI5 Web Components framework can leverage CSS (for shadow roots and the <code class="highlighter-rouge">&lt;head&gt;</code>) in 3 ways: with Constructable StyleSheets (<code class="highlighter-rouge">document.adoptedStyleSheets</code>)
+for the browsers that support them, with <code class="highlighter-rouge">&lt;style&gt;</code> tags, and with <code class="highlighter-rouge">&lt;link&gt;</code> tags.</p>
 
 <table>
   <thead>
     <tr>
-      <th>File</th>
-      <th>Purpose</th>
+      <th>Way to use CSS</th>
+      <th>Supported by</th>
+      <th>CSP Compliant</th>
+      <th>Extra setup required</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">src/Assets.js</code></td>
-      <td>Entry point for your package assets.</td>
+      <td>Constructable Stylesheets (<strong>default</strong> for Chrome/Edge)</td>
+      <td>Chrome / Edge</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;style&gt;</code> (<strong>default</strong> for Firefox/Safari)</td>
+      <td>all</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;link&gt;</code> (<em>optional for all browsers</em>)</td>
+      <td>all</td>
+      <td>Yes</td>
+      <td>Yes (CSS files must be statically served)</td>
     </tr>
   </tbody>
 </table>
 
-<p>This module imports all base assets (such as <code class="highlighter-rouge">CLDR</code> and the base theme parameters), but also your own
-package assets (i18n and package-specific theme parameters). Users of your package will have to import this module in their production applications in order to get additional themes support and i18n support.</p>
+<p>In summary, Constructable Stylesheets are both CSP-compliant and require no extra work on your part.
+Therefore, browsers that can use them (Chrome, Edge) are CSP-compliant out of the box. Firefox and Safari,
+on the other hand, use <code class="highlighter-rouge">&lt;style&gt;</code> tags by default, for both the shadow roots of web components, and in the HTML document’s head,
+and are therefore <strong>not</strong> CSP-compliant by default.</p>
 
-<p><strong>Note:</strong> For easier development and testing, <code class="highlighter-rouge">Assets.js</code> is also imported in the dev/test bundle <code class="highlighter-rouge">bundle.esm.js</code> by the initialization script.</p>
+<h2 id="turning-on-csp-compliance-for-firefox-and-safari">Turning on CSP compliance for Firefox and Safari</h2>
 
-<h3 id="the-test-directory">The <code class="highlighter-rouge">test/</code> directory</h3>
+<p>To make UI5 Web Componetns CSP-compliant also on Firefox and Safari, you need to copy the CSS resources for all relevant
+UI5 Web Components packages to where you can serve them, and use the <code class="highlighter-rouge">setUseLinks</code> and <code class="highlighter-rouge">setPackageCSSRoot</code> functions.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">test/pages/*</code></td>
-      <td>Simple <code class="highlighter-rouge">.html</code> pages used for development and tests.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">src/specs/*</code></td>
-      <td>Test specs, based on <a href="https://www.npmjs.com/package/wdio">WDIO</a>. They use the test pages for setup.</td>
-    </tr>
-  </tbody>
-</table>
+<p>Example:</p>
 
-<p>You can execute all specs by running <code class="highlighter-rouge">yarn test</code> or <code class="highlighter-rouge">npm run test</code>.</p>
+<p>1) First, copy the CSS files for all relevant packages to a directory that can be served, in this example, <code class="highlighter-rouge">public/css/</code>:</p>
 
-<p>For more on testing, see our <a href="./Testing%20Web%20Components.md">Testing Web Components</a> section.</p>
-
-<h2 id="public-consumption-of-your-custom-ui5-web-components-package">Public Consumption of Your Custom UI5 Web Components Package</h2>
-
-<p>Once you’ve developed your package and published it to NPM, application developers can import from the <code class="highlighter-rouge">dist/</code> directory
-of your package any of your Web Components, and optionally the <code class="highlighter-rouge">Assets.js</code> module, if they want additional themes and i18n.</p>
-
-<p>For example, if your package is called <code class="highlighter-rouge">my-ui5-webcomponents</code>, users will install it by:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i my-ui5-webcomponents --save
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> <span class="nt">-r</span> node_modules/@ui5/webcomponents-base/dist/css/ public/css/base/
+<span class="nb">cp</span> <span class="nt">-r</span> node_modules/@ui5/webcomponents-theming/dist/css/ public/css/theming/
+<span class="nb">cp</span> <span class="nt">-r</span> node_modules/@ui5/webcomponents/dist/css/ public/css/main/
+<span class="nb">cp</span> <span class="nt">-r</span> node_modules/@ui5/webcomponents-fiori/dist/css/ public/css/fiori/
 </code></pre></div></div>
 
-<p>and then use it by:</p>
+<p><em>Note: make these commands part of your build task, if your app needs to be CSP-compliant on all browsers.</em></p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">my-ui5-webcomponents/Assets.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// optional</span>
-<span class="k">import</span> <span class="dl">"</span><span class="s2">my-ui5-webcomponents/dist/MyFirstComponent.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// for my-first-component from this tutorial</span>
-<span class="k">import</span> <span class="dl">"</span><span class="s2">my-ui5-webcomponents/dist/SomeOtherComponent.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="dl">"</span><span class="s2">my-ui5-webcomponents/dist/YetAnotherComponent.js</span><span class="dl">"</span><span class="p">;</span>
+<p>You will always need the CSS resources of the framework-level packages (<code class="highlighter-rouge">@ui5/webcomponents-base</code> and <code class="highlighter-rouge">@ui5/webcomponents-theming</code>),
+and additionally the ones of all components packages your app is going to use (such as <code class="highlighter-rouge">@ui5/webcomponents</code> and <code class="highlighter-rouge">@ui5/webcomponents-fiori</code>).</p>
+
+<p>By convention, the CSS files are found in the <code class="highlighter-rouge">dist/css/</code> directory for each package that ships CSS resources.</p>
+
+<p>2) Call the 2 functions, described above, as follows:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setPackageCSSRoot</span><span class="p">,</span> <span class="nx">setUseLinks</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CSP.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">setUseLinks</span><span class="p">(</span><span class="o">!</span><span class="nb">document</span><span class="p">.</span><span class="nx">adoptedStyleSheets</span><span class="p">);</span> <span class="c1">// or "true", to force all browsers to use links </span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-base</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">public/css/base/</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-theming</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">public/css/theming/</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">public/css/main/</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">public/css/fiori/</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Next: <a href="02-custom-UI5-Web-Components.md">Developing Custom UI5 Web Components</a></p>
+<p>Calling <code class="highlighter-rouge">setUseLinks</code> with <code class="highlighter-rouge">!document.adoptedStyleSheets</code> as its argument is an easy way to tell the
+framework to use <code class="highlighter-rouge">&lt;link&gt;</code> tags only for the browsers that don’t support Constructable Stylesheets.
+However, you can call <code class="highlighter-rouge">setUseLinks(true)</code> to make all browsers consume CSS from <code class="highlighter-rouge">&lt;link&gt;</code>s, if you prefer so.</p>
+
+<p>Then, for each package, call <code class="highlighter-rouge">setPackageCSSRoot</code> and pass the directory, from which the CSS files will be
+served. You can pass relative paths to your HTML page, as in the example above, or fully qualified paths, for example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-base</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">https://my.site/path/to/public/css/base/</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-theming</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">https://my.site/path/to/public/css/theming/</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">https://my.site/path/to/public/css/main/</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">https://my.site/path/to/public/css/fiori/</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It’s simpler to just use relative paths, if your app is going to have one <code class="highlighter-rouge">index.html</code> file, and you can
+conveniently point to a directory, relative to it. However, in case components will be used in different
+pages across your site, or you are using URL re-writing, it would be safest to use fully qualified paths.</p>
+
+<h2 id="links-preloading">Links preloading</h2>
+
+<p>By default, when using <code class="highlighter-rouge">&lt;link&gt;</code>s, they are preloaded in the browser’s <code class="highlighter-rouge">&lt;head&gt;</code> (even the ones for shadow roots) in order to avoid
+flashing of un-styled content. These preloads have the form: <code class="highlighter-rouge">&lt;link rel="preload" as="style" ...&gt;</code>.</p>
+
+<p>If, for any reason, you want to opt out of these preloads, you can do so by calling the <code class="highlighter-rouge">setPreloadLinks</code> function:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setPreloadLinks</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CSP.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">setPreloadLinks</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="summary">Summary</h2>
+
+<p>By default, UI5 Web Components manages CSS resources either with Constructable Stylesheets, or with <code class="highlighter-rouge">&lt;style&gt;</code> tags.
+Since Constructable Stylesheets are CSP-compliant, UI5 Web Components is CSP-compliant on browsers
+that support them (Chrome, Edge) out of the box. For the other browsers (Firefox, Safari), in order to
+achieve CSP-compliance, you must instruct the framework to use <code class="highlighter-rouge">&lt;link&gt;</code> instead of <code class="highlighter-rouge">&lt;style&gt;</code> tags, but
+then you must also copy the CSS resources to a directory you can serve them from.</p>
 
 
 <footer class="footer-wrapper">

@@ -1,5 +1,5 @@
-commit 4ce8bd2a28f37688ed29184c1397bc147ffaca75
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Nov 9 12:20:48 2021 +0200
+commit 768d3c605c477eb6eac275b2e0fb88896ace6293
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Tue Nov 9 14:57:42 2021 +0100
 
-    chore: add theme-base to the namespace (#4295)
+    docs(AvatarGroup): use `AvatarColorScheme[]` as type for colorScheme getter (#4302)
