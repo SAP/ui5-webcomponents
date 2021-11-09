@@ -6,8 +6,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [1.0.0-rc.16](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.15...v1.0.0-rc.16) (2021-11-09)
 
 
-
-
 ### Features
 
-* **theming:** introduce SAP Horizon theme ([#3991](https://github.com/SAP/ui5-webcomponents/issues/3991)) ([b1afaf0](https://github.com/SAP/ui5-webcomponents/commit/b1afaf0)), closes [#3988](https://github.com/SAP/ui5-webcomponents/issues/3988)
+* **tools:** create an npm init script ([#4090](https://github.com/SAP/ui5-webcomponents/issues/4090)) ([5608e04](https://github.com/SAP/ui5-webcomponents/commit/5608e04))
