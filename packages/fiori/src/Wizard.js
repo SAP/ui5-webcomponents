@@ -706,9 +706,10 @@ class Wizard extends UI5Element {
 
 	get _steps() {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
-
+		const stepsInfo = this.getStepsInfo();
 		return this.steps.map((step, idx) => {
 			step.stretch = idx === lastEnabledStepIndex;
+			step.ariaLabel = stepsInfo[idx].accInfo.ariaLabel;
 			return step;
 		});
 	}
@@ -853,6 +854,7 @@ class Wizard extends UI5Element {
 				selected: step.selected,
 				disabled: step.disabled,
 				hideSeparator,
+				stretch: idx === lastEnabledStepIndex,
 				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
 				pos,
