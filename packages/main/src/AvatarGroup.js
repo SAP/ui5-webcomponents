@@ -288,7 +288,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
-	 * @type { sap.ui.webcomponents.main.types.AvatarColorScheme[] }
+	 * @type { AvatarColorScheme[] }
 	 * @defaultValue []
 	 * @public
 	 */
