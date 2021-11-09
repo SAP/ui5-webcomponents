@@ -1,6 +1,7 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-
+import encodeXML from "@ui5/webcomponents-base/dist/util/encodeXML.js";
+import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
@@ -478,31 +479,21 @@ class Suggestions {
 	}
 
 	getHighlightedText(suggestion, input) {
-		let text = suggestion.text || suggestion.textContent;
-		text = this.sanitizeText(text);
-
+		const text = suggestion.text || suggestion.textContent;
 		return this.hightlightInput(text, input);
 	}
 
 	getHighlightedDesc(suggestion, input) {
-		let text = suggestion.description;
-		text = this.sanitizeText(text);
-
+		const text = suggestion.description || "";
 		return this.hightlightInput(text, input);
 	}
 
 	hightlightInput(text, input) {
-		if (!text) {
-			return text;
-		}
-
-		const inputEscaped = input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-		const regEx = new RegExp(inputEscaped, "ig");
-		return text.replace(regEx, match => `<b>${match}</b>`);
+		return generateHighlightedMarkup(text, input);
 	}
 
 	sanitizeText(text) {
-		return text && text.replace("<", "&lt");
+		return encodeXML(text);
 	}
 
 	static get dependencies() {

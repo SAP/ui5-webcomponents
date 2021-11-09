@@ -79,6 +79,7 @@
   },
   "workspaces": [
     "packages/theming",
+    "packages/theme-base",
     "packages/base",
     "packages/localization",
     "packages/main",
