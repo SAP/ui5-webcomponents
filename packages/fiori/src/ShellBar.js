@@ -726,7 +726,7 @@ class ShellBar extends UI5Element {
 
 		if (refItemId) {
 			const shellbarItem = this.items.find(item => {
-				return this.shadowRoot.querySelector(`#${refItemId}`);
+				return item._id === refItemId;
 			});
 
 			const prevented = !shellbarItem.fireEvent("click", { targetRef: event.target }, true);

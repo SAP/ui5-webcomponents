@@ -2,7 +2,7 @@
 
 To learn about Content Security Policy (CSP), click [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP).
 
-*Read this section if your site needs to be CSP-compliant*
+*Read this section if your site needs to be CSP-compliant. This article focuses on styles compliance.*
 
 ```js
 import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
@@ -26,9 +26,9 @@ Therefore, browsers that can use them (Chrome, Edge) are CSP-compliant out of th
 on the other hand, use `<style>` tags by default, for both the shadow roots of web components, and in the HTML document's head,
 and are therefore **not** CSP-compliant by default.
 
-## Turning on CSP compliance for Firefox and Safari
+## Turning on CSP Compliance for Firefox and Safari
 
-To make UI5 Web Componetns CSP-compliant also on Firefox and Safari, you need to copy the CSS resources for all relevant
+To make UI5 Web Components CSP-compliant also on Firefox and Safari, you need to copy the CSS resources for all relevant
 UI5 Web Components packages to where you can serve them, and use the `setUseLinks` and `setPackageCSSRoot` functions.
 
 Example:
@@ -79,7 +79,7 @@ It's simpler to just use relative paths, if your app is going to have one `index
 conveniently point to a directory, relative to it. However, in case components will be used in different
 pages across your site, or you are using URL re-writing, it would be safest to use fully qualified paths.
 
-## Links preloading
+## Links Preloading
 
 By default, when using `<link>`s, they are preloaded in the browser's `<head>` (even the ones for shadow roots) in order to avoid
 flashing of un-styled content. These preloads have the form: `<link rel="preload" as="style" ...>`.
@@ -93,7 +93,7 @@ setPreloadLinks(false);
 
 ## Summary
 
-By default, UI5 Web Components manages CSS resources either with Constructable Stylesheets, or with `<style>` tags.
+By default, the UI5 Web Components framework manages CSS resources either with Constructable Stylesheets, or with `<style>` tags.
 Since Constructable Stylesheets are CSP-compliant, UI5 Web Components is CSP-compliant on browsers
 that support them (Chrome, Edge) out of the box. For the other browsers (Firefox, Safari), in order to
 achieve CSP-compliance, you must instruct the framework to use `<link>` instead of `<style>` tags, but
