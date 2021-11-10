@@ -91,6 +91,5 @@
     "packages/tools",
     "packages/playground",
     "packages/create-package"
-  ],
-  "name": "ui5-webcomponents"
+  ]
 }
