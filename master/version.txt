@@ -1,22 +1,9 @@
-commit 5e4a6648ff61cc49563b908e28b6b94cd2c905ae
+commit debbaf4ad18d36506317e4c2ca6bd92db49b2f59
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 10 09:30:55 2021 +0200
+Date:   Wed Nov 10 12:07:41 2021 +0200
 
-    fix(ui5-shellbar): fire "click" by the correct abstract ui5-shellbar-item (#4303)
+    chore: release 1.0.0 (#4304)
     
-    - Fix an issue with the following code, although no longer throws an error as before the recently introduced [fix](https://github.com/SAP/ui5-webcomponents/pull/4287/files) is not complete:
-    
-    ```js
-    const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
-    const shellbarItem = this.items.find(item => {
-            return this.shadowRoot.querySelector(`#${refItemId}`);
-    });
-    ```
-    
-    As this is always true (the clicked item is among all items):
-    ```js
-            return this.shadowRoot.querySelector(`#${refItemId}`);
-    ```
-    the result will be always the same - the first ui5-shellbar-item in the array will be returned and the"click" event will be always fired by the first ui5-shellbar-item, although we might click on another custom icon within the bar - the 2nd, 3rd, etc.
-    
-    - Add a test to avoid degradations
+    👏
+    We are happy to announce our first stable 1.0.0 version of UI5 Web Components
+    👏
