@@ -170,7 +170,7 @@ describe("Input general interaction", () => {
 
 		// Act
 		await input.click();
-		await input.keys("a");
+		await input.keys("z");
 		await focusoutInput.click();
 
 		// // Assert
