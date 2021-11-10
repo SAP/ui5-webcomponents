@@ -63,16 +63,18 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests 'click' on custom action", async () => {
-			const shellbar = await browser.$("#shellbar");
-			const resultInput = await browser.$("#press-input");
-			const customActionIcon1 = await shellbar.shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = await shellbar.shadow$(".ui5-shellbar-custom-item:nth-child(4)");
+			const shellbar = await browser.$("#shellbarwithitems");
+			const resultInput = await browser.$("#press-input3");
+			const customActionIcon1 = await shellbar.shadow$(`.ui5-shellbar-custom-item[icon="accept"]`);
+			const customActionIcon2 = await shellbar.shadow$(`.ui5-shellbar-custom-item[icon="alert"]`);
 
-			customActionIcon1.click();
-			assert.strictEqual(await resultInput.getProperty("value"), "Disc", "'click' fired by the first item");
+			await customActionIcon1.click();
+			assert.strictEqual(await resultInput.getProperty("value"), "accept",
+				"click, fired by the first item");
 
-			customActionIcon2.click();
-			assert.strictEqual(await resultInput.getProperty("value"), "Call", "'click fired' by the current item");
+			await customActionIcon2.click();
+			assert.strictEqual(await resultInput.getProperty("value"), "warning",
+				"click, fired by the second item");
 		});
 	});
 
