@@ -60,7 +60,20 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await shellbar.shadow$(".ui5-shellbar-custom-item").getAttribute("data-count"), "3");
 
-		})
+		});
+
+		it("tests 'click' on custom action", async () => {
+			const shellbar = await browser.$("#shellbar");
+			const resultInput = await browser.$("#press-input");
+			const customActionIcon1 = await shellbar.shadow$(".ui5-shellbar-custom-item");
+			const customActionIcon2 = await shellbar.shadow$(".ui5-shellbar-custom-item:nth-child(4)");
+
+			customActionIcon1.click();
+			assert.strictEqual(await resultInput.getProperty("value"), "Disc", "'click' fired by the first item");
+
+			customActionIcon2.click();
+			assert.strictEqual(await resultInput.getProperty("value"), "Call", "'click fired' by the current item");
+		});
 	});
 
 	describe("Responsiveness", () => {
