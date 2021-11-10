@@ -145,10 +145,20 @@ a.github-link > img {
 }
 
 .subtitle {
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
     font-size: 2rem;
     font-family: "72-Light";
 }
+
+.curr-version {
+    margin-bottom: 3rem;
+    font-family: "72-Light";
+}
+
+.curr-version-link {color:#5496C6;}         /* Unvisited link  */
+.curr-version-link:visited {color:#5496C6;} /* Visited link    */
+.curr-version-link:hover {color:#5496C6;}   /* Mouse over link */
+.curr-version-link:active {color:#5496C6;}  /* Selected link   */
 
 .get-started-button {
     padding: 1.25rem 1.5625rem;
@@ -360,7 +370,7 @@ footer h2 {
 }
 
 .testimonial img {
-    height: 2.5rem;
+    height: 5rem;
     margin-right: 1rem
 }
 
