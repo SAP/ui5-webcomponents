@@ -1051,6 +1051,10 @@ class MultiComboBox extends UI5Element {
 		return (this._isFocusInside || this.open) && !this.readonly;
 	}
 
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
 	get classes() {
 		return {
 			popover: {
