@@ -135,6 +135,7 @@ const _resolveTaskPromise = () => {
  * reRenderAllUI5Elements({tag: "ui5-button"}) -> re-renders only instances of ui5-button
  * reRenderAllUI5Elements({rtlAware: true}) -> re-renders only rtlAware components
  * reRenderAllUI5Elements({languageAware: true}) -> re-renders only languageAware components
+ * reRenderAllUI5Elements({themeAware: true}) -> re-renders only themeAware components
  * reRenderAllUI5Elements({rtlAware: true, languageAware: true}) -> re-renders components that are rtlAware or languageAware
  * etc...
  *
@@ -147,7 +148,8 @@ const reRenderAllUI5Elements = async filters => {
 		const tag = element.constructor.getMetadata().getTag();
 		const rtlAware = isRtlAware(element.constructor);
 		const languageAware = element.constructor.getMetadata().isLanguageAware();
-		if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware)) {
+		const themeAware = element.constructor.getMetadata().isThemeAware();
+		if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware) || (filters.themeAware && themeAware)) {
 			renderDeferred(element);
 		}
 	});

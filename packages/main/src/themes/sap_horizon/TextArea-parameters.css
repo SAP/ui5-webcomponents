@@ -1,0 +1,22 @@
+@import "../base/TextArea-parameters.css";
+
+:root {
+	--_ui5_textarea_background_image: linear-gradient(0deg, var(--sapField_BorderColor) 0, var(--sapField_BorderColor) 100%);
+	--_ui5_textarea_error_background_image: linear-gradient(0deg, var(--sapField_InvalidColor) 0, var(--sapField_InvalidColor) 100%);
+	--_ui5_textarea_warning_background_image: linear-gradient(0deg, var(--sapField_WarningColor) 0, var(--sapField_WarningColor) 100%);
+	--_ui5_textarea_information_background_image: linear-gradient(0deg, var(--sapField_InformationColor) 0, var(--sapField_InformationColor) 100%);
+	--_ui_textarea_success_background_image: linear-gradient(0deg, var(--sapField_SuccessColor) 0, var(--sapField_SuccessColor) 100%);
+	--_ui5_textarea_inner_border_width: 0px;
+	--_ui5_textarea_state_border_width: 0px;
+	--_ui5_textarea_success_border_width: 0px;
+	--_ui5_textarea_hover_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_textarea_focus_box_shadow: 0px 0px 0px 0.125rem var(--sapField_Focus_BorderColor);
+	--_ui5_textarea_value_state_warning_focus_box_shadow: 0px 0px 0px 2px var(--sapField_WarningColor);
+	--_ui5_textarea_value_state_error_focus_box_shadow: 0px 0px 0px 2px var(--sapField_InvalidColor);
+	--_ui5_textarea_value_state_success_focus_box_shadow: 0px 0px 0px 2px var(--sapField_SuccessColor);
+	--_ui5_textarea_focus_outline: none;
+	--_ui5_textarea_value_state_focus_outline: none;
+	--_ui5_textarea_after_element_display: inline-block;
+	--_ui5_textarea_value_state_warning_hover_box_shadow: none;
+	--_ui5_textarea_placeholder_font_style: normal;
+}

@@ -338,6 +338,19 @@
 
 	<br>
 	<br>
+
+	<div id="xss-wrapper">
+		<ui5-button id="xss-btn">add xss item</ui5-button>
+		<ui5-input show-suggestions id="xss-input">
+			<ui5-suggestion-item text=""></ui5-suggestion-item>
+			<ui5-suggestion-item text="&lt;b&gt;&lt;/b&gt;"></ui5-suggestion-item>
+			<ui5-suggestion-item text="3412test1234"></ui5-suggestion-item>
+			<ui5-suggestion-item text="[[[b]]]"></ui5-suggestion-item>
+			<ui5-suggestion-item text="&amp;amp;"></ui5-suggestion-item>
+		</ui5-input>
+		<span id="xss-result">NO XSS</span>
+	</div>
+
 	<br>
 	<br>
 	<br>
@@ -384,6 +397,7 @@
 		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var oXSSButton = document.getElementById("xss-btn");
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
@@ -481,6 +495,13 @@
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
 			scrollResult.value = event.detail.scrollTop;
 			console.log("scroll", { scrolltop: event.detail.scrollTop, container: event.detail.scrollContainer });
+		});
+
+		oXSSButton.addEventListener("click", function () {
+			const oXSSItem = document.createElement("ui5-suggestion-item");
+
+			oXSSItem.text = `Canada<<img src="xss" onerror="document.getElementById('xss-result').innerText = 'XSS FOUND'">`
+			document.getElementById("xss-input").appendChild(oXSSItem);
 		});
 	</script>
 </body>

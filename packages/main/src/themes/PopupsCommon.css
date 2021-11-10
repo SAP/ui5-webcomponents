@@ -44,11 +44,14 @@
     margin: 0;
     color: var(--sapPageHeader_TextColor);
     font-size: 1rem;
-    font-weight: var(--_ui5_popup_header_footer_font_weight);
     font-family: "72override", var(--sapFontFamily);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.ui5-popup-header-root .ui5-popup-header-text {
+	font-weight: var(--_ui5_popup_header_footer_font_weight);
 }
 
 .ui5-popup-content {
