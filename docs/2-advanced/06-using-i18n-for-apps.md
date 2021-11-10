@@ -117,4 +117,4 @@ and return the data directly in `.json` format if you want to load a little bit 
 | `assets/messagebundle_en.json` | `{"PLEASE_WAIT": "Please wait"}`  |
 
 
-Next: [Accessibility](07-accessibility.md)
+Next: [Accessibility](../accessibility)
