@@ -360,7 +360,7 @@ footer h2 {
 }
 
 .testimonial img {
-    height: 2.5rem;
+    height: 5rem;
     margin-right: 1rem
 }
 
@@ -510,7 +510,7 @@ footer a {
     }
 
     footer {
-        margin-top: 12rem;
+        margin-top: 16rem;
     }
 }
 
@@ -556,24 +556,6 @@ footer a {
         margin-top: 12rem;
     }
 }
-
-/* @media(max-width: 1520px) {
-    footer {
-        margin-top: 12rem;
-    }
-}
-
-@media(max-width: 1520px) {
-    .example {
-        margin-top: 9rem;
-    }
-}
-
-@media(max-width: 1510px) {
-    footer {
-        margin-top: 9rem
-    }
-} */
 
 @media(max-width: 1500px) {
     .example {

@@ -1,5 +1,5 @@
-commit 0274e295a4a1cdff63ebb3bb28e7c3dbf1e7bb73
+commit c83338ff486dd3505771e4dd1065f0f37eadde30
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 10 15:36:14 2021 +0200
+Date:   Wed Nov 10 17:41:13 2021 +0200
 
-    chore: fix all broken links in the playground (#4311)
+    chore: update playground texts (#4312)
