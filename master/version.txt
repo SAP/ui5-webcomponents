@@ -1,5 +1,5 @@
-commit 998e4f3807cb94fa12b940925ec576a4bf7e3fba
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 10 13:29:58 2021 +0200
+commit a5123308e483331c393b0da0d9d52adcc7e027f9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Nov 10 14:28:53 2021 +0200
 
-    chore: implement the new design of the landing page (#4306)
+    chore: start shipping .css files to NPM (#4308)
