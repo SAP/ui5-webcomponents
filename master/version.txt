@@ -1,5 +1,5 @@
-commit c83338ff486dd3505771e4dd1065f0f37eadde30
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 10 17:41:13 2021 +0200
+commit b0f57164fb152e235b09256816e849fd9c13c882
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Nov 10 17:54:08 2021 +0200
 
-    chore: update playground texts (#4312)
+    docs: update some landing page elements (#4314)
