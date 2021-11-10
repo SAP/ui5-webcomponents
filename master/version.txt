@@ -1,9 +1,5 @@
-commit debbaf4ad18d36506317e4c2ca6bd92db49b2f59
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 10 12:07:41 2021 +0200
+commit 998e4f3807cb94fa12b940925ec576a4bf7e3fba
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Nov 10 13:29:58 2021 +0200
 
-    chore: release 1.0.0 (#4304)
-    
-    👏
-    We are happy to announce our first stable 1.0.0 version of UI5 Web Components
-    👏
+    chore: implement the new design of the landing page (#4306)
