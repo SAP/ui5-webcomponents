@@ -282,7 +282,7 @@
 			var currenItem = window[id][0] || window[id];
 			currenItem.addEventListener("ui5-click", function(event) {
 				event.preventDefault();
-				window["press-input3"].value = event.target.id;
+				window["press-input"].value = event.target.id;
 				window["custom-item-popover"].showAt(event.detail.targetRef);
 			});
 		});
