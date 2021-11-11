@@ -1,5 +1,5 @@
-commit b0f57164fb152e235b09256816e849fd9c13c882
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 10 17:54:08 2021 +0200
+commit c23757355c0dc1d36e24b7e6c272e3b897cf241a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Nov 11 17:07:25 2021 +0200
 
-    docs: update some landing page elements (#4314)
+    chore: update broken logo (#4319)
