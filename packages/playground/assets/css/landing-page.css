@@ -163,6 +163,7 @@ a.github-link > img {
 .get-started-button {
     padding: 1.25rem 1.5625rem;
     border-radius: 10px;
+    font-size: 1.5rem;
     color: #fff;
     background: var(--orange_color);
     text-decoration: none;
