@@ -1,6 +1,6 @@
-commit 6b22bc7bd1191189eb9cb9749ee5052d5973ef78
-Merge: d3c4701 2ff477f
+commit 78a73607d8dc5544c51b80c4abfa43ff9835975f
+Merge: 6b22bc7 b0f5716
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 5 16:08:49 2021 +0300
+Date:   Thu Nov 11 10:07:13 2021 +0200
 
-    update playground to rc15
+    Merge branch 'master' into latest-release-website

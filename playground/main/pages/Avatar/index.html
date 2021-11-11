@@ -10,43 +10,35 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	
-	
-	
-<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-                    
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		:not(:defined) {
-			display: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/styles/Avatar.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="avatar1auto">
 	<section>
 		<h3>Avatar - Basic sample</h3>
 		<ui5-avatar>
-			<img src="./img/John_Miller.png" alt="John Miller">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John_Miller.png" alt="John Miller">
 		</ui5-avatar>
 	</section>
 
 	<section>
 		<h3>Avatar - special characters in image path</h3>
-		<ui5-avatar style="border: 1px dashed red;">
-			<img src="./img/John$$$ ' (_)Miller 100%25 &=.png" alt="John Miller">
+		<ui5-avatar class="avatar2auto">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John$$$%20'%20(_)Miller%20100%25%20&=.png" alt="John Miller">
 		</ui5-avatar>
-		<ui5-avatar style="border: 1px dashed red;">
-			<img src="./img/John Miller.png" alt="John Miller">
+		<ui5-avatar class="avatar2auto">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John%20Miller.png" alt="John Miller">
 		</ui5-avatar>
-		<ui5-avatar style="border: 1px dashed red;">
-			<img src="./img/John%20Miller.png" alt="John Miller">
+		<ui5-avatar class="avatar2auto">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John%20Miller.png" alt="John Miller">
 		</ui5-avatar>
-		<ui5-avatar style="border: 1px dashed red;">
+		<ui5-avatar class="avatar2auto">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP Logo">
 		</ui5-avatar>
 	</section>
@@ -54,38 +46,38 @@
 	<section>
 		<h3>Avatar - Square [ XS, S, M, L, XL ]</h3>
 		<ui5-avatar shape="Square" size="XS">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar shape="Square" size="S">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar shape="Square" size="M">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar shape="Square" size="L">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar shape="Square" size="XL">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 	</section>
 
 	<section>
 		<h3>Avatar - Circle [ XS, S, M, L, XL ]</h3>
 		<ui5-avatar size="XS">
-			<img src="./img/John_Miller.png" alt="John Miller">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John_Miller.png" alt="John Miller">
 		</ui5-avatar>
 		<ui5-avatar size="S">
-			<img src="./img/John_Miller.png" alt="John Miller">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John_Miller.png" alt="John Miller">
 		</ui5-avatar>
 		<ui5-avatar size="M">
-			<img src="./img/John_Miller.png" alt="John Miller">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John_Miller.png" alt="John Miller">
 		</ui5-avatar>
 		<ui5-avatar size="L">
-			<img src="./img/John_Miller.png" alt="John Miller">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John_Miller.png" alt="John Miller">
 		</ui5-avatar>
 		<ui5-avatar size="XL">
-			<img src="./img/John_Miller.png" alt="John Miller">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/John_Miller.png" alt="John Miller">
 		</ui5-avatar>
 	</section>
 
@@ -139,23 +131,23 @@
 	<section>
 		<h3>Avatar - Custom</h3>
 		<h4>Avatar with custom size</h4>
-		<ui5-avatar id="myCustomAvatar" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)">
-			<img src="./img/Lamp_avatar_01.jpg" alt="Lamp" style="object-fit: cover;">
+		<ui5-avatar id="myCustomAvatar" shape="Square" size="XL" class="avatar3auto">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/Lamp_avatar_01.jpg" alt="Lamp" class="avatar4auto">
 		</ui5-avatar>
 		<h4>Avatar with custom size and imageFitType="Contain"</h4>
-		<ui5-avatar id="myCustomAvatar1" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)">
-			<img src="./img/Lamp_avatar_01.jpg" alt="Lamp" style="object-fit: contain;">
+		<ui5-avatar id="myCustomAvatar1" shape="Square" size="XL" class="avatar3auto">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/Lamp_avatar_01.jpg" alt="Lamp" class="avatar5auto">
 		</ui5-avatar>
 	</section>
 
 	<section>
 		<h3>Avatar - test</h3>
 		<ui5-avatar id="myAvatar1">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar id="myAvatar2" icon="filter"></ui5-avatar>
 		<ui5-avatar id="myAvatar3" icon="filter" initials="SF">
-			<img src="./img/woman_avatar_5.png" alt="Woman image">
+			<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar id="myAvatar4" initials="SF" shape="Square" size="M"></ui5-avatar>
 	</section>
@@ -193,22 +185,14 @@
 		});
 	</script>
 
-	<style>
-		.avatar-image {
-			object-fit: cover;
-		}
-
-		.avatar-image1 {
-			object-fit: contain;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/styles/Avatar.css">
 
 	<ui5-avatar size="XL" shape="Circle">
-		<img src="./img/Lamp_avatar_01.jpg" alt="Woman 1" class="avatar-image">
+		<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/Lamp_avatar_01.jpg" alt="Woman 1" class="avatar-image">
 	</ui5-avatar>
 
 	<ui5-avatar size="XL" shape="Square">
-		<img src="./img/Lamp_avatar_01.jpg" alt="Woman 1" class="avatar-image1">
+		<img src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/Lamp_avatar_01.jpg" alt="Woman 1" class="avatar-image1">
 	</ui5-avatar>
 
 

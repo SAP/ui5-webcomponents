@@ -6,37 +6,34 @@
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
-	
-	
-	
-<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-                    
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/styles/List.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="list1auto">
 	<ui5-title>List growing="Scroll"</ui5-title>
-	<label style="font-size:2rem;">new items loaded:</label>
-	<label id="result" style="font-size:2rem;"> 0 times: 0</label>
+	<label class="list2auto">new items loaded:</label>
+	<label id="result" class="list2auto"> 0 times: 0</label>
 
-	<ui5-list id="infiniteScrollEx" growing="Scroll" style="height: 300px;">
+	<ui5-list id="infiniteScrollEx" growing="Scroll" class="list3auto">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
@@ -45,19 +42,19 @@
 
 	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Error">IPhone 3</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Error">IPhone 3</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
@@ -71,9 +68,9 @@
 	<br/><br/>
 
 	<ui5-list header-text="API: image">
-		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1022.jpg" >IPhone 3</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
@@ -143,7 +140,7 @@
 	</ui5-list>
 
 	<br/><br/>
-	<div style="display: flex; align-items: center;">
+	<div class="list4auto">
 		<h3 id="infoLbl">Items 3/3</h3>
 		<ui5-button id=	"resetBtn">Reset List</ui5-button>
 	</div>
@@ -158,9 +155,9 @@
 	<br/><br/>
 
 	<ui5-list header-text="API: ListItem selected">
-		<ui5-li selected="selected" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li selected="selected" image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/HT-1022.jpg" >IPhone 3</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
@@ -169,19 +166,19 @@
 
 	<ui5-list header-text="API: CustomListItem" mode="SingleSelectEnd">
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
 		</ui5-li-custom>
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
 		</ui5-li-custom>
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
@@ -237,7 +234,7 @@
 	</ui5-select>
 	<ui5-list id="myList6" header-text="visualization of different combinations of icon / title / description / info / image - (Current mode: None)">
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
@@ -250,10 +247,10 @@
 		<ui5-li icon="home" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li icon="home" additional-text-state="Error" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li icon="home" additional-text-state="Error" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li image="./img/woman_avatar_5.png">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li image="./img/woman_avatar_5.png" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Error" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Error" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" additional-text-state="Error" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/img/woman_avatar_5.png" additional-text-state="Error" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 	</ui5-list>
 
 	<script>
@@ -317,7 +314,7 @@
 
 			mutated = false;
 			cleanList();
-			fillList(items.join());
+			fillList(items.join(""));
 			updateInfo(3);
 		};
 

@@ -14,16 +14,12 @@
 		}
 	</script>
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-	
-	
-	
-<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-                    
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -51,18 +47,11 @@
 	</script>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="panel1auto">
 
-<style>
+<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/styles/Panel.css">
 
-	.header {
-		display: flex;
-		align-items: center;
-		width: 100%;
-	}
-</style>
-
-	<ui5-panel id="p1" collapsed accessible-role="Complementary">
+	<ui5-panel id="p1" collapsed accessible-role="Complementary" no-animation>
 
 		<!-- Panel header -->
 		<div slot="header" class="header">

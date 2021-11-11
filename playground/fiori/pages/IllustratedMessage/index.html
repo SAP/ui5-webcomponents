@@ -8,22 +8,14 @@
 
 	<title>IllustratedMessage</title>
 
-	<script>delete Document.prototype.adoptedStyleSheets</script>
-	
-	
-	
-<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-                    
-	<style>
-		.border {
-			border: 1px solid red;
-		}
-	</style>
+	<script>// delete Document.prototype.adoptedStyleSheets</script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/fiori/styles/IllustratedMessage.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="illustratedmessage1auto">
 	Illustration:
 	<ui5-select id="illustrationSelect">
 		<ui5-option selected>BeforeSearch</ui5-option>
@@ -37,6 +29,24 @@
 		<ui5-option>NoActivities</ui5-option>
 		<ui5-option>UnableToUpload</ui5-option>
 		<ui5-option>UnableToLoad</ui5-option>
+		<ui5-option>TntCodePlaceholder</ui5-option>
+		<ui5-option>TntCompany</ui5-option>
+		<ui5-option>TntExternalLink</ui5-option>
+		<ui5-option>TntFaceID</ui5-option>
+		<ui5-option>TntFingerprint</ui5-option>
+		<ui5-option>TntLock</ui5-option>
+		<ui5-option>TntMission</ui5-option>
+		<ui5-option>TntNoApplications</ui5-option>
+		<ui5-option>TntNoFlows</ui5-option>
+		<ui5-option>TntNoUsers</ui5-option>
+		<ui5-option>TntRadar</ui5-option>
+		<ui5-option>TntServices</ui5-option>
+		<ui5-option>TntSessionExpired</ui5-option>
+		<ui5-option>TntSessionExpiring</ui5-option>
+		<ui5-option>TntSuccess</ui5-option>
+		<ui5-option>TntSuccessfulAuth</ui5-option>
+		<ui5-option>TntUnlock</ui5-option>
+		<ui5-option>TntUnsuccessfulAuth</ui5-option>
 	</ui5-select>
 	Size:
 	<ui5-select id="sizeSelect">
@@ -57,6 +67,11 @@
 			<ui5-button id="closeDialogButton" design="Emphasized" slot="endContent">Close</ui5-button>
 		</ui5-bar>
 	</ui5-dialog>
+
+	<ui5-illustrated-message name="UnableToUpload" title="Something went wrong...">
+		<div slot="subtitle">Please try again or contact us at <ui5-link>example@example.com</ui5-link></div>
+		<ui5-button icon="refresh">Try again</ui5-button>
+	</ui5-illustrated-message>
 
 	<script>
 		const illustrationSelect = document.getElementById("illustrationSelect");

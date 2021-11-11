@@ -14,28 +14,14 @@
 		}
 	</script>
 
-	
-	
-	
-<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-                    
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
 
-	<style>
-		#myList {width: 700px;}
-		.focusable {height: 2rem;background: yellow;outline: none;box-sizing: border-box;}
-		.focusable:focus {border: 2px dotted red;}
-
-		.header {
-			display: flex;
-			align-items: center;
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/styles/List_keyboard_support.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="list_keyboard_support1auto">
 	<h1>UI5 Table Web Component</h1>
 	<p>The sample shows the keyboard navigation support of the Table</p>
 	<ul>
@@ -101,5 +87,45 @@
 	</ui5-list>
 
 	<div class="focusable" tabindex="0"></div>
+
+	<h1>Test PAGE UP/DOWN</h1>
+	<br><br>
+	<ui5-list>
+		<ui5-li>0</ui5-li>
+		<ui5-li>1</ui5-li>
+		<ui5-li>2</ui5-li>
+		<ui5-li>3</ui5-li>
+		<ui5-li>4</ui5-li>
+		<ui5-li>5</ui5-li>
+		<ui5-li>6</ui5-li>
+		<ui5-li>7</ui5-li>
+		<ui5-li>8</ui5-li>
+		<ui5-li>9</ui5-li>
+		<ui5-li>10</ui5-li>
+
+		<ui5-li>11</ui5-li>
+		<ui5-li>12</ui5-li>
+		<ui5-li>13</ui5-li>
+		<ui5-li>14</ui5-li>
+		<ui5-li>15</ui5-li>
+		<ui5-li>16</ui5-li>
+		<ui5-li>17</ui5-li>
+		<ui5-li>18</ui5-li>
+		<ui5-li>19</ui5-li>
+		<ui5-li>20</ui5-li>
+
+		<ui5-li>21</ui5-li>
+		<ui5-li>22</ui5-li>
+		<ui5-li>23</ui5-li>
+		<ui5-li>24</ui5-li>
+		<ui5-li>25</ui5-li>
+		<ui5-li>26</ui5-li>
+		<ui5-li>27</ui5-li>
+		<ui5-li>28</ui5-li>
+		<ui5-li>29</ui5-li>
+		<ui5-li>30</ui5-li>
+	</ui5-list>
+
+	
 </body>
 </html>
