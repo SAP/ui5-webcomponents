@@ -261,7 +261,10 @@ https://github.com/philipwalton/flexbugs/issues/231
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
 	cursor: default;
-    position: absolute;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 }
 
 /* RTL */
