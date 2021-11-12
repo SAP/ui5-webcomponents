@@ -1,5 +1,5 @@
-commit 7909b5c0de3b129f741bedb7447b707a2b7744f7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 12 10:10:16 2021 +0200
+commit d9acff82e8ccb3b038ca594c9a9c69380fd0ab7d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Nov 12 12:10:42 2021 +0200
 
-    chore: add new icons (#4318)
+    fix(playground): fix js error for compact mode (#4325)
