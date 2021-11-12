@@ -1,5 +1,5 @@
-commit d9acff82e8ccb3b038ca594c9a9c69380fd0ab7d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Nov 12 12:10:42 2021 +0200
+commit e1250aed45445e65648fbb59da0b6bd7bc80c51a
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Nov 12 15:22:35 2021 +0200
 
-    fix(playground): fix js error for compact mode (#4325)
+    fix(inputs): value state message is not presented in readonly mode (#4329)
