@@ -470,7 +470,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("value"), "Compact", "The only not selected item remains set");
 		});
 
-		it ("should reset current navigation state on user input", async () => {
+		it ("should reset current navigation state on user input if no matching item is found", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
@@ -481,6 +481,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("value"), "Compact", "The second item name is selected");
 
+			await mcb.setProperty("value", "");
 			await mcb.keys("a");
 			await mcb.keys("ArrowDown");
 
@@ -495,7 +496,20 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys("ArrowUp");
 			assert.equal(await mcb.getProperty("value"), "Condenseda", "The value remains the same");
 		});
+
+	it ("should set matching item if there is user input", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+		const mcb = await browser.$("#mcb");
+
+		await mcb.setProperty("value", "l");
+		await mcb.click();
+		await mcb.keys("ArrowDown");
+
+		assert.equal(await mcb.getProperty("value"), "Longest word in the world", "The value is set to the first item name");
 	});
+});
+
 
 	describe("General", () => {
 		before(async () => {
