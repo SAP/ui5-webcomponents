@@ -468,7 +468,7 @@ class Popover extends Popup {
 	 * @returns {int} The adjusted top in px.
 	 */
 	_adjustForIOSKeyboard(top) {
-		let actualTop = Math.ceil(this.getBoundingClientRect().top);
+		const actualTop = Math.ceil(this.getBoundingClientRect().top);
 
 		return top + (parseInt(this.style.top || "0") - actualTop);
 	}
