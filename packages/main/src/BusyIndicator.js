@@ -97,7 +97,7 @@ const metadata = {
 		 * @private
 		 */
 		_isBusy: {
-			type: Boolean
+			type: Boolean,
 		},
 	},
 };
