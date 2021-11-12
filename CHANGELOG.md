@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0...v1.0.1) (2021-11-10)
+
+
+
+### Fixes
+
+* **build:** start shipping .css files to NPM [#4308](https://github.com/SAP/ui5-webcomponents/pull/4308)
+
+_The `CSP-compliance` for **Firefox/Safari** requires the `/dist/css/` directory for the **main**, **fiori** and **theming** packages to be in **NPM**_
+
+# [1.0.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.16...v1.0.0) (2021-11-10)
+
+
+👏 **We are happy to announce our first stable 1.0.0 version of UI5 Web Components** 👏
+
+
 # [1.0.0-rc.16](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.15...v1.0.0-rc.16) (2021-11-09)
 
 ### New Component
