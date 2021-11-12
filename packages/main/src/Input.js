@@ -611,7 +611,7 @@ class Input extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._changeFired = (this.previousValue === this.value);
+			this._changeFired = (this.previousValue === this.value && this.lastConfirmedValue === this.value);
 			return this._handleEnter(event);
 		}
 

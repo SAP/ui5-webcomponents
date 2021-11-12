@@ -507,7 +507,7 @@
 			const changeResult = document.getElementById("myInput-change-result");
 			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
 			changeResult.innerText += event.target.value + "\r\n";
-		})
+		});
 
 		oXSSButton.addEventListener("click", function () {
 			const oXSSItem = document.createElement("ui5-suggestion-item");
