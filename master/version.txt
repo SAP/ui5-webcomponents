@@ -1,5 +1,5 @@
-commit c23757355c0dc1d36e24b7e6c272e3b897cf241a
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Nov 11 17:07:25 2021 +0200
+commit 7909b5c0de3b129f741bedb7447b707a2b7744f7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Nov 12 10:10:16 2021 +0200
 
-    chore: update broken logo (#4319)
+    chore: add new icons (#4318)
