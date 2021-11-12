@@ -950,7 +950,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get shouldOpenValueStateMessagePopover() {
-		return this.focused && this.hasValueStateText && !this._iconPressed
+		return this.focused && !this.readonly && this.hasValueStateText && !this._iconPressed
 			&& !this.open && !this._isPhone;
 	}
 

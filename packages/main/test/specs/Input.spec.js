@@ -541,6 +541,18 @@ describe("Input general interaction", () => {
 
 		assert.notOk(await input.getProperty("open"), "Input's Suggestion Popover should not be open");
 	});
+
+	it("Should not open value state message when input is in readonly state", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#readonly-value-state-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-input");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await input.click();
+
+		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+	});
 });
 
 describe("Input arrow navigation", () => {
