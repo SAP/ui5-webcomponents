@@ -98,7 +98,7 @@ These three `@ui5/` packages will serve as the foundation of your own package an
 | Package                         | Type of Dependency | Description                          |
 |---------------------------------|--------------------|--------------------------------------|
 | `@ui5/webcomponents-base`       | `dependency`       | Base classes and framework           |
-| `@ui5/webcomponents-theme-base` | `dependency`       | Base theming assets                  |
+| `@ui5/webcomponents-theming` | `dependency`       | Base theming assets                  |
 | `@ui5/webcomponents-tools`      | `devDependency`    | Build tools and configuration assets |
 
 The initialization script will create several NPM scripts for you in `package.json`.
@@ -294,4 +294,4 @@ import "my-ui5-webcomponents/dist/SomeOtherComponent.js";
 import "my-ui5-webcomponents/dist/YetAnotherComponent.js";
 ```
 
-Next: [Developing Custom UI5 Web Components](02-custom-UI5-Web-Components.md)
+Next: [Developing Custom UI5 Web Components](../custom-ui5-web-components)

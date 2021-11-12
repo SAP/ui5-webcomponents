@@ -397,25 +397,25 @@ class WheelSlider extends UI5Element {
 		this._selectElementByIndex(nextElementIndex);
 	}
 
-	_onkeydown(е) {
+	_onkeydown(e) {
 		if (!this.expanded) {
 			return;
 		}
 
-		if (isUp(е)) {
-			this._onArrowUp(е);
+		if (isUp(e)) {
+			this._onArrowUp(e);
 		}
 
-		if (isDown(е)) {
-			this._onArrowDown(е);
+		if (isDown(e)) {
+			this._onArrowDown(e);
 		}
 
-		if (isPageDown(е)) {
-			this._selectLimitCell(е, false);
+		if (isPageDown(e)) {
+			this._selectLimitCell(e, false);
 		}
 
-		if (isPageUp(е)) {
-			this._selectLimitCell(е, true);
+		if (isPageUp(e)) {
+			this._selectLimitCell(e, true);
 		}
 	}
 

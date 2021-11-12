@@ -6,10 +6,12 @@
 	@focusout="{{_onfocusout}}"
 >
 	<!-- Decrement Icon -->
+	{{#unless readonly}}
 	<div
 		class="ui5-step-icon ui5-step-dec"
 		title="{{decIconTitle}}"
 	>
+	
 		<ui5-icon
 			id="{{_id}}-dec"
 			name="{{decIconName}}"
@@ -25,7 +27,7 @@
 			?clickable="{{_decIconClickable}}"
 		></ui5-icon>
 	</div>
-
+	{{/unless}}
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
@@ -52,6 +54,7 @@
 	</ui5-input>
 
 	<!-- Increment Icon -->
+	{{#unless readonly}}
 	<div
 		class="ui5-step-icon ui5-step-inc"
 		title="{{incIconTitle}}"
@@ -71,7 +74,7 @@
 			?clickable="{{_incIconClickable}}"
 		></ui5-icon>
 	</div>
-
+	{{/unless}}
 	<slot name="formSupport"></slot>
 
 </div>

@@ -19,7 +19,8 @@ import messageStripCss from "./generated/themes/MessageStrip.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-messagestrip",
+	tag: "ui5-message-strip",
+	altTag: "ui5-messagestrip",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
@@ -113,13 +114,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-messagestrip</code> component enables the embedding of app-related messages.
+ * The <code>ui5-message-strip</code> component enables the embedding of app-related messages.
  * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
  * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-messagestrip</code> component, you can define whether it displays
+ * For the <code>ui5-message-strip</code> component, you can define whether it displays
  * an icon in the beginning and a close button. Moreover, its size and background
  * can be controlled with CSS.
  *
@@ -131,7 +132,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MessageStrip
  * @extends UI5Element
- * @tagname ui5-messagestrip
+ * @tagname ui5-message-strip
  * @public
  * @since 0.9.0
  */
@@ -173,10 +174,10 @@ class MessageStrip extends UI5Element {
 
 	static designClassesMappings() {
 		return {
-			"Information": "ui5-messagestrip-root--info",
-			"Positive": "ui5-messagestrip-root--positive",
-			"Negative": "ui5-messagestrip-root--negative",
-			"Warning": "ui5-messagestrip-root--warning",
+			"Information": "ui5-message-strip-root--info",
+			"Positive": "ui5-message-strip-root--positive",
+			"Negative": "ui5-message-strip-root--negative",
+			"Warning": "ui5-message-strip-root--warning",
 		};
 	}
 
@@ -200,9 +201,9 @@ class MessageStrip extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-root-hide-icon": this.hideIcon,
-				"ui5-messagestrip-root-hide-close-button": this.hideCloseButton,
+				"ui5-message-strip-root": true,
+				"ui5-message-strip-root-hide-icon": this.hideIcon,
+				"ui5-message-strip-root-hide-close-button": this.hideCloseButton,
 				[this.designClasses]: true,
 			},
 		};
