@@ -1236,7 +1236,7 @@ class Input extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.open && this.focused;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
