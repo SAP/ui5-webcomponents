@@ -13,7 +13,7 @@
 }
 
 :host([overflows]) {
-	visibility: hidden;
+	display: none;
 }
 
 :host(:not([readonly]):hover) {
