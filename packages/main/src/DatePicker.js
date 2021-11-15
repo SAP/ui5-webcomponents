@@ -319,8 +319,8 @@ const metadata = {
  * use TAB to reach the buttons for changing month and year.
  * <br>
  *
- * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
- * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
+ * If the <code>ui5-date-picker</code> input field is focused and its corresponding picker dialog is not opened,
+ * then users can increment or decrement the JS date object referenced by <code>dateValue</code> property
  * by using the following shortcuts:
  * <br>
  * <ul>
