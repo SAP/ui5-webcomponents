@@ -1,5 +1,15 @@
-commit 6691b3d275153689abcd1afa8058f8c208d8a84e
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Mon Nov 15 09:00:31 2021 +0200
+commit 75aa36e9f651a7c18dd47165001fb6267e9c2902
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Mon Nov 15 11:10:44 2021 +0200
 
-    fix(ui5-token): border-radius adjusted to spec in in SAP Quartz HCB/HCW (#4323)
+    fix(ui5-tokenizer) Adjust 'nMore' label positioning (#4285)
+    
+    * Fix nMore positioning
+    
+    * Remove tokenizer min-width when there is no tokens and nmore label
+    
+    * Fix hiding the tokens when there is enough space for them (Chrome)
+    
+    * Fix lint errors
+    
+    * Remove the min-width of nMore label
