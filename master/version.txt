@@ -1,15 +1,7 @@
-commit 75aa36e9f651a7c18dd47165001fb6267e9c2902
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Mon Nov 15 11:10:44 2021 +0200
+commit ce0dcd2ed2e078fb99af82f22acbda88cefd3fc1
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Mon Nov 15 12:38:16 2021 +0200
 
-    fix(ui5-tokenizer) Adjust 'nMore' label positioning (#4285)
+    fix(ui5-input, ui5-multi-combobox): value state popup now aligned properly in RTL mode (#4310)
     
-    * Fix nMore positioning
-    
-    * Remove tokenizer min-width when there is no tokens and nmore label
-    
-    * Fix hiding the tokens when there is enough space for them (Chrome)
-    
-    * Fix lint errors
-    
-    * Remove the min-width of nMore label
+    Fixes #3830
