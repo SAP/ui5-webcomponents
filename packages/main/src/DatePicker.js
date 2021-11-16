@@ -320,7 +320,7 @@ const metadata = {
  * <br>
  *
  * If the <code>ui5-date-picker</code> input field is focused and its corresponding picker dialog is not opened,
- * then users can increment or decrement the JS date object referenced by <code>dateValue</code> property
+ * then users can increment or decrement the date referenced by <code>dateValue</code> property
  * by using the following shortcuts:
  * <br>
  * <ul>
