@@ -155,20 +155,7 @@
 			></ui5-button>
 
 			{{#if hasProfile}}
-				<ui5-button
-					profile-btn
-					id="{{this._id}}-item-3"
-					@click={{_handleProfilePress}}
-					style="{{styles.items.profile}}"
-					title="{{_profileText}}"
-					._buttonAccInfo="{{accInfo.profile}}"
-					class="ui5-shellbar-button ui5-shellbar-image-button"
-					data-ui5-stable="profile"
-				>
-					<slot
-						name="profile"
-					></slot>
-				</ui5-button>
+				{{> profileBtn}}
 			{{/if}}
 
 			{{#if showProductSwitch}}
@@ -187,6 +174,21 @@
 		</div>
 	</div>
 </div>
+
+{{#*inline "profileBtn"}}
+	<ui5-button
+		profile-btn
+		id="{{this._id}}-item-3"
+		@click={{_handleProfilePress}}
+		style="{{styles.items.profile}}"
+		title="{{_profileText}}"
+		._buttonAccInfo="{{accInfo.profile}}"
+		class="ui5-shellbar-button ui5-shellbar-image-button"
+		data-ui5-stable="profile"
+	>
+		<slot name="profile"></slot>
+	</ui5-button>
+{{/inline}}
 
 {{#*inline "coPilot"}}
 	<svg @click="{{_coPilotClick}}" focusable="false" width="44" role="presentation" aria-hidden="true" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
