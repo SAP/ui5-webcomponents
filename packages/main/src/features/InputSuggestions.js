@@ -39,6 +39,7 @@ class Suggestions {
 		this.fnOnSuggestionItemFocus = this.onItemFocused.bind(this);
 		this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
 		this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
+		this.fnOnSuggestionItemMouseDown = this.onItemMouseDown.bind(this);
 
 		this._getSuggestionPopover();
 
@@ -165,6 +166,10 @@ class Suggestions {
 		this._getComponent().onItemMouseOver(event);
 	}
 
+	onItemMouseDown(event) {
+		this._getComponent().onItemMouseDown(event);
+	}
+
 	onItemMouseOut(event) {
 		this._getComponent().onItemMouseOut(event);
 	}
@@ -217,6 +222,8 @@ class Suggestions {
 		list.addEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
 		list.removeEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
 		list.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
+		list.removeEventListener("mousedown", this.fnOnSuggestionItemMouseOut);
+		list.addEventListener("mousedown", this.fnOnSuggestionItemMouseDown);
 	}
 
 	_attachPopupListeners() {
