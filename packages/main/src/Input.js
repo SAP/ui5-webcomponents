@@ -549,7 +549,6 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this._handleResizeBound = this._handleResize.bind(this);
-		this._isGroupHeaderItemClicked = false;
 	}
 
 	onEnterDOM() {
@@ -712,17 +711,12 @@ class Input extends UI5Element {
 	_onfocusout(event) {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
-		const groupHeaderIsFocused = this._isGroupHeaderItemClicked;
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (!groupHeaderIsFocused && (focusedOutToSuggestions || focusedOutToValueStateMessage)) {
+		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
 			event.stopImmediatePropagation();
 			return;
-		}
-
-		if (groupHeaderIsFocused) {
-			this.focused = false;
 		}
 
 		const toBeFocused = event.relatedTarget;
