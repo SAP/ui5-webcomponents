@@ -353,7 +353,9 @@ describe("Input general interaction", () => {
 		await input.keys("C");
 		await groupHeader.click();
 
-		assert.strictEqual(await input.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await input.getProperty("focused"), true, "Input is focused");
+
 	});
 
 	it("checks if the suggestions popover width is minimum the size of the input", async () => {

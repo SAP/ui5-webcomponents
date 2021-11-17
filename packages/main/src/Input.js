@@ -1078,7 +1078,7 @@ class Input extends UI5Element {
 	}
 
 	onItemMouseDown(event) {
-		this._isGroupHeaderItemClicked = event.target.group;
+		event.preventDefault();
 	}
 
 	onItemMouseOut(event) {
