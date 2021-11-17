@@ -1071,10 +1071,6 @@ class Input extends UI5Element {
 		});
 	}
 
-	onItemMouseDown(event) {
-		event.preventDefault();
-	}
-
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
