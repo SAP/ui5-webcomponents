@@ -1574,7 +1574,7 @@
     "@wdio/types" "7.13.2"
     p-iteration "^1.1.8"
 
-"@webcomponents/webcomponentsjs@^2.5.0":
+"@webcomponents/webcomponentsjs@^2.5.0", "@webcomponents/webcomponentsjs@^2.6.0":
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.6.0.tgz#7d1674c40bddf0c6dd974c44ffd34512fe7274ff"
   integrity sha512-Moog+Smx3ORTbWwuPqoclr+uvfLnciVd6wdCaVscHPrxbmQ/IJKm3wbB7hpzJtXWjAq2l/6QMlO85aZiOdtv5Q==

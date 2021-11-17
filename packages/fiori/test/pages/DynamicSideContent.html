@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Dynamic Side Content</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+    <style>
+		.p-padding * {
+			padding: 0.5rem;
+			margin: 0;
+		}
+    </style>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-page id="page" style="height: 650px; width: 100%" floating-footer show-footer>
+
+		<ui5-dynamic-side-content
+			id="dynamicSideContent"
+			class="p-padding"
+			side-content-position1="Begin"
+			side-content-visibility1="ShowAboveM"
+			side-content-fall-down1="BelowM"
+			equal-split1
+			hide-main-content1
+			hide-side-content1>
+			<div>
+				<h1>Main Content</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ex mi, elementum et ante commodo, semper sollicitudin magna. Sed dapibus ut tortor quis varius. Sed luctus sem at nunc porta vulputate. Suspendisse lobortis arcu est, quis ultrices ipsum fermentum a. Vestibulum a ipsum placerat ligula gravida fringilla at id ex. Etiam pellentesque lorem sed sagittis aliquam. Quisque semper orci risus, vel efficitur dui euismod aliquet. Morbi sapien sapien, rhoncus et rutrum nec, rhoncus id nisl. Cras non tincidunt enim, id eleifend neque.</p>
+				<p>Sed mauris nunc, sollicitudin eget mi nec, tincidunt molestie diam. Aliquam orci dui, vestibulum quis blandit et, interdum vel arcu. Vestibulum sit amet quam ut sapien pulvinar consequat ac sed turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus quam diam, mattis vitae condimentum ac, ornare vel dui. Pellentesque orci tellus, tempor vel ex eget, luctus vehicula massa. Nullam laoreet, lacus ut vulputate maximus, quam sem molestie nunc, vitae convallis sem nisi nec magna.</p>
+				<p>Nullam a felis odio. Curabitur quis tellus nec risus suscipit dictum vitae eget augue. Maecenas faucibus felis a arcu ultricies, sed tempor ante pellentesque. Ut hendrerit ipsum sit amet ligula bibendum, sit amet vehicula lacus condimentum. Morbi lacinia nibh eu placerat sollicitudin. Praesent accumsan pulvinar massa, eget finibus odio lacinia ullamcorper. Integer neque quam, pretium sed accumsan id, euismod non nibh.</p>
+				<p>Quisque luctus non mi in mollis. Suspendisse id lectus felis. Aliquam elementum nibh nibh. Nullam eget condimentum dolor. Suspendisse id dui non lorem imperdiet iaculis. Pellentesque ex turpis, vehicula a arcu quis, mattis auctor tellus. In ornare, libero ac rhoncus eleifend, felis orci sagittis felis, ac molestie est lacus fermentum odio. Mauris et porta nibh. Integer tellus leo, laoreet nec odio non, rutrum bibendum magna.</p>
+			</div>
+			<div slot="side-content">
+				<h1>Side Content</h1>
+				<p>Morbi lorem libero, imperdiet id condimentum ac, tempor ut velit. Integer a laoreet sem. Nunc at sagittis nisi. Sed placerat diam eu porttitor dignissim. Maecenas nec fringilla tortor. Pellentesque ut elit est. Curabitur quis elit at mauris ullamcorper fringilla. Nullam diam mi, porttitor dictum orci nec, molestie luctus metus. Nunc ut ex blandit, elementum erat eget, pulvinar sapien. Donec nec lorem eu nunc eleifend tempor at non tortor. In quam velit, ornare at rutrum ac, porta ac augue. Suspendisse venenatis semper lacus at venenatis. Praesent vestibulum ligula nulla, at tempus lorem consequat suscipit. Aenean consequat dapibus dui, at bibendum mauris porta a.</p>
+				<p>Vivamus ut efficitur massa, ac porttitor dolor. Nullam nec elit quis urna convallis tincidunt. Suspendisse potenti. Phasellus dignissim eget mauris eu egestas. Phasellus accumsan pulvinar pharetra. Pellentesque egestas viverra ipsum. Maecenas a dapibus neque. Morbi tincidunt ultricies enim, ac vehicula elit dapibus sit amet. Donec vel felis at felis elementum sodales id id erat. Pellentesque rutrum placerat mollis. In hac habitasse platea dictumst. Sed eget quam aliquet, pretium ligula vitae, lobortis mauris. Aenean eget ipsum auctor, dapibus quam at, pharetra nunc.</p>
+			</div>
+		</ui5-dynamic-side-content>
+
+		<div slot="footer">
+			<ui5-bar design="FloatingFooter">
+				<ui5-button id="toggleButton" design="Positive" slot="endContent">Toggle</ui5-button>
+			</ui5-bar>
+		</div>
+
+	</ui5-page>
+
+    <script>
+		let toggleButton = document.getElementById("toggleButton"),
+			dynamnicSideContent = document.getElementById("dynamicSideContent");
+
+		function toggleButtonEnablement() {
+			toggleButton.disabled = dynamicSideContent.breakpoint !== "S" || dynamicSideContent.sideContentVisibility === "AlwaysShow" ? true : false;
+		}
+
+		toggleButton.addEventListener("click", function() {
+			dynamnicSideContent.toggleContents();
+		});
+
+		dynamicSideContent.addEventListener("layout-change", function(event) {
+			console.warn(event.detail);
+		});
+
+		window.addEventListener("resize", toggleButtonEnablement);
+		window.addEventListener("load", toggleButtonEnablement);
+/*
+		var clickCounter = document.querySelector("#click-counter");
+		var button = document.querySelector("#button1");
+		var disabledButton = document.querySelector("#button-disabled");
+		var clickCount = 0;
+
+		[button, disabledButton].forEach(function (el) {
+			el.addEventListener("click", function(event) {
+				clickCount += 1;
+				clickCounter.value = clickCount;
+			});
+		});
+*/
+	</script>
+</body>
+</html>

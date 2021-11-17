@@ -1,0 +1,73 @@
+/* dummy classes */
+
+.ui5-dsc-main {
+	background-color: #dfeedf;
+}
+
+.ui5-dsc-side {
+	background-color: #eeeedf;
+}
+
+/* dummy classes end */
+
+
+:host {
+	display: block;
+	height: 100%;
+	position: relative;
+}
+
+.ui5-dsc-root {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.ui5-dsc-main,
+.ui5-dsc-side {
+	position: relative;
+}
+
+.ui5-dsc-root > div[class^="ui5-dcs-span"],
+.ui5-dsc-root > aside[class^="ui5-dsc-span"] {
+	overflow: auto;
+}
+
+.ui5-dsc-main.ui5-dsc-span-fixed {
+	width: calc(100% - 340px);
+}
+
+.ui5-dsc-side.ui5-dsc-span-fixed {
+	width: 340px;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-0 {
+	display: none;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-3 {
+	width: 25%;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-4 {
+	width: 33.333%;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-6 {
+	width: 50%;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-8 {
+	width: 66.666%;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-9 {
+	width: 75%;
+}
+
+.ui5-dsc-root > .ui5-dsc-span-12 {
+	width: 100%;
+}

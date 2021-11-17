@@ -1,0 +1,20 @@
+<div
+	class="{{classes.dynamicSideContentRoot}}"
+	style="{{styles.dynamicSideContentRoot}}"
+>
+	<div
+		class="{{classes.mainContent}}"
+		style="{{styles.mainContent}}"
+	>
+		<slot></slot>
+	</div>
+	<aside
+		role="complementary"
+		aria-label="{{accInfo.label}}"
+		class="{{classes.sideContent}}"
+		style="{{styles.sideContent}}"
+	>
+		<slot name="side-content"></slot>
+	</aside>
+
+</div>
