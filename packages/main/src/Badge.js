@@ -67,6 +67,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
+			propertyName: "text",
 			type: Node,
 		},
 
@@ -144,7 +145,7 @@ class Badge extends UI5Element {
 	}
 
 	get hasText() {
-		return !!this.textContent.trim().length;
+		return !!this.text.length;
 	}
 
 	get hasIcon() {
