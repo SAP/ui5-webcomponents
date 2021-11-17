@@ -1,7 +1,10 @@
-commit ce0dcd2ed2e078fb99af82f22acbda88cefd3fc1
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Mon Nov 15 12:38:16 2021 +0200
+commit 0965738bb43196fcacd5408455abacb0dfe83ad3
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Wed Nov 17 14:17:44 2021 +0200
 
-    fix(ui5-input, ui5-multi-combobox): value state popup now aligned properly in RTL mode (#4310)
+    fix(popups):  block layer of popups now has a tabindex with value 0 (#4324)
     
-    Fixes #3830
+    In popups block layer tabindex is set to 1 which breaks accessibility html validators.
+    To resolve the issue we are setting the tabindex to 0 of the block layer.
+    
+    FIXES: #4187
