@@ -1,10 +1,5 @@
-commit 0965738bb43196fcacd5408455abacb0dfe83ad3
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Wed Nov 17 14:17:44 2021 +0200
+commit 2745bbc08f654977fd839fb512dd13151009fe5d
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Nov 17 16:44:02 2021 +0200
 
-    fix(popups):  block layer of popups now has a tabindex with value 0 (#4324)
-    
-    In popups block layer tabindex is set to 1 which breaks accessibility html validators.
-    To resolve the issue we are setting the tabindex to 0 of the block layer.
-    
-    FIXES: #4187
+    fix(ui5-checkbox): fix position of checkmark in ie11 (#4320)
