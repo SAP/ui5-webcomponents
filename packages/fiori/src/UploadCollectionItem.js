@@ -280,6 +280,9 @@ class UploadCollectionItem extends ListItem {
 		]);
 	}
 
+	onBeforeRendering() {
+	}
+
 	async _initInputField() {
 		await renderFinished();
 
