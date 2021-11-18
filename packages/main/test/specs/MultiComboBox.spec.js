@@ -461,6 +461,15 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await mcb1.getAttribute("placeholder"), "Some initial text", "Should have placeholder");
 			assert.strictEqual(await mcb2.getAttribute("placeholder"), "", "Shouldn't have placeholder when there are tokens");
 		});
+
+		it ("Should not open value state message when component is in readonly state", async () => {
+			const mcb = await browser.$("#readonly-value-state-mcb");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+			await mcb.click();
+			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+		});
 	});
 
 	describe("ARIA attributes", () => {

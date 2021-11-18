@@ -37,7 +37,7 @@ describe("General API", () => {
 		const truncatingLabel = await browser.$("#non-wrapping-link");
 
 		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
-		assert.strictEqual((await truncatingLabel.getSize()).height, 16, "The truncated label should be single line.");
+		assert.strictEqual((await truncatingLabel.getSize()).height, 18, "The truncated label should be single line.");
 	});
 
 	it("should prevent clicking on disabled link", async () => {

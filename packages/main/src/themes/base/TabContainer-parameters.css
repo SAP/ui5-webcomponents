@@ -1,6 +1,6 @@
 :root {
 	/* Header */
-	--_ui5_tc_header_height: 4.6875rem;
+	--_ui5_tc_header_height: var(--_ui5_tc_item_height);
 	--_ui5_tc_header_height_text_only: var(--_ui5_tc_item_text_only_height);
 	--_ui5_tc_header_height_text_with_additional_text: var(--_ui5_tc_item_text_only_with_additional_text_height);
 	--_ui5_tc_header_box_shadow: var(--sapContent_HeaderShadow);
@@ -13,6 +13,7 @@
 	--_ui5_tc_headeritem_text_selected_color: var(--sapSelectedColor);
 	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapSelectedColor);
 	--_ui5_tc_headeritem_text_font_weight: normal;
+	--_ui5_tc_headeritem_additional_text_font_weight: normal;
 	--_ui5_tc_headerItem_neutral_color: var(--sapNeutralColor);
 	--_ui5_tc_headerItem_positive_color: var(--sapPositiveColor);
 	--_ui5_tc_headerItem_negative_color: var(--sapNegativeColor);
@@ -27,6 +28,7 @@
 	--_ui5_tc_headerItem_critical_selected_border_color: var(--_ui5_tc_headerItem_critical_color);
 	--_ui5_tc_headerItem_transition: none;
 	--_ui5_tc_headerItem_hover_border_visibility: hidden;
+	--_ui5_tc_headerItem_focus_offset: 0px;
 
 	--_ui5_tc_headerItemContent_border_radius: 0.125rem 0.125rem 0 0;
 	--_ui5_tc_headerItemContent_border_bottom: 0.125rem solid var(--sapSelectedColor);
@@ -40,12 +42,13 @@
 	--_ui5_tc_headerItemContent_border_height: 0;
 	--_ui5_tc_headerItemContent_offset: 1rem;
 	--_ui5_tc_headerItemContent_focus_offset: 1rem;
-	--_ui5_tc_headerItem_focus_border: 1px dotted var(--sapContent_FocusColor);
+	--_ui5_tc_headerItem_focus_border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	--_ui5_tc_headerItemContent_padding: 0;
 	--_ui5_tc_headerItemContent_focus_border: none;
 	--_ui5_tc_headerItemContent_default_focus_border: none;
 	--_ui5_tc_headerItemContent_focus_border_radius: 0;
 	--_ui5_tc_headerItemSemanticIcon_display: none;
+	--_ui5_tc_headerItem_focus_border_radius: 0px;
 
 	/* Overflow Item */
 
@@ -53,6 +56,7 @@
 	--_ui5_tc_overflowItem_positive_color: var(--sapPositiveColor);
 	--_ui5_tc_overflowItem_negative_color: var(--sapNegativeColor);
 	--_ui5_tc_overflowItem_critical_color: var(--sapCriticalColor);
+	--_ui5_tc_overflowItem_focus_border: 0px;
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapHighlightColor);
@@ -71,4 +75,10 @@
 
 	--_ui5_tc_headerItem_focus_border_offset: -2px;
 	--_ui5_tc_headerItemIcon_focus_border_radius: 0;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_tc_header_height: var(--_ui5_tc_item_height);
 }

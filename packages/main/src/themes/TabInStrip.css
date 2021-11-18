@@ -11,6 +11,7 @@
     align-items: center;
 	justify-content: center;
 	min-width: 2rem;
+	height: var(--_ui5_tc_header_height);
 }
 
 .ui5-tab-strip-itemContent {
@@ -86,9 +87,8 @@
     right: var(--_ui5_tc_headerItemContent_focus_offset);
 }
 
-
 .ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer::after {
-    bottom: -0.75rem;
+    bottom: -0.875rem;
 }
 
 .ui5-tab-strip-item--disabled {
@@ -104,6 +104,8 @@
 .ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent,
 .ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemContent {
     outline: var(--_ui5_tc_headerItem_focus_border);
+	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
+	outline-offset: var(--_ui5_tc_headerItem_focus_offset);
 }
 
 .ui5-tab-strip-item--withIcon:focus .ui5-tab-strip-item-icon-outer::before {
@@ -115,7 +117,7 @@
 	right: var(--_ui5_tc_headerItem_focus_border_offset);
 	top: var(--_ui5_tc_headerItem_focus_border_offset);
 	bottom: var(--_ui5_tc_headerItem_focus_border_offset);
-	border-radius: var(--_ui5_tc_headerItemIcon_focus_border_radius);;
+	border-radius: var(--_ui5_tc_headerItemIcon_focus_border_radius);
 }
 
 
@@ -149,11 +151,6 @@
 }
 
 /*** Icon and text Tab styles ***/
-.ui5-tab-strip-item--withIcon,
-.ui5-tab-strip-item--mixedMode {
-    margin-top: 0.75rem;
-    padding-bottom: 0.75rem;
-}
 
 .ui5-tab-strip-item-icon-outer {
     display: flex;
@@ -163,8 +160,8 @@
     border: var(--_ui5_tc_headerItemIcon_border);
     border-radius: 50%;
     margin-right: 0.25rem;
-    height: var(--_ui5_tc_item_text);
-    width: var(--_ui5_tc_item_text);
+    height: var(--_ui5_tc_item_icon_circle_size);
+    width: var(--_ui5_tc_item_icon_circle_size);
     pointer-events: none;
 }
 
@@ -332,7 +329,9 @@
     border-color: var(--_ui5_tc_headerItem_neutral_border_color);
 	background-color: var(--_ui5_tc_headerItem_neutral_border_bg);
 }
-
+.ui5-tab-strip-item .ui5-tab-strip-itemAdditionalText {
+	font-weight: var(--_ui5_tc_headeritem_additional_text_font_weight);
+}
 /*** RTL ***/
 
 [dir=rtl] .ui5-tab-strip-item-semanticIcon::before {

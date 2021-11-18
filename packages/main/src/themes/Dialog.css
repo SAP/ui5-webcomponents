@@ -32,7 +32,8 @@
 }
 
 .ui5-popup-header-root:focus {
-	outline: var(--_ui5_dialog_header_focus_width) dotted var(--sapContent_FocusColor);
+	outline: var(--_ui5_dialog_outline);
+	border-radius: var(--_ui5_dialog_header_border_radius);
 	outline-offset: var(--_ui5_dialog_header_focus_offset);
 }
 
@@ -54,8 +55,8 @@
 
 .ui5-popup-resize-handle {
 	position: absolute;
-	bottom: -0.0625rem;
-	right: -0.25rem;
+	bottom: var(--_ui5_dialog_resize_handle_bottom);
+	right: var(--_ui5_dialog_resize_handle_right);
 	cursor: se-resize;
 	color: var(--_ui5_dialog_resize_handle_color);
 }

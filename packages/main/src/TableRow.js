@@ -277,7 +277,7 @@ class TableRow extends UI5Element {
 
 	get shouldPopin() {
 		return this._columnsInfo.filter(el => {
-			return el.demandPopin;
+			return el.demandPopin || !el.visible;
 		}).length;
 	}
 

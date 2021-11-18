@@ -59,31 +59,56 @@
 
 /* value states */
 :host([value-state="Error"]) .ui5-checkbox-inner,
-:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--sapField_InvalidBackground);
 	border: var(--_ui5_checkbox_inner_error_border);
 	color: var(--sapField_InvalidColor);
 }
 
+:host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_error_box_shadow);
+	background: var(--_ui5_checkbox_inner_error_background_hover);
+}
+
 :host([value-state="Warning"]) .ui5-checkbox-inner,
-:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
 	color: var(--sapField_WarningColor);
 }
 
-:host([value-state="Information"]) .ui5-checkbox-inner,
-:host([value-state="Information"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
-	background: var(--sapField_InformationBackground);
-	border: var(--_ui5_checkbox_inner_information_border);
-	color: var(--sapField_InformationColor);
+:host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_warning_box_shadow);
+	background: var(--_ui5_checkbox_inner_warning_background_hover);
 }
 
+:host([value-state="Information"]) .ui5-checkbox-inner,
+:host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	background: var(--sapField_InformationBackground);
+	border: var(--_ui5_checkbox_inner_information_border);
+}
+
+:host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_information_box_shadow);
+	background: var(--_ui5_checkbox_inner_information_background_hover);
+}
+
+
 :host([value-state="Success"]) .ui5-checkbox-inner,
-:host([value-state="Success"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Success"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover  {
 	background: var(--sapField_SuccessBackground);
 	border: var(--_ui5_checkbox_inner_success_border);
 	color: var(--sapField_SuccessColor);
+}
+
+:host([value-state="Success"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover  {
+	box-shadow: var(--_ui5_checkbox_inner_success_box_shadow);
+	background: var(--_ui5_checkbox_inner_success_background_hover);
+}
+
+:host(:not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
+:host([value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_default_box_shadow);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-icon,
@@ -134,6 +159,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	right: var(--_ui5_checkbox_focus_position);
 	bottom: var(--_ui5_checkbox_focus_position);
 	border: var(--_ui5_checkbox_focus_outline);
+	border-radius: var(--_ui5_checkbox_focus_border_radius);
 }
 
 :host .ui5-checkbox-root:focus {
@@ -147,20 +173,20 @@ https://github.com/philipwalton/flexbugs/issues/231
 	box-shadow: var(--_ui5_checkbox_box_shadow);
 }
 
-.ui5-checkbox--hoverable:hover .ui5-checkbox-label {
+.ui5-checkbox--hoverable .ui5-checkbox-label:hover {
 	color: var(--_ui5_checkbox_label_color);
 }
 
 /* hover, not active, not checked */
-:host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
-:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
+:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--_ui5_checkbox_hover_background);
 	border-color: var(--_ui5_checkbox_inner_hover_border_color);
 }
 
 /* hover, not active, checked */
-:host(:not([active])[checked]:not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
-:host(:not([active])[checked][value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host(:not([active])[checked]:not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
+:host(:not([active])[checked][value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--_ui5_checkbox_hover_background);
 	border-color: var(--_ui5_checkbox_inner_hover_checked_border_color);
 }
@@ -175,6 +201,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 :host([active]:not([checked]):not([value-state]):not([disabled])) .ui5-checkbox-inner,
 :host([active]:not([checked])[value-state="None"]:not([disabled])) .ui5-checkbox-inner {
 	border-color: var(--_ui5_checkbox_inner_active_border_color);
+	background-color: var(--_ui5_checkbox_active_background);
 }
 
 /* active, checked */
@@ -184,9 +211,6 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-inner {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	min-width: var(--_ui5_checkbox_inner_width_height);
 	max-width: var(--_ui5_checkbox_inner_width_height);
 	height: var(--_ui5_checkbox_inner_width_height);
@@ -198,12 +222,15 @@ https://github.com/philipwalton/flexbugs/issues/231
 	box-sizing: border-box;
 	position: relative;
 	cursor: default;
-	pointer-events: none;
 }
 
 :host([indeterminate][checked]) .ui5-checkbox-inner::after {
 	content: "";
 	background-color: currentColor;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 	width: var(--_ui5_checkbox_partially_icon_size);
 	height: var(--_ui5_checkbox_partially_icon_size);
 }
@@ -218,7 +245,8 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-root .ui5-checkbox-label {
-	margin-left: var(--_ui5_checkbox_label_offset);
+	margin-left: var(--_ui5_checkbox_label_offset_left);
+	margin-right: var(--_ui5_checkbox_label_offset_right);
 	cursor: default;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -234,7 +262,10 @@ https://github.com/philipwalton/flexbugs/issues/231
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
 	cursor: default;
-    position: absolute;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 }
 
 /* RTL */

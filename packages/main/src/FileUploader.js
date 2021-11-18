@@ -263,9 +263,7 @@ class FileUploader extends UI5Element {
 
 	constructor() {
 		super();
-		if (this._canUseNativeFormSupport) {
-			this._internals = this.attachInternals();
-		}
+		this._internals = this.attachInternals && this.attachInternals();
 	}
 
 	_onmouseover() {
@@ -427,7 +425,7 @@ class FileUploader extends UI5Element {
 	}
 
 	get _canUseNativeFormSupport() {
-		return !!this.attachInternals;
+		return this._internals && this._internals.setFormValue;
 	}
 
 	get _keepInputInShadowDOM() {
@@ -478,6 +476,20 @@ class FileUploader extends UI5Element {
 
 	get shouldOpenValueStateMessagePopover() {
 		return this.focused && this.hasValueStateText && !this.hideInput;
+	}
+
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get classes() {

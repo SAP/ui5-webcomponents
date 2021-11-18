@@ -733,7 +733,7 @@ class RangeSlider extends SliderBase {
 	get styles() {
 		return {
 			progress: {
-				"transform": `scaleX(${this._selectedRange})`,
+				"width": `${this._selectedRange * 100}%`,
 				"transform-origin": `${this.directionStart} top`,
 				[this.directionStart]: `${this._firstHandlePositionFromStart}%`,
 			},

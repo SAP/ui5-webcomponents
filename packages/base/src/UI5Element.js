@@ -607,10 +607,17 @@ class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns the DOM Element inside the Shadow Root that corresponds to the opening tag in the UI5 Web Component's template
+	 * *Note:* For logical (abstract) elements (items, options, etc...), returns the part of the parent's DOM that represents this option
 	 * Use this method instead of "this.shadowRoot" to read the Shadow DOM, if ever necessary
+	 *
 	 * @public
 	 */
 	getDomRef() {
+		// If a component set _getRealDomRef to its children, use the return value of this function
+		if (typeof this._getRealDomRef === "function") {
+			return this._getRealDomRef();
+		}
+
 		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
 			return;
 		}
@@ -644,17 +651,6 @@ class UI5Element extends HTMLElement {
 	async getFocusDomRefAsync() {
 		await this._waitForDomRef();
 		return this.getFocusDomRef();
-	}
-
-	/**
-	 * Use this method in order to get a reference to an element in the shadow root of the web component or the static area item of the component
-	 * @public
-	 * @method
-	 * @param {String} refName Defines the name of the stable DOM ref
-	 */
-	getStableDomRef(refName) {
-		const staticAreaResult = this.staticAreaItem && this.staticAreaItem.getStableDomRef(refName);
-		return staticAreaResult || this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
 	}
 
 	/**

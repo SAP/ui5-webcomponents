@@ -55,8 +55,8 @@
 			id="shellbarwithitems"
 	>
 		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="accept" text="Hello World!" title="Approve"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
+		<ui5-shellbar-item id="accept" icon="accept" text="Hello World!" title="Approve"></ui5-shellbar-item>
+		<ui5-shellbar-item id="warning" icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="discussion" text="Hello World!" count="42" title="42 Messages"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="error" text="Hello World!" title="Attention"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="hello-world" text="UI5 Webcomponents" title="hello world"></ui5-shellbar-item>
@@ -64,6 +64,8 @@
 		<ui5-shellbar-item icon="nutrition-activity" text="UI5 Webcomponents" title="Apple"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="sound-loud" text="UI5 Webcomponents" title="Sound"></ui5-shellbar-item>
 	</ui5-shellbar>
+
+	<ui5-input id="press-input3" class="shellbar3auto"></ui5-input>
 
 	<ui5-shellbar
 			class="shellbar-example"
@@ -213,6 +215,8 @@
 		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"/>
 	</ui5-shellbar>
 
+	<ui5-toast id="wcToastTC">Custom Action Fired</ui5-toast>
+	
 	<script>
 		mySearch.addEventListener("suggestionItemSelect", function (event) {
 			 console.log(event);
@@ -268,12 +272,26 @@
 			window["result-key"].value = item.getAttribute("data-key");
 		});
 
+		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
+			item.addEventListener("ui5-click", function(event) {
+				wcToastTC.show();
+			});
+		});
+
 		["disc", "call"].forEach(function(id) {
 			var currenItem = window[id][0] || window[id];
-			currenItem.addEventListener("ui5-itemClick", function(event) {
+			currenItem.addEventListener("ui5-click", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
 				window["custom-item-popover"].showAt(event.detail.targetRef);
+			});
+		});
+
+		["accept", "warning"].forEach(function(id) {
+			var currenItem = window[id][0] || window[id];
+			currenItem.addEventListener("ui5-click", function(event) {
+				event.preventDefault();
+				window["press-input3"].value = event.target.id;
 			});
 		});
 	</script>

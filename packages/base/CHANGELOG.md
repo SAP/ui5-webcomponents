@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0...v1.0.1) (2021-11-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.0.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.16...v1.0.0) (2021-11-10)
+
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.0.0-rc.16](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.15...v1.0.0-rc.16) (2021-11-09)
+
+
+### Bug Fixes
+
+* **framework:** apply RTL for components with popovers ([#3657](https://github.com/SAP/ui5-webcomponents/issues/3657)) ([28e868b](https://github.com/SAP/ui5-webcomponents/commit/28e868b))
+* **framework:** Multiple properties have no attribute ([#3725](https://github.com/SAP/ui5-webcomponents/issues/3725)) ([2548935](https://github.com/SAP/ui5-webcomponents/commit/2548935))
+* **framework:** removing the base theme works with adopted stylesheets ([#4158](https://github.com/SAP/ui5-webcomponents/issues/4158)) ([aa1f594](https://github.com/SAP/ui5-webcomponents/commit/aa1f594))
+* **framework:**  detach events correctly to prevent memory leaks ([#3941](https://github.com/SAP/ui5-webcomponents/issues/3941)) ([6c877ee](https://github.com/SAP/ui5-webcomponents/commit/6c877ee))
+
+
+### Features
+
+* **framework:**  add SAP-icons5.0 ([#4244](https://github.com/SAP/ui5-webcomponents/issues/4244)) ([c0a226e](https://github.com/SAP/ui5-webcomponents/commit/c0a226e))
+* rework stableDomRef concept ([#4210](https://github.com/SAP/ui5-webcomponents/issues/4210)) ([d1ebea3](https://github.com/SAP/ui5-webcomponents/commit/d1ebea3))
+* **framework:** allow using a custom i18n library ([#4119](https://github.com/SAP/ui5-webcomponents/issues/4119)) ([56f366f](https://github.com/SAP/ui5-webcomponents/commit/56f366f))
+* **framework:** Implement better custom theme support ([#4121](https://github.com/SAP/ui5-webcomponents/issues/4121)) ([31e30f8](https://github.com/SAP/ui5-webcomponents/commit/31e30f8))
+* **framework:**  handle Page UP/DOWN ([#3727](https://github.com/SAP/ui5-webcomponents/issues/3727)) ([91a974f](https://github.com/SAP/ui5-webcomponents/commit/91a974f))
+* **framework:** introduce sap_horizon theme initial draft ([#3991](https://github.com/SAP/ui5-webcomponents/issues/3991)) ([b1afaf0](https://github.com/SAP/ui5-webcomponents/commit/b1afaf0)), closes [#3988](https://github.com/SAP/ui5-webcomponents/issues/3988)
+* **framework:** load "72Black" font face ([#4139](https://github.com/SAP/ui5-webcomponents/issues/4139)) ([2be7869](https://github.com/SAP/ui5-webcomponents/commit/2be7869))
+
+
+
+
+
 # [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
 
 

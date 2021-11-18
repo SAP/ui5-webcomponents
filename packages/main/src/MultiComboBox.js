@@ -19,6 +19,7 @@ import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
+import "@ui5/webcomponents-icons/dist/not-editable.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -35,6 +36,7 @@ import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_INFORMATION,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
@@ -49,6 +51,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
  * @public
@@ -337,12 +340,6 @@ const metadata = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
- * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
- * <ul>
- * <li>Every <code>ui5-mcb-item</code> that you provide.
- * Example: <code>&lt;ui5-mcb-item stable-dom-ref="item1"&gt;&lt;/ui5-mcb-item&gt;</code></li>
- * </ul>
- *
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
@@ -388,7 +385,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	static get dependencies() {
@@ -819,6 +816,10 @@ class MultiComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+		});
+
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
 	}
@@ -931,6 +932,10 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_readonlyIconClick() {
+		this._inputDom.focus();
+	}
+
 	get editable() {
 		return !this.readonly;
 	}
@@ -973,6 +978,20 @@ class MultiComboBox extends UI5Element {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	 get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get _tokensCountText() {
 		if (!this._tokenizer) {
 			return;
@@ -993,7 +1012,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.focused && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
 	}
 
 	get valueStateTextMappings() {
@@ -1002,6 +1021,7 @@ class MultiComboBox extends UI5Element {
 			"Error": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Error_Selection": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
 			"Warning": MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": MultiComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
@@ -1031,8 +1051,17 @@ class MultiComboBox extends UI5Element {
 		return (this._isFocusInside || this.open) && !this.readonly;
 	}
 
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
 	get classes() {
 		return {
+			popover: {
+				"ui5-multi-combobox-all-items-responsive-popover": true,
+				"ui5-suggestions-popover": !this.isPhone,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.hasValueStateMessage,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
