@@ -211,9 +211,6 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-inner {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	min-width: var(--_ui5_checkbox_inner_width_height);
 	max-width: var(--_ui5_checkbox_inner_width_height);
 	height: var(--_ui5_checkbox_inner_width_height);
@@ -230,6 +227,10 @@ https://github.com/philipwalton/flexbugs/issues/231
 :host([indeterminate][checked]) .ui5-checkbox-inner::after {
 	content: "";
 	background-color: currentColor;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 	width: var(--_ui5_checkbox_partially_icon_size);
 	height: var(--_ui5_checkbox_partially_icon_size);
 }
@@ -261,7 +262,10 @@ https://github.com/philipwalton/flexbugs/issues/231
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
 	cursor: default;
-    position: absolute;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 }
 
 /* RTL */
