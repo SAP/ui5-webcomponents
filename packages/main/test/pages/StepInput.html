@@ -136,6 +136,17 @@
 		/>
 	</div>
 
+	<div>
+		<h3>StepInput with min=0, max=3, step=1 and prevented default behavior</h3>
+		<ui5-step-input id="defaultPrevented"
+			placeholder="Enter number"
+			min="0"
+			max="3"
+			step="1"
+			class="stepinput2auto"
+		/>
+	</div>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="changeResult"></ui5-input>
 
@@ -146,9 +157,10 @@
 		var siMinMax = document.getElementById('stepInputMinMax');
 		var siPrecision = document.getElementById('stepInputPrecision');
 		var changeResult = document.getElementById('changeResult');
+		var defaultPrevented = document.getElementById('defaultPrevented');
 		var changeCount = 0;
 		var displayChange = function (event) {
-			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + JSON.stringify(event.detail);
 			changeCount++;
 			changeResult.value = changeCount;
 		}
@@ -157,6 +169,10 @@
 		siCompact.addEventListener('ui5-change', displayChange);
 		siMinMax.addEventListener('ui5-change', displayChange);
 		siPrecision.addEventListener('ui5-change', displayChange);
+		defaultPrevented.addEventListener('ui5-change', function(event) {
+			event.preventDefault();
+			displayChange(event);
+		});
 	</script>
 
 </body>

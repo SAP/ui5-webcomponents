@@ -434,6 +434,17 @@ describe("'change' event firing", () => {
 		assert.strictEqual(await siMinMax.getProperty("value"), 0, "Value is increased correctly to 1");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
+
+	it("When the default behavior on change event is prevented then the value state is not changed", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
+		const defaultPrevented = await browser.$('#defaultPrevented');
+
+		await defaultPrevented.click();
+		await defaultPrevented.keys("-1");
+		await defaultPrevented.keys("Enter");
+
+		assert.equal(await defaultPrevented.getProperty("valueState"), "Warning", 'the value state is not changed');
+	});
 });
 
 describe("Accessibility related parameters", async () => {

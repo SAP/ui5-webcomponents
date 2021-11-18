@@ -302,9 +302,21 @@ const metadata = {
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
 		 * @event
+		 * @allowPreventDefault
 		 * @public
+		 * @param {String} value The submitted value.
+		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
-		change: {},
+		change: {
+			details: {
+				value: {
+					type: String,
+				},
+				valid: {
+					type: Boolean,
+				},
+			},
+		},
 	},
 };
 
@@ -494,9 +506,8 @@ class StepInput extends UI5Element {
 		if (this._previousValueState === "") {
 			this._previousValueState = this.valueState !== "" ? this.valueState : ValueState.None;
 		}
-		this.valueState = ((this.min !== undefined && this.value < this.min)
-			|| (this.max !== undefined && this.value > this.max))
-			? ValueState.Error : this._previousValueState;
+
+		this.valueState = this._isValid(this.value) ? this._previousValueState : ValueState.Error;
 	}
 
 	_preciseValue(value) {
@@ -505,10 +516,20 @@ class StepInput extends UI5Element {
 	}
 
 	_fireChangeEvent() {
+		let executeDefault = true;
+		const value = this.value;
+		const valid = this._isValid(this.value);
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireEvent("change", { value: this.value });
+			executeDefault = this.fireEvent("change", { value, valid }, true);
 		}
+
+		return executeDefault;
+	}
+
+	_isValid(value) {
+		return !((this.min !== undefined && value < this.min)
+			|| (this.max !== undefined && value > this.max));
 	}
 
 	/**
@@ -520,6 +541,7 @@ class StepInput extends UI5Element {
 	 */
 	_modifyValue(modifier, fireChangeEvent) {
 		let value;
+		let executeDefault = true;
 		this.value = this._preciseValue(parseFloat(this.input.value));
 		value = this.value + modifier;
 		if (this.min !== undefined && value < this.min) {
@@ -531,14 +553,17 @@ class StepInput extends UI5Element {
 		value = this._preciseValue(value);
 		if (value !== this.value) {
 			this.value = value;
-			this._validate();
 			this._setButtonState();
 			this.focused = true;
 			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
-				this._fireChangeEvent();
+				executeDefault = this._fireChangeEvent();
 			} else {
 				this.input.focus();
+			}
+
+			if (executeDefault) {
+				this._validate();
 			}
 		}
 	}
@@ -564,9 +589,11 @@ class StepInput extends UI5Element {
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
 			this.value = inputValue;
-			this._validate();
+
 			this._setButtonState();
-			this._fireChangeEvent();
+			if (this._fireChangeEvent()) {
+				this._validate();
+			}
 		}
 	}
 
