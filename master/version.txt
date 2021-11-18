@@ -1,5 +1,10 @@
-commit 2745bbc08f654977fd839fb512dd13151009fe5d
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Nov 17 16:44:02 2021 +0200
+commit 4d2a7644df1af3466ad7996f00b4d67fce90b502
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Nov 18 08:12:05 2021 +0200
 
-    fix(ui5-checkbox): fix position of checkmark in ie11 (#4320)
+    refactor(ui5-shellbar): extract profile btn as HBS partial (#4342)
+    
+    The stakeholders can't provide own 'title' for the ShellBar's profile button. We show "profile", which is not what the stakeholders need. As currently, it's not possible to replace a specific text in the i18n bundle, we would need to provide either a HBS template hook, or an API to allow developers set their own text. The template hook is the simplest solution without any change in the APIs.
+    Extract the profile button mark up as Handlebars partial to allow custom component developers to overwrite the Handlebars partial and change the profile button "title" to the desired one.
+    
+    Fixes: #4009
