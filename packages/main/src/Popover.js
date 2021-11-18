@@ -187,11 +187,11 @@ const metadata = {
 			defaultValue: PopoverPlacementType.Right,
 		},
 
-		_maxContentHeight: {
+		_maxHeight: {
 			type: Integer,
 			noAttribute: true,
 		},
-		_maxContentWidth: {
+		_maxWidth: {
 			type: Integer,
 			noAttribute: true,
 		},
@@ -571,19 +571,8 @@ class Popover extends Popup {
 			}
 		}
 
-		let maxContentHeight = maxHeight;
-
-		if (this._displayHeader) {
-			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
-				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
-
-			if (headerDomRef) {
-				maxContentHeight = maxHeight - headerDomRef.offsetHeight;
-			}
-		}
-
-		this._maxContentHeight = Math.round(maxContentHeight - Popover.VIEWPORT_MARGIN);
-		this._maxContentWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
+		this._maxHeight = Math.round(maxHeight - Popover.VIEWPORT_MARGIN);
+		this._maxWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
 
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
@@ -756,9 +745,9 @@ class Popover extends Popup {
 	get styles() {
 		return {
 			...super.styles,
-			content: {
-				"max-height": `${this._maxContentHeight}px`,
-				"max-width": `${this._maxContentWidth}px`,
+			root: {
+				"max-height": `${this._maxHeight}px`,
+				"max-width": `${this._maxWidth}px`,
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
