@@ -1,4 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
@@ -447,6 +448,8 @@ class Popover extends Popup {
 		}
 		this.arrowTranslateY = Math.round(arrowY);
 
+		top = this._adjustForIOSKeyboard(top);
+
 		Object.assign(this.style, {
 			top: `${top}px`,
 			left: `${left}px`,
@@ -456,6 +459,23 @@ class Popover extends Popup {
 		if (stretching && this._width) {
 			this.style.width = this._width;
 		}
+	}
+
+	/**
+	 * Adjust the desired top position to compensate for shift of the screen
+	 * caused by opened keyboard on iOS which affects all elements with position:fixed.
+	 * @private
+	 * @param {int} top The target top in px.
+	 * @returns {int} The adjusted top in px.
+	 */
+	_adjustForIOSKeyboard(top) {
+		if (!isIOS()) {
+			return top;
+		}
+
+		const actualTop = Math.ceil(this.getBoundingClientRect().top);
+
+		return top + (parseInt(this.style.top || "0") - actualTop);
 	}
 
 	getPopoverSize() {
