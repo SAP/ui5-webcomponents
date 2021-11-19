@@ -1,5 +1,8 @@
-commit 1295a14c5b73a7e291386e4f7c11d7fb5f3a9b1a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 19 19:42:31 2021 +0200
+commit 7d8b93a8cbee857d1e09a1cd8211524598f77358
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Fri Nov 19 19:50:26 2021 +0000
 
-    docs: add chang logs (#4367)
+    fix(ui5-date-time-picker): proper visualization on mobile (#4345)
+    
+    There is no vertical scroll in the corresponding component
+    popover when navigated to the time picker part.
