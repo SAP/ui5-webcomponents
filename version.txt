@@ -1,6 +1,5 @@
-commit 78a73607d8dc5544c51b80c4abfa43ff9835975f
-Merge: 6b22bc7 b0f5716
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Nov 11 10:07:13 2021 +0200
+commit d912a36d81bc2a5c84064d2f38d0fe819f5f92b7
+Author: ilhan <ilhan.myumyun@sap.com>
+Date:   Fri Nov 19 22:15:50 2021 +0200
 
-    Merge branch 'master' into latest-release-website
+    fix: fix SAP logo path so that it loads in the playground footer
