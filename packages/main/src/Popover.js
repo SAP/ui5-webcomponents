@@ -1,4 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
@@ -468,6 +469,10 @@ class Popover extends Popup {
 	 * @returns {int} The adjusted top in px.
 	 */
 	_adjustForIOSKeyboard(top) {
+		if (!isIOS()) {
+			return top;
+		}
+
 		const actualTop = Math.ceil(this.getBoundingClientRect().top);
 
 		return top + (parseInt(this.style.top || "0") - actualTop);
