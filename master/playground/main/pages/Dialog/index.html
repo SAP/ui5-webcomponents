@@ -446,7 +446,9 @@
 
 		window["dynamic-open"].addEventListener("click", function () {
 			var dialog = document.createElement("ui5-dialog"),
-				button = document.createElement("ui5-button");
+				button = document.createElement("ui5-button"),
+				separator = document.createElement("div")
+				input = document.createElement("ui5-input");
 
 			button.setAttribute("id", "dynamic-dialog-close-button");
 			button.appendChild(document.createTextNode("Close"));
@@ -456,6 +458,11 @@
 
 			dialog.setAttribute("id", "dynamic-dialog");
 			dialog.appendChild(button);
+
+			separator.style.height = "200px";
+			dialog.appendChild(separator);
+
+			dialog.appendChild(input);
 
 			document.body.appendChild(dialog);
 
