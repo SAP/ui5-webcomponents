@@ -1,7 +1,5 @@
-commit a4b03a3e5b7968d2a799e3123237e005aa2ff00f
-Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
-Date:   Fri Nov 19 15:08:36 2021 +0200
+commit 1295a14c5b73a7e291386e4f7c11d7fb5f3a9b1a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Nov 19 19:42:31 2021 +0200
 
-    fix(ui5-popover): adjust top position when iOS keyboard is opened (#4333)
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/3847
+    docs: add chang logs (#4367)

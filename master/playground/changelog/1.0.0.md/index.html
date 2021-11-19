@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Custom UI5 Web Components - UI5 Web Components</title>
+    <title>1.0.0 - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Custom UI5 Web Components | UI5 Web Components</title>
+<title>1.0.0 | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Custom UI5 Web Components" />
+<meta property="og:title" content="1.0.0" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/changelog/1.0.0.md/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/changelog/1.0.0.md/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components/","headline":"Custom UI5 Web Components","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/changelog/1.0.0.md/","headline":"1.0.0","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -2444,7 +2444,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/development" class="navigation-list-link">Development</a>
             
@@ -2729,9 +2729,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/development/custom-ui5-web-components/" class="navigation-list-link">
                         <div class="component-name">Custom UI5 Web Components</div>
                         
                       </a>
@@ -3515,7 +3515,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/changelog" class="navigation-list-link">Changelog</a>
             
@@ -3779,9 +3779,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/changelog/1.0.0.md/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/changelog/1.0.0.md/" class="navigation-list-link active">
                         <div class="component-name">1.0.0</div>
                         
                       </a>
@@ -5193,477 +5193,17 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/development">Development</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/changelog">Changelog</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Custom UI5 Web Components</span></li>
+                <li class="breadcrumb-nav-list-item"><span>1.0.0</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="developing-custom-ui5-web-components">Developing Custom UI5 Web Components</h1>
+          <h1 id="100-2021-11-10"><a href="https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.16...v1.0.0">1.0.0</a> (2021-11-10)</h1>
 
-<p><strong>Note:</strong> All examples in this tutorial are taken from the Demo UI5 Web Component (<code class="highlighter-rouge">ui5-demo</code>), generated by the package initialization script.
-For more information on creating a new package with a demo Web Component inside, click <a href="Creating%20UI5%20Web%20Components%20Packages.md">here</a>.</p>
-
-<h3 id="the-class-definition">The class definition</h3>
-<p><a name="classdef"></a></p>
-
-<p>The main file representing the Web Component is <code class="highlighter-rouge">Demo.js</code>.</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Template</span>
-<span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Styles</span>
-<span class="k">import</span> <span class="nx">DemoCss</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/themes/Demo.css.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="k">import</span> <span class="p">{</span> <span class="nx">PLEASE_WAIT</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/i18n/i18n-defaults.js</span><span class="dl">"</span><span class="p">;</span>
-
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">template</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoTemplate</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="k">async</span> <span class="nx">onDefine</span><span class="p">()</span> <span class="p">{</span>
-		<span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
-	<span class="p">}</span>
-
-	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="nx">Demo</span><span class="p">.</span><span class="nx">define</span><span class="p">();</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="the-ui5element-base-class">The UI5Element base class</h3>
-
-<p>Every UI5 Web Component must extend the base class <code class="highlighter-rouge">UI5Element</code>, provided by the <code class="highlighter-rouge">@ui5/webcomponents-base</code> package:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-
-<span class="p">}</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="the-metadata-object">The metadata object</h3>
-
-<p>Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, slots, events, etc.).</p>
-
-<p>Metadata is passed via the <code class="highlighter-rouge">metadata</code> static getter:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>So far, we’ve defined a <code class="highlighter-rouge">ui5-demo</code> Web Component with no properties, slots or events.</p>
-
-<p>For a complete reference to all metadata entities, click <a href="Metadata.md">here</a>.</p>
-
-<h3 id="the-render-engine">The render engine</h3>
-
-<p>UI5 Web Components are agnostic of the DOM render engine used. However, all standard UI5 Web Components (<code class="highlighter-rouge">@ui5/webcomponents</code>, <code class="highlighter-rouge">@ui5/webcomponents-fiori</code>, etc.)
-use <a href="https://github.com/Polymer/lit-html">lit-html</a> as the rendering technology of choice.</p>
-
-<p>The render engine is defined via the <code class="highlighter-rouge">render</code> static getter:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Here we import <code class="highlighter-rouge">LitRenderer.js</code> from the <code class="highlighter-rouge">@ui5/webcomponents-base</code> package which is a very tiny wrapper around <code class="highlighter-rouge">lit-html</code>.</p>
-
-<h3 id="the-template">The template</h3>
-
-<p>Now that we’ve defined the rendering technology of choice, we can pass a template in that technology’s syntax.</p>
-
-<p>This is done via the <code class="highlighter-rouge">template</code> static getter:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Template</span>
-<span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">template</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoTemplate</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>The standard UI5 Web Components use <a href="https://github.com/wycats/handlebars.js/">handlebars</a> templates that are automatically converted
-to <code class="highlighter-rouge">lit-html</code> syntax by the build script.</p>
-
-<p>If you have a <code class="highlighter-rouge">Demo.hbs</code> file along with the <code class="highlighter-rouge">Demo.js</code> file, the build script is going to create for you <code class="highlighter-rouge">generated/templates/DemoTemplate.lit.js</code> file.
-Therefore, we pass the content of this file to the <code class="highlighter-rouge">template</code> static getter.</p>
-
-<p>For more information, see the <a href="#hbs">next chapter</a> of this tutorial.</p>
-
-<h3 id="the-css-definitions">The CSS definitions</h3>
-
-<p>You can pass CSS to be inserted in the Shadow Root of the UI5 Web Component by using the <code class="highlighter-rouge">styles</code> static getter:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Template</span>
-<span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Styles</span>
-<span class="k">import</span> <span class="nx">DemoCss</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/themes/Demo.css.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">template</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoTemplate</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>If you have a <code class="highlighter-rouge">themes/Demo.css</code> file, the build script will automatically generate for you a <code class="highlighter-rouge">generated/themes/Demo.css.js</code> file, which
-in addition to your component’s CSS, also contains definitions for all CSS Vars for the default theme. You can define your own CSS
-Vars for each theme in the respective theme directory in <code class="highlighter-rouge">themes/</code>:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Descriptions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_belize/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize</code> theme.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_belize_hcb/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize_hcb</code> theme.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_fiori_3/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3</code> theme.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_fiori_3_dark/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_dark</code> theme.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>For more information, see the <a href="#css">CSS</a> chapter of this tutorial.</p>
-
-<h3 id="defining-the-web-component">Defining the Web Component</h3>
-
-<p>Defining a Web Component is necessary in order to register it in the browser.</p>
-
-<p>This is done by calling the <code class="highlighter-rouge">UI5Element.define</code> static method:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Template</span>
-<span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Styles</span>
-<span class="k">import</span> <span class="nx">DemoCss</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/themes/Demo.css.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">template</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoTemplate</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="nx">Demo</span><span class="p">.</span><span class="nx">define</span><span class="p">();</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="adding-i18n-support">Adding i18n support</h3>
-
-<p>There are 2 steps to do that:</p>
-<ol>
-  <li>Get and assign an i18n bundle during component definition
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">await</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Get texts from the bundle, according to the currently <a href="../Configuration.md">configured</a> language
- <code class="highlighter-rouge">return Demo.i18nBundle.getText(PLEASE_WAIT);</code></li>
-</ol>
-
-<p>The <code class="highlighter-rouge">getI18nBundle</code> method is provided by the <code class="highlighter-rouge">i18nBundle.js</code> module from the <code class="highlighter-rouge">@ui5/webcomponents-base</code> package.</p>
-
-<p>So the final source code is:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">litRender</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Template</span>
-<span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Styles</span>
-<span class="k">import</span> <span class="nx">DemoCss</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/themes/Demo.css.js</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="k">import</span> <span class="p">{</span> <span class="nx">PLEASE_WAIT</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/i18n/i18n-defaults.js</span><span class="dl">"</span><span class="p">;</span>
-
-
-<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
-	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
-	<span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">template</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoTemplate</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
-	<span class="p">}</span>
-
-	<span class="kd">static</span> <span class="k">async</span> <span class="nx">onDefine</span><span class="p">()</span> <span class="p">{</span>
-		<span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
-	<span class="p">}</span>
-
-	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="nx">Demo</span><span class="p">.</span><span class="nx">define</span><span class="p">();</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Please, note that here we use the <code class="highlighter-rouge">onDefine</code> method of <code class="highlighter-rouge">UI5Element</code> in order to ensure that i18n resources have been fetched
-before the Web Component has been defined. The used namespace for resource registration (in this example <code class="highlighter-rouge">my-ui5-web-components</code>)
-is the <code class="highlighter-rouge">name</code> property of your <code class="highlighter-rouge">package.json</code> file.</p>
-
-<h2 id="the-template-file">The template file</h2>
-<p><a name="hbs"></a></p>
-
-<p>The template of the Web Component is in the <code class="highlighter-rouge">Demo.hbs</code> file.
-In this particular example it looks like this:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>This is: ui5-demo. <span class="nt">&lt;/div&gt;</span>
-</code></pre></div></div>
-
-<p>The context in the template is the <strong>Web Component instance</strong>, therefore you can directly use any properties/getters on the object.
-Here, we see the <code class="highlighter-rouge">pleaseWaitText</code> getter, defined in the previous step.</p>
-
-<p>As explained above, the <code class="highlighter-rouge">.hbs</code> file is transformed by the build script to a <code class="highlighter-rouge">.js</code> file in the <code class="highlighter-rouge">lit-html</code> syntax. More specifically, this file
-is provided to the Web Component class.</p>
-
-<h2 id="the-css">The CSS</h2>
-<p><a name="css"></a></p>
-
-<p>Let’s inspect the following files (one with CSS declarations, the others with CSS Vars values for the themes).</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">themes/Demo.css</code></td>
-      <td>All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_belize/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize</code> theme.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_belize_hcb/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize_hcb</code> theme.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_fiori_3/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3</code> theme.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">themes/sap_fiori_3_dark/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_dark</code> theme.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>In the <code class="highlighter-rouge">Demo.css</code> file, in addition to other selectors, we have:</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:host</span> <span class="p">{</span>
-    <span class="nl">border</span><span class="p">:</span> <span class="m">2px</span> <span class="nb">solid</span> <span class="n">var</span><span class="p">(</span><span class="n">--ui5-demo-border-color</span><span class="p">);</span>
-    <span class="nl">background-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--sapBackgroundColor</span><span class="p">);</span>
-    <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--sapTextColor</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>The CSS vars, starting with <code class="highlighter-rouge">--sap</code> are standard and provided by the framework.
-All the rest are custom for the specific Web Component.</p>
-
-<p>Respectively, the definitions file for, let’s say <code class="highlighter-rouge">sap_fiori_3</code>, contains:</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:root</span> <span class="p">{</span>
-    <span class="py">--ui5-demo-border-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>What’s important to understand here is that you author all the <code class="highlighter-rouge">.css</code> files listed in the table above, but the build script
-generates from them a single <code class="highlighter-rouge">.js</code> file for you, and this is namely the file you pass to the Web Component class: <code class="highlighter-rouge">generated/themes/Demo.css.js</code>.</p>
-
-<p>Next: <a href="../understanding-components-metadata">Understanding UI5 Web Components Metadata</a></p>
+<p>👏 <strong>We are happy to announce our first stable 1.0.0 version of UI5 Web Components</strong> 👏</p>
 
 
 <footer class="footer-wrapper">
