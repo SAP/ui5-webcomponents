@@ -1080,6 +1080,10 @@ class Input extends UI5Element {
 		});
 	}
 
+	onItemMouseDown(event) {
+		event.preventDefault();
+	}
+
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
 	}

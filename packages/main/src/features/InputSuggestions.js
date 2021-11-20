@@ -165,10 +165,6 @@ class Suggestions {
 		this._getComponent().onItemMouseOver(event);
 	}
 
-	onItemMouseDown(event) {
-		event.preventDefault();
-	}
-
 	onItemMouseOut(event) {
 		this._getComponent().onItemMouseOut(event);
 	}
