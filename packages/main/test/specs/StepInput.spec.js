@@ -3,7 +3,7 @@ const assert = require("chai").assert;
 describe("Attributes propagation", () => {
 
 	it("'placeholder' attribute is propagated properly", () => {
-		browser.ur	l("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
 		const siCozy = $("#stepInputCozy");
 		const sExpected = "New placeholder text";
 
@@ -451,13 +451,13 @@ describe("Accessibility related parameters", () => {
 		const siCozy = $("#stepInputCozy");
 		const siInner = siCozy.shadow$('.ui5-step-input-input').shadow$("input");
 
-		siCozy.setProperty("step", 5);
-		assert.strictEqual(siInner.getAttribute("min"), "", "'step' attribute doesn't exist");
-		siCozy.setProperty("min", -10);
-		assert.strictEqual(siInner.getAttribute("max"), "", "'step' attribute doesn't exist");
-		siCozy.setProperty("max", 20);
-		siCozy.setProperty("required", true);
-		siCozy.setProperty("ariaLabel", "test-aria-label");
+		assert.strictEqual(siInner.getAttribute("min"), null, "'min' attribute doesn't exist");
+		assert.strictEqual(siInner.getAttribute("max"), null, "'max' attribute doesn't exist");
+		siCozy.setAttribute("step", 5);
+		siCozy.setAttribute("min", -10);
+		siCozy.setAttribute("max", 20);
+		siCozy.setAttribute("required", true);
+		siCozy.setAttribute("aria-label", "test-aria-label");
 
 		assert.strictEqual(siInner.getAttribute("step"), "5", "'step' attribute exists and has correct value 5");
 		assert.strictEqual(siInner.getAttribute("min"), "-10", "'min' attribute exists and has correct value -10");

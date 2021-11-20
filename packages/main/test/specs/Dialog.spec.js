@@ -146,13 +146,13 @@ describe("Acc", () => {
 
 	it("tests aria-labelledby and aria-label", () => {
 		const dialog = browser.$("ui5-dialog");
-		dialog.removeAttribute("aria-label");
-		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "dialog has aria-labelledby.");
-		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog does not have aria-label.");
+		dialog.removeAttribute("accessible-name");
+		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "ui5-popup-header-text", "dialog has aria-labelledby.");
+		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), null, "dialog does not have aria-label.");
 
-		dialog.setAttribute("aria-label", "text");
-		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
-		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "dialog has aria-label.");
+		dialog.setAttribute("accessible-name", "text");
+		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), null, "dialog does not have aria-labelledby.");
+		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "text", "dialog has aria-label.");
 	});
 
 	it("tests aria-labelledby for slot header", () => {
@@ -169,7 +169,7 @@ describe("Acc", () => {
 
 describe("Page scrolling", () => {
 	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/Dialog.html`);
 	});
 
 	it("tests that page scrolling is blocked and restored", () => {

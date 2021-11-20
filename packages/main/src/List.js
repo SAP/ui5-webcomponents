@@ -820,6 +820,7 @@ class List extends UI5Element {
 			} else {
 				this.focusPreviouslyFocusedItem();
 			}
+			event.stopImmediatePropagation();
 		}
 
 		this.setForwardingFocus(false);

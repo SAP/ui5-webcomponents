@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("ViewSettingsDialog general interaction", () => {
 	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ViewSettingsDialog.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/ViewSettingsDialog.html`);
 	});
 
 	it("test ViewSettingsDialog initial value", ()=>{

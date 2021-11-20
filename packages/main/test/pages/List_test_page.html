@@ -10,6 +10,16 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<style>
+		.list_test_page3auto {
+			max-height: 20rem;
+			overflow: auto;
+		}
+
+		.list_test_page4auto {
+			height: 300px;
+		}
+	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -26,7 +36,28 @@
 		<ui5-li id="lastItem">Last Item</ui5-li>
 	</ui5-list>
 	<input id="loadMoreResult" value="0"/>
-	<br/>
+	<br><br><br>
+
+	<ui5-title>List growing="Scroll" items don't overflow initially</ui5-title>
+
+	<ui5-input id="growingScrollTestCounter" value="0"></ui5-input>
+	<section class="list_test_page3auto">
+		<ui5-list id="growingScrollTest" growing="Scroll">
+			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		</ui5-list>
+	</section>
+
+	<br><br><br>
+
+	<ui5-list id="growingListButton" growing="Button" class="list_test_page4auto">
+		<ui5-li>Javascript</ui5-li>
+		<ui5-li>PHP</ui5-li>
+	</ui5-list>
+
+	<button id="nextInteractiveElement">Next Interactive element</button>
+
+	<br><br><br>
+
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
@@ -159,7 +190,7 @@
 	</ui5-list>
 	<br/><br/>
 
-	<ui5-list id="listWithCustomHeader" aria-labelledby="testHeader">
+	<ui5-list id="listWithCustomHeader" accessible-name-ref="testHeader">
 		<div slot="header" class="header">
 			<h2 id="testHeader">Test aria</h2>
 		</div>

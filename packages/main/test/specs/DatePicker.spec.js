@@ -6,103 +6,103 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 	});
 
-	it("input renders", () => {
-		datepicker.id = "#dp";
+	// it("input renders", () => {
+	// 	datepicker.id = "#dp";
 
-		assert.ok(datepicker.input.isDisplayedInViewport(), "input is rendered");
-		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
-	});
+	// 	assert.ok(datepicker.input.isDisplayedInViewport(), "input is rendered");
+	// 	assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
+	// 	assert.strictEqual(datepicker.innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
+	// });
 
-	it("input receives value", () => {
-		datepicker.id = "#dp1";
+	// it("input receives value", () => {
+	// 	datepicker.id = "#dp1";
 
-		const date = new Date(datepicker.innerInput.getValue());
+	// 	const date = new Date(datepicker.innerInput.getValue());
 
-		assert.equal(date.getDate(), 11);
-		assert.equal(date.getMonth(), 10);
-		assert.equal(date.getFullYear(), 2011);
-	});
+	// 	assert.equal(date.getDate(), 11);
+	// 	assert.equal(date.getMonth(), 10);
+	// 	assert.equal(date.getFullYear(), 2011);
+	// });
 
-	it("input receives value in format pattern depending on the set language", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
-		datepicker.id = "#dp16";
+	// it("input receives value in format pattern depending on the set language", () => {
+	// 	browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
+	// 	datepicker.id = "#dp16";
 
-		const setDateButton = browser.$("#b1");
+	// 	const setDateButton = browser.$("#b1");
 
-		setDateButton.click();
+	// 	setDateButton.click();
 
-		assert.equal(datepicker.innerInput.getValue(), "11 декември 2018 г.");
-	});
+	// 	assert.equal(datepicker.innerInput.getValue(), "11 декември 2018 г.");
+	// });
 
-	it("custom formatting", () => {
-		datepicker.open();
-		datepicker.id = "#dp2";
+	// it("custom formatting", () => {
+	// 	datepicker.open();
+	// 	datepicker.id = "#dp2";
 
-		assert.ok(datepicker.isValid("2018, 05/05"), "custom value is valid");
-	});
+	// 	assert.ok(datepicker.isValid("2018, 05/05"), "custom value is valid");
+	// });
 
-	it("value state", () => {
-		datepicker.id = "#dp3";
-		datepicker.root.setAttribute("value-state", "Error");
+	// it("value state", () => {
+	// 	datepicker.id = "#dp3";
+	// 	datepicker.root.setAttribute("value-state", "Error");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+	// 	assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
 
-		const contentWrapper = browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
-	});
+	// 	const contentWrapper = browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
+	// 	assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+	// });
 
-	it("Value State Message", () => {
-		datepicker.id = "#dp17"
-		datepicker.input.click();
+	// it("Value State Message", () => {
+	// 	datepicker.id = "#dp17"
+	// 	datepicker.input.click();
 
-		const inputStaticAreaItem = datepicker.inputStaticAreaItem;
-		const popover = inputStaticAreaItem.shadow$("ui5-popover");
+	// 	const inputStaticAreaItem = datepicker.inputStaticAreaItem;
+	// 	const popover = inputStaticAreaItem.shadow$("ui5-popover");
 
-		const slot = popover.$("#coolValueStateMessage");
-		assert.notOk(slot.error, "Value State message slot is working");
-	});
+	// 	const slot = popover.$("#coolValueStateMessage");
+	// 	assert.notOk(slot.error, "Value State message slot is working");
+	// });
 
-	it("disabled", () => {
-		datepicker.id = "#dp2";
-		datepicker.root.setAttribute("disabled", "");
+	// it("disabled", () => {
+	// 	datepicker.id = "#dp2";
+	// 	datepicker.root.setAttribute("disabled", "");
 
-		assert.equal(datepicker.input.getProperty("disabled"), true, "input has disabled property");
-	});
+	// 	assert.equal(datepicker.input.getProperty("disabled"), true, "input has disabled property");
+	// });
 
-	it("readonly", () => {
-		datepicker.id = "#dp3";
+	// it("readonly", () => {
+	// 	datepicker.id = "#dp3";
 
-		datepicker.root.setAttribute("readonly", "");
+	// 	datepicker.root.setAttribute("readonly", "");
 
-		assert.equal(datepicker.input.getProperty("readonly"), true, "input has readonly set");
-		assert.ok(!datepicker.hasIcon(), "icon is not displayed");
-	});
+	// 	assert.equal(datepicker.input.getProperty("readonly"), true, "input has readonly set");
+	// 	assert.ok(!datepicker.hasIcon(), "icon is not displayed");
+	// });
 
-	it("required", () => {
-		datepicker.id = "#dp-required";
+	// it("required", () => {
+	// 	datepicker.id = "#dp-required";
 
-		assert.ok(datepicker.input.getProperty("required"), "input has required set");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "true", "Aria-required attribute is set correctly.");
+	// 	assert.ok(datepicker.input.getProperty("required"), "input has required set");
+	// 	assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "true", "Aria-required attribute is set correctly.");
 
-		datepicker.root.removeAttribute("required");
+	// 	datepicker.root.removeAttribute("required");
 
-		assert.notOk(datepicker.input.getProperty("required"), "required property is not set");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "false", "Aria-required attribute is set correctly.");
-	});
+	// 	assert.notOk(datepicker.input.getProperty("required"), "required property is not set");
+	// 	assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "false", "Aria-required attribute is set correctly.");
+	// });
 
-	it("placeholder", () => {
-		datepicker.root.setAttribute("placeholder", "test placeholder");
+	// it("placeholder", () => {
+	// 	datepicker.root.setAttribute("placeholder", "test placeholder");
 
-		assert.equal(datepicker.innerInput.getProperty("placeholder"), "test placeholder", "input has correct placeholder");
-		assert.equal(datepicker.innerInput.getAttribute("placeholder"), "test placeholder", "has correct placeholder attribute");
-	});
+	// 	assert.equal(datepicker.innerInput.getProperty("placeholder"), "test placeholder", "input has correct placeholder");
+	// 	assert.equal(datepicker.innerInput.getAttribute("placeholder"), "test placeholder", "has correct placeholder attribute");
+	// });
 
-	it("primary calendar type", () => {
-		datepicker.root.setAttribute("primary-calendar-type", "Islamic");
+	// it("primary calendar type", () => {
+	// 	datepicker.root.setAttribute("primary-calendar-type", "Islamic");
 
-		assert.equal(datepicker.calendar.getProperty("primaryCalendarType"), "Islamic", "calendar has correct calendar type");
-	});
+	// 	assert.equal(datepicker.calendar.getProperty("primaryCalendarType"), "Islamic", "calendar has correct calendar type");
+	// });
 
 	it("Islamic calendar type input value", () => {
 		datepicker.id = "#dp3";
@@ -114,7 +114,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
 
-		assert.equal(datepicker.innerInput.getAttribute("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
+		assert.equal(datepicker.innerInput.getProperty("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
 	});
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
@@ -912,7 +912,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Value state changes only on submit", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/DatePicker.html`);
 		datepicker.id = "#dp33";
 		datepicker.innerInput.click();
 		browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");

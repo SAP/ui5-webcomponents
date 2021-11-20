@@ -110,12 +110,8 @@ describe("FlexibleColumnLayout Behavior", () => {
 		// assert
 		assert.strictEqual(startArrow.getAttribute("title"), startArrowText1,
 			"Start arrow has the correct tooltip.");
-		assert.strictEqual(startArrow.getAttribute("aria-label"), startArrowText1,
-			"Start arrow has the correct aria-label.");
 		assert.strictEqual(endArrow.getAttribute("title"), endArrowText,
 			"End arrow has the correct tooltip.");
-		assert.strictEqual(endArrow.getAttribute("aria-label"), endArrowText,
-			"End arrow has the correct aria-label.");
 
 		// act
 		startArrow.click();
@@ -123,7 +119,5 @@ describe("FlexibleColumnLayout Behavior", () => {
 		// assert
 		assert.strictEqual(startArrow.getAttribute("title"), startArrowText2,
 			"Start arrow has the correct tooltip.");
-		assert.strictEqual(startArrow.getAttribute("aria-label"), startArrowText2,
-			"Start arrow has the correct aria-label.");
 	});
 });

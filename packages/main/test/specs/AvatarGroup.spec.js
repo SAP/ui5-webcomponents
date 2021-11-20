@@ -108,7 +108,7 @@ describe("avatar-group rendering", () => {
 	});
 
 	it("tests if click event is firing only once", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/AvatarGroup.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/AvatarGroup.html`);
 		let eventCounter = 0;
 
 		const avatar = browser.$("#avatar-1-test-events");

@@ -249,7 +249,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Previous and next buttons are disabled when necessary", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/Calendar.html`);
 		const calendarHeader = browser.$("#calendar4").shadow$("ui5-calendar-header");
 		const prevButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-prev]`);
 		const nextButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);

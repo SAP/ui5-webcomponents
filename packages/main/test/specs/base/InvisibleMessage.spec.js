@@ -3,7 +3,7 @@ const PORT = require("../_port.js");
 
 describe("InvisibleMessage", () => {
 	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/base/InvisibleMessage.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/base/InvisibleMessage.html`);
 	});
 
     it("Initial rendering", () => {
