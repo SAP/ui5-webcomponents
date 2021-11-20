@@ -25,5 +25,7 @@ import NotificationListGroupItem from "./dist/NotificationListGroupItem.js";
 import NotificationAction from "./dist/NotificationAction.js";
 import Wizard from "./dist/Wizard.js";
 import ViewSettingsDialog from "./dist/ViewSettingsDialog.js";
+import FilterItem from "./dist/FilterItem.js";
+import FilterItemOption from "./dist/FilterItemOption.js";
 
 export default testAssets;
