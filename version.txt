@@ -1,5 +1,5 @@
-commit f8815c4e4f0f1bcba96f6d2b33dc41763ddaec2c
+commit 4787428db0d41d08d24990ffae38f80345c5b46e
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Sun Nov 21 19:06:46 2021 +0200
+Date:   Sun Nov 21 21:03:10 2021 +0200
 
-    docs: make landing page nav sticky
+    docs: fix ui5logo at the top bar
