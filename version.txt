@@ -1,5 +1,5 @@
-commit d912a36d81bc2a5c84064d2f38d0fe819f5f92b7
+commit f8815c4e4f0f1bcba96f6d2b33dc41763ddaec2c
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 19 22:15:50 2021 +0200
+Date:   Sun Nov 21 19:06:46 2021 +0200
 
-    fix: fix SAP logo path so that it loads in the playground footer
+    docs: make landing page nav sticky
