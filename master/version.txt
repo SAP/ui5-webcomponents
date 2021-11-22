@@ -1,8 +1,7 @@
-commit 7d8b93a8cbee857d1e09a1cd8211524598f77358
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Fri Nov 19 19:50:26 2021 +0000
+commit 9b3869fdfca6a4bb495083b8e87f574e545abc05
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Mon Nov 22 11:04:39 2021 +0200
 
-    fix(ui5-date-time-picker): proper visualization on mobile (#4345)
+    fix(ui5-dialog): resize handle is no longer shown on phones (#4326)
     
-    There is no vertical scroll in the corresponding component
-    popover when navigated to the time picker part.
+    Fixes: #4253
