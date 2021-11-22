@@ -1,9 +1,5 @@
-commit 8671315ed6a112aab8959864495aceafdf11ef8f
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Mon Nov 22 12:07:05 2021 +0200
+commit ca8ac091e0458e546af12a8cc9f5ecff379a403d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Nov 22 15:32:16 2021 +0200
 
-    refactor(ui5-popover): simplify calcPlacement() (#4288)
-    
-    - Removed unused property `_height`
-    - Unified switch/case statements
-    - Added more samples to the test page
+    refactor: remove copy/pasted OpenUI5 files (#4328)
