@@ -112,6 +112,21 @@ const metadata = {
 		},
 
 		/**
+		 * An object of strings that defines several additional accessibility texts
+		 * for even further customization.
+		 *
+		 * It supports the following fields:
+		 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.1.0
+		 */
+		 accessibilityTexts: {
+			type: Object,
+		},
+
+		/**
 		 * @private
 		 */
 		breakpointSize: {
@@ -1129,7 +1144,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _profileText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
+		return this.accessibilityTexts.profileButtonTitle || ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
 
 	get _productsText() {

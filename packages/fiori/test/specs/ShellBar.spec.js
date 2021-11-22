@@ -456,6 +456,14 @@ describe("Component Behavior", () => {
 				await cancelButton.click();
 				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking on the search icon agian");
 			});
-		});
+
+			it("tests accessibilityTexts property", async () => {
+				const profileBtn = await browser.$("#sbAcc").shadow$(".ui5-shellbar-image-button");
+				const PROFILE_BTN_CUSTOM_TOOLTIP = "John Dow";
+
+				assert.strictEqual(await profileBtn.getAttribute("title"),
+					PROFILE_BTN_CUSTOM_TOOLTIP, "Profile button tooltip can be cutomized.");
+			});
+		});s
 	});
 });
