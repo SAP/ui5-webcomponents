@@ -1,7 +1,9 @@
-commit 9b3869fdfca6a4bb495083b8e87f574e545abc05
+commit 8671315ed6a112aab8959864495aceafdf11ef8f
 Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Mon Nov 22 11:04:39 2021 +0200
+Date:   Mon Nov 22 12:07:05 2021 +0200
 
-    fix(ui5-dialog): resize handle is no longer shown on phones (#4326)
+    refactor(ui5-popover): simplify calcPlacement() (#4288)
     
-    Fixes: #4253
+    - Removed unused property `_height`
+    - Unified switch/case statements
+    - Added more samples to the test page
