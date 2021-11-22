@@ -1,5 +1,5 @@
-commit ca8ac091e0458e546af12a8cc9f5ecff379a403d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Nov 22 15:32:16 2021 +0200
+commit d6b92957abba8d11cb3b842edf316e8513a71376
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Mon Nov 22 15:54:46 2021 +0200
 
-    refactor: remove copy/pasted OpenUI5 files (#4328)
+    docs(ui5-table, ui5-list): Wording update (#4376)
