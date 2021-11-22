@@ -17,7 +17,9 @@ const loadThemeBase = async theme => {
 	}
 
 	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createOrUpdateStyle(cssText, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	if (cssText) {
+		createOrUpdateStyle(cssText, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+	}
 };
 
 const deleteThemeBase = () => {
@@ -32,7 +34,9 @@ const loadComponentPackages = async theme => {
 		}
 
 		const cssText = await getThemeProperties(packageName, theme);
-		createOrUpdateStyle(cssText, "data-ui5-theme-properties", packageName);
+		if (cssText) {
+			createOrUpdateStyle(cssText, "data-ui5-theme-properties", packageName);
+		}
 	});
 };
 
