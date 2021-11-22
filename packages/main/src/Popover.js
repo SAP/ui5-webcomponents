@@ -513,9 +513,6 @@ class Popover extends Popup {
 		let maxHeight = clientHeight;
 		let maxWidth = clientWidth;
 
-		let width = "";
-		let height = "";
-
 		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 
 		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
@@ -525,14 +522,10 @@ class Popover extends Popup {
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && isVertical) {
 			popoverSize.width = targetRect.width;
-			width = `${targetRect.width}px`;
+			this._width = `${targetRect.width}px`;
 		} else if (this.verticalAlign === PopoverVerticalAlign.Stretch && !isVertical) {
 			popoverSize.height = targetRect.height;
-			height = `${targetRect.height}px`;
 		}
-
-		this._width = width;
-		this._height = height;
 
 		const arrowOffset = this.hideArrow ? 0 : arrowSize;
 
@@ -548,11 +541,11 @@ class Popover extends Popup {
 			break;
 		case PopoverPlacementType.Bottom:
 			left = this.getVerticalLeft(targetRect, popoverSize);
+			top = targetRect.bottom + arrowOffset;
 
 			if (allowTargetOverlap) {
-				top = Math.max(Math.min(targetRect.bottom + arrowOffset, clientHeight - popoverSize.height), 0);
+				top = Math.max(Math.min(top, clientHeight - popoverSize.height), 0);
 			} else {
-				top = targetRect.bottom + arrowOffset;
 				maxHeight = clientHeight - targetRect.bottom - arrowOffset;
 			}
 			break;
@@ -565,14 +558,14 @@ class Popover extends Popup {
 			}
 			break;
 		case PopoverPlacementType.Right:
+			left = targetRect.left + targetRect.width + arrowOffset;
+			top = this.getHorizontalTop(targetRect, popoverSize);
+
 			if (allowTargetOverlap) {
-				left = Math.max(Math.min(targetRect.left + targetRect.width + arrowOffset, clientWidth - popoverSize.width), 0);
+				left = Math.max(Math.min(left, clientWidth - popoverSize.width), 0);
 			} else {
-				left = targetRect.left + targetRect.width + arrowOffset;
 				maxWidth = clientWidth - targetRect.right - arrowOffset;
 			}
-
-			top = this.getHorizontalTop(targetRect, popoverSize);
 			break;
 		}
 
