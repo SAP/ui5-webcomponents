@@ -130,6 +130,7 @@ a.github-link > img {
 .title {
     display: flex;
     font-size: 4.5rem;
+    font-family: "72-Bold";
 }
 
 .title > h1 {
@@ -164,6 +165,7 @@ a.github-link > img {
     padding: 1.25rem 1.5625rem;
     border-radius: 10px;
     font-size: 1.5rem;
+    margin-left: -2px;
     color: #fff;
     background: var(--orange_color);
     text-decoration: none;
@@ -191,8 +193,13 @@ a.github-link > img {
 }
 
 .illustration-section > img {
-    width: 33rem;
-    height: 21rem;
+    width: 31rem;
+    height: 20rem;
+}
+
+.illustration-section:nth-child(3) > img {
+    width: 28rem;
+    height: 22rem;
 }
 
 .text-wrapper {
@@ -212,10 +219,13 @@ a.github-link > img {
 .testimonials h2,
 footer h2 {
     font-size: 2.25rem;
+    font-family: '72-Bold';
 }
 
 .text-wrapper > span {
+    font-family: "72-Light";
     font-size: 1.5rem;
+    line-height: 1.5rem;
 }
 
 .example {
@@ -232,13 +242,8 @@ footer h2 {
     display: flex;
 }
 
-.example-field:nth-child(1) {
-    margin-right: 10rem;
-}
-
 .example-field {
-    width: 23.5rem;
-    padding: 1rem 0;
+    padding: 1rem;
     margin-top: 4rem;
     display: flex;
     align-items: center;
@@ -246,6 +251,10 @@ footer h2 {
     background: #fff;
     border: 1px solid #DFDFDF;
     border-radius: .5rem;
+}
+
+.example-field > ui5-date-picker{
+    margin-right: 2rem;
 }
 
 .codesandbox-link {
@@ -307,23 +316,23 @@ footer h2 {
     flex-direction: column;
 }
 
+.compatibility > div > div {
+    display: flex;
+    justify-content: space-between;
+}
+
 .compatibility > div:nth-child(1) {
     margin-right: 14rem;
 }
 
 .compatibility h2 {
     margin-bottom: 1rem;
+    letter-spacing: 4px;
     text-align: center;
 }
 
 .compatibility img {
     height: 3.125rem;
-}
-
-.compatibility img:nth-child(1),
-.compatibility img:nth-child(2),
-.compatibility img:nth-child(3) {
-    margin-right: 4rem;
 }
 
 .testimonials {
@@ -505,7 +514,7 @@ footer a {
     }
 
     .example {
-        margin-top: 8rem;
+        margin-top: 10rem;
     }
 
     .frameworks-section {
@@ -887,7 +896,7 @@ footer a {
     }
 
     footer {
-        margin-top: 15rem;
+        margin-top: 18rem;
     }
 
     .footer-content {
@@ -927,18 +936,19 @@ footer a {
         flex-direction: column;
     }
 
-    .example-field:nth-child(1) {
-        margin-right: 0;
-    }
-
     .compatibility > div:nth-child(1) {
         margin-right: 0;
         margin-bottom: 2rem;
     }
 
+    .compatibility > div {
+        align-items: center;
+    }
+
     .compatibility > div > div {
+        width: 400px;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
     }
 }
 
