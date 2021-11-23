@@ -685,8 +685,14 @@ class MultiComboBox extends UI5Element {
 
 		let currentItem = matchingItems.length && !isItemMatched ? matchingItems[++this.currentItemIdx] : this.items[++this.currentItemIdx];
 
-		while (this.currentItemIdx < itemsCount - 1 && currentItem.selected) {
-			currentItem = this.items[++this.currentItemIdx];
+		if (matchingItems.length) {
+			while (this.currentItemIdx < matchingItems.length - 1 && currentItem.selected) {
+				currentItem = matchingItems[++this.currentItemIdx];
+			}
+		} else {
+			while (this.currentItemIdx < itemsCount - 1 && currentItem.selected) {
+				currentItem = items[++this.currentItemIdx];
+			}
 		}
 
 		if (currentItem.selected === true) {
