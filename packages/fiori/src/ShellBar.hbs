@@ -32,6 +32,7 @@
 				@click="{{_header.press}}"
 				aria-haspopup="{{menuBtnHasPopup}}"
 				aria-expanded="{{menuPopoverExpanded}}"
+				data-ui5-stable="menu"
 			>
 				{{#if hasNonFocusableLogo}}
 					<span
@@ -54,7 +55,7 @@
 		{{/if}}
 
 		{{#if secondaryTitle}}
-			<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
+			<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
 		{{/if}}
 	</div>
 
@@ -89,6 +90,7 @@
 						<ui5-button
 							@click={{_handleCancelButtonPress}}
 							class="ui5-shellbar-button"
+							data-ui5-stable="cancel-search"
 						>
 							Cancel
 						</ui5-button>
@@ -107,6 +109,7 @@
 					icon="sap-icon://search"
 					data-ui5-text="Search"
 					data-ui5-notification-count="{{notificationCount}}"
+					data-ui5-stable="toggle-search"
 					@click={{_handleSearchIconPress}}
 					title="{{_searchText}}"
 					._buttonAccInfo="{{accInfo.search}}"
