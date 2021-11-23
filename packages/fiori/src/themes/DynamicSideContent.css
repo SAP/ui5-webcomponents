@@ -1,16 +1,3 @@
-/* dummy classes */
-
-.ui5-dsc-main {
-	background-color: #dfeedf;
-}
-
-.ui5-dsc-side {
-	background-color: #eeeedf;
-}
-
-/* dummy classes end */
-
-
 :host {
 	display: block;
 	height: 100%;
@@ -21,14 +8,19 @@
 	width: 100%;
 	height: 100%;
 	position: relative;
-	overflow: hidden auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 	display: flex;
-	flex-wrap: wrap;
 }
 
 .ui5-dsc-main,
 .ui5-dsc-side {
+	display: inline;
 	position: relative;
+	overflow-x: hidden;
+	overflow-y: auto;
+	box-sizing: border-box;
+	flex: none;
 }
 
 .ui5-dsc-root > div[class^="ui5-dcs-span"],

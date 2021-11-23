@@ -10,27 +10,19 @@
 		delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-    <style>
-		.p-padding * {
-			padding: 0.5rem;
-			margin: 0;
-		}
-    </style>
-
+	<link rel="stylesheet" type="text/css" href="styles/DynamicSideContent.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="page1auto">
 
-	<ui5-page id="page" style="height: 650px; width: 100%" floating-footer show-footer>
-
+	<ui5-page id="page" floating-footer show-footer>
 		<ui5-dynamic-side-content
 			id="dynamicSideContent"
-			class="p-padding"
-			side-content-position1="Begin"
+			class="content-padding"
 			side-content-visibility1="ShowAboveM"
 			side-content-fall-down1="BelowM"
 			equal-split1
@@ -52,43 +44,81 @@
 
 		<div slot="footer">
 			<ui5-bar design="FloatingFooter">
+				<ui5-badge class="breakpointBadge" id="breakpointS" color-scheme="5" slot="startContent">S</ui5-badge>
+				<ui5-badge class="breakpointBadge" id="breakpointM" color-scheme="6" slot="startContent">M</ui5-badge>
+				<ui5-badge class="breakpointBadge" id="breakpointL" color-scheme="7" slot="startContent">L</ui5-badge>
+				<ui5-badge class="breakpointBadge" id="breakpointXL" color-scheme="8" slot="startContent">XL</ui5-badge>
+				<ui5-switch id="hideMainContent" class="hide-on-S" text-on="M +" text-off="M -" title="MainContent" checked></ui5-switch>
+				<ui5-switch id="hideSideContent" class="hide-on-S" text-on="S +" text-off="S -" title="SideContent" checked></ui5-switch>
+				<ui5-switch id="equalSplit" class="hide-on-S" text-on="EQ" text-off="! EQ" title="equalSplit"></ui5-switch>
+				<ui5-switch id="sideContentPosition" class="hide-on-S" text-on="END" text-off="BEG" title="sideContentPosition" checked></ui5-switch>
+				<ui5-select id="sideContentVisibility" class="hide-on-S" title="sideContentVisibility">
+					<ui5-option>NeverShow</ui5-option>
+					<ui5-option selected>ShowAboveS</ui5-option>
+					<ui5-option>ShowAboveM</ui5-option>
+					<ui5-option>ShowAboveL</ui5-option>
+					<ui5-option>AlwaysShow</ui5-option>
+				</ui5-select>
+				<ui5-select id="sideContentFallDown" class="hide-on-S" title="sideContentFallDown">
+					<ui5-option>BelowXL</ui5-option>
+					<ui5-option>BelowL</ui5-option>
+					<ui5-option>BelowM</ui5-option>
+					<ui5-option selected>OnMinimumWidth</ui5-option>
+				</ui5-select>
 				<ui5-button id="toggleButton" design="Positive" slot="endContent">Toggle</ui5-button>
 			</ui5-bar>
 		</div>
 
 	</ui5-page>
 
-    <script>
-		let toggleButton = document.getElementById("toggleButton"),
+	<script>
+		var toggleButton = document.getElementById("toggleButton"),
+			sideContentPosition = document.getElementById("sideContentPosition"),
+			sideContentVisibility = document.getElementById("sideContentVisibility"),
+			sideContentFallDown = document.getElementById("sideContentFallDown"),
+			equalSplit = document.getElementById("equalSplit"),
 			dynamnicSideContent = document.getElementById("dynamicSideContent");
-
-		function toggleButtonEnablement() {
-			toggleButton.disabled = dynamicSideContent.breakpoint !== "S" || dynamicSideContent.sideContentVisibility === "AlwaysShow" ? true : false;
-		}
 
 		toggleButton.addEventListener("click", function() {
 			dynamnicSideContent.toggleContents();
 		});
 
+		hideMainContent.addEventListener("change", function() {
+			dynamnicSideContent.hideMainContent = !hideMainContent.checked;
+		});
+
+		hideSideContent.addEventListener("change", function() {
+			dynamnicSideContent.hideSideContent = !hideSideContent.checked;
+		});
+
+		equalSplit.addEventListener("change", function() {
+			dynamnicSideContent.equalSplit = equalSplit.checked;
+		});
+
+		sideContentPosition.addEventListener("change", function() {
+			dynamnicSideContent.sideContentPosition = sideContentPosition.checked ? "End" : "Begin";
+		});
+
+		sideContentVisibility.addEventListener("change", function(event) {
+			dynamnicSideContent.sideContentVisibility = event.detail.selectedOption.innerText;
+		});
+
+		sideContentFallDown.addEventListener("change", function(event) {
+			dynamnicSideContent.sideContentFallDown = event.detail.selectedOption.innerText;
+		});
+
 		dynamicSideContent.addEventListener("layout-change", function(event) {
-			console.warn(event.detail);
-		});
+			var breakpoint = event.detail.currentBreakpoint,
+				disp = breakpoint === "S" ? "none" : "block";
 
-		window.addEventListener("resize", toggleButtonEnablement);
-		window.addEventListener("load", toggleButtonEnablement);
-/*
-		var clickCounter = document.querySelector("#click-counter");
-		var button = document.querySelector("#button1");
-		var disabledButton = document.querySelector("#button-disabled");
-		var clickCount = 0;
+			document.querySelectorAll('.breakpointBadge').forEach(function(elem) { elem.style.display = "none"; });
+			document.querySelector("#breakpoint" + breakpoint).style.display="block";
 
-		[button, disabledButton].forEach(function (el) {
-			el.addEventListener("click", function(event) {
-				clickCount += 1;
-				clickCounter.value = clickCount;
-			});
+			document.querySelectorAll('.hide-on-S').forEach(function(elem) { elem.style.display = disp; });
+
+			toggleButton.style.display = breakpoint !== "S" || dynamicSideContent.sideContentVisibility === "AlwaysShow" ? "none" : "block";
 		});
-*/
 	</script>
+
 </body>
 </html>

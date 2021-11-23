@@ -338,16 +338,15 @@ class DynamicSideContent extends UI5Element {
 		return {
 			dynamicSideContentRoot: {
 				"height": "100%",
+				"flex-wrap": this._mcSpan === "12" ? "wrap" : "nowrap",
 			},
 			mainContent: {
 				"height": mcSpan === this.span12 ? contentHeight : "100%",
 				"order": this.sideContentPosition === SideContentPosition.Begin ? 2 : 1,
-				"overflow": "hidden auto",
 			},
 			sideContent: {
 				"height": scSpan === this.span12 ? contentHeight : "100%",
 				"order": this.sideContentPosition === SideContentPosition.Begin ? 1 : 2,
-				"overflow": "hidden auto",
 			},
 		};
 	}
@@ -449,100 +448,6 @@ class DynamicSideContent extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
-	}
-
-	_resizeContentsUI5() {
-		const contentWidth = Math.ceil((33.333 / 100) * this.containerWidth); // for SideContentFallDown.OnMinimumWidth case
-		let mainSize,
-			sideSize,
-			sideVisible;
-
-		// initial set contents sizes
-		if (this.equalSplit) {
-			switch (this.breakpoint) {
-			case this.sizeS:
-				mainSize = this.span12;
-				sideSize = this.span12;
-				break;
-			default:
-				mainSize = this.span6;
-				sideSize = this.span6;
-				sideVisible = true;
-			}
-		} else {
-			switch (this.breakpoint) {
-			case this.sizeS:
-				mainSize = this.span12;
-				sideSize = this.span12;
-				break;
-			case this.sizeM:
-				if (this.sideContentFallDown === SideContentFallDown.BelowXL
-					|| this.sideContentFallDown === SideContentFallDown.BelowL
-					|| (contentWidth <= 320 && this.sideContentFallDown === SideContentFallDown.OnMinimumWidth)) {
-					mainSize = this.span12;
-					sideSize = this.span12;
-				} else {
-					mainSize = this.spanFixed;
-					sideSize = this.spanFixed;
-				}
-				sideVisible = this.sideContentVisibility === SideContentVisibility.ShowAboveS
-					|| this.sideContentVisibility === SideContentVisibility.AlwaysShow;
-				break;
-			case this.sizeL:
-				if (this.sideContentFallDown === SideContentFallDown.BelowXL) {
-					mainSize = this.span12;
-					sideSize = this.span12;
-				} else {
-					mainSize = this.span8;
-					sideSize = this.span4;
-				}
-				sideVisible = this.sideContentVisibility === SideContentVisibility.ShowAboveS
-					|| this.sideContentVisibility === SideContentVisibility.ShowAboveM
-					|| this.sideContentVisibility === SideContentVisibility.AlwaysShow;
-				break;
-			case this.sizeXL:
-				mainSize = this.span9;
-				sideSize = this.span3;
-				sideVisible = this.sideContentVisibility !== SideContentVisibility.NeverShow;
-			}
-		}
-
-		if (this.sideContentVisibility === SideContentVisibility.AlwaysShow) {
-			sideVisible = true;
-		}
-
-		// modify sizes of the contents depending on hideMainContent and hideSideContent properties
-		if (this.hideSideContent) {
-			mainSize = this.hideMainContent ? this.span0 : this.span12;
-			sideSize = this.span0;
-			sideVisible = false;
-		}
-
-		if (this.hideMainContent) {
-			mainSize = this.span0;
-			sideSize = this.hideSideContent ? this.span0 : this.span12;
-			sideVisible = true;
-		}
-
-		// set final sizes of the contents
-		if (!sideVisible) {
-			mainSize = this.span12;
-			sideSize = this.span0;
-		}
-
-		if (this._currentBreakpoint !== this.breakpoint) {
-			const eventParams = {
-				currentBreakpoint: this.breakpoint,
-				previousBreakpoint: this._currentBreakpoint,
-				mainContentVisible: mainSize !== this.span0,
-				sideContentVisible: sideSize !== this.span0,
-			};
-			this._currentBreakpoint = this.breakpoint;
-			this.fireEvent("layout-change", eventParams);
-		}
-
-		// update contents sizes
-		this._setSpanSizes(mainSize, sideSize);
 	}
 
 	_resizeContents() {

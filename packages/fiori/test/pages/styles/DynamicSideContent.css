@@ -1,0 +1,22 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.page1auto {
+    background-color: var(--sapBackgroundColor);
+}
+
+.content-padding * {
+	padding: 0.5rem;
+}
+
+:root {
+	--_ui5_input_width: 10rem !important;
+}
+
+.breakpointBadge {
+	display: none;
+}
