@@ -225,6 +225,10 @@
 		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"/>
 	</ui5-shellbar>
 
+	<ui5-shellbar id="sbAcc">
+		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
+	</ui5-shellbar>
+
 	<script>
 		mySearch.addEventListener("suggestionItemSelect", function (event) {
 			 console.log(event);
@@ -288,6 +292,10 @@
 				window["custom-item-popover"].openBy(event.detail.targetRef);
 			});
 		});
+
+		sbAcc.accessibilityTexts = {
+			profileButtonTitle: "John Dow",
+		};
 	</script>
 </body>
 </html>
