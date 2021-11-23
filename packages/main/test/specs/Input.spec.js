@@ -401,6 +401,24 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
+	
+	it("should remove input's focus when group header item is clicked", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await browser.$("#myInputGrouping");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+
+		await input.click();
+		await input.keys("C");
+		await groupHeader.click();
+
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await input.getProperty("focused"), true, "Input is focused");
+
+	});
+
 	it("checks if the suggestions popover width is minimum the size of the input", async () => {
 		const input = await browser.$("#myInputGrouping");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
