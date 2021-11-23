@@ -73,7 +73,7 @@ describe("Table general interaction", () => {
 	});
 
 	it ("tests adding spaces to input fields in a row", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+		browser.url(`http://localhost:8080/test-resources/pages/Table.html`);
 
 		const input = $("#myInput");
 		const inner = input.shadow$("input");
