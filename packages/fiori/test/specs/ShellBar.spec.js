@@ -35,21 +35,6 @@ describe("Component Behavior", () => {
 		});
 	});
 
-	describe("ui5-shellbar menu", () => {
-		it("tests close on content click", async () => {
-			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
-			const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
-			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
-
-			await primaryTitle.click();
-			await firstMenuItem.click();
-
-			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
-		});
-	});
-
-
 	describe("ui5-shellbar-item", () => {
 		it("tests count property", () => {
 			const shellbar = browser.$("#shellbarwithitems");
