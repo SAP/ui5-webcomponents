@@ -1,5 +1,9 @@
-commit 3215c7df4320baa720ec40e7217e053be8aa944e
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Nov 23 09:30:56 2021 +0200
+commit f762e76393f823b19b2c05aaca62c20e8e1df52d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Nov 23 11:58:08 2021 +0200
 
-    fix: prevent runtime error on malformed custom theme object (#4375)
+    feat(ui5-shellbar): introduce accessibilityTexts property (#4377)
+    
+    New property from type Object, called accessibilityTexts is introduced to allow customization of some internal parts of the ShellBar web component via stable API. Currently the only thing available on the object is the profileButtonTitle to define the profile button tooltip, showing up on hover.
+    
+    Fixes: #4009
