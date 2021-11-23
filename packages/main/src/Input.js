@@ -10,6 +10,7 @@ import {
 	isSpace,
 	isEnter,
 	isBackSpace,
+	isDelete,
 	isEscape,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -520,7 +521,7 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		// Indicates if the change event has already been fired
-		this._changeFired = false;
+		this._changeFiredValue = null;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
@@ -611,7 +612,6 @@ class Input extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._changeFired = (this.previousValue === this.value && this.lastConfirmedValue === this.value);
 			return this._handleEnter(event);
 		}
 
@@ -628,11 +628,15 @@ class Input extends UI5Element {
 			this._clearPopoverFocusAndSelection();
 		}
 
-		this._changeFired = true;
 		this._keyDown = true;
 	}
 
 	_onkeyup(event) {
+		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
+		if (isDelete(event)) {
+			this.value = event.target.value;
+		}
+
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -731,14 +735,6 @@ class Input extends UI5Element {
 		this.closePopover();
 		this._clearPopoverFocusAndSelection();
 
-		const areAllValuesEmpty = !this.previousValue && !this.value && !this.lastConfirmedValue;
-		const isInputChanged = this.previousValue !== this.value;
-		const isTheValueAlreadyConfirmed = !!this.lastConfirmedValue && this.lastConfirmedValue === this.value;
-
-		if (!areAllValuesEmpty && isInputChanged !== isTheValueAlreadyConfirmed) {
-			this._handleChange(event);
-		}
-
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
@@ -764,13 +760,16 @@ class Input extends UI5Element {
 		}
 	}
 
-	_handleChange(event) {
-		if (!this._changeFired) {
+	_handleNativeInputChange() {
+		clearTimeout(this._nativeChangeDebounce);
+		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
+	}
+
+	_handleChange() {
+		if (this._changeFiredValue !== this.value) {
+			this._changeFiredValue = this.value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
-
-		// Set event as no longer marked
-		this._changeFired = false;
 	}
 
 	_scroll(event) {
@@ -931,10 +930,7 @@ class Input extends UI5Element {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
-			this.fireEvent(this.EVENT_CHANGE);
-
-			// Mark the change event to avoid double firing
-			this._changeFired = true;
+			this._handleChange();
 		}
 
 		this.valueBeforeItemPreview = "";
