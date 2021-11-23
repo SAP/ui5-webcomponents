@@ -72,6 +72,20 @@ describe("Table general interaction", () => {
 			"The aria-label value is correct.");
 	});
 
+	it ("tests adding spaces to input fields in a row", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+
+		const input = $("#myInput");
+		const inner = input.shadow$("input");
+
+		inner.click();
+		inner.keys("a");
+		inner.keys("Space");
+		inner.keys("b");
+
+		assert.strictEqual(inner.getValue(), "a b", "space should be visible");
+	});
+
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", () => {
 			browser.url("http://localhost:8080/test-resources/pages/TableLoadMore.html");
