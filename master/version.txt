@@ -1,9 +1,21 @@
-commit f762e76393f823b19b2c05aaca62c20e8e1df52d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Nov 23 11:58:08 2021 +0200
+commit 3bccd7118271fc335f26a2948f94a0830891ba6f
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Nov 23 16:31:34 2021 +0200
 
-    feat(ui5-shellbar): introduce accessibilityTexts property (#4377)
+    fix(ui5-input) Prevent duplicating focus on group header click (#4343)
     
-    New property from type Object, called accessibilityTexts is introduced to allow customization of some internal parts of the ShellBar web component via stable API. Currently the only thing available on the object is the profileButtonTitle to define the profile button tooltip, showing up on hover.
+    * Fix duplicated focus on group header click
     
-    Fixes: #4009
+    * Do not focus group header items
+    
+    * Clean up
+    
+    * Clean up
+    
+    * Move the event handler to the correct place
+    
+    * restore prev ident
+    
+    * restore prev ident
+    
+    * restore prev ident
