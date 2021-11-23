@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.24](https://github.com/SAP/ui5-webcomponents/compare/v0.31.23...v0.31.24) (2021-11-23)
+
+
+### Bug Fixes
+
+* **ui5-tab-container, ui5-shellbar:** add stable selectors ([#4369](https://github.com/SAP/ui5-webcomponents/issues/4369)) ([dc2ea58](https://github.com/SAP/ui5-webcomponents/commit/dc2ea58))
+* **ui5-date-picker:** align day names in hide-week-numbers mode ([#4309](https://github.com/SAP/ui5-webcomponents/issues/4309)) ([9dcc887](https://github.com/SAP/ui5-webcomponents/commit/9dcc887)), closes [#4260](https://github.com/SAP/ui5-webcomponents/issues/4260)
+* **ui5-tab-container:** fix shadow DOM selector ([#4261](https://github.com/SAP/ui5-webcomponents/issues/4261)) ([#4273](https://github.com/SAP/ui5-webcomponents/issues/4273)) ([735d9c4](https://github.com/SAP/ui5-webcomponents/commit/735d9c4))
+
+
+### Features
+
+* **ui5-shellbar:** introduce `accessibilityTexts` property ([#4377](https://github.com/SAP/ui5-webcomponents/issues/4377)) ([426e6c0](https://github.com/SAP/ui5-webcomponents/commit/426e6c0)), closes [#4009](https://github.com/SAP/ui5-webcomponents/issues/4009)
+
+
+
+
+
 ## [0.31.23](https://github.com/SAP/ui5-webcomponents/compare/v0.31.22...v0.31.23) (2021-11-17)
 
 

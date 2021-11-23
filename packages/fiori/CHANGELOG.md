@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.24](https://github.com/SAP/ui5-webcomponents/compare/v0.31.23...v0.31.24) (2021-11-23)
+
+
+### Bug Fixes
+
+* adding stable selectors for tab container and shellbar ([#4369](https://github.com/SAP/ui5-webcomponents/issues/4369)) ([dc2ea58](https://github.com/SAP/ui5-webcomponents/commit/dc2ea58))
+
+
+### Features
+
+* **ui5-shellbar:** introduce accessibilityTexts property ([#4377](https://github.com/SAP/ui5-webcomponents/issues/4377)) ([426e6c0](https://github.com/SAP/ui5-webcomponents/commit/426e6c0)), closes [#4009](https://github.com/SAP/ui5-webcomponents/issues/4009)
+
+
+
+
+
 ## [0.31.23](https://github.com/SAP/ui5-webcomponents/compare/v0.31.22...v0.31.23) (2021-11-17)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
