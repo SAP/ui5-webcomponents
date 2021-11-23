@@ -1,5 +1,5 @@
-commit d6b92957abba8d11cb3b842edf316e8513a71376
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Mon Nov 22 15:54:46 2021 +0200
+commit 3215c7df4320baa720ec40e7217e053be8aa944e
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Nov 23 09:30:56 2021 +0200
 
-    docs(ui5-table, ui5-list): Wording update (#4376)
+    fix: prevent runtime error on malformed custom theme object (#4375)
