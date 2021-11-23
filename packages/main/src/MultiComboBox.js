@@ -1012,7 +1012,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.focused && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
 	}
 
 	get valueStateTextMappings() {
@@ -1049,6 +1049,10 @@ class MultiComboBox extends UI5Element {
 
 	get _tokenizerExpanded() {
 		return (this._isFocusInside || this.open) && !this.readonly;
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	get classes() {

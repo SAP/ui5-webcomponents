@@ -299,13 +299,20 @@ class Tokenizer extends UI5Element {
 			return [];
 		}
 
+		// Reset the overflow prop of the tokens first in order
+		// to use their dimensions for calculation because already
+		// hidden tokens are set to 'display: none'
+		this._getTokens().forEach(token => {
+			token.overflows = false;
+		});
+
 		return this._getTokens().filter(token => {
 			const isRTL = this.effectiveDir === "rtl";
 			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = tokenRect[elementEnd];
-			const parentEnd = parentRect[elementEnd];
+			const tokenEnd = parseInt(tokenRect[elementEnd]);
+			const parentEnd = parseInt(parentRect[elementEnd]);
 
 			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 

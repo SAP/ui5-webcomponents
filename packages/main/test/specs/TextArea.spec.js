@@ -101,6 +101,18 @@ describe("when enabled", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "The value state message popover is not displayed");
 	});
 
+	it("Should not open value state message when textarea is in readonly state", async () => {
+		const textarea = await browser.$("#readonly-value-state-textarea");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-textarea");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+
+		// act
+		await textarea.click();
+
+		// assert
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover with valueStateMessage should not be opened.");
+	});
+
 	it("can type inside", async () => {
 		const textarea = await browser.$("#basic-textarea");
 		const textareaInner = await browser.$("#basic-textarea").shadow$("textarea");

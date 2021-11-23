@@ -28,6 +28,15 @@ describe("Component Behavior", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
 	});
 
+	describe("Аccessibility", () => {
+		it("tests accessibilityTexts property", async () => {
+			const PROFILE_BTN_CUSTOM_TOOLTIP = "John Dow";
+			const sb = await browser.$("#sbAcc");
+
+			assert.strictEqual(await sb.getProperty("_profileText"), PROFILE_BTN_CUSTOM_TOOLTIP,
+				"Profile button tooltip can be cutomized.");
+		});
+	});
 
 	describe("ui5-shellbar menu", () => {
 		it("tests close on content click", async () => {
