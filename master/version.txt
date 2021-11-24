@@ -1,21 +1,5 @@
-commit 3bccd7118271fc335f26a2948f94a0830891ba6f
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Nov 23 16:31:34 2021 +0200
+commit 43536f9cbe78a8798901d83dd2495876e8c16dda
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Nov 24 18:27:35 2021 +0200
 
-    fix(ui5-input) Prevent duplicating focus on group header click (#4343)
-    
-    * Fix duplicated focus on group header click
-    
-    * Do not focus group header items
-    
-    * Clean up
-    
-    * Clean up
-    
-    * Move the event handler to the correct place
-    
-    * restore prev ident
-    
-    * restore prev ident
-    
-    * restore prev ident
+    chore: update landing page to latest spec (#4381)
