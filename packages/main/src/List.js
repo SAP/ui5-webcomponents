@@ -168,7 +168,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * on IE the component will fallback to <code>growing="Button"</code>.
 		 * @type {ListGrowingMode}
 		 * @defaultvalue "None"
