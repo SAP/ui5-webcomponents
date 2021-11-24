@@ -379,11 +379,6 @@ footer h2 {
     transition: all 1s ease-in-out;
 }
 
-.testimonial img {
-    height: 5rem;
-    margin-right: 1rem
-}
-
 .testimonial > div:nth-child(1) {
     margin-bottom: 2rem;
     font-size: 1.5rem;
@@ -549,7 +544,7 @@ footer a {
     }
 
     .example {
-        margin-top: 16rem;
+        margin-top: 13rem;
     }
 
     .frameworks-section {
@@ -566,6 +561,10 @@ footer a {
 }
 
 @media(max-width: 1560px) {
+    .example {
+        margin-top: 10rem;
+    }
+
     footer {
         margin-top: 9rem;
     }
@@ -573,13 +572,17 @@ footer a {
 
 @media(max-width: 1540px) {
     .example {
-        margin-top: 12rem;
+        margin-top: 8rem;
     }
 }
 
-@media(max-width: 1500px) {
+@media(max-width: 1510px) {
+    .illustration-section:nth-child(3) {
+        margin-top: 3rem;
+    }
+
     .example {
-        margin-top: 8rem;
+        margin-top: 5rem;
     }
 }
 
@@ -606,8 +609,17 @@ footer a {
         margin-top: 9rem;
     }
 
+    .illustration-section:nth-child(3) > img {
+        width: 22rem;
+        height: 19rem;
+    }
+
     .example {
-        margin-top: 9rem;
+        margin-top: 7rem;
+    }
+
+    .example-field {
+        padding: 0 1rem;
     }
 
     .illustration-section > img {
@@ -625,12 +637,6 @@ footer a {
 
     footer {
         margin-top: 12rem;
-    }
-}
-
-@media(max-width: 1450px) {
-    .example-field {
-        padding: 0;
     }
 }
 
@@ -661,7 +667,7 @@ footer a {
     }
 
     .example {
-        margin-top: 12rem;
+        margin-top: 10rem;
     }
 
     .testimonials {
@@ -715,6 +721,10 @@ footer a {
         font-size: 1.2rem;
     }
 
+    .example {
+        margin-top: 5rem;
+    }
+
     .testimonials {
         margin-top: 8rem;
     }
@@ -738,7 +748,12 @@ footer a {
     }
 
     .illustration-section:nth-child(1) {
-        margin-top: 9rem;
+        margin-top: 8rem;
+    }
+
+    .illustration-section:nth-child(3) > img {
+        width: 18rem;
+        height: 16rem;
     }
 
     .example {
@@ -855,7 +870,7 @@ footer a {
     }
 
     .example {
-        margin-top: 9rem;
+        margin-top: 7rem;
     }
 
     .illustration-section:nth-child(2) {
