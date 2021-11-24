@@ -439,11 +439,12 @@ describe("'change' event firing", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const defaultPrevented = await browser.$('#defaultPrevented');
 
-		await defaultPrevented.click();
+		await defaultPrevented.doubleClick();
 		await defaultPrevented.keys("-1");
 		await defaultPrevented.keys("Enter");
 
-		assert.equal(await defaultPrevented.getProperty("valueState"), "Warning", 'the value state is not changed');
+		assert.equal(await defaultPrevented.getProperty("value"), 0, "value property is not changed");
+		assert.equal(await defaultPrevented.getProperty("valueState"), "Warning", "valueState is not changed");
 	});
 });
 
