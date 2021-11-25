@@ -1,5 +1,5 @@
 import escapeRegex from "./escapeRegex.js";
-import encodeXML from "./encodeXML.js";
+import encodeXML from "../sap/base/security/encodeXML.js";
 
 // utility to replace all occurances of a string
 function replaceAll(text, find, replace, caseInsensitive) {
