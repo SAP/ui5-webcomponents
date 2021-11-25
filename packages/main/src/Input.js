@@ -1275,6 +1275,10 @@ class Input extends UI5Element {
 		return this.placeholder;
 	}
 
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
 	/**
 	 * Returns the caret position inside the native input
 	 * @protected
