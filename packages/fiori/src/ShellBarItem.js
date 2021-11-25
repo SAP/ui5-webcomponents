@@ -1,9 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-// Template
-import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit.js";
-
 /**
  * @public
  */
@@ -40,28 +37,19 @@ const metadata = {
 		count: {
 			type: String,
 		},
-
-		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.8
-		 */
-		stableDomRef: {
-			type: String,
-		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Fired, when the item is pressed.
 		 *
-		 * @event sap.ui.webcomponents.fiori.ShellBarItem#item-click
+		 * @event sap.ui.webcomponents.fiori.ShellBarItem#click
 		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef DOM ref of the clicked element
 		 * @public
+		 * @native
 		 */
-		"item-click": {
+		"click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -93,8 +81,8 @@ class ShellBarItem extends UI5Element {
 		return litRender;
 	}
 
-	static get template() {
-		return ShellBarItemTemplate;
+	get stableDomRef() {
+		return `${this._id}-stable-dom-ref`;
 	}
 }
 

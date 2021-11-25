@@ -2,7 +2,7 @@
 
 # UI5 Web Components
 
-[![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
+[![Travis CI Build Status](https://travis-ci.com/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.com/github/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui5-webcomponents)](https://api.reuse.software/info/github.com/SAP/ui5-webcomponents)
 
@@ -81,7 +81,7 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	<ui5-button>Hello world!</ui5-button>
 	```
 
-	For more information, see [Importing UI5 Web Components](./docs/1-getting-started/02-importing-components.md) and [Understanding Ui5 Web Components APIs](./docs/1-getting-started/03-understanding-components-APIs.md).
+	For more information, see [Importing UI5 Web Components](./docs/1-getting-started/02-importing-components.md) and [Understanding UI5 Web Components APIs](./docs/1-getting-started/03-understanding-components-APIs.md).
 
 ### Is there a CDN I can use?
 

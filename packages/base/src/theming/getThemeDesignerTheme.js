@@ -1,3 +1,5 @@
+const warnings = new Set();
+
 const getThemeMetadata = () => {
 	// Check if the class was already applied, most commonly to the link/style tag with the CSS Variables
 	let el = document.querySelector(".sapThemeMetaData-Base-baseLib") || document.querySelector(".sapThemeMetaData-UI5-sap-ui-core");
@@ -7,10 +9,18 @@ const getThemeMetadata = () => {
 
 	el = document.createElement("span");
 	el.style.display = "none";
+
+	// Try with sapThemeMetaData-Base-baseLib first
 	el.classList.add("sapThemeMetaData-Base-baseLib");
-	el.classList.add("sapThemeMetaData-UI5-sap-ui-core");
 	document.body.appendChild(el);
-	const metadata = getComputedStyle(el).backgroundImage;
+	let metadata = getComputedStyle(el).backgroundImage;
+
+	// Try with sapThemeMetaData-UI5-sap-ui-core only if the previous selector was not found
+	if (metadata === "none") {
+		el.classList.add("sapThemeMetaData-UI5-sap-ui-core");
+		metadata = getComputedStyle(el).backgroundImage;
+	}
+
 	document.body.removeChild(el);
 
 	return metadata;
@@ -25,14 +35,20 @@ const parseThemeMetadata = metadataString => {
 			try {
 				paramsString = decodeURIComponent(paramsString);
 			} catch (ex) {
-				console.warn("Malformed theme metadata string, unable to decodeURIComponent"); // eslint-disable-line
+				if (!warnings.has("decode")) {
+					console.warn("Malformed theme metadata string, unable to decodeURIComponent"); // eslint-disable-line
+					warnings.add("decode");
+				}
 				return;
 			}
 		}
 		try {
 			return JSON.parse(paramsString);
 		} catch (ex) {
-			console.warn("Malformed theme metadata string, unable to parse JSON"); // eslint-disable-line
+			if (!warnings.has("parse")) {
+				console.warn("Malformed theme metadata string, unable to parse JSON"); // eslint-disable-line
+				warnings.add("parse");
+			}
 		}
 	}
 };
@@ -45,7 +61,10 @@ const processThemeMetadata = metadata => {
 		themeName = metadata.Path.match(/\.([^.]+)\.css_variables$/)[1];
 		baseThemeName = metadata.Extends[0];
 	} catch (ex) {
-		console.warn("Malformed theme metadata Object", metadata); // eslint-disable-line
+		if (!warnings.has("object")) {
+			console.warn("Malformed theme metadata Object", metadata); // eslint-disable-line
+			warnings.add("object");
+		}
 		return;
 	}
 

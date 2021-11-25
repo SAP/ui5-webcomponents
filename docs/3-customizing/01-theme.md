@@ -86,4 +86,4 @@ setTheme("sap_fiori_3_dark");
 
 For more on configuring themes, see [Configuration](Configuration.md).
  	
-Next: [Custom Fonts](02-fonts.md)
+Next: [Custom Fonts](../fonts)

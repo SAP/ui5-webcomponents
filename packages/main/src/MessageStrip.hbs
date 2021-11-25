@@ -8,25 +8,25 @@
 
 	{{#unless hideIcon}}
 		<div
-		class="ui5-messagestrip-icon-wrapper"
+		class="ui5-message-strip-icon-wrapper"
 		aria-hidden="true"
 		>
 			{{#if iconProvided}}
 				<slot name="icon"></slot>
 			{{else}}
-				<ui5-icon name="{{standardIconName}}" class="ui5-messagestrip-icon"></ui5-icon>
+				<ui5-icon name="{{standardIconName}}" class="ui5-message-strip-icon"></ui5-icon>
 			{{/if}}
 		</div>
 	{{/unless}}
 
 	<span class="ui5-hidden-text">{{hiddenText}}</span>
-	<span class="ui5-messagestrip-text"><slot></slot></span>
+	<span class="ui5-message-strip-text"><slot></slot></span>
 
 	{{#unless hideCloseButton}}
 		<ui5-button
 			icon="decline"
 			design="Transparent"
-			class="ui5-messagestrip-close-button"
+			class="ui5-message-strip-close-button"
 			title="{{_closeButtonText}}"
 			@click={{_closeClick}}
 		></ui5-button>

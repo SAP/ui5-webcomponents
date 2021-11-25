@@ -462,6 +462,17 @@ describe("General interaction", () => {
 		await arrow.click();
 		assert.strictEqual(await listItem.shadow$(".ui5-li-additional-text").getText(), "DZ", "Additional item text should be displayed");
 	});
+
+	it ("Should not open value state message when component is in readonly state", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const cb = await browser.$("#readonly-value-state-cb");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await cb.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover with valueStateMessage should not be opened.");
+	});
 });
 
 describe("Grouping", () => {
@@ -727,5 +738,25 @@ describe("Keyboard navigation", async () => {
 		prevListItem = await popover.$("ui5-list").$$("ui5-li")[5];
 
 		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
+	});
+
+	it ("Should focus the next/previous focusable element on TAB/SHIFT+TAB",  async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$("[input-icon]");
+
+		const prevCombo = await browser.$("#value-state-grouping");
+		const nextCombo = await browser.$("#combobox-two-column-layout");
+
+		await arrow.click();
+		await combo.keys("Tab");
+
+		assert.strictEqual(await nextCombo.getProperty("focused"), true, "The next combobox should be focused");
+
+		await arrow.click();
+		await browser.keys(["Shift", "Tab"]);
+
+		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The previous combobox should be focused");
 	});
 });

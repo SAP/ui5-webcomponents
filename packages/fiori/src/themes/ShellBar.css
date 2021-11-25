@@ -25,7 +25,7 @@
 	margin-left: 0.5rem;
 	border: none;
 	background: transparent;
-	outline-color: var(--sapShell_TextColor);
+	outline-color: var(--_ui5_shellbar_logo_outline_color);
 	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
 	cursor: pointer;
@@ -38,12 +38,6 @@
 	text-overflow: initial;
 }
 
-.ui5-shellbar-menu-button,
-.ui5-shellbar-button,
-::slotted([ui5-button][slot="startButton"]) {
-	outline: none;
-}
-
 ::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
@@ -51,27 +45,25 @@
 	background: var(--sapShell_Hover_Background);
 }
 
+
+::slotted([ui5-button][slot="startButton"]:hover),
+.ui5-shellbar-button:hover,
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover {
+	box-shadow: var(--_ui5_shellbar_button_box_shadow);
+}
+
 ::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
 	background: var(--sapShell_Active_Background);
-	color: var(--sapShell_Active_TextColor);
+	color: var(--_ui5_shellbar_button_active_color);
 }
 
-::slotted([ui5-button][slot="startButton"][focused])::after,
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus::after,
-.ui5-shellbar-button[focused]::after,
-.ui5-shellbar-image-button:focus::after {
-	content: "";
-	position: absolute;
-	width: calc(100% - 0.375rem);
-	height: calc(100% - 0.375rem);
-	border: 1px dotted var(--sapContent_ContrastFocusColor);
-	pointer-events: none;
-	left: 2px;
-	top: 2px;
-	z-index: 1;
+
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
+	outline: var(--_ui5_shellbar_logo_outline);
+	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
 
 slot[name="profile"] {
@@ -150,8 +142,12 @@ slot[name="profile"] {
 .ui5-shellbar-overflow-container-middle {
 	align-self: center;
 	height: 2.5rem;
-	width: 3rem;
+	width: 0;
 	flex-shrink: 0;
+}
+
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-middle {
+	width: 3rem;
 }
 
 @keyframes Behind_layer {
@@ -204,8 +200,8 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-logo:focus {
-	outline: 1px dotted var(--sapContent_ContrastFocusColor);
-	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
+	outline: var(--_ui5_shellbar_logo_outline);
+	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
 
 .ui5-shellbar-button {
@@ -231,15 +227,18 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
-
 	justify-content: flex-start;
 	margin-right: 0.5rem;
+	max-width: 75%;
+	flex-shrink: 0;
+	flex-grow: 0;
 }
 
-.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
 }
+
 
 .ui5-shellbar-menu-button {
 	white-space: nowrap;
@@ -271,7 +270,12 @@ slot[name="profile"] {
 	overflow: hidden;
 	box-sizing: border-box;
 	white-space: nowrap;
-	flex: 1;
+	flex: 1 1 auto;
+	max-width: 100%;
+}
+
+:host([show-co-pilot]) .ui5-shellbar-overflow-container-right {
+	flex-basis: 0%;
 }
 
 :host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
@@ -337,7 +341,7 @@ slot[name="profile"] {
 	height: 1rem;
 	min-width: 1rem;
 	background: var(--sapContent_BadgeBackground);
-	color: var(--sapShell_TextColor);
+	color: var(--sapContent_BadgeTextColor);
 	top: 0.125rem;
 	left: 1.5rem;
 	padding: .25rem;
@@ -447,12 +451,13 @@ slot[name="profile"] {
 .ui5-shellbar-copilot-wrapper:focus::after {
 	content: "";
 	position: absolute;
-	width: 100%;
 	height: calc(100% - 0.75rem);
-	border: 1px dotted var(--sapContent_ContrastFocusColor);
+	border: var(--_ui5_shellbar_logo_outline);
+	border-radius: var(--_ui5_shellbar_logo_outline_border_radius);
 	pointer-events: none;
 	left: 0;
 	top: 0.25rem;
+	right: 0;
 	z-index: 1;
 }
 
@@ -463,6 +468,26 @@ slot[name="profile"] {
 
 .ui5-shellbar-co-pilot-circle {
 	fill: var(--sapShellColor);
+}
+
+.ui5-shellbar-co-pilot-color1 {
+	stop-color: var(--_ui5_shellbar_copilot_stop_color1);
+}
+
+.ui5-shellbar-co-pilot-color2 {
+	stop-color: var(--_ui5_shellbar_copilot_stop_color2);
+}
+
+.ui5-shellbar-co-pilot-opacity7 {
+	stop-opacity: 0.7;
+}
+
+.ui5-shellbar-co-pilot-opacity36 {
+	stop-opacity: 0.36;
+}
+
+.ui5-shellbar-co-pilot-opacity2 {
+	stop-opacity: 0.2;
 }
 
 :host [dir="rtl"] ::slotted([ui5-button][slot="startButton"]) {
