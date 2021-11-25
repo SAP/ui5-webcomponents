@@ -44,6 +44,8 @@ describe("DateRangePicker general interaction", () => {
 	it("startDateValue and endDateValue getter", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const daterangepicker = await browser.$("#daterange-picker4");
+		let startDateValue;
+		let endDateValue;
 
 		await daterangepicker.click();
 		await browser.keys("27/09/2019 - 10/10/2019");
@@ -51,14 +53,14 @@ describe("DateRangePicker general interaction", () => {
 
 		const res = await browser.executeAsync(done => {
 			const myDRP = document.getElementById("daterange-picker4");
-			const startDateValue = myDRP.startDateValue;
-			const endDateValue = myDRP.endDateValue;
+			startDateValue = myDRP.startDateValue;
+			endDateValue = myDRP.endDateValue;
 
 			done({startDateValue, endDateValue});
 		});
 
-		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
-		assert.deepEqual(new Date(res.endDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
+		assert.deepEqual(new Date(startDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
+		assert.deepEqual(new Date(endDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
 	});
 
 	it("Initially setting the same date as first & last is possible", async () => {
