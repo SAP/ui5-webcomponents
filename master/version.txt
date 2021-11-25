@@ -1,5 +1,13 @@
-commit 43536f9cbe78a8798901d83dd2495876e8c16dda
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 24 18:27:35 2021 +0200
+commit 13b7d6842cf8888ad2b96948da0a4b0d4f07bec6
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Thu Nov 25 19:16:13 2021 +0200
 
-    chore: update landing page to latest spec (#4381)
+    fix(ui5-li-notification-group): visual fixes for right-to-left mode (#4354)
+    
+    - "collapse" arrow is now pointing down in RTL
+    - buttons and status icons are correctly aligned in RTL
+    - background is not switching to blue when user taps (on touch device)
+    
+    Fixes #4255
+    Fixes #4256
+    Fixes #4257
