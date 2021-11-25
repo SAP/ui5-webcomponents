@@ -105,7 +105,7 @@ class TableRow extends UI5Element {
 			this.fireEvent("row-click", { row: this });
 		}
 
-		if (isSpace(event)) {
+		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
 	}
