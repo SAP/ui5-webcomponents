@@ -652,7 +652,7 @@ class ComboBox extends UI5Element {
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
-		this._applyAtomicValueAndSelection(item, this._userTypedValue, true);
+		this._applyAtomicValueAndSelection(item, (this.open ? this._userTypedValue : null), true);
 
 		if ((item && !item.selected)) {
 			this.fireEvent("selection-change", {
