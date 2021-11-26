@@ -1,13 +1,10 @@
-commit 13b7d6842cf8888ad2b96948da0a4b0d4f07bec6
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Thu Nov 25 19:16:13 2021 +0200
+commit c328ea908503d75cc5c1a12df40a2161c1ff4e81
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Fri Nov 26 13:02:54 2021 +0200
 
-    fix(ui5-li-notification-group): visual fixes for right-to-left mode (#4354)
+    fix(ui5-list): remove hightlighting on items after tap on mobile (#4388)
     
-    - "collapse" arrow is now pointing down in RTL
-    - buttons and status icons are correctly aligned in RTL
-    - background is not switching to blue when user taps (on touch device)
+    Part of #4258
     
-    Fixes #4255
-    Fixes #4256
-    Fixes #4257
+    When tapping on list items in Chrome on Android items would receive a light-blue overlay.
+    This change removes this overlay.
