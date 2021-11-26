@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -12,8 +11,6 @@ import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -29,8 +26,6 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
-
-const SCROLL_STEP = 128;
 
 const tabStyles = [];
 const staticAreaTabStyles = [];
@@ -174,21 +169,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_scrollable: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_scrollableBack: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_scrollableForward: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
 		_animationRunning: {
 			type: Boolean,
 			noAttribute: true,
@@ -289,10 +269,6 @@ class TabContainer extends UI5Element {
 
 		this._handleResize = this._handleResize.bind(this);
 
-		// Init ScrollEnablement
-		this._scrollEnablement = new ScrollEnablement(this);
-		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
-
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this._getTabs(),
@@ -319,8 +295,7 @@ class TabContainer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this._getHeaderScrollContainer();
-		this._updateScrolling();
+		this.scrollContainer = this._getHeaderScrollContainer();
 
 		this.items.forEach(item => {
 			item._getTabInStripDomRef = this.getDomRef().querySelector(`*[data-ui5-stable="${item.stableDomRef}"]`);
@@ -338,21 +313,11 @@ class TabContainer extends UI5Element {
 	_onTablistFocusin(event) {
 		const target = event.target;
 
-		if (!this._scrollable || !target.classList.contains("ui5-tab-strip-item")) {
+		if (!target.classList.contains("ui5-tab-strip-item")) {
 			return;
 		}
 
-		const headerScrollContainer = this._getHeaderScrollContainer();
-		const leftArrowWidth = this.shadowRoot.querySelector(".ui5-tc__headerArrowLeft").offsetWidth;
-		const rightArrowWidth = this.shadowRoot.querySelector(".ui5-tc__headerArrowRight").offsetWidth;
-
-		if (this._scrollableBack && (target.offsetLeft - leftArrowWidth < headerScrollContainer.scrollLeft)) {
-			this._scrollEnablement.move(target.offsetLeft - leftArrowWidth - headerScrollContainer.scrollLeft, 0, true);
-			this._updateScrolling();
-		} else if (this._scrollableForward && (target.offsetLeft + target.offsetWidth > headerScrollContainer.scrollLeft + headerScrollContainer.offsetWidth - rightArrowWidth)) {
-			this._scrollEnablement.move(target.offsetLeft + target.offsetWidth - headerScrollContainer.scrollLeft - headerScrollContainer.offsetWidth + rightArrowWidth, 0, true);
-			this._updateScrolling();
-		}
+		this._showEndOverflow();
 	}
 
 	_onHeaderClick(event) {
@@ -398,9 +363,11 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
+		const overflowItemIndex = event.detail.item.parentNode._itemNavigation._currentIndex;
 		this._onItemSelect(event.detail.item);
 		this.responsivePopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
+		this._updateEndOverflow(overflowItemIndex);
 	}
 
 	_onItemSelect(target) {
@@ -482,6 +449,7 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
+		this._updateEndOverflow();
 		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > [ui5-button]");
 
 		if (event.target !== button) {
@@ -496,18 +464,53 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderBackArrowClick() {
-		this._scrollEnablement.move(-SCROLL_STEP, 0).promise()
-			.then(_ => this._updateScrolling());
+	_updateEndOverflow(overflowItemIndex) {
+		const allItems = this.items;
+		const containerOffsetWidth = this._getHeaderScrollContainer().offsetWidth - this.getDomRef().querySelector(".ui-tc__overflowButton").offsetWidth;
+
+		this.itemsInEndOverflow = [];
+		this.lastVisibleTab = this._findLastVisibleItem(allItems, containerOffsetWidth);
+
+		for (let index = this.lastVisibleTab + 1; index < allItems.length; index++) {
+			allItems[index].hidden = true;
+		}
+
+		for (let index = 0; index < this.items.length; index++) {
+			this.itemsInEndOverflow.push({
+				text: this.items[index].text,
+				hidden: this.items[index].hidden,
+				icon: this.items[index].icon,
+				overflowPresentation: this.items[index].overflowPresentation,
+			});
+		}
+		if (overflowItemIndex) {
+			allItems[this.lastVisibleTab].hidden = true;
+			allItems[overflowItemIndex].hidden = false;
+		}
+		return this.itemsInEndOverflow;
 	}
 
-	_onHeaderForwardArrowClick() {
-		this._scrollEnablement.move(SCROLL_STEP, 0).promise()
-			.then(_ => this._updateScrolling());
+	_findLastVisibleItem(items, tabStripWidth) {
+		const startIndex = 0;
+		let lastVisibleTabIndex = -1,
+			index,
+			itemSize;
+
+		for (index = startIndex; index < items.length; index++) {
+			itemSize = items[index]._getRealDomRef().offsetWidth;
+
+			tabStripWidth -= itemSize;
+			if (tabStripWidth <= 0) {
+				lastVisibleTabIndex = index;
+				break;
+			}
+		}
+
+		return lastVisibleTabIndex;
 	}
 
 	_handleResize() {
-		this._updateScrolling();
+		this._showEndOverflow();
 		this._updateMediaRange();
 	}
 
@@ -516,14 +519,17 @@ class TabContainer extends UI5Element {
 		this.responsivePopover.close();
 	}
 
-	_updateScrolling() {
+	_showEndOverflow() {
 		const headerScrollContainer = this._getHeaderScrollContainer();
+		let allItemsWidth = 0;
 
-		this._scrollable = headerScrollContainer.offsetWidth < headerScrollContainer.scrollWidth;
-		this._scrollableBack = headerScrollContainer.scrollLeft > 0;
-		this._scrollableForward = Math.ceil(headerScrollContainer.scrollLeft) < headerScrollContainer.scrollWidth - headerScrollContainer.offsetWidth;
+		this.items.forEach(item => {
+			allItemsWidth += item._getRealDomRef().offsetWidth;
+		});
 
-		if (!this._scrollable) {
+		this.showOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
+
+		if (!this.showOverflow) {
 			this._closeRespPopover();
 		}
 	}
@@ -544,13 +550,17 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
 	}
 
+	_getHeaderOverflowButton() {
+		return this.shadowRoot.querySelector(".ui5-tc__overflowButton");
+	}
+
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	get shouldShowOverflow() {
-		return this.showOverflow && this._scrollable;
+		return this.showOverflow;
 	}
 
 	get classes() {
@@ -563,7 +573,6 @@ class TabContainer extends UI5Element {
 			},
 			header: {
 				"ui5-tc__header": true,
-				"ui5-tc__header--scrollable": this._scrollable,
 			},
 			headerInnerContainer: {
 				"ui5-tc__headerInnerContainer": true,
@@ -577,16 +586,16 @@ class TabContainer extends UI5Element {
 			separator: {
 				"ui5-tc__separator": true,
 			},
-			headerBackArrow: {
-				"ui5-tc__headerArrow": true,
-				"ui5-tc__headerArrowLeft": true,
-				"ui5-tc__headerArrow--visible": this._scrollableBack,
-			},
-			headerForwardArrow: {
-				"ui5-tc__headerArrow": true,
-				"ui5-tc__headerArrowRight": true,
-				"ui5-tc__headerArrow--visible": this._scrollableForward,
-			},
+			// headerBackArrow: {
+			// 	"ui5-tc__headerArrow": true,
+			// 	"ui5-tc__headerArrowLeft": true,
+			// 	"ui5-tc__headerArrow--visible": this._scrollableBack,
+			// },
+			// headerForwardArrow: {
+			// 	"ui5-tc__headerArrow": true,
+			// 	"ui5-tc__headerArrowRight": true,
+			// 	"ui5-tc__headerArrow--visible": this._scrollableForward,
+			// },
 			content: {
 				"ui5-tc__content": true,
 				"ui5-tc__content--collapsed": this._contentCollapsed,

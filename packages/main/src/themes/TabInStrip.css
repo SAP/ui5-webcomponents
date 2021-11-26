@@ -348,3 +348,7 @@
     margin-right: 0;
     margin-left: 0.5rem;
 }
+
+.ui5-tab-strip-item--hidden {
+	display: none;
+}

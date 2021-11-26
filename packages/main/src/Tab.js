@@ -294,6 +294,10 @@ class Tab extends UI5Element {
 			classes.push(`ui5-tab-strip-item--${this.design.toLowerCase()}`);
 		}
 
+		if (this.hidden) {
+			classes.push("ui5-tab-strip-item--hidden");
+		}
+
 		return classes.join(" ");
 	}
 
@@ -316,6 +320,10 @@ class Tab extends UI5Element {
 
 		if (this.disabled) {
 			classes.push("ui5-tab-overflow-item--disabled");
+		}
+
+		if (!this.hidden) {
+			classes.push("ui5-tab-overflow-item--hidden");
 		}
 
 		return classes.join(" ");

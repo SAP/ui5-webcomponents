@@ -8,14 +8,6 @@
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
 		<div class="{{classes.headerInnerContainer}}">
-			<div class="{{classes.headerBackArrow}}">
-				<ui5-button @click="{{_onHeaderBackArrowClick}}"
-							icon="slim-arrow-left"
-							data-ui5-stable="tabs-left"
-							design="Transparent"
-							tabindex="-1"
-							title="{{previousIconACCName}}"></ui5-button>
-			</div>
 			<!-- tab items -->
 			<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
 				<ul
@@ -41,14 +33,6 @@
 					{{/each}}
 				</ul>
 			</div>
-			<div class="{{classes.headerForwardArrow}}">
-			<ui5-button @click="{{_onHeaderForwardArrowClick}}"
-						icon="slim-arrow-right"
-						data-ui5-stable="tabs-right"
-						design="Transparent"
-						tabindex="-1"
-						title="{{nextIconACCName}}"></ui5-button>
-		</div>
 		</div>
 		<!-- overflow button -->
 		{{#if shouldShowOverflow}}
@@ -62,10 +46,10 @@
 					<ui5-button
 						icon="{{overflowMenuIcon}}"
 						data-ui5-stable="tabs-overflow"
-						design="Transparent"
 						tabindex="-1"
 						title="{{overflowMenuTitle}}"
-						aria-haspopup="true"></ui5-button>
+						aria-haspopup="true"
+						icon-end>MORE</ui5-button>
 				{{/if}}
 			</div>
 		{{/if}}

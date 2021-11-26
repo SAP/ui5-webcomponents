@@ -102,6 +102,11 @@
 	margin: 0 0.25rem;
 }
 
+.ui-tc__overflowButton>[ui5-button] {
+	margin-top: 0.25rem;
+	border-radius: 0.75rem;
+	height: 1.5rem;
+}
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
 	height: calc(100% - var(--_ui5_tc_header_height_text_only)); /* the header height (text only tabs) */
 }
