@@ -532,7 +532,9 @@ class DatePicker extends DateComponentBase {
 		}
 
 		if (updateValue) {
-			this._getInput().getInputDOMRef().then((innnerInput) => innnerInput.value = value);
+			this._getInput().getInputDOMRef().then(innnerInput => {
+				innnerInput.value = value;
+			});
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
