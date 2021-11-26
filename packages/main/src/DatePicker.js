@@ -14,6 +14,7 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -469,6 +470,10 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
+		if (isEnter(event)) {
+			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+		}
+
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._modifyDateValue(1, "year");
@@ -527,6 +532,7 @@ class DatePicker extends DateComponentBase {
 		}
 
 		if (updateValue) {
+			this._getInput().getInputDOMRef().then((innnerInput) => innnerInput.value = value);
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
