@@ -12,6 +12,7 @@ import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.j
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
+import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
 import {
@@ -142,7 +143,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
@@ -185,7 +186,7 @@ const metadata = {
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
 		 * <br><br>
-		 * <b>Limitations:</b>
+		 * <b>Restrictions:</b>
 		 * <ul>
 		 * <li>Browsers that do not support this feature:
 		 * <ul>
@@ -399,7 +400,7 @@ class Table extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [BusyIndicator];
+		return [BusyIndicator, CheckBox];
 	}
 
 	static async onDefine() {

@@ -42,7 +42,7 @@
 
 :host([focused]) .ui5-li-root.ui5-li--focusable:after {
 	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -53,7 +53,7 @@
 
 :host([focused]) .ui5-li-content:focus:after {
 	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -63,7 +63,7 @@
 }
 
 :host([active][focused]) .ui5-li-root.ui5-li--focusable:after {
-	border-color: var(--sapContent_ContrastFocusColor);
+	border-color: var(--ui5-listitem-active-border-color);
 }
 
 :host([disabled]) {

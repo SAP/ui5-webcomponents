@@ -99,29 +99,6 @@ const metadata = {
 		branching: {
 			type: Boolean,
 		},
-
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines the aria-labelledby of the step.
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 		/**

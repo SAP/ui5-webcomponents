@@ -23,7 +23,7 @@
 }
 
 [growing-button-inner]:focus {
-	outline: var(--_ui5_load_more_outline_width) dotted var(--sapContent_FocusColor);
+	outline: var(--_ui5_load_more_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 	border-color: transparent;
 }

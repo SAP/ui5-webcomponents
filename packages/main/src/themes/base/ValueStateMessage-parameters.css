@@ -1,3 +1,7 @@
 :root {
 	--_ui5_value_state_message_border: none;
+	--_ui5_value_state_message_focus_border_radius: 0;
+	--_ui5_input_value_state_icon_display: none;
+	--_ui5_value_state_message_padding: 0.5rem;
+	--_ui5_value_state_header_padding: .5625rem 1rem;
 }

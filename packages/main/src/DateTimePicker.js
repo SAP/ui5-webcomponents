@@ -314,12 +314,13 @@ class DateTimePicker extends DatePicker {
 	 */
 	onSelectedDatesChange(event) {
 		event.preventDefault();
+		const dateTimePickerContent = event.path ? event.path[1] : event.composedPath()[1];
 
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
 			calendarValue: event.detail.values[0],
-			timeSelectionValue: event.path[1].lastChild.value,
+			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
 	}
 

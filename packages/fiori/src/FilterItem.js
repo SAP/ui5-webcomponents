@@ -68,6 +68,7 @@ const metadata = {
  * @extends ListItem
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item
+ * @implements sap.ui.webcomponents.fiori.IFilterItem
  * @public
  */
 class FilterItem extends ListItem {
