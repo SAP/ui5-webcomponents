@@ -1,10 +1,5 @@
-commit c328ea908503d75cc5c1a12df40a2161c1ff4e81
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Fri Nov 26 13:02:54 2021 +0200
+commit 9ee0e96edd294ead5dd5f6277307886626af4f13
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Nov 26 15:03:01 2021 +0200
 
-    fix(ui5-list): remove hightlighting on items after tap on mobile (#4388)
-    
-    Part of #4258
-    
-    When tapping on list items in Chrome on Android items would receive a light-blue overlay.
-    This change removes this overlay.
+    chore: Upgrade to chromedriver 96 (#4391)
