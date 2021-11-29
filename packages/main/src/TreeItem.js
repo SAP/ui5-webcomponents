@@ -40,7 +40,8 @@ const metadata = {
 		* <li> If the tree node is checked and it is not indeterminate, it will be displayed as selected
 		* <li> If the tree node is not checked, it will be displayed as not selected regardless value of the indeterminate attribute
 		* </ul>
-		*
+		* <br>
+		* <b>Note:</b> This property will take affect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
 		* @type {boolean}
 		* @defaultvalue false
 		* @public
