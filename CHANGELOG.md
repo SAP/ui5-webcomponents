@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.25](https://github.com/SAP/ui5-webcomponents/compare/v0.31.24...v0.31.25) (2021-11-29)
+
+
+### Bug Fixes
+
+* **ui5-input, ui5-multi-combobox:** align value state popup in RTL ([#4310](https://github.com/SAP/ui5-webcomponents/issues/4310)) ([#4382](https://github.com/SAP/ui5-webcomponents/issues/4382)) ([a855dcc](https://github.com/SAP/ui5-webcomponents/commit/a855dcc))
+* **ui5-table-row:** fix prevent `SPACE` kwy within inputs ([f891e9d](https://github.com/SAP/ui5-webcomponents/commit/f891e9d))
+
+
+
 ## [0.31.24](https://github.com/SAP/ui5-webcomponents/compare/v0.31.23...v0.31.24) (2021-11-23)
 
 
