@@ -1,5 +1,5 @@
-commit 5d3e8f55e4d0bdc6ed93fc541ed3d0046c5d1e2f
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Nov 29 13:42:02 2021 +0200
+commit c8530a4a80536823cfcd02ad9a05b554943aebeb
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 29 14:16:06 2021 +0200
 
-    fix(ui5-checkbox): cursor style when disabled (#4392)
+    chore: update article link in FAQ (#4390)
