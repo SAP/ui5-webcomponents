@@ -1,5 +1,5 @@
-commit 9ee0e96edd294ead5dd5f6277307886626af4f13
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Nov 26 15:03:01 2021 +0200
+commit 5d3e8f55e4d0bdc6ed93fc541ed3d0046c5d1e2f
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Nov 29 13:42:02 2021 +0200
 
-    chore: Upgrade to chromedriver 96 (#4391)
+    fix(ui5-checkbox): cursor style when disabled (#4392)
