@@ -26,6 +26,7 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
+import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
 const tabStyles = [];
 const staticAreaTabStyles = [];
@@ -153,6 +154,30 @@ const metadata = {
 		tabLayout: {
 			type: String,
 			defaultValue: TabLayout.Standard,
+		},
+
+		/**
+		 * Defines the overflow mode of the tab strip.
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Only one overflow  at the end would be displayed by default,
+		 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends.
+		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Standard</code></li>
+		 * <li><code>Inline</code></li>
+		 * </ul>
+		 *
+		 * @type {TabsOverflowMode}
+		 * @defaultvalue "End"
+		 * @public
+		 */
+		tabsOverflowMode: {
+			type: String,
+			defaultValue: TabsOverflowMode.End,
 		},
 
 		/**
@@ -465,13 +490,13 @@ class TabContainer extends UI5Element {
 	}
 
 	_updateEndOverflow(overflowItemIndex) {
-		const allItems = this.items;
+		const allItems = this._getTabs();
 		const containerOffsetWidth = this._getHeaderScrollContainer().offsetWidth - this.getDomRef().querySelector(".ui-tc__overflowButton").offsetWidth;
+		const lastVisibleTab = this._findLastVisibleItem(allItems, containerOffsetWidth);
 
 		this.itemsInEndOverflow = [];
-		this.lastVisibleTab = this._findLastVisibleItem(allItems, containerOffsetWidth);
 
-		for (let index = this.lastVisibleTab + 1; index < allItems.length; index++) {
+		for (let index = lastVisibleTab + 1; index < allItems.length; index++) {
 			allItems[index].hidden = true;
 		}
 
@@ -484,7 +509,7 @@ class TabContainer extends UI5Element {
 			});
 		}
 		if (overflowItemIndex) {
-			allItems[this.lastVisibleTab].hidden = true;
+			allItems[lastVisibleTab].hidden = true;
 			allItems[overflowItemIndex].hidden = false;
 		}
 		return this.itemsInEndOverflow;
@@ -521,10 +546,11 @@ class TabContainer extends UI5Element {
 
 	_showEndOverflow() {
 		const headerScrollContainer = this._getHeaderScrollContainer();
+		const allItems = this._getTabs();
 		let allItemsWidth = 0;
 
-		this.items.forEach(item => {
-			allItemsWidth += item._getRealDomRef().offsetWidth;
+		allItems.forEach(item => {
+			allItemsWidth += item._getTabInStripDomRef.offsetWidth;
 		});
 
 		this.showOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
@@ -586,16 +612,6 @@ class TabContainer extends UI5Element {
 			separator: {
 				"ui5-tc__separator": true,
 			},
-			// headerBackArrow: {
-			// 	"ui5-tc__headerArrow": true,
-			// 	"ui5-tc__headerArrowLeft": true,
-			// 	"ui5-tc__headerArrow--visible": this._scrollableBack,
-			// },
-			// headerForwardArrow: {
-			// 	"ui5-tc__headerArrow": true,
-			// 	"ui5-tc__headerArrowRight": true,
-			// 	"ui5-tc__headerArrow--visible": this._scrollableForward,
-			// },
 			content: {
 				"ui5-tc__content": true,
 				"ui5-tc__content--collapsed": this._contentCollapsed,
