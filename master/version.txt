@@ -1,5 +1,5 @@
-commit c8530a4a80536823cfcd02ad9a05b554943aebeb
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 29 14:16:06 2021 +0200
+commit e6d0f6968a7693112d4d6fe1a2bde817452c3196
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Mon Nov 29 16:39:13 2021 +0200
 
-    chore: update article link in FAQ (#4390)
+    fix(ui5-badge): center text vertically (#4394)
