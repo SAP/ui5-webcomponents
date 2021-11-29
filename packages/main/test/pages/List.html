@@ -75,6 +75,16 @@
 
 	<br/><br/>
 
+	<ui5-list header-text="API: Postpone" mode="SingleSelect" postpone-selection='true'>
+		<ui5-li >Active item - press</ui5-li>
+		<ui5-li >Active item - press</ui5-li>
+		<ui5-li selected type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Detail">Detail item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" mode="SingleSelect">
 		<ui5-li >Active item - press</ui5-li>
 		<ui5-li >Active item - press</ui5-li>
@@ -133,7 +143,7 @@
 	<ui5-label id="itemPress2">[Event] itemPress :: n/a</ui5-label>
 	<br/><br/>
 	<ui5-label id="selectionChange2">[Event] selectionChange :: n/a</ui5-label>
-	<ui5-list id="myList4" mode="MultiSelect" header-text="API: mode='MultiSelect'">
+	<ui5-list postpone-selection='true' id="myList4" mode="MultiSelect" header-text="API: mode='MultiSelect'">
 		<ui5-li id="country1" selected>Argentina</ui5-li>
 		<ui5-li id="country2">Bulgaria</ui5-li>
 		<ui5-li id="country3">China</ui5-li>

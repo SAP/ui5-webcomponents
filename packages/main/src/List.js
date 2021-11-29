@@ -181,6 +181,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the user's selection should be postponed.
+		 *
+		 * To try to resume the selection of the last postponed item, call the public "resumeSelection" method.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.1
+		 */
+		postponeSelection: {
+			type: Boolean
+		},
+
+		/**
 		 * Defines if the component would display a loading indicator over the list.
 		 *
 		 * @type {boolean}
@@ -333,6 +346,14 @@ const metadata = {
 		 * @public
 		 */
 		"selection-change": {
+			detail: {
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
+				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
+			},
+		},
+
+		"selection-postpone": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
@@ -669,22 +690,42 @@ class List extends UI5Element {
 	/*
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
-	onSelectionRequested(event) {
+	onSelectionRequested(event, resuming) {
 		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
 		if (this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
+			if (this.postponeSelection && !resuming) {
+				this._postponedItem = {detail: {...event.detail}};
+			} else {
+				selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
+			}
 		}
 
-		if (selectionChange) {
+		if (selectionChange && !resuming) { // we don't fire selection-change if we resume the selection
 			this.fireEvent("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: event.detail.selectionComponentPressed,
 				key: event.detail.key,
 			});
+		} else if (this.postponeSelection && !resuming) { // we fire the optional selection-postpone event
+			this.fireEvent("selection-postpone", {
+				selectedItems: this.getSelectedItems(),
+				previouslySelectedItems,
+				selectionComponentPressed: event.detail.selectionComponentPressed,
+				key: event.detail.key,
+			});
+		}
+		this._selectionRequested = false;
+	}
+
+	resumeSelection() {
+		if (this.items.indexOf(this._postponedItem.detail.item) !== -1) {
+			this.onSelectionRequested(this._postponedItem, true);
+		} else {
+			console.warn("postponed item no longer exists")
 		}
 	}
 
@@ -883,7 +924,6 @@ class List extends UI5Element {
 		const pressedItem = event.detail.item;
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
-			this._selectionRequested = true;
 			this.onSelectionRequested({
 				detail: {
 					item: pressedItem,
@@ -897,7 +937,6 @@ class List extends UI5Element {
 		this.fireEvent("item-press", { item: pressedItem });
 		this.fireEvent("item-click", { item: pressedItem });
 
-		this._selectionRequested = false;
 	}
 
 	// This is applicable to NoficationListItem
