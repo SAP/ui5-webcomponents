@@ -29,6 +29,26 @@ const metadata = {
 		expanded: {
 			type: Boolean,
 		},
+		/**
+		* Defines whether the selection of tree node should be display as partially selected.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>selected</code> properties:
+		* <ul>
+		* <li> If the tree node is selected and indeterminate, it will be displayed as partially selected
+		* <li> If the tree node is checked and it is not indeterminate, it will be displayed as selected
+		* <li> If the tree node is not checked, it will be displayed as not selected regardless value of the indeterminate attribute
+		* </ul>
+		*
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.1.0
+		*/
+		indeterminate: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
