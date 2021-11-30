@@ -1,0 +1,25 @@
+{
+	"packages": [
+		"packages/tools",
+		"packages/base",
+		"packages/localization",
+		"packages/theming",
+		"packages/icons",
+		"packages/icons-tnt",
+		"packages/icons-business-suite",
+		"packages/main",
+		"packages/fiori",
+		"packages/ie11"
+	],
+	"version": "1.0.1",
+	"command": {
+		"publish": {
+			"conventionalCommits": true
+		},
+		"version": {
+			"message": "chore(release): publish %s"
+		}
+	},
+	"npmClient": "yarn",
+	"useWorkspaces": true
+}

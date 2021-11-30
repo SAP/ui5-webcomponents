@@ -168,7 +168,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * on IE the component will fallback to <code>growing="Button"</code>.
 		 * @type {ListGrowingMode}
 		 * @defaultvalue "None"
@@ -361,7 +361,7 @@ const metadata = {
  * The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard
  * handling support for navigating between items, and predefined modes to improve the development efficiency.
  * <br><br>
- * The <code>ui5-list</code> is а container for the available list items:
+ * The <code>ui5-list</code> is a container for the available list items:
  * <ul>
  * <li><code>ui5-li</code></li>
  * <li><code>ui5-li-custom</code></li>
@@ -560,7 +560,7 @@ class List extends UI5Element {
 		return ids.length ? ids.join(" ") : undefined;
 	}
 
-	get ariaLabelТxt() {
+	get ariaLabelTxt() {
 		return getEffectiveAriaLabelText(this);
 	}
 

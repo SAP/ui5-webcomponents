@@ -340,6 +340,24 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
+	
+	it("should remove input's focus when group header item is clicked", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await browser.$("#myInputGrouping");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+
+		await input.click();
+		await input.keys("C");
+		await groupHeader.click();
+
+		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await input.getProperty("focused"), true, "Input is focused");
+
+	});
+
 	it("checks if the suggestions popover width is minimum the size of the input", async () => {
 		const input = await browser.$("#myInputGrouping");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
@@ -541,6 +559,18 @@ describe("Input general interaction", () => {
 
 		assert.notOk(await input.getProperty("open"), "Input's Suggestion Popover should not be open");
 	});
+
+	it("Should not open value state message when input is in readonly state", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#readonly-value-state-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-input");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await input.click();
+
+		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+	});
 });
 
 describe("Input arrow navigation", () => {
@@ -669,5 +699,40 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+	});
+});
+
+describe("XSS tests for suggestions", () => {
+	it("add suggestion item with XSS", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const btn = await $("#xss-btn");
+		const span = await $("#xss-result");
+
+		await btn.click();
+
+		assert.strictEqual(await span.getText(), "NO XSS", "No XSS issues found")
+	});
+
+	it("tests dangerous items highlighting", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#xss-input");
+
+		await input.keys("a");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#xss-input");
+		const listItems = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
+		const expected = [
+			"",
+			"<b></b>",
+			"3412test1234",
+			"[[[b]]]",
+			"&amp;",
+		];
+
+		await Promise.all(listItems.map(async (item, index) => {
+			assert.strictEqual(await item.getProperty("innerText"), expected[index], "Items text should be escaped");
+		}));
 	});
 });

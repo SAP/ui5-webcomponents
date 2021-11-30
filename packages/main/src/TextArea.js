@@ -632,7 +632,7 @@ class TextArea extends UI5Element {
 	}
 
 	get displayValueStateMessagePopover() {
-		return this.hasCustomValueState || this.hasValueState || this.exceeding;
+		return !this.readonly && (this.hasCustomValueState || this.hasValueState || this.exceeding);
 	}
 
 	get hasCustomValueState() {
@@ -653,6 +653,10 @@ class TextArea extends UI5Element {
 		}
 
 		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	/**

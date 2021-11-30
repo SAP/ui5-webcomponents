@@ -7,6 +7,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/not-editable.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isBackSpace,
@@ -16,6 +17,8 @@ import {
 	isDown,
 	isEnter,
 	isEscape,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -724,6 +727,10 @@ class ComboBox extends UI5Element {
 			this._isValueStateFocused = false;
 		}
 
+		if ((isTabNext(event) || isTabPrevious(event)) && this.open) {
+			this._closeRespPopover();
+		}
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 
@@ -943,12 +950,16 @@ class ComboBox extends UI5Element {
 	}
 
 	get shouldOpenValueStateMessagePopover() {
-		return this.focused && this.hasValueStateText && !this._iconPressed
+		return this.focused && !this.readonly && this.hasValueStateText && !this._iconPressed
 			&& !this.open && !this._isPhone;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
 		return !this.valueStateMessage.length && this.hasValueStateText;
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	/**

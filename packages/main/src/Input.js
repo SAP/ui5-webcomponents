@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/not-editable.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 // Templates
@@ -714,7 +715,7 @@ class Input extends UI5Element {
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -951,7 +952,7 @@ class Input extends UI5Element {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type { ui5-suggestion-item }
+	 * @type { sap.ui.webcomponents.main.IInputSuggestionItem }
 	 * @readonly
 	 * @public
 	 */
@@ -1078,6 +1079,10 @@ class Input extends UI5Element {
 			item: suggestion,
 			targetRef: item,
 		});
+	}
+
+	onItemMouseDown(event) {
+		event.preventDefault();
 	}
 
 	onItemSelected(item, keyboardUsed) {
@@ -1235,7 +1240,7 @@ class Input extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.open && this.focused;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
@@ -1311,6 +1316,10 @@ class Input extends UI5Element {
 		`;
 
 		return this.valueState !== ValueState.None ? result : "";
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	/**

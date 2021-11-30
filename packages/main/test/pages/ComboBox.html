@@ -231,6 +231,17 @@
 		</div>
 	</section>
 
+	<div class="demo-section">
+		<span>Readonly ComboBox with value state</span>
+
+		<ui5-combobox class="combobox" readonly value-state="Error" id="readonly-value-state-cb">
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="United States of America"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Germany"></ui5-cb-item>
+		</ui5-combobox>
+	</div>
+
     <script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
 			const { value } = event.target;

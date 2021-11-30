@@ -229,6 +229,10 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
+	onBeforeRendering() {
+		this._preprocessItems();
+	}
+
 	onAfterRendering() {
 		this._cacheWidths();
 		this._updateOverflow();
@@ -432,6 +436,12 @@ class Breadcrumbs extends UI5Element {
 		// the check is not complete but may be extended in the future if needed to cover
 		// cases becides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
+	}
+
+	_preprocessItems() {
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.getDomRef().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
+		});
 	}
 
 	getCurrentLocationLabelWrapper() {

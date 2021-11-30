@@ -112,6 +112,21 @@ const metadata = {
 		},
 
 		/**
+		 * An object of strings that defines several additional accessibility texts
+		 * for even further customization.
+		 *
+		 * It supports the following fields:
+		 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.1.0
+		 */
+		 accessibilityTexts: {
+			type: Object,
+		},
+
+		/**
 		 * @private
 		 */
 		breakpointSize: {
@@ -682,9 +697,10 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(newItems);
 	}
 
-	_toggleActionPopover() {
+	async _toggleActionPopover() {
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		this.overflowPopover.showAt(overflowButton);
+		const overflowPopover = await this._getOverflowPopover();
+		overflowPopover.showAt(overflowButton);
 	}
 
 	onEnterDOM() {
@@ -725,10 +741,10 @@ class ShellBar extends UI5Element {
 
 		if (refItemId) {
 			const shellbarItem = this.items.find(item => {
-				return item.shadowRoot.querySelector(`#${refItemId}`);
+				return item._id === refItemId;
 			});
 
-			const prevented = !shellbarItem.fireEvent("item-click", { targetRef: event.target }, true);
+			const prevented = !shellbarItem.fireEvent("click", { targetRef: event.target }, true);
 
 			this._defaultItemPressPrevented = prevented;
 		}
@@ -765,7 +781,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>logo</code> DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get logoDomRef() {
@@ -773,7 +792,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>copilot</code> DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get copilotDomRef() {
@@ -781,7 +803,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>notifications</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get notificationsDomRef() {
@@ -789,15 +814,21 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>overflow</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get overflowlogoDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="notifications"]`);
+	get overflowDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="overflow"]`);
 	}
 
 	/**
+	 * Returns the <code>profile</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get profileDomRef() {
@@ -805,7 +836,10 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
+	 * Returns the <code>product-switch</code> icon DOM ref.
+	 * @type { HTMLElement }
 	 * @public
+	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get productSwitchDomRef() {
@@ -946,6 +980,11 @@ class ShellBar extends UI5Element {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		this.overflowPopover = staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
 		this.menuPopover = staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
+	}
+
+	async _getOverflowPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
 	}
 
 	async _getMenuPopover() {
@@ -1105,7 +1144,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _profileText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
+		return this.accessibilityTexts.profileButtonTitle || ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
 
 	get _productsText() {

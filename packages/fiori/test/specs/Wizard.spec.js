@@ -107,7 +107,7 @@ describe("Wizard general interaction", () => {
 		const inpStepChangeCause =  await browser.$("#inpStepChangeCause");
 
 		const wizardStep = await browser.$("ui5-wizard-step");
-		const messageStrip = await wizardStep.shadow$("ui5-messagestrip")
+		const messageStrip = await wizardStep.shadow$("ui5-message-strip")
 		const firstFocusableElement = await messageStrip.shadow$(`ui5-button`);
 
 		// act - click on the first step in the header

@@ -4,5 +4,6 @@ import testAssets from "@ui5/webcomponents/bundle.esm.js";
 import "./dist/Assets.js";
 
 import "./bundle.common.js";
+import BarcodeScannerDialog from "./dist/BarcodeScannerDialog.js";
 
 export default testAssets;
