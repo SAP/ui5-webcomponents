@@ -60,6 +60,36 @@ describe("List Tests", () => {
 		assert.strictEqual(await selectionChangeResultField2.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
+	it("itemPress and selectionPostpone events are fired in Single selection", async () => {
+		const itemPressResultField3 = await browser.$("#itemPressResultField3");
+		const itemPressFocusedResultField = await browser.$("#itemPressFocusedResultField");
+		const selectionChangeResultField3 = await browser.$("#selectionChangeResultField3");
+		const selectionPostponeResultField = await browser.$("#selectionPostponeResultField");
+		const firstItem = await browser.$("#listPostpone #country1");
+		const secondItem = await browser.$("#listPostpone #country2");
+
+		assert.strictEqual(await secondItem.getAttribute("selected"), "true", "second item is selected initially.");
+
+		await firstItem.click();
+
+		assert.strictEqual(await firstItem.getAttribute("selected"), null, "first item isn't selected (being postponed) after clicking first item.");
+		assert.strictEqual(await secondItem.getAttribute("selected"), "true", "second item is still selected after clicking first item.");
+
+		assert.strictEqual(await itemPressResultField3.getProperty("value"), "1", "itemPress event has been fired once.");
+		assert.strictEqual(await itemPressFocusedResultField.getProperty("value"), "true", "first item has been focused as expected.");
+		assert.strictEqual(await selectionChangeResultField3.getProperty("value"), "", "selectionChange event hasn't fired.");
+		assert.strictEqual(await selectionPostponeResultField.getProperty("value"), "1", "selectionPostpone event has been fired.");
+
+		await browser.$("#resumeSelectionBtn").click();
+
+		assert.strictEqual(await firstItem.getAttribute("selected"), "true", "first item is selected (no longer postponed) on resuming selection.");
+		assert.strictEqual(await secondItem.getAttribute("selected"), null, "second item is no longer selected on resuming selection.");
+
+		assert.strictEqual(await itemPressResultField3.getProperty("value"), "1", "itemPress event hasn't been fired on resuming selection.");
+		assert.strictEqual(await selectionChangeResultField3.getProperty("value"), "", "selectionChange still event hasn't fired on resuming selection.");
+		assert.strictEqual(await selectionPostponeResultField.getProperty("value"), "1", "selectionPostpone hasn't been fired on resuming selection.");
+	});
+
 	it("selectionChange events provides previousSelection item", async () => {
 		const selectionChangeResultPreviousItemsParameter = await browser.$("#selectionChangeResultPreviousItemsParameter");
 		const firstItem = await browser.$("#listEvents #country1");
