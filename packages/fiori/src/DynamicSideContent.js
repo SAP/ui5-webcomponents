@@ -15,18 +15,25 @@ import {
 	DSC_SIDE_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
+// Breakpoint-related constants
+const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen size
+	M_L_BREAKPOINT = 1024, // Breakpoint between M and L screen size
+	L_XL_BREAKPOINT = 1440, // Breakpoint between L and XL screen size
+	MINIMUM_WIDTH_BREAKPOINT = 960; // Minimum width of the control where main and side contents are side by side
+
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-dynamic-side-content",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.DynamicSideContent.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
 
 		/**
-		 * Determines whether to hide the main content.
+		 * Defines the visibility of the main content.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 *
 		 */
@@ -35,13 +42,10 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether to hide the side content.
-		 *
-		 * <b>Note:</b> If both <code>hideSideContent</code> and <code>hideMainContent</code>
-		 * properties are set to <code>false</code>, use the <code>toggleContents</code> method
-		 * for showing the side content on phone.
+		 * Defines the visibility of the side content.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 *
 		 */
@@ -50,7 +54,15 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the side content is on the left or on the right side of the main content.
+		 * Defines whether the side content is on the left or on the right side of the main content.
+		 *
+		 * <br><br>
+		 * <b>The available values are:</b>
+		 *
+		 * <ul>
+		 * <li><code>Start</code></li>
+		 * <li><code>End</code></li>
+		 * </ul>
 		 *
 		 * @type {SideContentPosition}
 		 * @defaultvalue "End"
@@ -63,7 +75,18 @@ const metadata = {
 		},
 
 		/**
-		 * Determines on which breakpoints the side content is visible.
+		 * Defines on which breakpoints the side content is visible.
+		 *
+		 * <br><br>
+		 * <b>The available values are:</b>
+		 *
+		 * <ul>
+		 * <li><code>AlwaysShow</code></li>
+		 * <li><code>ShowAboveL</code></li>
+		 * <li><code>ShowAboveM</code></li>
+		 * <li><code>ShowAboveS</code></li>
+		 * <li><code>NeverShow</code></li>
+		 * </ul>
 		 *
 		 * @type {SideContentVisibility}
 		 * @defaultvalue "ShowAboveS"
@@ -76,7 +99,17 @@ const metadata = {
 		},
 
 		/**
-		 * Determines on which breakpoints the side content falls down below the main content.
+		 * Defines on which breakpoints the side content falls down below the main content.
+		 *
+		 * <br><br>
+		 * <b>The available values are:</b>
+		 *
+		 * <ul>
+		 * <li><code>BelowXL</code></li>
+		 * <li><code>BelowL</code></li>
+		 * <li><code>BelowM</code></li>
+		 * <li><code>OnMinimumWidth</code></li>
+		 * </ul>
 		 *
 		 * @type {SideContentFallDown}
 		 * @defaultvalue "OnMinimumWidth"
@@ -89,7 +122,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the control is in equal split mode. In this mode, the side and
+		 * Defines whether the component is in equal split mode. In this mode, the side and
 		 * the main content take 50:50 percent of the container on all screen sizes
 		 * except for phone, where the main and side contents are switching visibility
 		 * using the toggle method.
@@ -100,19 +133,6 @@ const metadata = {
 		 *
 		 */
 		equalSplit: {
-			type: Boolean,
-		},
-
-		/**
-		 * If set to TRUE, then not the media Query (device screen size) but the size of
-		 * the container, surrounding the control, defines the current range.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 *
-		 */
-		containerQuery: {
 			type: Boolean,
 		},
 
@@ -151,10 +171,10 @@ const metadata = {
 		},
 
 	},
-	slots: /** @lends sap.ui.webcomponents.main.DynamicSideContent.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
 
 		/**
-		 * Main Content controls.
+		 * Defines the Main Content.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -165,22 +185,26 @@ const metadata = {
 		},
 
 		/**
-		 * Side Content controls.
+		 * Defines the Side Content.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		 "side-content": {
+		 "sideContent": {
 			type: HTMLElement,
 		},
 
 	},
-	events: /** @lends sap.ui.webcomponents.main.DynamicSideContent.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
 
 		/**
 		 * Fires when the current breakpoint has been changed.
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.DynamicSideContent#layout-change
+		 * @param {String} currentBreakpoint the current breakpoint.
+		 * @param {String} previousBreakpoint the breakpoint that was active before change to current breakpoint.
+		 * @param {Boolean} mainContentVisible visibility of the main content.
+		 * @param {Boolean} sideContentVisible visibility of the side content.
 		 * @public
 		 */
 		"layout-change": {
@@ -208,7 +232,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * <code>ui5-dynamic-side-content</code> is a layout control that allows additional content
+ * <code>ui5-dynamic-side-content</code> is a layout component that allows additional content
  * to be displayed in a way that flexibly adapts to different screen sizes. The side
  * content appears in a container next to or directly below the main content
  * (it doesn't overlay). When the side content is triggered, the main content becomes
@@ -220,7 +244,7 @@ const metadata = {
  *
  * <i>When to use?</i>
  *
- * Use this control if you want to display relevant information that is not critical
+ * Use this component if you want to display relevant information that is not critical
  * for users to complete a task. Users should have access to all the key functions and
  * critical information in the app even if they do not see the side content. This is
  * important because on smaller screen sizes it may be difficult to display the side
@@ -276,10 +300,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DynamicSideContent
+ * @alias sap.ui.webcomponents.fiori.DynamicSideContent
  * @extends UI5Element
  * @tagname ui5-dynamic-side-content
  * @public
+ * @since 1.1.0
  */
 class DynamicSideContent extends UI5Element {
 	constructor() {
@@ -307,24 +332,47 @@ class DynamicSideContent extends UI5Element {
 		DynamicSideContent.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	onAfterRendering() {
+		this._resizeContents();
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
+	}
+
+	/**
+	 * Toggles visibility of main and side contents on S screen size (mobile device).
+	 * @type {String}
+	 * @public
+	 */
+	 toggleContents() {
+		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
+			this._toggled = !this._toggled;
+		}
+	}
+
 	get classes() {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
 			scSpan = this._toggled ? this._mcSpan : this._scSpan,
 			classes = {
-				dynamicSideContentRoot: {
+				root: {
 					"ui5-dsc-root": true,
 				},
-				mainContent: {
+				main: {
 					"ui5-dsc-main": true,
 				},
-				sideContent: {
+				side: {
 					"ui5-dsc-side": true,
 				},
 			};
 
-		classes.mainContent[`${gridPrefix}-${mcSpan}`] = true;
-		classes.sideContent[`${gridPrefix}-${scSpan}`] = true;
+		classes.main[`${gridPrefix}-${mcSpan}`] = true;
+		classes.side[`${gridPrefix}-${scSpan}`] = true;
 
 		return classes;
 	}
@@ -336,17 +384,17 @@ class DynamicSideContent extends UI5Element {
 			contentHeight = this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow ? "100%" : "auto";
 
 		return {
-			dynamicSideContentRoot: {
+			root: {
 				"height": "100%",
 				"flex-wrap": this._mcSpan === "12" ? "wrap" : "nowrap",
 			},
-			mainContent: {
+			main: {
 				"height": mcSpan === this.span12 ? contentHeight : "100%",
-				"order": this.sideContentPosition === SideContentPosition.Begin ? 2 : 1,
+				"order": this.sideContentPosition === SideContentPosition.Start ? 2 : 1,
 			},
-			sideContent: {
+			side: {
 				"height": scSpan === this.span12 ? contentHeight : "100%",
-				"order": this.sideContentPosition === SideContentPosition.Begin ? 1 : 2,
+				"order": this.sideContentPosition === SideContentPosition.Start ? 1 : 2,
 			},
 		};
 	}
@@ -406,13 +454,10 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get containerWidth() {
-		return this.containerQuery ? this.getDomRef().clientWidth : window.innerWidth;
+		return this.parentElement.clientWidth;
 	}
 
 	get breakpoint() {
-		const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen size
-			M_L_BREAKPOINT = 1024, // Breakpoint between M and L screen size
-			L_XL_BREAKPOINT = 1440; // Breakpoint between L and XL screen size
 		let size;
 
 		if (this.containerWidth <= S_M_BREAKPOINT) {
@@ -428,30 +473,11 @@ class DynamicSideContent extends UI5Element {
 		return size;
 	}
 
-	toggleContents() {
-		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
-			this._toggled = !this._toggled;
-		}
-	}
-
 	handleResize() {
 		this._resizeContents();
 	}
 
-	onAfterRendering() {
-		this._resizeContents();
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._handleResizeBound);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._handleResizeBound);
-	}
-
 	_resizeContents() {
-		const contentWidth = Math.ceil((33.333 / 100) * this.containerWidth); // for SideContentFallDown.OnMinimumWidth case
 		let mainSize,
 			sideSize,
 			sideVisible;
@@ -465,7 +491,7 @@ class DynamicSideContent extends UI5Element {
 		case this.sizeM:
 			if (this.sideContentFallDown === SideContentFallDown.BelowXL
 				|| this.sideContentFallDown === SideContentFallDown.BelowL
-				|| (contentWidth <= 320 && this.sideContentFallDown === SideContentFallDown.OnMinimumWidth)) {
+				|| (this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT && this.sideContentFallDown === SideContentFallDown.OnMinimumWidth)) {
 				mainSize = this.span12;
 				sideSize = this.span12;
 			} else {
@@ -524,8 +550,8 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this._currentBreakpoint = this.breakpoint;
 			this.fireEvent("layout-change", eventParams);
+			this._currentBreakpoint = this.breakpoint;
 		}
 
 		// update contents sizes

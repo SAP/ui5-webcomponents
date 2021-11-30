@@ -90,8 +90,5 @@
     "packages/tools",
     "packages/playground",
     "packages/create-package"
-  ],
-  "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.6.0"
-  }
+  ]
 }

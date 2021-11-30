@@ -1,20 +1,20 @@
 <div
-	class="{{classes.dynamicSideContentRoot}}"
-	style="{{styles.dynamicSideContentRoot}}"
+	class="{{classes.root}}"
+	style="{{styles.root}}"
 >
 	<div
-		class="{{classes.mainContent}}"
-		style="{{styles.mainContent}}"
+		class="{{classes.main}}"
+		style="{{styles.main}}"
 	>
 		<slot></slot>
 	</div>
 	<aside
 		role="complementary"
 		aria-label="{{accInfo.label}}"
-		class="{{classes.sideContent}}"
-		style="{{styles.sideContent}}"
+		class="{{classes.side}}"
+		style="{{styles.side}}"
 	>
-		<slot name="side-content"></slot>
+		<slot name="sideContent"></slot>
 	</aside>
 
 </div>

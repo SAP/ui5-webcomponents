@@ -29,11 +29,11 @@
 }
 
 .ui5-dsc-main.ui5-dsc-span-fixed {
-	width: calc(100% - 340px);
+	width: calc(100% - 21.25rem);
 }
 
 .ui5-dsc-side.ui5-dsc-span-fixed {
-	width: 340px;
+	width: 21.25rem;
 }
 
 .ui5-dsc-root > .ui5-dsc-span-0 {
