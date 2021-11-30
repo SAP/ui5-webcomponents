@@ -768,6 +768,13 @@ class Popover extends Popup {
 		};
 	}
 
+	get classes() {
+		const allClasses = super.classes;
+		allClasses.root["ui5-popover-root"] = true;
+
+		return allClasses;
+	}
+
 	/**
 	 * Hook for descendants to hide header.
 	 */
