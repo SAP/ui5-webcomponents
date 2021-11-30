@@ -483,6 +483,10 @@ class ShellBar extends UI5Element {
 		};
 	}
 
+	getStaticAreaItemStableDomRef() {
+		return "shellbar-static";
+	}
+
 	_debounce(fn, delay) {
 		clearTimeout(this._debounceInterval);
 		this._debounceInterval = setTimeout(() => {

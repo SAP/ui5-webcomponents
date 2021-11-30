@@ -1,5 +1,6 @@
 <ui5-popover class="ui5-shellbar-menu-popover"
 	placement-type="Bottom"
+	data-ui5-stable="menu-popover"
 	@ui5-before-open={{_menuPopoverBeforeOpen}}
 	@ui5-after-close={{_menuPopoverAfterClose}}
 >
@@ -11,6 +12,7 @@
 </ui5-popover>
 
 <ui5-popover class="ui5-shellbar-overflow-popover"
+	data-ui5-stable="overflow-popover"
 	placement-type="Bottom"
 	horizontal-align="{{popoverHorizontalAlign}}"
 	hide-arrow
@@ -21,6 +23,7 @@
 		{{#each _hiddenIcons}}
 			<ui5-li
 				data-ui5-external-action-item-id="{{this.refItemid}}"
+				data-ui5-stable="{{this.stableDomRef}}"
 				icon="{{this.icon}}"
 				type="Active"
 				@ui5-_press="{{this.press}}"

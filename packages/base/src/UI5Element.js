@@ -779,6 +779,12 @@ class UI5Element extends HTMLElement {
 		if (!this.staticAreaItem) {
 			this.staticAreaItem = StaticAreaItem.createInstance();
 			this.staticAreaItem.setOwnerElement(this);
+			if (this.getStaticAreaItemStableDomRef) {
+				const stableDomRef = this.getStaticAreaItemStableDomRef();
+				if (stableDomRef) {
+					this.staticAreaItem.setAttribute("data-ui5-stable", stableDomRef);
+				}
+			}
 		}
 		if (!this.staticAreaItem.parentElement) {
 			getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
