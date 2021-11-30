@@ -718,7 +718,6 @@ class List extends UI5Element {
 				key: event.detail.key,
 			});
 		}
-		this._selectionRequested = false;
 	}
 
 	resumeSelection() {
@@ -727,6 +726,7 @@ class List extends UI5Element {
 		} else {
 			console.warn("postponed item no longer exists"); // eslint-disable-line
 		}
+		this._selectionRequested = false;
 	}
 
 	handleSingleSelect(item) {
@@ -924,6 +924,7 @@ class List extends UI5Element {
 		const pressedItem = event.detail.item;
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
+			this._selectionRequested = true;
 			this.onSelectionRequested({
 				detail: {
 					item: pressedItem,
@@ -936,6 +937,8 @@ class List extends UI5Element {
 
 		this.fireEvent("item-press", { item: pressedItem });
 		this.fireEvent("item-click", { item: pressedItem });
+
+		this._selectionRequested = false;
 	}
 
 	// This is applicable to NoficationListItem
