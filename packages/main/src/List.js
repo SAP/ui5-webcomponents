@@ -190,7 +190,7 @@ const metadata = {
 		 * @since 1.0.1
 		 */
 		postponeSelection: {
-			type: Boolean
+			type: Boolean,
 		},
 
 		/**
@@ -697,7 +697,7 @@ class List extends UI5Element {
 
 		if (this[`handle${this.mode}`]) {
 			if (this.postponeSelection && !resuming) {
-				this._postponedItem = {detail: {...event.detail}};
+				this._postponedItem = { detail: { ...event.detail } };
 			} else {
 				selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
 			}
@@ -725,7 +725,7 @@ class List extends UI5Element {
 		if (this.items.indexOf(this._postponedItem.detail.item) !== -1) {
 			this.onSelectionRequested(this._postponedItem, true);
 		} else {
-			console.warn("postponed item no longer exists")
+			console.warn("postponed item no longer exists"); // eslint-disable-line
 		}
 	}
 
@@ -936,7 +936,6 @@ class List extends UI5Element {
 
 		this.fireEvent("item-press", { item: pressedItem });
 		this.fireEvent("item-click", { item: pressedItem });
-
 	}
 
 	// This is applicable to NoficationListItem
