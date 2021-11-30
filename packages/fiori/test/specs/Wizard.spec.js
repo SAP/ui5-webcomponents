@@ -58,8 +58,8 @@ describe("Wizard general interaction", () => {
 
 		assert.strictEqual(await wizStep.getAttribute("role"), "region",
 			"Step has role 'region'");
-		assert.strictEqual(await wizStep.getAttribute("aria-label"), await step1InHeader.getProperty("title"),
-			"Step has aria-label set to its title.");
+		assert.strictEqual(await wizStep.getAttribute("aria-label"), `1 ${await step1InHeader.getProperty("titleText")}`,
+			"Step has aria-label set to the number of the step and its title.");
 	});
 
 	it("move to next step by API", async () => {
