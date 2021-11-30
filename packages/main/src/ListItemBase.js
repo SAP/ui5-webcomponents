@@ -39,11 +39,11 @@ const metadata = {
 		/**
 		 * Defines whether <code>ui5-li</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive and it is excluded from keyboard handling.
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @protected
-		 * @since 1.0.0-rc.12
+		 * @public
+		 * @since 1.1.0
 		 */
 		disabled: {
 			type: Boolean,

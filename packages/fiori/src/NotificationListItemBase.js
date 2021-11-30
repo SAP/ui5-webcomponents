@@ -74,6 +74,13 @@ const metadata = {
 		read: {
 			type: Boolean,
 		},
+		 /**
+		 * @private
+		 * @since 1.1.0
+		 */
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines if a busy indicator would be displayed over the item.

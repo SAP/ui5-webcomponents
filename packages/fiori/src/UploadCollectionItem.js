@@ -129,6 +129,13 @@ const metadata = {
 			type: Integer,
 			defaultValue: 0,
 		},
+		 /**
+		 * @private
+		 * @since 1.1.0
+		 */
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * If set to <code>Uploading</code> or <code>Error</code>, a progress indicator showing the <code>progress</code> is displayed.
