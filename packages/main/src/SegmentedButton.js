@@ -32,7 +32,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue: ""
 		 * @public
-		 * @since 1.0.1
+		 * @since 1.0.3
 		 */
 		 accessibleName: {
 			type: String,
