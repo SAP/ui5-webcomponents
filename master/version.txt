@@ -1,21 +1,8 @@
-commit 1464ed689cb2584f5bc88fb7de57bf0eed9a7460
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed Dec 1 11:14:15 2021 +0200
+commit 581c6baab8a64bb38c16ece82c98ed9b06791f31
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Dec 1 12:27:25 2021 +0200
 
-    fix(ui5-wizard) announce active step when navigating via a button (#4298)
+    chore: add fiori i18n texts to testAssets (#4407)
     
-    * Announce active step on navigation via button
-    
-    * Clean
-    
-    * Beautify
-    
-    * Adjust announcement, add role 'region'
-    
-    * Announce only the step title as a region
-    
-    * Add tests
-    
-    * Fix test
-    
-    * Add 'step' to the announcement
+    The i18n texts for the fiori package were not exposed via the global testAssets objects.
+    Now, we can make use of them in the tests.
