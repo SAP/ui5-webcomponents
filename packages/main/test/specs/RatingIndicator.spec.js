@@ -64,7 +64,23 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.strictEqual(await ratingIndicator.getProperty("value"), 0, "Value is changed on key press");
 
-		assert.strictEqual(await input.getProperty("value"), "12", "Input event is always fired")
+		await browser.keys("End");
+
+		assert.strictEqual(await ratingIndicator.getProperty("value"), 8, "Value is changed to max on End press");
+
+		await browser.keys("Home");
+
+		assert.strictEqual(await ratingIndicator.getProperty("value"), 0, "Value is changed to 0 on Home press");
+
+		await browser.keys("4");
+
+		assert.strictEqual(await ratingIndicator.getProperty("value"), 4, "Value is changed on numeric key press");
+
+		await browser.keys("9");
+
+		assert.strictEqual(await ratingIndicator.getProperty("value"), 8, "Value is set to max when the number pressed is bigger");
+
+		assert.strictEqual(await input.getProperty("value"), "16", "Input event is always fired");
 	});
 
 	it("Tests ACC attrs", async () => {
