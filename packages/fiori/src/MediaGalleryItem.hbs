@@ -1,0 +1,20 @@
+<div id="{{id}}"
+    tabindex="{{tabIndex}}"
+    class="ui5-media-gallery-item-root"
+    @focusout="{{_onfocusout}}"
+    @focusin="{{_onfocusin}}"
+    @mousedown="{{_onmousedown}}"
+    @keydown="{{_onkeydown}}"
+    @keyup="{{_onkeyup}}"
+>
+    <div class="ui5-media-gallery-item-mask-layer"></div>
+    <div class="ui5-media-gallery-item-wrapper">
+        <ui5-icon name="background" ?hidden="{{_hideBackgroundIcon}}"></ui5-icon>
+        {{#if _useThumbnail}}
+            <slot name="thumbnail" ?hidden="{{_thumbnailNotFound}}"></slot>
+        {{else}}
+            <slot ?hidden="{{_contentImageNotFound}}"></slot>
+        {{/if}}
+    </div>
+</div>
+

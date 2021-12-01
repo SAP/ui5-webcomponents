@@ -1,0 +1,45 @@
+<div class="ui5-media-gallery-root">
+    <div class="ui5-media-gallery-display-wrapper">
+        <div class="ui5-media-gallery-display"
+                @click="{{_onDisplayAreaClick}}">
+            {{#if _isPhonePlatform}}
+                <ui5-carousel
+                    @ui5-navigate="{{_onCarouselNavigate}}"
+                    ?hide-page-indicator="{{hidePageIndicator}}"
+                    hide-navigation-arrows>
+                    {{#each _selectableItems}}
+                        <slot name="{{this._individualSlot}}"></slot>
+                    {{/each}}
+                </ui5-carousel>
+            {{else}}
+                <ui5-media-gallery-item
+                ?_mask-layer-interactive="{{interactiveDisplayArea}}"
+                    ?_square="{{_shouldHaveSquareDisplay}}"
+                    _tab-index="{{_mainItemTabIndex}}">
+                </ui5-media-gallery-item>
+            {{/if}}
+        </div>
+    </div>
+
+    {{#if _showThumbnails}}
+        <div class="ui5-media-gallery-thumbnails-wrapper">
+            <ul>
+                {{#each _visibleItems}}
+                        <li id="{{id}}"
+                            class="ui5-media-gallery-thumbnail"
+                            role="option"
+                            @click="{{../_onThumbnailClick}}"
+                        >
+                            <slot name="{{this._individualSlot}}"></slot>
+                        </li>
+                {{/each}}
+                <li class="ui5-media-gallery-overflow"
+                    ?hidden={{_isOverflowBtnHidden}}>
+                    <ui5-button @click="{{_onOverflowBtnClick}}">
+                        +{{_overflowSize}}
+                    </ui5-button>
+                </li>
+            </ul>
+        </div>
+    {{/if}}
+</div>
