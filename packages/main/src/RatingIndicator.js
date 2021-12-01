@@ -249,12 +249,13 @@ class RatingIndicator extends UI5Element {
 		}
 
 		const down = isDown(event) || isLeft(event);
-		const up = isRight(event) || isUp(event) || isSpace(event) || isEnter(event);
+		const up = isRight(event) || isUp(event);
+		const spaceOrEnter = isSpace(event) || isEnter(event);
 		const home = isHome(event);
 		const end = isEnd(event);
 		const number = (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105);
 
-		if (down || up || home || end || number) {
+		if (down || up || spaceOrEnter || home || end || number) {
 			event.preventDefault();
 
 			if (down && this.value > 0) {
@@ -262,6 +263,10 @@ class RatingIndicator extends UI5Element {
 				this.fireEvent("change");
 			} else if (up && this.value < this.max) {
 				this.value = Math.round(this.value + 1);
+				this.fireEvent("change");
+			} else if (spaceOrEnter) {
+				const proposedValue = Math.round(this.value + 1);
+				this.value = proposedValue > this.max ? 0 : proposedValue;
 				this.fireEvent("change");
 			} else if (home) {
 				this.value = 0;

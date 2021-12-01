@@ -80,7 +80,11 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.strictEqual(await ratingIndicator.getProperty("value"), 8, "Value is set to max when the number pressed is bigger");
 
-		assert.strictEqual(await input.getProperty("value"), "16", "Input event is always fired");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await ratingIndicator.getProperty("value"), 0, "Value is set to lowest on enter/space if it was previously max");
+
+		assert.strictEqual(await input.getProperty("value"), "17", "Input event is always fired");
 	});
 
 	it("Tests ACC attrs", async () => {
