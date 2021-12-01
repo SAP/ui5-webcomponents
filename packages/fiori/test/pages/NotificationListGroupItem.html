@@ -337,6 +337,11 @@
 			event.preventDefault();
 			notificationsPopover.showAt(event.detail.targetRef);
 		});
+
+		notificationListTop.addEventListener("itemClose", function (event) {
+				wcToastBS.textContent = event.detail.item.titleText;
+				wcToastBS.show();
+		});
 	</script>
 </body>
 </html>
