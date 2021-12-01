@@ -1,8 +1,5 @@
-commit 581c6baab8a64bb38c16ece82c98ed9b06791f31
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 1 12:27:25 2021 +0200
+commit e6a8b38ed25f96e0f4d710fc7e19bfcf47c0c8b4
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Wed Dec 1 12:42:00 2021 +0000
 
-    chore: add fiori i18n texts to testAssets (#4407)
-    
-    The i18n texts for the fiori package were not exposed via the global testAssets objects.
-    Now, we can make use of them in the tests.
+    feat(ui5-segmented-button): implement accessibleName property (#4378)

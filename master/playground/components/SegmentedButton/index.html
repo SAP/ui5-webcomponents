@@ -5215,13 +5215,13 @@
 <section>
 	<h3>Basic SegmentedButton</h3>
 	<div class="snippet">
-        <ui5-segmented-button>
+        <ui5-segmented-button accessible-name="Geographic location">
             <ui5-segmented-button-item>Map</ui5-segmented-button-item>
             <ui5-segmented-button-item pressed>Satellite</ui5-segmented-button-item>
             <ui5-segmented-button-item>Terrain</ui5-segmented-button-item>
         </ui5-segmented-button>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-segmented-button&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-segmented-button</span> <span class="na">accessible-name=</span><span class="s">"Geographic location"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;ui5-segmented-button-item&gt;</span>Map<span class="nt">&lt;/ui5-segmented-button-item&gt;</span>
     <span class="nt">&lt;ui5-segmented-button-item</span> <span class="na">pressed</span><span class="nt">&gt;</span>Satellite<span class="nt">&lt;/ui5-segmented-button-item&gt;</span>
     <span class="nt">&lt;ui5-segmented-button-item&gt;</span>Terrain<span class="nt">&lt;/ui5-segmented-button-item&gt;</span>
@@ -5292,6 +5292,19 @@ The <code>ui5-segmented-button</code> shows a group of items. When the user clic
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                            <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Sets the accessible aria name of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.3</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           selectedItem
                             (readonly)
