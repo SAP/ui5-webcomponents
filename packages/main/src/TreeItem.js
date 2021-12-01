@@ -30,18 +30,18 @@ const metadata = {
 			type: Boolean,
 		},
 		/**
-		* Defines whether the selection of tree node should be display as partially selected.
+		* Defines whether the selection of a tree node is displayed as partially selected.
 		* <br><br>
 		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
-		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
+		* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
 		* and <code>selected</code> properties:
 		* <ul>
-		* <li> If the tree node is selected and indeterminate, it will be displayed as partially selected
-		* <li> If the tree node is selected and it is not indeterminate, it will be displayed as selected
-		* <li> If the tree node is not selected, it will be displayed as not selected regardless value of the indeterminate attribute
+		* <li> If a tree node has both <code>selected</code> and <code>indeterminate</code> set to <code>true</code>, it is displayed as partially selected.
+		* <li> If a tree node has <code>selected</code> set to <code>true</code> and <code>indeterminate</code> set to <code>false</code>, it is displayed as selected.
+		* <li> If a tree node has <code>selected</code> set to <code>false</code>, it is displayed as not selected regardless of the value of the <code>indeterminate</code> property.
 		* </ul>
 		* <br>
-		* <b>Note:</b> This property will take affect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
+		* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
 		* @type {boolean}
 		* @defaultvalue false
 		* @public
