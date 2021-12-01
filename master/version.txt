@@ -1,5 +1,21 @@
-commit 6ab9edbf644244da192d6e5c9e36099250ed0d7c
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon Nov 29 22:44:59 2021 +0200
+commit 1464ed689cb2584f5bc88fb7de57bf0eed9a7460
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Wed Dec 1 11:14:15 2021 +0200
 
-    fix(ui5-combobox, ui5-textarea): correct value state message placement in RTL mode (#4396)
+    fix(ui5-wizard) announce active step when navigating via a button (#4298)
+    
+    * Announce active step on navigation via button
+    
+    * Clean
+    
+    * Beautify
+    
+    * Adjust announcement, add role 'region'
+    
+    * Announce only the step title as a region
+    
+    * Add tests
+    
+    * Fix test
+    
+    * Add 'step' to the announcement
