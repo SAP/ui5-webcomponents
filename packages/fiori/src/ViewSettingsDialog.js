@@ -219,6 +219,10 @@ class ViewSettingsDialog extends UI5Element {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {
 			this._setAdditionalTexts();
 		}
+
+		if (!this.shouldBuildSort) {
+			this._currentMode = ViewSettingsDialogMode.Filter;
+		}
 	}
 
 	_setAdditionalTexts() {
@@ -277,6 +281,17 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		return "";
+	}
+
+	get shouldBuildSort() {
+		return this.sortItems.length;
+	}
+	get shouldBuildFilter() {
+		return this.filterItems.length;
+	}
+
+	get hasTwoPages() {
+		return this.shouldBuildSort && this.shouldBuildFilter;
 	}
 
 	get _filterByTitle() {
