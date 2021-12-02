@@ -117,7 +117,7 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
-		},
+		}
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},
@@ -292,10 +292,6 @@ class Tab extends UI5Element {
 
 		if (this.design !== SemanticColor.Default) {
 			classes.push(`ui5-tab-strip-item--${this.design.toLowerCase()}`);
-		}
-
-		if (this.hidden) {
-			classes.push("ui5-tab-strip-item--hidden");
 		}
 
 		return classes.join(" ");

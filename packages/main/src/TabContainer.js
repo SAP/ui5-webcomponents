@@ -301,6 +301,18 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		// update selected tab
+		const tabs = this._getTabs();
+		if (tabs.length) {
+			const selectedTabs = this._getTabs().filter(tab => tab.selected);
+			if (selectedTabs.length) {
+				this._selectedTab = selectedTabs[0];
+			} else {
+				this._selectedTab = tabs[0];
+				this._selectedTab.selected = true;
+			}
+		}
+
 		// Set external properties to items
 		this.items.filter(item => !item.isSeparator).forEach((item, index, arr) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
@@ -320,8 +332,6 @@ class TabContainer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.scrollContainer = this._getHeaderScrollContainer();
-
 		this.items.forEach(item => {
 			item._getTabInStripDomRef = this.getDomRef().querySelector(`*[data-ui5-stable="${item.stableDomRef}"]`);
 		});
@@ -333,16 +343,6 @@ class TabContainer extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResize);
-	}
-
-	_onTablistFocusin(event) {
-		const target = event.target;
-
-		if (!target.classList.contains("ui5-tab-strip-item")) {
-			return;
-		}
-
-		this._showEndOverflow();
 	}
 
 	_onHeaderClick(event) {
@@ -388,11 +388,9 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
-		const overflowItemIndex = event.detail.item.parentNode._itemNavigation._currentIndex;
 		this._onItemSelect(event.detail.item);
 		this.responsivePopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
-		this._updateEndOverflow(overflowItemIndex);
 	}
 
 	_onItemSelect(target) {
@@ -474,8 +472,7 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
-		this._updateEndOverflow();
-		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > [ui5-button]");
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__overflowButton > [ui5-button]");
 
 		if (event.target !== button) {
 			return;
@@ -489,75 +486,117 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_updateEndOverflow(overflowItemIndex) {
-		const allItems = this._getTabs();
-		const containerOffsetWidth = this._getHeaderScrollContainer().offsetWidth - this.getDomRef().querySelector(".ui-tc__overflowButton").offsetWidth;
-		const lastVisibleTab = this._findLastVisibleItem(allItems, containerOffsetWidth);
-
-		this.itemsInEndOverflow = [];
-
-		for (let index = lastVisibleTab + 1; index < allItems.length; index++) {
-			allItems[index].hidden = true;
-		}
-
-		for (let index = 0; index < this.items.length; index++) {
-			this.itemsInEndOverflow.push({
-				text: this.items[index].text,
-				hidden: this.items[index].hidden,
-				icon: this.items[index].icon,
-				overflowPresentation: this.items[index].overflowPresentation,
-			});
-		}
-		if (overflowItemIndex) {
-			allItems[lastVisibleTab].hidden = true;
-			allItems[overflowItemIndex].hidden = false;
-		}
-		return this.itemsInEndOverflow;
+	_handleResize() {
+		this._updateMediaRange();
+		this._setItemsForStrip();
 	}
 
-	_findLastVisibleItem(items, tabStripWidth) {
-		const startIndex = 0;
-		let lastVisibleTabIndex = -1,
-			index,
-			itemSize;
+	_setItemsForStrip() {
+		const headerScrollContainer = this._getHeaderScrollContainer();
+		const endOverflowButton = this._getHeaderOverflowButton();
+		let allItemsWidth = 0;
 
-		for (index = startIndex; index < items.length; index++) {
-			itemSize = items[index]._getRealDomRef().offsetWidth;
+		if (!this._selectedTab) {
+			return;
+		}
 
-			tabStripWidth -= itemSize;
-			if (tabStripWidth <= 0) {
-				lastVisibleTabIndex = index;
+		const itemsDomRefs = this.items.map(function (item) { return item.getTabInStripDomRef(); });
+
+		// make sure the end overflow is hidden
+		endOverflowButton.setAttribute("hidden", "");
+
+		// show all tabs
+		for (let i = 0; i < itemsDomRefs.length; i++) {
+			itemsDomRefs[i].removeAttribute("hidden");
+		}
+
+		itemsDomRefs.forEach(item => {
+			allItemsWidth += this._getItemWidth(item);
+		});
+
+		let showEndOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
+
+		if (showEndOverflow) {
+			this._updateEndOverflow(itemsDomRefs);
+		} else {
+			this._closeRespPopover();
+		}
+	}
+
+	_updateEndOverflow(itemsDomRefs) {
+		// show end overflow button
+		this._getHeaderOverflowButton().removeAttribute("hidden");
+
+		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
+		const containerWidth = this._getHeaderScrollContainer().offsetWidth;
+
+		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
+		const lastVisibleTabIndex = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
+
+		for (let i = lastVisibleTabIndex + 1; i < itemsDomRefs.length; i++) {
+			itemsDomRefs[i].setAttribute("hidden", "");
+		}
+	}
+
+	_getItemWidth(itemDomRef) {
+		const styles = window.getComputedStyle(itemDomRef);
+		const margins = Number.parseInt(styles.marginLeft) + Number.parseInt(styles.marginRight);
+
+		return itemDomRef.offsetWidth + margins;
+	}
+
+	_getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef) {
+		const index = itemsDomRefs.indexOf(selectedTabDomRef);
+		let width = selectedTabDomRef.offsetWidth;
+		let selectedSeparator;
+
+		if (itemsDomRefs[index - 1] && itemsDomRefs[index - 1].classList.contains("ui5-tc__separator")) {
+			selectedSeparator = itemsDomRefs[index - 1];
+			width += this._getItemWidth(selectedSeparator);
+		}
+
+		itemsDomRefs.splice(index, 1);
+
+		// if previous item is a separator - remove it
+		if (selectedSeparator) {
+			itemsDomRefs.splice(index - 1, 1);
+		}
+
+		return {
+			index: index,
+			width: width
+		};
+	}
+
+	_findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
+		startIndex = startIndex || 0;
+
+		let lastVisibleIndex = -1;
+		let index = startIndex;
+
+		for (; index < itemsDomRefs.length; index++) {
+			let itemWidth = this._getItemWidth(itemsDomRefs[index]);
+
+			if (containerWidth < selectedItemWidth + itemWidth) {
 				break;
 			}
+
+			selectedItemWidth += itemWidth;
+			lastVisibleIndex = index;
 		}
 
-		return lastVisibleTabIndex;
-	}
+		// if prev item is separator - hide it
+		let prevItem = itemsDomRefs[index - 1];
+		if (prevItem && prevItem.classList.contains("ui5-tc__separator")) {
+			lastVisibleIndex -= 1;
+		}
 
-	_handleResize() {
-		this._showEndOverflow();
-		this._updateMediaRange();
+		return lastVisibleIndex;
 	}
 
 	async _closeRespPopover() {
 		this.responsivePopover = await this._respPopover();
 		this.responsivePopover.close();
-	}
-
-	_showEndOverflow() {
-		const headerScrollContainer = this._getHeaderScrollContainer();
-		const allItems = this._getTabs();
-		let allItemsWidth = 0;
-
-		allItems.forEach(item => {
-			allItemsWidth += item._getTabInStripDomRef.offsetWidth;
-		});
-
-		this.showOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
-
-		if (!this.showOverflow) {
-			this._closeRespPopover();
-		}
 	}
 
 	_updateMediaRange() {
@@ -585,10 +624,6 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
-	get shouldShowOverflow() {
-		return this.showOverflow;
-	}
-
 	get classes() {
 		return {
 			root: {
@@ -604,7 +639,7 @@ class TabContainer extends UI5Element {
 				"ui5-tc__headerInnerContainer": true,
 			},
 			headerScrollContainer: {
-				"ui-tc__headerScrollContainer": true,
+				"ui5-tc__headerScrollContainer": true,
 			},
 			headerList: {
 				"ui5-tc__headerList": true,

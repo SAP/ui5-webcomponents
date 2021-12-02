@@ -34,25 +34,23 @@
 				</ul>
 			</div>
 		</div>
-		<!-- overflow button -->
-		{{#if shouldShowOverflow}}
-			<div
-				class="ui-tc__overflowButton"
-				@click="{{_onOverflowButtonClick}}"
-			>
-				{{#if overflowButton.length}}
-					<slot name="overflowButton"></slot>
-				{{else}}
-					<ui5-button
-						icon="{{overflowMenuIcon}}"
-						data-ui5-stable="tabs-overflow"
-						tabindex="-1"
-						title="{{overflowMenuTitle}}"
-						aria-haspopup="true"
-						icon-end>MORE</ui5-button>
-				{{/if}}
-			</div>
-		{{/if}}
+		<div
+			class="ui5-tc__overflowButton"
+			@click="{{_onOverflowButtonClick}}"
+			hidden
+		>
+			{{#if overflowButton.length}}
+				<slot name="overflowButton"></slot>
+			{{else}}
+				<ui5-button
+					icon="{{overflowMenuIcon}}"
+					data-ui5-stable="tabs-overflow"
+					tabindex="-1"
+					title="{{overflowMenuTitle}}"
+					aria-haspopup="true"
+					icon-end>MORE</ui5-button>
+			{{/if}}
+		</div>
 	</div>
 
 	{{#unless tabsAtTheBottom}}

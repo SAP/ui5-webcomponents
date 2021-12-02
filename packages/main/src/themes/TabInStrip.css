@@ -14,6 +14,11 @@
 	height: var(--_ui5_tc_header_height);
 }
 
+.ui5-tc__separator[hidden],
+.ui5-tab-strip-item[hidden] {
+	display: none;
+}
+
 .ui5-tab-strip-itemContent {
 	padding: var(--_ui5_tc_headerItemContent_padding);
 	border: var(--_ui5_tc_headerItemContent_default_focus_border);
@@ -347,8 +352,4 @@
 [dir=rtl] .ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemAdditionalText {
     margin-right: 0;
     margin-left: 0.5rem;
-}
-
-.ui5-tab-strip-item--hidden {
-	display: none;
 }

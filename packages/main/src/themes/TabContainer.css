@@ -44,7 +44,7 @@
 	height: var(--_ui5_tc_header_height_text_with_additional_text);
 }
 
-.ui-tc__headerScrollContainer {
+.ui5-tc__headerScrollContainer {
 	box-sizing: border-box;
 	overflow: hidden;
 	flex: 1 1 100%;
@@ -98,11 +98,15 @@
 	visibility: visible;
 }
 
-.ui-tc__overflowButton {
+.ui5-tc__overflowButton {
 	margin: 0 0.25rem;
 }
 
-.ui-tc__overflowButton>[ui5-button] {
+.ui5-tc__overflowButton[hidden] {
+	display: none;
+}
+
+.ui5-tc__overflowButton>[ui5-button] {
 	margin-top: 0.25rem;
 	border-radius: 0.75rem;
 	height: 1.5rem;
@@ -163,7 +167,7 @@
 }
 
 /*** RTL ***/
-[dir=rtl] .ui-tc__overflowButton {
+[dir=rtl] .ui5-tc__overflowButton {
 	margin-right: auto;
 	margin-left: 0.25rem;
 }
