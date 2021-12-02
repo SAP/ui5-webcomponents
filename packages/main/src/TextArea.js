@@ -656,6 +656,10 @@ class TextArea extends UI5Element {
 		return this.valueStateTextMappings()[this.valueState];
 	}
 
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
 	/**
 	 * This method is relevant for sap_horizon theme only
 	 */

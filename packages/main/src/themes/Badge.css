@@ -39,6 +39,7 @@
 	white-space: nowrap;
 	font-weight: inherit;
 	text-overflow: ellipsis;
+	line-height: 1;
 	text-transform: var(--_ui5-badge-text-transform);
 	letter-spacing: inherit;
 	font-size: var(--ui5-badge-font-size); /* origin from --sapFontSmallSize (0.75rem) */
