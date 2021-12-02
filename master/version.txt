@@ -1,5 +1,16 @@
-commit b6014bcc7aefcb8faf11fa6e92d744bdfbb61baa
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Dec 2 10:12:24 2021 +0200
+commit 6f069630972e4fa2b6f68340b5d49a69eb118925
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Thu Dec 2 13:53:48 2021 +0200
 
-    fix(inputs): adjust value and placeholder styles (#4400)
+    fix(ui5-textarea): Calc properly TextArea's size for showExceeds property (#4152)
+    
+    * fix(ui5-textarea): Calc properly TextArea's size for showExceeds property
+    
+    When showExceeds property was used, remainning characters text's size was not taken into consideration
+    for TextArea's root height calculations.
+    
+    * Fix eslint errors
+    
+    * Add single row textarea sample
+    
+    * Update sample
