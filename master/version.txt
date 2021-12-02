@@ -1,16 +1,9 @@
-commit 6f069630972e4fa2b6f68340b5d49a69eb118925
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Thu Dec 2 13:53:48 2021 +0200
+commit 9442e05c227244c901aeee0c4d3455909df807d9
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Dec 2 15:29:00 2021 +0200
 
-    fix(ui5-textarea): Calc properly TextArea's size for showExceeds property (#4152)
+    fix(ui5-message-strip): make speech output more comprehensive (#4416)
     
-    * fix(ui5-textarea): Calc properly TextArea's size for showExceeds property
+    * fix(ui5-message-strip): make speech output more comprehensive
     
-    When showExceeds property was used, remainning characters text's size was not taken into consideration
-    for TextArea's root height calculations.
-    
-    * Fix eslint errors
-    
-    * Add single row textarea sample
-    
-    * Update sample
+    * use uppercase
