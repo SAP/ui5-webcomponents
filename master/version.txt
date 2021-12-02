@@ -1,5 +1,5 @@
-commit e6a8b38ed25f96e0f4d710fc7e19bfcf47c0c8b4
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Dec 1 12:42:00 2021 +0000
+commit b6014bcc7aefcb8faf11fa6e92d744bdfbb61baa
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Dec 2 10:12:24 2021 +0200
 
-    feat(ui5-segmented-button): implement accessibleName property (#4378)
+    fix(inputs): adjust value and placeholder styles (#4400)
