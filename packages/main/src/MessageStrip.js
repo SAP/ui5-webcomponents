@@ -10,7 +10,14 @@ import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import {
+	MESSAGE_STRIP_CLOSE_BUTTON,
+	MESSAGE_STRIP_CLOSABLE,
+	MESSAGE_STRIP_ERROR,
+	MESSAGE_STRIP_WARNING,
+	MESSAGE_STRIP_SUCCESS,
+	MESSAGE_STRIP_INFORMATION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
@@ -189,12 +196,25 @@ class MessageStrip extends UI5Element {
 		};
 	}
 
+	get designAnnouncementMappings() {
+		return {
+			"Information": this.i18nBundle.getText(MESSAGE_STRIP_INFORMATION),
+			"Positive": this.i18nBundle.getText(MESSAGE_STRIP_SUCCESS),
+			"Negative": this.i18nBundle.getText(MESSAGE_STRIP_ERROR),
+			"Warning": this.i18nBundle.getText(MESSAGE_STRIP_WARNING),
+		};
+	}
+
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
+		return `${this.designAnnouncementMappings[this.type]} ${this.noCloseButton ? "" : this._closableText}`;
 	}
 
 	get _closeButtonText() {
 		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+	}
+
+	get _closableText() {
+		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE);
 	}
 
 	get classes() {
@@ -218,6 +238,14 @@ class MessageStrip extends UI5Element {
 
 	get typeClasses() {
 		return MessageStrip.typeClassesMappings()[this.type];
+	}
+
+	get accInfo() {
+		return {
+			"button": {
+				"title": this._closeButtonText,
+			},
+		};
 	}
 }
 
