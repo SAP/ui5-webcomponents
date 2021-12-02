@@ -117,7 +117,13 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
-		}
+		},
+
+		hideInOverflow: {
+			type: Boolean,
+			defaultValue: false,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},
@@ -316,10 +322,6 @@ class Tab extends UI5Element {
 
 		if (this.disabled) {
 			classes.push("ui5-tab-overflow-item--disabled");
-		}
-
-		if (!this.hidden) {
-			classes.push("ui5-tab-overflow-item--hidden");
 		}
 
 		return classes.join(" ");

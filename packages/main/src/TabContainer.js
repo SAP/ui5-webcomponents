@@ -390,6 +390,7 @@ class TabContainer extends UI5Element {
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
 		this.responsivePopover.close();
+		this._setItemsForStrip();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
@@ -500,7 +501,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(function (item) { return item.getTabInStripDomRef(); });
+		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef());
 
 		// make sure the end overflow is hidden
 		endOverflowButton.setAttribute("hidden", "");
@@ -521,6 +522,8 @@ class TabContainer extends UI5Element {
 		} else {
 			this._closeRespPopover();
 		}
+
+		this.items.forEach(item => item.hideInOverflow = !item.getTabInStripDomRef().hasAttribute("hidden"));
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
