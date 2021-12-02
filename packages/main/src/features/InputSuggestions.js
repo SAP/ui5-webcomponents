@@ -111,6 +111,18 @@ class Suggestions {
 		return false;
 	}
 
+	onPageUp(event) {
+		event.preventDefault();
+		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex + 10);
+		return true;
+	}
+
+	onPageDown(event) {
+		event.preventDefault();
+		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex - 10);
+		return true;
+	}
+
 	onTab(event) {
 		if (this._isItemOnTarget()) {
 			this.onItemSelected(null, true);

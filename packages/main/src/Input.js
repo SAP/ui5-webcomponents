@@ -12,6 +12,8 @@ import {
 	isBackSpace,
 	isEscape,
 	isTabNext,
+	isPageUp,
+	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -459,6 +461,21 @@ const metadata = {
  * don't forget to import the <code>InputSuggestions</code> module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
+ * 
+  * <h3>Keyboard Handling</h3>
+ * When the <code>ui5-input</code> is focused, the user can change the rating
+ * with the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
+ * <li>[ESC] - Closes the suggestion list, if open. If closed, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
+ * <li>[LEFT] - Moves caret one letter to the left. If caret is at the leftmost position, does nothing. If text is selected, moves caret to the beginning of the selection and removes the selection.</li>
+ * <li>[RIGHT] - Moves caret one letter to the right. If caret is at the rightmost position, does nothing. If text is selected, moves caret to the end of the selection and removes the selection.</li>
+ * <li>Any printable character - When text is selected, it gets overwritten by the new text.</li>
+ * <li>[CTRL]+[A] - Selects the whole content of the Input field.</li>
+ * <li>[DEL] - Deletes the letter on the right of the caret. If text is selected, deletes the whole selection. If text is selected due to a suggestion, also closes the suggestion list box.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -614,6 +631,14 @@ class Input extends UI5Element {
 			return this._handleEnter(event);
 		}
 
+		if (isPageUp(event)) {
+			return this._handlePageUp(event);
+		}
+
+		if (isPageDown(event)) {
+			return this._handlePageDown(event);
+		}
+
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}
@@ -670,6 +695,18 @@ class Input extends UI5Element {
 		}
 
 		this.focused = true;
+	}
+
+	_handlePageUp(event) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
+			this.Suggestions.onPageUp(event);
+		}
+	}
+
+	_handlePageDown(event) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
+			this.Suggestions.onPageDown(event);
+		}
 	}
 
 	_handleEscape() {
