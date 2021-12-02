@@ -384,6 +384,7 @@ class TabContainer extends UI5Element {
 	_onHeaderItemSelect(tab) {
 		if (!tab.hasAttribute("disabled")) {
 			this._onItemSelect(tab);
+			this._setItemsForStrip();
 		}
 	}
 
@@ -515,7 +516,7 @@ class TabContainer extends UI5Element {
 			allItemsWidth += this._getItemWidth(item);
 		});
 
-		let showEndOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
+		const showEndOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
 
 		if (showEndOverflow) {
 			this._updateEndOverflow(itemsDomRefs);
@@ -523,7 +524,9 @@ class TabContainer extends UI5Element {
 			this._closeRespPopover();
 		}
 
-		this.items.forEach(item => item.hideInOverflow = !item.getTabInStripDomRef().hasAttribute("hidden"));
+		this.items.forEach(item => {
+			item.hideInOverflow = !item.getTabInStripDomRef().hasAttribute("hidden");
+		});
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
@@ -566,8 +569,8 @@ class TabContainer extends UI5Element {
 		}
 
 		return {
-			index: index,
-			width: width
+			index,
+			width,
 		};
 	}
 
@@ -578,7 +581,7 @@ class TabContainer extends UI5Element {
 		let index = startIndex;
 
 		for (; index < itemsDomRefs.length; index++) {
-			let itemWidth = this._getItemWidth(itemsDomRefs[index]);
+			const itemWidth = this._getItemWidth(itemsDomRefs[index]);
 
 			if (containerWidth < selectedItemWidth + itemWidth) {
 				break;
@@ -589,7 +592,7 @@ class TabContainer extends UI5Element {
 		}
 
 		// if prev item is separator - hide it
-		let prevItem = itemsDomRefs[index - 1];
+		const prevItem = itemsDomRefs[index - 1];
 		if (prevItem && prevItem.classList.contains("ui5-tc__separator")) {
 			lastVisibleIndex -= 1;
 		}
