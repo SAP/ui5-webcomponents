@@ -42,7 +42,7 @@ describe("Wizard general interaction", () => {
 			"Wizard list has aria-label set.");
 		assert.strictEqual(wizStep.getAttribute("role"), "region",
 			"Step has role 'region'");
-		assert.strictEqual(wizStep.getAttribute("aria-label"), `Step 1 ${step1InHeader.getProperty("titleText")}`,
+		assert.strictEqual(wizStep.getAttribute("aria-label"), `Step 1 ${step1InHeader.getProperty("heading")}`,
 			"Step has aria-label set to the number of the step and its title.");
 	});
 
