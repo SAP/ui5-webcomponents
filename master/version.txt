@@ -1,9 +1,5 @@
-commit 9442e05c227244c901aeee0c4d3455909df807d9
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Dec 2 15:29:00 2021 +0200
+commit 56a672480ed0342f9d4de891ce7278a181217969
+Author: a-z-ivanov <alexander.ivanov01@sap.com>
+Date:   Fri Dec 3 14:28:55 2021 +0200
 
-    fix(ui5-message-strip): make speech output more comprehensive (#4416)
-    
-    * fix(ui5-message-strip): make speech output more comprehensive
-    
-    * use uppercase
+    fix(ui5-date-picker): remove title attribute from samples (#4422)
