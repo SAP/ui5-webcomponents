@@ -287,6 +287,7 @@
 	--_ui5_load_more_text_height: 2.625rem;
 	--_ui5_load_more_text_font_size: var(--sapFontSize);
 	--_ui5_load_more_desc_padding: 0 2rem 0.875rem 2rem;
+	--ui5_table_header_row_height: 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;
