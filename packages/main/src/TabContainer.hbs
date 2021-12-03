@@ -7,6 +7,23 @@
 	{{/if}}
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
+		<div
+				class="ui5-tc__overflowButton ui5-tc__startOverflowButton"
+				@click="{{_onStartOverflowButtonClick}}"
+				hidden
+		>
+			{{#if overflowButton.length}}
+				<slot name="overflowButton"></slot>
+			{{else}}
+				<ui5-button
+						icon="{{overflowMenuIcon}}"
+						data-ui5-stable="tabs-overflow"
+						tabindex="-1"
+						title="{{overflowMenuTitle}}"
+						aria-haspopup="true"
+						icon-end>MORE</ui5-button>
+			{{/if}}
+		</div>
 		<div class="{{classes.headerInnerContainer}}">
 			<!-- tab items -->
 			<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
@@ -35,8 +52,8 @@
 			</div>
 		</div>
 		<div
-			class="ui5-tc__overflowButton"
-			@click="{{_onOverflowButtonClick}}"
+			class="ui5-tc__overflowButton ui5-tc__endOverflowButton"
+			@click="{{_onEndOverflowButtonClick}}"
 			hidden
 		>
 			{{#if overflowButton.length}}

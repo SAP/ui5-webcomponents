@@ -59,7 +59,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
+		 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
+		 * the default button will be used.
 		 *
 		 * @type {sap.ui.webcomponents.main.IButton}
 		 * @public
@@ -67,6 +68,19 @@ const metadata = {
 		 * @since 1.0.0-rc.9
 		 */
 		overflowButton: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
+		 * the default button will be used.
+		 *
+		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @public
+		 * @slot
+		 * @since 1.0.0-rc.9
+		 */
+		startOverflowButton: {
 			type: HTMLElement,
 		},
 	},
@@ -167,8 +181,8 @@ const metadata = {
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
-		 * <li><code>Standard</code></li>
-		 * <li><code>Inline</code></li>
+		 * <li><code>End</code></li>
+		 * <li><code>StartAndEnd</code></li>
 		 * </ul>
 		 *
 		 * @type {TabsOverflowMode}
@@ -384,7 +398,10 @@ class TabContainer extends UI5Element {
 	_onHeaderItemSelect(tab) {
 		if (!tab.hasAttribute("disabled")) {
 			this._onItemSelect(tab);
-			this._setItemsForStrip();
+
+			if (this.tabsOverflowMode !== TabsOverflowMode.StartAndEnd) {
+				this._setItemsForStrip();
+			}
 		}
 	}
 
@@ -473,8 +490,23 @@ class TabContainer extends UI5Element {
 		return slideUp({ element }).promise();
 	}
 
-	async _onOverflowButtonClick(event) {
-		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__overflowButton > [ui5-button]");
+	async _onStartOverflowButtonClick(event) {
+		const button = this.startOverflowButton[0] || this.getDomRef().querySelector(".ui5-tc__startOverflowButton > [ui5-button]");
+
+		if (event.target !== button) {
+			return;
+		}
+
+		this.responsivePopover = await this._respPopover();
+		if (this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		} else {
+			this.responsivePopover.showAt(button);
+		}
+	}
+
+	async _onEndOverflowButtonClick(event) {
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__endOverflowButton > [ui5-button]");
 
 		if (event.target !== button) {
 			return;
@@ -495,7 +527,6 @@ class TabContainer extends UI5Element {
 
 	_setItemsForStrip() {
 		const headerScrollContainer = this._getHeaderScrollContainer();
-		const endOverflowButton = this._getHeaderOverflowButton();
 		let allItemsWidth = 0;
 
 		if (!this._selectedTab) {
@@ -504,8 +535,9 @@ class TabContainer extends UI5Element {
 
 		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef());
 
-		// make sure the end overflow is hidden
-		endOverflowButton.setAttribute("hidden", "");
+		// make sure the overflow buttons are hidden
+		this._getHeaderStartOverflowButton().setAttribute("hidden", "");
+		this._getHeaderEndOverflowButton().setAttribute("hidden", "");
 
 		// show all tabs
 		for (let i = 0; i < itemsDomRefs.length; i++) {
@@ -516,22 +548,30 @@ class TabContainer extends UI5Element {
 			allItemsWidth += this._getItemWidth(item);
 		});
 
-		const showEndOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
+		const hasOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
 
-		if (showEndOverflow) {
-			this._updateEndOverflow(itemsDomRefs);
-		} else {
+		if (!hasOverflow) {
 			this._closeRespPopover();
+			return;
+		}
+
+		switch (this.tabsOverflowMode) {
+		case TabsOverflowMode.StartAndEnd:
+			this._updateStartAndEndOverflow(itemsDomRefs);
+			break;
+		case TabsOverflowMode.End:
+			this._updateEndOverflow(itemsDomRefs);
+			break;
 		}
 
 		this.items.forEach(item => {
-			item.hideInOverflow = !item.getTabInStripDomRef().hasAttribute("hidden");
+			item.hideInEndOverflow = !item.getTabInStripDomRef().hasAttribute("hidden");
 		});
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
 		// show end overflow button
-		this._getHeaderOverflowButton().removeAttribute("hidden");
+		this._getHeaderEndOverflowButton().removeAttribute("hidden");
 
 		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
 		const containerWidth = this._getHeaderScrollContainer().offsetWidth;
@@ -544,6 +584,126 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	_updateStartAndEndOverflow(itemsDomRefs) {
+		let containerWidth = this._getHeaderScrollContainer().offsetWidth;
+		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
+		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
+		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
+		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
+		let firstVisible;
+		let lastVisible;
+
+		// show "end" overflow button
+		this._getHeaderEndOverflowButton().removeAttribute("hidden");
+
+		// width is changed
+		containerWidth = this._getHeaderScrollContainer().offsetWidth;
+
+		// has "end", but no "start" overflow
+		if (!hasStartOverflow) {
+			lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
+
+			for (let i = lastVisible + 1; i < itemsDomRefs.length; i++) {
+				itemsDomRefs[i].setAttribute("hidden", "");
+			}
+
+			return;
+		}
+
+		// show "start" overflow button
+		this._getHeaderStartOverflowButton().removeAttribute("hidden");
+
+		// hide "end" overflow button
+		this._getHeaderEndOverflowButton().setAttribute("hidden", "");
+
+		// width is changed
+		containerWidth = this._getHeaderScrollContainer().offsetWidth;
+
+		// has "start", but no "end" overflow
+		if (!hasEndOverflow) {
+			firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
+
+			for (let i = firstVisible - 1; i >= 0; i--) {
+				itemsDomRefs[i].setAttribute("hidden", "");
+			}
+
+			return;
+		}
+
+		// show "end" overflow button
+		this._getHeaderEndOverflowButton().removeAttribute("hidden");
+
+		// width is changed
+		containerWidth = this._getHeaderScrollContainer().offsetWidth;
+
+		const leftItems = [];
+
+		for (let index = 0; index < selectedItemIndexAndWidth.index; index++) {
+			leftItems.push(itemsDomRefs[index]);
+		}
+
+		firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, selectedItemIndexAndWidth.index - 1);
+		lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, firstVisible);
+
+		for (let i = firstVisible - 1; i >= 0; i--) {
+			itemsDomRefs[i].setAttribute("hidden", "");
+		}
+
+		for (let i = lastVisible + 1; i < itemsDomRefs.length; i++) {
+			itemsDomRefs[i].setAttribute("hidden", "");
+		}
+	}
+
+	_hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth) {
+		if (selectedItemIndexAndWidth.index === 0) {
+			return false;
+		}
+
+		let leftItemsWidth = 0;
+
+		for (let i = selectedItemIndexAndWidth.index - 1; i >= 0; i--) {
+			leftItemsWidth += this._getItemWidth(itemsDomRefs[i]);
+		}
+
+		let hasStartOverflow = containerWidth < leftItemsWidth + selectedItemIndexAndWidth.width;
+
+		// if there is no "start" overflow, it has "end" overflow
+		// check it again with the "end" overflow
+		if (!hasStartOverflow) {
+			this._getHeaderEndOverflowButton().removeAttribute("hidden");
+			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+			hasStartOverflow = containerWidth < leftItemsWidth + selectedItemIndexAndWidth.width;
+			this._getHeaderEndOverflowButton().setAttribute("hidden", "");
+		}
+
+		return hasStartOverflow;
+	}
+
+	_hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth) {
+		if (selectedItemIndexAndWidth.index >= itemsDomRefs.length) {
+			return false;
+		}
+
+		let rightItemsWidth = 0;
+
+		for (let i = selectedItemIndexAndWidth.index; i < itemsDomRefs.length; i++) {
+			rightItemsWidth += this._getItemWidth(itemsDomRefs[i]);
+		}
+
+		let hasEndOverflow = containerWidth < rightItemsWidth + selectedItemIndexAndWidth.width;
+
+		// if there is no "end" overflow, it has "start" overflow
+		// check it again with the "start" overflow
+		if (!hasEndOverflow) {
+			this._getHeaderStartOverflowButton().removeAttribute("hidden");
+			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+			hasEndOverflow = containerWidth < rightItemsWidth + selectedItemIndexAndWidth.width;
+			this._getHeaderStartOverflowButton().setAttribute("hidden", "");
+		}
+
+		return hasEndOverflow;
+	}
+
 	_getItemWidth(itemDomRef) {
 		const styles = window.getComputedStyle(itemDomRef);
 		const margins = Number.parseInt(styles.marginLeft) + Number.parseInt(styles.marginRight);
@@ -552,7 +712,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef) {
-		const index = itemsDomRefs.indexOf(selectedTabDomRef);
+		let index = itemsDomRefs.indexOf(selectedTabDomRef);
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
 
@@ -566,12 +726,34 @@ class TabContainer extends UI5Element {
 		// if previous item is a separator - remove it
 		if (selectedSeparator) {
 			itemsDomRefs.splice(index - 1, 1);
+			index--;
 		}
 
 		return {
 			index,
 			width,
 		};
+	}
+
+	_findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
+		let lastVisible = itemsDomRefs.length;
+
+		if (startIndex === undefined) {
+			startIndex = itemsDomRefs.length - 1;
+		}
+
+		for (let index = startIndex; index >= 0; index--) {
+			const itemWidth = this._getItemWidth(itemsDomRefs[index]);
+
+			if (containerWidth < selectedItemWidth + itemWidth) {
+				break;
+			}
+
+			selectedItemWidth += itemWidth;
+			lastVisible = index;
+		}
+
+		return lastVisible;
 	}
 
 	_findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
@@ -621,8 +803,12 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
 	}
 
-	_getHeaderOverflowButton() {
-		return this.shadowRoot.querySelector(".ui5-tc__overflowButton");
+	_getHeaderStartOverflowButton() {
+		return this.shadowRoot.querySelector(".ui5-tc__startOverflowButton");
+	}
+
+	_getHeaderEndOverflowButton() {
+		return this.shadowRoot.querySelector(".ui5-tc__endOverflowButton");
 	}
 
 	async _respPopover() {

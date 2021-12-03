@@ -119,9 +119,8 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		hideInOverflow: {
+		hideInEndOverflow: {
 			type: Boolean,
-			defaultValue: false,
 			noAttribute: true,
 		},
 	},
