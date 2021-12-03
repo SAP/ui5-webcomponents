@@ -21,7 +21,7 @@ describe("ARIA Support", () => {
 
 	it("Test close button title text", () => {
 
-		const closeButton = browser.$("#messageStrip").shadow$(".ui5-message-strip-close-button").shadow$("button");
+		const closeButton = browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-button").shadow$("button");
 		let resourceBundleText = null;
 
 		resourceBundleText = browser.execute(() => {
