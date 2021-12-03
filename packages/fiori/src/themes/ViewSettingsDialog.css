@@ -13,10 +13,24 @@
 
 .ui5-vsd-title {
 	font-size: 1rem;
+	margin-left: 0;
+}
+
+.ui5-vsd-sub-title {
+	margin-left: 0;
+}
+
+.ui5-vsd-bar-sub-header {
+	padding-left: 0.5rem;
 }
 
 .ui5-vsd-bar-header {
 	box-shadow: none;
+	padding-left: 0.5rem;
+}
+
+.ui5-vsd-content [ui5-li]::part(native-li) {
+	padding-left: var(--ui5_view_settigs_dialog_radio_button_padding_left);
 }
 
 .ui5-vsd-start {
@@ -58,3 +72,14 @@
 	overflow: hidden;
 }
 
+[dir=rtl] .ui5-vsd-bar-header {
+	padding-right: 0.5rem;
+}
+
+[dir=rtl] .ui5-vsd-bar-sub-header {
+	padding-right: 0.5rem;
+}
+
+[dir=rtl] .ui5-vsd-content [ui5-li]::part(native-li) {
+	padding-right: var(--ui5_view_settigs_dialog_radio_button_padding_left);
+}

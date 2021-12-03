@@ -1,0 +1,9 @@
+:root {
+	--ui5_view_settigs_dialog_radio_button_padding_left: 0.3125rem;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--ui5_view_settigs_dialog_radio_button_padding_left: 0.5rem;
+}

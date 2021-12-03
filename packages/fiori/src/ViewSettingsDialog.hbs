@@ -1,4 +1,5 @@
 <ui5-dialog
+	dir="{{effectiveDir}}"
 	aria-label="{{_dialogTitle}}"
 	@ui5-after-open={{_focusRecentlyUsedControl}}
 	@ui5-before-close={{_restoreConfirmedOnEscape}}
@@ -6,7 +7,7 @@
 >
 
 	<div slot="header" class="ui5-vsd-header">
-		<div class="header">
+		<div class="ui5-vsd-header-container">
 			<ui5-bar class="ui5-vsd-bar-header">
 				{{#if showBackButton}}
 					<ui5-button
@@ -26,14 +27,15 @@
 					design="Transparent"
 					@click="{{_resetSettings}}"
 					?disabled={{_disableResetButton}}
-					reset-button>{{_resetButtonLabel}}
+					reset-button>
+						{{_resetButtonLabel}}
 				</ui5-button>
 			</ui5-bar>
 		</div>
 		{{#unless showBackButton}}
-			<div class="subHeader">
-				<ui5-bar>
-					<ui5-segmented-button slot="startContent" @ui5-selection-change="{{_handleModeChange}}">
+			<div class="ui5-vsd-sub-header-container">
+				<ui5-bar class="ui5-vsd-bar-sub-header">
+					<ui5-segmented-button slot="startContent" class="ui5-vsd-sub-title" @ui5-selection-change="{{_handleModeChange}}">
 						<ui5-segmented-button-item
 							?pressed="{{isModeSort}}"
 							?focused="{{isModeSort}}"
