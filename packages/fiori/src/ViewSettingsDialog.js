@@ -286,6 +286,7 @@ class ViewSettingsDialog extends UI5Element {
 	get shouldBuildSort() {
 		return this.sortItems.length;
 	}
+
 	get shouldBuildFilter() {
 		return this.filterItems.length;
 	}
