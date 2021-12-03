@@ -24,12 +24,12 @@
 
 	{{#unless noCloseButton}}
 		<ui5-button
-				icon="decline"
-				icon-size=".75rem"
-				design="Transparent"
-				class="ui5-messagestrip-close-button"
-				title="{{_closeButtonText}}"
-				@click={{_closeClick}}
+			icon="decline"
+			icon-size=".75rem"
+			design="Transparent"
+			class="ui5-messagestrip-close-button"
+			._buttonAccInfo="{{accInfo.button}}"
+			@click={{_closeClick}}
 		></ui5-button>
 	{{/unless}}
 </div>
