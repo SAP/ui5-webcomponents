@@ -20,10 +20,13 @@ describe("Wizard general interaction", () => {
 		const wizRoot = wiz.shadow$(".ui5-wiz-root");
 		const wizNav = wiz.shadow$(".ui5-wiz-nav");
 		const wizList = wiz.shadow$(".ui5-wiz-nav-list");
+		const wizStep = wiz.shadow$(".ui5-wiz-content-item");
 
 		const wizRootText = "Wizard";
 		const wizNavText = "Wizard Progress Bar";
 		const wizListText = "Wizard Steps";
+
+		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`)
 
 		assert.strictEqual(wizRoot.getAttribute("role"), "region",
 			"Wizard has role set.");
@@ -37,6 +40,10 @@ describe("Wizard general interaction", () => {
 			"Wizard list has aria-controls set.");
 		assert.strictEqual(wizList.getAttribute("aria-label"), wizListText,
 			"Wizard list has aria-label set.");
+		assert.strictEqual(wizStep.getAttribute("role"), "region",
+			"Step has role 'region'");
+		assert.strictEqual(wizStep.getAttribute("aria-label"), `Step 1 ${step1InHeader.getProperty("heading")}`,
+			"Step has aria-label set to the number of the step and its title.");
 	});
 
 	it("move to next step by API", () => {

@@ -682,7 +682,9 @@ class Wizard extends UI5Element {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
 
 		return this.steps.map((step, idx) => {
+			const pos = idx + 1;
 			step.stretch = idx === lastEnabledStepIndex;
+			step.stepContentAriaLabel = (step.heading ? `${this.navStepDefaultHeading} ${pos} ${step.heading}` : `${pos}`).trim();
 			return step;
 		});
 	}
