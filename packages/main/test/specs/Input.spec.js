@@ -163,6 +163,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("Change event behaviour when focusing", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
 		// Setup
 		const input = await browser.$("#myInput").shadow$("input");
 		const focusoutInput = await browser.$("#myInput2").shadow$("input");
@@ -193,6 +195,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("Change event behaviour when focusing + ENTER", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
 		// Setup
 		const input = await browser.$("#myInput").shadow$("input");
 		const focusoutInput = await browser.$("#myInput2").shadow$("input");
@@ -205,14 +209,14 @@ describe("Input general interaction", () => {
 		await focusoutInput.click();
 
 		// Assert
-		assert.strictEqual(await changeCount.getHTML(false), "3", "The change event is called just once");
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called just once");
 
 		// Act
 		await input.click();
 		await input.keys("Enter");
 
 		// Assert
-		assert.strictEqual(await changeCount.getHTML(false), "3", "The change event is not called again");
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is not called again");
 
 		// Act
 		await input.click();
@@ -220,7 +224,7 @@ describe("Input general interaction", () => {
 		await input.keys("Enter");
 
 		// Assert
-		assert.strictEqual(await changeCount.getHTML(false), "4", "The change event is called for the changed value");
+		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called for the changed value");
 	});
 
 	it("fires suggestion-scroll event", async () => {
@@ -401,7 +405,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
-	
+
 	it("should remove input's focus when group header item is clicked", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
