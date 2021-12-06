@@ -23,16 +23,19 @@ describe("Wizard general interaction", () => {
 		const wizRoot = await wiz.shadow$(".ui5-wiz-root");
 		const wizNav = await wiz.shadow$(".ui5-wiz-nav");
 		const wizList = await wiz.shadow$(".ui5-wiz-nav-list");
+		const wizStep = await wiz.shadow$(".ui5-wiz-content-item");
 
 		const wizRootText = "Wizard";
 		const wizNavText = "Wizard Progress Bar";
 		const wizListDescribedbyId = "wiz-nav-descr";
 		const wizListText = "Wizard Steps";
 
+		const step1InHeader = await wiz.shadow$(`[data-ui5-index="1"]`)
 		const step1InHeaderRoot = await wiz.shadow$(`[data-ui5-index="1"]`).shadow$(`.ui5-wiz-step-root`);
 		const step2InHeaderRoot = await wiz.shadow$(`[data-ui5-index="2"]`).shadow$(`.ui5-wiz-step-root`);;
 		const step1Text = "Step 1 Product type Active";
 		const step2Text = "Step 2 Product Information Inactive";
+
 
 		assert.strictEqual(await wizRoot.getAttribute("role"), "region",
 			"Wizard has role set.");
@@ -53,6 +56,11 @@ describe("Wizard general interaction", () => {
 			"First step in the header has aria-label.");
 		assert.strictEqual(await step2InHeaderRoot.getAttribute("aria-label"), step2Text,
 			"Second step (inactive) in the header has aria-label.");
+
+		assert.strictEqual(await wizStep.getAttribute("role"), "region",
+			"Step has role 'region'");
+		assert.strictEqual(await wizStep.getAttribute("aria-label"), `Step 1 ${await step1InHeader.getProperty("titleText")}`,
+			"Step has aria-label set to the number of the step and its title.");
 	});
 
 	it("move to next step by API", async () => {

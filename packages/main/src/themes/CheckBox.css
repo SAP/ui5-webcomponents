@@ -15,6 +15,10 @@
 }
 
 /* disabled */
+:host([disabled]) {
+	cursor: default;
+}
+
 :host([disabled]) .ui5-checkbox-root {
 	opacity: .5;
 }
@@ -221,7 +225,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;
-	cursor: default;
+	cursor: inherit;
 }
 
 :host([indeterminate][checked]) .ui5-checkbox-inner::after {
@@ -247,7 +251,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 .ui5-checkbox-root .ui5-checkbox-label {
 	margin-left: var(--_ui5_checkbox_label_offset_left);
 	margin-right: var(--_ui5_checkbox_label_offset_right);
-	cursor: default;
+	cursor: inherit;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	pointer-events: none;
@@ -261,7 +265,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	width: var(--_ui5_checkbox_icon_size);
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
-	cursor: default;
+	cursor: inherit;
 	position: absolute;
 	left:50%;
 	top:50%;

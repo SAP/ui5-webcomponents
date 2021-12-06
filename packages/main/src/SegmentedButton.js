@@ -25,7 +25,20 @@ const metadata = {
 	tag: "ui5-segmented-button",
 	altTag: "ui5-segmentedbutton",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {},
+	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.0.3
+		 */
+		 accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 

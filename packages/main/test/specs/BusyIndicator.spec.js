@@ -85,11 +85,26 @@ describe("BusyIndicator general interaction", () => {
 	it("test inactive indicator in dialog - correct element from default slot is focused", async () => {
 		await browser.$("#open-dialog-inactive-indicator").click();
 
-		let activeElement = await browser.getActiveElement();
+		const activeElement = await browser.getActiveElement();
 		assert.strictEqual(
 			await browser.$(activeElement).getAttribute("id"),
 			await browser.$("#dialog-inactive-indicator-focused-button").getAttribute("id"),
 			"Correct element from default slot is focused"
 		);
+
+		await browser.keys("Escape");
+	});
+
+	it("delayed indicator in dialog - shouldn't attempt to focus before the indicator is visible", async () => {
+		await browser.$("#open-dialog-delayed-indicator").click();
+
+		const activeElement = await browser.getActiveElement();
+		assert.strictEqual(
+			await browser.$(activeElement).getAttribute("id"),
+			"dialog-delayed-indicator-focus-stop",
+			"Correct element is focused"
+		);
+
+		await browser.keys("Escape");
 	});
 });
