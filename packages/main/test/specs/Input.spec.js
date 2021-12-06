@@ -199,7 +199,7 @@ describe("Input general interaction", () => {
 
 		// Setup
 		const input = await browser.$("#myInput").shadow$("input");
-		const focusoutInput = await browser.$("#myInput2").shadow$("input");
+		const focusoutInput = await browser.$("#input3").shadow$("input");
 		const changeCount = await browser.$("#myInput-change-count");
 
 		// Act
