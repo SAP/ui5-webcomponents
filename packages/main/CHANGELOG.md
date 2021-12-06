@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.27](https://github.com/SAP/ui5-webcomponents/compare/v0.31.25...v0.31.27) (2021-12-06)
+
+
+### Bug Fixes
+
+* **ui5-message-strip:** make speech output more comprehensive ([e3fe05f](https://github.com/SAP/ui5-webcomponents/commit/e3fe05f)), closes [#4416](https://github.com/SAP/ui5-webcomponents/issues/4416)
+* **ui5-textarea:** Calc properly TextArea's size for showExceeds property ([#4152](https://github.com/SAP/ui5-webcomponents/issues/4152)) ([#4417](https://github.com/SAP/ui5-webcomponents/issues/4417)) ([58e9249](https://github.com/SAP/ui5-webcomponents/commit/58e9249))
+
+
+### Features
+
+* **ui5-segmented-button:** accessibleName property implemented ([#4418](https://github.com/SAP/ui5-webcomponents/issues/4418)) ([5cb963e](https://github.com/SAP/ui5-webcomponents/commit/5cb963e)), closes [#4000](https://github.com/SAP/ui5-webcomponents/issues/4000)
+
+
+
+
+
 ## [0.31.26](https://github.com/SAP/ui5-webcomponents/compare/v0.31.25...v0.31.26) (2021-12-06)
 
 
