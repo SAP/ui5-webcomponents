@@ -12,8 +12,8 @@
 				@click="{{_onStartOverflowButtonClick}}"
 				hidden
 		>
-			{{#if overflowButton.length}}
-				<slot name="overflowButton"></slot>
+			{{#if startOverflowButton.length}}
+				<slot name="startOverflowButton"></slot>
 			{{else}}
 				<ui5-button
 						icon="{{overflowMenuIcon}}"
@@ -21,7 +21,7 @@
 						tabindex="-1"
 						title="{{overflowMenuTitle}}"
 						aria-haspopup="true"
-						icon-end>MORE</ui5-button>
+						icon-end>{{this._startOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
 		<div class="{{classes.headerInnerContainer}}">
@@ -65,7 +65,7 @@
 					tabindex="-1"
 					title="{{overflowMenuTitle}}"
 					aria-haspopup="true"
-					icon-end>MORE</ui5-button>
+					icon-end>{{this._endOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
 	</div>

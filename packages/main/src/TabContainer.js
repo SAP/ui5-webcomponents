@@ -30,6 +30,7 @@ import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
 const tabStyles = [];
 const staticAreaTabStyles = [];
+const defaultOverflowText = "MORE";
 
 /**
  * @public
@@ -216,6 +217,18 @@ const metadata = {
 		_contentCollapsed: {
 			type: Boolean,
 			noAttribute: true,
+		},
+
+		_startOverflowText: {
+			type: String,
+			noAttribute: true,
+			defaultValue: defaultOverflowText,
+		},
+
+		_endOverflowText: {
+			type: String,
+			noAttribute: true,
+			defaultValue: defaultOverflowText,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -497,6 +510,10 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		this.items.forEach(item => {
+			item.isInEndOverflow = false;
+		});
+
 		this.responsivePopover = await this._respPopover();
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
@@ -511,6 +528,10 @@ class TabContainer extends UI5Element {
 		if (event.target !== button) {
 			return;
 		}
+
+		this.items.forEach(item => {
+			item.isInEndOverflow = true;
+		});
 
 		this.responsivePopover = await this._respPopover();
 		if (this.responsivePopover.opened) {
@@ -542,6 +563,8 @@ class TabContainer extends UI5Element {
 		// show all tabs
 		for (let i = 0; i < itemsDomRefs.length; i++) {
 			itemsDomRefs[i].removeAttribute("hidden");
+			itemsDomRefs[i].removeAttribute("start-overflow");
+			itemsDomRefs[i].removeAttribute("end-overflow");
 		}
 
 		itemsDomRefs.forEach(item => {
@@ -564,9 +587,7 @@ class TabContainer extends UI5Element {
 			break;
 		}
 
-		this.items.forEach(item => {
-			item.hideInEndOverflow = !item.getTabInStripDomRef().hasAttribute("hidden");
-		});
+		this._updateOverflowItems();
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
@@ -581,6 +602,7 @@ class TabContainer extends UI5Element {
 
 		for (let i = lastVisibleTabIndex + 1; i < itemsDomRefs.length; i++) {
 			itemsDomRefs[i].setAttribute("hidden", "");
+			itemsDomRefs[i].setAttribute("end-overflow", "");
 		}
 	}
 
@@ -605,6 +627,7 @@ class TabContainer extends UI5Element {
 
 			for (let i = lastVisible + 1; i < itemsDomRefs.length; i++) {
 				itemsDomRefs[i].setAttribute("hidden", "");
+				itemsDomRefs[i].setAttribute("end-overflow", "");
 			}
 
 			return;
@@ -625,6 +648,7 @@ class TabContainer extends UI5Element {
 
 			for (let i = firstVisible - 1; i >= 0; i--) {
 				itemsDomRefs[i].setAttribute("hidden", "");
+				itemsDomRefs[i].setAttribute("start-overflow", "");
 			}
 
 			return;
@@ -647,10 +671,12 @@ class TabContainer extends UI5Element {
 
 		for (let i = firstVisible - 1; i >= 0; i--) {
 			itemsDomRefs[i].setAttribute("hidden", "");
+			itemsDomRefs[i].setAttribute("start-overflow", "");
 		}
 
 		for (let i = lastVisible + 1; i < itemsDomRefs.length; i++) {
 			itemsDomRefs[i].setAttribute("hidden", "");
+			itemsDomRefs[i].setAttribute("end-overflow", "");
 		}
 	}
 
@@ -780,6 +806,32 @@ class TabContainer extends UI5Element {
 		}
 
 		return lastVisibleIndex;
+	}
+
+	_updateOverflowItems() {
+		const isStartAndEndOverflow = this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
+		let startOverflowItemsCount = 0;
+		let endOverflowItemsCount = 0;
+
+		this.items.forEach(item => {
+			item.hideInStartOverflow = !item.getTabInStripDomRef().hasAttribute("start-overflow");
+			item.hideInEndOverflow = !item.getTabInStripDomRef().hasAttribute("end-overflow");
+
+			if (isStartAndEndOverflow) {
+				if (!item.hideInStartOverflow && !item.isSeparator) {
+					startOverflowItemsCount++;
+				} else if (!item.hideInEndOverflow && !item.isSeparator) {
+					endOverflowItemsCount++;
+				}
+			}
+		});
+
+		if (isStartAndEndOverflow) {
+			this._startOverflowText = startOverflowItemsCount;
+			this._endOverflowText = endOverflowItemsCount;
+		} else {
+			this._endOverflowText = defaultOverflowText;
+		}
 	}
 
 	async _closeRespPopover() {
