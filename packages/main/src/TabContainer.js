@@ -817,8 +817,8 @@ class TabContainer extends UI5Element {
 		});
 
 		if (isStartAndEndOverflow) {
-			this._startOverflowText = startOverflowItemsCount;
-			this._endOverflowText = endOverflowItemsCount;
+			this._startOverflowText = "+" + startOverflowItemsCount;
+			this._endOverflowText = "+" + endOverflowItemsCount;
 		} else {
 			this._endOverflowText = defaultOverflowText;
 		}
