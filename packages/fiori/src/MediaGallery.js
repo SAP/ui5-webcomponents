@@ -8,15 +8,17 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Carousel from "@ui5/webcomponents/dist/Carousel.js";
-// Template
-import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
-// Styles
-import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
 import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
 import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
+
+// Template
+import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
+
+// Styles
+import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 
 // The allowed number of thumbnail columns on each size
 // (relevant when <code>showAllThumbnails</code> is enabled)
