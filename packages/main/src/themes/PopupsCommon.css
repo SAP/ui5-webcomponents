@@ -56,9 +56,6 @@
 
 .ui5-popup-content {
     overflow: auto;
-
-    /* Consider how to make this top level */
-    padding: var(--_ui5_popup_content_padding);
     box-sizing: border-box;
 }
 
