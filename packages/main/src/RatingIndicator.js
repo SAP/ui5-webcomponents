@@ -248,37 +248,33 @@ class RatingIndicator extends UI5Element {
 			return;
 		}
 
-		const down = isDown(event) || isLeft(event);
-		const up = isRight(event) || isUp(event);
-		const spaceOrEnter = isSpace(event) || isEnter(event);
-		const home = isHome(event);
-		const end = isEnd(event);
-		const number = (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105);
+		const isDecrease = isDown(event) || isLeft(event);
+		const isIncrease = isRight(event) || isUp(event);
+		const isIncreaseWithReset = isSpace(event) || isEnter(event);
+		const isMin = isHome(event);
+		const isMax = isEnd(event);
+		const isNumber = (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105);
 
-		if (down || up || spaceOrEnter || home || end || number) {
+		if (isDecrease || isIncrease || isIncreaseWithReset || isMin || isMax || isNumber) {
 			event.preventDefault();
 
-			if (down && this.value > 0) {
+			if (isDecrease && this.value > 0) {
 				this.value = Math.round(this.value - 1);
-				this.fireEvent("change");
-			} else if (up && this.value < this.max) {
+			} else if (isIncrease && this.value < this.max) {
 				this.value = Math.round(this.value + 1);
-				this.fireEvent("change");
-			} else if (spaceOrEnter) {
+			} else if (isIncreaseWithReset) {
 				const proposedValue = Math.round(this.value + 1);
 				this.value = proposedValue > this.max ? 0 : proposedValue;
-				this.fireEvent("change");
-			} else if (home) {
+			} else if (isMin) {
 				this.value = 0;
-				this.fireEvent("change");
-			} else if (end) {
+			} else if (isMax) {
 				this.value = this.max;
-				this.fireEvent("change");
-			} else if (number) {
+			} else if (isNumber) {
 				const pressedNumber = parseInt(event.key);
-				this.value = pressedNumber <= this.max ? pressedNumber : this.max;
-				this.fireEvent("change");
+				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
+
+			this.fireEvent("change");
 		}
 	}
 
