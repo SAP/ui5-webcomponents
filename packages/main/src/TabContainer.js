@@ -615,14 +615,13 @@ class TabContainer extends UI5Element {
 		let firstVisible;
 		let lastVisible;
 
-		// show "end" overflow button
-		this._getHeaderEndOverflowButton().removeAttribute("hidden");
-
-		// width is changed
-		containerWidth = this._getHeaderScrollContainer().offsetWidth;
-
 		// has "end", but no "start" overflow
 		if (!hasStartOverflow) {
+			// show "end" overflow button
+			this._getHeaderEndOverflowButton().removeAttribute("hidden");
+			// width is changed
+			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+
 			lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
 
 			for (let i = lastVisible + 1; i < itemsDomRefs.length; i++) {
@@ -633,17 +632,13 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		// show "start" overflow button
-		this._getHeaderStartOverflowButton().removeAttribute("hidden");
-
-		// hide "end" overflow button
-		this._getHeaderEndOverflowButton().setAttribute("hidden", "");
-
-		// width is changed
-		containerWidth = this._getHeaderScrollContainer().offsetWidth;
-
 		// has "start", but no "end" overflow
 		if (!hasEndOverflow) {
+			// show "start" overflow button
+			this._getHeaderStartOverflowButton().removeAttribute("hidden");
+			// width is changed
+			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+
 			firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
 
 			for (let i = firstVisible - 1; i >= 0; i--) {
@@ -654,17 +649,12 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		// show "start" overflow button
+		this._getHeaderStartOverflowButton().removeAttribute("hidden");
 		// show "end" overflow button
 		this._getHeaderEndOverflowButton().removeAttribute("hidden");
-
 		// width is changed
 		containerWidth = this._getHeaderScrollContainer().offsetWidth;
-
-		const leftItems = [];
-
-		for (let index = 0; index < selectedItemIndexAndWidth.index; index++) {
-			leftItems.push(itemsDomRefs[index]);
-		}
 
 		firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, selectedItemIndexAndWidth.index - 1);
 		lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, firstVisible);
@@ -762,11 +752,11 @@ class TabContainer extends UI5Element {
 	}
 
 	_findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
-		let lastVisible = itemsDomRefs.length;
-
 		if (startIndex === undefined) {
 			startIndex = itemsDomRefs.length - 1;
 		}
+
+		let lastVisible = startIndex + 1;
 
 		for (let index = startIndex; index >= 0; index--) {
 			const itemWidth = this._getItemWidth(itemsDomRefs[index]);
@@ -785,7 +775,7 @@ class TabContainer extends UI5Element {
 	_findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
 		startIndex = startIndex || 0;
 
-		let lastVisibleIndex = -1;
+		let lastVisibleIndex = startIndex - 1;
 		let index = startIndex;
 
 		for (; index < itemsDomRefs.length; index++) {
