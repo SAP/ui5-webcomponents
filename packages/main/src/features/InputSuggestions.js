@@ -113,13 +113,31 @@ class Suggestions {
 
 	onPageUp(event) {
 		event.preventDefault();
-		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex + 10);
+		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
+		this._moveItemSelection(this.selectedItemIndex,
+			isItemIndexValid ? this.selectedItemIndex -= 10 : this.selectedItemIndex = 0);
 		return true;
 	}
 
 	onPageDown(event) {
 		event.preventDefault();
-		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex - 10);
+		const lastItemIndex = this._getItems().length - 1;
+		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
+		this._moveItemSelection(this.selectedItemIndex,
+			isItemIndexValid ? this.selectedItemIndex += 10 : this.selectedItemIndex = lastItemIndex);
+		return true;
+	}
+
+	onHome(event) {
+		event.preventDefault();
+		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
+		return true;
+	}
+
+	onEnd(event) {
+		event.preventDefault();
+		const lastItemIndex = this._getItems().length - 1;
+		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = lastItemIndex);
 		return true;
 	}
 

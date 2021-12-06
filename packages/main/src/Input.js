@@ -14,6 +14,8 @@ import {
 	isTabNext,
 	isPageUp,
 	isPageDown,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -461,8 +463,8 @@ const metadata = {
  * don't forget to import the <code>InputSuggestions</code> module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
- * 
-  * <h3>Keyboard Handling</h3>
+ *
+ * <h3>Keyboard Handling</h3>
  * When the <code>ui5-input</code> is focused, the user can change the rating
  * with the following keyboard shortcuts:
  * <br>
@@ -639,6 +641,14 @@ class Input extends UI5Element {
 			return this._handlePageDown(event);
 		}
 
+		if (isHome(event)) {
+			return this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			return this._handleEnd(event);
+		}
+
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}
@@ -706,6 +716,18 @@ class Input extends UI5Element {
 	_handlePageDown(event) {
 		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onPageDown(event);
+		}
+	}
+
+	_handleHome(event) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
+			this.Suggestions.onHome(event);
+		}
+	}
+
+	_handleEnd(event) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
+			this.Suggestions.onEnd(event);
 		}
 	}
 

@@ -702,6 +702,26 @@ describe("Input arrow navigation", () => {
 	});
 });
 
+describe("Input arrow navigation", () => {
+	it("Should navigate up and down through the suggestions popover with arrow keys", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+		await suggestionsInput.keys("ArrowDown");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
+	});
+});
+
 describe("XSS tests for suggestions", () => {
 	it("add suggestion item with XSS", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
