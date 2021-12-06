@@ -180,15 +180,6 @@ const metadata = {
 			noAttribute: true,
 			defaultValue: 0,
 		},
-
-		/**
-		 * @private
-		 */
-		 _selectedIndex: {
-			type: Integer,
-			noAttribute: true,
-			defaultValue: -1,
-		},
 	},
 	events: /** @lends  sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
 		/**
@@ -242,6 +233,7 @@ class MediaGallery extends UI5Element {
 		super();
 		this._onResize = this._updateLayout.bind(this);
 		this.hidePageIndicator = !isPhone();
+		this._selectedItem = null;
 		this._initItemNavigation();
 	}
 
@@ -263,7 +255,9 @@ class MediaGallery extends UI5Element {
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
 			itemToSelect = this._findSelectableItem();
 		}
-		itemToSelect && this._selectItem(itemToSelect);
+		if (itemToSelect && itemToSelect !== this._selectedItem) {
+			this._selectItem(itemToSelect);
+		}
 	}
 
 	_initItemNavigation() {
@@ -457,11 +451,10 @@ class MediaGallery extends UI5Element {
 	}
 
 	_selectItem(item, userInteraction) {
-		const selectedIndex = this.items.indexOf(item);
-		if (selectedIndex === this._selectedIndex) {
+		if (item === this._selectedItem) {
 			return;
 		}
-		this._selectedIndex = selectedIndex;
+		this._selectedItem = item;
 
 		this._updateSelectedFlag(item);
 		this._itemNavigation.setCurrentItem(item);
@@ -510,8 +503,9 @@ class MediaGallery extends UI5Element {
 		if (item.disabled) {
 			return;
 		}
-
-		this._selectItem(item, true /* userInteraction */);
+		if (item !== this._selectedItem) {
+			this._selectItem(item, true /* userInteraction */);
+		}
 	}
 
 	_onOverflowBtnClick() {
