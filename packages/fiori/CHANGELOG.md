@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.26](https://github.com/SAP/ui5-webcomponents/compare/v0.31.25...v0.31.26) (2021-12-06)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** announce active step when navigating via a button ([#4298](https://github.com/SAP/ui5-webcomponents/issues/4298)) ([#4420](https://github.com/SAP/ui5-webcomponents/issues/4420)) ([1998db4](https://github.com/SAP/ui5-webcomponents/commit/1998db4))
+
+
+
+
+
 ## [0.31.25](https://github.com/SAP/ui5-webcomponents/compare/v0.31.24...v0.31.25) (2021-11-29)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
