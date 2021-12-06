@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.SideContentPosition.prototype
+ * @lends sap.ui.webcomponents.fiori.types.SideContentPosition.prototype
  * @public
  */
 const SideContentPositionTypes = {
@@ -27,7 +27,7 @@ const SideContentPositionTypes = {
  * Side Content position options.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.SideContentPosition
+ * @alias sap.ui.webcomponents.fiori.types.SideContentPosition
  * @public
  * @enum {string}
  */

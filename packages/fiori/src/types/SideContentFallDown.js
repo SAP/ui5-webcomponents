@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.SideContentFallDown.prototype
+ * @lends sap.ui.webcomponents.fiori.types.SideContentFallDown.prototype
  * @public
  */
 const SideContentFallDownTypes = {
@@ -39,7 +39,7 @@ const SideContentFallDownTypes = {
  * SideContent FallDown options.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.SideContentFallDown
+ * @alias sap.ui.webcomponents.fiori.types.SideContentFallDown
  * @public
  * @enum {string}
  */

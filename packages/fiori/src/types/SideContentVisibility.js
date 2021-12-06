@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.SideContentVisibility.prototype
+ * @lends sap.ui.webcomponents.fiori.types.SideContentVisibility.prototype
  * @public
  */
 const SideContentVisibilityTypes = {
@@ -46,7 +46,7 @@ const SideContentVisibilityTypes = {
  * Side Content visibility options.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.SideContentVisibility
+ * @alias sap.ui.webcomponents.fiori.types.SideContentVisibility
  * @public
  * @enum {string}
  */

@@ -16,9 +16,9 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Breakpoint-related constants
-const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen size
-	M_L_BREAKPOINT = 1024, // Breakpoint between M and L screen size
-	L_XL_BREAKPOINT = 1440, // Breakpoint between L and XL screen size
+const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
+	M_L_BREAKPOINT = 1024, // Breakpoint between M and L screen sizes
+	L_XL_BREAKPOINT = 1440, // Breakpoint between L and XL screen sizes
 	MINIMUM_WIDTH_BREAKPOINT = 960; // Minimum width of the control where main and side contents are side by side
 
 /**
@@ -54,7 +54,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the side content is on the left or on the right side of the main content.
+		 * Defines whether the side content is positioned before the main content (left side
+		 * in LTR mode), or after the the main content (right side in LTR mode).
 		 *
 		 * <br><br>
 		 * <b>The available values are:</b>
@@ -174,7 +175,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
 
 		/**
-		 * Defines the Main Content.
+		 * Defines the main content.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -185,7 +186,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the Side Content.
+		 * Defines the side content.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -273,11 +274,9 @@ const metadata = {
  *
  * Screen width <= 1024px and > 720px
  *
- * <ul><li>If <code>sideContentFallDown</code> is not set to <code>OnMinimumWidth</code>,
- * side content ratio is fixed to 340px, and the main content takes the rest of the width,
- * otherwise the above ratios are valid only for screen width <= 1024px and > 960px, and
- * for screen width <= 960px and > 720px the side content falls below the main content.
- * </li></ul>
+ * <ul><li>The side content ratio is fixed to 340px, and the main content takes the rest
+ * of the width. Only if the <code>sideContentFallDown</code> is set to <code>OnMinimumWidth</code>
+ * and screen width is <= 960px and > 720px the side content falls below the main content.</li></ul>
  *
  * Screen width <= 720px (for example on a mobile device)
  *
@@ -288,8 +287,8 @@ const metadata = {
  * content. We recommend that you always place the trigger for the side content in the
  * same location, such as in the app footer.</li></ul>
  *
- * A special case, allows for comparison mode between the main and side content. In
- * this case, the screen is split into 50:50 percent for main vs. side content. The
+ * A special case allows switching the comparison mode between the main and side content.
+ * In this case, the screen is split into 50:50 percent for main vs. side content. The
  * responsive behavior of the equal split is the same as in the standard view - the
  * side content disappears on screen widths of less than 720 px and can only be
  * viewed by triggering it.
