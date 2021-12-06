@@ -1156,4 +1156,23 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
 	});
+
+	it("DatePicker's formatter has strict parsing enabled", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		datepicker.id = "#dp7_1";
+
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("Jan 60, 2000");
+		await browser.keys("Enter");
+
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+
+		await innerInput.doubleClick();
+		await browser.keys("Backspace");
+		await browser.keys("Enter");
+	});
 });
