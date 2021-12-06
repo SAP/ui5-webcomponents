@@ -223,7 +223,7 @@ describe("Date Picker Tests", () => {
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
 		await valueHelpIcon.click();
 
-		let calendarDate_4_Jan_2019 = await datepicker.getPickerDate(1546560000); //Jan 4, 2019
+		let calendarDate_4_Jan_2019 = await datepicker.getPickerDate(1638576000); //Jan 4, 2019
 		await calendarDate_4_Jan_2019.click();
 
 		const innerInput = await datepicker.getInnerInput();
