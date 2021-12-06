@@ -518,7 +518,7 @@ class ComboBox extends UI5Element {
 
 	_resetFilter() {
 		this._userTypedValue = null;
-		this.inner.setSelectionRange(0,0);
+		this.inner.setSelectionRange(0, 0); // Put the cursor at the end
 		this._filteredItems = this._filterItems("");
 		this._selectMatchingItem();
 	}
