@@ -5,7 +5,6 @@
             {{#if _isPhonePlatform}}
                 <ui5-carousel
                     @ui5-navigate="{{_onCarouselNavigate}}"
-                    ?hide-page-indicator="{{hidePageIndicator}}"
                     hide-navigation-arrows>
                     {{#each _selectableItems}}
                         <slot name="{{this._individualSlot}}"></slot>

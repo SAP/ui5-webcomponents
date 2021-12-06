@@ -137,13 +137,6 @@ const metadata = {
 		},
 
 		/**
-		 * @private
-		 */
-		 hidePageIndicator: {
-			type: Boolean,
-		},
-
-		/**
 		 * Determines the actual applied layout type
 		 * (esp. needed when the app did not specify a fixed layout type
 		 * but selected <code>Auto</code> layout type).
@@ -173,6 +166,7 @@ const metadata = {
 		},
 
 		/**
+		 * The number of items in the overflow
 		 * @private
 		 */
 		_overflowSize: {
@@ -232,7 +226,6 @@ class MediaGallery extends UI5Element {
 	constructor() {
 		super();
 		this._onResize = this._updateLayout.bind(this);
-		this.hidePageIndicator = !isPhone();
 		this._selectedItem = null;
 		this._initItemNavigation();
 	}
@@ -250,6 +243,15 @@ class MediaGallery extends UI5Element {
 		this._updateSelection();
 	}
 
+	_initItemNavigation() {
+		if (!this._itemNavigation) {
+			this._itemNavigation = new ItemNavigation(this, {
+				navigationMode: NavigationMode.Auto,
+				getItemsCallback: () => this._getFocusableItems(),
+			});
+		}
+	}
+
 	_updateSelection() {
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
@@ -257,15 +259,6 @@ class MediaGallery extends UI5Element {
 		}
 		if (itemToSelect && itemToSelect !== this._selectedItem) {
 			this._selectItem(itemToSelect);
-		}
-	}
-
-	_initItemNavigation() {
-		if (!this._itemNavigation) {
-			this._itemNavigation = new ItemNavigation(this, {
-				navigationMode: NavigationMode.Auto,
-				getItemsCallback: () => this._getFocusableItems(),
-			});
 		}
 	}
 
@@ -299,7 +292,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	_calculateOverflowSize(width, height) {
-		const marginSize = this._getMarginSize();
+		const marginSize = MediaGallery.THUMBNAIL_MARGIN;
 		let columnHeight,
 			columnsCount;
 
@@ -311,7 +304,7 @@ class MediaGallery extends UI5Element {
 			columnHeight = height - marginSize;
 			columnsCount = this.showAllThumbnails ? COLUMNS_COUNT[this.mediaRange] : 1;
 		} else {
-			columnHeight = width - (marginSize * 2); // column appears as a row in this case
+			columnHeight = width - (marginSize * 2); // column is flexed to appear as a row in this case
 			columnsCount = 1;
 		}
 		return this._getOverflowSize(columnHeight, columnsCount);
@@ -321,12 +314,13 @@ class MediaGallery extends UI5Element {
 		this._display.style.width = ""; // restore default width
 
 		if (enable) {
-			const marginSize = this._getMarginSize(),
-				width = this._display.offsetWidth;
+			const marginSize = MediaGallery.THUMBNAIL_MARGIN,
+				width = this._display.offsetWidth,
+				thumbnailHeight = this._overflowBtnHeight; // UX requirement
 
 			let availableHeight = this.getDomRef().offsetHeight - (2 * marginSize);
 			if (this.effectiveLayoutType === MediaGalleryLayoutType.Vertical) {
-				availableHeight -= (this._getThumbnailHeight() + marginSize);
+				availableHeight -= (thumbnailHeight + marginSize);
 			}
 
 			if (width > availableHeight) {
@@ -355,7 +349,8 @@ class MediaGallery extends UI5Element {
 	}
 
 	_getMaxAllowedThumbnailsInColumn(columnHeight) {
-		let maxAllowedItems = Math.floor(columnHeight / this._getThumbnailHeight());
+		const thumbnailHeight = this._overflowBtnHeight; // UX requirement
+		let maxAllowedItems = Math.floor(columnHeight / thumbnailHeight);
 		if (!this.showAllThumbnails) {
 			maxAllowedItems = Math.min(maxAllowedItems, 5);
 		}
@@ -366,14 +361,6 @@ class MediaGallery extends UI5Element {
 		const maxAlowedThumbnailsInColumn = this._getMaxAllowedThumbnailsInColumn(columnHeight),
 			overflowSize = Math.max(0, this.items.length - maxAlowedThumbnailsInColumn * columnsCount);
 		return (overflowSize > 0) ? overflowSize + 1 : 0; // make room for overflow btn as well
-	}
-
-	_getThumbnailHeight() {
-		return 16 * 5;
-	}
-
-	_getMarginSize() {
-		return 16;
 	}
 
 	_getFocusableItems() {
@@ -387,67 +374,6 @@ class MediaGallery extends UI5Element {
 			items.push(this._overflowBtn);
 		}
 		return items;
-	}
-
-	get _mainItemTabIndex() {
-		return this.interactiveDisplayArea ? 0 : "";
-	}
-
-	get _selectableItems() {
-		return this.items.filter(this._isSelectableItem);
-	}
-
-	get _carousel() {
-		return this.shadowRoot.querySelector("ui5-carousel");
-	}
-
-	get _display() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-display");
-	}
-
-	get _mainItem() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-display ui5-media-gallery-item");
-	}
-
-	get _overflowBtn() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow ui5-button");
-	}
-
-	get _visibleItems() {
-		const visibleItemsCount = this.items.length - this._overflowSize;
-		return this.items.slice(0, visibleItemsCount);
-	}
-
-	get _isPhonePlatform() {
-		return isPhone();
-	}
-
-	get _showThumbnails() {
-		return !isPhone();
-	}
-
-	get _isOverflowBtnHidden() {
-		return this._overflowSize === 0;
-	}
-
-	get _isPhoneSize() {
-		return this.mediaRange === "S";
-	}
-
-	get _mainItemHasWideLayout() {
-		return this._mainItem && (this._mainItem.layoutType === MediaGalleryItemLayoutType.Wide);
-	}
-
-	get _shouldHaveWideDisplay() {
-		return this._mainItemHasWideLayout
-			&& this.showAllThumbnails
-			&& (this.effectiveLayoutType === MediaGalleryLayoutType.Horizontal);
-	}
-
-	get _shouldHaveSquareDisplay() {
-		// by default it should be square
-		// with the only exception when a wide 9*16 item should be displayed
-		return !this._shouldHaveWideDisplay;
 	}
 
 	_selectItem(item, userInteraction) {
@@ -531,6 +457,75 @@ class MediaGallery extends UI5Element {
 		this.fireEvent("selection-change", { item });
 	}
 
+	get _mainItemTabIndex() {
+		return this.interactiveDisplayArea ? 0 : "";
+	}
+
+	get _selectableItems() {
+		return this.items.filter(this._isSelectableItem);
+	}
+
+	get _carousel() {
+		return this.shadowRoot.querySelector("ui5-carousel");
+	}
+
+	get _display() {
+		return this.shadowRoot.querySelector(".ui5-media-gallery-display");
+	}
+
+	get _mainItem() {
+		return this.shadowRoot.querySelector(".ui5-media-gallery-display ui5-media-gallery-item");
+	}
+
+	get _overflowBtn() {
+		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow ui5-button");
+	}
+
+	get _visibleItems() {
+		const visibleItemsCount = this.items.length - this._overflowSize;
+		return this.items.slice(0, visibleItemsCount);
+	}
+
+	get _isPhonePlatform() {
+		return isPhone();
+	}
+
+	get _showThumbnails() {
+		return !isPhone();
+	}
+
+	get _isOverflowBtnHidden() {
+		return this._overflowSize === 0;
+	}
+
+	get _isPhoneSize() {
+		return this.mediaRange === "S";
+	}
+
+	get _mainItemHasWideLayout() {
+		return this._mainItem && (this._mainItem.layoutType === MediaGalleryItemLayoutType.Wide);
+	}
+
+	get _shouldHaveWideDisplay() {
+		return this._mainItemHasWideLayout
+			&& this.showAllThumbnails
+			&& (this.effectiveLayoutType === MediaGalleryLayoutType.Horizontal);
+	}
+
+	get _shouldHaveSquareDisplay() {
+		// by default it should be square
+		// with the only exception when a wide 9*16 item should be displayed
+		return !this._shouldHaveWideDisplay;
+	}
+
+	get _overflowBtnHeight() {
+		const overflowBtn = this._overflowBtn;
+		if (overflowBtn) {
+			return overflowBtn.offsetHeight + MediaGallery.THUMBNAIL_MARGIN;
+		}
+		return 0;
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -561,6 +556,10 @@ class MediaGallery extends UI5Element {
 			Button,
 			Carousel,
 		];
+	}
+
+	static get THUMBNAIL_MARGIN() {
+		return 16; // px
 	}
 }
 
