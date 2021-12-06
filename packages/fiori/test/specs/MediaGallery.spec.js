@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 
-describe("MediaGallery Behavior", () => {
+describe("MediaGallery general interaction", () => {
 	before(async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/MediaGallery.html`);
 	});
@@ -31,7 +31,7 @@ describe("MediaGallery Behavior", () => {
 		assert.strictEqual(await oldSelectedItem.getProperty("selected"), false, "flag of newly selected is updated");
 	});
 
-	it("does not fire selection-change on selected item click", async () => {
+	it("does not fire selection-change on click on already selected item", async () => {
 		// Setup
 		const clearOldResults = await browser.$("#clearBtn");
 		await clearOldResults.click();
@@ -93,6 +93,42 @@ describe("MediaGallery Behavior", () => {
 		// Check
 		const result = await browser.$("#displayAreaClickCallCountLabel");
 		assert.strictEqual(await result.getHTML(false), "", "no event is fired");
+	});
+
+	it("fires selection-change after keyboard handling", async () => {
+		const gallery = await browser.$("#mGallery2").shadow$(".ui5-media-gallery-root"),
+			item0 = await browser.$$("#mGallery2 ui5-media-gallery-item")[0];
+
+		// Act: move the selection to the second item using KBH
+		await item0.click();
+		await gallery.keys("ArrowDown");
+		await gallery.keys("Enter");
+
+		// Check
+		const result = await browser.$("#selectedIndexLabel");
+		assert.strictEqual(await result.getHTML(false), "1", "event for selected item is thrown");
+
+		// Act: move the selection back to the first item using KBH
+		await gallery.keys("ArrowUp");
+		await gallery.keys("Space");
+
+		// Check
+		const result1 = await browser.$("#selectedIndexLabel");
+		assert.strictEqual(await result1.getHTML(false), "0", "event for selected item is thrown");
+	});
+
+	it("changes selection when selected item is disabled", async () => {
+		const gallery = await browser.$("#mGallery2").shadow$(".ui5-media-gallery-root"),
+			item0 = await browser.$$("#mGallery2 ui5-media-gallery-item")[0],
+			item1 = await browser.$$("#mGallery2 ui5-media-gallery-item")[1];
+
+		// Act: move the selection to the second item using KBH
+		await item0.click();
+		await item0.setProperty("disabled", true);
+
+		// Check
+		assert.strictEqual(await item0.getProperty("selected"), false, "disabled item is no longer seleted");
+		assert.strictEqual(await item1.getProperty("selected"), true, "selection changed to the second item");
 	});
 
 });
