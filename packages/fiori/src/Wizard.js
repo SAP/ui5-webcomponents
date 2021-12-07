@@ -160,6 +160,33 @@ const metadata = {
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
+ * <h3>Keyboard Handling</h3>
+ * The user can interact with the navigation through the following keyboard shortcuts:
+ * <br>
+ *
+ * <h4>Wizard Progress Navigation</h4>
+ * <ul>
+ * <li>[LEFT], [DOWN] <br>
+ * 		<ul>
+ * 			<li>If focus is on a WizardProgressNavAnchor, focus moves backward through the WizardProgressNavAnchors.</li>
+ * 			<li>If focus is on the first WizardProgressNavAnchor, nothing happens – focus does not loop.</li>
+ * 			<li>If the visual estate is to small to present all items, the list scrolls accordingly.</li>
+ * 			<li>If there are disabled steps or anchors, the disabled items will also get focused by using the arrow keys. (Consistency to menu navigation, where disabled menu items are als focusable).</li>
+ * 		</ul>
+ * </li>
+ * <li>[UP], [RIGHT] <br>
+ * 		<ul>
+ * 			<li> If focus is on a WizardProgressNavAnchor, focus moves forward through the WizardProgressNavAnchor.</li>
+ * 			<li> If focus is on the last WizardProgressNavAnchor, nothing happens – focus does not loop.</li>
+ * 			<li> If the visual estate is to small to present all items, the list scrolls accordingly.</li>
+ * 			<li> If there are disabled steps or anchors, the disabled items will also get focused by using the arrow keys. (Consistency to menu navigation, where disabled menu items are als focusable).</li>
+ * 		</ul>
+ * </li>
+ * <li>[SPACE] or [ENTER], [RETURN]- Select an active step</li>
+ * <li>[HOME] or [PAGE UP]- Focus on the first step</li>
+ * <li>[END] or [PAGE DOWN]	- Focus on the last step</li>
+ * </ul>
+ *
  * <h4>Content</h4>
  * The content occupies the main part of the page. It can hold any type of HTML elements.
  * It's defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.
