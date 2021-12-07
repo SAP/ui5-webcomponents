@@ -1,5 +1,7 @@
-commit 56a672480ed0342f9d4de891ce7278a181217969
-Author: a-z-ivanov <alexander.ivanov01@sap.com>
-Date:   Fri Dec 3 14:28:55 2021 +0200
+commit 4e0ce0f63433962688e7a2ec5213cb81cffa83a2
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Mon Dec 6 23:28:22 2021 -0800
 
-    fix(ui5-date-picker): remove title attribute from samples (#4422)
+    chore: translation delivery (#4421)
+    
+    Change-Id: I71d48c323b13874bf55f06dc0e68f2badc966c7f
