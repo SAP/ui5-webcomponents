@@ -761,6 +761,8 @@ class Input extends UI5Element {
 	}
 
 	_handleNativeInputChange() {
+		// The native change sometimes fires too early and getting input's value in the listener would return
+		// the previous value instead of the most recent one. This would make things consistent.
 		clearTimeout(this._nativeChangeDebounce);
 		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
 	}
