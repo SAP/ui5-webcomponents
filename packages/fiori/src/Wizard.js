@@ -243,7 +243,7 @@ class Wizard extends UI5Element {
 		this.selectionRequestedByScroll = false;
 
 		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
+			navigationMode: NavigationMode.Auto,
 			getItemsCallback: () => this.enabledStepsInHeaderDOM,
 		});
 

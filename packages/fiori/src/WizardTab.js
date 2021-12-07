@@ -208,7 +208,7 @@ class WizardTab extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? undefined : this._tabIndex;
+		return this._tabIndex;
 	}
 
 	get hasTexts() {
