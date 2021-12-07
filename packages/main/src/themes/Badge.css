@@ -5,9 +5,9 @@
 	height: var(--_ui5-badge-height);
 	min-width: 1.125em;
 	max-width: 100%;
-	padding: 0 0.3125em;
+	padding: var(--_ui5-badge-padding);
 	color: var(--sapAccentColor1);
-	background: var(--sapLegendBackgroundColor1);
+	background: var(--_ui5-badge-background-position) / var(--_ui5-badge-background-size) var(--_ui5-badge-background) var(--_ui5-badge-background-repeat) var(--_ui5-badge-background-image);
 	border: var(--_ui5-badge-border);
 	border-inline-start: var(--_ui5-badge-left-border);
 	border-radius: var(--_ui5-badge-border-radius);
@@ -78,6 +78,7 @@
 :host([color-scheme="1"]) {
 	background-color: var(--ui5-badge-color-scheme-1-background);
 	border-color: var(--ui5-badge-color-scheme-1-border);
+	background-image: var(--ui5-badge-color-scheme-1-background-image);
 	color: var(--ui5-badge-color-scheme-1-color);
 }
 
@@ -86,7 +87,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-1-shadow);
 }
 
-:host([active][color-scheme="1"]:hover) {
+:host([color-scheme="1"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-1-active-shadow);
 	color: var(--ui5-badge-color-scheme-1-active-color);
 }
@@ -95,6 +96,7 @@
 :host([color-scheme="2"]) {
 	background-color: var(--ui5-badge-color-scheme-2-background);
 	border-color: var(--ui5-badge-color-scheme-2-border);
+	background-image: var(--ui5-badge-color-scheme-2-background-image);
 	color: var(--ui5-badge-color-scheme-2-color);
 }
 
@@ -103,7 +105,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-2-shadow);
 }
 
-:host([active][color-scheme="2"]:hover) {
+:host([color-scheme="2"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-2-active-shadow);
 	color: var(--ui5-badge-color-scheme-2-active-color);
 }
@@ -112,6 +114,7 @@
 :host([color-scheme="3"]) {
 	background-color: var(--ui5-badge-color-scheme-3-background);
 	border-color: var(--ui5-badge-color-scheme-3-border);
+	background-image: var(--ui5-badge-color-scheme-3-background-image);
 	color: var(--ui5-badge-color-scheme-3-color);
 }
 
@@ -120,7 +123,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-3-shadow);
 }
 
-:host([active][color-scheme="3"]:hover) {
+:host([color-scheme="3"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-3-active-shadow);
 	color: var(--ui5-badge-color-scheme-3-active-color);
 }
@@ -129,6 +132,7 @@
 :host([color-scheme="4"]) {
 	background-color: var(--ui5-badge-color-scheme-4-background);
 	border-color: var(--ui5-badge-color-scheme-4-border);
+	background-image: var(--ui5-badge-color-scheme-4-background-image);
 	color: var(--ui5-badge-color-scheme-4-color);
 }
 
@@ -137,7 +141,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-4-shadow);
 }
 
-:host([active][color-scheme="4"]:hover) {
+:host([color-scheme="4"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-4-active-shadow);
 	color: var(--ui5-badge-color-scheme-4-active-color);
 }
@@ -146,6 +150,7 @@
 :host([color-scheme="5"]) {
 	background-color: var(--ui5-badge-color-scheme-5-background);
 	border-color: var(--ui5-badge-color-scheme-5-border);
+	background-image: var(--ui5-badge-color-scheme-5-background-image);
 	color: var(--ui5-badge-color-scheme-5-color);
 }
 
@@ -154,7 +159,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-5-shadow);
 }
 
-:host([active][color-scheme="5"]:hover) {
+:host([color-scheme="5"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-5-active-shadow);
 	color: var(--ui5-badge-color-scheme-5-active-color);
 }
@@ -163,6 +168,7 @@
 :host([color-scheme="6"]) {
 	background-color: var(--ui5-badge-color-scheme-6-background);
 	border-color: var(--ui5-badge-color-scheme-6-border);
+	background-image: var(--ui5-badge-color-scheme-6-background-image);
 	color: var(--ui5-badge-color-scheme-6-color);
 }
 
@@ -171,7 +177,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-6-shadow);
 }
 
-:host([active][color-scheme="6"]:hover) {
+:host([color-scheme="6"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-6-active-shadow);
 	color: var(--ui5-badge-color-scheme-6-active-color);
 }
@@ -180,6 +186,7 @@
 :host([color-scheme="7"]) {
 	background-color: var(--ui5-badge-color-scheme-7-background);
 	border-color: var(--ui5-badge-color-scheme-7-border);
+	background-image: var(--ui5-badge-color-scheme-7-background-image);
 	color: var(--ui5-badge-color-scheme-7-color);
 }
 
@@ -188,7 +195,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-7-shadow);
 }
 
-:host([active][color-scheme="7"]:hover) {
+:host([color-scheme="7"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-7-active-shadow);
 	color: var(--ui5-badge-color-scheme-7-active-color);
 }
@@ -197,6 +204,7 @@
 :host([color-scheme="8"]) {
 	background-color: var(--ui5-badge-color-scheme-8-background);
 	border-color: var(--ui5-badge-color-scheme-8-border);
+	background-image: var(--ui5-badge-color-scheme-8-background-image);
 	color: var(--ui5-badge-color-scheme-8-color);
 }
 
@@ -205,7 +213,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-8-shadow);
 }
 
-:host([active][color-scheme="8"]:hover) {
+:host([color-scheme="8"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-8-active-shadow);
 	color: var(--ui5-badge-color-scheme-8-active-color);
 }
@@ -214,6 +222,7 @@
 :host([color-scheme="9"]) {
 	background-color: var(--ui5-badge-color-scheme-9-background);
 	border-color: var(--ui5-badge-color-scheme-9-border);
+	background-image: var(--ui5-badge-color-scheme-9-background-image);
 	color: var(--ui5-badge-color-scheme-9-color);
 }
 
@@ -222,7 +231,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-9-shadow);
 }
 
-:host([active][color-scheme="9"]:hover) {
+:host([color-scheme="9"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-9-active-shadow);
 	color: var(--ui5-badge-color-scheme-9-active-color);
 }
@@ -231,6 +240,7 @@
 :host([color-scheme="10"]) {
 	background-color: var(--ui5-badge-color-scheme-10-background);
 	border-color: var(--ui5-badge-color-scheme-10-border);
+	background-image: var(--ui5-badge-color-scheme-10-background-image);
 	color: var(--ui5-badge-color-scheme-10-color);
 }
 
@@ -239,7 +249,7 @@
 	box-shadow: var(--ui5-badge-color-scheme-10-shadow);
 }
 
-:host([active][color-scheme="10"]:hover) {
+:host([color-scheme="10"]:active:hover) {
 	box-shadow: var(--ui5-badge-color-scheme-10-active-shadow);
 	color: var(--ui5-badge-color-scheme-10-active-color);
 }
