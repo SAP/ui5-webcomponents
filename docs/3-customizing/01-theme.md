@@ -8,7 +8,7 @@ Follow this simple tutorial to build a custom theme running with UI5 Web Compone
 
 1. Open **UI Theme Designer**.
 
-   Go to the [official docs](https://help.sap.com/viewer/09f6818d8e064537973102d6289e2aca/Cloud/en-US/935325fb130d41449362181fb6020dd0.html) and set up the Theme Designer, or just open the [Demo Theme Designer](https://themedesigner-themedesignerdemo.dispatcher.eu2.hana.ondemand.com/index.html).
+   Go to the [official docs](https://help.sap.com/viewer/09f6818d8e064537973102d6289e2aca/Cloud/en-US/935325fb130d41449362181fb6020dd0.html) and set up the Theme Designer.
 
 2. Create your **custom theme** in `UI Theme Designer`.
 
@@ -84,6 +84,6 @@ setTheme("mytheme");
 setTheme("sap_fiori_3_dark");
 ```
 
-For more on configuring themes, see [Configuration](Configuration.md).
- 	
+For more on configuring themes, see [Configuration](../../advanced/configuration/).
+
 Next: [Custom Fonts](../fonts)
