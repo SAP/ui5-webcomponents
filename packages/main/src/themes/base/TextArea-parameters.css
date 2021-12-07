@@ -18,4 +18,5 @@
 	--_ui5_textarea_value_state_focus_outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	--_ui5_textarea_after_element_display: none;
 	--_ui5_textarea_placeholder_font_style: italic;
+	--_ui5_input_warning_font_weight: normal;
 }
