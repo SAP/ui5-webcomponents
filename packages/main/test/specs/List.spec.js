@@ -376,6 +376,17 @@ describe("List Tests", () => {
 		assert.strictEqual(await input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
 
+	it("tests events for ui5-li-custom", async () => {
+		list.id = "#listPreventClickEvent";
+		const input = await browser.$("#itemClickPreventedResultField");
+		const firstItem = await list.getItem(0);
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected when we prevent the click event.");
+		assert.strictEqual(await firstItem.getProperty("id"), await input.getProperty("value"));
+	});
+
 	it("Popover with List opens without errors", async () => {
 		const btnPopupOpener = await browser.$("#btnOpenPopup");
 		const btnInListHeader = await browser.$("#btnInHeader");
