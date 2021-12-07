@@ -634,7 +634,7 @@ class ComboBox extends UI5Element {
 
 		if (isOpen) {
 			this._itemFocused = true;
-			this.value = isGroupItem ? this.filterValue : currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.text;
 			this.focused = false;
 			currentItem.focused = true;
 		} else {
