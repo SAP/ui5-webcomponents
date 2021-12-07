@@ -1,7 +1,5 @@
-commit 4e0ce0f63433962688e7a2ec5213cb81cffa83a2
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Mon Dec 6 23:28:22 2021 -0800
+commit eb796f71ff58ebdf6a2dd720c3eeffde1fbc7b35
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Dec 7 10:52:08 2021 +0200
 
-    chore: translation delivery (#4421)
-    
-    Change-Id: I71d48c323b13874bf55f06dc0e68f2badc966c7f
+    fix(playground): fix broken links (#4440)
