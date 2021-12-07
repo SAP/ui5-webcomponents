@@ -11,7 +11,6 @@ th {
 	font-size: var(--sapFontMediumSize);
 	padding: 0.25rem;
 	box-sizing: border-box;
-	height: 3rem;
 	text-align: left;
 	vertical-align: middle;
 }
