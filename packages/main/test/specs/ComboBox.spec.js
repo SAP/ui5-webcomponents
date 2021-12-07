@@ -540,7 +540,7 @@ describe("Grouping", () => {
 
 		assert.ok(await groupItem.getProperty("focused"),  "The second group header should be focused");
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
-		assert.strictEqual(await combo.getProperty("value"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
+		assert.strictEqual(await combo.getProperty("value"), "", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
 });
 
@@ -623,7 +623,7 @@ describe("Keyboard navigation", async () => {
 		listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
-	
+
 		await input.keys("ArrowUp");
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
