@@ -1,5 +1,7 @@
-commit eb796f71ff58ebdf6a2dd720c3eeffde1fbc7b35
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Dec 7 10:52:08 2021 +0200
+commit 0e41f41c6732a30083042a908f284a37f803e2cb
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Tue Dec 7 13:21:00 2021 +0200
 
-    fix(playground): fix broken links (#4440)
+    feat(ui5-rating-indicator): add full keyboard support (#4411)
+    
+    The keyboard specification for RatingIndicator is now fully adopted.
