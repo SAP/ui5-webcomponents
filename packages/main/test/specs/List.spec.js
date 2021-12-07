@@ -376,7 +376,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
 
-	it("tests events for ui5-li-custom", async () => {
+	it("tests the prevention of the ui5-itemClick event", async () => {
 		list.id = "#listPreventClickEvent";
 		const input = await browser.$("#itemClickPreventedResultField");
 		const firstItem = await list.getItem(0);
