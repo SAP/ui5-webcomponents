@@ -1,0 +1,130 @@
+:root {
+	--sapGreyColor1: rgba(245, 246, 247, 1);
+	--sapGreyColor2: rgba(213, 218, 221, 1);
+	--sapGreyColor3: rgba(169, 180, 190, 1);
+	--sapGreyColor4: rgba(131, 150, 168, 1);
+	--sapGreyColor5: rgba(91, 115, 139, 1);
+	--sapGreyColor6: rgba(71, 94, 117, 1);
+	--sapGreyColor7: rgba(53, 74, 95, 1);
+	--sapGreyColor8: rgba(34, 53, 72, 1);
+	--sapGreyColor9: rgba(11, 20, 30, 1);
+
+	--sapBlueColor1: rgba(235, 248, 255, 1);
+	--sapBlueColor2: rgba(137, 209, 255, 1);
+	--sapBlueColor3: rgba(77, 177, 255, 1);
+	--sapBlueColor4: rgba(27, 144, 255, 1);
+	--sapBlueColor5: rgba(0, 112, 242, 1);
+	--sapBlueColor6: rgba(0, 87, 210, 1);
+	--sapBlueColor7: rgba(0, 64, 176, 1);
+	--sapBlueColor8: rgba(0, 42, 134, 1);
+	--sapBlueColor9: rgba(0, 20, 74, 1);
+
+	--sapTealColor1: rgba(218, 253, 245, 1);
+	--sapTealColor2: rgba(100, 237, 210, 1);
+	--sapTealColor3: rgba(0, 206, 172, 1);
+	--sapTealColor4: rgba(4, 172, 167, 1);
+	--sapTealColor5: rgba(7, 131, 143, 1);
+	--sapTealColor6: rgba(4, 108, 122, 1);
+	--sapTealColor7: rgba(3, 86, 99, 1);
+	--sapTealColor8: rgba(2, 65, 76, 1);
+	--sapTealColor9: rgba(1, 41, 49, 1);
+
+	--sapGreenColor1: rgba(245, 250, 229, 1);
+	--sapGreenColor2: rgba(151, 221, 64, 1);
+	--sapGreenColor3: rgba(93, 193, 34, 1);
+	--sapGreenColor4: rgba(54, 164, 29, 1);
+	--sapGreenColor5: rgba(24, 137, 24, 1);
+	--sapGreenColor6: rgba(37, 111, 58, 1);
+	--sapGreenColor7: rgba(30, 89, 47, 1);
+	--sapGreenColor8: rgba(22, 67, 35, 1);
+	--sapGreenColor9: rgba(14, 43, 22, 1);
+
+	--sapMangoColor1: rgba(255, 248, 214, 1);
+	--sapMangoColor2: rgba(255, 223, 114, 1);
+	--sapMangoColor3: rgba(255, 179, 0, 1);
+	--sapMangoColor4: rgba(245, 139, 0, 1);
+	--sapMangoColor5: rgba(195, 85, 0, 1);
+	--sapMangoColor6: rgba(169, 62, 0, 1);
+	--sapMangoColor7: rgba(141, 42, 0, 1);
+	--sapMangoColor8: rgba(109, 25, 0, 1);
+	--sapMangoColor9: rgba(69, 11, 0, 1);
+
+	--sapRedColor1: rgba(255, 234, 244, 1);
+	--sapRedColor2: rgba(255, 140, 178, 1);
+	--sapRedColor3: rgba(255, 92, 119, 1);
+	--sapRedColor4: rgba(238, 57, 57, 1);
+	--sapRedColor5: rgba(210, 10, 10, 1);
+	--sapRedColor6: rgba(170, 8, 8, 1);
+	--sapRedColor7: rgba(132, 6, 6, 1);
+	--sapRedColor8: rgba(90, 4, 4, 1);
+	--sapRedColor9: rgba(53, 0, 0, 1);
+
+	--sapPinkColor1: rgba(255, 240, 250, 1);
+	--sapPinkColor2: rgba(255, 175, 237, 1);
+	--sapPinkColor3: rgba(255, 138, 240, 1);
+	--sapPinkColor4: rgba(243, 29, 237, 1);
+	--sapPinkColor5: rgba(204, 0, 220, 1);
+	--sapPinkColor6: rgba(161, 0, 194, 1);
+	--sapPinkColor7: rgba(120, 0, 164, 1);
+	--sapPinkColor8: rgba(81, 0, 128, 1);
+	--sapPinkColor9: rgba(40, 0, 74, 1);
+
+	--sapIndigoColor1: rgba(241, 236, 255, 1);
+	--sapIndigoColor2: rgba(211, 182, 255, 1);
+	--sapIndigoColor3: rgba(184, 148, 255, 1);
+	--sapIndigoColor4: rgba(155, 118, 255, 1);
+	--sapIndigoColor5: rgba(120, 88, 255, 1);
+	--sapIndigoColor6: rgba(93, 54, 255, 1);
+	--sapIndigoColor7: rgba(71, 12, 237, 1);
+	--sapIndigoColor8: rgba(44, 19, 173, 1);
+	--sapIndigoColor9: rgba(28, 12, 110, 1);
+
+	--_shadow-blue-color: rgba(27, 144, 255, 0.16);
+	--_shadow-grey-color: rgba(131, 150, 168, 0.16);
+	--_shadow-teal-color: rgba(4, 172, 167, 0.16);
+	--_shadow-green-color: rgba(93, 193, 34, 0.16);
+	--_shadow-mango-color: rgba(255, 179, 0, 0.16);
+	--_shadow-red-color: rgba(245, 40, 40, 0.16);
+	--_shadow-pink-color: rgba(252, 0, 245, 0.16);
+	--_shadow-indigo-color: rgba(155, 118, 255, 0.16);
+
+	--shadow-blue-base: 0px 0px 2px var(--_shadow-blue-color);
+	--shadow-blue-xs: var(--shadow-blue-base), 0px 2px 4px var(--_shadow-blue-color);
+	--shadow-blue-small: var(--shadow-blue-base), 0px 4px 8px var(--_shadow-blue-color);
+	--shadow-blue-medium: var(--shadow-blue-base), 0px 8px 16px var(--_shadow-blue-color);
+
+	--shadow-grey-base: 0px 0px 2px var(--_shadow-grey-color);
+	--shadow-grey-xs: var(--shadow-grey-base), 0px 2px 4px var(--_shadow-grey-color);
+	--shadow-grey-small: var(--shadow-grey-base), 0px 4px 8px var(--_shadow-grey-color);
+	--shadow-grey-medium: var(--shadow-grey-base), 0px 8px 16px var(--_shadow-grey-color);
+
+	--shadow-teal-base: 0px 0px 2px var(--_shadow-teal-color);
+	--shadow-teal-xs: var(--shadow-teal-base), 0px 2px 4px var(--_shadow-teal-color);
+	--shadow-teal-small: var(--shadow-teal-base), 0px 4px 8px var(--_shadow-teal-color);
+	--shadow-teal-medium: var(--shadow-teal-base), 0px 8px 16px var(--_shadow-teal-color);
+
+	--shadow-green-base: 0px 0px 2px var(--_shadow-green-color);
+	--shadow-green-xs: var(--shadow-green-base), 0px 2px 4px var(--_shadow-green-color);
+	--shadow-green-small: var(--shadow-green-base), 0px 4px 8px var(--_shadow-green-color);
+	--shadow-green-medium: var(--shadow-green-base), 0px 8px 16px var(--_shadow-green-color);
+
+	--shadow-mango-base: 0px 0px 2px var(--_shadow-mango-color);
+	--shadow-mango-xs: var(--shadow-mango-base), 0px 2px 4px var(--_shadow-mango-color);
+	--shadow-mango-small: var(--shadow-mango-base), 0px 4px 8px var(--_shadow-mango-color);
+	--shadow-mango-medium: var(--shadow-mango-base), 0px 8px 16px var(--_shadow-mango-color);
+
+	--shadow-red-base: 0px 0px 2px var(--_shadow-red-color);
+	--shadow-red-xs: var(--shadow-red-base), 0px 2px 4px var(--_shadow-red-color);
+	--shadow-red-small: var(--shadow-red-base), 0px 4px 8px var(--_shadow-red-color);
+	--shadow-red-medium: var(--shadow-red-base), 0px 8px 16px var(--_shadow-red-color);
+
+	--shadow-pink-base: 0px 0px 2px var(--_shadow-pink-color);
+	--shadow-pink-xs: var(--shadow-pink-base), 0px 2px 4px var(--_shadow-pink-color);
+	--shadow-pink-small: var(--shadow-pink-base), 0px 4px 8px var(--_shadow-pink-color);
+	--shadow-pink-medium: var(--shadow-pink-base), 0px 8px 16px var(--_shadow-pink-color);
+
+	--shadow-indigo-base: 0px 0px 2px var(--_shadow-indigo-color);
+	--shadow-indigo-xs: var(--shadow-indigo-base), 0px 2px 4px var(--_shadow-indigo-color);
+	--shadow-indigo-small: var(--shadow-indigo-base), 0px 4px 8px var(--_shadow-indigo-color);
+	--shadow-indigo-medium: var(--shadow-indigo-base), 0px 8px 16px var(--_shadow-indigo-color);
+}
