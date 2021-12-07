@@ -1368,6 +1368,10 @@ class Input extends UI5Element {
 		return value;
 	}
 
+	get inputDomRef() {
+		return this.shadowRoot.querySelector(`*[data-ui5-stable="input"]`);
+	}
+
 	static get dependencies() {
 		const Suggestions = getFeature("InputSuggestions");
 
