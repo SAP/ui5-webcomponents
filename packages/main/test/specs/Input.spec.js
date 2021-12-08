@@ -703,6 +703,28 @@ describe("Input arrow navigation", () => {
 });
 
 describe("Input HOME navigation", () => {
+	it("Should move caret to beginning of input with HOME if focus is on Input", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+
+		await suggestionsInput.keys("Home");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const caretPosition = await browser.execute(() =>{
+			return document.getElementById("myInput2").getCaretPosition();
+		});
+
+		assert.strictEqual(caretPosition, 0, "Caret has been moved to beginning of Input");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+	});
+
 	it("Should focus the first item from the suggestions popover with HOME", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
@@ -776,6 +798,141 @@ describe("Input HOME navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
 
+	});
+});
+
+describe("Input END navigation", () => {
+	it("Should move caret to end of input with END if focus is on Input", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+
+		await suggestionsInput.keys("ArrowLeft");
+		await suggestionsInput.keys("End");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const caretPosition = await browser.execute(() =>{
+			return document.getElementById("myInput2").getCaretPosition();
+		});
+
+		assert.strictEqual(caretPosition, 1, "Caret has been moved to end of Input");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
+	});
+
+	it("Should focus the last item from the suggestions popover with END", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#inputCompact");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#inputCompact");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+
+		// Moving focus to suggestions popover, because by design END only moves the caret if focus is on input
+		await suggestionsInput.keys("ArrowDown");
+
+		await suggestionsInput.keys("End");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item:last-child");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Chili", "Last item has been selected");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), true, "Last list item is focused");
+	});
+});
+
+describe("Input PAGEUP/PAGEDOWN navigation", () => {
+	it("PAGEUP and PAGEDOWN should do nothing if focus is on Input", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("c");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		let caretPosition = await browser.execute(() =>{
+			return document.getElementById("myInput2").getCaretPosition();
+		});
+
+		assert.strictEqual(caretPosition, 1, "Caret is at end of Input");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "Responsive popover is open and first list item is not focused");
+
+		await suggestionsInput.keys("PageUp");
+
+		caretPosition = await browser.execute(() =>{
+			return document.getElementById("myInput2").getCaretPosition();
+		});
+
+		assert.strictEqual(caretPosition, 1, "Caret is still at end of Input");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "Responsive popover remains open and first list item is not focused");
+
+		await suggestionsInput.keys("PageDown");
+
+		caretPosition = await browser.execute(() =>{
+			return document.getElementById("myInput2").getCaretPosition();
+		});
+
+		assert.strictEqual(caretPosition, 1, "Caret is still at end of Input");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
+		assert.strictEqual(await firstListItem.getProperty("focused"), false, "Responsive popover remains open and first list item is not focused");
+
+	});
+
+	it("Should focus the tenth item from the suggestions popover with PAGEDOWN", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("a");
+
+		// Moving focus to suggestions popover, because by design HOME only moves the caret if focus is on input
+		await suggestionsInput.keys("ArrowDown");
+
+		await suggestionsInput.keys("PageDown");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const tenthListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item:nth-child(11)");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Azerbaijan", "Tenth item has been selected");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await tenthListItem.getProperty("focused"), true, "Tenth list item is focused");
+	});
+
+	it("Should focus the first item/group header from the suggestions popover with PAGEUP", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("a");
+
+		// Moving focus to suggestions popover, because by design HOME only moves the caret if focus is on input
+		await suggestionsInput.keys("ArrowDown");
+
+		await suggestionsInput.keys("PageDown");
+		await suggestionsInput.keys("PageUp");
+
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupheader");
+
+		assert.strictEqual(await suggestionsInput.getValue(), "a", "No item has been selected");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
 	});
 });
 

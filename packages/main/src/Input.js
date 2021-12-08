@@ -465,12 +465,12 @@ const metadata = {
  * to enable the suggestions functionality.
  *
  * <h3>Keyboard Handling</h3>
- * When the <code>ui5-input</code> is focused, the following keyboard shortcuts are available:
+ * The <code>ui5-input</code> provides the following keyboard shortcuts:
  * <br>
  *
  * <ul>
  * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
- * <li>[ESC] - Closes the suggestion list, if open. If closed, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
+ * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
  * <li>[LEFT] - Moves caret one letter to the left. If caret is at the leftmost position, does nothing. If text is selected, moves caret to the beginning of the selection and removes the selection.</li>
  * <li>[RIGHT] - Moves caret one letter to the right. If caret is at the rightmost position, does nothing. If text is selected, moves caret to the end of the selection and removes the selection.</li>
  * <li>Any printable character - When text is selected, it gets overwritten by the new text.</li>
@@ -489,10 +489,10 @@ const metadata = {
  * <li>[ENTER] or [RETURN] - Takes over the current matching item from the suggestion list (if open) and closes it. If value state or group header is focused, does nothing.</li>
  * <li>[DOWN] - Focuses the next matching item in the suggestion list (if available) and updates the Input accordingly. If list is not shown, does nothing.</li>
  * <li>[UP] - Focuses the previous matching item in the suggestion list (if available) and updates the Input accordingly. If list is not shown, does nothing.</li>
+ * <li>[HOME] - If focus is in the text input, moves text caret before the first typed character. If focus is in the list, highlights the first item, no matter if data item or value state header, and update the input field accordingly if a data item is focused.</li>
+ * <li>[END] - If focus is in the text input, moves text caret after the last typed character. If focus is in the list, highlights the last item, no matter if data item or value state header and updates the input field accordingly if a data item is focused.</li>
  * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
- * <li>[PAGEDOWN] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing</li>
- * <li>[HOME] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
- * <li>[END] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing</li>
+ * <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -726,12 +726,16 @@ class Input extends UI5Element {
 	_handlePageUp(event) {
 		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onPageUp(event);
+		} else {
+			event.preventDefault();
 		}
 	}
 
 	_handlePageDown(event) {
 		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onPageDown(event);
+		} else {
+			event.preventDefault();
 		}
 	}
 

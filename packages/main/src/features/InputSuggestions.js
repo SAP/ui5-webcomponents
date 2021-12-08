@@ -159,7 +159,7 @@ class Suggestions {
 			this._scrollItemIntoView(this._getItems()[0]);
 			return true;
 		}
-		
+
 		this.component._isValueStateFocused = false;
 
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
@@ -171,7 +171,7 @@ class Suggestions {
 		const lastItemIndex = this._getItems().length - 1;
 		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && !lastItemIndex){
+		if (hasValueState && !lastItemIndex) {
 			this._focusValueState();
 			this._deselectItems();
 			return true;
