@@ -465,8 +465,7 @@ const metadata = {
  * to enable the suggestions functionality.
  *
  * <h3>Keyboard Handling</h3>
- * When the <code>ui5-input</code> is focused, the user can change the rating
- * with the following keyboard shortcuts:
+ * When the <code>ui5-input</code> is focused, the following keyboard shortcuts are available:
  * <br>
  *
  * <ul>
@@ -477,6 +476,23 @@ const metadata = {
  * <li>Any printable character - When text is selected, it gets overwritten by the new text.</li>
  * <li>[CTRL]+[A] - Selects the whole content of the Input field.</li>
  * <li>[DEL] - Deletes the letter on the right of the caret. If text is selected, deletes the whole selection. If text is selected due to a suggestion, also closes the suggestion list box.</li>
+ * <li>[BACKSPACE] - Deletes the letter on the left of the caret. If text is selected, deletes the whole selection. If text is selected due to a suggestion, also closes the suggestion list box.</li>
+ * <li>[SHIFT]+[LEFT] - Selects text to the left starting from the caret position.</li>
+ * <li>[SHIFT]+[RIGHT] - Selects text to the right starting from the caret position.</li>
+ * <li>[SHIFT]+[HOME] or [SHIFT]+[UP] - Selects <b>all</b> text to the left starting from the caret position.</li>
+ * <li>[SHIFT]+[END] or [SHIFT]+[DOWN] - Selects <b>all</b> text to the right starting from the caret position.</li>
+ * <li>[CTRL]+[LEFT] - Moves caret to the beginning of the previous word.</li>
+ * <li>[CTRL]+[RIGHT] - Moves caret to the beginning of the next word.</li>
+ * <li>[CTRL]+[C] or [CTRL]+[INSERT] - Copies the selected text to the clipboard.</li>
+ * <li>[CTRL]+[X] or [SHIFT]+[DEL] - Cuts the selected text and copies it to the clipboard.</li>
+ * <li>[CTRL]+[V] or [SHIFT]+[INSERT] - Pastes the selected text from the clipboard to the caret position.</li>
+ * <li>[ENTER] or [RETURN] - Takes over the current matching item from the suggestion list (if open) and closes it. If value state or group header is focused, does nothing.</li>
+ * <li>[DOWN] - Focuses the next matching item in the suggestion list (if available) and updates the Input accordingly. If list is not shown, does nothing.</li>
+ * <li>[UP] - Focuses the previous matching item in the suggestion list (if available) and updates the Input accordingly. If list is not shown, does nothing.</li>
+ * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * <li>[PAGEDOWN] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing</li>
+ * <li>[HOME] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * <li>[END] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -708,25 +724,25 @@ class Input extends UI5Element {
 	}
 
 	_handlePageUp(event) {
-		if (this.Suggestions && this.Suggestions.isOpened()) {
+		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onPageUp(event);
 		}
 	}
 
 	_handlePageDown(event) {
-		if (this.Suggestions && this.Suggestions.isOpened()) {
+		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onPageDown(event);
 		}
 	}
 
 	_handleHome(event) {
-		if (this.Suggestions && this.Suggestions.isOpened()) {
+		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onHome(event);
 		}
 	}
 
 	_handleEnd(event) {
-		if (this.Suggestions && this.Suggestions.isOpened()) {
+		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onEnd(event);
 		}
 	}

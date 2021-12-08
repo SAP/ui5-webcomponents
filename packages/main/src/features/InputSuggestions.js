@@ -114,6 +114,17 @@ class Suggestions {
 	onPageUp(event) {
 		event.preventDefault();
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
+		const hasValueState = this.component.hasValueStateMessage;
+
+		if (hasValueState && !isItemIndexValid) {
+			this._focusValueState();
+			this._deselectItems();
+			this._scrollItemIntoView(this._getItems()[0]);
+			return true;
+		}
+
+		this.component._isValueStateFocused = false;
+
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex -= 10 : this.selectedItemIndex = 0);
 		return true;
@@ -121,8 +132,18 @@ class Suggestions {
 
 	onPageDown(event) {
 		event.preventDefault();
-		const lastItemIndex = this._getItems().length - 1;
+		const items = this._getItems();
+		const lastItemIndex = items.length - 1;
 		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
+		const hasValueState = this.component.hasValueStateMessage;
+
+		if (hasValueState && !items) {
+			this._focusValueState();
+			return true;
+		}
+
+		this.component._isValueStateFocused = false;
+
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex += 10 : this.selectedItemIndex = lastItemIndex);
 		return true;
@@ -130,6 +151,17 @@ class Suggestions {
 
 	onHome(event) {
 		event.preventDefault();
+		const hasValueState = this.component.hasValueStateMessage;
+
+		if (hasValueState) {
+			this._focusValueState();
+			this._deselectItems();
+			this._scrollItemIntoView(this._getItems()[0]);
+			return true;
+		}
+		
+		this.component._isValueStateFocused = false;
+
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
 		return true;
 	}
@@ -137,7 +169,18 @@ class Suggestions {
 	onEnd(event) {
 		event.preventDefault();
 		const lastItemIndex = this._getItems().length - 1;
+		const hasValueState = this.component.hasValueStateMessage;
+
+		if (hasValueState && !lastItemIndex){
+			this._focusValueState();
+			this._deselectItems();
+			return true;
+		}
+
+		this.component._isValueStateFocused = false;
+
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = lastItemIndex);
+		this._scrollItemIntoView(this._getItems()[lastItemIndex]);
 		return true;
 	}
 
@@ -317,11 +360,7 @@ class Suggestions {
 		const hasValueState = this.component.hasValueStateMessage;
 
 		if (hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
-			this.component._isValueStateFocused = true;
-			this.component.focused = false;
-			this.component.hasSuggestionItemSelected = false;
-			this.selectedItemIndex = null;
-
+			this._focusValueState();
 			return;
 		}
 
@@ -524,6 +563,13 @@ class Suggestions {
 
 	sanitizeText(text) {
 		return encodeXML(text);
+	}
+
+	_focusValueState() {
+		this.component._isValueStateFocused = true;
+		this.component.focused = false;
+		this.component.hasSuggestionItemSelected = false;
+		this.selectedItemIndex = null;
 	}
 
 	static get dependencies() {
