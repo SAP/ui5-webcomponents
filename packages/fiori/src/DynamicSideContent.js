@@ -359,9 +359,6 @@ class DynamicSideContent extends UI5Element {
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
 			scSpan = this._toggled ? this._mcSpan : this._scSpan,
 			classes = {
-				root: {
-					"ui5-dsc-root": true,
-				},
 				main: {
 					"ui5-dsc-main": true,
 				},
@@ -384,7 +381,6 @@ class DynamicSideContent extends UI5Element {
 
 		return {
 			root: {
-				"height": "100%",
 				"flex-wrap": this._mcSpan === "12" ? "wrap" : "nowrap",
 			},
 			main: {

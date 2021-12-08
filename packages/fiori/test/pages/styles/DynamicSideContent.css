@@ -13,14 +13,15 @@ body, html {
 	padding: 0.5rem;
 }
 
-:root {
-	--_ui5_input_width: 10rem !important;
-}
-
 .breakpointBadge {
 	display: none;
 }
 
 .invisible {
 	display: none;
+}
+
+.smaller-select {
+	width: 10rem;
+	min-width: 10rem;
 }
