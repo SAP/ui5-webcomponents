@@ -4,8 +4,7 @@
 
 :host,
 .ui5-media-gallery-display-wrapper,
-.ui5-media-gallery-display,
-ui5-carousel {
+.ui5-media-gallery-display {
     width: 100%;
 }
 
@@ -53,6 +52,15 @@ ui5-carousel {
 
 .ui5-media-gallery-display [ui5-media-gallery-item] {
     z-index: 1;
+}
+
+/* mobile platform */
+[ui5-carousel] {
+    width: calc(100% - 2rem);
+}
+[ui5-carousel]::part(item) {
+    padding: 0;
+    overflow: hidden;
 }
 
 /* THUMBNAILS */
