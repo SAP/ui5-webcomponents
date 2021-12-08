@@ -246,11 +246,11 @@ class Link extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const needsNoReferrer = this.target === "_blank"
+		const needsNoReferrer = this.target !== "_self"
 			&& this.href
 			&& this._isCrossOrigin();
-
-		this._rel = needsNoReferrer ? "noreferrer" : undefined;
+		
+		this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
 	}
 
 	_isCrossOrigin() {
