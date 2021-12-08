@@ -36,27 +36,23 @@ describe("List Tests", () => {
 
 	it("itemPress and selectionChange events are fired in Single selection", async () => {
 		const itemPressResultField = await browser.$("#itemPressResultField");
-		const itemPressSelectedResultField = await browser.$("#itemPressSelectedResultField");
 		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
 		const firstItem = await browser.$("#listEvents #country1");
 
 		await firstItem.click();
 
 		assert.strictEqual(await itemPressResultField.getProperty("value"), "1", "itemPress event has been fired once");
-		assert.strictEqual(await itemPressSelectedResultField.getProperty("value"), "true", "itemPress detail 'item' has correct value.");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
 	it("itemPress and selectionChange events are fired in Multi selection", async () => {
 		const itemPressResultField2 = await browser.$("#itemPressResultField2");
-		const itemPressSelectedResultField2 = await browser.$("#itemPressSelectedResultField2");
 		const selectionChangeResultField2 = await browser.$("#selectionChangeResultField2");
 		const firstItem = await browser.$("#listEvents2 #country11");
 
 		await firstItem.click();
 
 		assert.strictEqual(await itemPressResultField2.getProperty("value"), "1", "itemPress event has been fired once");
-		assert.strictEqual(await itemPressSelectedResultField2.getProperty("value"), "true", "itemPress detail 'item' has correct value.");
 		assert.strictEqual(await selectionChangeResultField2.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
