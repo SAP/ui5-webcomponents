@@ -176,7 +176,7 @@ const metadata = {
  * </li>
  * <li>[UP], [RIGHT] <br>
  * 		<ul>
- * 			<li> If focus is on a WizardProgressNavAnchor, focus moves forward through the WizardProgressNavAnchor.</li>
+ * 			<li> If focus is on a WizardProgressNavAnchor, focus moves forward to the WizardProgressNavAnchor.</li>
  * 			<li> If focus is on the last WizardProgressNavAnchor, nothing happens – focus does not loop.</li>
  * 			<li> If the visual estate is to small to present all items, the list scrolls accordingly.</li>
  * 			<li> If there are disabled steps or anchors, the disabled items will also get focused by using the arrow keys. (Consistency to menu navigation, where disabled menu items are als focusable).</li>
