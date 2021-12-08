@@ -772,7 +772,7 @@ class Input extends UI5Element {
 	}
 
 	_handleInput(event) {
-		const inputDomRef = this.getInputDOMRef();
+		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
@@ -1012,7 +1012,16 @@ class Input extends UI5Element {
 		return "";
 	}
 
-	getInputDOMRef() {
+	async getInputDOMRef() {
+		if (isPhone() && this.Suggestions) {
+			await this.Suggestions._getSuggestionPopover();
+			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		}
+
+		return this.nativeInput;
+	}
+
+	getInputDOMRefSync() {
 		if (isPhone() && this.Suggestions) {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
