@@ -184,7 +184,7 @@ const metadata = {
  * </li>
  * <li>[SPACE] or [ENTER], [RETURN]- Select an active step</li>
  * <li>[HOME] or [PAGE UP]- Focus on the first step</li>
- * <li>[END] or [PAGE DOWN]	- Focus on the last step</li>
+ * <li>[END] or [PAGE DOWN]	- Focus goes to the last step</li>
  * </ul>
  *
  * <h4>Content</h4>
