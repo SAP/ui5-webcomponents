@@ -9,7 +9,7 @@
 				{{#if isMultiSelect}}
 					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
 						<ui5-checkbox class="ui5-table-select-all-checkbox"
-							?checked="{{_allRowsSelected}}"
+							?checked="{{this._allRowsSelected}}"
 							@ui5-change="{{_selectAll}}"
 							aria-label="{{ariaLabelSelectAllText}}"
 						>
