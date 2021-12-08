@@ -183,7 +183,7 @@ const metadata = {
  * 		</ul>
  * </li>
  * <li>[SPACE] or [ENTER], [RETURN]- Select an active step</li>
- * <li>[HOME] or [PAGE UP]- Focus on the first step</li>
+ * <li>[HOME] or [PAGE UP]- Focus goes to the first step</li>
  * <li>[END] or [PAGE DOWN]	- Focus goes to the last step</li>
  * </ul>
  *
