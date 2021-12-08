@@ -372,7 +372,7 @@ class MediaGallery extends UI5Element {
 
 		const items = this._visibleItems.filter(item => !item.disabled);
 
-		if (this._showOverflowBtn) {
+		if (this._overflowBtn) {
 			items.push(this._overflowBtn);
 		}
 		return items;
