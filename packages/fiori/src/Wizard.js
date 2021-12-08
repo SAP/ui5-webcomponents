@@ -161,7 +161,7 @@ const metadata = {
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
  * <h3>Keyboard Handling</h3>
- * The user can interact with the navigation through the following keyboard shortcuts:
+ * The user can navigate using the following keyboard shortcuts:
  * <br>
  *
  * <h4>Wizard Progress Navigation</h4>
