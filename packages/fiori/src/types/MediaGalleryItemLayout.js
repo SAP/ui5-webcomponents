@@ -7,14 +7,17 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 const MediaGalleryItemLayouts = {
 
 	/**
-	 * TODO
+	 * Recommended to use when the item contains an image.<br>
+	 * When a thumbnail is selected, makes the corresponding enlarged content appear in a square display area.
 	 * @public
 	 * @type {Square}
 	 */
 	 Square: "Square",
 
 	/**
-	 * TODO
+	 * Recommended to use when the item contains video content.<br>
+	 * When a thumbnail is selected, makes the corresponding enlarged content appear in a wide display area
+	 * (stretched to fill all of the available width) for optimal user experiance.
 	 * @public
 	 * @type {Wide}
 	 */
