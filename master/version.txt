@@ -1,7 +1,5 @@
-commit 0e41f41c6732a30083042a908f284a37f803e2cb
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Tue Dec 7 13:21:00 2021 +0200
+commit d9731626cf9c6b9a0b54b80969f5bfd375ef720e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Dec 8 13:28:17 2021 +0200
 
-    feat(ui5-rating-indicator): add full keyboard support (#4411)
-    
-    The keyboard specification for RatingIndicator is now fully adopted.
+    fix(ui5-input): fix event handling in firefox (#4447)
