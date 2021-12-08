@@ -14,8 +14,6 @@
     width: 100%;
     height: 100%;
     display: flex;
-    /* align-items: center;
-    justify-content: center; */
 }
 
 :host([_square]) .ui5-media-gallery-item-root {
@@ -24,7 +22,7 @@
     left: 0;
 }
 
-:host([layout-type="Wide"]) .ui5-media-gallery-item-root {
+:host([layout="Wide"]) .ui5-media-gallery-item-root {
     align-items: center;
 }
 
@@ -63,16 +61,16 @@
     justify-content: center;
 }
 
-:host([layout-type="Wide"]) .ui5-media-gallery-item-wrapper {
+:host([layout="Wide"]) .ui5-media-gallery-item-wrapper {
     z-index: 1;
 }
 
-:host([layout-type="Wide"]:not([_thumbnail-design])) .ui5-media-gallery-item-wrapper {
+:host([layout="Wide"]:not([_thumbnail-design])) .ui5-media-gallery-item-wrapper {
     height: calc(100% / 16 * 9);
 }
 
 /* resource not found icon */
-ui5-icon {
+[ui5-icon] {
     position: absolute;
     width: 4.5rem;
     height: 4.55rem;
@@ -85,6 +83,10 @@ ui5-icon {
     left: 0;
     right: 0;
     bottom: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 :host(:not([_thumbnail-design])) .ui5-media-gallery-item-mask-layer {
@@ -92,10 +94,10 @@ ui5-icon {
     background: var(--sapBaseColor);
     mix-blend-mode: multiply;
     opacity: 0.2;
-    box-shadow: inset 0px 0px 80px rgba(0, 0, 0, 0.2); /* var(--sapMediaGallery_Shadow); */
+    box-shadow: var(--_ui5_media_gallery_item_overlay_box_shadow);
 }
 
-:host(:not([_thumbnail-design])[layout-type="Wide"]) .ui5-media-gallery-item-mask-layer {
+:host(:not([_thumbnail-design])[layout="Wide"]) .ui5-media-gallery-item-mask-layer {
     z-index: 0;
 }
 
@@ -113,7 +115,7 @@ ui5-icon {
 
 /* stretch the slotted thumbnails and videos */
 ::slotted([slot^=thumbnail]),
-:host([layout-type="Wide"]) ::slotted(*) {
+:host([layout="Wide"]) ::slotted(*) {
     width: 100%;
     height: 100%;
     object-fit: cover;

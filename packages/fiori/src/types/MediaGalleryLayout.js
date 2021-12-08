@@ -1,10 +1,10 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.fiori.types.MediaGalleryLayoutType.prototype
+ * @lends sap.ui.webcomponents.fiori.types.MediaGalleryLayout.prototype
  * @public
  */
-const MediaGalleryLayoutTypes = {
+const MediaGalleryLayouts = {
 
 	/**
 	 * The layout is determined automatically
@@ -33,16 +33,16 @@ const MediaGalleryLayoutTypes = {
  * Defines the layout type of the thumbnails list of the MediaGallery component.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.MediaGalleryLayoutType
+ * @alias sap.ui.webcomponents.fiori.types.MediaGalleryLayout
  * @public
  * @enum {string}
  */
-class MediaGalleryLayoutType extends DataType {
+class MediaGalleryLayout extends DataType {
 	static isValid(value) {
-		return !!MediaGalleryLayoutTypes[value];
+		return !!MediaGalleryLayouts[value];
 	}
 }
 
-MediaGalleryLayoutType.generateTypeAccessors(MediaGalleryLayoutTypes);
+MediaGalleryLayout.generateTypeAccessors(MediaGalleryLayouts);
 
-export default MediaGalleryLayoutType;
+export default MediaGalleryLayout;

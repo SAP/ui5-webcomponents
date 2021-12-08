@@ -13,8 +13,8 @@ import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit
 // Styles
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
-import MediaGalleryItemLayoutType from "./types/MediaGalleryItemLayoutType.js";
-import MediaGalleryLayoutType from "./types/MediaGalleryLayoutType.js";
+import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
+import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
 import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
 import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
 
@@ -89,12 +89,12 @@ const metadata = {
 		 * <li><code>Vertical</code></li>
 		 * <li><code>Horizontal</code></li>
 		 * </ul>
-		 * @type {MediaGalleryLayoutType}
+		 * @type {MediaGalleryLayout}
 		 * @defaultvalue "Auto"
 		 * @public
 		 */
-		 layoutType: {
-			type: MediaGalleryLayoutType,
+		 layout: {
+			type: MediaGalleryLayout,
 			defaultValue: "Auto",
 		},
 
@@ -146,12 +146,12 @@ const metadata = {
 		 * <li><code>Vertical</code></li>
 		 * <li><code>Horizontal</code></li>
 		 * </ul>
-		 * @type {MediaGalleryLayoutType}
+		 * @type {MediaGalleryLayout}
 		 * @defaultvalue "Vertical"
 		 * @private
 		 */
-		 effectiveLayoutType: {
-			type: MediaGalleryLayoutType,
+		 effectiveLayout: {
+			type: MediaGalleryLayout,
 			defaultValue: "Vertical",
 		},
 
@@ -284,7 +284,7 @@ class MediaGallery extends UI5Element {
 		}
 
 		this._updateMediaRange(width);
-		this.effectiveLayoutType = this._inferEffectiveLayoutType();
+		this.effectiveLayout = this._infereffectiveLayout();
 		this._overflowSize = this._calculateOverflowSize(width, height);
 
 		this._toggleDisplaySquareSize(this._shouldHaveSquareDisplay);
@@ -300,7 +300,7 @@ class MediaGallery extends UI5Element {
 			return 0;
 		}
 
-		if (this.effectiveLayoutType === MediaGalleryLayoutType.Horizontal) {
+		if (this.effectiveLayout === MediaGalleryLayout.Horizontal) {
 			columnHeight = height - marginSize;
 			columnsCount = this.showAllThumbnails ? COLUMNS_COUNT[this.mediaRange] : 1;
 		} else {
@@ -319,7 +319,7 @@ class MediaGallery extends UI5Element {
 				thumbnailHeight = this._overflowBtnHeight; // UX requirement
 
 			let availableHeight = this.getDomRef().offsetHeight - (2 * marginSize);
-			if (this.effectiveLayoutType === MediaGalleryLayoutType.Vertical) {
+			if (this.effectiveLayout === MediaGalleryLayout.Vertical) {
 				availableHeight -= (thumbnailHeight + marginSize);
 			}
 
@@ -340,12 +340,12 @@ class MediaGallery extends UI5Element {
 		this._mainItem.contentHeight = contentHeight;
 	}
 
-	_inferEffectiveLayoutType() {
-		if (this.layoutType === MediaGalleryLayoutType.Auto) {
-			return (this._isPhoneSize) ? MediaGalleryLayoutType.Vertical
-				: MediaGalleryLayoutType.Horizontal;
+	_infereffectiveLayout() {
+		if (this.layout === MediaGalleryLayout.Auto) {
+			return (this._isPhoneSize) ? MediaGalleryLayout.Vertical
+				: MediaGalleryLayout.Horizontal;
 		}
-		return this.layoutType;
+		return this.layout;
 	}
 
 	_getMaxAllowedThumbnailsInColumn(columnHeight) {
@@ -370,7 +370,7 @@ class MediaGallery extends UI5Element {
 
 		const items = this._visibleItems.filter(item => !item.disabled);
 
-		if (!this._isOverflowBtnHidden) {
+		if (this._showOverflowBtn) {
 			items.push(this._overflowBtn);
 		}
 		return items;
@@ -418,7 +418,7 @@ class MediaGallery extends UI5Element {
 
 		if (newContent) {
 			clone = newContent.cloneNode(true);
-			mainItem.layoutType = item.layoutType;
+			mainItem.layout = item.layout;
 			mainItem.appendChild(clone);
 		}
 	}
@@ -494,8 +494,8 @@ class MediaGallery extends UI5Element {
 		return !isPhone();
 	}
 
-	get _isOverflowBtnHidden() {
-		return this._overflowSize === 0;
+	get _showOverflowBtn() {
+		return this._overflowSize > 0;
 	}
 
 	get _isPhoneSize() {
@@ -503,13 +503,13 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _mainItemHasWideLayout() {
-		return this._mainItem && (this._mainItem.layoutType === MediaGalleryItemLayoutType.Wide);
+		return this._mainItem && (this._mainItem.layout === MediaGalleryItemLayout.Wide);
 	}
 
 	get _shouldHaveWideDisplay() {
 		return this._mainItemHasWideLayout
 			&& this.showAllThumbnails
-			&& (this.effectiveLayoutType === MediaGalleryLayoutType.Horizontal);
+			&& (this.effectiveLayout === MediaGalleryLayout.Horizontal);
 	}
 
 	get _shouldHaveSquareDisplay() {

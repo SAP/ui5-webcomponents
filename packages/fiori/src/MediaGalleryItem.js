@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import MediaGalleryItemLayoutType from "./types/MediaGalleryItemLayoutType.js";
+import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 
 import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
 // Styles
@@ -47,13 +47,13 @@ const metadata = {
 		 * <li><code>Wide</code></li>
 		 * </ul>
 		 *
-		 * @type {MediaGalleryItemLayoutType}
+		 * @type {MediaGalleryItemLayout}
 		 * @defaultvalue "Square"
 		 * @public
 		 */
-		 layoutType: {
-			type: MediaGalleryItemLayoutType,
-			defaultValue: MediaGalleryItemLayoutType.Square,
+		 layout: {
+			type: MediaGalleryItemLayout,
+			defaultValue: MediaGalleryItemLayout.Square,
 		},
 
 		/**
@@ -213,38 +213,39 @@ class MediaGalleryItem extends UI5Element {
 	}
 
 	get _useThumbnail() {
-		return this._thumbnailDesign && this.thumbnail.length;
+		return this._thumbnailDesign && !this._thumbnailNotFound;
 	}
 
 	get _useContent() {
-		return !this._useThumbnail && this.content.length;
+		return !this._thumbnailDesign && !this._contentImageNotFound;
 	}
 
-	get _hideBackgroundIcon() {
-		if (this._useThumbnail) {
-			return !this._thumbnailNotFound;
-		}
-		return !this._contentImageNotFound;
+	get _showBackgroundIcon() {
+		return this._thumbnailNotFound || this._contentImageNotFound;
+	}
+
+	get styles() {
+		return {
+			wrapper: {
+				height: this.contentHeight,
+			},
+		};
 	}
 
 	onBeforeRendering() {
 		this._monitorLoadingError();
 	}
 
-	onAfterRendering() {
-		this._itemWrapper.style.height = this.contentHeight;
-	}
-
 	_monitorLoadingError() {
 		let callback,
 			success;
-		if (this._useThumbnail && (this._monitoredThumbnail !== this._thumbnail)) {
+		if (this._thumbnailDesign && this.thumbnail.length && (this._monitoredThumbnail !== this._thumbnail)) {
 			this._thumbnailNotFound = undefined; // reset flag
 			callback = this._updateThumbnailLoaded;
 			success = this._attachListeners(this._thumbnail, callback);
 			success && (this._monitoredThumbnail = this._thumbnail);
 		}
-		if (this._useContent && (this._monitoredContent !== this._content)) {
+		if (!this._thumbnailDesign && this.content.length && (this._monitoredContent !== this._content)) {
 			this._contentImageNotFound = undefined; // reset flag
 			callback = this._updateContentImageLoaded;
 			success = this._attachListeners(this._content, callback);
@@ -309,10 +310,6 @@ class MediaGalleryItem extends UI5Element {
 
 	_fireItemClick() {
 		this.fireEvent("click", { item: this });
-	}
-
-	get _itemWrapper() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-item-wrapper");
 	}
 
 	static get dependencies() {

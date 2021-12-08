@@ -33,12 +33,13 @@
                             <slot name="{{this._individualSlot}}"></slot>
                         </li>
                 {{/each}}
-                <li class="ui5-media-gallery-overflow"
-                    ?hidden={{_isOverflowBtnHidden}}>
-                    <ui5-button @click="{{_onOverflowBtnClick}}">
-                        +{{_overflowSize}}
-                    </ui5-button>
-                </li>
+                {{#if _showThumbnails}}
+                    <li class="ui5-media-gallery-overflow">
+                        <ui5-button @click="{{_onOverflowBtnClick}}">
+                            +{{_overflowSize}}
+                        </ui5-button>
+                    </li>
+                {{/if}}
             </ul>
         </div>
     {{/if}}

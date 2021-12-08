@@ -8,12 +8,15 @@
     @keyup="{{_onkeyup}}"
 >
     <div class="ui5-media-gallery-item-mask-layer"></div>
-    <div class="ui5-media-gallery-item-wrapper">
-        <ui5-icon name="background" ?hidden="{{_hideBackgroundIcon}}"></ui5-icon>
+    <div class="ui5-media-gallery-item-wrapper" style="{{styles.wrapper}}">
+        {{#if _showBackgroundIcon}}
+            <ui5-icon name="background"/>
+        {{/if}}
+        {{#if _useContent}}
+            <slot/>
+        {{/if}}
         {{#if _useThumbnail}}
-            <slot name="thumbnail" ?hidden="{{_thumbnailNotFound}}"></slot>
-        {{else}}
-            <slot ?hidden="{{_contentImageNotFound}}"></slot>
+            <slot name="thumbnail"/>
         {{/if}}
     </div>
 </div>
