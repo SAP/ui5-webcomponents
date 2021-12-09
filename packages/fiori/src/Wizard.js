@@ -166,25 +166,11 @@ const metadata = {
  *
  * <h4>Wizard Progress Navigation</h4>
  * <ul>
- * <li>[LEFT], [DOWN] <br>
- * 		<ul>
- * 			<li>If focus is on a WizardProgressNavAnchor, focus moves backward to the WizardProgressNavAnchors.</li>
- * 			<li>If focus is on the first WizardProgressNavAnchor, nothing happens – focus does not loop.</li>
- * 			<li>If the visual estate is too small to present all items, the list scrolls accordingly.</li>
- * 			<li>If there are disabled steps or anchors the disabled items will also get focused by using the arrow keys. (Consistent with menu navigation, where disabled menu items are also focusable).</li>
- * 		</ul>
- * </li>
- * <li>[UP], [RIGHT] <br>
- * 		<ul>
- * 			<li> If focus is on a WizardProgressNavAnchor, focus moves forward to the WizardProgressNavAnchor.</li>
- * 			<li> If focus is on the last WizardProgressNavAnchor, nothing happens – focus does not loop.</li>
- * 			<li> If the visual estate is too small to present all items, the list scrolls accordingly.</li>
- * 			<li> If there are disabled steps or anchors, the disabled items will also get focused by using the arrow keys. (Consistent with menu navigation, where disabled menu items are also focusable).</li>
- * 		</ul>
- * </li>
- * <li>[SPACE] or [ENTER], [RETURN]- Select an active step</li>
- * <li>[HOME] or [PAGE UP]- Focus goes to the first step</li>
- * <li>[END] or [PAGE DOWN]	- Focus goes to the last step</li>
+ * 	<li>[LEFT], [DOWN] - Focus moves backward to the WizardProgressNavAnchors.</li>
+ * 	<li>[UP], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.</li>
+ * 	<li>[SPACE] or [ENTER], [RETURN] - Selects an active step</li>
+ * 	<li>[HOME] or [PAGE UP] - Focus goes to the first step</li>
+ * 	<li>[END] or [PAGE DOWN] - Focus goes to the last step</li>
  * </ul>
  *
  * <h4>Content</h4>
