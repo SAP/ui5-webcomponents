@@ -44,6 +44,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
+		 *
 		 * @type {sap.ui.webcomponents.fiori.IMediaGalleryItem[]}
 		 * @slot items
 		 * @public
@@ -60,6 +61,7 @@ const metadata = {
 		 * If set to <code>true</code>, all thumbnails will be rendered in a scrollable container.
 		 * If <code>false</code>, only up to 5 thumbnails will be rendered, followed by
 		 * an overflow button that shows the count of the remaining thumbnails.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -74,6 +76,7 @@ const metadata = {
 		 * <br>
 		 * The display area is the central area that contains
 		 * the enlarged content of the currently selected item.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -91,6 +94,7 @@ const metadata = {
 		 * <li><code>Vertical</code></li>
 		 * <li><code>Horizontal</code></li>
 		 * </ul>
+		 *
 		 * @type {MediaGalleryLayout}
 		 * @defaultvalue "Auto"
 		 * @public
@@ -148,6 +152,7 @@ const metadata = {
 		 * <li><code>Vertical</code></li>
 		 * <li><code>Horizontal</code></li>
 		 * </ul>
+		 *
 		 * @type {MediaGalleryLayout}
 		 * @defaultvalue "Vertical"
 		 * @private
@@ -160,7 +165,6 @@ const metadata = {
 		/**
 		 * Defines the current media query size.
 		 *
-		 * @type {string}
 		 * @private
 		 */
 		mediaRange: {
@@ -169,6 +173,7 @@ const metadata = {
 
 		/**
 		 * The number of items in the overflow.
+		 *
 		 * @private
 		 */
 		_overflowSize: {
@@ -193,6 +198,7 @@ const metadata = {
 
 		/**
 		 * Fired when the thumbnails overflow button is clicked.
+		 *
 		 * @event sap.ui.webcomponents.fiori.MediaGallery#overflow-click
 		 * @public
 		 */

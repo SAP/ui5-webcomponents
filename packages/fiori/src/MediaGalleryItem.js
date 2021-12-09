@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
-
+// Template
 import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
 // Styles
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
@@ -18,6 +18,7 @@ const metadata = {
 
 		/**
 		 * Defines the selected state of the component.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -28,6 +29,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -91,6 +93,7 @@ const metadata = {
 
 		/**
 		 * Indicates whether the element is focused.
+		 *
 		 * @private
 		 */
 		 focused: {
