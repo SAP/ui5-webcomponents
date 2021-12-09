@@ -1,11 +1,5 @@
-commit 7baabfa0f3bdc6c42f6137e153960a808db56c71
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Dec 9 14:23:38 2021 +0200
+commit c36cb57df94a234bfe10d7988bee3c4f9ebad15f
+Author: Nikolay Hristov <53182443+NHristov-sap@users.noreply.github.com>
+Date:   Thu Dec 9 16:06:02 2021 +0200
 
-    fix(ui5-table): check select all checkbox, when all rows are selected programatically (#4455)
-    
-    * fix(ui5-table): check select all checkbox, when all rows are selected programatically
-    
-    * remove change added by mistake
-    
-    * additional test added
+    feat(ui5-dynamic-side-content): initial implementation (#4379)
