@@ -392,6 +392,13 @@ describe("Table general interaction", () => {
 			assert.ok(await thirdRow.getAttribute("selected"), "The third row is selected");
 			assert.ok(await forthRow.getAttribute("selected"), "The forth row is selected");
 			assert.ok(await selectAllCheckBox.getProperty("checked"), "Select all checkbox is checked");
+
+			// act
+			await forthRow.setProperty("selected", false);
+
+			// assert
+			assert.notOk(await forthRow.getAttribute("selected"), "The forth row is not selected");
+			assert.notOk(await selectAllCheckBox.getProperty("checked"), "Select all checkbox is not checked");
 		});
 
 		it("test mouse and keyboard interaction over Active/Inactive row in Default mode", async () => {
