@@ -168,7 +168,7 @@ const metadata = {
 		},
 
 		/**
-		 * The number of items in the overflow
+		 * The number of items in the overflow.
 		 * @private
 		 */
 		_overflowSize: {

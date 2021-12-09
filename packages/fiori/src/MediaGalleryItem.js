@@ -28,8 +28,6 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br><br>
-		 * <b>Note:</b> A disabled component is noninterselected.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -39,7 +37,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the type of content.
+		 * Determines the layout of the item container.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
