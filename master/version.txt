@@ -1,5 +1,9 @@
-commit d9731626cf9c6b9a0b54b80969f5bfd375ef720e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Dec 8 13:28:17 2021 +0200
+commit ac5ac2d71120bcc17cd5644a0ff3e0343daaf8d7
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Thu Dec 9 10:23:12 2021 +0200
 
-    fix(ui5-input): fix event handling in firefox (#4447)
+    fix(ui5-date-picker): enable date value strict parsing (#4428)
+    
+    A validity check is now performed while parsing the date value.
+    
+    Fixes: #4409
