@@ -34,6 +34,7 @@ import "./dist/illustrations/tnt/UnsuccessfulAuth";
 
 // FIORI components
 import Bar from "./dist/Bar.js";
+import DynamicSideContent from "./dist/DynamicSideContent.js";
 import FilterItem from "./dist/FilterItem.js";
 import FilterItemOption from "./dist/FilterItemOption.js";
 import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
