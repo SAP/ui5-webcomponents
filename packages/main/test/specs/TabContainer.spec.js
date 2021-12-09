@@ -78,4 +78,59 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await tab4.getAttribute("aria-posinset"), "3", "The aria-posinset is correct.");
 		assert.strictEqual(await tab4.getAttribute("aria-setsize"), "7", "The aria-setsize is correct.");
 	});
+
+	it("tests start and end overflow behavior", async () => {
+
+		assert.strictEqual(await browser.$("#tabContainerStartAndEndOverflow").getAttribute("tabs-overflow-mode"), "StartAndEnd", "overflow mode is set to StartAndEnd");
+
+		// Resize
+		await browser.setWindowSize(1000, 1080);
+		let tabcontainer = await browser.$("#tabContainerStartAndEndOverflow");
+		let startOverflowButton = await tabcontainer.shadow$(".ui5-tc__startOverflowButton");
+		assert.strictEqual(await startOverflowButton.getProperty("innerText"), "+11", "11 tabs in start overflow");
+
+		await browser.setWindowSize(800, 1080);
+		assert.strictEqual(await startOverflowButton.getProperty("innerText"), "+14", "14 tabs in start overflow");
+
+		// Select
+		const initiallySelectedItem = await tabcontainer.$("[selected]");
+		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Twenty", "Initially selected item is Twenty");
+
+		await startOverflowButton.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerStartAndEndOverflow");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const item = await (await popover.$("ui5-list").$$("ui5-li-custom"))[0];
+
+		assert.strictEqual(await item.getProperty("innerText"), "One", "First item in overflow is 1");
+
+		await item.click()
+		const newlySelectedItem = await tabcontainer.$("[selected]");
+
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "One", "Newly selected item is One");
+	});
+
+	it("tests end overflow behavior", async () => {
+
+		await browser.setWindowSize(1000, 1080);
+
+		let tabcontainer = await browser.$("#tabContainerEndOverflow");
+		let overflowButton = await tabcontainer.shadow$(".ui5-tc__endOverflowButton");
+
+		// Select
+		const initiallySelectedItem = await tabcontainer.$("[selected]");
+		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Thirteen", "Initially selected item is 13");
+
+		await overflowButton.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[11].click();
+
+		const newlySelectedItem = await tabcontainer.$("[selected]");
+
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Twelve", "The first item in the overflow is 12");
+
+	});
+
 });

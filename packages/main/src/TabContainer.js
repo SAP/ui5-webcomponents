@@ -134,6 +134,21 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the overflow select list is displayed.
+		 * <br><br>
+		 * The overflow select list represents a list, where all tab filters are displayed
+		 * so that it's easier for the user to select a specific tab filter.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @deprecated
+		 */
+		showOverflow: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
 		 *
 		 * <br><br>
