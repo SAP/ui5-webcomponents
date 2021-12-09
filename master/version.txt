@@ -1,5 +1,7 @@
-commit c36cb57df94a234bfe10d7988bee3c4f9ebad15f
-Author: Nikolay Hristov <53182443+NHristov-sap@users.noreply.github.com>
-Date:   Thu Dec 9 16:06:02 2021 +0200
+commit abf8f4ff6464a926a262adcb349297fe47b043ec
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Dec 9 07:33:37 2021 -0800
 
-    feat(ui5-dynamic-side-content): initial implementation (#4379)
+    chore: translation delivery (#4459)
+    
+    Change-Id: I78ba118c1985958252749d9b33128a02cb4f7cb2
