@@ -233,7 +233,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * <code>ui5-dynamic-side-content</code> is a layout component that allows additional content
+ * The DynamicSideContent (<code>ui5-dynamic-side-content</code>) is a layout component that allows additional content
  * to be displayed in a way that flexibly adapts to different screen sizes. The side
  * content appears in a container next to or directly below the main content
  * (it doesn't overlay). When the side content is triggered, the main content becomes
@@ -295,7 +295,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/DynamicSideContent";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/DynamicSideContent";</code>
  *
  * @constructor
  * @author SAP SE
