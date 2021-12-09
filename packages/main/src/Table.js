@@ -51,6 +51,7 @@ const metadata = {
 			propertyName: "rows",
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -434,6 +435,7 @@ class Table extends UI5Element {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
 		const rowsCount = this.rows.length;
+		const selectedRows = this.selectedRows;
 
 		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
@@ -455,6 +457,8 @@ class Table extends UI5Element {
 
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
+
+		this._allRowsSelected = selectedRows.length === this.rows.length;
 	}
 
 	onAfterRendering() {
