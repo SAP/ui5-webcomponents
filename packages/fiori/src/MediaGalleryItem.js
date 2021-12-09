@@ -206,16 +206,24 @@ class MediaGalleryItem extends UI5Element {
 		return this.content.length && this.content[0];
 	}
 
-	get tabIndex() {
-		return this.disabled ? undefined : this._tabIndex;
+	get _isThubmnailAvailable() {
+		return this._thumbnail && !this._thumbnailNotFound;
+	}
+
+	get _isContentAvailable() {
+		return this._content && !this._contentNotFound;
 	}
 
 	get _useThumbnail() {
-		return this._thumbnailDesign && !this._thumbnailNotFound;
+		return this._thumbnailDesign && this._isThubmnailAvailable;
 	}
 
 	get _useContent() {
-		return !this._thumbnailDesign && !this._contentImageNotFound;
+		return !this._useThumbnail && this._isContentAvailable;
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : this._tabIndex;
 	}
 
 	get _showBackgroundIcon() {
@@ -243,7 +251,7 @@ class MediaGalleryItem extends UI5Element {
 			success = this._attachListeners(this._thumbnail, callback);
 			success && (this._monitoredThumbnail = this._thumbnail);
 		}
-		if (!this._thumbnailDesign && this.content.length && (this._monitoredContent !== this._content)) {
+		if (!this._useThumbnail && this.content.length && (this._monitoredContent !== this._content)) {
 			this._contentImageNotFound = undefined; // reset flag
 			callback = this._updateContentImageLoaded;
 			success = this._attachListeners(this._content, callback);
