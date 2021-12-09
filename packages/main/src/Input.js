@@ -472,8 +472,8 @@ const metadata = {
  * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
  * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
  * <li>[ENTER] or [RETURN] - Takes over the current matching item from the suggestion list (if open) and closes it. If value state or group header is focused, does nothing.</li>
- * <li>[DOWN] - Focuses the next matching item in the suggestion list (if available) and updates the Input accordingly. If focus is in the input, does nothing.</li>
- * <li>[UP] - Focuses the previous matching item in the suggestion list (if available) and updates the Input accordingly. If focus is in the input, does nothing.</li>
+ * <li>[DOWN] - Focuses the next matching item in the suggestion list (if available) and updates the Input accordingly.</li>
+ * <li>[UP] - Focuses the previous matching item in the suggestion list (if available) and updates the Input accordingly.</li>
  * <li>[HOME] - If focus is in the text input, moves text caret before the first typed character. If focus is in the list, highlights the first item, no matter if data item or value state header, and update the input field accordingly if a data item is focused.</li>
  * <li>[END] - If focus is in the text input, moves text caret after the last typed character. If focus is in the list, highlights the last item, no matter if data item or value state header and updates the input field accordingly if a data item is focused.</li>
  * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
