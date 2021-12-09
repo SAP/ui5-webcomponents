@@ -1,7 +1,5 @@
-commit abf8f4ff6464a926a262adcb349297fe47b043ec
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Dec 9 07:33:37 2021 -0800
+commit a295dc12b2dbee97b6145519665d9323dd33c61b
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Dec 9 23:32:05 2021 +0200
 
-    chore: translation delivery (#4459)
-    
-    Change-Id: I78ba118c1985958252749d9b33128a02cb4f7cb2
+    fix(ui5-slider, ui5-range-slider): remove focus outline on mobile (#4458)
