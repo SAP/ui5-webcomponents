@@ -1,5 +1,11 @@
-commit 1416d42707b0720bd4e19549a8a3f1e8a8c314e1
+commit 7baabfa0f3bdc6c42f6137e153960a808db56c71
 Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Dec 9 14:15:33 2021 +0200
+Date:   Thu Dec 9 14:23:38 2021 +0200
 
-    fix(ui5-wizard): make playground sample fully usable (#4457)
+    fix(ui5-table): check select all checkbox, when all rows are selected programatically (#4455)
+    
+    * fix(ui5-table): check select all checkbox, when all rows are selected programatically
+    
+    * remove change added by mistake
+    
+    * additional test added
