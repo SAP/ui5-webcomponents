@@ -73,7 +73,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
+		 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
 		 * the default button will be used.
 		 *
 		 * @type {sap.ui.webcomponents.main.IButton}
@@ -134,20 +134,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the overflow select list is displayed.
-		 * <br><br>
-		 * The overflow select list represents a list, where all tab filters are displayed
-		 * so that it's easier for the user to select a specific tab filter.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showOverflow: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
 		 *
 		 * <br><br>
@@ -172,12 +158,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the overflow mode of the tab strip.
+		 * Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible.
+		 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
-		 * Only one overflow  at the end would be displayed by default,
-		 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends.
+		 * Only one overflow at the end would be displayed by default,
+		 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
 		 *
 		 * <br><br>
 		 * Available options are:
