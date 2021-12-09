@@ -471,24 +471,9 @@ const metadata = {
  * <ul>
  * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
  * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
- * <li>[LEFT] - Moves caret one letter to the left. If caret is at the leftmost position, does nothing. If text is selected, moves caret to the beginning of the selection and removes the selection.</li>
- * <li>[RIGHT] - Moves caret one letter to the right. If caret is at the rightmost position, does nothing. If text is selected, moves caret to the end of the selection and removes the selection.</li>
- * <li>Any printable character - When text is selected, it gets overwritten by the new text.</li>
- * <li>[CTRL]+[A] - Selects the whole content of the Input field.</li>
- * <li>[DEL] - Deletes the letter on the right of the caret. If text is selected, deletes the whole selection. If text is selected due to a suggestion, also closes the suggestion list box.</li>
- * <li>[BACKSPACE] - Deletes the letter on the left of the caret. If text is selected, deletes the whole selection. If text is selected due to a suggestion, also closes the suggestion list box.</li>
- * <li>[SHIFT]+[LEFT] - Selects text to the left starting from the caret position.</li>
- * <li>[SHIFT]+[RIGHT] - Selects text to the right starting from the caret position.</li>
- * <li>[SHIFT]+[HOME] or [SHIFT]+[UP] - Selects <b>all</b> text to the left starting from the caret position.</li>
- * <li>[SHIFT]+[END] or [SHIFT]+[DOWN] - Selects <b>all</b> text to the right starting from the caret position.</li>
- * <li>[CTRL]+[LEFT] - Moves caret to the beginning of the previous word.</li>
- * <li>[CTRL]+[RIGHT] - Moves caret to the beginning of the next word.</li>
- * <li>[CTRL]+[C] or [CTRL]+[INSERT] - Copies the selected text to the clipboard.</li>
- * <li>[CTRL]+[X] or [SHIFT]+[DEL] - Cuts the selected text and copies it to the clipboard.</li>
- * <li>[CTRL]+[V] or [SHIFT]+[INSERT] - Pastes the selected text from the clipboard to the caret position.</li>
  * <li>[ENTER] or [RETURN] - Takes over the current matching item from the suggestion list (if open) and closes it. If value state or group header is focused, does nothing.</li>
- * <li>[DOWN] - Focuses the next matching item in the suggestion list (if available) and updates the Input accordingly. If list is not shown, does nothing.</li>
- * <li>[UP] - Focuses the previous matching item in the suggestion list (if available) and updates the Input accordingly. If list is not shown, does nothing.</li>
+ * <li>[DOWN] - Focuses the next matching item in the suggestion list (if available) and updates the Input accordingly. If focus is in the input, does nothing.</li>
+ * <li>[UP] - Focuses the previous matching item in the suggestion list (if available) and updates the Input accordingly. If focus is in the input, does nothing.</li>
  * <li>[HOME] - If focus is in the text input, moves text caret before the first typed character. If focus is in the list, highlights the first item, no matter if data item or value state header, and update the input field accordingly if a data item is focused.</li>
  * <li>[END] - If focus is in the text input, moves text caret after the last typed character. If focus is in the list, highlights the last item, no matter if data item or value state header and updates the input field accordingly if a data item is focused.</li>
  * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
