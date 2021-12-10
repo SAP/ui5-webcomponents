@@ -1,16 +1,7 @@
-commit 12d3e8a6fed6849cc23905e3a959d0ddeef4c0d6
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Dec 10 12:11:31 2021 +0200
+commit 2a9ed2a8d97d5148f72225d5f7fbc76fa239ece8
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Fri Dec 10 14:31:02 2021 +0200
 
-    feat(ui5-list): preventable item-click event (#4448)
+    fix(ui5-card): adjust some classes in Playground samples (#4462)
     
-    * feat(ui5-list): preventable item-click event
-    
-    In this change we introduce the preventable behaviour of the item-click
-    event in the List component.
-    
-    * fixed name of test
-    
-    * fixed failing tests
-    
-    additionally the press and click events are now fired before selection
+    Fixes: #4200
