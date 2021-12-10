@@ -835,8 +835,8 @@ class Input extends UI5Element {
 		});
 	}
 
-	async _handleInput(event) {
-		const inputDomRef = await this.getInputDOMRef();
+	_handleInput(event) {
+		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
@@ -1079,6 +1079,14 @@ class Input extends UI5Element {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
+			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		}
+
+		return this.nativeInput;
+	}
+
+	getInputDOMRefSync() {
+		if (isPhone() && this.Suggestions) {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
