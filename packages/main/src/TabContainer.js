@@ -336,7 +336,7 @@ class TabContainer extends UI5Element {
 		// update selected tab
 		const tabs = this._getTabs();
 		if (tabs.length) {
-			const selectedTabs = this._getTabs().filter(tab => tab.selected);
+			const selectedTabs = tabs.filter(tab => tab.selected);
 			if (selectedTabs.length) {
 				this._selectedTab = selectedTabs[0];
 			} else {
