@@ -1,7 +1,5 @@
-commit 2a9ed2a8d97d5148f72225d5f7fbc76fa239ece8
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Fri Dec 10 14:31:02 2021 +0200
+commit 755599d3428988466fa9652aee1a3f5e6f23e817
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Dec 10 15:29:11 2021 +0200
 
-    fix(ui5-card): adjust some classes in Playground samples (#4462)
-    
-    Fixes: #4200
+    fix(ui5-multi-combobox): make readonly component focusable on mobile device (#4456)
