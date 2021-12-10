@@ -116,6 +116,16 @@ const metadata = {
 		},
 
 		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.3
+		 */
+		 ariaExpanded: {
+			type: String,
+		},
+
+		/**
 		 * Defines the aria-haspopup value of the component.
 		 *
 		 * @type String
