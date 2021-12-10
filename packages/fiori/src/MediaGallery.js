@@ -323,12 +323,11 @@ class MediaGallery extends UI5Element {
 
 		if (enable) {
 			const marginSize = MediaGallery.THUMBNAIL_MARGIN,
-				width = this._display.offsetWidth,
-				thumbnailHeight = this._overflowBtnHeight; // UX requirement
+				width = this._display.offsetWidth;
 
 			let availableHeight = this.getDomRef().offsetHeight - (2 * marginSize);
 			if (this.effectiveLayout === MediaGalleryLayout.Vertical) {
-				availableHeight -= (thumbnailHeight + marginSize);
+				availableHeight -= (MediaGallery.THUMBNAIL_HEIGHT + marginSize);
 			}
 
 			if (width > availableHeight) {
@@ -357,8 +356,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	_getMaxAllowedThumbnailsInColumn(columnHeight) {
-		const thumbnailHeight = this._overflowBtnHeight; // UX requirement
-		let maxAllowedItems = Math.floor(columnHeight / thumbnailHeight);
+		let maxAllowedItems = Math.floor(columnHeight / MediaGallery.THUMBNAIL_HEIGHT);
 		if (!this.showAllThumbnails) {
 			maxAllowedItems = Math.min(maxAllowedItems, 5);
 		}
@@ -526,14 +524,6 @@ class MediaGallery extends UI5Element {
 		return !this._shouldHaveWideDisplay;
 	}
 
-	get _overflowBtnHeight() {
-		const overflowBtn = this._overflowBtn;
-		if (overflowBtn) {
-			return overflowBtn.offsetHeight + MediaGallery.THUMBNAIL_MARGIN;
-		}
-		return 0;
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -564,6 +554,10 @@ class MediaGallery extends UI5Element {
 			Button,
 			Carousel,
 		];
+	}
+
+	static get THUMBNAIL_HEIGHT() {
+		return 80; // px
 	}
 
 	static get THUMBNAIL_MARGIN() {
