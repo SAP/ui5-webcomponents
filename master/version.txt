@@ -1,5 +1,16 @@
-commit b3e715058c8f3de8d10a28f10932d79286addf82
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Dec 10 10:12:51 2021 +0200
+commit 12d3e8a6fed6849cc23905e3a959d0ddeef4c0d6
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Dec 10 12:11:31 2021 +0200
 
-    docs(ui5-dynamic-side-content): fix ES6 module import in docs (#4465)
+    feat(ui5-list): preventable item-click event (#4448)
+    
+    * feat(ui5-list): preventable item-click event
+    
+    In this change we introduce the preventable behaviour of the item-click
+    event in the List component.
+    
+    * fixed name of test
+    
+    * fixed failing tests
+    
+    additionally the press and click events are now fired before selection
