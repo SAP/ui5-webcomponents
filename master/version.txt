@@ -1,5 +1,5 @@
-commit a295dc12b2dbee97b6145519665d9323dd33c61b
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Dec 9 23:32:05 2021 +0200
+commit b3e715058c8f3de8d10a28f10932d79286addf82
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Dec 10 10:12:51 2021 +0200
 
-    fix(ui5-slider, ui5-range-slider): remove focus outline on mobile (#4458)
+    docs(ui5-dynamic-side-content): fix ES6 module import in docs (#4465)
