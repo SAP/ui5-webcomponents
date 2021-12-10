@@ -11,7 +11,12 @@ import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
+import {
+	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
+	TABCONTAINER_NEXT_ICON_ACC_NAME,
+	TABCONTAINER_OVERFLOW_MENU_TITLE,
+	TABCONTAINER_END_OVERFLOW,
+} from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
@@ -30,7 +35,6 @@ import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
 const tabStyles = [];
 const staticAreaTabStyles = [];
-const defaultOverflowText = "MORE";
 
 /**
  * @public
@@ -79,7 +83,7 @@ const metadata = {
 		 * @type {sap.ui.webcomponents.main.IButton}
 		 * @public
 		 * @slot
-		 * @since 1.0.0-rc.9
+		 * @since 1.0
 		 */
 		startOverflowButton: {
 			type: HTMLElement,
@@ -224,13 +228,12 @@ const metadata = {
 		_startOverflowText: {
 			type: String,
 			noAttribute: true,
-			defaultValue: defaultOverflowText,
 		},
 
 		_endOverflowText: {
 			type: String,
 			noAttribute: true,
-			defaultValue: defaultOverflowText,
+			defaultValue: "More",
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -505,35 +508,26 @@ class TabContainer extends UI5Element {
 		return slideUp({ element }).promise();
 	}
 
-	async _onStartOverflowButtonClick(event) {
-		const button = this.startOverflowButton[0] || this.getDomRef().querySelector(".ui5-tc__startOverflowButton > [ui5-button]");
+	async _onOverflowButtonClick(event) {
+		let button;
+		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__endOverflowButton");
+		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__startOverflowButton");
 
-		if (event.target !== button) {
+		if (!event.currentTarget.classList.contains("ui5-tc__overflowButton")) {
 			return;
 		}
 
-		this.items.forEach(item => {
-			item.isInEndOverflow = false;
-		});
-
-		this.responsivePopover = await this._respPopover();
-		if (this.responsivePopover.opened) {
-			this.responsivePopover.close();
-		} else {
-			this.responsivePopover.showAt(button);
+		if (isEndOverflow) {
+			button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__endOverflowButton > [ui5-button]");
+			this.items.forEach(item => {
+				item.isInEndOverflow = true;
+			});
+		} else if (isStartOverflow) {
+			button = this.startOverflowButton[0] || this.getDomRef().querySelector(".ui5-tc__startOverflowButton > [ui5-button]");
+			this.items.forEach(item => {
+				item.isInEndOverflow = false;
+			});
 		}
-	}
-
-	async _onEndOverflowButtonClick(event) {
-		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__endOverflowButton > [ui5-button]");
-
-		if (event.target !== button) {
-			return;
-		}
-
-		this.items.forEach(item => {
-			item.isInEndOverflow = true;
-		});
 
 		this.responsivePopover = await this._respPopover();
 		if (this.responsivePopover.opened) {
@@ -549,7 +543,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_setItemsForStrip() {
-		const headerScrollContainer = this._getHeaderScrollContainer();
+		const tabsInStripContainer = this._getTabsInStripContainer();
 		let allItemsWidth = 0;
 
 		if (!this._selectedTab) {
@@ -573,7 +567,7 @@ class TabContainer extends UI5Element {
 			allItemsWidth += this._getItemWidth(item);
 		});
 
-		const hasOverflow = headerScrollContainer.offsetWidth < allItemsWidth;
+		const hasOverflow = tabsInStripContainer.offsetWidth < allItemsWidth;
 
 		if (!hasOverflow) {
 			this._closeRespPopover();
@@ -597,7 +591,7 @@ class TabContainer extends UI5Element {
 		this._getHeaderEndOverflowButton().removeAttribute("hidden");
 
 		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
-		const containerWidth = this._getHeaderScrollContainer().offsetWidth;
+		const containerWidth = this._getTabsInStripContainer().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const lastVisibleTabIndex = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
@@ -609,7 +603,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_updateStartAndEndOverflow(itemsDomRefs) {
-		let containerWidth = this._getHeaderScrollContainer().offsetWidth;
+		let containerWidth = this._getTabsInStripContainer().offsetWidth;
 		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -622,7 +616,7 @@ class TabContainer extends UI5Element {
 			// show "end" overflow button
 			this._getHeaderEndOverflowButton().removeAttribute("hidden");
 			// width is changed
-			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+			containerWidth = this._getTabsInStripContainer().offsetWidth;
 
 			lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
 
@@ -639,7 +633,7 @@ class TabContainer extends UI5Element {
 			// show "start" overflow button
 			this._getHeaderStartOverflowButton().removeAttribute("hidden");
 			// width is changed
-			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+			containerWidth = this._getTabsInStripContainer().offsetWidth;
 
 			firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
 
@@ -656,7 +650,7 @@ class TabContainer extends UI5Element {
 		// show "end" overflow button
 		this._getHeaderEndOverflowButton().removeAttribute("hidden");
 		// width is changed
-		containerWidth = this._getHeaderScrollContainer().offsetWidth;
+		containerWidth = this._getTabsInStripContainer().offsetWidth;
 
 		firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, selectedItemIndexAndWidth.index - 1);
 		lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, firstVisible);
@@ -689,7 +683,7 @@ class TabContainer extends UI5Element {
 		// check it again with the "end" overflow
 		if (!hasStartOverflow) {
 			this._getHeaderEndOverflowButton().removeAttribute("hidden");
-			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+			containerWidth = this._getTabsInStripContainer().offsetWidth;
 			hasStartOverflow = containerWidth < leftItemsWidth + selectedItemIndexAndWidth.width;
 			this._getHeaderEndOverflowButton().setAttribute("hidden", "");
 		}
@@ -714,7 +708,7 @@ class TabContainer extends UI5Element {
 		// check it again with the "start" overflow
 		if (!hasEndOverflow) {
 			this._getHeaderStartOverflowButton().removeAttribute("hidden");
-			containerWidth = this._getHeaderScrollContainer().offsetWidth;
+			containerWidth = this._getTabsInStripContainer().offsetWidth;
 			hasEndOverflow = containerWidth < rightItemsWidth + selectedItemIndexAndWidth.width;
 			this._getHeaderStartOverflowButton().setAttribute("hidden", "");
 		}
@@ -822,7 +816,7 @@ class TabContainer extends UI5Element {
 			this._startOverflowText = `+${startOverflowItemsCount}`;
 			this._endOverflowText = `+${endOverflowItemsCount}`;
 		} else {
-			this._endOverflowText = defaultOverflowText;
+			this._endOverflowText = this.overflowButtonText;
 		}
 	}
 
@@ -843,8 +837,8 @@ class TabContainer extends UI5Element {
 		return this.items.filter(item => !item.isSeparator);
 	}
 
-	_getHeaderScrollContainer() {
-		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
+	_getTabsInStripContainer() {
+		return this.shadowRoot.querySelector(`#${this._id}-tabsInStripContainer`);
 	}
 
 	_getHeaderStartOverflowButton() {
@@ -874,8 +868,8 @@ class TabContainer extends UI5Element {
 			headerInnerContainer: {
 				"ui5-tc__headerInnerContainer": true,
 			},
-			headerScrollContainer: {
-				"ui5-tc__headerScrollContainer": true,
+			tabsInStripContainer: {
+				"ui5-tc__tabsInStripContainer": true,
 			},
 			headerList: {
 				"ui5-tc__headerList": true,
@@ -924,6 +918,10 @@ class TabContainer extends UI5Element {
 
 	get overflowMenuIcon() {
 		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
+	}
+
+	get overflowButtonText() {
+		return TabContainer.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
 	}
 
 	get animate() {

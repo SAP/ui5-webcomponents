@@ -44,7 +44,7 @@
 	height: var(--_ui5_tc_header_height_text_with_additional_text);
 }
 
-.ui5-tc__headerScrollContainer {
+.ui5-tc__tabsInStripContainer {
 	box-sizing: border-box;
 	overflow: hidden;
 	flex: 1 1 100%;

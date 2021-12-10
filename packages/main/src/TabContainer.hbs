@@ -9,24 +9,24 @@
 	<div class="{{classes.header}}" id="{{_id}}-header">
 		<div
 				class="ui5-tc__overflowButton ui5-tc__startOverflowButton"
-				@click="{{_onStartOverflowButtonClick}}"
+				@click="{{_onOverflowButtonClick}}"
 				hidden
 		>
 			{{#if startOverflowButton.length}}
 				<slot name="startOverflowButton"></slot>
 			{{else}}
 				<ui5-button
-						icon="{{overflowMenuIcon}}"
-						data-ui5-stable="tabs-overflow"
-						tabindex="-1"
-						title="{{overflowMenuTitle}}"
-						aria-haspopup="true"
-						icon-end>{{this._startOverflowText}}</ui5-button>
+					icon="{{overflowMenuIcon}}"
+					data-ui5-stable="tabs-overflow-start"
+					tabindex="-1"
+					title="{{overflowMenuTitle}}"
+					aria-haspopup="true"
+					icon-end>{{this._startOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
 		<div class="{{classes.headerInnerContainer}}">
 			<!-- tab items -->
-			<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
+			<div class="{{classes.tabsInStripContainer}}" id="{{_id}}-tabsInStripContainer">
 				<ul
 					role="tablist"
 					@focusin={{_onTablistFocusin}}
@@ -53,7 +53,7 @@
 		</div>
 		<div
 			class="ui5-tc__overflowButton ui5-tc__endOverflowButton"
-			@click="{{_onEndOverflowButtonClick}}"
+			@click="{{_onOverflowButtonClick}}"
 			hidden
 		>
 			{{#if overflowButton.length}}
@@ -61,7 +61,7 @@
 			{{else}}
 				<ui5-button
 					icon="{{overflowMenuIcon}}"
-					data-ui5-stable="tabs-overflow"
+					data-ui5-stable="tabs-overflow-end"
 					tabindex="-1"
 					title="{{overflowMenuTitle}}"
 					aria-haspopup="true"
