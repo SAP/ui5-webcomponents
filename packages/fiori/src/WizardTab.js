@@ -200,10 +200,6 @@ class WizardTab extends UI5Element {
 	}
 
 	_onfocusin() {
-		if (this.disabled) {
-			return;
-		}
-
 		this.fireEvent("focused");
 	}
 

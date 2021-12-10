@@ -760,7 +760,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM.filter(step => !step.disabled);
+		return this.stepsInHeaderDOM;
 	}
 
 	get phoneMode() {
