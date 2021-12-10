@@ -395,7 +395,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
-		const listItem = event.detail.item,
+		const listItem = event.detail.selectedItems[0],
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-li` === listItem.id);
 

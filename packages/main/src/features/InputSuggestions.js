@@ -200,7 +200,7 @@ class Suggestions {
 
 	/* Private methods */
 	onItemPress(oEvent) {
-		this.onItemSelected(oEvent.detail.item, false /* keyboardUsed */);
+		this.onItemSelected(oEvent.detail.selectedItems[0], false /* keyboardUsed */);
 	}
 
 	_beforeOpen() {
@@ -210,8 +210,8 @@ class Suggestions {
 
 	async _attachItemsListeners() {
 		const list = await this._getList();
-		list.removeEventListener("ui5-item-press", this.fnOnSuggestionItemPress);
-		list.addEventListener("ui5-item-press", this.fnOnSuggestionItemPress);
+		list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
 		list.addEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
 		list.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
