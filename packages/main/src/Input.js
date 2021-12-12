@@ -709,7 +709,7 @@ class Input extends UI5Element {
 	}
 
 	_handlePageUp(event) {
-		if (_isSuggestionsFocused) {
+		if (this._isSuggestionsFocused) {
 			this.Suggestions.onPageUp(event);
 		} else {
 			event.preventDefault();
@@ -717,7 +717,7 @@ class Input extends UI5Element {
 	}
 
 	_handlePageDown(event) {
-		if (_isSuggestionsFocused) {
+		if (this._isSuggestionsFocused) {
 			this.Suggestions.onPageDown(event);
 		} else {
 			event.preventDefault();
@@ -725,13 +725,13 @@ class Input extends UI5Element {
 	}
 
 	_handleHome(event) {
-		if (_isSuggestionsFocused) {
+		if (this._isSuggestionsFocused) {
 			this.Suggestions.onHome(event);
 		}
 	}
 
 	_handleEnd(event) {
-		if (_isSuggestionsFocused) {
+		if (this._isSuggestionsFocused) {
 			this.Suggestions.onEnd(event);
 		}
 	}
@@ -1362,7 +1362,7 @@ class Input extends UI5Element {
 		return isPhone();
 	}
 
-	get _isSuggestionsFocused {
+	get _isSuggestionsFocused() {
 		return !this.focused && this.Suggestions && this.Suggestions.isOpened();
 	}
 
