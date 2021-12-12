@@ -149,8 +149,6 @@ class Suggestions {
 			return true;
 		}
 
-		this.component._isValueStateFocused = false;
-
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
 		return true;
 	}
