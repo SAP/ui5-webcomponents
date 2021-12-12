@@ -545,7 +545,7 @@ class Suggestions {
 	sanitizeText(text) {
 		return encodeXML(text);
 	}
-	
+
 	get _hasValueState() {
 		return this.component.hasValueStateMessage;
 	}
@@ -555,7 +555,7 @@ class Suggestions {
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = null;
-		
+
 		this._deselectItems();
 	}
 
