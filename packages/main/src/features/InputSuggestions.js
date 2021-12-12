@@ -114,16 +114,11 @@ class Suggestions {
 	onPageUp(event) {
 		event.preventDefault();
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && !isItemIndexValid) {
+		if (this._hasValueState && !isItemIndexValid) {
 			this._focusValueState();
-			this._deselectItems();
-			this._scrollItemIntoView(this._getItems()[0]);
 			return true;
 		}
-
-		this.component._isValueStateFocused = false;
 
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex -= 10 : this.selectedItemIndex = 0);
@@ -135,14 +130,11 @@ class Suggestions {
 		const items = this._getItems();
 		const lastItemIndex = items.length - 1;
 		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && !items) {
+		if (this._hasValueState && !items) {
 			this._focusValueState();
 			return true;
 		}
-
-		this.component._isValueStateFocused = false;
 
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex += 10 : this.selectedItemIndex = lastItemIndex);
@@ -151,12 +143,9 @@ class Suggestions {
 
 	onHome(event) {
 		event.preventDefault();
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState) {
+		if (this._hasValueState) {
 			this._focusValueState();
-			this._deselectItems();
-			this._scrollItemIntoView(this._getItems()[0]);
 			return true;
 		}
 
@@ -169,18 +158,13 @@ class Suggestions {
 	onEnd(event) {
 		event.preventDefault();
 		const lastItemIndex = this._getItems().length - 1;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && !lastItemIndex) {
+		if (this._hasValueState && !lastItemIndex) {
 			this._focusValueState();
-			this._deselectItems();
 			return true;
 		}
 
-		this.component._isValueStateFocused = false;
-
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = lastItemIndex);
-		this._scrollItemIntoView(this._getItems()[lastItemIndex]);
 		return true;
 	}
 
@@ -357,15 +341,14 @@ class Suggestions {
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
+		if (this._hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
 			this._focusValueState();
 			return;
 		}
 
-		if ((previousSelectedIdx === null && !hasValueState) || this.component._isValueStateFocused) {
-			this.component._isValueStateFocused = false;
+		if ((previousSelectedIdx === null && !this._hasValueState) || this.component._isValueStateFocused) {
+			this._clearValueStateFocus();
 			--this.selectedItemIndex;
 		}
 
@@ -379,9 +362,8 @@ class Suggestions {
 	_selectPreviousItem() {
 		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
+		if (this._hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
 			this.component.hasSuggestionItemSelected = false;
 			this.component._isValueStateFocused = true;
 			this.selectedItemIndex = null;
@@ -427,6 +409,7 @@ class Suggestions {
 		}
 
 		this.component.focused = false;
+		this._clearValueStateFocus();
 
 		this.accInfo = {
 			currentPos: nextIdx + 1,
@@ -564,12 +547,22 @@ class Suggestions {
 	sanitizeText(text) {
 		return encodeXML(text);
 	}
+	
+	get _hasValueState() {
+		return this.component.hasValueStateMessage;
+	}
 
 	_focusValueState() {
 		this.component._isValueStateFocused = true;
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = null;
+		
+		this._deselectItems();
+	}
+
+	_clearValueStateFocus() {
+		this.component._isValueStateFocused = false;
 	}
 
 	static get dependencies() {

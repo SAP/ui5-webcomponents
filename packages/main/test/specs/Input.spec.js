@@ -899,7 +899,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
 
-		// Moving focus to suggestions popover, because by design HOME only moves the caret if focus is on input
+		// Moving focus to suggestions popover, because by design PAGEDOWN does nothing if focus is on input
 		await suggestionsInput.keys("ArrowDown");
 
 		await suggestionsInput.keys("PageDown");
@@ -912,7 +912,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		assert.strictEqual(await tenthListItem.getProperty("focused"), true, "Tenth list item is focused");
 	});
 
-	it("Should focus the first item/group header from the suggestions popover with PAGEUP", async () => {
+	it("Should focus the -10 item/group header from the suggestions popover with PAGEUP", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput");
@@ -921,7 +921,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
 
-		// Moving focus to suggestions popover, because by design HOME only moves the caret if focus is on input
+		// Moving focus to suggestions popover, because by design PAGEUP does nothing if focus is on input
 		await suggestionsInput.keys("ArrowDown");
 
 		await suggestionsInput.keys("PageDown");

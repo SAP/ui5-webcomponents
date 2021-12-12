@@ -709,7 +709,7 @@ class Input extends UI5Element {
 	}
 
 	_handlePageUp(event) {
-		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
+		if (_isSuggestionsFocused) {
 			this.Suggestions.onPageUp(event);
 		} else {
 			event.preventDefault();
@@ -717,7 +717,7 @@ class Input extends UI5Element {
 	}
 
 	_handlePageDown(event) {
-		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
+		if (_isSuggestionsFocused) {
 			this.Suggestions.onPageDown(event);
 		} else {
 			event.preventDefault();
@@ -725,13 +725,13 @@ class Input extends UI5Element {
 	}
 
 	_handleHome(event) {
-		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
+		if (_isSuggestionsFocused) {
 			this.Suggestions.onHome(event);
 		}
 	}
 
 	_handleEnd(event) {
-		if (!this.focused && this.Suggestions && this.Suggestions.isOpened()) {
+		if (_isSuggestionsFocused) {
 			this.Suggestions.onEnd(event);
 		}
 	}
@@ -1360,6 +1360,10 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _isSuggestionsFocused {
+		return !this.focused && this.Suggestions && this.Suggestions.isOpened();
 	}
 
 	/**
