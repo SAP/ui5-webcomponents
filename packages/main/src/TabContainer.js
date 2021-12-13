@@ -443,7 +443,7 @@ class TabContainer extends UI5Element {
 				const selected = selectedIndex === index;
 				item.selected = selected;
 
-				if(item._selected) {
+				if (item._selected) {
 					item._selected = false;
 				}
 
