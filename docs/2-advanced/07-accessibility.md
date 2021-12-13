@@ -161,7 +161,7 @@ Setting the property on the custom element as:
 </script>
 ```
 
-Will result in the shadow DOM as: 
+Results in the shadow DOM as: 
 ```html
 <div role="complimentary" ... >
     ...
