@@ -1,5 +1,7 @@
-commit 133e45d9e90f800252fa52d72e8a05b77aebe22b
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Dec 10 16:27:39 2021 +0200
+commit 912a09e7a3d094088816128b5eb33a8a853833bc
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Dec 13 13:06:32 2021 +0200
 
-    fix(ui5-token): apply correct background color in HC themes (#4464)
+    fix(Playground): apply RTL properly (#4468)
+    
+    Currently we only set dir="rtl" to the body of the Playground samples, but some of the components need to re-render to apply specific RTL styles and that can be triggered by the applyDirection method as suggested in this PR.
