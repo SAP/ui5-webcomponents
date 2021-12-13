@@ -345,8 +345,6 @@ class TabContainer extends UI5Element {
 				this._selectedTab = tabs[0];
 				this._selectedTab._selected = true;
 			}
-
-			this._itemNavigation.setCurrentItem(this._selectedTab)
 		}
 
 		// Set external properties to items
@@ -445,7 +443,7 @@ class TabContainer extends UI5Element {
 				const selected = selectedIndex === index;
 				item.selected = selected;
 
-				if(item._selected) {
+				if (item._selected) {
 					item._selected = false;
 				}
 
@@ -541,6 +539,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
+			await this.responsivePopover.applyInitialFocus()
 			this.responsivePopover.showAt(button);
 		}
 	}
@@ -835,18 +834,26 @@ class TabContainer extends UI5Element {
 		this.responsivePopover.close();
 	}
 
-	/**
-	 * Obtains the tabs for navigation via keyboard
-	 * @private
-	 */
 	_getFocusableTabs() {
+		if (!this.getDomRef()) {
+			return [];
+		}
+
 		const focusableTabs = [];
+
+		if (!this._getHeaderStartOverflowButton().hasAttribute("hidden")) {
+			focusableTabs.push(this._getHeaderStartOverflowButton().querySelector("ui5-button"));
+		}
 
 		this._getTabs().forEach(tab => {
 			if (tab.getTabInStripDomRef() && !tab.getTabInStripDomRef().hasAttribute("hidden")) {
 				focusableTabs.push(tab);
 			}
 		});
+
+		if (!this._getHeaderEndOverflowButton().hasAttribute("hidden")) {
+			focusableTabs.push(this._getHeaderEndOverflowButton().querySelector("ui5-button"));
+		}
 
 		return focusableTabs;
 	}
