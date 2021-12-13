@@ -475,7 +475,7 @@ const metadata = {
  * <li>[DOWN] - Focuses the next matching item in the suggestion list.</li>
  * <li>[UP] - Focuses the previous matching item in the suggestion list.</li>
  * <li>[HOME] - If focus is in the text input, moves text caret before the first typed character. If focus is in the list, highlights the first item, no matter if data item or value state header, and update the input field accordingly if a data item is focused.</li>
- * <li>[END] - If focus is in the text input, moves text caret after the last typed character. If focus is in the list, highlights the last item, no matter if data item or value state header and updates the input field accordingly if a data item is focused.</li>
+ * <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li>
  * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
  * <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li>
  * </ul>
