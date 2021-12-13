@@ -302,7 +302,7 @@ class Wizard extends UI5Element {
 	}
 
 	static get CONTENT_TOP_OFFSET() {
-		return 32;
+		return 0;
 	}
 
 	static get staticAreaTemplate() {
