@@ -1,10 +1,5 @@
-commit d7425015ba1e8cfbd3ed1ff8313b689feed9e6ac
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Dec 13 17:16:31 2021 +0200
+commit d9261f5cdcfc4a2e629327d5ab171efc7e9fd22b
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Dec 13 18:06:11 2021 +0200
 
-    fix(playground): adjust main wrapper paddings (#4480)
-    
-    - display breadcrumbs in the playground
-    - sets playground padding higher z-index to get over components stylings
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3817
+    fix(ui5-input): fix value  truncation (#4467)
