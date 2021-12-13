@@ -10,6 +10,7 @@ import {
 	isSpace,
 	isEnter,
 	isBackSpace,
+	isDelete,
 	isEscape,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -520,7 +521,7 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		// Indicates if the change event has already been fired
-		this._changeFired = false;
+		this._changeFiredValue = null;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
@@ -631,6 +632,11 @@ class Input extends UI5Element {
 	}
 
 	_onkeyup(event) {
+		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
+		if (isDelete(event)) {
+			this.value = event.target.value;
+		}
+
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -754,13 +760,18 @@ class Input extends UI5Element {
 		}
 	}
 
-	_handleChange(event) {
-		if (!this._changeFired) {
+	_handleNativeInputChange() {
+		// The native change sometimes fires too early and getting input's value in the listener would return
+		// the previous value instead of the most recent one. This would make things consistent.
+		clearTimeout(this._nativeChangeDebounce);
+		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
+	}
+
+	_handleChange() {
+		if (this._changeFiredValue !== this.value) {
+			this._changeFiredValue = this.value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
-
-		// Set event as no longer marked
-		this._changeFired = false;
 	}
 
 	_scroll(event) {
@@ -771,8 +782,8 @@ class Input extends UI5Element {
 		});
 	}
 
-	async _handleInput(event) {
-		const inputDomRef = await this.getInputDOMRef();
+	_handleInput(event) {
+		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
@@ -921,10 +932,7 @@ class Input extends UI5Element {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
-			this.fireEvent(this.EVENT_CHANGE);
-
-			// Mark the change event to avoid double firing
-			this._changeFired = true;
+			this._handleChange();
 		}
 
 		this.valueBeforeItemPreview = "";
@@ -999,7 +1007,7 @@ class Input extends UI5Element {
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
-			this.fireEvent(this.EVENT_CHANGE);
+			this._handleChange();
 		}
 	}
 
@@ -1015,6 +1023,14 @@ class Input extends UI5Element {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
+			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		}
+
+		return this.nativeInput;
+	}
+
+	getInputDOMRefSync() {
+		if (isPhone() && this.Suggestions) {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 

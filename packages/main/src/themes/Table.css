@@ -18,7 +18,7 @@ table {
 
 .ui5-table-header-row {
 	color: var(--sapTextColor);
-	height: 3rem;
+	height: var(--ui5_table_header_row_height);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: var(--ui5_table_header_row_font_weight);

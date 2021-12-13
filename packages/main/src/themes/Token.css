@@ -36,6 +36,7 @@
 }
 
 :host([readonly]) {
+	background: var(--_ui5_token_readonly_background);
 	color: var(--sapContent_ForegroundTextColor);
 }
 
