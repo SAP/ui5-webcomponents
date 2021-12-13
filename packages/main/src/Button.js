@@ -169,6 +169,8 @@ const metadata = {
 		},
 
 		/**
+		 * Use aria-expanded to indicate the state of a collapsible element.
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
