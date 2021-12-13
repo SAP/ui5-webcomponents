@@ -106,7 +106,7 @@ const metadata = {
 		},
 
 		/**
-		 * An object of strings that defines several additional accessibility roles for even further customization.
+		 * An object of strings that defines additional accessibility roles for further customization.
 		 *
 		 * It supports the following fields:
 		 *  - <code>startColumnRole</code>: the accessibility role for the <code>startColumn</code>
