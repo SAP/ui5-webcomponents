@@ -147,7 +147,7 @@ Will result in the shadow DOM as:
 
 ### accessibilityRoles
 
-This property accepts `object` with properties values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout). 
+This property accepts `object` with property values for different parts of the `FlexibleColumnLayout` elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout). 
 
 Setting the property on the custom element as:
 ```html
