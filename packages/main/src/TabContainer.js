@@ -330,7 +330,7 @@ class TabContainer extends UI5Element {
 
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this._getTabs(),
+			getItemsCallback: () => this._getFocusableTabs(),
 		});
 	}
 
@@ -345,6 +345,8 @@ class TabContainer extends UI5Element {
 				this._selectedTab = tabs[0];
 				this._selectedTab._selected = true;
 			}
+
+			this._itemNavigation.setCurrentItem(this._selectedTab)
 		}
 
 		// Set external properties to items
@@ -590,6 +592,8 @@ class TabContainer extends UI5Element {
 		}
 
 		this._updateOverflowItems();
+		this._itemNavigation._init();
+		this._itemNavigation.setCurrentItem(this._selectedTab);
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
@@ -829,6 +833,22 @@ class TabContainer extends UI5Element {
 	async _closeRespPopover() {
 		this.responsivePopover = await this._respPopover();
 		this.responsivePopover.close();
+	}
+
+	/**
+	 * Obtains the tabs for navigation via keyboard
+	 * @private
+	 */
+	_getFocusableTabs() {
+		const focusableTabs = [];
+
+		this._getTabs().forEach(tab => {
+			if (tab.getTabInStripDomRef() && !tab.getTabInStripDomRef().hasAttribute("hidden")) {
+				focusableTabs.push(tab);
+			}
+		});
+
+		return focusableTabs;
 	}
 
 	_updateMediaRange() {
