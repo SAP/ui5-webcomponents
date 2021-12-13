@@ -113,6 +113,7 @@ class Suggestions {
 
 	onPageUp(event) {
 		event.preventDefault();
+
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
 
 		if (this._hasValueState && !isItemIndexValid) {
@@ -127,6 +128,7 @@ class Suggestions {
 
 	onPageDown(event) {
 		event.preventDefault();
+
 		const items = this._getItems();
 		const lastItemIndex = items.length - 1;
 		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
@@ -155,6 +157,7 @@ class Suggestions {
 
 	onEnd(event) {
 		event.preventDefault();
+
 		const lastItemIndex = this._getItems().length - 1;
 
 		if (this._hasValueState && !lastItemIndex) {
@@ -551,11 +554,14 @@ class Suggestions {
 	}
 
 	_focusValueState() {
+		const items = this._getItems();
+
 		this.component._isValueStateFocused = true;
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = null;
 
+		items && this._scrollItemIntoView(items[0]);
 		this._deselectItems();
 	}
 
