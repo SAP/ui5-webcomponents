@@ -103,7 +103,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.0.3
+		 * @since 1.1.0
 		 */
 		 accessibleNameRef: {
 			type: String,
