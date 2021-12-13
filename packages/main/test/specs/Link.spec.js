@@ -65,6 +65,6 @@ describe("General API", () => {
 		const link = await browser.$("#collapse");
 
 		await link.click();
-		assert.strictEqual(await link.getAttribute("aria-expanded"), "false", "Collabsible element is expanded");
+		assert.strictEqual(await link.getAttribute("aria-expanded"), "false", "Text is collapsed");
 	});
 });
