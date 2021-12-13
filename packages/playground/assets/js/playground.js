@@ -115,9 +115,11 @@ function setRTL() {
   if (rtlIsEnabled) {
     setTimeout(() => {
       body.setAttribute("dir", "rtl");
+      window["sap-ui-webcomponents-bundle"].applyDirection();
     }, 0);
   } else {
     body.removeAttribute("dir");
+    window["sap-ui-webcomponents-bundle"].applyDirection();
   }
 }
 
