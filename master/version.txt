@@ -1,14 +1,10 @@
-commit e76f8c942b65b374b29578159801cb7de0998f2a
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Mon Dec 13 16:55:44 2021 +0200
+commit d7425015ba1e8cfbd3ed1ff8313b689feed9e6ac
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Dec 13 17:16:31 2021 +0200
 
-    fix(ui5-li-custom): removed height restriction (#4473)
+    fix(playground): adjust main wrapper paddings (#4480)
     
-    * fix(ui5-li-custom): removed height restriction
+    - display breadcrumbs in the playground
+    - sets playground padding higher z-index to get over components stylings
     
-    CustomListItem is no longer restricted to a hardcoded height. Now it
-    aligns its height depending on its content.
-    
-    fixes: #4450
-    
-    * now the CLI has minimum height set to the LI base height
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3817
