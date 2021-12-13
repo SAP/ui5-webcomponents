@@ -76,6 +76,9 @@
 :host([effective-layout="Horizontal"][menu-horizontal-align="Right"]) .ui5-media-gallery-thumbnails-wrapper {
     margin: 0 0 0 1rem;
 }
+:host(:not([effective-layout="Horizontal"])) [dir="rtl"] .ui5-media-gallery-thumbnails-wrapper {
+    margin-right: 1rem;
+}
 
 /* show all thumbnails in a single scrollable row */
 :host([show-all-thumbnails]) .ui5-media-gallery-thumbnails-wrapper {
@@ -98,6 +101,7 @@
     margin-top: 0; /* disable browser default css */
     margin-bottom: 0; /* disable browser default css */
     list-style-type: none; /* disable browser default css */
+    padding-inline-start: 0; /* disable browser default css */
 }
 
 /* in horizontal layout, the menu is 1-4 vertical columns, depending on media size */

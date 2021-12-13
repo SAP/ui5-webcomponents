@@ -1,12 +1,11 @@
-<div id="{{id}}"
+<div class="ui5-media-gallery-item-root"
     tabindex="{{tabIndex}}"
-    class="ui5-media-gallery-item-root"
+    data-sap-focus-ref
     @focusout="{{_onfocusout}}"
     @focusin="{{_onfocusin}}"
-    @mousedown="{{_onmousedown}}"
     @keydown="{{_onkeydown}}"
     @keyup="{{_onkeyup}}"
->
+    role="{{_role}}">
     <div class="ui5-media-gallery-item-mask-layer"></div>
     <div class="ui5-media-gallery-item-wrapper" style="{{styles.wrapper}}">
         {{#if _showBackgroundIcon}}

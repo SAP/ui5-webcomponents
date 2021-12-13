@@ -51,7 +51,7 @@ const metadata = {
 		 * @defaultvalue "Square"
 		 * @public
 		 */
-		 layout: {
+		layout: {
 			type: MediaGalleryItemLayout,
 			defaultValue: MediaGalleryItemLayout.Square,
 		},
@@ -59,35 +59,35 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		 _maskLayerInteractive: {
+		_interactive: {
 			type: Boolean,
 		},
 
 		/**
 		 * @private
 		 */
-		 _square: {
+		_square: {
 			type: Boolean,
 		},
 
 		/**
 		 * @private
 		 */
-		 _contentImageNotFound: {
+		_contentImageNotFound: {
 			type: Boolean,
 		},
 
 		/**
 		 * @private
 		 */
-		 _thumbnailNotFound: {
+		_thumbnailNotFound: {
 			type: Boolean,
 		},
 
 		/**
 		 * @private
 		 */
-		 _thumbnailDesign: {
+		_thumbnailDesign: {
 			type: Boolean,
 		},
 
@@ -96,7 +96,7 @@ const metadata = {
 		 *
 		 * @private
 		 */
-		 focused: {
+		focused: {
 			type: Boolean,
 		},
 
@@ -105,14 +105,13 @@ const metadata = {
 		 */
 		_tabIndex: {
 			type: String,
-			defaultValue: "-1",
-			/* noAttribute: true, */
+			defaultValue: undefined,
 		},
 
 		/**
 		 * @private
 		 */
-		 contentHeight: {
+		contentHeight: {
 			type: String,
 			noAttribute: true,
 			defaultValue: "",
@@ -180,6 +179,7 @@ class MediaGalleryItem extends UI5Element {
 		super();
 
 		this._thumbnailDesign = !isPhone();
+		this._interactive = !isPhone();
 		this._square = true;
 		this._monitoredContent = null;
 		this._monitoredThumbnail = null;
@@ -214,7 +214,7 @@ class MediaGalleryItem extends UI5Element {
 	}
 
 	get _isContentAvailable() {
-		return this._content && !this._contentNotFound;
+		return this._content && !this._contentImageNotFound;
 	}
 
 	get _useThumbnail() {
@@ -239,6 +239,10 @@ class MediaGalleryItem extends UI5Element {
 				height: this.contentHeight,
 			},
 		};
+	}
+
+	get _role() {
+		return this._interactive ? "button" : undefined;
 	}
 
 	onBeforeRendering() {
@@ -287,10 +291,6 @@ class MediaGalleryItem extends UI5Element {
 
 	_updateThumbnailLoaded(image) {
 		this._thumbnailNotFound = image.naturalHeight === 0 && image.naturalWidth === 0;
-	}
-
-	_onmousedown() {
-		this.active = true;
 	}
 
 	_onkeydown(event) {

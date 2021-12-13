@@ -132,3 +132,261 @@ describe("MediaGallery general interaction", () => {
 	});
 
 });
+
+describe("MediaGallery layout", () => {
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/MediaGallery.html`);
+	});
+
+	it("auto layout S size", async () => {
+
+		const newWidth = 599, // S size
+			marginSize = 16,
+			expectedEffectiveLayout = "Vertical",
+			expectedDisplayWidth = newWidth - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		// Act: apply new width
+		await browser.executeAsync(async (newWidth, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			done();
+		}, newWidth);
+
+		// Check
+		const gallery = await browser.$("#mGallery1");
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("auto layout M size", async () => {
+
+		const newWidth = 600, // M size
+			marginSize = 16,
+			thumbnailWidth = 64,
+			thumbnailsMenuWidth = thumbnailWidth + (2 * marginSize),
+			expectedEffectiveLayout = "Horizontal",
+			expectedDisplayWidth = newWidth - thumbnailsMenuWidth - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		// Act: apply new width
+		await browser.executeAsync(async (newWidth, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			done();
+		}, newWidth);
+
+		// Check
+		const gallery = await browser.$("#mGallery1");
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("auto layout L size and restricted height", async () => {
+
+		const newWidth = 1024, // L size
+			marginSize = 16,
+			parentHeight = 800,
+			expectedEffectiveLayout = "Horizontal",
+			expectedDisplayWidth = parentHeight - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		// Act: apply new width
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			done();
+		}, newWidth, parentHeight);
+
+		// Check
+		const gallery = await browser.$("#mGallery1");
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("auto layout L size and unrestricted height", async () => {
+
+		const newWidth = 1024, // L size
+			marginSize = 16,
+			parentHeight = 3000, // a big enough value
+			thumbnailWidth = 64,
+			thumbnailsMenuWidth = thumbnailWidth + (2 * marginSize),
+			expectedEffectiveLayout = "Horizontal",
+			expectedDisplayWidth = newWidth - thumbnailsMenuWidth - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		// Act: apply new width
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			document.getElementById("mGallery1")._updateLayout();
+			done();
+		}, newWidth, parentHeight);
+
+		// Check
+		const gallery = await browser.$("#mGallery1");
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("vertical layout L size and unrestricted height", async () => {
+
+		const newWidth = 1024, // L size
+			marginSize = 16,
+			parentHeight = 3000, // a big enough value
+			expectedEffectiveLayout = "Vertical",
+			expectedDisplayWidth = newWidth - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		const gallery = await browser.$("#mGallery1");
+
+		// Setup
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			done();
+		}, newWidth, parentHeight);
+
+		// Act
+		await gallery.setProperty("layout", "Vertical");
+
+		// Check
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("vertical layout L size and restricted height", async () => {
+
+		const newWidth = 1024, // L size
+			marginSize = 16,
+			parentHeight = 600,
+			thumbnailWidth = 64,
+			thumbnailsMenuWidth = thumbnailWidth + (2 * marginSize),
+			expectedEffectiveLayout = "Vertical",
+			expectedDisplayWidth = parentHeight - thumbnailsMenuWidth - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		const gallery = await browser.$("#mGallery1");
+
+		// Setup
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			done();
+		}, newWidth, parentHeight);
+
+		// Act
+		await gallery.setProperty("layout", "Vertical");
+
+		// Check
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("horizontal layout S size and restricted height", async () => {
+
+		const newWidth = 599, // S size
+			marginSize = 16,
+			parentHeight = 400,
+			expectedEffectiveLayout = "Horizontal",
+			expectedDisplayWidth = parentHeight - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		const gallery = await browser.$("#mGallery1");
+
+		// Setup
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			done();
+		}, newWidth, parentHeight);
+
+		// Act
+		await gallery.setProperty("layout", "Horizontal");
+
+		// Check
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("horizontal layout S size and unrestricted height", async () => {
+
+		const newWidth = 599, // S size
+			marginSize = 16,
+			parentHeight = 3000, // big enough value
+			thumbnailWidth = 64,
+			thumbnailsMenuWidth = thumbnailWidth + (2 * marginSize),
+			expectedEffectiveLayout = "Horizontal",
+			expectedDisplayWidth = newWidth - thumbnailsMenuWidth - (2 * marginSize),
+			expectedDisplayHeight = expectedDisplayWidth;
+
+		const gallery = await browser.$("#mGallery1");
+
+		// Setup
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			done();
+		}, newWidth, parentHeight);
+
+		// Act
+		await gallery.setProperty("layout", "Horizontal");
+
+		// Check
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+
+		assert.strictEqual(await gallery.getProperty("effectiveLayout"), expectedEffectiveLayout, "correct effective layout");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+
+	it("item with 'Wide' layout and all thumbnails shown", async () => {
+
+		const newWidth = 1400, // L size
+			parentHeight = 800,
+			marginSize = 16,
+			expectedDisplayWidth = 1006, // 3/4 of the available width
+			expectedDisplayHeight = parentHeight - (2 * marginSize);
+
+		const gallery = await browser.$("#mGallery1"),
+			item0 = await browser.$$("#mGallery1 ui5-media-gallery-item")[0];
+
+		// Setup
+		await browser.executeAsync(async (newWidth, parentHeight, done) => {
+			document.getElementById("mGallery1").style.width = `${newWidth}px`;
+			document.getElementById("mGallery1").parentElement.style.height = `${parentHeight}px`;
+			done();
+		}, newWidth, parentHeight);
+
+		// item width 'wide' layout while all thumbnails shown
+		await gallery.setProperty("showAllThumbnails", true);
+		await item0.setProperty("layout", "Wide");
+
+		// Act: select the item width 'wide' layout
+		await item0.setProperty("selected", true);
+
+		// Check
+		const display = await browser.$("#mGallery1").shadow$(".ui5-media-gallery-display ui5-media-gallery-item");
+		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
+		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
+	});
+});

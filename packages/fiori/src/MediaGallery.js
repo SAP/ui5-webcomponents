@@ -49,7 +49,7 @@ const metadata = {
 		 * @slot items
 		 * @public
 		 */
-		 "default": {
+		"default": {
 			propertyName: "items",
 			type: HTMLElement,
 			individualSlots: true,
@@ -66,7 +66,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		 showAllThumbnails: {
+		showAllThumbnails: {
 			type: Boolean,
 		},
 
@@ -81,7 +81,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		 interactiveDisplayArea: {
+		interactiveDisplayArea: {
 			type: Boolean,
 		},
 
@@ -99,7 +99,7 @@ const metadata = {
 		 * @defaultvalue "Auto"
 		 * @public
 		 */
-		 layout: {
+		layout: {
 			type: MediaGalleryLayout,
 			defaultValue: "Auto",
 		},
@@ -157,7 +157,7 @@ const metadata = {
 		 * @defaultvalue "Vertical"
 		 * @private
 		 */
-		 effectiveLayout: {
+		effectiveLayout: {
 			type: MediaGalleryLayout,
 			defaultValue: "Vertical",
 		},
@@ -448,12 +448,8 @@ class MediaGallery extends UI5Element {
 		if (!this.interactiveDisplayArea) {
 			return;
 		}
-		// fires the event only when the user clicked
-		// on an element from the MediaGalleryItem's shadow DOM
-		// (rather than on its slotted children from light DOM)
-		if (event.target.tagName === "UI5-MEDIA-GALLERY-ITEM") {
-			this.fireEvent("display-area-click");
-		}
+
+		this.fireEvent("display-area-click");
 	}
 
 	_onCarouselNavigate(event) {
@@ -464,7 +460,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _mainItemTabIndex() {
-		return this.interactiveDisplayArea ? 0 : "";
+		return this.interactiveDisplayArea ? 0 : undefined;
 	}
 
 	get _selectableItems() {

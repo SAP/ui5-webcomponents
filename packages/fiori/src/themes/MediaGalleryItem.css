@@ -29,6 +29,9 @@
 :host([_thumbnail-design]) .ui5-media-gallery-item-root {
     border: var(--_ui5_media_gallery_thumbnail_border);
     box-sizing: border-box;
+}
+
+:host([_interactive]) .ui5-media-gallery-item-root {
     cursor: pointer;
 }
 
@@ -95,14 +98,11 @@
     mix-blend-mode: multiply;
     opacity: 0.2;
     box-shadow: var(--_ui5_media_gallery_item_overlay_box_shadow);
+    pointer-events: none;
 }
 
 :host(:not([_thumbnail-design])[layout="Wide"]) .ui5-media-gallery-item-mask-layer {
     z-index: 0;
-}
-
-:host([_mask-layer-interactive]) .ui5-media-gallery-item-mask-layer {
-    cursor: pointer;
 }
 
 /* disabled state */

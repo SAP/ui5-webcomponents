@@ -1,4 +1,5 @@
-<div class="ui5-media-gallery-root">
+<div class="ui5-media-gallery-root"
+    dir={{effectiveDir}}>
     <div class="ui5-media-gallery-display-wrapper">
         <div class="ui5-media-gallery-display"
                 @click="{{_onDisplayAreaClick}}">
@@ -12,7 +13,7 @@
                 </ui5-carousel>
             {{else}}
                 <ui5-media-gallery-item
-                ?_mask-layer-interactive="{{interactiveDisplayArea}}"
+                ?_interactive="{{interactiveDisplayArea}}"
                     ?_square="{{_shouldHaveSquareDisplay}}"
                     _tab-index="{{_mainItemTabIndex}}">
                 </ui5-media-gallery-item>
