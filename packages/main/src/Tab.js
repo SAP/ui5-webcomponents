@@ -133,6 +133,10 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_selected: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},
@@ -249,11 +253,11 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		return this.selected || false;
+		return this.selected || this._selected;
 	}
 
 	get effectiveHidden() {
-		return !this.selected;
+		return !this.effectiveSelected;
 	}
 
 	get ariaLabelledBy() {
@@ -277,7 +281,7 @@ class Tab extends UI5Element {
 	get headerClasses() {
 		const classes = ["ui5-tab-strip-item"];
 
-		if (this.selected) {
+		if (this.effectiveSelected) {
 			classes.push("ui5-tab-strip-item--selected");
 		}
 

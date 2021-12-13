@@ -6,14 +6,14 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  */
 const TabsOverflowModes = {
 	/**
-	 * End type if there is only one overflow in the end of the scroll container .
+	 * End type is used if there should be only one overflow with hidden the tabs at the end of the tab container.
 	 * @public
 	 * @type {End}
 	 */
 	End: "End",
 
 	/**
-	 * StartAndEnd type if there are overflows at the beginning and at end of the scroll container .
+	 * StartAndEnd type is used if there should be two overflows on both ends of the tab container.
 	 * @public
 	 * @type {StartAndEnd}
 	 */

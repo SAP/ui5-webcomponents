@@ -83,7 +83,7 @@ const metadata = {
 		 * @type {sap.ui.webcomponents.main.IButton}
 		 * @public
 		 * @slot
-		 * @since 1.0
+		 * @since 1.1.0
 		 */
 		startOverflowButton: {
 			type: HTMLElement,
@@ -146,7 +146,8 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @deprecated
+		 * @deprecated Since the introduction of TabsOverflowMode overflows will always be visible if there is not enough space for all tabs,
+		 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the overflowButton and / or startOverflowButton
 		 */
 		showOverflow: {
 			type: Boolean,
@@ -194,10 +195,11 @@ const metadata = {
 		 *
 		 * @type {TabsOverflowMode}
 		 * @defaultvalue "End"
+		 * @since 1.1.0
 		 * @public
 		 */
 		tabsOverflowMode: {
-			type: String,
+			type: TabsOverflowMode,
 			defaultValue: TabsOverflowMode.End,
 		},
 
@@ -341,7 +343,7 @@ class TabContainer extends UI5Element {
 				this._selectedTab = selectedTabs[0];
 			} else {
 				this._selectedTab = tabs[0];
-				this._selectedTab.selected = true;
+				this._selectedTab._selected = true;
 			}
 		}
 
@@ -440,6 +442,10 @@ class TabContainer extends UI5Element {
 			if (!item.isSeparator) {
 				const selected = selectedIndex === index;
 				item.selected = selected;
+
+				if(item._selected) {
+					item._selected = false;
+				}
 
 				if (selected) {
 					this._itemNavigation.setCurrentItem(item);
