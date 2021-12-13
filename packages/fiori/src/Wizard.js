@@ -160,6 +160,19 @@ const metadata = {
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
+ * <h3>Keyboard Handling</h3>
+ * The user can navigate using the following keyboard shortcuts:
+ * <br>
+ *
+ * <h4>Wizard Progress Navigation</h4>
+ * <ul>
+ * 	<li>[LEFT], [DOWN] - Focus moves backward to the WizardProgressNavAnchors.</li>
+ * 	<li>[UP], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.</li>
+ * 	<li>[SPACE] or [ENTER], [RETURN] - Selects an active step</li>
+ * 	<li>[HOME] or [PAGE UP] - Focus goes to the first step</li>
+ * 	<li>[END] or [PAGE DOWN] - Focus goes to the last step</li>
+ * </ul>
+ *
  * <h4>Content</h4>
  * The content occupies the main part of the page. It can hold any type of HTML elements.
  * It's defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.
@@ -243,7 +256,7 @@ class Wizard extends UI5Element {
 		this.selectionRequestedByScroll = false;
 
 		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
+			navigationMode: NavigationMode.Auto,
 			getItemsCallback: () => this.enabledStepsInHeaderDOM,
 		});
 
@@ -747,7 +760,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM.filter(step => !step.disabled);
+		return this.stepsInHeaderDOM;
 	}
 
 	get phoneMode() {
