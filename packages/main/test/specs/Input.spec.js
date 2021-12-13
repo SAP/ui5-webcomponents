@@ -162,6 +162,71 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputChangeResult.getValue(), "2", "change is called twice");
 	});
 
+	it("Change event behaviour when focusing", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		// Setup
+		const input = await browser.$("#myInput").shadow$("input");
+		const focusoutInput = await browser.$("#myInput2").shadow$("input");
+		const changeCount = await browser.$("#myInput-change-count");
+
+		// Act
+		await input.click();
+		await input.keys("z");
+		await focusoutInput.click();
+
+		// // Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called");
+
+		// Act
+		await input.click();
+		await focusoutInput.click();
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is not called again");
+
+		// Act
+		await input.click();
+		await input.keys("f");
+		await focusoutInput.click();
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called for the changed value");
+	});
+
+	it("Change event behaviour when focusing + ENTER", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		// Setup
+		const input = await browser.$("#myInput").shadow$("input");
+		const focusoutInput = await browser.$("#input3").shadow$("input");
+		const changeCount = await browser.$("#myInput-change-count");
+
+		// Act
+		await input.click();
+		await input.keys("a");
+		await input.keys("Enter");
+		await focusoutInput.click();
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called just once");
+
+		// Act
+		await input.click();
+		await input.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is not called again");
+
+		// Act
+		await input.click();
+		await input.keys("f");
+		await input.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called for the changed value");
+	});
+
 	it("fires suggestion-scroll event", async () => {
 		const input = await browser.$("#scrollInput").shadow$("input");
 		const scrollResult = await browser.$("#scrollResult");
@@ -340,7 +405,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
-	
+
 	it("should remove input's focus when group header item is clicked", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
@@ -628,12 +693,12 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await secondListItem.getProperty("focused"), true, "Second list item is focused");
-	
+
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 		assert.strictEqual(await secondListItem.getProperty("focused"), false, "Second list item is not focused");
-	
+
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
@@ -684,7 +749,7 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
 		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
 
-		
+
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
