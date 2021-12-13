@@ -1,53 +1,14 @@
-commit 09f905967433edb4c7268940c72ada8d90216b97
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Mon Dec 13 16:04:03 2021 +0200
+commit e76f8c942b65b374b29578159801cb7de0998f2a
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Mon Dec 13 16:55:44 2021 +0200
 
-    fix(ui5-input): Consistent "change" event (#4129)
+    fix(ui5-li-custom): removed height restriction (#4473)
     
-    * fix(ui5-input): Consistent "change" event
+    * fix(ui5-li-custom): removed height restriction
     
-    The change event was not fired consistently in different scenarios. This change tries to fix that, so only a new value would trigger a henge event.
+    CustomListItem is no longer restricted to a hardcoded height. Now it
+    aligns its height depending on its content.
     
-    There are some "edge" cases like:
-    - Selecting an item from suggestions should trigger change event imediately, if the value actually changed
-    - Hitting Enter should trigger change event imediately, if the value actually changed
-    - Focusing out should trigger change event, if the value actually changed. BUT should not trigger it if Enter was pressed before that.
+    fixes: #4450
     
-    * The change event was not fired consistently in different scenarios. This change tries to fix that, so only a new value would trigger a henge event.
-    
-    There are some "edge" cases like:
-    - Selecting an item from suggestions should trigger a change event immediately, if the value actually changed
-    - Hitting Enter should trigger a change event immediately, if the value actually changed
-    - Focusing out should trigger a change event, if the value actually changed. BUT should not trigger it if Enter was pressed before that.
-    
-    * Fix change eventing for DatePicker
-    
-    * Fix Input's onEnter change eventing
-    
-    * Fix ESLint errors
-    
-    * WDIO tests
-    
-    * WDIO tests
-    
-    * Bugfixes
-    
-    * Rewrite change event firing
-    
-    * Revert DatePicker changes for change event
-    
-    * Fix date tests
-    
-    * Revert date tests
-    
-    * Datepicker update
-    
-    * Eslint fixes
-    
-    * Fix tests
-    
-    * Update tests
-    
-    * Adjust tests
-    
-    * Add some notes
+    * now the CLI has minimum height set to the LI base height
