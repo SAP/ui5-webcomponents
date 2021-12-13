@@ -1,7 +1,53 @@
-commit 912a09e7a3d094088816128b5eb33a8a853833bc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Dec 13 13:06:32 2021 +0200
+commit 09f905967433edb4c7268940c72ada8d90216b97
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Mon Dec 13 16:04:03 2021 +0200
 
-    fix(Playground): apply RTL properly (#4468)
+    fix(ui5-input): Consistent "change" event (#4129)
     
-    Currently we only set dir="rtl" to the body of the Playground samples, but some of the components need to re-render to apply specific RTL styles and that can be triggered by the applyDirection method as suggested in this PR.
+    * fix(ui5-input): Consistent "change" event
+    
+    The change event was not fired consistently in different scenarios. This change tries to fix that, so only a new value would trigger a henge event.
+    
+    There are some "edge" cases like:
+    - Selecting an item from suggestions should trigger change event imediately, if the value actually changed
+    - Hitting Enter should trigger change event imediately, if the value actually changed
+    - Focusing out should trigger change event, if the value actually changed. BUT should not trigger it if Enter was pressed before that.
+    
+    * The change event was not fired consistently in different scenarios. This change tries to fix that, so only a new value would trigger a henge event.
+    
+    There are some "edge" cases like:
+    - Selecting an item from suggestions should trigger a change event immediately, if the value actually changed
+    - Hitting Enter should trigger a change event immediately, if the value actually changed
+    - Focusing out should trigger a change event, if the value actually changed. BUT should not trigger it if Enter was pressed before that.
+    
+    * Fix change eventing for DatePicker
+    
+    * Fix Input's onEnter change eventing
+    
+    * Fix ESLint errors
+    
+    * WDIO tests
+    
+    * WDIO tests
+    
+    * Bugfixes
+    
+    * Rewrite change event firing
+    
+    * Revert DatePicker changes for change event
+    
+    * Fix date tests
+    
+    * Revert date tests
+    
+    * Datepicker update
+    
+    * Eslint fixes
+    
+    * Fix tests
+    
+    * Update tests
+    
+    * Adjust tests
+    
+    * Add some notes

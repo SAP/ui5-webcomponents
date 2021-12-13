@@ -5550,6 +5550,10 @@
 				event.preventDefault();
 				notificationsPopover.showAt(event.detail.targetRef);
 			});
+
+			notificationListTop.addEventListener("item-close", function (e) {
+				e.detail.item.hidden = true;
+			});
 		</script>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
@@ -5598,6 +5602,7 @@
 	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">notifications-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">notificationsPopover</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
 	<span class="p">});</span>
+
 <span class="nt">&lt;/script&gt;</span>
 	
 	</code></pre></figure></pre>
