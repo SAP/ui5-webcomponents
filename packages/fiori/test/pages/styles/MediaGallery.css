@@ -36,3 +36,7 @@ body {
 .controls.theme {
     margin-bottom: 3rem;
 }
+
+ui5-media-gallery-item:not(:defined) {
+    visibility: hidden;
+}

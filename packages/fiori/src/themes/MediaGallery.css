@@ -21,11 +21,13 @@
     flex-direction: column-reverse;
 }
 
-:host([effective-layout="Horizontal"]) .ui5-media-gallery-root {
+:host([effective-layout="Horizontal"]) .ui5-media-gallery-root,
+:host([effective-layout="Horizontal"][menu-horizontal-align="Right"]) .ui5-media-gallery-root[dir="rtl"] {
     flex-direction: row-reverse;
 }
 
-:host([effective-layout="Horizontal"][menu-horizontal-align="Right"]) .ui5-media-gallery-root {
+:host([effective-layout="Horizontal"][menu-horizontal-align="Right"]) .ui5-media-gallery-root,
+:host([effective-layout="Horizontal"]) .ui5-media-gallery-root[dir="rtl"] {
     flex-direction: row;
 }
 
