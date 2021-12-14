@@ -8,7 +8,7 @@ const MediaGalleryItemLayouts = {
 
 	/**
 	 * Recommended to use when the item contains an image.<br>
-	 * When a thumbnail is selected, makes the corresponding enlarged content appear in a square display area.
+	 * When a thumbnail is selected, it makes the corresponding enlarged content appear in a square display area.
 	 * @public
 	 * @type {Square}
 	 */
