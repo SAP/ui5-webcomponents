@@ -240,12 +240,12 @@ const metadata = {
 
 		_startOverflowItems: {
 			type: Object,
-			multiple: true
+			multiple: true,
 		},
 
 		_endOverflowItems: {
 			type: Object,
-			multiple: true
+			multiple: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
