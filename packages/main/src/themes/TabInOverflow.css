@@ -46,6 +46,10 @@
     color: var(--_ui5_tc_overflowItem_current_color);
 }
 
+.ui5-tab-overflow-item[hidden] {
+	display: none;
+}
+
 .ui5-tab-container-responsive-popover [ui5-li-custom][focused]:first-child::part(native-li)::after {
 	border-top-left-radius: var(--_ui5_tc_overflowItem_focus_border);
 	border-top-right-radius: var(--_ui5_tc_overflowItem_focus_border);
