@@ -71,7 +71,7 @@ const metadata = {
 		},
 
 		/**
-		 * If enabled, a <code>display-area-click</code> event will be fired
+		 * If enabled, a <code>display-area-click</code> event is fired
 		 * when the user clicks on the display area.
 		 * <br>
 		 * The display area is the central area that contains
