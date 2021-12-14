@@ -6,7 +6,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  */
 const MediaGalleryMenuVerticalAligns = {
 	/**
-	 * The menu will be placed at the top of the reference control.
+	 * Displays the menu at the top of the reference control.
 	 * @public
 	 * @type {Top}
 	 */
