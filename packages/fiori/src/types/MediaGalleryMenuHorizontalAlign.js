@@ -14,7 +14,7 @@ const MediaGalleryMenuHorizontalAligns = {
 	Left: "Left",
 
 	/**
-	 * The menu is on the right side of the target
+	 * Displays the menu on the right side of the target.
 	 * @public
 	 * @type {Right}
 	 */
