@@ -1,0 +1,4 @@
+:root {
+	--browser_scrollbar_border_radius: 0;
+	--browser_scrollbar_border: 0.0625rem solid #585858;
+}
