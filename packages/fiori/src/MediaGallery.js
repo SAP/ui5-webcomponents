@@ -58,7 +58,7 @@ const metadata = {
 	},
 	properties: /** @lends  sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
 		/**
-		 * If set to <code>true</code>, all thumbnails will be rendered in a scrollable container.
+		 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
 		 * If <code>false</code>, only up to 5 thumbnails will be rendered, followed by
 		 * an overflow button that shows the count of the remaining thumbnails.
 		 *
