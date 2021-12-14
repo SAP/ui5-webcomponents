@@ -13,7 +13,7 @@ const MediaGalleryMenuVerticalAligns = {
 	Top: "Top",
 
 	/**
-	 * The menu will be placed at the bottom of the reference control.
+	 * Displays the menu at the bottom of the reference control.
 	 * @public
 	 * @type {Bottom}
 	 */
