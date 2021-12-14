@@ -45,87 +45,6 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "XL", "media-range=XL");
 	});
 
-	it("scroll works on iconsOnly TabContainer", async () => {
-		await browser.setWindowSize(520, 1080);
-
-		const arrowLeft = await browser.$("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft ui5-button");
-		const arrowRight = await browser.$("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight ui5-button");
-
-		assert.notOk(await arrowLeft.isDisplayed(), "'Left Arrow' should be initially hidden");
-		assert.ok(await arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
-
-		await arrowRight.click();
-
-		await arrowLeft.waitForDisplayed({
-			timeout: 1000,
-			interval: 100,
-			timeoutMsg: "'Left Arrow' should be visible after 'Right arrow' click"
-		});
-
-		await arrowLeft.click();
-
-		await arrowLeft.waitForDisplayed({
-			reverse: true,
-			timeout: 1000,
-			interval: 100,
-			timeoutMsg: "'Left Arrow' should be hidden after 'Left arrow' click"
-		});
-		await arrowRight.waitForDisplayed({
-			timeout: 1000,
-			interval: 100,
-			timeoutMsg: "'Right Arrow' should be visible  after 'Left arrow' click"
-		});
-	});
-
-	it("scroll works on textOnly TabContainer", async () => {
-		await browser.setWindowSize(520, 1080);
-
-		let arrowLeft = await browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowLeft  ui5-button");
-		let arrowRight = await browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowRight  ui5-button");
-
-		assert.notOk(await arrowLeft.isDisplayed(), "'Left Arrow' should be initially hidden");
-		assert.ok(await arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
-
-		await arrowRight.click();
-
-		await arrowLeft.waitForDisplayed({
-			timeout: 1000,
-			interval: 100,
-			timeoutMsg: "'Left Arrow' should be visible after 'Right arrow' click"
-		});
-
-		await arrowLeft.click();
-
-		await arrowLeft.waitForDisplayed({
-			reverse: true,
-			timeout: 1000,
-			interval: 100,
-			timeoutMsg: "'Left Arrow' should be hidden after 'Left arrow' click"
-		});
-		await arrowRight.waitForDisplayed({
-			timeout: 1000,
-			interval: 100,
-			timeoutMsg: "'Right Arrow' should be visible  after 'Left arrow' click"
-		});
-
-		// act: open overflow
-		const overflowBtn = await browser.$("#tabContainerTextOnly").shadow$(".ui-tc__overflowButton");
-		await overflowBtn.click();
-
-		// assert: the overflow popover is open.
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerTextOnly")
-		const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		assert.strictEqual(await overflowPopover.isDisplayedInViewport(), true,
-			"Popover is open.");
-
-		// act: resize, so the overflow button is not visible
-		await browser.setWindowSize(1600, 1080);
-
-		// assert: the overflow popover is closed.
-		assert.strictEqual(await overflowPopover.isDisplayedInViewport(), false,
-			"Popover is closed.");
-	});
-
 	it("tests if content is scrollable when tabcontainer takes limited height by its parent", async () => {
 		const { tcHeight, tcScrollHeight } = await browser.executeAsync(done => {
 			const scrollableContent = document.getElementById("tc-scrollable-child");
@@ -159,4 +78,59 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await tab4.getAttribute("aria-posinset"), "3", "The aria-posinset is correct.");
 		assert.strictEqual(await tab4.getAttribute("aria-setsize"), "7", "The aria-setsize is correct.");
 	});
+
+	it("tests start and end overflow behavior", async () => {
+
+		assert.strictEqual(await browser.$("#tabContainerStartAndEndOverflow").getAttribute("tabs-overflow-mode"), "StartAndEnd", "overflow mode is set to StartAndEnd");
+
+		// Resize
+		await browser.setWindowSize(1000, 1080);
+		let tabcontainer = await browser.$("#tabContainerStartAndEndOverflow");
+		let startOverflowButton = await tabcontainer.shadow$(".ui5-tc__startOverflowButton");
+		assert.strictEqual(await startOverflowButton.getProperty("innerText"), "+11", "11 tabs in start overflow");
+
+		await browser.setWindowSize(800, 1080);
+		assert.strictEqual(await startOverflowButton.getProperty("innerText"), "+14", "14 tabs in start overflow");
+
+		// Select
+		const initiallySelectedItem = await tabcontainer.$("[selected]");
+		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Twenty", "Initially selected item is Twenty");
+
+		await startOverflowButton.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerStartAndEndOverflow");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const item = await (await popover.$("ui5-list").$$("ui5-li-custom"))[0];
+
+		assert.strictEqual(await item.getProperty("innerText"), "One", "First item in overflow is 1");
+
+		await item.click()
+		const newlySelectedItem = await tabcontainer.$("[selected]");
+
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "One", "Newly selected item is One");
+	});
+
+	it("tests end overflow behavior", async () => {
+
+		await browser.setWindowSize(1000, 1080);
+
+		let tabcontainer = await browser.$("#tabContainerEndOverflow");
+		let overflowButton = await tabcontainer.shadow$(".ui5-tc__endOverflowButton");
+
+		// Select
+		const initiallySelectedItem = await tabcontainer.$("[selected]");
+		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Thirteen", "Initially selected item is 13");
+
+		await overflowButton.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[11].click();
+
+		const newlySelectedItem = await tabcontainer.$("[selected]");
+
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Twelve", "The first item in the overflow is 12");
+
+	});
+
 });
