@@ -14,7 +14,7 @@ const MediaGalleryLayouts = {
 	 Auto: "Auto",
 
 	/**
-	 * Vertical split between the thumbnails list and the selected image
+	 * Displays the layout as a vertical split between the thumbnails list and the selected image.
 	 * @public
 	 * @type {Left}
 	 */
