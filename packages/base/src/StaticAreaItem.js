@@ -5,6 +5,8 @@ import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 
+const STATIC_AREA_ITEM_ID_SUFFIX = "--static-area-item";
+
 /**
  *
  * @class
@@ -25,6 +27,9 @@ class StaticAreaItem extends HTMLElement {
 	setOwnerElement(ownerElement) {
 		this.ownerElement = ownerElement;
 		this.classList.add(this.ownerElement._id); // used for getting the popover in the tests
+		if (this.ownerElement.hasAttribute("id")) {
+			this.setAttribute("id", `${this.ownerElement.id}${STATIC_AREA_ITEM_ID_SUFFIX}`); // stable selector
+		}
 	}
 
 	/**
