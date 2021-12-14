@@ -251,7 +251,7 @@ class UI5Element extends HTMLElement {
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (child.isUI5Element && slotData.invalidateOnChildChange) {
-				child.attachInvalidate(this._getChildChangeListener(slotName));
+				(child.attachInvalidate || child._attachChange)(this._getChildChangeListener(slotName));
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
@@ -311,7 +311,7 @@ class UI5Element extends HTMLElement {
 
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
-				child.detachInvalidate(this._getChildChangeListener(slotName));
+				(child.detachInvalidate || child._detachChange)(this._getChildChangeListener(slotName));
 			}
 
 			if (isSlot(child)) {
