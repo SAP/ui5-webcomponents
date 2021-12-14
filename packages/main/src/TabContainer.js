@@ -390,8 +390,6 @@ class TabContainer extends UI5Element {
 		this.items.forEach(item => {
 			item._getTabInStripDomRef = this.getDomRef().querySelector(`*[data-ui5-stable="${item.stableDomRef}"]`);
 		});
-		this._itemNavigation._init();
-		this._itemNavigation.setCurrentItem(this._selectedTab);
 	}
 
 	onEnterDOM() {
