@@ -5,16 +5,16 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import {
-	getAnimationMode
+	getAnimationMode,
 } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
-	isEnter
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import {
-	getI18nBundle
+	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -244,6 +244,16 @@ const metadata = {
 			noAttribute: true,
 			defaultValue: "More",
 		},
+
+		_startOverflowItems: {
+			type: Object,
+			multiple: true,
+		},
+
+		_endOverflowItems: {
+			type: Object,
+			multiple: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -258,10 +268,10 @@ const metadata = {
 		"tab-select": {
 			detail: {
 				tab: {
-					type: HTMLElement
+					type: HTMLElement,
 				},
 				tabIndex: {
-					type: Number
+					type: Number,
 				},
 			},
 		},
@@ -383,6 +393,10 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (this.showOverflow) {
+			console.warn(`The "show-overflow" property is deprecated and will be removed in a future release.`); // eslint-disable-line
+		}
+
 		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
@@ -457,10 +471,6 @@ class TabContainer extends UI5Element {
 				if (item._selected) {
 					item._selected = false;
 				}
-
-				if (selected) {
-					this._itemNavigation.setCurrentItem(item);
-				}
 			}
 		}, this);
 
@@ -519,13 +529,13 @@ class TabContainer extends UI5Element {
 
 	slideContentDown(element) {
 		return slideDown({
-			element
+			element,
 		}).promise();
 	}
 
 	slideContentUp(element) {
 		return slideUp({
-			element
+			element,
 		}).promise();
 	}
 
@@ -538,15 +548,24 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		this._startOverflowItems = [];
+		this._endOverflowItems = [];
+
 		if (isEndOverflow) {
 			button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__endOverflowButton > [ui5-button]");
 			this.items.forEach(item => {
 				item.isInEndOverflow = true;
+				if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute("end-overflow")) {
+					this._endOverflowItems.push(item);
+				}
 			});
 		} else if (isStartOverflow) {
 			button = this.startOverflowButton[0] || this.getDomRef().querySelector(".ui5-tc__startOverflowButton > [ui5-button]");
 			this.items.forEach(item => {
 				item.isInEndOverflow = false;
+				if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute("start-overflow")) {
+					this._startOverflowItems.push(item);
+				}
 			});
 		}
 
@@ -554,7 +573,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			await this.responsivePopover.applyInitialFocus()
+			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items[0].id;
 			this.responsivePopover.showAt(button);
 		}
 	}
@@ -597,12 +616,12 @@ class TabContainer extends UI5Element {
 		}
 
 		switch (this.tabsOverflowMode) {
-			case TabsOverflowMode.StartAndEnd:
-				this._updateStartAndEndOverflow(itemsDomRefs);
-				break;
-			case TabsOverflowMode.End:
-				this._updateEndOverflow(itemsDomRefs);
-				break;
+		case TabsOverflowMode.StartAndEnd:
+			this._updateStartAndEndOverflow(itemsDomRefs);
+			break;
+		case TabsOverflowMode.End:
+			this._updateEndOverflow(itemsDomRefs);
+			break;
 		}
 
 		this._updateOverflowItems();
