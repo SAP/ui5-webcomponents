@@ -1,5 +1,9 @@
-commit 80bbc22edf0c2c09f6ee7b4558f9eb24103cc734
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Dec 14 14:35:51 2021 +0200
+commit a38bbab92b3d2be8fbdea66cbdcdcce9d848a57c
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Tue Dec 14 14:58:11 2021 +0200
 
-    feat(ui5-tree-item): add indeterminate state (#4397)
+    feat(ui5-tabcontainer): implement overflow functionality (#4403)
+    
+    Part of #2540
+    
+    Co-authored-by: Teodor Taushanov <teodor.taushanov@sap.com>

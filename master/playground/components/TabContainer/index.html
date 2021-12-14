@@ -5257,7 +5257,7 @@
 	</style>
 	<h3>Basic TabContainer</h3>
 	<div class="snippet">
-		<ui5-tabcontainer class="full-width" show-overflow>
+		<ui5-tabcontainer class="full-width">
 			<ui5-tab icon="menu" text="Tab 1">
 				<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
 			</ui5-tab>
@@ -5276,7 +5276,7 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">show-overflow</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 1"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-label&gt;</span>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.<span class="nt">&lt;/ui5-label&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
@@ -5301,7 +5301,7 @@
 <section>
 	<h3>TabContainer with text only tabs</h3>
 	<div class="snippet">
-		<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
+		<ui5-tabcontainer class="full-width" collapsed fixed>
 			<ui5-tab text="Home"></ui5-tab>
 			<ui5-tab text="What's new" selected></ui5-tab>
 			<ui5-tab text="Who are we"></ui5-tab>
@@ -5309,7 +5309,7 @@
 			<ui5-tab text="Contacts"></ui5-tab>
 		</ui5-tabcontainer>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">collapsed</span> <span class="na">fixed</span> <span class="na">show-overflow</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Home"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"What's new"</span> <span class="na">selected</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Who are we"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
@@ -5319,11 +5319,163 @@
 	</code></pre></figure></pre>
 </section>
 
+<!--end overflow -->
+
+<section>
+	<h3>Text only End Overflow</h3>
+	<div  class="snippet">
+		<ui5-tabcontainer collapsed fixed>
+			<ui5-tab text="Tab 1">
+			</ui5-tab>
+			<ui5-tab text="Tab 2">
+			</ui5-tab>
+			<ui5-tab text="Tab 3">
+			</ui5-tab>
+			<ui5-tab text="Tab 4">
+			</ui5-tab>
+			<ui5-tab text="Tab 5">
+			</ui5-tab>
+			<ui5-tab text="Tab 6">
+			</ui5-tab>
+			<ui5-tab text="Tab 7">
+			</ui5-tab>
+			<ui5-tab text="Tab 8">
+			</ui5-tab>
+			<ui5-tab text="Tab 9">
+			</ui5-tab>
+			<ui5-tab text="Tab 10">
+			</ui5-tab>
+			<ui5-tab text="Tab 11">
+			</ui5-tab>
+			<ui5-tab text="Tab 12">
+			</ui5-tab>
+			<ui5-tab text="Tab 13" selected>
+			</ui5-tab>
+			<ui5-tab text="Tab 14">
+			</ui5-tab>
+			<ui5-tab text="Tab 15">
+			</ui5-tab>
+			<ui5-tab text="Tab 16">
+			</ui5-tab>
+			<ui5-tab text="Tab 17">
+			</ui5-tab>
+			<ui5-tab text="Tab 18">
+			</ui5-tab>
+			<ui5-tab text="Tab 19">
+			</ui5-tab>
+			<ui5-tab text="Tab 20">
+			</ui5-tab>
+			<ui5-tab text="Tab 21">
+			</ui5-tab>
+			<ui5-tab text="Tab 22">
+			</ui5-tab>
+			<ui5-tab text="Tab 23">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 1"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 2"</span> <span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	...
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 13"</span> <span class="na">selected</span> <span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	...
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 22"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 23"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- start and end overflow -->
+
+<section>
+		<h2>Text only Start and End Overflow</h2>
+		<div>
+			<ui5-tabcontainer collapsed fixed tabs-overflow-mode="StartAndEnd">
+				<ui5-tab text="Tab 1">
+				</ui5-tab>
+				<ui5-tab text="Tab 2">
+				</ui5-tab>
+				<ui5-tab text="Tab 3">
+				</ui5-tab>
+				<ui5-tab text="Tab 4">
+				</ui5-tab>
+				<ui5-tab text="Tab 5">
+				</ui5-tab>
+				<ui5-tab text="Tab 6">
+				</ui5-tab>
+				<ui5-tab text="Tab 7">
+				</ui5-tab>
+				<ui5-tab text="Tab 8">
+				</ui5-tab>
+				<ui5-tab text="Tab 9">
+				</ui5-tab>
+				<ui5-tab text="Tab 10">
+				</ui5-tab>
+				<ui5-tab text="Tab 11">
+				</ui5-tab>
+				<ui5-tab text="Tab 12">
+				</ui5-tab>
+				<ui5-tab text="Tab 13">
+				</ui5-tab>
+				<ui5-tab text="Tab 14">
+				</ui5-tab>
+				<ui5-tab text="Tab 15">
+				</ui5-tab>
+				<ui5-tab text="Tab 16">
+				</ui5-tab>
+				<ui5-tab text="Tab 17" selected>
+				</ui5-tab>
+				<ui5-tab text="Tab 18">
+				</ui5-tab>
+				<ui5-tab text="Tab 19">
+				</ui5-tab>
+				<ui5-tab text="Tab 20">
+				</ui5-tab>
+				<ui5-tab text="Tab 21">
+				</ui5-tab>
+				<ui5-tab text="Tab 22">
+				</ui5-tab>
+				<ui5-tab text="Tab 23">
+				</ui5-tab>
+				<ui5-tab text="Tab 24">
+				</ui5-tab>
+				<ui5-tab text="Tab 25">
+				</ui5-tab>
+				<ui5-tab text="Tab 26">
+				</ui5-tab>
+				<ui5-tab text="Tab 27">
+				</ui5-tab>
+				<ui5-tab text="Tab 28">
+				</ui5-tab>
+				<ui5-tab text="Tab 29">
+				</ui5-tab>
+				<ui5-tab text="Tab 30">
+				</ui5-tab>
+				<ui5-tab text="Tab 31">
+				</ui5-tab>
+				<ui5-tab text="Tab 32">
+				</ui5-tab>
+				<ui5-tab text="Tab 33">
+				</ui5-tab>
+			</ui5-tabcontainer>
+		</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 1"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 2"</span> <span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	...
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 17"</span> <span class="na">selected</span> <span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	...
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 32"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 33"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 <!-- text and additional-text -->
 <section>
 	<h3>TabContainer with text and additional-text</h3>
 	<div class="snippet">
-		<ui5-tabcontainer show-overflow="true" collapsed fixed>
+		<ui5-tabcontainer collapsed fixed>
 			<ui5-tab text="Info" additional-text="3">
 			</ui5-tab>
 			<ui5-tab text="Attachments" additional-text="24" selected>
@@ -5334,7 +5486,7 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">collapsed</span> <span class="na">fixed</span> <span class="na">tabs-overflow-mode=</span><span class="s">"StartAndEnd"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Info"</span> <span class="na">additional-text=</span><span class="s">"3"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Attachments"</span> <span class="na">additional-text=</span><span class="s">"24"</span> <span class="na">selected</span><span class="nt">&gt;</span>
@@ -5351,7 +5503,7 @@
 <section>
 	<h3>TabContainer with tabLayout="Inline"</h3>
 	<div class="snippet">
-		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
 			<ui5-tab text="Monitors" additional-text="(10)">
 			</ui5-tab>
 			<ui5-tab text="Cameras" additional-text="(2)" selected>
@@ -5360,7 +5512,7 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 
-		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
 			<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
 			</ui5-tab>
 			<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
@@ -5369,7 +5521,7 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
@@ -5378,7 +5530,7 @@
 	<span class="nt">&lt;/ui5-tab&gt;</span>
 <span class="nt">&lt;/ui5-tabcontainer&gt;</span>
 
-<span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+<span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"laptop"</span> <span class="na">ext=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"video"</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
@@ -5467,6 +5619,23 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
             <br><br> Available options are: <ul> <li><code>Standard</code></li> <li><code>Inline</code></li> </ul>
                         </div>
                       </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          tabsOverflowMode
+                            <br>
+                            <code>tabs-overflow-mode</code>
+                        </div>
+                        <div class="cell api-table-content-cell">TabsOverflowMode</div>
+                        <div class="cell api-table-content-cell">&quot;End&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible. All other tabs that can 't fit on the screen are available in an overflow tab "More".
+            
+            <br><br> <b>Note:</b> Only one overflow at the end would be displayed by default, but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
+            
+            <br><br> Available options are: <ul> <li><code>End</code></li> <li><code>StartAndEnd</code></li> </ul>
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.1.0</div>
+                        </div>
+                      </div>
             
                   </div>
             
@@ -5493,6 +5662,11 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                       <div class="cell api-table-content-cell api-table-content-cell-bold">overflowButton</div>
                       <div class="cell api-table-content-cell">HTMLElement</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.</div>
+                    </div>
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">startOverflowButton</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the button which will open the start overflow menu if available. If nothing is provided to this slot, the default button will be used.</div>
                     </div>
             
                 </div>
