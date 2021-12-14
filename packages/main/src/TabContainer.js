@@ -373,7 +373,7 @@ class TabContainer extends UI5Element {
 
 	onEnterDOM() {
 		if (this.showOverflow) {
-			console.warn(`The "show-overflow" property is deprecated and will be removed in a future release.`);
+			console.warn(`The "show-overflow" property is deprecated and will be removed in a future release.`); // eslint-disable-line
 		}
 
 		ResizeHandler.register(this._getHeader(), this._handleResize);
