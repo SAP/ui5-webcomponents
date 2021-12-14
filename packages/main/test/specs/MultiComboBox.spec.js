@@ -494,7 +494,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.keys("a");
 			await mcb.keys("ArrowUp");
-			assert.equal(await mcb.getProperty("value"), "Condenseda", "The value remains the same");
+			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
 
 	it ("should set matching item if there is user input", async () => {
