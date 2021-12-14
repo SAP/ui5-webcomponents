@@ -10,7 +10,6 @@
 	--_ui5_checkbox_root_side_padding: .6875rem;
 	--_ui5_checkbox_icon_size: 1rem;
 	--_ui5_checkbox_partially_icon_size: .75rem;
-	--_ui5_custom_list_item_height: 3rem;
 	--_ui5_custom_list_item_rb_min_width: 2.75rem;
 	--_ui5_day_picker_item_width: 2.25rem;
 	--_ui5_day_picker_item_height: 2.875rem;
@@ -161,7 +160,6 @@
 	--_ui5_color-palette-button-height: 2rem;
 
 	/* Custom List Item */
-	--_ui5_custom_list_item_height: 2rem;
 	--_ui5_custom_list_item_rb_min_width: 2rem;
 
 	/* DayPicker */

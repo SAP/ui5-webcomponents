@@ -8,9 +8,11 @@
 
 ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
+	border-left: var(--browser_scrollbar_border);
 }
 
 ::-webkit-scrollbar-thumb {
+	border-radius: var(--browser_scrollbar_border_radius);
 	background-color: var(--sapScrollBar_FaceColor);
 }
 

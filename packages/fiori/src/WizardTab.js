@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
@@ -178,37 +178,23 @@ class WizardTab extends UI5Element {
 		}
 	}
 
-	_onkeydown(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		if (isSpace(event) || isEnter(event)) {
-			event.preventDefault();
-			this.fireEvent("selection-change-requested");
-		}
-	}
-
 	_onkeyup(event) {
 		if (this.disabled) {
 			return;
 		}
 
-		if (isSpace(event)) {
+		if ((isSpace(event) || isEnter(event)) && !isSpaceShift(event)) {
+			event.preventDefault();
 			this.fireEvent("selection-change-requested");
 		}
 	}
 
 	_onfocusin() {
-		if (this.disabled) {
-			return;
-		}
-
 		this.fireEvent("focused");
 	}
 
 	get tabIndex() {
-		return this.disabled ? undefined : this._tabIndex;
+		return this._tabIndex;
 	}
 
 	get hasTexts() {
