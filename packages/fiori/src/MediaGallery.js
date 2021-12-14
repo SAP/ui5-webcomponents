@@ -72,7 +72,7 @@ const metadata = {
 
 		/**
 		 * If enabled, a <code>display-area-click</code> event is fired
-		 * when the user clicks on the display area.
+		 * when the user clicks or taps on the display area.
 		 * <br>
 		 * The display area is the central area that contains
 		 * the enlarged content of the currently selected item.
