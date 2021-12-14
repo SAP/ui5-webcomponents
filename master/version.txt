@@ -1,5 +1,5 @@
-commit 84018fc55d081584de1ad97da08aabd24274b1be
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Dec 14 09:58:19 2021 +0200
+commit 80bbc22edf0c2c09f6ee7b4558f9eb24103cc734
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Dec 14 14:35:51 2021 +0200
 
-    fix(ui5-textarea): apply specified scrollbar stylings (#4477)
+    feat(ui5-tree-item): add indeterminate state (#4397)
