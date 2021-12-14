@@ -666,26 +666,26 @@ class MultiComboBox extends UI5Element {
 	_navigateToNextItem() {
 		let isItemMatched = false;
 		let previousItemIdx = this.currentItemIdx;
-	
+
 		const value = this.value;
 		const items = this.items;
 		const itemsCount = items.length;
 		const prevItem = items[previousItemIdx];
 		const matchingItems = this.value && this._filterItems(value);
-	
+
 		if (previousItemIdx > -1 && prevItem && prevItem.text !== value) {
 			this.currentItemIdx = -1;
 			previousItemIdx = -1;
 		} else {
 			isItemMatched = previousItemIdx > -1 && prevItem.text === value;
 		}
-	
+
 		if (previousItemIdx >= itemsCount - 1) {
 			return;
 		}
-	
+
 		let currentItem = matchingItems.length && !isItemMatched ? matchingItems[++this.currentItemIdx] : this.items[++this.currentItemIdx];
-	
+
 		if (matchingItems.length > 1) {
 			while (this.currentItemIdx < matchingItems.length - 1 && currentItem.selected) {
 				currentItem = matchingItems[++this.currentItemIdx];
@@ -695,40 +695,40 @@ class MultiComboBox extends UI5Element {
 				currentItem = items[++this.currentItemIdx];
 			}
 		}
-	
+
 		if (currentItem.selected === true) {
 			this.currentItemIdx = previousItemIdx;
 			return;
 		}
-	
+
 		this.value = currentItem.text;
 	}
-	
+
 	_navigateToPrevItem() {
 		let isItemMatched = false;
 		let currentItem;
-	
+
 		const items = this.items;
 		const previousItemIdx = this.currentItemIdx;
 		const prevItem = items[previousItemIdx];
 		const prevItemText = prevItem && prevItem.text;
 		const value = this.value;
 		const matchingItems = this.value && this._filterItems(value);
-	
+
 		if (prevItem && prevItemText && value && prevItemText !== value) {
 			this.currentItemIdx = -1;
 		} else {
 			isItemMatched = previousItemIdx > -1 && prevItemText === value;
 		}
-	
+
 		if (previousItemIdx > -1 && !value) {
 			this.currentItemIdx = -1;
 		}
-	
+
 		if (previousItemIdx === 0 && prevItemText === value) {
 			return;
 		}
-	
+
 		if (this.currentItemIdx < 1 && !isItemMatched) {
 			this.currentItemIdx = matchingItems.length ? matchingItems.length - 1 : items.length - 1;
 			currentItem = matchingItems.length ? matchingItems[this.currentItemIdx] : items[this.currentItemIdx];
@@ -737,7 +737,7 @@ class MultiComboBox extends UI5Element {
 		} else {
 			currentItem = matchingItems.length ? matchingItems[--this.currentItemIdx] : items[--this.currentItemIdx];
 		}
-	
+
 		if (matchingItems.length > 1) {
 			while (this.currentItemIdx > 0 && currentItem.selected) {
 				currentItem = matchingItems[--this.currentItemIdx];
@@ -747,7 +747,7 @@ class MultiComboBox extends UI5Element {
 				currentItem = items[--this.currentItemIdx];
 			}
 		}
-	
+
 		if (currentItem && currentItem.selected) {
 			this.currentItemIdx = previousItemIdx;
 		} else if (currentItem) {
