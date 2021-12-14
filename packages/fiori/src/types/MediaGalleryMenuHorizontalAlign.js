@@ -7,7 +7,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 const MediaGalleryMenuHorizontalAligns = {
 
 	/**
-	 * The menu is on the left side of the target
+	 * Displays the menu on the left side of the target.
 	 * @public
 	 * @type {Left}
 	 */
