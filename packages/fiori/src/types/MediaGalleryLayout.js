@@ -7,7 +7,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 const MediaGalleryLayouts = {
 
 	/**
-	 * The layout is determined automatically
+	 * The layout is determined automatically.
 	 * @public
 	 * @type {Left}
 	 */
