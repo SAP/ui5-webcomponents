@@ -39,6 +39,8 @@ import FilterItem from "./dist/FilterItem.js";
 import FilterItemOption from "./dist/FilterItemOption.js";
 import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
 import IllustratedMessage from "./dist/IllustratedMessage.js";
+import MediaGallery from "./dist/MediaGallery.js";
+import MediaGalleryItem from "./dist/MediaGalleryItem.js";
 import ProductSwitch from "./dist/ProductSwitch.js";
 import ProductSwitchItem from "./dist/ProductSwitchItem.js";
 import SideNavigation from "./dist/SideNavigation.js";
