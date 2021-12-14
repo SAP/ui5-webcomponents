@@ -4,11 +4,18 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import {
+	getAnimationMode
+} from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	getI18nBundle
+} from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
@@ -250,8 +257,12 @@ const metadata = {
 		 */
 		"tab-select": {
 			detail: {
-				tab: { type: HTMLElement },
-				tabIndex: { type: Number },
+				tab: {
+					type: HTMLElement
+				},
+				tabIndex: {
+					type: Number
+				},
 			},
 		},
 	},
@@ -330,7 +341,7 @@ class TabContainer extends UI5Element {
 
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this._getTabs(),
+			getItemsCallback: () => this._getFocusableTabs(),
 		});
 	}
 
@@ -372,10 +383,6 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (this.showOverflow) {
-			console.warn(`The "show-overflow" property is deprecated and will be removed in a future release.`); // eslint-disable-line
-		}
-
 		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
@@ -511,11 +518,15 @@ class TabContainer extends UI5Element {
 	}
 
 	slideContentDown(element) {
-		return slideDown({ element }).promise();
+		return slideDown({
+			element
+		}).promise();
 	}
 
 	slideContentUp(element) {
-		return slideUp({ element }).promise();
+		return slideUp({
+			element
+		}).promise();
 	}
 
 	async _onOverflowButtonClick(event) {
@@ -543,6 +554,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
+			await this.responsivePopover.applyInitialFocus()
 			this.responsivePopover.showAt(button);
 		}
 	}
@@ -585,15 +597,17 @@ class TabContainer extends UI5Element {
 		}
 
 		switch (this.tabsOverflowMode) {
-		case TabsOverflowMode.StartAndEnd:
-			this._updateStartAndEndOverflow(itemsDomRefs);
-			break;
-		case TabsOverflowMode.End:
-			this._updateEndOverflow(itemsDomRefs);
-			break;
+			case TabsOverflowMode.StartAndEnd:
+				this._updateStartAndEndOverflow(itemsDomRefs);
+				break;
+			case TabsOverflowMode.End:
+				this._updateEndOverflow(itemsDomRefs);
+				break;
 		}
 
 		this._updateOverflowItems();
+		this._itemNavigation._init();
+		this._itemNavigation.setCurrentItem(this._selectedTab);
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
@@ -833,6 +847,30 @@ class TabContainer extends UI5Element {
 	async _closeRespPopover() {
 		this.responsivePopover = await this._respPopover();
 		this.responsivePopover.close();
+	}
+
+	_getFocusableTabs() {
+		if (!this.getDomRef()) {
+			return [];
+		}
+
+		const focusableTabs = [];
+
+		if (!this._getHeaderStartOverflowButton().hasAttribute("hidden")) {
+			focusableTabs.push(this._getHeaderStartOverflowButton().querySelector("ui5-button"));
+		}
+
+		this._getTabs().forEach(tab => {
+			if (tab.getTabInStripDomRef() && !tab.getTabInStripDomRef().hasAttribute("hidden")) {
+				focusableTabs.push(tab);
+			}
+		});
+
+		if (!this._getHeaderEndOverflowButton().hasAttribute("hidden")) {
+			focusableTabs.push(this._getHeaderEndOverflowButton().querySelector("ui5-button"));
+		}
+
+		return focusableTabs;
 	}
 
 	_updateMediaRange() {
