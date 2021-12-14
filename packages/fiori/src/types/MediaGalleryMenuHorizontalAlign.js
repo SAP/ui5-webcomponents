@@ -23,7 +23,7 @@ const MediaGalleryMenuHorizontalAligns = {
 
 /**
  * @class
- * Defines the horizontal alignment of the thumbnails menu of the MediaGallery component.
+ * Defines the horizontal alignment of the thumbnails menu of the <code>ui5-media-gallery</code> component.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.types.MediaGalleryMenuHorizontalAlign
