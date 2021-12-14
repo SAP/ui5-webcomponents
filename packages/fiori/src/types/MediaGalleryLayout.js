@@ -30,7 +30,7 @@ const MediaGalleryLayouts = {
 
 /**
  * @class
- * Defines the layout type of the thumbnails list of the MediaGallery component.
+ * Defines the layout type of the thumbnails list of the <code>ui5-media-gallery</code> component.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.types.MediaGalleryLayout
