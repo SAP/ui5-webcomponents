@@ -26,7 +26,7 @@ const MediaGalleryItemLayouts = {
 
 /**
  * @class
- * Defines the type of the content
+ * Defines the layout of the content displayed in the <code>ui5-media-gallery-item</code>.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout
