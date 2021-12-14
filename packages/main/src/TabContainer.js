@@ -237,6 +237,16 @@ const metadata = {
 			noAttribute: true,
 			defaultValue: "More",
 		},
+
+		_startOverflowItems: {
+			type: Object,
+			multiple: true
+		},
+
+		_endOverflowItems: {
+			type: Object,
+			multiple: true
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -527,15 +537,24 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		this._startOverflowItems = [];
+		this._endOverflowItems = [];
+
 		if (isEndOverflow) {
 			button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__endOverflowButton > [ui5-button]");
 			this.items.forEach(item => {
 				item.isInEndOverflow = true;
+				if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute("end-overflow")) {
+					this._endOverflowItems.push(item);
+				}
 			});
 		} else if (isStartOverflow) {
 			button = this.startOverflowButton[0] || this.getDomRef().querySelector(".ui5-tc__startOverflowButton > [ui5-button]");
 			this.items.forEach(item => {
 				item.isInEndOverflow = false;
+				if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute("start-overflow")) {
+					this._startOverflowItems.push(item);
+				}
 			});
 		}
 
@@ -543,7 +562,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			await this.responsivePopover.applyInitialFocus()
+			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items[0].id;
 			this.responsivePopover.showAt(button);
 		}
 	}
