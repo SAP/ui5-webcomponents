@@ -1,9 +1,5 @@
-commit a38bbab92b3d2be8fbdea66cbdcdcce9d848a57c
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Tue Dec 14 14:58:11 2021 +0200
+commit 4b2720bd1540c3518dc7c98fc883231925585630
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Dec 14 15:17:36 2021 +0200
 
-    feat(ui5-tabcontainer): implement overflow functionality (#4403)
-    
-    Part of #2540
-    
-    Co-authored-by: Teodor Taushanov <teodor.taushanov@sap.com>
+    fix(ui5-combobox): remove incorrect sample (#4482)
