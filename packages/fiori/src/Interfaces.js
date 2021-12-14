@@ -17,6 +17,15 @@ const IFilterItem = "sap.ui.webcomponents.fiori.IFilterItem";
 const IFilterItemOption = "sap.ui.webcomponents.fiori.IFilterItemOption";
 
 /**
+ * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
+ *
+ * @name sap.ui.webcomponents.fiori.IMediaGalleryItem
+ * @interface
+ * @public
+ */
+const IMediaGalleryItem = "sap.ui.webcomponents.fiori.IMediaGalleryItem";
+
+/**
  * Interface for components that may be slotted as an action inside <code>ui5-li-notification</code> and <code>ui5-li-notification-group</code>
  *
  * @name sap.ui.webcomponents.fiori.INotificationAction
@@ -109,6 +118,7 @@ const IWizardStep = "sap.ui.webcomponents.fiori.IWizardStep";
 export {
 	IFilterItem,
 	IFilterItemOption,
+	IMediaGalleryItem,
 	INotificationAction,
 	INotificationListItem,
 	IProductSwitchItem,
