@@ -17,7 +17,7 @@ const IFilterItem = "sap.ui.webcomponents.fiori.IFilterItem";
 const IFilterItemOption = "sap.ui.webcomponents.fiori.IFilterItemOption";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-media-gallery</code> as items
+ * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
  *
  * @name sap.ui.webcomponents.fiori.IMediaGalleryItem
  * @interface
