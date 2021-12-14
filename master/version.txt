@@ -1,5 +1,113 @@
-commit 4b2720bd1540c3518dc7c98fc883231925585630
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Dec 14 15:17:36 2021 +0200
+commit 17cb2255d16eeaf6c940035a866d468898b336a4
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Tue Dec 14 17:27:48 2021 +0200
 
-    fix(ui5-combobox): remove incorrect sample (#4482)
+    feat(ui5-media-gallery): Initial implementation (#4427)
+    
+    * refactoring and API changes
+    
+    * fixes
+    
+    * minor refactoring for item selection
+    
+    * cleanup
+    
+    * improvements from review feedback
+    
+    * jsdoc improvements
+    
+    * fixes
+    
+    * fix for tab navigation
+    
+    * correct mobile view
+    
+    * improve js doc and file formatting
+    
+    * bug fix when no thumbnail
+    
+    * jsdoc improvements
+    
+    * declare thumbnail height
+    
+    * no ponter events for displayed img and more tests added
+    
+    * images for the playground sample
+    
+    * remove self-enclosing tags
+    
+    * improve css focus and RTL
+    
+    * Update packages/fiori/src/Interfaces.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/MediaGallery.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/MediaGallery.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/MediaGallery.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/MediaGallery.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryMenuHorizontalAlign.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryMenuHorizontalAlign.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryMenuVerticalAlign.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryMenuVerticalAlign.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryMenuVerticalAlign.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryItemLayout.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryItemLayout.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryLayout.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryLayout.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryLayout.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryMenuHorizontalAlign.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * Update packages/fiori/src/types/MediaGalleryLayout.js
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
+    
+    * improve description in jsdoc
+    
+    * add dependency to Icon
+    
+    Co-authored-by: Tanya Kostadinova <tanya.kostadinova@sap.com>
