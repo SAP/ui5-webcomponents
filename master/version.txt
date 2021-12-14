@@ -1,5 +1,5 @@
-commit d9261f5cdcfc4a2e629327d5ab171efc7e9fd22b
+commit 84018fc55d081584de1ad97da08aabd24274b1be
 Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon Dec 13 18:06:11 2021 +0200
+Date:   Tue Dec 14 09:58:19 2021 +0200
 
-    fix(ui5-input): fix value  truncation (#4467)
+    fix(ui5-textarea): apply specified scrollbar stylings (#4477)
