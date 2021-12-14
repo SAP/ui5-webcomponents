@@ -111,7 +111,7 @@
 		});
 
 		collapse.addEventListener("click", function(event) {
-			collapse.ariaExpanded = collapse.ariaExpanded === "true" ?  "false" : "true";
+			collapse.expanded = collapse.expanded === "true" ?  "false" : "true";
 			collapse.innerText = collapse.innerText === "More" ? "Less" : "More";
 			collapsible.style["display"] = collapsible.style["display"] === "-webkit-box" ? "" : "-webkit-box";
 			collapsible.style["-webkit-line-clamp"] = collapsible.style["-webkit-line-clamp"] === "3" ? "" : "3";

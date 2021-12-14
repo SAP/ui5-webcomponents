@@ -120,10 +120,10 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @private
+		 * @public
 		 * @since 1.1.0
 		 */
-		 ariaExpanded: {
+		 expanded: {
 			type: String,
 		},
 
