@@ -40,6 +40,7 @@ const PAGE_UP_DOWN_SIZE = 10;
 const metadata = {
 	tag: "ui5-list",
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**

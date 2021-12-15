@@ -101,6 +101,9 @@ class UI5Element extends HTMLElement {
 	 */
 	async connectedCallback() {
 		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
+		if (this.constructor.getMetadata().metadata.fastNavigation) {
+			this.setAttribute("data-sap-ui-fastnavgroup", true);
+		}
 
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
