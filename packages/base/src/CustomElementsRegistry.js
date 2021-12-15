@@ -64,7 +64,7 @@ const displayFailedRegistrations = () => {
 		} else {
 			compareWord = "the same";
 		}
-		logger.para(`Runtime ${currentRuntime.descriptor} failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version (${otherRuntime.descriptor}): ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`);
+		logger.para(`Runtime "${currentRuntime.descriptor}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntime.descriptor}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`);
 		if (comparison > 0) {
 			logger.line(`WARNING! If your code uses features of the above web components, unavailable in version ${otherRuntime.version}, it might not work as expected!`);
 		} else {
@@ -72,7 +72,7 @@ const displayFailedRegistrations = () => {
 		}
 	});
 
-	logger.para(`To prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
+	logger.para(`To prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/2-advanced/03-scoping.md.`);
 
 	logDisableRuntimeWarningsInstructions(logger);
 

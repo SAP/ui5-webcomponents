@@ -4,16 +4,16 @@ class Runtime {
 			this[prop] = versionInfo[prop];
 		});
 		this.index = index;
-		this.customAlias = undefined;
+		this.alias = undefined;
 		this.compareResultCache = new WeakMap();
 	}
 
-	get alias() {
-		return this.customAlias ? this.customAlias : `Unspecified runtime ${this.index}`;
-	}
-
 	get descriptor() {
-		return `${this.version} - ${this.alias}`;
+		let descriptor = `[${this.index}] ${this.version}`;
+		if (this.alias) {
+			descriptor = `${descriptor} (${this.alias})`;
+		}
+		return descriptor;
 	}
 
 	compareTo(otherVer) {

@@ -104,7 +104,7 @@ const getAllRuntimes = () => registry.getAllRuntimes();
  */
 const setRuntimeAlias = alias => {
 	const currentRuntime = getRuntime();
-	currentRuntime.customAlias = alias;
+	currentRuntime.alias = alias;
 };
 
 export {
