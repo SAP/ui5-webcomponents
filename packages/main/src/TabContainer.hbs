@@ -7,17 +7,26 @@
 	{{/if}}
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
+		<div
+			class="ui5-tc__overflowButton ui5-tc__startOverflowButton"
+			@click="{{_onOverflowButtonClick}}"
+			hidden
+		>
+			{{#if startOverflowButton.length}}
+				<slot name="startOverflowButton"></slot>
+			{{else}}
+				<ui5-button
+					icon="{{overflowMenuIcon}}"
+					data-ui5-stable="tabs-overflow-start"
+					tabindex="-1"
+					title="{{overflowMenuTitle}}"
+					aria-haspopup="true"
+					icon-end>{{this._startOverflowText}}</ui5-button>
+			{{/if}}
+		</div>
 		<div class="{{classes.headerInnerContainer}}">
-			<div class="{{classes.headerBackArrow}}">
-				<ui5-button @click="{{_onHeaderBackArrowClick}}"
-							icon="slim-arrow-left"
-							data-ui5-stable="tabs-left"
-							design="Transparent"
-							tabindex="-1"
-							title="{{previousIconACCName}}"></ui5-button>
-			</div>
 			<!-- tab items -->
-			<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
+			<div class="{{classes.tabsInStripContainer}}" id="{{_id}}-tabsInStripContainer">
 				<ul
 					role="tablist"
 					@focusin={{_onTablistFocusin}}
@@ -41,34 +50,24 @@
 					{{/each}}
 				</ul>
 			</div>
-			<div class="{{classes.headerForwardArrow}}">
-			<ui5-button @click="{{_onHeaderForwardArrowClick}}"
-						icon="slim-arrow-right"
-						data-ui5-stable="tabs-right"
-						design="Transparent"
-						tabindex="-1"
-						title="{{nextIconACCName}}"></ui5-button>
 		</div>
+		<div
+			class="ui5-tc__overflowButton ui5-tc__endOverflowButton"
+			@click="{{_onOverflowButtonClick}}"
+			hidden
+		>
+			{{#if overflowButton.length}}
+				<slot name="overflowButton"></slot>
+			{{else}}
+				<ui5-button
+					icon="{{overflowMenuIcon}}"
+					data-ui5-stable="tabs-overflow-end"
+					tabindex="-1"
+					title="{{overflowMenuTitle}}"
+					aria-haspopup="true"
+					icon-end>{{this._endOverflowText}}</ui5-button>
+			{{/if}}
 		</div>
-		<!-- overflow button -->
-		{{#if shouldShowOverflow}}
-			<div
-				class="ui-tc__overflowButton"
-				@click="{{_onOverflowButtonClick}}"
-			>
-				{{#if overflowButton.length}}
-					<slot name="overflowButton"></slot>
-				{{else}}
-					<ui5-button
-						icon="{{overflowMenuIcon}}"
-						data-ui5-stable="tabs-overflow"
-						design="Transparent"
-						tabindex="-1"
-						title="{{overflowMenuTitle}}"
-						aria-haspopup="true"></ui5-button>
-				{{/if}}
-			</div>
-		{{/if}}
 	</div>
 
 	{{#unless tabsAtTheBottom}}
