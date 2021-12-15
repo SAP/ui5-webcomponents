@@ -705,8 +705,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_navigateToPrevItem() {
-		let isItemMatched = false;
 		let currentItem;
+		let isItemMatched = false;
 
 		const items = this.items;
 		const previousItemIdx = this.currentItemIdx;
