@@ -49,7 +49,8 @@ const displayFailedRegistrations = () => {
 	}
 
 	const allRuntimes = getAllRuntimes();
-	const logger = new Logger(`There are currently ${allRuntimes.length} UI5 Web Components instances on this HMTL page (loading order: ${allRuntimes.map(ver => ver.descriptor).join(", ")}).`);
+	const logger = new Logger(`There are currently ${allRuntimes.length} known UI5 Web Components instances on this HTML page (versions before 1.1.0 are not detected).`);
+	logger.line(`Loading order: ${allRuntimes.map(ver => ver.descriptor).join(", ")}`);
 
 	Object.keys(Failures).forEach(otherRuntimeIndex => {
 		const currentRuntime = getRuntime();
