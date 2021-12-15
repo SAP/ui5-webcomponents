@@ -961,6 +961,8 @@ class Wizard extends UI5Element {
 			}
 		}
 
+		console.log("here");
+
 		return this.selectedStepIndex;
 	}
 
@@ -975,8 +977,12 @@ class Wizard extends UI5Element {
 	 */
 	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
 		if (selectedStep && stepToSelect) {
-			selectedStep.selected = false;
-			stepToSelect.selected = true;
+
+			// keep the selection if next step is disabled
+			if (!stepToSelect.disabled) {
+				selectedStep.selected = false;
+				stepToSelect.selected = true;
+			}
 
 			this.fireEvent("step-change", {
 				step: stepToSelect,
