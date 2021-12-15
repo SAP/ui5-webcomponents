@@ -1,6 +1,7 @@
 @import "../base/sizes-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
+@import "../base/BrowserScrollbar-parameters.css";
 @import "../base/BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/Card-parameters.css";
