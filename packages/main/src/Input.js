@@ -13,6 +13,10 @@ import {
 	isDelete,
 	isEscape,
 	isTabNext,
+	isPageUp,
+	isPageDown,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -461,6 +465,22 @@ const metadata = {
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-input</code> provides the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
+ * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
+ * <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li>
+ * <li>[DOWN] - Focuses the next matching item in the suggestion list.</li>
+ * <li>[UP] - Focuses the previous matching item in the suggestion list.</li>
+ * <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li>
+ * <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li>
+ * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Input.js";</code>
@@ -615,6 +635,22 @@ class Input extends UI5Element {
 			return this._handleEnter(event);
 		}
 
+		if (isPageUp(event)) {
+			return this._handlePageUp(event);
+		}
+
+		if (isPageDown(event)) {
+			return this._handlePageDown(event);
+		}
+
+		if (isHome(event)) {
+			return this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			return this._handleEnd(event);
+		}
+
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}
@@ -676,6 +712,34 @@ class Input extends UI5Element {
 		}
 
 		this.focused = true;
+	}
+
+	_handlePageUp(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onPageUp(event);
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	_handlePageDown(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onPageDown(event);
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	_handleHome(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onHome(event);
+		}
+	}
+
+	_handleEnd(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onEnd(event);
+		}
 	}
 
 	_handleEscape() {
@@ -1304,6 +1368,10 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _isSuggestionsFocused() {
+		return !this.focused && this.Suggestions && this.Suggestions.isOpened();
 	}
 
 	/**
