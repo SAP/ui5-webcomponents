@@ -1,5 +1,5 @@
-commit 825765ff1077be431ebc34b59ec879fc0735c098
+commit a56f4edeafe173deb46ebd7f62ad952b34f92125
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Dec 15 10:41:59 2021 +0200
+Date:   Wed Dec 15 16:08:11 2021 +0200
 
-    refactor: use backwards-compatible child communication method (#4484)
+    refactor: provide stable data attributes for static area items (#4485)
