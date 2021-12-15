@@ -1,6 +1,9 @@
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 // import "./customI18n.js";
 
+import { setRuntimeAlias } from "@ui5/webcomponents-base/dist/Runtimes.js";
+setRuntimeAlias("UI5 Web Components Playground");
+
 import "./csp.js"; // import from a separate module to ensure that the code has executed before other modules are executed
 
 // Calendars

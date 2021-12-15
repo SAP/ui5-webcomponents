@@ -2,6 +2,7 @@ const resolve = require("resolve");
 
 const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate-asset-parameters/index.js");
 const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/index.js");
+const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const serve = resolve.sync("@ui5/webcomponents-tools/lib/serve/index.js");
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
@@ -13,7 +14,7 @@ const UP_TO_DATE = `node "${hashIsUpToDate}" dist/ hash.txt && echo "Up to date.
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
 	lint: "eslint . --config config/.eslintrc.js",
-	prepare: "nps clean integrate copy generateAssetParameters generateStyles",
+	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.copy-overlay integrate.replace-amd integrate.replace-export-true integrate.replace-export-false integrate.amd-to-es6 integrate.replace-global-core-usage integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -40,6 +41,7 @@ const scripts = {
 		test: `copy-and-watch "test/**/*.*" dist/test-resources`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
+	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
