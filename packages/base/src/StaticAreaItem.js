@@ -25,6 +25,9 @@ class StaticAreaItem extends HTMLElement {
 	setOwnerElement(ownerElement) {
 		this.ownerElement = ownerElement;
 		this.classList.add(this.ownerElement._id); // used for getting the popover in the tests
+		if (typeof this.constructor.mappingCallback === "function") {
+			this.constructor.mappingCallback(this, this.ownerElement);
+		}
 	}
 
 	/**
@@ -92,6 +95,22 @@ class StaticAreaItem extends HTMLElement {
 		}
 
 		return document.createElement(this.getTag());
+	}
+
+	/**
+	 * Provide a callback that will be executed when a static area item is connected to its owner element.
+	 * The callback will be executed with 2 parameters - the static area item and the owner element.
+	 * Example:
+	 * StaticAreaItem.setMappingCallback((staticAreaItem, ownerElement) => {
+	 *  staticAreaItem.setAttribute("someAttr", ownerElement.getAttribute("someAttr"));
+	 * });
+	 *
+	 * @public
+	 * @since 1.1.0
+	 * @param callback
+	 */
+	static setMappingCallback(callback) {
+		this.mappingCallback = callback;
 	}
 }
 

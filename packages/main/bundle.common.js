@@ -1,6 +1,14 @@
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 // import "./customI18n.js";
 
+import StaticAreaItem from "@ui5/webcomponents-base/dist/StaticAreaItem.js";
+StaticAreaItem.setMappingCallback((staticAreaItem, ownerElement) => {
+	const staticRef = ownerElement.getAttribute("data-ui5-static-ref");
+	if (staticRef) {
+		staticAreaItem.setAttribute("data-ui5-stable", staticRef);
+	}
+});
+
 import "./csp.js"; // import from a separate module to ensure that the code has executed before other modules are executed
 
 // Calendars
