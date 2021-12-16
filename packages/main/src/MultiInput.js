@@ -192,7 +192,7 @@ class MultiInput extends Input {
 		if (isRight(event)) {
 			const lastTokenIndex = this.tokenizer._tokens.length - 1;
 
-			if (this.tokenizer._tokens[lastTokenIndex] === document.activeElement) {
+			if (event.target === this.tokenizer._tokens[lastTokenIndex] && this.tokenizer._tokens[lastTokenIndex] === document.activeElement) {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
