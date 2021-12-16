@@ -1,13 +1,21 @@
-commit 2e8d3bd9dccb8ddf6a25e06a99451b3714c3ad35
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Dec 16 15:21:10 2021 +0200
+commit 799d19dc46b5aca65a53398e4c654a8a28eb361f
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Dec 16 07:23:09 2021 -0800
 
-    fix(ui5-popover): fix content truncation (#4359)
+    Translation Delivery (#4487)
     
-    * fix(ui5-popover): fixed content truncation
+    * chore: translation delivery
     
-    #4259
+    Change-Id: Ib1c57e4a06118c5a436c12230c6d96fa907442d3
     
-    * return the dialog minimum width
+    * chore: translation delivery
     
-    * added popover min width
+    Change-Id: Ia8264d9285c146e2c04b51c458c4ff5e164e9bb5
+    
+    * chore: translation delivery
+    
+    Change-Id: I2ca629a88218f4a82c7d76b7f960752e1753e391
+    
+    * chore: translation delivery
+    
+    Change-Id: Id645c2ee3c61543270b045e0994e35086f41535c
