@@ -1,5 +1,13 @@
-commit 9796a9d9cfcf569dd87fe8f8be9e2ef15b166589
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Thu Dec 16 08:26:51 2021 +0200
+commit 2e8d3bd9dccb8ddf6a25e06a99451b3714c3ad35
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Thu Dec 16 15:21:10 2021 +0200
 
-    test(ui5-input): ensure input is in wdio's viewport (#4493)
+    fix(ui5-popover): fix content truncation (#4359)
+    
+    * fix(ui5-popover): fixed content truncation
+    
+    #4259
+    
+    * return the dialog minimum width
+    
+    * added popover min width
