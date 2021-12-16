@@ -1,7 +1,6 @@
 :host {
     display: none;
     position: fixed;
-    min-width: 6.25rem;
     background: var(--sapGroup_ContentBackground);
     box-shadow: var(--sapContent_Shadow2);
     border-radius: var(--_ui5-popup-border-radius);
