@@ -971,7 +971,6 @@ class Wizard extends UI5Element {
 	 */
 	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
 		if (selectedStep && stepToSelect) {
-
 			// keep the selection if next step is disabled
 			if (!stepToSelect.disabled) {
 				selectedStep.selected = false;
