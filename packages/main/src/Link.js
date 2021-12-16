@@ -123,7 +123,7 @@ const metadata = {
 		 * @public
 		 * @since 1.1.0
 		 */
-		 expanded: {
+		 ariaExpanded: {
 			type: String,
 		},
 
