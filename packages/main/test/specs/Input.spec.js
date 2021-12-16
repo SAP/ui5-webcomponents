@@ -981,6 +981,8 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput");
+		await suggestionsInput.scrollIntoView();
+
 		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
 
 		await suggestionsInput.click();
