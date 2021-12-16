@@ -202,9 +202,13 @@ class MultiInput extends Input {
 
 	_handleLeft() {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+		const tokens = this.tokens;
+		const lastToken = tokens.length && tokens[tokens.length - 1];
 
-		if (cursorPosition === 0) {
-			this.tokenizer._focusLastToken();
+		if (cursorPosition === 0 && lastToken) {
+			// this.tokenizer._focusLastToken(); won't work as the tokens in the MultiInput use different slot and are not resolved properly
+			lastToken.focus();
+			this.tokenizer._itemNav.setCurrentItem(lastToken);
 		}
 	}
 
