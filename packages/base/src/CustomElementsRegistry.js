@@ -4,11 +4,8 @@ import {
 	getCurrentRuntimeIndex,
 	getRuntime,
 	compareCurrentRuntimeWith,
-	runtimeWarningsEnabled,
-	logDisableRuntimeWarningsInstructions,
 	getAllRuntimes,
 } from "./Runtimes.js";
-import Logger from "./util/Logger.js";
 
 const Tags = getSharedResource("Tags", new Map());
 
@@ -46,17 +43,11 @@ const recordTagRegistrationFailure = tag => {
 };
 
 const displayFailedRegistrations = () => {
-	if (!runtimeWarningsEnabled()) {
-		return;
-	}
+	let message = `There is currently more than one UI5 Web Components instance on this HTML page.`;
 
 	const allRuntimes = getAllRuntimes();
-	const logger = new Logger(allRuntimes.length === 1
-		? `There are currently at least 2 UI5 Web Components instances on this page.`
-		: `There are currently ${allRuntimes.length} known UI5 Web Components instances on this HTML page (versions before 1.1.0 are not detected).`);
-
 	if (allRuntimes.length > 1) {
-		logger.line(`Loading order: ${allRuntimes.map(ver => ver.descriptor).join(", ")}`);
+		message = `${message}\nDetected instances  (versions before 1.1.0 are not detected) loading order: ${allRuntimes.map(ver => `\n${ver.descriptor}`).join(", ")}`;
 	}
 
 	Object.keys(Failures).forEach(otherRuntimeIndex => {
@@ -68,7 +59,7 @@ const displayFailedRegistrations = () => {
 		if (otherRuntimeIndex === UNKNOWN_RUNTIME) { // version < 1.1.0 defined the tag
 			comparison = 1; // the current runtime is considered newer
 			otherRuntimeVersionPhrase = "the older version that defined them";
-			otherRuntimeDescriptor = "";
+			otherRuntimeDescriptor = "Unknown older version";
 		} else {
 			const otherRuntime = getRuntime(otherRuntimeIndex);
 			otherRuntimeVersionPhrase = `version ${otherRuntime.version}`;
@@ -84,19 +75,20 @@ const displayFailedRegistrations = () => {
 		} else {
 			compareWord = "the same";
 		}
-		logger.para(`Runtime "${currentRuntime.descriptor}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntimeDescriptor}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`);
+		message = `${message}\n\nRuntime "${currentRuntime.descriptor}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntimeDescriptor}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`;
+
 		if (comparison > 0) {
-			logger.line(`WARNING! If your code uses features of the above web components, unavailable in ${otherRuntimeVersionPhrase}, it might not work as expected!`);
+			message = `${message}\nWARNING! If your code uses features of the above web components, unavailable in ${otherRuntimeVersionPhrase}, it might not work as expected!`;
+		} else if (comparison < 0) {
+			message = `${message}\nWARNING! If ${otherRuntimeVersionPhrase} uses features of the above components, unavailable in ${currentRuntime.descriptor}, it might not work as expected!`;
 		} else {
-			logger.line(`Since the above web components were defined by ${compareWord} version runtime, they should be compatible with your code.`);
+			message = `${message}\nSince the above web components were defined by the same version runtime, they should be compatible with your code.`;
 		}
 	});
 
-	logger.para(`To prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/2-advanced/03-scoping.md.`);
+	message = `${message}\n\nTo prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/2-advanced/03-scoping.md.`;
 
-	logDisableRuntimeWarningsInstructions(logger);
-
-	logger.console("warn");
+	console.warn(message); // eslint-disable-line
 };
 
 export {

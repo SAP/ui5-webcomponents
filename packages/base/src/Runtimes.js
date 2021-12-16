@@ -1,10 +1,8 @@
 import VersionInfo from "./generated/VersionInfo.js";
 import RuntimeRegistry from "./runtime/RuntimeRegistry.js";
 import getSharedResource from "./getSharedResource.js";
-import Logger from "./util/Logger.js";
 
 let currentRuntimeIndex;
-let showWarnings = true;
 
 /**
  * Central registry where all runtimes register themselves by pushing a Runtime instance object.
@@ -64,35 +62,6 @@ const compareCurrentRuntimeWith = otherRuntimeIndex => {
 };
 
 /**
- * Call this method to stop runtime-related console warnings such as "Tags already defined by another runtime"
- */
-const disableRuntimeWarnings = () => {
-	showWarnings = false;
-};
-
-/**
- * Determines whether runtime-related warnings are enabled
- * @returns {boolean}
- */
-const runtimeWarningsEnabled = () => {
-	return showWarnings;
-};
-
-/**
- * Receives as a parameter a util/Logger.js class instance and logs instructions how to disable runtime-related warnings
- * @param logger
- */
-const logDisableRuntimeWarningsInstructions = logger => {
-	if (!(logger instanceof Logger)) {
-		throw new Error("logger must be a Logger class instance");
-	}
-
-	logger.para(`To suppress runtime related warnings such as this one, add the following code to your bundle:`);
-	logger.line(`import { disableRuntimeWarnings } from "@ui5/webcomponents-base/dist/Runtimes.js";`);
-	logger.line(`disableRuntimeWarnings();`);
-};
-
-/**
  * Returns an array with all runtimes
  * @returns {*}
  */
@@ -112,9 +81,6 @@ export {
 	getCurrentRuntimeIndex,
 	registerCurrentRuntime,
 	compareCurrentRuntimeWith,
-	disableRuntimeWarnings,
-	runtimeWarningsEnabled,
 	getAllRuntimes,
-	logDisableRuntimeWarningsInstructions,
 	setRuntimeAlias,
 };
