@@ -5348,12 +5348,12 @@
     <tr>
       <td><code class="highlighter-rouge">accessibleName</code></td>
       <td><code class="highlighter-rouge">aria-label</code></td>
-      <td>Defines the text alternative of the component. If not provided a default text alternative will be set, if present.</td>
+      <td>Defines the text alternative of the component. If not provided, a default text alternative is set, if present.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">accessibleNameRef</code></td>
       <td><code class="highlighter-rouge">aria-label</code></td>
-      <td>Alternative for <code class="highlighter-rouge">aria-labelledby</code>. Receives id (or many ids) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the <code class="highlighter-rouge">aria-label</code> attribute.</td>
+      <td>Alternative for <code class="highlighter-rouge">aria-labelledby</code>. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the <code class="highlighter-rouge">aria-label</code> attribute.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">accessibleRole</code></td>
@@ -5361,9 +5361,14 @@
       <td>Sets the accessible aria role of the component.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">accessibilityTexts</code> (FlexibleColumnLayout)</td>
+      <td><code class="highlighter-rouge">accessibilityTexts</code> (<code class="highlighter-rouge">FlexibleColumnLayout</code>)</td>
       <td><code class="highlighter-rouge">aria-label</code></td>
-      <td>An object of strings that define several additional accessibility texts for even further customization.</td>
+      <td>An object of strings that define several additional accessibility texts for further customization.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">accessibilityRoles</code> (<code class="highlighter-rouge">FlexibleColumnLayout</code>)</td>
+      <td><code class="highlighter-rouge">role</code></td>
+      <td>An object of strings that define several additional accessibility roles for further customization.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">required</code></td>
@@ -5465,6 +5470,29 @@
     <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"component-startColumnText"</span> <span class="na">class=</span><span class="s">"ui5-hidden-text"</span> <span class="err">...</span> <span class="nt">&gt;</span>
         Products list
     <span class="nt">&lt;/span&gt;</span>
+    ...
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="accessibilityroles">accessibilityRoles</h3>
+
+<p>This property accepts <code class="highlighter-rouge">object</code> with property values for different parts of the <code class="highlighter-rouge">FlexibleColumnLayout</code> elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-flexible-column-layout</span> <span class="na">id=</span><span class="s">"component"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-flexible-column-layout&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElemetnById</span><span class="p">(</span><span class="dl">"</span><span class="s2">component</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">component</span><span class="p">.</span><span class="nx">accessibilityRoles</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">startColumnRole</span><span class="p">:</span> <span class="dl">"</span><span class="s2">complimentary</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Results in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">"complimentary"</span> <span class="err">...</span> <span class="nt">&gt;</span>
     ...
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>

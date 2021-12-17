@@ -1,21 +1,13 @@
-commit 799d19dc46b5aca65a53398e4c654a8a28eb361f
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Dec 16 07:23:09 2021 -0800
+commit f515f3d04971ed1c369714ea7b97af962810476d
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Fri Dec 17 13:36:50 2021 +0200
 
-    Translation Delivery (#4487)
+    feat(ui5-flexible-column-layout): new property accessibilityRoles (#4446)
     
-    * chore: translation delivery
+    * feat(ui5-flexible-column-layout): new property accessibilityRoles
     
-    Change-Id: Ib1c57e4a06118c5a436c12230c6d96fa907442d3
+    Summary:
+    1. New property accessibilityRoles added to set custom roles on the containers (start/mid/end column + arrow containers)
+    2. Add 2 additional properties to the accessibilityTexts object to set custom labels on the arrow containers)
     
-    * chore: translation delivery
-    
-    Change-Id: Ia8264d9285c146e2c04b51c458c4ff5e164e9bb5
-    
-    * chore: translation delivery
-    
-    Change-Id: I2ca629a88218f4a82c7d76b7f960752e1753e391
-    
-    * chore: translation delivery
-    
-    Change-Id: Id645c2ee3c61543270b045e0994e35086f41535c
+    Fixes: #3804, #3796
