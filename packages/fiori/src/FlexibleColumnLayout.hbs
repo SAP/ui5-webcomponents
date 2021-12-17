@@ -1,39 +1,38 @@
 <div class="{{classes.root}}">
 	<div
-		role="region"
+		role="{{accStartColumnRole}}"
 		class="{{classes.columns.start}}"
 		aria-labelledby="{{_id}}-startColumnText"
 	>
+		<span id="{{_id}}-startColumnText" class="ui5-hidden-text">{{accStartColumnText}}</span>
 		<slot name="startColumn"></slot>
 	</div>
 
-	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.start}}">
+	<div role="{{accStartArrowContainerRole}}" aria-label={{accStartArrowContainerText}} class="ui5-fcl-arrow-container ui5-fcl-arrow-container-start" style="{{styles.arrowsContainer.start}}">
 		{{> startArrow}}
 	</div>
 
 	<div
-		role="region"
+		role="{{accMiddleColumnRole}}"
 		class="{{classes.columns.middle}}"
 		aria-labelledby="{{_id}}-midColumnText"
 	>
+		<span id="{{_id}}-midColumnText" class="ui5-hidden-text">{{accMiddleColumnText}}</span>
 		<slot name="midColumn"></slot>
 	</div>
 
-	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.end}}">
+	<div role="{{accEndArrowContainerRole}}" aria-label="{{accEndArrowContainerText}}" class="ui5-fcl-arrow-container ui5-fcl-arrow-container-end" style="{{styles.arrowsContainer.end}}">
 		{{> endArrow}}
 	</div>
 
 	<div
-		role="region"
+		role="{{accEndColumnRole}}"
 		class="{{classes.columns.end}}"
 		aria-labelledby="{{_id}}-endColumnText"
 	>
+		<span id="{{_id}}-endColumnText" class="ui5-hidden-text">{{accEndColumnText}}</span>
 		<slot name="endColumn"></slot>
 	</div>
-
-	<span id="{{_id}}-startColumnText" class="ui5-hidden-text">{{accStartColumnText}}</span>
-	<span id="{{_id}}-midColumnText" class="ui5-hidden-text">{{accMiddleColumnText}}</span>
-	<span id="{{_id}}-endColumnText" class="ui5-hidden-text">{{accEndColumnText}}</span>
 </div>
 
 {{#*inline "startArrow"}}
