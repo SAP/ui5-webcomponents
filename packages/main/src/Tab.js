@@ -278,7 +278,7 @@ class Tab extends UI5Element {
 		return labels.join(" ");
 	}
 
-	get headerClasses() {
+	get stripClasses() {
 		const classes = ["ui5-tab-strip-item"];
 
 		if (this.effectiveSelected) {

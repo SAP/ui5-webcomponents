@@ -26,12 +26,6 @@
 	box-sizing: border-box;
 }
 
-.ui5-tc__headerInnerContainer {
-	position: relative;
-	flex: 1 1 100%;
-	min-width: 0; /* fixes chrome flex issue */
-}
-
 :host([tabs-placement="Bottom"]) .ui5-tc__header {
 	border-top: var(--_ui5_tc_header_border_bottom);
 }
@@ -40,22 +34,17 @@
 	height: var(--_ui5_tc_header_height_text_only);
 }
 
-.ui5-tc-root.ui5-tc--textOnly.ui5-tc--withAdditonalText.ui5-tc--standardTabLayout .ui5-tc__header {
+.ui5-tc-root.ui5-tc--textOnly.ui5-tc--withAdditionalText.ui5-tc--standardTabLayout .ui5-tc__header {
 	height: var(--_ui5_tc_header_height_text_with_additional_text);
 }
 
-.ui5-tc__tabsInStripContainer {
-	box-sizing: border-box;
-	overflow: hidden;
-	flex: 1 1 100%;
-}
-
-.ui5-tc__headerList {
-	position: relative;
+.ui5-tc__tabStrip {
+	flex: 1;
 	display: flex;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+	overflow: hidden;
+	box-sizing: border-box;
+	position: relative;
+	white-space: nowrap;
 }
 
 .ui5-tc__separator {
@@ -99,6 +88,7 @@
 }
 
 .ui5-tc__overflowButton {
+	flex: 0 0 0;
 	margin: 0 0.25rem;
 }
 

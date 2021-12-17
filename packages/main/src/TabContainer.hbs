@@ -7,9 +7,11 @@
 	{{/if}}
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
+		{{!-- // TODO render this overflow conditionally with isModeStartAndEnd --}}
 		<div
 			class="ui5-tc__overflowButton ui5-tc__startOverflowButton"
 			@click="{{_onOverflowButtonClick}}"
+			@keydown="{{_onOverflowButtonKeyDown}}"
 			hidden
 		>
 			{{#if startOverflowButton.length}}
@@ -24,36 +26,34 @@
 					icon-end>{{this._startOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
-		<div class="{{classes.headerInnerContainer}}">
-			<!-- tab items -->
-			<div class="{{classes.tabsInStripContainer}}" id="{{_id}}-tabsInStripContainer">
-				<ul
-					role="tablist"
-					@focusin={{_onTablistFocusin}}
-					class="{{classes.headerList}}"
-					@click="{{_onHeaderClick}}"
-					@keydown="{{_onHeaderKeyDown}}"
-					@keyup="{{_onHeaderKeyUp}}"
-				>
-					{{#each items}}
-						{{#unless this.isSeparator}}
-							{{this.stripPresentation}}
-						{{/unless}}
-						{{#if this.isSeparator}}
-							<li
-								id="{{this._id}}"
-								data-ui5-stable="{{this.stableDomRef}}"
-								role="separator"
-								class="{{../classes.separator}}"
-							></li>
-						{{/if}}
-					{{/each}}
-				</ul>
-			</div>
+
+		<div
+			id="{{_id}}-tabStrip"
+			class="{{classes.tabStrip}}"
+			role="tablist"
+			@click="{{_onTabStripClick}}"
+			@keydown="{{_onTabStripKeyDown}}"
+			@keyup="{{_onTabStripKeyUp}}"
+		>
+			{{#each items}}
+				{{#unless this.isSeparator}}
+					{{this.stripPresentation}}
+				{{/unless}}
+				{{#if this.isSeparator}}
+					<div
+						id="{{this._id}}"
+						data-ui5-stable="{{this.stableDomRef}}"
+						role="separator"
+						class="{{../classes.separator}}"
+					></div>
+				{{/if}}
+			{{/each}}
 		</div>
+
 		<div
 			class="ui5-tc__overflowButton ui5-tc__endOverflowButton"
 			@click="{{_onOverflowButtonClick}}"
+			@keydown="{{_onOverflowButtonKeyDown}}"
 			hidden
 		>
 			{{#if overflowButton.length}}
