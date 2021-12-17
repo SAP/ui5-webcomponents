@@ -2,7 +2,6 @@ import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomp
 // import "./customI18n.js";
 
 import "./bundle.common.bootstrap.js"; // code that needs to be executed before other modules
-import "./csp.js"; // import from a separate module to ensure that the code has executed before other modules are executed
 
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
