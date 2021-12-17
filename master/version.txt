@@ -1,13 +1,7 @@
-commit f515f3d04971ed1c369714ea7b97af962810476d
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Fri Dec 17 13:36:50 2021 +0200
+commit 303ecb1dd39667bcf4d50ec2ce7b11dfcb7cc2b8
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Dec 17 15:08:41 2021 +0200
 
-    feat(ui5-flexible-column-layout): new property accessibilityRoles (#4446)
+    fix(ui5-wizard): adjust content and navigator paddings based on spec (#4479)
     
-    * feat(ui5-flexible-column-layout): new property accessibilityRoles
-    
-    Summary:
-    1. New property accessibilityRoles added to set custom roles on the containers (start/mid/end column + arrow containers)
-    2. Add 2 additional properties to the accessibilityTexts object to set custom labels on the arrow containers)
-    
-    Fixes: #3804, #3796
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3612
