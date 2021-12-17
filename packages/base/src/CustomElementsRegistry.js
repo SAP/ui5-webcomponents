@@ -77,10 +77,8 @@ const displayFailedRegistrations = () => {
 
 		if (comparison > 0) {
 			message = `${message}\nWARNING! If your code uses features of the above web components, unavailable in ${otherRuntime.description}, it might not work as expected!`;
-		} else if (comparison < 0) {
-			message = `${message}\nWARNING! If ${otherRuntime.description} uses features of the above components, unavailable in ${currentRuntime.description}, it might not work as expected!`;
 		} else {
-			message = `${message}\nSince the above web components were defined by the same version runtime, they should be compatible with your code.`;
+			message = `${message}\nSince the above web components were defined by the same or newer version runtime, they should be compatible with your code.`;
 		}
 	});
 
