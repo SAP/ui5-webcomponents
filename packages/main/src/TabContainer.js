@@ -585,7 +585,10 @@ class TabContainer extends UI5Element {
 		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__endOverflowButton");
 		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__startOverflowButton");
 
-		if (isDown(event) || isStartOverflow && isLeft(event) || isEndOverflow && isRight(event)) {
+		switch (true) {
+		case isDown(event):
+		case isStartOverflow && isLeft(event):
+		case isEndOverflow && isRight(event):
 			await this._onOverflowButtonClick(event);
 		}
 	}
