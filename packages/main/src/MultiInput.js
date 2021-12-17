@@ -8,6 +8,8 @@ import {
 	isRightCtrl,
 	isLeftShift,
 	isRightShift,
+	isEnd,
+	isHome,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";

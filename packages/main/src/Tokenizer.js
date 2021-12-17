@@ -5,7 +5,9 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace, isLeftCtrl, isRightCtrl, isLeftShift, isRightShift, isEnd, isHome } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace, isLeftCtrl, isRightCtrl, isLeftShift, isRightShift, isEnd, isHome,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -245,6 +247,7 @@ class Tokenizer extends UI5Element {
 			return this._handleArrowCtrl(event.target, this.tokens, isRightCtrl(event));
 		}
 
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
 		if (isLeftShift(event) || isRightShift(event)
 			|| (isLeftShift(event) && isCtrl) || (isRightShift(event) && isCtrl)) {
 			event.preventDefault();
@@ -256,12 +259,12 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_handleHome(tokens, isEnd) {
+	_handleHome(tokens, endKeyPressed) {
 		if (!tokens || !tokens.length) {
 			return -1;
 		}
 
-		const index = isEnd ? tokens.length - 1 : 0;
+		const index = endKeyPressed ? tokens.length - 1 : 0;
 
 		tokens[index].focus();
 		this._itemNav.setCurrentItem(tokens[index]);
@@ -275,7 +278,7 @@ class Tokenizer extends UI5Element {
 		let nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
 
 		if (nextIndex >= tokens.length) {
-			nextIndex = tokens.length - 1
+			nextIndex = tokens.length - 1;
 		}
 		if (nextIndex < 0) {
 			nextIndex = 0;
