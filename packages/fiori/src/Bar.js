@@ -166,13 +166,8 @@ class Bar extends UI5Element {
 			root: {
 				"ui5-bar-root": true,
 				"ui5-bar-root-shrinked": this._shrinked,
-				"ui5-bar-root-rtl": this._isRTL,
 			},
 		};
-	}
-
-	get _isRTL() {
-		return this.effectiveDir === "rtl";
 	}
 
 	onBeforeRendering() {
