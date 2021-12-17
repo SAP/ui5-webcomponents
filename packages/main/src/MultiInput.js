@@ -220,6 +220,10 @@ class MultiInput extends Input {
 			event.preventDefault();
 			return this.tokenizer._handleArrowShift(event.target, this.tokens, isRightShift(event) || ((isRightShift(event) && isCtrl)));
 		}
+
+		if (isHome(event) || isEnd(event)) {
+			return this.tokenizer._handleHome(this.tokens, isEnd(event));
+		}
 	}
 
 	_handleLeft() {

@@ -5,7 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import {isSpace, isLeftCtrl, isRightCtrl, isLeftShift, isRightShift} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isLeftCtrl, isRightCtrl, isLeftShift, isRightShift, isEnd, isHome } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -250,6 +250,21 @@ class Tokenizer extends UI5Element {
 			event.preventDefault();
 			return this._handleArrowShift(event.target, this.tokens, isRightShift(event) || ((isRightShift(event) && isCtrl)));
 		}
+
+		if (isHome(event) || isEnd(event)) {
+			return this._handleHome(this.tokens, isEnd(event));
+		}
+	}
+
+	_handleHome(tokens, isEnd) {
+		if (!tokens || !tokens.length) {
+			return -1;
+		}
+
+		const index = isEnd ? tokens.length - 1 : 0;
+
+		tokens[index].focus();
+		this._itemNav.setCurrentItem(tokens[index]);
 	}
 
 	_calcNextTokenIndex(focusedToken, tokens, backwards) {
