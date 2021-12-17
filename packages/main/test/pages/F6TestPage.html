@@ -20,7 +20,7 @@
 
 <body>
 	<div data-sap-ui-fastnavgroup="true">
-		<ui5-button>1</ui5-button>
+		<ui5-button id="div-button">1</ui5-button>
 		<ui5-button>2</ui5-button>
 		<ui5-button>3</ui5-button>
 		<ui5-button>4</ui5-button>
@@ -28,7 +28,7 @@
 	<ui5-panel id="panel-expandable" accessible-role="Complementary" header-text="Both expandable and expanded" header-level="H4">
 		<!-- Content -->
 		<ui5-title>Lorem ipsum!</ui5-title>
-		<ui5-button>1</ui5-button>
+		<ui5-button id="panel-button">1</ui5-button>
 		<ui5-button>2</ui5-button>
 		<ui5-button>3</ui5-button>
 		<ui5-button>4</ui5-button>
@@ -93,7 +93,7 @@
 	<br><br>
 
 	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" mode="SingleSelect">
-		<ui5-li >Active item - press</ui5-li>
+		<ui5-li id="list-item">Active item - press</ui5-li>
 		<ui5-li >Active item - press</ui5-li>
 		<ui5-li selected type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
@@ -103,7 +103,7 @@
 	<br><br>
 
 	<ui5-tabcontainer show-overflow>
-		<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
+		<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125" id="tab">
 		</ui5-tab>
 		<ui5-tab-separator></ui5-tab-separator>
 		<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
@@ -119,5 +119,7 @@
 		<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
 		</ui5-tab>
 	</ui5-tabcontainer>
+
+	<ui5-button id="reset-focus">Reset Focus</ui5-button>
 </body>
 </html>
