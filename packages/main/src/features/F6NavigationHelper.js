@@ -1,4 +1,4 @@
-import { registerFeature, getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isF6Next, isF6Previous } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
@@ -67,4 +67,3 @@ class F6NavigationHelper {
 const F6HelperInstance = new F6NavigationHelper();
 
 registerFeature("F6Navigation", F6HelperInstance);
-getFeature("F6Navigation");
