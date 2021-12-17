@@ -15,7 +15,7 @@
 	</style>
 	<h3>Basic TabContainer</h3>
 	<div class="snippet">
-		<ui5-tabcontainer class="full-width" show-overflow>
+		<ui5-tabcontainer class="full-width">
 			<ui5-tab icon="menu" text="Tab 1">
 				<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
 			</ui5-tab>
@@ -35,7 +35,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" show-overflow>
+<ui5-tabcontainer class="full-width">
 	<ui5-tab text="Tab 1">
 		<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
 	</ui5-tab>
@@ -60,7 +60,7 @@
 <section>
 	<h3>TabContainer with text only tabs</h3>
 	<div class="snippet">
-		<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
+		<ui5-tabcontainer class="full-width" collapsed fixed>
 			<ui5-tab text="Home"></ui5-tab>
 			<ui5-tab text="What's new" selected></ui5-tab>
 			<ui5-tab text="Who are we"></ui5-tab>
@@ -69,7 +69,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
+<ui5-tabcontainer class="full-width" collapsed fixed>
 	<ui5-tab text="Home"></ui5-tab>
 	<ui5-tab text="What's new" selected></ui5-tab>
 	<ui5-tab text="Who are we"></ui5-tab>
@@ -79,11 +79,165 @@
 	</xmp></pre>
 </section>
 
+<!--end overflow -->
+
+<section>
+	<h3>Text only End Overflow</h3>
+	<div  class="snippet">
+		<ui5-tabcontainer collapsed fixed>
+			<ui5-tab text="Tab 1">
+			</ui5-tab>
+			<ui5-tab text="Tab 2">
+			</ui5-tab>
+			<ui5-tab text="Tab 3">
+			</ui5-tab>
+			<ui5-tab text="Tab 4">
+			</ui5-tab>
+			<ui5-tab text="Tab 5">
+			</ui5-tab>
+			<ui5-tab text="Tab 6">
+			</ui5-tab>
+			<ui5-tab text="Tab 7">
+			</ui5-tab>
+			<ui5-tab text="Tab 8">
+			</ui5-tab>
+			<ui5-tab text="Tab 9">
+			</ui5-tab>
+			<ui5-tab text="Tab 10">
+			</ui5-tab>
+			<ui5-tab text="Tab 11">
+			</ui5-tab>
+			<ui5-tab text="Tab 12">
+			</ui5-tab>
+			<ui5-tab text="Tab 13" selected>
+			</ui5-tab>
+			<ui5-tab text="Tab 14">
+			</ui5-tab>
+			<ui5-tab text="Tab 15">
+			</ui5-tab>
+			<ui5-tab text="Tab 16">
+			</ui5-tab>
+			<ui5-tab text="Tab 17">
+			</ui5-tab>
+			<ui5-tab text="Tab 18">
+			</ui5-tab>
+			<ui5-tab text="Tab 19">
+			</ui5-tab>
+			<ui5-tab text="Tab 20">
+			</ui5-tab>
+			<ui5-tab text="Tab 21">
+			</ui5-tab>
+			<ui5-tab text="Tab 22">
+			</ui5-tab>
+			<ui5-tab text="Tab 23">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer class="full-width" collapsed fixed>
+	<ui5-tab text="Tab 1"></ui5-tab>
+	<ui5-tab text="Tab 2" ></ui5-tab>
+	...
+	<ui5-tab text="Tab 13" selected ></ui5-tab>
+	...
+	<ui5-tab text="Tab 22"></ui5-tab>
+	<ui5-tab text="Tab 23"></ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
+<!-- start and end overflow -->
+
+<section>
+		<h2>Text only Start and End Overflow</h2>
+		<div>
+			<ui5-tabcontainer collapsed fixed tabs-overflow-mode="StartAndEnd">
+				<ui5-tab text="Tab 1">
+				</ui5-tab>
+				<ui5-tab text="Tab 2">
+				</ui5-tab>
+				<ui5-tab text="Tab 3">
+				</ui5-tab>
+				<ui5-tab text="Tab 4">
+				</ui5-tab>
+				<ui5-tab text="Tab 5">
+				</ui5-tab>
+				<ui5-tab text="Tab 6">
+				</ui5-tab>
+				<ui5-tab text="Tab 7">
+				</ui5-tab>
+				<ui5-tab text="Tab 8">
+				</ui5-tab>
+				<ui5-tab text="Tab 9">
+				</ui5-tab>
+				<ui5-tab text="Tab 10">
+				</ui5-tab>
+				<ui5-tab text="Tab 11">
+				</ui5-tab>
+				<ui5-tab text="Tab 12">
+				</ui5-tab>
+				<ui5-tab text="Tab 13">
+				</ui5-tab>
+				<ui5-tab text="Tab 14">
+				</ui5-tab>
+				<ui5-tab text="Tab 15">
+				</ui5-tab>
+				<ui5-tab text="Tab 16">
+				</ui5-tab>
+				<ui5-tab text="Tab 17" selected>
+				</ui5-tab>
+				<ui5-tab text="Tab 18">
+				</ui5-tab>
+				<ui5-tab text="Tab 19">
+				</ui5-tab>
+				<ui5-tab text="Tab 20">
+				</ui5-tab>
+				<ui5-tab text="Tab 21">
+				</ui5-tab>
+				<ui5-tab text="Tab 22">
+				</ui5-tab>
+				<ui5-tab text="Tab 23">
+				</ui5-tab>
+				<ui5-tab text="Tab 24">
+				</ui5-tab>
+				<ui5-tab text="Tab 25">
+				</ui5-tab>
+				<ui5-tab text="Tab 26">
+				</ui5-tab>
+				<ui5-tab text="Tab 27">
+				</ui5-tab>
+				<ui5-tab text="Tab 28">
+				</ui5-tab>
+				<ui5-tab text="Tab 29">
+				</ui5-tab>
+				<ui5-tab text="Tab 30">
+				</ui5-tab>
+				<ui5-tab text="Tab 31">
+				</ui5-tab>
+				<ui5-tab text="Tab 32">
+				</ui5-tab>
+				<ui5-tab text="Tab 33">
+				</ui5-tab>
+			</ui5-tabcontainer>
+		</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer class="full-width" collapsed fixed>
+	<ui5-tab text="Tab 1"></ui5-tab>
+	<ui5-tab text="Tab 2" ></ui5-tab>
+	...
+	<ui5-tab text="Tab 17" selected ></ui5-tab>
+	...
+	<ui5-tab text="Tab 32"></ui5-tab>
+	<ui5-tab text="Tab 33"></ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
 <!-- text and additional-text -->
 <section>
 	<h3>TabContainer with text and additional-text</h3>
 	<div class="snippet">
-		<ui5-tabcontainer show-overflow="true" collapsed fixed>
+		<ui5-tabcontainer collapsed fixed>
 			<ui5-tab text="Info" additional-text="3">
 			</ui5-tab>
 			<ui5-tab text="Attachments" additional-text="24" selected>
@@ -95,7 +249,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer show-overflow="true" collapsed fixed>
+<ui5-tabcontainer collapsed fixed tabs-overflow-mode="StartAndEnd">
 	<ui5-tab text="Info" additional-text="3">
 	</ui5-tab>
 	<ui5-tab text="Attachments" additional-text="24" selected>
@@ -112,7 +266,7 @@
 <section>
 	<h3>TabContainer with tabLayout="Inline"</h3>
 	<div class="snippet">
-		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
 			<ui5-tab text="Monitors" additional-text="(10)">
 			</ui5-tab>
 			<ui5-tab text="Cameras" additional-text="(2)" selected>
@@ -121,7 +275,7 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 
-		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
 			<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
 			</ui5-tab>
 			<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
@@ -131,7 +285,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
 	<ui5-tab text="Monitors" additional-text="(10)">
 	</ui5-tab>
 	<ui5-tab text="Cameras" additional-text="(2)" selected>
@@ -140,7 +294,7 @@
 	</ui5-tab>
 </ui5-tabcontainer>
 
-<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
 	<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
 	</ui5-tab>
 	<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>

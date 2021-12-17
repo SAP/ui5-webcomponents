@@ -57,9 +57,17 @@
 		<ui5-li id="country4" type="Inactive">Portugal</ui5-li>
 	</ui5-list>
 	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
-	<ui5-input id="itemPressSelectedResultField" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
+
+	<br><br><br>
+	
+	<br/>
+	<ui5-list id="listPreventClickEvent" mode="SingleSelect">
+		<ui5-li id="country1">Argentina</ui5-li>
+		<ui5-li id="country2" selected >Bulgaria</ui5-li>
+	</ui5-list>
+	<ui5-input id="itemClickPreventedResultField" placeholder="itemClick prevented result"></ui5-input>
 
 	<br><br><br>
 	<ui5-list id="justList">
@@ -87,7 +95,6 @@
 		<ui5-li id="country44">Portugal</ui5-li>
 	</ui5-list>
 	<ui5-input id="itemPressResultField2" placeholder="itemPress result"></ui5-input>
-	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
 	<br><br><br>
@@ -257,7 +264,6 @@
 		listEvents.addEventListener("ui5-itemPress", function (event) {
 			itemPressCounter += 1;
 			itemPressResultField.value = itemPressCounter;
-			itemPressSelectedResultField.value = event.detail.item.selected;
 		});
 
 		listEvents.addEventListener("ui5-selectionChange", function (event) {
@@ -272,7 +278,6 @@
 		listEvents2.addEventListener("ui5-itemPress", function (event) {
 			itemPressCounter2 += 1;
 			itemPressResultField2.value = itemPressCounter2;
-			itemPressSelectedResultField2.value = event.detail.item.selected;
 		});
 
 		listEvents2.addEventListener("ui5-selectionChange", function (event) {
@@ -292,6 +297,11 @@
 
 		changeEmptyItem.addEventListener("click", function(e) {
 			emptyItem.textContent = "updated";
+		});
+
+		listPreventClickEvent.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			itemClickPreventedResultField.value = event.detail.item.id;
 		});
 
 		var loadMoreCounter = 0;

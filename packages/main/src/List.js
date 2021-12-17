@@ -266,6 +266,7 @@ const metadata = {
 		 * is set to <code>Inactive</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -883,6 +884,11 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
+		this.fireEvent("item-press", { item: pressedItem });
+		if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
+			return;
+		}
+
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
 			this.onSelectionRequested({
@@ -894,9 +900,6 @@ class List extends UI5Element {
 				},
 			});
 		}
-
-		this.fireEvent("item-press", { item: pressedItem });
-		this.fireEvent("item-click", { item: pressedItem });
 
 		this._selectionRequested = false;
 	}
