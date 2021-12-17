@@ -684,6 +684,10 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (!matchingItems.length && !isItemMatched && value) {
+			return;
+		}
+
 		let currentItem = matchingItems.length && !isItemMatched ? matchingItems[++this.currentItemIdx] : this.items[++this.currentItemIdx];
 
 		if (matchingItems.length > 1) {
@@ -728,6 +732,10 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (previousItemIdx === 0 && prevItemText === value) {
+			return;
+		}
+
+		if (!matchingItems.length && !isItemMatched && value) {
 			return;
 		}
 

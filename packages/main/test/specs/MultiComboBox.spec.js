@@ -470,30 +470,28 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("value"), "Compact", "The only not selected item remains set");
 		});
 
-		it ("should reset current navigation state on user input if no matching item is found", async () => {
+		it ("should not navigate user input if no matching filtered item is found", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
-			await mcb.keys("ArrowDown");
-			await mcb.keys("ArrowDown");
-
-			assert.equal(await mcb.getProperty("value"), "Compact", "The second item name is selected");
-
-			await mcb.setProperty("value", "");
-			await mcb.keys("a");
-			await mcb.keys("ArrowDown");
-
-			assert.equal(await mcb.getProperty("value"), "Cosy", "The value is set to the first item name");
-
-			await mcb.keys("ArrowDown");
-			await mcb.keys("ArrowDown");
-
-			assert.equal(await mcb.getProperty("value"), "Condensed", "The value is set to the third item name");
-
 			await mcb.keys("a");
 			await mcb.keys("ArrowUp");
+			assert.equal(await mcb.getProperty("value"), "a", "No item is selected because there is no matching one");
+
+			await mcb.keys("ArrowDown");
+			assert.equal(await mcb.getProperty("value"), "a", "No item is selected because there is no matching one");
+		});
+
+		it ("arrow up when the first or no item is selected should go to the last item", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("ArrowUp");
+
 			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
 
