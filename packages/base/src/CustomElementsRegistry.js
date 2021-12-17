@@ -1,11 +1,6 @@
 import setToArray from "./util/setToArray.js";
 import getSharedResource from "./getSharedResource.js";
-import {
-	getCurrentRuntimeIndex,
-	getRuntime,
-	compareCurrentRuntimeWith,
-	getAllRuntimes,
-} from "./Runtimes.js";
+import { getCurrentRuntimeIndex, compareRuntimes, getAllRuntimes } from "./Runtimes.js";
 
 const Tags = getSharedResource("Tags", new Map());
 
@@ -29,7 +24,10 @@ const getAllRegisteredTags = () => {
 };
 
 const recordTagRegistrationFailure = tag => {
-	const tagRegRuntimeIndex = Tags.get(tag) || UNKNOWN_RUNTIME; // If the tag is taken, but not registered in Tags, then a version before 1.1.0 defined it => use the "unknown" key
+	let tagRegRuntimeIndex = Tags.get(tag);
+	if (tagRegRuntimeIndex === undefined) {
+		tagRegRuntimeIndex = UNKNOWN_RUNTIME; // If the tag is taken, but not registered in Tags, then a version before 1.1.0 defined it => use the "unknown" key
+	}
 	Failures[tagRegRuntimeIndex] = Failures[tagRegRuntimeIndex] || new Set();
 	Failures[tagRegRuntimeIndex].add(tag);
 
@@ -43,28 +41,28 @@ const recordTagRegistrationFailure = tag => {
 };
 
 const displayFailedRegistrations = () => {
-	let message = `There is currently more than one UI5 Web Components instance on this HTML page.`;
-
 	const allRuntimes = getAllRuntimes();
+	const currentRuntimeIndex = getCurrentRuntimeIndex();
+	const currentRuntime = allRuntimes[currentRuntimeIndex];
+
+	let message = `Multiple UI5 Web Components instances detected.`;
+
 	if (allRuntimes.length > 1) {
-		message = `${message}\nDetected instances  (versions before 1.1.0 are not detected) loading order: ${allRuntimes.map(ver => `\n${ver.descriptor}`).join(", ")}`;
+		message = `${message}\nLoading order (versions before 1.1.0 not listed): ${allRuntimes.map(runtime => `\n${runtime.description}`).join("")}`;
 	}
 
 	Object.keys(Failures).forEach(otherRuntimeIndex => {
-		const currentRuntime = getRuntime();
 		let comparison;
-		let otherRuntimeVersionPhrase;
-		let otherRuntimeDescriptor;
+		let otherRuntime;
 
 		if (otherRuntimeIndex === UNKNOWN_RUNTIME) { // version < 1.1.0 defined the tag
 			comparison = 1; // the current runtime is considered newer
-			otherRuntimeVersionPhrase = "the older version that defined them";
-			otherRuntimeDescriptor = "Unknown older version";
+			otherRuntime = {
+				description: `Older unknown runtime`,
+			};
 		} else {
-			const otherRuntime = getRuntime(otherRuntimeIndex);
-			otherRuntimeVersionPhrase = `version ${otherRuntime.version}`;
-			otherRuntimeDescriptor = otherRuntime.descriptor;
-			comparison = compareCurrentRuntimeWith(otherRuntimeIndex);
+			comparison = compareRuntimes(currentRuntimeIndex, otherRuntimeIndex);
+			otherRuntime = allRuntimes[otherRuntimeIndex];
 		}
 
 		let compareWord;
@@ -75,12 +73,12 @@ const displayFailedRegistrations = () => {
 		} else {
 			compareWord = "the same";
 		}
-		message = `${message}\n\nRuntime "${currentRuntime.descriptor}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntimeDescriptor}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`;
+		message = `${message}\n\n"${currentRuntime.description}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntime.description}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`;
 
 		if (comparison > 0) {
-			message = `${message}\nWARNING! If your code uses features of the above web components, unavailable in ${otherRuntimeVersionPhrase}, it might not work as expected!`;
+			message = `${message}\nWARNING! If your code uses features of the above web components, unavailable in ${otherRuntime.description}, it might not work as expected!`;
 		} else if (comparison < 0) {
-			message = `${message}\nWARNING! If ${otherRuntimeVersionPhrase} uses features of the above components, unavailable in ${currentRuntime.descriptor}, it might not work as expected!`;
+			message = `${message}\nWARNING! If ${otherRuntime.description} uses features of the above components, unavailable in ${currentRuntime.description}, it might not work as expected!`;
 		} else {
 			message = `${message}\nSince the above web components were defined by the same version runtime, they should be compatible with your code.`;
 		}
