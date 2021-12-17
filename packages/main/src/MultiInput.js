@@ -3,7 +3,11 @@ import {
 	isShow,
 	isBackSpace,
 	isLeft,
+	isLeftCtrl,
 	isRight,
+	isRightCtrl,
+	isLeftShift,
+	isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
@@ -189,14 +193,32 @@ class MultiInput extends Input {
 	}
 
 	_onTokenizerKeydown(event) {
-		if (isRight(event)) {
+		const rightCtrl = isRightCtrl(event);
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+
+		if (isRight(event) || rightCtrl) {
+			event.preventDefault();
 			const lastTokenIndex = this.tokenizer._tokens.length - 1;
 
 			if (event.target === this.tokenizer._tokens[lastTokenIndex] && this.tokenizer._tokens[lastTokenIndex] === document.activeElement) {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
+			} else if (rightCtrl) {
+				event.preventDefault();
+				return this.tokenizer._handleArrowCtrl(event.target, this.tokens, true);
 			}
+		}
+
+		if (isLeftCtrl(event)) {
+			event.preventDefault();
+			return this.tokenizer._handleArrowCtrl(event.target, this.tokens, false);
+		}
+
+		if (isLeftShift(event) || isRightShift(event)
+			|| (isLeftShift(event) && isCtrl) || (isRightShift(event) && isCtrl)) {
+			event.preventDefault();
+			return this.tokenizer._handleArrowShift(event.target, this.tokens, isRightShift(event) || ((isRightShift(event) && isCtrl)));
 		}
 	}
 

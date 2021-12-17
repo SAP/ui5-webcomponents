@@ -5,7 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import {isSpace, isLeftCtrl, isRightCtrl, isLeftShift, isRightShift} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -237,8 +237,58 @@ class Tokenizer extends UI5Element {
 		if (isSpace(event)) {
 			event.preventDefault();
 
-			this._handleTokenSelection(event);
+			return this._handleTokenSelection(event);
 		}
+
+		if (isLeftCtrl(event) || isRightCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowCtrl(event.target, this.tokens, isRightCtrl(event));
+		}
+
+		if (isLeftShift(event) || isRightShift(event)
+			|| (isLeftShift(event) && isCtrl) || (isRightShift(event) && isCtrl)) {
+			event.preventDefault();
+			return this._handleArrowShift(event.target, this.tokens, isRightShift(event) || ((isRightShift(event) && isCtrl)));
+		}
+	}
+
+	_calcNextTokenIndex(focusedToken, tokens, backwards) {
+		if (!tokens.length) {
+			return -1;
+		}
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		let nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex >= tokens.length) {
+			nextIndex = tokens.length - 1
+		}
+		if (nextIndex < 0) {
+			nextIndex = 0;
+		}
+
+		return nextIndex;
+	}
+
+	_handleArrowCtrl(focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+		if (nextIndex === -1) {
+			return;
+		}
+
+		tokens[nextIndex].focus();
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
+	}
+
+	_handleArrowShift(focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+		if (nextIndex === -1) {
+			return;
+		}
+
+		focusedToken.selected = true;
+		tokens[nextIndex].selected = true;
+		tokens[nextIndex].focus();
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_click(event) {
