@@ -21,6 +21,7 @@ const registerCurrentRuntime = () => {
 		currentRuntimeIndex = Runtimes.length;
 		Runtimes.push({
 			...VersionInfo,
+			url: import.meta.url,
 			alias: currentRuntimeAlias,
 			description: `Runtime ${currentRuntimeIndex} - ver ${VersionInfo.version}${currentRuntimeAlias ? ` (${currentRuntimeAlias})` : ""}`,
 		});
