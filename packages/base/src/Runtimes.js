@@ -1,6 +1,6 @@
 import VersionInfo from "./generated/VersionInfo.js";
 import getSharedResource from "./getSharedResource.js";
-import metaUrl from "./util/metaUrl.js";
+import metaUrl from "./util/metaUrl.js"; // eslint-disable-line
 
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
