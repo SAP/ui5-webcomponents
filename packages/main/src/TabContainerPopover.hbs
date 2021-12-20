@@ -7,7 +7,7 @@
 	_hide-header
 	class="ui5-tab-container-responsive-popover"
 >
-	<ui5-list separators="None" @ui5-item-press="{{_onOverflowListItemSelect}}">
+	<ui5-list separators="None" @ui5-item-press="{{_onOverflowListItemPress}}">
 		{{#if _endOverflowItems.length}}
 			{{#each _endOverflowItems}}
 				{{#unless this.isSeparator}}

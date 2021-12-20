@@ -119,21 +119,6 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		hideInStartOverflow: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		hideInEndOverflow: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		isInEndOverflow: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
 		_selected: {
 			type: Boolean,
 		},
@@ -342,14 +327,6 @@ class Tab extends UI5Element {
 
 	get overflowState() {
 		return this.disabled ? "Inactive" : "Active";
-	}
-
-	get hideInOverflow() {
-		if (this.isInEndOverflow) {
-			return this.hideInEndOverflow;
-		}
-
-		return this.hideInStartOverflow;
 	}
 }
 

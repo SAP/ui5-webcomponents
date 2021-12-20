@@ -7,11 +7,10 @@
 	{{/if}}
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		{{!-- // TODO render this overflow conditionally with isModeStartAndEnd --}}
 		<div
-			class="ui5-tc__overflowButton ui5-tc__startOverflowButton"
-			@click="{{_onOverflowButtonClick}}"
-			@keydown="{{_onOverflowButtonKeyDown}}"
+			class="ui5-tc__overflow ui5-tc__overflow--start"
+			@click="{{_onOverflowClick}}"
+			@keydown="{{_onOverflowKeyDown}}"
 			hidden
 		>
 			{{#if startOverflowButton.length}}
@@ -19,7 +18,7 @@
 			{{else}}
 				<ui5-button
 					icon="{{overflowMenuIcon}}"
-					data-ui5-stable="tabs-overflow-start"
+					data-ui5-stable="overflow-start"
 					tabindex="-1"
 					title="{{overflowMenuTitle}}"
 					aria-haspopup="true"
@@ -51,9 +50,9 @@
 		</div>
 
 		<div
-			class="ui5-tc__overflowButton ui5-tc__endOverflowButton"
-			@click="{{_onOverflowButtonClick}}"
-			@keydown="{{_onOverflowButtonKeyDown}}"
+			class="ui5-tc__overflow ui5-tc__overflow--end"
+			@click="{{_onOverflowClick}}"
+			@keydown="{{_onOverflowKeyDown}}"
 			hidden
 		>
 			{{#if overflowButton.length}}
@@ -61,7 +60,7 @@
 			{{else}}
 				<ui5-button
 					icon="{{overflowMenuIcon}}"
-					data-ui5-stable="tabs-overflow-end"
+					data-ui5-stable="overflow-end"
 					tabindex="-1"
 					title="{{overflowMenuTitle}}"
 					aria-haspopup="true"
