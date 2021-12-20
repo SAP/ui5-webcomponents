@@ -7,7 +7,7 @@ module.exports = {
 	"extends": "airbnb-base",
 	"parserOptions": {
 		"ecmaVersion": 2018,
-		"sourceType": "module",
+		"sourceType": "module"
 	},
 	"rules": {
 		"comma-dangle": [2, "always-multiline"], // difference from openui5
