@@ -329,7 +329,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		const tokensAreSelected = tokens.every(token => token.selected);
-		tokens.forEach((token) => token.selected = !tokensAreSelected);
+		tokens.forEach(token => { token.selected = !tokensAreSelected; });
 	}
 
 	_handleTokenSelection(event) {

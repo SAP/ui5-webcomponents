@@ -142,8 +142,15 @@ class MultiInput extends Input {
 	}
 
 	tokenDelete(event) {
-		this.fireEvent("token-delete", {
-			token: event.detail.ref,
+		const focusedToken = event.detail.ref;
+		const selectedTokens = this.tokens.filter(token => token.selected);
+
+		if (selectedTokens.indexOf(focusedToken) === -1) {
+			selectedTokens.push(focusedToken);
+		}
+
+		selectedTokens.forEach(token => {
+			this.fireEvent("token-delete", { token });
 		});
 
 		this.focus();
