@@ -1,7 +1,5 @@
-commit 303ecb1dd39667bcf4d50ec2ce7b11dfcb7cc2b8
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Dec 17 15:08:41 2021 +0200
+commit e5c0f2d446e0cf680a08a472deabfbff4414342c
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Dec 20 10:07:46 2021 +0200
 
-    fix(ui5-wizard): adjust content and navigator paddings based on spec (#4479)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3612
+    fix(ui5-bar): fix rtl support (#4496)
