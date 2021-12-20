@@ -454,10 +454,12 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
-		this._onItemSelect(event.detail.item);
+		const selectedItem = event.detail.selectedItems[0];
+
+		this._onItemSelect(selectedItem);
 		this.responsivePopover.close();
 		this._setItemsForStrip();
-		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
+		this.shadowRoot.querySelector(`#${selectedItem.id}`).focus();
 	}
 
 	_onItemSelect(target) {
