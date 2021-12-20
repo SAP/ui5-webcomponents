@@ -1,5 +1,5 @@
 .ui5-tc__separator {
-	margin: 0.5rem 0.25rem;
+	margin: 0rem 0.25rem -1rem;
 }
 
 /* check if this can ever receive focus, it must not */
