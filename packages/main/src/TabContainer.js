@@ -466,15 +466,15 @@ class TabContainer extends UI5Element {
 		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
-		this.items.forEach((item, index) => {
-			if (!item.isSeparator) {
+		this.items
+			.filter(item => !item.isSeparator)
+			.forEach((item, index) => {
 				const selected = selectedIndex === index;
 				item.selected = selected;
 
 				if (item._selected) {
 					item._selected = false;
 				}
-			}
 		}, this);
 
 		if (this.fixed) {
@@ -542,7 +542,7 @@ class TabContainer extends UI5Element {
 		}).promise();
 	}
 
-	async _onOverflowButtonClick(event) {
+	async _onOverflowClick(event) {
 		let button;
 		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__endOverflowButton");
 		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__startOverflowButton");
@@ -581,7 +581,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _onOverflowButtonKeyDown(event) {
+	async _onOverflowKeyDown(event) {
 		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__endOverflowButton");
 		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__startOverflowButton");
 
@@ -589,7 +589,7 @@ class TabContainer extends UI5Element {
 		case isDown(event):
 		case isStartOverflow && isLeft(event):
 		case isEndOverflow && isRight(event):
-			await this._onOverflowButtonClick(event);
+			await this._onOverflowClick(event);
 		}
 	}
 

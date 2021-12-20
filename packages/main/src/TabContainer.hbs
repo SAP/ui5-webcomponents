@@ -7,11 +7,11 @@
 	{{/if}}
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		{{!-- // TODO render this overflow conditionally with isModeStartAndEnd --}}
+		{{!-- TODO render this overflow conditionally with isModeStartAndEnd --}}
 		<div
 			class="ui5-tc__overflowButton ui5-tc__startOverflowButton"
-			@click="{{_onOverflowButtonClick}}"
-			@keydown="{{_onOverflowButtonKeyDown}}"
+			@click="{{_onOverflowClick}}"
+			@keydown="{{_onOverflowKeyDown}}"
 			hidden
 		>
 			{{#if startOverflowButton.length}}
@@ -36,24 +36,14 @@
 			@keyup="{{_onTabStripKeyUp}}"
 		>
 			{{#each items}}
-				{{#unless this.isSeparator}}
-					{{this.stripPresentation}}
-				{{/unless}}
-				{{#if this.isSeparator}}
-					<div
-						id="{{this._id}}"
-						data-ui5-stable="{{this.stableDomRef}}"
-						role="separator"
-						class="{{../classes.separator}}"
-					></div>
-				{{/if}}
+				{{this.stripPresentation}}
 			{{/each}}
 		</div>
 
 		<div
 			class="ui5-tc__overflowButton ui5-tc__endOverflowButton"
-			@click="{{_onOverflowButtonClick}}"
-			@keydown="{{_onOverflowButtonKeyDown}}"
+			@click="{{_onOverflowClick}}"
+			@keydown="{{_onOverflowKeyDown}}"
 			hidden
 		>
 			{{#if overflowButton.length}}

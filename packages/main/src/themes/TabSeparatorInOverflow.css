@@ -1,0 +1,8 @@
+.ui5-tc__separator {
+	margin: 0.5rem 0.25rem;
+}
+
+/* check if this can ever receive focus, it must not */
+.ui5-tc__separator:focus {
+	outline: none;
+}
