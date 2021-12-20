@@ -9,9 +9,6 @@ module.exports = {
 		"ecmaVersion": 2018,
 		"sourceType": "module",
 	},
-	"settings": {
-		"import/ignore": ["Runtimes.js"],
-	},
 	"rules": {
 		"comma-dangle": [2, "always-multiline"], // difference from openui5
 		"no-cond-assign": 2,
