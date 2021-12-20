@@ -234,10 +234,24 @@ class MultiInput extends Input {
 			return this.tokenizer._handleHome(this.tokens, isEnd(event));
 		}
 
-		if (!!(event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "a") {
+		if (isCtrl && event.key.toLowerCase() === "a") {
 			event.preventDefault();
 
-			this.tokenizer._toggleTokenSelection(this.tokens);
+			return this.tokenizer._toggleTokenSelection(this.tokens);
+		}
+
+		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
+			event.preventDefault();
+
+			const isCut = event.key.toLowerCase() === "x";
+			const selectedTokens = this.tokens.filter(token => token.selected);
+
+			if (isCut) {
+				this.tokenDelete(event);
+				return this.tokenizer._fillClipboard("cut", selectedTokens);
+			}
+
+			return this.tokenizer._fillClipboard("copy", selectedTokens);
 		}
 	}
 

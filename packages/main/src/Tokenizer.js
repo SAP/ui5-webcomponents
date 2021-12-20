@@ -258,10 +258,26 @@ class Tokenizer extends UI5Element {
 			return this._handleHome(this.tokens, isEnd(event));
 		}
 
-		if (!!(event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "a") {
+		if (isCtrl && event.key.toLowerCase() === "a") {
 			event.preventDefault();
 
 			this._toggleTokenSelection(this.tokens);
+		}
+
+		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
+			event.preventDefault();
+
+			const isCut = event.key.toLowerCase() === "x";
+			const selectedTokens = this.tokens.filter(token => token.selected);
+
+			if (isCut) {
+				selectedTokens.forEach(token => {
+					this.fireEvent("token-delete", { ref: token });
+				});
+				return this._fillClipboard("cut", selectedTokens);
+			}
+
+			return this._fillClipboard("copy", selectedTokens);
 		}
 	}
 
@@ -340,6 +356,25 @@ class Tokenizer extends UI5Element {
 				}
 			});
 		}
+	}
+
+	_fillClipboard(sShortcutName, tokens) {
+		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
+
+		/* fill clipboard with tokens' texts so parent can handle creation */
+		const cutToClipboard = oEvent => {
+			if (oEvent.clipboardData) {
+				oEvent.clipboardData.setData("text/plain", tokensTexts);
+			} else {
+				oEvent.originalEvent.clipboardData.setData("text/plain", tokensTexts);
+			}
+
+			oEvent.preventDefault();
+		};
+
+		document.addEventListener(sShortcutName, cutToClipboard);
+		document.execCommand(sShortcutName);
+		document.removeEventListener(sShortcutName, cutToClipboard);
 	}
 
 	/**
