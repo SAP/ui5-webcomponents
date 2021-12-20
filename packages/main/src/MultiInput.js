@@ -200,9 +200,9 @@ class MultiInput extends Input {
 
 		if (isRight(event) || rightCtrl) {
 			event.preventDefault();
-			const lastTokenIndex = this.tokenizer._tokens.length - 1;
+			const lastTokenIndex = this.tokens.length - 1;
 
-			if (event.target === this.tokenizer._tokens[lastTokenIndex] && this.tokenizer._tokens[lastTokenIndex] === document.activeElement) {
+			if (event.target === this.tokens[lastTokenIndex] && this.tokens[lastTokenIndex] === document.activeElement) {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
@@ -225,6 +225,12 @@ class MultiInput extends Input {
 
 		if (isHome(event) || isEnd(event)) {
 			return this.tokenizer._handleHome(this.tokens, isEnd(event));
+		}
+
+		if (!!(event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "a") {
+			event.preventDefault();
+
+			this.tokenizer._toggleTokenSelection(this.tokens);
 		}
 	}
 

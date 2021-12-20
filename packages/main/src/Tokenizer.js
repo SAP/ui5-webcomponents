@@ -257,6 +257,12 @@ class Tokenizer extends UI5Element {
 		if (isHome(event) || isEnd(event)) {
 			return this._handleHome(this.tokens, isEnd(event));
 		}
+
+		if (!!(event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "a") {
+			event.preventDefault();
+
+			this._toggleTokenSelection(this.tokens);
+		}
 	}
 
 	_handleHome(tokens, endKeyPressed) {
@@ -315,6 +321,15 @@ class Tokenizer extends UI5Element {
 
 	_onmousedown(event) {
 		this._itemNav.setCurrentItem(event.target);
+	}
+
+	_toggleTokenSelection(tokens) {
+		if (!tokens || !tokens.length) {
+			return;
+		}
+
+		const tokensAreSelected = tokens.every(token => token.selected);
+		tokens.forEach((token) => token.selected = !tokensAreSelected);
 	}
 
 	_handleTokenSelection(event) {
