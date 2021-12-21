@@ -469,7 +469,6 @@ class TabContainer extends UI5Element {
 
 		// update selected items
 		this.items
-			.filter(item => !item.isSeparator)
 			.forEach((item, index) => {
 				const selected = selectedIndex === index;
 				item.selected = selected;

@@ -125,7 +125,7 @@ describe("TabContainer general interaction", () => {
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[1].click();
 
 		const newlySelectedItem = await tabcontainer.$("[selected]");
 
