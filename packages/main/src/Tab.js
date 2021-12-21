@@ -56,7 +56,7 @@ const metadata = {
 		},
 
 		/**
-		 * Represents the "additionalText" text, which is displayed in the tab filter.
+		 * Represents the "additionalText" text, which is displayed in the tab.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
