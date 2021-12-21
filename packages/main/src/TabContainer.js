@@ -477,7 +477,7 @@ class TabContainer extends UI5Element {
 				if (item._selected) {
 					item._selected = false;
 				}
-		}, this);
+			}, this);
 
 		if (this.fixed) {
 			this.selectTab(selectedTab, selectedTabIndex);
