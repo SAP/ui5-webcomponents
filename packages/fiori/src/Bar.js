@@ -54,7 +54,6 @@ const metadata = {
 		 */
 		startContent: {
 			type: HTMLElement,
-			propertyName: "startContent",
 		},
 
 		/**
@@ -76,7 +75,6 @@ const metadata = {
 		 */
 		endContent: {
 			type: HTMLElement,
-			propertyName: "endContent",
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
@@ -171,9 +169,8 @@ class Bar extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// Next two row is specific for IE11. Please remove after stop support and edit css file
-		const content = this.startContent.concat(this.middleContent).concat(this.endContent);
-		content.forEach(e => e.classList.add("ui5-bar-content"));
+		// Next row is specific for IE11. Please remove after stop support and edit css file
+		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"))
 	}
 
 	onEnterDOM() {
