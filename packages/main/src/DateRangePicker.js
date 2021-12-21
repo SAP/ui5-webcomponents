@@ -84,6 +84,28 @@ class DateRangePicker extends DatePicker {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
+	/**
+	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValue() {
+		return null;
+	}
+
+	/**
+	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValueUTC() {
+		return null;
+	}
+
 	get _startDateTimestamp() {
 		return this._extractFirstTimestamp(this.value);
 	}

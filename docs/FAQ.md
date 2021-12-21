@@ -13,7 +13,7 @@
 
 **Q: Is there a CDN to load UI5 Web Components from?**
 
-**A:** No. The best practice is to build your own bundle. See [this article](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/) for details.
+**A:** No. The best practice is to build your own bundle. See [this article](https://blogs.sap.com/2021/05/28/getting-started-with-ui5-web-components-in-2021/) for details.
 
 
 **Q: Are UI5 Web Components APIs stable?**

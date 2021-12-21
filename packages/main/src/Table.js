@@ -51,6 +51,7 @@ const metadata = {
 			propertyName: "rows",
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -143,7 +144,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
@@ -186,7 +187,7 @@ const metadata = {
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
 		 * <br><br>
-		 * <b>Limitations:</b>
+		 * <b>Restrictions:</b>
 		 * <ul>
 		 * <li>Browsers that do not support this feature:
 		 * <ul>
@@ -434,6 +435,7 @@ class Table extends UI5Element {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
 		const rowsCount = this.rows.length;
+		const selectedRows = this.selectedRows;
 
 		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
@@ -455,6 +457,8 @@ class Table extends UI5Element {
 
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
+
+		this._allRowsSelected = selectedRows.length === this.rows.length;
 	}
 
 	onAfterRendering() {
@@ -688,9 +692,6 @@ class Table extends UI5Element {
 
 	get styles() {
 		return {
-			table: {
-				height: "48px",
-			},
 			busy: {
 				position: this.busyIndPosition,
 			},

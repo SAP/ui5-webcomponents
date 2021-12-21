@@ -10,8 +10,13 @@ import {
 	isSpace,
 	isEnter,
 	isBackSpace,
+	isDelete,
 	isEscape,
 	isTabNext,
+	isPageUp,
+	isPageDown,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -460,6 +465,22 @@ const metadata = {
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-input</code> provides the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
+ * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
+ * <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li>
+ * <li>[DOWN] - Focuses the next matching item in the suggestion list.</li>
+ * <li>[UP] - Focuses the previous matching item in the suggestion list.</li>
+ * <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li>
+ * <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li>
+ * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Input.js";</code>
@@ -520,7 +541,7 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		// Indicates if the change event has already been fired
-		this._changeFired = false;
+		this._changeFiredValue = null;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
@@ -614,6 +635,22 @@ class Input extends UI5Element {
 			return this._handleEnter(event);
 		}
 
+		if (isPageUp(event)) {
+			return this._handlePageUp(event);
+		}
+
+		if (isPageDown(event)) {
+			return this._handlePageDown(event);
+		}
+
+		if (isHome(event)) {
+			return this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			return this._handleEnd(event);
+		}
+
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}
@@ -631,6 +668,11 @@ class Input extends UI5Element {
 	}
 
 	_onkeyup(event) {
+		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
+		if (isDelete(event)) {
+			this.value = event.target.value;
+		}
+
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -670,6 +712,34 @@ class Input extends UI5Element {
 		}
 
 		this.focused = true;
+	}
+
+	_handlePageUp(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onPageUp(event);
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	_handlePageDown(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onPageDown(event);
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	_handleHome(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onHome(event);
+		}
+	}
+
+	_handleEnd(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onEnd(event);
+		}
 	}
 
 	_handleEscape() {
@@ -715,7 +785,7 @@ class Input extends UI5Element {
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -754,13 +824,18 @@ class Input extends UI5Element {
 		}
 	}
 
-	_handleChange(event) {
-		if (!this._changeFired) {
+	_handleNativeInputChange() {
+		// The native change sometimes fires too early and getting input's value in the listener would return
+		// the previous value instead of the most recent one. This would make things consistent.
+		clearTimeout(this._nativeChangeDebounce);
+		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
+	}
+
+	_handleChange() {
+		if (this._changeFiredValue !== this.value) {
+			this._changeFiredValue = this.value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
-
-		// Set event as no longer marked
-		this._changeFired = false;
 	}
 
 	_scroll(event) {
@@ -771,8 +846,8 @@ class Input extends UI5Element {
 		});
 	}
 
-	async _handleInput(event) {
-		const inputDomRef = await this.getInputDOMRef();
+	_handleInput(event) {
+		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
@@ -921,10 +996,7 @@ class Input extends UI5Element {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
-			this.fireEvent(this.EVENT_CHANGE);
-
-			// Mark the change event to avoid double firing
-			this._changeFired = true;
+			this._handleChange();
 		}
 
 		this.valueBeforeItemPreview = "";
@@ -999,7 +1071,7 @@ class Input extends UI5Element {
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
-			this.fireEvent(this.EVENT_CHANGE);
+			this._handleChange();
 		}
 	}
 
@@ -1015,6 +1087,14 @@ class Input extends UI5Element {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
+			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		}
+
+		return this.nativeInput;
+	}
+
+	getInputDOMRefSync() {
+		if (isPhone() && this.Suggestions) {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
@@ -1079,6 +1159,10 @@ class Input extends UI5Element {
 			item: suggestion,
 			targetRef: item,
 		});
+	}
+
+	onItemMouseDown(event) {
+		event.preventDefault();
 	}
 
 	onItemSelected(item, keyboardUsed) {
@@ -1236,7 +1320,7 @@ class Input extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.open && this.focused;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
@@ -1286,6 +1370,10 @@ class Input extends UI5Element {
 		return isPhone();
 	}
 
+	get _isSuggestionsFocused() {
+		return !this.focused && this.Suggestions && this.Suggestions.isOpened();
+	}
+
 	/**
 	 * Returns the placeholder value.
 	 * @protected
@@ -1312,6 +1400,10 @@ class Input extends UI5Element {
 		`;
 
 		return this.valueState !== ValueState.None ? result : "";
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	/**

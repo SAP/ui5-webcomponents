@@ -277,6 +277,10 @@ class Dialog extends Popup {
 		return this._movable ? "0" : undefined;
 	}
 
+	get _showResizeHandle() {
+		return this.resizable && this.onDesktop;
+	}
+
 	_show() {
 		super._show();
 		this._center();

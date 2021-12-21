@@ -517,6 +517,8 @@ class ComboBox extends UI5Element {
 	}
 
 	_resetFilter() {
+		this._userTypedValue = null;
+		this.inner.setSelectionRange(0, 0); // Put the cursor at the end
 		this._filteredItems = this._filterItems("");
 		this._selectMatchingItem();
 	}
@@ -632,7 +634,7 @@ class ComboBox extends UI5Element {
 
 		if (isOpen) {
 			this._itemFocused = true;
-			this.value = isGroupItem ? this.filterValue : currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.text;
 			this.focused = false;
 			currentItem.focused = true;
 		} else {
@@ -652,7 +654,7 @@ class ComboBox extends UI5Element {
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
-		this._applyAtomicValueAndSelection(item, "", true);
+		this._applyAtomicValueAndSelection(item, (this.open ? this._userTypedValue : null), true);
 
 		if ((item && !item.selected)) {
 			this.fireEvent("selection-change", {
@@ -704,6 +706,10 @@ class ComboBox extends UI5Element {
 
 		indexOfItem = !isOpen && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
 		this._handleItemNavigation(event, --indexOfItem, false /* isForward */);
+	}
+
+	_keyup(event) {
+		this._userTypedValue = this.value.substring(0, this.inner.selectionStart);
 	}
 
 	_keydown(event) {
@@ -822,6 +828,7 @@ class ComboBox extends UI5Element {
 		const value = (item && item.text) || "";
 		this.inner.value = value;
 		if (highlightValue) {
+			filterValue = filterValue || "";
 			this.inner.setSelectionRange(filterValue.length, value.length);
 		}
 		this.value = value;
@@ -950,12 +957,16 @@ class ComboBox extends UI5Element {
 	}
 
 	get shouldOpenValueStateMessagePopover() {
-		return this.focused && this.hasValueStateText && !this._iconPressed
+		return this.focused && !this.readonly && this.hasValueStateText && !this._iconPressed
 			&& !this.open && !this._isPhone;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
 		return !this.valueStateMessage.length && this.hasValueStateText;
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	/**

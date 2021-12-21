@@ -462,6 +462,17 @@ describe("General interaction", () => {
 		await arrow.click();
 		assert.strictEqual(await listItem.shadow$(".ui5-li-additional-text").getText(), "DZ", "Additional item text should be displayed");
 	});
+
+	it ("Should not open value state message when component is in readonly state", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const cb = await browser.$("#readonly-value-state-cb");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await cb.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover with valueStateMessage should not be opened.");
+	});
 });
 
 describe("Grouping", () => {
@@ -529,7 +540,7 @@ describe("Grouping", () => {
 
 		assert.ok(await groupItem.getProperty("focused"),  "The second group header should be focused");
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
-		assert.strictEqual(await combo.getProperty("value"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
+		assert.strictEqual(await combo.getProperty("value"), "", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
 });
 
@@ -612,7 +623,7 @@ describe("Keyboard navigation", async () => {
 		listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
-	
+
 		await input.keys("ArrowUp");
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
