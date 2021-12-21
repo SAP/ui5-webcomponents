@@ -449,8 +449,6 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-
-
 	_onOverflowListItemSelect(event) {
 		const selectedItem = event.detail.selectedItems[0];
 		this._onItemSelect(selectedItem);
@@ -566,7 +564,7 @@ class TabContainer extends UI5Element {
 			button = this.overflowButton[0] || overflow.querySelector("[ui5-button]");
 			this._endOverflowItems = items;
 		}
-		
+
 		if (isStartOverflow) {
 			button = this.startOverflowButton[0] || overflow.querySelector("[ui5-button]");
 			this._startOverflowItems = items;
@@ -865,7 +863,7 @@ class TabContainer extends UI5Element {
 				if (tab.hasAttribute("start-overflow")) {
 					startOverflowItemsCount++;
 				}
-				
+
 				if (tab.hasAttribute("end-overflow")) {
 					endOverflowItemsCount++;
 				}
@@ -879,7 +877,6 @@ class TabContainer extends UI5Element {
 		this.responsivePopover = await this._respPopover();
 		this.responsivePopover.close();
 	}
-
 
 	_getFocusableTabs() {
 		if (!this.getDomRef()) {
