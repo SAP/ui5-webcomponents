@@ -4,9 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import {
-	getAnimationMode,
-} from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
@@ -16,9 +14,7 @@ import {
 	isLeft,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import {
-	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
@@ -124,7 +120,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content.
+		 * Defines the placement of the tab strip relative to the actual tabs' content.
 		 * <br><br>
 		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
 		 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
@@ -455,7 +451,6 @@ class TabContainer extends UI5Element {
 
 	_onOverflowListItemSelect(event) {
 		const selectedItem = event.detail.selectedItems[0];
-
 		this._onItemSelect(selectedItem);
 		this.responsivePopover.close();
 		this._setItemsForStrip();
@@ -468,6 +463,7 @@ class TabContainer extends UI5Element {
 		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
+
 		this.items
 			.forEach((item, index) => {
 				const selected = selectedIndex === index;
@@ -544,33 +540,36 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowClick(event) {
-		let button;
-		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__endOverflowButton");
-		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__startOverflowButton");
-
-		if (!event.currentTarget.classList.contains("ui5-tc__overflowButton")) {
+		if (event.target.classList.contains("ui5-tc__overflow")) {
+			// the empty area in the overflow was clicked
 			return;
 		}
+
+		const overflow = event.currentTarget;
+		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
+		const isStartOverflow = overflow.classList.contains("ui5-tc__overflow--start");
+		const items = [];
+
+		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
 
 		this._startOverflowItems = [];
 		this._endOverflowItems = [];
 
+		this.items.forEach(item => {
+			if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute(overflowAttr)) {
+				items.push(item);
+			}
+		});
+
+		let button;
 		if (isEndOverflow) {
-			button = this.overflowButton[0] || this.getDomRef().querySelector(".ui5-tc__endOverflowButton > [ui5-button]");
-			this.items.forEach(item => {
-				item.isInEndOverflow = true;
-				if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute("end-overflow")) {
-					this._endOverflowItems.push(item);
-				}
-			});
-		} else if (isStartOverflow) {
-			button = this.startOverflowButton[0] || this.getDomRef().querySelector(".ui5-tc__startOverflowButton > [ui5-button]");
-			this.items.forEach(item => {
-				item.isInEndOverflow = false;
-				if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute("start-overflow")) {
-					this._startOverflowItems.push(item);
-				}
-			});
+			button = this.overflowButton[0] || overflow.querySelector("[ui5-button]");
+			this._endOverflowItems = items;
+		}
+
+		if (isStartOverflow) {
+			button = this.startOverflowButton[0] || overflow.querySelector("[ui5-button]");
+			this._startOverflowItems = items;
 		}
 
 		this.responsivePopover = await this._respPopover();
@@ -583,8 +582,8 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowKeyDown(event) {
-		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__endOverflowButton");
-		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__startOverflowButton");
+		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__overflow--end");
+		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__overflow--start");
 
 		switch (true) {
 		case isDown(event):
@@ -609,9 +608,9 @@ class TabContainer extends UI5Element {
 
 		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef());
 
-		// make sure the overflow buttons are hidden
-		this._getHeaderStartOverflowButton().setAttribute("hidden", "");
-		this._getHeaderEndOverflowButton().setAttribute("hidden", "");
+		// make sure the overflows are hidden
+		this._getStartOverflow().setAttribute("hidden", "");
+		this._getEndOverflow().setAttribute("hidden", "");
 
 		// show all tabs
 		for (let i = 0; i < itemsDomRefs.length; i++) {
@@ -633,18 +632,18 @@ class TabContainer extends UI5Element {
 
 		if (this.isModeStartAndEnd) {
 			this._updateStartAndEndOverflow(itemsDomRefs);
+			this._updateOverflowCounters();
 		} else {
 			this._updateEndOverflow(itemsDomRefs);
 		}
 
-		this._updateOverflowItems();
 		this._itemNavigation._init();
 		this._itemNavigation.setCurrentItem(this._selectedTab);
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
-		// show end overflow button
-		this._getHeaderEndOverflowButton().removeAttribute("hidden");
+		// show end overflow
+		this._getEndOverflow().removeAttribute("hidden");
 
 		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
 		const containerWidth = this._getTabStrip().offsetWidth;
@@ -656,6 +655,8 @@ class TabContainer extends UI5Element {
 			itemsDomRefs[i].setAttribute("hidden", "");
 			itemsDomRefs[i].setAttribute("end-overflow", "");
 		}
+
+		this._endOverflowText = this.overflowButtonText;
 	}
 
 	_updateStartAndEndOverflow(itemsDomRefs) {
@@ -669,8 +670,8 @@ class TabContainer extends UI5Element {
 
 		// has "end", but no "start" overflow
 		if (!hasStartOverflow) {
-			// show "end" overflow button
-			this._getHeaderEndOverflowButton().removeAttribute("hidden");
+			// show "end" overflow
+			this._getEndOverflow().removeAttribute("hidden");
 			// width is changed
 			containerWidth = this._getTabStrip().offsetWidth;
 
@@ -686,8 +687,8 @@ class TabContainer extends UI5Element {
 
 		// has "start", but no "end" overflow
 		if (!hasEndOverflow) {
-			// show "start" overflow button
-			this._getHeaderStartOverflowButton().removeAttribute("hidden");
+			// show "start" overflow
+			this._getStartOverflow().removeAttribute("hidden");
 			// width is changed
 			containerWidth = this._getTabStrip().offsetWidth;
 
@@ -701,10 +702,10 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		// show "start" overflow button
-		this._getHeaderStartOverflowButton().removeAttribute("hidden");
-		// show "end" overflow button
-		this._getHeaderEndOverflowButton().removeAttribute("hidden");
+		// show "start" overflow
+		this._getStartOverflow().removeAttribute("hidden");
+		// show "end" overflow
+		this._getEndOverflow().removeAttribute("hidden");
 		// width is changed
 		containerWidth = this._getTabStrip().offsetWidth;
 
@@ -738,10 +739,10 @@ class TabContainer extends UI5Element {
 		// if there is no "start" overflow, it has "end" overflow
 		// check it again with the "end" overflow
 		if (!hasStartOverflow) {
-			this._getHeaderEndOverflowButton().removeAttribute("hidden");
+			this._getEndOverflow().removeAttribute("hidden");
 			containerWidth = this._getTabStrip().offsetWidth;
 			hasStartOverflow = containerWidth < leftItemsWidth + selectedItemIndexAndWidth.width;
-			this._getHeaderEndOverflowButton().setAttribute("hidden", "");
+			this._getEndOverflow().setAttribute("hidden", "");
 		}
 
 		return hasStartOverflow;
@@ -763,10 +764,10 @@ class TabContainer extends UI5Element {
 		// if there is no "end" overflow, it has "start" overflow
 		// check it again with the "start" overflow
 		if (!hasEndOverflow) {
-			this._getHeaderStartOverflowButton().removeAttribute("hidden");
+			this._getStartOverflow().removeAttribute("hidden");
 			containerWidth = this._getTabStrip().offsetWidth;
 			hasEndOverflow = containerWidth < rightItemsWidth + selectedItemIndexAndWidth.width;
-			this._getHeaderStartOverflowButton().setAttribute("hidden", "");
+			this._getStartOverflow().setAttribute("hidden", "");
 		}
 
 		return hasEndOverflow;
@@ -784,7 +785,7 @@ class TabContainer extends UI5Element {
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
 
-		if (itemsDomRefs[index - 1] && itemsDomRefs[index - 1].classList.contains("ui5-tc__separator")) {
+		if (itemsDomRefs[index - 1] && itemsDomRefs[index - 1].isSeparator) {
 			selectedSeparator = itemsDomRefs[index - 1];
 			width += this._getItemWidth(selectedSeparator);
 		}
@@ -843,7 +844,7 @@ class TabContainer extends UI5Element {
 
 		// if prev item is separator - hide it
 		const prevItem = itemsDomRefs[index - 1];
-		if (prevItem && prevItem.classList.contains("ui5-tc__separator")) {
+		if (prevItem && prevItem.isSeparator) {
 			lastVisibleIndex -= 1;
 		}
 
@@ -854,29 +855,24 @@ class TabContainer extends UI5Element {
 		return this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
 	}
 
-	_updateOverflowItems() {
+	_updateOverflowCounters() {
 		let startOverflowItemsCount = 0;
 		let endOverflowItemsCount = 0;
 
-		this.items.forEach(item => {
-			item.hideInStartOverflow = !item.getTabInStripDomRef().hasAttribute("start-overflow");
-			item.hideInEndOverflow = !item.getTabInStripDomRef().hasAttribute("end-overflow");
-
-			if (this.isModeStartAndEnd) {
-				if (!item.hideInStartOverflow && !item.isSeparator) {
+		this._getTabs()
+			.map(tab => tab.getTabInStripDomRef())
+			.forEach(tab => {
+				if (tab.hasAttribute("start-overflow")) {
 					startOverflowItemsCount++;
-				} else if (!item.hideInEndOverflow && !item.isSeparator) {
+				}
+
+				if (tab.hasAttribute("end-overflow")) {
 					endOverflowItemsCount++;
 				}
-			}
-		});
+			});
 
-		if (this.isModeStartAndEnd) {
-			this._startOverflowText = `+${startOverflowItemsCount}`;
-			this._endOverflowText = `+${endOverflowItemsCount}`;
-		} else {
-			this._endOverflowText = this.overflowButtonText;
-		}
+		this._startOverflowText = `+${startOverflowItemsCount}`;
+		this._endOverflowText = `+${endOverflowItemsCount}`;
 	}
 
 	async _closeRespPopover() {
@@ -891,8 +887,8 @@ class TabContainer extends UI5Element {
 
 		const focusableTabs = [];
 
-		if (!this._getHeaderStartOverflowButton().hasAttribute("hidden")) {
-			focusableTabs.push(this._getHeaderStartOverflowButton().querySelector("ui5-button"));
+		if (!this._getStartOverflow().hasAttribute("hidden")) {
+			focusableTabs.push(this._getStartOverflow().querySelector("[ui5-button]"));
 		}
 
 		this._getTabs().forEach(tab => {
@@ -901,8 +897,8 @@ class TabContainer extends UI5Element {
 			}
 		});
 
-		if (!this._getHeaderEndOverflowButton().hasAttribute("hidden")) {
-			focusableTabs.push(this._getHeaderEndOverflowButton().querySelector("ui5-button"));
+		if (!this._getEndOverflow().hasAttribute("hidden")) {
+			focusableTabs.push(this._getEndOverflow().querySelector("[ui5-button]"));
 		}
 
 		return focusableTabs;
@@ -924,12 +920,12 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-tabStrip`);
 	}
 
-	_getHeaderStartOverflowButton() {
-		return this.shadowRoot.querySelector(".ui5-tc__startOverflowButton");
+	_getStartOverflow() {
+		return this.shadowRoot.querySelector(".ui5-tc__overflow--start");
 	}
 
-	_getHeaderEndOverflowButton() {
-		return this.shadowRoot.querySelector(".ui5-tc__endOverflowButton");
+	_getEndOverflow() {
+		return this.shadowRoot.querySelector(".ui5-tc__overflow--end");
 	}
 
 	async _respPopover() {
