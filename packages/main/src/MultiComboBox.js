@@ -670,25 +670,39 @@ class MultiComboBox extends UI5Element {
 		const value = this.value;
 		const items = this.items;
 		const itemsCount = items.length;
-		const prevItem = items[previousItemIdx];
 		const matchingItems = this.value && this._filterItems(value);
+		const prevItem = previousItemIdx > -1  && items[previousItemIdx] && items[previousItemIdx].text === value ? items[previousItemIdx] : matchingItems[previousItemIdx];
 
-		if (previousItemIdx > -1 && prevItem && prevItem.text !== value) {
+		if (prevItem && prevItem.text !== value) {
 			this.currentItemIdx = -1;
 			previousItemIdx = -1;
 		} else {
-			isItemMatched = previousItemIdx > -1 && prevItem.text === value;
+			isItemMatched = previousItemIdx > -1 && prevItem && prevItem.text === value;
 		}
 
-		if (previousItemIdx >= itemsCount - 1) {
+		if (previousItemIdx === itemsCount - 1 && items[previousItemIdx].text === value) {
 			return;
+		}
+
+		if (previousItemIdx > itemsCount) {
+			this.currentItemIdx = -1;
 		}
 
 		if (!matchingItems.length && !isItemMatched && value) {
 			return;
 		}
 
-		let currentItem = matchingItems.length && !isItemMatched ? matchingItems[++this.currentItemIdx] : this.items[++this.currentItemIdx];
+		let currentItem;
+
+		if (!isItemMatched && matchingItems.length) {
+			currentItem = matchingItems[++this.currentItemIdx];
+		} else {
+			// If the previous item index corresponds to a filtered item 
+			// we should find its index among unfilted items
+			let currentItemIdx = items.findIndex(item => item.text === value);
+			this.currentItemIdx = currentItemIdx !== -1 ? currentItemIdx : this.currentItemIdx;
+			currentItem = items[++this.currentItemIdx]
+		}
 
 		if (matchingItems.length > 1) {
 			while (this.currentItemIdx < matchingItems.length - 1 && currentItem.selected) {
@@ -716,12 +730,12 @@ class MultiComboBox extends UI5Element {
 
 		const items = this.items;
 		const previousItemIdx = this.currentItemIdx;
-		const prevItem = items[previousItemIdx];
-		const prevItemText = prevItem && prevItem.text;
 		const value = this.value;
 		const matchingItems = this.value && this._filterItems(value);
+		const prevItem = previousItemIdx > -1  && items[previousItemIdx].text === value ? items[previousItemIdx] : matchingItems[previousItemIdx];
+		const prevItemText = prevItem && prevItem.text;
 
-		if (prevItem && prevItemText && value && prevItemText !== value) {
+		if ((prevItemText && value && prevItemText !== value) || (value && previousItemIdx > -1)) {
 			this.currentItemIdx = -1;
 		} else {
 			isItemMatched = previousItemIdx > -1 && prevItemText === value;
@@ -731,11 +745,7 @@ class MultiComboBox extends UI5Element {
 			this.currentItemIdx = -1;
 		}
 
-		if (previousItemIdx === 0 && prevItemText === value) {
-			return;
-		}
-
-		if (!matchingItems.length && !isItemMatched && value) {
+		if (previousItemIdx === 0 && items[previousItemIdx].text === value) {
 			return;
 		}
 
@@ -743,6 +753,8 @@ class MultiComboBox extends UI5Element {
 			this.currentItemIdx = matchingItems.length ? matchingItems.length - 1 : items.length - 1;
 			currentItem = matchingItems.length ? matchingItems[this.currentItemIdx] : items[this.currentItemIdx];
 		} else if (isItemMatched) {
+			let currentItemIdx = items.findIndex(item => item.text === value);
+			this.currentItemIdx = currentItemIdx !== -1 ? currentItemIdx : this.currentItemIdx;
 			currentItem = items[--this.currentItemIdx];
 		} else {
 			currentItem = matchingItems.length ? matchingItems[--this.currentItemIdx] : items[--this.currentItemIdx];
