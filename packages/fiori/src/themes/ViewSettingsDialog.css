@@ -80,6 +80,10 @@
 	padding-right: 0.5rem;
 }
 
+[dir=rtl] .ui5-vsd-sub-title {
+	margin-right: 0;
+}
+
 [dir=rtl] .ui5-vsd-content [ui5-li]::part(native-li) {
 	padding-right: var(--ui5_view_settigs_dialog_radio_button_padding_left);
 }
