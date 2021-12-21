@@ -554,7 +554,7 @@ class Select extends UI5Element {
 	 * @private
 	 */
 	_handleItemPress(event) {
-		const item = event.detail.item;
+		const item = event.detail.selectedItems[0];
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
