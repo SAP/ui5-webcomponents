@@ -2,8 +2,3 @@
 	border-left: 2px solid var(--sapList_BorderColor);
 	margin: 0.5rem 0.25rem;
 }
-
-/* check if this can ever receive focus, it must not */
-.ui5-tc__separator:focus {
-	outline: none;
-}
