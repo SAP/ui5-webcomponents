@@ -266,12 +266,8 @@ const metadata = {
 		 */
 		"tab-select": {
 			detail: {
-				tab: {
-					type: HTMLElement,
-				},
-				tabIndex: {
-					type: Number,
-				},
+				tab: { type: HTMLElement },
+				tabIndex: { type: Number },
 			},
 		},
 	},
@@ -449,12 +445,14 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onOverflowListItemSelect(event) {
-		const selectedItem = event.detail.selectedItems[0];
-		this._onItemSelect(selectedItem);
+	_onOverflowListItemClick(event) {
+		event.preventDefault(); // cancel the item selection
+		const { item } = event.detail;
+
+		this._onItemSelect(item);
 		this.responsivePopover.close();
 		this._setItemsForStrip();
-		this.shadowRoot.querySelector(`#${selectedItem.id}`).focus();
+		this.shadowRoot.querySelector(`#${item.id}`).focus();
 	}
 
 	_onItemSelect(target) {
@@ -528,15 +526,11 @@ class TabContainer extends UI5Element {
 	}
 
 	slideContentDown(element) {
-		return slideDown({
-			element,
-		}).promise();
+		return slideDown({ element }).promise();
 	}
 
 	slideContentUp(element) {
-		return slideUp({
-			element,
-		}).promise();
+		return slideUp({ element }).promise();
 	}
 
 	async _onOverflowClick(event) {
