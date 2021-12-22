@@ -37,6 +37,14 @@
 		>
 			{{#each items}}
 				{{this.stripPresentation}}
+				{{#if this.isSeparator}}
+					<div
+						id="{{this._id}}"
+						data-ui5-stable="{{this.stableDomRef}}"
+						role="separator"
+						class="{{../classes.separator}}"
+					></div>
+				{{/if}}
 			{{/each}}
 		</div>
 
