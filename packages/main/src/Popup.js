@@ -87,7 +87,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.0.3
+		 * @since 1.1.0
 		 */
 		accessibleNameRef: {
 			type: String,
@@ -549,7 +549,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return getEffectiveAriaLabelText(this) || undefined;
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get _root() {
