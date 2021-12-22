@@ -20,13 +20,12 @@
 	margin-left: 0;
 }
 
-.ui5-vsd-bar-sub-header {
-	padding-left: 0.5rem;
-}
-
 .ui5-vsd-bar-header {
 	box-shadow: none;
-	padding-left: 0.5rem;
+}
+
+.ui5-vsd-header ::part(bar-startContent-container){
+	padding-left: 1rem
 }
 
 .ui5-vsd-content [ui5-li]::part(native-li) {
@@ -72,12 +71,9 @@
 	overflow: hidden;
 }
 
-[dir=rtl] .ui5-vsd-bar-header {
-	padding-right: 0.5rem;
-}
-
-[dir=rtl] .ui5-vsd-bar-sub-header {
-	padding-right: 0.5rem;
+[dir=rtl] .ui5-vsd-header ::part(bar-startContent-container){
+	padding-right: 1rem;
+	padding-left: 0;
 }
 
 [dir=rtl] .ui5-vsd-sub-title {
