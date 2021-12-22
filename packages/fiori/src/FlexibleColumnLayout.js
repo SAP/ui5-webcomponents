@@ -39,6 +39,7 @@ import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css
  */
 const metadata = {
 	tag: "ui5-flexible-column-layout",
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the columns layout and their proportion.

@@ -42,6 +42,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 const metadata = {
 	tag: "ui5-shellbar",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
