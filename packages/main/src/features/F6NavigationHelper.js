@@ -6,14 +6,15 @@ class F6NavigationHelper {
 	constructor() {
 		this.attachEventListeners();
 		this.selectedGroup = null;
+		this.groups = [];
+		this.cachedGroups = [];
 	}
 
 	attachEventListeners() {
 		document.addEventListener("keydown", async event => {
-			this.setCurrentGroup(document.activeElement);
-			this.setAllGroups();
-
 			if (isF6Next(event)) {
+				this.eventHandlingPreparation();
+
 				const nextIndex = this.groups.indexOf(this.selectedGroup);
 				let nextElement = null;
 
@@ -32,6 +33,8 @@ class F6NavigationHelper {
 			}
 
 			if (isF6Previous(event)) {
+				this.eventHandlingPreparation();
+
 				const nextIndex = this.groups.indexOf(this.selectedGroup);
 				let nextElement = null;
 
@@ -39,7 +42,19 @@ class F6NavigationHelper {
 					if (nextIndex - 1 < 0) {
 						nextElement = this.groups[this.groups.length - 1];
 					} else {
-						nextElement = this.groups[nextIndex - 1];
+						// Handle the situation where the first focusable element of two neighbor groups is the same
+						// For example:
+						// <ui5-flexible-column-layout>
+						//     <ui5-list>
+						//         <ui5-li>List Item</ui5-li>
+						//     </ui5-list>
+						// </ui5-flexible-column-layout>
+						// Here for both FCL & List the firstFoccusableElement is the same (the ui5-li)
+
+						const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1]);
+						const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex]);
+
+						nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
 					}
 				} else {
 					nextElement = this.groups[this.groups.length - 1];
@@ -51,8 +66,14 @@ class F6NavigationHelper {
 		});
 	}
 
-	setAllGroups() {
-		this.groups = Array.from(document.querySelectorAll("[data-sap-ui-fastnavgroup='true']"));
+	eventHandlingPreparation() {
+		this.cachedGroups = this.groups;
+		this.setCurrentGroup(document.activeElement);
+		this.setGroups();
+	}
+
+	setGroups() {
+		this.groups = Array.from(document.querySelectorAll("[data-sap-ui-fastnavgroup='true']")).filter(group => group.clientWidth);
 	}
 
 	setCurrentGroup(element = null) {

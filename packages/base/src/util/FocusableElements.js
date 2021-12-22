@@ -34,7 +34,7 @@ const findFocusableElement = async (container, forward) => {
 		const assignedElements = container.assignedNodes();
 		child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
 	} else {
-		child = forward ? container.firstChild : container.lastChild;
+		child = forward ? container.firstElementChild : container.lastElementChild;
 	}
 
 	let focusableDescendant;
