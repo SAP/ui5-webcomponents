@@ -1,7 +1,5 @@
-commit 32d4507ebfc6a57442bc0d4f1ff5987e02084915
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Tue Dec 21 16:17:05 2021 +0200
+commit 83fdef5f7690f36842f41d473a92cfd1a0446997
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Wed Dec 22 13:59:05 2021 +0200
 
-    fix(ui5-bar): remove unnecessary slot names (#4510)
-    
-    * unnecessary slot names have been removed
+    feat(ui5-radio-button): implement accessibleNameRef property (#4511)
