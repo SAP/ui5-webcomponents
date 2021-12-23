@@ -314,10 +314,6 @@ class Wizard extends UI5Element {
 		return 25;
 	}
 
-	static get CONTENT_TOP_OFFSET() {
-		return 32;
-	}
-
 	static get staticAreaTemplate() {
 		return WizardPopoverTemplate;
 	}
@@ -418,7 +414,7 @@ class Wizard extends UI5Element {
 	storeStepScrollOffsets() {
 		this.stepScrollOffsets = this.slottedSteps.map(step => {
 			const contentItem = this.getStepWrapperByRefId(step._id);
-			return contentItem.offsetTop + contentItem.offsetHeight - Wizard.CONTENT_TOP_OFFSET;
+			return contentItem.offsetTop + contentItem.offsetHeight;
 		});
 	}
 
@@ -988,8 +984,11 @@ class Wizard extends UI5Element {
 	 */
 	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
 		if (selectedStep && stepToSelect) {
-			selectedStep.selected = false;
-			stepToSelect.selected = true;
+			// keep the selection if next step is disabled
+			if (!stepToSelect.disabled) {
+				selectedStep.selected = false;
+				stepToSelect.selected = true;
+			}
 
 			this.fireEvent("step-change", {
 				step: stepToSelect,
