@@ -5,9 +5,7 @@
 	{{#if tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/if}}
-
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		{{!-- TODO render this overflow conditionally with isModeStartAndEnd --}}
 		<div
 			class="ui5-tc__overflow ui5-tc__overflow--start"
 			@click="{{_onOverflowClick}}"
@@ -37,14 +35,6 @@
 		>
 			{{#each items}}
 				{{this.stripPresentation}}
-				{{#if this.isSeparator}}
-					<div
-						id="{{this._id}}"
-						data-ui5-stable="{{this.stableDomRef}}"
-						role="separator"
-						class="{{../classes.separator}}"
-					></div>
-				{{/if}}
 			{{/each}}
 		</div>
 
