@@ -1,7 +1,8 @@
-commit 7d35bd63502b714b66ffa4c0bdff537789ecbef5
+commit fddf903c27fbedc54968db90ad0864a20d1ca4b0
 Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Thu Dec 23 13:16:20 2021 +0200
+Date:   Thu Dec 23 17:16:57 2021 +0200
 
-    fix(ui5-side-navigation): correct styles for static area (#4526)
+    fix(ui5-popover): make sample responsive for small devices (#4527)
     
-    Fixes: #4515
+    The sample popover had 300px width.
+    Part of #4206
