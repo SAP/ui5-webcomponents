@@ -1,7 +1,7 @@
-commit 5ab6f35dda5e1ad6a02db302ddca6a49fc40fa96
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Dec 23 02:11:26 2021 -0800
+commit 7d35bd63502b714b66ffa4c0bdff537789ecbef5
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Thu Dec 23 13:16:20 2021 +0200
 
-    chore: translation delivery (#4524)
+    fix(ui5-side-navigation): correct styles for static area (#4526)
     
-    Change-Id: I992eb9452a5db42f3dc1b08b80bf7a9ded755900
+    Fixes: #4515
