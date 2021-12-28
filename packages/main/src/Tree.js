@@ -78,6 +78,21 @@ const metadata = {
 		},
 
 		/**
+		 * If set to true clickin on an item does not select it.
+     * Clicking a radio button or checkbox still toggles the selection.
+		 * <br><br>
+		 * <b>Note:</b> The modde must be set to  <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code>,
+     * or <code>MultiSelect</code> for radio buttons / checkboxes to be visible.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		noClickSelect: {
+			type: Boolean,
+		},
+
+		/**
 		 * An array, containing a flat structure of list items to render
 		 *
 		 * @private

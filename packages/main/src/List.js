@@ -108,6 +108,21 @@ const metadata = {
 		},
 
 		/**
+		 * If set to true, clicking on an item does not select it.
+     * Clicking a radio button or checkbox still toggles the selection.
+		 * <br><br>
+		 * <b>Note:</b> The modde must be set to  <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code>,
+     * or <code>MultiSelect</code> for radio buttons / checkboxes to be visible.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		noClickSelect: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the mode of the component.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
@@ -887,7 +902,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
+		if (!this._selectionRequested && this.mode !== ListMode.Delete && !this.noClickSelect) {
 			this._selectionRequested = true;
 			this.onSelectionRequested({
 				detail: {
