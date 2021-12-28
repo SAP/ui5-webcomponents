@@ -383,6 +383,14 @@ describe("List Tests", () => {
 		assert.strictEqual(await firstItem.getProperty("id"), await input.getProperty("value"));
 	});
 
+  it("should not select an item when clicked, if noClickSelect is true", async () => {
+		const item = await browser.$('#listNoClickSelect ui5-li:nth-child(1)');
+
+		await item.click();
+
+		assert.notOk(await item.getAttribute("selected"), "item is not selected");
+  });
+
 	it("Popover with List opens without errors", async () => {
 		const btnPopupOpener = await browser.$("#btnOpenPopup");
 		const btnInListHeader = await browser.$("#btnInHeader");

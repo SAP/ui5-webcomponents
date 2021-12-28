@@ -100,6 +100,16 @@
 		</ui5-tree>
 	</ui5-busy-indicator>
 
+  <ui5-tree id="treeNoClickSelect" mode="MultiSelect" class="full-width" no-click-select>
+    <div slot="header" class="hdr">
+      <ui5-title>API: noClickSelect</ui5-title>
+    </div>
+    <ui5-tree-item text="Tree 1" expanded>
+      <ui5-tree-item text="Tree 1.1"></ui5-tree-item>
+      <ui5-tree-item text="Tree 1.2"></ui5-tree-item>
+    </ui5-tree-item>
+  </ui5-tree>
+
 	<script>
 		const mouseOverInput = document.getElementById("mouseover-counter");
 		const mouseOutInput = document.getElementById("mouseout-counter");
