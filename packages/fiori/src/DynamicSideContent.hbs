@@ -1,0 +1,20 @@
+<div
+	class="ui5-dsc-root"
+	style="{{styles.root}}"
+>
+	<div
+		class="{{classes.main}}"
+		style="{{styles.main}}"
+	>
+		<slot></slot>
+	</div>
+	<aside
+		role="complementary"
+		aria-label="{{accInfo.label}}"
+		class="{{classes.side}}"
+		style="{{styles.side}}"
+	>
+		<slot name="sideContent"></slot>
+	</aside>
+
+</div>

@@ -4,6 +4,7 @@ import insertFontFace from "./FontFace.js";
 import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
 import applyTheme from "./theming/applyTheme.js";
+import { registerCurrentRuntime } from "./Runtimes.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 let booted = false;
@@ -22,6 +23,8 @@ const boot = async () => {
 	if (booted) {
 		return;
 	}
+
+	registerCurrentRuntime();
 
 	const OpenUI5Support = getFeature("OpenUI5Support");
 	if (OpenUI5Support) {

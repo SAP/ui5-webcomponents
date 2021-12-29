@@ -253,6 +253,7 @@
 :host([value-state="Error"]) [inner-input],
 :host([value-state="Warning"]) [inner-input] {
 	font-style: var(--_ui5_input_error_warning_font_style);
+	text-indent: var(--_ui5_input_error_warning_text_indent);
 }
 
 :host([value-state="Error"]) [inner-input] {
@@ -266,6 +267,7 @@
 :host([value-state="Information"]) [inner-input] {
 	font-style: var(--_ui5_input_information_font_style);
 	font-weight: var(--_ui5_input_information_font_weight);
+	text-indent: var(--_ui5_input_information_text_indent);
 }
 
 :host([value-state="Error"]:not([readonly])) {

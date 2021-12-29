@@ -912,7 +912,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	inputFocusIn() {
-		if (!isPhone()) {
+		if (!isPhone() || this.readonly) {
 			this.focused = true;
 		} else {
 			this._innerInput.blur();

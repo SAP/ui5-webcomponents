@@ -69,7 +69,7 @@
 	--_ui5_tc_headerItemIcon_neutral_selected_background: var(--sapNeutralColor);
 	--_ui5_tc_headerItemIcon_semantic_selected_color: var(--sapGroup_ContentBackground);
 
-	--_ui5_tc_overflowItem_default_color: var(--sapHighlightColor);
+	--_ui5_tc_overflowItem_default_color: var(--sapNeutralTextColor);
 	--_ui5_tc_overflowItem_current_color: CurrentColor;
 	--_ui5_tc_content_border_bottom: 0.125rem solid var(--sapObjectHeader_BorderColor);
 

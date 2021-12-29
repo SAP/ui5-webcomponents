@@ -1,5 +1,5 @@
-<li id="{{this._id}}"
-	class="{{this.headerClasses}}"
+<div id="{{this._id}}"
+	class="{{this.stripClasses}}"
 	tabindex="{{this._tabIndex}}"
 	role="tab"
 	aria-posinset="{{this._posinset}}"
@@ -11,7 +11,6 @@
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	data-ui5-stable="{{this.stableDomRef}}"
 >
-
 	{{#if this.icon}}
 		<div class="ui5-tab-strip-item-icon-outer">
 			<ui5-icon name="{{this.icon}}" class="ui5-tab-strip-item-icon"></ui5-icon>
@@ -19,7 +18,6 @@
 	{{/if}}
 
 	<div class="ui5-tab-strip-itemContent">
-
 		{{#unless this._isInline}}
 			{{> additionalText}}
 		{{/unless}}
@@ -30,12 +28,9 @@
 				{{this.displayText}}
 			</span>
 		{{/if}}
-
 	</div>
+</div>
 
-</li>
-
-<!-- Additional text -->
 {{#*inline additionalText}}
 	{{#if this.additionalText}}
 		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>

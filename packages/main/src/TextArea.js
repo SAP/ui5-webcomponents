@@ -24,6 +24,7 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 /**
  * @public
@@ -360,7 +361,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get styles() {
-		return styles;
+		return [browserScrollbarCSS, styles];
 	}
 
 	static get render() {
