@@ -449,13 +449,14 @@ class Button extends UI5Element {
 	}
 
 	get tabIndexValue() {
-		const tabindex = this.getAttribute("tabindex");
+		// const tabindex = this.getAttribute("tabindex");
 
-		if (tabindex) {
-			return tabindex;
-		}
+		// if (tabindex) {
+		// 	return tabindex;
+		// }
 
-		return this.nonInteractive ? "-1" : this._tabIndex;
+		// return this.nonInteractive ? "-1" : this._tabIndex;
+		return ""
 	}
 
 	get showIconTooltip() {

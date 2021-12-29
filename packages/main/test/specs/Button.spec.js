@@ -34,6 +34,7 @@ describe("Button general interaction", () => {
 		const oButtonIconOnlyBlankText = await browser.$("#icon-only-blank-text");
 
 		assert.strictEqual(await oButtonIconOnlyComment.getAttribute("icon-only"), "", "Button comment has attribute icon-only");
+		assert.strictEqual(await oButtonIconOnlyComment.shadow$("ui5-icon").getAttribute("aria-hidden"), "true", "aria-hidden is set");
 		assert.strictEqual(await oButtonIconOnlyBlankText.getAttribute("icon-only"), "", "Button blank text has attribute icon-only");
 	});
 
