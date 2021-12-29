@@ -435,6 +435,7 @@ class ViewSettingsDialog extends UI5Element {
 		}
 		return this._dialogTitle;
 	}
+
 	/**
 	 * Shows the dialog.
 	 * @public
