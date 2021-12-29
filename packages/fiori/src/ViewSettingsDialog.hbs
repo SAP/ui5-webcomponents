@@ -17,17 +17,13 @@
 						class="ui5-vsd-back-button"
 						@click="{{_navigateToFilters}}"
 					></ui5-button>
-					<ui5-label slot="startContent" class="ui5-vsd-title">{{_filterByTitle}}</ui5-label>
-				{{else}}
-					<ui5-label slot="startContent" class="ui5-vsd-title">{{_dialogTitle}}</ui5-label>
 				{{/if}}
-
+				<ui5-label slot="startContent" class="ui5-vsd-title">{{_title}}</ui5-label>
 				<ui5-button
 					slot="endContent"
 					design="Transparent"
 					@click="{{_resetSettings}}"
-					?disabled={{_disableResetButton}}
-					reset-button>
+					?disabled={{_disableResetButton}}>
 						{{_resetButtonLabel}}
 				</ui5-button>
 			</ui5-bar>

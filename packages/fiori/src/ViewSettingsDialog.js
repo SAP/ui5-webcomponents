@@ -429,6 +429,12 @@ class ViewSettingsDialog extends UI5Element {
 		return this.shadowRoot.querySelector("[ui5-dialog]");
 	}
 
+	get _title() {
+		if (this.showBackButton) {
+			return this._filterByTitle;
+		}
+		return this._dialogTitle;
+	}
 	/**
 	 * Shows the dialog.
 	 * @public
