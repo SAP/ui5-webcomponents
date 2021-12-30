@@ -34,25 +34,25 @@ describe("List Tests", () => {
 		assert.notOk(await busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
 	});
 
-	it("itemPress and selectionChange events are fired in Single selection", async () => {
-		const itemPressResultField = await browser.$("#itemPressResultField");
+	it("itemClick and selectionChange events are fired in Single selection", async () => {
+		const itemClickResultField = await browser.$("#itemClickResultField");
 		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
 		const firstItem = await browser.$("#listEvents #country1");
 
 		await firstItem.click();
 
-		assert.strictEqual(await itemPressResultField.getProperty("value"), "1", "itemPress event has been fired once");
+		assert.strictEqual(await itemClickResultField.getProperty("value"), "1", "itemClick event has been fired once");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
-	it("itemPress and selectionChange events are fired in Multi selection", async () => {
-		const itemPressResultField2 = await browser.$("#itemPressResultField2");
+	it("itemClick and selectionChange events are fired in Multi selection", async () => {
+		const itemClickResultField2 = await browser.$("#itemClickResultField2");
 		const selectionChangeResultField2 = await browser.$("#selectionChangeResultField2");
 		const firstItem = await browser.$("#listEvents2 #country11");
 
 		await firstItem.click();
 
-		assert.strictEqual(await itemPressResultField2.getProperty("value"), "1", "itemPress event has been fired once");
+		assert.strictEqual(await itemClickResultField2.getProperty("value"), "1", "itemClick event has been fired once");
 		assert.strictEqual(await selectionChangeResultField2.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 

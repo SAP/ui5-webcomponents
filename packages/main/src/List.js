@@ -884,7 +884,6 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
-		this.fireEvent("item-press", { item: pressedItem });
 		if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
 			return;
 		}

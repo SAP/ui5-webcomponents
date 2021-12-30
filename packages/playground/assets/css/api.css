@@ -111,8 +111,8 @@ body {
 }
 
 .popover-content {
-	width: 300px;
-	height: 150px;
+	margin: 0.5rem;
+	height: 100px;
 	display: flex;
 	flex-direction:column;
 	justify-content: center;
