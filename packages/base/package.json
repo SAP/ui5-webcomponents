@@ -32,6 +32,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
+    "focus-visible": "^5.2.0",
     "lit-html": "2.0.1"
   },
   "devDependencies": {

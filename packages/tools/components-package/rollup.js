@@ -17,10 +17,16 @@ const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
-const warningsToSkip = [{
-	warningCode: "THIS_IS_UNDEFINED",
-	filePath: /.+zxing.+/,
-}];
+const warningsToSkip = [
+	{
+		warningCode: "THIS_IS_UNDEFINED",
+		filePath: /.+zxing.+/,
+	},
+	{
+		warningCode: "THIS_IS_UNDEFINED",
+		filePath: /focus-visible.js/,
+	},
+];
 
 function ui5DevImportCheckerPlugin() {
 	return {
