@@ -1,9 +1,7 @@
-commit 3f7eae3430781f89ec8c61a1f02fa5de3a076783
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Dec 29 15:47:20 2021 +0200
+commit 02e3f3a391d616e30c2535af68c43061d32bf88b
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Dec 30 02:26:15 2021 -0800
 
-    feat(ui5-button): accessibleNameRef property implemented (#4474)
+    chore: translation delivery (#4535)
     
-    * feat(ui5-switch): accessibleNameRef property implemented
-    
-    - Receives id(or many ids) of the elements that label the component.
+    Change-Id: I3ba7cc17e5cac1ff0d8537bd6e8345332da23734
