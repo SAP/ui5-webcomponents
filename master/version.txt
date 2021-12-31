@@ -1,7 +1,5 @@
-commit 02e3f3a391d616e30c2535af68c43061d32bf88b
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Dec 30 02:26:15 2021 -0800
+commit 14a2a03aac888005cce6de15235c4d8a171380aa
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Dec 31 10:55:59 2021 +0200
 
-    chore: translation delivery (#4535)
-    
-    Change-Id: I3ba7cc17e5cac1ff0d8537bd6e8345332da23734
+    fix(ui5-card-header): fix rtl support (#4536)
