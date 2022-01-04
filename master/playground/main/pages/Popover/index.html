@@ -110,9 +110,7 @@
 		</div>
 	</ui5-popover>
 
-
 	<br>
-
 	<br>
 
 	<ui5-select>
@@ -412,6 +410,14 @@
 		<ui5-input></ui5-input>
 	</ui5-popover>
 
+	<br>
+	<br>
+
+	<ui5-button id="btnAccNameRef">Popover with accessibleNameRef</ui5-button>
+	<ui5-label id="lblAccNameRef">Some label</ui5-label>
+	<ui5-popover id="popAccNameRef" accessible-name-ref="lblAccNameRef" header-text="Header text">
+		<span>Hello world</span>
+	</ui5-popover>
 
 	<script>
 		btn.addEventListener("click", function (event) {
@@ -540,6 +546,10 @@
 
 		btnRightEdge.addEventListener("click", function () {
 			popoverRightEdge.showAt(btnRightEdge);
+		});
+
+		btnAccNameRef.addEventListener("click", function () {
+			popAccNameRef.showAt(btnAccNameRef);
 		});
 
 	</script>

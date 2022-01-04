@@ -1,5 +1,5 @@
-commit 14a2a03aac888005cce6de15235c4d8a171380aa
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Dec 31 10:55:59 2021 +0200
+commit 0a7c1f3dd0b026133780cf5961240baba5b4c9c9
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Tue Jan 4 15:39:30 2022 +0200
 
-    fix(ui5-card-header): fix rtl support (#4536)
+    feat(ui5-popup): add accessibleNameRef property (#4517)
