@@ -1,4 +1,4 @@
-import { registerFeature } from "../FeaturesRegistry.js";
+import { registerFeature, deregisterFeature, getFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
 
@@ -16,6 +16,10 @@ const init = () => {
 	const core = getCore();
 	if (!core) {
 		return Promise.resolve();
+	}
+
+	if (getFeature("F6Navigation")) {
+		deregisterFeature("F6Navigation");
 	}
 
 	return new Promise(resolve => {
