@@ -13,6 +13,7 @@ import BarCss from "./generated/themes/Bar.css.js";
 const metadata = {
 	tag: "ui5-bar",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
 		 * Defines the <code>ui5-bar</code> design.

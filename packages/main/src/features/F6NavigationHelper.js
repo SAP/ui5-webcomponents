@@ -28,7 +28,7 @@ class F6NavigationHelper {
 					nextElement = this.groups[0];
 				}
 
-				const elementToFocus = await getFirstFocusableElement(nextElement.isUI5Element ? nextElement.getDomRef() : nextElement);
+				const elementToFocus = await getFirstFocusableElement(nextElement.isUI5Element ? nextElement.getDomRef() : nextElement, true);
 				elementToFocus.focus();
 			}
 
@@ -51,8 +51,8 @@ class F6NavigationHelper {
 						// </ui5-flexible-column-layout>
 						// Here for both FCL & List the firstFoccusableElement is the same (the ui5-li)
 
-						const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1]);
-						const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex]);
+						const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1], true);
+						const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex], true);
 
 						nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
 					}
@@ -60,7 +60,7 @@ class F6NavigationHelper {
 					nextElement = this.groups[this.groups.length - 1];
 				}
 
-				const elementToFocus = await getFirstFocusableElement(nextElement.isUI5Element ? nextElement.getDomRef() : nextElement);
+				const elementToFocus = await getFirstFocusableElement(nextElement.isUI5Element ? nextElement.getDomRef() : nextElement, true);
 				elementToFocus.focus();
 			}
 		});
@@ -73,7 +73,7 @@ class F6NavigationHelper {
 	}
 
 	setGroups() {
-		this.groups = Array.from(document.querySelectorAll("[data-sap-ui-fastnavgroup='true']")).filter(group => group.clientWidth);
+		this.groups = Array.from(document.querySelectorAll("[data-sap-ui-fastnavgroup='true']")).filter(group => group.clientWidth && window.getComputedStyle(group).visibility !== "hidden");
 	}
 
 	setCurrentGroup(element = null) {
