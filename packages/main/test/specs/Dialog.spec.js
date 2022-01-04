@@ -305,6 +305,13 @@ describe("Acc", () => {
 		assert.strictEqual(await dialog.getAttribute("accessible-name"), accName, "dialog has correct attribute set");
 		assert.strictEqual(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
 	});
+
+	it("tests accessible-name-ref", async () => {
+		const dialog = await browser.$("#dialog-acc-name-ref");
+		const expectedText = await browser.$("#label-acc-name-ref").getText();
+
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), expectedText, "aria-label should be the text of the label.");
+	});
 });
 
 describe("Page scrolling", () => {
