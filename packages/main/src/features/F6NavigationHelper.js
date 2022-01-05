@@ -3,7 +3,8 @@ import { isF6Next, isF6Previous } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 class F6NavigationHelper {
-	constructor() {
+	init() {
+		this.keydownHandler = this._keydownHandler.bind(this);
 		this.attachEventListeners();
 		this.selectedGroup = null;
 		this.groups = [];
@@ -13,7 +14,7 @@ class F6NavigationHelper {
 		document.addEventListener("keydown", this.keydownHandler);
 	}
 
-	async keydownHandler(event) {
+	async _keydownHandler(event) {
 		if (isF6Next(event)) {
 			this.updateGroups();
 			if (this.groups.length < 1) {
@@ -100,5 +101,6 @@ class F6NavigationHelper {
 }
 
 const F6HelperInstance = new F6NavigationHelper();
-
 registerFeature("F6Navigation", F6HelperInstance);
+
+export default F6NavigationHelper;

@@ -2,7 +2,7 @@ import { registerThemePropertiesLoader } from "./dist/AssetRegistry.js";
 import EventProvider from "./dist/EventProvider.js";
 
 // ESM bundle targets browsers with native support
-import "./dist/features/OpenUI5Support.js";
+// import "./dist/features/OpenUI5Support.js";
 
 // Test components
 import "./dist/test-resources/elements/Generic.js";
