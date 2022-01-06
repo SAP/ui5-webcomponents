@@ -245,4 +245,5 @@ export {
 	isPageDownAlt,
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
+	checkModifierKeys,
 };

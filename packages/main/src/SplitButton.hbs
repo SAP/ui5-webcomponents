@@ -1,0 +1,40 @@
+<div
+	class="ui5-split-button-root"
+	role="group"
+	tabindex={{tabIndexValue}}
+	@focusout={{_onFocusOut}}
+	@focusin={{_onFocusIn}}
+	@keydown={{_onKeyDown}}
+	@keyup={{_onKeyUp}}
+>
+	<ui5-button
+		class="ui5-split-text-button"
+		design="{{design}}"
+		dir={{effectiveDir}}
+		tabindex="-1"
+		?disabled="{{disabled}}"
+		@click="{{_fireClick}}"
+		@touchstart={{_onMouseTouchDownText}}
+		@mousedown={{_onMouseTouchDownText}}
+		@mouseup={{_onMouseUpText}}
+		@focusout={{_onFocusOut}}
+	>
+		{{text}}
+	</ui5-button>
+	<div
+		class="ui5-split-arrow-button-wrapper"
+		dir={{effectiveDir}}
+	>
+		<ui5-button
+			class="ui5-split-arrow-button"
+			design="{{design}}"
+			icon="slim-arrow-down"
+			tabindex="-1"
+			?disabled="{{disabled}}"
+			@click="{{_fireArrowClick}}"
+			@mousedown={{_onMouseDownArrow}}
+			@focusout={{_onFocusOut}}
+		>
+		</ui5-button>
+	</div>
+</div>

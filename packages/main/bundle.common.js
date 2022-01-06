@@ -143,3 +143,6 @@ const testAssets = {
 window["sap-ui-webcomponents-bundle"] = testAssets;
 
 export default testAssets;
+
+// TODO: Move this line in order to keep the file sorted alphabetically
+import SplitButton from "./dist/SplitButton.js";
