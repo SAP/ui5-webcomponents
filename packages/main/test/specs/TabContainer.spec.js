@@ -45,6 +45,29 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "XL", "media-range=XL");
 	});
 
+	it("tests if content is scrollable when tabcontainer takes limited height by its parent", async () => {
+		const { tcHeight, tcScrollHeight } = await browser.executeAsync(done => {
+			const scrollableContent = document.getElementById("tc-scrollable-child");
+
+			done({
+				tcHeight: scrollableContent.offsetHeight,
+				tcScrollHeight: scrollableContent.scrollHeight,
+			});
+		});
+
+		const { tabHeight, tabScrollHeight } = await browser.executeAsync(done => {
+			const scrollableContent = document.getElementById("scrollable-tab").shadowRoot.querySelector("div");
+
+			done({
+				tabHeight: scrollableContent.offsetHeight,
+				tabScrollHeight: scrollableContent.scrollHeight,
+			});
+		});
+
+		assert.isBelow(tabHeight, tabScrollHeight, "Tab Content is scrollable");
+		assert.isAtLeast(tcHeight, tcScrollHeight, "TabContainer is not scrollable");
+	});
+
 	it("tests aria attrs", async () => {
 		const tabContainer = await browser.$("#tabContainer1");
 		const tab4 = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
