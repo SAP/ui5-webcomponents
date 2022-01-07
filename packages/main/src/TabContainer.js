@@ -469,7 +469,7 @@ class TabContainer extends UI5Element {
 				if (item._selected) {
 					item._selected = false;
 				}
-			}, this);
+			});
 
 		if (this.fixed) {
 			this.selectTab(selectedTab, selectedTabIndex);
@@ -587,6 +587,9 @@ class TabContainer extends UI5Element {
 	}
 
 	_handleResize() {
+		if (this.responsivePopover && this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		}
 		this._updateMediaRange();
 		this._setItemsForStrip();
 	}
