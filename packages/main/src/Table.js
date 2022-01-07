@@ -13,6 +13,10 @@ import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
 import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
+import {
+	isTabNext,
+	isF7,
+} from "../../base/src/Keys.js";
 
 // Texts
 import {
@@ -365,6 +369,15 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-table</code> provides advanced keyboard handling.
+ * <br>
+ *
+ * <ul>
+ * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
+ * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Table.js";</code>
@@ -487,6 +500,17 @@ class Table extends UI5Element {
 		}
 	}
 
+	_onkeydown(event) {
+		const isCtrlA = event.keyCode === 65 && event.ctrlKey;
+
+		if (isF7(event)) {}
+
+		if (isCtrlA && this.mode === "MultiSelect") {
+			event.preventDefault();
+			this._selectAll(event);
+		}
+	}
+
 	onRowFocused(event) {
 		this._itemNavigation.setCurrentItem(event.target);
 	}
@@ -578,7 +602,7 @@ class Table extends UI5Element {
 	}
 
 	_selectAll(event) {
-		const bAllSelected = event.target.checked;
+		const bAllSelected = !this._allRowsSelected;
 		const previouslySelectedRows = this.rows.filter(row => row.selected);
 
 		this._allRowsSelected = bAllSelected;
