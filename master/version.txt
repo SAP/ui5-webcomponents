@@ -1,5 +1,5 @@
-commit 54698f64fc69cd517692154a913527a5f8d7b492
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jan 5 13:50:08 2022 +0200
+commit a2cb0b43b01e0730723e2363da57241657766a3e
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 7 10:20:03 2022 +0200
 
-    fix(ui5-icon): correct tabindex value (#4509)
+    docs: fix broken links to Playground (#4549)
