@@ -1,0 +1,16 @@
+@import "../base/ListItemBase-parameters.css";
+
+:root {
+	--_ui5-listitem-border-radius: .25rem;
+	--_ui5_list_item_title_size: .875rem; 
+	--ui5-listitem-selected-border-bottom: none;
+	--ui5-listitem-border: none;
+	--ui5-listitem-border-bottom: 1px solid transparent;
+	--_ui5_list_item_base_height: 2rem;
+	--ui5-listitem-border-radius: .25rem;
+	--ui5-listitem-hover-background: linear-gradient(90deg, var(--sapGreyColor2) 2px, var(--sapGreyColor1) 2px, var(--sapGreyColor1) 100%);
+    --ui5-listitem-active-background: linear-gradient(90deg, var(--sapGreyColor3) 2px, var(--sapGreyColor1) 2px, var(--sapGreyColor1) 100%);
+    --ui5-listitem-selected-background: linear-gradient(90deg, var(--sapBlueColor4) 2px, var(--sapBlueColor1) 2px, var(--sapBlueColor1) 100%);
+	--ui5-listitem-selected-hover-background: linear-gradient(90deg, var(--sapBlueColor5) 2px, var(--sapBlueColor1) 2px, var(--sapBlueColor1) 100%);
+    --ui5-listitem-selected-active-background: linear-gradient(90deg, var(--sapBlueColor6) 2px, var(--sapBlueColor1) 2px, var(--sapBlueColor1) 100%);
+}

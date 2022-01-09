@@ -2,7 +2,7 @@
     display: none;
     position: fixed;
     background: var(--sapGroup_ContentBackground);
-    box-shadow: var(--sapContent_Shadow2);
+    box-shadow: var(--_ui5-popup-box-shadow);
     border-radius: var(--_ui5-popup-border-radius);
     min-height: 2rem;
     box-sizing: border-box;

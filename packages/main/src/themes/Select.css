@@ -1,6 +1,11 @@
 @import "./InputIcon.css";
 @import "./Input.css";
 
+
+:host {
+	overflow: hidden;
+}
+
 .ui5-select-root {
 	width: 100%;
 	height: 100%;
@@ -15,16 +20,18 @@
 	flex-grow: 1;
 	align-self: center;
 	min-width: 1rem;
-	padding-left: 0.5rem;
+	padding-left: var(--_ui5_select_padding_left);
 	cursor: pointer;
 	outline: none;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	color: var(--_ui5_select_label_olor);
+	color: var(--_ui5_select_label_color);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
+	box-shadow: var(--_ui5_select_label_box_shadow); 
+	transition: var(--_ui5-input-transition);
 }
 
 .ui5-select-option-icon {
@@ -43,8 +50,20 @@
 	padding-left: 0;
 }
 
+:host([disabled]) [input-icon] {
+	color: var(--_ui5_select_disabled_input_icon_color);
+}
+
+:host([disabled]) .ui5-select-label-root {
+	color: var(--_ui5_select_disabled_label_color);
+}
+
 :host(:not([disabled])) {
 	cursor: pointer;
+}
+
+:host(:not([disabled]):not([focused]):not([value-state])) .ui5-select-label-root:not(:empty) {
+	box-shadow: var(--_ui5_select_label_with_value_box_shadow);
 }
 
 :host([focused][opened]),
