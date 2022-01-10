@@ -1,3 +1,4 @@
+@import "../base/vars.css";
 @import "../base/sizes-parameters.css";
 @import "../base/Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
@@ -16,7 +17,9 @@
 @import "./InputIcon-parameters.css";
 @import "./Link-parameters.css";
 @import "./List-parameters.css";
-@import "../base/ListItemBase-parameters.css";
+@import "./ListItemBase-parameters.css";
+@import "./PopupsCommon-parameters.css";
+@import "./SelectPopover-parameters.css";
 @import "./MonthPicker-parameters.css";
 @import "../base/MessageStrip-parameters.css";
 @import "./Panel-parameters.css";

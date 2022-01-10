@@ -7,5 +7,10 @@
 	--_ui5_select_rtl_hover_icon_left_border: none;
 	--_ui5_select_rtl_hover_icon_right_border: none;
 	--_ui5_select_focus_width: 1px;
-	--_ui5_select_label_olor: var(--sapField_TextColor);
+	--_ui5_select_label_color: var(--sapField_TextColor);
+	--_ui5_select_padding_left: 0.5rem;
+	--_ui5_select_label_box_shadow: none;
+	--_ui5_select_label_with_value_box_shadow: none;
+	--_ui5_select_disabled_label_color: var(--_ui5_select_label_color);
+	--_ui5_select_disabled_input_icon_color: var(--_ui5_input_icon_color);
 }

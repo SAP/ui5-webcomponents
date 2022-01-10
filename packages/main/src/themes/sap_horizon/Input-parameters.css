@@ -32,4 +32,9 @@
 	--_ui5_input_readonly_icon_display: inline-block;
 	--_ui5_input_icon_min_width: 2.125rem;
 	--_ui5_input_compact_min_width: 1.875rem;
+	--_ui5-input-background-size: 100% var(--sapField_BorderWidth);
+	--_ui5-input-background-repeat: repeat-x;
+	--_ui5-input-background-position: 50% 100%;
+	--_ui5-input-filled-background-image: var(--_ui5-input-background-image);
+	--_ui5-input-disabled-background-image: var(--_ui5-input-background-image);
 }

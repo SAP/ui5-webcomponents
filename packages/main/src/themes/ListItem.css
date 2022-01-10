@@ -7,18 +7,22 @@
 
 /* selected and hovered */
 :host([selected][actionable]:not([active]):hover) {
-	background : var(--sapList_Hover_SelectionBackground);
+	background : var(--ui5-listitem-selected-hover-background);
+}
+
+/* active */
+:host([active][actionable]) {
+	background: var(--ui5-listitem-active-background);
 }
 
 /* selected and active */
-:host([active][actionable]),
 :host([selected][active][actionable]) {
-	background: var(--sapList_Active_Background);
+	background: var(--ui5-listitem-selected-active-background);
 }
 
 /* hovered */
 :host([actionable]:not([active]):not([selected]):hover) {
-	background : var(--sapList_Hover_Background);
+	background: var(--ui5-listitem-hover-background);
 }
 
 /* focused */
