@@ -6,7 +6,15 @@ import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnable
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
-	isSpace, isLeftCtrl, isRightCtrl, isLeftShift, isRightShift, isEnd, isHome,
+	isSpace,
+	isLeftCtrl,
+	isRightCtrl,
+	isLeftShift,
+	isRightShift,
+	isLeftShiftCtrl,
+	isRightShiftCtrl,
+	isEnd,
+	isHome,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -242,33 +250,41 @@ class Tokenizer extends UI5Element {
 			return this._handleTokenSelection(event);
 		}
 
+		this._handleItemNavigation(event, this.tokens);
+	}
+
+	_handleItemNavigation(event, tokens) {
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
 		if (isLeftCtrl(event) || isRightCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowCtrl(event.target, this.tokens, isRightCtrl(event));
+			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
 		}
 
-		const isCtrl = !!(event.metaKey || event.ctrlKey);
-		if (isLeftShift(event) || isRightShift(event)
-			|| (isLeftShift(event) && isCtrl) || (isRightShift(event) && isCtrl)) {
+		if (isLeftCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowShift(event.target, this.tokens, isRightShift(event) || ((isRightShift(event) && isCtrl)));
+			return this._handleArrowCtrl(event.target, tokens, false);
+		}
+
+		if (isLeftShift(event) || isRightShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
 		}
 
 		if (isHome(event) || isEnd(event)) {
-			return this._handleHome(this.tokens, isEnd(event));
+			return this._handleHome(tokens, isEnd(event));
 		}
 
 		if (isCtrl && event.key.toLowerCase() === "a") {
 			event.preventDefault();
 
-			this._toggleTokenSelection(this.tokens);
+			return this._toggleTokenSelection(tokens);
 		}
 
 		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
 			event.preventDefault();
 
 			const isCut = event.key.toLowerCase() === "x";
-			const selectedTokens = this.tokens.filter(token => token.selected);
+			const selectedTokens = tokens.filter(token => token.selected);
 
 			if (isCut) {
 				selectedTokens.forEach(token => {
@@ -358,7 +374,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_fillClipboard(sShortcutName, tokens) {
+	_fillClipboard(shortcutName, tokens) {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
 		/* fill clipboard with tokens' texts so parent can handle creation */
@@ -372,9 +388,9 @@ class Tokenizer extends UI5Element {
 			oEvent.preventDefault();
 		};
 
-		document.addEventListener(sShortcutName, cutToClipboard);
-		document.execCommand(sShortcutName);
-		document.removeEventListener(sShortcutName, cutToClipboard);
+		document.addEventListener(shortcutName, cutToClipboard);
+		document.execCommand(shortcutName);
+		document.removeEventListener(shortcutName, cutToClipboard);
 	}
 
 	/**

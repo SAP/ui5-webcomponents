@@ -3,13 +3,8 @@ import {
 	isShow,
 	isBackSpace,
 	isLeft,
-	isLeftCtrl,
 	isRight,
 	isRightCtrl,
-	isLeftShift,
-	isRightShift,
-	isEnd,
-	isHome,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
@@ -203,7 +198,6 @@ class MultiInput extends Input {
 
 	_onTokenizerKeydown(event) {
 		const rightCtrl = isRightCtrl(event);
-		const isCtrl = !!(event.metaKey || event.ctrlKey);
 
 		if (isRight(event) || rightCtrl) {
 			event.preventDefault();
@@ -219,40 +213,7 @@ class MultiInput extends Input {
 			}
 		}
 
-		if (isLeftCtrl(event)) {
-			event.preventDefault();
-			return this.tokenizer._handleArrowCtrl(event.target, this.tokens, false);
-		}
-
-		if (isLeftShift(event) || isRightShift(event)
-			|| (isLeftShift(event) && isCtrl) || (isRightShift(event) && isCtrl)) {
-			event.preventDefault();
-			return this.tokenizer._handleArrowShift(event.target, this.tokens, isRightShift(event) || ((isRightShift(event) && isCtrl)));
-		}
-
-		if (isHome(event) || isEnd(event)) {
-			return this.tokenizer._handleHome(this.tokens, isEnd(event));
-		}
-
-		if (isCtrl && event.key.toLowerCase() === "a") {
-			event.preventDefault();
-
-			return this.tokenizer._toggleTokenSelection(this.tokens);
-		}
-
-		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
-			event.preventDefault();
-
-			const isCut = event.key.toLowerCase() === "x";
-			const selectedTokens = this.tokens.filter(token => token.selected);
-
-			if (isCut) {
-				this.tokenDelete(event);
-				return this.tokenizer._fillClipboard("cut", selectedTokens);
-			}
-
-			return this.tokenizer._fillClipboard("copy", selectedTokens);
-		}
+		this.tokenizer._handleItemNavigation(event, this.tokens);
 	}
 
 	_handleLeft() {
