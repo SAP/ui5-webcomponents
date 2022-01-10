@@ -38,6 +38,7 @@ import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
 import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 const tabStyles = [];
 const staticAreaTabStyles = [];
@@ -569,7 +570,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items[0].id;
+			this.responsivePopover.initialFocus = getFirstFocusableElement(this.responsivePopover.content[0]).id;
 			this.responsivePopover.showAt(button);
 		}
 	}
