@@ -10,6 +10,7 @@ import SideNavigationItemPopoverContentTemplate from "./generated/templates/Side
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
+import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
 
 /**
  * @public
@@ -142,7 +143,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [SideNavigationCss];
+		return [SideNavigationPopoverCss];
 	}
 
 	static get render() {

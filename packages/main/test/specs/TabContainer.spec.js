@@ -85,18 +85,18 @@ describe("TabContainer general interaction", () => {
 
 		// Resize
 		await browser.setWindowSize(1000, 1080);
-		let tabcontainer = await browser.$("#tabContainerStartAndEndOverflow");
-		let startOverflowButton = await tabcontainer.shadow$(".ui5-tc__startOverflowButton");
-		assert.strictEqual(await startOverflowButton.getProperty("innerText"), "+11", "11 tabs in start overflow");
+		const tabcontainer = await browser.$("#tabContainerStartAndEndOverflow");
+		const startOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--start");
+		assert.strictEqual(await startOverflow.getProperty("innerText"), "+11", "11 tabs in start overflow");
 
 		await browser.setWindowSize(800, 1080);
-		assert.strictEqual(await startOverflowButton.getProperty("innerText"), "+14", "14 tabs in start overflow");
+		assert.strictEqual(await startOverflow.getProperty("innerText"), "+14", "14 tabs in start overflow");
 
 		// Select
 		const initiallySelectedItem = await tabcontainer.$("[selected]");
 		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Twenty", "Initially selected item is Twenty");
 
-		await startOverflowButton.click();
+		await startOverflow.click();
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerStartAndEndOverflow");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -114,18 +114,18 @@ describe("TabContainer general interaction", () => {
 
 		await browser.setWindowSize(1000, 1080);
 
-		let tabcontainer = await browser.$("#tabContainerEndOverflow");
-		let overflowButton = await tabcontainer.shadow$(".ui5-tc__endOverflowButton");
+		const tabcontainer = await browser.$("#tabContainerEndOverflow");
+		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
 
 		// Select
 		const initiallySelectedItem = await tabcontainer.$("[selected]");
 		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Thirteen", "Initially selected item is 13");
 
-		await overflowButton.click();
+		await endOverflow.click();
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		await (await popover.$("ui5-list").$$("ui5-li-custom"))[11].click();
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
 
 		const newlySelectedItem = await tabcontainer.$("[selected]");
 
