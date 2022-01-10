@@ -402,6 +402,7 @@ class Select extends UI5Element {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
+				title: opt.title,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
