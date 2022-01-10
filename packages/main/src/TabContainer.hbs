@@ -5,7 +5,6 @@
 	{{#if tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/if}}
-
 	<div class="{{classes.header}}" id="{{_id}}-header">
 		<div
 			class="ui5-tc__overflow ui5-tc__overflow--start"
@@ -35,17 +34,7 @@
 			@keyup="{{_onTabStripKeyUp}}"
 		>
 			{{#each items}}
-				{{#unless this.isSeparator}}
-					{{this.stripPresentation}}
-				{{/unless}}
-				{{#if this.isSeparator}}
-					<div
-						id="{{this._id}}"
-						data-ui5-stable="{{this.stableDomRef}}"
-						role="separator"
-						class="{{../classes.separator}}"
-					></div>
-				{{/if}}
+				{{this.stripPresentation}}
 			{{/each}}
 		</div>
 
