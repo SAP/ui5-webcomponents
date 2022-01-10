@@ -122,6 +122,10 @@ const metadata = {
 		_selected: {
 			type: Boolean,
 		},
+		subTabs: {
+			type: Boolean,
+		}
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},

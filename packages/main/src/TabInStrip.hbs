@@ -29,6 +29,16 @@
 			</span>
 		{{/if}}
 	</div>
+	{{!-- {{#if this.subTabs}} --}}
+		<div class="ui5-tab-expand-button" @click="{{_onTabExpandButtonClick}}">
+			<ui5-button
+				icon="slim-arrow-down"
+				data-ui5-stable="overflow-end"
+				tabindex="-1"
+				aria-haspopup="true"
+				icon-end></ui5-button>
+		</div>
+	{{!-- {{/if}} --}}
 </div>
 
 {{#*inline additionalText}}

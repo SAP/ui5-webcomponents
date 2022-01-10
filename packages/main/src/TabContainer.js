@@ -94,6 +94,19 @@ const metadata = {
 		startOverflowButton: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the button which will open the sub tabs menu. If nothing is provided to this slot,
+		 * the default button will be used.
+		 *
+		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @public
+		 * @slot
+		 * @since 1.0.0-rc.9
+		 */
+		expandButton: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**

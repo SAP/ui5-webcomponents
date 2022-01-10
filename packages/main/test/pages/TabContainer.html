@@ -32,7 +32,9 @@
 		<h2>Text only End Overflow</h2>
 		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed fixed>
 			<ui5-tab text="One"></ui5-tab>
-			<ui5-tab text="Two"></ui5-tab>
+			<ui5-tab text="Two">
+							<ui5-tab text="Two Two"></ui5-tab>
+			</ui5-tab>
 			<ui5-tab text="Three"></ui5-tab>
 			<ui5-tab text="Four"></ui5-tab>
 			<ui5-tab text="Five"></ui5-tab>
@@ -69,7 +71,7 @@
 		</ui5-tabcontainer>
 	</section>
 
-	<section>
+	<!-- <section>
 		<h2>Text only Start And End Overflow</h2>
 		<ui5-tabcontainer id="tabContainerStartAndEndOverflow" tabs-overflow-mode="StartAndEnd" collapsed fixed>
 			<ui5-tab text="One"></ui5-tab>
@@ -475,10 +477,10 @@
 			</ui5-tabcontainer>
 
 		</div>
-	</section>
+	</section> -->
 
 
-	<script>
+	<!-- <script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
 			result.innerHTML = event.detail.tab.text;
 			resultIdx.innerHTML = event.detail.tabIndex;
@@ -488,7 +490,7 @@
 			console.log(event);
 			document.body.classList.toggle("sapUiSizeCompact")
 		})
-	</script>
+	</script> -->
 </body>
 
 </html>
