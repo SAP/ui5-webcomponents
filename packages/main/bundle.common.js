@@ -1,3 +1,4 @@
+import "./dist/features/F6NavigationHelper.js";
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 // import "./customI18n.js";
 
@@ -27,7 +28,6 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
-import "./dist/features/F6NavigationHelper.js";
 import "./dist/features/ColorPaletteMoreColors.js";
 
 import Avatar from "./dist/Avatar.js";
@@ -51,7 +51,6 @@ import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
-import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
