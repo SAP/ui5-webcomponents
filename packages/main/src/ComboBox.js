@@ -215,7 +215,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the combo box
+		 * Receives id(or many ids) of the elements that label the component
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
