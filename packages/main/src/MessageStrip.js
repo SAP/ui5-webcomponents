@@ -29,6 +29,7 @@ const metadata = {
 	tag: "ui5-message-strip",
 	altTag: "ui5-messagestrip",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**

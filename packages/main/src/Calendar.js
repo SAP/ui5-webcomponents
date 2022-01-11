@@ -29,6 +29,7 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
  */
 const metadata = {
 	tag: "ui5-calendar",
+	fastNavigation: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.

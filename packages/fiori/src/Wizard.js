@@ -56,6 +56,7 @@ const STEP_SWITCH_THRESHOLDS = {
 const metadata = {
 	tag: "ui5-wizard",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the width of the <code>ui5-wizard</code>.

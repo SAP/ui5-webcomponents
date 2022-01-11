@@ -49,6 +49,7 @@ const metadata = {
 	tag: "ui5-tabcontainer",
 	languageAware: true,
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.

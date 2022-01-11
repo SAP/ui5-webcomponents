@@ -18,6 +18,7 @@ import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.c
 const metadata = {
 	tag: "ui5-side-navigation",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
