@@ -319,4 +319,11 @@ describe("Acc", () => {
 		assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
 		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover has aria-label.");
 	});
+
+	it("tests accessible-name-ref", async () => {
+		const popover = await browser.$("#popAccNameRef");
+		const expectedText = await browser.$("#lblAccNameRef").getText();
+
+		assert.strictEqual(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), expectedText, "aria-label should be the text of the label.");
+	});
 });

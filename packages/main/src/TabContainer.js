@@ -49,6 +49,7 @@ const metadata = {
 	tag: "ui5-tabcontainer",
 	languageAware: true,
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
@@ -146,8 +147,8 @@ const metadata = {
 		/**
 		 * Defines whether the overflow select list is displayed.
 		 * <br><br>
-		 * The overflow select list represents a list, where all tab filters are displayed
-		 * so that it's easier for the user to select a specific tab filter.
+		 * The overflow select list represents a list, where all tabs are displayed
+		 * so that it's easier for the user to select a specific tab.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -461,14 +462,15 @@ class TabContainer extends UI5Element {
 		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
-		this._getTabs().forEach((item, index) => {
-			const selected = selectedIndex === index;
-			item.selected = selected;
+		this.items
+			.forEach((item, index) => {
+				const selected = selectedIndex === index;
+				item.selected = selected;
 
-			if (item._selected) {
-				item._selected = false;
-			}
-		});
+				if (item._selected) {
+					item._selected = false;
+				}
+			});
 
 		if (this.fixed) {
 			this.selectTab(selectedTab, selectedTabIndex);
@@ -568,7 +570,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items[0].id;
+			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
 			this.responsivePopover.showAt(button);
 		}
 	}
@@ -586,6 +588,9 @@ class TabContainer extends UI5Element {
 	}
 
 	_handleResize() {
+		if (this.responsivePopover && this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		}
 		this._updateMediaRange();
 		this._setItemsForStrip();
 	}
