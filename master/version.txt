@@ -1,5 +1,5 @@
-commit 0c060aaec9559434bf3440c5c513a6421e809453
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jan 7 14:08:28 2022 +0200
+commit 60d0dc1ad41544ce4afa07b71b8a23b9e821c22b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jan 11 11:53:13 2022 +0200
 
-    feat(ui5-option): title attribute handle (#4546)
+    feat: implement F6 Navigation Helper (#4490)
