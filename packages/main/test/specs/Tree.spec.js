@@ -62,12 +62,12 @@ describe("Tree proxies properties to list", () => {
 		assert.strictEqual(await list.getAttribute("no-data-text"), "no data text", "no data text applied");
 	})
 
-  it("noClickSelect works", async () => {
+	it("noClickSelect works", async () => {
 		const tree = await browser.$("#treeNoClickSelect");
 		const list = await tree.shadow$("ui5-list");
 
 		assert.strictEqual(await list.getAttribute("no-click-select"), "", "no click select applied");
-  });
+	});
 
 	it("Mouseover/mouseout events", async () => {
 		const tree = await browser.$("#tree");
