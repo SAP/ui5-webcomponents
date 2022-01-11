@@ -34,7 +34,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**
-		 * Receives id(or many ids) of the elements that label the combo box
+		 * Receives id(or many ids) of the elements that label the component
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
