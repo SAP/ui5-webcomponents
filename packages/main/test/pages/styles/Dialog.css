@@ -42,3 +42,8 @@
     display: none;
     margin-top: 1000px;
 }
+
+/* Remove the responsive paddings for the content area of the Dialog */
+.NoPaddingsDialog::part(content) {
+    padding: 0;
+}

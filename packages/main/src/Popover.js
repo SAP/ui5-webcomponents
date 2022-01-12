@@ -285,10 +285,12 @@ class Popover extends Popup {
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		ResizeHandler.register(this, this._handleResize);
 	}
 
 	onExitDOM() {
+		super.onExitDOM();
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 

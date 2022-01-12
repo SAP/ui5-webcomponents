@@ -205,3 +205,9 @@
 	position: absolute;
 	right: 1rem;
 }
+
+.ui5-tab-container-responsive-popover {
+	--_ui5_popup_content_padding_s: 0;
+	--_ui5_popup_content_padding_m_l: 0;
+	--_ui5_popup_content_padding_xl: 0;
+}

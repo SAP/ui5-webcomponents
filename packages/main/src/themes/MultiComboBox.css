@@ -4,7 +4,6 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	--_ui5_popup_content_padding: 0;
 }
 
 .ui5-multi-combobox-root {

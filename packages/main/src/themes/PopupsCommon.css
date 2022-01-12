@@ -57,7 +57,6 @@
     overflow: auto;
 
     /* Consider how to make this top level */
-    padding: var(--_ui5_popup_content_padding);
     box-sizing: border-box;
 }
 
@@ -84,4 +83,19 @@
 
 :host([disable-scrolling]) .ui5-popup-content {
     overflow: hidden;
+}
+
+
+/*** Responsive paddings ***/
+:host([media-range="S"]) .ui5-popup-content {
+	padding: var(--_ui5_popup_content_padding_s);
+}
+
+:host([media-range="M"]) .ui5-popup-content,
+:host([media-range="L"]) .ui5-popup-content {
+	padding: var(--_ui5_popup_content_padding_m_l);
+}
+
+:host([media-range="XL"]) .ui5-popup-content {
+	padding: var(--_ui5_popup_content_padding_xl);
 }

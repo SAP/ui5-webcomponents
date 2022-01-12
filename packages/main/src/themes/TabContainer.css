@@ -109,11 +109,11 @@
 	padding: 0;
 }
 
-:host([media-range="S"]) .ui5-tc__content {
+:host([media-range="M"]) .ui5-tc__content {
 	padding: 1rem;
 }
 
-:host([media-range="XL"]) .ui5-tc__header {
+:host([media-range="L"]) .ui5-tc__header {
 	padding: 0 2rem;
 }
 

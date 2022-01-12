@@ -4,10 +4,6 @@
 	min-height: 2rem;
 }
 
-:host(:not([with-padding])) {
-	--_ui5_popup_content_padding: 0;
-}
-
 :host([opened]) {
 	display: inline-block;
 }

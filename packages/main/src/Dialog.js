@@ -124,7 +124,7 @@ const metadata = {
 		onDesktop: {
 			type: Boolean,
 		},
-	},
+	}
 };
 
 /**
@@ -269,10 +269,10 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-		this._detachResizeHandlers();
 	}
 
-	onAfterRendering() {
+	onEnterDOM() {
+		super.onEnterDOM();
 		this._attachResizeHandlers();
 	}
 
