@@ -17,4 +17,5 @@
 	--_ui5_button_emphasized_outline: var(--_ui5_button_outline);
 	--_ui5_button_focus_outline_focus_color:var(--sapContent_FocusColor);
 	--_ui5_button_transparent_hover: var(--sapButton_Hover_Background);
+	--_ui5_button_font_weight: bold;
 }
