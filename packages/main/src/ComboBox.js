@@ -1106,4 +1106,6 @@ ComboBox.SKIP_ITEMS_SIZE = 10;
 
 ComboBox.define();
 
+ComboBox.SKIP_ITEMS_SIZE = 10;
+
 export default ComboBox;
