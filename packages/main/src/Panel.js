@@ -24,6 +24,7 @@ const metadata = {
 	tag: "ui5-panel",
 	languageAware: true,
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**

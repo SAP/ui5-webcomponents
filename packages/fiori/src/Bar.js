@@ -13,6 +13,7 @@ import BarCss from "./generated/themes/Bar.css.js";
 const metadata = {
 	tag: "ui5-bar",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
@@ -166,6 +167,11 @@ class Bar extends UI5Element {
 				"ui5-bar-root-shrinked": this._shrinked,
 			},
 		};
+	}
+
+	onBeforeRendering() {
+		// Next row is specific for IE11. Please remove after stop support and edit css file
+		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
 	}
 
 	onEnterDOM() {

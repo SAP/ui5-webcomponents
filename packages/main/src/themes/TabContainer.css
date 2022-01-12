@@ -26,12 +26,6 @@
 	box-sizing: border-box;
 }
 
-.ui5-tc__headerInnerContainer {
-	position: relative;
-	flex: 1 1 100%;
-	min-width: 0; /* fixes chrome flex issue */
-}
-
 :host([tabs-placement="Bottom"]) .ui5-tc__header {
 	border-top: var(--_ui5_tc_header_border_bottom);
 }
@@ -40,66 +34,36 @@
 	height: var(--_ui5_tc_header_height_text_only);
 }
 
-.ui5-tc-root.ui5-tc--textOnly.ui5-tc--withAdditonalText.ui5-tc--standardTabLayout .ui5-tc__header {
+.ui5-tc-root.ui5-tc--textOnly.ui5-tc--withAdditionalText.ui5-tc--standardTabLayout .ui5-tc__header {
 	height: var(--_ui5_tc_header_height_text_with_additional_text);
 }
 
-.ui-tc__headerScrollContainer {
-	box-sizing: border-box;
-	overflow: hidden;
-	flex: 1 1 100%;
-}
-
-.ui5-tc__headerList {
-	position: relative;
+.ui5-tc__tabStrip {
+	flex: 1;
 	display: flex;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.ui5-tc__separator {
-	width: 0;
-	border-left: 2px solid var(--sapList_BorderColor);
-	margin: 0.5rem 0.25rem;
+	overflow: hidden;
+	box-sizing: border-box;
+	position: relative;
+	white-space: nowrap;
 }
 
 .ui5-tc__separator:focus {
     outline: none;
 }
 
-.ui5-tc__headerArrow {
-	position: absolute;
-	top: 0;
-	bottom: 1px;
-	z-index: 1;
-	display: flex;
-	align-items: center;
-	color: var(--sapContent_IconColor);
-	background-color: var(--sapObjectHeader_Background);
-	padding: 0 0.25rem;
-	visibility: hidden;
-}
-
-.ui5-tc__headerArrowLeft {
-	left: 0;
-}
-
-.ui5-tc__headerArrowRight {
-	right: 0;
-}
-
-.ui5-tc__headerArrow:hover,
-.ui5-tc__headerArrow:active {
-	color: var(--sapHighlightColor);
-}
-
-.ui5-tc__headerArrow--visible {
-	visibility: visible;
-}
-
-.ui-tc__overflowButton {
+.ui5-tc__overflow {
+	flex: 0 0 0;
 	margin: 0 0.25rem;
+}
+
+.ui5-tc__overflow[hidden] {
+	display: none;
+}
+
+.ui5-tc__overflow > [ui5-button] {
+	margin-top: 0.25rem;
+	border-radius: 0.75rem;
+	height: 1.5rem;
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
@@ -117,7 +81,7 @@
 }
 
 :host([tabs-placement="Bottom"]) .ui5-tc__content {
-    border-top: var(--_ui5_tc_content_border_bottom);
+	border-top: var(--_ui5_tc_content_border_bottom);
 }
 
 .ui5-tc__content--collapsed {
@@ -158,7 +122,7 @@
 }
 
 /*** RTL ***/
-[dir=rtl] .ui-tc__overflowButton {
+[dir=rtl] .ui5-tc__overflow {
 	margin-right: auto;
 	margin-left: 0.25rem;
 }

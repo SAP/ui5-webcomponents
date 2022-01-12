@@ -10,6 +10,7 @@ import SideNavigationItemPopoverContentTemplate from "./generated/templates/Side
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
+import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
 
 /**
  * @public
@@ -17,6 +18,7 @@ import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 const metadata = {
 	tag: "ui5-side-navigation",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
@@ -142,7 +144,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [SideNavigationCss];
+		return [SideNavigationPopoverCss];
 	}
 
 	static get render() {

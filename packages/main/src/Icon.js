@@ -219,13 +219,13 @@ class Icon extends UI5Element {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
 	}
 
-	_onfocusin(event) {
+	_onFocusInHandler(event) {
 		if (this.interactive) {
 			this.focused = true;
 		}
 	}
 
-	_onfocusout(event) {
+	_onFocusOutHandler(event) {
 		this.focused = false;
 	}
 
@@ -280,7 +280,7 @@ class Icon extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.interactive ? "0" : "-1";
+		return this.interactive ? "0" : undefined;
 	}
 
 	get isDecorative() {
@@ -348,6 +348,8 @@ class Icon extends UI5Element {
 		this.packageName = iconData.packageName;
 
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
+		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;

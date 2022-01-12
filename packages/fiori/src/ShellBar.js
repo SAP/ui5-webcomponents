@@ -42,6 +42,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 const metadata = {
 	tag: "ui5-shellbar",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
@@ -494,7 +495,7 @@ class ShellBar extends UI5Element {
 	_menuItemPress(event) {
 		this.menuPopover.close();
 		this.fireEvent("menu-item-click", {
-			item: event.detail.item,
+			item: event.detail.selectedItems[0],
 		}, true);
 	}
 

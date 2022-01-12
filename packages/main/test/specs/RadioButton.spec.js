@@ -165,6 +165,21 @@ describe("RadioButton general interaction", () => {
 		const RADIOBUTTON_TEXT = "Sample Text";
 
 		assert.strictEqual(await rbAccName.getProperty("ariaLabelText"), RADIOBUTTON_LABEL, "The ariaLabelledByText includes the accessibleName.");
-		assert.strictEqual(await rbAccNameText.getProperty("ariaLabelText"), `${RADIOBUTTON_TEXT} ${RADIOBUTTON_LABEL}`, "The ariaLabelledByText includes both the text and the accessibleName.");
+		assert.strictEqual(await rbAccNameText.getProperty("ariaLabelText"), `${RADIOBUTTON_LABEL} ${RADIOBUTTON_TEXT}`, "The ariaLabelledByText includes both the text and the accessibleName.");
+	});
+
+	it("tests accessibleNameRef", async () => {
+		const labelText = await browser.$("#lbl-rb-acc-name-ref").getText();
+		const rb = await browser.$("#rb-acc-name-ref");
+	
+		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText includes the accessibleNameRef text.");
+	});
+
+	it("tests accessibleNameRef and radio button text together", async () => {
+		const labelText = await browser.$("#lbl-rb-acc-name-ref-with-text").getText();
+		const rb = await browser.$("#rb-acc-name-ref-with-text");
+		const rbText = await rb.getProperty("text");
+	
+		assert.strictEqual(await rb.getProperty("ariaLabelText"), `${labelText} ${rbText}`, "The ariaLabelText includes both the accessibleNameRef text and the radio button text.");
 	});
 });

@@ -56,10 +56,18 @@
 		<ui5-li id="country3">China</ui5-li>
 		<ui5-li id="country4" type="Inactive">Portugal</ui5-li>
 	</ui5-list>
-	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
-	<ui5-input id="itemPressSelectedResultField" placeholder="itemPress selected result"></ui5-input>
+	<ui5-input id="itemClickResultField" placeholder="itemClick result"></ui5-input>
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
+
+	<br><br><br>
+	
+	<br/>
+	<ui5-list id="listPreventClickEvent" mode="SingleSelect">
+		<ui5-li id="country1">Argentina</ui5-li>
+		<ui5-li id="country2" selected >Bulgaria</ui5-li>
+	</ui5-list>
+	<ui5-input id="itemClickPreventedResultField" placeholder="itemClick prevented result"></ui5-input>
 
 	<br><br><br>
 	<ui5-list id="justList">
@@ -86,8 +94,7 @@
 		<ui5-li id="country33">China</ui5-li>
 		<ui5-li id="country44">Portugal</ui5-li>
 	</ui5-list>
-	<ui5-input id="itemPressResultField2" placeholder="itemPress result"></ui5-input>
-	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
+	<ui5-input id="itemClickResultField2" placeholder="itemClick result"></ui5-input>
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
 	<br><br><br>
@@ -243,8 +250,8 @@
 		'use strict';
 
 		var itemDeleteCounter = 0;
-		var itemPressCounter = 0;
-		var itemPressCounter2 = 0;
+		var itemClickCounter = 0;
+		var itemClickCounter2 = 0;
 		var selectionChangeCounter = 0;
 		var selectionChangeCounter2 = 0;
 
@@ -254,10 +261,9 @@
 
 		list1.addEventListener("ui5-itemDelete", deleteItemHandler);
 
-		listEvents.addEventListener("ui5-itemPress", function (event) {
-			itemPressCounter += 1;
-			itemPressResultField.value = itemPressCounter;
-			itemPressSelectedResultField.value = event.detail.item.selected;
+		listEvents.addEventListener("ui5-itemClick", function (event) {
+			itemClickCounter += 1;
+			itemClickResultField.value = itemClickCounter;
 		});
 
 		listEvents.addEventListener("ui5-selectionChange", function (event) {
@@ -269,10 +275,9 @@
 			selectionChangeResultPreviousItemsParameter.value = event.detail.previouslySelectedItems[0].id;
 		})
 
-		listEvents2.addEventListener("ui5-itemPress", function (event) {
-			itemPressCounter2 += 1;
-			itemPressResultField2.value = itemPressCounter2;
-			itemPressSelectedResultField2.value = event.detail.item.selected;
+		listEvents2.addEventListener("ui5-itemClick", function (event) {
+			itemClickCounter2 += 1;
+			itemClickResultField2.value = itemClickCounter2;
 		});
 
 		listEvents2.addEventListener("ui5-selectionChange", function (event) {
@@ -292,6 +297,11 @@
 
 		changeEmptyItem.addEventListener("click", function(e) {
 			emptyItem.textContent = "updated";
+		});
+
+		listPreventClickEvent.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			itemClickPreventedResultField.value = event.detail.item.id;
 		});
 
 		var loadMoreCounter = 0;

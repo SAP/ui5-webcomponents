@@ -34,29 +34,25 @@ describe("List Tests", () => {
 		assert.notOk(await busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
 	});
 
-	it("itemPress and selectionChange events are fired in Single selection", async () => {
-		const itemPressResultField = await browser.$("#itemPressResultField");
-		const itemPressSelectedResultField = await browser.$("#itemPressSelectedResultField");
+	it("itemClick and selectionChange events are fired in Single selection", async () => {
+		const itemClickResultField = await browser.$("#itemClickResultField");
 		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
 		const firstItem = await browser.$("#listEvents #country1");
 
 		await firstItem.click();
 
-		assert.strictEqual(await itemPressResultField.getProperty("value"), "1", "itemPress event has been fired once");
-		assert.strictEqual(await itemPressSelectedResultField.getProperty("value"), "true", "itemPress detail 'item' has correct value.");
+		assert.strictEqual(await itemClickResultField.getProperty("value"), "1", "itemClick event has been fired once");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
-	it("itemPress and selectionChange events are fired in Multi selection", async () => {
-		const itemPressResultField2 = await browser.$("#itemPressResultField2");
-		const itemPressSelectedResultField2 = await browser.$("#itemPressSelectedResultField2");
+	it("itemClick and selectionChange events are fired in Multi selection", async () => {
+		const itemClickResultField2 = await browser.$("#itemClickResultField2");
 		const selectionChangeResultField2 = await browser.$("#selectionChangeResultField2");
 		const firstItem = await browser.$("#listEvents2 #country11");
 
 		await firstItem.click();
 
-		assert.strictEqual(await itemPressResultField2.getProperty("value"), "1", "itemPress event has been fired once");
-		assert.strictEqual(await itemPressSelectedResultField2.getProperty("value"), "true", "itemPress detail 'item' has correct value.");
+		assert.strictEqual(await itemClickResultField2.getProperty("value"), "1", "itemClick event has been fired once");
 		assert.strictEqual(await selectionChangeResultField2.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
@@ -374,6 +370,17 @@ describe("List Tests", () => {
 		await browser.keys("Space");
 
 		assert.strictEqual(await input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
+	});
+
+	it("tests the prevention of the ui5-itemClick event", async () => {
+		list.id = "#listPreventClickEvent";
+		const input = await browser.$("#itemClickPreventedResultField");
+		const firstItem = await list.getItem(0);
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected when we prevent the click event.");
+		assert.strictEqual(await firstItem.getProperty("id"), await input.getProperty("value"));
 	});
 
 	it("Popover with List opens without errors", async () => {
