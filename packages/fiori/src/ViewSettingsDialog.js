@@ -510,7 +510,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
-		if (!Object.keys(this._recentlyFocused).length) {
+		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
 		}
 		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),
