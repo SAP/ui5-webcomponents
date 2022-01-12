@@ -1,5 +1,5 @@
-commit cfd9fa6222bc3f39da1463af5a4f03279e602d42
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jan 12 12:18:36 2022 +0200
+commit bfa7564107e4c2fadeafaa4d3bb3e660f5d06042
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jan 12 12:52:21 2022 +0200
 
-    fix: Breadcrumbs no longer throws an error when empty (#4563)
+    docs: fix broken links (#4554)
