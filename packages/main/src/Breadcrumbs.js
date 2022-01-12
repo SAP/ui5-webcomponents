@@ -314,7 +314,7 @@ class Breadcrumbs extends UI5Element {
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot.querySelector(`.ui5-breadcrumbs-link-wrapper #${item._id}-link`);
+				link = this.shadowRoot.querySelector(`#${item._id}-link-wrapper`);
 			map.set(item, this._getElementWidth(link) || 0);
 		}
 
