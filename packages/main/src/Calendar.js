@@ -195,6 +195,12 @@ const metadata = {
  * </ul>
  * <br>
  *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ *
 * <h3>Calendar types</h3>
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
  * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,

@@ -1,4 +1,4 @@
-import "./dist/features/F6NavigationHelper.js";
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 // import "./customI18n.js";
 
