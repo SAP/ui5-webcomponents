@@ -1042,6 +1042,4 @@ class ComboBox extends UI5Element {
 
 ComboBox.define();
 
-ComboBox.SKIP_ITEMS_SIZE = 10;
-
 export default ComboBox;
