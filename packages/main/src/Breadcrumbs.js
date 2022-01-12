@@ -318,7 +318,7 @@ class Breadcrumbs extends UI5Element {
 			map.set(item, this._getElementWidth(link) || 0);
 		}
 
-		if (this._endsWithCurrentLocationLabel && label) {
+		if (items.length && this._endsWithCurrentLocationLabel && label) {
 			const item = items[items.length - 1];
 			map.set(item, this._getElementWidth(label));
 		}
