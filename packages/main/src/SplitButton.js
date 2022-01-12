@@ -32,7 +32,7 @@ const metadata = {
 	tag: "ui5-split-button",
 	properties: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
 		/**
-		 * Defines the text of the button.
+		 * Defines the text of the component.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
