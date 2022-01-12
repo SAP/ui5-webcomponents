@@ -24,19 +24,19 @@
 		<h3 class="header-title">Button Types</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-split-button text="Default"></ui5-split-button>
-		<ui5-split-button text="Emphasized" design="Emphasized"></ui5-split-button>
-		<ui5-split-button text="Positive" design="Positive"></ui5-split-button>
-		<ui5-split-button text="Negative" design="Negative"></ui5-split-button>
-		<ui5-split-button text="Attention" design="Attention"></ui5-split-button>
-		<ui5-split-button text="Transparent" design="Transparent"></ui5-split-button>
+		<ui5-split-button id="sbDefault" text="Default" design="Default"></ui5-split-button>
+		<ui5-split-button id="sbEmphasized" text="Emphasized" design="Emphasized"></ui5-split-button>
+		<ui5-split-button id="sbPositive" text="Positive" design="Positive"></ui5-split-button>
+		<ui5-split-button id="sbNegative" text="Negative" design="Negative"></ui5-split-button>
+		<ui5-split-button id="sbAttention" text="Attention" design="Attention"></ui5-split-button>
+		<ui5-split-button id="sbTransparent" text="Transparent" design="Transparent"></ui5-split-button>
 	</div>
 
 	<header class="header">
 		<h3 class="header-title">Disabled Buttons</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-split-button text="Default" disabled></ui5-split-button>
+		<ui5-split-button id="sbDisabled" text="Default" disabled></ui5-split-button>
 		<ui5-split-button text="Emphasized" design="Emphasized" disabled></ui5-split-button>
 		<ui5-split-button text="Positive" design="Positive" disabled></ui5-split-button>
 		<ui5-split-button text="Negative" design="Negative" disabled></ui5-split-button>
@@ -48,16 +48,17 @@
 		<h3 class="header-title">Icons</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-split-button text="Icon" icon="add"></ui5-split-button>
-		<ui5-split-button text="Active Icon" active-icon="accept"></ui5-split-button>
-		<ui5-split-button text="Icon + Active Icon" icon="add" active-icon="accept"></ui5-split-button>
+		<ui5-split-button id="sbTextIcon" text="Icon" icon="add"></ui5-split-button>
+		<ui5-split-button id="sbTextActiveIcon" text="Active Icon" active-icon="accept"></ui5-split-button>
+		<ui5-split-button id="sbTextIconActiveIcon" text="Icon + Active Icon" icon="add" active-icon="accept"></ui5-split-button>
+		<ui5-split-button id="sbIcon" icon="add"></ui5-split-button>
 	</div>
 
 	<header class="header">
 		<h3 class="header-title">Event Display</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-input id="display" style="width: 400px"></ui5-input>
+		<ui5-input id="displayEvent" style="width: 100px"></ui5-input> on <ui5-input id="displayElement" style="width: 100px"></ui5-input>
 	</div>
 
 	<header class="header">
@@ -69,12 +70,13 @@
 
 </body>
 <script>
-	var displayInput = document.getElementById("display"),
+	var displayEvent = document.getElementById("displayEvent"),
+		displayElement = document.getElementById("displayElement"),
 		directionSwitch =  document.getElementById("direction");
 
 	document.querySelectorAll("ui5-split-button").forEach(function(item) {
-		item.addEventListener("click", displayEvent);
-		item.addEventListener("arrow-click", displayEvent);
+		item.addEventListener("ui5-click", displayEventDetails);
+		item.addEventListener("ui5-arrow-click", displayEventDetails);
 	});
 
 	direction.addEventListener("change", function() {
@@ -82,8 +84,9 @@
 		window["sap-ui-webcomponents-bundle"].applyDirection();
 	});
 
-	function displayEvent(event) {
-		displayInput.value = "'" + event.type + "' event on '" + event.target.text + "' Split Button";
+	function displayEventDetails(event) {
+		displayEvent.value = event.type
+		displayElement.value = event.target.text;
 	}
 </script>
 </html>

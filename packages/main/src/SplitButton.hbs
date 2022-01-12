@@ -2,17 +2,21 @@
 	class="ui5-split-button-root"
 	role="group"
 	tabindex={{tabIndexValue}}
+	aria-labelledby="{{_id}}-invisibleTextDefault {{_id}}-invisibleText"
 	@focusout={{_onFocusOut}}
 	@focusin={{_onFocusIn}}
 	@keydown={{_onKeyDown}}
 	@keyup={{_onKeyUp}}
 >
+
 	<ui5-button
 		class="ui5-split-text-button"
 		design="{{design}}"
 		dir={{effectiveDir}}
+		icon="{{_textButtonIcon}}"
 		tabindex="-1"
 		?disabled="{{disabled}}"
+		?active="{{_textButtonActive}}"
 		@click="{{_fireClick}}"
 		@touchstart={{_onMouseTouchDownText}}
 		@mousedown={{_onMouseTouchDownText}}
@@ -21,6 +25,7 @@
 	>
 		{{text}}
 	</ui5-button>
+
 	<div
 		class="ui5-split-arrow-button-wrapper"
 		dir={{effectiveDir}}
@@ -31,10 +36,17 @@
 			icon="slim-arrow-down"
 			tabindex="-1"
 			?disabled="{{disabled}}"
+			?active="{{_arrowButtonActive}}"
+			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
+			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
 			@click="{{_fireArrowClick}}"
 			@mousedown={{_onMouseDownArrow}}
 			@focusout={{_onFocusOut}}
 		>
 		</ui5-button>
 	</div>
+
+	<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accessibilityInfo.description}} {{accessibilityInfo.keyboardHint}} {{accessibleName}}</span>
+	<span id="{{_id}}-invisibleTextDefault" class="ui5-hidden-text">{{text}}</span>
+
 </div>
