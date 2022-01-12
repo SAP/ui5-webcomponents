@@ -86,6 +86,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @since 1.0.2
 		 * @public
 		 */
 		noClickSelect: {
