@@ -768,7 +768,7 @@ describe("Keyboard navigation", async () => {
 		const pickerIcon = await comboBox.shadow$("[input-icon]");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
 		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		let listItem, inputValue;
+		let listItem;
 
 		// Opened picker
 		await pickerIcon.click();
@@ -796,27 +796,21 @@ describe("Keyboard navigation", async () => {
 		await pickerIcon.click();
 
 		// Clearing typed in value to prevent default behavior of HOME
-		await input.keys(['\uE009', 'a']); // Ctrl + A
-		await input.keys('Backspace');
+		await comboBox.setProperty("value", "");
 
 		await input.keys("Home");
-		inputValue = await input.getProperty("value");
-		assert.strictEqual("Algeria", inputValue, "The first item should be selected on HOME");
+		assert.strictEqual(await input.getProperty("value"), "Algeria", "The first item should be selected on HOME");
 		
 		// Clearing typed in value to prevent default behavior of END
-		await input.keys(['\uE009', 'a']); // Ctrl + A
-		await input.keys('Backspace');
+		await comboBox.setProperty("value", "");
 
 		await input.keys("End");
-		inputValue = await input.getProperty("value");
-		assert.strictEqual("Chile", inputValue, "The last item should be selected on END");
+		assert.strictEqual(await input.getProperty("value"), "Chile", "The last item should be selected on END");
 
 		await input.keys("PageUp");
-		inputValue = await input.getProperty("value");
-		assert.strictEqual("Algeria", inputValue, "The -10 item should be selected on PAGEUP");
+		assert.strictEqual(await input.getProperty("value"), "Algeria", "The -10 item should be selected on PAGEUP");
 
 		await input.keys("PageDown");
-		inputValue = await input.getProperty("value");
-		assert.strictEqual("Chile", inputValue, "The +10 item should be selected on PAGEDOWN");
+		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
 	});
 });
