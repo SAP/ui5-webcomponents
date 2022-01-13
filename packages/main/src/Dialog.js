@@ -124,7 +124,7 @@ const metadata = {
 		onDesktop: {
 			type: Boolean,
 		},
-	}
+	},
 };
 
 /**

@@ -13,8 +13,6 @@
 	border-bottom-right-radius: var(--_ui5_suggestions_item_focus_border_radius);
 }
 
-.ui5-suggestions-popover {
-	--_ui5_popup_content_padding_s: 0;
-	--_ui5_popup_content_padding_m_l: 0;
-	--_ui5_popup_content_padding_xl: 0;
+.ui5-suggestions-popover::part(content) {
+	padding: 0;
 }

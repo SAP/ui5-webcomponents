@@ -15,8 +15,6 @@
 	margin-right: 0.5rem;
 }
 
-:host([ui5-color-palette-popover]) {
-	--_ui5_popup_content_padding_s: 0;
-	--_ui5_popup_content_padding_m_l: 0;
-	--_ui5_popup_content_padding_xl: 0;
+ui5-responsive-popover::part(content) {
+	padding: 0;
 }

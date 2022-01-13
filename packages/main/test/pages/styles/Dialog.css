@@ -44,6 +44,6 @@
 }
 
 /* Remove the responsive paddings for the content area of the Dialog */
-.NoPaddingsDialog::part(content) {
+.noContentPaddingsDialog::part(content) {
     padding: 0;
 }

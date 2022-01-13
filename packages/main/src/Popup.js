@@ -216,7 +216,7 @@ class Popup extends UI5Element {
 	constructor() {
 		super();
 
-		this._resizeHandler = this._updateMediaRange.bind(this);
+		this._resizeHandler = this._resize.bind(this);
 	}
 
 	static get metadata() {
@@ -264,7 +264,7 @@ class Popup extends UI5Element {
 		return "block";
 	}
 
-	_updateMediaRange() {
+	_resize() {
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
@@ -589,18 +589,18 @@ class Popup extends UI5Element {
 			content: {},
 			blockLayer: {
 				"zIndex": (this._zIndex - 1),
-			}
+			},
 		};
 	}
 
 	get classes() {
 		return {
 			root: {
-				"ui5-popup-root": true
+				"ui5-popup-root": true,
 			},
 			content: {
-				"ui5-popup-content": true
-			}
+				"ui5-popup-content": true,
+			},
 		};
 	}
 }

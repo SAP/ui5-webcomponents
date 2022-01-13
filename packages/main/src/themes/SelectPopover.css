@@ -9,8 +9,6 @@
 	border-bottom-right-radius: var(--_ui5_select_option_focus_border_radius);
 }
 
-.ui5-select-popover {
-	--_ui5_popup_content_padding_s: 0;
-	--_ui5_popup_content_padding_m_l: 0;
-	--_ui5_popup_content_padding_xl: 0;
+.ui5-select-popover::part(content) {
+	padding: 0;
 }
