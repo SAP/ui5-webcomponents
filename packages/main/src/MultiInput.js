@@ -5,6 +5,8 @@ import {
 	isLeft,
 	isRight,
 	isRightCtrl,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
@@ -178,7 +180,9 @@ class MultiInput extends Input {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		if (isLeft(event)) {
+		const isHomeInBeginning = isHome(event) && event.target.selectionStart === 0;
+
+		if (isLeft(event) || isHomeInBeginning) {
 			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens.
 
 			return this._handleLeft(event);
@@ -199,7 +203,7 @@ class MultiInput extends Input {
 	_onTokenizerKeydown(event) {
 		const rightCtrl = isRightCtrl(event);
 
-		if (isRight(event) || rightCtrl) {
+		if (isRight(event) || isEnd(event) || rightCtrl) {
 			event.preventDefault();
 			const lastTokenIndex = this.tokens.length - 1;
 

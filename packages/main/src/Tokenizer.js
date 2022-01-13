@@ -247,7 +247,7 @@ class Tokenizer extends UI5Element {
 		if (isSpace(event)) {
 			event.preventDefault();
 
-			return this._handleTokenSelection(event);
+			return this._handleTokenSelection(event, false);
 		}
 
 		this._handleItemNavigation(event, this.tokens);
@@ -364,9 +364,11 @@ class Tokenizer extends UI5Element {
 		tokens.forEach(token => { token.selected = !tokensAreSelected; });
 	}
 
-	_handleTokenSelection(event) {
+	_handleTokenSelection(event, deselectAll = true) {
 		if (event.target.localName === "ui5-token") {
-			this._tokens.forEach(token => {
+			const deselectTokens = deselectAll ? this._tokens : [event.target];
+
+			deselectTokens.forEach(token => {
 				if (token !== event.target) {
 					token.selected = false;
 				}
@@ -378,14 +380,14 @@ class Tokenizer extends UI5Element {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
 		/* fill clipboard with tokens' texts so parent can handle creation */
-		const cutToClipboard = oEvent => {
-			if (oEvent.clipboardData) {
-				oEvent.clipboardData.setData("text/plain", tokensTexts);
+		const cutToClipboard = event => {
+			if (event.clipboardData) {
+				event.clipboardData.setData("text/plain", tokensTexts);
 			} else {
-				oEvent.originalEvent.clipboardData.setData("text/plain", tokensTexts);
+				event.originalEvent.clipboardData.setData("text/plain", tokensTexts);
 			}
 
-			oEvent.preventDefault();
+			event.preventDefault();
 		};
 
 		document.addEventListener(shortcutName, cutToClipboard);
