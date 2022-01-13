@@ -468,7 +468,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _carousel() {
-		return this.shadowRoot.querySelector("ui5-carousel");
+		return this.shadowRoot.querySelector("[ui5-carousel]");
 	}
 
 	get _display() {
@@ -476,11 +476,11 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _mainItem() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-display ui5-media-gallery-item");
+		return this.shadowRoot.querySelector(".ui5-media-gallery-display [ui5-media-gallery-item]");
 	}
 
 	get _overflowBtn() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow ui5-button");
+		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow [ui5-button]");
 	}
 
 	get _visibleItems() {

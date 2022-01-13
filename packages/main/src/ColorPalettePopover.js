@@ -13,6 +13,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 import Button from "./Button.js";
+import Title from "./Title.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 
@@ -145,6 +146,7 @@ class ColorPalettePopover extends UI5Element {
 		return [
 			ResponsivePopover,
 			Button,
+			Title,
 			ColorPalette,
 		];
 	}
