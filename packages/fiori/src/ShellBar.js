@@ -736,8 +736,8 @@ class ShellBar extends UI5Element {
 	async _handleActionListClick(event) {
 		if (!this._defaultItemPressPrevented) {
 			this.closeOverflow();
-			// wait until DOM is updated when ui5-popover is closed, otherwise if Enter key is hold
-			// there will be no visual indication that this has happened
+			//wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold
+			//there will be no visual indication that this has happened
 			await renderFinished();
 		}
 
