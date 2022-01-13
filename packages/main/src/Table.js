@@ -5,7 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isCtrlA } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -13,10 +13,6 @@ import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
 import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
-import {
-	isTabNext,
-	isF7,
-} from "../../base/src/Keys.js";
 
 // Texts
 import {
@@ -377,6 +373,13 @@ const metadata = {
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  * <br><br>
+ * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
+ * <br>
+ *
+ * <ul>
+ * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
+ * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -501,11 +504,7 @@ class Table extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		const isCtrlA = event.keyCode === 65 && event.ctrlKey;
-
-		if (isF7(event)) {}
-
-		if (isCtrlA && this.mode === "MultiSelect") {
+		if (isCtrlA(event) && this.mode === "MultiSelect") {
 			event.preventDefault();
 			this._selectAll(event);
 		}

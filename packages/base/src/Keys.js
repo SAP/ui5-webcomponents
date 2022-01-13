@@ -203,6 +203,12 @@ const isShowByArrows = event => {
 	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
 
+const isUpAlt = event => (event.key ? event.key === "ArrowUp" : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, true, false);
+
+const isDownAlt = event => (event.key ? event.key === "ArrowDown" : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, true, false);
+
+const isCtrlA = event => (event.key ? (event.key === "A" || event.key === "a") : event.keyCode === KeyCodes.A) && checkModifierKeys(event, true, false, false);
+
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = event => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
@@ -253,4 +259,7 @@ export {
 	isPageDownAlt,
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
+	isUpAlt,
+	isDownAlt,
+	isCtrlA,
 };
