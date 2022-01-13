@@ -3,6 +3,6 @@
 	border-bottom: 0.0625rem solid var(--sapGroup_TitleBorderColor);
 	margin: 0 0.5rem;
 }
-ui5-list>.ui5-tc__separator:first-child {
+[ui5-list]>.ui5-tc__separator:first-child {
 	min-height: 0.5rem;
 }
