@@ -250,7 +250,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleTokenSelection(event) {
-		if (event.target.localName === "ui5-token") {
+		if (event.target.hasAttribute("ui5-token")) {
 			this._tokens.forEach(token => {
 				if (token !== event.target) {
 					token.selected = false;

@@ -118,6 +118,7 @@ const metadata = {
 		 *
 		 * It supports the following fields:
 		 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
+		 * - <code>logoTitle</code>: defines the tooltip for the logo
 		 *
 		 * @type {object}
 		 * @public
@@ -1021,7 +1022,6 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
 				"ui5-shellbar-menu-button": true,
 			},
-			title: {},
 			items: {
 				notification: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("bell"),
@@ -1130,7 +1130,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _logoText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
+		return this.accessibilityTexts.logoTitle || ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
 	}
 
 	get _copilotText() {
