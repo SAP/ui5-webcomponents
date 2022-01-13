@@ -40,6 +40,7 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 const metadata = {
 	tag: "ui5-table",
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
@@ -370,13 +371,12 @@ const metadata = {
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
  * <h3>Keyboard Handling</h3>
- * The <code>ui5-table</code> provides advanced keyboard handling.
- * <br>
  *
- * <ul>
- * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
- * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
- * </ul>
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *

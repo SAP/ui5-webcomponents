@@ -14,7 +14,7 @@ describe("TabContainer general interaction", () => {
 
 		const selectedFilterHtml = await selectedFilter.getHTML();
 		assert.include(selectedFilterHtml, SELECTION_CSS_CLASS, "The item has the selection css class set.");
-		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab filter matches.");
+		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab matches.");
 	});
 
 	it("tests tabSelect event", async () => {

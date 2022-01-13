@@ -29,6 +29,7 @@ const metadata = {
 	tag: "ui5-message-strip",
 	altTag: "ui5-messagestrip",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
@@ -130,6 +131,14 @@ const metadata = {
  * For the <code>ui5-message-strip</code> component, you can define whether it displays
  * an icon in the beginning and a close button. Moreover, its size and background
  * can be controlled with CSS.
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *

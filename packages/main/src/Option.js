@@ -32,6 +32,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.1.0
+		 */
+		title: {
+			type: String,
+		},
+
+		/**
 		 * Defines the <code>icon</code> source URI.
 		 * <br><br>
 		 * <b>Note:</b>
