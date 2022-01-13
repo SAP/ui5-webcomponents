@@ -1,5 +1,5 @@
-commit bfa7564107e4c2fadeafaa4d3bb3e660f5d06042
+commit 46d982ee1e06c1aa701f13b48affc95d68d25d37
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jan 12 12:52:21 2022 +0200
+Date:   Thu Jan 13 10:59:04 2022 +0200
 
-    docs: fix broken links (#4554)
+    chore: return openui5support to the bundle (#4566)
