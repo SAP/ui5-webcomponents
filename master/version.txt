@@ -1,5 +1,5 @@
-commit 46d982ee1e06c1aa701f13b48affc95d68d25d37
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jan 13 10:59:04 2022 +0200
+commit 4e430d3fa3d23642488fe2806f91eb7efa79492d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jan 13 11:06:42 2022 +0200
 
-    chore: return openui5support to the bundle (#4566)
+    fix: Scoping issues corrected (#4573)
