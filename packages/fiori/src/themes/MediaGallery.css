@@ -125,13 +125,13 @@
 }
 
 .ui5-media-gallery-thumbnail,
-.ui5-media-gallery-overflow ui5-button {
+.ui5-media-gallery-overflow [ui5-button] {
     width: 4rem;
     height: 4rem;
     flex-shrink: 0;
 }
 
-.ui5-media-gallery-overflow ui5-button {
+.ui5-media-gallery-overflow [ui5-button] {
     background: var(--_ui5_media_gallery_overflow_btn_background);
     color: var(--_ui5_media_gallery_overflow_btn_color);
     border: var(--_ui5_media_gallery_overflow_btn_border);
