@@ -3,15 +3,16 @@
 		{{> busyRow}}
 	{{/if}}
 
-	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
+	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" @focusin="{{_onfocusin}}" role="table">
 		<thead>
-			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" aria-label="{{ariaLabelText}}" tabindex="{{_columnHeader._tabIndex}}" @click="{{_onColumnHeaderClick}}">
+			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" aria-label="{{ariaLabelText}}" tabindex="{{_columnHeader._tabIndex}}" @click="{{_onColumnHeaderClick}} @click="{{_onColumnHeaderKeydown}}">
 				{{#if isMultiSelect}}
 					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
 						<ui5-checkbox class="ui5-table-select-all-checkbox"
 							?checked="{{_allRowsSelected}}"
 							@ui5-change="{{_selectAll}}"
 							aria-label="{{ariaLabelSelectAllText}}"
+							tabindex="-1"
 						>
 						</ui5-checkbox>
 					</th>

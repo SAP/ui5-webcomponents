@@ -5,7 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter, isCtrlA } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isCtrlA, isUpAlt } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -444,6 +444,9 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.tableEndObserved = false;
+
+		this.tableInitialFocus = true;
+
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
 
@@ -507,6 +510,30 @@ class Table extends UI5Element {
 		if (isCtrlA(event) && this.mode === "MultiSelect") {
 			event.preventDefault();
 			this._selectAll(event);
+			return;
+		}
+
+		if (isUpAlt(event)) {
+			if (event.target.tagName === "UI5-TABLE-ROW") {
+				console.log("row")
+			}
+
+			if (event.target.id === `${this._id}-columnHeader`) {
+				console.log("header")
+			}
+
+			if (event.target.id === `${this._id}-growingButton-text`) {
+				console.log("more")
+			}
+
+			console.log(event.target)
+		}
+	}
+
+	_onfocusin(event) {
+		if (this.tableInitialFocus) {
+			this.rows.length && this.rows[0].focus();
+			this.tableInitialFocus = false;
 		}
 	}
 
@@ -519,6 +546,16 @@ class Table extends UI5Element {
 		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
 
+	_onColumnHeaderKeydown(event) {
+		if(isUpAlt(event)) {
+			
+		}
+
+		if(isDownAlt(event)) {
+			
+		}
+	}
+
 	_onLoadMoreKeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
@@ -528,6 +565,14 @@ class Table extends UI5Element {
 		if (isEnter(event)) {
 			this._onLoadMoreClick();
 			this._loadMoreActive = true;
+		}
+
+		if(isUpAlt(event)) {
+			
+		}
+
+		if(isDownAlt(event)) {
+			
 		}
 	}
 
