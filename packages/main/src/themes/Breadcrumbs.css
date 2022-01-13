@@ -62,7 +62,7 @@
 }
 
 /* links separator */
-.ui5-breadcrumbs-link-wrapper::after {
+li[separator]::after {
     content: "/"; /* default separator is "Slash" */
     padding: 0 .25rem;
     cursor: auto;
@@ -79,22 +79,22 @@
 }
 
 /* separator styles */
-:host([separator-style="BackSlash"]) .ui5-breadcrumbs-link-wrapper::after {
+:host([separator-style="BackSlash"]) li[separator]::after {
     content: "\\";
 }
 
-:host([separator-style="DoubleBackSlash"]) .ui5-breadcrumbs-link-wrapper::after {
+:host([separator-style="DoubleBackSlash"]) li[separator]::after {
     content: "\\\\";
 }
 
-:host([separator-style="DoubleGreaterThan"]) .ui5-breadcrumbs-link-wrapper::after {
+:host([separator-style="DoubleGreaterThan"]) li[separator]::after {
     content: ">>";
 }
 
-:host([separator-style="DoubleSlash"]) .ui5-breadcrumbs-link-wrapper::after {
+:host([separator-style="DoubleSlash"]) li[separator]::after {
     content: "//";
 }
 
-:host([separator-style="GreaterThan"]) .ui5-breadcrumbs-link-wrapper::after {
+:host([separator-style="GreaterThan"]) li[separator]::after {
     content: ">";
 }
