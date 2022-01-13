@@ -2,19 +2,21 @@
 	hide-arrow
 	content-only-on-desktop
 	placement-type="Bottom"
-	>
+>
 	<div slot="header" class="ui5-cp-header">
 		<ui5-title
-			class="ui5-cp-title">{{_colorPaletteTitle}}</ui5-title>
+			class="ui5-cp-title"
+		>{{_colorPaletteTitle}}</ui5-title>
 	</div>
 	<div>
-		<ui5-color-palette 
+		<ui5-color-palette
 			?show-more-colors="{{this.showMoreColors}}"
 			?show-recent-colors="{{this.showRecentColors}}"
 			?show-default-color="{{this.defaultColor}}"
 			default-color="{{this.defaultColor}}"
 			popup-mode
-			@item-click="{{onSelectedColor}}">
+			@ui5-item-click="{{onSelectedColor}}"
+		>
 			{{#each colorPaletteColors}}
 				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}

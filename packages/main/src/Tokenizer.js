@@ -365,7 +365,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleTokenSelection(event, deselectAll = true) {
-		if (event.target.localName === "ui5-token") {
+		if (event.target.hasAttribute("ui5-token")) {
 			const deselectTokens = deselectAll ? this._tokens : [event.target];
 
 			deselectTokens.forEach(token => {

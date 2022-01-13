@@ -10,15 +10,11 @@
 	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
 		{{#if _endOverflowItems.length}}
 			{{#each _endOverflowItems}}
-				{{#unless this.isSeparator}}
-					{{this.overflowPresentation}}
-				{{/unless}}
+				{{this.overflowPresentation}}
 			{{/each}}
-		{{else }}
+		{{else}}
 			{{#each _startOverflowItems}}
-				{{#unless this.isSeparator}}
-					{{this.overflowPresentation}}
-				{{/unless}}
+				{{this.overflowPresentation}}
 			{{/each}}
 		{{/if}}
 	</ui5-list>

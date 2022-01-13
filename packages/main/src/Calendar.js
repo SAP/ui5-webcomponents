@@ -29,6 +29,7 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
  */
 const metadata = {
 	tag: "ui5-calendar",
+	fastNavigation: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.
@@ -193,6 +194,12 @@ const metadata = {
  * <li>[CTRL] + [END] - Navigate to the last year of the current year range</li>
  * </ul>
  * <br>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
 * <h3>Calendar types</h3>
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.

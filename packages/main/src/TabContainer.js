@@ -49,6 +49,7 @@ const metadata = {
 	tag: "ui5-tabcontainer",
 	languageAware: true,
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
@@ -146,8 +147,8 @@ const metadata = {
 		/**
 		 * Defines whether the overflow select list is displayed.
 		 * <br><br>
-		 * The overflow select list represents a list, where all tab filters are displayed
-		 * so that it's easier for the user to select a specific tab filter.
+		 * The overflow select list represents a list, where all tabs are displayed
+		 * so that it's easier for the user to select a specific tab.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -289,6 +290,14 @@ const metadata = {
  * <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li>
  * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
  * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -461,14 +470,15 @@ class TabContainer extends UI5Element {
 		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
-		this._getTabs().forEach((item, index) => {
-			const selected = selectedIndex === index;
-			item.selected = selected;
+		this.items
+			.forEach((item, index) => {
+				const selected = selectedIndex === index;
+				item.selected = selected;
 
-			if (item._selected) {
-				item._selected = false;
-			}
-		});
+				if (item._selected) {
+					item._selected = false;
+				}
+			});
 
 		if (this.fixed) {
 			this.selectTab(selectedTab, selectedTabIndex);
@@ -568,7 +578,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items[0].id;
+			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
 			this.responsivePopover.showAt(button);
 		}
 	}
@@ -586,6 +596,9 @@ class TabContainer extends UI5Element {
 	}
 
 	_handleResize() {
+		if (this.responsivePopover && this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		}
 		this._updateMediaRange();
 		this._setItemsForStrip();
 	}
