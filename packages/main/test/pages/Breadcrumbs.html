@@ -161,7 +161,7 @@
 		});
 
 		// log events
-		breadcrumbs1.addEventListener("item-click", (event) => {result.innerText = event.detail.item.innerText});
+		breadcrumbs1.addEventListener("ui5-item-click", (event) => {result.innerText = event.detail.item.innerText});
 
 		extendSizeBtn.addEventListener("click", () => resizeContainer(true));
 		shrinkSizeBtn.addEventListener("click", () => resizeContainer());
