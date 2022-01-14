@@ -90,6 +90,14 @@ const metadata = {
 		/**
 		 * @private
 		 */
+		_isSelectedColorChanged: {
+			type: Boolean,
+			defaultValue: false
+		},
+
+		/**
+		 * @private
+		 */
 		_wrongHEX: {
 			type: Boolean,
 		},
@@ -425,6 +433,9 @@ class ColorPicker extends UI5Element {
 			y: y - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
+		// Idicated that changes to the color settings are triggered as a result of user pressing over the main color section.
+		this._isSelectedColorChanged = true;
+
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
 			this._setColor(HSLToRGB(tempColor));
@@ -435,7 +446,7 @@ class ColorPicker extends UI5Element {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
 
-		const h = Math.round(this._hue / 4.25), // 0 ≤ H < 360
+		const h = this._hue / 4.25, // 0 ≤ H < 360
 			// 0 ≤ S ≤ 1
 			s = 1 - +(Math.round((y / 256) + "e+2") + "e-2"), // eslint-disable-line
 			// 0 ≤ V ≤ 1
@@ -488,7 +499,13 @@ class ColorPicker extends UI5Element {
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
+		// We shouldn't update the hue value when user presses over the main color section.
+		if (this._isSelectedColorChanged) {
+			this._isSelectedColorChanged = false;
+		} else {
+			this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
+		}
+
 		this._setMainColor(this._hue);
 	}
 
