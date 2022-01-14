@@ -31,8 +31,8 @@ describe("Breadcrumbs general interaction", () => {
 
 		// Check
 		const eventResult = await browser.$("#result");
-		assert.isNotEmpty(eventResult.innerText, 'label should have a value');
-		assert.strictEqual(eventResult.innerText, link.innerText, "label for pressed link is correct");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
 	});
 
 	it("fires link-click event when link in overflow", async () => {
@@ -51,8 +51,8 @@ describe("Breadcrumbs general interaction", () => {
 
 		// Check
 		const eventResult = await browser.$("#result");
-		assert.isNotEmpty(eventResult.innerText, 'label should have a value');
-		assert.strictEqual(eventResult.innerText, link.innerText, "label for pressed link is correct");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
 	});
 
 	it("updates layout on container resize", async () => {
