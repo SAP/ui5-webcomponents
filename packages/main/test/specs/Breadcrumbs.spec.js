@@ -37,8 +37,7 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("fires link-click event when link in overflow", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbs1"),
-			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0],
-			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0];
 
 
 		// Act
@@ -52,7 +51,7 @@ describe("Breadcrumbs general interaction", () => {
 		// Check
 		const eventResult = await browser.$("#result");
 		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
-		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+		assert.strictEqual(await eventResult.getText(), await firstItem.getProperty('innerText'), "label for pressed link is correct");
 	});
 
 	it("updates layout on container resize", async () => {
