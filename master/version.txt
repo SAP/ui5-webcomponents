@@ -1,5 +1,13 @@
-commit 4e430d3fa3d23642488fe2806f91eb7efa79492d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jan 13 11:06:42 2022 +0200
+commit fd4bb507bd08080b0a825861520de40d22dc5fff
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Fri Jan 14 10:55:31 2022 +0200
 
-    fix: Scoping issues corrected (#4573)
+    feat(ui5-combobox): add full keyboard handling (#4494)
+    
+    The keyboard specification for the ComboBox is now fully implemented, with the addition of the following keys:
+    
+    - `F4`, `ALT`+`UP`/`DOWN`- Toggles the picker.
+    - `PAGEDOWN` - Moves selection down by page size (10 items by default).
+    - `PAGEUP` - Moves selection up by page size (10 items by default).
+    - `HOME` - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
+    - `END` - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
