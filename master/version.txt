@@ -1,13 +1,7 @@
-commit fd4bb507bd08080b0a825861520de40d22dc5fff
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Fri Jan 14 10:55:31 2022 +0200
+commit 622db2c88e4cb012eef83c7b51f3c7d0f8cba283
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Fri Jan 14 14:47:24 2022 +0200
 
-    feat(ui5-combobox): add full keyboard handling (#4494)
+    fix(ui5-card): update theming parameter (#4582)
     
-    The keyboard specification for the ComboBox is now fully implemented, with the addition of the following keys:
-    
-    - `F4`, `ALT`+`UP`/`DOWN`- Toggles the picker.
-    - `PAGEDOWN` - Moves selection down by page size (10 items by default).
-    - `PAGEUP` - Moves selection up by page size (10 items by default).
-    - `HOME` - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
-    - `END` - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
+    The parameter for the border-radius has been updated to use sapElement_BorderCornerRadius.
