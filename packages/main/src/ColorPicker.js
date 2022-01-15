@@ -91,8 +91,14 @@ const metadata = {
 		 * @private
 		 */
 		_isSelectedColorChanged: {
-			type: Boolean,
-			defaultValue: false
+			type: Boolean
+		},
+
+		/**
+		 * @private
+		 */
+		 _isHueValueChanged: {
+			type: Boolean
 		},
 
 		/**
@@ -334,6 +340,8 @@ class ColorPicker extends UI5Element {
 		this.selectedHue = event.target.value;
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
+		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
+		this._isHueValueChanged = true;
 
 		const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
 
@@ -433,7 +441,7 @@ class ColorPicker extends UI5Element {
 			y: y - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		// Idicated that changes to the color settings are triggered as a result of user pressing over the main color section.
+		// Idication that changes to the color settings are triggered as a result of user pressing over the main color section.
 		this._isSelectedColorChanged = true;
 
 		const tempColor = this._calculateColorFromCoordinates(x, y);
@@ -500,10 +508,14 @@ class ColorPicker extends UI5Element {
 		};
 
 		// We shouldn't update the hue value when user presses over the main color section.
+		// We shouldn't recalculate the hue value when user changes the hue value
 		if (this._isSelectedColorChanged) {
 			this._isSelectedColorChanged = false;
+		} else if (this._isHueValueChanged) {
+			this._isHueValueChanged = false;
+			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
-			this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
+			this._hue = Math.round(hslColours.h * 4.25);
 		}
 
 		this._setMainColor(this._hue);

@@ -106,13 +106,22 @@ describe("Color Picker general interaction", () => {
 		const colorPicker = await browser.$("#change-event");
 		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
 		const mainColorSection = await colorPicker.shadow$(".ui5-color-picker-main-color");
-		const hueValue = await colorPicker.getAttribute("_hue");
 
 		await hexInput.doubleClick();
 		await browser.keys("0a6ed1");
+		await browser.keys("Enter");
+
+		const hueValue = await colorPicker.getAttribute("_hue");
+
 		await mainColorSection.click();
 
 		assert.strictEqual(await colorPicker.getAttribute("_hue"), hueValue, "Hue value remained unchanched");
+
+		await hexInput.doubleClick();
+		await browser.keys("2aa65e");
+		await browser.keys("Enter");
+		
+		assert.strictEqual(await colorPicker.getAttribute("_hue"), '617', "Hue value changed");
 	});
 
 });
