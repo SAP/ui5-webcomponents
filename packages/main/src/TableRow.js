@@ -1,10 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import {
-	isSpace,
-	isEnter,
-	isTabNext,
-	isF7 
-} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isF7 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableMode from "./types/TableMode.js";
@@ -205,7 +200,7 @@ class TableRow extends UI5Element {
 
 		if (isF7(event)) {
 			event.preventDefault();
-			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
+			this._onfocusin(event, true);
 		}
 	}
 

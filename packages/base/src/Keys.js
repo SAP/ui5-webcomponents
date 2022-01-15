@@ -207,7 +207,7 @@ const isUpAlt = event => (event.key ? event.key === "ArrowUp" : event.keyCode ==
 
 const isDownAlt = event => (event.key ? event.key === "ArrowDown" : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, true, false);
 
-const isCtrlA = event => (event.key ? (event.key === "A" || event.key === "a") : event.code === "KeyA") && checkModifierKeys(event, true, false, false);
+const isCtrlA = event => (event.keyCode === KeyCodes.A || (event.key === "A" || event.key === "a")) && checkModifierKeys(event, true, false, false);
 
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 

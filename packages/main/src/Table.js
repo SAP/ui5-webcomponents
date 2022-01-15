@@ -5,7 +5,13 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter, isCtrlA, isUpAlt } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isCtrlA,
+	isUpAlt,
+	isDownAlt,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -437,6 +443,7 @@ class Table extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			affectedPropertiesNames: ["_columnHeader"],
 			getItemsCallback: () => [this._columnHeader, ...this.rows],
+			skipItemsSize: 20,
 		});
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
@@ -478,6 +485,8 @@ class Table extends UI5Element {
 		this.visibleColumnsCount = this.visibleColumns.length;
 
 		this._allRowsSelected = selectedRows.length === this.rows.length;
+
+		this._previousItem = this._previousItem || this.rows[0] || null;
 	}
 
 	onAfterRendering() {
@@ -507,33 +516,80 @@ class Table extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isCtrlA(event) && this.mode === "MultiSelect") {
+		if (isCtrlA(event)) {
 			event.preventDefault();
-			this._selectAll(event);
+			this.isMultiSelect && this._selectAll(event);
 			return;
 		}
 
-		if (isUpAlt(event)) {
-			if (event.target.tagName === "UI5-TABLE-ROW") {
-				console.log("row")
-			}
+		const isAltUp = isUpAlt(event);
 
-			if (event.target.id === `${this._id}-columnHeader`) {
-				console.log("header")
-			}
-
-			if (event.target.id === `${this._id}-growingButton-text`) {
-				console.log("more")
-			}
-
-			console.log(event.target)
+		if (isAltUp || isDownAlt(event)) {
+			return this._handleArrowAlt(isAltUp, event.target);
 		}
 	}
 
-	_onfocusin(event) {
-		if (this.tableInitialFocus) {
-			this.rows.length && this.rows[0].focus();
-			this.tableInitialFocus = false;
+	/**
+	 * Handles Alt + Up/Down.
+	 * Switches focus between column header, last focused item, and "More" button (if applicable).
+	 * @private
+	 * @param {boolean} shouldMoveUp Whether to move focus upward
+	 * @param {object} focusedElement The element currently in focus
+	 */
+	_handleArrowAlt(shouldMoveUp, focusedElement) {
+		const focusedElementType = this.getFocusedElementType(focusedElement);
+		const moreButton = this.getMoreButton();
+		let shouldFocusTableRow;
+
+		if (focusedElementType === "tableRow") {
+			const shouldFocusHeader = shouldMoveUp || !moreButton;
+			this._previousItem = focusedElement;
+
+			if (shouldFocusHeader) {
+				this._onColumnHeaderClick();
+			} else {
+				moreButton.focus();
+			}
+		}
+
+		if (focusedElementType === "columnHeader") {
+			shouldFocusTableRow = (!shouldMoveUp || !moreButton) && !!this._previousItem;
+
+			if (!shouldFocusTableRow && !moreButton) {
+				return;
+			}
+			
+			(shouldFocusTableRow ? this._previousItem : moreButton).focus();
+		}
+
+		if (focusedElementType === "moreButton") {
+			shouldFocusTableRow = shouldMoveUp && !!this._previousItem;
+
+			if (shouldFocusTableRow) {
+				this._previousItem.focus();
+			} else {
+				this._onColumnHeaderClick();
+			}
+		}
+	}
+
+	/**
+	 * Determines the type of the currently focused element.
+	 * @private
+	 * @param {object} element The object representation of the DOM element
+	 * @returns {("columnHeader"|"tableRow"|"moreButton")} A string identifier
+	 */
+	getFocusedElementType(element) {
+		if (element === this.getColumnHeader()) {
+			return "columnHeader";
+		}
+
+		if (element === this.getMoreButton()) {
+			return "moreButton";
+		}
+
+		if (this.rows.includes(element)) {
+			return "tableRow";
 		}
 	}
 
@@ -547,12 +603,9 @@ class Table extends UI5Element {
 	}
 
 	_onColumnHeaderKeydown(event) {
-		if(isUpAlt(event)) {
-			
-		}
-
-		if(isDownAlt(event)) {
-			
+		if(isSpace(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll();
 		}
 	}
 
@@ -565,14 +618,6 @@ class Table extends UI5Element {
 		if (isEnter(event)) {
 			this._onLoadMoreClick();
 			this._loadMoreActive = true;
-		}
-
-		if(isUpAlt(event)) {
-			
-		}
-
-		if(isDownAlt(event)) {
-			
 		}
 	}
 
@@ -679,6 +724,10 @@ class Table extends UI5Element {
 
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
+	}
+
+	getMoreButton() {
+		return this.growsWithButton && this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-growingButton`);
 	}
 
 	handleResize(event) {

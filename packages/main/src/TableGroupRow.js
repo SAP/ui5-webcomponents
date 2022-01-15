@@ -150,6 +150,10 @@ class TableGroupRow extends UI5Element {
 		this._colSpan = this.visibleColCount();
 	}
 
+	_onfocusin(event) {
+		this.parentElement._itemNavigation.setCurrentItem(this);
+	}
+
 	static async onDefine() {
 		TableGroupRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
