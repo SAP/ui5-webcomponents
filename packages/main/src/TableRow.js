@@ -180,6 +180,7 @@ class TableRow extends UI5Element {
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
+		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
 
 		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
@@ -200,7 +201,7 @@ class TableRow extends UI5Element {
 
 		if (isF7(event)) {
 			event.preventDefault();
-			this._onfocusin(event, true);
+			tableRowRoot.focus();
 		}
 	}
 

@@ -474,3 +474,59 @@ describe("Table general interaction", () => {
 		});
 	});
 });
+
+describe("Table keyboard interaction", () => {
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`)
+	});
+
+	it("Ctrl + A", async () => {
+		await browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+		const firstRow = await browser.$("#firstRowMultiSelect");
+		const secondRow = await browser.$("#secondRowMultiSelect");
+		const thirdRow = await browser.$("#thirdRowMultiSelect");
+		const forthRow = await browser.$("#forthRowMultiSelect");
+		const table = await browser.$("#multi");
+		const selectAllCheckBox = await table.shadow$("thead ui5-checkbox");
+
+		await firstRow.click();
+		
+		// Assert
+		assert.notOk(await firstRow.getAttribute("selected"), "The first row is not selected");
+		assert.notOk(await secondRow.getAttribute("selected"), "The second row is not selected");
+		assert.notOk(await thirdRow.getAttribute("selected"), "The third row is not selected");
+		assert.notOk(await forthRow.getAttribute("selected"), "The forth row is not selected");
+		assert.notOk(await selectAllCheckBox.getProperty("checked"), "Select all checkbox is not checked");
+
+		// Act
+		await table.keys(["Control", "A"]);
+
+		// Assert
+		assert.ok(await firstRow.getAttribute("selected"), "The first row is selected");
+		assert.ok(await secondRow.getAttribute("selected"), "The second row is selected");
+		assert.ok(await thirdRow.getAttribute("selected"), "The third row is selected");
+		assert.ok(await forthRow.getAttribute("selected"), "The forth row is selected");
+		assert.ok(await selectAllCheckBox.getProperty("checked"), "Select all checkbox is checked");
+	});
+
+	it("F7", async () => {
+		await browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+		const firstRow = await browser.$("#firstRowMultiSelect");
+		const buttonInFirstRow = await browser.$("#button2");
+		
+		// Act
+		await firstRow.click();
+		await firstRow.keys("Tab");
+
+		// Assert
+		assert.ok(await buttonInFirstRow.getAttribute("focused"), "First interactive element in table row should be focused on TAB");
+		assert.notOk(await firstRow.getAttribute("focused"), "First row's root should not be focused");
+
+		// Act
+		await buttonInFirstRow.keys("F7");
+
+		// Assert
+		assert.notOk(await buttonInFirstRow.getAttribute("focused"), "First interactive element in table row should not be focused on F7");
+		assert.ok(await firstRow.getAttribute("focused"), "First row's root should  be focused");
+	});
+});

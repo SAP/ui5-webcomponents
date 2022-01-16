@@ -498,11 +498,15 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
+		const rows = this.rows;
+
 		if (!isIE()) {
 			this.growingIntersectionObserver = this.getIntersectionObserver();
 		}
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
+
+		this._itemNavigation.setCurrentItem(rows.length ? rows[0] : this._columnHeader);
 	}
 
 	onExitDOM() {
@@ -558,7 +562,7 @@ class Table extends UI5Element {
 			if (!shouldFocusTableRow && !moreButton) {
 				return;
 			}
-			
+
 			(shouldFocusTableRow ? this._previousItem : moreButton).focus();
 		}
 
@@ -603,7 +607,7 @@ class Table extends UI5Element {
 	}
 
 	_onColumnHeaderKeydown(event) {
-		if(isSpace(event)) {
+		if (isSpace(event)) {
 			event.preventDefault();
 			this.isMultiSelect && this._selectAll();
 		}
