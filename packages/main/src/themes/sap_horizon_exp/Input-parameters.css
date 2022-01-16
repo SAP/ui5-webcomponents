@@ -44,6 +44,7 @@
 	--_ui5-input-value-state-icon-display: flex;
 	--_ui5-input-disabled-value-state-icon-opacity: 0;
 	--_ui5-input-value-state-error-color: var(--sapRedColor9);
+	--_ui5-input-focused-value-state-error-color: var(--_ui5-input-color);
 	--_ui5-input-value-state-error-placeholder-color: var(--sapRedColor5);
 	--_ui5-input-value-state-error-background: var(--sapRedColor1);
 	--_ui5-input-error-background-image: linear-gradient(var(--sapRedColor4), var(--sapRedColor4));
@@ -56,6 +57,7 @@
 	--_ui5-input-disabled-value-state-error-border-width: 0;
 	--_ui5-input-disabled-value-state-error-color: var(--sapGreyColor8);
 	--_ui5-input-value-state-warning-color: var(--sapMangoColor9);
+	--_ui5-input-focused-value-state-warning-color: var(--_ui5-input-color);
 	--_ui5-input-value-state-warning-placeholder-color: var(--sapMangoColor5);
 	--_ui5-input-value-state-warning-background: var(--sapMangoColor1);
 	--_ui5-input-value-state-warning-border-color: var(--sapMangoColor5);
@@ -69,6 +71,7 @@
 	--_ui5-input-value-state-warning-border-width: 2px;
 	--_ui5-input-focused-value-state-warning-border-width: 0;
 	--_ui5-input-value-state-success-color: var(--sapGreenColor9);
+	--_ui5-input-focused-value-state-success-color: var(--_ui5-input-color);
 	--_ui5-input-value-state-success-placeholder-color: var(--_ui5-input-placeholder-color);
 	--_ui5-input-value-state-success-background: var(--sapGreenColor1);
 	--_ui5-input-value-state-success-border-color: var(--sapGreenColor4);
@@ -91,7 +94,8 @@
 	--_ui5-input-disabled-value-state-information-background: var(--sapGreyColor1);
 	--_ui5-input-disabled-value-state-information-border-width: 0;
 	--_ui5-input-disabled-value-state-information-color: var(--sapGreyColor8);
-	--_ui5-input-value-state-information-color: var(--sapGreyColor9);
+	--_ui5-input-value-state-information-color: var(--sapBlueColor9);
+	--_ui5-input-focused-value-state-information-color: var(--_ui5-input-color);
 	--_ui5-input-value-state-error-focus-box-shadow: var(--_ui5-input-focus-box-shadow);
 	--_ui5-input-value-state-warning-focus-box-shadow: var(--_ui5-input-focus-box-shadow);
 	--_ui5-input-value-state-success-focus-box-shadow: var(--_ui5-input-focus-box-shadow);

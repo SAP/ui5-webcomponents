@@ -127,8 +127,7 @@
 }
 
 :host([disabled]) .ui5-input-value-state-icon,
-:host([readonly]) .ui5-input-value-state-icon,
-:host([focused]) .ui5-input-value-state-icon {
+:host([readonly]) .ui5-input-value-state-icon {
 	opacity: var(--_ui5-input-disabled-value-state-icon-opacity);
 }
 
@@ -309,6 +308,7 @@
 }
 
 :host([value-state="Error"][focused]:not([readonly])) {
+	color: var(--_ui5-input-focused-value-state-error-color);
 	background-color: var(--_ui5-input-focused-value-state-error-background);
 	border-color: var(--_ui5-input-focused-value-state-error-border-color);
 	box-shadow: var(--_ui5-input-value-state-error-focus-box-shadow);
@@ -347,6 +347,7 @@
 }
 
 :host([value-state="Warning"][focused]:not([readonly])) {
+	color: var(--_ui5-input-focused-value-state-warning-color);
 	background-color: var(--_ui5-input-focused-value-state-warning-background);
 	border-color: var(--_ui5-input-focused-value-state-warning-border-color);
 	box-shadow: var(--_ui5-input-value-state-warning-focus-box-shadow);
@@ -380,6 +381,7 @@
 }
 
 :host([value-state="Success"][focused]:not([readonly])) {
+	color: var(--_ui5-input-focused-value-state-success-color);
 	background-color: var(--_ui5-input-focused-value-state-success-background);
 	border-color: var(--_ui5-input-focused-value-state-success-border-color);
 	box-shadow: var(--_ui5-input-value-state-success-focus-box-shadow);
@@ -413,6 +415,7 @@
 }
 
 :host([value-state="Information"][focused]:not([readonly])) {
+	color: var(--_ui5-input-focused-value-state-information-color);
 	background-color: var(--_ui5-input-focused-value-state-information-background);
 	border-color: var(--_ui5-input-focused-value-state-information-border-color);
 	box-shadow: var(--_ui5-input-focus-box-shadow);

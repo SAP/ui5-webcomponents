@@ -49,6 +49,7 @@
 	--_ui5-input-focused-value-state-warning-background: var(--sapField_WarningBackground);
 	--_ui5-input-focused-value-state-success-background: var(--sapField_SuccessBackground);
 	--_ui5-input-focused-value-state-information-background: var(--sapField_InformationBackground);
+	--_ui5-input-focused-value-state-error-color: var(--sapField_TextColor);
 	--_ui5-input-value-state-error-border-color: var(--sapField_InvalidColor);
 	--_ui5-input-focused-value-state-error-border-color: var(--sapField_InvalidColor);
 	--_ui5-input-value-state-error-hover-box-shadow: none;
@@ -65,6 +66,7 @@
 	--_ui5-input-value-state-warning-border-width: var(--sapField_WarningBorderWidth);
 	--_ui5-input-focused-value-state-warning-border-width: var(--sapField_WarningBorderWidth);
 	--_ui5-input-focused-value-state-warning-border-color: var(--sapField_WarningColor);
+	--_ui5-input-focused-value-state-warning-color: var(--sapField_WarningColor);
 	--_ui5-input-value-state-warning-box-shadow: none;
 	--_ui5-input-value-state-warning-hover-box-shadow: none;
 	--_ui5-input-disabled-value-state-warning-background: var(--sapField_WarningBackground);
@@ -78,6 +80,7 @@
 	--_ui5-input-focused-value-state-success-border-color: var(--sapField_SuccessColor);
 	--_ui5-input-value-state-success-border-width: 1px;
 	--_ui5-input-focused-value-state-success-border-width: 1px;
+	--_ui5-input-focused-value-state-success-color: var(--sapField_TextColor);
 	--_ui5-input-value-state-success-hover-box-shadow: none;
 	--_ui5-input-disabled-value-state-success-background: var(--sapField_SuccessBackground);
 	--_ui5-input-disabled-value-state-success-border-width: var(--sapField_SuccessBorderWidth);
@@ -93,6 +96,7 @@
 	--_ui5-input-disabled-value-state-information-background: var(--sapField_InformationBackground);
 	--_ui5-input-disabled-value-state-information-border-width: var(--sapField_InformationBorderWidth);
 	--_ui5-input-focused-value-state-information-border-width: 1px;
+	--_ui5-input-focused-value-state-information-color: var(--sapField_TextColor);
 	--_ui5-input-background-size: 0 0;
 	--_ui5-input-hover-background-size: 100% var(--sapField_BorderWidth);
 	--_ui5-input-focused-background-size: 100% var(--sapField_BorderWidth);
