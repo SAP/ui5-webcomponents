@@ -106,12 +106,24 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @public
+		 */
+		 accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * Indicates if the elements is on focus
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @private
 		 */
-		focused: {
+		 focused: {
 			type: Boolean,
 		},
 
@@ -123,18 +135,6 @@ const metadata = {
 		 */
 		_splitButtonAccInfo: {
 			type: Object,
-		},
-
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @defaultvalue: ""
-		 * @public
-		 */
-		 accessibleName: {
-			type: String,
-			defaultValue: undefined,
 		},
 
 		/**
@@ -161,13 +161,12 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if there is action on default or arrow button triggered by keyboard
-		 * (Space, Enter, F4, Arrow Up/Down, Alt+Arrow Up/Down)
+		 * Indicates if there is Space key pressed
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @private
 		 */
-		_keyboardAction: {
+		_spacePressed: {
 			type: Boolean,
 			noAttribute: true,
 		},
@@ -180,18 +179,6 @@ const metadata = {
 		 */
 		_shiftOrEscapePressed: {
 			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
-		 * Defines the icon of the text button
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @private
-		 */
-		 _textButtonIcon: {
-			type: String,
-			defaultValue: "",
 			noAttribute: true,
 		},
 
@@ -246,7 +233,7 @@ const metadata = {
  * <ul>
  * <li>for the first one (default action) you can define some <code>text</code> or an <code>icon</code>, or both.
  * Also, it is possible to define different icon for active state of this button - <code>activeIcon</code>.</li>
- * <li>the second one (arrow action) consists only <code>slim-arrow-down</code> icon.</li>
+ * <li>the second one (arrow action) contains only <code>slim-arrow-down</code> icon.</li>
  * </ul>
  * You can choose a <code>design</code> from a set of predefined types (the same as for ui5-button) that offer
  * different styling to correspond to the triggered action. Both text and arrow actions have the same design.
@@ -257,6 +244,11 @@ const metadata = {
  * the mouse cursor. A disabled <code>ui5-split-button</code> appears inactive and any of the two buttons
  * cannot be pressed.
  * <br><br>
+ * <b>Keyboard handing</b>
+ * <ul>
+ * <li><code>Space</code> or <code>Enter</code> - triggers the default action</li>
+ * <li><code>Shift</code> or <code>Escape</code> - if <code>Space</code> is pressed, releases the default action button without triggering the click event.</li>
+ * <li><code>Arrow Down</code>, <code>Arrow Up</code>, <code>Alt</code>+<code>Arrow Down</code>, <code>Alt</code>+<code>Arrow Up</code>, or <code>F4</code> - triggers the arrow action
  * There are separate events that are fired on activating of <code>ui5-split-button</code> parts:
  * <ul>
  * <li><code>click</code> for the first button (default action)</li>
@@ -296,16 +288,13 @@ class SplitButton extends UI5Element {
 		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	onAfterRendering() {
-		this._textButtonIcon = this.buttonIcon;
-	}
-
 	_onFocusOut(event) {
 		if (this.disabled || event.isMarked) {
 			return;
 		}
 
-		this._focusedState(false);
+		this.focused = false;
+		this._forceTabIndexUpdate();
 	}
 
 	_onFocusIn(event) {
@@ -313,20 +302,11 @@ class SplitButton extends UI5Element {
 			return;
 		}
 
-		this._focusedState(true);
+		this.focused = true;
 	}
 
-	_onMouseDownArrow(event) {
-		this._focusedState(false);
-	}
-
-	_onMouseTouchDownText(event) {
-		this._focusedState(false);
-		this._textButtonActiveState(true);
-	}
-
-	_onMouseUpText() {
-		this._textButtonActiveState(false);
+	_forceTabIndexUpdate() {
+		this._tabIndexUpdate = true;
 	}
 
 	_onKeyDown(event) {
@@ -334,24 +314,21 @@ class SplitButton extends UI5Element {
 			this._tabIndexUpdate = true;
 		} else if (isDown(event) || isUp(event) || isDownAlt(event) || isUpAlt(event) || isF4(event)) {
 			this._arrowButtonActive = true;
-			this._keyboardAction = true;
 			this._fireArrowClick();
 		} else if (isSpace(event) || isEnter(event)) {
-			this._arrowButtonActive = false;
-			this._updateIcon = true;
-			this._textButtonActiveState(true);
+			this._textButtonActive = true;
+			this._tabIndexUpdate = true;
 			if (isEnter(event)) {
-				this._keyboardAction = true;
 				event.preventDefault();
 				this._fireClick();
 			} else {
-				this._keyboardAction = true;
+				this._spacePressed = true;
 			}
 		}
 
-		if (this._keyboardAction && (isEscape(event) || isShift(event))) {
+		if (this._spacePressed && (isEscape(event) || isShift(event))) {
 			this._shiftOrEscapePressed = true;
-			this._textButtonActiveState(false);
+			this._textButtonActive = false;
 		}
 	}
 
@@ -359,27 +336,20 @@ class SplitButton extends UI5Element {
 		if (isDown(event) || isUp(event) || isDownAlt(event) || isUpAlt(event) || isF4(event)) {
 			this._arrowButtonActive = false;
 		} else if (isSpace(event) || isEnter(event)) {
-			this._textButtonActiveState(false);
+			this._textButtonActive = false;
+			this._tabIndexUpdate = true;
 			if (isSpace(event)) {
 				if (!this._shiftOrEscapePressed) {
+					this._shiftOrEscapePressed = false;
 					event.preventDefault();
 					event.stopPropagation();
 					this._fireClick();
+					this._spacePressed = false;
 				} else {
 					this._shiftOrEscapePressed = false;
 				}
 			}
 		}
-	}
-
-	_focusedState(state) {
-		this._tabIndexUpdate = true;
-		this.focused = state;
-	}
-
-	_textButtonActiveState(state) {
-		this._textButtonActive = state;
-		this._textButtonIcon = this.buttonIcon;
 	}
 
 	_fireClick(event) {
@@ -393,15 +363,15 @@ class SplitButton extends UI5Element {
 	}
 
 	get buttonIcon() {
-		return this.textButton && this.activeIcon !== "" && this.textButton.active ? this.activeIcon : this.icon;
+		return this.textButton && this.activeIcon !== "" && (this._textButtonActive || this.textButton.active) ? this.activeIcon : this.icon;
 	}
 
 	get textButton() {
-		return this.shadowRoot.querySelector(".ui5-split-text-button");
+		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-text-button");
 	}
 
 	get arrowButton() {
-		return this.shadowRoot.querySelector(".ui5-split-arrow-button");
+		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-arrow-button");
 	}
 
 	get tabIndexValue() {
@@ -415,14 +385,6 @@ class SplitButton extends UI5Element {
 
 		if (tabIndex) {
 			return tabIndex;
-		}
-
-		if (buttonsAction && !this._keyboardAction) {
-			this.focused = false;
-		}
-
-		if (this._keyboardAction) {
-			this._spcePressed = false;
 		}
 
 		return this.disabled || buttonsAction ? "-1" : this._tabIndex;

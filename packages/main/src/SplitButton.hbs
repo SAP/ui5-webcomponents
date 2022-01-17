@@ -13,14 +13,15 @@
 		class="ui5-split-text-button"
 		design="{{design}}"
 		dir={{effectiveDir}}
-		icon="{{_textButtonIcon}}"
+		icon="{{buttonIcon}}"
 		tabindex="-1"
 		?disabled="{{disabled}}"
 		?active="{{_textButtonActive}}"
 		@click="{{_fireClick}}"
-		@touchstart={{_onMouseTouchDownText}}
-		@mousedown={{_onMouseTouchDownText}}
-		@mouseup={{_onMouseUpText}}
+		@touchstart={{_forceTabIndexUpdate}}
+		@mousedown={{_forceTabIndexUpdate}}
+		@mouseup={{_forceTabIndexUpdate}}
+		@focusin={{_forceTabIndexUpdate}}
 		@focusout={{_onFocusOut}}
 	>
 		{{text}}
@@ -40,7 +41,8 @@
 			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
 			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
 			@click="{{_fireArrowClick}}"
-			@mousedown={{_onMouseDownArrow}}
+			@mousedown={{_forceTabIndexUpdate}}
+			@focusin={{_forceTabIndexUpdate}}
 			@focusout={{_onFocusOut}}
 		>
 		</ui5-button>

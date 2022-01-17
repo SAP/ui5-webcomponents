@@ -85,8 +85,12 @@
 	});
 
 	function displayEventDetails(event) {
-		displayEvent.value = event.type
+		displayEvent.value = event.type;
 		displayElement.value = event.target.text;
+		setTimeout(function() {
+			displayEvent.value = "";
+			displayElement.value = "";
+		}, 1000);
 	}
 </script>
 </html>
