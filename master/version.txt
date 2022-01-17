@@ -1,9 +1,7 @@
-commit 42254d8822ca3cfe67a5cdc77dba0b32bda05903
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Mon Jan 17 10:08:38 2022 +0200
+commit 2294cb2d089df96fc611fc93843790213247318b
+Author: Philipp Pracht <philipp.pracht@sap.com>
+Date:   Mon Jan 17 09:41:19 2022 +0100
 
-    fix(ui5-breadcrumbs): correct missing label for single breadcrumb (#4578)
+    test(ui5-breadcrumbs): fix false-positive event listener tests (#4584)
     
-    Add the missing label of breadcrumbs with a single item.
-    
-    Fixes #4565
+    Two tests checking for item-click event are passing, although the eventlistener isn't called in the test run, probably due to the noConflict configuration here:
