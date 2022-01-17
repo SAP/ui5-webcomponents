@@ -325,7 +325,7 @@ class Breadcrumbs extends UI5Element {
 
 		if (!this._isOverflowEmpty) {
 			this._dropdownArrowLinkWidth = this._getElementWidth(
-				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper")
+				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper"),
 			);
 		}
 	}
