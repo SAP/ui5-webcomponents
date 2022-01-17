@@ -22,6 +22,12 @@ describe("General API", () => {
 		assert.strictEqual(await link.getAttribute("href"), HREF_ATTRIBUTE, "The href attribute is changed.");
 	});
 
+	it("tests rel attribute", async () => {
+		const anchor = await browser.$("#target-blank-link");
+
+		assert.strictEqual(await anchor.shadow$("a").getAttribute("rel"), "noreferrer noopener", "The rel attribute is properly set.");
+	});
+
 	it("tests target attributes", async () => {
 		const link = await browser.$("#empty-link-2");
 		const TARGET_ATTRIBUTE = "_blank";

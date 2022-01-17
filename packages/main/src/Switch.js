@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
@@ -94,6 +95,19 @@ const metadata = {
 		 */
 		textOff: {
 			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		 accessibleNameRef: {
+			type: String,
+			defaultValue: "",
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
@@ -246,6 +260,10 @@ class Switch extends UI5Element {
 
 	get hiddenText() {
 		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static get dependencies() {
