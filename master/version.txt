@@ -1,8 +1,5 @@
-commit 3f2c3cdf6ded573e6a178b6d36cef39652aa0717
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Mon Jan 17 11:45:13 2022 +0200
+commit f872c458fc558166130216791cbd136c168cf114
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Mon Jan 17 18:38:35 2022 +0200
 
-    fix(ui5-link): add `noopener` to rel attribute (#4533)
-    
-    - The "noopener" text is added to the rel value attribute alongside "noreferrer" text for compatibility reasons with the openui5's sap.m.Link implementation.
-    - Explicit specification of rel "noopener" helps protect users from tabnabbing in legacy browsers including Edge Legacy and Internet Explorer.
+    docs(ui5-breadcrumbs): remove obsolete attribute from test page
