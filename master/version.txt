@@ -1,5 +1,7 @@
-commit f0b1bf768066342c020191a689fe2fdd30d96c73
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jan 17 08:59:18 2022 +0200
+commit 6d6cf6f6d4639856964839c8feb5a3e4d4bbae04
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon Jan 17 09:07:01 2022 +0200
 
-    fix(ui5-combobox): fix docs (#4553)
+    feat(ui5-icon): accessibleRole property implemented (#4548)
+    
+    Fixes: #4499
