@@ -12,6 +12,7 @@
 	--_ui5_button_icon_font_size: 1.375rem;
 	--_ui5_button_outline: 1px dotted var(--sapContent_FocusColor);
 	--_ui5_button_outline_offset: calc(-1 * .1875rem);
+	--_ui5_button_focused_keyboard_outline: var(--_ui5_button_outline);
 	--_ui5_button_background: var(--sapButton_Background);
 	--_ui5_button_hover_background: var(--sapButton_Hover_Background);
 	--_ui5_button_disabled_background: var(--sapButton_Background);
@@ -29,7 +30,9 @@
 	--_ui5_button_disabled_box-shadow: none;
 	--_ui5_button_active_box_shadow: none;
 	--_ui5_button_focused_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_button_focused_keyboard_box_shadow: var(--sapContent_Interaction_Shadow);
 	--_ui5_button_focused_background: var(--sapButton_Background);
+	--_ui5_button_focused_keyboard_background: var(--sapButton_Background);
 	--_ui5_button_text_shadow: var(--sapContent_TextShadow);
 	--_ui5_button_focus_offset: 1px;
 	--_ui5_button_focus_width: 1px;
@@ -43,6 +46,7 @@
 	--_ui5_button_emphasized_focused_border_color: var(--sapButton_Emphasized_BorderColor);
 	--_ui5_button_emphasized_font_weight: normal;
 	--_ui5_button_emphasized_outline: 1px dotted var(--sapContent_FocusColor);
+	--_ui5_button_emphasized_focused_keyboard_outline: var(--_ui5_button_emphasized_outline);
 	--_ui5_button_emphasized_focused_border_radius: 0;
 	--_ui5_button_emphasized_background_color: var(--sapButton_Emphasized_Background);
 	--_ui5_button_emphasized_focused_background: var(--sapButton_Emphasized_Background);
@@ -56,20 +60,24 @@
 	--_ui5_button_emphasized_color: var(--sapButton_Emphasized_TextColor);
 	--_ui5_button_emphasized_hover_color: var(--sapButton_Emphasized_TextColor);
 	--_ui5_button_emphasized_disabled_color: var(--sapButton_Emphasized_TextColor);
+	--_ui5_button_emphasized_focused_inset: 0.0625rem;
+	--_ui5_button_emphasized_focused_box_shadow: none;
+	--_ui5_button_emphasized_focused_keyboard_box_shadow: none;
 	--_ui5_button_transparent_hover: transparent;
 	--_ui5_button_transparent_color: var(--sapButton_Lite_TextColor);
-	--_ui5_button_transparent_disabled_background: var(--sapButton_Lite_Background);
+	--_ui5_button_transparent_disabled_background: transparent;
 	--_ui5_button_transparent_active_color: var(--sapButton_Active_TextColor);
+	--_ui5_button_transparent_box_shadow: none;
+	--_ui5_button_transparent_focused_background: transparent;
 	--_ui5_button_flat_background: var(--sapButton_Background);
 	--_ui5_button_neutral_background: var(--_ui5_button_background);
 	--_ui5_button_neutral_color: var(--_ui5_button_color);
 	--_ui5_button_neutral_hover_color: var(--_ui5_button_hover_color);
 	--_ui5_button_neutral_hover_box_shadow: var(--_ui5_button_hover_box_shadow);
 	--_ui5_button_neutral_active_box_shadow: var(--_ui5_button_active_box_shadow);
+	--_ui5_button_neutral_focused_box_shadow: var(--_ui5_button_focused_box_shadow);
 	--_ui5_button_neutral_active_color: var(--_ui5_button_active_color);
 	--_ui5_button_neutral_box_shadow: none;
 	--_ui5_button_silent_background: var(--_ui5_button_background);
 	--_ui5_button_silent_color: var(--_ui5_button_color);
-	--_ui5_button_emphasized_focused_inset: 0.0625rem;
-	--_ui5_button_emphasized_focused_box_shadow: none;
 }

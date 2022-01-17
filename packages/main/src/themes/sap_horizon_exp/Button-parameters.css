@@ -14,8 +14,10 @@
 	--_ui5_button_background: #fff;
 	--_ui5_button_hover_background: #fff;
 	--_ui5_button_hover_box_shadow: var(--shadow-blue-medium);
-	--_ui5_button_focused_box_shadow: var(--shadow-blue-medium);
-	--_ui5_button_focused_background: #fff;
+	--_ui5_button_focused_box_shadow: var(--shadow-blue-small);
+	--_ui5_button_focused_keyboard_box_shadow: var(--shadow-blue-medium);
+	--_ui5_button_focused_background: var(--_ui5_button_background); 
+	--_ui5_button_focused_keyboard_background: #fff;
 	--_ui5_button_disabled_background: var(--sapGreyColor1);
 	--_ui5_button_font_weight: bold;
 	--_ui5_button_transition: all .2s ease-in-out;
@@ -28,7 +30,8 @@
 	--_ui5_button_active_background: #fff;
 	--_ui5_button_disabled_color: var(--sapGreyColor3);
 	--_ui5_button_disabled_opacity: 1;
-	--_ui5_button_outline: 2px solid var(--sapBlueColor4);
+	--_ui5_button_outline: none;
+	--_ui5_button_focused_keyboard_outline: 2px solid var(--sapBlueColor4);
 	--_ui5_button_transparent_hover: #fff;
 	--_ui5_button_transparent_disabled_background: transparent;
 	--_ui5_button_flat_background: var(--sapBlueColor1);
@@ -36,6 +39,7 @@
 	--_ui5_button_outline_offset: 0;
 	--_ui5_button_emphasized_focused_border_radius: 8px;
 	--_ui5_button_emphasized_outline: var(--_ui5_button_outline);
+	--_ui5_button_emphasized_focused_keyboard_outline: 2px solid var(--sapBlueColor4);
 	--_ui5_button_emphasized_background_color: var(--sapBlueColor5);
 	--_ui5_button_emphasized_border_color: var(--sapBlueColor5);
 	--_ui5_button_emphasized_hover_background_color: var(--sapBlueColor6);
@@ -49,14 +53,16 @@
 	--_ui5_button_emphasized_hover_color: #fff;
 	--_ui5_button_emphasized_active_color: #fff;
 	--_ui5_button_emphasized_focused_inset: 0;
-	--_ui5_button_emphasized_focused_box_shadow: inset 0 0 0 2px white;
+	--_ui5_button_emphasized_focused_keyboard_box_shadow: inset 0 0 0 2px #fff;
 	--_ui5_button_transparent_color: var(--sapBlueColor5);
 	--_ui5_button_transparent_active_color: var(--sapBlueColor7);
+	--_ui5_button_transparent_focused_background: #fff;
 	--_ui5_button_neutral_background: var(--sapGreyColor1);
 	--_ui5_button_neutral_color: var(--sapGreyColor6);
 	--_ui5_button_neutral_hover_color: var(--sapGreyColor6);
 	--_ui5_button_neutral_hover_box_shadow: var(--shadow-grey-medium);
 	--_ui5_button_neutral_active_box_shadow: var(--shadow-grey-xs);
+	--_ui5_button_neutral_focused_box_shadow: var(--shadow-grey-small);
 	--_ui5_button_neutral_active_color: var(--sapGreyColor5);
 	--_ui5_button_silent_background: transparent;
 	--_ui5_button_silent_color: var(--sapGreyColor5);

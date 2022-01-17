@@ -123,11 +123,18 @@
 	box-shadow: var(--_ui5_button_disabled_box-shadow);
 }
 
-:host([focused].focus-visible) {
+:host([focused]) {
 	outline: var(--_ui5_button_outline);
 	outline-offset: var(--_ui5_button_outline_offset);
 	background: var(--_ui5_button_focused_background);
 	box-shadow: var(--_ui5_button_focused_box_shadow);
+}
+
+:host(.focus-visible) {
+	--_ui5_button_outline: var(--_ui5_button_focused_keyboard_outline);
+	--_ui5_button_focused_background: var(--_ui5_button_focused_keyboard_background);
+	--_ui5_button_focused_box_shadow: var(--_ui5_button_focused_keyboard_box_shadow);
+	--_ui5_button_emphasized_outline: var(--_ui5_button_emphasized_focused_keyboard_outline);
 }
 
 .ui5-button-root::-moz-focus-inner {
@@ -266,7 +273,7 @@ bdi {
 	--_ui5_button_focused_background: var(--_ui5_button_emphasized_focused_background);
 }
 
-:host([design="Emphasized"][focused].focus-visible) {
+:host([design="Emphasized"][focused]) {
 	outline: var(--_ui5_button_emphasized_outline);
 }
 
@@ -290,7 +297,7 @@ bdi {
 	text-shadow: none;
 }
 
-:host([design="Emphasized"][focused].focus-visible) .ui5-button-root:after {
+:host([design="Emphasized"][focused]) .ui5-button-root:after {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -305,13 +312,18 @@ bdi {
 	box-shadow: var(--_ui5_button_emphasized_focused_box_shadow);
 }
 
+:host([design="Emphasized"][focused].focus-visible) .ui5-button-root:after {
+	box-shadow: var(--_ui5_button_emphasized_focused_keyboard_box_shadow);
+}
+
 :host([design="Transparent"]) {
-	background-color: var(--sapButton_Lite_Background);
-	--_ui5_button_color: var(--_ui5_button_transparent_color);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-color: var(--sapButton_Lite_BorderColor);
-	box-shadow: none;
+	--_ui5_button_box_shadow: var(--_ui5_button_transparent_box_shadow);
 	--_ui5_button_disabled_background: var(--_ui5_button_transparent_disabled_background);
+	--_ui5_button_focused_background: var(--_ui5_button_transparent_focused_background);
+	--_ui5_button_background: var(--sapButton_Lite_Background);
+	--_ui5_button_color: var(--_ui5_button_transparent_color);
 }
 
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
@@ -347,6 +359,7 @@ bdi {
 	--_ui5_button_hover_color: var(--_ui5_button_neutral_hover_color);
 	--_ui5_button_active_color: var(--_ui5_button_neutral_active_color);
 	--_ui5_button_active_box_shadow: var(--_ui5_button_neutral_active_box_shadow);
+	--_ui5_button_focused_box_shadow: var(--_ui5_button_neutral_focused_box_shadow);
 }
 
 :host([design="Neutral"]) {
@@ -357,5 +370,5 @@ bdi {
 :host([design="Silent"]) {
 	--_ui5_button_color: var(--_ui5_button_silent_color);
 	--_ui5_button_background: var(--_ui5_button_silent_background);
-	--_ui5_button_disabled_background: var(--_ui5_button_transparent_disabled_background);
+	--_ui5_button_disabled_background: var(--_ui5_button_silent_background);
 }
