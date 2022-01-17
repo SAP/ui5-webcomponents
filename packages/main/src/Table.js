@@ -385,6 +385,7 @@ const metadata = {
  * <ul>
  * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
  * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
+ * <li>[ALT]+[UP]/[DOWN] - Moves focus between header, last focused item, and More button in either direction.</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -451,9 +452,6 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.tableEndObserved = false;
-
-		this.tableInitialFocus = true;
-
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
 

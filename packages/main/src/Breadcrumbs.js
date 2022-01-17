@@ -434,7 +434,7 @@ class Breadcrumbs extends UI5Element {
 
 	_hasVisibleContent(item) {
 		// the check is not complete but may be extended in the future if needed to cover
-		// cases becides the standard (UX-recommended) ones
+		// cases besides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
 	}
 
@@ -454,7 +454,7 @@ class Breadcrumbs extends UI5Element {
 
 	get _currentLocationText() {
 		const items = this.getSlottedNodes("items");
-		if (this._endsWithCurrentLocationLabel && items.length > 1) {
+		if (this._endsWithCurrentLocationLabel && items.length) {
 			const item = items[items.length - 1];
 			if (this._isItemVisible(item)) {
 				return item.innerText;
