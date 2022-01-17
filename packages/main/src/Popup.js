@@ -7,11 +7,12 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -103,7 +104,7 @@ const metadata = {
 		 * @private
 		 */
 		 mediaRange: {
-			type: String
+			type: String,
 		},
 
 		/**
@@ -212,7 +213,6 @@ const bodyScrollingBlockers = new Set();
  * @public
  */
 class Popup extends UI5Element {
-
 	constructor() {
 		super();
 
