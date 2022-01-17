@@ -1,9 +1,9 @@
-commit fb405142984a1b5037ab4f89cafbbb1b268db51f
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 17 09:14:43 2022 +0200
+commit 42254d8822ca3cfe67a5cdc77dba0b32bda05903
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Mon Jan 17 10:08:38 2022 +0200
 
-    fix(ui5-shellbar): allow selection with Enter key in overflow menu (#4577)
+    fix(ui5-breadcrumbs): correct missing label for single breadcrumb (#4578)
     
-    We need to wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold there will be no visual indication that this has happened
+    Add the missing label of breadcrumbs with a single item.
     
-    Fixes: #4556
+    Fixes #4565
