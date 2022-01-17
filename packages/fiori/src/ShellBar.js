@@ -5,6 +5,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
@@ -157,10 +158,6 @@ const metadata = {
 		},
 
 		_itemsInfo: {
-			type: Object,
-		},
-
-		_actionList: {
 			type: Object,
 		},
 
@@ -459,16 +456,6 @@ class ShellBar extends UI5Element {
 		// marks if preventDefault() is called in item's press handler
 		this._defaultItemPressPrevented = false;
 
-		this._actionList = {
-			itemPress: event => {
-				if (!this._defaultItemPressPrevented) {
-					this.overflowPopover.close();
-				}
-
-				this._defaultItemPressPrevented = false;
-			},
-		};
-
 		this.menuItemsObserver = new MutationObserver(() => {
 			this._updateClonedMenuItems();
 		});
@@ -744,6 +731,17 @@ class ShellBar extends UI5Element {
 				input.focus();
 			}
 		}, 100);
+	}
+
+	async _handleActionListClick(event) {
+		if (!this._defaultItemPressPrevented) {
+			this.closeOverflow();
+			// wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold
+			// there will be no visual indication that this has happened
+			await renderFinished();
+		}
+
+		this._defaultItemPressPrevented = false;
 	}
 
 	_handleCustomActionPress(event) {
