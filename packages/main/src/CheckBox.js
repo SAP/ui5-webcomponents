@@ -4,6 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
@@ -31,6 +32,30 @@ const metadata = {
 	tag: "ui5-checkbox",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {String}
+		 * @public
+		 * @defaultvalue ""
+		 * @since 1.1.0
+		 */
+		accessibleName: {
+			type: String,
+		},
 
 		/**
 		 * Defines whether the component is disabled.
@@ -362,6 +387,10 @@ class CheckBox extends UI5Element {
 		};
 	}
 
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get classes() {
 		return {
 			main: {
@@ -383,7 +412,11 @@ class CheckBox extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+		if (!this.ariaLabelText) {
+			return this.text ? `${this._id}-label` : undefined;
+		}
+
+		return undefined;
 	}
 
 	get ariaDescribedBy() {
