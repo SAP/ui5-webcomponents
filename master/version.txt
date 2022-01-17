@@ -1,7 +1,9 @@
-commit 6d6cf6f6d4639856964839c8feb5a3e4d4bbae04
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Jan 17 09:07:01 2022 +0200
+commit fb405142984a1b5037ab4f89cafbbb1b268db51f
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Jan 17 09:14:43 2022 +0200
 
-    feat(ui5-icon): accessibleRole property implemented (#4548)
+    fix(ui5-shellbar): allow selection with Enter key in overflow menu (#4577)
     
-    Fixes: #4499
+    We need to wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold there will be no visual indication that this has happened
+    
+    Fixes: #4556
