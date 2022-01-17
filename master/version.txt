@@ -1,7 +1,8 @@
-commit 2294cb2d089df96fc611fc93843790213247318b
-Author: Philipp Pracht <philipp.pracht@sap.com>
-Date:   Mon Jan 17 09:41:19 2022 +0100
+commit 3f2c3cdf6ded573e6a178b6d36cef39652aa0717
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Jan 17 11:45:13 2022 +0200
 
-    test(ui5-breadcrumbs): fix false-positive event listener tests (#4584)
+    fix(ui5-link): add `noopener` to rel attribute (#4533)
     
-    Two tests checking for item-click event are passing, although the eventlistener isn't called in the test run, probably due to the noConflict configuration here:
+    - The "noopener" text is added to the rel value attribute alongside "noreferrer" text for compatibility reasons with the openui5's sap.m.Link implementation.
+    - Explicit specification of rel "noopener" helps protect users from tabnabbing in legacy browsers including Edge Legacy and Internet Explorer.
