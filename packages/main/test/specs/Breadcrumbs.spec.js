@@ -140,6 +140,14 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is added to the overflow");
 	});
 
+	it("standard breadcrumb with single item shows location", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsWithSingleItem"),
+			label = (await breadcrumbs.shadow$("ui5-label"));
+
+		// Check
+		assert.strictEqual(await label.getText(), "Location", "label is displayed");
+	});
+
 	it("opens upon space", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 
