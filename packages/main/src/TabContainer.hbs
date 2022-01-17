@@ -5,7 +5,7 @@
 	{{#if tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/if}}
-	<div class="{{classes.header}}" id="{{_id}}-header">
+	<div class="{{classes.header}}" id="{{_id}}-header" part="header">
 		<div
 			class="ui5-tc__overflow ui5-tc__overflow--start"
 			@click="{{_onOverflowClick}}"
@@ -65,7 +65,7 @@
 </div>
 
 {{#*inline "contentArea"}}
-	<div class="{{classes.content}}">
+	<div class="{{classes.content}}" part="content">
 		{{#each items}}
 			{{#unless this.isSeparator}}
 				<div

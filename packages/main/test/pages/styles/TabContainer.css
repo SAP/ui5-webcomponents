@@ -32,3 +32,11 @@ html,
 .tabcontainer3auto {
     height: 100%;
 }
+
+.tabContainerNoPaddings::part(header) {
+    padding: 0;
+}
+
+.tabContainerNoPaddings::part(content) {
+    padding: 0;
+}
