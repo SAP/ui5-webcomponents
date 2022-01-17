@@ -62,7 +62,7 @@
 }
 
 /* links separator */
-li[separator]::after {
+li:not(.ui5-breadcrumbs-current-location)::after {
     content: "/"; /* default separator is "Slash" */
     padding: 0 .25rem;
     cursor: auto;
@@ -79,22 +79,22 @@ li[separator]::after {
 }
 
 /* separator styles */
-:host([separator-style="BackSlash"]) li[separator]::after {
+:host([separator-style="BackSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
     content: "\\";
 }
 
-:host([separator-style="DoubleBackSlash"]) li[separator]::after {
+:host([separator-style="DoubleBackSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
     content: "\\\\";
 }
 
-:host([separator-style="DoubleGreaterThan"]) li[separator]::after {
+:host([separator-style="DoubleGreaterThan"]) li:not(.ui5-breadcrumbs-current-location)::after {
     content: ">>";
 }
 
-:host([separator-style="DoubleSlash"]) li[separator]::after {
+:host([separator-style="DoubleSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
     content: "//";
 }
 
-:host([separator-style="GreaterThan"]) li[separator]::after {
+:host([separator-style="GreaterThan"]) li:not(.ui5-breadcrumbs-current-location)::after {
     content: ">";
 }
