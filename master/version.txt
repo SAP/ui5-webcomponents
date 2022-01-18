@@ -1,5 +1,7 @@
-commit f872c458fc558166130216791cbd136c168cf114
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Mon Jan 17 18:38:35 2022 +0200
+commit ed87ba5f65a10f43ddc82b95768cac9590fece63
+Author: Philipp Pracht <philipp.pracht@sap.com>
+Date:   Tue Jan 18 10:02:26 2022 +0100
 
-    docs(ui5-breadcrumbs): remove obsolete attribute from test page
+    fix(ui5-breadcrumbs): remove text-decoration from separator (#4568)
+    
+    Remove underline text decoration shown on mouse hover from separator.
