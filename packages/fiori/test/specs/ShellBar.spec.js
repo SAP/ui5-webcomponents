@@ -31,10 +31,13 @@ describe("Component Behavior", () => {
 	describe("Аccessibility", () => {
 		it("tests accessibilityTexts property", async () => {
 			const PROFILE_BTN_CUSTOM_TOOLTIP = "John Dow";
+			const LOGO_CUSTOM_TOOLTIP = "Custom logo title";
 			const sb = await browser.$("#sbAcc");
 
 			assert.strictEqual(await sb.getProperty("_profileText"), PROFILE_BTN_CUSTOM_TOOLTIP,
 				"Profile button tooltip can be cutomized.");
+			assert.strictEqual(await sb.getProperty("_logoText"), LOGO_CUSTOM_TOOLTIP,
+				"Logo tooltip can be cutomized.");
 		});
 	});
 

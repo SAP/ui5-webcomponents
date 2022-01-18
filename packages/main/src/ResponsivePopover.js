@@ -107,6 +107,7 @@ class ResponsivePopover extends Popover {
 
 	static get dependencies() {
 		return [
+			...Popover.dependencies,
 			Button,
 			Dialog,
 			Title,

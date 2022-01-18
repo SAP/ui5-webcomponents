@@ -191,6 +191,12 @@ const isF4 = event => {
 
 const isF4Shift = event => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
 
+const isF6Next = event => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, false))
+|| ((event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, true, false));
+
+const isF6Previous = event => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, true))
+|| ((event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_Up) && checkModifierKeys(event, true, true, false));
+
 const isF7 = event => (event.key ? event.key === "F7" : event.keyCode === KeyCodes.F7) && !hasModifierKeys(event);
 
 const isShowByArrows = event => {
@@ -236,6 +242,8 @@ export {
 	isShow,
 	isF4,
 	isF4Shift,
+	isF6Previous,
+	isF6Next,
 	isF7,
 	isPageUp,
 	isPageDown,

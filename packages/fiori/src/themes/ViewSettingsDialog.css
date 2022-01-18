@@ -7,7 +7,7 @@
 	width: 100%;
 }
 
-.ui5-vsd-header > ui5-bar {
+.ui5-vsd-header > [ui5-bar] {
 	height: 4rem;
 }
 

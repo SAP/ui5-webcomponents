@@ -58,7 +58,7 @@
 
 	<h2>Breadcrumbs with current location</h2>
 
-	<ui5-breadcrumbs id="breadcrumbs2" separator-class="breadcrumbs6auto">
+	<ui5-breadcrumbs id="breadcrumbs2">
 		<ui5-breadcrumbs-item href="https://www.sap.com">Link1 </ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link2</ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -71,7 +71,7 @@
 
 	<h2>Breadcrumbs with no current location</h2>
 
-	<ui5-breadcrumbs id="breadcrumbs3" design="NoCurrentPage" separator-class="breadcrumbs6auto">
+	<ui5-breadcrumbs id="breadcrumbs3" design="NoCurrentPage">
 		<ui5-breadcrumbs-item href="https://www.sap.com">Link1 </ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link2</ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -91,7 +91,7 @@
 		<ui5-option>GreaterThan</ui5-option>
 	</ui5-select>
 	<div class="breadcrumbs7auto">
-		<ui5-breadcrumbs id="breadcrumbs4" separator-class="breadcrumbs6auto">
+		<ui5-breadcrumbs id="breadcrumbs4">
 			<ui5-breadcrumbs-item href="#">Link1 </ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link2</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -120,7 +120,7 @@
 
 		<h2>Breadcrumbs with overflowing links</h2>
 
-		<ui5-breadcrumbs id="breadcrumbs1" separator-class="breadcrumbs6auto">
+		<ui5-breadcrumbs id="breadcrumbs1">
 			<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link1 </ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link2</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -128,6 +128,18 @@
 			<ui5-breadcrumbs-item href="#">Link5</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link6</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item id="item7" href="#">aaaaa</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
+		</ui5-breadcrumbs>
+	</div>
+
+	<div class="breadcrumbs9auto">
+		<h2>Empty Breadcrumbs</h2>
+		<ui5-breadcrumbs></ui5-breadcrumbs>
+	</div>
+
+	<div class="breadcrumbs9auto">
+		<h2>Empty Breadcrumbs with Location only</h2>
+		<ui5-breadcrumbs id="breadcrumbsWithSingleItem">
 			<ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
 		</ui5-breadcrumbs>
 	</div>
@@ -149,7 +161,7 @@
 		});
 
 		// log events
-		breadcrumbs1.addEventListener("item-click", (event) => {result.innerText = event.detail.item.innerText});
+		breadcrumbs1.addEventListener("ui5-item-click", (event) => {result.innerText = event.detail.item.innerText});
 
 		extendSizeBtn.addEventListener("click", () => resizeContainer(true));
 		shrinkSizeBtn.addEventListener("click", () => resizeContainer());
