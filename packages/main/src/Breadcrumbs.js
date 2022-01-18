@@ -389,7 +389,7 @@ class Breadcrumbs extends UI5Element {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-link` === link.id);
-		if(!this.fireEvent("item-click", { item }, true)) {
+		if (!this.fireEvent("item-click", { item }, true)) {
 			event.preventDefault();
 		}
 	}
