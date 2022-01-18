@@ -292,7 +292,7 @@ class SplitButton extends UI5Element {
 		if (this.disabled || event.isMarked) {
 			return;
 		}
-
+		this._shiftOrEscapePressed = false;
 		this.focused = false;
 		this._forceTabIndexUpdate();
 	}
@@ -301,7 +301,7 @@ class SplitButton extends UI5Element {
 		if (this.disabled || event.isMarked) {
 			return;
 		}
-
+		this._shiftOrEscapePressed = false;
 		this.focused = true;
 	}
 
@@ -317,7 +317,6 @@ class SplitButton extends UI5Element {
 			this._fireArrowClick();
 		} else if (isSpace(event) || isEnter(event)) {
 			this._textButtonActive = true;
-			this._tabIndexUpdate = true;
 			if (isEnter(event)) {
 				event.preventDefault();
 				this._fireClick();
@@ -325,7 +324,6 @@ class SplitButton extends UI5Element {
 				this._spacePressed = true;
 			}
 		}
-
 		if (this._spacePressed && (isEscape(event) || isShift(event))) {
 			this._shiftOrEscapePressed = true;
 			this._textButtonActive = false;
@@ -339,22 +337,20 @@ class SplitButton extends UI5Element {
 			this._textButtonActive = false;
 			this._tabIndexUpdate = true;
 			if (isSpace(event)) {
-				if (!this._shiftOrEscapePressed) {
-					this._shiftOrEscapePressed = false;
-					event.preventDefault();
-					event.stopPropagation();
-					this._fireClick();
-					this._spacePressed = false;
-				} else {
-					this._shiftOrEscapePressed = false;
-				}
+				event.preventDefault();
+				event.stopPropagation();
+				this._fireClick();
+				this._spacePressed = false;
 			}
 		}
 	}
 
 	_fireClick(event) {
 		event && event.stopPropagation();
-		this.fireEvent("click");
+		if (!this._shiftOrEscapePressed) {
+			this.fireEvent("click");
+		}
+		this._shiftOrEscapePressed = false;
 	}
 
 	_fireArrowClick(event) {
@@ -363,7 +359,7 @@ class SplitButton extends UI5Element {
 	}
 
 	get buttonIcon() {
-		return this.textButton && this.activeIcon !== "" && (this._textButtonActive || this.textButton.active) ? this.activeIcon : this.icon;
+		return this.textButton && this.activeIcon !== "" && (this._textButtonActive || this.textButton.active) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 	}
 
 	get textButton() {
@@ -382,7 +378,6 @@ class SplitButton extends UI5Element {
 						 || (arrowButton && (arrowButton.focused || arrowButton.active));
 
 		this._tabIndexUpdate = false;
-
 		if (tabIndex) {
 			return tabIndex;
 		}
