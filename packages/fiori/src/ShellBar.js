@@ -298,7 +298,7 @@ const metadata = {
 
 		/**
 		 * Fired, when the product switch icon is activated.
-		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
+		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
 		 * @allowPreventDefault
@@ -341,7 +341,7 @@ const metadata = {
 
 		/**
 		 * Fired, when a menu item is activated
-		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
+		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#menu-item-click
 		 * @param {HTMLElement} item DOM ref of the activated list item
