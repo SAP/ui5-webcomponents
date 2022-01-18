@@ -116,19 +116,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-haspopup value of the component.
-		 *
-		 * @type String
-		 * @defaultvalue undefined
-		 * @private
-		 * @since 1.0.0-rc.15
-		 */
-		 ariaHaspopup: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
 		 * Defines the accessibility role of the component.
 		 * @defaultvalue ""
 		 * @private
@@ -136,6 +123,21 @@ const metadata = {
 		 */
 		 accessibleRole: {
 			type: String,
+		},
+
+		/**
+		 * An object of strings that defines several additional accessibility attribute values
+		 * for customization depending on the use case.
+		 *
+		 * It supports the following fields:
+		 * - <code>expanded</code>: indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed
+		 * - <code>hasPopup</code>: indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element
+		 * @type {object}
+		 * @public
+		 * @since 1.3.0
+		 */
+		 accessibilityAttributes: {
+			type: Object,
 		},
 
 		_rel: {

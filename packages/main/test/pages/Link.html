@@ -76,11 +76,29 @@
 		<ui5-link id="ariaLblBy" accessible-name-ref="lbl">Go to</ui5-link>
 	</section>
 
+	<section class="group">
+		<h2>Collapsible text</h2>
+		<span id="collapsibleText">
+			Maxlines ... Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed
+			diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+			erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+			rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+			dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+			sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+			erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing
+			elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+			aliquyam erat
+		</span>
+		<ui5-link id="collapseExpandTrigger">Less</ui5-link>
+	</section>
+
 	<script>
 		var disLink = document.querySelector("#disabled-link");
 		var link = document.querySelector("#link");
 		var linkClickPreventDefault = document.querySelector("#link-click-prevent-default");
 		var input = document.querySelector("#helper-input");
+		var collapseExpandTrigger = document.getElementById("collapseExpandTrigger");
+		var collapsibleText = document.getElementById("collapsibleText");
 
 		[link, disLink].forEach(function(element) {
 			element.addEventListener("click", function(event) {
@@ -90,6 +108,21 @@
 
 		linkClickPreventDefault.addEventListener("click", function(event) {
 			event.preventDefault();
+		});
+
+		collapseExpandTrigger.accessibilityAttributes = {
+			expanded: "true"
+		}
+
+		collapseExpandTrigger.addEventListener("click", function(event) {
+			collapseExpandTrigger.accessibilityAttributes = {
+				expanded: collapseExpandTrigger.accessibilityAttributes["expanded"] === "true" ? "false" : "true"
+			}
+			collapseExpandTrigger.innerText = collapseExpandTrigger.innerText === "More" ? "Less" : "More";
+			collapsibleText.style["display"] = collapsibleText.style["display"] === "-webkit-box" ? "" : "-webkit-box";
+			collapsibleText.style["-webkit-line-clamp"] = collapsibleText.style["-webkit-line-clamp"] === "2" ? "" : "2";
+			collapsibleText.style["-webkit-box-orient"] = collapsibleText.style["-webkit-box-orient"] === "vertical" ? "" : "vertical";
+			collapsibleText.style["overflow"] = collapsibleText.style["overflow"] === "hidden" ? "" : "hidden";
 		});
 	</script>
 </body>

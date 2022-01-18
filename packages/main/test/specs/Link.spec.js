@@ -41,7 +41,6 @@ describe("General API", () => {
 	});
 
 	it("should prevent clicking on disabled link", async () => {
-		const disLink = await browser.$("#disabled-link");
 		const input = await browser.$("#helper-input");
 
 		assert.strictEqual(await input.getValue(), "0", "Click should not be fired and value of input should not be changed.");
@@ -60,5 +59,13 @@ describe("General API", () => {
 		await link.click();
 		const url = await browser.getUrl();
 		assert.notInclude(url, "https://www.google.com", "URL is not google");
+	});
+
+	it("Collabsible element has aria expanded attribute", async () => {
+		const link = await browser.$("#collapseExpandTrigger");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "true", "The text is expanded");
+		await link.click();
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "false", "The text is collapsed");
 	});
 });
