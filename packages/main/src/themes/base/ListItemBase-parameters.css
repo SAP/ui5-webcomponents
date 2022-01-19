@@ -6,4 +6,11 @@
 	--_ui5_listitembase_focus_width: 1px;
 	--_ui5-listitembase_disabled_opacity: 0.5;
 	--_ui5_product_switch_item_border: none;
+	--ui5-listitem-border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	--ui5-listitem-hover-background: var(--sapList_Hover_Background);
+	--ui5-listitem-border-radius: 0;
+	--ui5-listitem-active-background: var(--sapList_Active_Background);
+	--ui5-listitem-selected-background: var(--sapList_SelectionBackgroundColor);
+	--ui5-listitem-selected-hover-background: var(--sapList_Hover_SelectionBackground);
+	--ui5-listitem-selected-active-background: var(--sapList_Active_Background);
 }

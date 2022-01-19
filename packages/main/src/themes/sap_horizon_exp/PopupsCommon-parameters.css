@@ -1,0 +1,7 @@
+@import "../base/PopupsCommon-parameters.css";
+
+:root {
+	--_ui5_popup_content_no_padding: .25rem;
+	--_ui5-popup-border-radius: .5rem;
+	--_ui5-popup-box-shadow: var(--shadow-grey-medium);
+}

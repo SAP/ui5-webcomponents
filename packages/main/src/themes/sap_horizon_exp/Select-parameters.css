@@ -1,5 +1,10 @@
 @import "../base/Select-parameters.css";
 
 :root {
-	--_ui5_select_label_olor: var(--sapTitleColor); /* #223548; */
+	--_ui5_select_label_color: var(--sapGreyColor8);
+	--_ui5_select_padding_left: .75rem;
+	--_ui5_select_label_box_shadow: 0 4.5rem 0 3rem var(--sapBlueColor4);
+	--_ui5_select_label_with_value_box_shadow: 0 calc(4.5rem - 2px) 0 3rem var(--sapBlueColor4);
+	--_ui5_select_disabled_label_color: var(--sapGreyColor4);
+	--_ui5_select_disabled_input_icon_color: var(--sapGreyColor3);
 }
