@@ -1437,7 +1437,7 @@
   "206": {
     "id": "206",
     "title": "View Settings Dialog",
-    "content": "&lt;!DOCTYPE html&gt; ViewSettingsDialog test page ViewSettingsDialog Show ViewSettingsDialog",
+    "content": "&lt;!DOCTYPE html&gt; ViewSettingsDialog test page ViewSettingsDialog Show ViewSettingsDialog Show Sort Only ViewSettingsDialog Show Filter Only ViewSettingsDialog",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/ViewSettingsDialog/",
     "relUrl": "/playground/fiori/pages/ViewSettingsDialog/"
   },

@@ -1,7 +1,5 @@
-commit ed87ba5f65a10f43ddc82b95768cac9590fece63
-Author: Philipp Pracht <philipp.pracht@sap.com>
-Date:   Tue Jan 18 10:02:26 2022 +0100
+commit 572a32373274dd5d9e0d4f6ee3234e8f970350a7
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Wed Jan 19 12:30:27 2022 +0200
 
-    fix(ui5-breadcrumbs): remove text-decoration from separator (#4568)
-    
-    Remove underline text decoration shown on mouse hover from separator.
+    fix(ui5-view-settings-dialog): implement single page functionality (#4419)

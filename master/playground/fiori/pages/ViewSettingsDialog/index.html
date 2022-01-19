@@ -24,6 +24,8 @@
 
 	<h3> ViewSettingsDialog</h3>
 	<ui5-button id="btnOpenDialog">Show ViewSettingsDialog</ui5-button>
+	<ui5-button id="btnOpenDialogSort">Show Sort Only ViewSettingsDialog</ui5-button>
+	<ui5-button id="btnOpenDialogFilter">Show Filter Only ViewSettingsDialog</ui5-button>
 	<br>
 	<br>
 	<ui5-view-settings-dialog id="vsd">
@@ -55,11 +57,54 @@
 		</ui5-filter-item>
 	</ui5-view-settings-dialog>
 
+	<ui5-view-settings-dialog id="vsdSort">
+
+		<ui5-sort-item slot="sortItems" text="Name"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Position"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Company"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Department"></ui5-sort-item>
+	</ui5-view-settings-dialog>
+
+	<ui5-view-settings-dialog id="vsdFilter">
+		<ui5-filter-item slot="filterItems" text="Filter 1">
+			<ui5-filter-item-option slot="values" text="Some filter 1"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 2"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 3"></ui5-filter-item-option>
+		</ui5-filter-item>
+		<ui5-filter-item slot="filterItems" text="Filter 2">
+			<ui5-filter-item-option slot="values" text="Some filter 4"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 5"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 6"></ui5-filter-item-option>
+		</ui5-filter-item>
+		<ui5-filter-item slot="filterItems" text="Filter 3">
+			<ui5-filter-item-option slot="values" text="Some filter 7"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 8"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 9"></ui5-filter-item-option>
+		</ui5-filter-item>
+		<ui5-filter-item slot="filterItems" text="Filter 4">
+			<ui5-filter-item-option slot="values" text="Some filter 10"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 11"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 12"></ui5-filter-item-option>
+		</ui5-filter-item>
+	</ui5-view-settings-dialog>
+
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.show();
 		});
 		vsd.addEventListener("confirm", function(evt) {
+			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
+		});
+		btnOpenDialogSort.addEventListener("click", function () {
+			vsdSort.show();
+		});
+		vsdSort.addEventListener("confirm", function(evt) {
+			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
+		});
+		btnOpenDialogFilter.addEventListener("click", function () {
+			vsdFilter.show();
+		});
+		vsdFilter.addEventListener("confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 	</script>
