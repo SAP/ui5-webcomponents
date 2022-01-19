@@ -219,6 +219,10 @@ class ViewSettingsDialog extends UI5Element {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {
 			this._setAdditionalTexts();
 		}
+
+		if (!this.shouldBuildSort && this.shouldBuildFilter) {
+			this._currentMode = ViewSettingsDialogMode.Filter;
+		}
 	}
 
 	_setAdditionalTexts() {
@@ -277,6 +281,18 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		return "";
+	}
+
+	get shouldBuildSort() {
+		return !!this.sortItems.length;
+	}
+
+	get shouldBuildFilter() {
+		return !!this.filterItems.length;
+	}
+
+	get hasPagination() {
+		return this.shouldBuildSort && this.shouldBuildFilter;
 	}
 
 	get _filterByTitle() {
@@ -494,7 +510,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
-		if (!Object.keys(this._recentlyFocused).length) {
+		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
 		}
 		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),
