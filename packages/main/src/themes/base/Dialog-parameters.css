@@ -6,4 +6,7 @@
 	--_ui5_dialog_header_border_radius: 0px;
 	--_ui5_dialog_resize_handle_right: -0.25rem;
 	--_ui5_dialog_resize_handle_bottom: -0.0625rem;
+	--_ui5_popup_header_footer_padding_s: 1rem;
+	--_ui5_popup_header_footer_padding_m_l: 2rem;
+	--_ui5_popup_header_footer_padding_xl: 3rem;
 }

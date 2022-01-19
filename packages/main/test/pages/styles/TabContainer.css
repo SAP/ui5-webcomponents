@@ -33,10 +33,7 @@ html,
     height: 100%;
 }
 
-.tabContainerNoPaddings::part(header) {
-    padding: 0;
-}
-
-.tabContainerNoPaddings::part(content) {
-    padding: 0;
+.tabContainerNoContentPaddings::part(content) {
+    padding-left: 0;
+    padding-right: 0;
 }

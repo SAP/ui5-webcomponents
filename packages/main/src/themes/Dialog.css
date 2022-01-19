@@ -22,6 +22,8 @@
 
 .ui5-popup-header-root {
 	background: var(--sapPageHeader_Background);
+	min-height: 2.5rem;
+	justify-content: start;
 }
 
 :host([draggable]) .ui5-popup-header-root,
@@ -67,4 +69,30 @@
 	left: -0.25rem;
 	right: unset;
 	cursor: sw-resize;
+}
+
+.ui5-popup-footer-root {
+	min-height: 2.5rem;
+	justify-content: end;
+}
+
+/*** Responsive paddings for the Header and Footer ***/
+:host([media-range="S"]) .ui5-popup-header-root,
+:host([media-range="S"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_s);
+	padding-right: var(--_ui5_popup_header_footer_padding_s);
+}
+
+:host([media-range="M"]) .ui5-popup-header-root,
+:host([media-range="L"]) .ui5-popup-header-root,
+:host([media-range="M"]) .ui5-popup-footer-root,
+:host([media-range="L"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_m_l);
+	padding-right: var(--_ui5_popup_header_footer_padding_m_l);
+}
+
+:host([media-range="XL"]) .ui5-popup-header-root,
+:host([media-range="XL"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_xl);
+	padding-right: var(--_ui5_popup_header_footer_padding_xl);
 }

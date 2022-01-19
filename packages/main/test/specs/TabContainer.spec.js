@@ -133,4 +133,12 @@ describe("TabContainer general interaction", () => {
 
 	});
 
+	it("tests removing of responsive paddings for the content", async () => {
+		const tabContainer = await browser.$(".tabContainerNoContentPaddings");
+		const expectedContentPadding = "0px";
+		const actualContentPadding = await tabContainer.shadow$(".ui5-tc__content").getCSSProperty("padding-left");
+
+		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "tabContainer has correct padding set on the content");
+	});
+
 });
