@@ -60,6 +60,7 @@
 	border-color: var(--sapButton_Selected_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
 	outline-color: var(--_ui5_toggle_button_pressed_focussed_hovered_outline_color);
+	--_ui5_button_hover_color: var(--sapButton_Selected_TextColor);
 }
 :host([design="Emphasized"][pressed]),
 :host([design="Emphasized"][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover){
