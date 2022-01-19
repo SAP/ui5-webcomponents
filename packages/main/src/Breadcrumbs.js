@@ -405,9 +405,10 @@ class Breadcrumbs extends UI5Element {
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-li` === listItem.id);
 
-		window.open(item.href, item.target || "_self", "noopener,noreferrer");
 		this.responsivePopover.close();
-		this.fireEvent("item-click", { item });
+		if (this.fireEvent("item-click", { item }, true)) {
+			window.open(item.href, item.target || "_self", "noopener,noreferrer");
+		}
 	}
 
 	async _respPopover() {

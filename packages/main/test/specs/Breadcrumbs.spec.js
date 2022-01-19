@@ -217,7 +217,7 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await link.getProperty("ariaLabel"), expectedAriaLabel, "label for last link is correct");
 	});
 
-	it("cancels default if link-click event listener calls preventDefault", async () => {
+	it("cancels default if item-click event listener calls preventDefault", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
 			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
 
@@ -231,5 +231,28 @@ describe("Breadcrumbs general interaction", () => {
 		const url = await browser.getUrl();
 		assert.strictEqual(url, initialUrl, "url should not have changed");
 		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+	});
+
+	it("cancels default if item-click event listener calls preventDefault in overflow", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0];
+
+		const initialUrl = await browser.getUrl();
+
+		// Act
+		await overflowArrowLink.click(); // open the overflow
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsPreventDefault");
+		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+
+		await firstItem.click();
+
+		// Check
+		const eventResult = await browser.$("#result");
+		const url = await browser.getUrl();
+		assert.strictEqual(url, initialUrl, "url should not have changed");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await firstItem.getProperty('innerText'), "label for pressed link is correct");
+
 	});
 });
