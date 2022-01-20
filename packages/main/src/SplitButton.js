@@ -1,7 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
-	isTabNext,
-	isTabPrevious,
 	isEscape,
 	isSpace,
 	isEnter,
@@ -370,13 +368,13 @@ class SplitButton extends UI5Element {
 		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-arrow-button");
 	}
 
-	_textButtonRelease () {
+	_textButtonRelease() {
 		this._textButtonActive = false;
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		this._setTabIndexValue();
 	}
 
-	_textButtonPress () {
+	_textButtonPress() {
 		this._textButtonActive = true;
 		this._setTabIndexValue();
 	}
