@@ -134,7 +134,7 @@ const metadata = {
 		 * - <code>hasPopup</code>: indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element
 		 * @type {object}
 		 * @public
-		 * @since 1.3.0
+		 * @since 1.1.0
 		 */
 		 accessibilityAttributes: {
 			type: Object,
