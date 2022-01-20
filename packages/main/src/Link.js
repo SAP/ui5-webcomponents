@@ -132,8 +132,13 @@ const metadata = {
 		 * It supports the following fields:
 		 *
 		 * <ul>
-		 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed.Accepts boolean values.</li>
-		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element.Accepts the following values:
+		 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+		 *			<ul>
+		 *				<li><code>true</code></li>
+		 *				<li><code>false</code></li>
+		 *			<ul>
+		 * 		</li>
+		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
 		 * 			<ul>
 		 *				<li><code>Dialog</code></li>
 		 *				<li><code>Grid</code></li>

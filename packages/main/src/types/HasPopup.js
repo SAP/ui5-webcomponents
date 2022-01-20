@@ -7,7 +7,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  */
 const PopupTypes = {
 	/**
-	 * Dialog popup type
+	 * Dialog popup type.
 	 * @public
 	 * @type {Dialog}
 	 */
