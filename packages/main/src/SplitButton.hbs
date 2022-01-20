@@ -1,7 +1,7 @@
 <div
 	class="ui5-split-button-root"
 	role="group"
-	tabindex={{tabIndexValue}}
+	tabindex={{_tabIndex}}
 	aria-labelledby="{{_id}}-invisibleTextDefault {{_id}}-invisibleText"
 	@focusout={{_onFocusOut}}
 	@focusin={{_onFocusIn}}
@@ -13,15 +13,15 @@
 		class="ui5-split-text-button"
 		design="{{design}}"
 		dir={{effectiveDir}}
-		icon="{{buttonIcon}}"
+		icon="{{_textButtonIcon}}"
 		tabindex="-1"
 		?disabled="{{disabled}}"
 		?active="{{_textButtonActive}}"
 		@click="{{_fireClick}}"
-		@touchstart={{_forceTabIndexUpdate}}
-		@mousedown={{_forceTabIndexUpdate}}
-		@mouseup={{_forceTabIndexUpdate}}
-		@focusin={{_forceTabIndexUpdate}}
+		@touchstart={{_textButtonPress}}
+		@mousedown={{_textButtonPress}}
+		@mouseup={{_textButtonRelease}}
+		@focusin={{_setTabIndexValue}}
 		@focusout={{_onFocusOut}}
 	>
 		{{text}}
@@ -41,8 +41,7 @@
 			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
 			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
 			@click="{{_fireArrowClick}}"
-			@mousedown={{_forceTabIndexUpdate}}
-			@focusin={{_forceTabIndexUpdate}}
+			@focusin={{_setTabIndexValue}}
 			@focusout={{_onFocusOut}}
 		>
 		</ui5-button>

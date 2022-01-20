@@ -150,17 +150,6 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if an update of the tabIndex of the component must be performed
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
-		 */
-		_tabIndexUpdate: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
 		 * Indicates if there is Space key pressed
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -190,6 +179,17 @@ const metadata = {
 		 */
 		 _textButtonActive: {
 			type: Boolean,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines the icon of the text button
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		 _textButtonIcon: {
+			type: String,
 			noAttribute: true,
 		},
 
@@ -288,13 +288,20 @@ class SplitButton extends UI5Element {
 		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	onBeforeRendering() {
+		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
+		if (this.disabled) {
+			this._tabIndex = "-1";
+		}
+	}
+
 	_onFocusOut(event) {
 		if (this.disabled || event.isMarked) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
 		this.focused = false;
-		this._forceTabIndexUpdate();
+		this._setTabIndexValue();
 	}
 
 	_onFocusIn(event) {
@@ -305,14 +312,8 @@ class SplitButton extends UI5Element {
 		this.focused = true;
 	}
 
-	_forceTabIndexUpdate() {
-		this._tabIndexUpdate = true;
-	}
-
 	_onKeyDown(event) {
-		if (isTabNext(event) || isTabPrevious(event)) {
-			this._tabIndexUpdate = true;
-		} else if (isDown(event) || isUp(event) || isDownAlt(event) || isUpAlt(event) || isF4(event)) {
+		if (isDown(event) || isUp(event) || isDownAlt(event) || isUpAlt(event) || isF4(event)) {
 			this._arrowButtonActive = true;
 			this._fireArrowClick();
 		} else if (isSpace(event) || isEnter(event)) {
@@ -328,6 +329,8 @@ class SplitButton extends UI5Element {
 			this._shiftOrEscapePressed = true;
 			this._textButtonActive = false;
 		}
+
+		this._setTabIndexValue();
 	}
 
 	_onKeyUp(event) {
@@ -335,7 +338,6 @@ class SplitButton extends UI5Element {
 			this._arrowButtonActive = false;
 		} else if (isSpace(event) || isEnter(event)) {
 			this._textButtonActive = false;
-			this._tabIndexUpdate = true;
 			if (isSpace(event)) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -343,6 +345,8 @@ class SplitButton extends UI5Element {
 				this._spacePressed = false;
 			}
 		}
+
+		this._setTabIndexValue();
 	}
 
 	_fireClick(event) {
@@ -358,10 +362,6 @@ class SplitButton extends UI5Element {
 		this.fireEvent("arrow-click");
 	}
 
-	get buttonIcon() {
-		return this.textButton && this.activeIcon !== "" && (this._textButtonActive || this.textButton.active) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
-	}
-
 	get textButton() {
 		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-text-button");
 	}
@@ -370,19 +370,24 @@ class SplitButton extends UI5Element {
 		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-arrow-button");
 	}
 
-	get tabIndexValue() {
-		const tabIndex = this.getAttribute("tabindex"),
-			textButton = this.textButton,
+	_textButtonRelease () {
+		this._textButtonActive = false;
+		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
+		this._setTabIndexValue();
+	}
+
+	_textButtonPress () {
+		this._textButtonActive = true;
+		this._setTabIndexValue();
+	}
+
+	_setTabIndexValue() {
+		const textButton = this.textButton,
 			arrowButton = this.arrowButton,
 			buttonsAction = (textButton && (textButton.focused || textButton.active))
 						 || (arrowButton && (arrowButton.focused || arrowButton.active));
 
-		this._tabIndexUpdate = false;
-		if (tabIndex) {
-			return tabIndex;
-		}
-
-		return this.disabled || buttonsAction ? "-1" : this._tabIndex;
+		this._tabIndex = this.disabled || buttonsAction ? "-1" : "0";
 	}
 
 	get accessibilityInfo() {
