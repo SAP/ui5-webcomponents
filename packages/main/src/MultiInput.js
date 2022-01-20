@@ -202,6 +202,8 @@ class MultiInput extends Input {
 
 	_onTokenizerKeydown(event) {
 		const rightCtrl = isRightCtrl(event);
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+		const tokens = this.tokens;
 
 		if (isRight(event) || isEnd(event) || rightCtrl) {
 			event.preventDefault();
@@ -217,7 +219,26 @@ class MultiInput extends Input {
 			}
 		}
 
-		this.tokenizer._handleItemNavigation(event, this.tokens);
+		this.tokenizer._handleItemNavigation(event, tokens);
+
+		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
+			event.preventDefault();
+
+			const isCut = event.key.toLowerCase() === "x";
+			const selectedTokens = tokens.filter(token => token.selected);
+
+			if (isCut) {
+				const cutResult = this.tokenizer._fillClipboard("cut", selectedTokens);
+
+				selectedTokens.forEach(token => {
+					this.fireEvent("token-delete", { token });
+				});
+
+				return cutResult;
+			}
+
+			return this.tokenizer._fillClipboard("copy", selectedTokens);
+		}
 	}
 
 	_handleLeft() {

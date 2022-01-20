@@ -279,22 +279,6 @@ class Tokenizer extends UI5Element {
 
 			return this._toggleTokenSelection(tokens);
 		}
-
-		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
-			event.preventDefault();
-
-			const isCut = event.key.toLowerCase() === "x";
-			const selectedTokens = tokens.filter(token => token.selected);
-
-			if (isCut) {
-				selectedTokens.forEach(token => {
-					this.fireEvent("token-delete", { ref: token });
-				});
-				return this._fillClipboard("cut", selectedTokens);
-			}
-
-			return this._fillClipboard("copy", selectedTokens);
-		}
 	}
 
 	_handleHome(tokens, endKeyPressed) {
