@@ -1,7 +1,5 @@
-commit 1a6919bda0761839e019dda45ae7fe5c809ef4c4
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jan 20 02:16:25 2022 -0800
+commit 21e1cd92be8340a5bdb4148f4e13e4f0345164f5
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Thu Jan 20 16:00:07 2022 +0200
 
-    chore: translation delivery (#4597)
-    
-    Change-Id: Ib29f5ff9778617dbd79ab3c831239d7d4f1fbb33
+    docs: update link in issue template (#4600)
