@@ -1,5 +1,7 @@
-commit 572a32373274dd5d9e0d4f6ee3234e8f970350a7
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Wed Jan 19 12:30:27 2022 +0200
+commit 1a6919bda0761839e019dda45ae7fe5c809ef4c4
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jan 20 02:16:25 2022 -0800
 
-    fix(ui5-view-settings-dialog): implement single page functionality (#4419)
+    chore: translation delivery (#4597)
+    
+    Change-Id: Ib29f5ff9778617dbd79ab3c831239d7d4f1fbb33
