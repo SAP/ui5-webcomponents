@@ -61,11 +61,18 @@ describe("General API", () => {
 		assert.notInclude(url, "https://www.google.com", "URL is not google");
 	});
 
-	it("Collabsible element has aria expanded attribute", async () => {
-		const link = await browser.$("#collapseExpandTrigger");
+	it("Collabsible element has aria-expanded attribute", async () => {
+		const link = await browser.$("#collapseExpandLink");
 
 		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "true", "The text is expanded");
 		await link.click();
 		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "false", "The text is collapsed");
 	});
+
+	it("Open dialog link has propper aria-haspopup attribute", async () => {
+		const link = await browser.$("#signInLink");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Propper aria-haspopup attribute is set");
+	});
+
 });

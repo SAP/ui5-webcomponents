@@ -89,7 +89,30 @@
 			elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
 			aliquyam erat
 		</span>
-		<ui5-link id="collapseExpandTrigger">Less</ui5-link>
+		<ui5-link id="collapseExpandLink">Less</ui5-link>
+	</section>
+
+	<section class="group">
+		<h2>Link opens a dialog</h2>
+		<ui5-link id="signInLink">Sign in</ui5-link>
+		<ui5-dialog id="signInDialog" header-text="Sign in form">
+			<section class="login-form">
+				<div>
+					<ui5-label for="email" type="Email" required>Email: </ui5-label>
+					<ui5-input id="email"></ui5-input>
+				</div>
+		
+				<div>
+					<ui5-label for="password" required>Password: </ui5-label>
+					<ui5-input id="password" type="Password"></ui5-input>
+				</div>
+			</section>
+		
+			<div slot="footer"	class="dialog-footer">
+				<div style="flex: 1;"></div>
+				<ui5-button id="closeDialogButton" design="Emphasized">Sign in</ui5-button>
+			</div>
+		</ui5-dialog>
 	</section>
 
 	<script>
@@ -97,8 +120,11 @@
 		var link = document.querySelector("#link");
 		var linkClickPreventDefault = document.querySelector("#link-click-prevent-default");
 		var input = document.querySelector("#helper-input");
-		var collapseExpandTrigger = document.getElementById("collapseExpandTrigger");
+		var collapseExpandLink = document.getElementById("collapseExpandLink");
 		var collapsibleText = document.getElementById("collapsibleText");
+		var signInLink = document.getElementById("signInLink");
+		var singInDialog = document.getElementById("signInDialog");
+		var closeSignInDialogButton = document.getElementById("closeDialogButton");
 
 		[link, disLink].forEach(function(element) {
 			element.addEventListener("click", function(event) {
@@ -106,19 +132,31 @@
 			});
 		});
 
+		signInLink.addEventListener("click", function(event) {
+			singInDialog.show();
+		});
+
+		signInLink.accessibilityAttributes = {
+			hasPopup: "Dialog"
+		};
+
+		closeSignInDialogButton.addEventListener("click", function(event) {
+			singInDialog.close();
+		});
+
 		linkClickPreventDefault.addEventListener("click", function(event) {
 			event.preventDefault();
 		});
 
-		collapseExpandTrigger.accessibilityAttributes = {
+		collapseExpandLink.accessibilityAttributes = {
 			expanded: "true"
-		}
+		};
 
-		collapseExpandTrigger.addEventListener("click", function(event) {
-			collapseExpandTrigger.accessibilityAttributes = {
-				expanded: collapseExpandTrigger.accessibilityAttributes["expanded"] === "true" ? "false" : "true"
-			}
-			collapseExpandTrigger.innerText = collapseExpandTrigger.innerText === "More" ? "Less" : "More";
+		collapseExpandLink.addEventListener("click", function(event) {
+			collapseExpandLink.accessibilityAttributes = {
+				expanded: collapseExpandLink.accessibilityAttributes["expanded"] === "true" ? "false" : "true"
+			};
+			collapseExpandLink.innerText = collapseExpandLink.innerText === "More" ? "Less" : "More";
 			collapsibleText.style["display"] = collapsibleText.style["display"] === "-webkit-box" ? "" : "-webkit-box";
 			collapsibleText.style["-webkit-line-clamp"] = collapsibleText.style["-webkit-line-clamp"] === "2" ? "" : "2";
 			collapsibleText.style["-webkit-box-orient"] = collapsibleText.style["-webkit-box-orient"] === "vertical" ? "" : "vertical";
