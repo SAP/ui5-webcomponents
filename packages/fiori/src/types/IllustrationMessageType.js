@@ -84,6 +84,12 @@ const IllustrationMessageTypes = {
 	 */
 	UnableToLoad: "UnableToLoad",
 	/**
+	 * "Unable To Load Image" illustration type.
+	 * @public
+	 * @type {UnableToLoadImage}
+	 */
+	UnableToLoadImage: "UnableToLoadImage",
+	/**
 	 * "Unable To Upload" illustration type.
 	 * @public
 	 * @type {UnableToUpload}
@@ -204,11 +210,11 @@ const IllustrationMessageTypes = {
 	 */
 	SimpleCalendar: "SimpleCalendar",
 	/**
-	 * "Simple Checkmark" illustration type.
+	 * "Simple CheckMark" illustration type.
 	 * @public
-	 * @type {SimpleCheckmark}
+	 * @type {SimpleCheckMark}
 	 */
-	SimpleCheckmark: "SimpleCheckmark",
+	SimpleCheckMark: "SimpleCheckMark",
 	/**
 	 * "Simple Connection" illustration type.
 	 * @public
@@ -281,6 +287,24 @@ const IllustrationMessageTypes = {
 	 * @type {SortColumn}
 	 */
 	SortColumn: "SortColumn",
+	/**
+	 * "Success Balloon" illustration type.
+	 * @public
+	 * @type {SuccessBalloon}
+	 */
+	SuccessBalloon: "SuccessBalloon",
+	/**
+	 * "Success CheckMark" illustration type.
+	 * @public
+	 * @type {SuccessCheckMark}
+	 */
+	SuccessCheckMark: "SuccessCheckMark",
+	/**
+	 * "Success HighFive" illustration type.
+	 * @public
+	 * @type {SuccessHighFive}
+	 */
+	SuccessHighFive: "SuccessHighFive",
 	/**
 	 * "Success Screen" illustration type.
 	 * @public

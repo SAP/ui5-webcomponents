@@ -77,6 +77,7 @@ const metadata = {
 		 * <li><code>NoTasks</code></li>
 		 * <li><code>NoTasks_v1</code></li>
 		 * <li><code>UnableToLoad</code></li>
+		 * <li><code>UnableToLoadImage</code></li>
 		 * <li><code>UnableToUpload</code></li>
 		 * <li><code>AddColumn</code></li>
 		 * <li><code>AddPeople</code></li>
@@ -97,7 +98,7 @@ const metadata = {
 		 * <li><code>SimpleBalloon</code></li>
 		 * <li><code>SimpleBell</code></li>
 		 * <li><code>SimpleCalendar</code></li>
-		 * <li><code>SimpleCheckmark</code></li>
+		 * <li><code>SimpleCheckMark</code></li>
 		 * <li><code>SimpleConnection</code></li>
 		 * <li><code>SimpleEmptyDoc</code></li>
 		 * <li><code>SimpleEmptyList</code></li>
@@ -110,6 +111,9 @@ const metadata = {
 		 * <li><code>SimpleTask</code></li>
 		 * <li><code>SleepingBell</code></li>
 		 * <li><code>SortColumn</code></li>
+		 * <li><code>SuccessBalloon</code></li>
+		 * <li><code>SuccessCheckMark</code></li>
+		 * <li><code>SuccessHighFive</code></li>
 		 * <li><code>SuccessScreen</code></li>
 		 * <li><code>Tent</code></li>
 		 * <li><code>UploadCollection</code></li>

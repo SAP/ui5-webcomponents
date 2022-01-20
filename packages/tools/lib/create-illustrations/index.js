@@ -35,7 +35,7 @@ const FALLBACK_TEXTS = {
 	SimpleBalloon: ORIGINAL_TEXTS.BalloonSky,
 	SimpleBell: ORIGINAL_TEXTS.NoNotifications,
 	SimpleCalendar: ORIGINAL_TEXTS.NoActivities,
-	SimpleCheckmark: ORIGINAL_TEXTS.SuccessScreen,
+	SimpleCheckMark: ORIGINAL_TEXTS.SuccessScreen,
 	SimpleConnection: ORIGINAL_TEXTS.UnableToLoad,
 	SimpleEmptyDoc: ORIGINAL_TEXTS.NoData,
 	SimpleEmptyList: ORIGINAL_TEXTS.NoEntries,
@@ -45,7 +45,10 @@ const FALLBACK_TEXTS = {
 	SimpleNoSavedItems: ORIGINAL_TEXTS.NoSavedItems,
 	SimpleNotFoundMagnifier: ORIGINAL_TEXTS.NoSearchResults,
 	SimpleReload: ORIGINAL_TEXTS.UnableToLoad,
-	SimpleTask: ORIGINAL_TEXTS.NoTasks
+	SimpleTask: ORIGINAL_TEXTS.NoTasks,
+	SuccessBalloon: ORIGINAL_TEXTS.BalloonSky,
+	SuccessCheckMark: ORIGINAL_TEXTS.SuccessScreen,
+	SuccessHighFive: ORIGINAL_TEXTS.BalloonSky
 };
 
 const srcPath = process.argv[2];
