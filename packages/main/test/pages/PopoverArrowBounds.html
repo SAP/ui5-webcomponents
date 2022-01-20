@@ -4,7 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>PopoverArrowBounds</title>
 
 	<script data-ui5-config type="application/json">
@@ -67,7 +66,7 @@
 	</style>
 </head>
 
-<body class="popover2auto">
+<body>
 	<ui5-button id="myBtn1" data-placement-type="Left" class="myBtn">1</ui5-button>
 	<ui5-button id="myBtn2" data-placement-type="Left" class="myBtn">2</ui5-button>
 	<ui5-button id="myBtn3" data-placement-type="Bottom" class="myBtn">3</ui5-button>
@@ -80,7 +79,6 @@
 	<ui5-popover id="myPopover">My Popover</ui5-popover>
 
 	<script>
-
 		var myPopover = document.getElementById("myPopover");
 		
 		Array.from(document.querySelectorAll(".myBtn")).forEach(function (btn) {
