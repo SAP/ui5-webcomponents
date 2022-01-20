@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="popover1auto">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>PopoverArrowBounds</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webcomponents.main"
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		.myBtn {
+			position: absolute;
+		}
+
+		#myBtn1 {
+			top: 0;
+			left: 0;
+		}
+
+		#myBtn2 {
+			top: 0;
+			right: 0;
+		}
+
+		#myBtn3 {
+			top: 50%;
+			left: 0;
+		}
+
+		#myBtn4 {
+			top: 50%;
+			right: 0;
+		}
+
+		#myBtn5 {
+			bottom: 0;
+			left: 0;
+		}
+
+		#myBtn6 {
+			bottom: 0;
+			right: 0;
+		}
+
+		#customSizeBtn {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.customSize {
+			height: 100px;
+			width: 100px;
+		}
+	</style>
+</head>
+
+<body class="popover2auto">
+	<ui5-button id="myBtn1" data-placement-type="Left" class="myBtn">1</ui5-button>
+	<ui5-button id="myBtn2" data-placement-type="Left" class="myBtn">2</ui5-button>
+	<ui5-button id="myBtn3" data-placement-type="Bottom" class="myBtn">3</ui5-button>
+	<ui5-button id="myBtn4" data-placement-type="Top" class="myBtn">4</ui5-button>
+	<ui5-button id="myBtn5" data-placement-type="Left" class="myBtn">5</ui5-button>
+	<ui5-button id="myBtn6" data-placement-type="Left" class="myBtn">6</ui5-button>
+
+	<ui5-toggle-button id="customSizeBtn">Bigger Popover</ui5-toggle-button>
+
+	<ui5-popover id="myPopover">My Popover</ui5-popover>
+
+	<script>
+
+		var myPopover = document.getElementById("myPopover");
+		
+		Array.from(document.querySelectorAll(".myBtn")).forEach(function (btn) {
+			btn.addEventListener("click", function() {
+				myPopover.placementType = btn.dataset.placementType;
+				myPopover.showAt(btn);
+			});
+		});
+
+		var customSizeBtn = document.getElementById("customSizeBtn");
+		customSizeBtn.addEventListener("click", function (event) {
+			myPopover.classList.toggle("customSize");
+		})
+	</script>
+</body>
+
+</html>
