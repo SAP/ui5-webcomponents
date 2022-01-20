@@ -314,7 +314,7 @@ class Breadcrumbs extends UI5Element {
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot.querySelector(`.ui5-breadcrumbs-link-wrapper #${item._id}-link`);
+				link = this.shadowRoot.querySelector(`#${item._id}-link-wrapper`);
 			map.set(item, this._getElementWidth(link) || 0);
 		}
 
@@ -324,7 +324,9 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._dropdownArrowLinkWidth = this._getElementWidth(this._dropdownArrowLink);
+			this._dropdownArrowLinkWidth = this._getElementWidth(
+				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper"),
+			);
 		}
 	}
 
@@ -434,7 +436,7 @@ class Breadcrumbs extends UI5Element {
 
 	_hasVisibleContent(item) {
 		// the check is not complete but may be extended in the future if needed to cover
-		// cases becides the standard (UX-recommended) ones
+		// cases besides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
 	}
 
@@ -454,7 +456,7 @@ class Breadcrumbs extends UI5Element {
 
 	get _currentLocationText() {
 		const items = this.getSlottedNodes("items");
-		if (this._endsWithCurrentLocationLabel && items.length > 1) {
+		if (this._endsWithCurrentLocationLabel && items.length) {
 			const item = items[items.length - 1];
 			if (this._isItemVisible(item)) {
 				return item.innerText;
