@@ -508,10 +508,11 @@ class ColorPicker extends UI5Element {
 		};
 
 		// We shouldn't update the hue value when user presses over the main color section.
-		// We shouldn't recalculate the hue value when user changes the hue value
 		if (this._isSelectedColorChanged) {
 			this._isSelectedColorChanged = false;
-		} else if (this._isHueValueChanged) {
+		}
+		// We shouldn't recalculate the hue value when user changes the hue slider. 
+		else if (this._isHueValueChanged) {
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
