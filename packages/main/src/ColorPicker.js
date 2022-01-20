@@ -91,14 +91,14 @@ const metadata = {
 		 * @private
 		 */
 		_isSelectedColorChanged: {
-			type: Boolean
+			type: Boolean,
 		},
 
 		/**
 		 * @private
 		 */
 		 _isHueValueChanged: {
-			type: Boolean
+			type: Boolean,
 		},
 
 		/**
@@ -507,12 +507,9 @@ class ColorPicker extends UI5Element {
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		// We shouldn't update the hue value when user presses over the main color section.
-		if (this._isSelectedColorChanged) {
+		if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.
 			this._isSelectedColorChanged = false;
-		}
-		// We shouldn't recalculate the hue value when user changes the hue slider. 
-		else if (this._isHueValueChanged) {
+		} else if (this._isHueValueChanged) { // We shouldn't recalculate the hue value when user changes the hue slider.
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
