@@ -116,7 +116,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessibility role of the component.
+		 * Defines the ARIA role of the component.
 		 * @defaultvalue ""
 		 * @private
 		 * @since 1.0.0-rc.15
