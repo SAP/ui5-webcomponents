@@ -314,7 +314,7 @@ class Breadcrumbs extends UI5Element {
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot.querySelector(`.ui5-breadcrumbs-link-wrapper #${item._id}-link`);
+				link = this.shadowRoot.querySelector(`#${item._id}-link-wrapper`);
 			map.set(item, this._getElementWidth(link) || 0);
 		}
 
@@ -324,7 +324,9 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._dropdownArrowLinkWidth = this._getElementWidth(this._dropdownArrowLink);
+			this._dropdownArrowLinkWidth = this._getElementWidth(
+				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper"),
+			);
 		}
 	}
 
