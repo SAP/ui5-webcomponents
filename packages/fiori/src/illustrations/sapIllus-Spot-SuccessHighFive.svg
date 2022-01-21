@@ -1,5 +1,5 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Spot-SuccessHighFive">
-<mask id="mask0_671_9658" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+<mask id="mask0_671_9658" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
 <circle cx="64" cy="64" r="64" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask0_671_9658)">
@@ -13,7 +13,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M83.8196 26.3971C84.6319 26.5596 85.1587 27.3498 84.9962 28.1621L82.2811 41.7379C82.1186 42.5502 81.3284 43.0771 80.5161 42.9146C79.7037 42.7521 79.1769 41.9619 79.3394 41.1495L82.0545 27.5738C82.217 26.7615 83.0072 26.2346 83.8196 26.3971Z" fill="var(--sapContent_Illustrative_Color15)"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M75.9171 15.9026C76.7414 15.985 77.3428 16.7201 77.2604 17.5444L74.9331 40.8171C74.8507 41.6414 74.1156 42.2428 73.2913 42.1604C72.467 42.078 71.8656 41.3429 71.948 40.5186L74.2753 17.2459C74.3577 16.4216 75.0928 15.8201 75.9171 15.9026Z" fill="var(--sapContent_Illustrative_Color15)"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M66.9898 8.92053C67.8144 8.9996 68.4188 9.73221 68.3398 10.5569L65.6246 38.872C65.5455 39.6967 64.8129 40.3011 63.9883 40.222C63.1636 40.1429 62.5592 39.4103 62.6383 38.5857L65.3535 10.2705C65.4325 9.44586 66.1651 8.84145 66.9898 8.92053Z" fill="var(--sapContent_Illustrative_Color15)"/>
-<mask id="mask1_671_9658" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-26" y="35" width="187" height="117">
+<mask id="mask1_671_9658" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="-26" y="35" width="187" height="117">
 <path d="M151.916 35.6255H-17.4472C-18.5512 35.6245 -19.6445 35.841 -20.6647 36.2628C-21.6849 36.6845 -22.612 37.3032 -23.393 38.0835C-24.1739 38.8637 -24.7935 39.7902 -25.2162 40.8101C-25.6389 41.8299 -25.8564 42.923 -25.8564 44.0269V143.58C-25.8564 145.81 -24.9705 147.949 -23.3934 149.526C-21.8164 151.103 -19.6775 151.989 -17.4472 151.989H151.916C154.146 151.989 156.285 151.103 157.862 149.526C159.439 147.949 160.325 145.81 160.325 143.58V44.0269C160.325 42.923 160.108 41.8299 159.685 40.8101C159.262 39.7902 158.643 38.8637 157.862 38.0835C157.081 37.3032 156.154 36.6845 155.134 36.2628C154.113 35.841 153.02 35.6245 151.916 35.6255V35.6255Z" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask1_671_9658)">
