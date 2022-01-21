@@ -12,6 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ### Features
+* **framework:** implement F6 Navigation Helper ([#4490](https://github.com/SAP/ui5-webcomponents/issues/4490)) ([60d0dc1](https://github.com/SAP/ui5-webcomponents/commit/60d0dc1))
 * **framework:** introduce runtimes and version info ([#4491](https://github.com/SAP/ui5-webcomponents/issues/4491)) ([757577f](https://github.com/SAP/ui5-webcomponents/commit/757577f))
 * **framework:** add `stable-dom-ref` support for abstract items ([#4604](https://github.com/SAP/ui5-webcomponents/issues/4604)) ([5526dea](https://github.com/SAP/ui5-webcomponents/commit/5526dea))
 * **ui5-button:** implement `accessibleNameRef` property ([#4474](https://github.com/SAP/ui5-webcomponents/issues/4474)) ([3f7eae3](https://github.com/SAP/ui5-webcomponents/commit/3f7eae3))
@@ -30,7 +31,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-segmented-button:** implement `accessibleName` property ([#4378](https://github.com/SAP/ui5-webcomponents/issues/4378)) ([e6a8b38](https://github.com/SAP/ui5-webcomponents/commit/e6a8b38))
 * **ui5-shellbar:** introduce `accessibilityTexts` property ([#4377](https://github.com/SAP/ui5-webcomponents/issues/4377)) ([f762e76](https://github.com/SAP/ui5-webcomponents/commit/f762e76)), closes [#4009](https://github.com/SAP/ui5-webcomponents/issues/4009)
 * **ui5-switch:** implement `accessibleNameRef` property ([#4472](https://github.com/SAP/ui5-webcomponents/issues/4472)) ([8538de9](https://github.com/SAP/ui5-webcomponents/commit/8538de9))
-* implement F6 Navigation Helper ([#4490](https://github.com/SAP/ui5-webcomponents/issues/4490)) ([60d0dc1](https://github.com/SAP/ui5-webcomponents/commit/60d0dc1))
 * **ui5-tabcontainer:** implement overflow functionality ([#4403](https://github.com/SAP/ui5-webcomponents/issues/4403)) ([a38bbab](https://github.com/SAP/ui5-webcomponents/commit/a38bbab)), closes [#2540](https://github.com/SAP/ui5-webcomponents/issues/2540)
 * **ui5-tabcontainer:** show `separators` in overflow ([#4507](https://github.com/SAP/ui5-webcomponents/issues/4507)) ([b646157](https://github.com/SAP/ui5-webcomponents/commit/b646157))
 * **ui5-tree-item:** add `indeterminate` state ([#4397](https://github.com/SAP/ui5-webcomponents/issues/4397)) ([80bbc22](https://github.com/SAP/ui5-webcomponents/commit/80bbc22))
