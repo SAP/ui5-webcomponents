@@ -1,5 +1,5 @@
-commit 21e1cd92be8340a5bdb4148f4e13e4f0345164f5
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Thu Jan 20 16:00:07 2022 +0200
+commit c6479dce083fe25622734607ae8e8a7136e5167e
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Fri Jan 21 07:49:20 2022 +0200
 
-    docs: update link in issue template (#4600)
+    docs(ui5-media-gallery): improve overview section (#4602)
