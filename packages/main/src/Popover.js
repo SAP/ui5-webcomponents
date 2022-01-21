@@ -450,11 +450,11 @@ class Popover extends Popup {
 	 * Restricts the arrow's coordinates within the bounds of the popover.
 	 * @private
 	 * @param {{x: number, y: number}} arrow arrow's coordinates
-	 * @param {number} isVertical if the popover is placed vertically relative to the opener
+	 * @param {boolean} isVertical if the popover is placed vertically relative to the opener
 	 * @param {number} top popover's top
 	 * @param {number} left popover's left
 	 * @param {{width: number, height: number}} popoverSize popover's width and height
-	 * @param {number} borderRadius borderRadius
+	 * @param {number} borderRadius value of the border-radius property
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
 	_clampArrowPlacement({ x, y }, isVertical, top, left, { width, height }, borderRadius) {
