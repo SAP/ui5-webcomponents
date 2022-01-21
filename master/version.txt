@@ -1,5 +1,5 @@
-commit 5526deac9c439ff4ef83c30c5144ad09532d5d02
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 21 12:16:32 2022 +0200
+commit 417bd6aad5829de578cc91487fa080af4699e450
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Jan 21 15:37:39 2022 +0200
 
-    feat: stable-dom-ref supported for abstract items (#4604)
+    feat(ui5-illustrated-message): add more illustrations to the default set (#4587)
