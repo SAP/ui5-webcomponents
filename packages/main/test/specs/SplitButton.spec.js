@@ -19,7 +19,7 @@ describe("Split Button general interaction", () => {
 		const textButton = await sbDefault.shadow$(".ui5-split-text-button");
 		const field = await browser.$("#displayEvent");
 
-		await textButton.click();
+		await textButton.click({x: 1, y: 1});
 
 		assert.strictEqual(await field.getValue(), "ui5-click", "'click' is fired");
 	});
