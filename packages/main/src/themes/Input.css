@@ -135,6 +135,7 @@
 	visibility: hidden;
 }
 [inner-input]::-webkit-input-placeholder {
+	font-weight: normal;
 	font-style: var(--_ui5-input-placeholder-style);
 	color: var(--_ui5-input-placeholder-color);
 	padding-right: 0.125rem;
@@ -147,6 +148,7 @@
 	visibility: hidden;
 }
 [inner-input]::-moz-placeholder {
+	font-weight: normal;
 	font-style: var(--_ui5-input-placeholder-style);
 	color: var(--sapField_PlaceholderTextColor);
 	padding-right: 0.125rem;
@@ -159,6 +161,7 @@
 	visibility: hidden;
 }
 [inner-input]:-ms-input-placeholder {
+	font-weight: normal;
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 	padding-right: 0.125rem;
@@ -250,10 +253,21 @@
 :host([value-state="Error"]) [inner-input],
 :host([value-state="Warning"]) [inner-input] {
 	font-style: var(--_ui5_input_error_warning_font_style);
+	text-indent: var(--_ui5_input_error_warning_text_indent);
 }
 
 :host([value-state="Error"]) [inner-input] {
 	font-weight: var(--_ui5_input_error_font_weight);
+}
+
+:host([value-state="Warning"]) [inner-input] {
+	font-weight: var(--_ui5_input_warning_font_weight);
+}
+
+:host([value-state="Information"]) [inner-input] {
+	font-style: var(--_ui5_input_information_font_style);
+	font-weight: var(--_ui5_input_information_font_weight);
+	text-indent: var(--_ui5_input_information_text_indent);
 }
 
 :host([value-state="Error"]:not([readonly])) {

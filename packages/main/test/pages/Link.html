@@ -27,7 +27,7 @@
 
 <body class="link1auto">
 	<div class="group">
-		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
+		<ui5-link id="target-blank-link" class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
 		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
 		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" disabled>Disabled</ui5-link>
 		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
@@ -76,11 +76,55 @@
 		<ui5-link id="ariaLblBy" accessible-name-ref="lbl">Go to</ui5-link>
 	</section>
 
+	<section class="group">
+		<h2>Collapsible text</h2>
+		<span id="collapsibleText">
+			Maxlines ... Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed
+			diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+			erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+			rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+			dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+			sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+			erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing
+			elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+			aliquyam erat
+		</span>
+		<ui5-link id="collapseExpandLink">Less</ui5-link>
+	</section>
+
+	<section class="group">
+		<h2>Link opens a dialog</h2>
+		<ui5-link id="signInLink">Sign in</ui5-link>
+		<ui5-dialog id="signInDialog" header-text="Sign in form">
+			<section class="login-form">
+				<div>
+					<ui5-label for="email" type="Email" required>Email: </ui5-label>
+					<ui5-input id="email"></ui5-input>
+				</div>
+		
+				<div>
+					<ui5-label for="password" required>Password: </ui5-label>
+					<ui5-input id="password" type="Password"></ui5-input>
+				</div>
+			</section>
+		
+			<div slot="footer"	class="dialog-footer">
+				<div style="flex: 1;"></div>
+				<ui5-button id="closeDialogButton" design="Emphasized">Sign in</ui5-button>
+			</div>
+		</ui5-dialog>
+	</section>
+
 	<script>
 		var disLink = document.querySelector("#disabled-link");
 		var link = document.querySelector("#link");
 		var linkClickPreventDefault = document.querySelector("#link-click-prevent-default");
 		var input = document.querySelector("#helper-input");
+		var collapseExpandLink = document.getElementById("collapseExpandLink");
+		var collapsibleText = document.getElementById("collapsibleText");
+		var signInLink = document.getElementById("signInLink");
+		var singInDialog = document.getElementById("signInDialog");
+		var closeSignInDialogButton = document.getElementById("closeDialogButton");
 
 		[link, disLink].forEach(function(element) {
 			element.addEventListener("click", function(event) {
@@ -88,8 +132,35 @@
 			});
 		});
 
+		signInLink.addEventListener("click", function(event) {
+			singInDialog.show();
+		});
+
+		signInLink.accessibilityAttributes = {
+			hasPopup: "Dialog"
+		};
+
+		closeSignInDialogButton.addEventListener("click", function(event) {
+			singInDialog.close();
+		});
+
 		linkClickPreventDefault.addEventListener("click", function(event) {
 			event.preventDefault();
+		});
+
+		collapseExpandLink.accessibilityAttributes = {
+			expanded: "true"
+		};
+
+		collapseExpandLink.addEventListener("click", function(event) {
+			collapseExpandLink.accessibilityAttributes = {
+				expanded: collapseExpandLink.accessibilityAttributes["expanded"] === "true" ? "false" : "true"
+			};
+			collapseExpandLink.innerText = collapseExpandLink.innerText === "More" ? "Less" : "More";
+			collapsibleText.style["display"] = collapsibleText.style["display"] === "-webkit-box" ? "" : "-webkit-box";
+			collapsibleText.style["-webkit-line-clamp"] = collapsibleText.style["-webkit-line-clamp"] === "2" ? "" : "2";
+			collapsibleText.style["-webkit-box-orient"] = collapsibleText.style["-webkit-box-orient"] === "vertical" ? "" : "vertical";
+			collapsibleText.style["overflow"] = collapsibleText.style["overflow"] === "hidden" ? "" : "hidden";
 		});
 	</script>
 </body>

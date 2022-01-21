@@ -1,10 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
-import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isPhone,
+	isTablet,
+	isCombi,
+	isSafari,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -161,6 +167,19 @@ const metadata = {
 		accessibleName: {
 			type: String,
 			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		 accessibleNameRef: {
+			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -343,6 +362,10 @@ class Button extends UI5Element {
 		if (FormSupport) {
 			FormSupport.triggerFormSubmit(this);
 		}
+
+		if (isSafari()) {
+			this.getDomRef().focus();
+		}
 	}
 
 	_onmousedown(event) {
@@ -451,6 +474,10 @@ class Button extends UI5Element {
 
 	get showIconTooltip() {
 		return this.iconOnly && !this.title;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static async onDefine() {

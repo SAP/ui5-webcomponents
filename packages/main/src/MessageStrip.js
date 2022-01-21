@@ -10,7 +10,14 @@ import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import {
+	MESSAGE_STRIP_CLOSE_BUTTON,
+	MESSAGE_STRIP_CLOSABLE,
+	MESSAGE_STRIP_ERROR,
+	MESSAGE_STRIP_WARNING,
+	MESSAGE_STRIP_SUCCESS,
+	MESSAGE_STRIP_INFORMATION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
@@ -22,6 +29,7 @@ const metadata = {
 	tag: "ui5-message-strip",
 	altTag: "ui5-messagestrip",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
@@ -124,6 +132,14 @@ const metadata = {
  * an icon in the beginning and a close button. Moreover, its size and background
  * can be controlled with CSS.
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/MessageStrip";</code>
@@ -190,12 +206,25 @@ class MessageStrip extends UI5Element {
 		};
 	}
 
+	static designAnnouncementMappings() {
+		return {
+			"Information": MessageStrip.i18nBundle.getText(MESSAGE_STRIP_INFORMATION),
+			"Positive": MessageStrip.i18nBundle.getText(MESSAGE_STRIP_SUCCESS),
+			"Negative": MessageStrip.i18nBundle.getText(MESSAGE_STRIP_ERROR),
+			"Warning": MessageStrip.i18nBundle.getText(MESSAGE_STRIP_WARNING),
+		};
+	}
+
 	get hiddenText() {
-		return `Message Strip ${this.design} ${this.hideCloseButton ? "" : "closable"}`;
+		return `${MessageStrip.designAnnouncementMappings()[this.design]} ${this.hideCloseButton ? "" : this._closableText}`;
 	}
 
 	get _closeButtonText() {
 		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+	}
+
+	get _closableText() {
+		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE);
 	}
 
 	get classes() {
@@ -219,6 +248,14 @@ class MessageStrip extends UI5Element {
 
 	get designClasses() {
 		return MessageStrip.designClassesMappings()[this.design];
+	}
+
+	get accInfo() {
+		return {
+			"button": {
+				"title": this._closeButtonText,
+			},
+		};
 	}
 }
 

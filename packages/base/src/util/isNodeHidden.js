@@ -3,7 +3,7 @@ const isNodeHidden = node => {
 		return false;
 	}
 
-	return (node.offsetWidth <= 0 && node.offsetHeight <= 0) || node.style.visibility === "hidden";
+	return (node.offsetWidth <= 0 && node.offsetHeight <= 0) || (node.style && node.style.visibility === "hidden");
 };
 
 export default isNodeHidden;

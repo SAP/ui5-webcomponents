@@ -64,6 +64,8 @@
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     overflow-y: scroll;
+    padding-top: 3rem;
+    box-sizing: border-box;
   }
 }
 
@@ -96,7 +98,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #000;
-  z-index: 10;
+  z-index: 150;
 
   .main-content, .main-content-header {
     padding-top: 0;

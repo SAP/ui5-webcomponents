@@ -98,7 +98,6 @@ const metadata = {
 		 */
 		_isBusy: {
 			type: Boolean,
-			noAttribute: true,
 		},
 	},
 };
@@ -231,7 +230,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	_handleKeydown(event) {
-		if (!this.active) {
+		if (!this._isBusy) {
 			return;
 		}
 
@@ -246,7 +245,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	_preventEvent(event) {
-		if (this.active) {
+		if (this._isBusy) {
 			event.stopImmediatePropagation();
 		}
 	}

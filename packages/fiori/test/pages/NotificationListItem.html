@@ -247,17 +247,17 @@
 	</div>
 
 	<script>
-		notificationList.addEventListener("itemClick", function(event) {
+		notificationList.addEventListener("item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("itemClose", function(event) {
+		notificationList.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList2.addEventListener("itemClick", function(event) {
+		notificationList2.addEventListener("item-click", function(event) {
 			var item = event.detail.item;
 
 			setTimeout(function() {
@@ -270,7 +270,7 @@
 			wcToastBS.show();
 		});
 
-		notificationList2.addEventListener("itemClose", function(event) {
+		notificationList2.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
@@ -299,7 +299,7 @@
 			notificationsPopover.showAt(openNotifications);
 		});
 
-		shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
 			notificationsPopover.showAt(event.detail.targetRef);
 		});

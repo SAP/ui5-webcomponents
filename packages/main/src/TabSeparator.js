@@ -1,6 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TabSeparatorTemplate from "./generated/templates/TabSeparatorTemplate.lit.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+
+import TabContainer from "./TabContainer.js";
+
+// Templates
+import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
+import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorInOverflowTemplate.lit.js";
+
+// Styles
+import stripCss from "./generated/themes/TabSeparatorInStrip.css.js";
+import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 
 /**
  * @public
@@ -30,15 +40,44 @@ class TabSeparator extends UI5Element {
 		return litRender;
 	}
 
-	static get template() {
-		return TabSeparatorTemplate;
+	static get stripTemplate() {
+		return TabSeparatorInStripTemplate;
+	}
+
+	static get overflowTemplate() {
+		return TabSeparatorInOverflowTemplate;
+	}
+
+	get classes() {
+		return {
+			"ui5-tc__separator": true,
+		};
 	}
 
 	get isSeparator() {
 		return true;
 	}
+
+	getTabInStripDomRef() {
+		return this._getTabInStripDomRef;
+	}
+
+	get stableDomRef() {
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	}
+
+	get stripPresentation() {
+		return executeTemplate(this.constructor.stripTemplate, this);
+	}
+
+	get overflowPresentation() {
+		return executeTemplate(this.constructor.overflowTemplate, this);
+	}
 }
 
 TabSeparator.define();
+
+TabContainer.registerTabStyles(stripCss);
+TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default TabSeparator;

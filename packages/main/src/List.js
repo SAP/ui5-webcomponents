@@ -40,6 +40,7 @@ const PAGE_UP_DOWN_SIZE = 10;
 const metadata = {
 	tag: "ui5-list",
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
@@ -168,7 +169,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * on IE the component will fallback to <code>growing="Button"</code>.
 		 * @type {ListGrowingMode}
 		 * @defaultvalue "None"
@@ -265,6 +266,7 @@ const metadata = {
 		 * is set to <code>Inactive</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -376,6 +378,8 @@ const metadata = {
  *
  * <br><br>
  * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Basic Navigation</h4
  * The <code>ui5-list</code> provides advanced keyboard handling.
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
@@ -393,6 +397,11 @@ const metadata = {
  * <li>[SPACE] - Select an item (if <code>type</code> is 'Active') when <code>mode</code> is selection</li>
  * <li>[DELETE] - Delete an item if <code>mode</code> property is <code>Delete</code></li>
  * </ul>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  * <br><br>
  *
  * <h3>ES6 Module Import</h3>
@@ -882,6 +891,10 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
+		if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
+			return;
+		}
+
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
 			this.onSelectionRequested({
@@ -893,9 +906,6 @@ class List extends UI5Element {
 				},
 			});
 		}
-
-		this.fireEvent("item-press", { item: pressedItem });
-		this.fireEvent("item-click", { item: pressedItem });
 
 		this._selectionRequested = false;
 	}

@@ -73,6 +73,14 @@ const metadata = {
 		},
 
 		/**
+		 * @private
+		 * @since 1.1.0
+		 */
+		indeterminate: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
 		 * @type {string}
 		 * @public

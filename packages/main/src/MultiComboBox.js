@@ -537,7 +537,7 @@ class MultiComboBox extends UI5Element {
 
 		const tokensCount = this._tokenizer.tokens.length - 1;
 
-		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+		if (!event.relatedTarget || !event.relatedTarget.hasAttribute("ui5-token")) {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
 			this._tokenizer.scrollToStart();
 		}
@@ -912,7 +912,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	inputFocusIn() {
-		if (!isPhone()) {
+		if (!isPhone() || this.readonly) {
 			this.focused = true;
 		} else {
 			this._innerInput.blur();
@@ -1012,7 +1012,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.focused && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
 	}
 
 	get valueStateTextMappings() {
@@ -1049,6 +1049,10 @@ class MultiComboBox extends UI5Element {
 
 	get _tokenizerExpanded() {
 		return (this._isFocusInside || this.open) && !this.readonly;
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	get classes() {

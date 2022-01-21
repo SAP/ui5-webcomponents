@@ -56,7 +56,7 @@ const metadata = {
 		},
 
 		/**
-		 * Represents the "additionalText" text, which is displayed in the tab filter.
+		 * Represents the "additionalText" text, which is displayed in the tab.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -117,6 +117,10 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
+		},
+
+		_selected: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -192,7 +196,7 @@ class Tab extends UI5Element {
 	}
 
 	get stableDomRef() {
-		return `${this._id}-stable-dom-ref`;
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 
 	/**
@@ -234,11 +238,11 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		return this.selected || false;
+		return this.selected || this._selected;
 	}
 
 	get effectiveHidden() {
-		return !this.selected;
+		return !this.effectiveSelected;
 	}
 
 	get ariaLabelledBy() {
@@ -259,10 +263,10 @@ class Tab extends UI5Element {
 		return labels.join(" ");
 	}
 
-	get headerClasses() {
+	get stripClasses() {
 		const classes = ["ui5-tab-strip-item"];
 
-		if (this.selected) {
+		if (this.effectiveSelected) {
 			classes.push("ui5-tab-strip-item--selected");
 		}
 

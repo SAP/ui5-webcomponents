@@ -22,6 +22,12 @@ describe("General API", () => {
 		assert.strictEqual(await link.getAttribute("href"), HREF_ATTRIBUTE, "The href attribute is changed.");
 	});
 
+	it("tests rel attribute", async () => {
+		const anchor = await browser.$("#target-blank-link");
+
+		assert.strictEqual(await anchor.shadow$("a").getAttribute("rel"), "noreferrer noopener", "The rel attribute is properly set.");
+	});
+
 	it("tests target attributes", async () => {
 		const link = await browser.$("#empty-link-2");
 		const TARGET_ATTRIBUTE = "_blank";
@@ -41,7 +47,6 @@ describe("General API", () => {
 	});
 
 	it("should prevent clicking on disabled link", async () => {
-		const disLink = await browser.$("#disabled-link");
 		const input = await browser.$("#helper-input");
 
 		assert.strictEqual(await input.getValue(), "0", "Click should not be fired and value of input should not be changed.");
@@ -61,4 +66,19 @@ describe("General API", () => {
 		const url = await browser.getUrl();
 		assert.notInclude(url, "https://www.google.com", "URL is not google");
 	});
+
+	it("Collabsible element has aria-expanded attribute", async () => {
+		const link = await browser.$("#collapseExpandLink");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "true", "The text is expanded");
+		await link.click();
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "false", "The text is collapsed");
+	});
+
+	it("Open dialog link has propper aria-haspopup attribute", async () => {
+		const link = await browser.$("#signInLink");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Proper aria-haspopup attribute is set");
+	});
+
 });

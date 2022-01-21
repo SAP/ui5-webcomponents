@@ -1,6 +1,6 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import encodeXML from "@ui5/webcomponents-base/dist/util/encodeXML.js";
+import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
@@ -111,6 +111,64 @@ class Suggestions {
 		return false;
 	}
 
+	onPageUp(event) {
+		event.preventDefault();
+
+		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
+
+		if (this._hasValueState && !isItemIndexValid) {
+			this._focusValueState();
+			return true;
+		}
+
+		this._moveItemSelection(this.selectedItemIndex,
+			isItemIndexValid ? this.selectedItemIndex -= 10 : this.selectedItemIndex = 0);
+		return true;
+	}
+
+	onPageDown(event) {
+		event.preventDefault();
+
+		const items = this._getItems();
+		const lastItemIndex = items.length - 1;
+		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
+
+		if (this._hasValueState && !items) {
+			this._focusValueState();
+			return true;
+		}
+
+		this._moveItemSelection(this.selectedItemIndex,
+			isItemIndexValid ? this.selectedItemIndex += 10 : this.selectedItemIndex = lastItemIndex);
+		return true;
+	}
+
+	onHome(event) {
+		event.preventDefault();
+
+		if (this._hasValueState) {
+			this._focusValueState();
+			return true;
+		}
+
+		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
+		return true;
+	}
+
+	onEnd(event) {
+		event.preventDefault();
+
+		const lastItemIndex = this._getItems().length - 1;
+
+		if (this._hasValueState && !lastItemIndex) {
+			this._focusValueState();
+			return true;
+		}
+
+		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = lastItemIndex);
+		return true;
+	}
+
 	onTab(event) {
 		if (this._isItemOnTarget()) {
 			this.onItemSelected(null, true);
@@ -200,7 +258,7 @@ class Suggestions {
 
 	/* Private methods */
 	onItemPress(oEvent) {
-		this.onItemSelected(oEvent.detail.item, false /* keyboardUsed */);
+		this.onItemSelected(oEvent.detail.selectedItems[0], false /* keyboardUsed */);
 	}
 
 	_beforeOpen() {
@@ -210,8 +268,8 @@ class Suggestions {
 
 	async _attachItemsListeners() {
 		const list = await this._getList();
-		list.removeEventListener("ui5-item-press", this.fnOnSuggestionItemPress);
-		list.addEventListener("ui5-item-press", this.fnOnSuggestionItemPress);
+		list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
 		list.addEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
 		list.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
@@ -284,19 +342,14 @@ class Suggestions {
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
 		const previousSelectedIdx = this.selectedItemIndex;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
-			this.component._isValueStateFocused = true;
-			this.component.focused = false;
-			this.component.hasSuggestionItemSelected = false;
-			this.selectedItemIndex = null;
-
+		if (this._hasValueState && previousSelectedIdx === null && !this.component._isValueStateFocused) {
+			this._focusValueState();
 			return;
 		}
 
-		if ((previousSelectedIdx === null && !hasValueState) || this.component._isValueStateFocused) {
-			this.component._isValueStateFocused = false;
+		if ((previousSelectedIdx === null && !this._hasValueState) || this.component._isValueStateFocused) {
+			this._clearValueStateFocus();
 			--this.selectedItemIndex;
 		}
 
@@ -310,9 +363,8 @@ class Suggestions {
 	_selectPreviousItem() {
 		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
-		const hasValueState = this.component.hasValueStateMessage;
 
-		if (hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
+		if (this._hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
 			this.component.hasSuggestionItemSelected = false;
 			this.component._isValueStateFocused = true;
 			this.selectedItemIndex = null;
@@ -358,6 +410,7 @@ class Suggestions {
 		}
 
 		this.component.focused = false;
+		this._clearValueStateFocus();
 
 		this.accInfo = {
 			currentPos: nextIdx + 1,
@@ -494,6 +547,26 @@ class Suggestions {
 
 	sanitizeText(text) {
 		return encodeXML(text);
+	}
+
+	get _hasValueState() {
+		return this.component.hasValueStateMessage;
+	}
+
+	_focusValueState() {
+		const items = this._getItems();
+
+		this.component._isValueStateFocused = true;
+		this.component.focused = false;
+		this.component.hasSuggestionItemSelected = false;
+		this.selectedItemIndex = null;
+
+		items && this._scrollItemIntoView(items[0]);
+		this._deselectItems();
+	}
+
+	_clearValueStateFocus() {
+		this.component._isValueStateFocused = false;
 	}
 
 	static get dependencies() {

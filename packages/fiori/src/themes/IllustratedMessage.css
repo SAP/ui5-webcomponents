@@ -112,6 +112,10 @@
     display: none;
 }
 
+.sapIllus_MaskTypeAlpha {
+	mask-type:alpha;
+}
+
 .sapIllus_BackgroundColor {
     fill: var(--sapIllus_BackgroundColor);
 }

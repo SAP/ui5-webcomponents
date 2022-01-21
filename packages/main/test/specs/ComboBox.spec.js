@@ -462,6 +462,17 @@ describe("General interaction", () => {
 		await arrow.click();
 		assert.strictEqual(await listItem.shadow$(".ui5-li-additional-text").getText(), "DZ", "Additional item text should be displayed");
 	});
+
+	it ("Should not open value state message when component is in readonly state", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const cb = await browser.$("#readonly-value-state-cb");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await cb.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover with valueStateMessage should not be opened.");
+	});
 });
 
 describe("Grouping", () => {
@@ -529,7 +540,7 @@ describe("Grouping", () => {
 
 		assert.ok(await groupItem.getProperty("focused"),  "The second group header should be focused");
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
-		assert.strictEqual(await combo.getProperty("value"), "a", "Temp value should be reset to the initial filter value - no autocomplete");
+		assert.strictEqual(await combo.getProperty("value"), "", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
 });
 
@@ -612,7 +623,7 @@ describe("Keyboard navigation", async () => {
 		listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
-	
+
 		await input.keys("ArrowUp");
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
@@ -747,5 +758,59 @@ describe("Keyboard navigation", async () => {
 		await browser.keys(["Shift", "Tab"]);
 
 		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The previous combobox should be focused");
+	});
+
+	it ("Should select the corresponding item on home/pgup/pgdown/end",  async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo2");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		const pickerIcon = await comboBox.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItem;
+
+		// Opened picker
+		await pickerIcon.click();
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		
+		await input.keys("Home");
+		listItem = await respPopover.$("ui5-list").$("ui5-li");
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The first item should be focused on HOME");
+		assert.strictEqual(await comboBox.getProperty("focused"), false, "The ComboBox should not be focused");
+
+		await input.keys("End");
+		listItem = await respPopover.$("ui5-list").$$("ui5-li")[10];
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The last item should be focused on END");
+
+		await input.keys("PageUp");
+		listItem = await respPopover.$("ui5-list").$("ui5-li");
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The -10 item should be focused on PAGEUP");
+
+		await input.keys("PageDown");
+		listItem = await respPopover.$("ui5-list").$$("ui5-li")[10];
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The +10 item should be focused on PAGEDOWN");
+
+		// Closed picker
+		await pickerIcon.click();
+
+		// Clearing typed in value to prevent default behavior of HOME
+		await comboBox.setProperty("value", "");
+
+		await input.keys("Home");
+		assert.strictEqual(await input.getProperty("value"), "Algeria", "The first item should be selected on HOME");
+		
+		// Clearing typed in value to prevent default behavior of END
+		await comboBox.setProperty("value", "");
+
+		await input.keys("End");
+		assert.strictEqual(await input.getProperty("value"), "Chile", "The last item should be selected on END");
+
+		await input.keys("PageUp");
+		assert.strictEqual(await input.getProperty("value"), "Algeria", "The -10 item should be selected on PAGEUP");
+
+		await input.keys("PageDown");
+		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
 	});
 });

@@ -309,6 +309,10 @@
 				event.preventDefault();
 				notificationsPopover.showAt(event.detail.targetRef);
 			});
+
+			notificationListTop.addEventListener("item-close", function (e) {
+				e.detail.item.hidden = true;
+			});
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
@@ -358,6 +362,7 @@
 	shellbar.addEventListener("notifications-click", function(event) {
 		notificationsPopover.showAt(event.detail.targetRef);
 	});
+
 </script>
 	
 	</xmp></pre>

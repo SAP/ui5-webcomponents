@@ -168,6 +168,21 @@ exports.config = {
 			}, this);
 		}, true);
 
+		await browser.addCommand("isFocusedDeepElement", async function (element) {
+			return browser.executeAsync(function (elem, element, done) {
+				let activeElement = document.activeElement;
+
+				while (activeElement.shadowRoot) {
+					if (activeElement.shadowRoot.activeElement) {
+						activeElement = activeElement.shadowRoot.activeElement;
+					} else {
+						break;
+					}
+				}
+				done(element === activeElement);
+			}, this, element);
+		}, true);
+
 		await browser.addCommand("setProperty", async function(property, value) {
 			return browser.executeAsync((elem, property, value, done) => {
 				elem[property] = value;
@@ -230,6 +245,7 @@ exports.config = {
 			"isExisting",
 			"isFocused",
 			"isFocusedDeep", // custom
+			"isFocusedDeepElement", // custom
 			"shadow$",
 			"shadow$$",
 		];

@@ -18,8 +18,6 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>// delete Document.prototype.adoptedStyleSheets;</script>
-
 	<link rel="stylesheet" type="text/css" href="styles/TabContainer.css">
 </head>
 
@@ -29,61 +27,115 @@
 		<h1 class="header-title">ui5-tabcontainer</h1>
 	</header>
 
+	<section>
+		<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>
+		<h2>Text only End Overflow</h2>
+		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed fixed>
+			<ui5-tab text="One"></ui5-tab>
+			<ui5-tab text="Two"></ui5-tab>
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Four"></ui5-tab>
+			<ui5-tab text="Five"></ui5-tab>
+			<ui5-tab text="Six"></ui5-tab>
+			<ui5-tab text="Seven"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Eight"></ui5-tab>
+			<ui5-tab text="Nine"></ui5-tab>
+			<ui5-tab text="Ten"></ui5-tab>
+			<ui5-tab text="Eleven"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Twelve"></ui5-tab>
+			<ui5-tab text="Thirteen" selected></ui5-tab>
+			<ui5-tab text="Fourteen"></ui5-tab>
+			<ui5-tab text="Fifteen"></ui5-tab>
+			<ui5-tab text="Sixteen"></ui5-tab>
+			<ui5-tab text="Seventeen"></ui5-tab>
+			<ui5-tab text="Eighteen"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Nineteen"></ui5-tab>
+			<ui5-tab text="Twenty"></ui5-tab>
+			<ui5-tab text="Twenty One"></ui5-tab>
+			<ui5-tab text="Twenty Two"></ui5-tab>
+			<ui5-tab text="Twenty Three"></ui5-tab>
+			<ui5-tab text="Twenty Four"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Twenty Five"></ui5-tab>
+			<ui5-tab text="Twenty Six"></ui5-tab>
+			<ui5-tab text="Twenty Seven"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Twenty Eight"></ui5-tab>
+			<ui5-tab text="Twenty Nine"></ui5-tab>
+			<ui5-tab text="Thirty"></ui5-tab>
+		</ui5-tabcontainer>
+	</section>
 
 	<section>
-		<h2>Text only</h2>
-		<ui5-tabcontainer collapsed fixed>
-			<ui5-tab text="One" selected>
-			</ui5-tab>
-			<ui5-tab text="Two">
-			</ui5-tab>
-			<ui5-tab text="Three">
-			</ui5-tab>
-			<ui5-tab text="Four">
-			</ui5-tab>
-			<ui5-tab text="Five">
-			</ui5-tab>
-			<ui5-tab text="Six">
-			</ui5-tab>
-			<ui5-tab text="Seven">
-			</ui5-tab>
-			<ui5-tab text="Eight">
-			</ui5-tab>
-			<ui5-tab text="Nine">
-			</ui5-tab>
-			<ui5-tab text="Ten">
-			</ui5-tab>
-			<ui5-tab text="Eleven">
-			</ui5-tab>
-			<ui5-tab text="Twelve">
-			</ui5-tab>
+		<h2>Text only Start And End Overflow</h2>
+		<ui5-tabcontainer id="tabContainerStartAndEndOverflow" tabs-overflow-mode="StartAndEnd" collapsed fixed>
+			<ui5-tab text="One"></ui5-tab>
+			<ui5-tab text="Two"></ui5-tab>
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Four"></ui5-tab>
+			<ui5-tab text="Five"></ui5-tab>
+			<ui5-tab text="Six"></ui5-tab>
+			<ui5-tab text="Seven"></ui5-tab>
+			<ui5-tab text="Eight"></ui5-tab>
+			<ui5-tab text="Nine"></ui5-tab>
+			<ui5-tab text="Ten"></ui5-tab>
+			<ui5-tab text="Eleven"></ui5-tab>
+			<ui5-tab text="Twelve"></ui5-tab>
+			<ui5-tab text="Thirteen"></ui5-tab>
+			<ui5-tab text="Fourteen"></ui5-tab>
+			<ui5-tab text="Fifteen"></ui5-tab>
+			<ui5-tab text="Sixteen"></ui5-tab>
+			<ui5-tab text="Seventeen"></ui5-tab>
+			<ui5-tab text="Eighteen"></ui5-tab>
+			<ui5-tab text="Nineteen"></ui5-tab>
+			<ui5-tab text="Twenty" selected></ui5-tab>
+			<ui5-tab text="Twenty One"></ui5-tab>
+			<ui5-tab text="Twenty Two"></ui5-tab>
+			<ui5-tab text="Twenty Three"></ui5-tab>
+			<ui5-tab text="Twenty Four"></ui5-tab>
+			<ui5-tab text="Twenty Five"></ui5-tab>
+			<ui5-tab text="Twenty Six"></ui5-tab>
+			<ui5-tab text="Twenty Seven"></ui5-tab>
+			<ui5-tab text="Twenty Eight"></ui5-tab>
+			<ui5-tab text="Twenty Nine"></ui5-tab>
+			<ui5-tab text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
 	<section>
 		<h2>Tab Container</h2>
-		<ui5-tabcontainer id="tabContainer1" fixed collapsed show-overflow>
-			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
-			</ui5-tab>
+		<ui5-tabcontainer id="tabContainer1" fixed collapsed>
+			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
-			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40"></ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
+		<h2>Tab Container Start And End Overflow</h2>
+		<ui5-tabcontainer id="tabContainer1" fixed collapsed tabs-overflow-mode="StartAndEnd">
+			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
 	<section>
 		<h2>Icon only</h2>
-		<ui5-tabcontainer show-overflow id="tabContainerIconOnly">
+		<ui5-tabcontainer id="tabContainerIconOnly">
 			<ui5-tab icon="sap-icon://card" selected>
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -129,7 +181,7 @@
 
 	<section>
 		<h2>Text only</h2>
-		<ui5-tabcontainer show-overflow id="tabContainerTextOnly">
+		<ui5-tabcontainer id="tabContainerTextOnly">
 			<ui5-tab text="Products ID" selected>
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -171,7 +223,7 @@
 	</section>
 
 	<section class="tabcontainer2auto">
-		<ui5-tabcontainer fixed showOverflow class="tabcontainer3auto" id="tc-scrollable-child">
+		<ui5-tabcontainer fixed class="tabcontainer3auto" id="tc-scrollable-child">
 			<ui5-tab text="Tab 1" selected id="scrollable-tab">
 				<ui5-button>Toggle style</ui5-button>
 
@@ -233,7 +285,7 @@
 	<section>
 		<h2>Icon and Text</h2>
 
-		<ui5-tabcontainer show-overflow>
+		<ui5-tabcontainer>
 			<ui5-tab icon="sap-icon://card" text="Tab 1" additional-text="123">
 				<div class="tabcontainer2auto">
 					<h4>Content with set height: 300px</h4>
@@ -253,7 +305,7 @@
 	<section>
 		<h2>Icon and Text with tabLayout="Inline"</h2>
 
-		<ui5-tabcontainer show-overflow tab-layout="Inline">
+		<ui5-tabcontainer tab-layout="Inline">
 			<ui5-tab icon="sap-icon://card" text="Tab 1" additional-text="123">
 				<div class="tabcontainer2auto">
 					<h4>Content with set height: 300px</h4>
@@ -273,7 +325,7 @@
 	<section>
 		<h2>Text and additional text</h2>
 
-		<ui5-tabcontainer show-overflow>
+		<ui5-tabcontainer>
 			<ui5-tab text="Tab 1" additional-text="additional">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -290,7 +342,7 @@
 	<section>
 		<h2>Text and additional text with tabLayout="Inline"</h2>
 
-		<ui5-tabcontainer show-overflow tab-layout="Inline">
+		<ui5-tabcontainer tab-layout="Inline">
 			<ui5-tab text="Monitors" additional-text="10">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -307,7 +359,7 @@
 	<section>
 		<h2>Tabs with input elements</h2>
 
-		<ui5-tabcontainer show-overflow>
+		<ui5-tabcontainer>
 			<ui5-tab text="Tab 1" selected>
 				<p>ui5-input</p>
 				<ui5-input></ui5-input>
@@ -328,7 +380,7 @@
 	<section class="ui5-content-density-compact">
 		<h3>TabContainer in Compact</h3>
 		<div>
-			<ui5-tabcontainer show-overflow>
+			<ui5-tabcontainer>
 			<ui5-tab text="Products ID">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -368,25 +420,18 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 
-			<ui5-tabcontainer id="tabContainer1Compact" fixed collapsed show-overflow>
-				<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
-				</ui5-tab>
+			<ui5-tabcontainer id="tabContainer1Compact" fixed collapsed>
+				<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
 				<ui5-tab-separator></ui5-tab-separator>
-				<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
-				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45">
-				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15">
-				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40">
-				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40">
-				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
-				</ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40"></ui5-tab>
 			</ui5-tabcontainer>
 
-			<ui5-tabcontainer show-overflow id="tabContainerIconOnlyCompact">
+			<ui5-tabcontainer id="tabContainerIconOnlyCompact">
 				<ui5-tab icon="sap-icon://card" selected>
 					<ui5-button>Button 11</ui5-button>
 					<ui5-button>Button 12</ui5-button>
@@ -432,33 +477,18 @@
 		</div>
 	</section>
 
-	<section>
-		<h2>Tab Container With Custom Menu Button</h2>
-		<ui5-tabcontainer id="tabContainer-custom-icon" fixed collapsed show-overflow>
-			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
-			</ui5-tab>
-			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40">
-			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
-			</ui5-tab>
-			<ui5-button slot="overflowButton" accessible-name="Menu icon here" icon="menu" design="Transparent"></ui5-button>
-		</ui5-tabcontainer>
-	</section>
 
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
 			result.innerHTML = event.detail.tab.text;
 			resultIdx.innerHTML = event.detail.tabIndex;
 		});
+
+		document.getElementById("densityToggle").addEventListener("click", function (event) {
+			console.log(event);
+			document.body.classList.toggle("sapUiSizeCompact")
+		})
 	</script>
 </body>
+
 </html>

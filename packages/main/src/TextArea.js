@@ -24,6 +24,7 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 /**
  * @public
@@ -360,7 +361,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get styles() {
-		return styles;
+		return [browserScrollbarCSS, styles];
 	}
 
 	static get render() {
@@ -570,6 +571,7 @@ class TextArea extends UI5Element {
 
 	get styles() {
 		const lineHeight = 1.4 * 16;
+		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
 
 		return {
 			mirror: {
@@ -577,7 +579,7 @@ class TextArea extends UI5Element {
 			},
 			main: {
 				width: "100%",
-				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+				height: (this.rows && !this.growing) ? `${mainHeight}px` : "100%",
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
@@ -632,7 +634,7 @@ class TextArea extends UI5Element {
 	}
 
 	get displayValueStateMessagePopover() {
-		return this.hasCustomValueState || this.hasValueState || this.exceeding;
+		return !this.readonly && (this.hasCustomValueState || this.hasValueState || this.exceeding);
 	}
 
 	get hasCustomValueState() {
@@ -653,6 +655,10 @@ class TextArea extends UI5Element {
 		}
 
 		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
 
 	/**

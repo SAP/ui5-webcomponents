@@ -36,6 +36,7 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 const metadata = {
 	tag: "ui5-table",
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
@@ -51,6 +52,7 @@ const metadata = {
 			propertyName: "rows",
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -143,7 +145,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
@@ -186,7 +188,7 @@ const metadata = {
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
 		 * <br><br>
-		 * <b>Limitations:</b>
+		 * <b>Restrictions:</b>
 		 * <ul>
 		 * <li>Browsers that do not support this feature:
 		 * <ul>
@@ -364,6 +366,14 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Table.js";</code>
@@ -434,6 +444,7 @@ class Table extends UI5Element {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
 		const rowsCount = this.rows.length;
+		const selectedRows = this.selectedRows;
 
 		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
@@ -455,6 +466,8 @@ class Table extends UI5Element {
 
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
+
+		this._allRowsSelected = selectedRows.length === this.rows.length;
 	}
 
 	onAfterRendering() {
@@ -688,9 +701,6 @@ class Table extends UI5Element {
 
 	get styles() {
 		return {
-			table: {
-				height: "48px",
-			},
 			busy: {
 				position: this.busyIndPosition,
 			},
