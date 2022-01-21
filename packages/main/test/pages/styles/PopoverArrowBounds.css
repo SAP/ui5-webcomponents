@@ -1,0 +1,45 @@
+.myBtn {
+	position: absolute;
+}
+
+#myBtn1 {
+	top: 0;
+	left: 0;
+}
+
+#myBtn2 {
+	top: 0;
+	right: 0;
+}
+
+#myBtn3 {
+	top: 50%;
+	left: 0;
+}
+
+#myBtn4 {
+	top: 50%;
+	right: 0;
+}
+
+#myBtn5 {
+	bottom: 0;
+	left: 0;
+}
+
+#myBtn6 {
+	bottom: 0;
+	right: 0;
+}
+
+#customSizeBtn {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.customSize {
+	height: 100px;
+	width: 100px;
+}
