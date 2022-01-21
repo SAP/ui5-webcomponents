@@ -24,34 +24,33 @@
 		<h3 class="header-title">Button Types</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-split-button id="sbDefault" text="Default" design="Default"></ui5-split-button>
-		<ui5-split-button id="sbEmphasized" text="Emphasized" design="Emphasized"></ui5-split-button>
-		<ui5-split-button id="sbPositive" text="Positive" design="Positive"></ui5-split-button>
-		<ui5-split-button id="sbNegative" text="Negative" design="Negative"></ui5-split-button>
-		<ui5-split-button id="sbAttention" text="Attention" design="Attention"></ui5-split-button>
-		<ui5-split-button id="sbTransparent" text="Transparent" design="Transparent"></ui5-split-button>
+		<ui5-split-button id="sbDefault" design="Default">Default</ui5-split-button>
+		<ui5-split-button id="sbEmphasized" design="Emphasized">Emphasized</ui5-split-button>
+		<ui5-split-button id="sbPositive" design="Positive">Positive</ui5-split-button>
+		<ui5-split-button id="sbNegative" design="Negative">Negative</ui5-split-button>
+		<ui5-split-button id="sbAttention" design="Attention">Attention</ui5-split-button>
+		<ui5-split-button id="sbTransparent" design="Transparent">Transparent</ui5-split-button>
 	</div>
 
 	<header class="header">
 		<h3 class="header-title">Disabled Buttons</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-split-button id="sbDisabled" text="Default" disabled></ui5-split-button>
-		<ui5-split-button text="Emphasized" design="Emphasized" disabled></ui5-split-button>
-		<ui5-split-button text="Positive" design="Positive" disabled></ui5-split-button>
-		<ui5-split-button text="Negative" design="Negative" disabled></ui5-split-button>
-		<ui5-split-button text="Attention" design="Attention" disabled></ui5-split-button>
-		<ui5-split-button text="Transparent" design="Transparent" disabled></ui5-split-button>
+		<ui5-split-button id="sbDisabled" design="Default" disabled>Default</ui5-split-button>
+		<ui5-split-button design="Emphasized" disabled>Emphasized</ui5-split-button>
+		<ui5-split-button design="Positive" disabled>Positive</ui5-split-button>
+		<ui5-split-button design="Negative" disabled>Negative</ui5-split-button>
+		<ui5-split-button design="Attention" disabled>Attention</ui5-split-button>
+		<ui5-split-button design="Transparent" disabled>Transparent</ui5-split-button>
 	</div>
 
 	<header class="header">
 		<h3 class="header-title">Icons</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-split-button id="sbTextIcon" text="Icon" icon="add"></ui5-split-button>
-		<ui5-split-button id="sbTextActiveIcon" text="Active Icon" active-icon="accept"></ui5-split-button>
-		<ui5-split-button id="sbTextIconActiveIcon" text="Icon + Active Icon" icon="add" active-icon="accept"></ui5-split-button>
-		<ui5-split-button id="sbIcon" icon="add"></ui5-split-button>
+		<ui5-split-button id="sbTextIcon" icon="add">Icon</ui5-split-button>
+		<ui5-split-button id="sbTextActiveIcon" active-icon="accept">Active Icon</ui5-split-button>
+		<ui5-split-button id="sbTextIconActiveIcon" icon="add" active-icon="accept">Icon + Active Icon</ui5-split-button>
 	</div>
 
 	<header class="header">
@@ -67,7 +66,6 @@
 	<div class="samples-margin">
 		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-input>
 	</div>
-
 </body>
 <script>
 	var displayEvent = document.getElementById("displayEvent"),
@@ -86,7 +84,7 @@
 
 	function displayEventDetails(event) {
 		displayEvent.value = event.type;
-		displayElement.value = event.target.text;
+		displayElement.value = event.target.text[0].textContent;
 		setTimeout(function() {
 			displayEvent.value = "";
 			displayElement.value = "";

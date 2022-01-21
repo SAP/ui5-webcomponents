@@ -24,7 +24,7 @@
 		@focusin={{_setTabIndexValue}}
 		@focusout={{_onFocusOut}}
 	>
-		{{text}}
+		<slot></slot>
 	</ui5-button>
 
 	<div
@@ -48,6 +48,6 @@
 	</div>
 
 	<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accessibilityInfo.description}} {{accessibilityInfo.keyboardHint}} {{accessibleName}}</span>
-	<span id="{{_id}}-invisibleTextDefault" class="ui5-hidden-text">{{text}}</span>
+	<span id="{{_id}}-invisibleTextDefault" class="ui5-hidden-text">{{textButtonAccText}}</span>
 
 </div>

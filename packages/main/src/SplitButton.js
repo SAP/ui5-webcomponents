@@ -28,17 +28,8 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  */
 const metadata = {
 	tag: "ui5-split-button",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-
 		/**
 		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
@@ -202,6 +193,21 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
+		/**
+		 * Defines the text of the component.
+		 * <br><br>
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+			propertyName: "text",
+		},
+	},
 	events: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
 		/**
 		 * Fired when the user clicks on the default action.
@@ -312,12 +318,13 @@ class SplitButton extends UI5Element {
 
 	_onKeyDown(event) {
 		if (isDown(event) || isUp(event) || isDownAlt(event) || isUpAlt(event) || isF4(event)) {
+			event.preventDefault();
 			this._arrowButtonActive = true;
 			this._fireArrowClick();
 		} else if (isSpace(event) || isEnter(event)) {
+			event.preventDefault();
 			this._textButtonActive = true;
 			if (isEnter(event)) {
-				event.preventDefault();
 				this._fireClick();
 			} else {
 				this._spacePressed = true;
@@ -360,14 +367,6 @@ class SplitButton extends UI5Element {
 		this.fireEvent("arrow-click");
 	}
 
-	get textButton() {
-		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-text-button");
-	}
-
-	get arrowButton() {
-		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-arrow-button");
-	}
-
 	_textButtonRelease() {
 		this._textButtonActive = false;
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
@@ -376,6 +375,7 @@ class SplitButton extends UI5Element {
 
 	_textButtonPress() {
 		this._textButtonActive = true;
+		this.focused = false;
 		this._setTabIndexValue();
 	}
 
@@ -386,6 +386,18 @@ class SplitButton extends UI5Element {
 						 || (arrowButton && (arrowButton.focused || arrowButton.active));
 
 		this._tabIndex = this.disabled || buttonsAction ? "-1" : "0";
+	}
+
+	get textButtonAccText() {
+		return this.text[0].textContent;
+	}
+
+	get textButton() {
+		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-text-button");
+	}
+
+	get arrowButton() {
+		return this.getDomRef() && this.getDomRef().querySelector(".ui5-split-arrow-button");
 	}
 
 	get accessibilityInfo() {
