@@ -1,5 +1,5 @@
-commit c6479dce083fe25622734607ae8e8a7136e5167e
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Fri Jan 21 07:49:20 2022 +0200
+commit 5526deac9c439ff4ef83c30c5144ad09532d5d02
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 21 12:16:32 2022 +0200
 
-    docs(ui5-media-gallery): improve overview section (#4602)
+    feat: stable-dom-ref supported for abstract items (#4604)
