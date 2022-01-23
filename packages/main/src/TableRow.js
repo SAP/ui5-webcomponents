@@ -106,6 +106,10 @@ const metadata = {
 			defaultValue: "",
 			noAttribute: true,
 		},
+		_tabbableElements: {
+			type: Object,
+			multiple: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -221,6 +225,7 @@ class TableRow extends UI5Element {
 
 	_onfocusout() {
 		this.deactivate();
+		this._tabbableElements.forEach(el => el.setAttribute("tabindex", -1));
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
@@ -230,6 +235,8 @@ class TableRow extends UI5Element {
 		}
 
 		this.fireEvent("_focused", event);
+
+		this._tabbableElements.forEach(el => el.setAttribute("tabindex", 0));
 	}
 
 	_onrowclick(event) {

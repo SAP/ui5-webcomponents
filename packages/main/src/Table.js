@@ -12,6 +12,7 @@ import {
 	isUpAlt,
 	isDownAlt,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -385,7 +386,9 @@ const metadata = {
  * <ul>
  * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
  * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
- * <li>[ALT]+[UP]/[DOWN] - Moves focus between header, last focused item, and More button in either direction.</li>
+ * <li>[HOME]/[END] - Focuses the first/last item.</li>
+ * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
+ * <li>[ALT]+[UP]/[DOWN] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -496,15 +499,18 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
-		const rows = this.rows;
-
 		if (!isIE()) {
 			this.growingIntersectionObserver = this.getIntersectionObserver();
 		}
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 
-		this._itemNavigation.setCurrentItem(rows.length ? rows[0] : this._columnHeader);
+		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
+
+		this.rows.forEach(row => {
+			row._tabbableElements = getTabbableElements(row);
+			row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
+		});
 	}
 
 	onExitDOM() {
@@ -541,36 +547,34 @@ class Table extends UI5Element {
 	_handleArrowAlt(shouldMoveUp, focusedElement) {
 		const focusedElementType = this.getFocusedElementType(focusedElement);
 		const moreButton = this.getMoreButton();
-		let shouldFocusTableRow;
 
-		if (focusedElementType === "tableRow") {
-			const shouldFocusHeader = shouldMoveUp || !moreButton;
-			this._previousItem = focusedElement;
-
-			if (shouldFocusHeader) {
-				this._onColumnHeaderClick();
-			} else {
-				moreButton.focus();
+		if (shouldMoveUp) {
+			switch (focusedElementType) {
+			case "tableRow":
+				this._previousItem = focusedElement;
+				return this._onColumnHeaderClick();
+			case "columnHeader":
+				return moreButton ? moreButton.focus() : this._previousItem.focus();
+			case "moreButton":
+				return this._previousItem ? this._previousItem.focus() : this._onColumnHeaderClick();
 			}
-		}
+		} else {
+			switch (focusedElementType) {
+			case "tableRow":
+				this._previousItem = focusedElement;
+				return moreButton ? moreButton.focus() : this._onColumnHeaderClick();
+			case "columnHeader":
+				if (this._previousItem) {
+					return this._previousItem.focus();
+				}
 
-		if (focusedElementType === "columnHeader") {
-			shouldFocusTableRow = (!shouldMoveUp || !moreButton) && !!this._previousItem;
+				if (moreButton) {
+					return moreButton.focus();
+				}
 
-			if (!shouldFocusTableRow && !moreButton) {
 				return;
-			}
-
-			(shouldFocusTableRow ? this._previousItem : moreButton).focus();
-		}
-
-		if (focusedElementType === "moreButton") {
-			shouldFocusTableRow = shouldMoveUp && !!this._previousItem;
-
-			if (shouldFocusTableRow) {
-				this._previousItem.focus();
-			} else {
-				this._onColumnHeaderClick();
+			case "moreButton":
+				return this._onColumnHeaderClick();
 			}
 		}
 	}
