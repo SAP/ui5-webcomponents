@@ -389,7 +389,7 @@ class SplitButton extends UI5Element {
 	}
 
 	get textButtonAccText() {
-		return this.text[0].textContent;
+		return this.textContent;
 	}
 
 	get textButton() {
