@@ -188,7 +188,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
 	 */
 	openPopover(opener) {
-		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead.");
+		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead."); // eslint-disable-line
 		this._openPopover(opener);
 	}
 
