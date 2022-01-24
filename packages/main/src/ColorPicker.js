@@ -436,7 +436,6 @@ class ColorPicker extends UI5Element {
 		}
 	}
 
-
 	_onkeydown(event) {
 		if (isEnter(event)) {
 			this._handleHEXChange(event);
