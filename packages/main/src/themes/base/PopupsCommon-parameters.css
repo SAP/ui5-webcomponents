@@ -1,7 +1,7 @@
 :root {
 	--_ui5_popup_content_padding_s: 1rem;
-	--_ui5_popup_content_padding_m_l: 1rem 2rem;
-	--_ui5_popup_content_padding_xl: 1rem 3rem;
+	--_ui5_popup_content_padding_m_l: 2rem;
+	--_ui5_popup_content_padding_xl: 3rem;
 	--_ui5_popup_viewport_margin: 10px;
 	--_ui5-popup-border-radius: 0.25rem;
 	--_ui5_popup_header_shadow: var(--sapContent_Shadow0);

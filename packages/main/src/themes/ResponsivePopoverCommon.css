@@ -206,6 +206,4 @@
 	right: 1rem;
 }
 
-.ui5-tab-container-responsive-popover::part(content) {
-	padding: 0;
-}
+

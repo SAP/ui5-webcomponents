@@ -87,20 +87,40 @@
 
 /*** Responsive paddings for the content***/
 :host([media-range="S"]) .ui5-popup-content {
-	padding: var(--_ui5_popup_content_padding_s);
+	padding: 1rem var(--_ui5_popup_content_padding_s);
 }
 
 :host([media-range="M"]) .ui5-popup-content,
 :host([media-range="L"]) .ui5-popup-content {
-	padding: var(--_ui5_popup_content_padding_m_l);
+	padding: 1rem var(--_ui5_popup_content_padding_m_l);
 }
 
 :host([media-range="XL"]) .ui5-popup-content {
-	padding: var(--_ui5_popup_content_padding_xl);
+	padding: 1rem var(--_ui5_popup_content_padding_xl);
 }
 
-/* ** Class to remove responsive paddings of the content **
-:host(.noContentPaddingsDialog) .ui5-popup-content {
-    padding-right: 0;
-    padding-left: 0;
-} */
+.ui5-popup-footer-root {
+	min-height: 2.5rem;
+	justify-content: end;
+}
+
+/*** Responsive paddings for the Header and Footer ***/
+:host([media-range="S"]) .ui5-popup-header-root,
+:host([media-range="S"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_s);
+	padding-right: var(--_ui5_popup_header_footer_padding_s);
+}
+
+:host([media-range="M"]) .ui5-popup-header-root,
+:host([media-range="L"]) .ui5-popup-header-root,
+:host([media-range="M"]) .ui5-popup-footer-root,
+:host([media-range="L"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_m_l);
+	padding-right: var(--_ui5_popup_header_footer_padding_m_l);
+}
+
+:host([media-range="XL"]) .ui5-popup-header-root,
+:host([media-range="XL"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_xl);
+	padding-right: var(--_ui5_popup_header_footer_padding_xl);
+}
