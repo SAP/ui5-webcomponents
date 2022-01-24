@@ -1,7 +1,7 @@
-commit 436f8f423445e64a02f9220eec2af829bbe13c12
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Mon Jan 24 11:47:22 2022 +0200
+commit d04cf8c8a39f7e5bb9a7f1c0fa6be7b856b76690
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 24 12:47:06 2022 +0200
 
-    fix(ui5-media-gallery-item): correct initialization order (#4614)
+    fix(ui5-media-gallery-item): add missing icon import (#4615)
     
-    Fixes #4610
+    The icon is used within the template, but not imported and may cause an error in apps that don't load the entire icons bundle, but import only the icons they use.
