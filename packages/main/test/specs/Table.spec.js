@@ -504,7 +504,7 @@ describe("Table keyboard interaction", () => {
 		await browser.keys("Tab");
 
 		// Assert
-		assert.ok(await buttonInFirstRow.isFocused(), "The button nested in the first row should be focused on Tab");
+		assert.ok(await buttonInFirstRow.isFocused(), "The button nested in the first row should be focused");
 		assert.notOk(await firstRow.isFocused(), "First row's root not be focused when a nested element is in focus");
 		assert.notOk(await firstRowCheckBox.isFocused(), "The first row's checkbox is excluded from the tab chain");
 
@@ -520,15 +520,22 @@ describe("Table keyboard interaction", () => {
 		await browser.keys(["Shift", "Tab"]);
 
 		// Assert
-		assert.ok(await firstRow.isFocused(), "The previously focused row should be focused on Shift+Tab");
-		assert.notOk(await nextElementInTabIndex.isFocused(), "The element after the table should lose focus on Shift+Tab");
+		assert.ok(await buttonInFirstRow.isFocused(), "The previously focused button in the table should be focused");
+		assert.notOk(await nextElementInTabIndex.isFocused(), "The element after the table should lose focus");
 
 		// Act
 		await browser.keys(["Shift", "Tab"]);
 
 		// Assert
-		assert.ok(await precedingElementInTabIndex.isFocused(), "The element before the table should be focused on Shift+Tab");
-		assert.notOk(await firstRow.isFocused(), "The first row should lose focus on Shift+Tab");
+		assert.ok(await firstRow.isFocused(), "The first row's root should be focused");
+		assert.notOk(await buttonInFirstRow.isFocused(), "The previously focused nested button should lose focus");
+
+		// Act
+		await browser.keys(["Shift", "Tab"]);
+
+		// Assert
+		assert.ok(await precedingElementInTabIndex.isFocused(), "The element before the table should be focused");
+		assert.notOk(await firstRow.isFocused(), "The first row should lose focus");
 	});
 
 	it("F7", async () => {
@@ -544,17 +551,18 @@ describe("Table keyboard interaction", () => {
 		// Act
 		await firstCellFirstRowLabel.click();
 		await browser.keys("Tab");
+		await browser.keys("F7");
 
 		// Assert
-		assert.ok(await buttonInFirstRow.isFocused(), "The button nested in the first row should be in focus");
-		assert.notOk(await firstRow.isFocused(), "First row's root not be focused");
+		assert.ok(await firstRow.isFocused(), "The first row's root should be in focus");
+		assert.notOk(await buttonInFirstRow.isFocused(), "The button nested in the first row should lose focus");
 
 		// Act
 		await browser.keys("F7");
 
 		// Assert
-		assert.ok(await firstRow.isFocused(), "The first row's root should be in focus on F7");
-		assert.notOk(await buttonInFirstRow.isFocused(), "The button nested in the first row should lose focus on F7");
+		assert.ok(await buttonInFirstRow.isFocused(), "The button nested in the first row should be focused");
+		assert.notOk(await firstRow.isFocused(), "First row's root should lose focus");
 	});
 
 	it("Ctrl + A", async () => {
@@ -615,21 +623,21 @@ describe("Table keyboard interaction", () => {
 			await browser.keys(["Alt", "Up"]);
 
 			// Assert
-			assert.ok(await tableHeader.isFocused(), "Focus should move from first row to header on Alt+Up");
+			assert.ok(await tableHeader.isFocused(), "Focus should move from first row to header");
 			assert.notOk(await firstRow.isFocused(), "The first row should not be focused");
 
 			// Act
 			await browser.keys(["Alt", "Up"]);
 
 			// Assert
-			assert.ok(await moreButton.isFocused(), "Focus should move from header to More button on Alt+Up");
+			assert.ok(await moreButton.isFocused(), "Focus should move from header to More button");
 			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
 
 			// Act
 			await browser.keys(["Alt", "Up"]);
 
 			// Assert
-			assert.ok(await firstRow.isFocused(), "Focus should move from More button to last focused row on Alt+Up");
+			assert.ok(await firstRow.isFocused(), "Focus should move from More button to last focused row");
 			assert.notOk(await moreButton.isFocused(), "The More button should not be focused");
 
 			// [Alt] + [Down]
@@ -641,21 +649,21 @@ describe("Table keyboard interaction", () => {
 			await browser.keys(["Alt", "Down"]);
 
 			// Assert
-			assert.ok(await moreButton.isFocused(), "Focus should move from second row to More button on Alt+Down");
+			assert.ok(await moreButton.isFocused(), "Focus should move from second row to More button");
 			assert.notOk(await secondRow.isFocused(), "The second row should not be focused");
 
 			// Act
 			await browser.keys(["Alt", "Down"]);
 
 			// Assert
-			assert.ok(await tableHeader.isFocused(), "Focus should move More button to header on Alt+Down");
+			assert.ok(await tableHeader.isFocused(), "Focus should move More button to header");
 			assert.notOk(await moreButton.isFocused(), "The More button should not be focused");
 
 			// Act
 			await browser.keys(["Alt", "Down"]);
 
 			// Assert
-			assert.ok(await secondRow.isFocused(), "Focus should move from header to last focused row on Alt+Down");
+			assert.ok(await secondRow.isFocused(), "Focus should move from header to last focused row");
 			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
 		}, 1600);
 	});

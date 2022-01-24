@@ -1,7 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isSpace, isEnter, isF7 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import {
+	isSpace,
+	isEnter,
+	isF7,
+	isTabNext,
+	isTabPrevious,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
@@ -110,6 +116,9 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+		_tabMarked: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -186,6 +195,10 @@ class TableRow extends UI5Element {
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
 
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._tabMarked = true;
+		}
+
 		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
@@ -205,7 +218,13 @@ class TableRow extends UI5Element {
 
 		if (isF7(event)) {
 			event.preventDefault();
-			tableRowRoot.focus();
+
+			if (this._tabbableElements.length && event.target === tableRowRoot) {
+				this._lastFocused = this._lastFocused || this._tabbableElements[0];
+				this._lastFocused.focus();
+			} else {
+				tableRowRoot.focus();
+			}
 		}
 	}
 
@@ -223,20 +242,31 @@ class TableRow extends UI5Element {
 		this.deactivate();
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
 		this.deactivate();
-		this._tabbableElements.forEach(el => el.setAttribute("tabindex", -1));
+
+		if (!this._tabMarked) {
+			this._tabbableElements.forEach(el => el.setAttribute("tabindex", -1));
+		} else {
+			this._tabMarked = false;
+		}
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
+		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
+
 		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
-			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
+			tableRowRoot.focus();
 			this.activate();
 		}
 
-		this.fireEvent("_focused", event);
+		if (this._tabbableElements.includes(event.target)) {
+			this._lastFocused = event.target;
+		}
 
 		this._tabbableElements.forEach(el => el.setAttribute("tabindex", 0));
+
+		this.fireEvent("_focused", event);
 	}
 
 	_onrowclick(event) {
