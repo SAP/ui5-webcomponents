@@ -116,12 +116,6 @@ describe("Color Picker general interaction", () => {
 		await mainColorSection.click();
 
 		assert.strictEqual(await colorPicker.getAttribute("_hue"), hueValue, "Hue value remained unchanched");
-
-		await hexInput.doubleClick();
-		await browser.keys("2aa65e");
-		await browser.keys("Enter");
-		
-		assert.strictEqual(await colorPicker.getAttribute("_hue"), '617', "Hue value changed");
 	});
 
 });
