@@ -13,7 +13,7 @@ describe("Split Button general interaction", () => {
 		assert.strictEqual(await arrowButton.getAttribute("design"), design, "Arrow button have proper design");
 	});
 
-	it("tests textCqontent on 'click'", async () => {
+	it("tests textContent on 'click'", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
 		const sbEmpty = await browser.$("#emptySpBtn");
 		const textButton1 = await sbEmpty.shadow$(".ui5-split-text-button");
