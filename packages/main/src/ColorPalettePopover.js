@@ -181,12 +181,14 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 * <b>Note:</b> The method will be removed in 2.0
+	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
 	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @deprecated
+	 * @public
+	 * @since 1.0.0-rc.16
+	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
 	 */
 	openPopover(opener) {
-		console.warn("The method 'openPopover' is deprecated, use 'showAt' instead.");
+		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead.");
 		this._openPopover(opener);
 	}
 
