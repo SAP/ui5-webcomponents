@@ -88,6 +88,7 @@ const metadata = {
 
 		/**
 		 * Defines the accessibility role of the component.
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0

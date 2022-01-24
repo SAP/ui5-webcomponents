@@ -13,6 +13,21 @@ describe("Split Button general interaction", () => {
 		assert.strictEqual(await arrowButton.getAttribute("design"), design, "Arrow button have proper design");
 	});
 
+	it("tests textContent on 'click'", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		const sbEmpty = await browser.$("#emptySpBtn");
+		const textButton1 = await sbEmpty.shadow$(".ui5-split-text-button");
+		const sbDefault = await browser.$("#defaultSpBtn");
+		const textButton2 = await sbDefault.shadow$(".ui5-split-text-button");
+		const field = await browser.$("#displayElement");
+
+		await textButton1.click({x: 1, y: 1});
+		assert.strictEqual(await field.getValue(), "", "Button text is empty string");
+
+		await textButton2.click({x: 1, y: 1});
+		assert.strictEqual(await field.getValue(), "Default", "Button text is 'Default'");
+	});
+
 	it("tests text button 'click' event (mouse)", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
