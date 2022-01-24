@@ -178,12 +178,14 @@ const metadata = {
 class MediaGalleryItem extends UI5Element {
 	constructor() {
 		super();
+		this._monitoredContent = null;
+		this._monitoredThumbnail = null;
+	}
 
+	onEnterDOM() {
 		this._thumbnailDesign = !isPhone();
 		this._interactive = !isPhone();
 		this._square = true;
-		this._monitoredContent = null;
-		this._monitoredThumbnail = null;
 	}
 
 	static get metadata() {
