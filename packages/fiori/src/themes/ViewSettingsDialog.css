@@ -54,3 +54,7 @@
 	overflow: hidden;
 }
 
+ui5-dialog::part(content) {
+	margin-left: -1rem;
+	margin-right: -1rem;
+}
