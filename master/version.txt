@@ -1,7 +1,7 @@
-commit d04cf8c8a39f7e5bb9a7f1c0fa6be7b856b76690
+commit 4f2abdd509c0b69612970db15ab4beccda620da7
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 24 12:47:06 2022 +0200
+Date:   Mon Jan 24 14:05:49 2022 +0200
 
-    fix(ui5-media-gallery-item): add missing icon import (#4615)
+    refactor(ui5-color-palette-popover): deprecate openPopover (#4613)
     
-    The icon is used within the template, but not imported and may cause an error in apps that don't load the entire icons bundle, but import only the icons they use.
+    Deprecate openPopover in favour of "showAt" to be consistent with Popover, ResponsivePopover
