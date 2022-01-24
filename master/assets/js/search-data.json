@@ -1206,7 +1206,7 @@
   "173": {
     "id": "173",
     "title": "Split Button",
-    "content": "&lt;!DOCTYPE html&gt; ui5-split-button ui5-split-button Button Types Default Emphasized Positive Negative Attention Transparent Disabled Buttons Default Emphasized Positive Negative Attention Transparent Icons Icon Active Icon Icon + Active Icon Event Display on Text Direction &lt;/ui5-input&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;",
+    "content": "&lt;!DOCTYPE html&gt; ui5-split-button ui5-split-button Button Types Default Emphasized Positive Negative Attention Transparent Disabled Buttons Default Emphasized Positive Negative Attention Transparent Icons Icon Active Icon Icon + Active Icon Event Display on Text Direction &lt;/ui5-input&gt; &lt;/div&gt; Test textContent Default &lt;/body&gt; &lt;/html&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/SplitButton/",
     "relUrl": "/playground/main/pages/SplitButton/"
   },

@@ -1,5 +1,10 @@
-commit 11e686ffd64fbabc1ed80cff3238a9ebd2d4c234
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Sat Jan 22 22:37:55 2022 -0800
+commit c407fd1fd1293d69e9d2fa2292c3273761f063c3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 24 10:41:08 2022 +0200
 
-    chore: translation delivery (#4607)
+    fix(ui5-split-button): fix JS error on empty text content (#4612)
+    
+    When the default slot is empty, e.g no text is provided, the this.text[0].textContent throws an error.
+    Instead, call to this.textContent is sufficient.
+    
+    Fixes: #4609
