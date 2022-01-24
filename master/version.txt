@@ -1,7 +1,5 @@
-commit 4f2abdd509c0b69612970db15ab4beccda620da7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 24 14:05:49 2022 +0200
+commit baa02bb061cced689d132d7042fe8ebf2fe38fe5
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Mon Jan 24 13:16:08 2022 +0100
 
-    refactor(ui5-color-palette-popover): deprecate openPopover (#4613)
-    
-    Deprecate openPopover in favour of "showAt" to be consistent with Popover, ResponsivePopover
+    fix(ui5-title): replace custom heading CSS vars with SAP theming-base vars (#4617)
