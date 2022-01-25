@@ -46,7 +46,6 @@ describe("Breadcrumbs general interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
 		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
 
-		await firstItem.waitForDisplayed();
 		await firstItem.click();
 
 		// Check
@@ -246,6 +245,8 @@ describe("Breadcrumbs general interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsPreventDefault");
 		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
 		const itemLabel = await firstItem.getProperty('innerText');
+
+		await firstItem.waitForDisplayed();
 		await firstItem.click();
 
 		// Check
