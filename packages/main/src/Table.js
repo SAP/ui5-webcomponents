@@ -455,7 +455,10 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.tableEndObserved = false;
+
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
+
+		this._prevNestedElementIndex = 0;
 	}
 
 	onBeforeRendering() {

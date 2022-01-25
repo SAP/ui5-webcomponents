@@ -193,7 +193,6 @@ class TableRow extends UI5Element {
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
-		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
 
 		if (isTabNext(event) || isTabPrevious(event)) {
 			this._tabMarked = true;
@@ -218,13 +217,7 @@ class TableRow extends UI5Element {
 
 		if (isF7(event)) {
 			event.preventDefault();
-
-			if (this._tabbableElements.length && event.target === tableRowRoot) {
-				this._lastFocused = this._lastFocused || this._tabbableElements[0];
-				this._lastFocused.focus();
-			} else {
-				tableRowRoot.focus();
-			}
+			this._handleF7(event.target);
 		}
 	}
 
@@ -242,7 +235,7 @@ class TableRow extends UI5Element {
 		this.deactivate();
 	}
 
-	_onfocusout(event) {
+	_onfocusout() {
 		this.deactivate();
 
 		if (!this._tabMarked) {
@@ -253,15 +246,9 @@ class TableRow extends UI5Element {
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
-		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
-
 		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
-			tableRowRoot.focus();
+			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
 			this.activate();
-		}
-
-		if (this._tabbableElements.includes(event.target)) {
-			this._lastFocused = event.target;
 		}
 
 		this._tabbableElements.forEach(el => el.setAttribute("tabindex", 0));
@@ -300,6 +287,44 @@ class TableRow extends UI5Element {
 
 	_handleSelection() {
 		this.fireEvent("selection-requested", { row: this });
+	}
+
+	/**
+	 * Toggles focus between the table row's root and the last focused nested element.
+	 * @private
+	 * @param {Object} activeElement The currently focused element
+	 */
+	_handleF7(activeElement) {
+		const elements = this._tabbableElements;
+
+		if (!elements.length) {
+			return;
+		}
+
+		const table = this.parentElement;
+		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
+		const prevFocusedIdx = table._prevNestedElementIndex;
+
+		if (activeElement === tableRowRoot) {
+			const lastFocusedElement = elements[prevFocusedIdx];
+
+			if (lastFocusedElement) {
+				lastFocusedElement.focus();
+			} else {
+				elements[0].focus();
+			}
+
+			return;
+		}
+
+		const shadowRoot = activeElement.shadowRoot;
+		const target = shadowRoot ? shadowRoot.activeElement : activeElement;
+		const targetIndex = elements.indexOf(target);
+
+		if (targetIndex > -1) {
+			table._prevNestedElementIndex = targetIndex;
+			tableRowRoot.focus();
+		}
 	}
 
 	_getActiveElementTagName() {
