@@ -507,9 +507,12 @@ class Table extends UI5Element {
 
 		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
 
-		this.rows.forEach(row => {
+		this.rows.forEach((row, index) => {
 			row._tabbableElements = getTabbableElements(row);
-			row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
+
+			if (index > 0) {
+				row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
+			}
 		});
 	}
 
