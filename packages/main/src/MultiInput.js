@@ -234,6 +234,8 @@ class MultiInput extends Input {
 					this.fireEvent("token-delete", { token });
 				});
 
+				this.focus();
+
 				return cutResult;
 			}
 
