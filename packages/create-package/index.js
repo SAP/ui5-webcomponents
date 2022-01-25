@@ -130,11 +130,11 @@ const createWebcomponentsPackage = async () => {
 			"./*": "./dist/*",
 		},
 		"dependencies": {
-			"@ui5/webcomponents-base": "1.0.0",
-			"@ui5/webcomponents-theming": "1.0.0",
+			"@ui5/webcomponents-base": "1.1.1",
+			"@ui5/webcomponents-theming": "1.1.1",
 		},
 		"devDependencies": {
-			"@ui5/webcomponents-tools": "1.0.0",
+			"@ui5/webcomponents-tools": "1.1.1",
 			"chromedriver": "*",
 		},
 	};
