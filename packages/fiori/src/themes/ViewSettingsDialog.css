@@ -58,3 +58,7 @@ ui5-dialog::part(content) {
 	margin-left: -1rem;
 	margin-right: -1rem;
 }
+
+.ui5-vsd-header > [ui5-bar] {
+	box-shadow: none;
+}
