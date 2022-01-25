@@ -487,7 +487,7 @@ class Table extends UI5Element {
 
 		this._allRowsSelected = selectedRows.length === this.rows.length;
 
-		this._previousItem = this._previousItem || this.rows[0] || null;
+		this._previousFocusedRow = this._previousFocusedRow || this.rows[0] || null;
 	}
 
 	onAfterRendering() {
@@ -554,21 +554,21 @@ class Table extends UI5Element {
 		if (shouldMoveUp) {
 			switch (focusedElementType) {
 			case "tableRow":
-				this._previousItem = focusedElement;
+				this._previousFocusedRow = focusedElement;
 				return this._onColumnHeaderClick();
 			case "columnHeader":
-				return moreButton ? moreButton.focus() : this._previousItem.focus();
+				return moreButton ? moreButton.focus() : this._previousFocusedRow.focus();
 			case "moreButton":
-				return this._previousItem ? this._previousItem.focus() : this._onColumnHeaderClick();
+				return this._previousFocusedRow ? this._previousFocusedRow.focus() : this._onColumnHeaderClick();
 			}
 		} else {
 			switch (focusedElementType) {
 			case "tableRow":
-				this._previousItem = focusedElement;
+				this._previousFocusedRow = focusedElement;
 				return moreButton ? moreButton.focus() : this._onColumnHeaderClick();
 			case "columnHeader":
-				if (this._previousItem) {
-					return this._previousItem.focus();
+				if (this._previousFocusedRow) {
+					return this._previousFocusedRow.focus();
 				}
 
 				if (moreButton) {
