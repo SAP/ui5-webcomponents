@@ -9,6 +9,7 @@
 
 .ui5-vsd-header > [ui5-bar] {
 	height: 4rem;
+	box-shadow: none;
 }
 
 .ui5-vsd-title {
@@ -59,6 +60,3 @@ ui5-dialog::part(content) {
 	margin-right: -1rem;
 }
 
-.ui5-vsd-header > [ui5-bar] {
-	box-shadow: none;
-}
