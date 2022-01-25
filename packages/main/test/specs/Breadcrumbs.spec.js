@@ -244,7 +244,7 @@ describe("Breadcrumbs general interaction", () => {
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsPreventDefault");
 		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
-
+		const itemLabel = await firstItem.getProperty('innerText');
 		await firstItem.click();
 
 		// Check
@@ -252,7 +252,7 @@ describe("Breadcrumbs general interaction", () => {
 		const url = await browser.getUrl();
 		assert.strictEqual(url, initialUrl, "url should not have changed");
 		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
-		assert.strictEqual(await eventResult.getText(), await firstItem.getProperty('innerText'), "label for pressed link is correct");
+		assert.strictEqual(await eventResult.getText(), itemLabel, "label for pressed link is correct");
 
 	});
 });
