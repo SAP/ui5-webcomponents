@@ -1,5 +1,5 @@
-commit adafeba96ed9c0e522bed81cbb35b60290eafd2a
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jan 26 16:02:03 2022 +0200
+commit d7004cf95838b43c46ad9fce14fc3c03a4198aef
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jan 26 19:16:38 2022 +0200
 
-    fix(ui5-illustrated-message): remove uncompleted illustration (#4638)
+    chore: release v1.1.2 (#4642)
