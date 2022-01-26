@@ -1,5 +1,39 @@
-commit c7dfe01eee4f883626da2553199092108d91092a
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Tue Jan 25 10:58:50 2022 +0100
+commit b978f4af64851be3c88711eb82e0054f06ba5407
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Wed Jan 26 07:51:11 2022 +0200
 
-    docs(ui5-media-gallery): fix types for `MediaGalleryLayouts` (#4626)
+    feat(ui5-multi-input): Keyboard handling (#4495)
+    
+    * fix(ui5-multi-input): Keyboard handling of Left
+    
+    When the carret is in the 0th position of the input and the user presses Left arrow,
+    the focus should go to the last Token if there are tokens.
+    
+    * fix(ui5-multi-input): Keyboard handling of Right
+    
+    Fix: Do not skip the last token before going to the input
+    
+    * fix(ui5-multi-input): Shift+Ctrl+Arrow
+    
+    * fix(ui5-multi-input): Home/End on Tokens
+    
+    * Fix ESLint errors
+    
+    * Ctrl + A
+    
+    * Multiple token deletion
+    
+    * Cut/Copy functionality
+    
+    * - Move keyboard handler into the Tokenizer
+    - Add Shift + Ctrl + ArrowKey as combination
+    
+    * Keyboard handling tests
+    
+    * - Home/End cases bugfix
+    - Tokenizer's space select/deselect bugfix
+    - remove Hungarian notation
+    
+    * Cut/Copy functionality bugfixes
+    
+    * Focus on the input after Cut
