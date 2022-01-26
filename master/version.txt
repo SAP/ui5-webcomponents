@@ -1,7 +1,13 @@
-commit 604ce638464562a75d9c4ce4bb95ffbd959ffcb1
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Jan 26 10:33:23 2022 +0200
+commit 279ca8dcb73ab1f746cd334051639042e7eda9aa
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Jan 26 01:43:10 2022 -0800
 
-    fix: remove import.meta.url (#4630)
+    Translation Delivery (#4629)
     
-    not well supported by all build tools
+    * chore: translation delivery
+    
+    Change-Id: Ie2ae914d9432cb200ad9b1710426aa4c2c077950
+    
+    * chore: translation delivery
+    
+    Change-Id: Id4cd02bf55354cec635e18f9bcc8ef05a412b00f
