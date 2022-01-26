@@ -1,6 +1,6 @@
-import { registerFeature } from "../../dist/FeaturesRegistry.js";
-import { isF6Next, isF6Previous } from "../../dist/Keys.js";
-import { getFirstFocusableElement } from "../../dist/util/FocusableElements.js";
+import { registerFeature } from "../FeaturesRegistry.js";
+import { isF6Next, isF6Previous } from "../Keys.js";
+import { getFirstFocusableElement } from "../util/FocusableElements.js";
 
 class F6Navigation {
 	init() {
