@@ -494,7 +494,9 @@ hr:not(.style-scope) {
     min-height: 600px;
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
-    overflow-y: scroll; } }
+    overflow-y: scroll;
+    padding-top: 3rem;
+    box-sizing: border-box; } }
 
 .main-content {
   padding-top: 1rem;
@@ -526,7 +528,7 @@ hr:not(.style-scope) {
   justify-content: space-between;
   align-items: center;
   background-color: #000;
-  z-index: 10; }
+  z-index: 150; }
   .page-header .main-content, .page-header .main-content-header {
     padding-top: 0; }
     @media (min-width: 46.25rem) {

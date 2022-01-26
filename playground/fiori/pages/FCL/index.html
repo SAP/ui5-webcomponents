@@ -407,6 +407,22 @@
 		</div>
 	</ui5-flexible-column-layout>
 
+	<ui5-flexible-column-layout id="fclAccRoles" layout="ThreeColumnsMidExpandedEndHidden">
+		<!-- start column -->
+		<div class="fcl4auto" slot="startColumn">
+		</div>
+
+		<!-- mid column -->
+		<div class="fcl4auto" slot="midColumn">
+			
+		</div>
+
+		<!-- end column -->
+		<div class="fcl4auto" slot="endColumn">
+			
+		</div>
+	</ui5-flexible-column-layout>
+
 	<!-- ex6 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Default OneColumn</ui5-title>
@@ -603,7 +619,7 @@
 			</div>
 			<br><br>
 
-			<ui5-tabcontainer id="tabContainer1" fixed collapsed show-overflow>
+			<ui5-tabcontainer id="tabContainer1" fixed collapsed>
 				<ui5-tab text="Products" additional-text="125">
 				</ui5-tab>
 				<ui5-tab-separator></ui5-tab-separator>
@@ -659,7 +675,17 @@
 			startArrowLeftText: "Collapse products list",
 			startArrowRightText: "Expand products list",
 			endArrowLeftText: "Expand product detailed information",
-			endArrowRightText: "Collapse product detailed information"
+			endArrowRightText: "Collapse product detailed information",
+			startArrowContainerAccessibleName: "Start Arrow Container",
+			endArrowContainerAccessibleName: "End Arrow Container",
+		};
+
+		fclAccRoles.accessibilityRoles = {
+			startColumnRole: "complimentary",
+			startArrowContainerRole: "navigation",
+			midColumnRole: "main",
+			endArrowContainerRole: "navigation",
+			endColumnRole: "complementary"
 		};
 
 		var counter = 0;

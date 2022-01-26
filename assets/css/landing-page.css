@@ -134,6 +134,7 @@ a.github-link > img {
 .title {
     display: flex;
     font-size: 4.5rem;
+    font-family: "72-Bold";
 }
 
 .title > h1 {
@@ -167,6 +168,8 @@ a.github-link > img {
 .get-started-button {
     padding: 1.25rem 1.5625rem;
     border-radius: 10px;
+    font-size: 1.5rem;
+    margin-left: -2px;
     color: #fff;
     background: var(--orange_color);
     text-decoration: none;
@@ -194,8 +197,13 @@ a.github-link > img {
 }
 
 .illustration-section > img {
-    width: 33rem;
-    height: 21rem;
+    width: 31rem;
+    height: 20rem;
+}
+
+.illustration-section:nth-child(3) > img {
+    width: 28rem;
+    height: 22rem;
 }
 
 .text-wrapper {
@@ -215,10 +223,13 @@ a.github-link > img {
 .testimonials h2,
 footer h2 {
     font-size: 2.25rem;
+    font-family: '72-Bold';
 }
 
 .text-wrapper > span {
+    font-family: "72-Light";
     font-size: 1.5rem;
+    line-height: 1.5rem;
 }
 
 .example {
@@ -235,13 +246,8 @@ footer h2 {
     display: flex;
 }
 
-.example-field:nth-child(1) {
-    margin-right: 10rem;
-}
-
 .example-field {
-    width: 23.5rem;
-    padding: 1rem 0;
+    padding: 1rem;
     margin-top: 4rem;
     display: flex;
     align-items: center;
@@ -249,6 +255,10 @@ footer h2 {
     background: #fff;
     border: 1px solid #DFDFDF;
     border-radius: .5rem;
+}
+
+.example-field > ui5-date-picker{
+    margin-right: 2rem;
 }
 
 .codesandbox-link {
@@ -310,23 +320,23 @@ footer h2 {
     flex-direction: column;
 }
 
+.compatibility > div > div {
+    display: flex;
+    justify-content: space-between;
+}
+
 .compatibility > div:nth-child(1) {
     margin-right: 14rem;
 }
 
 .compatibility h2 {
     margin-bottom: 1rem;
+    letter-spacing: 4px;
     text-align: center;
 }
 
 .compatibility img {
     height: 3.125rem;
-}
-
-.compatibility img:nth-child(1),
-.compatibility img:nth-child(2),
-.compatibility img:nth-child(3) {
-    margin-right: 4rem;
 }
 
 .testimonials {
@@ -371,11 +381,6 @@ footer h2 {
     letter-spacing: .5px;
     opacity: 1;
     transition: all 1s ease-in-out;
-}
-
-.testimonial img {
-    height: 5rem;
-    margin-right: 1rem
 }
 
 .testimonial > div:nth-child(1) {
@@ -508,7 +513,7 @@ footer a {
     }
 
     .example {
-        margin-top: 8rem;
+        margin-top: 10rem;
     }
 
     .frameworks-section {
@@ -543,7 +548,7 @@ footer a {
     }
 
     .example {
-        margin-top: 16rem;
+        margin-top: 13rem;
     }
 
     .frameworks-section {
@@ -560,6 +565,10 @@ footer a {
 }
 
 @media(max-width: 1560px) {
+    .example {
+        margin-top: 10rem;
+    }
+
     footer {
         margin-top: 9rem;
     }
@@ -567,13 +576,17 @@ footer a {
 
 @media(max-width: 1540px) {
     .example {
-        margin-top: 12rem;
+        margin-top: 8rem;
     }
 }
 
-@media(max-width: 1500px) {
+@media(max-width: 1510px) {
+    .illustration-section:nth-child(3) {
+        margin-top: 3rem;
+    }
+
     .example {
-        margin-top: 8rem;
+        margin-top: 5rem;
     }
 }
 
@@ -600,8 +613,17 @@ footer a {
         margin-top: 9rem;
     }
 
+    .illustration-section:nth-child(3) > img {
+        width: 22rem;
+        height: 19rem;
+    }
+
     .example {
-        margin-top: 9rem;
+        margin-top: 7rem;
+    }
+
+    .example-field {
+        padding: 0 1rem;
     }
 
     .illustration-section > img {
@@ -619,12 +641,6 @@ footer a {
 
     footer {
         margin-top: 12rem;
-    }
-}
-
-@media(max-width: 1450px) {
-    .example-field {
-        padding: 0;
     }
 }
 
@@ -655,7 +671,7 @@ footer a {
     }
 
     .example {
-        margin-top: 12rem;
+        margin-top: 10rem;
     }
 
     .testimonials {
@@ -709,6 +725,10 @@ footer a {
         font-size: 1.2rem;
     }
 
+    .example {
+        margin-top: 5rem;
+    }
+
     .testimonials {
         margin-top: 8rem;
     }
@@ -732,7 +752,12 @@ footer a {
     }
 
     .illustration-section:nth-child(1) {
-        margin-top: 9rem;
+        margin-top: 8rem;
+    }
+
+    .illustration-section:nth-child(3) > img {
+        width: 18rem;
+        height: 16rem;
     }
 
     .example {
@@ -849,7 +874,7 @@ footer a {
     }
 
     .example {
-        margin-top: 9rem;
+        margin-top: 7rem;
     }
 
     .illustration-section:nth-child(2) {
@@ -890,7 +915,7 @@ footer a {
     }
 
     footer {
-        margin-top: 15rem;
+        margin-top: 18rem;
     }
 
     .footer-content {
@@ -930,18 +955,19 @@ footer a {
         flex-direction: column;
     }
 
-    .example-field:nth-child(1) {
-        margin-right: 0;
-    }
-
     .compatibility > div:nth-child(1) {
         margin-right: 0;
         margin-bottom: 2rem;
     }
 
+    .compatibility > div {
+        align-items: center;
+    }
+
     .compatibility > div > div {
+        width: 400px;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
     }
 }
 

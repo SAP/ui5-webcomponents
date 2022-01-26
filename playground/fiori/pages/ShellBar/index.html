@@ -54,8 +54,8 @@
 			secondary-title="Second Title"
 			id="shellbarwithitems"
 	>
-		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule"></ui5-shellbar-item>
-		<ui5-shellbar-item id="accept" icon="accept" text="Hello World!" title="Approve"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule" stable-dom-ref="schedule"></ui5-shellbar-item>
+		<ui5-shellbar-item id="accept" icon="accept" text="Hello World!" title="Approve" stable-dom-ref="accept"></ui5-shellbar-item>
 		<ui5-shellbar-item id="warning" icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="discussion" text="Hello World!" count="42" title="42 Messages"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="error" text="Hello World!" title="Attention"></ui5-shellbar-item>
@@ -75,6 +75,7 @@
 	<ui5-shellbar
 		id="shellbarWithLogoClick"
 		class="shellbar-example"
+		data-ui5-static-stable="shellbarWithLogoClickStatic"
 		primary-title="SAP Labs Bulgaria"
 		show-notifications
 		show-product-switch
@@ -216,7 +217,12 @@
 	</ui5-shellbar>
 
 	<ui5-toast id="wcToastTC">Custom Action Fired</ui5-toast>
-	
+
+	<ui5-shellbar id="sbAcc">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
+	</ui5-shellbar>
+
 	<script>
 		mySearch.addEventListener("suggestionItemSelect", function (event) {
 			 console.log(event);
@@ -294,6 +300,11 @@
 				window["press-input3"].value = event.target.id;
 			});
 		});
+
+		sbAcc.accessibilityTexts = {
+			profileButtonTitle: "John Dow",
+			logoTitle: "Custom logo title",
+		};
 	</script>
 </body>
 </html>

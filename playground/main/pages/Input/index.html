@@ -28,6 +28,11 @@
 			placeholder="Search for a country ..."
 		>
 		</ui5-input>
+
+		<div>
+			Change event count: <span id="myInput-change-count"></span>
+		</div>
+		<div id="myInput-change-result"></div>
 	</div>
 
 	<div class="sapUiSizeCompact">
@@ -169,6 +174,9 @@
 
 	<h3> Input With aria-label</h3>
 	<ui5-input id="aria-label-input" accessible-name="Enter your secret password"></ui5-input>
+
+	<h3> Readonly input with value state</h3>
+	<ui5-input id="readonly-value-state-input" readonly value-state="Error"></ui5-input>
 
 	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
@@ -495,6 +503,13 @@
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
 			scrollResult.value = event.detail.scrollTop;
 			console.log("scroll", { scrolltop: event.detail.scrollTop, container: event.detail.scrollContainer });
+		});
+
+		input.addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("myInput-change-count");
+			const changeResult = document.getElementById("myInput-change-result");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+			changeResult.innerText += event.target.value + "\r\n";
 		});
 
 		oXSSButton.addEventListener("click", function () {

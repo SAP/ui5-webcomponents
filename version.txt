@@ -1,5 +1,5 @@
-commit 4787428db0d41d08d24990ffae38f80345c5b46e
+commit ee0339ebe6b1cc8578e7415285dfdb313ef60188
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Sun Nov 21 21:03:10 2021 +0200
+Date:   Wed Jan 26 19:44:52 2022 +0200
 
-    docs: fix ui5logo at the top bar
+    update version to 1.1.2

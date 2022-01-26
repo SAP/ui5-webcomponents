@@ -293,17 +293,17 @@
 	</div>
 
 	<script>
-		notificationList.addEventListener("itemClick", function(event) {
+		notificationList.addEventListener("item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("itemClose", function(event) {
+		notificationList.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("itemToggle", function(event) {
+		notificationList.addEventListener("item-toggle", function(event) {
 			var item = event.detail.item;
 			wcToastBS.textContent = item.titleText + " has been " + (item.collapsed ? "collapsed" : "expanded");
 			wcToastBS.show();
@@ -333,9 +333,14 @@
 
 
 
-		shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
 			notificationsPopover.showAt(event.detail.targetRef);
+		});
+
+		notificationListTop.addEventListener("item-close", function (event) {
+				wcToastBS.textContent = event.detail.item.titleText;
+				wcToastBS.show();
 		});
 	</script>
 </body>
