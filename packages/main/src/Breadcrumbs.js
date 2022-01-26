@@ -522,7 +522,14 @@ class Breadcrumbs extends UI5Element {
 			items.pop();
 		}
 
-		return items.filter(item => this._isItemVisible(item));
+		// filter by visible and add accessible name ref property
+		return items.reduce((result, item) => {
+			if (this._isItemVisible(item)) {
+				item.accessibleNameRef = item.accessibleName ? `${item.id}-accessible-name-ref` : undefined;
+				result.push(item);
+			}
+			return result;
+		}, []);
 	}
 
 	/**

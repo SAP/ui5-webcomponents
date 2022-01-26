@@ -16,13 +16,19 @@
         </li>
 
         {{#each _linksData}}
-            <li class="ui5-breadcrumbs-link-wrapper" id="{{this._id}}-link-wrapper">
+            <li class="ui5-breadcrumbs-link-wrapper" 
+                id="{{this._id}}-link-wrapper">
+                
+                {{#if this.accessibleNameRef}}
+                    <span id="{{this.accessibleNameRef}}" class="ui5-hidden-text">{{this.accessibleName}}</span>
+                {{/if}}
+
                 <ui5-link
                     @click="{{../_onLinkPress}}"
                     href="{{this.href}}"
                     target="{{this.target}}"
                     id="{{this._id}}-link"
-                    aria-label="{{this.accessibleName}}"
+                    accessible-name-ref="{{this.accessibleNameRef}}"
                     data-ui5-stable="{{this.stableDomRef}}">
                     {{this.innerText}}
                 </ui5-link>
