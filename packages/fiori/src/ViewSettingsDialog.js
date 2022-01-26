@@ -195,7 +195,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ViewSettingsDialog";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog";</code>
  *
  * @constructor
  * @author SAP SE

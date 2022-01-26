@@ -82,7 +82,7 @@ class ShellBarItem extends UI5Element {
 	}
 
 	get stableDomRef() {
-		return `${this._id}-stable-dom-ref`;
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 }
 

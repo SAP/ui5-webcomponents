@@ -13,6 +13,8 @@ const components = [];
  // Add new components here
 const newComponents = [
 	"DynamicSideContent",
+	"MediaGallery",
+	"SplitButton"
 ];
 
 packages.forEach(package => {
