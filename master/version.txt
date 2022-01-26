@@ -1,39 +1,5 @@
-commit b978f4af64851be3c88711eb82e0054f06ba5407
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Wed Jan 26 07:51:11 2022 +0200
+commit 99f3c866826bd038bca06129debb10a9a32de7f9
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Jan 26 09:33:53 2022 +0200
 
-    feat(ui5-multi-input): Keyboard handling (#4495)
-    
-    * fix(ui5-multi-input): Keyboard handling of Left
-    
-    When the carret is in the 0th position of the input and the user presses Left arrow,
-    the focus should go to the last Token if there are tokens.
-    
-    * fix(ui5-multi-input): Keyboard handling of Right
-    
-    Fix: Do not skip the last token before going to the input
-    
-    * fix(ui5-multi-input): Shift+Ctrl+Arrow
-    
-    * fix(ui5-multi-input): Home/End on Tokens
-    
-    * Fix ESLint errors
-    
-    * Ctrl + A
-    
-    * Multiple token deletion
-    
-    * Cut/Copy functionality
-    
-    * - Move keyboard handler into the Tokenizer
-    - Add Shift + Ctrl + ArrowKey as combination
-    
-    * Keyboard handling tests
-    
-    * - Home/End cases bugfix
-    - Tokenizer's space select/deselect bugfix
-    - remove Hungarian notation
-    
-    * Cut/Copy functionality bugfixes
-    
-    * Focus on the input after Cut
+    also remove from logging
