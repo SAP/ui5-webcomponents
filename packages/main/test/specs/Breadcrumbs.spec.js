@@ -240,13 +240,16 @@ describe("Breadcrumbs general interaction", () => {
 		const initialUrl = await browser.getUrl();
 
 		// Act
+		await overflowArrowLink.waitForExist({ timeout: 5000 });
+		await overflowArrowLink.waitForDisplayed({ timeout: 5000 });
 		await overflowArrowLink.click(); // open the overflow
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsPreventDefault");
 		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
 		const itemLabel = await firstItem.getProperty('innerText');
 
-		await firstItem.waitForDisplayed();
+		await firstItem.waitForExist({ timeout: 5000 });
+		await firstItem.waitForDisplayed({ timeout: 5000 });
 		await firstItem.click();
 
 		// Check
