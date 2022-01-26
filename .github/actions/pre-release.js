@@ -24,7 +24,7 @@ const OTP = options.otp;
 
 const run = async () => {
 	const FILES = await glob("**/packages/**/package.json", { 
-		"ignore": ["**/node_modules/**/*.*", "**/dist/**/*.*", "**/playground/**/*.*", "**/create-package/**/*.*"],
+		"ignore": ["**/node_modules/**/*.*", "**/dist/**/*.*", "**/playground/**/*.*"],
 	});
 
 	// Step 1: process package.json files
