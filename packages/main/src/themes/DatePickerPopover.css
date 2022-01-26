@@ -4,6 +4,6 @@
 	justify-content: center;
 }
 
-ui5-responsive-popover::part(content) {
+[ui5-responsive-popover]::part(content) {
     padding: 0;
 }
