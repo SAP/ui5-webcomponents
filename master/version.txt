@@ -1,5 +1,5 @@
-commit aa3ca7e6a656f3772d540de0e00de817dcfd8a0e
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jan 26 14:34:11 2022 +0200
+commit adafeba96ed9c0e522bed81cbb35b60290eafd2a
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Jan 26 16:02:03 2022 +0200
 
-    chore: Upgrade PostCSS (#4636)
+    fix(ui5-illustrated-message): remove uncompleted illustration (#4638)
