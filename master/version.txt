@@ -1,13 +1,5 @@
-commit 279ca8dcb73ab1f746cd334051639042e7eda9aa
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Jan 26 01:43:10 2022 -0800
+commit 0eb0355bdd828c40be7d00d73acd1d2dcbec50d5
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jan 26 12:28:10 2022 +0200
 
-    Translation Delivery (#4629)
-    
-    * chore: translation delivery
-    
-    Change-Id: Ie2ae914d9432cb200ad9b1710426aa4c2c077950
-    
-    * chore: translation delivery
-    
-    Change-Id: Id4cd02bf55354cec635e18f9bcc8ef05a412b00f
+    chore: Upgrade all dependencies (#4634)
