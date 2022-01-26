@@ -1,5 +1,5 @@
-commit 0eb0355bdd828c40be7d00d73acd1d2dcbec50d5
+commit 3e7fe4d51a19184ac9992941ae801cce6389be88
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jan 26 12:28:10 2022 +0200
+Date:   Wed Jan 26 13:52:34 2022 +0200
 
-    chore: Upgrade all dependencies (#4634)
+    chore: use a different colors package (#4635)
