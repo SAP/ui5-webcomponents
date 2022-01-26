@@ -8,7 +8,10 @@ const windows = navigator.platform.indexOf("Win") !== -1;
 const iOS = navigator.platform.match(/iPhone|iPad|iPod/) || (navigator.userAgent.match(/Mac/) && "ontouchend" in document);
 const android = !windows && /Android/.test(ua);
 const androidPhone = android && /(?=android)(?=.*mobile)/i.test(ua);
-const ipad = /ipad/i.test(ua);
+const ipad = /ipad/i.test(ua) || (/Macintosh/i.test(ua) && "ontouchend" in document);
+// With iOS 13 the string 'iPad' was removed from the user agent string through a browser setting, which is applied on all sites by default:
+// "Request Desktop Website -> All websites" (for more infos see: https://forums.developer.apple.com/thread/119186).
+// Therefore the OS is detected as MACINTOSH instead of iOS and the device is a tablet if the Device.support.touch is true.
 
 let windowsVersion;
 let webkitVersion;
