@@ -48,7 +48,7 @@ const displayFailedRegistrations = () => {
 	let message = `Multiple UI5 Web Components instances detected.`;
 
 	if (allRuntimes.length > 1) {
-		message = `${message}\nLoading order (versions before 1.1.0 not listed): ${allRuntimes.map(runtime => `\n${runtime.description} ${runtime.url}`).join("")}`;
+		message = `${message}\nLoading order (versions before 1.1.0 not listed): ${allRuntimes.map(runtime => `\n${runtime.description}`).join("")}`;
 	}
 
 	Object.keys(Failures).forEach(otherRuntimeIndex => {
