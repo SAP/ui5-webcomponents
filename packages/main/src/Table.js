@@ -10,7 +10,11 @@ import {
 	isEnter,
 	isCtrlA,
 	isUpAlt,
-	isDownAlt,
+	isDownAlt,	
+	isUpShift,
+	isDownShift,
+	isHomeCtrl,
+	isEndCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -524,7 +528,7 @@ class Table extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isCtrlA(event)) {
+		if (isCtrlA(event)) { 
 			event.preventDefault();
 			this.isMultiSelect && this._selectAll(event);
 			return;
@@ -533,12 +537,73 @@ class Table extends UI5Element {
 		const isAltUp = isUpAlt(event);
 
 		if (isAltUp || isDownAlt(event)) {
-			return this._handleArrowAlt(isAltUp, event.target);
+			return this._handleArrowAlt(isAltUp, event.target);	
+		}
+
+		
+		if ((isUpShift(event) || isDownShift(event)) && this.isMultiSelect) {
+			this._handleArrowNav(event);
+		}
+
+		if (isHomeCtrl(event)) {
+			this._itemNavigation._handleHome(event);
+			this._itemNavigation._applyTabIndex();
+			this._itemNavigation._focusCurrentItem();
+		}
+
+		if (isEndCtrl(event)) {
+			this._itemNavigation._handleEnd(event);
+			this._itemNavigation._applyTabIndex();
+			this._itemNavigation._focusCurrentItem();
 		}
 	}
 
+	_handleArrowNav(event) {
+		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+
+		if (!isRowFocused) {
+			return;
+		}
+		const prevSelectedRows = this.selectedRows;
+		const currentItem = this.currentItem;
+		const currentItemIdx = this.currentItemIdx;
+
+		const prevItemIdx = currentItemIdx - 1;
+		const nextItemIdx = currentItemIdx +1;
+
+		const prevItem = this.rows[prevItemIdx];
+		const nextItem = this.rows[nextItemIdx];
+
+		if (isUpShift(event) && currentItem.selected) {
+			prevItem.selected = true;
+			prevItem.focus();
+		}
+
+		if (isUpShift(event) && !currentItem.selected && prevItem.selected) {
+			prevItem.selected = false;
+			prevItem.focus();
+		}
+
+		if (isDownShift(event) && currentItem.selected) {
+			nextItem.selected = true;
+			nextItem.focus();
+		}
+
+		if (isDownShift(event) && !currentItem.selected && nextItem.selected) {
+			nextItem.selected = false;
+			nextItem.focus();
+		}
+
+		const selectedRows = this.selectedRows;
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			prevSelectedRows,
+		});
+	}
+
 	/**
-	 * Handles Alt + Up/Down.
+	 * Handles Alt + Up/Down.	
 	 * Switches focus between column header, last focused item, and "More" button (if applicable).
 	 * @private
 	 * @param {boolean} shouldMoveUp Whether to move focus upward
@@ -877,6 +942,22 @@ class Table extends UI5Element {
 
 	get selectedRows() {
 		return this.rows.filter(row => row.selected);
+	}
+
+	get currentItemIdx() {
+		return this.rows.indexOf(this.currentItem);
+	}
+
+	get currentItem() {
+		return this.getRootNode().activeElement
+	}
+
+	get currentElement() {
+		return this._itemNavigation._getCurrentItem();
+	}
+
+	_getActiveElementTagName() {
+		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
 	}
 }
 
