@@ -1,5 +1,7 @@
-commit 99f3c866826bd038bca06129debb10a9a32de7f9
+commit 604ce638464562a75d9c4ce4bb95ffbd959ffcb1
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Jan 26 09:33:53 2022 +0200
+Date:   Wed Jan 26 10:33:23 2022 +0200
 
-    also remove from logging
+    fix: remove import.meta.url (#4630)
+    
+    not well supported by all build tools
