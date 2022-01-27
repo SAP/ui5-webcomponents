@@ -21,7 +21,7 @@ cd ui5-web-components-application
 npm install @ui5/webcomponents --save
 ```
 
-### Step 4a. In Vue 2.x Add UI5 Web Components to Vue `ignoredElement`.
+### Step 4a. In Vue 2.x add UI5 Web Components to Vue `ignoredElement`.
 
 Add the following line to your ```main.js``` file:
 
