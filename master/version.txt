@@ -1,9 +1,9 @@
-commit 0208103c52cfaaaeb98e3b2fe901be4b15fdca5a
+commit 27cddee0d8e91230f3adf1a391b6e1ea1ee70f5d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 27 10:44:24 2022 +0200
+Date:   Thu Jan 27 11:29:09 2022 +0200
 
-    feat(icons): add `qr-code` icon (#4645)
+    docs: update Vue + UI5WebComps docs (#4647)
     
-    Added missing icon for both v4 and v5 versions.
+    Update Vue related docs as with Vue 3.x there is a BREAKING change - the Custom elements whitelisting is now performed during template compilation, and should be configured via compiler options instead of runtime config.
     
-    FIXES: #4643
+    Fixes: #4637

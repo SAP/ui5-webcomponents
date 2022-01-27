@@ -5394,13 +5394,40 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents <span class="nt">--save</span>
 </code></pre></div></div>
 
-<h3 id="step-4-add-ui5-web-components-to-vue-ignoredelement">Step 4. Add UI5 Web Components to Vue <code class="highlighter-rouge">ignoredElement</code>.</h3>
+<h3 id="step-4a-in-vue-2x-add-ui5-web-components-to-vue-ignoredelement">Step 4a. In Vue 2.x add UI5 Web Components to Vue <code class="highlighter-rouge">ignoredElement</code>.</h3>
 
 <p>Add the following line to your <code class="highlighter-rouge">main.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">ignoredElements</span> <span class="o">=</span> <span class="p">[</span><span class="sr">/^ui5-/</span><span class="p">];</span>
 </code></pre></div></div>
 
+<h3 id="step-4b-in-vue-3x-the-web-components-check-is-performed-during-template-compilation-there-are-two-options-to-instruct-the-compiler-to-treat-ui5-web-components-as-custom-elements">Step 4b. In Vue 3.x the web components check is performed during template compilation. There are two options to instruct the compiler to treat UI5 Web Components as custom elements.</h3>
+
+<ul>
+  <li>If using a build step: pass the <code class="highlighter-rouge">isCustomElement</code> option to the Vue template compiler. If using <code class="highlighter-rouge">vue-loader</code>, this should be passed via vue-loader’s <code class="highlighter-rouge">compilerOptions</code> option:</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// in webpack config</span>
+<span class="nx">rules</span><span class="p">:</span> <span class="p">[</span>
+	<span class="p">{</span>
+		<span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">vue$/</span><span class="p">,</span>
+		<span class="na">use</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue-loader</span><span class="dl">'</span><span class="p">,</span>
+		<span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">compilerOptions</span><span class="p">:</span> <span class="p">{</span>
+				<span class="na">isCustomElement</span><span class="p">:</span> <span class="nx">tag</span> <span class="o">=&gt;</span> <span class="nx">tag</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-</span><span class="dl">"</span><span class="p">)</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>If using on-the-fly template compilation, pass the check via <code class="highlighter-rouge">app.config.isCustomElement</code>:</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">createApp</span><span class="p">({})</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">isCustomElement</span> <span class="o">=</span> <span class="nx">tag</span> <span class="o">=&gt;</span> <span class="nx">tag</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div></div>
 <h3 id="step-5-import-the-components-that-you-are-going-to-use">Step 5. Import the components that you are going to use.</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Button.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5423,8 +5450,8 @@
 <p><code class="highlighter-rouge">v-model</code> binding doesn’t work for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-input</span>
-    <span class="na">:value=</span><span class="s">"inputValue"</span>
-    <span class="err">@</span><span class="na">input=</span><span class="s">"inputValue = $event.target.value"</span><span class="nt">&gt;</span>
+	<span class="na">:value=</span><span class="s">"inputValue"</span>
+	<span class="err">@</span><span class="na">input=</span><span class="s">"inputValue = $event.target.value"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;/ui5-input&gt;</span>
 </code></pre></div></div>
 
