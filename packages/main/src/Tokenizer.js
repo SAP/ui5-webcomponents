@@ -250,7 +250,7 @@ class Tokenizer extends UI5Element {
 			return this._handleTokenSelection(event, false);
 		}
 
-		this._handleItemNavigation(event, this.tokens);
+		this._handleItemNavigation(event, this._tokens);
 	}
 
 	_handleItemNavigation(event, tokens) {
