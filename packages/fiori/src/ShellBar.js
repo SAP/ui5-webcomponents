@@ -1168,23 +1168,16 @@ class ShellBar extends UI5Element {
 
 	get accInfo() {
 		return {
-			notifications: {
-				"title": this._notificationsText,
-			},
-			profile: {
-				"title": this._profileText,
-			},
-			products: {
-				"title": this._productsText,
-			},
 			search: {
-				"ariaExpanded": this.showSearchField,
-				"title": this._searchText,
+				"accessibilityAttributes": {
+					expanded: this.showSearchField,
+				},
 			},
 			overflow: {
-				"title": this._overflowText,
-				"ariaHaspopup": true,
-				"ariaExpanded": this._overflowPopoverExpanded,
+				"accessibilityAttributes": {
+					expanded: true,
+					hadPopup: this._overflowPopoverExpanded,
+				},
 			},
 		};
 	}
