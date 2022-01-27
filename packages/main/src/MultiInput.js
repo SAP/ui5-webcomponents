@@ -263,7 +263,6 @@ class MultiInput extends Input {
 
 			firstToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(firstToken);
-			return;
 		}
 	}
 
