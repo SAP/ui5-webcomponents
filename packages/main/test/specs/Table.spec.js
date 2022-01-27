@@ -667,4 +667,42 @@ describe("Table keyboard interaction", () => {
 			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
 		}, 1600);
 	});
+
+	it("SHIFT + UP/DOWN", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+
+		const table = await browser.$("#multi");
+		const firstRow = await browser.$("#firstRowMultiSelect");
+		const firstRowCheckBox = await firstRow.shadow$("ui5-checkbox");
+		const secondRow = await browser.$("#secondRowMultiSelect");
+		const thirdRow = await browser.$("#thirdRowMultiSelect");
+		const forthRow = await browser.$("#forthRowMultiSelect");
+		const firstCellFirstRowLabel = await browser.$("#firstCellFirstRowMSLabel");
+
+		await firstRowCheckBox.click();
+		await browser.keys(["Shift", "ArrowDown"]);
+
+		assert.strictEqual(await firstRow.getProperty("selected"), true, "The third row is selected");
+		assert.strictEqual(await secondRow.getProperty("selected"), true, "The second row is selected");
+
+		await browser.keys("ArrowDown");
+		await browser.keys(["Shift", "ArrowUp"]);
+		await browser.keys(["Shift", "ArrowUp"]);
+
+		assert.strictEqual(await firstRow.getProperty("selected"), false, "The first row is unselected");
+		assert.strictEqual(await secondRow.getProperty("selected"), false, "The second row is unselected");
+
+		await firstRowCheckBox.click();
+		await browser.keys(["Shift", "ArrowDown"]);
+		await browser.keys(["Shift", "ArrowDown"]);
+
+		await firstRowCheckBox.click();
+		await browser.keys(["Shift", "ArrowDown"]);
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys(["Shift", "ArrowUp"]);
+
+		assert.strictEqual(await secondRow.getProperty("selected"), false, "The second row is unselected");
+		assert.strictEqual(await thirdRow.getProperty("selected"), false, "The third row is unselected");
+	});
 });
