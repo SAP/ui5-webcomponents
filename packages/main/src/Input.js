@@ -565,7 +565,7 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		// Indicates if the change event has already been fired
-		this._changeFiredValue = "";
+		this._changeFiredValue = null;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
