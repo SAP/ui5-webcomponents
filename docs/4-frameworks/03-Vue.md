@@ -48,7 +48,7 @@ rules: [
 ]
 ```
 
-- b. If using on-the-fly template compilation, pass the check via `app.config.isCustomElement`:
+- If using on-the-fly template compilation, pass the check via `app.config.isCustomElement`:
 
 ```js
 const app = createApp({})
