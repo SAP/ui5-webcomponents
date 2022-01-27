@@ -10,6 +10,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
@@ -169,14 +170,7 @@ const metadata = {
 			type: String,
 			multiple: true,
 		},
-		_menuPopoverExpanded: {
-			type: Boolean,
-			noAttribute: true,
-		},
-		_overflowPopoverExpanded: {
-			type: Boolean,
-			noAttribute: true,
-		},
+
 		_fullWidthSearch: {
 			type: Boolean,
 			noAttribute: true,
@@ -499,22 +493,6 @@ class ShellBar extends UI5Element {
 		this.fireEvent("logo-click", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-logo"),
 		});
-	}
-
-	_menuPopoverBeforeOpen() {
-		this._menuPopoverExpanded = true;
-	}
-
-	_menuPopoverAfterClose() {
-		this._menuPopoverExpanded = false;
-	}
-
-	_overflowPopoverBeforeOpen() {
-		this._overflowPopoverExpanded = true;
-	}
-
-	_overflowPopoverAfterClose() {
-		this._overflowPopoverExpanded = false;
 	}
 
 	_logoKeyup(event) {
@@ -1120,7 +1098,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get menuPopoverExpanded() {
-		return this.hasMenuItems ? this._menuPopoverExpanded : undefined;
+		return HasPopup.Menu;
 	}
 
 	get _shellbarText() {
@@ -1175,8 +1153,7 @@ class ShellBar extends UI5Element {
 			},
 			overflow: {
 				"accessibilityAttributes": {
-					expanded: true,
-					hadPopup: this._overflowPopoverExpanded,
+					hasPopup: HasPopup.Menu,
 				},
 			},
 		};
