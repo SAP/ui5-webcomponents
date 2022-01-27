@@ -200,6 +200,10 @@ const metadata = {
  * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"</code>
+ * <br>
+ * <b>Note:</b> Illustrations starting with the “Tnt” prefix are part of another illustration set. For example to use the “TntSuccess” illustration, add the following import::
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/Success.js"</code>
  *
  * <h3>Structure</h3>
  * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
@@ -280,8 +284,10 @@ class IllustratedMessage extends UI5Element {
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
+			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
+
 			/* eslint-disable-next-line */
-			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${this.name}.js".`);
+			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js".`);
 		}
 
 		this.invalid = false;
