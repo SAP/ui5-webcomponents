@@ -274,6 +274,12 @@ class Dialog extends Popup {
 
 	onAfterRendering() {
 		this._attachResizeHandlers();
+
+		if (!this.isOpen() && this.open) {
+			this.show();
+		} else if (this.isOpen() && !this.open) {
+			this.close();
+		}
 	}
 
 	onExitDOM() {

@@ -146,6 +146,16 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the opener id of the element that the popover is shown at
+		 * @public
+		 * @type {String}
+		 * @defaultvalue ""
+		 */
+		opener: {
+			type: String,
+		},
+
+		/**
 		 * Defines whether the content is scrollable.
 		 *
 		 * @type {boolean}
@@ -294,6 +304,14 @@ class Popover extends Popup {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
+	}
+
+	onAfterRendering() {
+		if (!this.isOpen() && this.open) {
+			this.showAt(document.getElementById(this.opener));
+		} else if (this.isOpen() && !this.open) {
+			this.close();
+		}
 	}
 
 	isOpenerClicked(event) {
