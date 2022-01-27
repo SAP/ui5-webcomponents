@@ -10,11 +10,13 @@ import {
 	isEnter,
 	isCtrlA,
 	isUpAlt,
-	isDownAlt,	
+	isDownAlt,
 	isUpShift,
 	isDownShift,
 	isHomeCtrl,
 	isEndCtrl,
+	isHomeShift,
+	isEndShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -528,7 +530,7 @@ class Table extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isCtrlA(event)) { 
+		if (isCtrlA(event)) {
 			event.preventDefault();
 			this.isMultiSelect && this._selectAll(event);
 			return;
@@ -537,10 +539,9 @@ class Table extends UI5Element {
 		const isAltUp = isUpAlt(event);
 
 		if (isAltUp || isDownAlt(event)) {
-			return this._handleArrowAlt(isAltUp, event.target);	
+			return this._handleArrowAlt(isAltUp, event.target);
 		}
 
-		
 		if ((isUpShift(event) || isDownShift(event)) && this.isMultiSelect) {
 			this._handleArrowNav(event);
 		}
@@ -556,6 +557,10 @@ class Table extends UI5Element {
 			this._itemNavigation._applyTabIndex();
 			this._itemNavigation._focusCurrentItem();
 		}
+
+		if ((isHomeShift(event) || isEndShift(event)) && this.isMultiSelect) {
+			this._handleHomeEndSelection(event);
+		}
 	}
 
 	_handleArrowNav(event) {
@@ -564,12 +569,13 @@ class Table extends UI5Element {
 		if (!isRowFocused) {
 			return;
 		}
-		const prevSelectedRows = this.selectedRows;
+
+		const previouslySelectedRows = this.selectedRows;
 		const currentItem = this.currentItem;
 		const currentItemIdx = this.currentItemIdx;
 
 		const prevItemIdx = currentItemIdx - 1;
-		const nextItemIdx = currentItemIdx +1;
+		const nextItemIdx = currentItemIdx + 1;
 
 		const prevItem = this.rows[prevItemIdx];
 		const nextItem = this.rows[nextItemIdx];
@@ -598,12 +604,44 @@ class Table extends UI5Element {
 
 		this.fireEvent("selection-change", {
 			selectedRows,
-			prevSelectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_handleHomeEndSelection(event) {
+		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+
+		if (!isRowFocused) {
+			return;
+		}
+		const rows = this.rows;
+		const previouslySelectedRows = this.selectedRows;
+		const currentItemIdx = this.currentItemIdx;
+
+		if (isHomeShift(event)) {
+			rows.slice(0, currentItemIdx + 1).forEach(item => {
+				item.selected = true;
+			});
+			rows[0].focus();
+		}
+
+		if (isEndShift(event)) {
+			rows.slice(currentItemIdx).forEach(item => {
+				item.selected = true;
+			});
+			rows[rows.length - 1].focus();
+		}
+
+		const selectedRows = this.selectedRows;
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
 		});
 	}
 
 	/**
-	 * Handles Alt + Up/Down.	
+	 * Handles Alt + Up/Down.
 	 * Switches focus between column header, last focused item, and "More" button (if applicable).
 	 * @private
 	 * @param {boolean} shouldMoveUp Whether to move focus upward
@@ -949,7 +987,7 @@ class Table extends UI5Element {
 	}
 
 	get currentItem() {
-		return this.getRootNode().activeElement
+		return this.getRootNode().activeElement;
 	}
 
 	get currentElement() {
