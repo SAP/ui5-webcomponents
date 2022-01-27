@@ -169,11 +169,30 @@ class ColorPalettePopover extends UI5Element {
 		return this.responsivePopover.content[0].querySelector("[ui5-color-palette]");
 	}
 
-	closePopover() {
-		this.responsivePopover.close();
+	/**
+	 * Shows the ColorPalettePopover.
+	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @public
+	 * @since 1.1.1
+	 */
+	showAt(opener) {
+		this._openPopover(opener);
 	}
 
+	/**
+	 * Shows the ColorPalettePopover.
+	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
+	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @public
+	 * @since 1.0.0-rc.16
+	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
+	 */
 	openPopover(opener) {
+		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead."); // eslint-disable-line
+		this._openPopover(opener);
+	}
+
+	_openPopover(opener) {
 		this._respPopover();
 
 		this.responsivePopover.showAt(opener, true);
@@ -183,6 +202,10 @@ class ColorPalettePopover extends UI5Element {
 		} else {
 			this._colorPalette().focusColorElement(this._colorPalette().colorPaletteNavigationElements[0], this._colorPalette()._itemNavigation);
 		}
+	}
+
+	closePopover() {
+		this.responsivePopover.close();
 	}
 
 	onSelectedColor(event) {

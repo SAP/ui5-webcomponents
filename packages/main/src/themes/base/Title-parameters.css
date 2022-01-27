@@ -1,8 +1,8 @@
 :root {
-	--ui5_title_level_1Size: 1.625rem;
-	--ui5_title_level_2Size: 1.375rem;
-	--ui5_title_level_3Size: 1.250rem;
-	--ui5_title_level_4Size: 1.125rem;
-	--ui5_title_level_5Size: 1rem;
-	--ui5_title_level_6Size: 0.875rem;
+	--ui5_title_level_1Size: var(--sapFontHeader1Size);
+	--ui5_title_level_2Size: var(--sapFontHeader2Size);
+	--ui5_title_level_3Size: var(--sapFontHeader3Size);
+	--ui5_title_level_4Size: var(--sapFontHeader4Size);
+	--ui5_title_level_5Size: var(--sapFontHeader5Size);
+	--ui5_title_level_6Size: var(--sapFontHeader6Size);
 }

@@ -9,21 +9,21 @@ const MediaGalleryLayouts = {
 	/**
 	 * The layout is determined automatically.
 	 * @public
-	 * @type {Left}
+	 * @type {Auto}
 	 */
 	 Auto: "Auto",
 
 	/**
 	 * Displays the layout as a vertical split between the thumbnails list and the selected image.
 	 * @public
-	 * @type {Left}
+	 * @type {Vertical}
 	 */
 	Vertical: "Vertical",
 
 	/**
 	 * Displays the layout as a horizontal split between the thumbnails list and the selected image.
 	 * @public
-	 * @type {Right}
+	 * @type {Horizontal}
 	 */
 	Horizontal: "Horizontal",
 };

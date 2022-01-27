@@ -67,14 +67,56 @@ const metadata = {
 		 * <li><code>BeforeSearch</code></li>
 		 * <li><code>NoActivities</code></li>
 		 * <li><code>NoData</code></li>
-		 * <li><code>NoEntries</code></li>
 		 * <li><code>NoMail</code></li>
+		 * <li><code>NoMail_v1</code></li>
+		 * <li><code>NoEntries</code></li>
 		 * <li><code>NoNotifications</code></li>
 		 * <li><code>NoSavedItems</code></li>
+		 * <li><code>NoSavedItems_v1</code></li>
 		 * <li><code>NoSearchResults</code></li>
 		 * <li><code>NoTasks</code></li>
+		 * <li><code>NoTasks_v1</code></li>
 		 * <li><code>UnableToLoad</code></li>
+		 * <li><code>UnableToLoadImage</code></li>
 		 * <li><code>UnableToUpload</code></li>
+		 * <li><code>AddColumn</code></li>
+		 * <li><code>AddPeople</code></li>
+		 * <li><code>BalloonSky</code></li>
+		 * <li><code>Connection</code></li>
+		 * <li><code>EmptyCalendar</code></li>
+		 * <li><code>EmptyList</code></li>
+		 * <li><code>EmptyPlanningCalendar</code></li>
+		 * <li><code>ErrorScreen</code></li>
+		 * <li><code>FilterTable</code></li>
+		 * <li><code>GroupTable</code></li>
+		 * <li><code>NoFilterResults</code></li>
+		 * <li><code>PageNotFound</code></li>
+		 * <li><code>ReloadScreen</code></li>
+		 * <li><code>ResizeColumn</code></li>
+		 * <li><code>SearchEarth</code></li>
+		 * <li><code>SearchFolder</code></li>
+		 * <li><code>SimpleBalloon</code></li>
+		 * <li><code>SimpleBell</code></li>
+		 * <li><code>SimpleCalendar</code></li>
+		 * <li><code>SimpleCheckMark</code></li>
+		 * <li><code>SimpleConnection</code></li>
+		 * <li><code>SimpleEmptyDoc</code></li>
+		 * <li><code>SimpleEmptyList</code></li>
+		 * <li><code>SimpleError</code></li>
+		 * <li><code>SimpleMagnifier</code></li>
+		 * <li><code>SimpleMail</code></li>
+		 * <li><code>SimpleNoSavedItems</code></li>
+		 * <li><code>SimpleNotFoundMagnifier</code></li>
+		 * <li><code>SimpleReload</code></li>
+		 * <li><code>SimpleTask</code></li>
+		 * <li><code>SleepingBell</code></li>
+		 * <li><code>SortColumn</code></li>
+		 * <li><code>SuccessBalloon</code></li>
+		 * <li><code>SuccessCheckMark</code></li>
+		 * <li><code>SuccessHighFive</code></li>
+		 * <li><code>SuccessScreen</code></li>
+		 * <li><code>Tent</code></li>
+		 * <li><code>UploadCollection</code></li>
 		 * <li><code>TntCompany</code></li>
 		 * <li><code>TntExternalLink</code></li>
 		 * <li><code>TntFaceID</code></li>

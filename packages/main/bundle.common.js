@@ -63,6 +63,7 @@ import SegmentedButton from "./dist/SegmentedButton.js";
 import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
+import SplitButton from "./dist/SplitButton.js";
 import StepInput from "./dist/StepInput.js";
 import RangeSlider from "./dist/RangeSlider.js";
 import Switch from "./dist/Switch.js";

@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** remove uncompleted illustration ([#4638](https://github.com/SAP/ui5-webcomponents/issues/4638)) ([adafeba](https://github.com/SAP/ui5-webcomponents/commit/adafeba))
+
+
+
+
+
+## [1.1.1](https://github.com/SAP/ui5-webcomponents/compare/v1.1.0...v1.1.1) (2022-01-24)
+
+
+### Bug Fixes
+
+* **ui5-media-gallery-item:** add missing icon import ([#4615](https://github.com/SAP/ui5-webcomponents/issues/4615)) ([d04cf8c](https://github.com/SAP/ui5-webcomponents/commit/d04cf8c))
+* **ui5-media-gallery-item:** correct initialization order ([#4614](https://github.com/SAP/ui5-webcomponents/issues/4614)) ([436f8f4](https://github.com/SAP/ui5-webcomponents/commit/436f8f4)), closes [#4610](https://github.com/SAP/ui5-webcomponents/issues/4610)
+
+
+
+
+
+# [1.1.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.2...v1.1.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* **ui5-bar:** fix rtl support ([#4496](https://github.com/SAP/ui5-webcomponents/issues/4496)) ([e5c0f2d](https://github.com/SAP/ui5-webcomponents/commit/e5c0f2d))
+* **ui5-bar:** remove unnecessary slot names ([#4510](https://github.com/SAP/ui5-webcomponents/issues/4510)) ([32d4507](https://github.com/SAP/ui5-webcomponents/commit/32d4507))
+* **ui5-li-notification-group:** fixed close button functionality in shell bar sample ([#4408](https://github.com/SAP/ui5-webcomponents/issues/4408)) ([6a66797](https://github.com/SAP/ui5-webcomponents/commit/6a66797)), closes [#4202](https://github.com/SAP/ui5-webcomponents/issues/4202)
+* **ui5-li-notification-group:** visual fixes for right-to-left mode ([#4354](https://github.com/SAP/ui5-webcomponents/issues/4354)) ([13b7d68](https://github.com/SAP/ui5-webcomponents/commit/13b7d68)), closes [#4255](https://github.com/SAP/ui5-webcomponents/issues/4255) [#4256](https://github.com/SAP/ui5-webcomponents/issues/4256) [#4257](https://github.com/SAP/ui5-webcomponents/issues/4257)
+* **ui5-shellbar:** allow selection with Enter key in overflow menu ([#4577](https://github.com/SAP/ui5-webcomponents/issues/4577)) ([fb40514](https://github.com/SAP/ui5-webcomponents/commit/fb40514)), closes [#4556](https://github.com/SAP/ui5-webcomponents/issues/4556)
+* **ui5-side-navigation:** correct styles for static area ([#4526](https://github.com/SAP/ui5-webcomponents/issues/4526)) ([7d35bd6](https://github.com/SAP/ui5-webcomponents/commit/7d35bd6)), closes [#4515](https://github.com/SAP/ui5-webcomponents/issues/4515)
+* **ui5-view-settings-dialog:** implement single page functionality ([#4419](https://github.com/SAP/ui5-webcomponents/issues/4419)) ([572a323](https://github.com/SAP/ui5-webcomponents/commit/572a323))
+* Scoping issues corrected ([#4573](https://github.com/SAP/ui5-webcomponents/issues/4573)) ([4e430d3](https://github.com/SAP/ui5-webcomponents/commit/4e430d3))
+* **ui5-upload-collection:** make buttons visible on small screens ([#4361](https://github.com/SAP/ui5-webcomponents/issues/4361)) ([fcb7f62](https://github.com/SAP/ui5-webcomponents/commit/fcb7f62))
+* **ui5-upload-collection:** removed active and hover states ([#4360](https://github.com/SAP/ui5-webcomponents/issues/4360)) ([cb76902](https://github.com/SAP/ui5-webcomponents/commit/cb76902)), closes [#4258](https://github.com/SAP/ui5-webcomponents/issues/4258)
+* **ui5-wizard:** adjust content and navigator paddings based on spec ([#4479](https://github.com/SAP/ui5-webcomponents/issues/4479)) ([303ecb1](https://github.com/SAP/ui5-webcomponents/commit/303ecb1))
+* **ui5-wizard:** make playground sample fully usable ([#4457](https://github.com/SAP/ui5-webcomponents/issues/4457)) ([1416d42](https://github.com/SAP/ui5-webcomponents/commit/1416d42))
+* adding stable selectors for tab container and shellbar ([#4369](https://github.com/SAP/ui5-webcomponents/issues/4369)) ([9abdaba](https://github.com/SAP/ui5-webcomponents/commit/9abdaba))
+
+
+### Features
+
+* **ui5-illustrated-message:** add more illustrations to the default set ([#4587](https://github.com/SAP/ui5-webcomponents/issues/4587)) ([417bd6a](https://github.com/SAP/ui5-webcomponents/commit/417bd6a))
+* stable-dom-ref supported for abstract items ([#4604](https://github.com/SAP/ui5-webcomponents/issues/4604)) ([5526dea](https://github.com/SAP/ui5-webcomponents/commit/5526dea))
+* **ui5-dynamic-side-content:** initial implementation ([#4379](https://github.com/SAP/ui5-webcomponents/issues/4379)) ([c36cb57](https://github.com/SAP/ui5-webcomponents/commit/c36cb57))
+* **ui5-shellbar:** improved accessibilityTexts property ([#4551](https://github.com/SAP/ui5-webcomponents/issues/4551)) ([c811a41](https://github.com/SAP/ui5-webcomponents/commit/c811a41))
+* implement F6 Navigation Helper ([#4490](https://github.com/SAP/ui5-webcomponents/issues/4490)) ([60d0dc1](https://github.com/SAP/ui5-webcomponents/commit/60d0dc1))
+* **ui5-flexible-column-layout:** new property accessibilityRoles ([#4446](https://github.com/SAP/ui5-webcomponents/issues/4446)) ([f515f3d](https://github.com/SAP/ui5-webcomponents/commit/f515f3d)), closes [#3804](https://github.com/SAP/ui5-webcomponents/issues/3804) [#3796](https://github.com/SAP/ui5-webcomponents/issues/3796)
+* **ui5-media-gallery:** Initial implementation ([#4427](https://github.com/SAP/ui5-webcomponents/issues/4427)) ([17cb225](https://github.com/SAP/ui5-webcomponents/commit/17cb225))
+* **ui5-shellbar:** introduce accessibilityTexts property ([#4377](https://github.com/SAP/ui5-webcomponents/issues/4377)) ([f762e76](https://github.com/SAP/ui5-webcomponents/commit/f762e76)), closes [#4009](https://github.com/SAP/ui5-webcomponents/issues/4009)
+* **ui5-tabcontainer:** implement overflow functionality ([#4403](https://github.com/SAP/ui5-webcomponents/issues/4403)) ([a38bbab](https://github.com/SAP/ui5-webcomponents/commit/a38bbab)), closes [#2540](https://github.com/SAP/ui5-webcomponents/issues/2540)
+* **ui5-wizard:** Extend keyboard handling ([#4444](https://github.com/SAP/ui5-webcomponents/issues/4444)) ([57151a3](https://github.com/SAP/ui5-webcomponents/commit/57151a3))
+
+
+
+
+
+## [1.0.2](https://github.com/SAP/ui5-webcomponents/compare/v1.0.1...v1.0.2) (2021-11-29)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 ## [1.0.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0...v1.0.1) (2021-11-10)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

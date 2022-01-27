@@ -190,6 +190,7 @@ The `accessible-role` property is currently supported in:
 * User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
 * [Panel](https://sap.github.io/ui5-webcomponents/playground/components/Panel)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
+* [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
 
 ---
 

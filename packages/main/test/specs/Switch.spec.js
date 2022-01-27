@@ -27,4 +27,10 @@ describe("Switch general interaction", async () => {
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more");
 	});
+
+	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {
+		const switchEl = await browser.$("#switchAccNameRef").shadow$("div");
+
+		assert.strictEqual(await switchEl.getAttribute("aria-label"), "Use GPS location", "Attribute is reflected");
+	});
 });
