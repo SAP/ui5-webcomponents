@@ -1,9 +1,7 @@
-commit 27cddee0d8e91230f3adf1a391b6e1ea1ee70f5d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 27 11:29:09 2022 +0200
+commit c638668a130d269bac77d8daaf5670c50b07f84a
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jan 27 14:32:09 2022 +0200
 
-    docs: update Vue + UI5WebComps docs (#4647)
+    docs(ui5-illustrated-message): import illustrations from tnt illustra… (#4652)
     
-    Update Vue related docs as with Vue 3.x there is a BREAKING change - the Custom elements whitelisting is now performed during template compilation, and should be configured via compiler options instead of runtime config.
-    
-    Fixes: #4637
+    Fixes: #4639
