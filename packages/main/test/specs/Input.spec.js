@@ -684,7 +684,7 @@ describe("Input general interaction", () => {
 		// press clear icon
 		await clearIcon.click();
 
-		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, secnond - clear icon)");
+		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, second - clear icon)");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
