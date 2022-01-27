@@ -20,6 +20,20 @@ describe("Dialog general interaction", () => {
 		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
 	});
 
+	it("tests dialog toggling with 'open' attribute", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialogWithAttr");
+		const btnCloseDialog= await browser.$("#btnCloseWithAttr");
+
+		await btnOpenDialog.click();
+
+		const dialog = await browser.$("#dlgAttr");
+
+		assert.ok(await dialog.isDisplayedInViewport(), "Dialog is opened.");
+
+		await btnCloseDialog.click();
+		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
+	});
+
 	it("tests popover in dialog", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const select = await browser.$("#mySelect");

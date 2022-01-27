@@ -76,7 +76,7 @@ const metadata = {
 		 */
 		opened: {
 			type: Boolean,
-			noAttribute: true
+			noAttribute: true,
 		},
 
 		/**
