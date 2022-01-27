@@ -100,13 +100,11 @@
 }
 
 .ui5-popup-footer-root {
-	min-height: 2.5rem;
 	justify-content: end;
 }
 
 .ui5-popup-header-root {
 	background: var(--sapPageHeader_Background);
-	min-height: 2.5rem;
 	justify-content: start;
 }
 
