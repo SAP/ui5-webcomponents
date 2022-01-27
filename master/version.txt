@@ -1,5 +1,9 @@
-commit d7004cf95838b43c46ad9fce14fc3c03a4198aef
+commit 0208103c52cfaaaeb98e3b2fe901be4b15fdca5a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jan 26 19:16:38 2022 +0200
+Date:   Thu Jan 27 10:44:24 2022 +0200
 
-    chore: release v1.1.2 (#4642)
+    feat(icons): add `qr-code` icon (#4645)
+    
+    Added missing icon for both v4 and v5 versions.
+    
+    FIXES: #4643
