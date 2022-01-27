@@ -284,7 +284,7 @@ class IllustratedMessage extends UI5Element {
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
-			let illustrationPath =  this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
+			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
 
 			/* eslint-disable-next-line */
 			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js".`);
