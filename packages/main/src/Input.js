@@ -336,7 +336,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.1.2
+		 * @since 1.2.0
 		 */
 		showClearIcon: {
 			type: Boolean,
@@ -348,7 +348,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @private
-		 * @since 1.1.2
+		 * @since 1.2.0
 		 */
 		effectiveShowClearIcon: {
 			type: Boolean,

@@ -666,7 +666,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
 	});
 
-	it("Change event is called when value of inut is cleared with clear icon and input is focused out", async () => {
+	it("Change event is called when value of input is cleared with clear icon and input is focused out", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		const input = await $("#clear-input");
@@ -684,7 +684,7 @@ describe("Input general interaction", () => {
 		// press clear icon
 		await clearIcon.click();
 
-		assert.strictEqual(await changeCounter.getText(), "2", "Change event not called twice");
+		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, secnond - clear icon)");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
