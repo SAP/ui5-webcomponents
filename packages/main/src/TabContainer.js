@@ -617,11 +617,13 @@ class TabContainer extends UI5Element {
 		this._getStartOverflow().setAttribute("hidden", "");
 		this._getEndOverflow().setAttribute("hidden", "");
 
-		// show all tabs
-		for (let i = 0; i < itemsDomRefs.length; i++) {
-			itemsDomRefs[i].removeAttribute("hidden");
-			itemsDomRefs[i].removeAttribute("start-overflow");
-			itemsDomRefs[i].removeAttribute("end-overflow");
+		// show all tabs if any
+		if (itemsDomRefs.length) {
+			for (let i = 0; i < itemsDomRefs.length; i++) {
+				itemsDomRefs[i].removeAttribute("hidden");
+				itemsDomRefs[i].removeAttribute("start-overflow");
+				itemsDomRefs[i].removeAttribute("end-overflow");
+			}
 		}
 
 		itemsDomRefs.forEach(item => {
