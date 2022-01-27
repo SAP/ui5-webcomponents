@@ -213,21 +213,38 @@ describe("Keyboard handling", () => {
 		const innerInput =  await input.shadow$("input");
 		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
 		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
+		let caretPosition;
 
 		await innerInput.click();
 		await innerInput.keys("ArrowLeft");
 		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
 
 		await innerInput.keys("Home");
-		assert.strictEqual(await firstToken.getProperty("focused"), true, "The last token is focused");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
 
 		await innerInput.keys("End");
 		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
 
 
 		await innerInput.keys("ArrowRight");
-		assert.strictEqual(await firstToken.getProperty("focused"), false, "The last token is not focused anymore");
+		assert.strictEqual(await firstToken.getProperty("focused"), false, "The first token is not focused anymore");
 		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
+
+		await innerInput.keys("Backspace");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused on Backspace");
+
+		await innerInput.keys("ArrowRight");
+		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
+
+		caretPosition = await browser.execute(() =>{
+			const multiInputShadowRoot = document.getElementById("basic-overflow").shadowRoot;
+			return multiInputShadowRoot.querySelector("input").selectionStart;
+		});
+
+		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at 0 index");
+
+		await innerInput.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused on Home press, if the cursor is at 0 index");
 	});
 
 	it("should select tokens with key modifiers", async () => {
