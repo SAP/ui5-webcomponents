@@ -29,7 +29,7 @@ Add the following line to your ```main.js``` file:
 Vue.config.ignoredElements = [/^ui5-/];
 ```
 
-### Step 4b. In Vue 3.x the web components check is performed during template compilation. There are two options to instruct the compiler to treat UI5 Web Components as a custom element.
+### Step 4b. In Vue 3.x the web components check is performed during template compilation. There are two options to instruct the compiler to treat UI5 Web Components as custom elements.
 
 - If using a build step: pass the `isCustomElement` option to the Vue template compiler. If using `vue-loader`, this should be passed via vue-loader's `compilerOptions` option:
 
