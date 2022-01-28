@@ -1,5 +1,9 @@
-commit 2d8ce468a4bfcde739073fc64b00e5e455adb81b
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jan 28 15:27:32 2022 +0200
+commit 11f8adaf035bb025117256f093b45db6c5596d13
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Fri Jan 28 15:55:33 2022 +0200
 
-    fix(ui5-select): incorrect popover styles when value state is used (#4651)
+    fix(popovers): correct list items height of input dropdowns (#4650)
+    
+    List items of suggestion popovers are now aligned with FIori visual specification and have correct height of 2.5rem for Cozy and 2rem for Compact.
+    
+    Fixes: #4616
