@@ -171,6 +171,15 @@ const metadata = {
 			multiple: true,
 		},
 
+		_menuPopoverExpanded: {
+			type: Boolean,
+			noAttribute: true,
+		},
+		_overflowPopoverExpanded: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
 		_fullWidthSearch: {
 			type: Boolean,
 			noAttribute: true,
@@ -493,6 +502,22 @@ class ShellBar extends UI5Element {
 		this.fireEvent("logo-click", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-logo"),
 		});
+	}
+
+	_menuPopoverBeforeOpen() {
+		this._menuPopoverExpanded = true;
+	}
+
+	_menuPopoverAfterClose() {
+		this._menuPopoverExpanded = false;
+	}
+
+	_overflowPopoverBeforeOpen() {
+		this._overflowPopoverExpanded = true;
+	}
+
+	_overflowPopoverAfterClose() {
+		this._overflowPopoverExpanded = false;
 	}
 
 	_logoKeyup(event) {
@@ -1090,7 +1115,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get menuBtnHasPopup() {
-		return this.hasMenuItems ? true : undefined;
+		return this.hasMenuItems ? HasPopup.Menu : undefined;
 	}
 
 	get menuBtnTabindex() {
@@ -1098,7 +1123,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get menuPopoverExpanded() {
-		return HasPopup.Menu;
+		return this.hasMenuItems ? this._menuPopoverExpanded : undefined;
 	}
 
 	get _shellbarText() {
@@ -1165,6 +1190,7 @@ class ShellBar extends UI5Element {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
 					hasPopup: HasPopup.Menu,
+					expanded: this._overflowPopoverExpanded,
 				},
 			},
 		};
