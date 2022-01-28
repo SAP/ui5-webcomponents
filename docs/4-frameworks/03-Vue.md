@@ -21,7 +21,7 @@ cd ui5-web-components-application
 npm install @ui5/webcomponents --save
 ```
 
-### Step 4. Add UI5 Web Components to Vue `ignoredElement`.
+### Step 4a. In Vue 2.x add UI5 Web Components to Vue `ignoredElement`.
 
 Add the following line to your ```main.js``` file:
 
@@ -29,6 +29,31 @@ Add the following line to your ```main.js``` file:
 Vue.config.ignoredElements = [/^ui5-/];
 ```
 
+### Step 4b. In Vue 3.x the web components check is performed during template compilation. There are two options to instruct the compiler to treat UI5 Web Components as custom elements.
+
+- If using a build step: pass the `isCustomElement` option to the Vue template compiler. If using `vue-loader`, this should be passed via vue-loader's `compilerOptions` option:
+
+```js
+// in webpack config
+rules: [
+	{
+		test: /\.vue$/,
+		use: 'vue-loader',
+		options: {
+			compilerOptions: {
+				isCustomElement: tag => tag.startsWith("ui5-")
+			}
+		}
+	}
+]
+```
+
+- If using on-the-fly template compilation, pass the check via `app.config.isCustomElement`:
+
+```js
+const app = createApp({})
+app.config.isCustomElement = tag => tag.startsWith("ui5-");
+```
 ### Step 5. Import the components that you are going to use.
 
 ```js
@@ -55,7 +80,7 @@ yarn serve
 
 ```html
 <ui5-input
-    :value="inputValue"
-    @input="inputValue = $event.target.value">
+	:value="inputValue"
+	@input="inputValue = $event.target.value">
 </ui5-input>
 ```

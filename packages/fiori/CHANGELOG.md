@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** remove uncompleted illustration ([#4638](https://github.com/SAP/ui5-webcomponents/issues/4638)) ([adafeba](https://github.com/SAP/ui5-webcomponents/commit/adafeba))
+
+
+
+
+
 ## [1.1.1](https://github.com/SAP/ui5-webcomponents/compare/v1.1.0...v1.1.1) (2022-01-24)
 
 
