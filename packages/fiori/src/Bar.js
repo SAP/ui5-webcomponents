@@ -125,6 +125,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Bar
+ * @implements sap.ui.webcomponents.fiori.IBar
  * @extends UI5Element
  * @tagname ui5-bar
  * @public
