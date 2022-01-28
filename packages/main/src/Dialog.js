@@ -281,14 +281,6 @@ class Dialog extends Popup {
 		this._detachResizeHandlers();
 	}
 
-	/**
-	 * @override
-	 */
-	_resize() {
-		super._resize();
-		this._center();
-	}	
-
 	_attachResizeHandlers() {
 		ResizeHandler.register(this, this._screenResizeHandler);
 		ResizeHandler.register(document.body, this._screenResizeHandler);
