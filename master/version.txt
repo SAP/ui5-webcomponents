@@ -1,9 +1,7 @@
-commit 11f8adaf035bb025117256f093b45db6c5596d13
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Fri Jan 28 15:55:33 2022 +0200
+commit 1fb6e58ffa8d1197df230a1a5d3a6b230593911b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jan 28 16:54:46 2022 +0200
 
-    fix(popovers): correct list items height of input dropdowns (#4650)
+    docs: add IBar interface (#4663)
     
-    List items of suggestion popovers are now aligned with FIori visual specification and have correct height of 2.5rem for Cozy and 2rem for Compact.
-    
-    Fixes: #4616
+    Fixes: #4661
