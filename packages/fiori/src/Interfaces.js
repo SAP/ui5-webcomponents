@@ -1,4 +1,3 @@
-
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
@@ -6,9 +5,9 @@
  * @interface
  * @public
  */
- const IBar = "sap.ui.webcomponents.fiori.IBar";
+const IBar = "sap.ui.webcomponents.fiori.IBar";
 
- /**
+/**
  * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items
  *
  * @name sap.ui.webcomponents.fiori.IFilterItem
