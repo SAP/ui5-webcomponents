@@ -493,7 +493,18 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.keys("a");
 			await mcb.keys("ArrowUp");
-			assert.equal(await mcb.getProperty("value"), "Condenseda", "The value remains the same");
+			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "The last item is selected if there is a custom value in the input");
+		});
+
+		it ("arrow up when no item is selected should go to the last item", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("ArrowUp");
+
+			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
 	});
 

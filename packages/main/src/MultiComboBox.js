@@ -694,7 +694,7 @@ class MultiComboBox extends UI5Element {
 		const items = this.items;
 		let previousItemIdx = this.currentItemIdx;
 
-		if (!this.value && this.currentItemIdx !== -1) {
+		if ((!this.value && previousItemIdx !== -1) || (previousItemIdx !== -1 && this.value && this.value !== items[previousItemIdx].text)) {
 			previousItemIdx = -1;
 		}
 
