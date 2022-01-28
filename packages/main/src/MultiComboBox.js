@@ -692,17 +692,29 @@ class MultiComboBox extends UI5Element {
 
 	_navigateToPrevItem() {
 		const items = this.items;
-		const previousItemIdx = this.currentItemIdx;
+		let previousItemIdx = this.currentItemIdx;
 
-		if (previousItemIdx <= 0 || items[previousItemIdx].text !== this.value) {
-			this.currentItemIdx = this.currentItemIdx === 0 ? 0 : -1;
+		if (!this.value && this.currentItemIdx !== -1) {
+			previousItemIdx = -1;
+		}
+
+		if (previousItemIdx === -1) {
+			this.currentItemIdx = items.length;
+		}
+
+		if (previousItemIdx === 0) {
+			this.currentItemIdx = 0;
 			return;
 		}
 
 		let currentItem = this.items[--this.currentItemIdx];
 
-		while (currentItem.selected && this.currentItemIdx > 0) {
+		while (currentItem && currentItem.selected && this.currentItemIdx > 0) {
 			currentItem = this.items[--this.currentItemIdx];
+		}
+
+		if (!currentItem) {
+			return;
 		}
 
 		if (currentItem.selected) {
