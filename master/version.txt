@@ -1,7 +1,5 @@
-commit c638668a130d269bac77d8daaf5670c50b07f84a
+commit 2d8ce468a4bfcde739073fc64b00e5e455adb81b
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jan 27 14:32:09 2022 +0200
+Date:   Fri Jan 28 15:27:32 2022 +0200
 
-    docs(ui5-illustrated-message): import illustrations from tnt illustra… (#4652)
-    
-    Fixes: #4639
+    fix(ui5-select): incorrect popover styles when value state is used (#4651)
