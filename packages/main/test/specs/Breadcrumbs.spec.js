@@ -234,6 +234,9 @@ describe("Breadcrumbs general interaction", () => {
 	});
 
 	it("cancels default if item-click event listener calls preventDefault in overflow", async () => {
+
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+
 		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
 			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0];
 
