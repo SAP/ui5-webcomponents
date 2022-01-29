@@ -208,7 +208,7 @@ const metadata = {
 		 * </ul>
 		 * @type {object}
 		 * @public
-		 * @since 1.1.0
+		 * @since 1.2.0
 		 */
 		accessibilityAttributes: {
 			type: Object,
