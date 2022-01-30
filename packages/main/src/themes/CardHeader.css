@@ -72,7 +72,6 @@
 	color: var(--sapTile_TextColor);
 	text-align: left;
 	line-height: 1.125rem;
-	padding-left: 1rem;
 	margin-left: auto;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -109,15 +108,20 @@
 	max-width: 100%;
 }
 
+
+.ui5-card-header-action {
+	display: flex;
+	padding-left: 1rem;
+}
+
 [dir="rtl"].ui5-card-header .ui5-card-header-avatar {
 	margin-left: .75rem;
 	margin-right: 0;
 }
 
-[dir="rtl"].ui5-card-header .ui5-card-header-status {
+[dir="rtl"].ui5-card-header .ui5-card-header-action {
 	padding-right: 1rem;
 	padding-left: 0rem;
-	margin-right: auto;
 }
 
 [dir="rtl"].ui5-card-header .ui5-card-header-text .ui5-card-header-title {

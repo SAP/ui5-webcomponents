@@ -95,4 +95,10 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(await innerButton.getAttribute("aria-expanded"), null, "Attribute is reflected");
 	});
+
+	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {
+		const button = await browser.$("#buttonAccNameRef").shadow$("button");
+
+		assert.strictEqual(await button.getAttribute("aria-label"), "Download Application", "Attribute is reflected");
+	});
 });

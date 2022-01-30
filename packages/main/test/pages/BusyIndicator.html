@@ -125,7 +125,7 @@
 	<br>
 	<br>
 
-	<ui5-busy-indicator id="busy-tree" class="busyindicator8auto">
+	<ui5-busy-indicator id="busy-tree" class="busyindicator8auto" delay="0">
 		<ui5-tree id="treeDynamic">
 			<div slot="header">
 				<ui5-title>Dynamic tree</ui5-title>
@@ -172,6 +172,20 @@
 			</ui5-busy-indicator>
 		</div>
 	</ui5-dialog>
+
+	<br>
+	<br>
+	<span>Indicator with delay</span>
+	<div></div>
+	<ui5-button id="open-dialog-delayed-indicator">Open dialog</ui5-button>
+	<ui5-dialog id="dialog-delayed-indicator">
+		<ui5-busy-indicator id="dialog-delayed-indicator-indicator" delay="5000" >
+			<span>Will become busy after 5 seconds</span>
+			<span>Shouldn't attempt to focus the busy indicator</span>
+		</ui5-busy-indicator>
+		<ui5-button id="dialog-delayed-indicator-focus-stop">focus stop</ui5-button>
+	</ui5-dialog>
+
 	<script>
 		document.getElementById("fetch-btn").addEventListener("click", function(event) {
 			var busyIndicator = document.getElementById("busy-container");
@@ -228,6 +242,11 @@
 
 		document.getElementById("open-dialog-active-indicator").addEventListener("click", function () {
 			document.getElementById("dialog-active-indicator").show();
+		});
+
+		document.getElementById("open-dialog-delayed-indicator").addEventListener("click", function () {
+			document.getElementById("dialog-delayed-indicator-indicator").active = true;
+			document.getElementById("dialog-delayed-indicator").show();
 		});
 	</script>
 </body>

@@ -4,6 +4,12 @@
     margin-bottom: 2rem;
 }
 
+.radio-section-horizontal {
+    display: flex;
+    align-items: center;
+    width: 400px;
+}
+
 div {
     width: 250px;
 }

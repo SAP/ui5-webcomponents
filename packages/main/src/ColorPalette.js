@@ -16,6 +16,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
 import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
+import Button from "./Button.js";
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
@@ -178,7 +179,7 @@ class ColorPalette extends UI5Element {
 
 	static get dependencies() {
 		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
-		return [ColorPaletteItem].concat(ColorPaletteMoreColors ? ColorPaletteMoreColors.dependencies : []);
+		return [ColorPaletteItem, Button].concat(ColorPaletteMoreColors ? ColorPaletteMoreColors.dependencies : []);
 	}
 
 	static async onDefine() {
@@ -252,20 +253,20 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (event.target.localName === "ui5-color-palette-item") {
+		if (event.target.hasAttribute("ui5-color-palette-item")) {
 			this.selectColor(event.target);
 		}
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event) && event.target.localName === "ui5-color-palette-item") {
+		if (isSpace(event) && event.target.hasAttribute("ui5-color-palette-item")) {
 			event.preventDefault();
 			this.selectColor(event.target);
 		}
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event) && event.target.localName === "ui5-color-palette-item") {
+		if (isEnter(event) && event.target.hasAttribute("ui5-color-palette-item")) {
 			this.selectColor(event.target);
 		}
 	}

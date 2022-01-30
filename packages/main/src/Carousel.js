@@ -38,6 +38,7 @@ import CarouselCss from "./generated/themes/Carousel.css.js";
 const metadata = {
 	tag: "ui5-carousel",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
@@ -231,9 +232,17 @@ const metadata = {
  * </ul>
  *
  * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Basic Navigation</h4>
  * When the <code>ui5-carousel</code> is focused the user can navigate between the items
  * with the following keyboard shortcuts:
  * <br>
+ *
+ * * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <ul>
  * <li>[UP/DOWN] - Navigates to previous and next item</li>

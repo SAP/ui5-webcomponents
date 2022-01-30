@@ -27,9 +27,16 @@
 		{{/if}}
 	</div>
 
-	{{#if hasAction}}
-		<slot name="action"></slot>
-	{{else}}
-		<span id="{{_id}}-status" part="status" class="ui5-card-header-status" dir="auto">{{status}}</span>
-	{{/if}}
+	<div class="ui5-card-header-action">
+		{{#if hasAction}}
+			<slot name="action"></slot>
+		{{else}}
+			<span
+				id="{{_id}}-status"
+				part="status"
+				class="ui5-card-header-status"
+				dir="auto"	
+			>{{status}}</span>
+		{{/if}}
+	</div>
 </div>

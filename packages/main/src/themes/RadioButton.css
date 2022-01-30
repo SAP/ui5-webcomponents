@@ -10,9 +10,12 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	color: var(--_ui5_radio_button_color);
-	cursor: pointer;
 	border-radius: var(--_ui5_radio_button_border_radius);
 	transition: var(--_ui5_radio_button_transition);
+}
+
+:host(:not([disabled])) .ui5-radio-root {
+	cursor: pointer;
 }
 
 /* checked */
@@ -152,7 +155,6 @@
 	border: var(--_ui5_radio_button_border);
 	border-radius: var(--_ui5_radio_button_border_radius);
 	transition: var(--_ui5_radio_button_transition);
-	cursor: pointer;
 }
 
 /* Inner */
@@ -187,7 +189,6 @@
 	align-items: center;
 	padding-right: var(--_ui5_radio_button_label_offset);
 	vertical-align: top;
-	cursor: default;
 	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;

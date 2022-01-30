@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-(function() {
+(function () {
   'use strict';
 
   /**
@@ -47,7 +47,9 @@
 
   function fireEvent() {
     window.WebComponents.ready = true;
-    document.dispatchEvent(new CustomEvent('WebComponentsReady', { bubbles: true }));
+    document.dispatchEvent(
+      new CustomEvent('WebComponentsReady', {bubbles: true})
+    );
   }
 
   function batchCustomElements() {
@@ -77,43 +79,51 @@
 
   function runWhenLoadedFns() {
     allowUpgrades = false;
-    var fnsMap = whenLoadedFns.map(function(fn) {
+    var fnsMap = whenLoadedFns.map(function (fn) {
       return fn instanceof Function ? fn() : fn;
     });
     whenLoadedFns = [];
-    return Promise.all(fnsMap).then(function() {
-      allowUpgrades = true;
-      flushFn && flushFn();
-    }).catch(function(err) {
-      console.error(err);
-    });
+    return Promise.all(fnsMap)
+      .then(function () {
+        allowUpgrades = true;
+        flushFn && flushFn();
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
   }
 
   window.WebComponents = window.WebComponents || {};
   window.WebComponents.ready = window.WebComponents.ready || false;
-  window.WebComponents.waitFor = window.WebComponents.waitFor || function(waitFn) {
-    if (!waitFn) {
-      return;
-    }
-    whenLoadedFns.push(waitFn);
-    if (polyfillsLoaded) {
-      runWhenLoadedFns();
-    }
-  };
+  window.WebComponents.waitFor =
+    window.WebComponents.waitFor ||
+    function (waitFn) {
+      if (!waitFn) {
+        return;
+      }
+      whenLoadedFns.push(waitFn);
+      if (polyfillsLoaded) {
+        runWhenLoadedFns();
+      }
+    };
   window.WebComponents._batchCustomElements = batchCustomElements;
 
   var name = 'webcomponents-loader.js';
   // Feature detect which polyfill needs to be imported.
   var polyfills = [];
-  if (!('attachShadow' in Element.prototype && 'getRootNode' in Element.prototype) ||
-    (window.ShadyDOM && window.ShadyDOM.force)) {
+  if (
+    !(
+      'attachShadow' in Element.prototype && 'getRootNode' in Element.prototype
+    ) ||
+    (window.ShadyDOM && window.ShadyDOM.force)
+  ) {
     polyfills.push('sd');
   }
   if (!window.customElements || window.customElements.forcePolyfill) {
     polyfills.push('ce');
   }
 
-  var needsTemplate = (function() {
+  var needsTemplate = (function () {
     // no real <template> because no `content` property (IE and older browsers)
     var t = document.createElement('template');
     if (!('content' in t)) {
@@ -128,13 +138,21 @@
     t2.content.appendChild(document.createElement('div'));
     t.content.appendChild(t2);
     var clone = t.cloneNode(true);
-    return (clone.content.childNodes.length === 0 ||
-        clone.content.firstChild.content.childNodes.length === 0);
+    return (
+      clone.content.childNodes.length === 0 ||
+      clone.content.firstChild.content.childNodes.length === 0
+    );
   })();
 
   // NOTE: any browser that does not have template or ES6 features
   // must load the full suite of polyfills.
-  if (!window.Promise || !Array.from || !window.URL || !window.Symbol || needsTemplate) {
+  if (
+    !window.Promise ||
+    !Array.from ||
+    !window.URL ||
+    !window.Symbol ||
+    needsTemplate
+  ) {
     polyfills = ['sd-ce-pf'];
   }
 
@@ -146,7 +164,7 @@
     if (window.WebComponents.root) {
       url = window.WebComponents.root + polyfillFile;
     } else {
-      var script = document.querySelector('script[src*="' + name +'"]');
+      var script = document.querySelector('script[src*="' + name + '"]');
       // Load it from the right place.
       url = script.src.replace(name, polyfillFile);
     }
@@ -156,7 +174,10 @@
     // if readyState is 'loading', this script is synchronous
     if (document.readyState === 'loading') {
       // make sure custom elements are batched whenever parser gets to the injected script
-      newScript.setAttribute('onload', 'window.WebComponents._batchCustomElements()');
+      newScript.setAttribute(
+        'onload',
+        'window.WebComponents._batchCustomElements()'
+      );
       document.write(newScript.outerHTML);
       document.addEventListener('DOMContentLoaded', ready);
     } else {
@@ -176,10 +197,10 @@
     } else {
       // this script may come between DCL and load, so listen for both, and cancel load listener if DCL fires
       window.addEventListener('load', ready);
-      window.addEventListener('DOMContentLoaded', function() {
+      window.addEventListener('DOMContentLoaded', function () {
         window.removeEventListener('load', ready);
         ready();
-      })
+      });
     }
   }
 })();

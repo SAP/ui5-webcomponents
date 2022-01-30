@@ -32,6 +32,7 @@
 				@click="{{_header.press}}"
 				aria-haspopup="{{menuBtnHasPopup}}"
 				aria-expanded="{{menuPopoverExpanded}}"
+				data-ui5-stable="menu"
 			>
 				{{#if hasNonFocusableLogo}}
 					<span
@@ -45,7 +46,7 @@
 
 				{{#if primaryTitle}}
 					<h1 class="ui5-shellbar-menu-button-title">
-						<bdi class="{{classes.title}}">{{primaryTitle}}</bdi>
+						<bdi>{{primaryTitle}}</bdi>
 					</h1>
 				{{/if}}
 
@@ -54,7 +55,7 @@
 		{{/if}}
 
 		{{#if secondaryTitle}}
-			<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
+			<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
 		{{/if}}
 	</div>
 
@@ -89,6 +90,7 @@
 						<ui5-button
 							@click={{_handleCancelButtonPress}}
 							class="ui5-shellbar-button"
+							data-ui5-stable="cancel-search"
 						>
 							Cancel
 						</ui5-button>
@@ -107,6 +109,7 @@
 					icon="sap-icon://search"
 					data-ui5-text="Search"
 					data-ui5-notifications-count="{{notificationsCount}}"
+					data-ui5-stable="toggle-search"
 					@click={{_handleSearchIconPress}}
 					title="{{_searchText}}"
 					._buttonAccInfo="{{accInfo.search}}"
@@ -155,20 +158,7 @@
 			></ui5-button>
 
 			{{#if hasProfile}}
-				<ui5-button
-					profile-btn
-					id="{{this._id}}-item-3"
-					@click={{_handleProfilePress}}
-					style="{{styles.items.profile}}"
-					title="{{_profileText}}"
-					._buttonAccInfo="{{accInfo.profile}}"
-					class="ui5-shellbar-button ui5-shellbar-image-button"
-					data-ui5-stable="profile"
-				>
-					<slot
-						name="profile"
-					></slot>
-				</ui5-button>
+				{{> profileButton}}
 			{{/if}}
 
 			{{#if showProductSwitch}}
@@ -187,6 +177,21 @@
 		</div>
 	</div>
 </div>
+
+{{#*inline "profileButton"}}
+	<ui5-button
+		profile-btn
+		id="{{this._id}}-item-3"
+		@click={{_handleProfilePress}}
+		style="{{styles.items.profile}}"
+		title="{{_profileText}}"
+		._buttonAccInfo="{{accInfo.profile}}"
+		class="ui5-shellbar-button ui5-shellbar-image-button"
+		data-ui5-stable="profile"
+	>
+		<slot name="profile"></slot>
+	</ui5-button>
+{{/inline}}
 
 {{#*inline "coPilot"}}
 	<svg @click="{{_coPilotClick}}" focusable="false" width="44" role="presentation" aria-hidden="true" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">

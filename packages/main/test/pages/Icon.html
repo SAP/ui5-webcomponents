@@ -24,7 +24,8 @@
 </head>
 
 <body class="icon1auto">
-
+	<ui5-toggle-button id="myBtn">Fiori 3/Next</ui5-toggle-button>
+	<br>
 	<ui5-icon title="add equipment" class="icon2auto" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
@@ -37,6 +38,7 @@
 	<ui5-icon id="araHiddenIcon" name="add-employee" aria-hidden="true" class="icon-red icon-small"></ui5-icon>
 
 	<h3>Interactive Icon</h3>
+	<ui5-icon id="accRoleIcon" accessible-role="link" interactive class="samples-margin" accessible-name="Hello World" name="horizon/accept"></ui5-icon>
 	<ui5-icon
 		id="myInteractiveIcon"
 		interactive
@@ -94,6 +96,44 @@
 	<ui5-icon name="overflow" show-tooltip></ui5-icon>
 	<ui5-icon name="settings" show-tooltip></ui5-icon>
 
+	<h3>Auto, SAP-icons, horizon</h3>
+	<ui5-icon name="company-view" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-icon name="SAP-icons/company-view" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-icon name="horizon/company-view" class="icon-blue icon-medium"></ui5-icon>
+
+	<h3>SAP Icons</h3>
+	<ui5-icon name="SAP-icons/appointment-2"></ui5-icon>
+	<ui5-icon name="SAP-icons/slim-arrow-down"></ui5-icon>
+	<ui5-icon name="SAP-icons/accept"></ui5-icon>
+	<ui5-icon name="SAP-icons/resize-corner"></ui5-icon>
+	<ui5-icon show-tooltip name="SAP-icons/error"></ui5-icon>
+
+
+	<h3>SAP Fiori Next Icons</h3>
+	<ui5-icon name="horizon/appointment-2"></ui5-icon>
+	<ui5-icon name="horizon/slim-arrow-down"></ui5-icon>
+	<ui5-icon name="horizon/accept"></ui5-icon>
+	<ui5-icon name="horizon/resize-corner"></ui5-icon>
+	<ui5-icon show-tooltip name="horizon/error"></ui5-icon>
+
+	<h3>SAP Fiori Tools Icons</h3>
+	<div class="snippet">
+		<ui5-icon class="samples-margin" name="tnt/actor"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/aggregator"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/association"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/network"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/repeater"></ui5-icon>
+	</div>
+
+	<h3>SAP business-suite Icons</h3>
+	<div class="snippet">
+		<ui5-icon class="samples-margin" name="business-suite/add-polygone"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/2x1-grid-layout"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/activate"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/3d"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/ab-testing"></ui5-icon>
+	</div>
+	
 	<script>
 		var icon = document.getElementById("interactive-icon"),
 			nonInteractiveIcon = document.getElementById("non-interactive-icon"),
@@ -208,5 +248,13 @@
 		<ui5-icon name="undo"></ui5-icon>
 		<ui5-icon name="step"></ui5-icon>
 	</section>
+
+	<script>
+		myBtn.addEventListener("click", function(event) {
+			var theme = event.target.pressed ? "sap_horizon" : "sap_fiori_3";
+			var Conf = window["sap-ui-webcomponents-bundle"].configuration;
+			Conf.setTheme(theme);
+		});
+	</script>
 </body>
 </html>

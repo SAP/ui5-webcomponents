@@ -25,6 +25,9 @@ class StaticAreaItem extends HTMLElement {
 	setOwnerElement(ownerElement) {
 		this.ownerElement = ownerElement;
 		this.classList.add(this.ownerElement._id); // used for getting the popover in the tests
+		if (this.ownerElement.hasAttribute("data-ui5-static-stable")) {
+			this.setAttribute("data-ui5-stable", this.ownerElement.getAttribute("data-ui5-static-stable")); // stable selector
+		}
 	}
 
 	/**

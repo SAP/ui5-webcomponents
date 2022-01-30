@@ -4,7 +4,8 @@
 }
 
 :host {
-	height: var(--_ui5_custom_list_item_height);
+	min-height: var(--_ui5_list_item_base_height);
+	height: auto;
 	box-sizing: border-box;
 }
 

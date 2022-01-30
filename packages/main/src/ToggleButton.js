@@ -1,5 +1,6 @@
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
@@ -67,6 +68,10 @@ class ToggleButton extends Button {
 
 	_onclick() {
 		this.pressed = !this.pressed;
+
+		if (isSafari()) {
+			this.getDomRef().focus();
+		}
 	}
 
 	_onkeyup(event) {

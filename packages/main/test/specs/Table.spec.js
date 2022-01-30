@@ -371,6 +371,36 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "5",  "Enter key over an already selected row should trigger selection-change event");
 		});
 
+		it("test selectAll functionallity in MultiSelect mode", async () => {
+			await browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+			const firstRow = await browser.$("#firstRowMultiSelect");
+			const secondRow = await browser.$("#secondRowMultiSelect");
+			const thirdRow = await browser.$("#thirdRowMultiSelect");
+			const forthRow = await browser.$("#forthRowMultiSelect");
+			const table = await browser.$("#multi");
+			const selectAllCheckBox = await table.shadow$("thead ui5-checkbox");
+
+			// act
+			await firstRow.setProperty("selected", true);
+			await secondRow.setProperty("selected", true);
+			await thirdRow.setProperty("selected", true);
+			await forthRow.setProperty("selected", true);
+
+			// assert
+			assert.ok(await firstRow.getAttribute("selected"), "The first row is selected");
+			assert.ok(await secondRow.getAttribute("selected"), "The second row is selected");
+			assert.ok(await thirdRow.getAttribute("selected"), "The third row is selected");
+			assert.ok(await forthRow.getAttribute("selected"), "The forth row is selected");
+			assert.ok(await selectAllCheckBox.getProperty("checked"), "Select all checkbox is checked");
+
+			// act
+			await forthRow.setProperty("selected", false);
+
+			// assert
+			assert.notOk(await forthRow.getAttribute("selected"), "The forth row is not selected");
+			assert.notOk(await selectAllCheckBox.getProperty("checked"), "Select all checkbox is not checked");
+		});
+
 		it("test mouse and keyboard interaction over Active/Inactive row in Default mode", async () => {
 			const table = await browser.$("#default");
 			const firstRow = await browser.$("#firstRowDefaultMode");

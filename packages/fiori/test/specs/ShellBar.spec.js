@@ -28,6 +28,18 @@ describe("Component Behavior", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
 	});
 
+	describe("Аccessibility", () => {
+		it("tests accessibilityTexts property", async () => {
+			const PROFILE_BTN_CUSTOM_TOOLTIP = "John Dow";
+			const LOGO_CUSTOM_TOOLTIP = "Custom logo title";
+			const sb = await browser.$("#sbAcc");
+
+			assert.strictEqual(await sb.getProperty("_profileText"), PROFILE_BTN_CUSTOM_TOOLTIP,
+				"Profile button tooltip can be cutomized.");
+			assert.strictEqual(await sb.getProperty("_logoText"), LOGO_CUSTOM_TOOLTIP,
+				"Logo tooltip can be cutomized.");
+		});
+	});
 
 	describe("ui5-shellbar menu", () => {
 		it("tests close on content click", async () => {
@@ -45,6 +57,13 @@ describe("Component Behavior", () => {
 
 
 	describe("ui5-shellbar-item", async () => {
+		it("tests the stable-dom-ref attribute", async () => {
+			const shellbar = await browser.$("#shellbarwithitems");
+			const innerButtonWithStableDomRef = await shellbar.shadow$(`[data-ui5-stable="schedule"]`);
+
+			assert.ok(await innerButtonWithStableDomRef.isExisting(), "There is indeed an element in the Shellbar's shadow root with an attribute, matching the stable dom ref");
+		});
+
 		it("tests count property", async () => {
 			const shellbar = await browser.$("#shellbarwithitems");
 			const icon = await shellbar.shadow$("ui5-button[data-count]");
@@ -60,7 +79,22 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await shellbar.shadow$(".ui5-shellbar-custom-item").getAttribute("data-count"), "3");
 
-		})
+		});
+
+		it("tests 'click' on custom action", async () => {
+			const shellbar = await browser.$("#shellbarwithitems");
+			const resultInput = await browser.$("#press-input3");
+			const customActionIcon1 = await shellbar.shadow$(`.ui5-shellbar-custom-item[icon="accept"]`);
+			const customActionIcon2 = await shellbar.shadow$(`.ui5-shellbar-custom-item[icon="alert"]`);
+
+			await customActionIcon1.click();
+			assert.strictEqual(await resultInput.getProperty("value"), "accept",
+				"click, fired by the first item");
+
+			await customActionIcon2.click();
+			assert.strictEqual(await resultInput.getProperty("value"), "warning",
+				"click, fired by the second item");
+		});
 	});
 
 	describe("Responsiveness", () => {

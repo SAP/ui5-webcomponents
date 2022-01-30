@@ -351,7 +351,7 @@ class Select extends UI5Element {
 	/**
 	 * Currently selected option.
 	 * @readonly
-	 * @type { ui5-option }
+	 * @type { sap.ui.webcomponents.main.ISelectOption }
 	 * @public
 	 */
 	get selectedOption() {
@@ -402,6 +402,7 @@ class Select extends UI5Element {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
+				title: opt.title,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
@@ -554,7 +555,7 @@ class Select extends UI5Element {
 	 * @private
 	 */
 	_handleItemPress(event) {
-		const item = event.detail.item;
+		const item = event.detail.selectedItems[0];
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
@@ -725,7 +726,7 @@ class Select extends UI5Element {
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 			popover: {
-				"ui5-valuestatemessage-popover": this.hasValueState,
+				"ui5-select-popover-valuestate": this.hasValueState,
 			},
 		};
 	}

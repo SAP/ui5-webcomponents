@@ -9,6 +9,10 @@
 	transform: rotate(90deg);
 }
 
+:host(:not([collapsed])) [dir="rtl"] .ui5-nli-group-toggle-btn {
+	transform: rotate(270deg);
+}
+
 :host([collapsed]) .ui5-nli-group-items {
 	display: none;
 }
@@ -33,6 +37,10 @@
 	border-bottom: 0.0625rem solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
 	cursor: default;
+}
+
+[dir="rtl"] .ui5-nli-group-header {
+	padding: 0.75rem 0.75rem 0.25rem 0.5rem;
 }
 
 .ui5-nli-group-toggle-btn {
@@ -64,9 +72,15 @@
 
 [dir="rtl"] .ui5-nli-group-toggle-btn {
 	margin-left: 1rem;
+	margin-right: 0;
 }
 
 [dir="rtl"] .ui5-nli-group-counter {
 	margin-right: 0.25rem;
 	margin-left: 1rem;
+}
+
+/* fix for blue background color on tap (touchscreen devices) */
+:host([ui5-li-notification-group]) { 
+	-webkit-tap-highlight-color: transparent;
 }

@@ -30,4 +30,6 @@
 	--_ui5-input-value-state-outline: none;
 	--_ui5-input-value-state-outline-offset: 0px;
 	--_ui5_input_readonly_icon_display: inline-block;
+	--_ui5_input_icon_min_width: 2.125rem;
+	--_ui5_input_compact_min_width: 1.875rem;
 }

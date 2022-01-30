@@ -58,6 +58,10 @@
 	transform: rotate(90deg);
 }
 
+:host(:not([collapsed])) [dir="rtl"] .ui5-panel-header-button {
+	transform: rotate(-90deg);
+}
+
 :host([fixed]) .ui5-panel-header-title {
 	width: 100%;
 }

@@ -1,11 +1,12 @@
 import getSharedResource from "../getSharedResource.js";
+import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
+import { isTheme } from "../config/Theme.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
 const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-const DEFAULT_COLLECTION = "SAP-icons";
 
 /**
  * @deprecated
@@ -47,7 +48,7 @@ const _fillRegistry = bundleData => {
 // set
 const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
 	if (!collection) {
-		collection = DEFAULT_COLLECTION;
+		collection = _getDefaultCollection();
 	}
 
 	const key = `${collection}/${name}`;
@@ -67,18 +68,16 @@ const _parseName = name => {
 
 	let collection;
 	[name, collection] = name.split("/").reverse();
-	collection = collection || DEFAULT_COLLECTION;
-	// hardcoded alias in case icon explorer is used, resolve `SAP-icons-TNT` to `tnt`
-	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
-	if (collection === "SAP-icons-TNT") {
-		collection = "tnt";
-	}
-	// hardcoded alias in case icon explorer is used, resolve `BusinessSuiteInAppSymbols` to `business-suite`
-	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
-	if (collection === "BusinessSuiteInAppSymbols") {
-		collection = "business-suite";
-		name = name.replace("icon-", "");
-	}
+	collection = collection || _getDefaultCollection();
+
+	// Normalize collection name.
+	// - resolve `SAP-icons-TNT` to `tnt`.
+	// - resolve `BusinessSuiteInAppSymbols` to `business-suite`.
+	// - resolve `horizon` to `SAP-icons-v5`,
+	// Note: aliases can be made as a feature, if more collections need it or more aliases are needed.
+	collection = _normalizeCollection(collection);
+	name = name.replace("icon-", "");
+
 	const registryKey = `${collection}/${name}`;
 	return { name, collection, registryKey };
 };
@@ -116,6 +115,18 @@ const _getRegisteredNames = async () => {
 	await getIconData("tnt/arrow");
 	await getIconData("business-suite/3d");
 	return Array.from(registry.keys());
+};
+
+const _getDefaultCollection = () => {
+	return isTheme("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
+};
+
+const _normalizeCollection = collectionName => {
+	if (IconCollectionsAlias[collectionName]) {
+		return IconCollectionsAlias[collectionName];
+	}
+
+	return collectionName;
 };
 
 export {

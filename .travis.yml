@@ -15,7 +15,7 @@ before_install:
   - gem install jekyll-seo-tag
 
 script:
-- DEPLOY_PUBLIC_PATH=/resources/ yarn build
+- DEPLOY_PUBLIC_PATH=/resources/ ENABLE_CLDR=1 yarn build
 - yarn test
 
 deploy:

@@ -33,7 +33,6 @@
 	</ui5-segmented-button>
 
 	<br><br>
-
 	<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect">
 		<div slot="header" class="hdr">
 			<ui5-title>My tree</ui5-title>
@@ -53,9 +52,9 @@
 			<ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
 		</div>
 
-		<ui5-tree-item expanded text="Tree 1" icon="paste" additional-text="Available" additional-text-state="Information" selected>
-			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Error" selected>
-				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Warning"></ui5-tree-item>
+		<ui5-tree-item expanded text="Tree 1" icon="paste" additional-text="Available" indeterminate selected additional-text-state="Information">
+			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Error" indeterminate selected>
+				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Warning" selected></ui5-tree-item>
 				<ui5-tree-item text="Tree 1.1.2" additional-text="Available" additional-text-state="Success"></ui5-tree-item>
 			</ui5-tree-item>
 		</ui5-tree-item>

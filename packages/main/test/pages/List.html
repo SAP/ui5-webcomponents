@@ -99,6 +99,16 @@
 
 	<br/><br/>
 
+	<ui5-list id="listPrevent" mode="SingleSelect" header-text="Prevent selection change event">
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" >Bulgaria</ui5-li>
+		<ui5-li id="country3" >China</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-label id="itemClickPrevent">[prevented Event] itemClick :: n/a</ui5-label>
+
 	<ui5-list id="myList" mode="SingleSelect" header-text="API: mode='SingleSelect'">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
@@ -260,6 +270,7 @@
 		var singleSelectList = document.getElementById('myList');
 		var singleSelectEndList = document.getElementById('myList2');
 		var multiSelectList = document.getElementById('myList4');
+		var singleSelectListPrevent = document.getElementById('listPrevent');
 
 		var list = document.getElementById('myList5');
 		var resetBtn = document.getElementById('resetBtn');
@@ -267,6 +278,7 @@
 		var lblItemPress = document.getElementById('itemPress');
 		var lblItemClick = document.getElementById('itemClick');
 		var lblSelectionChange = document.getElementById('selectionChange');
+		var lblitemClickPrevent = document.getElementById('itemClickPrevent');
 		var lblItemPress2 = document.getElementById('itemPress2');
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
 		var visualizationList = document.getElementById('myList6');
@@ -337,6 +349,12 @@
 		});
 
 		resetBtn.addEventListener("click", resetList);
+
+		singleSelectListPrevent.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			var clickedItem = event.detail.item;
+			lblitemClickPrevent.innerHTML = "[Prevented Event] itemClick :: " + clickedItem.id;
+		});
 
 		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.selectedItems;

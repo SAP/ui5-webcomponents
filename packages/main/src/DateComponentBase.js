@@ -144,19 +144,17 @@ class DateComponentBase extends UI5Element {
 	}
 
 	getFormat() {
-		let dateFormat;
-		if (this._isPattern) {
-			dateFormat = DateFormat.getInstance({
+		return this._isPattern
+			? DateFormat.getInstance({
+				strictParsing: true,
 				pattern: this._formatPattern,
 				calendarType: this._primaryCalendarType,
-			});
-		} else {
-			dateFormat = DateFormat.getInstance({
+			})
+			: DateFormat.getInstance({
+				strictParsing: true,
 				style: this._formatPattern,
 				calendarType: this._primaryCalendarType,
 			});
-		}
-		return dateFormat;
 	}
 
 	static async onDefine() {

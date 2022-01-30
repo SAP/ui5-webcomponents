@@ -6,9 +6,9 @@
 	with-padding
 	_hide-header
 	@keydown="{{_onkeydown}}">
-	<ui5-list mode="SingleSelectAuto"
+	<ui5-list mode="SingleSelect"
 		separators="None"
-		@ui5-item-press="{{_onOverflowListItemSelect}}">
+		@ui5-selection-change="{{_onOverflowListItemSelect}}">
 
 		{{#each _overflowItemsData}}
 			<ui5-li

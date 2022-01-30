@@ -13,6 +13,7 @@
 	border-radius: var(--_ui5-badge-border-radius);
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
+	font-weight: var(--_ui5-badge-font-weight);
 	text-align: center;
 	letter-spacing: 0.0125em;
 	transition: all .2s ease-in-out;
@@ -36,8 +37,9 @@
 	width: 100%;
 	overflow: hidden;
 	white-space: nowrap;
-	font-weight: var(--_ui5-badge-font-weight);
+	font-weight: inherit;
 	text-overflow: ellipsis;
+	line-height: 1;
 	text-transform: var(--_ui5-badge-text-transform);
 	letter-spacing: inherit;
 	font-size: var(--ui5-badge-font-size); /* origin from --sapFontSmallSize (0.75rem) */

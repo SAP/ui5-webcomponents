@@ -41,7 +41,6 @@
 	content: "\2605";
 	position: absolute;
 	top: 0;
-	left: 0;
 	width: 50%;
 	height: 100%;
 	color: var(--sapContent_RatedColor);

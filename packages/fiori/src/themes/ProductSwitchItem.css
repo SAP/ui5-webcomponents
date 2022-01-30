@@ -33,7 +33,7 @@
 }
 
 :host([focused]) {
-	outline:var(--_ui5_product_switch_item_outline);
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset:var(--_ui5_product_switch_item_outline_offset)
 }
 

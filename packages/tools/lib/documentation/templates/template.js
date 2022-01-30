@@ -33,6 +33,6 @@ module.exports = {
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
       </div>
-      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
     </footer>`
 };

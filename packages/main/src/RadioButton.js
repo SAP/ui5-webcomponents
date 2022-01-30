@@ -4,6 +4,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isSpace,
 	isEnter,
@@ -174,8 +175,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text alternative of the component.
-		 * If not provided a default text alternative will be set, if present.
+		 * Defines the accessible name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -183,6 +183,18 @@ const metadata = {
 		 * @since 1.0.0-rc.16
 		 */
 		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
 			type: String,
 		},
 
@@ -455,7 +467,7 @@ class RadioButton extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return [this.text, this.accessibleName].filter(Boolean).join(" ");
+		return [getEffectiveAriaLabelText(this), this.text].filter(Boolean).join(" ");
 	}
 
 	get ariaDescribedBy() {

@@ -39,30 +39,26 @@
 <body class="datepicker1auto">
 	<div style='width:500px;'>
 		<ui5-date-picker id='ui5-datepicker--startDate'
-			placeholder='Delivery Date...'
-			title='Delivery Date!'>
+			placeholder='Delivery Date...'>
 		</ui5-date-picker>
 
 		<ui5-date-picker id='ui5-datepicker-value-state-message'
 		placeholder='Delivery Date...'
-		value-state="Error"
-		title='Delivery Date!'>
+		value-state="Error">
 			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 			<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-date-picker>
 
-		<h3>placeholder + title + events</h3>
+		<h3>placeholder + events</h3>
 		<ui5-date-picker id='dp5'
-			placeholder='Delivery Date...'
-			title='Delivery Date!'>
+			placeholder='Delivery Date...'>
 		</ui5-date-picker>
 		<ui5-label id="lblChange">change: N/A</ui5-label><br/>
 		<ui5-label id="lblLiveChange">input: N/A</ui5-label><br/>
 
-		<h3>placeholder + title + prevented default events</h3>
+		<h3>placeholder + prevented default events</h3>
 		<ui5-date-picker id='dpPrevent'
-			placeholder='Delivery Date...'
-			title='Delivery Date!'>
+			placeholder='Delivery Date...'>
 		</ui5-date-picker>
 		<ui5-label id="lblChangePrevent">change: N/A</ui5-label><br/>
 		<ui5-label id="lblLiveChangePrevent">input: N/A</ui5-label><br/>

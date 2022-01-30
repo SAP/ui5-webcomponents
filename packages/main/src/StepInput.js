@@ -220,9 +220,12 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_focused: {
+		/**
+		 * @type {Boolean}
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
-			noAttribute: true,
 		},
 
 		_inputFocused: {
@@ -421,7 +424,7 @@ class StepInput extends UI5Element {
 	}
 
 	get _isFocused() {
-		return this._focused;
+		return this.focused;
 	}
 
 	get _valuePrecisioned() {
@@ -530,7 +533,7 @@ class StepInput extends UI5Element {
 			this.value = value;
 			this._validate();
 			this._setButtonState();
-			this._focused = true;
+			this.focused = true;
 			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
 				this._fireChangeEvent();
@@ -568,11 +571,11 @@ class StepInput extends UI5Element {
 	}
 
 	_onfocusin() {
-		this._focused = true;
+		this.focused = true;
 	}
 
 	_onfocusout() {
-		this._focused = false;
+		this.focused = false;
 	}
 
 	_onkeydown(event) {

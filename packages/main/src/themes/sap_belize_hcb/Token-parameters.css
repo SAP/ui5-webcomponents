@@ -2,4 +2,5 @@
 
 :root {
 	--_ui5_token_border_radius: 0.125rem;
+	--_ui5_token_readonly_background: var(--sapField_ReadOnly_Background);
 }

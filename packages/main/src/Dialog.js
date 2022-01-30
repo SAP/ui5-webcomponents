@@ -67,17 +67,6 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
 		 * Determines whether the component should be stretched to fullscreen.
 		 * <br><br>
 		 * <b>Note:</b> The component will be stretched to approximately
@@ -237,21 +226,11 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.accessibleName) {
+		if (this.headerText !== "" && !this._ariaLabel) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
 		return ariaLabelledById;
-	}
-
-	get _ariaLabel() {
-		let ariaLabel;
-
-		if (this.header.length > 0 && !!this.accessibleName) {
-			ariaLabel = this.accessibleName;
-		}
-
-		return this.accessibleName ? this.accessibleName : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -275,6 +254,10 @@ class Dialog extends Popup {
 
 	get _headerTabIndex() {
 		return this._movable ? "0" : undefined;
+	}
+
+	get _showResizeHandle() {
+		return this.resizable && this.onDesktop;
 	}
 
 	_show() {

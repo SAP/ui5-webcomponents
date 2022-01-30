@@ -73,7 +73,7 @@
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
 			placement-type="Bottom"
-			horizontal-align="Left"
+			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
@@ -93,7 +93,7 @@
 {{/inline}}
 
 {{#*inline "suggestionsList"}}
-	<ui5-list separators="{{suggestionSeparators}}">
+	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" mode="SingleSelect">
 		{{#each suggestionsTexts}}
 			{{#if groupItem}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
@@ -104,7 +104,6 @@
 					additional-text="{{this.additionalText}}"
 					type="{{this.type}}"
 					additional-text-state="{{this.additionalTextState}}"
-					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
 				>
 					{{{ this.text }}}

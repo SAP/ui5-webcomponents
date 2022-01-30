@@ -72,4 +72,4 @@ For example:
 <ui5-avatar icon="business-suite/coins"></ui5-avatar>
 ```
 
-Next: [Using Additional Assets](05-using-assets.md)
+Next: [Using Additional Assets](../using-assets)

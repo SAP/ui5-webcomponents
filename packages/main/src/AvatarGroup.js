@@ -277,7 +277,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
 	 * @readonly
-	 * @type { Array }
+	 * @type { HTMLElement[] }
 	 * @defaultValue []
 	 * @public
 	 */
@@ -288,7 +288,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
-	 * @type { Array }
+	 * @type { AvatarColorScheme[] }
 	 * @defaultValue []
 	 * @public
 	 */

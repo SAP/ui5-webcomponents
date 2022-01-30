@@ -28,7 +28,7 @@
 			aria-label="{{accInfo.input.ariaLabel}}"
 			aria-required="{{required}}"
 			@input="{{_handleInput}}"
-			@change="{{_handleChange}}"
+			@change="{{_handleNativeInputChange}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
@@ -39,9 +39,9 @@
 			max="{{nativeInputAttributes.max}}"
 		/>
 
-		{{!-- {{#if this.readonly}}
+		{{#if readonly}}
 			<ui5-icon class="ui5-input-readonly-icon" name="not-editable"></ui5-icon>
-		{{/if}} --}}
+		{{/if}}
 
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">

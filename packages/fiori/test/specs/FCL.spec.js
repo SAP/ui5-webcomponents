@@ -90,15 +90,23 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const fcl = await browser.$("#fclAcc");
 		const startArrow = await fcl.shadow$(".ui5-fcl-arrow--start");
 		const endArrow = await fcl.shadow$(".ui5-fcl-arrow--end");
+		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-start");
+		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
 		const startArrowText1 = "Expand products list";
 		const startArrowText2 = "Collapse products list";
 		const endArrowText = "Expand product detailed information";
+		const startArrowContainerText = "Start Arrow Container";
+		const endArrowContainerText = "End Arrow Container";
 
 		// assert
 		assert.strictEqual(await startArrow.getAttribute("title"), startArrowText1,
 			"Start arrow has the correct tooltip.");
 		assert.strictEqual(await endArrow.getAttribute("title"), endArrowText,
 			"End arrow has the correct tooltip.");
+		assert.strictEqual(await startArrowContainerDOM.getAttribute("aria-label"), startArrowContainerText,
+			"Start arrow container has the correct label.");
+		assert.strictEqual(await endArrowContainerDOM.getAttribute("aria-label"), endArrowContainerText,
+			"End arrow container has the correct label.");
 
 		// act
 		await startArrow.click();
@@ -106,5 +114,59 @@ describe("FlexibleColumnLayout Behavior", () => {
 		// assert
 		assert.strictEqual(await startArrow.getAttribute("title"), startArrowText2,
 			"Start arrow has the correct tooltip.");
+	});
+
+	it("tests acc default roles", async () => {
+		let fcl = await browser.$("#fclAcc");
+
+		const startColumnDOM = await fcl.shadow$(".ui5-fcl-column--start");
+		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
+		const endColumnDOM = await fcl.shadow$(".ui5-fcl-column--end");
+
+		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-start");
+		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
+
+		// assert
+		assert.strictEqual(await startColumnDOM.getAttribute("role"), "region",
+			"Start column has the correct default role.");
+
+		assert.strictEqual(await middleColumnDOM.getAttribute("role"), "region",
+			"Middle column has the correct default role.");
+
+		assert.strictEqual(await endColumnDOM.getAttribute("role"), "region",
+			"End column has the correct default role.");
+
+		assert.strictEqual(await startArrowContainerDOM.getAttribute("role"), null,
+			"Start arrow container has the correct default role.");
+
+		assert.strictEqual(await endArrowContainerDOM.getAttribute("role"), null,
+			"End arrow container has the correct default role.");
+	});
+
+	it("tests acc custom roles", async () => {
+		let fcl = await browser.$("#fclAccRoles");
+
+		const startColumnDOM = await fcl.shadow$(".ui5-fcl-column--start");
+		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
+		const endColumnDOM = await fcl.shadow$(".ui5-fcl-column--end");
+
+		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-start");
+		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
+
+		// assert
+		assert.strictEqual(await startColumnDOM.getAttribute("role"), "complimentary",
+			"Start column has the correct custom role.");
+
+		assert.strictEqual(await middleColumnDOM.getAttribute("role"), "main",
+			"Middle column has the correct custom role.");
+
+		assert.strictEqual(await endColumnDOM.getAttribute("role"), "complementary",
+			"End column has the correct custom role.");
+
+		assert.strictEqual(await startArrowContainerDOM.getAttribute("role"), "navigation",
+			"Start arrow container has the correct custom role.");
+
+		assert.strictEqual(await endArrowContainerDOM.getAttribute("role"), "navigation",
+			"End arrow container has the correct custom role.");
 	});
 });

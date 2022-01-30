@@ -19,7 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="styles/Page.css">
 </head>
 
-<body class="page1auto"></body>
+<body class="page1auto">
 	<ui5-page id="page" background-design="List" floating-footer show-footer>
 		<ui5-bar design="Header" slot="header">
 			<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
@@ -47,7 +47,7 @@
 		</div>
 	</ui5-page>
 	<script>
-		const page = document.getElementById("page");
+		var page = document.getElementById("page");
 
 		document.getElementById("toggleVisibility").addEventListener("click", function(){
 			page.hideFooter = !page.hideFooter;

@@ -16,7 +16,8 @@
 <body class="responsivepopover2auto">
 	<ui5-button id="btnOpen" design="Positive">Open me</ui5-button> <br/>
 	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
-	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button>
+	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
+	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
 
 	<!-- with header and footer slots -->
 	<ui5-responsive-popover id="respPopover">
@@ -59,6 +60,19 @@
 
 		<div slot="footer" class="popover-footer">
 			<ui5-button id="btnClose3" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	
+	<ui5-responsive-popover id="respPopover4" accessible-name="Some label">
+		<div slot="header">
+			<ui5-title>Header</ui5-title>
+		</div>
+		<div class="popover-content">
+			<span>Hello World</span>
+		</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose4" design="Emphasized">Close</ui5-button>
 		</div>
 	</ui5-responsive-popover>
 
@@ -125,6 +139,14 @@
 		btnClose3.addEventListener("click", function(event) {
 			respPopover3.close();
 		});
+
+		btnOpen4.addEventListener("click", function(event) {
+			respPopover4.showAt(btnOpen4);
+		});
+		btnClose4.addEventListener("click", function(event) {
+			respPopover4.close();
+		});
+
 		btnOpenDialog.addEventListener('click', function (event) {
 			dialog.show();
 		});

@@ -250,4 +250,4 @@ When `managedSlots` is set to `true`:
  in order to display a link on its Tab Strip for each Tab child. Therefore, it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.
 
-Next: [Testing UI5 Web Components](04-testing-UI5-Web-Components.md)
+Next: [Testing UI5 Web Components](../testing-ui5-web-components)

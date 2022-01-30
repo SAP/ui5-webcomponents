@@ -39,6 +39,7 @@ import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css
  */
 const metadata = {
 	tag: "ui5-flexible-column-layout",
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the columns layout and their proportion.
@@ -94,12 +95,32 @@ const metadata = {
 		 *  - <code>startArrowRightText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the right
 		 *  - <code>endArrowLeftText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the left
 		 *  - <code>endArrowRightText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the right
+		 *  - <code>startArrowContainerAccessibleName</code>: the text that the first arrow container (between the <code>begin</code> and <code>mid</code> columns) will have as <code>aria-label</code>
+		 *  - <code>endArrowContainerAccessibleName</code>: the text that the second arrow container (between the <code>mid</code> and <code>end</code> columns) will have as <code>aria-label</code>
 		 *
 		 * @type {object}
 		 * @public
 		 * @since 1.0.0-rc.11
 		 */
 		accessibilityTexts: {
+			type: Object,
+		},
+
+		/**
+		 * An object of strings that defines additional accessibility roles for further customization.
+		 *
+		 * It supports the following fields:
+		 *  - <code>startColumnRole</code>: the accessibility role for the <code>startColumn</code>
+		 *  - <code>startArrowContainerRole</code>: the accessibility role for the first arrow container (between the <code>begin</code> and <code>mid</code> columns)
+		 *  - <code>midColumnRole</code>: the accessibility role for the <code>midColumn</code>
+		 *  - <code>endArrowContainerRole</code>: the accessibility role for the second arrow container (between the <code>mid</code> and <code>end</code> columns)
+		 *  - <code>endColumnRole</code>: the accessibility role for the <code>endColumn</code>
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibilityRoles: {
 			type: Object,
 		},
 
@@ -235,9 +256,18 @@ const metadata = {
  * <br><br>
  * <h3>Keyboard Handling</h3>
  *
+ * <h4>Basic Navigation</h4>
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).</li>
+ * <li>This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code></li>
  * </ul>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  * <br><br>
  *
  * <h3>ES6 Module Import</h3>
@@ -664,6 +694,34 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get accEndColumnText() {
 		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
+	}
+
+	get accStartArrowContainerText() {
+		return this.accessibilityTexts.startArrowContainerAccessibleName || undefined;
+	}
+
+	get accEndArrowContainerText() {
+		return this.accessibilityTexts.endArrowContainerAccessibleName || undefined;
+	}
+
+	get accStartColumnRole() {
+		return this.accessibilityRoles.startColumnRole || "region";
+	}
+
+	get accMiddleColumnRole() {
+		return this.accessibilityRoles.midColumnRole || "region";
+	}
+
+	get accEndColumnRole() {
+		return this.accessibilityRoles.endColumnRole || "region";
+	}
+
+	get accStartArrowContainerRole() {
+		return this.accessibilityRoles.startArrowContainerRole || undefined;
+	}
+
+	get accEndArrowContainerRole() {
+		return this.accessibilityRoles.endArrowContainerRole || undefined;
 	}
 
 	get _effectiveLayoutsByMedia() {

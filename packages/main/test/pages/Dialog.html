@@ -374,6 +374,18 @@
 
 	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
 
+	<br>
+	<br>
+
+	<ui5-button id="btn-acc-name-ref">Dialog with accessibleNameRef</ui5-button>
+	<ui5-label id="label-acc-name-ref">Some label</ui5-label>
+	<ui5-dialog id="dialog-acc-name-ref" accessible-name-ref="label-acc-name-ref" stretch>
+		<div slot="header">
+			<ui5-title level="H2">Header</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-dialog>
+
 	<span id="scrollHelper" class="dialog9auto">SCroll Helper</span>
 
 	<script>
@@ -446,7 +458,9 @@
 
 		window["dynamic-open"].addEventListener("click", function () {
 			var dialog = document.createElement("ui5-dialog"),
-				button = document.createElement("ui5-button");
+				button = document.createElement("ui5-button"),
+				separator = document.createElement("div")
+				input = document.createElement("ui5-input");
 
 			button.setAttribute("id", "dynamic-dialog-close-button");
 			button.appendChild(document.createTextNode("Close"));
@@ -457,6 +471,11 @@
 			dialog.setAttribute("id", "dynamic-dialog");
 			dialog.appendChild(button);
 
+			separator.style.height = "200px";
+			dialog.appendChild(separator);
+
+			dialog.appendChild(input);
+
 			document.body.appendChild(dialog);
 
 			dialog.show();
@@ -465,6 +484,10 @@
 		window["multiple-show"].addEventListener("click", function () {
 			dialog.show();
 			dialog.show();
+		});
+
+		window["btn-acc-name-ref"].addEventListener("click", function () {
+			window["dialog-acc-name-ref"].show();
 		});
 
 	</script>

@@ -1,6 +1,7 @@
 @import "./sizes-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
+@import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/Card-parameters.css";
@@ -9,7 +10,7 @@
 @import "./CheckBox-parameters.css";
 @import "./ColorPalette-parameters.css";
 @import "./ColorPicker-parameters.css";
-@import "../base/DatePicker-parameters.css";
+@import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
 @import "./Dialog-parameters.css";
@@ -52,4 +53,5 @@
 @import "./Table-parameters.css";
 @import "./TableRow-parameters.css";
 @import "./TableColumn-parameters.css";
+@import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";

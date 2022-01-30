@@ -5,7 +5,17 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isLeftCtrl,
+	isRightCtrl,
+	isLeftShift,
+	isRightShift,
+	isLeftShiftCtrl,
+	isRightShiftCtrl,
+	isEnd,
+	isHome,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -237,8 +247,88 @@ class Tokenizer extends UI5Element {
 		if (isSpace(event)) {
 			event.preventDefault();
 
-			this._handleTokenSelection(event);
+			return this._handleTokenSelection(event, false);
 		}
+
+		this._handleItemNavigation(event, this.tokens);
+	}
+
+	_handleItemNavigation(event, tokens) {
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+		if (isLeftCtrl(event) || isRightCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
+		}
+
+		if (isLeftCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowCtrl(event.target, tokens, false);
+		}
+
+		if (isLeftShift(event) || isRightShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
+		}
+
+		if (isHome(event) || isEnd(event)) {
+			return this._handleHome(tokens, isEnd(event));
+		}
+
+		if (isCtrl && event.key.toLowerCase() === "a") {
+			event.preventDefault();
+
+			return this._toggleTokenSelection(tokens);
+		}
+	}
+
+	_handleHome(tokens, endKeyPressed) {
+		if (!tokens || !tokens.length) {
+			return -1;
+		}
+
+		const index = endKeyPressed ? tokens.length - 1 : 0;
+
+		tokens[index].focus();
+		this._itemNav.setCurrentItem(tokens[index]);
+	}
+
+	_calcNextTokenIndex(focusedToken, tokens, backwards) {
+		if (!tokens.length) {
+			return -1;
+		}
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		let nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex >= tokens.length) {
+			nextIndex = tokens.length - 1;
+		}
+		if (nextIndex < 0) {
+			nextIndex = 0;
+		}
+
+		return nextIndex;
+	}
+
+	_handleArrowCtrl(focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+		if (nextIndex === -1) {
+			return;
+		}
+
+		tokens[nextIndex].focus();
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
+	}
+
+	_handleArrowShift(focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+		if (nextIndex === -1) {
+			return;
+		}
+
+		focusedToken.selected = true;
+		tokens[nextIndex].selected = true;
+		tokens[nextIndex].focus();
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_click(event) {
@@ -249,14 +339,44 @@ class Tokenizer extends UI5Element {
 		this._itemNav.setCurrentItem(event.target);
 	}
 
-	_handleTokenSelection(event) {
-		if (event.target.localName === "ui5-token") {
-			this._tokens.forEach(token => {
+	_toggleTokenSelection(tokens) {
+		if (!tokens || !tokens.length) {
+			return;
+		}
+
+		const tokensAreSelected = tokens.every(token => token.selected);
+		tokens.forEach(token => { token.selected = !tokensAreSelected; });
+	}
+
+	_handleTokenSelection(event, deselectAll = true) {
+		if (event.target.hasAttribute("ui5-token")) {
+			const deselectTokens = deselectAll ? this._tokens : [event.target];
+
+			deselectTokens.forEach(token => {
 				if (token !== event.target) {
 					token.selected = false;
 				}
 			});
 		}
+	}
+
+	_fillClipboard(shortcutName, tokens) {
+		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
+
+		/* fill clipboard with tokens' texts so parent can handle creation */
+		const cutToClipboard = event => {
+			if (event.clipboardData) {
+				event.clipboardData.setData("text/plain", tokensTexts);
+			} else {
+				event.originalEvent.clipboardData.setData("text/plain", tokensTexts);
+			}
+
+			event.preventDefault();
+		};
+
+		document.addEventListener(shortcutName, cutToClipboard);
+		document.execCommand(shortcutName);
+		document.removeEventListener(shortcutName, cutToClipboard);
 	}
 
 	/**
@@ -299,13 +419,20 @@ class Tokenizer extends UI5Element {
 			return [];
 		}
 
+		// Reset the overflow prop of the tokens first in order
+		// to use their dimensions for calculation because already
+		// hidden tokens are set to 'display: none'
+		this._getTokens().forEach(token => {
+			token.overflows = false;
+		});
+
 		return this._getTokens().filter(token => {
 			const isRTL = this.effectiveDir === "rtl";
 			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = tokenRect[elementEnd];
-			const parentEnd = parentRect[elementEnd];
+			const tokenEnd = parseInt(tokenRect[elementEnd]);
+			const parentEnd = parseInt(parentRect[elementEnd]);
 
 			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 

@@ -74,6 +74,10 @@
 	cursor: pointer;
 }
 
+[dir="rtl"].ui5-nli-root {
+	padding: 1rem 1rem 1rem 0.5rem;
+}
+
 .ui5-nli-content {
 	display: flex;
 	flex-direction: column;

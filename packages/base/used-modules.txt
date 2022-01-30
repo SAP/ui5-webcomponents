@@ -5,3 +5,6 @@ sap/base/Log.js
 sap/base/assert.js
 sap/base/security/URLListValidator.js
 sap/base/security/sanitizeHTML.js
+sap/base/strings/toHex.js
+sap/base/security/encodeXML.js
+sap/base/security/encodeCSS.js

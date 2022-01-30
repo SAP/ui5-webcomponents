@@ -121,7 +121,7 @@
 }
 
 :host([design="Emphasized"][focused]) {
-	outline: var(--_ui5_button_еmphasized_outline);
+	outline: var(--_ui5_button_emphasized_outline);
 }
 
 .ui5-button-root::-moz-focus-inner {

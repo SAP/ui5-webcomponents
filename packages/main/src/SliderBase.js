@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/source-code.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
@@ -229,6 +230,9 @@ class SliderBase extends UI5Element {
 
 	get classes() {
 		return {
+			root: {
+				"ui5-slider-root-phone": isPhone(),
+			},
 			labelContainer: {
 				"ui5-slider-hidden-labels": this._labelsOverlapping,
 			},
