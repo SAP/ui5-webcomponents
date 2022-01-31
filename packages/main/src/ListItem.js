@@ -61,6 +61,7 @@ const metadata = {
 		 */
 		title: {
 			type: String,
+			skipNameValidation: true,
 		},
 
 		/**
@@ -85,6 +86,7 @@ const metadata = {
 		role: {
 			type: String,
 			defaultValue: "listitem",
+			skipNameValidation: true,
 		},
 
 		_mode: {

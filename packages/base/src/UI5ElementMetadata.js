@@ -3,6 +3,7 @@ import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedElements } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
+import isValidPropertyName from "./util/isValidPropertyName.js";
 
 /**
  *
@@ -127,6 +128,26 @@ class UI5ElementMetadata {
 	hasAttribute(propName) {
 		const propData = this.getProperties()[propName];
 		return propData.type !== Object && !propData.noAttribute && !propData.multiple;
+	}
+
+	/**
+	 * Determines whether a property name is allowed - does not collide with existing DOM API properties
+	 * except for those marked with the metadata field "skipNameValidation".
+	 * @param {string} propName the name of the property
+	 * @returns {boolean}
+	 */
+	propertyNameAllowed(propName) {
+		return this.getProperties()[propName].skipNameValidation || isValidPropertyName(propName);
+	}
+
+	/**
+	 * Determines whether a slot name is allowed - does not collide with existing DOM API properties
+	 * except for those marked with the metadata field "skipNameValidation".
+	 * @param {string} slotName the name of the slot
+	 * @returns {boolean}
+	 */
+	slotNameAllowed(slotName) {
+		return this.getSlots()[slotName].skipNameValidation || isValidPropertyName(slotName);
 	}
 
 	/**

@@ -122,6 +122,7 @@ const metadata = {
 		 */
 		title: {
 			type: String,
+			skipNameValidation: true,
 		},
 	},
 	managedSlots: true,

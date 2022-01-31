@@ -31,6 +31,7 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
+			skipNameValidation: true,
 		},
 		/**
 		 * Defines whether the component value is shown.

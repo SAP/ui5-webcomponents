@@ -78,6 +78,7 @@ const metadata = {
 		 */
 		 title: {
 			type: String,
+			skipNameValidation: true,
 		},
 	},
 

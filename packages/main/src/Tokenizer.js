@@ -61,7 +61,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
 
-		disabled: { type: Boolean },
+		disabled: { type: Boolean, skipNameValidation: true },
 
 		/**
 		 * Indicates if the tokenizer should show all tokens or n more label instead

@@ -12,7 +12,6 @@ import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
-import isValidPropertyName from "./util/isValidPropertyName.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
@@ -797,12 +796,13 @@ class UI5Element extends HTMLElement {
 	 */
 	static _generateAccessors() {
 		const proto = this.prototype;
-		const slotsAreManaged = this.getMetadata().slotsAreManaged();
+		const metaData = this.getMetadata();
+		const slotsAreManaged = metaData.slotsAreManaged();
 
 		// Properties
-		const properties = this.getMetadata().getProperties();
+		const properties = metaData.getProperties();
 		for (const [prop, propData] of Object.entries(properties)) { // eslint-disable-line
-			if (!isValidPropertyName(prop)) {
+			if (!metaData.propertyNameAllowed(prop)) {
 				console.warn(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 			}
 
@@ -869,9 +869,9 @@ class UI5Element extends HTMLElement {
 
 		// Slots
 		if (slotsAreManaged) {
-			const slots = this.getMetadata().getSlots();
+			const slots = metaData.getSlots();
 			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-				if (!isValidPropertyName(slotName)) {
+				if (!metaData.slotNameAllowed(slotName)) {
 					console.warn(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 				}
 

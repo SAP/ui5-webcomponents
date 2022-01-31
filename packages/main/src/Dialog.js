@@ -92,6 +92,7 @@ const metadata = {
 		 */
 		draggable: {
 			type: Boolean,
+			skipNameValidation: true,
 		},
 
 		/**

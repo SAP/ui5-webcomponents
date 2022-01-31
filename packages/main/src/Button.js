@@ -67,6 +67,7 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
+			skipNameValidation: true,
 		},
 
 		/**
@@ -122,6 +123,7 @@ const metadata = {
 		 */
 		title: {
 			type: String,
+			skipNameValidation: true,
 		},
 
 		/**

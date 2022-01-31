@@ -71,6 +71,7 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
+			skipNameValidation: true,
 		},
 
 		/**
