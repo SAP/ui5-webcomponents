@@ -874,7 +874,10 @@ class Input extends UI5Element {
 		this.value = "";
 		this.fireEvent(this.EVENT_INPUT);
 		this._handleChange();
-		this.focus();
+
+		if (!this._isPhone) {
+			this.focus();
+		}
 	}
 
 	_scroll(event) {
