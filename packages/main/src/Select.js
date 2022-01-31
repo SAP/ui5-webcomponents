@@ -726,7 +726,7 @@ class Select extends UI5Element {
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 			popover: {
-				"ui5-valuestatemessage-popover": this.hasValueState,
+				"ui5-select-popover-valuestate": this.hasValueState,
 			},
 		};
 	}

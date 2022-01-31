@@ -5,13 +5,22 @@
 
 	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
 		<thead>
-			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" aria-label="{{ariaLabelText}}" tabindex="{{_columnHeader._tabIndex}}" @click="{{_onColumnHeaderClick}}">
+			<tr
+				id="{{_columnHeader.id}}"
+				role="row"
+				class="ui5-table-header-row"
+				aria-label="{{ariaLabelText}}"
+				tabindex="{{_columnHeader._tabIndex}}"
+				@click="{{_onColumnHeaderClick}}"
+				@keydown="{{_onColumnHeaderKeydown}}"
+			>
 				{{#if isMultiSelect}}
 					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
 						<ui5-checkbox class="ui5-table-select-all-checkbox"
 							?checked="{{_allRowsSelected}}"
 							@ui5-change="{{_selectAll}}"
 							aria-label="{{ariaLabelSelectAllText}}"
+							tabindex="-1"
 						>
 						</ui5-checkbox>
 					</th>
@@ -57,6 +66,7 @@
 	<td colspan="{{visibleColumnsCount}}">
 		<div growing-button>
 			<div
+				id="{{_id}}-growingButton"
 				tabindex="0"
 				role="button"
 				aria-labelledby="{{loadMoreAriaLabelledBy}}"
