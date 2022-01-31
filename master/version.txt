@@ -1,7 +1,5 @@
-commit 197f3f93ac6a974e5b4b81b3556d93661c27f8cc
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Jan 31 12:33:03 2022 +0200
+commit 67848d7bd7d18e31fe105b5b118b12dc74a9cb86
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Jan 31 15:49:48 2022 +0200
 
-    fix(ui5-file-uploader): fixing the console warning (#4605)
-    
-    Fixes: #4592
+    fix(ui5-li-tree): correct usage of i18nBudnle (#4668)
