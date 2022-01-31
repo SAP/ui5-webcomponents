@@ -2,6 +2,7 @@
 	class="ui5-table-row-root"
 	tabindex="{{_tabIndex}}"
 	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
 	@click="{{_onrowclick}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
@@ -26,6 +27,7 @@
 				?checked="{{this.selected}}"
 				aria-label="{{ariaLabelRowSelection}}"
 				@ui5-change="{{_handleSelection}}"
+				tabindex="-1"
 			>
 			</ui5-checkbox>
 		</td>
