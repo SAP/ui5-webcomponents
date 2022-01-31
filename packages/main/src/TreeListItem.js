@@ -331,7 +331,10 @@ class TreeListItem extends ListItem {
 	}
 
 	static async onDefine() {
-		TreeListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		[TreeListItem.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 }
 
