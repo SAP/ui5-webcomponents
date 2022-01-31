@@ -1,15 +1,7 @@
-commit 8daa7645b19de3cf6153b7c01099b7cbf7b2b3b4
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Mon Jan 31 12:02:11 2022 +0200
+commit 197f3f93ac6a974e5b4b81b3556d93661c27f8cc
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon Jan 31 12:33:03 2022 +0200
 
-    feat(ui5-table): extend keyboard handling (#4550)
+    fix(ui5-file-uploader): fixing the console warning (#4605)
     
-    This change adds support to `ui5-table` for the following keystrokes:
-    
-    - `TAB` - If entering for the first time, focus now moves to the first visible item. The item checkbox in MultiSelect mode is now excluded from the tab chain.
-    - `F7` - If focus is on an interactive control inside an item, moves focus to the corresponding item.
-    - `CTRL`+`A` - Selects all items, if MultiSelect mode is enabled.
-    - `ALT`+`UP`/`DOWN` - Moves focus between header, last focused item, and More button in either direction.
-    - `PAGEUP`/`PAGEDOWN` - Moves focus up/down by page size (20 items by default).
-    
-    Related to: #3090
+    Fixes: #4592
