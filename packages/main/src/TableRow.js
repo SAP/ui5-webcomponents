@@ -193,7 +193,6 @@ class TableRow extends UI5Element {
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
-		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
 
 		if (isTabNext(event) || isTabPrevious(event)) {
 			this._tabMarked = true;
