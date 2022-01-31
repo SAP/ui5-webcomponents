@@ -267,7 +267,7 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/Option";</code>
+ * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
