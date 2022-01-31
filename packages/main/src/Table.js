@@ -5,7 +5,14 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isCtrlA,
+	isUpAlt,
+	isDownAlt,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -373,6 +380,16 @@ const metadata = {
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  * <br><br>
+ * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
+ * <br>
+ *
+ * <ul>
+ * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
+ * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
+ * <li>[HOME]/[END] - Focuses the first/last item.</li>
+ * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
+ * <li>[ALT]+[UP]/[DOWN] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -430,6 +447,7 @@ class Table extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			affectedPropertiesNames: ["_columnHeader"],
 			getItemsCallback: () => [this._columnHeader, ...this.rows],
+			skipItemsSize: 20,
 		});
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
@@ -437,7 +455,10 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.tableEndObserved = false;
+
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
+
+		this._prevNestedElementIndex = 0;
 	}
 
 	onBeforeRendering() {
@@ -468,6 +489,8 @@ class Table extends UI5Element {
 		this.visibleColumnsCount = this.visibleColumns.length;
 
 		this._allRowsSelected = selectedRows.length === this.rows.length;
+
+		this._previousFocusedRow = this._previousFocusedRow || this.rows[0] || null;
 	}
 
 	onAfterRendering() {
@@ -484,6 +507,16 @@ class Table extends UI5Element {
 		}
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
+
+		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
+
+		this.rows.forEach((row, index) => {
+			row._tabbableElements = getTabbableElements(row);
+
+			if (index > 0) {
+				row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
+			}
+		});
 	}
 
 	onExitDOM() {
@@ -496,6 +529,82 @@ class Table extends UI5Element {
 		}
 	}
 
+	_onkeydown(event) {
+		if (isCtrlA(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll(event);
+			return;
+		}
+
+		const isAltUp = isUpAlt(event);
+
+		if (isAltUp || isDownAlt(event)) {
+			return this._handleArrowAlt(isAltUp, event.target);
+		}
+	}
+
+	/**
+	 * Handles Alt + Up/Down.
+	 * Switches focus between column header, last focused item, and "More" button (if applicable).
+	 * @private
+	 * @param {boolean} shouldMoveUp Whether to move focus upward
+	 * @param {object} focusedElement The element currently in focus
+	 */
+	_handleArrowAlt(shouldMoveUp, focusedElement) {
+		const focusedElementType = this.getFocusedElementType(focusedElement);
+		const moreButton = this.getMoreButton();
+
+		if (shouldMoveUp) {
+			switch (focusedElementType) {
+			case "tableRow":
+				this._previousFocusedRow = focusedElement;
+				return this._onColumnHeaderClick();
+			case "columnHeader":
+				return moreButton ? moreButton.focus() : this._previousFocusedRow.focus();
+			case "moreButton":
+				return this._previousFocusedRow ? this._previousFocusedRow.focus() : this._onColumnHeaderClick();
+			}
+		} else {
+			switch (focusedElementType) {
+			case "tableRow":
+				this._previousFocusedRow = focusedElement;
+				return moreButton ? moreButton.focus() : this._onColumnHeaderClick();
+			case "columnHeader":
+				if (this._previousFocusedRow) {
+					return this._previousFocusedRow.focus();
+				}
+
+				if (moreButton) {
+					return moreButton.focus();
+				}
+
+				return;
+			case "moreButton":
+				return this._onColumnHeaderClick();
+			}
+		}
+	}
+
+	/**
+	 * Determines the type of the currently focused element.
+	 * @private
+	 * @param {object} element The object representation of the DOM element
+	 * @returns {("columnHeader"|"tableRow"|"moreButton")} A string identifier
+	 */
+	getFocusedElementType(element) {
+		if (element === this.getColumnHeader()) {
+			return "columnHeader";
+		}
+
+		if (element === this.getMoreButton()) {
+			return "moreButton";
+		}
+
+		if (this.rows.includes(element)) {
+			return "tableRow";
+		}
+	}
+
 	onRowFocused(event) {
 		this._itemNavigation.setCurrentItem(event.target);
 	}
@@ -503,6 +612,13 @@ class Table extends UI5Element {
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
 		this._itemNavigation.setCurrentItem(this._columnHeader);
+	}
+
+	_onColumnHeaderKeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll();
+		}
 	}
 
 	_onLoadMoreKeydown(event) {
@@ -587,7 +703,7 @@ class Table extends UI5Element {
 	}
 
 	_selectAll(event) {
-		const bAllSelected = event.target.checked;
+		const bAllSelected = !this._allRowsSelected;
 		const previouslySelectedRows = this.rows.filter(row => row.selected);
 
 		this._allRowsSelected = bAllSelected;
@@ -620,6 +736,10 @@ class Table extends UI5Element {
 
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
+	}
+
+	getMoreButton() {
+		return this.growsWithButton && this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-growingButton`);
 	}
 
 	handleResize(event) {
