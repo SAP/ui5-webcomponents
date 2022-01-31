@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+
+### Bug Fixes
+
+* fix ipad recognition ([#4632](https://github.com/SAP/ui5-webcomponents/issues/4632)) ([c0cc73d](https://github.com/SAP/ui5-webcomponents/commit/c0cc73d))
+* remove import.meta.url ([#4630](https://github.com/SAP/ui5-webcomponents/issues/4630)) ([604ce63](https://github.com/SAP/ui5-webcomponents/commit/604ce63))
+
+
+### Features
+
+* **ui5-multi-input:** Keyboard handling ([#4495](https://github.com/SAP/ui5-webcomponents/issues/4495)) ([b978f4a](https://github.com/SAP/ui5-webcomponents/commit/b978f4a))
+
+
+
+
+
+## [1.1.1](https://github.com/SAP/ui5-webcomponents/compare/v1.1.0...v1.1.1) (2022-01-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [1.1.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.2...v1.1.0) (2022-01-21)
 
 

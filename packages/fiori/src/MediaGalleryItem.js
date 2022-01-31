@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents-icons/dist/background.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 // Template
 import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
@@ -178,12 +179,14 @@ const metadata = {
 class MediaGalleryItem extends UI5Element {
 	constructor() {
 		super();
+		this._monitoredContent = null;
+		this._monitoredThumbnail = null;
+	}
 
+	onEnterDOM() {
 		this._thumbnailDesign = !isPhone();
 		this._interactive = !isPhone();
 		this._square = true;
-		this._monitoredContent = null;
-		this._monitoredThumbnail = null;
 	}
 
 	static get metadata() {

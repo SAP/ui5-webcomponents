@@ -211,11 +211,15 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
 		/**
 		 * Fired when the user clicks on the default action.
+		 * @event
+		 * @public
 		 */
 		"click": {},
 
 		/**
 		 * Fired when the user clicks on the arrow action.
+		 * @event sap.ui.webcomponents.main.SplitButton#arrow-click
+		 * @public
 		 */
 		"arrow-click": {},
 	 },
@@ -389,7 +393,7 @@ class SplitButton extends UI5Element {
 	}
 
 	get textButtonAccText() {
-		return this.text[0].textContent;
+		return this.textContent;
 	}
 
 	get textButton() {

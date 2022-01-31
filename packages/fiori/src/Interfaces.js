@@ -1,4 +1,13 @@
 /**
+ * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
+ *
+ * @name sap.ui.webcomponents.fiori.IBar
+ * @interface
+ * @public
+ */
+const IBar = "sap.ui.webcomponents.fiori.IBar";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items
  *
  * @name sap.ui.webcomponents.fiori.IFilterItem
@@ -116,6 +125,7 @@ const IUploadCollectionItem = "sap.ui.webcomponents.fiori.IUploadCollectionItem"
 const IWizardStep = "sap.ui.webcomponents.fiori.IWizardStep";
 
 export {
+	IBar,
 	IFilterItem,
 	IFilterItemOption,
 	IMediaGalleryItem,

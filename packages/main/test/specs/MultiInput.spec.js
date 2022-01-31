@@ -203,3 +203,59 @@ describe("ARIA attributes", () => {
 	});
 });
 
+describe("Keyboard handling", () => {
+	beforeEach(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+	});
+
+	it("should move the focus from the input to the tokens and back", async () => {
+		const input =  await browser.$("#basic-overflow");
+		const innerInput =  await input.shadow$("input");
+		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
+		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
+
+		await innerInput.click();
+		await innerInput.keys("ArrowLeft");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
+
+		await innerInput.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The last token is focused");
+
+		await innerInput.keys("End");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
+
+
+		await innerInput.keys("ArrowRight");
+		assert.strictEqual(await firstToken.getProperty("focused"), false, "The last token is not focused anymore");
+		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
+	});
+
+	it("should select tokens with key modifiers", async () => {
+		const input = await browser.$("#basic-overflow");
+		const innerInput = await input.shadow$("input");
+		const firstToken = await browser.$("#basic-overflow ui5-token:last-child");
+		const secondToken = await browser.$("#basic-overflow ui5-token:nth-child(10)");
+		const thirdToken = await browser.$("#basic-overflow ui5-token:nth-child(9)");
+
+		await innerInput.click();
+		await innerInput.keys("ArrowLeft");
+		await browser.keys(["Shift", "ArrowLeft"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
+
+		await browser.keys(["Control", "Shift", "ArrowLeft"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), true, "The third token should be selected");
+
+		await secondToken.click();
+
+		assert.strictEqual(await firstToken.getProperty("selected"), false, "The first token should NOT be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), false, "The second token should NOT be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
+	});
+})
+
