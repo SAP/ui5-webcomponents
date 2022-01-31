@@ -1,7 +1,7 @@
-commit 1fb6e58ffa8d1197df230a1a5d3a6b230593911b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jan 28 16:54:46 2022 +0200
+commit ec6ca802e950126119f78fd228eb86f6ac500470
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Jan 31 11:30:12 2022 +0200
 
-    docs: add IBar interface (#4663)
+    fix(ui5-switch): role checkbox is changed to role switch (#4658)
     
-    Fixes: #4661
+    Fixes: #4633
