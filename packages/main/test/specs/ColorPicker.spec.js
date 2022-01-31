@@ -115,7 +115,7 @@ describe("Color Picker general interaction", () => {
 
 		await mainColorSection.click();
 
-		assert.strictEqual(await colorPicker.getAttribute("_hue"), hueValue, "Hue value remained unchanched");
+		assert.strictEqual(await colorPicker.getAttribute("_hue"), hueValue, "Hue value remained unchanged");
 	});
 
 });
