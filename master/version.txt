@@ -1,5 +1,5 @@
-commit 67848d7bd7d18e31fe105b5b118b12dc74a9cb86
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 31 15:49:48 2022 +0200
+commit b641f8b4b815fcb0791da3835d9242b3d79f1634
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 31 18:39:39 2022 +0200
 
-    fix(ui5-li-tree): correct usage of i18nBudnle (#4668)
+    chore: fix docs and tag misuse in CSS (#4669)
