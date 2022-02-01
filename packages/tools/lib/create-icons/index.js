@@ -9,20 +9,22 @@ const destDir = collectionVersion ? path.normalize(`dist/${collectionVersion}/`)
 
 mkdirp.sync(destDir);
 
-const iconTemplate = (name, pathData, ltr, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+const iconTemplate = (name, unicode, pathData, ltr, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
 const ltr = ${ltr};
 const collection = "${collection}";
 const packageName = "${packageName}";
+const unicode = "${unicode}";
 
 registerIcon(name, { pathData, ltr, collection, packageName });
+registerIcon(unicode, { pathData, ltr, collection, packageName });
 
 export default { pathData };`;
 
 
-const iconAccTemplate = (name, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+const iconAccTemplate = (name, unicode, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
 
 const name = "${name}";
@@ -31,8 +33,10 @@ const ltr = ${ltr};
 const accData = ${accData.key};
 const collection = "${collection}";
 const packageName = "${packageName}";
+const unicode = "${unicode}";
 
 registerIcon(name, { pathData, ltr, accData, collection, packageName });
+registerIcon(unicode, { pathData, ltr, collection, packageName });
 
 export default { pathData, accData };`;
 
@@ -57,8 +61,9 @@ const createIcons = (file) => {
 		const pathData = iconData.path;
 		const ltr = !!iconData.ltr;
 		const acc = iconData.acc;
+		const unicode = iconData.unicode;
 
-		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, json.collection, json.packageName) : iconTemplate(name, pathData, ltr, json.collection, json.packageName);
+		const content = acc ? iconAccTemplate(name, unicode, pathData, ltr, acc, json.collection, json.packageName) : iconTemplate(name, unicode, pathData, ltr, json.collection, json.packageName);
 
 		fs.writeFileSync(path.join(destDir, `${name}.js`), content);
 		fs.writeFileSync(path.join(destDir, `${name}.svg`), svgTemplate(pathData));

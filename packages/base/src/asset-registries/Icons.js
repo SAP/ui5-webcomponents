@@ -34,14 +34,19 @@ const _loadIconCollectionOnce = async collectionName => {
 const _fillRegistry = bundleData => {
 	Object.keys(bundleData.data).forEach(iconName => {
 		const iconData = bundleData.data[iconName];
+		const iconAltName = iconData.unicode;
 
-		registerIcon(iconName, {
-			pathData: iconData.path,
-			ltr: iconData.ltr,
-			accData: iconData.acc,
-			collection: bundleData.collection,
-			packageName: bundleData.packageName,
-		 });
+		[iconName, iconAltName].forEach(key => {
+			if (key) {
+				registerIcon(key, {
+					pathData: iconData.path,
+					ltr: iconData.ltr,
+					accData: iconData.acc,
+					collection: bundleData.collection,
+					packageName: bundleData.packageName,
+				});
+			}
+		});
 	});
 };
 
@@ -77,6 +82,7 @@ const _parseName = name => {
 	// Note: aliases can be made as a feature, if more collections need it or more aliases are needed.
 	collection = _normalizeCollection(collection);
 	name = name.replace("icon-", "");
+	name = name.replace("0x", "x");
 
 	const registryKey = `${collection}/${name}`;
 	return { name, collection, registryKey };
