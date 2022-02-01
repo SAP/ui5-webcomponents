@@ -1,7 +1,12 @@
-commit 88e38ca6346ca1abd572e9960b3db1e36f85f3b3
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Feb 1 13:57:02 2022 +0200
+commit cd8dc26819a6449ed917cf2a4e334d4b8f5a09c8
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Tue Feb 1 16:04:37 2022 +0200
 
-    Update 03-understanding-components-metadata.md
+    fix(ui5-tabcontainer): await for renderFinished in resize handler (#4675)
     
-    fix wrong documentation typo
+    The issue occurs in a case where TabContainer's handleResize gets
+    called before onAfterRendering. At that point, TabContainer hasn't
+    rendered its own representation of the tabs (stripPresentation)
+    which it later relies on.
+    
+    Part of #4628
