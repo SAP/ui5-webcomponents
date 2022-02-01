@@ -252,8 +252,8 @@ const metadata = {
  * the style to provide visual feedback to the user that it is pressed or hovered over with
  * the mouse cursor. A disabled <code>ui5-split-button</code> appears inactive and any of the two buttons
  * cannot be pressed.
- * <br><br>
- * <b>Keyboard handing</b>
+ *
+ * <h3>Keyboard Handling</h3>
  * <ul>
  * <li><code>Space</code> or <code>Enter</code> - triggers the default action</li>
  * <li><code>Shift</code> or <code>Escape</code> - if <code>Space</code> is pressed, releases the default action button without triggering the click event.</li>
@@ -262,6 +262,7 @@ const metadata = {
  * <ul>
  * <li><code>click</code> for the first button (default action)</li>
  * <li><code>arrow-click</code> for the second button (arrow action)</li>
+ * </ul>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

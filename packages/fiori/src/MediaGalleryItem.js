@@ -166,7 +166,7 @@ const metadata = {
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code> (comes with <code>ui5-media-gallery</code>)
  *
  * @constructor
  * @author SAP SE
