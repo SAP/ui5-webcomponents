@@ -19,9 +19,7 @@
             <li class="ui5-breadcrumbs-link-wrapper" @click="{{../_onLinkPress}}" 
                 id="{{this._id}}-link-wrapper">
                 
-                {{#if this.accessibleNameRef}}
-                    <span id="{{this.accessibleNameRef}}" class="ui5-hidden-text">{{this.accessibleName}}</span>
-                {{/if}}
+                <span id="{{this.accessibleNameRef}}" class="ui5-hidden-text">{{this._accessibleNameText}}</span>
 
                 <ui5-link
                     href="{{this.href}}"
@@ -36,7 +34,7 @@
 
         {{#if _endsWithCurrentLocationLabel}}
         <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelPress}}">
-            <span id={{this._id}}-labelWrapper>
+            <span aria-label="{{_currentLocationAccName}}" id={{this._id}}-labelWrapper>
                 <ui5-label
                     aria-current="page">
                     {{_currentLocationText}}
