@@ -14,6 +14,7 @@ import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
+	BREADCRUMB_ITEM_POS,
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
@@ -452,6 +453,27 @@ class Breadcrumbs extends UI5Element {
 		});
 	}
 
+	_getItemPositionText(position, size) {
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
+	}
+
+	_getItemAccessibleNameData(item, position, size) {
+		const positionText = this._getItemPositionText(position, size);
+
+		// innerText is needed as it is no longer read out when label is set
+		let text = "";
+		if (item.accessibleName) {
+			text = `${item.innerText} ${item.accessibleName} ${positionText}`;
+		} else {
+			text = `${item.innerText} ${positionText}`;
+		}
+
+		return {
+			accessibleNameRef: `${item._id}-accessible-name`,
+			accessibleName: text,
+		};
+	}
+
 	getCurrentLocationLabelWrapper() {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
 	}
@@ -517,19 +539,43 @@ class Breadcrumbs extends UI5Element {
 	 */
 	get _linksData() {
 		const items = this.getSlottedNodes("items").slice(this._overflowSize);
+		const itemsCount = items.length; // get size before removing of current location
 
 		if (this._endsWithCurrentLocationLabel) {
 			items.pop();
 		}
 
-		// filter by visible and add accessible name ref property
-		return items.reduce((result, item) => {
-			if (this._isItemVisible(item)) {
-				item.accessibleNameRef = item.accessibleName ? `${item.id}-accessible-name-ref` : undefined;
-				result.push(item);
-			}
-			return result;
-		}, []);
+		return items
+			.filter(item => this._isItemVisible(item))
+			.map((item, index) => {
+				const { accessibleNameRef, accessibleName } = this._getItemAccessibleNameData(item, index + 1, itemsCount);
+
+				item.accessibleNameRef = accessibleNameRef;
+				item._accessibleNameText = accessibleName;
+
+				return item;
+			});
+	}
+
+	/**
+	 * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
+	 */
+	get _currentLocationAccName() {
+		let items = this.getSlottedNodes("items").slice(this._overflowSize);
+		items = items.filter(item => this._isItemVisible(item));
+
+		const positionText = this._getItemPositionText(items.length, items.length);
+		const lastItem = items[items.length - 1];
+
+		if (!lastItem) {
+			return positionText;
+		}
+
+		if (lastItem.accessibleName) {
+			return `${lastItem.accessibleName} ${lastItem.innerText} ${positionText}`;
+		}
+
+		return `${lastItem.innerText} ${positionText}`;
 	}
 
 	/**
