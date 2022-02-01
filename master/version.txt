@@ -1,5 +1,7 @@
-commit b641f8b4b815fcb0791da3835d9242b3d79f1634
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 31 18:39:39 2022 +0200
+commit 88e38ca6346ca1abd572e9960b3db1e36f85f3b3
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Feb 1 13:57:02 2022 +0200
 
-    chore: fix docs and tag misuse in CSS (#4669)
+    Update 03-understanding-components-metadata.md
+    
+    fix wrong documentation typo
