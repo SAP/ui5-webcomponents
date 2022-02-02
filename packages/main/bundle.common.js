@@ -113,6 +113,7 @@ import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/direc
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import getIconNameByUnicode from "@ui5/webcomponents-base/dist/util/getIconNameByUnicode.js";
 
 const testAssets = {
 	configuration : {
@@ -139,6 +140,7 @@ const testAssets = {
 	getIconNames,
 	renderFinished,
 	defaultTexts,
+	getIconNameByUnicode,
 };
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
