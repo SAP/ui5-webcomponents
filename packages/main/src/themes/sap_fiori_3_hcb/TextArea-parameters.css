@@ -5,4 +5,6 @@
 	--_ui5_textarea_warning_border_style: dashed;
 	--_ui5_textarea_error_warning_border_width: 2 * var(--sapField_BorderWidth);
 	--_ui5_textarea_information_border_width: 0.0625rem;
+	--_ui5_textarea_placeholder_font_style: normal;
+	--_ui5_input_warning_font_weight: bold;
 }

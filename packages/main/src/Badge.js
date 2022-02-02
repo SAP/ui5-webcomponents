@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -46,6 +46,13 @@ const metadata = {
 		 * @private
 		 */
 		_iconOnly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the component is pressed.
+		 */
+		active: {
 			type: Boolean,
 		},
 	},
@@ -103,12 +110,6 @@ const metadata = {
  * @public
  */
 class Badge extends UI5Element {
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -126,12 +127,20 @@ class Badge extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Badge.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		this._hasIcon = this.hasIcon;
 		this._iconOnly = this.iconOnly;
+	}
+
+	_onmousedown() {
+		this.active = true;
+	}
+
+	_onmouseup() {
+		this.active = false;
 	}
 
 	get hasText() {
@@ -147,7 +156,7 @@ class Badge extends UI5Element {
 	}
 
 	get badgeDescription() {
-		return this.i18nBundle.getText(BADGE_DESCRIPTION);
+		return Badge.i18nBundle.getText(BADGE_DESCRIPTION);
 	}
 }
 

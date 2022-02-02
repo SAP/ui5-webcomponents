@@ -14,6 +14,7 @@
 					icon="{{this.item.icon}}"
 					.associatedItem="{{this.item}}"
 					text="{{this.item.text}}"
+					title="{{this.item._tooltip}}"
 					?has-children="{{this.item.items.length}}"
 					?expanded="{{this.item.expanded}}"
 					?selected="{{this.selected}}"
@@ -23,6 +24,7 @@
 							<ui5-tree-item
 								.associatedItem="{{this}}"
 								text="{{this.text}}"
+								title="{{this._tooltip}}"
 								icon="{{this.icon}}"
 								?selected="{{this.selected}}"
 							>
@@ -53,6 +55,7 @@
 						icon="{{this.item.icon}}"
 						.associatedItem="{{this.item}}"
 						text="{{this.item.text}}"
+						title="{{this.item._tooltip}}"
 						?has-children="{{this.item.items.length}}"
 						?expanded="{{this.item.expanded}}"
 						?selected="{{this.selected}}"
@@ -62,6 +65,7 @@
 								<ui5-tree-item
 									.associatedItem="{{this}}"
 									text="{{this.text}}"
+									title="{{this._tooltip}}"
 									?selected="{{this.selected}}"
 								>
 								</ui5-tree-item>

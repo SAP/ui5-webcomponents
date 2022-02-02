@@ -16,30 +16,16 @@
 		}
 	</script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			font-family: sans-serif;
-			padding: 1rem;
-		}
-
-		h2 {
-			margin: 50px 0 25px;
-		}
-
-		.group {
-			padding: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Slider.css">
 </head>
 
-	<body style="background-color: var(--sapBackgroundColor);">
+	<body class="slider1auto">
 		<section class="group">
 			<h2>Basic Slider</h2>
 			<ui5-slider id="basic-slider" min="0" max="10"></ui5-slider>
@@ -48,24 +34,24 @@
 			<ui5-slider id="basic-slider-with-tooltip" min="0" max="20" show-tooltip></ui5-slider>
 
 			<h2>Disabled Slider with tickmarks and labels</h2>
-			<ui5-slider id="disabled-slider-with-tickmarks" min="20" max="100" label-interval="5" disabled show-tickmarks></ui5-slider>
+			<ui5-slider id="disabled-slider-with-tickmarks" min="20" max="100" value="30" label-interval="5" disabled show-tickmarks></ui5-slider>
 
 			<h2>Slider with tickmarks</h2>
 			<ui5-slider id="tickmarks-slider" min="0" max="100" step="2" show-tickmarks value="12"></ui5-slider>
 
 			<h2>Slider with many steps and small width</h2>
-			<ui5-slider id="small-slider" min="0" max="100" step="1" style="width: 200px;"></ui5-slider>
-			<ui5-slider id="small-slider-two" min="0" max="200" step="1" style="width: 300px;" show-tooltip></ui5-slider>
+			<ui5-slider id="small-slider" min="0" max="100" step="1" class="slider2auto"></ui5-slider>
+			<ui5-slider id="small-slider-two" min="0" max="200" step="1" class="slider3auto" show-tooltip></ui5-slider>
 
 			<h2>Inactive slider with no steps and tooltip</h2>
 			<ui5-slider id="inactive-slider" min="-10" max="90" step="0" show-tooltip></ui5-slider>
 
-			<h2 style="text-align: center;">Slider with steps, tooltips, tickmarks and labels</h2>
-			<ui5-slider id="slider-tickmarks-labels" min="-20" max="20" step="2" value="12" show-tooltip label-interval="2" show-tickmarks style="width: 60%; margin-left: 20%; margin-top: 50px;"></ui5-slider>
-			
+			<h2 class="slider4auto">Slider with steps, tooltips, tickmarks and labels</h2>
+			<ui5-slider id="slider-tickmarks-labels" min="-20" max="20" step="2" value="12" show-tooltip label-interval="2" show-tickmarks class="slider5auto"></ui5-slider>
+
 			<h2>Slider with float number step (1.25), tooltips, tickmarks and labels between 3 steps (3.75 value)</h2>
 			<ui5-slider id="slider-tickmarks-tooltips-labels" min="-12.5" max="47.5" step="1.25" value="10" show-tooltip label-interval="3" show-tickmarks></ui5-slider>
-			
+
 			<h2>Basic RTL Slider</h2>
 			<ui5-slider id="basic-slider-rtl" min="0" max="10" dir="rtl"></ui5-slider>
 		</section>
@@ -80,7 +66,7 @@
 		<script>
 			const eventTargetSlider = document.getElementById("test-slider");
 			const eventResultSlider = document.getElementById("test-result-slider");
-		
+
 			eventTargetSlider.addEventListener("ui5-input", () => {
 				eventResultSlider.setAttribute("value", parseInt(eventResultSlider.getAttribute("value")) + 1);
 			});

@@ -1,14 +1,20 @@
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
-import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-defaults.js";
+import {
+	DELETE,
+	ARIA_LABEL_LIST_ITEM_CHECKBOX,
+	ARIA_LABEL_LIST_ITEM_RADIO_BUTTON,
+	LIST_ITEM_SELECTED,
+	LIST_ITEM_NOT_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -72,13 +78,13 @@ const metadata = {
 		 *
 		 * @private
 		 * @type {String}
-		 * @defaultvalue "option"
+		 * @defaultvalue "listitem"
 		 * @since 1.0.0-rc.9
 		 *
 		 */
 		role: {
 			type: String,
-			defaultValue: "option",
+			defaultValue: "listitem",
 		},
 
 		_mode: {
@@ -142,8 +148,6 @@ class ListItem extends ListItemBase {
 				this.active = false;
 			}
 		};
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering(...params) {
@@ -330,8 +334,22 @@ class ListItem extends ListItemBase {
 		return undefined;
 	}
 
+	get ariaSelectedText() {
+		let ariaSelectedText;
+
+		// Selected state needs to be supported separately since now the role mapping is list -> listitem[]
+		// to avoid the issue of nesting interactive elements, ex. (option -> radio/checkbox);
+		// The text is added to aria-describedby because as part of the aria-labelledby
+		// the whole content of the item is readout when the aria-labelledby value is changed.
+		if (this.ariaSelected !== undefined) {
+			ariaSelectedText = this.ariaSelected ? ListItem.i18nBundle.getText(LIST_ITEM_SELECTED) : ListItem.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
+		}
+
+		return ariaSelectedText;
+	}
+
 	get deleteText() {
-		return this.i18nBundle.getText(DELETE);
+		return ListItem.i18nBundle.getText(DELETE);
 	}
 
 	get _accInfo() {
@@ -339,15 +357,14 @@ class ListItem extends ListItemBase {
 			role: this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
-			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
-			listItemAriaLabel: undefined,
+			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
+			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
+			ariaSelectedText: this.ariaSelectedText,
 		};
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		ListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

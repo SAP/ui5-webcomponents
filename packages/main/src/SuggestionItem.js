@@ -100,9 +100,9 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br><br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
-         * @defaultvalue "None"
+		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @public
 		 */

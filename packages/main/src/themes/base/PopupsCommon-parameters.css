@@ -1,3 +1,8 @@
 :root {
 	--_ui5_popup_content_padding: .4375em;
+	--_ui5_popup_viewport_margin: 10px;
+	--_ui5-popup-border-radius: 0.25rem;
+	--_ui5_popup_header_shadow: var(--sapContent_Shadow0);
+	--_ui5_popup_footer_border_top: 1px solid var(--sapPageFooter_BorderColor);
+	--_ui5_popup_header_footer_font_weight: 400;
 }

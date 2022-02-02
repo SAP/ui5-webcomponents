@@ -7,7 +7,7 @@
 
 .ui5-table-root {
 	position: relative;
-	border-bottom: 1px solid var(--sapList_BorderColor);
+	border-bottom: var(--ui5_table_bottom_border);
 }
 
 table {
@@ -18,13 +18,14 @@ table {
 
 .ui5-table-header-row {
 	color: var(--sapTextColor);
-	height: 3rem;
+	height: var(--ui5_table_header_row_height);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
+	font-weight: var(--ui5_table_header_row_font_weight);
 }
 
 .ui5-table-header-row:focus {
-	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapContent_FocusColor);
+	outline: var(--ui5_table_header_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 }
 
@@ -77,6 +78,12 @@ tr {
 .ui5-table-select-all-column {
 	width: var(--ui5_table_multiselect_column_width);
 	text-align: center;
+}
+
+:host([sticky-column-header]) .ui5-table-header-row {
+	position: sticky;
+	top: 0;
+	z-index: 99;
 }
 
 th {

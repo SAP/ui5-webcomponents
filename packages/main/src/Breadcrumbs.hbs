@@ -4,7 +4,7 @@
         @keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}">
 
-        <li class="ui5-breadcrumbs-dropdown-arrow-link-wrapper"
+        <li class="ui5-breadcrumbs-dropdown-arrow-link-wrapper" 
             ?hidden="{{_isOverflowEmpty}}">
             <ui5-link @click="{{_openRespPopover}}"
                 accessible-role="button"
@@ -16,8 +16,9 @@
         </li>
 
         {{#each _linksData}}
-            <li class="ui5-breadcrumbs-link-wrapper" @click="{{../_onLinkPress}}">
+            <li class="ui5-breadcrumbs-link-wrapper" id="{{this._id}}-link-wrapper">
                 <ui5-link
+                    @click="{{../_onLinkPress}}"
                     href="{{this.href}}"
                     target="{{this.target}}"
                     id="{{this._id}}-link"

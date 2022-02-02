@@ -7,7 +7,8 @@
 	tabindex="{{tabIndex}}"
 	?disabled="{{disabled}}"
 	aria-label="{{ariaLabelText}}"
-	aria-haspopup="{{ariaHaspopup}}"
+	aria-haspopup="{{accessibilityAttributes.hasPopup}}"
+	aria-expanded="{{accessibilityAttributes.expanded}}"
 	@focusin={{_onfocusin}}
 	@focusout={{_onfocusout}}
 	@click={{_onclick}}

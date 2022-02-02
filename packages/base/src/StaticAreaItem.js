@@ -25,6 +25,9 @@ class StaticAreaItem extends HTMLElement {
 	setOwnerElement(ownerElement) {
 		this.ownerElement = ownerElement;
 		this.classList.add(this.ownerElement._id); // used for getting the popover in the tests
+		if (this.ownerElement.hasAttribute("data-ui5-static-stable")) {
+			this.setAttribute("data-ui5-stable", this.ownerElement.getAttribute("data-ui5-static-stable")); // stable selector
+		}
 	}
 
 	/**
@@ -74,15 +77,6 @@ class StaticAreaItem extends HTMLElement {
 		}
 		await renderFinished(); // Wait for the content of the ui5-static-area-item to be rendered
 		return this.shadowRoot;
-	}
-
-	/**
-	 * @protected
-	 * @param refName
-	 * @returns {Element}
-	 */
-	getStableDomRef(refName) {
-		return this.shadowRoot.querySelector(`[data-ui5-stable=${refName}]`);
 	}
 
 	static getTag() {

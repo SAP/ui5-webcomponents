@@ -1,11 +1,7 @@
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
@@ -42,6 +38,26 @@ const metadata = {
 			type: CalendarType,
 		},
 
+		/**
+		 * Already normalized by Calendar
+		 * @sience 1.0.0-rc.16
+		 * @defaultvalue undefined
+		 * @type {CalendarType}
+		 * @public
+		 */
+		secondaryCalendarType: {
+			type: CalendarType,
+		},
+
+		/**
+		 * Stores information for month button for secondary calendar type
+		 * @type {Object}
+		 * @private
+		*/
+		buttonTextForSecondaryCalendarType: {
+			type: Object,
+		},
+
 		isNextButtonDisabled: {
 			type: Boolean,
 		},
@@ -51,6 +67,18 @@ const metadata = {
 		},
 
 		isMonthButtonHidden: {
+			type: Boolean,
+		},
+
+		_monthButtonText: {
+			type: String,
+		},
+
+		_yearButtonText: {
+			type: String,
+		},
+
+		isYearButtonHidden: {
 			type: Boolean,
 		},
 	},
@@ -84,24 +112,21 @@ class CalendarHeader extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		CalendarHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
-		const localDate = new Date(this.timestamp * 1000);
-		const calendarDate = CalendarDate.fromTimestamp(localDate.getTime(), this.primaryCalendarType);
+		this._prevButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
+		this._nextButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 
-		this._monthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[calendarDate.getMonth()];
-		this._yearButtonText = yearFormat.format(localDate, true);
-		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
-		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
+		if (this.hasSecondaryCalendarType) {
+			this._secondMonthButtonText = this.buttonTextForSecondaryCalendarType.monthButtonText;
+			this._secondYearButtonText = this.buttonTextForSecondaryCalendarType.yearButtonText;
+		}
 	}
 
 	onPrevButtonClick(event) {
@@ -154,6 +179,10 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
+	get hasSecondaryCalendarType() {
+		return !!this.secondaryCalendarType;
+	}
+
 	get classes() {
 		return {
 			prevButton: {
@@ -164,6 +193,13 @@ class CalendarHeader extends UI5Element {
 				"ui5-calheader-arrowbtn": true,
 				"ui5-calheader-arrowbtn-disabled": this.isNextButtonDisabled,
 			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			ariaLabelMonthButton: this.hasSecondaryCalendarType
+				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType.info}` : `${this._monthButtonText}`,
 		};
 	}
 }

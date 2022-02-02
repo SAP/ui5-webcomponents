@@ -6,9 +6,12 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
-const colors = require("colors/safe");
+const replace = require("@rollup/plugin-replace");
+const commonjs = require("@rollup/plugin-commonjs");
+const colors = require("cli-color");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
+const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
@@ -71,6 +74,25 @@ function ui5DevReadyMessagePlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
+
+	if (process.env.DEV) {
+		plugins.push(replace({
+			values: {
+				'const DEV_MODE = false': 'const DEV_MODE = true',
+			},
+			preventAssignment: false,
+		}));
+	}
+
+	if (process.env.DEV && !process.env.ENABLE_CLDR) {
+		// Empty the CLDR assets file for better performance during development
+		plugins.push(emptyModulePlugin({
+			emptyModules: [
+				"localization/dist/Assets.js",
+			],
+		}));
+	}
+
 	if (!process.env.DEV) {
 		plugins.push(filesize(
 			{
@@ -116,10 +138,11 @@ const getPlugins = ({ transpile }) => {
 	}
 
 	if (transpile) {
+		plugins.push(commonjs());
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
 			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, // exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
-			sourcemap: true,
+			sourcemap: false,
 			babelHelpers: "bundled",
 		}));
 	}

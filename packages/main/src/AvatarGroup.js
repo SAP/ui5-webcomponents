@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import {
 	isEnter,
@@ -246,8 +246,6 @@ class AvatarGroup extends UI5Element {
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -273,13 +271,13 @@ class AvatarGroup extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		AvatarGroup.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
 	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
 	 * @readonly
-	 * @type { Array }
+	 * @type { HTMLElement[] }
 	 * @defaultValue []
 	 * @public
 	 */
@@ -290,7 +288,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
-	 * @type { Array }
+	 * @type { AvatarColorScheme[] }
 	 * @defaultValue []
 	 * @public
 	 */
@@ -307,24 +305,24 @@ class AvatarGroup extends UI5Element {
 		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
 
 		// avatar type label
-		let text = this.i18nBundle.getText(typeLabelKey);
+		let text = AvatarGroup.i18nBundle.getText(typeLabelKey);
 
 		// add displayed-hidden avatars label
-		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, [this._itemsCount - hiddenItemsCount], [hiddenItemsCount])}`;
+		text += ` ${AvatarGroup.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, this._itemsCount - hiddenItemsCount, hiddenItemsCount)}`;
 
 		if (this._isGroup) {
 			// the container role is "button", add the message for complete list activation
-			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
+			text += ` ${AvatarGroup.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
 		} else {
 			// the container role is "group", add the "how to navigate" message
-			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
+			text += ` ${AvatarGroup.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
 		}
 
 		return text;
 	}
 
 	get _overflowButtonAriaLabelText() {
-		return this._isGroup ? undefined : this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
+		return this._isGroup ? undefined : AvatarGroup.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
 	}
 
 	get _containerAriaHasPopup() {

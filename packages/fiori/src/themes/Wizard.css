@@ -24,7 +24,7 @@
 .ui5-wiz-content-item {
 	display: block;
 	box-sizing: border-box;
-	padding-bottom: 2rem;
+	padding: 1rem 2rem;
 }
 
 .ui5-wiz-content-item[hidden] {
@@ -65,7 +65,7 @@
 .ui5-wiz-nav {
 	box-sizing: border-box;
 	height: 4rem;
-	padding: 0.875rem 1rem;
+	padding: 0.875rem 2rem;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;

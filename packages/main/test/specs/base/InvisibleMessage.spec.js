@@ -2,33 +2,33 @@ const assert = require("chai").assert;
 const PORT = require("../_port.js");
 
 describe("InvisibleMessage", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/base/InvisibleMessage.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/base/InvisibleMessage.html`);
 	});
 
-    it("Initial rendering", () => {
-        const politeSpan = browser.$(".ui5-invisiblemessage-polite");
-        const assertiveSpan = browser.$(".ui5-invisiblemessage-assertive");
+    it("Initial rendering", async () => {
+        const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
+        const assertiveSpan = await browser.$(".ui5-invisiblemessage-assertive");
 
         assert.ok(politeSpan, "Polite span is rendered");
         assert.ok(assertiveSpan, "Assertive span is rendered");
     });
 
-    it("String annoucement", () => {
-        const politeSpan = browser.$(".ui5-invisiblemessage-polite");
-        const assertiveSpan = browser.$(".ui5-invisiblemessage-assertive");
-        const button = browser.$("#announce-button");
-        const checkBox = browser.$("#announce-checkbox");
+    it("String annoucement", async () => {
+        const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
+        const assertiveSpan = await browser.$(".ui5-invisiblemessage-assertive");
+        const button = await browser.$("#announce-button");
+        const checkBox = await browser.$("#announce-checkbox");
 
-        browser.execute(() => {
-			document.getElementById("announce-textarea").value = "announcement";
-		});
+        await browser.$("#announce-textarea").setProperty("value", "announcement");
 
-        button.click();
-        checkBox.click();
-        button.click();
+        await button.click();
+        await checkBox.click();
+        await button.click();
 
-        assert.ok(politeSpan.getHTML().indexOf("announcement") > -1, "Value has been rendered.");
-        assert.ok(assertiveSpan.getHTML().indexOf("announcement") > -1, "Value has been rendered.");
+        const politeSpanHtml = await politeSpan.getHTML();
+        const assertiveSpanHtml = await assertiveSpan.getHTML();
+        assert.include(politeSpanHtml, "announcement", "Value has been rendered.");
+        assert.include(assertiveSpanHtml, "announcement", "Value has been rendered.");
     });
 });

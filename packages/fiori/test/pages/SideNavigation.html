@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Side Navigation</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -19,37 +19,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html, body {
-			margin: 0;
-			padding: 0;
-		}
-
-		body {
-			height: 100vh;
-			display: flex;
-			flex-direction: column;
-		}
-
-		.content {
-			height: 100%;
-			display: flex;
-		}
-
-		ui5-shellbar::part(root) {
-			padding-left: .5rem;
-		}
-
-		.header {
-			display: flex;
-			flex-direction: column;
-			padding: 1rem;
-			box-sizing: border-box;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/SideNavigation.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="sidenavigation1auto">
 	<ui5-shellbar
 		primary-title="UI5 Web Components"
 		secondary-title="The Best Run SAP"
@@ -73,9 +46,9 @@
 			</div>
 
 			<!-- Items -->
-			<ui5-side-navigation-item text="Home" icon="home" ></ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
 			<ui5-side-navigation-item text="People" expanded icon="group">
-				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
@@ -85,8 +58,8 @@
 			</ui5-side-navigation-item>
 
 			<!-- Fixed Items -->
-			<ui5-side-navigation-item slot="fixedItems" text="Usefull Links" icon="chain-link">
-				<ui5-side-navigation-sub-item text="Vacation Tool"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link" title="Useful links tooltip">
+				<ui5-side-navigation-sub-item text="Vacation Tool" title="Vacation Tool tooltip"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="HR tool"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>

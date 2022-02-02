@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 
 	<title>Default values test page</title>
-	<script>delete Document.prototype.adoptedStyleSheets</script>
+	<script>// delete Document.prototype.adoptedStyleSheets</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -18,9 +18,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/Components.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="components1auto">
 	<ui5-busy-indicator id="busyIndicator"></ui5-busy-indicator>
 	<ui5-button id="btn">Primary button</ui5-button>
 	<ui5-toggle-button id="toggleBtn">Toggle button</ui5-toggle-button>
@@ -56,7 +57,7 @@
 		<ui5-li-custom>Discounted Items</ui5-li-custom>
 	</ui5-list>
 
-	<ui5-messagestrip id="ms2" hidden>Hello world</ui5-messagestrip>
+	<ui5-message-strip id="ms2" hidden>Hello world</ui5-message-strip>
 
 	<ui5-multi-combobox id="mcbx2" hidden>
 		<ui5-mcb-item text="Compact"></ui5-mcb-item>

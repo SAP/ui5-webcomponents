@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Core Controls</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"theme": "sap_horizon",
+			"language": "EN"
+		}
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="styles/CoreControls.css">
+</head>
+
+<body>
+	<section class="row-space-between">
+		<ui5-badge color-scheme="1">Mango</ui5-badge><br>
+		<ui5-badge color-scheme="2">Redd</ui5-badge><br>
+		<ui5-badge color-scheme="3">Pink</ui5-badge><br>
+		<ui5-badge color-scheme="4">Pink 2</ui5-badge><br>
+		<ui5-badge color-scheme="5">Purple</ui5-badge><br>
+		<ui5-badge color-scheme="6">Blue</ui5-badge><br>
+		<ui5-badge color-scheme="7">Green</ui5-badge><br>
+		<ui5-badge color-scheme="8">Lemon</ui5-badge><br>
+		<ui5-badge color-scheme="9">Grey</ui5-badge><br>
+		<ui5-badge color-scheme="10">indigo</ui5-badge><br>
+	</section>
+
+	<section class="row-center">
+		<ui5-input show-suggestions placeholder="Suggestions">
+			<ui5-suggestion-item text="Chromium"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Titanium"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Iron"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Gold"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Silver"></ui5-suggestion-item>
+		</ui5-input>
+
+		<ui5-input value="Not editable" readonly></ui5-input>
+		<ui5-input value="Not editable" disabled></ui5-input>
+	</section>
+
+	<section class="row-center">
+			<ui5-input  value="input" value-state="Error">
+			</ui5-input>
+			<ui5-input  value="input" value-state="Warning">
+			</ui5-input>
+			<ui5-input  value="input" value-state="Success">
+			</ui5-input>
+
+			<ui5-input  value="input" value-state="Information">
+			</ui5-input>
+	</section>
+
+	<section class="row-center">
+			<ui5-combobox show-suggestions placeholder="Standard">
+				<ui5-cb-item text="Chromium"></ui5-cb-item>
+				<ui5-cb-item selected text="Titanium"></ui5-cb-item>
+				<ui5-cb-item text="Iron"></ui5-cb-item>
+				<ui5-cb-item text="Gold"></ui5-cb-item>
+				<ui5-cb-item text="Silver"></ui5-cb-item>
+			</ui5-combobox>
+
+			<ui5-combobox show-suggestions readonly value="Not editable">
+				<ui5-cb-item text="Chromium"></ui5-cb-item>
+				<ui5-cb-item text="Titanium"></ui5-cb-item>
+				<ui5-cb-item text="Iron"></ui5-cb-item>
+				<ui5-cb-item text="Gold"></ui5-cb-item>
+				<ui5-cb-item text="Silver"></ui5-cb-item>
+			</ui5-combobox>
+
+			<ui5-combobox disabled value="disabled"></ui5-combobox>
+
+			<ui5-combobox show-suggestions placeholder="Standard">
+				<ui5-cb-item text="Chromium"></ui5-cb-item>
+				<ui5-cb-item text="Titanium"></ui5-cb-item>
+				<ui5-cb-item text="Iron"></ui5-cb-item>
+				<ui5-cb-item text="Gold"></ui5-cb-item>
+				<ui5-cb-item text="Silver"></ui5-cb-item>
+			</ui5-combobox>
+	</section>
+
+	<section class="row-center">
+		<ui5-select>
+			<ui5-option>Cozy</ui5-option>
+			<ui5-option selected>Compact</ui5-option>
+			<ui5-option >Condensed</ui5-option>
+		</ui5-select>
+
+		<ui5-date-picker placeholder='Delivery Date...'></ui5-date-picker>
+
+		<ui5-date-picker value-state="Error"></ui5-date-picker>
+	</section>
+
+	<section>
+		<ui5-tabcontainer collapsed fixed>
+			<ui5-tab text="One" selected>
+			</ui5-tab>
+			<ui5-tab text="Two">
+			</ui5-tab>
+			<ui5-tab text="Three">
+			</ui5-tab>
+			<ui5-tab text="Four">
+			</ui5-tab>
+			<ui5-tab text="Five">
+			</ui5-tab>
+			<ui5-tab text="Six">
+			</ui5-tab>
+			<ui5-tab text="Seven">
+			</ui5-tab>
+			<ui5-tab text="Eight">
+			</ui5-tab>
+			<ui5-tab text="Nine">
+			</ui5-tab>
+			<ui5-tab text="Ten">
+			</ui5-tab>
+			<ui5-tab text="Eleven">
+			</ui5-tab>
+			<ui5-tab text="Twelve">
+			</ui5-tab>
+			<ui5-tab text="Thirteen">
+			</ui5-tab>
+			<ui5-tab text="Fourteen">
+			</ui5-tab>
+			<ui5-tab text="Fiveteen">
+			</ui5-tab>
+			<ui5-tab text="Sixteen">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section class="row-center">
+		<section>
+			<ui5-button design="Emphasized">Action</ui5-button>
+			<ui5-button>Primary</ui5-button>
+			<ui5-button design="Transparent">Secondary</ui5-button>
+			<ui5-button disabled>Inactive</ui5-button>
+			<ui5-button design="Positive">Agree</ui5-button>
+			<ui5-button design="Negative">Decline</ui5-button>
+			<ui5-button design="Attention">Warning</ui5-button>
+			<ui5-button design="Attention" icon="message-warning">Warning</ui5-button>
+		</section>
+
+		<section>
+			<ui5-radio-button text="Group One" checked name="test"></ui5-radio-button>
+			<ui5-radio-button text="Group One" name="test"></ui5-radio-button>
+			<ui5-radio-button text="Group One" name="test"></ui5-radio-button>
+			<ui5-radio-button text="Group One" disabled name="test2"></ui5-radio-button>
+			<ui5-radio-button text="Group One" readonly name="test2"></ui5-radio-button>
+		</section>
+
+		<section>
+			<ui5-radio-button value-state="Error" checked text="Group Two" name="test2"></ui5-radio-button>
+			<ui5-radio-button value-state="Error" disabled text="Group Two" name="test2"></ui5-radio-button>
+			<ui5-radio-button value-state="Warning" text="Group Two" name="test2"></ui5-radio-button>
+			<ui5-radio-button value-state="Success" text="Group Two" name="test2"></ui5-radio-button>
+			<ui5-radio-button value-state="Information" text="Group Two" name="test2"></ui5-radio-button>
+		</section>
+
+		<section>
+			<ui5-checkbox text="Option C"></ui5-checkbox>
+			<ui5-checkbox checked text="Option D"></ui5-checkbox>
+			<ui5-checkbox text="Option E"></ui5-checkbox>
+			<ui5-checkbox disabled text="Option A"></ui5-checkbox>
+			<ui5-checkbox readonly text="Option B"></ui5-checkbox>
+		</section>
+
+		<section>
+			<ui5-checkbox checked value-state="Error" text="First"></ui5-checkbox>
+			<ui5-checkbox value-state="Error" disabled text="Second"></ui5-checkbox>
+			<ui5-checkbox value-state="Warning" text="Third"></ui5-checkbox>
+			<ui5-checkbox value-state="Success" text="Fourth"></ui5-checkbox>
+			<ui5-checkbox value-state="Information" text="Fifth"></ui5-checkbox>
+		</section>
+
+		<section>
+			<ui5-switch checked name="test"></ui5-switch>
+			<ui5-switch name="test"></ui5-switch>
+			<ui5-switch name="test"></ui5-switch>
+			<ui5-switch checked name="test"></ui5-switch>
+			<ui5-switch name="test"></ui5-switch>
+		</section>
+	</section>
+
+	<section class="row-center">
+		<section class="corecontrols1auto">
+			<ui5-slider min="0" max="20" show-tooltip></ui5-slider>
+			<ui5-slider min="20" max="100" label-interval="5" show-tickmarks></ui5-slider>
+		</section>
+	</section>
+</body>
+</html>

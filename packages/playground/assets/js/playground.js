@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var contentDensity = window.localStorage.getItem("contentDensity");
     var isCompact = (contentDensity === "Compact");
-    document.body.className = isCompact ? "ui5-content-density-compact": ""
+
+    if (isCompact) {
+      document.body.classList.add("ui5-content-density-compact");
+    }
 });
 
 var THEMES = {
@@ -21,6 +24,7 @@ var THEMES = {
   "sap_belize": "belize",
   "sap_belize_hcb": "hcb",
   "sap_belize_hcw": "hcw",
+  "sap_horizon": "horizon",
 }
 
 function toggleSettings() {
@@ -111,9 +115,11 @@ function setRTL() {
   if (rtlIsEnabled) {
     setTimeout(() => {
       body.setAttribute("dir", "rtl");
+      window["sap-ui-webcomponents-bundle"].applyDirection();
     }, 0);
   } else {
     body.removeAttribute("dir");
+    window["sap-ui-webcomponents-bundle"].applyDirection();
   }
 }
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Components
-nav_order: 5
+nav_order: 21
 has_children: true
 permalink: /playground/components
 accordion: false

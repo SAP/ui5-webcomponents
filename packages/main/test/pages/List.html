@@ -10,15 +10,16 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+<link rel="stylesheet" type="text/css" href="styles/List.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="list1auto">
 	<ui5-title>List growing="Scroll"</ui5-title>
-	<label style="font-size:2rem;">new items loaded:</label>
-	<label id="result" style="font-size:2rem;"> 0 times: 0</label>
+	<label class="list2auto">new items loaded:</label>
+	<label id="result" class="list2auto"> 0 times: 0</label>
 
-	<ui5-list id="infiniteScrollEx" growing="Scroll" style="height: 300px;">
+	<ui5-list id="infiniteScrollEx" growing="Scroll" class="list3auto">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
 		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
@@ -98,6 +99,16 @@
 
 	<br/><br/>
 
+	<ui5-list id="listPrevent" mode="SingleSelect" header-text="Prevent selection change event">
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" >Bulgaria</ui5-li>
+		<ui5-li id="country3" >China</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-label id="itemClickPrevent">[prevented Event] itemClick :: n/a</ui5-label>
+
 	<ui5-list id="myList" mode="SingleSelect" header-text="API: mode='SingleSelect'">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
@@ -139,7 +150,7 @@
 	</ui5-list>
 
 	<br/><br/>
-	<div style="display: flex; align-items: center;">
+	<div class="list4auto">
 		<h3 id="infoLbl">Items 3/3</h3>
 		<ui5-button id=	"resetBtn">Reset List</ui5-button>
 	</div>
@@ -165,19 +176,19 @@
 
 	<ui5-list header-text="API: CustomListItem" mode="SingleSelectEnd">
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
 		</ui5-li-custom>
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
 		</ui5-li-custom>
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
@@ -233,7 +244,7 @@
 	</ui5-select>
 	<ui5-list id="myList6" header-text="visualization of different combinations of icon / title / description / info / image - (Current mode: None)">
 		<ui5-li-custom>
-			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
 				<ui5-link>Go to SAP</ui5-link>
 			</div>
@@ -259,6 +270,7 @@
 		var singleSelectList = document.getElementById('myList');
 		var singleSelectEndList = document.getElementById('myList2');
 		var multiSelectList = document.getElementById('myList4');
+		var singleSelectListPrevent = document.getElementById('listPrevent');
 
 		var list = document.getElementById('myList5');
 		var resetBtn = document.getElementById('resetBtn');
@@ -266,6 +278,7 @@
 		var lblItemPress = document.getElementById('itemPress');
 		var lblItemClick = document.getElementById('itemClick');
 		var lblSelectionChange = document.getElementById('selectionChange');
+		var lblitemClickPrevent = document.getElementById('itemClickPrevent');
 		var lblItemPress2 = document.getElementById('itemPress2');
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
 		var visualizationList = document.getElementById('myList6');
@@ -313,7 +326,7 @@
 
 			mutated = false;
 			cleanList();
-			fillList(items.join());
+			fillList(items.join(""));
 			updateInfo(3);
 		};
 
@@ -336,6 +349,12 @@
 		});
 
 		resetBtn.addEventListener("click", resetList);
+
+		singleSelectListPrevent.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			var clickedItem = event.detail.item;
+			lblitemClickPrevent.innerHTML = "[Prevented Event] itemClick :: " + clickedItem.id;
+		});
 
 		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.selectedItems;

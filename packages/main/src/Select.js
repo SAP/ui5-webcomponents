@@ -12,6 +12,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -26,6 +27,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	LIST_ITEM_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -262,18 +264,10 @@ const metadata = {
  * </ul>
  * <br>
  *
- * <h3>Stable DOM Refs</h3>
- *
- * In the context of <code>ui5-select</code>, you can provide a custom stable DOM ref for:
- * <ul>
- * <li>Every <code>ui5-option</code> that you provide.
- * Example: <code><ui5-option stable-dom-ref="option1"></ui5-option></code></li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/Option";</code>
+ * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
@@ -318,7 +312,6 @@ class Select extends UI5Element {
 		this._lastSelectedOption = null;
 		this._typedChars = "";
 		this._typingTimeoutID = -1;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -334,6 +327,8 @@ class Select extends UI5Element {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
 		}
+
+		this._attachRealDomRefs();
 	}
 
 	_onfocusin() {
@@ -342,7 +337,6 @@ class Select extends UI5Element {
 
 	_onfocusout() {
 		this.focused = false;
-		this.itemSelectionAnnounce();
 	}
 
 	get _isPickerOpen() {
@@ -357,11 +351,11 @@ class Select extends UI5Element {
 	/**
 	 * Currently selected option.
 	 * @readonly
-	 * @type { ui5-option }
+	 * @type { sap.ui.webcomponents.main.ISelectOption }
 	 * @public
 	 */
 	get selectedOption() {
-		return this.options.find(option => option.selected);
+		return this._filteredItems.find(option => option.selected);
 	}
 
 	async _toggleRespPopover() {
@@ -378,15 +372,24 @@ class Select extends UI5Element {
 		}
 	}
 
+	async _attachRealDomRefs() {
+		this.responsivePopover = await this._respPopover();
+
+		this.options.forEach(option => {
+			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`);
+		});
+	}
+
 	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
-		const opts = this.options.map((opt, index) => {
+		const options = this._filteredItems;
+		const syncOpts = options.map((opt, index) => {
 			if (opt.selected || opt.textContent === this.value) {
 				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
 				lastSelectedOptionIndex = index;
 			}
-			if (!opt.disabled && (firstEnabledOptionIndex === -1)) {
+			if (firstEnabledOptionIndex === -1) {
 				firstEnabledOptionIndex = index;
 			}
 
@@ -396,36 +399,36 @@ class Select extends UI5Element {
 			return {
 				selected: false,
 				_focused: false,
-				disabled: opt.disabled,
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
+				title: opt.title,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
 		});
 
-		if (lastSelectedOptionIndex > -1 && !opts[lastSelectedOptionIndex].disabled) {
-			opts[lastSelectedOptionIndex].selected = true;
-			opts[lastSelectedOptionIndex]._focused = true;
-			this.options[lastSelectedOptionIndex].selected = true;
-			this.options[lastSelectedOptionIndex]._focused = true;
-			this._text = opts[lastSelectedOptionIndex].textContent;
+		if (lastSelectedOptionIndex > -1 && !syncOpts[lastSelectedOptionIndex].disabled) {
+			syncOpts[lastSelectedOptionIndex].selected = true;
+			syncOpts[lastSelectedOptionIndex]._focused = true;
+			options[lastSelectedOptionIndex].selected = true;
+			options[lastSelectedOptionIndex]._focused = true;
+			this._text = syncOpts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
 			this._text = "";
 			this._selectedIndex = -1;
-			if (opts[firstEnabledOptionIndex]) {
-				opts[firstEnabledOptionIndex].selected = true;
-				opts[firstEnabledOptionIndex]._focused = true;
-				this.options[firstEnabledOptionIndex].selected = true;
-				this.options[firstEnabledOptionIndex]._focused = true;
+			if (syncOpts[firstEnabledOptionIndex]) {
+				syncOpts[firstEnabledOptionIndex].selected = true;
+				syncOpts[firstEnabledOptionIndex]._focused = true;
+				options[firstEnabledOptionIndex].selected = true;
+				options[firstEnabledOptionIndex]._focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = this.options[firstEnabledOptionIndex].textContent;
+				this._text = options[firstEnabledOptionIndex].textContent;
 			}
 		}
 
-		this._syncedOptions = opts;
+		this._syncedOptions = syncOpts;
 	}
 
 	_enableFormSupport() {
@@ -462,14 +465,11 @@ class Select extends UI5Element {
 			this._handleSelectionChange();
 		} else if (isUp(event) || isDown(event)) {
 			this._handleArrowNavigation(event);
-		} else {
-			this._handleKeyboardNavigation(event);
 		}
 	}
 
 	_handleKeyboardNavigation(event) {
-		// Waiting for the actual symbol to trigger the keydown event
-		if (event.shiftKey && event.key === "Shift") {
+		if (isEnter(event)) {
 			return;
 		}
 
@@ -509,7 +509,7 @@ class Select extends UI5Element {
 	}
 
 	_searchNextItemByText(text) {
-		let orderedOptions = this.options.slice(0);
+		let orderedOptions = this._filteredItems.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
@@ -524,7 +524,7 @@ class Select extends UI5Element {
 	}
 
 	_handleEndKey(event) {
-		const lastIndex = this.options.length - 1;
+		const lastIndex = this._filteredItems.length - 1;
 
 		event.preventDefault();
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
@@ -545,9 +545,9 @@ class Select extends UI5Element {
 	}
 
 	_select(index) {
-		this.options[this._selectedIndex].selected = false;
+		this._filteredItems[this._selectedIndex].selected = false;
 		this._selectedIndex = index;
-		this.options[index].selected = true;
+		this._filteredItems[index].selected = true;
 	}
 
 	/**
@@ -555,7 +555,7 @@ class Select extends UI5Element {
 	 * @private
 	 */
 	_handleItemPress(event) {
-		const item = event.detail.item;
+		const item = event.detail.selectedItems[0];
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
@@ -604,17 +604,19 @@ class Select extends UI5Element {
 	}
 
 	_changeSelectedItem(oldIndex, newIndex) {
-		this.options[oldIndex].selected = false;
-		this.options[oldIndex]._focused = false;
+		const options = this._filteredItems;
 
-		this.options[newIndex].selected = true;
-		this.options[newIndex]._focused = true;
+		options[oldIndex].selected = false;
+		options[oldIndex]._focused = false;
+
+		options[newIndex].selected = true;
+		options[newIndex]._focused = true;
 
 		this._selectedIndex = newIndex;
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
-			this._fireChangeEvent(this.options[newIndex]);
+			this._fireChangeEvent(options[newIndex]);
 		}
 	}
 
@@ -628,7 +630,7 @@ class Select extends UI5Element {
 
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
-		this._lastSelectedOption = this.options[this._selectedIndex];
+		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 	}
 
 	_afterOpen() {
@@ -643,9 +645,9 @@ class Select extends UI5Element {
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
-		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
-			this._fireChangeEvent(this.options[this._selectedIndex]);
-			this._lastSelectedOption = this.options[this._selectedIndex];
+		} else if (this._lastSelectedOption !== this._filteredItems[this._selectedIndex]) {
+			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
+			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 		}
 	}
 
@@ -658,13 +660,11 @@ class Select extends UI5Element {
 	}
 
 	get valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": Select.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -685,21 +685,35 @@ class Select extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return Select.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _currentSelectedItem() {
-		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
+		return this.shadowRoot.querySelector(`#${this._filteredItems[this._selectedIndex]._id}-li`);
 	}
 
 	get _currentlySelectedOption() {
-		return this.options[this._selectedIndex];
+		return this._filteredItems[this._selectedIndex];
 	}
 
 	get tabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
 		&& this.responsivePopover.opened) ? "-1" : "0";
+	}
+
+	 /**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get classes() {
@@ -711,6 +725,9 @@ class Select extends UI5Element {
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
+			popover: {
+				"ui5-select-popover-valuestate": this.hasValueState,
+			},
 		};
 	}
 
@@ -720,8 +737,8 @@ class Select extends UI5Element {
 				"max-width": `${this.offsetWidth}px`,
 			},
 			responsivePopoverHeader: {
-				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
+				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
 			},
 		};
 	}
@@ -751,13 +768,19 @@ class Select extends UI5Element {
 		return isPhone();
 	}
 
+	get _filteredItems() {
+		return this.options.filter(option => !option.disabled);
+	}
+
 	itemSelectionAnnounce() {
-		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+		let text;
+		const optionsCount = this._filteredItems.length;
+		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
-			invisibleText.textContent = this._currentlySelectedOption.textContent;
-		} else {
-			invisibleText.textContent = "";
+			text = `${this._currentlySelectedOption.textContent} ${this._isPickerOpen ? itemPositionText : ""}`;
+
+			announce(text, "Polite");
 		}
 	}
 
@@ -800,6 +823,10 @@ class Select extends UI5Element {
 			Icon,
 			Button,
 		];
+	}
+
+	static async onDefine() {
+		Select.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

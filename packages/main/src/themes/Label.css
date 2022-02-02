@@ -13,19 +13,21 @@
 
 .ui5-label-root {
 	width: 100%;
+	cursor: inherit;
+}
+
+:host([wrapping-type="Normal"]) .ui5-label-root {
+	white-space: normal;
 }
 
 :host(:not([wrapping-type="Normal"])) .ui5-label-root {
-	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;
-	cursor: inherit;
-	overflow: hidden;
 }
 
 bdi {
 	content: "";
-	padding-right: 0.15625rem;
+	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
 }
 
 :host(:not([wrapping-type="Normal"])) .ui5-label-text-wrapper {
@@ -50,7 +52,11 @@ bdi {
 }
 
 :host(:not([wrapping-type="Normal"])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - .2rem);
+	max-width: calc(100% - 0.125rem);
+}
+
+:host([show-colon]) .ui5-label-required-colon {
+	margin-left: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {

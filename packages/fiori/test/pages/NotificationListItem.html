@@ -10,16 +10,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		:not(:defined) {
-			display: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/NotificationListItem.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="notificationlistitem1auto">
 
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
@@ -55,7 +51,7 @@
 		<li>itemClose</li>
 	</ul>
 
-	<ui5-list id="notificationList" header-text="Notifications titleText and content 'truncates'" accessible-role="list">
+	<ui5-list id="notificationList" header-text="Notifications titleText and content 'truncates'">
 
 		<ui5-li-notification
 			busy
@@ -129,7 +125,7 @@
 
 	<br><br>
 
-	<ui5-list id="notificationList2" header-text="Notifications titleText and content 'wraps'" accessible-role="list">
+	<ui5-list id="notificationList2">
 
 		<ui5-li-notification
 			show-close
@@ -183,8 +179,8 @@
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
-	<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
-		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'" accessible-role="list">
+	<ui5-popover id="notificationsPopover" class="notificationlistitem2auto" placement-type="Bottom" horizontal-align="Right">
+		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'">
 			<ui5-li-notification
 				show-close
 				title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
@@ -246,22 +242,22 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<div style="display: flex; justify-content: flex-end; padding: 0.25rem; border-bottom: 1px solid grey;">
+	<div class="notificationlistitem3auto">
 		<ui5-button id="openNotifications" design="Transparent" icon="bell"></ui5-button>
 	</div>
 
 	<script>
-		notificationList.addEventListener("itemClick", function(event) {
+		notificationList.addEventListener("item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("itemClose", function(event) {
+		notificationList.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList2.addEventListener("itemClick", function(event) {
+		notificationList2.addEventListener("item-click", function(event) {
 			var item = event.detail.item;
 
 			setTimeout(function() {
@@ -274,7 +270,7 @@
 			wcToastBS.show();
 		});
 
-		notificationList2.addEventListener("itemClose", function(event) {
+		notificationList2.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
@@ -303,7 +299,7 @@
 			notificationsPopover.showAt(openNotifications);
 		});
 
-		shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
 			notificationsPopover.showAt(event.detail.targetRef);
 		});

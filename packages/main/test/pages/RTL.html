@@ -7,27 +7,21 @@
 
 	<title>RTL and Language</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		section {
-			border: 1px dashed red;
-			padding: 10px;
-			margin: 10px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/RTL.css">
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="rtl1auto">
 
 
-	<div style="display: flex; align-items: center;">
+	<div class="rtl2auto">
 		<ui5-segmented-button id="tb">
 			<ui5-toggle-button pressed>EN</ui5-toggle-button>
 			<ui5-toggle-button>DE</ui5-toggle-button>
@@ -36,13 +30,13 @@
 			<ui5-toggle-button>HE</ui5-toggle-button>
 			<ui5-toggle-button>AR</ui5-toggle-button>
 		</ui5-segmented-button>
-		<div style="flex: auto;"></div>
-		<ui5-label style="margin:0 5px;">Manually switch RTL:</ui5-label>
+		<div class="rtl3auto"></div>
+		<ui5-label class="rtl4auto">Manually switch RTL:</ui5-label>
 		<ui5-switch id="sw"></ui5-switch>
 	</div>
 
 	<section>
-		<ui5-textarea maxlength="20" show-exceeded-text style="width: 500px;"></ui5-textarea>
+		<ui5-textarea maxlength="20" show-exceeded-text class="rtl5auto"></ui5-textarea>
 	</section>
 
 	<section>

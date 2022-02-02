@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -24,6 +24,7 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 /**
  * @public
@@ -34,7 +35,7 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
-		 * Defines the value of the Web Component.
+		 * Defines the value of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -47,7 +48,7 @@ const metadata = {
 		/**
 		 * Indicates whether the user can interact with the component or not.
 		 * <br><br>
-		 * <b>Note:</b> Disabled components cannot be focused and they are out of the tab chain.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -180,7 +181,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the maximum number of lines that the Web Component can grow.
+		 * Defines the maximum number of lines that the component can grow.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 0
@@ -329,10 +330,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-textarea</code> component provides large spaces for text
- * entries in the form of multiple rows.
- * It has the functionality of the <code>TextField</code> with the additional
- * functionality for multiline texts.
+ * The <code>ui5-textarea</code> component is used to enter multiple lines of text.
  * <br><br>
  * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
  * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
@@ -363,7 +361,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get styles() {
-		return styles;
+		return [browserScrollbarCSS, styles];
 	}
 
 	static get render() {
@@ -388,7 +386,6 @@ class TextArea extends UI5Element {
 		this._firstRendering = true;
 		this._openValueStateMsgPopover = false;
 		this._fnOnResize = this._onResize.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -449,9 +446,13 @@ class TextArea extends UI5Element {
 		this.previousValue = this.getInputDomRef().value;
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 		this.focused = false;
-		this._openValueStateMsgPopover = false;
+
+		if (!focusedOutToValueStateMessage) {
+			this._openValueStateMsgPopover = false;
+		}
 	}
 
 	_onchange() {
@@ -544,9 +545,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
+					exceededText = TextArea.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, leftCharactersCount);
 				} else {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
+					exceededText = TextArea.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, Math.abs(leftCharactersCount));
 				}
 			}
 		} else {
@@ -570,6 +571,7 @@ class TextArea extends UI5Element {
 
 	get styles() {
 		const lineHeight = 1.4 * 16;
+		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
 
 		return {
 			mirror: {
@@ -577,7 +579,7 @@ class TextArea extends UI5Element {
 			},
 			main: {
 				width: "100%",
-				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+				height: (this.rows && !this.growing) ? `${mainHeight}px` : "100%",
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
@@ -632,7 +634,7 @@ class TextArea extends UI5Element {
 	}
 
 	get displayValueStateMessagePopover() {
-		return this.hasCustomValueState || this.hasValueState || this.exceeding;
+		return !this.readonly && (this.hasCustomValueState || this.hasValueState || this.exceeding);
 	}
 
 	get hasCustomValueState() {
@@ -655,13 +657,29 @@ class TextArea extends UI5Element {
 		return this.valueStateTextMappings()[this.valueState];
 	}
 
-	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	valueStateTextMappings() {
 		return {
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -670,7 +688,7 @@ class TextArea extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

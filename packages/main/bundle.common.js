@@ -1,8 +1,8 @@
-import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
-// setAssetsPath("/my-resources/");
-
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
+// import "./customI18n.js";
 
+import "./bundle.common.bootstrap.js"; // code that needs to be executed before other modules
 
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
@@ -42,6 +42,7 @@ import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ColorPalette from "./dist/ColorPalette.js";
 import ColorPaletteItem from "./dist/ColorPaletteItem.js";
+import ColorPalettePopover from "./dist/ColorPalettePopover.js";
 import ColorPicker from "./dist/ColorPicker.js";
 import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";
@@ -50,7 +51,6 @@ import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
-import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
@@ -63,6 +63,7 @@ import SegmentedButton from "./dist/SegmentedButton.js";
 import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
+import SplitButton from "./dist/SplitButton.js";
 import StepInput from "./dist/StepInput.js";
 import RangeSlider from "./dist/RangeSlider.js";
 import Switch from "./dist/Switch.js";
@@ -124,8 +125,6 @@ const testAssets = {
 		setNoConflict,
 		getRTL,
 		getFirstDayOfWeek,
-		getAssetsPath,
-		setAssetsPath
 	},
 	invisibleMessage : {
 		announce,

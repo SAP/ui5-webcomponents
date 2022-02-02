@@ -8,7 +8,7 @@
 	<title>ColorPicker Playground</title>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -21,10 +21,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/ColorPicker.css">
 </head>
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="colorpicker1auto">
 
 	<ui5-color-picker id="cp1"></ui5-color-picker>
+	<ui5-step-input id="changeEventCounter" value="0"></ui5-step-input>
 
 	<br>
 	<br>
@@ -46,10 +48,17 @@
 
 	<script>
 		var colorPicker = document.querySelector("#change-event"),
-			colorLabel = document.querySelector("#color-input");
+			colorLabel = document.querySelector("#color-input"),
+			colorPicker1 = document.getElementById("cp1"),
+			stepInput = document.getElementById("changeEventCounter");
 
 		colorPicker.addEventListener("ui5-change", function(event) {
 			colorLabel.value = event.target.color;
 		});
+
+		colorPicker1.addEventListener("ui5-change", function(event) {
+			stepInput.value += 1;
+		});
+
 	</script>
 </html>

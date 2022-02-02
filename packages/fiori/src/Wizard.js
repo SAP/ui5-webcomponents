@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -56,20 +56,8 @@ const STEP_SWITCH_THRESHOLDS = {
 const metadata = {
 	tag: "ui5-wizard",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @defaultvalue undefined
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-			defaultValue: undefined,
-		},
-
 		/**
 		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
@@ -95,7 +83,7 @@ const metadata = {
 		 * @defaultvalue 0.7
 		 * @since 1.0.0-rc.13
 		 */
-		 stepSwitchThreshold: {
+		stepSwitchThreshold: {
 			type: Float,
 			defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT,
 		},
@@ -136,9 +124,9 @@ const metadata = {
 		 * or by clicking on the steps within the component header.
 		 *
 		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
-		 * @param {HTMLElement} step the new step
-		 * @param {HTMLElement} previousStep the previous step
-		 * @param {Boolean} changeWithClick the step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation
+		 * @param {HTMLElement} step The new step.
+		 * @param {HTMLElement} previousStep The previous step.
+		 * @param {Boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
 		 * @public
 		 */
 		"step-change": {
@@ -156,7 +144,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-wizard</code> helps users complete a complex task by dividing it into sections and guiding the user through it.
+ * The <code>ui5-wizard</code> helps users to complete a complex task by dividing it into sections and guiding them through it.
  * It has two main areas - a navigation area at the top showing the step sequence and a content area below it.
  *
  * <h3>Structure</h3>
@@ -166,12 +154,30 @@ const metadata = {
  * <ul>
  * <li> Steps can have different visual representations - numbers or icons.
  * <li> Steps might have labels for better readability - titleText and subTitleText.</li>
- * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
+ * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.</li>
  * </ul>
  *
  * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
+ *
+ * <h3>Keyboard Handling</h3>
+ * The user can navigate using the following keyboard shortcuts:
+ * <br>
+ *
+ * <h4>Wizard Progress Navigation</h4>
+ * <ul>
+ * 	<li>[LEFT], [DOWN] - Focus moves backward to the WizardProgressNavAnchors.</li>
+ * 	<li>[UP], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.</li>
+ * 	<li>[SPACE] or [ENTER], [RETURN] - Selects an active step</li>
+ * 	<li>[HOME] or [PAGE UP] - Focus goes to the first step</li>
+ * 	<li>[END] or [PAGE DOWN] - Focus goes to the last step</li>
+ * </ul>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  *
  * <h4>Content</h4>
  * The content occupies the main part of the page. It can hold any type of HTML elements.
@@ -194,7 +200,7 @@ const metadata = {
  * <h4>Moving to next step</h4>
  * The <code>ui5-wizard-step</code> provides the necessary API and it's up to the user of the component to use it to move to the next step.
  * You have to set its <code>selected</code> property (and remove the <code>disabled</code> one if set) to <code>true</code>.
- * And, the <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
+ * The <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
  * <br><br>
  *
  * The Fiori 3 guidelines recommends having a "nextStep" button in the content area.
@@ -203,14 +209,14 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * <h4>When to use:</h4>
- * When the user has to accomplish a long set of tasks.
+ * When the user has to accomplish a long or unfamiliar task.
  *
  * <h4>When not to use:</h4>
  * When the task has less than 3 steps.
  *
  * <h3>Responsive Behavior</h3>
- * On small widths the step's titleText, subtitleText and separators in the navigation area
- * will start truncate and shrink and from particular point they will hide to free as much space as possible.
+ * On small widths the step's titleText, subtitleText and separators in the navigation area shrink and from particular point the steps are grouped together and overlap.
+ * Tapping on them will show a popover to select the step to navigate to. On mobile device, the grouped steps are presented within a dialog.
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
@@ -256,13 +262,11 @@ class Wizard extends UI5Element {
 		this.selectionRequestedByScroll = false;
 
 		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
+			navigationMode: NavigationMode.Auto,
 			getItemsCallback: () => this.enabledStepsInHeaderDOM,
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -305,7 +309,7 @@ class Wizard extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		Wizard.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get PHONE_BREAKPOINT() {
@@ -314,10 +318,6 @@ class Wizard extends UI5Element {
 
 	static get SCROLL_DEBOUNCE_RATE() {
 		return 25;
-	}
-
-	static get CONTENT_TOP_OFFSET() {
-		return 32;
 	}
 
 	static get staticAreaTemplate() {
@@ -420,7 +420,7 @@ class Wizard extends UI5Element {
 	storeStepScrollOffsets() {
 		this.stepScrollOffsets = this.slottedSteps.map(step => {
 			const contentItem = this.getStepWrapperByRefId(step._id);
-			return contentItem.offsetTop + contentItem.offsetHeight - Wizard.CONTENT_TOP_OFFSET;
+			return contentItem.offsetTop + contentItem.offsetHeight;
 		});
 	}
 
@@ -666,8 +666,10 @@ class Wizard extends UI5Element {
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
 
-		// Focus the first focusable element within the step content corresponding to the currently focused tab
-		firstFocusableElement.focus();
+		if (firstFocusableElement) {
+			// Focus the first focusable element within the step content corresponding to the currently focused tab
+			firstFocusableElement.focus();
+		}
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.
@@ -693,7 +695,7 @@ class Wizard extends UI5Element {
 	}
 
 	getStepAriaLabelText(step, ariaLabel) {
-		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
+		return Wizard.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
 	}
 
 	get stepsDOM() {
@@ -706,9 +708,11 @@ class Wizard extends UI5Element {
 
 	get _steps() {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
+		const stepsInfo = this.getStepsInfo();
 
 		return this.steps.map((step, idx) => {
 			step.stretch = idx === lastEnabledStepIndex;
+			step.stepContentAriaLabel = `${this.navStepDefaultHeading} ${stepsInfo[idx].number} ${stepsInfo[idx].titleText}`;
 			return step;
 		});
 	}
@@ -758,7 +762,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM.filter(step => !step.disabled);
+		return this.stepsInHeaderDOM;
 	}
 
 	get phoneMode() {
@@ -770,43 +774,43 @@ class Wizard extends UI5Element {
 	}
 
 	get navAriaRoleDescription() {
-		return this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get navAriaLabelText() {
-		return this.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
+		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
 	}
 
 	get navAriaDescribedbyText() {
-		return this.i18nBundle.getText(WIZARD_LIST_ARIA_DESCRIBEDBY);
+		return Wizard.i18nBundle.getText(WIZARD_LIST_ARIA_DESCRIBEDBY);
 	}
 
 	get listAriaLabelText() {
-		return this.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
+		return Wizard.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
 	}
 
 	get actionSheetStepsText() {
-		return this.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
+		return Wizard.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
 	}
 
 	get navStepDefaultHeading() {
-		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
+		return Wizard.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
 	}
 
 	get optionalStepText() {
-		return this.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
+		return Wizard.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
 	}
 
 	get activeStepText() {
-		return this.i18nBundle.getText(WIZARD_STEP_ACTIVE);
+		return Wizard.i18nBundle.getText(WIZARD_STEP_ACTIVE);
 	}
 
 	get inactiveStepText() {
-		return this.i18nBundle.getText(WIZARD_STEP_INACTIVE);
+		return Wizard.i18nBundle.getText(WIZARD_STEP_INACTIVE);
 	}
 
 	get ariaLabelText() {
-		return this.accessibleName || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get effectiveStepSwitchThreshold() {
@@ -859,7 +863,9 @@ class Wizard extends UI5Element {
 				accInfo,
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
-				styles: `z-index: ${isAfterCurrent ? --inintialZIndex : 1}`,
+				styles: {
+					zIndex: isAfterCurrent ? --inintialZIndex : 1,
+				},
 			};
 		});
 	}
@@ -984,8 +990,11 @@ class Wizard extends UI5Element {
 	 */
 	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
 		if (selectedStep && stepToSelect) {
-			selectedStep.selected = false;
-			stepToSelect.selected = true;
+			// keep the selection if next step is disabled
+			if (!stepToSelect.disabled) {
+				selectedStep.selected = false;
+				stepToSelect.selected = true;
+			}
 
 			this.fireEvent("step-change", {
 				step: stepToSelect,

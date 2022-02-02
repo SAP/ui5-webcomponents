@@ -2,7 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 
-import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -66,14 +67,73 @@ const metadata = {
 		 * <li><code>BeforeSearch</code></li>
 		 * <li><code>NoActivities</code></li>
 		 * <li><code>NoData</code></li>
-		 * <li><code>NoEntries</code></li>
 		 * <li><code>NoMail</code></li>
+		 * <li><code>NoMail_v1</code></li>
+		 * <li><code>NoEntries</code></li>
 		 * <li><code>NoNotifications</code></li>
 		 * <li><code>NoSavedItems</code></li>
+		 * <li><code>NoSavedItems_v1</code></li>
 		 * <li><code>NoSearchResults</code></li>
 		 * <li><code>NoTasks</code></li>
+		 * <li><code>NoTasks_v1</code></li>
 		 * <li><code>UnableToLoad</code></li>
+		 * <li><code>UnableToLoadImage</code></li>
 		 * <li><code>UnableToUpload</code></li>
+		 * <li><code>AddColumn</code></li>
+		 * <li><code>AddPeople</code></li>
+		 * <li><code>BalloonSky</code></li>
+		 * <li><code>Connection</code></li>
+		 * <li><code>EmptyCalendar</code></li>
+		 * <li><code>EmptyList</code></li>
+		 * <li><code>EmptyPlanningCalendar</code></li>
+		 * <li><code>ErrorScreen</code></li>
+		 * <li><code>FilterTable</code></li>
+		 * <li><code>GroupTable</code></li>
+		 * <li><code>NoFilterResults</code></li>
+		 * <li><code>PageNotFound</code></li>
+		 * <li><code>ReloadScreen</code></li>
+		 * <li><code>ResizeColumn</code></li>
+		 * <li><code>SearchEarth</code></li>
+		 * <li><code>SearchFolder</code></li>
+		 * <li><code>SimpleBalloon</code></li>
+		 * <li><code>SimpleBell</code></li>
+		 * <li><code>SimpleCalendar</code></li>
+		 * <li><code>SimpleCheckMark</code></li>
+		 * <li><code>SimpleConnection</code></li>
+		 * <li><code>SimpleEmptyDoc</code></li>
+		 * <li><code>SimpleEmptyList</code></li>
+		 * <li><code>SimpleError</code></li>
+		 * <li><code>SimpleMagnifier</code></li>
+		 * <li><code>SimpleMail</code></li>
+		 * <li><code>SimpleNoSavedItems</code></li>
+		 * <li><code>SimpleNotFoundMagnifier</code></li>
+		 * <li><code>SimpleReload</code></li>
+		 * <li><code>SimpleTask</code></li>
+		 * <li><code>SleepingBell</code></li>
+		 * <li><code>SortColumn</code></li>
+		 * <li><code>SuccessBalloon</code></li>
+		 * <li><code>SuccessCheckMark</code></li>
+		 * <li><code>SuccessHighFive</code></li>
+		 * <li><code>SuccessScreen</code></li>
+		 * <li><code>Tent</code></li>
+		 * <li><code>UploadCollection</code></li>
+		 * <li><code>TntCompany</code></li>
+		 * <li><code>TntExternalLink</code></li>
+		 * <li><code>TntFaceID</code></li>
+		 * <li><code>TntFingerprint</code></li>
+		 * <li><code>TntLock</code></li>
+		 * <li><code>TntMission</code></li>
+		 * <li><code>TntNoApplications</code></li>
+		 * <li><code>TntNoFlows</code></li>
+		 * <li><code>TntNoUsers</code></li>
+		 * <li><code>TntRadar</code></li>
+		 * <li><code>TntServices</code></li>
+		 * <li><code>TntSessionExpired</code></li>
+		 * <li><code>TntSessionExpiring</code></li>
+		 * <li><code>TntSuccess</code></li>
+		 * <li><code>TntSuccessfulAuth</code></li>
+		 * <li><code>TntUnlock</code></li>
+		 * <li><code>TntUnsuccessfulAuth</code></li>
 		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
@@ -81,6 +141,11 @@ const metadata = {
 		 * When using an illustration type, other than the default, it should be loaded in addition:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
+		 * <br><br>
+		 * <b>Note:</b> TNT illustrations cointain <code>Tnt</code> prefix in their name.
+		 * You can import them removing the <code>Tnt</code> prefix like this:
+		 * <br>
+		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
 		 * @type {IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
@@ -130,11 +195,15 @@ const metadata = {
  * Each illustration has default internationalised title and subtitle texts. Also they can be managed with
  * <code>titleText</code> and <code>subtitleText</code> properties.
  *
- * То display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
+ * To display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
  * <br><br>
  * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"</code>
+ * <br>
+ * <b>Note:</b> Illustrations starting with the “Tnt” prefix are part of another illustration set. For example to use the “TntSuccess” illustration, add the following import::
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/Success.js"</code>
  *
  * <h3>Structure</h3>
  * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
@@ -166,7 +235,6 @@ class IllustratedMessage extends UI5Element {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._handleResize = this.handleResize.bind(this);
 	}
 
@@ -187,7 +255,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		IllustratedMessage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -207,13 +275,19 @@ class IllustratedMessage extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [Title];
+	}
+
 	onBeforeRendering() {
 		const illustrationData = getIllustrationDataSync(this.name);
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
+			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
+
 			/* eslint-disable-next-line */
-			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${this.name}.js".`);
+			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js".`);
 		}
 
 		this.invalid = false;
@@ -221,8 +295,8 @@ class IllustratedMessage extends UI5Element {
 		this.dialogSvg = illustrationData.dialogSvg;
 		this.sceneSvg = illustrationData.sceneSvg;
 
-		this.illustrationTitle = this.i18nBundle.getText(illustrationData.title);
-		this.illustrationSubtitle = this.i18nBundle.getText(illustrationData.subtitle);
+		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData.title);
+		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData.subtitle);
 	}
 
 	onEnterDOM() {
@@ -268,6 +342,14 @@ class IllustratedMessage extends UI5Element {
 
 	get effectiveSubitleText() {
 		return this.subtitleText ? this.subtitleText : this.illustrationSubtitle;
+	}
+
+	get hasTitle() {
+		return this.titleText || this.illustrationTitle;
+	}
+
+	get hasSubtitle() {
+		return this.subtitleText || this.illustrationSubtitle;
 	}
 
 	get hasActions() {

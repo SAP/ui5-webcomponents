@@ -7,7 +7,31 @@
 
 Contains the base files for all Web Components, most notably `@ui5/webcomponents-base/dist/UI5Element.js`.
 
-For a complete list of all app development related public module imports from the `base` package, click [here](../../docs/Public%20Module%20Imports.md#base):
+## Provided APIs for applications
+
+### `Boot.js`
+
+ - `attachBoot`
+
+### `CustomElementsScope.js`
+
+ - `setCustomElementsScopingSuffix`
+ - `getCustomElementsScopingSuffix`
+ - `setCustomElementsScopingRules`
+ - `getCustomElementsScopingRules`
+
+### `i18nBundle.js`
+
+ - `registerI18nLoader`
+ - `getI18nBundle`
+
+### `PropertiesFileFormat.js`
+
+ - `parseProperties`
+
+### `Render.js`
+
+ - `renderFinished`
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
@@ -18,7 +42,7 @@ For a complete list of all app development related public module imports from th
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/docs/6-contributing/02-conventions-and-guidelines.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.

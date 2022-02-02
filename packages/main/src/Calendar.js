@@ -4,6 +4,9 @@ import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -26,6 +29,7 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
  */
 const metadata = {
 	tag: "ui5-calendar",
+	fastNavigation: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.
@@ -73,6 +77,14 @@ const metadata = {
 
 		_nextButtonDisabled: {
 			type: Boolean,
+		},
+
+		_headerMonthButtonText: {
+			type: String,
+		},
+
+		_headerYearButtonText: {
+			type: String,
 		},
 	},
 	managedSlots: true,
@@ -164,8 +176,8 @@ const metadata = {
  * <br>
  * - Month picker: <br>
  * <ul>
- * <li>[PAGEUP] - Navigate to the previous month</li>
- * <li>[PAGEDOWN] - Navigate to the next month</li>
+ * <li>[PAGEUP] - Navigate to the previous year</li>
+ * <li>[PAGEDOWN] - Navigate to the next year</li>
  * <li>[HOME] - Navigate to the first month of the current row</li>
  * <li>[END] - Navigate to the last month of the current row</li>
  * <li>[CTRL] + [HOME] - Navigate to the first month of the current year</li>
@@ -182,6 +194,12 @@ const metadata = {
  * <li>[CTRL] + [END] - Navigate to the last year of the current year range</li>
  * </ul>
  * <br>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
 * <h3>Calendar types</h3>
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
@@ -269,6 +287,21 @@ class Calendar extends CalendarPart {
 		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
+
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		this._headerMonthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
+
+		if (this._currentPicker === "year") {
+			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			rangeStart.setYear(this._currentPickerDOM._firstYear);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+
+			this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
+		} else {
+			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
+		}
 	}
 
 	/**
@@ -307,13 +340,72 @@ class Calendar extends CalendarPart {
 		this._currentPickerDOM._showNextPage();
 	}
 
+	get secondaryCalendarTypeButtonText() {
+		if (!this.secondaryCalendarType) {
+			return;
+		}
+
+		const localDate = new Date(this._timestamp * 1000);
+		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
+		const secondYearText = secondYearFormat.format(localDate, true);
+		return {
+			yearButtonText: secondYearText,
+			monthButtonText: secondMonthInfo.text,
+			monthButtonInfo: secondMonthInfo.info,
+		};
+	}
+
+	_getDisplayedSecondaryMonthText() {
+		const month = this._getDisplayedSecondaryMonths();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const pattern = localeData.getIntervalPattern();
+		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
+		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
+
+		if (month.startMonth === month.endMonth) {
+			return {
+				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[month.startMonth],
+				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth],
+			};
+		}
+
+		return {
+			text: pattern.replace(/\{0\}/, secondaryMonthsNames[month.startMonth]).replace(/\{1\}/, secondaryMonthsNames[month.endMonth]),
+			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[month.startMonth]).replace(/\{1\}/, secondaryMonthsNamesWide[month.endMonth]),
+		};
+	}
+
+	_getDisplayedSecondaryMonths() {
+		const localDate = new Date(this._timestamp * 1000);
+		let firstDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
+		firstDate.setDate(1);
+		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
+		const startMonth = firstDate.getMonth();
+
+		let lastDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
+		lastDate.setDate(this._getDaysInMonth(lastDate));
+		lastDate = new CalendarDate(lastDate, this.secondaryCalendarType);
+		const endMonth = lastDate.getMonth();
+
+		return { startMonth, endMonth };
+	}
+
+	_getDaysInMonth(date) {
+		const tempCalendarDate = new CalendarDate(date);
+		tempCalendarDate.setDate(1);
+		tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
+		tempCalendarDate.setDate(0);
+		return tempCalendarDate.getDate();
+	}
+
 	/**
-	 * The month button is only hidden when the month picker is shown
+	 * The month button is hidden when the month picker or year picker is shown
 	 * @returns {boolean}
 	 * @private
 	 */
 	get _isHeaderMonthButtonHidden() {
-		return this._currentPicker === "month";
+		return this._currentPicker === "month" || this._currentPicker === "year";
 	}
 
 	get _isDayPickerHidden() {

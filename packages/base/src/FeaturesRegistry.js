@@ -8,4 +8,7 @@ const getFeature = name => {
 	return features.get(name);
 };
 
-export { registerFeature, getFeature };
+export {
+	registerFeature,
+	getFeature,
+};

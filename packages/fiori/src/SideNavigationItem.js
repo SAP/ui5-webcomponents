@@ -68,6 +68,17 @@ const metadata = {
 		wholeItemToggleable: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		 title: {
+			type: String,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
@@ -113,6 +124,10 @@ const metadata = {
 class SideNavigationItem extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	get _tooltip() {
+		return this.title || this.text;
 	}
 }
 

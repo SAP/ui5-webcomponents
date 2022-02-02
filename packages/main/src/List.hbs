@@ -18,17 +18,18 @@
 			<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
 		{{/if}}
 
+		<span id="{{_id}}-modeLabel" class="ui5-hidden-text">{{ariaLabelModeText}}</span>
+
 		<ul id="{{_id}}-listUl"
 			class="ui5-list-ul"
 			role="{{accessibleRole}}"
-			aria-label="{{ariaLabelТxt}}"
+			aria-label="{{ariaLabelTxt}}"
 			aria-labelledby="{{ariaLabelledBy}}"
-			aria-multiselectable="{{isMultiSelect}}"
 		>
 			<slot></slot>
 
 			{{#if showNoDataText}}
-				<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}" style="list-style-type: none;">
+				<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}">
 					<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
 						{{noDataText}}
 					</div>
@@ -59,8 +60,9 @@
 				delay="{{busyDelay}}"
 				active
 				size="Medium"
-				class="ui5-list-busy-ind" 
+				class="ui5-list-busy-ind"
 				style="{{styles.busyInd}}"
+				data-sap-focus-ref
 			></ui5-busy-indicator>
 		</div>
 	{{/if}}
@@ -69,7 +71,7 @@
 
 {{#*inline "moreRow"}}
 	<div growing-button>
-		<div 
+		<div
 			tabindex="0"
 			role="button"
 			aria-labelledby="{{_id}}-growingButton-text"

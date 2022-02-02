@@ -1,0 +1,5 @@
+:root {
+	--_ui5_media_gallery_overflow_btn_background:  var(--sapButton_Neutral_Background);
+	--_ui5_media_gallery_overflow_btn_color:  var(--sapBaseColor);
+	--_ui5_media_gallery_overflow_btn_border:  none;
+}

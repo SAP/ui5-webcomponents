@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
@@ -103,7 +104,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.items,
 		});
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get dependencies() {
@@ -111,11 +111,11 @@ class Timeline extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		Timeline.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get ariaLabel() {
-		return this.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+		return Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
 	}
 
 	_onfocusin(event) {
@@ -135,6 +135,32 @@ class Timeline extends UI5Element {
 				this.items[i]._lineWidth = LARGE_LINE_WIDTH;
 			}
 		}
+	}
+
+	_onkeydown(event) {
+		if (isTabNext(event)) {
+			if (!event.target.nameClickable || event.isMarked === "link") {
+				this._handleTabNextOrPrevious(event, isTabNext(event));
+			}
+		} else if (isTabPrevious(event)) {
+			this._handleTabNextOrPrevious(event);
+		}
+	}
+
+	_handleTabNextOrPrevious(event, isNext) {
+		const nextTargetIndex = isNext ? this.items.indexOf(event.target) + 1 : this.items.indexOf(event.target) - 1;
+		const nextTarget = this.items[nextTargetIndex];
+		if (!nextTarget) {
+			return;
+		}
+		if (nextTarget.nameClickable && !isNext) {
+			event.preventDefault();
+			nextTarget.shadowRoot.querySelector("[ui5-link]").focus();
+			return;
+		}
+		event.preventDefault();
+		nextTarget.focus();
+		this._itemNavigation.setCurrentItem(nextTarget);
 	}
 }
 

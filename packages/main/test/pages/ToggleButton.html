@@ -11,7 +11,7 @@
 	<meta charset="utf-8">
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -24,47 +24,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
-
-		.header {
-			display: flex;
-			justify-content: center;
-			height: 3rem;
-			background: #3f5161;
-		}
-
-		.header-title {
-			color: #fafafa;
-			margin: 0;
-			padding: 0;
-			line-height: 3rem;
-			font-size: 1.375rem;
-			font-weight: normal;
-			text-shadow: 0 0 0.125rem #ffffff;
-			font-family: "72", Arial, Helvetica, sans-serif;
-		}
-
-		.main {
-			display: flex;
-		}
-
-		.samples,
-		.result {
-			flex: 1;
-		}
-
-		.samples {
-			flex-grow: 4;
-		}
-
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/ToggleButton.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="togglebutton1auto">
 
 <header class="header">
 	<h1 class="header-title">ui5-toggle-button</h1>

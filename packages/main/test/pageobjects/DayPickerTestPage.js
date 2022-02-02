@@ -3,14 +3,14 @@ class DayPickerTestHelper {
 		this._sut = id;
 	}
 
-	get dayPickerRoot() {
+	async getDayPickerRoot() {
 		return browser.executeAsync(async (id, done) => {
 			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			const el = document.getElementById(id)
 				.shadowRoot.querySelector(".ui5-dp-root");
 
-			return done(el);
+			done(el);
 		}, this._sut);
 	}
 }

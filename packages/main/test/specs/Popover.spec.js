@@ -2,155 +2,172 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 	});
 
-	it("Header text attribute is propagated", () => {
-		const popover = $("#pop");
+	it("Header text attribute is propagated", async () => {
+		const popover = await browser.$("#pop");
 		const selector = "h2=New text";
 
-		popover.setAttribute("header-text", "New text");
+		await popover.setAttribute("header-text", "New text");
 		assert.ok($(selector), "The new header text was set correctly");
 	});
 
-	it("Popover arrow", () => {
-		const popover = $("#pop");
-		const btnOpenPopover = $("#btn");
+	it("Popover arrow", async () => {
+		const popover = await browser.$("#pop");
+		const btnOpenPopover = await browser.$("#btn");
 
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		assert.ok(popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "Initially popover has arrow.");
+		assert.ok(await popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "Initially popover has arrow.");
 
-		browser.execute(() => {
+		await browser.executeAsync(done => {
 			document.getElementById("pop").toggleAttribute("hide-arrow");
+			done();
 		});
 
-		assert.ok(!popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "The arrow was hidden.");
+		assert.notOk(await popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "The arrow was hidden.");
 	});
 
 });
 
 describe("Popover general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 	});
 
-	it("tests popover toggling", () => {
-		const btnOpenPopover = $("#btn");
-		const field = $("#field");
+	it("tests popover toggling", async () => {
+		const btnOpenPopover = await browser.$("#btn");
+		const field = await browser.$("#field");
 
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		const popover = browser.$("ui5-popover");
-		assert.ok(popover.isDisplayedInViewport(), "Popover is opened.");
+		const popover = await browser.$("ui5-popover");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 
-		field.click();
-		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
+		await field.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
-	it("tests popover does not close with opener", () => {
-		const popover = browser.$("#quickViewCard");
-		const btnOpenPopover = $("#btnQuickViewCardOpener");
-		const btnMoveFocus = $("#btnMoveFocus");
+	it("tests popover does not close with opener", async () => {
+		const popover = await browser.$("#quickViewCard");
+		const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
+		const btnMoveFocus = await browser.$("#btnMoveFocus");
 
 		// assert - the opener is visible
-		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), true,
+		assert.strictEqual(await btnOpenPopover.isDisplayedInViewport(), true,
 			"Opener is available.");
 
 		// act - open popover and hide opener
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		browser.pause(500);
+		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(popover.getAttribute("opened"), "",
+		assert.strictEqual(await popover.getAttribute("opened"), "",
 			"Popover remains open.");
-		assert.strictEqual(popover.isDisplayedInViewport(), true,
+		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
-		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), false,
+		assert.strictEqual(await btnOpenPopover.isDisplayedInViewport(), false,
 			"Opener is not available.");
 
 		// close the popover
-		btnMoveFocus.click();
+		await btnMoveFocus.click();
 	});
 
-	it("tests clicking inside the popover does not close it", () => {
-		const btnOpenPopover = $("#btn");
-		const btnInPopover = $("#popbtn");
+	it("tests clicking inside the popover does not close it", async () => {
+		const btnOpenPopover = await browser.$("#btn");
+		const btnInPopover = await browser.$("#popbtn");
 
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		const popover = browser.$("ui5-popover");
-		assert.ok(popover.isDisplayedInViewport(), "Popover is opened.");
+		const popover = await browser.$("ui5-popover");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 
-		btnInPopover.click();
-		assert.ok(popover.isDisplayedInViewport(), "Popover remains opened.");
+		await btnInPopover.click();
+		assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
 
-	it("tests if overflown content can be reached by scrolling", () => {
-		const manyItemsSelect = $("#many-items");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#many-items");
-		const items = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li");
+	it("tests if overflown content can be reached by scrolling 1", async () => {
+		const manyItemsSelect = await browser.$("#many-items");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
+		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+		const items = await staticAreaItem.shadow$$("ui5-li");
 
-		manyItemsSelect.click();
+		await manyItemsSelect.click();
 
 		const itemBeforeLastItem = items[items.length - 2];
 
-		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
-
-		itemBeforeLastItem.scrollIntoView();
-
-		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
-
-		manyItemsSelect.click();
+		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
 	});
 
-	it("tests if overflown content can be reached by scrolling (with header and arrow)", () => {
-		const bigPopover = $("#big-popover");
-		const items = bigPopover.$$("ui5-li");
-		const openBigPopoverButton = $("#big-popover-button")
+	it("tests if overflown content can be reached by scrolling 2", async () => {
+		const manyItemsSelect = await browser.$("#many-items");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
+		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+		const items = await staticAreaItem.shadow$$("ui5-li");
+		const itemBeforeLastItem = items[items.length - 2];
 
-		openBigPopoverButton.click();
+		await itemBeforeLastItem.scrollIntoView();
+
+		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+
+		await manyItemsSelect.click();
+	});
+
+	it("tests if overflown content can be reached by scrolling (with header and arrow) 1", async () => {
+		const bigPopover = await browser.$("#big-popover");
+		const items = await bigPopover.$$("ui5-li");
+		const openBigPopoverButton = await browser.$("#big-popover-button");
+
+		await openBigPopoverButton.click();
 
 		const itemBeforeLastItem = items[items.length - 2];
 
-		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
-
-		itemBeforeLastItem.scrollIntoView();
-
-		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
 	});
 
-	it("tests modal popover", () => {
-		const btnOpenPopover = $("#btnPopModal");
-		const popoverClose = $("#modalPopoverClose");
-		const popover = $("#modalPopover");
+	it("tests if overflown content can be reached by scrolling (with header and arrow) 2", async () => {
+		const bigPopover = await browser.$("#big-popover");
+		const items = await bigPopover.$$("ui5-li");
 
-		btnOpenPopover.click();
-		assert.ok(popover.getProperty("opened"), "Popover is opened.");
+		const itemBeforeLastItem = items[items.length - 2];
+
+		await itemBeforeLastItem.scrollIntoView();
+
+		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+	});
+
+	it("tests modal popover", async () => {
+		const btnOpenPopover = await browser.$("#btnPopModal");
+		const popoverClose = await browser.$("#modalPopoverClose");
+		const popover = await browser.$("#modalPopover");
+
+		await btnOpenPopover.click();
+		assert.ok(await popover.getProperty("opened"), "Popover is opened.");
 
 		try {
-			$("#btn").click();
+			await browser.$("#btn").click();
 		} catch {
 			assert.ok(true, "The click was intercepted.");
 		}
 
-		assert.ok(popover.getProperty("opened"), "Popover is still opened.");
+		assert.ok(await popover.getProperty("opened"), "Popover is still opened.");
 
-		popoverClose.click();
-		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
+		await popoverClose.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
-	it("tests modal popover with no block layer", () => {
-		const btnOpenPopover = $("#btnPopModalNoLayer");
-		const popover = $("#modalPopoverNoLayer");
-		const popoverId = popover.getProperty("_id");
+	it("tests modal popover with no block layer", async () => {
+		const btnOpenPopover = await browser.$("#btnPopModalNoLayer");
+		const popover = await browser.$("#modalPopoverNoLayer");
+		const popoverId = await popover.getProperty("_id");
 
-		btnOpenPopover.click();
-		assert.ok(popover.getProperty("opened"), "Popover is opened.");
+		await btnOpenPopover.click();
+		assert.ok(await popover.getProperty("opened"), "Popover is opened.");
 
-		const blockLayerIsCreated = browser.execute( (popoverId) => {
+		const blockLayerIsCreated = await browser.executeAsync((popoverId, done) => {
 			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");
 			let result = false;
 
@@ -160,123 +177,123 @@ describe("Popover general interaction", () => {
 				}
 			});
 
-			return result
+			done(result);
 		}, popoverId);
 
 		assert.notOk(blockLayerIsCreated, "Block layer is not created.");
 
-		browser.keys("Escape");
+		await browser.keys("Escape");
 	});
 
-	it("tests initial focus", () => {
-		const focusedButton = $("#focusMe");
-		const btnOpenPopover = $("#btnPopFocus");
+	it("tests initial focus", async () => {
+		const focusedButton = await browser.$("#focusMe");
+		const btnOpenPopover = await browser.$("#btnPopFocus");
 
-		btnOpenPopover.click();
+		await btnOpenPopover.click();
 
-		assert.ok(focusedButton.getProperty("focused"), "The button is focused.");
+		assert.ok(await focusedButton.getProperty("focused"), "The button is focused.");
 	});
 
-	it("tests focus trapping using TAB", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	it("tests focus trapping using TAB", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
-		const btn = $("#btn");
-		const ff = $("#first-focusable");
+		const btn = await browser.$("#btn");
+		const ff = await browser.$("#first-focusable");
 
-		btn.click();
+		await btn.click();
 
-		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
 
 		// list
-		browser.keys("Tab");
+		await browser.keys("Tab");
 
-		assert.ok(!ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
 
 		// button
-		browser.keys("Tab");
+		await browser.keys("Tab");
 
-		assert.ok(!ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
 
 		// select
-		browser.keys("Tab");
+		await browser.keys("Tab");
 
 		// footer button
-		browser.keys("Tab");
+		await browser.keys("Tab");
 
 		// goes to first focusable again
-		browser.keys("Tab");
+		await browser.keys("Tab");
 
-		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
 	});
 
-	it("tests focus trapping using SHIFT TAB", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	it("tests focus trapping using SHIFT TAB", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
-		const btn = $("#btn");
-		const ff = $("#first-focusable");
+		const btn = await browser.$("#btn");
+		const ff = await browser.$("#first-focusable");
 
-		btn.click();
+		await btn.click();
 
-		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
 
 		// footer button
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
 		// select
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
 		// button
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
 		// list
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
 		// header button
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
-		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
 	});
 
-	it("tests focus when there is no focusable content", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	it("tests focus when there is no focusable content", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
-		const firstBtn = $("#firstBtn");
+		const firstBtn = await browser.$("#firstBtn");
 		const popoverId = "popNoFocusableContent";
 
-		firstBtn.click();
+		await firstBtn.click();
 
-		let activeElementId = $(browser.getActiveElement()).getAttribute("id");
+		let activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 
 		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
 
-		browser.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 
-		activeElementId = $(browser.getActiveElement()).getAttribute("id");
+		activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 
-		assert.ok(activeElementId, popoverId, "Popover remains focused");
+		assert.equal(activeElementId, popoverId, "Popover remains focused");
 	});
 
-	it("tests focus when content, which can't be focused is clicked", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	it("tests focus when content, which can't be focused is clicked", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
-		$("#btnOpenPopoverWithDiv").click();
-		$("#divContent").click();
+		await browser.$("#btnOpenPopoverWithDiv").click();
+		await browser.$("#divContent").click();
 
 		const popoverId = "popWithDiv";
-		const activeElementId = $(browser.getActiveElement()).getAttribute("id");
+		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 
 		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
 	});
 
-	it("tests that dynamically created popover is opened", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	it("tests that dynamically created popover is opened", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
-		const btnOpenDynamic = $("#btnOpenDynamic");
-		btnOpenDynamic.click();
-		const popover = $('#dynamic-popover');
+		const btnOpenDynamic = await browser.$("#btnOpenDynamic");
+		await btnOpenDynamic.click();
+		const popover = await browser.$('#dynamic-popover');
 
-		browser.waitUntil(
-			() => popover.getCSSProperty("top").parsed.value > 0 && popover.getCSSProperty("left").parsed.value > 0,
+		await browser.waitUntil(
+			async () => (await popover.getCSSProperty("top")).parsed.value > 0 && (await popover.getCSSProperty("left")).parsed.value > 0,
 			{
 				timeout: 500,
 				timeoutMsg: "popover was not opened after a timeout"
@@ -288,18 +305,25 @@ describe("Popover general interaction", () => {
 });
 
 describe("Acc", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 	});
 
-	it("tests aria-labelledby and aria-label", () => {
-		const popover = browser.$("ui5-popover");
-		popover.removeAttribute("accessible-name");
-		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "Popover has aria-labelledby.");
-		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
+	it("tests aria-labelledby and aria-label", async () => {
+		const popover = await browser.$("ui5-popover");
+		await popover.removeAttribute("accessible-name");
+		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover has aria-labelledby.");
+		assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
 
-		popover.setAttribute("accessible-name", "text");
-		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
-		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "Popover has aria-label.");
+		await popover.setAttribute("accessible-name", "text");
+		assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
+		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover has aria-label.");
+	});
+
+	it("tests accessible-name-ref", async () => {
+		const popover = await browser.$("#popAccNameRef");
+		const expectedText = await browser.$("#lblAccNameRef").getText();
+
+		assert.strictEqual(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), expectedText, "aria-label should be the text of the label.");
 	});
 });

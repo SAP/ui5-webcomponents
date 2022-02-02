@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>LitHTML key function test page</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -20,16 +20,11 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-multi-combobox {
-			max-width: 560px;
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/LitKeyFunction.css">
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="litkeyfunction1auto">
 
 
 		<ui5-multi-combobox id="mcb" >

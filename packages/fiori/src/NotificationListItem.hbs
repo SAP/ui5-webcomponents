@@ -9,7 +9,6 @@
 	tabindex="{{_tabIndex}}"
 	dir="{{effectiveDir}}"
 	aria-labelledby="{{ariaLabelledBy}}"
-	style="list-style-type: none;"
 >
 	<div class="ui5-nli-actions">
 		{{#if showOverflow}}
@@ -101,6 +100,7 @@
 				active
 				size="Medium"
 				class="ui5-nli-busy"
+				data-sap-focus-ref
 		></ui5-busy-indicator>
 	{{/if}}
 </li>

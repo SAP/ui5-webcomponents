@@ -12,8 +12,9 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
+<link rel="stylesheet" type="text/css" href="styles/SegmentedButton.css">
 </head>
 
 <body>
@@ -63,7 +64,7 @@
 				<section>
 					<h1>Example with Icons and custom width</h1>
 
-					<ui5-segmented-button style="width: 500px;">
+					<ui5-segmented-button class="segmentedbutton1auto">
 						<ui5-segmented-button-item icon="employee"></ui5-segmented-button-item>
 						<ui5-segmented-button-item icon="menu" pressed></ui5-segmented-button-item>
 						<ui5-segmented-button-item icon="factory"></ui5-segmented-button-item>
@@ -73,7 +74,7 @@
 				<section>
 					<h1>SegmentedButton with 100% width</h1>
 
-					<ui5-segmented-button style="width: 100%;">
+					<ui5-segmented-button class="segmentedbutton2auto">
 						<ui5-segmented-button-item pressed>Pressed SegmentedButtonItem</ui5-segmented-button-item>
 						<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
 						<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
@@ -82,8 +83,8 @@
 
 				<section>
 					<h1>SegmentedButton wrapped in a container with set width</h1>
-					<div style="width: 500px;">
-						<ui5-segmented-button style="width: 100%;">
+					<div class="segmentedbutton1auto">
+						<ui5-segmented-button class="segmentedbutton2auto">
 							<ui5-segmented-button-item icon="employee" pressed></ui5-segmented-button-item>
 							<ui5-segmented-button-item icon="menu"></ui5-segmented-button-item>
 							<ui5-segmented-button-item icon="accept"></ui5-segmented-button-item>

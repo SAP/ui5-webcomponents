@@ -67,17 +67,6 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
 		 * Determines whether the component should be stretched to fullscreen.
 		 * <br><br>
 		 * <b>Note:</b> The component will be stretched to approximately
@@ -237,21 +226,11 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.accessibleName) {
+		if (this.headerText !== "" && !this._ariaLabel) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
 		return ariaLabelledById;
-	}
-
-	get _ariaLabel() {
-		let ariaLabel;
-
-		if (this.header.length > 0 && !!this.accessibleName) {
-			ariaLabel = this.accessibleName;
-		}
-
-		return this.accessibleName ? this.accessibleName : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -277,16 +256,24 @@ class Dialog extends Popup {
 		return this._movable ? "0" : undefined;
 	}
 
+	get _showResizeHandle() {
+		return this.resizable && this.onDesktop;
+	}
+
 	_show() {
 		super._show();
 		this._center();
-		this._attachResizeHandlers();
 	}
 
 	onBeforeRendering() {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
+		this._detachResizeHandlers();
+	}
+
+	onAfterRendering() {
+		this._attachResizeHandlers();
 	}
 
 	onExitDOM() {
@@ -297,11 +284,15 @@ class Dialog extends Popup {
 	_attachResizeHandlers() {
 		ResizeHandler.register(this, this._screenResizeHandler);
 		ResizeHandler.register(document.body, this._screenResizeHandler);
+		this._resizeHandlersAttached = true;
 	}
 
 	_detachResizeHandlers() {
-		ResizeHandler.deregister(this, this._screenResizeHandler);
-		ResizeHandler.deregister(document.body, this._screenResizeHandler);
+		if (this._resizeHandlersAttached) {
+			ResizeHandler.deregister(this, this._screenResizeHandler);
+			ResizeHandler.deregister(document.body, this._screenResizeHandler);
+			this._resizeHandlersAttached = false;
+		}
 	}
 
 	_center() {
@@ -445,7 +436,7 @@ class Dialog extends Popup {
 			style = window.getComputedStyle(this),
 			minWidth = Number.parseFloat(style.minWidth),
 			minHeight = Number.parseFloat(style.minHeight),
-			maxWidth = 	window.innerWidth - left,
+			maxWidth = window.innerWidth - left,
 			maxHeight = window.innerHeight - top;
 
 		let width = Number.parseFloat(style.width),

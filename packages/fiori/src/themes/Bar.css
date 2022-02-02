@@ -22,6 +22,16 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: flex-start;
+}
+
+.ui5-bar-root .ui5-bar-content-container {
+	min-width: 30%;
+}
+
+.ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
+	min-width: 0px;
+	overflow: hidden;
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
@@ -29,6 +39,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: flex-end;
 }
 .ui5-bar-root .ui5-bar-midcontent-container {
 	padding-left: 0.5rem;
@@ -36,6 +47,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: center;
 }
 
 :host([design="Footer"]){
@@ -54,7 +66,23 @@
 	box-shadow: var(--sapContent_Shadow1);
 	border: none;
 }
-
-::slotted(*){
+  /* This selector works well for all browsers except IE11.
+  After support for IE11 is stopped, the specific selectors added for it can be removed and this selector can be uncommented*/
+/* ::slotted(*) {
 	margin: 0 0.25rem;
+} */
+
+/*Specific selector added for support in IE11*/
+::slotted(.ui5-bar-content) {
+	margin: 0 0.25rem;
+}
+
+[dir="rtl"] .ui5-bar-startcontent-container {
+	padding-right: 0.5rem;
+	padding-left: 0;
+}
+
+[dir="rtl"] .ui5-bar-endcontent-container {
+	padding-left: 0.5rem;
+	padding-right: 0;
 }

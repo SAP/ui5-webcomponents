@@ -1,4 +1,9 @@
-<div class="ui5-badge-root" dir="{{effectiveDir}}">
+<div
+	class="ui5-badge-root"
+	dir="{{effectiveDir}}"
+	@mousedown="{{_onmousedown}}"
+	@mouseup="{{_onmouseup}}"
+>
 	<slot name="icon"></slot>
 
 	{{#if hasText}}

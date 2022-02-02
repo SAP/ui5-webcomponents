@@ -7,7 +7,7 @@
 	<title>Popups</title>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -23,49 +23,18 @@
 
 	<script src="modules/Popups.js"></script>
 
-	<style>
-		html, body {margin: 0;}
-		.header {
-			display: flex;
-			justify-content: center;
-			height: 3rem;
-			background: #3f5161;
-		}
-		.header-title {
-			color: #fafafa;
-			margin: 0;
-			padding: 0;
-			line-height: 3rem;
-			font-size: 1.375rem;
-			font-weight: normal;
-			text-shadow: 0 0 0.125rem #ffffff;
-			font-family: "72",Arial,Helvetica,sans-serif;
-		}
-		.group {
-			padding: 1rem;
-			background: #fafafa;
-		}
-		.group-title {
-			color: #333;
-		}
-		.small-margin {
-			margin: 2px;
-		}
-		.group_colored{
-			background: #eff4f9;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Popups.css">
 </head>
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="popups1auto">
 
-	<div style="width:0;height:0;overflow: hidden; display: block;">
+	<div class="popups2auto">
 		<content id="popover"></content>
 	</div>
 
 	<ui5-popover placement-type="Bottom" horizontal-align="Stretch" hide-arrow initial-focus="input1" class="wcPopoverWithList">
 		<ui5-list id="myList" indent separators="Inner" mode="MultiSelect" footer-text="Copyright" no-data-text="No data">
 			<!-- Header -->
-			<div style="display: flex; align-items: center;" slot="header">
+			<div class="popups3auto" slot="header">
 				<ui5-title>Countries:</ui5-title>
 				<ui5-button design="Accept">OK</ui5-button>
 			</div>
@@ -102,13 +71,13 @@
 
 			<ui5-dialog class="wcDialog" initial-focus="focusButton" header-text="Web Component Dialog">
 
-				<div slot="header" id="head1" style="display: flex; align-items: center;padding: 0 0.5rem">
-					<div style="flex: 1; text-align: center">Custom Header</div>
+				<div slot="header" id="head1" class="popups4auto">
+					<div class="popups5auto">Custom Header</div>
 					<ui5-button icon="decline"></ui5-button>
 				</div>
 
-				<div slot="footer" style="display: flex; align-items: center;padding: 0 0.5rem">
-					<div style="flex: 1; text-align: center">Custom Footer</div>
+				<div slot="footer" class="popups4auto">
+					<div class="popups5auto">Custom Footer</div>
 					<ui5-button id="focusButton">Accept</ui5-button>
 				</div>
 				<ui5-date-picker></ui5-date-picker>
@@ -130,18 +99,18 @@
 	<section class="group group_colored">
 		<h3 class="group-title">Popover</h3>
 		<h5>JS Components</h5>
-		<!--<div style="height: 300px; overflow: auto">-->
-			<!--<content style="margin-left: 200px" id="btnOpenPopover"></content>-->
+		<!--<div class="popups6auto">-->
+			<!--<content class="popups7auto" id="btnOpenPopover"></content>-->
 		<!--</div>-->
 		<h5>Web Component</h5>
 		<ui5-button class="wcBtnOpenPopover">Open Popover</ui5-button>
 		<ui5-popover placement-type="Top" class="wcPopover" header-text="Web Component Popover">
-			<div slot="header" style="display: flex; align-items: center;padding: 0 0.5rem">
-				<div style="flex: 1; text-align: center">Custom Header</div>
+			<div slot="header" class="popups4auto">
+				<div class="popups5auto">Custom Header</div>
 				<ui5-button icon="decline"></ui5-button>
 			</div>
-			<div slot="footer" style="display: flex; align-items: center;padding: 0 0.5rem">
-				<div style="flex: 1; text-align: center">Custom Footer</div>
+			<div slot="footer" class="popups4auto">
+				<div class="popups5auto">Custom Footer</div>
 				<ui5-button>Accept</ui5-button>
 			</div>
 			<ui5-date-picker></ui5-date-picker>

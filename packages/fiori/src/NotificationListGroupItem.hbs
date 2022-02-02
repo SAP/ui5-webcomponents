@@ -8,7 +8,6 @@
 	dir="{{effectiveDir}}"
 	aria-expanded="{{ariaExpanded}}"
 	aria-labelledby="{{ariaLabelledBy}}"
-	style="list-style-type: none;"
 >
 	<div class="ui5-nli-group-header">
 		<ui5-button
@@ -77,7 +76,7 @@
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
 
-	<ui5-list class="ui5-nli-group-items" accessible-role="list">
+	<ui5-list class="ui5-nli-group-items">
 		<slot></slot>
 	</ui5-list>
 

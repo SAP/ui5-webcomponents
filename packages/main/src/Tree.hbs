@@ -15,6 +15,7 @@
             type="Active"
             level="{{this.level}}"
             icon="{{this.treeItem.icon}}"
+            ?indeterminate="{{this.treeItem.indeterminate}}"
             additional-text="{{this.treeItem.additionalText}}"
             additional-text-state="{{this.treeItem.additionalTextState}}"
             title="{{this.treeItem.title}}"
@@ -29,6 +30,8 @@
             @ui5-toggle="{{../_onListItemToggle}}"
             @ui5-step-in="{{../_onListItemStepIn}}"
             @ui5-step-out="{{../_onListItemStepOut}}"
+            @mouseover="{{../_onListItemMouseOver}}"
+            @mouseout="{{../_onListItemMouseOut}}"
         >
             {{> treeListItemContent}}
         </ui5-li-tree>

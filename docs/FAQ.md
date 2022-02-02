@@ -8,16 +8,12 @@
 **Q: Where is the documentation?**
 
 **A:** There are several resources:
-- [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/)
+- [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/components)
 - [How to get started?](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/)
-- [List of all public module imports](https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/)
-- [How to use](https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/)
-- [How to configure](https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/)
-
 
 **Q: Is there a CDN to load UI5 Web Components from?**
 
-**A:** No. The best practice is to build your own bundle. See [this article](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/) for details.
+**A:** No. The best practice is to build your own bundle. See [this article](https://blogs.sap.com/2021/05/28/getting-started-with-ui5-web-components-in-2021/) for details.
 
 
 **Q: Are UI5 Web Components APIs stable?**
@@ -27,7 +23,7 @@
 
 **Q: Can I create my own UI5 Web Components?**
 
-**A:** Yes, for more information see [Creating a custom UI5 Web Components package](https://github.com/SAP/ui5-webcomponents/blob/master/docs/dev/Creating%20UI5%20Web%20Components%20Packages.md)
+**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](https://github.com/SAP/ui5-webcomponents/blob/master/docs/5-development/01-custom-UI5-Web-Components-Packages.md)
 
 
 **Q: How big is the runtime?**
@@ -35,7 +31,7 @@
 **A:** Currently on master, a simple working Web Component (```ui5-label```) and its dependencies equals to around 22K gzipped. 
 Two simple web components (```ui5-label``` and ```ui5-icon```) and their dependencies equal to around 25K gzipped.
 
-*Note:* The quoted numbers include only a ```<ui5-label>``` (respectively ```ui5-label``` and ```ui5-icon```) working on Chrome/FF/Safari with the default settings (theme/language).
+**Note:** The quoted numbers include only a ```<ui5-label>``` (respectively ```ui5-label``` and ```ui5-icon```) working on Chrome/FF/Safari with the default settings (theme/language).
 Additional features, settings and old browser support will increase bundle size accordingly.
 
 
@@ -43,7 +39,7 @@ Additional features, settings and old browser support will increase bundle size 
 **A:** See the project's [readme.md](https://github.com/SAP/ui5-webcomponents) for more on this.
 
 
-**Q: Can I use UI5 Web Components in a OpenUI5 application?**
+**Q: Can I use UI5 Web Components in an OpenUI5 application?**
 **A:** This is not necessary as OpenUI5 already provides equivalents in the form of UI5 Controls. 
 
 

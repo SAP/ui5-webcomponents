@@ -10,6 +10,10 @@
 	padding: 1rem;
 }
 
+.ui5-uci-edit-buttons {
+	display: flex;
+}
+
 /* Thumbnail */
 .ui5-uci-thumbnail {
 	width: 3rem;
@@ -28,7 +32,7 @@
 	height: 3rem;
 }
 
-:host([actionable]) ::slotted([ui5-icon][slot="thumbnail"])  {
+:host([actionable]) ::slotted([ui5-icon][slot="thumbnail"]) {
 	color: var(--sapContent_IconColor);
 }
 
@@ -101,7 +105,7 @@
 .ui5-uci-root-editing .ui5-li-detailbtn,
 .ui5-uci-root-editing .ui5-li-deletebtn,
 .ui5-uci-root-uploading .ui5-li-detailbtn,
-.ui5-uci-root-uploading .ui5-li-deletebtn  {
+.ui5-uci-root-uploading .ui5-li-deletebtn {
 	display: none;
 }
 

@@ -13,6 +13,8 @@ const metadata = {
 		/**
 		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
+		 * @type {ButtonDesign}
+		 * @defaultvalue "Default"
 		 * @public
 		 */
 		design: {
@@ -23,6 +25,8 @@ const metadata = {
 		/**
 		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		iconEnd: {
@@ -32,16 +36,8 @@ const metadata = {
 		/**
 		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * @public
-		 */
-		iconSize: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-		 *
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		submits: {
@@ -91,6 +87,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.SegmentedButtonItem
  * @extends ToggleButton
  * @tagname ui5-segmented-button-item
+ * @implements sap.ui.webcomponents.main.ISegmentedButtonItem
  * @public
  */
 class SegmentedButtonItem extends ToggleButton {
@@ -103,7 +100,7 @@ class SegmentedButtonItem extends ToggleButton {
 	}
 
 	get ariaDescription() {
-		return this.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
+		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
 	}
 }
 

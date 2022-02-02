@@ -16,11 +16,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/TableSelection.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="tableselection1auto">
 	<!-- Header -->
-	<div style="display:flex; align-items: center;">
+	<div class="tableselection2auto">
 		<ui5-button id="size-btn-500">Lower tables size to 500px</ui5-button>
 		<ui5-label>Resize your browser to make some columns pop-in</ui5-label>
 	</div>
@@ -146,7 +147,7 @@
 	<br>
 	<br>
 	<ui5-title>Table in MultiSelect mode</ui5-title>
-	<ui5-table id="multi" mode="MultiSelect">
+	<ui5-table id="multi" mode="MultiSelect" sticky-column-header>
 
 		<ui5-table-column slot="columns">
 			<ui5-label>Product</ui5-label>
@@ -205,7 +206,7 @@
 				<ui5-label>1249 EUR</ui5-label>
 			</ui5-table-cell>
 			<ui5-table-cell>
-				<ui5-button>Active</ui5-button>
+				<ui5-button id="button3">Active</ui5-button>
 			</ui5-table-cell>
 		</ui5-table-row>
 

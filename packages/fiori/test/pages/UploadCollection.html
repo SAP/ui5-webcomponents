@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>UploadCollection</title>
     <script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
     </script>
 
 
@@ -13,28 +13,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		.header {
-			display: flex;
-			align-items: center;
-			overflow: hidden;
-		}
-
-		.header > * {
-			margin: 4px;
-		}
-
-		.spacer {
-			flex: 1 1 auto;
-		}
-
-		ui5-upload-collection {
-			margin: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/UploadCollection.css">
 	<script src="./uploadCollectionScript.js" defer></script>
 </head>
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="uploadcollection1auto">
 	<div class="header">
 		<ui5-label>UC Mode:</ui5-label>
 		<ui5-select id="changeMode">
@@ -59,9 +41,9 @@
 
 	<p id="draggableElement" draggable="true">This element is draggable</p>
 
-	<ui5-upload-collection id="uploadCollection">
+	<ui5-upload-collection id="uploadCollection" accessible-name="Uploaded (4)">
 		<div slot="header" class="header">
-			<ui5-title>Uploaded (4)</ui5-title>
+			<ui5-title id="uploadCollectionTitle">Uploaded (4)</ui5-title>
 			<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
 			<ui5-button id="startUploading">Start</ui5-button>
 			<div class="spacer"></div>
@@ -183,12 +165,12 @@
 		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 
-	
+
 	<ui5-upload-collection id="uploadCollection3">
 		<div class="header" slot="header">
 			<ui5-title>Hidden buttons</ui5-title>
 		</div>
-		
+
 		<ui5-upload-collection-item id="uc3-default" file-name="File name">
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 			Default, delete button always visible

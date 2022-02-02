@@ -1,5 +1,4 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 
@@ -212,10 +211,6 @@ class NotificationListItem extends NotificationListItemBase {
 		];
 	}
 
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this.onResizeBind);
 	}
@@ -234,18 +229,18 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get showMoreText() {
 		if (this._showMorePressed) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
 		}
 
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
+		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
 	get overflowBtnAccessibleName() {
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
 	get closeBtnAccessibleName() {
-		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
 	get hideShowMore() {
@@ -331,23 +326,23 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get priorityText() {
 		if (this.priority === Priority.High) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Medium) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Low) {
-			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
 		}
 
 		return "";
 	}
 
 	get accInvisibleText() {
-		const notificationText = this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readText = this.read ? this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		const notificationText = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const readText = this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
 
 		return `${notificationText} ${readText} ${priorityText}`;

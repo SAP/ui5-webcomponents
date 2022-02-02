@@ -1,7 +1,9 @@
 {{>include "./SliderBase.hbs"}}
 
-<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
-<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
+{{#*inline "handlesAriaText"}}
+	<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
+	<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
+{{/inline}}
 
 {{#*inline "progressBar"}}
 	<div class="ui5-slider-progress-container">
@@ -35,6 +37,8 @@
 		aria-labelledby="{{_id}}-startHandleDesc"
 		aria-disabled="{{_ariaDisabled}}"
 	>
+		<ui5-icon name="source-code" slider-icon></ui5-icon>
+
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
@@ -55,6 +59,8 @@
 		aria-labelledby="{{_id}}-endHandleDesc"
 		aria-disabled="{{_ariaDisabled}}"
 	>
+		<ui5-icon name="source-code" slider-icon></ui5-icon>
+
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>

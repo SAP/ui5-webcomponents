@@ -1,3 +1,6 @@
+@import "./InvisibleTextStyles.css";
+@import "./InputIcon.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 }
@@ -5,6 +8,15 @@
 :host {
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
+	border-radius: var(--_ui5-time_picker_border_radius);
+}
+
+:host([value-state="Error"]) {
+	background-color: var(--sapField_InvalidBackground);
+}
+
+:host(:not([disabled]):hover) {
+	background: var(--sapField_Hover_Background);
 }
 
 :host .ui5-time-picker-input {

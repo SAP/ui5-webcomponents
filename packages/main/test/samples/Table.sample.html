@@ -44,7 +44,7 @@
 				<span style="line-height: 1.4rem">Product</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="800" popin-text="Supplier">
+			<ui5-table-column slot="columns" min-width="800">
 				<span style="line-height: 1.4rem">Supplier</span>
 			</ui5-table-column>
 
@@ -77,7 +77,7 @@
 		<span style="line-height: 1.4rem">Product</span>
 	</ui5-table-column>
 
-	<ui5-table-column slot="columns" min-width="800" popin-text="Supplier">
+	<ui5-table-column slot="columns" min-width="800">
 		<span style="line-height: 1.4rem">Supplier</span>
 	</ui5-table-column>
 
@@ -131,15 +131,15 @@
 				<span>Product</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns">
+			<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin>
 				<span>Supplier</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns">
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin>
 				<span>Dimensions</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns">
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin>
 				<span>Weight</span>
 			</ui5-table-column>
 
@@ -163,15 +163,15 @@
 				<span>Product</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns">
+			<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin>
 				<span>Supplier</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns">
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin>
 				<span>Dimensions</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns">
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin>
 				<span>Weight</span>
 			</ui5-table-column>
 
@@ -1471,7 +1471,7 @@
 </section>
 
 <section class="table-grouping-example-single">
-	<h3>Tables with grouping (SingleSelect)</h3>
+	<h3>Table with grouping (SingleSelect)</h3>
 
 	<div class="snippet flex-column">
 		<!-- Header -->
@@ -1479,14 +1479,14 @@
 			<span>The <em>ui5-table-group-row</em> allows visual grouping of the table rows.</span>
 		</div>
 
-		<ui5-table class="demo-table-single">
+		<ui5-table class="demo-table-single" mode="SingleSelect">
 			<ui5-table-column id="column-1" slot="columns">
 				<ui5-label>City</ui5-label>
 			</ui5-table-column>
-			<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier">
+			<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier" demand-popin>
 				<ui5-label>Supplier</ui5-label>
 			</ui5-table-column>
-			<ui5-table-column id="column-3" slot="columns" min-width="500" popin-text="Country" demand-popin>
+			<ui5-table-column id="column-3" slot="columns" min-width="500">
 				<ui5-label>Country</ui5-label>
 			</ui5-table-column>
 
@@ -1519,14 +1519,14 @@
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-table class="demo-table-single">
+<ui5-table class="demo-table-single" mode="SingleSelect">
 	<ui5-table-column id="column-1" slot="columns">
 		<ui5-label>City</ui5-label>
 	</ui5-table-column>
-	<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier">
+	<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier" demand-popin>
 		<ui5-label>Supplier</ui5-label>
 	</ui5-table-column>
-	<ui5-table-column id="column-3" slot="columns" min-width="500" popin-text="Country" demand-popin>
+	<ui5-table-column id="column-3" slot="columns" min-width="500">
 		<ui5-label>Country</ui5-label>
 	</ui5-table-column>
 
@@ -1567,10 +1567,10 @@
 			<ui5-table-column id="column-1" slot="columns">
 				<ui5-label>City</ui5-label>
 			</ui5-table-column>
-			<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier">
+			<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier" demand-popin>
 				<ui5-label>Supplier</ui5-label>
 			</ui5-table-column>
-			<ui5-table-column id="column-3" slot="columns" min-width="500" popin-text="Country" demand-popin>
+			<ui5-table-column id="column-3" slot="columns" min-width="500">
 				<ui5-label>Country</ui5-label>
 			</ui5-table-column>
 
@@ -1607,10 +1607,10 @@
 	<ui5-table-column id="column-1" slot="columns">
 		<ui5-label>City</ui5-label>
 	</ui5-table-column>
-	<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier">
+	<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier" demand-popin>
 		<ui5-label>Supplier</ui5-label>
 	</ui5-table-column>
-	<ui5-table-column id="column-3" slot="columns" min-width="500" popin-text="Country" demand-popin>
+	<ui5-table-column id="column-3" slot="columns" min-width="500">
 		<ui5-label>Country</ui5-label>
 	</ui5-table-column>
 

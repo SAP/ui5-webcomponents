@@ -112,7 +112,7 @@ const pad = number => {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-duration-picker</code> component provides an input field with assigned sliders which opens on user action.
+ * The <code>ui5-duration-picker</code> component provides an input field with assigned sliders which are opened on user action.
  * The <code>ui5-duration-picker</code> allows users to select a time duration.
  * It consists of two parts: the time input field and the sliders.
  *
@@ -292,7 +292,7 @@ class DurationPicker extends TimePickerBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DURATION_INPUT_DESCRIPTION);
+		return DurationPicker.i18nBundle.getText(DURATION_INPUT_DESCRIPTION);
 	}
 
 	get accInfo() {

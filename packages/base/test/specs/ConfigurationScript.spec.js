@@ -1,62 +1,62 @@
 const assert = require("chai").assert;
 
 describe("Configuration script has effect", () => {
-	before(() => {
-		browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html?do-not-change-configuration");
+	before(async () => {
+		await browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html?do-not-change-configuration");
 	});
 
-	it("Tests that RTL is applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that RTL is applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getRTL();
+			done(config.getRTL());
 		});
 		assert.strictEqual(res, true, "RTL is true");
 	});
 
-	it("Tests that language is applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that language is applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getLanguage();
+			done(config.getLanguage());
 		});
 		assert.strictEqual(res, 'ja', "language is japanese");
 	});
 
-	it("Tests that calendarType is applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that calendarType is applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getCalendarType();
+			done(config.getCalendarType());
 		});
 		assert.strictEqual(res, 'Japanese', "calendarType is japanese");
 	});
 
-	it("Tests that formatSettings are applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that formatSettings are applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getFirstDayOfWeek();
+			done(config.getFirstDayOfWeek());
 		});
 		assert.strictEqual(res, 0, "First day of week is applied");
 	});
 
-	it("Tests that theme is applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that theme is applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getTheme();
+			done(config.getTheme());
 		});
 		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
 	});
 
-	it("Tests that noConflict is applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that noConflict is applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getNoConflict();
+			done(config.getNoConflict());
 		});
-		assert.strictEqual(res.events.includes("selection-change"), true, "selectionChange was successfully registered as a no conflict event");
+		assert.include(res.events, "selection-change", "selectionChange was successfully registered as a no conflict event");
 	});
 
-	it("Tests that animationMode is applied", () => {
-		const res = browser.execute( () => {
+	it("Tests that animationMode is applied", async () => {
+		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getAnimationMode();
+			done(config.getAnimationMode());
 		});
 		assert.strictEqual(res, 'basic', "animationMode is basic");
 	});

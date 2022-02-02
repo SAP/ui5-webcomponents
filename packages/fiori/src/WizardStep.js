@@ -10,9 +10,8 @@ const metadata = {
 		 * Defines the <code>titleText</code> of the step.
 		 * <br><br>
 		 *
-		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
-		 * <br>
-		 * <b>Note:</b> the text will hide on small sizes (about 559 px).
+		 * <b>Note:</b> The text is displayed in the <code>ui5-wizard</code> navigation header.
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
@@ -27,8 +26,7 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
-		 * <br>
-		 * <b>Note:</b> the text will hide on small sizes (about 559 px).
+		 *
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
@@ -42,7 +40,7 @@ const metadata = {
 		 * Defines the <code>icon</code> of the step.
 		 * <br><br>
 		 *
-		 * <b>Note:</b> the icon is displayed in the <code>ui5-wizard</code> navigation header.
+		 * <b>Note:</b> The icon is displayed in the <code>ui5-wizard</code> navigation header.
 		 * <br><br>
 		 *
 		 * The SAP-icons font provides numerous options.
@@ -101,29 +99,6 @@ const metadata = {
 		branching: {
 			type: Boolean,
 		},
-
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines the aria-labelledby of the step.
-		 * @type {boolean}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 		/**
@@ -146,14 +121,14 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * A component that represents a logical step as part of the <code>ui5-wizard</code>.
- * It is meant to aggregate arbitrary HTML elements that forms the content of a single step.
+ * It is meant to aggregate arbitrary HTML elements that form the content of a single step.
  *
  * <h3>Structure</h3>
  * <ul>
- * <li>Each wizard step has arbitrary content</li>
- * <li>Each wizard step might have texts - defined by the <code>titleText</code> and <code>subtitleText</code> properties</li>
- * <li>Each wizard step might have an icon - defined by the <code>icon</code> property</li>
- * <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing</li>
+ * <li>Each wizard step has arbitrary content.</li>
+ * <li>Each wizard step might have texts - defined by the <code>titleText</code> and <code>subtitleText</code> properties.</li>
+ * <li>Each wizard step might have an icon - defined by the <code>icon</code> property.</li>
+ * <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing.</li>
  * </ul>
  *
  * <h3>Usage</h3>

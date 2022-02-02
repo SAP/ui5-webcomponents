@@ -14,16 +14,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		:not(:defined) {
-			display: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Avatar.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="avatar1auto">
 	<section>
 		<h3>Avatar - Basic sample</h3>
 		<ui5-avatar>
@@ -33,16 +29,16 @@
 
 	<section>
 		<h3>Avatar - special characters in image path</h3>
-		<ui5-avatar style="border: 1px dashed red;">
+		<ui5-avatar class="avatar2auto">
 			<img src="./img/John$$$ ' (_)Miller 100%25 &=.png" alt="John Miller">
 		</ui5-avatar>
-		<ui5-avatar style="border: 1px dashed red;">
+		<ui5-avatar class="avatar2auto">
 			<img src="./img/John Miller.png" alt="John Miller">
 		</ui5-avatar>
-		<ui5-avatar style="border: 1px dashed red;">
+		<ui5-avatar class="avatar2auto">
 			<img src="./img/John%20Miller.png" alt="John Miller">
 		</ui5-avatar>
-		<ui5-avatar style="border: 1px dashed red;">
+		<ui5-avatar class="avatar2auto">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP Logo">
 		</ui5-avatar>
 	</section>
@@ -135,12 +131,12 @@
 	<section>
 		<h3>Avatar - Custom</h3>
 		<h4>Avatar with custom size</h4>
-		<ui5-avatar id="myCustomAvatar" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)">
-			<img src="./img/Lamp_avatar_01.jpg" alt="Lamp" style="object-fit: cover;">
+		<ui5-avatar id="myCustomAvatar" shape="Square" size="XL" class="avatar3auto">
+			<img src="./img/Lamp_avatar_01.jpg" alt="Lamp" class="avatar4auto">
 		</ui5-avatar>
 		<h4>Avatar with custom size and imageFitType="Contain"</h4>
-		<ui5-avatar id="myCustomAvatar1" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)">
-			<img src="./img/Lamp_avatar_01.jpg" alt="Lamp" style="object-fit: contain;">
+		<ui5-avatar id="myCustomAvatar1" shape="Square" size="XL" class="avatar3auto">
+			<img src="./img/Lamp_avatar_01.jpg" alt="Lamp" class="avatar5auto">
 		</ui5-avatar>
 	</section>
 
@@ -189,15 +185,7 @@
 		});
 	</script>
 
-	<style>
-		.avatar-image {
-			object-fit: cover;
-		}
-
-		.avatar-image1 {
-			object-fit: contain;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Avatar.css">
 
 	<ui5-avatar size="XL" shape="Circle">
 		<img src="./img/Lamp_avatar_01.jpg" alt="Woman 1" class="avatar-image">

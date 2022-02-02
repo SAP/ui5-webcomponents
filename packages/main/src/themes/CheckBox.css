@@ -1,4 +1,5 @@
 @import "./InvisibleTextStyles.css";
+@import "./TapHighlightColor.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -8,11 +9,26 @@
 	overflow: hidden;
 	max-width: 100%;
 	outline: none;
+	border-radius: var(--_ui5_checkbox_border_radius);
+	transition: var(--_ui5_checkbox_transition);
+	cursor: pointer;
 }
 
 /* disabled */
+:host([disabled]) {
+	cursor: default;
+}
+
 :host([disabled]) .ui5-checkbox-root {
 	opacity: .5;
+}
+
+:host([disabled]) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_disabled_border_color);
+}
+
+:host([disabled]) .ui5-checkbox-label {
+	color: var(--_ui5_checkbox_disabled_label_color);
 }
 
 /* readonly */
@@ -47,31 +63,56 @@
 
 /* value states */
 :host([value-state="Error"]) .ui5-checkbox-inner,
-:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--sapField_InvalidBackground);
 	border: var(--_ui5_checkbox_inner_error_border);
 	color: var(--sapField_InvalidColor);
 }
 
+:host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_error_box_shadow);
+	background: var(--_ui5_checkbox_inner_error_background_hover);
+}
+
 :host([value-state="Warning"]) .ui5-checkbox-inner,
-:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
 	color: var(--sapField_WarningColor);
 }
 
-:host([value-state="Information"]) .ui5-checkbox-inner,
-:host([value-state="Information"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
-	background: var(--sapField_InformationBackground);
-	border: var(--_ui5_checkbox_inner_information_border);
-	color: var(--sapField_InformationColor);
+:host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_warning_box_shadow);
+	background: var(--_ui5_checkbox_inner_warning_background_hover);
 }
 
+:host([value-state="Information"]) .ui5-checkbox-inner,
+:host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	background: var(--sapField_InformationBackground);
+	border: var(--_ui5_checkbox_inner_information_border);
+}
+
+:host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_information_box_shadow);
+	background: var(--_ui5_checkbox_inner_information_background_hover);
+}
+
+
 :host([value-state="Success"]) .ui5-checkbox-inner,
-:host([value-state="Success"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Success"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover  {
 	background: var(--sapField_SuccessBackground);
 	border: var(--_ui5_checkbox_inner_success_border);
 	color: var(--sapField_SuccessColor);
+}
+
+:host([value-state="Success"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover  {
+	box-shadow: var(--_ui5_checkbox_inner_success_box_shadow);
+	background: var(--_ui5_checkbox_inner_success_background_hover);
+}
+
+:host(:not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
+:host([value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	box-shadow: var(--_ui5_checkbox_inner_default_box_shadow);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-icon,
@@ -91,14 +132,16 @@
 	position: relative;
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
 	width: 100%;
 	min-height: var(--_ui5_checkbox_width_height);
 	min-width: var(--_ui5_checkbox_width_height);
 	padding: 0 var(--_ui5_checkbox_wrapper_padding);
 	box-sizing: border-box;
 	outline: none;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	transition: var(--_ui5_checkbox_transition);
+	border: var(--_ui5_checkbox_default_focus_border);
+	border-radius: var(--_ui5_checkbox_border_radius);
+	box-sizing: border-box;
 }
 
 /* Fixes IE11 bug for flex + min-height
@@ -110,7 +153,9 @@ https://github.com/philipwalton/flexbugs/issues/231
 	font-size: 0;
 }
 
+/* focused */
 .ui5-checkbox-root:focus::before {
+	display: var(--_ui5_checkbox_focus_outline_display);
 	content: "";
 	position: absolute;
 	top: var(--_ui5_checkbox_focus_position);
@@ -118,34 +163,78 @@ https://github.com/philipwalton/flexbugs/issues/231
 	right: var(--_ui5_checkbox_focus_position);
 	bottom: var(--_ui5_checkbox_focus_position);
 	border: var(--_ui5_checkbox_focus_outline);
+	border-radius: var(--_ui5_checkbox_focus_border_radius);
 }
 
-.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host .ui5-checkbox-root:focus {
+	border: var(--_ui5_checkbox_focus_border);
+	border-radius: 0.5rem;
+}
+
+/* hover */
+:host(:hover:not([disabled])) {
+	background: var(--_ui5_checkbox_outer_hover_background);
+	box-shadow: var(--_ui5_checkbox_box_shadow);
+}
+
+.ui5-checkbox--hoverable .ui5-checkbox-label:hover {
+	color: var(--_ui5_checkbox_label_color);
+}
+
+/* hover, not active, not checked */
+:host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
+:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--_ui5_checkbox_hover_background);
-	border-color: var(--sapField_Hover_BorderColor);
+	border-color: var(--_ui5_checkbox_inner_hover_border_color);
+}
+
+/* hover, not active, checked */
+:host(:not([active])[checked]:not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
+:host(:not([active])[checked][value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+	background: var(--_ui5_checkbox_hover_background);
+	border-color: var(--_ui5_checkbox_inner_hover_checked_border_color);
+}
+
+/* checked */
+:host([checked]:not([value-state])) .ui5-checkbox-inner,
+:host([checked][value-state="None"]) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_selected_border_color);
+}
+
+/* active, not checked */
+:host([active]:not([checked]):not([value-state]):not([disabled])) .ui5-checkbox-inner,
+:host([active]:not([checked])[value-state="None"]:not([disabled])) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_active_border_color);
+	background-color: var(--_ui5_checkbox_active_background);
+}
+
+/* active, checked */
+:host([active][checked]:not([value-state]):not([disabled])) .ui5-checkbox-inner,
+:host([active][checked][value-state="None"]:not([disabled])) .ui5-checkbox-inner {
+	border-color: var(--_ui5_checkbox_inner_selected_border_color);
 }
 
 .ui5-checkbox-inner {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	min-width: var(--_ui5_checkbox_inner_width_height);
 	max-width: var(--_ui5_checkbox_inner_width_height);
 	height: var(--_ui5_checkbox_inner_width_height);
 	max-height: var(--_ui5_checkbox_inner_width_height);
 	border: var(--_ui5_checkbox_inner_border);
 	border-radius: var(--_ui5_checkbox_inner_border_radius);
-	background: var(--sapField_Background);
+	background: var(--_ui5_checkbox_inner_background);
 	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;
-	cursor: default;
-	pointer-events: none;
+	cursor: inherit;
 }
 
 :host([indeterminate][checked]) .ui5-checkbox-inner::after {
 	content: "";
 	background-color: currentColor;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 	width: var(--_ui5_checkbox_partially_icon_size);
 	height: var(--_ui5_checkbox_partially_icon_size);
 }
@@ -160,22 +249,27 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-root .ui5-checkbox-label {
-	margin-left: var(--_ui5_checkbox_wrapper_padding);
-	cursor: default;
+	margin-left: var(--_ui5_checkbox_label_offset_left);
+	margin-right: var(--_ui5_checkbox_label_offset_right);
+	cursor: inherit;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	pointer-events: none;
 	user-select: none;
 	-ms-user-select: none;
 	-webkit-user-select: none;
+	color: var(--_ui5_checkbox_label_color);
 }
 
 .ui5-checkbox-icon {
 	width: var(--_ui5_checkbox_icon_size);
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
-	cursor: default;
-    position: absolute;
+	cursor: inherit;
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%);
 }
 
 /* RTL */

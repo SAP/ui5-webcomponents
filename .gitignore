@@ -1,5 +1,6 @@
 # Ignore .gitignore, target, dist and tmp folders
 .gitignore
+!packages/create-package/resources/.gitignore
 tmp
 temp
 target
@@ -55,3 +56,14 @@ packages/playground/docs/tutorials
 
 packages/playground/docs/pages/content/main/*
 packages/playground/docs/pages/content/fiori/*
+
+packages/playground/docs/advanced
+packages/playground/docs/contributing/
+packages/playground/docs/customizing/
+packages/playground/docs/development/
+packages/playground/docs/frameworks/
+packages/playground/docs/getting-started/
+packages/playground/docs/FAQ.md
+
+packages/main/test/pages/fix.js
+packages/fiori/test/pages/fix.js

@@ -13,14 +13,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-bar {
-			margin: 0.25rem 0;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Bar.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="bar1auto">
 	<section>
 		<ui5-title level="3">Header design</ui5-title>
 		<ui5-bar design="Header">
@@ -33,7 +29,7 @@
 		<ui5-title level="3">Subheader design</ui5-title>
 		<br>
 		<ui5-bar design="Subheader">
-			<div slot="startContent" style="display: flex; align-items: center;">
+			<div slot="startContent" class="bar2auto">
 				<ui5-button>Start Button</ui5-button>
 				<ui5-label>Basic Label</ui5-label>
 			</div>
@@ -43,6 +39,9 @@
 
 			<ui5-label slot="endContent">Basic Label</ui5-label>
 			<ui5-button slot="endContent">End Button</ui5-button>
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
 		</ui5-bar>
 
 		<br>

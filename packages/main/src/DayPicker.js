@@ -186,13 +186,16 @@ class DayPicker extends CalendarPart {
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
-		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
-		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
+		const secondaryMonthsNames = this.hasSecondaryCalendarType && localeData.getMonths("wide", this.secondaryCalendarType);
+		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
+		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
 		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
 		const minDate = this._minDate; // store the _minDate (expensive getter)
 		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
+
+		const tempSecondDate = this.hasSecondaryCalendarType && this._getSecondaryDay(tempDate);
 
 		let week = [];
 		for (let i = 0; i < DAYS_IN_WEEK * 6; i++) { // always show 6 weeks total, 42 days to avoid jumping
@@ -214,15 +217,20 @@ class DayPicker extends CalendarPart {
 
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
+			const ariaLabel = this.hasSecondaryCalendarType
+				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
+				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
 
 			const day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
-				iDay: tempDate.getDate(),
+				day: tempDate.getDate(),
+				secondDay: this.hasSecondaryCalendarType && tempSecondDate.getDate(),
+				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
-				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`,
+				ariaLabel,
 				ariaSelected: isSelected ? "true" : "false",
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
@@ -251,8 +259,13 @@ class DayPicker extends CalendarPart {
 			if (isWeekend) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
+
 			if (isDisabled) {
 				day.classes += " ui5-dp-item--disabled";
+			}
+
+			if (this.hasSecondaryCalendarType) {
+				day.classes += " ui5-dp-item--withsecondtype";
 			}
 
 			week.push(day);
@@ -270,6 +283,9 @@ class DayPicker extends CalendarPart {
 			}
 
 			tempDate.setDate(tempDate.getDate() + 1);
+			if (this.hasSecondaryCalendarType) {
+				tempSecondDate.setDate(tempSecondDate.getDate() + 1);
+			}
 		}
 	}
 
@@ -292,7 +308,7 @@ class DayPicker extends CalendarPart {
 		this._dayNames = [];
 		this._dayNames.push({
 			classes: "ui5-dp-dayname",
-			name: this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
+			name: DayPicker.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
 		});
 		for (let i = 0; i < DAYS_IN_WEEK; i++) {
 			dayOfTheWeek = i + this._getFirstDayOfWeek();
@@ -664,6 +680,10 @@ class DayPicker extends CalendarPart {
 		return this.hideWeekNumbers;
 	}
 
+	get hasSecondaryCalendarType() {
+		return !!this.secondaryCalendarType;
+	}
+
 	_isWeekend(oDate) {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
@@ -678,6 +698,10 @@ class DayPicker extends CalendarPart {
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+	}
+
+	_getSecondaryDay(tempDate) {
+		return new CalendarDate(tempDate, this.secondaryCalendarType);
 	}
 
 	_getFirstDay() {
@@ -716,6 +740,12 @@ class DayPicker extends CalendarPart {
 				width: "100%",
 			},
 		};
+	}
+
+	get ariaRoledescription() {
+		return this.hasSecondaryCalendarType
+			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType} calendar`
+			: `${this._primaryCalendarType} calendar`;
 	}
 }
 

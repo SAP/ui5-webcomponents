@@ -10,11 +10,11 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="input1auto">
 	<h3> Input with suggestions: type 'a'</h3>
 	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
@@ -23,17 +23,22 @@
 	<div>
 		<h3>Input in Cozy</h3>
 		<ui5-input id="myInput"
-			style="width: 500px"
+			class="input2auto"
 			show-suggestions
 			placeholder="Search for a country ..."
 		>
 		</ui5-input>
+
+		<div>
+			Change event count: <span id="myInput-change-count"></span>
+		</div>
+		<div id="myInput-change-result"></div>
 	</div>
 
 	<div class="sapUiSizeCompact">
 		<h3>Input in Compact</h3>
 		<ui5-input id="inputCompact"
-			style="width: 500px"
+			class="input2auto"
 			show-suggestions
 			placeholder="Search for a country ...">
 		</ui5-input>
@@ -42,7 +47,7 @@
 	<br/>
 	<br/>
 	<h3>Input suggestions with ui5-li</h3>
-	<ui5-input id="myInput2" show-suggestions style="width: 100%">
+	<ui5-input id="myInput2" show-suggestions class="input3auto">
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
@@ -52,7 +57,7 @@
 	<br/>
 	<br/>
 	<h3>Input suggestions with grouping</h3>
-	<ui5-input id="myInputGrouping" show-suggestions style="width: 100%">
+	<ui5-input id="myInputGrouping" show-suggestions class="input3auto">
 		<ui5-suggestion-group-item text="Content Density"></ui5-suggestion-group-item>
 		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
@@ -63,7 +68,7 @@
 	</ui5-input>
 
 	<h3>Input suggestions with highlighing</h3>
-	<ui5-input id="myInputHighlighted" show-suggestions style="width: 100%">
+	<ui5-input id="myInputHighlighted" show-suggestions class="input3auto">
 		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
@@ -71,7 +76,7 @@
 	</ui5-input>
 
 	<h3> Input disabled</h3>
-	<ui5-input style="width: auto" id="input-disabled" disabled placeholder="Disabled one ...">
+	<ui5-input class="input4auto" id="input-disabled" disabled placeholder="Disabled one ...">
 		<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
 	</ui5-input>
 	<input />
@@ -80,23 +85,17 @@
 	<ui5-input id="input-max-length" maxLength="5" placeholder="Max length of 5"></ui5-input>
 
 	<h3> Input valueState Success</h3>
-	<ui5-input id="input3" value-state="Success" placeholder="Success state ...">
-		<ui5-icon slot="icon" name="message-success"></ui5-icon>
-	</ui5-input>
+	<ui5-input id="input3" value-state="Success" placeholder="Success state ..."></ui5-input>
 
 	<h3> Input valueState Information</h3>
-	<ui5-input value-state="Information" placeholder="Info state ...">
-		<ui5-icon slot="icon" name="message-information"></ui5-icon>
-	</ui5-input>
+	<ui5-input value-state="Information" placeholder="Info state ..."></ui5-input>
 
 	<h3> Test 'change' event</h3>
-	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ...">
-		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
-	</ui5-input>
+	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ..."></ui5-input>
 
 	<h3>Input with valueState and Dynamic suggestions</h3>
 	<ui5-input id="inputError"
-		style="width: 500px"
+		class="input2auto"
 		show-suggestions
 		value-state="Error"
 		placeholder="Search for a country ...">
@@ -104,10 +103,10 @@
 	<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 	</ui5-input>
 
-	<h3>Input suggestions with valueState and ui5-li</h3>
-	<ui5-input show-suggestions style="width: 500px" value-state="Information">
+	<h3>Input with long suggestions with valueState and ui5-li</h3>
+	<ui5-input id="long-sugg" show-suggestions class="input2auto" value-state="Information">
 		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
+		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
@@ -123,7 +122,6 @@
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
 		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
-		<ui5-icon slot="icon" name="message-error"></ui5-icon>
 	</ui5-input>
 	<h3> 'input' test result</h3>
 	<ui5-input id="inputLiveChangeResult"></ui5-input>
@@ -140,9 +138,9 @@
 	<ui5-input id="inputChange"></ui5-input>
 
 	<h3> Input test change result</h3>
-	<ui5-input id="inputChangeResult"></ui5-input>	
+	<ui5-input id="inputChangeResult"></ui5-input>
 	<h3>Input test ESC</h3>
-	<ui5-input id="myInputEsc" show-suggestions style="width: 100%">
+	<ui5-input id="myInputEsc" show-suggestions class="input3auto">
 		<ui5-suggestion-item text="Chromium"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Titanium"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Iron"></ui5-suggestion-item>
@@ -177,6 +175,9 @@
 	<h3> Input With aria-label</h3>
 	<ui5-input id="aria-label-input" accessible-name="Enter your secret password"></ui5-input>
 
+	<h3> Readonly input with value state</h3>
+	<ui5-input id="readonly-value-state-input" readonly value-state="Error"></ui5-input>
+
 	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
 	<ui5-date-picker  id='dp5'
@@ -202,9 +203,7 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
-	<ui5-input  value="input" value-state="Error">
-		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
-	</ui5-input>
+	<ui5-input  value="input" value-state="Error"></ui5-input>
 
 	<ui5-select id="mySelect2" value-state="Error">
 		<ui5-option>Cozy</ui5-option>
@@ -223,8 +222,8 @@
 
 	<h3> Input with multiple icons</h3>
 	<ui5-input id="input3" placeholder="Search ...">
-		<ui5-icon slot="icon" name="search" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
-		<ui5-icon slot="icon" name="decline" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
+		<ui5-icon slot="icon" name="search" class="input5auto"></ui5-icon>
+		<ui5-icon slot="icon" name="decline" class="input5auto"></ui5-icon>
 	</ui5-input>
 
 	<h3> Input firing submit event and submit action on 'ENTER' in a form</h3>
@@ -296,21 +295,21 @@
 	<ui5-input accessible-name-ref="enterNameLabel"></ui5-input>
 
 	<h3>Input suggestions with highlighing and XSS test</h3>
-	<ui5-input show-suggestions style="width: 100%">
+	<ui5-input show-suggestions class="input3auto">
 		<ui5-suggestion-item text="<script>alert('XSS')</script>" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Aanya Sing" description="<b onmouseover=alert('XSS')></b>">
 		</ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Test width of suggestions popover</h3>
-	<ui5-input id="suggestionsPopoverWidth" show-suggestions style="width: 350px !important;">
+	<ui5-input id="suggestionsPopoverWidth" show-suggestions class="input6auto">
 		<ui5-li>Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</ui5-li>
 	</ui5-input>
 
 	<h3>Input in a Dialog</h3>
 	<ui5-button id="btnOpenDialog">Open Dialog</ui5-button>
 	<ui5-dialog id="dialog">
-		<ui5-input id="inputInDialog" show-suggestions style="width: 100%">
+		<ui5-input id="inputInDialog" show-suggestions class="input3auto">
 			<ui5-li>Cozy</ui5-li>
 			<ui5-li>Compact</ui5-li>
 			<ui5-li>Condensed</ui5-li>
@@ -321,13 +320,7 @@
 
 	<h3>Short Input With Centered Text</h3>
 	<ui5-input class="short" value="244"></ui5-input>
-	<style>
-		.short {
-			width: 2.5rem;
-			min-width: 2.5rem;
-			text-align: center;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Input.css">
 
 	<h3>Test Backspace</h3>
 	<ui5-input id="input-number3" type="Number" value="4"></ui5-input><br>
@@ -338,12 +331,44 @@
 	<ui5-input id="input-number33" type="Number" value=".33"></ui5-input><br>
 	<ui5-input id="input-number34" type="Number" value="-1.33"></ui5-input><br>
 
+	<h3>sap_horizon</h3>
+
+	<div class="sap_horizon">
+		<link rel="stylesheet" type="text/css" href="styles/Input.css">
+		<ui5-input placeholder="No Value State"></ui5-input>
+		<ui5-input placeholder="Disabled" disabled></ui5-input>
+		<ui5-input placeholder="ReadnOnly" readonly></ui5-input>
+		<ui5-input placeholder="Error ValueState" value-state="Error"></ui5-input>
+		<ui5-input placeholder="Warning ValueState" value-state="Warning"></ui5-input>
+		<ui5-input placeholder="Success ValueState" value-state="Success"></ui5-input>
+		<ui5-input placeholder="Information ValueState" value-state="Information"></ui5-input>
+	</div>
+
+	<br>
+	<br>
+
+	<div id="xss-wrapper">
+		<ui5-button id="xss-btn">add xss item</ui5-button>
+		<ui5-input show-suggestions id="xss-input">
+			<ui5-suggestion-item text=""></ui5-suggestion-item>
+			<ui5-suggestion-item text="&lt;b&gt;&lt;/b&gt;"></ui5-suggestion-item>
+			<ui5-suggestion-item text="3412test1234"></ui5-suggestion-item>
+			<ui5-suggestion-item text="[[[b]]]"></ui5-suggestion-item>
+			<ui5-suggestion-item text="&amp;amp;"></ui5-suggestion-item>
+		</ui5-input>
+		<span id="xss-result">NO XSS</span>
+	</div>
+
+	<br>
+	<br>
+	<br>
+
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
 				var formToSubmit = document.getElementById("submit-form");
 				var submitEvent = new Event('submit');
-				
+
 				/* The old way - supported by all browsers:
 				The submit method of the form won't trigger
 				a submit event by itself, dispatch it manually */
@@ -380,6 +405,7 @@
 		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var oXSSButton = document.getElementById("xss-btn");
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
@@ -477,6 +503,20 @@
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
 			scrollResult.value = event.detail.scrollTop;
 			console.log("scroll", { scrolltop: event.detail.scrollTop, container: event.detail.scrollContainer });
+		});
+
+		input.addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("myInput-change-count");
+			const changeResult = document.getElementById("myInput-change-result");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+			changeResult.innerText += event.target.value + "\r\n";
+		});
+
+		oXSSButton.addEventListener("click", function () {
+			const oXSSItem = document.createElement("ui5-suggestion-item");
+
+			oXSSItem.text = `Canada<<img src="xss" onerror="document.getElementById('xss-result').innerText = 'XSS FOUND'">`
+			document.getElementById("xss-input").appendChild(oXSSItem);
 		});
 	</script>
 </body>

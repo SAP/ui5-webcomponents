@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
@@ -39,6 +39,7 @@ import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css
  */
 const metadata = {
 	tag: "ui5-flexible-column-layout",
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the columns layout and their proportion.
@@ -84,7 +85,7 @@ const metadata = {
 		},
 
 		/**
-		 * On object of strings that defines several additional accessibility texts for even further customization.
+		 * An object of strings that defines several additional accessibility texts for even further customization.
 		 *
 		 * It supports the following fields:
 		 *  - <code>startColumnAccessibleName</code>: the accessibility name for the <code>startColumn</code> region
@@ -94,12 +95,32 @@ const metadata = {
 		 *  - <code>startArrowRightText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the right
 		 *  - <code>endArrowLeftText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the left
 		 *  - <code>endArrowRightText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the right
+		 *  - <code>startArrowContainerAccessibleName</code>: the text that the first arrow container (between the <code>begin</code> and <code>mid</code> columns) will have as <code>aria-label</code>
+		 *  - <code>endArrowContainerAccessibleName</code>: the text that the second arrow container (between the <code>mid</code> and <code>end</code> columns) will have as <code>aria-label</code>
 		 *
 		 * @type {object}
 		 * @public
 		 * @since 1.0.0-rc.11
 		 */
 		accessibilityTexts: {
+			type: Object,
+		},
+
+		/**
+		 * An object of strings that defines additional accessibility roles for further customization.
+		 *
+		 * It supports the following fields:
+		 *  - <code>startColumnRole</code>: the accessibility role for the <code>startColumn</code>
+		 *  - <code>startArrowContainerRole</code>: the accessibility role for the first arrow container (between the <code>begin</code> and <code>mid</code> columns)
+		 *  - <code>midColumnRole</code>: the accessibility role for the <code>midColumn</code>
+		 *  - <code>endArrowContainerRole</code>: the accessibility role for the second arrow container (between the <code>mid</code> and <code>end</code> columns)
+		 *  - <code>endColumnRole</code>: the accessibility role for the <code>endColumn</code>
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibilityRoles: {
 			type: Object,
 		},
 
@@ -235,9 +256,18 @@ const metadata = {
  * <br><br>
  * <h3>Keyboard Handling</h3>
  *
+ * <h4>Basic Navigation</h4>
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).</li>
+ * <li>This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code></li>
  * </ul>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  * <br><br>
  *
  * <h3>ES6 Module Import</h3>
@@ -259,7 +289,6 @@ class FlexibleColumnLayout extends UI5Element {
 		this._prevLayout = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -283,7 +312,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		FlexibleColumnLayout.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -656,15 +685,43 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.accessibilityTexts.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.accessibilityTexts.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.accessibilityTexts.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
+	}
+
+	get accStartArrowContainerText() {
+		return this.accessibilityTexts.startArrowContainerAccessibleName || undefined;
+	}
+
+	get accEndArrowContainerText() {
+		return this.accessibilityTexts.endArrowContainerAccessibleName || undefined;
+	}
+
+	get accStartColumnRole() {
+		return this.accessibilityRoles.startColumnRole || "region";
+	}
+
+	get accMiddleColumnRole() {
+		return this.accessibilityRoles.midColumnRole || "region";
+	}
+
+	get accEndColumnRole() {
+		return this.accessibilityRoles.endColumnRole || "region";
+	}
+
+	get accStartArrowContainerRole() {
+		return this.accessibilityRoles.startArrowContainerRole || undefined;
+	}
+
+	get accEndArrowContainerRole() {
+		return this.accessibilityRoles.endArrowContainerRole || undefined;
 	}
 
 	get _effectiveLayoutsByMedia() {
@@ -675,20 +732,20 @@ class FlexibleColumnLayout extends UI5Element {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.startArrowDirection === "mirror") {
-			return customTexts.startArrowLeftText || this.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+			return customTexts.startArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return customTexts.startArrowRightText || this.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
+		return customTexts.startArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 
 	get accEndArrowText() {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.endArrowDirection === "mirror") {
-			return customTexts.endArrowRightText || this.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+			return customTexts.endArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return customTexts.endArrowLeftText || this.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
+		return customTexts.endArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 }
 

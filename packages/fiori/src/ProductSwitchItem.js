@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
@@ -96,6 +96,14 @@ const metadata = {
 		 * @private
 		 */
 		focused: {
+			type: Boolean,
+		},
+
+		/**
+		 * Used to set the selected state of the component. Only one selected in a sequence.
+		 * @private
+		 */
+		selected: {
 			type: Boolean,
 		},
 
@@ -209,6 +217,9 @@ class ProductSwitchItem extends UI5Element {
 		}
 
 		if (isSpace(event)) {
+			if (isSpaceShift(event)) {
+				event.stopPropagation();
+			}
 			this._fireItemClick();
 		}
 	}

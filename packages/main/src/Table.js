@@ -5,13 +5,21 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	isSpace,
+	isEnter,
+	isCtrlA,
+	isUpAlt,
+	isDownAlt,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
+import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
 import {
@@ -35,6 +43,7 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 const metadata = {
 	tag: "ui5-table",
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
@@ -50,6 +59,7 @@ const metadata = {
 			propertyName: "rows",
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -142,7 +152,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
@@ -185,7 +195,7 @@ const metadata = {
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
 		 * <br><br>
-		 * <b>Limitations:</b>
+		 * <b>Restrictions:</b>
 		 * <ul>
 		 * <li>Browsers that do not support this feature:
 		 * <ul>
@@ -363,6 +373,24 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
+ * <br>
+ *
+ * <ul>
+ * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
+ * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
+ * <li>[HOME]/[END] - Focuses the first/last item.</li>
+ * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
+ * <li>[ALT]+[UP]/[DOWN] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Table.js";</code>
@@ -399,11 +427,11 @@ class Table extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [BusyIndicator];
+		return [BusyIndicator, CheckBox];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -419,22 +447,25 @@ class Table extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			affectedPropertiesNames: ["_columnHeader"],
 			getItemsCallback: () => [this._columnHeader, ...this.rows],
+			skipItemsSize: 20,
 		});
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
 
 		this._handleResize = this.popinContent.bind(this);
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
 		this.tableEndObserved = false;
+
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
+
+		this._prevNestedElementIndex = 0;
 	}
 
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
 		const rowsCount = this.rows.length;
+		const selectedRows = this.selectedRows;
 
 		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
@@ -442,7 +473,7 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = this.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
+			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
@@ -450,12 +481,15 @@ class Table extends UI5Element {
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
-			column.sticky = this.stickyColumnHeader;
 			return !this._hiddenColumns[index];
 		});
 
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
+
+		this._allRowsSelected = selectedRows.length === this.rows.length;
+
+		this._previousFocusedRow = this._previousFocusedRow || this.rows[0] || null;
 	}
 
 	onAfterRendering() {
@@ -472,6 +506,16 @@ class Table extends UI5Element {
 		}
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
+
+		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
+
+		this.rows.forEach((row, index) => {
+			row._tabbableElements = getTabbableElements(row);
+
+			if (index > 0) {
+				row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
+			}
+		});
 	}
 
 	onExitDOM() {
@@ -484,6 +528,82 @@ class Table extends UI5Element {
 		}
 	}
 
+	_onkeydown(event) {
+		if (isCtrlA(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll(event);
+			return;
+		}
+
+		const isAltUp = isUpAlt(event);
+
+		if (isAltUp || isDownAlt(event)) {
+			return this._handleArrowAlt(isAltUp, event.target);
+		}
+	}
+
+	/**
+	 * Handles Alt + Up/Down.
+	 * Switches focus between column header, last focused item, and "More" button (if applicable).
+	 * @private
+	 * @param {boolean} shouldMoveUp Whether to move focus upward
+	 * @param {object} focusedElement The element currently in focus
+	 */
+	_handleArrowAlt(shouldMoveUp, focusedElement) {
+		const focusedElementType = this.getFocusedElementType(focusedElement);
+		const moreButton = this.getMoreButton();
+
+		if (shouldMoveUp) {
+			switch (focusedElementType) {
+			case "tableRow":
+				this._previousFocusedRow = focusedElement;
+				return this._onColumnHeaderClick();
+			case "columnHeader":
+				return moreButton ? moreButton.focus() : this._previousFocusedRow.focus();
+			case "moreButton":
+				return this._previousFocusedRow ? this._previousFocusedRow.focus() : this._onColumnHeaderClick();
+			}
+		} else {
+			switch (focusedElementType) {
+			case "tableRow":
+				this._previousFocusedRow = focusedElement;
+				return moreButton ? moreButton.focus() : this._onColumnHeaderClick();
+			case "columnHeader":
+				if (this._previousFocusedRow) {
+					return this._previousFocusedRow.focus();
+				}
+
+				if (moreButton) {
+					return moreButton.focus();
+				}
+
+				return;
+			case "moreButton":
+				return this._onColumnHeaderClick();
+			}
+		}
+	}
+
+	/**
+	 * Determines the type of the currently focused element.
+	 * @private
+	 * @param {object} element The object representation of the DOM element
+	 * @returns {("columnHeader"|"tableRow"|"moreButton")} A string identifier
+	 */
+	getFocusedElementType(element) {
+		if (element === this.getColumnHeader()) {
+			return "columnHeader";
+		}
+
+		if (element === this.getMoreButton()) {
+			return "moreButton";
+		}
+
+		if (this.rows.includes(element)) {
+			return "tableRow";
+		}
+	}
+
 	onRowFocused(event) {
 		this._itemNavigation.setCurrentItem(event.target);
 	}
@@ -491,6 +611,13 @@ class Table extends UI5Element {
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
 		this._itemNavigation.setCurrentItem(this._columnHeader);
+	}
+
+	_onColumnHeaderKeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll();
+		}
 	}
 
 	_onLoadMoreKeydown(event) {
@@ -575,7 +702,7 @@ class Table extends UI5Element {
 	}
 
 	_selectAll(event) {
-		const bAllSelected = event.target.checked;
+		const bAllSelected = !this._allRowsSelected;
 		const previouslySelectedRows = this.rows.filter(row => row.selected);
 
 		this._allRowsSelected = bAllSelected;
@@ -608,6 +735,10 @@ class Table extends UI5Element {
 
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
+	}
+
+	getMoreButton() {
+		return this.growsWithButton && this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-growingButton`);
 	}
 
 	handleResize(event) {
@@ -709,11 +840,11 @@ class Table extends UI5Element {
 	}
 
 	get _growingButtonText() {
-		return this.growingButtonText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText() {
-		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");
@@ -722,7 +853,7 @@ class Table extends UI5Element {
 	}
 
 	get ariaLabelSelectAllText() {
-		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
+		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {

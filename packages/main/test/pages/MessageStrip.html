@@ -13,40 +13,36 @@
 		}
 	</script>
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		.top {
-			margin-top: 3rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/MessageStrip.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
-	<ui5-messagestrip id="messageStrip">Hello World!</ui5-messagestrip>
+<body class="messagestrip1auto">
+	<ui5-message-strip id="messageStrip">Hello World!</ui5-message-strip>
 	<ui5-input id="inputField"></ui5-input>
 
 
-	<ui5-messagestrip class="top" design="Information">Default (Information) with default icon and close button:</ui5-messagestrip>
-	<ui5-messagestrip class="top" design="Negative">Negative with <b>default</b> icon and close button:</ui5-messagestrip>
-	<ui5-messagestrip class="top" design="Warning">Warning with default icon and close button:</ui5-messagestrip>
-	<ui5-messagestrip class="top" design="Positive">Positive with default icon and close button:</ui5-messagestrip>
+	<ui5-message-strip class="top" design="Information">Default (Information) with default icon and close button:</ui5-message-strip>
+	<ui5-message-strip class="top" design="Negative">Negative with <b>default</b> icon and close button:</ui5-message-strip>
+	<ui5-message-strip class="top" design="Warning">Warning with default icon and close button:</ui5-message-strip>
+	<ui5-message-strip class="top" design="Positive">Positive with default icon and close button:</ui5-message-strip>
 
-	<ui5-messagestrip class="top" design="Information">Information with default icon.</ui5-messagestrip>
-	<ui5-messagestrip class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-messagestrip>
+	<ui5-message-strip class="top" design="Information">Information with default icon.</ui5-message-strip>
+	<ui5-message-strip class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
 
-	<ui5-messagestrip hide-icon class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-messagestrip>
-	<ui5-messagestrip hide-icon hide-close-button class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-messagestrip>
-	<ui5-messagestrip hide-close-button class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-messagestrip>
+	<ui5-message-strip hide-icon class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
+	<ui5-message-strip hide-icon hide-close-button class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
+	<ui5-message-strip hide-close-button class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
 
-    <ui5-messagestrip design="Warning" class="top"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-messagestrip>
+    <ui5-message-strip design="Warning" class="top"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-message-strip>
 
-    <ui5-messagestrip design="Positive" class="top"><img src="./img/loading.gif" width="16" height="16" slot="icon">Custom icon</ui5-messagestrip>
+    <ui5-message-strip design="Positive" class="top"><img src="./img/loading.gif" width="16" height="16" slot="icon">Custom icon</ui5-message-strip>
 
 	<script>
 		var counter = 0;

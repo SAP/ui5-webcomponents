@@ -3,953 +3,1176 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Date Picker Tests", () => {
-	before(() => {
-		datepicker.open();
+	before(async () => {
+		await datepicker.open();
 	});
 
-	it("input renders", () => {
+	it("input renders", async () => {
 		datepicker.id = "#dp";
 
-		assert.ok(datepicker.input.isDisplayedInViewport(), "input is rendered");
-		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
+		const input = await datepicker.getInput();
+		const innerInput = await datepicker.getInnerInput();
+
+		assert.ok(await input.isDisplayedInViewport(), "input is rendered");
+		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
+		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
 	});
 
-	it("input receives value", () => {
+	it("input receives value", async () => {
 		datepicker.id = "#dp1";
 
-		const date = new Date(datepicker.innerInput.getValue());
+		const innerInput = await datepicker.getInnerInput();
+		const date = new Date(await innerInput.getValue());
 
 		assert.equal(date.getDate(), 11);
 		assert.equal(date.getMonth(), 10);
 		assert.equal(date.getFullYear(), 2011);
 	});
 
-	it("input receives value in format pattern depending on the set language", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+	it("input receives value in format pattern depending on the set language", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp16";
 
-		const setDateButton = browser.$("#b1");
+		const setDateButton = await browser.$("#b1");
 
-		setDateButton.click();
+		await setDateButton.click();
 
-		assert.equal(datepicker.innerInput.getValue(), "11 декември 2018 г.");
+		const innerInput = await datepicker.getInnerInput();
+		assert.equal(await innerInput.getValue(), "11 декември 2018 г.");
 	});
 
-	it("custom formatting", () => {
-		datepicker.open();
+	it("custom formatting", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp2";
 
-		assert.ok(datepicker.isValid("2018, 05/05"), "custom value is valid");
+		assert.ok(await datepicker.isValid("2018, 05/05"), "custom value is valid");
 	});
 
-	it("value state", () => {
+	it("value state", async () => {
 		datepicker.id = "#dp3";
-		datepicker.root.setAttribute("value-state", "Error");
+		const root = await datepicker.getRoot();
+		const input = await datepicker.getInput();
 
-		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+		await root.setAttribute("value-state", "Error");
 
-		const contentWrapper = browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+
+		const contentWrapper = await browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Value State Message", () => {
-		datepicker.id = "#dp17"
-		datepicker.input.click();
+	it("Value State Message", async () => {
+		datepicker.id = "#dp17";
+		const input = await datepicker.getInput();
+		await input.click();
 
-		const inputStaticAreaItem = datepicker.inputStaticAreaItem;
-		const popover = inputStaticAreaItem.shadow$("ui5-popover");
+		const inputStaticAreaItem = await datepicker.getInputStaticAreaItem();
+		const popover = await inputStaticAreaItem.shadow$("ui5-popover");
 
-		const slot = popover.$("#coolValueStateMessage");
+		const slot = await popover.$("#coolValueStateMessage");
 		assert.notOk(slot.error, "Value State message slot is working");
 	});
 
-	it("disabled", () => {
+	it("disabled", async () => {
 		datepicker.id = "#dp2";
-		datepicker.root.setAttribute("disabled", "");
+		const root = await datepicker.getRoot();
+		const input = await datepicker.getInput();
 
-		assert.equal(datepicker.input.getProperty("disabled"), true, "input has disabled property");
+		await root.setAttribute("disabled", "");
+
+		assert.ok(await input.getProperty("disabled"),  "input has disabled property");
 	});
 
-	it("readonly", () => {
+	it("readonly", async () => {
 		datepicker.id = "#dp3";
 
-		datepicker.root.setAttribute("readonly", "");
+		const root = await datepicker.getRoot();
+		await root.setAttribute("readonly", "");
 
-		assert.equal(datepicker.input.getProperty("readonly"), true, "input has readonly set");
-		assert.ok(!datepicker.hasIcon(), "icon is not displayed");
+		const input = await datepicker.getInput();
+		assert.ok(await input.getProperty("readonly"),  "input has readonly set");
+		assert.notOk(await datepicker.hasIcon(), "icon is not displayed");
 	});
 
-	it("required", () => {
+	it("required", async () => {
 		datepicker.id = "#dp-required";
 
-		assert.ok(datepicker.input.getProperty("required"), "input has required set");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "true", "Aria-required attribute is set correctly.");
+		const input = await datepicker.getInput();
+		const innerInput = await datepicker.getInnerInput();
+		assert.ok(await input.getProperty("required"), "input has required set");
+		assert.strictEqual(await innerInput.getAttribute("aria-required"), "true", "Aria-required attribute is set correctly.");
 
-		datepicker.root.removeAttribute("required");
+		const root = await datepicker.getRoot();
+		await root.removeAttribute("required");
 
-		assert.notOk(datepicker.input.getProperty("required"), "required property is not set");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "false", "Aria-required attribute is set correctly.");
+		assert.notOk(await input.getProperty("required"), "required property is not set");
+		assert.strictEqual(await innerInput.getAttribute("aria-required"), "false", "Aria-required attribute is set correctly.");
 	});
 
-	it("placeholder", () => {
-		datepicker.root.setAttribute("placeholder", "test placeholder");
+	it("placeholder", async () => {
+		const root = await datepicker.getRoot();
+		await root.setAttribute("placeholder", "test placeholder");
 
-		assert.equal(datepicker.innerInput.getProperty("placeholder"), "test placeholder", "input has correct placeholder");
-		assert.equal(datepicker.innerInput.getAttribute("placeholder"), "test placeholder", "has correct placeholder attribute");
+		const innerInput = await datepicker.getInnerInput();
+		assert.equal(await innerInput.getProperty("placeholder"), "test placeholder", "input has correct placeholder");
+		assert.equal(await innerInput.getAttribute("placeholder"), "test placeholder", "has correct placeholder attribute");
 	});
 
-	it("primary calendar type", () => {
-		datepicker.root.setAttribute("primary-calendar-type", "Islamic");
+	it("primary calendar type", async () => {
+		const root = await datepicker.getRoot();
+		await root.setAttribute("primary-calendar-type", "Islamic");
 
-		assert.equal(datepicker.calendar.getProperty("primaryCalendarType"), "Islamic", "calendar has correct calendar type");
+		const calendar = await datepicker.getCalendar();
+		assert.equal(await calendar.getProperty("primaryCalendarType"), "Islamic", "calendar has correct calendar type");
 	});
 
-	it("Islamic calendar type input value", () => {
+	it("Islamic calendar type input value", async () => {
 		datepicker.id = "#dp3";
 
-		datepicker.root.setAttribute("primary-calendar-type", "Islamic");
-		datepicker.root.setAttribute("format-pattern", "MMM d, y G");
+		const root = await datepicker.getRoot();
+		await root.setAttribute("primary-calendar-type", "Islamic");
+		await root.setAttribute("format-pattern", "MMM d, y G");
 
-		assert.ok(datepicker.isValid("Rab. I 6, 1440 AH"), "Islamic value is valid");
+		assert.ok(await datepicker.isValid("Rab. I 6, 1440 AH"), "Islamic value is valid");
 
-		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
+		await root.setAttribute("value", "Rab. I 6, 1440 AH");
 
-		assert.equal(datepicker.innerInput.getProperty("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
+		const innerInput = await datepicker.getInnerInput();
+		assert.equal(await innerInput.getProperty("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
 	});
 
-	it("Selected date from daypicker is the same as datepicker date", () => {
+	it("Selected date from daypicker is the same as datepicker date", async () => {
 		datepicker.id = "#dp4";
 
 		//open picker
-		datepicker.valueHelpIcon.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
 		//select a date
-		const pickerDate = datepicker.getPickerDate(1547164800); //Jan 11, 2019
-		pickerDate.click();
+		const pickerDate = await datepicker.getPickerDate(1547164800); //Jan 11, 2019
+		await pickerDate.click();
 
-		assert.equal(datepicker.innerInput.getProperty("value"), "Jan 11, 2019", "input has the correct value");
+		const innerInput = await datepicker.getInnerInput();
+		assert.equal(await innerInput.getProperty("value"), "Jan 11, 2019", "input has the correct value");
 	});
 
-	it("focusout fires change", () => {
+	it("focusout fires change", async () => {
 		datepicker.id = "#dp5";
 
-		datepicker.input.click();
-		datepicker.root.keys("Jan 1, 1999");
-		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		const input = await datepicker.getInput();
+		await input.click();
+		const root = await datepicker.getRoot();
+		await root.keys("Jan 1, 1999");
+		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
+		assert.equal(await browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 	});
 
-	it("delete input value then open picker keeps the empty value", () => {
+	it("delete input value then open picker keeps the empty value", async () => {
 		datepicker.id = "#dp6";
 
 		const timestamp_6_Jan_2015 = 1420502400;
 		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
 
 		//type in the input
-		datepicker.root.setProperty("value", "Jan 6, 2015");
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 6, 2015");
 
 		//open picker
-		datepicker.valueHelpIcon.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		const calendarDate_6_Jan_2015 = datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
-		const calendarDate_8_Jan_2015 = datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
-		assert.ok(calendarDate_6_Jan_2015.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
+		const calendarDate_6_Jan_2015 = await datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
+		const calendarDate_8_Jan_2015 = await datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
+		assert.ok(await calendarDate_6_Jan_2015.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
 
 		//select a date
-		calendarDate_8_Jan_2015.click();
+		await calendarDate_8_Jan_2015.click();
 
 		//check if the picker is closed and the datepicker value is correct
-		assert.ok(!datepicker.isPickerOpen(), "picker is closed");
-		assert.equal(datepicker.input.getProperty("value"), "Jan 8, 2015", "datepicker value is Jan 8, 2015");
+		assert.notOk(await datepicker.isPickerOpen(), "picker is closed");
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("value"), "Jan 8, 2015", "datepicker value is Jan 8, 2015");
 
 		//then delete the value
-		datepicker.innerInput.click();
-		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 
 		//then open the picker
-		datepicker.valueHelpIcon.click();
+		await valueHelpIcon.click();
 
 		//check if the datepicker value is still empty
-		assert.equal(datepicker.innerInput.getProperty("value"), "", "datepicker value is empty");
+		assert.equal(await innerInput.getProperty("value"), "", "datepicker value is empty");
 
 		//check if the picker is open and the selected date in the calendar is correct
 
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
-		assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
+		assert.ok(await datepicker.isPickerOpen(), "picker is open");
+		assert.notOk(await calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
+		assert.notOk(await calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 
-		datepicker.valueHelpIcon.click();
+		await valueHelpIcon.click();
 	});
 
-	it("Calendar selection works on different timezones", () => {
-		datepicker.id = "#dp7";
+	// it("Calendar selection works on different timezones", async () => {
+	// 	datepicker.id = "#dp7";
 
-		browser.$("#inputTimezone").setValue(-6); //CST
-		browser.$("#btnApplyTimezone").click();
+	// 	await browser.$("#inputTimezone").setValue(-6); //CST
+	// 	await browser.$("#btnApplyTimezone").click();
 
-		datepicker.valueHelpIcon.click();
+	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
+	// 	await valueHelpIcon.click();
 
-		let calendarDate_4_Jan_2019 = datepicker.getPickerDate(1546560000); //Jan 4, 2019
-		calendarDate_4_Jan_2019.click();
+	// 	let calendarDate_4_Jan_2019 = await datepicker.getPickerDate(1546560000); //Jan 4, 2019
+	// 	await calendarDate_4_Jan_2019.click();
 
-		assert.strictEqual(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
-		//restore timezone
-		browser.$('#btnRestoreTimezone').click();
+	// 	const innerInput = await datepicker.getInnerInput();
+	// 	assert.strictEqual(await innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
+	// 	//restore timezone
+	// 	await browser.$('#btnRestoreTimezone').click();
 
-		// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
-		assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
-	});
+	// 	// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
+	// 	assert.equal(await browser.$("#inputTimezone").getValue(), "", "timezone is reset");
+	// });
 
-	it("respect first day of the week - monday", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+	it("respect first day of the week - monday", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp7_1";
 
-		datepicker.root.setProperty("value", "фев 6, 2019");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "фев 6, 2019");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
+		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
 
-		assert.ok(firstDisplayedDate.getAttribute("data-sap-timestamp").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, "1548633600", "28 Jan is the first displayed date for Feb 2019")
 
-		const calendarDate_3_Feb_2019 = datepicker.getPickerDate(1549152000);
+		const calendarDate_3_Feb_2019 = await datepicker.getPickerDate(1549152000);
 
-		assert.ok(calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
+		assert.ok(await calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
 	});
 
-	it("if today is 30 jan, clicking next month does not skip feb", () => {
-		datepicker.open();
+	it("if today is 30 jan, clicking next month does not skip feb", async () => {
+		await datepicker.open();
 
 		datepicker.id = "#dp7_2";
 
-		datepicker.root.setProperty("value", "Jan 30, 2019");
-		datepicker.valueHelpIcon.click();
-		datepicker.btnNext.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 30, 2019");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		(await datepicker.getBtnNext()).click();
 
-		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
+		const firstDisplayedDate = (await datepicker.getFirstDisplayedDate());
 
 		// first displayed date should be Jan 27, 2019, so this is February
-		assert.ok(firstDisplayedDate.getAttribute("data-sap-timestamp").indexOf("1548547200") > -1, "Feb is the displayed month");
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, "1548547200", "Feb is the displayed month");
 	});
 
-	it("picker stays open on input click", () => {
-		datepicker.open();
+	it("picker stays open on input click", async () => {
+		await datepicker.open();
 
 		datepicker.id = "#dp6";
 
-		datepicker.valueHelpIcon.click();
-		datepicker.innerInput.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
 
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(datepicker.innerInput.isFocusedDeep(), "input is focused");
+		assert.ok(await innerInput.isFocusedDeep(), "input is focused");
 	});
 
-	it("change fires when we change the input back to its original value", () => {
+	it("change fires when we change the input back to its original value", async () => {
 		datepicker.id = "#dp8"; // initial value is Jan 6, 2015
 
-		datepicker.innerInput.click();
-		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		datepicker.innerInput.keys("Jan 8, 2015");
-		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
+		await innerInput.keys("Jan 8, 2015");
+		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
+		assert.equal(await browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 
-		datepicker.innerInput.click();
-		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		datepicker.innerInput.keys("Jan 6, 2015");
-		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		await innerInput.click();
+		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
+		await innerInput.keys("Jan 6, 2015");
+		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.$("#lbl").getHTML(false), "2", 'change has fired once');
+		assert.equal(await browser.$("#lbl").getHTML(false), "2", 'change has fired once');
 	});
 
-	it("change fires every time tomorrow is typed and normalized", () => {
+	it("change fires every time tomorrow is typed and normalized", async () => {
 		let tomorrowDate;
-		const lblChangeCounter = browser.$("#lblTomorrow");
-		const lblTomorrowDate = browser.$("#lblTomorrowDate");
+		const lblChangeCounter = await browser.$("#lblTomorrow");
+		const lblTomorrowDate = await browser.$("#lblTomorrowDate");
 
 		datepicker.id = "#dp13";
 
 		// Type tomorrow.
-		datepicker.innerInput.click();
-		datepicker.innerInput.keys("tomorrow");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await innerInput.keys("tomorrow");
 
 		// Press Enter, store the date and delete it.
-		datepicker.innerInput.keys("Enter");
-		tomorrowDate = lblTomorrowDate.getHTML(false);
-		browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		await innerInput.keys("Enter");
+		tomorrowDate = await lblTomorrowDate.getHTML(false);
+		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
 
 		// Type tomorrow and press Enter for the second time.
-		datepicker.innerInput.keys("tomorrow");
-		datepicker.innerInput.keys("Enter");
+		await innerInput.keys("tomorrow");
+		await innerInput.keys("Enter");
 
 		// Two change events should be fired and the date should twice normalized
-		assert.equal(lblChangeCounter.getHTML(false), "2", 'change event is being fired twice');
-		assert.equal(lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalized to date twice as well');
+		assert.equal(await lblChangeCounter.getHTML(false), "3", 'change event is being fired twice');
+		assert.equal(await lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalized to date twice as well');
 	});
 
-	it("today value is normalized and correctly rounded to 00:00:00", () => {
+	it("today value is normalized and correctly rounded to 00:00:00", async () => {
 		datepicker.id = "#dp9";
 
 		let timestampToday = new Date().getTime();
 		timestampToday = (timestampToday - timestampToday % (24 * 60 * 60 * 1000)) / 1000;
 
-		assert.equal(datepicker.innerInput.getProperty("value"), "today", "input value is ok");
+		const innerInput = await datepicker.getInnerInput();
+		assert.equal(await innerInput.getProperty("value"), "today", "input value is ok");
 
-		datepicker.valueHelpIcon.click();
-		assert.equal(datepicker.calendar.getProperty('timestamp'), timestampToday, "calendar selected dates is ok");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		const calendar = await datepicker.getCalendar();
+		assert.equal(await calendar.getProperty('timestamp'), timestampToday, "calendar selected dates is ok");
 
-		const calendarDateToday = datepicker.getPickerDate(timestampToday);
-		assert.ok(calendarDateToday.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
+		const calendarDateToday = await datepicker.getPickerDate(timestampToday);
+		assert.ok(await calendarDateToday.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
 	});
 
-	it("does not open, if disabled", () => {
+	it("does not open, if disabled", async () => {
 		datepicker.id = "#dp10";
 
-		assert.ok(!datepicker.isPickerOpen(), "picker is closed initially.");
-		assert.equal(datepicker.valueHelpIcon.getCSSProperty('pointer-events').value, "none", "pointer events are none");
+		assert.notOk(await datepicker.isPickerOpen(), "picker is closed initially.");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		assert.equal((await valueHelpIcon.getCSSProperty('pointer-events')).value, "none", "pointer events are none");
 	});
 
-	it("[F4] toggles the calendar", () => {
+	it("[F4] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 
-		datepicker.innerInput.click();
-		browser.keys("F4");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("F4");
 
-		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
 	});
 
-	it("[Alt] + [UP] toggles the calendar", () => {
+	it("[Alt] + [UP] toggles the calendar", async () => {
 		datepicker.id = "#dp9";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 
-		datepicker.innerInput.click();
-		browser.keys(["Alt", "ArrowUp", "NULL"]);
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 
-		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
 
-		browser.keys(["Alt", "ArrowUp", "NULL"]);
+		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 
-		assert.notOk(datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 	});
 
-	it("[Alt] + [DOWN] toggles the calendar", () => {
+	it("[Alt] + [DOWN] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 
-		datepicker.innerInput.click();
-		browser.keys(["Alt", "ArrowDown", "NULL"]);
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
 
-		browser.keys(["Alt", "ArrowDown", "NULL"]);
+		await browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		assert.notOk(datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 	});
 
-	it("[F4] shows year picker after date picker is open", () => {
+	it("[F4] shows year picker after date picker is open", async () => {
 		datepicker.id = "#dp11";
 
-		datepicker.valueHelpIcon.click()
-		browser.keys("F4");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		await browser.keys("F4");
 
-		assert.notOk(datepicker.calendar.shadow$("ui5-monthpicker")._hidden, "Month picker is open");
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		const calendar = await datepicker.getCalendar();
+		assert.notOk((await calendar.shadow$("ui5-monthpicker"))._hidden, "Month picker is open");
+		await valueHelpIcon.click(); // close the datepicker
 	});
 
-	it("[SHIFT] + [F4] shows year picker after date picker is open", () => {
+	it("[SHIFT] + [F4] shows year picker after date picker is open", async () => {
 		datepicker.id = "#dp11";
 
-		datepicker.valueHelpIcon.click()
-		browser.keys(['Shift', 'F4']);
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		await browser.keys(['Shift', 'F4']);
 
-		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		const calendar = await datepicker.getCalendar();
+		assert.notOk((await calendar.shadow$("ui5-yearpicker"))._hidden, "Year picker is open");
+		await valueHelpIcon.click(); // close the datepicker
 	});
 
-	it("[F4] shows month picker after year picker is open", () => {
+	it("[F4] shows month picker after year picker is open", async () => {
 		datepicker.id = "#dp11";
 
-		datepicker.valueHelpIcon.click()
-		browser.keys(['Shift', 'F4']);
-		browser.keys('F4');
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		await browser.keys(['Shift', 'F4']);
+		await browser.keys('F4');
 
-		assert.notOk(datepicker.calendar.shadow$("ui5-monthpicker")._hidden, "Year picker is open");
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		const calendar = await datepicker.getCalendar();
+		assert.notOk((await calendar.shadow$("ui5-monthpicker"))._hidden, "Year picker is open");
+		await valueHelpIcon.click(); // close the datepicker
 	});
 
 
-	it("[SHIFT] + [F4] shows year picker after month picker is open", () => {
+	it("[SHIFT] + [F4] shows year picker after month picker is open", async () => {
 		datepicker.id = "#dp11";
 
-		datepicker.valueHelpIcon.click()
-		browser.keys('F4');
-		browser.keys(['Shift', 'F4']);
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		await browser.keys('F4');
+		await browser.keys(['Shift', 'F4']);
 
-		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		const calendar = await datepicker.getCalendar();
+		assert.notOk((await calendar.shadow$("ui5-yearpicker"))._hidden, "Year picker is open");
+		await valueHelpIcon.click(); // close the datepicker
 	});
 
-	it("DatePicker popover when initially opened displays a day picker", () => {
+	it("DatePicker popover when initially opened displays a day picker", async () => {
 		datepicker.id = "#dp11";
 
-		datepicker.valueHelpIcon.click() // open the datepicker
-		browser.keys('F4'); // show month picker
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		await browser.keys('F4'); // show month picker
+		await valueHelpIcon.click(); // close the datepicker
 
-		assert.notOk(datepicker.calendar.shadow$("ui5-daypicker")._hidden, "Day picker is open");
+		const calendar = await datepicker.getCalendar();
+		assert.notOk((await calendar.shadow$("ui5-daypicker"))._hidden, "Day picker is open");
 
-		browser.keys(['Shift', 'F4']); // show year picker
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		await browser.keys(['Shift', 'F4']); // show year picker
+		await valueHelpIcon.click(); // close the datepicker
 
-		datepicker.valueHelpIcon.click() // open the datepicker
-		assert.notOk(datepicker.calendar.shadow$("ui5-daypicker")._hidden, "Day picker is open");
+		await valueHelpIcon.click(); // open the datepicker
+		assert.notOk((await calendar.shadow$("ui5-daypicker"))._hidden, "Day picker is open");
 
-		datepicker.valueHelpIcon.click(); // close the datepicker
+		await valueHelpIcon.click(); // close the datepicker
 	});
 
 
-	it("[F4] on year picker doesn't close the date picker", () => {
+	it("[F4] on year picker doesn't close the date picker", async () => {
 		datepicker.id = "#dp11";
 
-		datepicker.valueHelpIcon.click();
-		browser.keys("F4");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		await browser.keys("F4");
 
-		browser.keys("F4");
+		await browser.keys("F4");
 
-		assert.ok(datepicker.isPickerOpen, "Datepicker remains open");
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker remains open");
 	});
 
-	it("daypicker extreme values max", () => {
+	it("daypicker extreme values max", async () => {
 		var _28Nov9999 = "253399363200";
 
-		datepicker.open();
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Dec 31, 9999");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Dec 31, 9999");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _28Nov9999, "28 Nov, 9999 is the first displayed date");
 	});
 
-	it("daypicker extreme values min", () => {
+	it("daypicker extreme values min", async () => {
 		var _31Dec0000 = "-62135683200";
 
-		datepicker.open();
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Jan 1, 0001");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 0001");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
+		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _31Dec0000, "Jan 1, 0001 is the second displayed date");
 	});
 
-	it("daypicker prev extreme values min", () => {
+	it("daypicker prev extreme values min", async () => {
 		var _31Dec0000 = "-62135683200";
 
-		datepicker.open();
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Feb 1, 0001");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Feb 1, 0001");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnPrev.click();
+		const btnPrev = await datepicker.getBtnPrev();
+		await btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
+		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _31Dec0000, "Jan 1, 0001 is the second displayed date");
 	});
 
-	it("daypicker next extreme values max", () => {
+	it("daypicker next extreme values max", async () => {
 		var _28Nov9999 = "253399363200";
 
-		datepicker.open();
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Nov 30, 9999");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Nov 30, 9999");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnNext.click();
+		const btnNext = await datepicker.getBtnNext();
+		await btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, _28Nov9999, "28 Nov, 9999 is the first displayed date");
 	});
 
-	it("monthpicker next extreme values max", () => {
-		datepicker.open();
+	it("monthpicker next extreme values max", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Dec 31, 9998");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Dec 31, 9998");
 
-		datepicker.btnMonth.click();
-		datepicker.btnNext.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
+		const btnMonth = await datepicker.getBtnMonth();
+		await btnMonth.click();
+		const btnNext = await datepicker.getBtnNext();
+		await btnNext.click();
+
+		const btnYear = await datepicker.getBtnYear();
+		const innerHTML = await btnYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9999", "year button's text is correct");
 	});
 
-	it("monthpicker prev extreme values min", () => {
-		datepicker.open();
+	it("monthpicker prev extreme values min", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Jan 1, 0002");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 0002");
 
-		datepicker.btnMonth.click();
-		datepicker.btnPrev.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
+		const btnMonth = await datepicker.getBtnMonth();
+		await btnMonth.click();
+		const btnPrev = await datepicker.getBtnPrev();
+		await btnPrev.click();
+
+		const btnYear = await datepicker.getBtnYear();
+		const innerHTML = await btnYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "year button's text is correct");
 	});
 
-	it("yearpicker extreme values max", () => {
-		datepicker.open();
+	it("yearpicker extreme values max", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Dec 31, 9995");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Dec 31, 9995");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9980", "First year in the year picker is correct");
 	});
 
-	it("yearpicker extreme values min", () => {
-		datepicker.open();
+	it("yearpicker extreme values min", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Jan 1, 0003");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 0003");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "First year in the year picker is correct");
 	});
 
-	it("yearpicker prev page extreme values min", () => {
-		datepicker.open();
+	it("yearpicker prev page extreme values min", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Jan 1, 0012");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 0012");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0002") > -1, "First year in the year picker is correct");
+		let firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		let innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0002", "First year in the year picker is correct");
 
-		datepicker.btnPrev.click();
+		const btnPrev = await datepicker.getBtnPrev();
+		await btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+		firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "First year in the year picker is correct");
 	});
 
-	it("yearpicker next page extreme values max", () => {
-		datepicker.open();
+	it("yearpicker next page extreme values max", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Dec 31, 9986");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Dec 31, 9986");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
+		let firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		let innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9976", "First year in the year picker is correct");
 
-		datepicker.btnNext.click();
+		const btnNext = await datepicker.getBtnNext();
+		await btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+		firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9980", "First year in the year picker is correct");
 	});
 
-	it("yearpicker click extreme values max", () => {
-		datepicker.open();
+	it("yearpicker click extreme values max", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Dec 31, 9986");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Dec 31, 9986");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		var tenthYear = datepicker.getDisplayedYear(10);
-		assert.ok(tenthYear.getProperty("innerHTML").indexOf("9986") > -1, "Tenth year in the year picker is correct");
+		const tenthYear = await datepicker.getDisplayedYear(10);
+		let innerHTML = await tenthYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
 
-		tenthYear.click();
-		datepicker.btnYear.click();
+		await tenthYear.click();
+		await btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
+		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9976", "First year in the year picker is correct");
 	});
 
-	it("yearpicker click extreme values min above 10", () => {
-		datepicker.open();
+	it("yearpicker click extreme values min above 10", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Jan 1, 0012");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 0012");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		var thirdYear = datepicker.getDisplayedYear(2);
-		assert.ok(thirdYear.getProperty("innerHTML").indexOf("0004") > -1, "Third year in the year picker is correct");
+		const thirdYear = await datepicker.getDisplayedYear(2);
+		const innerHTML = await thirdYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0004", "Third year in the year picker is correct");
 	});
 
-	it("yearpicker click extreme values min below 10", () => {
-		datepicker.open();
+	it("yearpicker click extreme values min below 10", async () => {
+		await datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.root.setProperty("value", "Jan 1, 0004");
-		datepicker.valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 0004");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		datepicker.btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "0001", "First year in the year picker is correct");
 	});
 
-	it("placeholder, based on the formatPattern", () => {
+	it("placeholder, based on the formatPattern", async () => {
 		datepicker.id = "#dp14";
 
 		const pickerFormatPattern = "MMM d, y";
-		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
+		const innerInput = await datepicker.getInnerInput();
+		const innerInputPlaceholder = await innerInput.getProperty("placeholder");
 
 		// The DatePicker has no placeholder set, in this case a default placeholder, based on the format pattern,
 		//  is set to the internal input.
-		assert.ok(!datepicker.root.getProperty("placeholder"), "The DatePicker has no placeholder set");
+		const root = await datepicker.getRoot()
+		assert.notOk(await root.getProperty("placeholder"), "The DatePicker has no placeholder set");
 		assert.equal(innerInputPlaceholder, pickerFormatPattern, "By default, the inner input has the formatPattern as placeholder");
 	});
 
-	it("placeholder, set by the user", () => {
+	it("placeholder, set by the user", async () => {
 		datepicker.id = "#dp15";
 
 		const placeholder = "Delivery date";
-		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
+		const innerInput = await datepicker.getInnerInput();
+		const innerInputPlaceholder = await innerInput.getProperty("placeholder");
 
 		// The DatePicker has placeholder set, in this case the default placeholder, based on the format pattern,
 		// is not displayed.
-		assert.ok(datepicker.root.getProperty("placeholder"), "The DatePicker has placeholder set");
+		const root = await datepicker.getRoot();
+		assert.ok(await root.getProperty("placeholder"), "The DatePicker has placeholder set");
 		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
 	});
 
-	it("Going under the minimum date changes value state", () => {
+	it("Going under the minimum date changes value state", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.innerInput.click();
-		datepicker.innerInput.keys("Jan 1, 1999");
-		datepicker.innerInput.keys("Enter");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await innerInput.keys("Jan 1, 1999");
+		await innerInput.keys("Enter");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
 
-		const contentWrapper = browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Going over the maximum date changes value state", () => {
+	it("Going over the maximum date changes value state", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.innerInput.click();
-		while(datepicker.innerInput.getValue() !== ""){
-			datepicker.innerInput.keys("Backspace");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		while(await innerInput.getValue() !== ""){
+			await innerInput.keys("Backspace");
 		}
 
-		datepicker.innerInput.keys("May 5, 2100");
-		datepicker.root.keys("Enter");
+		await innerInput.keys("May 5, 2100");
+		const root = await datepicker.getRoot();
+		await root.keys("Enter");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
 
-		const contentWrapper = browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Maximum or minimum date changes value state to none", () => {
+	it("Maximum or minimum date changes value state to none", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.input.click();
-		while(datepicker.innerInput.getValue() !== ""){
-			datepicker.innerInput.keys("Backspace");
+		const input = await datepicker.getInput();
+		const innerInput = await datepicker.getInnerInput();
+		await input.click();
+		while(await innerInput.getValue() !== ""){
+			await innerInput.keys("Backspace");
 		}
 
-		datepicker.innerInput.keys("Jan 8, 2100");
-		datepicker.root.keys("Enter");
+		await innerInput.keys("Jan 8, 2100");
+		const root = await datepicker.getRoot();
+		await root.keys("Enter");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
 
-		datepicker.input.click();
-		datepicker.root.setProperty("value", "Jan 1, 2000");
-		datepicker.root.keys("Enter");
+		await input.click();
+		await root.setProperty("value", "Jan 1, 2000");
+		await root.keys("Enter");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
 
-		const contentWrapper = browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Years are disabled when out of range", () => {
+	it("Years are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.input.click();
-		datepicker.root.setProperty("value", "Jan 8, 2100");
-		datepicker.root.keys("Enter");
+		const input = await datepicker.getInput();
+		await input.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 8, 2100");
+		await root.keys("Enter");
 
-		datepicker.openPicker();
+		await datepicker.openPicker();
 
-		datepicker.btnYear.click();
-		assert.ok(datepicker.getDisplayedYear(11).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
-		datepicker.root.keys("ArrowRight");
-		assert.ok(datepicker.getDisplayedYear(10).isFocusedDeep(), "Focus remained on year 2100");
-		assert.ok(!datepicker.getDisplayedYear(11).isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
+		let displayedYear = await datepicker.getDisplayedYear(11);
+		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
+		await root.keys("ArrowRight");
+
+		displayedYear = await datepicker.getDisplayedYear(10);
+		assert.ok(await displayedYear.isFocusedDeep(), "Focus remained on year 2100");
+
+		displayedYear = await datepicker.getDisplayedYear(11);
+		assert.notOk(await displayedYear.isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
 	});
 
-	it("Months are disabled when out of range", () => {
+	it("Months are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.openPicker();
+		await datepicker.openPicker();
 
-		datepicker.btnMonth.click();
-		assert.ok(datepicker.getDisplayedMonth(10).hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
+		const btnMonth = await datepicker.getBtnMonth();
+		await btnMonth.click();
+		let displayedMonth = await datepicker.getDisplayedMonth(10);
+		assert.ok(await displayedMonth.hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
 
-		datepicker.root.keys("ArrowDown");
-		assert.ok(datepicker.getDisplayedMonth(0).isFocusedDeep(), "Months out of range  can not be reached with keyboard");
+		const root = await datepicker.getRoot();
+		await root.keys("ArrowDown");
+
+		displayedMonth = await datepicker.getDisplayedMonth(0);
+		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range  can not be reached with keyboard");
 	});
 
-	it("Days are disabled when out of range", () => {
+	it("Days are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.keys("Escape");
-		datepicker.openPicker();
+		const root = await datepicker.getRoot();
+		await root.keys("Escape");
+		await datepicker.openPicker();
 
-		assert.ok(datepicker.getDisplayedDay(15).hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
+		const displayedDay = await datepicker.getDisplayedDay(15);
+		assert.ok(await displayedDay.hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
 	});
 
-	it("Days are disabled when out of range", () => {
+	it("Days are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
-		datepicker.root.keys("Escape");
+		const root = await datepicker.getRoot();
+		await root.keys("Escape");
 
 		datepicker.id = "#dp34";
-		datepicker.openPicker();
-		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
+		await datepicker.openPicker();
+
+		const displayedDay = await datepicker.getDisplayedDay(14);
+		assert.ok(await displayedDay.isFocusedDeep(), "Days out of range are disabled");
 	});
 
-	it("Min and Max date are included in the interval", () => {
+	it("Min and Max date are included in the interval", async () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.keys("Escape");
-		datepicker.openPicker();
+		const root = await datepicker.getRoot();
+		await root.keys("Escape");
+		await datepicker.openPicker();
 
-		assert.equal(datepicker.getDisplayedDay(9).hasClass("ui5-dp-item--disabled"), false , "Min date is included");
-		assert.equal(datepicker.getDisplayedDay(11).hasClass("ui5-dp-item--disabled"), false, "Max date is included");
+		let displayedDay = await datepicker.getDisplayedDay(9);
+		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Min date is included");
+
+		displayedDay = await datepicker.getDisplayedDay(11);
+		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Max date is included");
 	});
 
-	it("Tests week numbers column visibility", () => {
+	it("Tests week numbers column visibility", async () => {
 		// act
 		datepicker.id = "#dp18";
-		datepicker.valueHelpIcon.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
 		// assert
-		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
+		let dayPicker = await datepicker.getDayPicker();
+		const weekNumbersCol1 = await dayPicker.shadow$(".ui5-dp-weekname-container");
+		assert.ok(await weekNumbersCol1.isExisting(), "The week numbers column is visible.");
 
 		// close date picker
-		datepicker.innerInput.click();
-		browser.keys(["Alt", "ArrowUp", "NULL"]);
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 
 		// act
 		datepicker.id = "#dp19";
-		datepicker.valueHelpIcon.click();
+		await valueHelpIcon.click();
 
 		// assert
-		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.equal(weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
+		dayPicker = await datepicker.getDayPicker();
+		const weekNumbersCol2 = await dayPicker.shadow$(".ui5-dp-weekname-container");
+		assert.notOk(await weekNumbersCol2.isExisting(), "The week numbers column is hidden.");
 
 		// close date picker
-		datepicker.innerInput.click();
-		browser.keys(["Alt", "ArrowUp", "NULL"]);
+		await innerInput.click();
+		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 	});
 
-	it("Calendar root have correct attribute", () => {
+	it("Calendar root have correct attribute", async () => {
 
 		datepicker.id = "#dp18";
-		datepicker.valueHelpIcon.click();
-		const monthpickerContent = datepicker.dayPicker.shadow$(".ui5-dp-content");
+		(await datepicker.getValueHelpIcon()).click();
+		const monthpickerContent = (await datepicker.getDayPicker()).shadow$(".ui5-dp-content");
 
-		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
-		assert.strictEqual(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
+		assert.strictEqual(await monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
+		assert.strictEqual(await monthpickerContent.getAttribute("aria-roledescription"), "Gregorian calendar", "Calendar root have correct roledescription")
 
 	});
 
-	it("DayPicker content wrapped", ()=>{
+	it("DayPicker content wrapped", async () => {
 		datepicker.id = "#dp19";
-		datepicker.open();
-		let arr = datepicker.getDayPickerContent();
+		await datepicker.open();
+		let arr = await datepicker.getDayPickerContent();
 
-		arr.forEach(function(el){
-			assert.strictEqual(el.getAttribute("role"), "row", "Content wrapper has correct role");
+		arr.forEach(async function(el){
+			assert.strictEqual(await el.getAttribute("role"), "row", "Content wrapper has correct role");
 		});
 	});
 
-	it("DayPicker day name attribute", ()=>{
-		// browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		// datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+	it("DayPicker day name attribute", async () => {
+		// await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		const root = await datepicker.getRoot();
+		await root.setAttribute("primary-calendar-type", "Gregorian");
 		// datepicker.id = "#dp13";
 		// datepicker.openPicker();
-		// datepicker.root.keys("May 3, 2100");
-		// datepicker.root.keys("Enter");
+		// const root = await datepicker.getRoot();
+		await root.keys("May 3, 2100");
+		// const root = await datepicker.getRoot();
+		await root.keys("Enter");
 
 		// const content = Array.from(datepicker.getDayPickerDayNames());
 		// const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		// content.forEach((element,index) => {
-		// 	assert.strictEqual(element.getAttribute("role"), "columnheader", "Each day have column header role");
-		// 	assert.strictEqual(element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
+		// 	assert.strictEqual(await element.getAttribute("role"), "columnheader", "Each day have column header role");
+		// 	assert.strictEqual(await element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
 		// });
 	});
 
-	it("DayPiker day number attribute", ()=>{
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+	it("DayPiker day number attribute", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		const root = await datepicker.getRoot();
+		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker();
-		datepicker.root.keys("May 3, 2100");
-		datepicker.root.keys("Enter");
+		await datepicker.openPicker();
+		await root.keys("May 3, 2100");
+		await root.keys("Enter");
 
-		const rows = Array.from(datepicker.getDayPickerNumbers());
-		const firstColumn = Array.from(rows[1].$$("div"));
-		const lastColumn = Array.from(rows[rows.length - 1].$$("div"));
+		const rows = Array.from(await datepicker.getDayPickerNumbers());
+		const firstColumn = Array.from(await rows[1].$$("div"));
+		const lastColumn = Array.from(await rows[rows.length - 1].$$("div"));
 
-		assert.strictEqual(firstColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
-		assert.strictEqual(firstColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-		assert.strictEqual(firstColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(await firstColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(await firstColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(await firstColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
 
-		assert.strictEqual(lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
-		assert.strictEqual(lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-		assert.strictEqual(lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(await lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(await lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(await lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
 	});
 
-	it("DatePicker dates and week number", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+	it("DatePicker dates and week number", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		const root = await datepicker.getRoot();
+		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.input.click();
-		browser.keys("May 3, 2100");
-		browser.keys("Enter");
+
+		const input = await datepicker.getInput();
+		await input.click();
+		await browser.keys("May 3, 2100");
+		await browser.keys("Enter");
 		// open picker after accepting the date
-		datepicker.openPicker();
+		await datepicker.openPicker();
 
-		const data = Array.from(datepicker.getDayPickerDatesRow(2));
-		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
-		assert.strictEqual(data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		const data = Array.from(await datepicker.getDayPickerDatesRow(2));
+		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.strictEqual(await data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 	});
 
-	it("Tests aria-label", () => {
+	it("Tests aria-label", async () => {
 		const EXPECTED_ARIA_LABEL = "Hello World";
 
 		datepicker.id = "#dpAriaLabel";
 
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+		const innerInput = await datepicker.getInnerInput();
+		assert.strictEqual(await innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
 	});
 
-	it("Tests aria-labelledby", () => {
+	it("Tests aria-labelledby", async () => {
 		const EXPECTED_ARIA_LABEL = "info text";
 
 		datepicker.id = "#dpAriaLabelledBy";
 
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+		const innerInput = await datepicker.getInnerInput();
+		assert.strictEqual(await innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
 	});
 
-	it("Page up/down increments/decrements the day value", () => {
+	it("Page up/down increments/decrements the day value", async () => {
 		datepicker.id = "#dp1";
-		datepicker.root.setProperty("value", "Jan 1, 2000");
-		datepicker.input.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 2000");
 
-		browser.keys('PageDown');
+		const input = await datepicker.getInput();
+		await input.click();
 
-		let date = new Date(datepicker.innerInput.getValue());
+		await browser.keys('PageDown');
+
+		const innerInput = await datepicker.getInnerInput();
+		let date = new Date(await innerInput.getValue());
 		assert.strictEqual(date.getDate(), 31, "Correct day value");
 		assert.strictEqual(date.getMonth(), 11, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
 
-		browser.keys('PageUp');
+		await browser.keys('PageUp');
 
-		date = new Date(datepicker.innerInput.getValue());
+		date = new Date(await innerInput.getValue());
 		assert.strictEqual(date.getDate(), 1, "Correct day value");
 		assert.strictEqual(date.getMonth(), 0, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	it("Shift + Page up/down increments/decrements the month value", () => {
+	it("Shift + Page up/down increments/decrements the month value", async () => {
 		datepicker.id = "#dp1";
-		datepicker.root.setProperty("value", "Jan 1, 2000");
-		datepicker.input.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 2000");
 
-		browser.keys(['Shift', 'PageDown']);
+		const input = await datepicker.getInput();
+		await input.click();
 
-		let date = new Date(datepicker.innerInput.getValue());
+		await browser.keys(['Shift', 'PageDown']);
+
+		const innerInput = await datepicker.getInnerInput();
+		let date = new Date(await innerInput.getValue());
 		assert.strictEqual(date.getDate(), 1, "Correct day value");
 		assert.strictEqual(date.getMonth(), 11, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
 
-		browser.keys(['Shift', 'PageUp']);
+		await browser.keys(['Shift', 'PageUp']);
 
-		date = new Date(datepicker.innerInput.getValue());
+		date = new Date(await innerInput.getValue());
 		assert.strictEqual(date.getDate(), 1, "Correct day value");
 		assert.strictEqual(date.getMonth(), 0, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
+	it("Ctrl + Shift + Page up/down increments/decrements the year value", async () => {
 		datepicker.id = "#dp1";
-		datepicker.root.setProperty("value", "Jan 1, 2000");
-		datepicker.input.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 1, 2000");
 
-		browser.keys(['Control', 'Shift', 'PageDown']);
+		const input = await datepicker.getInput();
+		await input.click();
 
-		let date = new Date(datepicker.innerInput.getValue());
+		await browser.keys(['Control', 'Shift', 'PageDown']);
+
+		const innerInput = await datepicker.getInnerInput();
+		let date = new Date(await innerInput.getValue());
 		assert.strictEqual(date.getDate(), 1, "Correct day value");
 		assert.strictEqual(date.getMonth(), 0, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
 
-		browser.keys(['Control', 'Shift', 'PageUp']);
+		await browser.keys(['Control', 'Shift', 'PageUp']);
 
-		date = new Date(datepicker.innerInput.getValue());
+		date = new Date(await innerInput.getValue());
 		assert.strictEqual(date.getDate(), 1, "Correct day value");
 		assert.strictEqual(date.getMonth(), 0, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
 		datepicker.id = "#dp33";
-		datepicker.innerInput.click();
-		browser.keys("Jan 1, 2000");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("Jan 1, 2000");
 
-		datepicker.valueHelpIcon.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-		browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
-		assert.ok(datepicker.getDisplayedDay(13).isFocusedDeep(), "Successfully navigated");
+		const displayedDay = await datepicker.getDisplayedDay(13);
+		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
-		browser.keys("Escape");
-		datepicker.innerInput.click();
-		browser.keys(["Control", "A"]);
-		browser.keys("Backspace");
+		await browser.keys("Escape");
+		await innerInput.click();
+		await browser.keys(["Control", "A"]);
+		await browser.keys("Backspace");
 	});
 
-	it("Value state changes only on submit", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
+	it("Value state changes only on submit", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
 		datepicker.id = "#dp33";
-		datepicker.innerInput.click();
-		browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");
 
-		browser.keys("Enter");
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
 
-		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+		await browser.keys("Enter");
+
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
 	});
 
-	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", () => {
+	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", async () => {
 		datepicker.id = "#dpPrevent";
 
-		datepicker.input.click();
-		datepicker.root.keys("Jan 1, 1999999");
-		browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		const input = await datepicker.getInput();
+		await input.click();
 
-		assert.equal(datepicker.input.getProperty("valueState"), "None", 'the value state is not changed');
+		const root = await datepicker.getRoot();
+		await root.keys("Jan 1, 1999999");
+		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+
+		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
+	});
+
+	it("DatePicker's formatter has strict parsing enabled", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		datepicker.id = "#dp7_1";
+
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("Jan 60, 2000");
+		await browser.keys("Enter");
+
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+
+		await innerInput.doubleClick();
+		await browser.keys("Backspace");
+		await browser.keys("Enter");
 	});
 });

@@ -10,7 +10,7 @@
 		show-more
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
-		@ui5-show-more-items-press="{{_showMorePopover}}"
+		@ui5-show-more-items-press="{{_showFilteredItems}}"
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@focusin="{{_tokenizerFocusIn}}"
@@ -54,6 +54,10 @@
 		aria-required="{{required}}"
 	/>
 
+	{{#if readonly}}
+		<ui5-icon class="ui5-input-readonly-icon" name="not-editable" @click="{{_readonlyIconClick}}"></ui5-icon>
+	{{/if}}
+
 	{{#if icon}}
 		<slot name="icon"></slot>
 	{{/if}}
@@ -65,6 +69,7 @@
 			tabindex="-1"
 			@click="{{togglePopover}}"
 			@mousedown="{{_onIconMousedown}}"
+			@focusin="{{_forwardFocusToInner}}"
 			?pressed="{{open}}"
 			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"

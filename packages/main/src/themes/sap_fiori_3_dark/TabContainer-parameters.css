@@ -1,12 +1,10 @@
 @import "../base/TabContainer-parameters.css";
 
 :root {
-	--_ui5_tc_header_box_shadow: var(--sapContent_HeaderShadow);
 	--_ui5_tc_header_border_bottom: 0.0625rem solid var(--sapObjectHeader_Background);
 
 	/* Header Item */
-	--_ui5_tc_headerItem_color: var(--sapContent_LabelColor);
-	--_ui5_tc_headerItemContent_border_bottom: 0.188rem solid var(--sapSelectedColor);
+	--_ui5_tc_headerItemContent_border_bottom: 0.1875rem solid var(--sapSelectedColor);
 
 	--_ui5_tc_overflowItem_default_color: var(--sapHighlightColor);
 	--_ui5_tc_overflowItem_current_color: CurrentColor;

@@ -16,12 +16,13 @@
 	</script>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/Dialog.css">
 </head>
 
 <body>
@@ -59,10 +60,13 @@
 	<br>
 	<br>
 	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="multiple-show">Open dialog calling show() multiple times</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
 
-	<ui5-dialog id="msg-dialog" header-text="Message dialog" style="--sapScrollBar_Dimension: 20px">
+	<ui5-dialog id="msg-dialog" header-text="Message dialog" class="dialog1auto">
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
@@ -114,7 +118,7 @@
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -127,7 +131,7 @@
 
 		</div>
 
-		<div style="padding: 1rem;text-align: center;">
+		<div class="dialog3auto">
 			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
@@ -139,7 +143,7 @@
 		<ui5-textarea id="area" placeholder="Type some text" max-length="2" show-exceeded-text>
 		</ui5-textarea>
 
-		<div style="padding: 1rem;text-align: center;">
+		<div class="dialog3auto">
 			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
@@ -151,20 +155,7 @@
 		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
 		</ui5-textarea>
 
-		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H3">Hello World!</ui5-title>
-		</div>
-
-		<ui5-select>
-			<ui5-option>Hello</ui5-option>
-			<ui5-option>World</ui5-option>
-		</ui5-select>
-
-		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
-		</ui5-textarea>
-
-
-		<div style="padding: 1rem;text-align: center;">
+		<div class="dialog3auto">
 			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
@@ -177,7 +168,20 @@
 		</ui5-textarea>
 
 
-		<div style="padding: 1rem;text-align: center;">
+		<div class="dialog3auto">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div class="dialog3auto">
 			<ui5-title level="H2">Hello World!</ui5-title>
 		</div>
 
@@ -190,7 +194,7 @@
 		</ui5-textarea>
 
 
-		<div style="padding: 1rem;text-align: center;">
+		<div class="dialog3auto">
 			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
@@ -203,7 +207,7 @@
 		</ui5-textarea>
 
 
-		<div style="padding: 1rem;text-align: center;">
+		<div class="dialog3auto">
 			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
@@ -215,8 +219,8 @@
 		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
 		</ui5-textarea>
 
-		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem; width: 100%">
-			<div style="flex: 1;"></div>
+		<div slot="footer" class="dialog4auto">
+			<div class="dialog5auto"></div>
 			<ui5-button id="btnCloseDialog">Close</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -226,7 +230,7 @@
 	<ui5-dialog id="prevent-dialog" header-text="Message dialog">
 		<p>Prevent closing the dialog.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -239,7 +243,7 @@
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="wide-dialog" header-text="Wide dialog" style="width: 100%">
+	<ui5-dialog id="wide-dialog" header-text="Wide dialog" class="dialog6auto">
 		<p>That´s OpenUI5.</p>
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
@@ -254,12 +258,12 @@
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="wide-dialog2" header-text="Wide dialog" stretch style="width: 100%">
+	<ui5-dialog id="wide-dialog2" header-text="Wide dialog" stretch class="dialog6auto">
 		<p>That´s OpenUI5.</p>
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
@@ -274,18 +278,18 @@
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
 
 	<ui5-dialog id="draggable-dialog" accessible-name="Draggable" draggable>
-		<div id="tlt" slot="header"  style="flex: 1 0 0; height: 2.5rem;">Draggable dialog</div>
+		<div id="tlt" slot="header"  class="dialog7auto">Draggable dialog</div>
 
 		<p>Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button id="draggable-close" design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -294,7 +298,7 @@
 		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button id="resizable-close" design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -304,12 +308,12 @@
 		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
-		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+		<div slot="footer" class="dialog2auto">
 			<ui5-button id="draggable-and-resizable-close" design="Emphasized">Close</ui5-button>
 		</div>
 	</ui5-dialog>
 
-	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
+	<ui5-popover header-text="My Heading" id="pop" class="dialog8auto" placement-type="Top">
 		<!-- <div slot="header">
 			Hello World
 		</div> -->
@@ -370,7 +374,19 @@
 
 	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
 
-	<span id="scrollHelper" style="display: none; margin-top: 1000px;">SCroll Helper</span>
+	<br>
+	<br>
+
+	<ui5-button id="btn-acc-name-ref">Dialog with accessibleNameRef</ui5-button>
+	<ui5-label id="label-acc-name-ref">Some label</ui5-label>
+	<ui5-dialog id="dialog-acc-name-ref" accessible-name-ref="label-acc-name-ref" stretch>
+		<div slot="header">
+			<ui5-title level="H2">Header</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-dialog>
+
+	<span id="scrollHelper" class="dialog9auto">SCroll Helper</span>
 
 	<script>
 		cbCompact.addEventListener("change", function () {
@@ -442,7 +458,9 @@
 
 		window["dynamic-open"].addEventListener("click", function () {
 			var dialog = document.createElement("ui5-dialog"),
-				button = document.createElement("ui5-button");
+				button = document.createElement("ui5-button"),
+				separator = document.createElement("div")
+				input = document.createElement("ui5-input");
 
 			button.setAttribute("id", "dynamic-dialog-close-button");
 			button.appendChild(document.createTextNode("Close"));
@@ -453,10 +471,25 @@
 			dialog.setAttribute("id", "dynamic-dialog");
 			dialog.appendChild(button);
 
+			separator.style.height = "200px";
+			dialog.appendChild(separator);
+
+			dialog.appendChild(input);
+
 			document.body.appendChild(dialog);
 
 			dialog.show();
 		});
+
+		window["multiple-show"].addEventListener("click", function () {
+			dialog.show();
+			dialog.show();
+		});
+
+		window["btn-acc-name-ref"].addEventListener("click", function () {
+			window["dialog-acc-name-ref"].show();
+		});
+
 	</script>
 </body>
 

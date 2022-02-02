@@ -30,17 +30,7 @@ Copyright: 2020 SAP SE or an SAP affiliate company and OpenUI5 contributors
 License: Apache-2.0
 
 
-Files: /packages/main/test/pages/diffable-html.js packages/playground/docs/pages/content/main/diffable-html.js
-Copyright: Feross Aboukhadijeh <https://feross.org>
-License: MIT
-
-
-Files: /packages/playground/assets/js/vendor/lunr.min.js
-Copyright: 2017 Oliver Nightingale
-License: MIT
-
-
-Files: packages/playground/assets/js/webcomponentsjs/* /packages/base/src/thirdparty/Array.from.js /packages/base/src/thirdparty/events-polyfills.js /packages/base/src/thirdparty/Object.assign.js /packages/base/src/thirdparty/template.js /packages/base/src/thirdparty/webcomponents-sd-ce-pf.js
+Files: packages/playground/assets/js/webcomponentsjs/* packages/ie11/src/thirdparty/Array.from.js packages/ie11/src/thirdparty/events-polyfills.js packages/ie11/src/thirdparty/Object.assign.js packages/ie11/src/thirdparty/template.js packages/ie11/src/thirdparty/webcomponents-sd-ce-pf.js
 Copyright: 2018 The Polymer Project Authors
 License: BSD-3-Clause-Clear
 
@@ -48,3 +38,11 @@ Files: packages/base/dist/sap/ui/thirdparty/caja-html-sanitizer.js
 Copyright: Google Inc.
 License: Apache-2.0
 Comment: these files belong to: Google-Caja JS HTML Sanitizer
+
+Files: packages/main/test/pages/diffable-html.js
+Copyright: Feross Aboukhadijeh <https://feross.org>
+License: MIT
+
+Files: packages/playground/assets/js/vendor/lunr.min.js
+Copyright: 2017 Oliver Nightingale
+License: MIT

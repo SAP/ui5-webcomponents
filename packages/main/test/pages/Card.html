@@ -12,14 +12,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		.myCard {
-			max-width: 300px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Card.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="card1auto">
 
 <ui5-card
 	id="card"
@@ -38,7 +34,7 @@
 		<ui5-li icon="line-charts" >Marketing plans</ui5-li>
 	</ui5-list>
 
-	<ui5-input id="field" value="0"></ui5-input>
+	<ui5-input id="field" value="0" class="myInput"></ui5-input>
 </ui5-card>
 
 <ui5-card
@@ -179,7 +175,7 @@
 	</ui5-card>
 
 	<ui5-card id="textAreaAriaLabelledBy">
-		<div slot="header" id="header2">
+		<div slot="header" id="header2" class="myHeader">
 			Test
 		</div>
 		<ui5-list id="myList3" separators="Inner">
@@ -203,10 +199,24 @@
 		</ui5-list>
 	</ui5-card>
 
+	<ui5-card id="textCard" accessible-name="Internships">
+		<ui5-card-header slot="header" id="header4" title-text="New Internships">
+		</ui5-card-header>
+	</ui5-card>
+
+	<ui5-card id="textCardRef" accessible-name="Internships" accessible-name-ref="cont">
+		<ui5-card-header slot="header" id="header5" title-text="New Positions">
+		</ui5-card-header>
+		<div id="cont" class="myContent">I am the content</div>
+	</ui5-card>
 	<script>
-		card.addEventListener("ui5-click", function (event) {
+		function onClick(event) {
 			console.log(event);
 			field.value = parseInt(field.value) + 1;
+		}
+
+		[cardHeader, cardHeader2].forEach(function (el) {
+			el.addEventListener("ui5-click", onClick);
 		});
 	</script>
 </body>

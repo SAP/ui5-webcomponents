@@ -16,6 +16,7 @@
 	color: var(--sapPositiveElementColor);
 }
 
-[dir="rtl"] .ui5-prio-icon {
-	padding-right: 0.5rem;
+[dir=rtl] .ui5-prio-icon {
+	padding-left: .5rem;
+	padding-right: 0rem;
 }

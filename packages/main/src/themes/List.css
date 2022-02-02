@@ -1,9 +1,11 @@
+@import "./InvisibleTextStyles.css";
 @import "./GrowingButton.css";
 
 :host(:not([hidden])) {
 	display: block;
 	max-width: 100%;
 	width: 100%;
+	-webkit-tap-highlight-color: transparent;
 }
 
 :host([indent]) .ui5-list-root {

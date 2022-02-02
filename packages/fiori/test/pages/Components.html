@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
     <title>Default values test page</title>
-    <script>delete Document.prototype.adoptedStyleSheets</script>
+    <script>// delete Document.prototype.adoptedStyleSheets</script>
 
     <script data-ui5-config type="application/json">
         {
@@ -18,9 +18,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
     <script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/Components.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="components1auto">
 
 	<ui5-shellbar id="shellbar2" hidden></ui5-shellbar>
 	<ui5-upload-collection id="uploadCollection" hidden></ui5-upload-collection>

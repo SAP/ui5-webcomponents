@@ -5,7 +5,7 @@ import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import TitleLevel from "./types/TitleLevel.js";
@@ -24,6 +24,7 @@ const metadata = {
 	tag: "ui5-panel",
 	languageAware: true,
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -207,14 +208,14 @@ const metadata = {
  * </ul>
  *
  * <h3>Structure</h3>
- * A panel consists of a title bar with a header text or custom header.
+ * The panel's header area consists of a title bar with a header text or custom header.
  * <br>
- * The content area can contain an arbitrary set of controls.
- * The header is clickable and can be used to toggle between the expanded and collapsed state.
- * It includes an icon which rotates depending on the state.
+ * The header is clickable and can be used to toggle between the expanded and collapsed state. It includes an icon which rotates depending on the state.
  * <br>
  * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
- * <br><b>Note:</b> the custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
+ * <br>
+ * The content area can contain an arbitrary set of controls.
+ * <br><b>Note:</b> The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
  * <h3>Responsive Behavior</h3>
  * <ul>
@@ -239,6 +240,14 @@ const metadata = {
  * <ul>
  * <li>content - Used to style the wrapper of the content</li>
  * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -272,7 +281,6 @@ class Panel extends UI5Element {
 		super();
 
 		this._header = {};
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -383,7 +391,7 @@ class Panel extends UI5Element {
 	}
 
 	get toggleButtonTitle() {
-		return this.i18nBundle.getText(PANEL_ICON);
+		return Panel.i18nBundle.getText(PANEL_ICON);
 	}
 
 	get expanded() {
@@ -454,7 +462,7 @@ class Panel extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Panel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -4,8 +4,18 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	isSpace,
+	isLeftCtrl,
+	isRightCtrl,
+	isLeftShift,
+	isRightShift,
+	isLeftShiftCtrl,
+	isRightShiftCtrl,
+	isEnd,
+	isHome,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -26,6 +36,9 @@ import {
 import styles from "./generated/themes/Tokenizer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+
+// reuse suggestions focus styling for NMore popup
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
  * @public
@@ -125,7 +138,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	static get staticAreaTemplate() {
@@ -147,7 +160,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	async onBeforeRendering() {
@@ -155,6 +167,8 @@ class Tokenizer extends UI5Element {
 			const popover = await this.getPopover();
 			popover.close();
 		}
+
+		this._nMoreCount = this.overflownTokens.length;
 	}
 
 	onEnterDOM() {
@@ -198,7 +212,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._nMoreCount = this.overflownTokens.length;
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
@@ -212,9 +225,10 @@ class Tokenizer extends UI5Element {
 			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
 		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
-		this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
 
-		if (nextToken) {
+		if (nextToken && !isPhone()) {
+			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
+
 			setTimeout(() => {
 				nextToken.focus();
 			}, 0);
@@ -233,8 +247,88 @@ class Tokenizer extends UI5Element {
 		if (isSpace(event)) {
 			event.preventDefault();
 
-			this._handleTokenSelection(event);
+			return this._handleTokenSelection(event, false);
 		}
+
+		this._handleItemNavigation(event, this.tokens);
+	}
+
+	_handleItemNavigation(event, tokens) {
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+		if (isLeftCtrl(event) || isRightCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
+		}
+
+		if (isLeftCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowCtrl(event.target, tokens, false);
+		}
+
+		if (isLeftShift(event) || isRightShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
+		}
+
+		if (isHome(event) || isEnd(event)) {
+			return this._handleHome(tokens, isEnd(event));
+		}
+
+		if (isCtrl && event.key.toLowerCase() === "a") {
+			event.preventDefault();
+
+			return this._toggleTokenSelection(tokens);
+		}
+	}
+
+	_handleHome(tokens, endKeyPressed) {
+		if (!tokens || !tokens.length) {
+			return -1;
+		}
+
+		const index = endKeyPressed ? tokens.length - 1 : 0;
+
+		tokens[index].focus();
+		this._itemNav.setCurrentItem(tokens[index]);
+	}
+
+	_calcNextTokenIndex(focusedToken, tokens, backwards) {
+		if (!tokens.length) {
+			return -1;
+		}
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		let nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex >= tokens.length) {
+			nextIndex = tokens.length - 1;
+		}
+		if (nextIndex < 0) {
+			nextIndex = 0;
+		}
+
+		return nextIndex;
+	}
+
+	_handleArrowCtrl(focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+		if (nextIndex === -1) {
+			return;
+		}
+
+		tokens[nextIndex].focus();
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
+	}
+
+	_handleArrowShift(focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+		if (nextIndex === -1) {
+			return;
+		}
+
+		focusedToken.selected = true;
+		tokens[nextIndex].selected = true;
+		tokens[nextIndex].focus();
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_click(event) {
@@ -245,14 +339,44 @@ class Tokenizer extends UI5Element {
 		this._itemNav.setCurrentItem(event.target);
 	}
 
-	_handleTokenSelection(event) {
-		if (event.target.localName === "ui5-token") {
-			this._tokens.forEach(token => {
+	_toggleTokenSelection(tokens) {
+		if (!tokens || !tokens.length) {
+			return;
+		}
+
+		const tokensAreSelected = tokens.every(token => token.selected);
+		tokens.forEach(token => { token.selected = !tokensAreSelected; });
+	}
+
+	_handleTokenSelection(event, deselectAll = true) {
+		if (event.target.hasAttribute("ui5-token")) {
+			const deselectTokens = deselectAll ? this._tokens : [event.target];
+
+			deselectTokens.forEach(token => {
 				if (token !== event.target) {
 					token.selected = false;
 				}
 			});
 		}
+	}
+
+	_fillClipboard(shortcutName, tokens) {
+		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
+
+		/* fill clipboard with tokens' texts so parent can handle creation */
+		const cutToClipboard = event => {
+			if (event.clipboardData) {
+				event.clipboardData.setData("text/plain", tokensTexts);
+			} else {
+				event.originalEvent.clipboardData.setData("text/plain", tokensTexts);
+			}
+
+			event.preventDefault();
+		};
+
+		document.addEventListener(shortcutName, cutToClipboard);
+		document.execCommand(shortcutName);
+		document.removeEventListener(shortcutName, cutToClipboard);
 	}
 
 	/**
@@ -271,7 +395,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
-		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
+		return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
 	}
 
 	get showNMore() {
@@ -283,11 +407,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get tokenizerLabel() {
-		return this.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
 	}
 
 	get morePopoverTitle() {
-		return this.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
 	}
 
 	get overflownTokens() {
@@ -295,13 +419,20 @@ class Tokenizer extends UI5Element {
 			return [];
 		}
 
+		// Reset the overflow prop of the tokens first in order
+		// to use their dimensions for calculation because already
+		// hidden tokens are set to 'display: none'
+		this._getTokens().forEach(token => {
+			token.overflows = false;
+		});
+
 		return this._getTokens().filter(token => {
 			const isRTL = this.effectiveDir === "rtl";
 			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = tokenRect[elementEnd];
-			const parentEnd = parentRect[elementEnd];
+			const tokenEnd = parseInt(tokenRect[elementEnd]);
+			const parentEnd = parseInt(parentRect[elementEnd]);
 
 			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 
@@ -351,7 +482,6 @@ class Tokenizer extends UI5Element {
 			popoverValueStateMessage: {
 				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
 				"min-height": "2rem",
-				"padding": isPhone() ? "0.25rem 1rem" : "0.3rem 0.625rem",
 			},
 			popoverHeader: {
 				"min-height": "2rem",
@@ -366,14 +496,14 @@ class Tokenizer extends UI5Element {
 		const iTokenCount = this._getTokens().length;
 
 		if (iTokenCount === 0) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
 		}
 
 		if (iTokenCount === 1) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
 		}
 
-		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
 	/**
@@ -398,7 +528,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Tokenizer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	async getPopover() {

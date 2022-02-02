@@ -117,8 +117,10 @@ const metadata = {
 
 		/**
 		 * Fires when a <code>BreadcrumbsItem</code> is clicked.
+		 * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.Breadcrumbs#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -193,7 +195,6 @@ class Breadcrumbs extends UI5Element {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._initItemNavigation();
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
@@ -228,6 +229,10 @@ class Breadcrumbs extends UI5Element {
 				this._overflowSize = itemIndex;
 			}
 		}
+	}
+
+	onBeforeRendering() {
+		this._preprocessItems();
 	}
 
 	onAfterRendering() {
@@ -311,17 +316,19 @@ class Breadcrumbs extends UI5Element {
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot.querySelector(`.ui5-breadcrumbs-link-wrapper #${item._id}-link`);
+				link = this.shadowRoot.querySelector(`#${item._id}-link-wrapper`);
 			map.set(item, this._getElementWidth(link) || 0);
 		}
 
-		if (this._endsWithCurrentLocationLabel && label) {
+		if (items.length && this._endsWithCurrentLocationLabel && label) {
 			const item = items[items.length - 1];
 			map.set(item, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._dropdownArrowLinkWidth = this._getElementWidth(this._dropdownArrowLink);
+			this._dropdownArrowLinkWidth = this._getElementWidth(
+				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper"),
+			);
 		}
 	}
 
@@ -382,7 +389,9 @@ class Breadcrumbs extends UI5Element {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-link` === link.id);
-		this.fireEvent("item-click", { item });
+		if (!this.fireEvent("item-click", { item }, true)) {
+			event.preventDefault();
+		}
 	}
 
 	_onLabelPress() {
@@ -392,13 +401,14 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
-		const listItem = event.detail.item,
+		const listItem = event.detail.selectedItems[0],
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-li` === listItem.id);
 
-		window.open(item.href, item.target || "_self", "noopener,noreferrer");
-		this.responsivePopover.close();
-		this.fireEvent("item-click", { item });
+		if (this.fireEvent("item-click", { item }, true)) {
+			window.open(item.href, item.target || "_self", "noopener,noreferrer");
+			this.responsivePopover.close();
+		}
 	}
 
 	async _respPopover() {
@@ -431,8 +441,14 @@ class Breadcrumbs extends UI5Element {
 
 	_hasVisibleContent(item) {
 		// the check is not complete but may be extended in the future if needed to cover
-		// cases becides the standard (UX-recommended) ones
+		// cases besides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
+	}
+
+	_preprocessItems() {
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.getDomRef().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
+		});
 	}
 
 	getCurrentLocationLabelWrapper() {
@@ -445,7 +461,7 @@ class Breadcrumbs extends UI5Element {
 
 	get _currentLocationText() {
 		const items = this.getSlottedNodes("items");
-		if (this._endsWithCurrentLocationLabel && items.length > 1) {
+		if (this._endsWithCurrentLocationLabel && items.length) {
 			const item = items[items.length - 1];
 			if (this._isItemVisible(item)) {
 				return item.innerText;
@@ -531,15 +547,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _accessibleNameText() {
-		return this.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
 	}
 
 	get _dropdownArrowAccessibleNameText() {
-		return this.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
 	}
 
 	get _cancelButtonText() {
-		return this.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
 	}
 
 	static get dependencies() {
@@ -552,6 +568,10 @@ class Breadcrumbs extends UI5Element {
 			StandardListItem,
 			Icon,
 		];
+	}
+
+	static async onDefine() {
+		Breadcrumbs.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -1,5 +1,5 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
@@ -12,24 +12,12 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
-const POPOVER_MIN_WIDTH = 100;
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-
-		/**
-		 * Defines whether the component will stretch to fit its content.
-		 * <br/><b>Note:</b> by default the popover will be as wide as its opener component and will grow if the content is not fitting.
-		 * <br/><b>Note:</b> if set to true, it will take only as much space as it needs.
-		 * @private
-		 */
-		noStretch: {
-			type: Boolean,
-		},
 
 		/**
 		 * Defines if padding would be added around the content.
@@ -53,6 +41,19 @@ const metadata = {
 		 * @private
 		 */
 		_hideHeader: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether a close button will be rendered in the header of the component
+		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
+		 *
+		 * @private
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.16
+		 */
+		_hideCloseButton: {
 			type: Boolean,
 		},
 	},
@@ -79,7 +80,6 @@ const metadata = {
 class ResponsivePopover extends Popover {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -107,6 +107,7 @@ class ResponsivePopover extends Popover {
 
 	static get dependencies() {
 		return [
+			...Popover.dependencies,
 			Button,
 			Dialog,
 			Title,
@@ -122,21 +123,12 @@ class ResponsivePopover extends Popover {
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
 	async showAt(opener, preventInitialFocus = false) {
-		this.style.display = this._isPhone ? "contents" : "";
-
-		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
-			return;
-		}
-
 		if (!isPhone()) {
-			// make popover width be >= of the opener's width
-			if (!this.noStretch) {
-				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
-			}
 			await super.showAt(opener, preventInitialFocus);
 		} else {
+			this.style.display = "contents";
 			this.style.zIndex = getNextZIndex();
-			await this._dialog.show();
+			await this._dialog.show(preventInitialFocus);
 		}
 	}
 
@@ -148,7 +140,7 @@ class ResponsivePopover extends Popover {
 		if (!isPhone()) {
 			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
-			this._dialog.close();
+			this._dialog.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		}
 	}
 
@@ -169,16 +161,6 @@ class ResponsivePopover extends Popover {
 		return isPhone() ? this._dialog.isOpen() : super.isOpen();
 	}
 
-	get styles() {
-		const popoverStyles = super.styles;
-
-		popoverStyles.root = {
-			"min-width": `${this._minWidth}px`,
-		};
-
-		return popoverStyles;
-	}
-
 	get _dialog() {
 		return this.shadowRoot.querySelector("[ui5-dialog]");
 	}
@@ -196,7 +178,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _closeDialogAriaLabel() {
-		return this.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
+		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
 	}
 
 	_afterDialogOpen(event) {
@@ -216,7 +198,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ResponsivePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

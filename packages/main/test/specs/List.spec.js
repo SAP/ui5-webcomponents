@@ -2,379 +2,450 @@ const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
+/**
+ *
+ * @param {Array} options.keys The bundle keys of the texts
+ * @param {String} options.id ID of the component to get the texts from
+ * @returns
+ */
+async function getResourceBundleTexts(options) {
+	return browser.executeAsync((options, done) => {
+		const component = document.getElementById(options.id);
+
+		const texts = options.keys.reduce((result, key) => {
+			result[key] = component.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			return result;
+		}, {});
+		done(texts);
+
+	}, options);
+}
+
 describe("List Tests", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 	});
 
-	it("List is rendered", () => {
-		const list = browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
-		const busyInd = browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
+	it("List is rendered", async () => {
+		const list = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
+		const busyInd = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
 
-		assert.ok(list.isExisting(), "List is rendered");
-		assert.notOk(busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
+		assert.ok(await list.isExisting(), "List is rendered");
+		assert.notOk(await busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
 	});
 
-	it("itemPress and selectionChange events are fired in Single selection", () => {
-		const itemPressResultField = $("#itemPressResultField");
-		const itemPressSelectedResultField = $("#itemPressSelectedResultField");
-		const selectionChangeResultField = $("#selectionChangeResultField");
-		const firstItem = $("#listEvents #country1");
+	it("itemClick and selectionChange events are fired in Single selection", async () => {
+		const itemClickResultField = await browser.$("#itemClickResultField");
+		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
+		const firstItem = await browser.$("#listEvents #country1");
 
-		firstItem.click();
+		await firstItem.click();
 
-		assert.strictEqual(itemPressResultField.getProperty("value"), "1", "itemPress event has been fired once");
-		assert.strictEqual(itemPressSelectedResultField.getProperty("value"), "true", "itemPress detail 'item' has correct value.");
-		assert.strictEqual(selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
+		assert.strictEqual(await itemClickResultField.getProperty("value"), "1", "itemClick event has been fired once");
+		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
-	it("itemPress and selectionChange events are fired in Multi selection", () => {
-		const itemPressResultField2 = $("#itemPressResultField2");
-		const itemPressSelectedResultField2 = $("#itemPressSelectedResultField2");
-		const selectionChangeResultField2 = $("#selectionChangeResultField2");
-		const firstItem = $("#listEvents2 #country11");
+	it("itemClick and selectionChange events are fired in Multi selection", async () => {
+		const itemClickResultField2 = await browser.$("#itemClickResultField2");
+		const selectionChangeResultField2 = await browser.$("#selectionChangeResultField2");
+		const firstItem = await browser.$("#listEvents2 #country11");
 
-		firstItem.click();
+		await firstItem.click();
 
-		assert.strictEqual(itemPressResultField2.getProperty("value"), "1", "itemPress event has been fired once");
-		assert.strictEqual(itemPressSelectedResultField2.getProperty("value"), "true", "itemPress detail 'item' has correct value.");
-		assert.strictEqual(selectionChangeResultField2.getProperty("value"), "1", "selectionChange event has been fired.");
+		assert.strictEqual(await itemClickResultField2.getProperty("value"), "1", "itemClick event has been fired once");
+		assert.strictEqual(await selectionChangeResultField2.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
-	it("selectionChange events provides previousSelection item", () => {
-		const selectionChangeResultPreviousItemsParameter = $("#selectionChangeResultPreviousItemsParameter");
-		const firstItem = $("#listEvents #country1");
-		const secondItem = $("#listEvents #country2");
+	it("selectionChange events provides previousSelection item", async () => {
+		const selectionChangeResultPreviousItemsParameter = await browser.$("#selectionChangeResultPreviousItemsParameter");
+		const firstItem = await browser.$("#listEvents #country1");
+		const secondItem = await browser.$("#listEvents #country2");
 
-		firstItem.click();
+		await firstItem.click();
 
-		assert.strictEqual(secondItem.getProperty("id"), selectionChangeResultPreviousItemsParameter.getProperty("value"));
+		assert.strictEqual(await secondItem.getProperty("id"), await selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
-	it("No data text is shown", () => {
-		const noDataText = browser.$("#no-data-list").shadow$(".ui5-list-nodata-text");
+	it("No data text is shown", async () => {
+		const noDataText = await browser.$("#no-data-list").shadow$(".ui5-list-nodata-text");
 
 		assert.ok(noDataText, "No data text is shown");
 	});
 
-	it("Tests header text", () => {
+	it("Tests header text", async () => {
 		list.id = "#list1";
 
-		assert.ok(list.header.hasClass("ui5-list-header"), "header has the right classes");
-		assert.ok(list.header.getHTML(false), "API: GroupHeaderListItem");
+		const header = await list.getHeader();
+
+		assert.ok(await header.hasClass("ui5-list-header"), "header has the right classes");
+		assert.ok(await header.getHTML(false), "API: GroupHeaderListItem");
 	});
 
-	it("Tests header slot", () => {
-		const headerSlotContent = browser.execute(() => {
-			return document.getElementById("header-slot-list").shadowRoot.querySelector("slot[name='header']").assignedNodes()[0].querySelector("#header-slot-title");
+	it("Tests header slot", async () => {
+		const headerSlotContent = await browser.executeAsync(done => {
+			done(document.getElementById("header-slot-list").shadowRoot.querySelector("slot[name='header']").assignedNodes()[0].querySelector("#header-slot-title"));
 		});
 
 		assert.ok(headerSlotContent, "header slot content is rendered");
 	});
 
-	it("Test default slot", () => {
-		const listItemsLength = browser.execute(() => {
+	it("Test default slot", async () => {
+		const listItemsLength = await browser.executeAsync(done => {
 			const slots = document.getElementById("default-slot-test").shadowRoot.querySelector("slot").assignedNodes();
 
 			const result = slots.filter(slot => {
 				return slot.tagName === "UI5-LI";
 			});
 
-			return result.length;
+			done(result.length);
 		});
 
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
-	it("Clicking on inactive items does not change single selection", () => {
+	it("Clicking on inactive items does not change single selection", async () => {
 		list.id = "#inactiveSingleSelect";
-		const firstItem = list.getItem(0);
-		const secondItem = list.getItem(1);
+		const firstItem = await list.getItem(0);
+		const secondItem = await list.getItem(1);
 
-		firstItem.click();
-		secondItem.click();
+		await firstItem.click();
+		await secondItem.click();
 
-		assert.ok(!firstItem.getAttribute("selected"), "The first item is not selected");
-		assert.ok(!secondItem.getAttribute("selected"), "The second item is notselected");
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected");
+		assert.notOk(await secondItem.getAttribute("selected"), "The second item is not selected");
 	});
 
-	it("Clicking on inactive items does not change multi selection", () => {
+	it("Clicking on inactive items does not change multi selection", async () => {
 		list.id = "#inactiveMultiSelect";
-		const firstItem = list.getItem(0);
-		const secondItem = list.getItem(1);
+		const firstItem = await list.getItem(0);
+		const secondItem = await list.getItem(1);
 
-		firstItem.click();
-		secondItem.click();
+		await firstItem.click();
+		await secondItem.click();
 
-		assert.ok(!firstItem.getAttribute("selected"), "The first item is not selected");
-		assert.ok(!secondItem.getAttribute("selected"), "The second item is notselected");
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected");
+		assert.notOk(await secondItem.getAttribute("selected"), "The second item is not selected");
 	});
 
-	it("mode: none. clicking item does not select it", () => {
+	it("mode: none. clicking item does not select it", async () => {
 		list.id = "#list1";
 
-		const firstItem = list.getItem(0);
-		firstItem.click();
+		const firstItem = await list.getItem(0);
+		await firstItem.click();
 
-		assert.equal(list.root.getProperty("mode"), "None", "default mode is None");
-		assert.ok(!firstItem.getAttribute("selected"), "item is not selected");
+		const root = await list.getRoot();
+		assert.equal(await root.getProperty("mode"), "None", "default mode is None");
+		assert.notOk(await firstItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: singleselect. clicking item selects it", () => {
-		list.root.setProperty("mode", "SingleSelect");
+	it("mode: singleselect. clicking item selects it", async () => {
+		const root = await list.getRoot();
+		await root.setProperty("mode", "SingleSelect");
 
-		const firstItem = list.getItem(0);
-		firstItem.click();
+		const firstItem = await list.getItem(0);
+		await firstItem.click();
 
-		assert.ok(firstItem.getAttribute("selected"), "item is selected");
+		assert.ok(await firstItem.getAttribute("selected"), "item is selected");
 	});
 
-	it("mode: singleselect. clicking another item selects deselects the first", () => {
-		const firstItem = list.getItem(0);
-		const secondItem = list.getItem(1);
-		secondItem.click();
+	it("mode: singleselect. clicking another item selects deselects the first", async () => {
+		const firstItem = await list.getItem(0);
+		const secondItem = await list.getItem(1);
+		await secondItem.click();
 
-		assert.ok(secondItem.getAttribute("selected"), "second item is selected");
-		assert.ok(!firstItem.getAttribute("selected"), "first item is not selected");
+		assert.ok(await secondItem.getAttribute("selected"), "second item is selected");
+		assert.notOk(await firstItem.getAttribute("selected"), "first item is not selected");
 	});
 
-	it("mode: multiselect. clicking every item selects it independently from the other items", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
-		list.root.setProperty("mode", "MultiSelect");
+	it("mode: multiselect. clicking every item selects it independently from the other items", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		const root = await list.getRoot();
+		await root.setProperty("mode", "MultiSelect");
 
-		const firstItem = list.getItem(0);
-		const secondItem = list.getItem(1);
-		firstItem.click();
-		secondItem.click();
+		const firstItem = await list.getItem(0);
+		const secondItem = await list.getItem(1);
+		await firstItem.click();
+		await secondItem.click();
 
-		assert.ok(firstItem.getAttribute("selected"), "item is selected");
-		assert.ok(secondItem.getAttribute("selected"), "item is selected");
+		assert.ok(await firstItem.getAttribute("selected"), "item is selected");
+		assert.ok(await secondItem.getAttribute("selected"), "item is selected");
 
-		secondItem.click();
+		await secondItem.click();
 
-		assert.ok(firstItem.getAttribute("selected"), "item is selected");
-		assert.ok(!secondItem.getAttribute("selected"), "item is not selected");
+		assert.ok(await firstItem.getAttribute("selected"), "item is selected");
+		assert.notOk(await secondItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: delete. items have X buttons which delete them", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
-		list.root.setProperty("mode", "Delete");
+	it("mode: delete. items have X buttons which delete them", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		const root = await list.getRoot();
+		await root.setProperty("mode", "Delete");
 
-		const firstItem = list.getItem(0);
-		firstItem.click();
+		const firstItem = await list.getItem(0);
+		await firstItem.click();
 
-		assert.ok(!firstItem.getAttribute("selected"), "item is selected");
+		assert.notOk(await firstItem.getAttribute("selected"), "item is selected");
 
-		const itemDeleteButton = firstItem.shadow$('ui5-button');
-		assert.ok(itemDeleteButton.isExisting(), "there is a delete button");
+		const itemDeleteButton = await firstItem.shadow$('ui5-button');
+		assert.ok(await itemDeleteButton.isExisting(), "there is a delete button");
 
-		itemDeleteButton.click();
-		assert.equal(browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
+		await itemDeleteButton.click();
+		assert.equal(await browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
 	});
 
-	it("mode: delete. DELETE key press - deletes item", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
-		list.root.setProperty("mode", "Delete");
+	it("mode: delete. DELETE key press - deletes item", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		const root = await list.getRoot();
+		await root.setProperty("mode", "Delete");
 
-		const firstItem = list.getItem(0);
-		firstItem.click();
+		const firstItem = await list.getItem(0);
+		await firstItem.click();
 
-		assert.ok(!firstItem.getAttribute("selected"), "item is selected");
+		assert.notOk(await firstItem.getAttribute("selected"), "item is selected");
 
-		firstItem.keys("Delete")
-		assert.equal(browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
+		await firstItem.keys("Delete")
+		assert.equal(await browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
 	});
 
-	it("item size and classed, when an item has both text and description", () => {
+	it("item size and classed, when an item has both text and description", async () => {
 		const ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT = 80;
-		const firstItem =  $("#listWithDesc ui5-li:first-child");
-		const firstItemHeight = firstItem.getSize("height");
+		const firstItem = await browser.$("#listWithDesc ui5-li:first-child");
+		const firstItemHeight = await firstItem.getSize("height");
 
 		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
 	});
 
-	it("keyboard handling on TAB", () => {
-		const headerBtn = $("#headerBtn");
-		const item = $("ui5-li-custom.item");
-		const itemBtn = $("ui5-button.itemBtn");
-		const itemLink = $("ui5-link.itemLink");
-		const itemRadioBtn = $("ui5-radio-button.itemRadio");
-		const randomBtn = $("#randomBtn");
+	it("keyboard handling on TAB", async () => {
+		const headerBtn = await browser.$("#headerBtn");
+		const item = await browser.$("ui5-li-custom.item");
+		const itemBtn = await browser.$("ui5-button.itemBtn");
+		const itemLink = await browser.$("ui5-link.itemLink");
+		const itemRadioBtn = await browser.$("ui5-radio-button.itemRadio");
+		const randomBtn = await browser.$("#randomBtn");
 
-		headerBtn.click();
-		assert.strictEqual(headerBtn.isFocused(), true, "header btn is focused");
+		await headerBtn.click();
+		assert.ok(await headerBtn.isFocused(), "header btn is focused");
 
 		// act: TAB from headerButton -> the focus should go to the 1st selected item
-		headerBtn.keys("Tab");
-		assert.strictEqual(item.isFocused(), true, "selected item is focused");
+		await headerBtn.keys("Tab");
+		assert.ok(await item.isFocused(), "selected item is focused");
 
 		// act: TAB from item -> the focus should go to "Click me" button
-		item.keys("Tab");
-		assert.strictEqual(itemBtn.isFocused(), true, "the 1st tabbable element (button) is focused");
+		await item.keys("Tab");
+		assert.ok(await itemBtn.isFocused(), "the 1st tabbable element (button) is focused");
 
 		// act: TAB from the "Click me" button - the the focus should go to "UI5 Link" anchor
-		itemBtn.keys("Tab");
-		assert.strictEqual(itemLink.isFocused(), true, "the 2nd tabbable element (link) is focused");
+		await itemBtn.keys("Tab");
+		assert.ok(await itemLink.isFocused(), "the 2nd tabbable element (link) is focused");
 
 		// act: TAB from the "UI5 Link" anchor - the the focus should skip the "Disabled" button
 		// and go to the "Option B" radio button
-		itemLink.keys("Tab");
-		assert.strictEqual(itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
+		await itemLink.keys("Tab");
+		assert.ok(await itemRadioBtn.isFocused(), "the last tabbable element (radio) is focused");
 
 		// act: TAB from the "Option B" radio button - the focus should leave  the ui5-list
 		// and Random button should be focused
-		itemLink.keys("Tab");
-		assert.strictEqual(randomBtn.isFocused(), true, "element outside of the list is focused");
+		await itemLink.keys("Tab");
+		assert.ok(await randomBtn.isFocused(), "element outside of the list is focused");
 	});
 
-	it("does not focus next / prev item when right / left arrow is pressed", () => {
-		const firstListItem = $("#country1");
-		const secondListItem = $("#country2");
+	it("does not focus next / prev item when right / left arrow is pressed", async () => {
+		const firstListItem = await browser.$("#country1");
+		const secondListItem = await browser.$("#country2");
 
-		firstListItem.click();
+		await firstListItem.click();
 
-		firstListItem.keys("ArrowRight");
+		await firstListItem.keys("ArrowRight");
 
-		assert.ok(firstListItem.isFocused(), "First item remains focussed");
-		assert.strictEqual(secondListItem.isFocused(), false, "Second list item not should be focused");
+		assert.ok(await firstListItem.isFocused(), "First item remains focussed");
+		assert.notOk(await secondListItem.isFocused(), "Second list item not should be focused");
 
-		firstListItem.keys("ArrowLeft");
+		await firstListItem.keys("ArrowLeft");
 
-		assert.ok(firstListItem.isFocused(), "First item remains focussed");
+		assert.ok(await firstListItem.isFocused(), "First item remains focussed");
 	});
 
-	it("tests 'loadMore' event not fired initially when the list did not overflow", () => {
-		const loadMoreResult = $("#growingScrollTestCounter");
-		assert.strictEqual(loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
+	it("tests 'loadMore' event not fired initially when the list did not overflow", async () => {
+		const loadMoreResult = await browser.$("#growingScrollTestCounter");
+		assert.strictEqual(await loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
 	});
 
-	it("tests 'loadMore' event fired upon infinite scroll", () => {
-		const btn = $("#btnTrigger");
-		const loadMoreResult = $("#loadMoreResult");
+	// it("tests 'loadMore' event fired upon infinite scroll", async () => {
+	// 	const btn = await browser.$("#btnTrigger");
+	// 	const loadMoreResult = await browser.$("#loadMoreResult");
 
-		btn.click();
-		browser.pause(1000);
+	// 	await btn.click();
 
-		// assert.strictEqual(loadMoreResult.getProperty("value"), "1", "The event loadMore is fired.");
+	// 	await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
+	// 		timeout: 5000,
+	// 		timeoutMsg: "The event loadMore must be fired"
+	// 	});
+	// });
+
+	it("detailPress event is fired", async () => {
+		const detailCounterResult = await browser.$("#detailPressCounter");
+		const firstItem = await browser.$("#detailListItem");
+		const detailButton = await firstItem.shadow$(".ui5-li-detailbtn");
+
+		await detailButton.click();
+
+		assert.strictEqual(await detailCounterResult.getProperty("innerHTML"), "1", "detailClick event has been fired once");
 	});
 
-	it("detailPress event is fired", () => {
-		const detailCounterResult = $("#detailPressCounter");
-		const firstItem = $("#detailListItem");
-		const detailButton = firstItem.shadow$(".ui5-li-detailbtn");
-
-		detailButton.click();
-
-		assert.strictEqual(detailCounterResult.getProperty("innerHTML"), "1", "detailClick event has been fired once");
-	});
-
-	it("tests aria-labelledby", () => {
-		const listWithInternalHeader = $("#listWithInternalHeader");
-		const listWithCustomHeader = $("#listWithCustomHeader");
-		const ulInternalHeader = listWithInternalHeader.shadow$(".ui5-list-ul");
-		const ulCustomHeader = listWithCustomHeader.shadow$(".ui5-list-ul");
+	it("tests aria-labelledby", async () => {
+		const listWithInternalHeader = await browser.$("#listWithInternalHeader");
+		const listWithCustomHeader = await browser.$("#listWithCustomHeader");
+		const ulInternalHeader = await listWithInternalHeader.shadow$(".ui5-list-ul");
+		const ulCustomHeader = await listWithCustomHeader.shadow$(".ui5-list-ul");
 
 		// assert: List with internal header
-		const listWithInternalHeaderId = listWithInternalHeader.getProperty("_id");
-		assert.strictEqual(ulInternalHeader.getAttribute("aria-label"),
+		const listWithInternalHeaderId = await listWithInternalHeader.getProperty("_id");
+		assert.strictEqual(await ulInternalHeader.getAttribute("aria-label"),
 			null, "aria-label is not present");
 
-		assert.strictEqual(ulInternalHeader.getAttribute("aria-labelledby"),
+		assert.strictEqual(await ulInternalHeader.getAttribute("aria-labelledby"),
 			`${listWithInternalHeaderId}-header`, "aria-labelledby is correct");
 
 		// assert: List with custom header
 		const EXPECTED_ARIA_LABEL_TXT = "Test aria";
 
-		assert.strictEqual(ulCustomHeader.getAttribute("aria-label"),
+		assert.strictEqual(await ulCustomHeader.getAttribute("aria-label"),
 			EXPECTED_ARIA_LABEL_TXT, "aria-label is correct");
-		assert.strictEqual(ulCustomHeader.getAttribute("aria-labelledby"),
+		assert.strictEqual(await ulCustomHeader.getAttribute("aria-labelledby"),
 			null, "aria-labelledby is not present");
 	});
 
-	it("tests title is updated, when initially empty", () => {
-		const btnChangeEmptyItem = $("#changeEmptyItem");
-		const emptyItem = $("#emptyItem");
+	it("tests aria-labelledby for mode label", async () => {
+		const justList = await browser.$("#justList");
+		const listDelete = await browser.$("#listDelete");
+		const listMultiSelect = await browser.$("#listMultiSelect");
+		const listSingleSelect = await browser.$("#listSingleSelect");
+
+		const keys = [
+			"ARIA_LABEL_LIST_SELECTABLE",
+			"ARIA_LABEL_LIST_MULTISELECTABLE",
+			"ARIA_LABEL_LIST_DELETABLE",
+		];
+		const texts = await getResourceBundleTexts({ keys, id: "justList" });
+
+		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), null, "aria-label mode message is correct");
+		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
+		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
+		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
+	});
+
+	it("tests title is updated, when initially empty", async () => {
+		const btnChangeEmptyItem = await browser.$("#changeEmptyItem");
+		const emptyItem = await browser.$("#emptyItem");
 		const NEW_TEXT = "updated";
-		const assignedNodesBefore = browser.execute(() => {
-			return document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length;
+		const assignedNodesBefore = await browser.executeAsync(done => {
+			done(document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length);
 		});
 
 		// assert default
-		assert.strictEqual(emptyItem.getProperty("innerHTML"), "",
+		assert.strictEqual(await emptyItem.getProperty("innerHTML"), "",
 			"The value is empty string");
 		assert.strictEqual(assignedNodesBefore, 0,
 			"No slotted elements as no text is present.");
 
 		// act
-		btnChangeEmptyItem.click();	// update the item textContent
+		await btnChangeEmptyItem.click();	// update the item textContent
 
-		const assignedNodesAfter = browser.execute(() => {
-			return document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length;
+		const assignedNodesAfter = await browser.executeAsync(done => {
+			done(document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length);
 		});
 
 		// assert
-		assert.strictEqual(emptyItem.getProperty("innerHTML"), NEW_TEXT, "The value is updated");
+		assert.strictEqual(await emptyItem.getProperty("innerHTML"), NEW_TEXT, "The value is updated");
 		assert.strictEqual(assignedNodesAfter, 1, "The new text is slotted.");
 	});
 
-	it("tests events for ui5-li-custom", () => {
-		const button = $("#liBtn1");
-		const input = $("#customListItemEvents");
+	it("tests events for ui5-li-custom", async () => {
+		const button = await browser.$("#liBtn1");
+		const input = await browser.$("#customListItemEvents");
 
-		button.click();
+		await button.click();
 
-		browser.keys("Enter");
-		browser.keys("Space");
+		await browser.keys("Enter");
+		await browser.keys("Space");
 
-		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
+		assert.strictEqual(await input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
 
-	it("Popover with List opens without errors", () => {
-		const btnPopupOpener = $("#btnOpenPopup");
-		const btnInListHeader = $("#btnInHeader");
+	it("tests the prevention of the ui5-itemClick event", async () => {
+		list.id = "#listPreventClickEvent";
+		const input = await browser.$("#itemClickPreventedResultField");
+		const firstItem = await list.getItem(0);
 
-		btnPopupOpener.click();
-		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected when we prevent the click event.");
+		assert.strictEqual(await firstItem.getProperty("id"), await input.getProperty("value"));
 	});
 
-	it('focusable list-items are correctly disabled', () => {
-		const item2 = $('#basicList ui5-li:nth-child(2)');
+	it("Popover with List opens without errors", async () => {
+		const btnPopupOpener = await browser.$("#btnOpenPopup");
+		const btnInListHeader = await browser.$("#btnInHeader");
+
+		await btnPopupOpener.click();
+		assert.ok(await btnInListHeader.isFocused(), "The List header btn is focused.");
+	});
+
+	it('focusable list-items are correctly disabled', async () => {
+		const item2 = await browser.$('#basicList ui5-li:nth-child(2)');
 
 		// focus the second item
-		item2.click();
+		await item2.click();
 
 		// disable the second item
-		browser.execute(() => {
-			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
-		});
+		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
-		assert.strictEqual(item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
-		assert.strictEqual(item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
+		assert.strictEqual(await item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
+		assert.strictEqual(await item2.shadow$('li').getAttribute("class"), "ui5-li-root", "disabled item no longer styled as focusable");
 	});
 
-	it('disabled list-items are skipped on navigation', () => {
-		const item1 = $('#basicList ui5-li:nth-child(1)'),
-			item3 = $('#basicList ui5-li:nth-child(3)');
+	it('disabled list-items are skipped on navigation', async () => {
+		const item1 = await browser.$('#basicList ui5-li:nth-child(1)'),
+			item3 = await browser.$('#basicList ui5-li:nth-child(3)');
 
 		// ensure the second item is disabled
-		browser.execute(() => {
-			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
-		});
+		await browser.$("#basicList ui5-li:nth-child(2)").setProperty("disabled", true);
 
 		// navigate from the first item to the next focusable item
-		item1.click();
-		item1.keys("ArrowDown");
+		await item1.click();
+		await item1.keys("ArrowDown");
 
-		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
+		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
 	});
 
-	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', () => {
-		const growingListButton = $('#growingListButton').shadow$("div[growing-button-inner]");
-		const nextInteractiveElement = $('#nextInteractiveElement');
-			
-		growingListButton.click() // focus growing button
-		growingListButton.keys("Tab") // focus next list
+	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', async () => {
+		const growingListButton = await browser.$('#growingListButton').shadow$("div[growing-button-inner]");
+		const nextInteractiveElement = await browser.$('#nextInteractiveElement');
 
-		assert.strictEqual(nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
+		await growingListButton.click() // focus growing button
+		await growingListButton.keys("Tab") // focus next list
+
+		assert.ok(await nextInteractiveElement.isFocused(), "Focus is moved to next interactive element.");
+	});
+
+	it('should include selected state text', async () => {
+		const item = await browser.$("#justList #justList-country");
+		const notSelectedItem = await browser.$("#listSelectedItem #not-selected-country");
+		const selectedItem = await browser.$("#listSelectedItem #selected-country");
+
+		let ariaSelectedText = await item.getProperty("ariaSelectedText");
+		assert.strictEqual(ariaSelectedText, null, "List is not in select mode, no selected state should be spoken");
+
+		ariaSelectedText = await notSelectedItem.getProperty("ariaSelectedText");
+		assert.strictEqual(ariaSelectedText, "Not Selected", "Selected false state text is correct");
+
+		ariaSelectedText = await selectedItem.getProperty("ariaSelectedText");
+		assert.strictEqual(ariaSelectedText, "Selected", "Selected state text is correct");
+	});
+
+	it('group headers should not be with role options', async () => {
+		const groupHeader = await browser.$("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
+
+		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
 	});
 });

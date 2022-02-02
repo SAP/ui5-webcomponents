@@ -1,0 +1,5 @@
+:root {
+    --_ui5-popover-margin-top: 8px;
+    --_ui5-popover-margin-bottom: -8px;
+    --_ui5-popup-border-radius: .5rem;
+}

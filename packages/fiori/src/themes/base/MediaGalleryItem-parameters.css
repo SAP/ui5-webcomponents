@@ -1,0 +1,6 @@
+:root {
+	--_ui5_media_gallery_thumbnail_border: 1px solid var(--sapContent_ForegroundColor);
+	--_ui5_media_gallery_thumbnail_selected_border: 2px solid var(--sapSelectedColor);
+	--_ui5_media_gallery_thumbnail_focus_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	--_ui5_media_gallery_item_overlay_box_shadow: inset 0px 0px 80px rgba(0, 0, 0, 0.2);
+}

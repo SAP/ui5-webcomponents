@@ -2,66 +2,83 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("General API", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Link.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Link.html`);
 	});
 
-	it("render initially", () => {
-		const linkRoot = browser.$("ui5-link").shadow$("ui5-link-root");
+	it("render initially", async () => {
+		const linkRoot = await browser.$("ui5-link").shadow$("ui5-link-root");
 
 		assert.ok(linkRoot, "Link is rendered.");
 	});
 
-	it("tests href attributes", () => {
-		const link = browser.$("#empty-link-1");
+	it("tests href attributes", async () => {
+		const link = await browser.$("#empty-link-1");
 		const HREF_ATTRIBUTE = "https://www.sap.com/index.html";
 
-		assert.notOk(link.getAttribute("href"), "Render without 'href' by default");
+		assert.notOk(await link.getAttribute("href"), "Render without 'href' by default");
 
-		link.setAttribute("href", HREF_ATTRIBUTE);
-		assert.strictEqual(link.getAttribute("href"), HREF_ATTRIBUTE, "The href attribute is changed.");
+		await link.setAttribute("href", HREF_ATTRIBUTE);
+		assert.strictEqual(await link.getAttribute("href"), HREF_ATTRIBUTE, "The href attribute is changed.");
 	});
 
-	it("tests target attributes", () => {
-		const link = browser.$("#empty-link-2");
+	it("tests rel attribute", async () => {
+		const anchor = await browser.$("#target-blank-link");
+
+		assert.strictEqual(await anchor.shadow$("a").getAttribute("rel"), "noreferrer noopener", "The rel attribute is properly set.");
+	});
+
+	it("tests target attributes", async () => {
+		const link = await browser.$("#empty-link-2");
 		const TARGET_ATTRIBUTE = "_blank";
 
-		assert.notOk(link.getAttribute("target"), "Render without 'target' by default.");
+		assert.notOk(await link.getAttribute("target"), "Render without 'target' by default.");
 
-		link.setAttribute("target", TARGET_ATTRIBUTE);
-		assert.strictEqual(link.getAttribute("target"), TARGET_ATTRIBUTE, "The target attribute is changed.");
+		await link.setAttribute("target", TARGET_ATTRIBUTE);
+		assert.strictEqual(await link.getAttribute("target"), TARGET_ATTRIBUTE, "The target attribute is changed.");
 	});
 
-	it("should wrap the text of the link", () => {
-		const wrappingLabel = browser.$("#wrapping-link");
-		const truncatingLabel = browser.$("#non-wrapping-link");
+	it("should wrap the text of the link", async () => {
+		const wrappingLabel = await browser.$("#wrapping-link");
+		const truncatingLabel = await browser.$("#non-wrapping-link");
 
-		assert.ok(wrappingLabel.getSize().height > truncatingLabel.getSize().height);
-		assert.strictEqual(truncatingLabel.getSize().height, 16, "The truncated label should be single line.");
+		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
+		assert.strictEqual((await truncatingLabel.getSize()).height, 18, "The truncated label should be single line.");
 	});
 
-	it("should prevent clicking on disabled link", () => {
-		const disLink = browser.$("#disabled-link");
-		const input = browser.$("#helper-input");
+	it("should prevent clicking on disabled link", async () => {
+		const input = await browser.$("#helper-input");
 
-		assert.throws(() => {
-			disLink.click();
-		});
-
-		assert.strictEqual(input.getValue(), "0", "Click should not be fired and value of input should not be changed.");
+		assert.strictEqual(await input.getValue(), "0", "Click should not be fired and value of input should not be changed.");
 
 	});
 
-	it("disabled link should not be enabled", () => {
-		const link = browser.$("#disabled-link").shadow$("a").getAttribute("disabled");
+	it("disabled link should not be enabled", async () => {
+		const link = await browser.$("#disabled-link").shadow$("a").getAttribute("disabled");
 
 		assert.ok(link, "Disabled link should not be enabled.");
 	});
 
-	it("tests prevent default", () => {
-		const link = browser.$("#link-click-prevent-default");
+	it("tests prevent default", async () => {
+		const link = await browser.$("#link-click-prevent-default");
 
-		link.click();
-		assert.ok(browser.getUrl().indexOf("https://www.google.com") === -1);
+		await link.click();
+		const url = await browser.getUrl();
+		assert.notInclude(url, "https://www.google.com", "URL is not google");
 	});
+
+	it("Collabsible element has aria-expanded attribute", async () => {
+		const link = await browser.$("#collapseExpandLink");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "true", "The text is expanded");
+		await link.click();
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-expanded"), "false", "The text is collapsed");
+	});
+
+	it("Open dialog link has propper aria-haspopup attribute", async () => {
+		const link = await browser.$("#signInLink");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Proper aria-haspopup attribute is set");
+	});
+
 });

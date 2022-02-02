@@ -30,7 +30,7 @@ const metadata = {
 		 * Defines the currently selected color of the component.
 		 * <br><br>
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-		 * @type {String}
+		 * @type {CSSColor}
 		 * @public
 		 */
 		color: {
@@ -112,7 +112,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ColorPicker allows users to choose any color and provides different input options for selecting colors.
+ * The <code>ui5-color-picker</code> allows users to choose any color and provides different input options for selecting colors.
  *
  * <h3>Usage</h3>
  *
@@ -188,9 +188,10 @@ class ColorPicker extends UI5Element {
 	onBeforeRendering() {
 		// we have the color & _mainColor properties here
 		this._color = getRGBColor(this.color);
+		const tempColor = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, 1)`;
 		this._setHex();
 		this._setValues();
-		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", this.color);
+		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", tempColor);
 	}
 
 	async onAfterRendering() {
@@ -318,11 +319,19 @@ class ColorPicker extends UI5Element {
 
 	_handleAlphaInput(event) {
 		this._alpha = parseFloat(event.target.value);
+		this._setColor(this._color);
 	}
 
 	_handleHueInput(event) {
 		this.selectedHue = event.target.value;
+		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
+
+		const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
+
+		if (tempColor) {
+			this._setColor(HSLToRGB(tempColor));
+		}
 	}
 
 	_handleHEXChange(event) {
@@ -358,6 +367,8 @@ class ColorPicker extends UI5Element {
 		case "blue":
 			tempColor = { ...this._color, b: targetValue };
 			break;
+		default:
+			tempColor = { ...this._color };
 		}
 
 		this._setColor(tempColor);

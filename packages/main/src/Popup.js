@@ -3,7 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
@@ -13,6 +14,7 @@ import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsReg
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 /**
  * @public
@@ -67,7 +69,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -77,6 +79,19 @@ const metadata = {
 		accessibleName: {
 			type: String,
 			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -141,28 +156,15 @@ const metadata = {
 	},
 };
 
-let customBlockingStyleInserted = false;
-
 const createBlockingStyle = () => {
-	if (customBlockingStyleInserted) {
-		return;
+	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
+		createStyle(globalStyles, "data-ui5-popup-scroll-blocker");
 	}
-
-	createStyleInHead(`
-		.ui5-popup-scroll-blocker {
-			width: 100%;
-			height: 100%;
-			position: fixed;
-			overflow: hidden;
-		}
-	`, { "data-ui5-popup-scroll-blocker": "" });
-
-	customBlockingStyleInserted = true;
 };
 
 createBlockingStyle();
 
-let bodyScrollingBlockers = 0;
+const bodyScrollingBlockers = new Set();
 
 /**
  * @class
@@ -230,7 +232,7 @@ class Popup extends UI5Element {
 
 	onExitDOM() {
 		if (this.isOpen()) {
-			Popup.unblockBodyScrolling();
+			Popup.unblockBodyScrolling(this);
 			this._removeOpenedPopup();
 		}
 	}
@@ -250,10 +252,10 @@ class Popup extends UI5Element {
 	 * Temporarily removes scrollbars from the body
 	 * @protected
 	 */
-	static blockBodyScrolling() {
-		bodyScrollingBlockers++;
+	static blockBodyScrolling(popup) {
+		bodyScrollingBlockers.add(popup);
 
-		if (bodyScrollingBlockers !== 1) {
+		if (bodyScrollingBlockers.size !== 1) {
 			return;
 		}
 
@@ -267,10 +269,10 @@ class Popup extends UI5Element {
 	 * Restores scrollbars on the body, if needed
 	 * @protected
 	 */
-	static unblockBodyScrolling() {
-		bodyScrollingBlockers--;
+	static unblockBodyScrolling(popup) {
+		bodyScrollingBlockers.delete(popup);
 
-		if (bodyScrollingBlockers !== 0) {
+		if (bodyScrollingBlockers.size !== 0) {
 			return;
 		}
 
@@ -406,7 +408,7 @@ class Popup extends UI5Element {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
-			Popup.blockBodyScrolling();
+			Popup.blockBodyScrolling(this);
 		}
 
 		this._zIndex = getNextZIndex();
@@ -451,7 +453,7 @@ class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling();
+			Popup.unblockBodyScrolling(this);
 		}
 
 		this.hide();
@@ -547,7 +549,7 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.accessibleName || undefined;
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get _root() {

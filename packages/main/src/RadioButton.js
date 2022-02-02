@@ -2,8 +2,9 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isSpace,
 	isEnter,
@@ -24,6 +25,9 @@ import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-de
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
+
+let isGlobalHandlerAttached = false;
+let activeRadio = null;
 
 /**
  * @public
@@ -170,10 +174,42 @@ const metadata = {
 			defaultValue: WrappingType.None,
 		},
 
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
+			type: String,
+		},
+
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
+		},
+
+		/**
+		 * Defines the active state (pressed or not) of the component.
+		 * @private
+		 */
+		 active: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
@@ -238,7 +274,16 @@ class RadioButton extends UI5Element {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._deactivate = () => {
+			if (activeRadio) {
+				activeRadio.active = false;
+			}
+		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+			isGlobalHandlerAttached = true;
+		}
 	}
 
 	static get metadata() {
@@ -262,7 +307,7 @@ class RadioButton extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		RadioButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -339,10 +384,12 @@ class RadioButton extends UI5Element {
 
 	_onkeydown(event) {
 		if (isSpace(event)) {
+			this.active = true;
 			return event.preventDefault();
 		}
 
 		if (isEnter(event)) {
+			this.active = true;
 			return this.toggle();
 		}
 
@@ -359,6 +406,21 @@ class RadioButton extends UI5Element {
 		if (isSpace(event)) {
 			this.toggle();
 		}
+
+		this.active = false;
+	}
+
+	_onmousedown() {
+		this.active = true;
+		activeRadio = this; // eslint-disable-line
+	}
+
+	_onmouseup() {
+		this.active = false;
+	}
+
+	_onfocusout() {
+		this.active = false;
 	}
 
 	toggle() {
@@ -381,11 +443,9 @@ class RadioButton extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Error": RadioButton.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": RadioButton.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -406,8 +466,8 @@ class RadioButton extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+	get ariaLabelText() {
+		return [getEffectiveAriaLabelText(this), this.text].filter(Boolean).join(" ");
 	}
 
 	get ariaDescribedBy() {

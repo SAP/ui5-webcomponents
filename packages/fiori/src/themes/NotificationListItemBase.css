@@ -18,7 +18,7 @@
 
 :host([focused]) .ui5-nli-focusable:after {
 	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
 	top: 0;
 	right: 0;

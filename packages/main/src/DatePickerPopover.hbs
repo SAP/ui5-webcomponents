@@ -6,8 +6,7 @@
 	horizontal-align="Left"
 	?disable-scrolling="{{_isIE}}"
 	hide-arrow
-	with-padding
-	no-stretch
+	no-padding
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
 	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
@@ -42,6 +41,7 @@
 	<ui5-calendar
 		id="{{_id}}-calendar"
 		primary-calendar-type="{{_primaryCalendarType}}"
+		secondary-calendar-type="{{secondaryCalendarType}}"
 		format-pattern="{{_formatPattern}}"
 		timestamp="{{_calendarTimestamp}}"
 		.selectionMode="{{_calendarSelectionMode}}"

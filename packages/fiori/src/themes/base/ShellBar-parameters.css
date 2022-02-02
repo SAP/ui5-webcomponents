@@ -1,0 +1,10 @@
+:root {
+	--_ui5_shellbar_logo_outline_color: var(--sapContent_ContrastFocusColor);
+	--_ui5_shellbar_logo_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--_ui5_shellbar_logo_outline_color);
+	--_ui5_shellbar_outline_offset: -0.0625rem;
+	--_ui5_shellbar_button_box_shadow: none;
+	--_ui5_shellbar_button_active_color: var(--sapShell_Active_TextColor);
+	--_ui5_shellbar_logo_outline_border_radius: 0;
+	--_ui5_shellbar_copilot_stop_color1: #C0D9F2;
+	--_ui5_shellbar_copilot_stop_color2: #FFFFFF;
+}

@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundleData, fetchI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -12,6 +11,7 @@ import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import iconCss from "./generated/themes/Icon.css.js";
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
+const PRESENTATION_ROLE = "presentation";
 
 /**
  * @public
@@ -19,6 +19,7 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const metadata = {
 	tag: "ui5-icon",
 	languageAware: true,
+	themeAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 		/**
 		 * Defines if the icon is interactive (focusable and pressable)
@@ -87,16 +88,18 @@ const metadata = {
 
 		/**
 		 * Defines the accessibility role of the component.
+		 * @type {string}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.15
+		 * @public
+		 * @since 1.1.0
 		 */
-		role: {
+		accessibleRole: {
 			type: String,
 		},
 
 		/**
 		 * Defines the aria hidden state of the component.
+		 * Note: If the role is presentation the default value of aria-hidden will be true.
 		 * @private
 		 * @since 1.0.0-rc.15
 		 */
@@ -217,13 +220,13 @@ class Icon extends UI5Element {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
 	}
 
-	_onfocusin(event) {
+	_onFocusInHandler(event) {
 		if (this.interactive) {
 			this.focused = true;
 		}
 	}
 
-	_onfocusout(event) {
+	_onFocusOutHandler(event) {
 		this.focused = false;
 	}
 
@@ -247,12 +250,10 @@ class Icon extends UI5Element {
 		}
 	}
 
-	_onclick(event) {
-		if (this.interactive) {
-			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation();
-			this.fireEvent("click");
-		}
+	_onClickHandler(event) {
+		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+		event.stopPropagation();
+		this.fireEvent("click");
 	}
 
 	get _dir() {
@@ -269,6 +270,10 @@ class Icon extends UI5Element {
 
 	get effectiveAriaHidden() {
 		if (this.ariaHidden === "") {
+			if (this.isDecorative) {
+				return true;
+			}
+
 			return;
 		}
 
@@ -276,19 +281,23 @@ class Icon extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.interactive ? "0" : "-1";
+		return this.interactive ? "0" : undefined;
+	}
+
+	get isDecorative() {
+		return this.effectiveAccessibleRole === PRESENTATION_ROLE;
 	}
 
 	get effectiveAccessibleRole() {
-		if (this.role) {
-			return this.role;
+		if (this.accessibleRole) {
+			return this.accessibleRole;
 		}
 
 		if (this.interactive) {
 			return "button";
 		}
 
-		return this.effectiveAccessibleName ? "img" : "presentation";
+		return this.effectiveAccessibleName ? "img" : PRESENTATION_ROLE;
 	}
 
 	static createGlobalStyle() {
@@ -339,13 +348,14 @@ class Icon extends UI5Element {
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
 
+		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
+		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
+
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;
 		} else if (this.accData) {
-			if (!getI18nBundleData(this.packageName)) {
-				await fetchI18nBundle(this.packageName);
-			}
-			const i18nBundle = getI18nBundle(this.packageName);
+			const i18nBundle = await getI18nBundle(this.packageName);
 			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
 		}
 	}

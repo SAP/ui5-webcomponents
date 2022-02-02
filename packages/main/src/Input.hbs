@@ -28,22 +28,30 @@
 			aria-label="{{accInfo.input.ariaLabel}}"
 			aria-required="{{required}}"
 			@input="{{_handleInput}}"
-			@change="{{_handleChange}}"
+			@change="{{_handleNativeInputChange}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
 			@focusin={{innerFocusIn}}
-			data-sap-no-tab-ref
 			data-sap-focus-ref
 			step="{{nativeInputAttributes.step}}"
 			min="{{nativeInputAttributes.min}}"
 			max="{{nativeInputAttributes.max}}"
 		/>
+
+		{{#if readonly}}
+			<ui5-icon class="ui5-input-readonly-icon" name="not-editable"></ui5-icon>
+		{{/if}}
+
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">
 				<slot name="icon"></slot>
 			</div>
 		{{/if}}
+
+		<div class="ui5-input-value-state-icon">
+			{{{_valueStateInputIcon}}}
+		</div>
 
 		{{> postContent }}
 

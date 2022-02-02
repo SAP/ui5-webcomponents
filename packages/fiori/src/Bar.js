@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import BarTemplate from "./generated/templates/BarTemplate.lit.js";
 import BarDesign from "./types/BarDesign.js";
 
@@ -12,6 +13,7 @@ import BarCss from "./generated/themes/Bar.css.js";
 const metadata = {
 	tag: "ui5-bar",
 	managedSlots: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
@@ -33,6 +35,15 @@ const metadata = {
 		design: {
 			type: BarDesign,
 			defaultValue: BarDesign.Header,
+		},
+
+		/**
+		 * Defines if the component middle area needs to be centered between start and end area
+		 * @type {Boolean}
+		 * @private
+		 */
+		_shrinked: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
@@ -99,6 +110,14 @@ const metadata = {
  * <li>bar - Used to style the wrapper of the content of the component</li>
  * </ul>
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/Bar.js";</code>
@@ -106,6 +125,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Bar
+ * @implements sap.ui.webcomponents.fiori.IBar
  * @extends UI5Element
  * @tagname ui5-bar
  * @public
@@ -132,6 +152,43 @@ class Bar extends UI5Element {
 		return {
 			"label": this.design,
 		};
+	}
+
+	constructor() {
+		super();
+
+		this._handleResizeBound = this.handleResize.bind(this);
+	}
+
+	handleResize() {
+		const bar = this.getDomRef();
+		const barWidth = bar.offsetWidth;
+
+		this._shrinked = Array.from(bar.children).some(element => {
+			return barWidth / 3 < element.offsetWidth;
+		});
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-bar-root": true,
+				"ui5-bar-root-shrinked": this._shrinked,
+			},
+		};
+	}
+
+	onBeforeRendering() {
+		// Next row is specific for IE11. Please remove after stop support and edit css file
+		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 }
 

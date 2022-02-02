@@ -11,9 +11,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/form.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="form1auto">
 
 	<form method="get">
 		<h3> Input with suggestions</h3>
@@ -24,27 +25,27 @@
 		</ui5-input>
 
 		<h3> Input disabled</h3>
-		<ui5-input name="b_disabled" style="width:100%" disabled placeholder="Disabled one ...">
+		<ui5-input name="b_disabled" class="form2auto" disabled placeholder="Disabled one ...">
 			<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
 		</ui5-input>
 
 		<h3> Input readonly</h3>
-		<ui5-input name="c" style="width:100%" value="readonly" readonly></ui5-input>
+		<ui5-input name="c" class="form2auto" value="readonly" readonly></ui5-input>
 
 		<h3> Input type 'Number'</h3>
-		<ui5-input name="d" style="width:100%" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+		<ui5-input name="d" class="form2auto" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
 
 		<h3> Input type 'Password'</h3>
-		<ui5-input name="e" style="width:100%" type="Password" placeholder="Typing in private ..."></ui5-input>
+		<ui5-input name="e" class="form2auto" type="Password" placeholder="Typing in private ..."></ui5-input>
 
 		<h3> Input type 'Email'</h3>
-		<ui5-input name="f" style="width:100%" type="Email" name="my-input-email"></ui5-input>
+		<ui5-input name="f" class="form2auto" type="Email" name="my-input-email"></ui5-input>
 
 		<h3> Input type 'Tel'</h3>
-		<ui5-input name="g" style="width:100%" type="Tel" name="my-input-tel"></ui5-input>
+		<ui5-input name="g" class="form2auto" type="Tel" name="my-input-tel"></ui5-input>
 
 		<h3> Input type 'URL'</h3>
-		<ui5-input name="h" style="width:100%" type="URL"></ui5-input>
+		<ui5-input name="h" class="form2auto" type="URL"></ui5-input>
 
 		<ui5-input value="No name"></ui5-input>
 

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
@@ -237,7 +237,7 @@ const metadata = {
  *
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
+ * <li>[SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
  * </ul>
  * <br><br>
  *
@@ -255,11 +255,6 @@ const metadata = {
  * @public
  */
 class Avatar extends UI5Element {
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -281,7 +276,7 @@ class Avatar extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get tabindex() {
@@ -335,7 +330,7 @@ class Avatar extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
+		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
 	}
 
 	get hasImage() {
@@ -343,12 +338,14 @@ class Avatar extends UI5Element {
 		return this._hasImage;
 	}
 
-	_onclick(event) {
-		if (this.interactive) {
-			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation();
-			this.fireEvent("click");
-		}
+	onBeforeRendering() {
+		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+	}
+
+	_onClickHandler(event) {
+		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+		event.stopPropagation();
+		this.fireEvent("click");
 	}
 
 	_onkeydown(event) {

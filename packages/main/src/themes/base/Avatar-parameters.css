@@ -13,8 +13,26 @@
     --ui5-avatar-accent10: var(--sapAccentColor10);
     --ui5-avatar-placeholder: var(--sapContent_ImagePlaceholderBackground);
 
-    --_ui5_avatar_outline: 1px dotted var(--sapContent_FocusColor);
+    --ui5-avatar-accent1-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent2-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent3-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent4-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent5-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent6-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent7-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent8-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent9-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-accent10-color: var(--ui5-avatar-initials-color);
+    --ui5-avatar-placeholder-color: var(--ui5-avatar-initials-color);
+
+    --_ui5_avatar_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     --_ui5_avatar_focus_offset: 1px;
 	--_ui5_avatar_focus_width: 1px;
 	--_ui5_avatar_focus_color: var(--sapContent_FocusColor);
+
+    --_ui5_avatar_fontsize_XS: 0.75rem;
+    --_ui5_avatar_fontsize_S: 1.125rem;
+    --_ui5_avatar_fontsize_M: 1.625rem;
+    --_ui5_avatar_fontsize_L: 2rem;
+    --_ui5_avatar_fontsize_XL: 2.75rem;
 }

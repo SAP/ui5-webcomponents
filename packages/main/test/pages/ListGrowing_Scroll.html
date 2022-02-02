@@ -10,14 +10,15 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+<link rel="stylesheet" type="text/css" href="styles/ListGrowing_Scroll.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="listgrowing_scroll1auto">
 	<ui5-title>List growing="Scroll" max-height: 10.5rem;</ui5-title>
 	<br><br><br>
 
-	<section style="max-height: 10.5rem; overflow: auto;">
+	<section class="listgrowing_scroll2auto">
 		<ui5-list id="infiniteScrollEx" growing="Scroll">
 			<ui5-li-groupheader>New Items</ui5-li-groupheader>
 			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
@@ -29,12 +30,12 @@
 			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
 		</ui5-list>
 	</section>
-	
+
 
 	<br><br><br>
 	<ui5-title>List growing="Scroll" max-height: 8rem;</ui5-title>
 	<br><br><br>
-	<ui5-list id="infiniteScrollEx2" growing="Scroll" style="max-height: 8rem; overflow: auto;">
+	<ui5-list id="infiniteScrollEx2" growing="Scroll" class="listgrowing_scroll3auto">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
 		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>

@@ -23,14 +23,13 @@
 		aria-required="{{required}}"
 		aria-expanded="{{_isPickerOpen}}"
 		@keydown="{{_onkeydown}}"
+		@keypress="{{_handleKeyboardNavigation}}"
 		@keyup="{{_onkeyup}}"
 		@focusin="{{_onfocusin}}"
 		@focusout="{{_onfocusout}}"
 	>
 		{{_text}}
 	</div>
-
-	<span id="{{_id}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
 
 	<ui5-icon
 		name="slim-arrow-down"

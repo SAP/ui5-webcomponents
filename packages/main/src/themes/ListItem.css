@@ -161,6 +161,7 @@
 	pointer-events: none; /* IE specific */
 }
 
+.ui5-li-detailbtn,
 .ui5-li-deletebtn {
 	display: flex;
 	align-items: center;

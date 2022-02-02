@@ -2,189 +2,235 @@ const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
 describe("Breadcrumbs general interaction", () => {
-	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 	});
 
-	it("fires link-click event", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-			link = breadcrumbs.shadow$$("ui5-link")[1];
+	it("tests getDomRef", async () => {
+		const res = await browser.executeAsync(async (done) => {
+			const breadCrumbsItemOutOfOverflow = document.getElementById("lastItemWithACCName");
+
+			// act
+			done({
+				item: breadCrumbsItemOutOfOverflow,
+				realDomRef: breadCrumbsItemOutOfOverflow.getDomRef(),
+			});
+		});
+
+		// assert
+		assert.strictEqual(res.item["_id"], res.realDomRef["_id"],
+			"getDomRef corrcetly returns the matching ui5-link outside the overflow.");
+	});
+
+	it("fires link-click event", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
 
 		// Act
-		link.click();
+		await link.click();
 
 		// Check
-		const eventResult = browser.$("#result");
-		assert.strictEqual(eventResult.innerText, link.innerText, "label for pressed link is correct");
+		const eventResult = await browser.$("#result");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
 	});
 
-	it("fires link-click event when link in overflow", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-			overflowArrowLink = breadcrumbs.shadow$$("ui5-link")[0],
-			link = breadcrumbs.shadow$$("ui5-link")[1];
+	it("fires link-click event when link in overflow", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0];
 
 
 		// Act
-		overflowArrowLink.click(); // open the overflow
+		await overflowArrowLink.click(); // open the overflow
 
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[0];
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
+		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
 
-		firstItem.click();
+		await firstItem.click();
 
 		// Check
-		const eventResult = browser.$("#result");
-		assert.strictEqual(eventResult.innerText, link.innerText, "label for pressed link is correct");
+		const eventResult = await browser.$("#result");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await firstItem.getProperty('innerText'), "label for pressed link is correct");
 	});
 
-	it("updates layout on container resize", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-			shrinkContainerBtn = $("#shrinkSizeBtn"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
+	it("updates layout on container resize", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			shrinkContainerBtn = await browser.$("#shrinkSizeBtn"),
+			countItemsInOverflowBefore = await breadcrumbs.getProperty("_overflowSize"),
 			expectedCountLinksInOverflowAfter = countItemsInOverflowBefore + 1;
 
 		// Act: shrink the breadcrumbs container
 		// to cause one more item to overflow
-		shrinkContainerBtn.click();
+		await shrinkContainerBtn.click();
 
 		// Check links inside overflow
-		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountLinksInOverflowAfter, "one link is added to the overflow");
+		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountLinksInOverflowAfter, "one link is added to the overflow");
 	});
 
-	it("updates layout on resize of content outside overflow", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-			extendLinkTextBtn = $("#extendLinkTextBtn"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
+	it("updates layout on resize of content outside overflow", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			extendLinkTextBtn = await browser.$("#extendLinkTextBtn"),
+			countItemsInOverflowBefore = await breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
 
 		// Act:
 		// extend the length of the last link,
 		// so that it becomes too big to be rendered outside the overflow
-		extendLinkTextBtn.click();
+		await extendLinkTextBtn.click();
 
 		// Check
-		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "the link is added to the overflow");
+		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "the link is added to the overflow");
 	});
 
-	it("updates layout on resize of content inside overflow", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-			shortenLinkTextBtn = $("#shortenLinkTextBtn"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
+	it("updates layout on resize of content inside overflow", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			shortenLinkTextBtn = await browser.$("#shortenLinkTextBtn"),
+			countItemsInOverflowBefore = await breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
-		// Act: 
+		// Act:
 		// shrink the length of the last link from the overflow,
 		// to make it small enough => eligible to be moved outside the overflow
-		shortenLinkTextBtn.click();
+		await shortenLinkTextBtn.click();
 
 		// Check
-		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "the link is taken out of the overflow");
+		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "the link is taken out of the overflow");
 	});
 
-	it("updates layout when link content removed", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-			shortenLinkTextBtn = $("#shortenLinkTextBtn"),
-			link = breadcrumbs.shadow$$("ui5-link")[1],
-			linkId = link.getProperty("id"),
-			countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
+	it("updates layout when link content removed", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			shortenLinkTextBtn = await browser.$("#shortenLinkTextBtn");
+
+		let	link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		const linkId = await link.getProperty("id"),
+			countItemsInOverflowBefore = await breadcrumbs.getProperty("_overflowSize"),
 			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
-		// Act: 
+		// Act:
 		// shrink the length of the last link to make it empty
-		shortenLinkTextBtn.click();
+		await shortenLinkTextBtn.click();
 
-		// Check: a link is taken out of the overflow, to fill the space left after removing 
-		assert.notEqual(link.getProperty("id"), linkId, "another link is rendrered in the place of the empty item");
-		assert.ok(link.getText(), "the new link is non-empty");
-		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is taken out of the overflow");
+		link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		// Check: a link is taken out of the overflow, to fill the space left after removing
+		assert.notEqual(await link.getProperty("id"), linkId, "another link is rendrered in the place of the empty item");
+		assert.ok(await link.getText(), "the new link is non-empty");
+		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is taken out of the overflow");
 	});
 
-	it("updates layout when content added to empty link", () => {
-		const breadcrumbs = $("#breadcrumbs1"),
-		lastItem = $("#item7"),
-		lastLinkId = lastItem.getProperty('_id') + "-link",
-		extendLinkTextBtn = $("#extendLinkTextBtn"),
-		countItemsInOverflowBefore = breadcrumbs.getProperty("_overflowSize"),
-		expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
+	it("updates layout when content added to empty link", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs1"),
+			lastItem = await browser.$("#item7"),
+			lastLinkId = (await lastItem.getProperty('_id')) + "-link",
+			extendLinkTextBtn = await browser.$("#extendLinkTextBtn"),
+			countItemsInOverflowBefore = await breadcrumbs.getProperty("_overflowSize"),
+			expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
 
 		// Check initial state
-		assert.strictEqual(lastItem.getText(), "", "the item has no text");
-		assert.strictEqual(breadcrumbs.shadow$$("#" + lastLinkId).length, 0, "the link for empty item is not rendered");
+		assert.strictEqual(await lastItem.getText(), "", "the item has no text");
+		assert.strictEqual((await breadcrumbs.shadow$$("#" + lastLinkId)).length, 0, "the link for empty item is not rendered");
 
-		// Act: 
+		// Act:
 		// add text of the last link to make it non-empty
-		extendLinkTextBtn.click();
+		await extendLinkTextBtn.click();
 
 		// Check
-		assert.strictEqual(breadcrumbs.shadow$$("#" + lastLinkId).length, 1, "the link for non-empty item is rendered");
-		assert.strictEqual(breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is added to the overflow");
-	}); 
-
-	it("opens upon space", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
-
-		const externalElement = $("#breadcrumbsWithAccName").shadow$$("ui5-link")[3];
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
-		externalElement.click();
-		externalElement.keys("Tab");
-
-		browser.keys("Space");
-		assert.ok(popover.getProperty("opened"), "Dropdown is opened.");
+		assert.strictEqual((await breadcrumbs.shadow$$("#" + lastLinkId)).length, 1, "the link for non-empty item is rendered");
+		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is added to the overflow");
 	});
 
-	it("toggles upon F4", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+	it("standard breadcrumb with single item shows location", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsWithSingleItem"),
+			label = (await breadcrumbs.shadow$("ui5-label"));
 
-		const externalElement = $("#breadcrumbsWithAccName").shadow$$("ui5-link")[3];
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
-		externalElement.click();
-		externalElement.keys("Tab");
-
-		browser.keys("F4");
-		assert.ok(popover.getProperty("opened"), "Dropdown is opened.");
-
-		browser.keys("F4");
-		assert.ok(!popover.getProperty("opened"), "Dropdown is closed.");
+		// Check
+		assert.strictEqual(await label.getText(), "Location", "label is displayed");
 	});
 
-	it("toggles upon ALT + DOWN", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+	it("opens upon space", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 
-		const externalElement = $("#breadcrumbsWithAccName").shadow$$("ui5-link")[3];
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		externalElement.click();
-		externalElement.keys("Tab");
+		await externalElement.click();
+		await externalElement.keys("Tab");
 
-		browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(popover.getProperty("opened"), "Dropdown is opened.");
-
-		browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(!popover.getProperty("opened"), "Dropdown is closed.");
+		await browser.keys("Space");
+		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
 	});
 
-	it("renders accessible names of overflowing link items", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+	it("toggles upon F4", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#breadcrumbsWithAccName"),
-			listItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[1],
+		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await externalElement.click();
+		await externalElement.keys("Tab");
+
+		await browser.keys("F4");
+		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+
+		await browser.keys("F4");
+		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
+	});
+
+	it("toggles upon ALT + DOWN", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+
+		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await externalElement.click();
+		await externalElement.keys("Tab");
+
+		await browser.keys(["Alt", "ArrowDown", "NULL"]);
+		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+
+		await browser.keys(["Alt", "ArrowDown", "NULL"]);
+		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
+	});
+
+	it("renders accessible names of overflowing link items", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsWithAccName"),
+			listItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[1],
 			expectedAriaLabel = "first link acc name";
 
 		// Check
-		assert.strictEqual(listItem.getProperty("accessibleName"), expectedAriaLabel, "label for first link is correct");
+		assert.strictEqual(await listItem.getProperty("accessibleName"), expectedAriaLabel, "label for first link is correct");
 	});
 
-	it("renders accessible names of non-overflowing link items", () => {
-		const breadcrumbs = $("#breadcrumbsWithAccName"),
-			link = breadcrumbs.shadow$$("ui5-link")[3],
+	it("renders accessible names of non-overflowing link items", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsWithAccName"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[3],
 			expectedAriaLabel = "last link acc name";
 
 		// Check
-		assert.strictEqual(link.getProperty("ariaLabel"), expectedAriaLabel, "label for last link is correct");
+		assert.strictEqual(await link.getProperty("ariaLabel"), expectedAriaLabel, "label for last link is correct");
 	});
+
+	it("cancels default if item-click event listener calls preventDefault", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		const initialUrl = await browser.getUrl();
+
+		// Act
+		await link.click();
+
+		// Check
+		const eventResult = await browser.$("#result");
+		const url = await browser.getUrl();
+		assert.strictEqual(url, initialUrl, "url should not have changed");
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+	});
+
 });

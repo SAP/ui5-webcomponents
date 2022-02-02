@@ -99,3 +99,9 @@
 	justify-content: space-between;
 	width: 100%;
 }
+
+/* RTL */
+.ui5-li-root-tree[dir="rtl"] {
+	padding-left: 1rem;
+	padding-right: 0;
+}

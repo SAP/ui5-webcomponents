@@ -32,6 +32,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.1.0
+		 */
+		title: {
+			type: String,
+		},
+
+		/**
 		 * Defines the <code>icon</code> source URI.
 		 * <br><br>
 		 * <b>Note:</b>
@@ -54,16 +65,6 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			type: String,
-		},
-
-		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.11
-		 */
-		stableDomRef: {
 			type: String,
 		},
 
@@ -113,6 +114,10 @@ const metadata = {
 class Option extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	get stableDomRef() {
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 }
 

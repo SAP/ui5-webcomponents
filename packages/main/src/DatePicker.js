@@ -14,6 +14,7 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -153,7 +154,7 @@ const metadata = {
 		 * Defines the visibility of the week numbers column.
 		 * <br><br>
 		 *
-		 * <b>Note:<b> For calendars other than Gregorian,
+		 * <b>Note:</b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.
 		 *
 		 * @type {boolean}
@@ -296,7 +297,7 @@ const metadata = {
  * <li>Typing it in directly in the input field</li>
  * </ul>
  * <br><br>
- * When the user makes an entry and chooses the enter key, the calendar shows the corresponding date.
+ * When the user makes an entry and presses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.
  *
  * <h3>Formatting</h3>
@@ -319,8 +320,8 @@ const metadata = {
  * use TAB to reach the buttons for changing month and year.
  * <br>
  *
- * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
- * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
+ * If the <code>ui5-date-picker</code> input field is focused and its corresponding picker dialog is not opened,
+ * then users can increment or decrement the date referenced by <code>dateValue</code> property
  * by using the following shortcuts:
  * <br>
  * <ul>
@@ -353,7 +354,7 @@ const metadata = {
  * {
  *	"calendarType": "Japanese"
  * }
- * &lt;/script&gt;
+ * &lt;/script&gt;</code></pre>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -469,6 +470,10 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
+		if (isEnter(event)) {
+			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+		}
+
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._modifyDateValue(1, "year");
@@ -527,6 +532,9 @@ class DatePicker extends DateComponentBase {
 		}
 
 		if (updateValue) {
+			this._getInput().getInputDOMRef().then(innnerInput => {
+				innnerInput.value = value;
+			});
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
@@ -641,7 +649,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get phone() {
@@ -674,7 +682,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get openIconTitle() {
-		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
+		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
 	get openIconName() {
@@ -682,7 +690,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	/**

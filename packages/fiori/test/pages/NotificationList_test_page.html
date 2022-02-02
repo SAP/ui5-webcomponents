@@ -10,19 +10,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		.test-section {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/NotificationList_test_page.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="notificationlist_test_page1auto">
 
 	<ui5-title>Test NotificationListItem and NotificationListGroupItem</ui5-title>
 
@@ -56,7 +49,7 @@
 
 	<div class="test-section">
 
-		<ui5-list id="notificationList" style="width: 500px" header-text="Notifications grouped">
+		<ui5-list id="notificationList" class="notificationlist_test_page2auto" header-text="Notifications grouped">
 			<ui5-li-notification-group
 				id="nlgi1"
 				show-close

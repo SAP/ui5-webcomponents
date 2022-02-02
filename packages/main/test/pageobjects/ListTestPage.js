@@ -3,16 +3,16 @@ class ListTestPage {
 		this._sut = id;
 	}
 
-	get root() {
+	async getRoot() {
 		return $(this._sut);
 	}
 
-	get header() {
+	async getHeader() {
 		return browser.$(`${this._sut}`).shadow$(`header`);
 	}
 
-	getItem(index) {
-		return browser.$$("#list1 ui5-li")[index];
+	async getItem(index) {
+		return (await browser.$$("#list1 ui5-li"))[index];
 	}
 }
 

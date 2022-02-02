@@ -13,21 +13,63 @@
 	<div class="snippet">
 		<ui5-button id="btnOpenDialog1">Open ViewSettingsDialog</ui5-button>
 		<ui5-view-settings-dialog id="vsd1">
-			<ui5-li slot="sortItems">Name</ui5-li>
-			<ui5-li slot="sortItems">Position</ui5-li>
-			<ui5-li slot="sortItems">Company</ui5-li>
-			<ui5-li slot="sortItems">Department</ui5-li>
-		</ui5-view-settings-dialog>
+				<ui5-sort-item slot="sortItems" text="Name"></ui5-sort-item>
+				<ui5-sort-item slot="sortItems" text="Position"></ui5-sort-item>
+				<ui5-sort-item slot="sortItems" text="Company"></ui5-sort-item>
+				<ui5-sort-item slot="sortItems" text="Department"></ui5-sort-item>
+		
+				<ui5-filter-item slot="filterItems" text="Position">
+					<ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+				</ui5-filter-item>
+				<ui5-filter-item slot="filterItems" text="Department">
+					<ui5-filter-item-option slot="values" text="Sales"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="Management"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="PR"></ui5-filter-item-option>
+				</ui5-filter-item>
+				<ui5-filter-item slot="filterItems" text="Location">
+					<ui5-filter-item-option slot="values" text="Walldorf"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="New York"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="London"></ui5-filter-item-option>
+				</ui5-filter-item>
+				<ui5-filter-item slot="filterItems" text="Reports to">
+					<ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+					<ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+				</ui5-filter-item>
+			</ui5-view-settings-dialog>
 		<br />
 		<br />
 		<div id="vsdResults"></div>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 		<ui5-view-settings-dialog>
-			<ui5-li slot="sortItems">Name</ui5-li>
-			<ui5-li slot="sortItems">Position</ui5-li>
-			<ui5-li slot="sortItems">Company</ui5-li>
-			<ui5-li slot="sortItems">Department</ui5-li>
+			<ui5-sort-item slot="sortItems" text="Name"></ui5-sort-item>
+			<ui5-sort-item slot="sortItems" text="Position"></ui5-sort-item>
+			<ui5-sort-item slot="sortItems" text="Company"></ui5-sort-item>
+			<ui5-sort-item slot="sortItems" text="Department"></ui5-sort-item>
+	
+			<ui5-filter-item slot="filterItems" text="Position">
+				<ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+			</ui5-filter-item>
+			<ui5-filter-item slot="filterItems" text="Department">
+				<ui5-filter-item-option slot="values" text="Sales"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="Management"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="PR"></ui5-filter-item-option>
+			</ui5-filter-item>
+			<ui5-filter-item slot="filterItems" text="Location">
+				<ui5-filter-item-option slot="values" text="Walldorf"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="New York"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="London"></ui5-filter-item-option>
+			</ui5-filter-item>
+			<ui5-filter-item slot="filterItems" text="Reports to">
+				<ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+				<ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+			</ui5-filter-item>
 		</ui5-view-settings-dialog>
 		<script>
 			let vsdResults = document.getElementById("vsdResults");

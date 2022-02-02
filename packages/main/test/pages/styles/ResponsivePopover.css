@@ -1,0 +1,20 @@
+.popover-footer,
+	.popover-header {
+    margin: 0.25rem 0.25rem;
+}
+
+.popover-content {
+    padding: 1rem;
+}
+
+.responsivepopover1auto {
+    height: 100%
+}
+
+.responsivepopover2auto {
+    background-color: var(--sapBackgroundColor);
+}
+
+.responsivepopover3auto {
+    min-width: 150px;
+}

@@ -20,19 +20,10 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
-
-		.group {
-			padding: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Badge.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="badge1auto">
 	<section class="group">
 		<h2>Badges</h2>
 		<ui5-badge color-scheme="1">This is an info label</ui5-badge><br>
@@ -47,13 +38,13 @@
 		<ui5-badge color-scheme="10">IN WAREHOUSE</ui5-badge><br>
 
 		<ui5-badge color-scheme="1">
-			<ui5-icon name="accept" slot="icon"></ui5-icon>done
+			<ui5-icon name="accept" slot="icon"></ui5-icon>Done
 		</ui5-badge>
 		<ui5-badge id="badgeIconOnly" color-scheme="2">
 			<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
 		</ui5-badge>
 		<ui5-badge color-scheme="3">
-			<ui5-icon name="add-equipment" slot="icon"></ui5-icon>in process
+			<ui5-icon name="add-equipment" slot="icon"></ui5-icon>In Process
 		</ui5-badge>
 		<ui5-badge color-scheme="4">
 			<ui5-icon name="lab" slot="icon"></ui5-icon>
@@ -62,7 +53,7 @@
 			<ui5-icon name="email-read" slot="icon"></ui5-icon>
 		</ui5-badge>
 		<ui5-badge color-scheme="6">
-			<ui5-icon name="pending" slot="icon"></ui5-icon>pending
+			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
 		</ui5-badge>
 		<ui5-badge color-scheme="7">
 			<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
@@ -71,6 +62,19 @@
 			<ui5-icon name="locked" slot="icon"></ui5-icon>
 		</ui5-badge>
 	</section>
+
+	<h2>sap_horizon</h2>
+	<div class="sap_horizon">
+		<link rel="stylesheet" type="text/css" href="styles/Badge.css">
+		<ui5-badge color-scheme="1">Grey</ui5-badge>
+		<ui5-badge color-scheme="2">Blue</ui5-badge>
+		<ui5-badge color-scheme="3">Teal</ui5-badge>
+		<ui5-badge color-scheme="4">Green</ui5-badge>
+		<ui5-badge color-scheme="5">Mango</ui5-badge>
+		<ui5-badge color-scheme="6">Red</ui5-badge>
+		<ui5-badge color-scheme="7">Pink</ui5-badge>
+		<ui5-badge color-scheme="8">Indigo</ui5-badge>
+	</div>
 </body>
 
 </html>

@@ -16,10 +16,10 @@
 					icon="{{this.icon}}"
 					?disabled="{{this.disabled}}"
 					design="Transparent"
-					data-ui5-header-tab-ref-id="{{pos}}"
+					data-ui5-header-tab-ref-id="{{accInfo.ariaPosinset}}"
 					@click="{{../_onOverflowStepButtonClick}}"
 				>
-				{{this.heading}}
+				{{this.titleText}}
 				</ui5-button>
 			</li>
 		{{/each}}

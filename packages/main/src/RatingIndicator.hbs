@@ -23,6 +23,8 @@
 				<div class="ui5-rating-indicator-icon ui5-rating-indicator-active-icon" data-value="{{this.index}}">&#9733;</div>
 			{{else if this.halfStar}}
 				<div class="ui5-rating-indicator-icon ui5-rating-indicator-half-icon" data-value="{{this.index}}">&#9734;</div>
+			{{else if ../readonly}}
+				<div class="ui5-rating-indicator-icon ui5-rating-indicator-readonly-unselected-icon" data-value="{{this.index}}">&#9733;</div>
 			{{else}}
 				<div class="ui5-rating-indicator-icon" data-value="{{this.index}}">&#9734;</div>
 			{{/if}}

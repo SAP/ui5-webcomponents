@@ -6,4 +6,11 @@
 	--_ui5_monthpicker_item_focus_after_height: calc(100% - 0.375rem);
 	--_ui5_monthpicker_item_focus_after_border: 1px dotted var(--sapContent_FocusColor);
 	--_ui5_monthpicker_item_focus_after_offset: 2px;
+	--_ui5_monthpicker_item_focus_after_border_radius: 0;
+	--_ui5_monthpicker_item_selected_text_color: var(--sapContent_ContrastTextColor);
+	--_ui5_monthpicker_item_selected_background_color: var(--sapSelectedColor);
+	--_ui5_monthpicker_item_selected_hover_color: var(--sapContent_Selected_Background);
+	--_ui5_monthpicker_item_selected_box_shadow: none;
+	--_ui5_monthpicker_item_focus_after_outline: none;
+	--_ui5_monthpicker_item_selected_font_wieght: inherit;
 }

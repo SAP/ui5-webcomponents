@@ -3,13 +3,16 @@
 	aria-checked="{{checked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
-	aria-labelledby="{{ariaLabelledBy}}"
+	aria-label="{{ariaLabelText}}"
 	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
 	dir="{{effectiveDir}}"
 	@click="{{_onclick}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
+	@mousedown="{{_onmousedown}}"
+	@mouseup="{{_onmouseup}}"
+	@focusout="{{_onfocusout}}"
 >
 
 	<div class='ui5-radio-inner {{classes.inner}}'>

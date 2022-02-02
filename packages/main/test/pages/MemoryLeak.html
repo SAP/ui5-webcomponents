@@ -13,11 +13,12 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
     <script nomodule src="../../resources/bundle.es5.js"></script>
 
+<link rel="stylesheet" type="text/css" href="styles/MemoryLeak.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="memoryleak1auto">
 
-<div style="display: flex; justify-content: space-around;">
+<div class="memoryleak2auto">
 	<ui5-input id="count" value="100" value-state="Information">
 		<div slot="valueStateMessage">How many date pickers to create</div>
 	</ui5-input>
@@ -27,7 +28,7 @@
 	<ui5-button id="destroy">Destroy</ui5-button>
 </div>
 
-<div id="test" style="margin-top: 100px;"></div>
+<div id="test" class="memoryleak3auto"></div>
 
 <script>
 	const count = document.getElementById("count");

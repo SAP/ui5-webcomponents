@@ -1,4 +1,4 @@
-<div id="{{this._id}}" class="ui5-time-picker-root" @keydown="{{_onkeydown}}">
+<div id="{{this._id}}" class="ui5-time-picker-root">
 	<ui5-input
 			id="{{_id}}-inner"
 			value="{{value}}"
@@ -7,10 +7,12 @@
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
 			._inputAccInfo="{{accInfo}}"
+			data-sap-focus-ref
 			@click="{{_handleInputClick}}"
 			@ui5-change="{{_handleInputChange}}"
 			@ui5-input="{{_handleInputLiveChange}}"
 			class="ui5-time-picker-input"
+			@keydown="{{_onkeydown}}"
 	>
 
 	{{#if valueStateMessage.length}}
