@@ -555,12 +555,16 @@ class Table extends UI5Element {
 		}
 
 		if (isHomeCtrl(event)) {
+			event.preventDefault();
+
 			this._itemNavigation._handleHome(event);
 			this._itemNavigation._applyTabIndex();
 			this._itemNavigation._focusCurrentItem();
 		}
 
 		if (isEndCtrl(event)) {
+			event.preventDefault();
+
 			this._itemNavigation._handleEnd(event);
 			this._itemNavigation._applyTabIndex();
 			this._itemNavigation._focusCurrentItem();
@@ -588,23 +592,13 @@ class Table extends UI5Element {
 		const prevItem = this.rows[prevItemIdx];
 		const nextItem = this.rows[nextItemIdx];
 
-		if (isUpShift(event) && currentItem.selected) {
-			prevItem.selected = true;
+		if (isUpShift(event)) {
+			prevItem.selected = currentItem.selected;
 			prevItem.focus();
 		}
 
-		if (isUpShift(event) && !currentItem.selected && prevItem.selected) {
-			prevItem.selected = false;
-			prevItem.focus();
-		}
-
-		if (isDownShift(event) && currentItem.selected) {
-			nextItem.selected = true;
-			nextItem.focus();
-		}
-
-		if (isDownShift(event) && !currentItem.selected && nextItem.selected) {
-			nextItem.selected = false;
+		if (isDownShift(event)) {
+			nextItem.selected = currentItem.selected;
 			nextItem.focus();
 		}
 
