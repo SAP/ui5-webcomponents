@@ -1,12 +1,5 @@
-commit cd8dc26819a6449ed917cf2a4e334d4b8f5a09c8
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Tue Feb 1 16:04:37 2022 +0200
+commit 967a1cfe83bff6dbd1cad4f00e1fdd9c15bfeb85
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Feb 3 10:40:00 2022 +0200
 
-    fix(ui5-tabcontainer): await for renderFinished in resize handler (#4675)
-    
-    The issue occurs in a case where TabContainer's handleResize gets
-    called before onAfterRendering. At that point, TabContainer hasn't
-    rendered its own representation of the tabs (stripPresentation)
-    which it later relies on.
-    
-    Part of #4628
+    chore: update chromdriver (#4687)
