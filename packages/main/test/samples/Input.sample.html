@@ -17,28 +17,32 @@
 		background: rgba(224,224,224,0.5)
 	}
 
+	#valueHelpInput {
+		width: 100%;
+	}
+
 	#dialog[on-desktop] {
 		/* The playground's header has a z-index of 151, which is
 		higher than the dialog's default, and cuts off the dialog */
 		z-index: 200 !important;
 	}
 
-	.dialog-header {
+	#dialogHeader {
 		width: 100%;
 		padding: 0 1rem 0.5rem 1rem;
 	}
 
-	.header-title {
+	#headerTitle {
 		margin-top: 1em !important;
 		font-size: 1rem;
 		font-weight: 500;
 	}
 
-	#search-input {
+	#dialogSearchInput {
 		width: 100%;
 	}
 
-	.footer {
+	#footer {
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;
@@ -292,41 +296,31 @@
 <section>
 	<h3>Input With Value Help Dialog</h3>
 	<div class="snippet">
-		<ui5-input id="valuehelp-input" placeholder="Enter product" style="width: 100%" show-suggestions>
-			<ui5-icon id="valuehelp-icon" input-icon slot="icon" name="value-help"></ui5-icon>
+		<ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions>
+			<ui5-icon id="valueHelpIcon" slot="icon" name="value-help" input-icon></ui5-icon>
 		</ui5-input>
 	
 		<ui5-dialog id="dialog" accessibleName="Products Value Help">
-			<div slot="header" class="dialog-header">
-				<h2 class="header-title">Products</h2>
-				<ui5-input id="search-input" placeholder="Search" show-clear-icon>
-					<ui5-icon id="search-icon" input-icon slot="icon" name="search"></ui5-icon>
+			<div slot="header" id="dialogHeader">
+				<h2 id="headerTitle">Products</h2>
+				<ui5-input id="dialogSearchInput" placeholder="Search" show-clear-icon>
+					<ui5-icon id="dialogSearchIcon" slot="icon" name="search" input-icon></ui5-icon>
 				</ui5-input>
 			</div>
 	
-			<ui5-list id="items-list" no-data-text="No data"></ui5-list>
+			<ui5-list id="itemsList" no-data-text="No data"></ui5-list>
 	
-			<div slot="footer" class="footer">
-				<ui5-button design="Transparent" id="cancel-button">Cancel</ui5-button>
+			<div slot="footer" id="footer">
+				<ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
 			</div>
 		</ui5-dialog>
 	
 		<script>
-			var valueHelpInput = document.getElementById("valuehelp-input");
-			var valueHelpIcon = document.getElementById("valuehelp-icon");
-
-			var dialog = document.getElementById("dialog");
-			var list = document.getElementById("items-list");
-			var searchInput = document.getElementById("search-input");
-			var searchIcon = document.getElementById("search-icon");
-			var cancelButton = document.getElementById("cancel-button");
-
 			valueHelpInput.addEventListener("input", loadSuggestions);
 			valueHelpIcon.addEventListener("click", showDialog);
-			searchIcon.addEventListener("click", loadList);
-			searchInput.addEventListener("change", loadList);
+			dialogSearchInput.addEventListener("change", loadList);
 			cancelButton.addEventListener("click", closeDialog);
-			list.addEventListener("item-click", handleItemClick);
+			itemsList.addEventListener("item-click", handleItemClick);
 
 			async function loadSuggestions() {
 				var response = await fetch("../../../assets/data/products.json");
@@ -337,20 +331,17 @@
 
 				if (query) {
 					suggestionItems = products
-						.map(function (product) {
-							return product.Name;
-						})
-						.filter(function (productName, index) {
-							return productName.toLowerCase().indexOf(query) === 0;
-						})
+						.filter(({ name }) => name.toLowerCase().indexOf(query) === 0)
+						.map(({ name }) => name)
+						.sort((a, b) => a.localeCompare(b))
 						.slice(0, 10);
 				}
 
-				[].slice.call(valueHelpInput.children, 1).forEach(function (child) {
-					valueHelpInput.removeChild(child);
+				[].slice.call(valueHelpInput.children, 1).forEach(item => {
+					valueHelpInput.removeChild(item);
 				});
 
-				suggestionItems.forEach(function (item) {
+				suggestionItems.forEach(item => {
 					var li = document.createElement("ui5-suggestion-item");
 					li.text = item;
 					valueHelpInput.appendChild(li);
@@ -358,7 +349,7 @@
 			}
 
 			function showDialog() {
-				searchInput.value = valueHelpInput.value;
+				dialogSearchInput.value = valueHelpInput.value;
 				loadList();
 
 				if (screen.width <= 768) {
@@ -368,24 +359,27 @@
 				dialog.show();
 			}
 
+			function closeDialog() {
+				dialog.close();
+			}
+
 			async function loadList() {
 				var response = await fetch("../../../assets/data/products.json");
 				var products = await response.json();
-				var query = searchInput.value.toLowerCase();
+				var query = dialogSearchInput.value.toLowerCase();
 
-				list.innerHTML = "";
+				itemsList.innerHTML = "";
 
 				products
-					.filter(function (product) {
-						return product.Name.toLowerCase().indexOf(query) === 0;
-					})
-					.forEach(function (item) {
+					.filter(product => product.name.toLowerCase().indexOf(query) === 0)
+					.sort((a, b) => a.name.localeCompare(b.name))
+					.forEach(item => {
 						var li = document.createElement("ui5-li");
-						li.innerHTML = item.Name;
-						li.image = item.ProductPicUrl;
-						li.description = item.ProductId;
+						li.innerHTML = item.name;
+						li.image = item.productPicUrl;
+						li.description = item.productId;
 
-						list.appendChild(li);
+						itemsList.appendChild(li);
 					});
 			}
 
@@ -394,51 +388,37 @@
 				valueHelpInput.setAttribute("value", item.innerHTML);
 				dialog.close();
 			}
-
-			function closeDialog() {
-				dialog.close();
-			}
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-input id="valuehelp-input" placeholder="Enter product" style="width: 100%" show-suggestions>
-	<ui5-icon id="valuehelp-icon" input-icon slot="icon" name="value-help"></ui5-icon>
+<ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions>
+	<ui5-icon id="valueHelpIcon" slot="icon" name="value-help" input-icon></ui5-icon>
 </ui5-input>
 
 <ui5-dialog id="dialog" accessibleName="Products Value Help">
-	<div slot="header" class="dialog-header">
-		<h2 class="header-title">Products</h2>
-		<ui5-input id="search-input" placeholder="Search" show-clear-icon>
-			<ui5-icon id="search-icon" input-icon slot="icon" name="search"></ui5-icon>
+	<div slot="header" id="dialogHeader">
+		<h2 id="headerTitle">Products</h2>
+		<ui5-input id="dialogSearchInput" placeholder="Search" show-clear-icon>
+			<ui5-icon id="dialogSearchIcon" slot="icon" name="search" input-icon></ui5-icon>
 		</ui5-input>
 	</div>
 
-	<ui5-list id="items-list"></ui5-list>
+	<ui5-list id="itemsList" no-data-text="No data"></ui5-list>
 
-	<div slot="footer" class="footer">
-		<ui5-button design="Transparent" id="cancel-button">Cancel</ui5-button>
+	<div slot="footer" id="footer">
+		<ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
 	</div>
 </ui5-dialog>
 
 <script>
-	var valueHelpInput = document.getElementById("valuehelp-input");
-	var valueHelpIcon = document.getElementById("valuehelp-icon");
-
-	var dialog = document.getElementById("dialog");
-	var list = document.getElementById("items-list");
-	var searchInput = document.getElementById("search-input");
-	var searchIcon = document.getElementById("search-icon");
-	var cancelButton = document.getElementById("cancel-button");
-
 	valueHelpInput.addEventListener("input", loadSuggestions);
 	valueHelpIcon.addEventListener("click", showDialog);
-	searchIcon.addEventListener("click", loadList);
-	searchInput.addEventListener("change", loadList);
+	dialogSearchInput.addEventListener("change", loadList);
 	cancelButton.addEventListener("click", closeDialog);
-	list.addEventListener("item-click", handleItemClick);
+	itemsList.addEventListener("item-click", handleItemClick);
 
 	async function loadSuggestions() {
-		var response = await fetch("../../../data/products.json");
+		var response = await fetch("../../../assets/data/products.json");
 		var products = await response.json();
 
 		var query = valueHelpInput.value.toLowerCase();
@@ -446,20 +426,17 @@
 
 		if (query) {
 			suggestionItems = products
-				.map(function (product) {
-					return product.Name;
-				})
-				.filter(function (productName, index) {
-					return productName.toLowerCase().indexOf(query) === 0;
-				})
+				.filter(({ name }) => name.toLowerCase().indexOf(query) === 0)
+				.map(({ name }) => name)
+				.sort((a, b) => a.localeCompare(b))
 				.slice(0, 10);
 		}
 
-		[].slice.call(valueHelpInput.children, 1).forEach(function (child) {
-			input.removeChild(child);
+		[].slice.call(valueHelpInput.children, 1).forEach(item => {
+			valueHelpInput.removeChild(item);
 		});
 
-		suggestionItems.forEach(function (item) {
+		suggestionItems.forEach(item => {
 			var li = document.createElement("ui5-suggestion-item");
 			li.text = item;
 			valueHelpInput.appendChild(li);
@@ -467,44 +444,38 @@
 	}
 
 	function showDialog() {
-		searchInput.value = valueHelpInput.value;
+		dialogSearchInput.value = valueHelpInput.value;
 		loadList();
-
-		if (screen.width <= 768) {
-			dialog.setAttribute("stretch", "");
-		}
-
 		dialog.show();
 	}
 
-	async function loadList() {
-		var response = await fetch("../../../data/products.json");
-		var products = await response.json();
-		var query = searchInput.value.toLowerCase();
+	function closeDialog() {
+		dialog.close();
+	}
 
-		list.innerHTML = "";
+	async function loadList() {
+		var response = await fetch("../../../assets/data/products.json");
+		var products = await response.json();
+		var query = dialogSearchInput.value.toLowerCase();
+
+		itemsList.innerHTML = "";
 
 		products
-			.filter(function (product) {
-				return product.Name.toLowerCase().indexOf(query) === 0;
-			})
-			.forEach(function (item) {
+			.filter(product => product.name.toLowerCase().indexOf(query) === 0)
+			.sort((a, b) => a.name.localeCompare(b.name))
+			.forEach(item => {
 				var li = document.createElement("ui5-li");
-				li.innerHTML = item.Name;
-				li.image = item.ProductPicUrl;
-				li.description = item.ProductId;
+				li.innerHTML = item.name;
+				li.image = item.productPicUrl;
+				li.description = item.productId;
 
-				list.appendChild(li);
+				itemsList.appendChild(li);
 			});
 	}
 
 	function handleItemClick(event) {
 		var item = event.detail.item;
 		valueHelpInput.setAttribute("value", item.innerHTML);
-		dialog.close();
-	}
-
-	function closeDialog() {
 		dialog.close();
 	}
 </script>
