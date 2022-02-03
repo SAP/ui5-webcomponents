@@ -3,6 +3,8 @@
 	--_ui5_calendar_height: 24.5rem;
 	--_ui5_calendar_width: 20.5rem;
 	--_ui5_calendar_padding: 1rem;
+	--_ui5_calendar_left_right_padding:  0.5rem;
+	--_ui5_calendar_top_bottom_padding: 1rem;
 	--_ui5_calendar_header_height: 3rem;
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
@@ -132,7 +134,8 @@
 	/* Calendar */
 	--_ui5_calendar_height: 18rem;
 	--_ui5_calendar_width: 17.75rem;
-	--_ui5_calendar_padding: 0.5rem;
+	--_ui5_calendar_left_right_padding: 0.25rem;
+	--_ui5_calendar_top_bottom_padding: 0.5rem;
 	--_ui5_calendar_header_height: 2rem;
 	--_ui5_calendar_header_arrow_button_width: 2rem;
 	--_ui5_calendar_header_padding: 0;

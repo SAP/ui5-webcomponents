@@ -78,13 +78,6 @@ const metadata = {
 		last: {
 			type: Boolean,
 		},
-
-		/**
-		 * @private
-		 */
-		sticky: {
-			type: Boolean,
-		},
 	},
 };
 
