@@ -9,7 +9,8 @@
 	border-bottom-right-radius: var(--_ui5_select_option_focus_border_radius);
 }
 
-.ui5-select-popover::part(content) {
+.ui5-select-popover::part(content),
+.ui5-select-popover::part(header) {
 	padding: 0;
 }
 
