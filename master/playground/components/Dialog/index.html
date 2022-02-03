@@ -5421,6 +5421,11 @@
 			var dialog = document.getElementById("hello-dialog");
 			var dialogCloser = document.getElementById("closeDialogButton");
 
+			dialogOpener.accessibilityAttributes = {
+				hasPopup: "dialog",
+				controls: dialog.id,
+			}
+
 			dialogOpener.addEventListener("click", function() {
 				dialog.show();
 			});
@@ -5466,6 +5471,11 @@
 	<span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">hello-dialog</span><span class="dl">"</span><span class="p">);</span>
 	<span class="kd">var</span> <span class="nx">dialogCloser</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">closeDialogButton</span><span class="dl">"</span><span class="p">);</span>
 
+	<span class="nx">dialogOpener</span><span class="p">.</span><span class="nx">accessibilityAttributes</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="na">hasPopup</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dialog</span><span class="dl">"</span><span class="p">,</span>
+		<span class="na">controls</span><span class="p">:</span> <span class="nx">dialog</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+	<span class="p">}</span>
+
 	<span class="nx">dialogOpener</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 		<span class="nx">dialog</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
 	<span class="p">});</span>
@@ -5504,6 +5514,11 @@
 		var dialog2 = document.getElementById("resize-draggable-dialog");
 		var dialogOpener2 = document.getElementById("resizable-draggable-open");
 		var dialogCloser2 = document.getElementById("resizable-drggable-close");
+
+		dialogOpener2.accessibilityAttributes = {
+			hasPopup: "dialog",
+			controls: dialog2.id,
+		}
 	
 		dialogOpener2.addEventListener("click", function() {
 			dialog2.show();

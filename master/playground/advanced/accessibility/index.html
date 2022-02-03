@@ -5453,6 +5453,11 @@
       <td>An object of strings that define several additional accessibility texts for further customization.</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">accessibilityAttributes</code></td>
+      <td><code class="highlighter-rouge">aria-expanded</code>, <code class="highlighter-rouge">aria-haspopup</code>, <code class="highlighter-rouge">aria-controls</code></td>
+      <td>An object of strings that defines several additional accessibility attribute values for customization depending on the use case.</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">accessibilityRoles</code> (<code class="highlighter-rouge">FlexibleColumnLayout</code>)</td>
       <td><code class="highlighter-rouge">role</code></td>
       <td>An object of strings that define several additional accessibility roles for further customization.</td>
@@ -5538,7 +5543,7 @@
 
 <h3 id="accessibilitytexts">accessibilityTexts</h3>
 
-<p>This property accepts <code class="highlighter-rouge">object</code> with properties values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
+<p>This property accepts <code class="highlighter-rouge">object</code> with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
 
 <p>Setting the property on the custom element as:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-flexible-column-layout</span> <span class="na">id=</span><span class="s">"component"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-flexible-column-layout&gt;</span>
@@ -5559,6 +5564,31 @@
     <span class="nt">&lt;/span&gt;</span>
     ...
 <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="accessibilityattributes">accessibilityAttributes</h3>
+
+<p>This property accepts an <code class="highlighter-rouge">object</code> with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/Button/">Button</a>.</p>
+
+<p>Setting the property on the custom element as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"button"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-dialog</span> <span class="na">id=</span><span class="s">"dialogIdentificator"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-dialog&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElemetnById</span><span class="p">(</span><span class="dl">"</span><span class="s2">button</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">component</span><span class="p">.</span><span class="nx">accessibilityAttributes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">hasPopup</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dialog</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">controls</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dialogIdentificator</span><span class="dl">"</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Will result in the shadow DOM as:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui5-button-root"</span> <span class="na">part=</span><span class="s">"button"</span> <span class="na">aria-controls=</span><span class="s">"dialogIdentificator"</span> <span class="na">aria-haspopup=</span><span class="s">"dialog"</span><span class="nt">&gt;</span>
+	...
+<span class="nt">&lt;/button&gt;</span>
 </code></pre></div></div>
 
 <hr />
