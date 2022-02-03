@@ -149,11 +149,13 @@ class DateComponentBase extends UI5Element {
 				strictParsing: true,
 				pattern: this._formatPattern,
 				calendarType: this._primaryCalendarType,
+				relative: true,
 			})
 			: DateFormat.getInstance({
 				strictParsing: true,
 				style: this._formatPattern,
 				calendarType: this._primaryCalendarType,
+				relative: true,
 			});
 	}
 

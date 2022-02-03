@@ -33,6 +33,14 @@ const metadata = {
 		_tempValue: {
 			type: String,
 		},
+
+		/**
+		 * @private
+		 */
+		 _prevDelimiter: {
+			type: String,
+			defaultValue: "-",
+		},
 	},
 };
 
@@ -82,6 +90,10 @@ class DateRangePicker extends DatePicker {
 
 	static get styles() {
 		return [DatePicker.styles, DateRangePickerCss];
+	}
+
+	onAfterRendering() {
+		this._prevDelimiter = this._effectiveDelimiter;
 	}
 
 	/**
@@ -287,7 +299,7 @@ class DateRangePicker extends DatePicker {
 
 	_splitValueByDelimiter(value) {
 		const valuesArray = [];
-		const partsArray = value.split(this._effectiveDelimiter);
+		const partsArray = value.split(this._prevDelimiter);
 
 		valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(this._effectiveDelimiter);
 		valuesArray[1] = partsArray.slice(partsArray.length / 2).join(this._effectiveDelimiter);
