@@ -590,14 +590,23 @@ class Table extends UI5Element {
 
 		const prevItem = this.rows[prevItemIdx];
 		const nextItem = this.rows[nextItemIdx];
+		const wasSelected = currentItem.selected;
+
+		if ((isUpShift(event) && !prevItem) || (isDownShift(event) && !nextItem)) {
+			return;
+		}
 
 		if (isUpShift(event)) {
-			prevItem.selected = currentItem.selected;
+			currentItem.selected = currentItem.selected && !prevItem.selected;
+			prevItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
+
 			prevItem.focus();
 		}
 
 		if (isDownShift(event)) {
-			nextItem.selected = currentItem.selected;
+			currentItem.selected = currentItem.selected && !nextItem.selected;
+			nextItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
+
 			nextItem.focus();
 		}
 
