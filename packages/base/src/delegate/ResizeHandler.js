@@ -4,9 +4,11 @@ const observedElements = new Map();
 const getResizeObserver = () => {
 	if (!resizeObserver) {
 		resizeObserver = new window.ResizeObserver(entries => {
-			entries.forEach(entry => {
-				const callbacks = observedElements.get(entry.target);
-				callbacks.forEach(callback => callback());
+			window.requestAnimationFrame(() => {
+				entries.forEach(entry => {
+					const callbacks = observedElements.get(entry.target);
+					callbacks.forEach(callback => callback());
+				});
 			});
 		});
 	}
