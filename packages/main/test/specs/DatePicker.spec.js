@@ -1112,7 +1112,7 @@ describe("Date Picker Tests", () => {
 	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
 		datepicker.id = "#dp33";
 		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
+		await innerInput.doubleClick();
 		await browser.keys("Jan 1, 2000");
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -1124,8 +1124,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
 		await browser.keys("Escape");
-		await innerInput.click();
-		await browser.keys(["Control", "A"]);
+		await innerInput.doubleClick();
 		await browser.keys("Backspace");
 	});
 
