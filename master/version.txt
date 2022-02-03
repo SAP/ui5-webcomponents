@@ -1,5 +1,7 @@
-commit 967a1cfe83bff6dbd1cad4f00e1fdd9c15bfeb85
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 3 10:40:00 2022 +0200
+commit ec28f2103ac29630edfe4dc405d6adcf096bfc3f
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Feb 3 02:09:51 2022 -0800
 
-    chore: update chromdriver (#4687)
+    chore: translation delivery (#4692)
+    
+    Change-Id: I95a529886bebc7775587bb3806e9f353bc5099d7
