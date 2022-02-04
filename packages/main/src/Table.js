@@ -575,7 +575,7 @@ class Table extends UI5Element {
 	}
 
 	_handleArrowNav(event) {
-		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+		const isRowFocused = this.currentItem.hasAttribute("ui5-table-row");
 
 		if (!isRowFocused) {
 			return;
@@ -619,7 +619,7 @@ class Table extends UI5Element {
 	}
 
 	_handleHomeEndSelection(event) {
-		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+		const isRowFocused = this.currentItem.hasAttribute("ui5-table-row");
 
 		if (!isRowFocused) {
 			return;
@@ -1002,10 +1002,6 @@ class Table extends UI5Element {
 
 	get currentElement() {
 		return this._itemNavigation._getCurrentItem();
-	}
-
-	_getActiveElementTagName() {
-		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
 	}
 }
 
