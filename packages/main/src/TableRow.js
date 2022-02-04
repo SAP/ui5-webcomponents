@@ -138,6 +138,14 @@ const metadata = {
 		 * @private
 		 */
 		"selection-requested": {},
+		/**
+		 * Fired when F7 is pressed.
+		 *
+		 * @event sap.ui.webcomponents.main.TableRow#f7-pressed
+		 * @since 1.2.0
+		 * @private
+		 */
+		"f7-pressed": {},
 	},
 };
 
@@ -221,7 +229,7 @@ class TableRow extends UI5Element {
 
 		if (isF7(event)) {
 			event.preventDefault();
-			this._handleF7(event.target);
+			this.fireEvent("f7-pressed", { row: this });
 		}
 	}
 
@@ -293,44 +301,6 @@ class TableRow extends UI5Element {
 
 	_handleSelection() {
 		this.fireEvent("selection-requested", { row: this });
-	}
-
-	/**
-	 * Toggles focus between the table row's root and the last focused nested element.
-	 * @private
-	 * @param {Object} activeElement The currently focused element
-	 */
-	_handleF7(activeElement) {
-		const elements = this._tabbableElements;
-
-		if (!elements.length) {
-			return;
-		}
-
-		const table = this.parentElement;
-		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
-		const prevFocusedIdx = table._prevNestedElementIndex;
-
-		if (activeElement === tableRowRoot) {
-			const lastFocusedElement = elements[prevFocusedIdx];
-
-			if (lastFocusedElement) {
-				lastFocusedElement.focus();
-			} else {
-				elements[0].focus();
-			}
-
-			return;
-		}
-
-		const shadowRoot = activeElement.shadowRoot;
-		const target = shadowRoot ? shadowRoot.activeElement : activeElement;
-		const targetIndex = elements.indexOf(target);
-
-		if (targetIndex > -1) {
-			table._prevNestedElementIndex = targetIndex;
-			tableRowRoot.focus();
-		}
 	}
 
 	_getActiveElementTagName() {

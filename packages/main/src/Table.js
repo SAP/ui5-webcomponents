@@ -462,6 +462,8 @@ class Table extends UI5Element {
 
 		this._handleResize = this.popinContent.bind(this);
 
+		this.fnHandleF7 = this._handleF7.bind(this);
+
 		this.tableEndObserved = false;
 
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
@@ -497,7 +499,7 @@ class Table extends UI5Element {
 
 		this._allRowsSelected = selectedRows.length === this.rows.length;
 
-		this._previousFocusedRow = this._previousFocusedRow || this.rows[0] || null;
+		this._previousFocusedRow = this._previousFocusedRow || this.rows[0];
 	}
 
 	onAfterRendering() {
@@ -523,6 +525,8 @@ class Table extends UI5Element {
 			if (index > 0) {
 				row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
 			}
+
+			row.addEventListener("ui5-f7-pressed", this.fnHandleF7);
 		});
 	}
 
@@ -709,6 +713,42 @@ class Table extends UI5Element {
 
 		if (this.rows.includes(element)) {
 			return "tableRow";
+		}
+	}
+
+	/**
+	 * Toggles focus between the table row's root and the last focused nested element.
+	 * @private
+	 * @param {CustomEvent} event "ui5-f7-focused"
+	 */
+	_handleF7(event) {
+		const row = event.detail.row;
+		const activeElement = row.getRootNode().activeElement;
+		const elements = row._tabbableElements;
+
+		if (!elements.length) {
+			return;
+		}
+
+		if (activeElement === row) {
+			const lastFocusedElement = elements[this._prevNestedElementIndex];
+
+			if (lastFocusedElement) {
+				lastFocusedElement.focus();
+			} else {
+				elements[0].focus();
+			}
+
+			return;
+		}
+
+		const shadowRoot = activeElement.shadowRoot;
+		const target = shadowRoot ? shadowRoot.activeElement : activeElement;
+		const targetIndex = elements.indexOf(target);
+
+		if (targetIndex > -1) {
+			this._prevNestedElementIndex = targetIndex;
+			row.focus();
 		}
 	}
 
