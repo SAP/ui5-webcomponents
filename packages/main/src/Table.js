@@ -575,7 +575,7 @@ class Table extends UI5Element {
 	}
 
 	_handleArrowNav(event) {
-		const isRowFocused = this.currentItem.hasAttribute("ui5-table-row");
+		const isRowFocused = this.currentElement.localName === "tr";
 
 		if (!isRowFocused) {
 			return;
@@ -619,7 +619,7 @@ class Table extends UI5Element {
 	}
 
 	_handleHomeEndSelection(event) {
-		const isRowFocused = this.currentItem.hasAttribute("ui5-table-row");
+		const isRowFocused = this.currentElement.localName === "tr";
 
 		if (!isRowFocused) {
 			return;
