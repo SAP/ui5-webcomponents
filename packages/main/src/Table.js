@@ -719,7 +719,7 @@ class Table extends UI5Element {
 	/**
 	 * Toggles focus between the table row's root and the last focused nested element.
 	 * @private
-	 * @param {CustomEvent} event "ui5-f7-focused"
+	 * @param {CustomEvent} event "ui5-f7-pressed"
 	 */
 	_handleF7(event) {
 		const row = event.detail.row;
