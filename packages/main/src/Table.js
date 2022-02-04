@@ -11,6 +11,12 @@ import {
 	isCtrlA,
 	isUpAlt,
 	isDownAlt,
+	isUpShift,
+	isDownShift,
+	isHomeCtrl,
+	isEndCtrl,
+	isHomeShift,
+	isEndShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -388,8 +394,10 @@ const metadata = {
  * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
  * <li>[HOME]/[END] - Focuses the first/last item.</li>
  * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
- * <li>[ALT]+[UP]/[DOWN] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
- * </ul>
+ * <li>[ALT]+[DOWN]/[UP] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
+ * <li>[SHIFT]+[DOWN]/[UP] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).</li>
+ * <li>[SHIFT]+[HOME]/[END] - Range selection to the first/last item of the List.</li>
+ * <li>[CTRL]+[HOME]/[END] - Same behavior as HOME & END.</li> * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -481,7 +489,6 @@ class Table extends UI5Element {
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
-			column.sticky = this.stickyColumnHeader;
 			return !this._hiddenColumns[index];
 		});
 
@@ -541,6 +548,106 @@ class Table extends UI5Element {
 		if (isAltUp || isDownAlt(event)) {
 			return this._handleArrowAlt(isAltUp, event.target);
 		}
+
+		if ((isUpShift(event) || isDownShift(event)) && this.isMultiSelect) {
+			this._handleArrowNav(event);
+		}
+
+		if (isHomeCtrl(event)) {
+			event.preventDefault();
+
+			this._itemNavigation._handleHome(event);
+			this._itemNavigation._applyTabIndex();
+			this._itemNavigation._focusCurrentItem();
+		}
+
+		if (isEndCtrl(event)) {
+			event.preventDefault();
+
+			this._itemNavigation._handleEnd(event);
+			this._itemNavigation._applyTabIndex();
+			this._itemNavigation._focusCurrentItem();
+		}
+
+		if ((isHomeShift(event) || isEndShift(event)) && this.isMultiSelect) {
+			this._handleHomeEndSelection(event);
+		}
+	}
+
+	_handleArrowNav(event) {
+		const isRowFocused = this.currentElement.localName === "tr";
+
+		if (!isRowFocused) {
+			return;
+		}
+
+		const previouslySelectedRows = this.selectedRows;
+		const currentItem = this.currentItem;
+		const currentItemIdx = this.currentItemIdx;
+
+		const prevItemIdx = currentItemIdx - 1;
+		const nextItemIdx = currentItemIdx + 1;
+
+		const prevItem = this.rows[prevItemIdx];
+		const nextItem = this.rows[nextItemIdx];
+		const wasSelected = currentItem.selected;
+
+		if ((isUpShift(event) && !prevItem) || (isDownShift(event) && !nextItem)) {
+			return;
+		}
+
+		if (isUpShift(event)) {
+			currentItem.selected = currentItem.selected && !prevItem.selected;
+			prevItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
+
+			prevItem.focus();
+		}
+
+		if (isDownShift(event)) {
+			currentItem.selected = currentItem.selected && !nextItem.selected;
+			nextItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
+
+			nextItem.focus();
+		}
+
+		const selectedRows = this.selectedRows;
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_handleHomeEndSelection(event) {
+		const isRowFocused = this.currentElement.localName === "tr";
+
+		if (!isRowFocused) {
+			return;
+		}
+		const rows = this.rows;
+		const previouslySelectedRows = this.selectedRows;
+		const currentItemIdx = this.currentItemIdx;
+
+		if (isHomeShift(event)) {
+			rows.slice(0, currentItemIdx + 1).forEach(item => {
+				item.selected = true;
+			});
+			rows[0].focus();
+		}
+
+		if (isEndShift(event)) {
+			rows.slice(currentItemIdx).forEach(item => {
+				item.selected = true;
+			});
+			rows[rows.length - 1].focus();
+		}
+
+		const selectedRows = this.selectedRows;
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
 	}
 
 	/**
@@ -883,6 +990,18 @@ class Table extends UI5Element {
 
 	get selectedRows() {
 		return this.rows.filter(row => row.selected);
+	}
+
+	get currentItemIdx() {
+		return this.rows.indexOf(this.currentItem);
+	}
+
+	get currentItem() {
+		return this.getRootNode().activeElement;
+	}
+
+	get currentElement() {
+		return this._itemNavigation._getCurrentItem();
 	}
 }
 
