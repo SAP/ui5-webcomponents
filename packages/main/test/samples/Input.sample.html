@@ -331,17 +331,23 @@
 
 				if (query) {
 					suggestionItems = products
-						.filter(({ name }) => name.toLowerCase().indexOf(query) === 0)
-						.map(({ name }) => name)
-						.sort((a, b) => a.localeCompare(b))
+						.filter(function (product) {
+							return product.name.toLowerCase().indexOf(query) === 0;
+						})
+						.map(function (product) {
+							return product.name;
+						})
+						.sort(function (a, b) {
+							return a.localeCompare(b);
+						})
 						.slice(0, 10);
 				}
 
-				[].slice.call(valueHelpInput.children, 1).forEach(item => {
+				[].slice.call(valueHelpInput.children, 1).forEach(function (item) {
 					valueHelpInput.removeChild(item);
 				});
 
-				suggestionItems.forEach(item => {
+				suggestionItems.forEach(function (item) {
 					var li = document.createElement("ui5-suggestion-item");
 					li.text = item;
 					valueHelpInput.appendChild(li);
@@ -371,9 +377,13 @@
 				itemsList.innerHTML = "";
 
 				products
-					.filter(product => product.name.toLowerCase().indexOf(query) === 0)
-					.sort((a, b) => a.name.localeCompare(b.name))
-					.forEach(item => {
+					.filter(function (product) {
+						return product.name.toLowerCase().indexOf(query) === 0;
+					})
+					.sort(function (a, b) {
+						return a.name.localeCompare(b.name);
+					})
+					.forEach(function (item) {
 						var li = document.createElement("ui5-li");
 						li.innerHTML = item.name;
 						li.image = item.productPicUrl;
@@ -461,7 +471,7 @@
 		itemsList.innerHTML = "";
 
 		products
-			.filter(product => product.name.toLowerCase().indexOf(query) === 0)
+			.filter(({ name }) => name.toLowerCase().indexOf(query) === 0)
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach(item => {
 				var li = document.createElement("ui5-li");
