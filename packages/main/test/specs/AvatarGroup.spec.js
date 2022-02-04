@@ -149,12 +149,12 @@ describe("ARIA attributes", () => {
 		it("aria-haspopup is correct", async () => {
 			const avatarGroup = await browser.$("#avatar-group-individual");
 			const ariaHasPopupContainer = await avatarGroup.getProperty("_containerAriaHasPopup");
-			const overflowButtonAccInfo = await avatarGroup.getProperty("_overflowButtonAccInfo");
+			const overflowButtonAccAttributes = await avatarGroup.getProperty("_overflowButtonAccAttributes");
 
 			// container
 			assert.notExists(ariaHasPopupContainer, "should not have aria-haspopup attribute");
 			// overflow button
-			assert.strictEqual(overflowButtonAccInfo.ariaHaspopup, "menu", "overflow button should have aria-haspopup for type individual");
+			assert.strictEqual(overflowButtonAccAttributes.hasPopup, "menu", "overflow button should have aria-haspopup for type individual");
 		});
 
 		it("aria-label is correct", async () => {
@@ -190,12 +190,12 @@ describe("ARIA attributes", () => {
 		it("aria-haspopup is correct", async () => {
 			const avatarGroup = await browser.$("#avatar-group-group");
 			const ariaHasPopupContainer = await avatarGroup.getProperty("_containerAriaHasPopup");
-			const overflowButtonAccInfo = await avatarGroup.getProperty("_overflowButtonAccInfo");
+			const overflowButtonAccAttributes = await avatarGroup.getProperty("_overflowButtonAccAttributes");
 
 			// container
 			assert.strictEqual(ariaHasPopupContainer, "menu", "should have 'menu' set to aria-haspopup attribute");
 			// overflow button
-			assert.notExists(overflowButtonAccInfo.ariaHaspopup, "overflow button should not have aria-haspopup for type group");
+			assert.notExists(overflowButtonAccAttributes.ariaHaspopup, "overflow button should not have aria-haspopup for type group");
 		});
 
 		it("aria-label is correct", async () => {
