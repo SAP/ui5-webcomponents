@@ -41,6 +41,7 @@ function HTMLLitVisitor(debug) {
 	if (this.debug) {
 		this.blockByNumber = [];
 	}
+	this.blockLevel = 0;
 }
 
 HTMLLitVisitor.prototype = new Visitor();
@@ -168,6 +169,8 @@ function visitUnlessBlock(block) {
 }
 
 function visitEachBlock(block) {
+	this.blockLevel++;
+
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
@@ -185,7 +188,11 @@ function visitEachBlock(block) {
 		this.blockParameters.shift("item");
 		this.blockParameters.shift("index");
 	}
-	this.blockPath = "context";
+
+	this.blockLevel--;
+	if (this.blockLevel === 0) {
+		this.blockPath = "context";
+	}
 
 	this.blocks[this.currentKey()] += ") }";
 }
