@@ -1,7 +1,56 @@
-commit b1c16202038b15b98d7b411e26395a395583e1cd
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Feb 4 11:02:32 2022 +0200
+commit f1f2b1bf86e1a6cd9d19a388121171dc5e5af554
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri Feb 4 11:49:40 2022 +0200
 
-    feat(ui5-input): implement showClearIcon property (#4641)
+    feat(ui5-table): improve keyboard handling (#4631)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/4395
+    * feat(ui5-table): extend keyboard handling
+    
+    This change adds support to `ui5-table` for the following keystrokes:
+    
+    - `F7` - If focus is on an interactive control inside an item, moves focus to the corresponding item.
+    - `CTRL`+`A` - Selects all items, if MultiSelect mode is enabled.
+    
+    * F7 support; Remove checkbox from tabindex
+    
+    * Partial Alt+Arr implementation
+    
+    * Full Alt+Arr implementation; Group row navigation bugfix; Fix Space key on header
+    
+    * Support Ctrl+A in cyrilic; Add unit tests
+    
+    * Forward focus outside of table on Tab; Extend unit tests
+    
+    * Remove duplicate Keys entries
+    
+    * Focus last nested control on Shift+Tab
+    
+    * Check failing tests
+    
+    * Check failing tests
+    
+    * Merge with the first change for Table keyboard handling implementation
+    
+    * Improve table keyboard handling
+    
+    * Handle SHIFT+HOME and SHIFT+END combinations
+    
+    * Add tests for SHITF+UP/DOWN range selection/deselection
+    
+    * Add more tests
+    
+    * Restore ComboBox tests
+    
+    * Apply suggested documentation update
+    
+    * Lint TableRow
+    
+    * Fix code review comments
+    
+    * Fix comment
+    
+    * Use attribute to determine active element not tagname
+    
+    * Use tr element to determine active element not the row component's tagname
+    
+    Co-authored-by: Stanislav Bodurov <stbodurov@icloud.com>
