@@ -1,12 +1,7 @@
-commit d27c4b56bb018fa917a1ecf0b9a798908c1713f3
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Thu Feb 3 12:52:36 2022 +0200
+commit b1c16202038b15b98d7b411e26395a395583e1cd
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Feb 4 11:02:32 2022 +0200
 
-    feat(ui5-button): implement accessibilityAttributes property (#4655)
+    feat(ui5-input): implement showClearIcon property (#4641)
     
-    The ui5-button component now supports 'accessibilityAttributes' property,
-    which enables users to supply additional accessibility attributes for
-    the button element. A standard use case would be to provide the corresponding accessibility attributes
-    for a button opening a popover or a dialog.
-    
-    Related to: #3546
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/4395

@@ -363,6 +363,27 @@
 	<br>
 	<br>
 
+	<div>
+		<h3>Inputs with clear icon</h3>
+
+		<ui5-input id="clear-input" show-clear-icon placeholder="Type to show clear icon..."></ui5-input>
+		<br />
+		<br />
+		<span>Change: </span><span id="clear-input-change-event-count">0</span>
+		<br />
+		<span>Input: </span><span id="clear-input-input-event-count">0</span>
+		<br />
+		<br />
+		<span class="sapUiSizeCompact">
+			<ui5-input id="clear-input-compact" show-clear-icon placeholder="Type to show clear icon..." value="test"></ui5-input>
+			<br>
+			<button id="clear-icon-readonly-toggle">Toggle readonly</button>
+			<br>
+
+			<button id="clear-icon-disabled-toggle">Toggle disabled</button>
+		</span>
+	</div>
+
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
@@ -517,6 +538,30 @@
 
 			oXSSItem.text = `Canada<<img src="xss" onerror="document.getElementById('xss-result').innerText = 'XSS FOUND'">`
 			document.getElementById("xss-input").appendChild(oXSSItem);
+		});
+
+		const clearInput = document.getElementById("clear-input");
+
+		clearInput.addEventListener("ui5-change", event => {
+			const span = document.getElementById("clear-input-change-event-count");
+
+			span.innerText = span.innerText ? parseInt(span.innerText) + 1 : 1;
+		});
+
+		clearInput.addEventListener("ui5-input", event => {
+			const span = document.getElementById("clear-input-input-event-count");
+
+			span.innerText = span.innerText ? parseInt(span.innerText) + 1 : 1;
+		});
+
+		const compactClearIconInput = document.getElementById("clear-input-compact");
+
+		document.getElementById("clear-icon-disabled-toggle").addEventListener("click", event => {
+			compactClearIconInput.toggleAttribute("disabled");
+		});
+
+		document.getElementById("clear-icon-readonly-toggle").addEventListener("click", event => {
+			compactClearIconInput.toggleAttribute("readonly");
 		});
 	</script>
 </body>

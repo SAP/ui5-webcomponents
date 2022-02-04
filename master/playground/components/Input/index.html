@@ -5405,11 +5405,11 @@
 <section>
 	<h3>Basic Input</h3>
 	<div class="snippet">
-		<ui5-input class="samples-margin samples-responsive-margin-bottom" value="Input"></ui5-input>
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" show-clear-icon value="Input"></ui5-input>
 		<ui5-input class="samples-margin samples-responsive-margin-bottom" readonly value="readonly Input"></ui5-input>
 		<ui5-input class="samples-margin samples-responsive-margin-bottom" disabled value="Disabled Input"></ui5-input>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">value=</span><span class="s">"Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">show-clear-icon</span> <span class="na">value=</span><span class="s">"Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 <span class="nt">&lt;ui5-input</span> <span class="na">readonly</span> <span class="na">value=</span><span class="s">"readonly Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 <span class="nt">&lt;ui5-input</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">"Disabled Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 	</code></pre></figure></pre>
@@ -5422,6 +5422,7 @@
 			id="suggestions-input"
 			placeholder="Start typing country name"
 			show-suggestions
+			show-clear-icon
 		></ui5-input>
 
 		<script>
@@ -5456,7 +5457,7 @@
 			});
 		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"suggestions-input"</span> <span class="na">show-suggestions</span> <span class="na">placeholder=</span><span class="s">"Start typing country name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"suggestions-input"</span> <span class="na">show-suggestions</span> <span class="na">show-clear-icon</span> <span class="na">placeholder=</span><span class="s">"Start typing country name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
 	<span class="c1">// data</span>
@@ -5772,6 +5773,19 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showClearIcon
+                            <br>
+                                 <code>show-clear-icon</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the clear icon of the input will be shown.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showSuggestions
                             <br>
                                  <code>show-suggestions</code>
@@ -5782,7 +5796,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the component should show suggestions, if such are present. <br><br> <b>Note:</b> You need to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           type
                             <br>
@@ -5793,7 +5807,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the HTML type of the component. Available options are: <code>Text</code>, <code>Email</code>, <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>. <br><br> <b>Notes:</b> <ul> <li>The particular effect of this property differs depending on the browser and the current language settings, especially for type <code>Number</code>.</li> <li>The property is mostly intended to be used with touch devices that use different soft keyboard layouts depending on the given input type.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -5804,7 +5818,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the value of the component. <br><br> <b>Note:</b> The property is updated upon typing.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
