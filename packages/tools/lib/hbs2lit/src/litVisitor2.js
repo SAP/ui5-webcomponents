@@ -203,8 +203,9 @@ function normalizePath(sPath) {
 	//read carefully - https://github.com/wycats/handlebars.js/issues/1028
 	//kpdecker commented on May 20, 2015
 	if (result.indexOf("../") === 0) {
-		let absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
+		const absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
 		result = replaceAll(path.normalize(absolutePath), path.sep, ".");
+		result = this.blockLevel <= 1 ? result.replace("item", "context") : result;
 	} else {
 		result = result ? replaceAll(this.blockPath + "/" + result, "/", ".") : this.blockPath;
 	}
