@@ -689,6 +689,8 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this.value = currentItem.text;
+		this._innerInput.value = currentItem.text;
+		this._innerInput.setSelectionRange(0, currentItem.text.length);
 	}
 
 	_navigateToPrevItem() {
@@ -724,6 +726,8 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this.value = currentItem.text;
+		this._innerInput.value = currentItem.text;
+		this._innerInput.setSelectionRange(0, currentItem.text.length);
 	}
 
 	handleEnter() {
