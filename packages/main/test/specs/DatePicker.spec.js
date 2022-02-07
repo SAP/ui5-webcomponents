@@ -236,24 +236,24 @@ describe("Date Picker Tests", () => {
 	// 	assert.equal(await browser.$("#inputTimezone").getValue(), "", "timezone is reset");
 	// });
 
-	// it("respect first day of the week - monday", async () => {
-	// 	await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
-	// 	datepicker.id = "#dp7_1";
+	it("respect first day of the week - monday", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		datepicker.id = "#dp7_1";
 
-	// 	const root = await datepicker.getRoot();
-	// 	await root.setProperty("value", "фев 6, 2019");
-	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
-	// 	await valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "фев 6, 2019");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-	// 	const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
 
-	// 	const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-	// 	assert.include(timestamp, "1548633600", "28 Jan is the first displayed date for Feb 2019")
+		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
+		assert.include(timestamp, "1548633600", "28 Jan is the first displayed date for Feb 2019")
 
-	// 	const calendarDate_3_Feb_2019 = await datepicker.getPickerDate(1549152000);
+		const calendarDate_3_Feb_2019 = await datepicker.getPickerDate(1549152000);
 
-	// 	assert.ok(await calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
-	// });
+		assert.ok(await calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
+	});
 
 	it("if today is 30 jan, clicking next month does not skip feb", async () => {
 		await datepicker.open();
