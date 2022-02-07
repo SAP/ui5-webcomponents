@@ -205,3 +205,8 @@
 	position: absolute;
 	right: 1rem;
 }
+
+[ui5-responsive-popover][tokenizer-popover="true"]::part(header),
+[ui5-responsive-popover][tokenizer-popover="true"]::part(content) {
+    padding: 0;
+}
