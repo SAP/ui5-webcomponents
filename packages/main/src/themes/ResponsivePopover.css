@@ -13,8 +13,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 1rem;
-	box-shadow: var(--sapContent_HeaderShadow);
+	width:100%;
 }
 
 :host [dir="rtl"] .ui5-responsive-popover-header {
