@@ -27,6 +27,10 @@ const getTabbables = (nodes, tabbables) => {
 			currentNode = Array.from(children).find(node => node.tagName !== "STYLE");
 		}
 
+		if (!currentNode) {
+			return;
+		}
+
 		if (isNodeTabbable(currentNode)) {
 			tabbablesNodes.push(currentNode);
 		}
