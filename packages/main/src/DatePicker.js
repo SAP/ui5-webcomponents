@@ -19,6 +19,7 @@ import {
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import HasPopup from "./types/HasPopup.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -28,7 +29,6 @@ import Calendar from "./Calendar.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
-import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
 import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
