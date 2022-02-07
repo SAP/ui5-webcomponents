@@ -339,9 +339,6 @@ describe("Date Picker Tests", () => {
 		let timestampToday = new Date().getTime();
 		timestampToday = (timestampToday - timestampToday % (24 * 60 * 60 * 1000)) / 1000;
 
-		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getProperty("value"), "Feb 4, 2022", "input value is ok");
-
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
 		await valueHelpIcon.click();
 		const calendar = await datepicker.getCalendar();
