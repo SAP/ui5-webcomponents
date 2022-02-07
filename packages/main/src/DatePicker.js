@@ -673,7 +673,6 @@ class DatePicker extends DateComponentBase {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
-			"role": "combobox",
 			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaRequired": this.required,
