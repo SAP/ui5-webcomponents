@@ -33,9 +33,16 @@
 		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed fixed>
 			<ui5-tab text="One"></ui5-tab>
 			<ui5-tab text="Two">
-							<ui5-tab text="Two Two"></ui5-tab>
+				<ui5-tab text="2.1"><ui5-button>Button 2.1</ui5-button>
+					<ui5-tab text="2.1.1"><ui5-button>Button 2.2</ui5-button>
+						<ui5-tab text="2.1.2"></ui5-tab><ui5-button>Button 2.3</ui5-button>
+				</ui5-tab></ui5-tab>
 			</ui5-tab>
-			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Three">
+				<ui5-tab text="3.1">
+					<ui5-button>Button 3</ui5-button>
+				</ui5-tab>
+			</ui5-tab>
 			<ui5-tab text="Four"></ui5-tab>
 			<ui5-tab text="Five"></ui5-tab>
 			<ui5-tab text="Six"></ui5-tab>
@@ -71,7 +78,7 @@
 		</ui5-tabcontainer>
 	</section>
 
-	<!-- <section>
+	<section>
 		<h2>Text only Start And End Overflow</h2>
 		<ui5-tabcontainer id="tabContainerStartAndEndOverflow" tabs-overflow-mode="StartAndEnd" collapsed fixed>
 			<ui5-tab text="One"></ui5-tab>
@@ -133,7 +140,7 @@
 			<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></ui5-tab>
 			<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40"></ui5-tab>
 		</ui5-tabcontainer>
-	</section>
+	</section> -->
 
 	<section>
 		<h2>Icon only</h2>
@@ -477,10 +484,9 @@
 			</ui5-tabcontainer>
 
 		</div>
-	</section> -->
+	</section>
 
-
-	<!-- <script>
+	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
 			result.innerHTML = event.detail.tab.text;
 			resultIdx.innerHTML = event.detail.tabIndex;
@@ -490,7 +496,7 @@
 			console.log(event);
 			document.body.classList.toggle("sapUiSizeCompact")
 		})
-	</script> -->
+	</script>
 </body>
 
 </html>

@@ -25,3 +25,27 @@
 		>Cancel</ui5-button>
 	</div>
 </ui5-responsive-popover>
+
+<ui5-responsive-popover id="{{_id}}-expandButtonPopover" horizontal-align="Right" placement-type="Bottom"
+	content-only-on-desktop hide-arrow _hide-header class="ui5-tab-container-responsive-popover">
+	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onExpandListItemClick}}">
+				{{#each selectedTabItems}}
+					<ui5-li-custom id="{{this._id}}" class="{{this.overflowClasses}}" type="{{this.overflowState}}"
+						?disabled="{{this.effectiveDisabled}}" aria-disabled="{{this.effectiveDisabled}}"
+						aria-selected="{{this.effectiveSelected}}" aria-labelledby="{{this.ariaLabelledBy}}" class="ui5-tab-overflow-subItem" level="{{item.level}}">
+						<div class="ui5-tab-overflow-itemContent">
+							{{#if item.icon}}
+							<ui5-icon name="{{item.icon}}"></ui5-icon>
+							{{/if}}
+							{{item.text}}
+							{{#if item.additionalText}}
+							({{item.additionalText}})
+							{{/if}}
+						</div>
+					</ui5-li-custom>
+			{{/each}}
+	</ui5-list>
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button design="Transparent" @click="{{_closeRespPopover}}">Cancel</ui5-button>
+	</div>
+</ui5-responsive-popover>

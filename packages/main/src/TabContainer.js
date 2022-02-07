@@ -95,19 +95,6 @@ const metadata = {
 		startOverflowButton: {
 			type: HTMLElement,
 		},
-
-		/**
-		 * Defines the button which will open the sub tabs menu. If nothing is provided to this slot,
-		 * the default button will be used.
-		 *
-		 * @type {sap.ui.webcomponents.main.IButton}
-		 * @public
-		 * @slot
-		 * @since 1.0.0-rc.9
-		 */
-		expandButton: {
-			type: HTMLElement,
-		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -396,6 +383,8 @@ class TabContainer extends UI5Element {
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+			item._subItems = [];
+			buildTree(item, 1, item._subItems);
 		});
 
 		if (!this._animationRunning) {
@@ -474,16 +463,42 @@ class TabContainer extends UI5Element {
 		this._onItemSelect(item);
 		this.responsivePopover.close();
 		this._setItemsForStrip();
-		this.shadowRoot.querySelector(`#${item.id}`).focus();
+		this.shadowRoot.querySelector(`#${item.parentElement.items[0].id}`).focus();
+	}
+
+	_onExpandListItemClick(event) {
+		event.preventDefault(); // cancel the item selection
+		const {
+			item,
+		} = event.detail;
+
+		this._onItemSelect(item);
+		this.responsivePopoverExpand.close();
+		this._setItemsForStrip();
+		this._selectedTab.parentElement.focus();
+	}
+
+	_getAllSubItems(items, result) {
+		items.forEach(item => {
+			if (item.nodeName === "UI5-TAB") {
+				result.push(item);
+				if (item.items) {
+					this._getAllSubItems(item.items, result);
+				}
+			}
+		});
 	}
 
 	_onItemSelect(target) {
-		const selectedIndex = findIndex(this.items, item => item._id === target.id);
-		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
-		const selectedTab = this.items[selectedIndex];
+		const _allItemsAndSubItems = [];
+
+		this._getAllSubItems(this.items, _allItemsAndSubItems);
+		const selectedIndex = findIndex(_allItemsAndSubItems, item => item.text.trim() === target.textContent.trim());
+		const selectedTabIndex = findIndex(_allItemsAndSubItems, item => item.text.trim() === target.textContent.trim());
+		const selectedTab = _allItemsAndSubItems[selectedIndex];
 
 		// update selected items
-		this.items
+		_allItemsAndSubItems
 			.forEach((item, index) => {
 				const selected = selectedIndex === index;
 				item.selected = selected;
@@ -951,6 +966,11 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
+	async _expandButtonPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(`#${this._id}-expandButtonPopover`);
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -1019,6 +1039,10 @@ class TabContainer extends UI5Element {
 		return getAnimationMode() !== AnimationMode.None;
 	}
 
+	get selectedTabItems() {
+		return this._selectedTab._subItems;
+	}
+
 	static get dependencies() {
 		return [
 			Button,
@@ -1057,6 +1081,24 @@ const findIndex = (arr, predicate) => {
 	}
 
 	return -1;
+};
+
+const buildTree = (el, level, result) => {
+	el.items.forEach((item, index) => {
+		if (item.nodeName === "UI5-TAB") {
+			const subItem = {
+				item,
+				size: el.items.length,
+				posinset: index + 1,
+				level,
+			};
+
+			result.push(subItem);
+			if (item.items) {
+				buildTree(item, level + 1, result);
+			}
+		}
+	});
 };
 
 TabContainer.define();

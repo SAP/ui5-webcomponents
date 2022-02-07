@@ -21,16 +21,26 @@ import overflowCss from "./generated/themes/TabInOverflow.css.js";
  */
 const metadata = {
 	tag: "ui5-tab",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
-		 * Defines the tab content.
-		 * @type {Node[]}
-		 * @slot
+		/**
+		 * Defines the sub tabs.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 *
+		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
+		 * @slot items
 		 */
 		"default": {
-			type: Node,
+			propertyName: "items",
+			type: HTMLElement,
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -122,9 +132,11 @@ const metadata = {
 		_selected: {
 			type: Boolean,
 		},
-		subTabs: {
-			type: Boolean,
-		}
+
+		_subItems: {
+			type: Object,
+			multiple: true,
+		},
 
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -203,6 +215,10 @@ class Tab extends UI5Element {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 
+	get requiresExpandButton() {
+		return this._subItems.length > 0;
+	}
+
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
@@ -223,6 +239,17 @@ class Tab extends UI5Element {
 		}
 
 		return focusedDomRef;
+	}
+
+	async _onTabExpandButtonClick(event) {
+		const button = event.target;
+
+		this.responsivePopoverExpand = await this._expandButtonPopover();
+		if (this.responsivePopoverExpand.opened) {
+			this.responsivePopoverExpand.close();
+		} else {
+			this.responsivePopoverExpand.showAt(button);
+		}
 	}
 
 	get isMixedModeTab() {
