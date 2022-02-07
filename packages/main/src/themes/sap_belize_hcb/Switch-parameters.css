@@ -3,7 +3,6 @@
 :root {
 	/* Switch */
 	--_ui5_switch_root_outline_top_bottom: 0.1875rem;
-	--_ui5_switch_root_outline_left_right: 0;
 	--_ui5_switch_compact_root_outline_top_bottom: 0;
 	--_ui5_switch_foucs_size: 0.125rem;
 	--_ui5_switch_root_after_outline: none;
