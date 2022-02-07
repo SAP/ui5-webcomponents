@@ -153,7 +153,11 @@ const isEnd = event => (event.key ? event.key === "End" : event.keyCode === KeyC
 
 const isHomeCtrl = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, true, false, false);
 
+const isHomeShift = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, false, false, true);
+
 const isEndCtrl = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, true, false, false);
+
+const isEndShift = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, false, false, true);
 
 const isEscape = event => (event.key ? event.key === "Escape" || event.key === "Esc" : event.keyCode === KeyCodes.ESCAPE) && !hasModifierKeys(event);
 
@@ -250,6 +254,8 @@ export {
 	isMinus,
 	isHomeCtrl,
 	isEndCtrl,
+	isHomeShift,
+	isEndShift,
 	isEscape,
 	isTabNext,
 	isTabPrevious,
