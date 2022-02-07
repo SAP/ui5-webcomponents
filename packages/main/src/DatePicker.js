@@ -28,6 +28,7 @@ import Calendar from "./Calendar.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
 import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
@@ -671,7 +672,7 @@ class DatePicker extends DateComponentBase {
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": "true",
+			"ariaHasPopup": HasPopup.Grid,
 			"ariaAutoComplete": "none",
 			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
