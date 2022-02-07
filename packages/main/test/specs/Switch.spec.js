@@ -31,6 +31,7 @@ describe("Switch general interaction", async () => {
 	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {
 		const switchEl = await browser.$("#switchAccNameRef").shadow$("div");
 
+		assert.strictEqual(await switchEl.getAttribute("role"), "switch", "Proper role attribute is set");
 		assert.strictEqual(await switchEl.getAttribute("aria-label"), "Use GPS location", "Attribute is reflected");
 	});
 });
