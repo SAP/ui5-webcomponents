@@ -9,6 +9,10 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
