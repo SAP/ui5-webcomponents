@@ -1,9 +1,10 @@
-commit 2d457c920cc0dd1edf91031574e38a3daa56376b
+commit 4b033743fc3ed3337a5d596b3d9636d6f1adbdb5
 Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Feb 8 14:20:26 2022 +0200
+Date:   Tue Feb 8 15:11:32 2022 +0200
 
-    fix(ui5-date-picker): remove combobox role (#4706)
+    fix(ui5-color-picker): adjust hue value update when user presses over the main color section (#4601)
     
-    The following changes would affect the ui5-date-picker, ui5-daterange-picker and ui5-datetime-picker components:
-    - The combobox role is now removed from the inner input field for compliance with the accessibility specification.
-    - The aria-haspopup attribute value is updated to "grid" instead of "true".
+     - Hue value remains unchanged when users press over the
+     main color section, in order to change the color.
+    
+    Fixes: #4540

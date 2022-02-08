@@ -1430,7 +1430,7 @@
   "205": {
     "id": "205",
     "title": "Tree",
-    "content": "&lt;!DOCTYPE html&gt; ui5-tree Cozy Compact My tree None SingleSelect SingleSelectBegin SingleSelectEnd MultiSelect Delete Expand Level 1 Expand Level 2 Expand All Collapse All Mouseover counter Mouseout counter Dynamic tree",
+    "content": "&lt;!DOCTYPE html&gt; ui5-tree Cozy Compact My tree None SingleSelect SingleSelectBegin SingleSelectEnd MultiSelect Delete Expand Level 1 Expand Level 2 Expand All Collapse All Mouseover counter Mouseout counter Dynamic tree Prevent item-click Events Prevented events counter",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Tree/",
     "relUrl": "/playground/main/pages/Tree/"
   },
