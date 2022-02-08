@@ -14,7 +14,7 @@
 	left: 0.5rem;
 }
 
-ui5-responsive-popover .ui5-valuestatemessage-header .ui5-input-value-state-message-icon {
+[ui5-responsive-popover] .ui5-valuestatemessage-header .ui5-input-value-state-message-icon {
 	left: 1rem;
 }
 
@@ -48,7 +48,7 @@ ui5-responsive-popover .ui5-valuestatemessage-header .ui5-input-value-state-mess
 	border: var(--_ui5_value_state_message_border);
 }
 
-ui5-responsive-popover .ui5-valuestatemessage-header {
+[ui5-responsive-popover] .ui5-valuestatemessage-header {
 	min-height: 2rem;
 	padding: var(--_ui5_value_state_header_padding);
 }
@@ -73,4 +73,4 @@ ui5-responsive-popover .ui5-valuestatemessage-header {
 	outline-offset: -0.125rem;
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--_ui5_value_state_message_focus_border_radius);
-} 
+}

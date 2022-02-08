@@ -759,4 +759,58 @@ describe("Keyboard navigation", async () => {
 
 		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The previous combobox should be focused");
 	});
+
+	it ("Should select the corresponding item on home/pgup/pgdown/end",  async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo2");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		const pickerIcon = await comboBox.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItem;
+
+		// Opened picker
+		await pickerIcon.click();
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		
+		await input.keys("Home");
+		listItem = await respPopover.$("ui5-list").$("ui5-li");
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The first item should be focused on HOME");
+		assert.strictEqual(await comboBox.getProperty("focused"), false, "The ComboBox should not be focused");
+
+		await input.keys("End");
+		listItem = await respPopover.$("ui5-list").$$("ui5-li")[10];
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The last item should be focused on END");
+
+		await input.keys("PageUp");
+		listItem = await respPopover.$("ui5-list").$("ui5-li");
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The -10 item should be focused on PAGEUP");
+
+		await input.keys("PageDown");
+		listItem = await respPopover.$("ui5-list").$$("ui5-li")[10];
+		assert.strictEqual(await listItem.getProperty("focused"), true, "The +10 item should be focused on PAGEDOWN");
+
+		// Closed picker
+		await pickerIcon.click();
+
+		// Clearing typed in value to prevent default behavior of HOME
+		await comboBox.setProperty("value", "");
+
+		await input.keys("Home");
+		assert.strictEqual(await input.getProperty("value"), "Algeria", "The first item should be selected on HOME");
+		
+		// Clearing typed in value to prevent default behavior of END
+		await comboBox.setProperty("value", "");
+
+		await input.keys("End");
+		assert.strictEqual(await input.getProperty("value"), "Chile", "The last item should be selected on END");
+
+		await input.keys("PageUp");
+		assert.strictEqual(await input.getProperty("value"), "Algeria", "The -10 item should be selected on PAGEUP");
+
+		await input.keys("PageDown");
+		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
+	});
 });

@@ -5,10 +5,12 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
@@ -118,6 +120,7 @@ const metadata = {
 		 *
 		 * It supports the following fields:
 		 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
+		 * - <code>logoTitle</code>: defines the tooltip for the logo
 		 *
 		 * @type {object}
 		 * @public
@@ -159,10 +162,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_actionList: {
-			type: Object,
-		},
-
 		_header: {
 			type: Object,
 		},
@@ -171,6 +170,7 @@ const metadata = {
 			type: String,
 			multiple: true,
 		},
+
 		_menuPopoverExpanded: {
 			type: Boolean,
 			noAttribute: true,
@@ -179,6 +179,7 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_fullWidthSearch: {
 			type: Boolean,
 			noAttribute: true,
@@ -300,7 +301,7 @@ const metadata = {
 
 		/**
 		 * Fired, when the product switch icon is activated.
-		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
+		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
 		 * @allowPreventDefault
@@ -343,7 +344,7 @@ const metadata = {
 
 		/**
 		 * Fired, when a menu item is activated
-		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
+		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#menu-item-click
 		 * @param {HTMLElement} item DOM ref of the activated list item
@@ -386,6 +387,14 @@ const metadata = {
  * <ul>
  * <li>root - Used to style the outermost wrapper of the <code>ui5-shellbar</code></li>
  * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
@@ -449,16 +458,6 @@ class ShellBar extends UI5Element {
 
 		// marks if preventDefault() is called in item's press handler
 		this._defaultItemPressPrevented = false;
-
-		this._actionList = {
-			itemPress: event => {
-				if (!this._defaultItemPressPrevented) {
-					this.overflowPopover.close();
-				}
-
-				this._defaultItemPressPrevented = false;
-			},
-		};
 
 		this.menuItemsObserver = new MutationObserver(() => {
 			this._updateClonedMenuItems();
@@ -737,6 +736,17 @@ class ShellBar extends UI5Element {
 		}, 100);
 	}
 
+	async _handleActionListClick(event) {
+		if (!this._defaultItemPressPrevented) {
+			this.closeOverflow();
+			// wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold
+			// there will be no visual indication that this has happened
+			await renderFinished();
+		}
+
+		this._defaultItemPressPrevented = false;
+	}
+
 	_handleCustomActionPress(event) {
 		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
 
@@ -1013,7 +1023,6 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
 				"ui5-shellbar-menu-button": true,
 			},
-			title: {},
 			items: {
 				notification: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("bell"),
@@ -1106,7 +1115,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get menuBtnHasPopup() {
-		return this.hasMenuItems ? true : undefined;
+		return this.hasMenuItems ? HasPopup.Menu : undefined;
 	}
 
 	get menuBtnTabindex() {
@@ -1122,7 +1131,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _logoText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
+		return this.accessibilityTexts.logoTitle || ShellBar.i18nBundle.getText(SHELLBAR_LOGO);
 	}
 
 	get _copilotText() {
@@ -1172,13 +1181,17 @@ class ShellBar extends UI5Element {
 				"title": this._productsText,
 			},
 			search: {
-				"ariaExpanded": this.showSearchField,
 				"title": this._searchText,
+				"accessibilityAttributes": {
+					expanded: this.showSearchField,
+				},
 			},
 			overflow: {
 				"title": this._overflowText,
-				"ariaHaspopup": true,
-				"ariaExpanded": this._overflowPopoverExpanded,
+				"accessibilityAttributes": {
+					hasPopup: HasPopup.Menu,
+					expanded: this._overflowPopoverExpanded,
+				},
 			},
 		};
 	}

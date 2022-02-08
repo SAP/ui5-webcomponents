@@ -17,7 +17,7 @@
 	@ui5-before-open={{_overflowPopoverBeforeOpen}}
 	@ui5-after-close={{_overflowPopoverAfterClose}}
 >
-	<ui5-list separators="None" @ui5-item-click="{{_actionList.itemPress}}">
+	<ui5-list separators="None" @ui5-item-click="{{_handleActionListClick}}">
 		{{#each _hiddenIcons}}
 			<ui5-li
 				data-ui5-external-action-item-id="{{this.refItemid}}"

@@ -110,6 +110,14 @@ const metadata = {
  * <li>bar - Used to style the wrapper of the content of the component</li>
  * </ul>
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/Bar.js";</code>
@@ -117,6 +125,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Bar
+ * @implements sap.ui.webcomponents.fiori.IBar
  * @extends UI5Element
  * @tagname ui5-bar
  * @public

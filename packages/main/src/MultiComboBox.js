@@ -537,7 +537,7 @@ class MultiComboBox extends UI5Element {
 
 		const tokensCount = this._tokenizer.tokens.length - 1;
 
-		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+		if (!event.relatedTarget || !event.relatedTarget.hasAttribute("ui5-token")) {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
 			this._tokenizer.scrollToStart();
 		}

@@ -174,6 +174,11 @@ const metadata = {
  * 	<li>[END] or [PAGE DOWN] - Focus goes to the last step</li>
  * </ul>
  *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ *
  * <h4>Content</h4>
  * The content occupies the main part of the page. It can hold any type of HTML elements.
  * It's defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.

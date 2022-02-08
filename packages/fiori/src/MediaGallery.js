@@ -221,12 +221,42 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui-media-gallery</code> component allows the user to browse through multimedia items. Currently,
+ * the supported items are images and videos. The items should be defined using the <code>ui5-media-gallery-item</code>
+ * component.
+ *
+ * The items are initially displayed as thumbnails. When the user selects a thumbnail, the corresponding item
+ * is displayed in larger size.
+ * <br>
+ * The component is responsive by default and adjusts the position of the menu with respect to viewport size,
+ * but the application is able to further customize the layout via the provided API.
+ *
+* <h3>Keyboard Handling</h3>
+ * The <code>ui5-media-gallery</code> provides advanced keyboard handling.
+ * <br>
+ * When the thumbnails menu is focused the following keyboard
+ * shortcuts allow the user to navigate through the thumbnail items:
+ * <br>
+ *
+ * <ul>
+ * <li>[UP/DOWN] - Navigates up and down the items</li>
+ * <li>[HOME] - Navigates to first item</li>
+ * <li>[END] - Navigates to the last item</li>
+ * <li>[SPACE/ENTER] - Select an item
+ * </ul>
+ * <br>
+ *
+ * <h3>ES6 Module Import</h3>
+ * <code>import "@ui5/webcomponents-fiori/dist/MediaGallery";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.MediaGallery
  * @extends UI5Element
  * @tagname ui5-media-gallery
+ * @appenddocs MediaGalleryItem
  * @public
  * @since 1.1.0
  */
@@ -468,7 +498,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _carousel() {
-		return this.shadowRoot.querySelector("ui5-carousel");
+		return this.shadowRoot.querySelector("[ui5-carousel]");
 	}
 
 	get _display() {
@@ -476,11 +506,11 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _mainItem() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-display ui5-media-gallery-item");
+		return this.shadowRoot.querySelector(".ui5-media-gallery-display [ui5-media-gallery-item]");
 	}
 
 	get _overflowBtn() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow ui5-button");
+		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow [ui5-button]");
 	}
 
 	get _visibleItems() {

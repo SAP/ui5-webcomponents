@@ -60,9 +60,11 @@ describe("Icon general interaction", () => {
 
 	it("Tests the accessibility attributes", async () => {
 		const iconRoot = await browser.$("#myIcon").shadow$(".ui5-icon-root");
+		const accRoleIconRoot = await browser.$("#accRoleIcon").shadow$(".ui5-icon-root");
 		const ariaHiddenIconRoot = await browser.$("#araHiddenIcon").shadow$(".ui5-icon-root");
 
 		assert.strictEqual(await iconRoot.getAttribute("aria-hidden"), null, "The aria-hidden attribute is not set");
+		assert.strictEqual(await accRoleIconRoot.getAttribute("role"), "link", "The accessibleRole property works");
 		assert.strictEqual(await ariaHiddenIconRoot.getAttribute("aria-hidden"), "true", "The ariaHidden property works");
 	});
 

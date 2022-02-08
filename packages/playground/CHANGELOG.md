@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+## [1.1.1](https://github.com/SAP/ui5-webcomponents/compare/v1.1.0...v1.1.1) (2022-01-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.1.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.2...v1.1.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* **playground:** adjust main wrapper paddings ([#4480](https://github.com/SAP/ui5-webcomponents/issues/4480)) ([d742501](https://github.com/SAP/ui5-webcomponents/commit/d742501))
+* **playground:** fix js error for compact mode ([#4325](https://github.com/SAP/ui5-webcomponents/issues/4325)) ([d9acff8](https://github.com/SAP/ui5-webcomponents/commit/d9acff8))
+* **Playground:** apply RTL properly ([#4468](https://github.com/SAP/ui5-webcomponents/issues/4468)) ([912a09e](https://github.com/SAP/ui5-webcomponents/commit/912a09e))
+
+
+
+## [1.0.2](https://github.com/SAP/ui5-webcomponents/compare/v1.0.1...v1.0.2) (2021-11-29)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 # [1.0.0-rc.16](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.15...v1.0.0-rc.16) (2021-11-09)
 
 

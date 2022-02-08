@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",

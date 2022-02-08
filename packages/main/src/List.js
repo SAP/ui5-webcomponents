@@ -378,6 +378,8 @@ const metadata = {
  *
  * <br><br>
  * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Basic Navigation</h4>
  * The <code>ui5-list</code> provides advanced keyboard handling.
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
@@ -395,6 +397,11 @@ const metadata = {
  * <li>[SPACE] - Select an item (if <code>type</code> is 'Active') when <code>mode</code> is selection</li>
  * <li>[DELETE] - Delete an item if <code>mode</code> property is <code>Delete</code></li>
  * </ul>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
  * <br><br>
  *
  * <h3>ES6 Module Import</h3>

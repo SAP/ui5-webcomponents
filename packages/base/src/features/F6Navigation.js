@@ -1,8 +1,8 @@
-import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isF6Next, isF6Previous } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import { registerFeature } from "../FeaturesRegistry.js";
+import { isF6Next, isF6Previous } from "../Keys.js";
+import { getFirstFocusableElement } from "../util/FocusableElements.js";
 
-class F6NavigationHelper {
+class F6Navigation {
 	init() {
 		this.keydownHandler = this._keydownHandler.bind(this);
 		this.attachEventListeners();
@@ -100,7 +100,7 @@ class F6NavigationHelper {
 	}
 }
 
-const F6HelperInstance = new F6NavigationHelper();
+const F6HelperInstance = new F6Navigation();
 registerFeature("F6Navigation", F6HelperInstance);
 
-export default F6NavigationHelper;
+export default F6Navigation;

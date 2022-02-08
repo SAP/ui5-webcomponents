@@ -195,7 +195,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ViewSettingsDialog";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog";</code>
  *
  * @constructor
  * @author SAP SE
@@ -218,6 +218,10 @@ class ViewSettingsDialog extends UI5Element {
 	onBeforeRendering() {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {
 			this._setAdditionalTexts();
+		}
+
+		if (!this.shouldBuildSort && this.shouldBuildFilter) {
+			this._currentMode = ViewSettingsDialogMode.Filter;
 		}
 	}
 
@@ -277,6 +281,18 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		return "";
+	}
+
+	get shouldBuildSort() {
+		return !!this.sortItems.length;
+	}
+
+	get shouldBuildFilter() {
+		return !!this.filterItems.length;
+	}
+
+	get hasPagination() {
+		return this.shouldBuildSort && this.shouldBuildFilter;
 	}
 
 	get _filterByTitle() {
@@ -494,7 +510,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
-		if (!Object.keys(this._recentlyFocused).length) {
+		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
 		}
 		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),

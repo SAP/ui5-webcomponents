@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -290,6 +291,14 @@ const metadata = {
  * <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li>
  * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
  * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -587,11 +596,13 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_handleResize() {
+	async _handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		}
 		this._updateMediaRange();
+
+		await renderFinished(); // await the tab container to have rendered its representation of tabs
 		this._setItemsForStrip();
 	}
 
