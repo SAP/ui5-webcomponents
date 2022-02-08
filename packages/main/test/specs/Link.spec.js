@@ -81,7 +81,7 @@ describe("General API", () => {
 		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Proper aria-haspopup attribute is set");
 	});
 
-	it("setting accessible-name on the host is reflected on the link tag", async () => {
+	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {
 		const link = await browser.$("#linkAccName").shadow$("link");
 
 		assert.strictEqual(await link.getAttribute("aria-label"), "Application", "Attribute is reflected");
