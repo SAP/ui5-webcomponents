@@ -244,11 +244,11 @@ class Tab extends UI5Element {
 	async _onTabExpandButtonClick(event) {
 		const button = event.target;
 
-		this.responsivePopoverExpand = await this._expandButtonPopover();
-		if (this.responsivePopoverExpand.opened) {
-			this.responsivePopoverExpand.close();
+		this.responsivePopoverSubItems = await this._subItemsPopover();
+		if (this.responsivePopoverSubItems.opened) {
+			this.responsivePopoverSubItems.close();
 		} else {
-			this.responsivePopoverExpand.showAt(button);
+			this.responsivePopoverSubItems.showAt(button);
 		}
 	}
 
@@ -269,7 +269,8 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		return this.selected || this._selected;
+		const selectedSubItem = this.items.some(elem => elem.effectiveSelected);
+		return this.selected || this._selected || selectedSubItem;
 	}
 
 	get effectiveHidden() {

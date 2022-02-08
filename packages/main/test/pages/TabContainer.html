@@ -26,6 +26,28 @@
 	<header class="header">
 		<h1 class="header-title">ui5-tabcontainer</h1>
 	</header>
+	<section>
+		<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>
+		<h2>Nested Tabs</h2>
+		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed fixed>
+			<ui5-tab text="One"></ui5-tab>
+			<ui5-tab text="Two">
+				<ui5-tab text="2.1"><ui5-button>Button 21</ui5-button>
+					<ui5-tab text="2.1.1"><ui5-button>Button 211</ui5-button></ui5-tab>
+					<ui5-tab text="2.1.2">
+						<ui5-tab text="2.1.2.1"><ui5-button>Button 2121</ui5-button></ui5-tab>
+						<ui5-button>Button 212</ui5-button>
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab text="2.2"></ui5-tab>
+			</ui5-tab>
+			<ui5-tab text="Three">
+				<ui5-tab text="3.1">
+					<ui5-button>Button 31</ui5-button>
+				</ui5-tab>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
 
 	<section>
 		<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>

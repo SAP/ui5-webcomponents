@@ -362,7 +362,8 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// update selected tab
-		const tabs = this._getTabs();
+		const tabs = [];
+		this._getAllSubItems(this._getTabs(), tabs);
 		if (tabs.length) {
 			const selectedTabs = tabs.filter(tab => tab.selected);
 			if (selectedTabs.length) {
@@ -474,9 +475,9 @@ class TabContainer extends UI5Element {
 		} = event.detail;
 
 		this._onItemSelect(item);
-		this.responsivePopoverExpand.close();
+		this.responsivePopoverSubItems.close();
 		this._setItemsForStrip();
-		this._selectedTab.parentElement.focus();
+		this._selectedTab.focus();
 	}
 
 	_getAllSubItems(items, result) {
@@ -969,7 +970,7 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
-	async _expandButtonPopover() {
+	async _subItemsPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector(`#${this._id}-expandButtonPopover`);
 	}
@@ -1093,7 +1094,7 @@ const buildTree = (el, level, result) => {
 				item,
 				size: el.items.length,
 				posinset: index + 1,
-				level,
+				style: { "padding-left": `${level / 2}rem` },
 			};
 
 			result.push(subItem);
