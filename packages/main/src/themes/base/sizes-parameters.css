@@ -238,11 +238,16 @@
 	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
 	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
 	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
+	--_ui5_switch_no_label_width_horizon: var(--_ui5_switch_compact_no_label_width_horizon);
 	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
 	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
 
 	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom);
 	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right);
+	--_ui5_switch_root_outline_top_bottom_horizon: var(--_ui5_switch_compact_root_outline_top_bottom_horizon);
+	--_ui5_switch_root_outline_left_right_horizon: var(--_ui5_switch_compact_root_outline_left_right_horizon);
+	--_ui5_switch_root_outline_top_bottom_hcb: var(--_ui5_switch_compact_root_outline_top_bottom_hcb);
+	--_ui5_switch_root_outline_left_right_hcb: var(--_ui5_switch_compact_root_outline_left_right_hcb);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
