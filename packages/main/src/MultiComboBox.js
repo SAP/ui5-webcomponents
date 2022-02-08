@@ -12,6 +12,8 @@ import {
 	isRight,
 	isEscape,
 	isEnter,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -592,7 +594,21 @@ class MultiComboBox extends UI5Element {
 			this.handleEnter();
 		}
 
+		if (isHome(event)) {
+			this._handleHome(event);
+		}
+
 		this._keyDown = true;
+	}
+
+	_handleHome(event) {
+		const shouldFocusToken = this._isFocusInside && event.target.selectionStart === 0 && this._tokenizer.tokens.length > 0;
+
+		// If 'HOME' is preessed while the caret is already at the start of the input the focus should go to the first token
+		if (shouldFocusToken) {
+			event.preventDefault();
+ 			this._tokenizer.tokens[0].focus();
+		}
 	}
 
 	_onValueStateKeydown(event) {
@@ -615,16 +631,13 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if (!isUp(event) || !isFirstItem) {
-			return;
-		}
-
-		if (this.valueStateHeader) {
+		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
-			return;
 		}
 
-		this._inputDom.focus();
+		if (!this.valueStateHeader && isUp(event) && isFirstItem) {
+			this._inputDom.focus();
+		}
 	}
 
 	async _handleArrowNavigation(event) {
