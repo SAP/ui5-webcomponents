@@ -82,7 +82,7 @@ describe("General API", () => {
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {
-		const link = await browser.$("#linkAccName").shadow$("link");
+		const link = await browser.$("#linkAccName").shadow$("а");
 
 		assert.strictEqual(await link.getAttribute("aria-label"), "Application", "Attribute is reflected");
 	});
