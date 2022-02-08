@@ -38,8 +38,7 @@ describe("Date Picker Tests", () => {
 		await setDateButton.click();
 
 		const innerInput = await datepicker.getInnerInput();
-		// assert.equal(await innerInput.getValue(), "11 декември 2018 г.");
-		assert.ok(true);
+		assert.equal(await innerInput.getValue(), "11 декември 2018 г.");
 	});
 
 	it("custom formatting", async () => {
