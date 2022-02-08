@@ -28,7 +28,7 @@
 
 <ui5-responsive-popover id="{{_id}}-expandButtonPopover" horizontal-align="Right" placement-type="Bottom"
 	content-only-on-desktop hide-arrow _hide-header class="ui5-tab-container-responsive-popover">
-	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onExpandListItemClick}}">
+	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
 				{{#each selectedTabItems}}
 					<ui5-li-custom id="{{this._id}}" class="{{this.overflowClasses}}" type="{{this.overflowState}}"
 						?disabled="{{this.effectiveDisabled}}" aria-disabled="{{this.effectiveDisabled}}"

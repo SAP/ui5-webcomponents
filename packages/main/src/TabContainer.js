@@ -464,25 +464,16 @@ class TabContainer extends UI5Element {
 
 		this._onItemSelect(item);
 		this.responsivePopover.close();
-		this._setItemsForStrip();
-		this.shadowRoot.querySelector(`#${item.parentElement.items[0].id}`).focus();
-	}
-
-	_onExpandListItemClick(event) {
-		event.preventDefault(); // cancel the item selection
-		const {
-			item,
-		} = event.detail;
-
-		this._onItemSelect(item);
-		this.responsivePopoverSubItems.close();
+		if (this.responsivePopoverSubItems) {
+			this.responsivePopoverSubItems.close();
+		}
 		this._setItemsForStrip();
 		this._selectedTab.focus();
 	}
 
 	_getAllSubItems(items, result) {
 		items.forEach(item => {
-			if (item.nodeName === "UI5-TAB") {
+			if (item.getAttribute("ui5-tab") === "") {
 				result.push(item);
 				if (item.items) {
 					this._getAllSubItems(item.items, result);
@@ -682,7 +673,15 @@ class TabContainer extends UI5Element {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 
-		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
+		let selectedTab = this._selectedTab;
+		while (selectedTab.getAttribute("ui5-tab") === "") {
+			if (selectedTab.parentElement.getAttribute("ui5-tabcontainer") === "") {
+				break;
+			}
+			selectedTab = selectedTab.parentElement;
+		}
+
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -698,7 +697,14 @@ class TabContainer extends UI5Element {
 
 	_updateStartAndEndOverflow(itemsDomRefs) {
 		let containerWidth = this._getTabStrip().offsetWidth;
-		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
+		let selectedTab = this._selectedTab;
+		while (selectedTab.getAttribute("ui5-tab") === "") {
+			if (selectedTab.parentElement.getAttribute("ui5-tabcontainer") === "") {
+				break;
+			}
+			selectedTab = selectedTab.parentElement;
+		}
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1089,7 +1095,7 @@ const findIndex = (arr, predicate) => {
 
 const buildTree = (el, level, result) => {
 	el.items.forEach((item, index) => {
-		if (item.nodeName === "UI5-TAB") {
+		if (item.getAttribute("ui5-tab") === "") {
 			const subItem = {
 				item,
 				size: el.items.length,
