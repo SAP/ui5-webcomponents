@@ -1,7 +1,5 @@
-commit 4aecd48fc185b11a7b6e485f874d904734479049
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Feb 7 16:49:12 2022 +0200
+commit e0646fc2936691840854bc6f6c8a3c5199da8ab7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 8 10:51:33 2022 +0200
 
-    fix(ui5-slider): sets correct color to tickmarks based on theme (#4677)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/4478
+    Update landing-page.html
