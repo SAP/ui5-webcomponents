@@ -1,10 +1,15 @@
-commit 4b033743fc3ed3337a5d596b3d9636d6f1adbdb5
+commit 0cb658083900b891b3e7f0d97f31591eed6ecd7e
 Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Feb 8 15:11:32 2022 +0200
+Date:   Tue Feb 8 17:29:25 2022 +0200
 
-    fix(ui5-color-picker): adjust hue value update when user presses over the main color section (#4601)
+    fix(ui5-switch): adjust focus outline (#4665)
     
-     - Hue value remains unchanged when users press over the
-     main color section, in order to change the color.
+    * fix(ui5-switch): focus outline adjustment
     
-    Fixes: #4540
+    The ui5-switch component focus outline is drawn
+    with the help of a pseudo element. This pseudo
+    element is displayed bigger than the actual
+    ui5-switch root element. As a result the focus
+    outline could get cut off.
+    
+    Related to: #2925
