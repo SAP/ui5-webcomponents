@@ -1,5 +1,15 @@
-commit e0646fc2936691840854bc6f6c8a3c5199da8ab7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 8 10:51:33 2022 +0200
+commit 1cee62a92963cf05f6142d637ec27e8b1119a4fe
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Feb 8 13:02:55 2022 +0200
 
-    Update landing-page.html
+    feat(ui5-multi-combobox) Arrow navigation through items when the suggestions popover is closed (#4662)
+    
+    * Implement arrow navigation when the suggestions popover is not open
+    
+    * Clean redundant leftover code
+    
+    * Arrow navigation when suggestions popover is closed
+    
+    * Minor corrections
+    
+    * Add text selection
