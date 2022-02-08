@@ -521,11 +521,7 @@ class Table extends UI5Element {
 
 		this.rows.forEach((row, index) => {
 			row._tabbableElements = getTabbableElements(row);
-
-			if (index > 0) {
-				row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
-			}
-
+			row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
 			row.addEventListener("ui5-f7-pressed", this.fnHandleF7);
 		});
 	}
