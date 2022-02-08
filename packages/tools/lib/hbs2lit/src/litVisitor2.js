@@ -169,7 +169,7 @@ function visitUnlessBlock(block) {
 }
 
 function visitEachBlock(block) {
-	this.blockLevel++;
+	// this.blockLevel++;
 
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
@@ -189,10 +189,10 @@ function visitEachBlock(block) {
 		this.blockParameters.shift("index");
 	}
 
-	this.blockLevel--;
-	if (this.blockLevel === 0) {
+	// this.blockLevel--;
+	// if (this.blockLevel === 0) {
 		this.blockPath = "context";
-	}
+	// }
 
 	this.blocks[this.currentKey()] += ") }";
 }

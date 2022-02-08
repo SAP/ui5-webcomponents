@@ -1,0 +1,13 @@
+<div class="root">
+	{{#each items}}
+			<hr/><ul class="tags">
+				{{#each tags}}
+					<li class="tag">{{this}}</li>
+				{{/each}}
+			</ul>
+
+			{{#if name}}
+				<span class="name">{{name}}</span>
+			{{/if}}
+	{{/each}}
+</div>
