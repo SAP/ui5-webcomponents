@@ -1,15 +1,7 @@
-commit 0cb658083900b891b3e7f0d97f31591eed6ecd7e
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Feb 8 17:29:25 2022 +0200
+commit a913653d4a828dc58c0e0cd33c0bdea7a586327f
+Author: Boyan Rakilovski <boyanrakilovski@gmail.com>
+Date:   Tue Feb 8 19:49:46 2022 +0200
 
-    fix(ui5-switch): adjust focus outline (#4665)
+    Revert "fix(ui5-switch): adjust focus outline (#4665)" (#4713)
     
-    * fix(ui5-switch): focus outline adjustment
-    
-    The ui5-switch component focus outline is drawn
-    with the help of a pseudo element. This pseudo
-    element is displayed bigger than the actual
-    ui5-switch root element. As a result the focus
-    outline could get cut off.
-    
-    Related to: #2925
+    This reverts commit 0cb658083900b891b3e7f0d97f31591eed6ecd7e.
