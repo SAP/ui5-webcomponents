@@ -625,7 +625,7 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if ((!isUp(event) || !isFirstItem)) {
+		if (!isUp(event) || !isFirstItem) {
 			return;
 		}
 
