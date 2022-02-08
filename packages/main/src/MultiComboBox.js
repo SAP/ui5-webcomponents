@@ -413,6 +413,7 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 		this._validationTimeout = null;
 		this._handleResizeBound = this._handleResize.bind(this);
+		this.currentItemIdx = -1;
 	}
 
 	onEnterDOM() {
@@ -572,7 +573,7 @@ class MultiComboBox extends UI5Element {
 			this.togglePopover();
 		}
 
-		if (this.open && (isUp(event) || isDown(event))) {
+		if (isUp(event) || isDown(event)) {
 			this._handleArrowNavigation(event);
 		}
 
@@ -628,7 +629,8 @@ class MultiComboBox extends UI5Element {
 
 	async _handleArrowNavigation(event) {
 		const isArrowDown = isDown(event);
-		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
+		const hasSuggestions = this.items.length;
+		const isOpen = this.allItemsPopover.opened;
 
 		event.preventDefault();
 
@@ -636,7 +638,7 @@ class MultiComboBox extends UI5Element {
 			await this._setValueStateHeader();
 		}
 
-		if (isArrowDown && this.focused && this.valueStateHeader) {
+		if (isArrowDown && isOpen && this.focused && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 			return;
 		}
@@ -644,13 +646,88 @@ class MultiComboBox extends UI5Element {
 		if (isArrowDown && this.focused && hasSuggestions) {
 			this._handleArrowDown(event);
 		}
+
+		if (!isArrowDown && !isOpen && !this.readonly) {
+			this._navigateToPrevItem();
+		}
 	}
 
 	_handleArrowDown(event) {
+		const isOpen = this.allItemsPopover.opened;
 		const firstListItem = this.list.items[0];
 
-		this.list._itemNavigation.setCurrentItem(firstListItem);
-		firstListItem.focus();
+		if (isOpen) {
+			this.list._itemNavigation.setCurrentItem(firstListItem);
+			firstListItem.focus();
+		} else if (!this.readonly) {
+			this._navigateToNextItem();
+		}
+	}
+
+	_navigateToNextItem() {
+		const items = this.items;
+		const itemsCount = items.length;
+		const previousItemIdx = this.currentItemIdx;
+
+		if (previousItemIdx > -1 && items[previousItemIdx].text !== this.value) {
+			this.currentItemIdx = -1;
+		}
+
+		if (previousItemIdx >= itemsCount - 1) {
+			return;
+		}
+
+		let currentItem = this.items[++this.currentItemIdx];
+
+		while (this.currentItemIdx < itemsCount - 1 && currentItem.selected) {
+			currentItem = this.items[++this.currentItemIdx];
+		}
+
+		if (currentItem.selected === true) {
+			this.currentItemIdx = previousItemIdx;
+			return;
+		}
+
+		this.value = currentItem.text;
+		this._innerInput.value = currentItem.text;
+		this._innerInput.setSelectionRange(0, currentItem.text.length);
+	}
+
+	_navigateToPrevItem() {
+		const items = this.items;
+		let previousItemIdx = this.currentItemIdx;
+
+		if ((!this.value && previousItemIdx !== -1) || (previousItemIdx !== -1 && this.value && this.value !== items[previousItemIdx].text)) {
+			previousItemIdx = -1;
+		}
+
+		if (previousItemIdx === -1) {
+			this.currentItemIdx = items.length;
+		}
+
+		if (previousItemIdx === 0) {
+			this.currentItemIdx = 0;
+			return;
+		}
+
+		let currentItem = this.items[--this.currentItemIdx];
+
+		while (currentItem && currentItem.selected && this.currentItemIdx > 0) {
+			currentItem = this.items[--this.currentItemIdx];
+		}
+
+		if (!currentItem) {
+			return;
+		}
+
+		if (currentItem.selected) {
+			this.currentItemIdx = previousItemIdx;
+			return;
+		}
+
+		this.value = currentItem.text;
+		this._innerInput.value = currentItem.text;
+		this._innerInput.setSelectionRange(0, currentItem.text.length);
 	}
 
 	handleEnter() {
