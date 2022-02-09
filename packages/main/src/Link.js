@@ -124,7 +124,6 @@ const metadata = {
 		 */
 		accessibleNameRef: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
