@@ -78,7 +78,7 @@ describe("Item Navigation Tests", () => {
 		itemOnFocus.keys("PageDown");
 
 		// assert - the focus should move to the bottom of the first column - Item 11.
-		assert.strictEqual(nextFocusedItem.isFocused(), true, "The 11th item is focused.");
+		assert.strictEqual(await nextFocusedItem.isFocused(), true, "The 11th item is focused.");
 
 
 		// act - switch to the next (2nd) column.
@@ -86,13 +86,13 @@ describe("Item Navigation Tests", () => {
 		const nextFocusedItem2 = await browser.$("#color_palette_item12");
 
 		// assert - focus should go to Item 12
-		assert.strictEqual(nextFocusedItem2.isFocused(), true, "The 12th item is focused.");
+		assert.strictEqual(await nextFocusedItem2.isFocused(), true, "The 12th item is focused.");
 
 
 		// act - press PageUp to move to the top of the 2nd column.
 		nextFocusedItem2.keys("PageUp");
 		const nextFocusedItem3 = await browser.$("#color_palette_item2");
 		// assert - focus should go to Item 2
-		assert.strictEqual(nextFocusedItem3.isFocused(), true, "The 2th is focused.");
+		assert.strictEqual(await nextFocusedItem3.isFocused(), true, "The 2th is focused.");
 	});
 });
