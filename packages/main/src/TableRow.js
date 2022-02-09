@@ -1,7 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import {
+	isSpace,
+	isEnter,
+	isF7,
+	isTabNext,
+	isTabPrevious,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
@@ -106,6 +112,13 @@ const metadata = {
 			defaultValue: "",
 			noAttribute: true,
 		},
+		_tabbableElements: {
+			type: Object,
+			multiple: true,
+		},
+		_tabMarked: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -181,6 +194,14 @@ class TableRow extends UI5Element {
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._tabMarked = true;
+		}
+
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._tabMarked = true;
+		}
+
 		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
@@ -196,6 +217,11 @@ class TableRow extends UI5Element {
 					this.activate();
 				}
 			}
+		}
+
+		if (isF7(event)) {
+			event.preventDefault();
+			this._handleF7(event.target);
 		}
 	}
 
@@ -213,15 +239,25 @@ class TableRow extends UI5Element {
 		this.deactivate();
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
 		this.deactivate();
+
+		if (!this._tabMarked) {
+			this._tabbableElements.forEach(el => el.setAttribute("tabindex", -1));
+		} else {
+			this._tabMarked = false;
+		}
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
+		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
+
 		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
-			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
+			tableRowRoot.focus();
 			this.activate();
 		}
+
+		this._tabbableElements.forEach(el => el.setAttribute("tabindex", 0));
 
 		this.fireEvent("_focused", event);
 	}
@@ -257,6 +293,44 @@ class TableRow extends UI5Element {
 
 	_handleSelection() {
 		this.fireEvent("selection-requested", { row: this });
+	}
+
+	/**
+	 * Toggles focus between the table row's root and the last focused nested element.
+	 * @private
+	 * @param {Object} activeElement The currently focused element
+	 */
+	_handleF7(activeElement) {
+		const elements = this._tabbableElements;
+
+		if (!elements.length) {
+			return;
+		}
+
+		const table = this.parentElement;
+		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
+		const prevFocusedIdx = table._prevNestedElementIndex;
+
+		if (activeElement === tableRowRoot) {
+			const lastFocusedElement = elements[prevFocusedIdx];
+
+			if (lastFocusedElement) {
+				lastFocusedElement.focus();
+			} else {
+				elements[0].focus();
+			}
+
+			return;
+		}
+
+		const shadowRoot = activeElement.shadowRoot;
+		const target = shadowRoot ? shadowRoot.activeElement : activeElement;
+		const targetIndex = elements.indexOf(target);
+
+		if (targetIndex > -1) {
+			table._prevNestedElementIndex = targetIndex;
+			tableRowRoot.focus();
+		}
 	}
 
 	_getActiveElementTagName() {

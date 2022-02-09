@@ -45,6 +45,11 @@
 			var dialog = document.getElementById("hello-dialog");
 			var dialogCloser = document.getElementById("closeDialogButton");
 
+			dialogOpener.accessibilityAttributes = {
+				hasPopup: "dialog",
+				controls: dialog.id,
+			}
+
 			dialogOpener.addEventListener("click", function() {
 				dialog.show();
 			});
@@ -91,6 +96,11 @@
 	var dialog = document.getElementById("hello-dialog");
 	var dialogCloser = document.getElementById("closeDialogButton");
 
+	dialogOpener.accessibilityAttributes = {
+		hasPopup: "dialog",
+		controls: dialog.id,
+	}
+
 	dialogOpener.addEventListener("click", function() {
 		dialog.show();
 	});
@@ -129,6 +139,11 @@
 		var dialog2 = document.getElementById("resize-draggable-dialog");
 		var dialogOpener2 = document.getElementById("resizable-draggable-open");
 		var dialogCloser2 = document.getElementById("resizable-drggable-close");
+
+		dialogOpener2.accessibilityAttributes = {
+			hasPopup: "dialog",
+			controls: dialog2.id,
+		}
 	
 		dialogOpener2.addEventListener("click", function() {
 			dialog2.show();
