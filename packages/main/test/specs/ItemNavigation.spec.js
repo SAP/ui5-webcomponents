@@ -70,8 +70,8 @@ describe("Item Navigation Tests", () => {
 
 
 	it("test PageDown and PageUp in grid", () => {
-		const itemOnFocus = $("#color_palette_item1");
-		const nextFocusedItem = $("#color_palette_item11");
+		const itemOnFocus = await browser.$("#color_palette_item1");
+		const nextFocusedItem = await browser.$("#color_palette_item11");
 
 		// act - start from first item and press PageDown.
 		itemOnFocus.click();
@@ -83,7 +83,7 @@ describe("Item Navigation Tests", () => {
 
 		// act - switch to the next (2nd) column.
 		nextFocusedItem.keys("ArrowRight");
-		const nextFocusedItem2 = $("#color_palette_item12");
+		const nextFocusedItem2 = await browser.$("#color_palette_item12");
 
 		// assert - focus should go to Item 12
 		assert.strictEqual(nextFocusedItem2.isFocused(), true, "The 12th item is focused.");
@@ -91,7 +91,7 @@ describe("Item Navigation Tests", () => {
 
 		// act - press PageUp to move to the top of the 2nd column.
 		nextFocusedItem2.keys("PageUp");
-		const nextFocusedItem3 = $("#color_palette_item2");
+		const nextFocusedItem3 = await browser.$("#color_palette_item2");
 		// assert - focus should go to Item 2
 		assert.strictEqual(nextFocusedItem3.isFocused(), true, "The 2th is focused.");
 	});
