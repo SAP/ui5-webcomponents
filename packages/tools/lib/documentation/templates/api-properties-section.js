@@ -21,7 +21,9 @@ module.exports = {
               {{/if}}
                 <br>
               {{#if (toKebabCase this.name)}}
-                <code>{{toKebabCase this.name}}</code>
+                  {{#unless this.noattribute}}
+                     <code>{{toKebabCase this.name}}</code>
+                 {{/unless}}
               {{/if}}
             </div>
             <div class="cell api-table-content-cell">{{this.type}}</div>

@@ -636,6 +636,77 @@ describe("Input general interaction", () => {
 
 		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
 	});
+
+	it("Displays clear icon when typing and pressing it clears the value", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#clear-input");
+		const innerInput = await input.shadow$("input");
+		const changeCounter = await $("#clear-input-change-event-count");
+		const inputCounter = await $("#clear-input-input-event-count");
+
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+
+		// type
+		await innerInput.click();
+		await innerInput.keys("a");
+
+		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
+		assert.strictEqual(await inputCounter.getText(), "1", "Input event called when typing");
+
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+
+		// press clear icon
+		await clearIcon.click();
+
+		assert.strictEqual(await input.getProperty("value"), "", "Clear icon clear the value");
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
+		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
+	});
+
+	it("Change event is called when value of input is cleared with clear icon and input is focused out", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#clear-input");
+		const innerInput = await input.shadow$("input");
+		const changeCounter = await $("#clear-input-change-event-count");
+		const inputCounter = await $("#clear-input-input-event-count");
+
+		// type
+		await innerInput.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+
+		// press clear icon
+		await clearIcon.click();
+
+		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, second - clear icon)");
+		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
+	});
+
+	it("Setting readonly or disabled hides clear icon", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#clear-input-compact");
+		const readonly = await $("#clear-icon-readonly-toggle");
+		const disable = await $("#clear-icon-disabled-toggle");
+
+		await readonly.click();
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
+
+		await readonly.click();
+		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+
+		await disable.click();
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when disabled");
+
+		await disable.click();
+		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+	});
 });
 
 describe("Input arrow navigation", () => {

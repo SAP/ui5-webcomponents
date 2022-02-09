@@ -379,7 +379,7 @@ const metadata = {
  * <br><br>
  * <h3>Keyboard Handling</h3>
  *
- * <h4>Basic Navigation</h4
+ * <h4>Basic Navigation</h4>
  * The <code>ui5-list</code> provides advanced keyboard handling.
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
