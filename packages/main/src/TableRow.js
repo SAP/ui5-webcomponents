@@ -198,6 +198,10 @@ class TableRow extends UI5Element {
 			this._tabMarked = true;
 		}
 
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._tabMarked = true;
+		}
+
 		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
 		}
@@ -235,7 +239,7 @@ class TableRow extends UI5Element {
 		this.deactivate();
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
 		this.deactivate();
 
 		if (!this._tabMarked) {
@@ -246,8 +250,10 @@ class TableRow extends UI5Element {
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
+		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
+
 		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
-			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
+			tableRowRoot.focus();
 			this.activate();
 		}
 

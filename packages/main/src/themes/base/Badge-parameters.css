@@ -12,50 +12,50 @@
 	--ui5-badge-color-scheme-1-background: var(--sapLegendBackgroundColor1);
 	--ui5-badge-color-scheme-1-hover-background: var(--ui5-badge-color-scheme-1-background);
 	--ui5-badge-color-scheme-1-border: var(--sapAccentColor1);
-	--ui5-badge-color-scheme-1-color: var(--sapAccentColor1);
+	--ui5-badge-color-scheme-1-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-2-background: var(--sapLegendBackgroundColor2);
 	--ui5-badge-color-scheme-2-hover-background: var(--ui5-badge-color-scheme-2-background);
 	--ui5-badge-color-scheme-2-border: var(--sapAccentColor2);
-	--ui5-badge-color-scheme-2-color: var(--sapAccentColor2);
+	--ui5-badge-color-scheme-2-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-3-background: var(--sapLegendBackgroundColor3);
 	--ui5-badge-color-scheme-3-hover-background: var(--ui5-badge-color-scheme-3-background);
 	--ui5-badge-color-scheme-3-border: var(--sapAccentColor3);
-	--ui5-badge-color-scheme-3-color: var(--sapAccentColor3);
+	--ui5-badge-color-scheme-3-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-4-background: var(--sapLegendBackgroundColor5);
 	--ui5-badge-color-scheme-4-hover-background: var(--ui5-badge-color-scheme-4-background);
 	--ui5-badge-color-scheme-4-border: var(--sapAccentColor4);
-	--ui5-badge-color-scheme-4-color: var(--sapAccentColor4);
+	--ui5-badge-color-scheme-4-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-5-background: var(--sapLegendBackgroundColor20);
 	--ui5-badge-color-scheme-5-hover-background: var(--ui5-badge-color-scheme-5-background);
 	--ui5-badge-color-scheme-5-border: var(--sapAccentColor5);
-	--ui5-badge-color-scheme-5-color: var(--sapAccentColor5);
+	--ui5-badge-color-scheme-5-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-6-background: var(--sapLegendBackgroundColor6);
 	--ui5-badge-color-scheme-6-hover-background: var(--ui5-badge-color-scheme-6-background);
 	--ui5-badge-color-scheme-6-border: var(--sapAccentColor6);
-	--ui5-badge-color-scheme-6-color: var(--sapAccentColor6);
+	--ui5-badge-color-scheme-6-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-7-background: var(--sapLegendBackgroundColor7);
 	--ui5-badge-color-scheme-7-hover-background: var(--ui5-badge-color-scheme-7-background);
 	--ui5-badge-color-scheme-7-border: var(--sapAccentColor7);
-	--ui5-badge-color-scheme-7-color: var(--sapAccentColor7);
+	--ui5-badge-color-scheme-7-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-8-background: var(--sapLegendBackgroundColor18);
 	--ui5-badge-color-scheme-8-hover-background: var(--ui5-badge-color-scheme-8-background);
 	--ui5-badge-color-scheme-8-border: var(--sapLegendColor18);
-	--ui5-badge-color-scheme-8-color: var(--sapLegendColor18);
+	--ui5-badge-color-scheme-8-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-9-background: var(--sapLegendBackgroundColor10);
 	--ui5-badge-color-scheme-9-hover-background: var(--ui5-badge-color-scheme-9-background);
 	--ui5-badge-color-scheme-9-border: var(--sapAccentColor10);
-	--ui5-badge-color-scheme-9-color: var(--sapAccentColor10);
+	--ui5-badge-color-scheme-9-color: var(--sapTextColor);
 
 	--ui5-badge-color-scheme-10-background: var(--sapLegendBackgroundColor9);
 	--ui5-badge-color-scheme-10-hover-background: var(--ui5-badge-color-scheme-10-background);
 	--ui5-badge-color-scheme-10-border: var(--sapAccentColor9);
-	--ui5-badge-color-scheme-10-color: var(--sapAccentColor9);
+	--ui5-badge-color-scheme-10-color: var(--sapTextColor);
 }

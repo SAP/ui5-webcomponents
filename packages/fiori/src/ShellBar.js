@@ -10,6 +10,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
@@ -169,6 +170,7 @@ const metadata = {
 			type: String,
 			multiple: true,
 		},
+
 		_menuPopoverExpanded: {
 			type: Boolean,
 			noAttribute: true,
@@ -177,6 +179,7 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_fullWidthSearch: {
 			type: Boolean,
 			noAttribute: true,
@@ -1112,7 +1115,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get menuBtnHasPopup() {
-		return this.hasMenuItems ? true : undefined;
+		return this.hasMenuItems ? HasPopup.Menu : undefined;
 	}
 
 	get menuBtnTabindex() {
@@ -1178,13 +1181,17 @@ class ShellBar extends UI5Element {
 				"title": this._productsText,
 			},
 			search: {
-				"ariaExpanded": this.showSearchField,
 				"title": this._searchText,
+				"accessibilityAttributes": {
+					expanded: this.showSearchField,
+				},
 			},
 			overflow: {
 				"title": this._overflowText,
-				"ariaHaspopup": true,
-				"ariaExpanded": this._overflowPopoverExpanded,
+				"accessibilityAttributes": {
+					hasPopup: HasPopup.Menu,
+					expanded: this._overflowPopoverExpanded,
+				},
 			},
 		};
 	}

@@ -329,9 +329,9 @@ class AvatarGroup extends UI5Element {
 		return this._isGroup ? this._getAriaHasPopup() : undefined;
 	}
 
-	get _overflowButtonAccInfo() {
+	get _overflowButtonAccAttributes() {
 		return {
-			ariaHaspopup: this._isGroup ? undefined : this._getAriaHasPopup(),
+			hasPopup: this._isGroup ? undefined : this._getAriaHasPopup(),
 		};
 	}
 
