@@ -1,7 +1,5 @@
-commit a913653d4a828dc58c0e0cd33c0bdea7a586327f
-Author: Boyan Rakilovski <boyanrakilovski@gmail.com>
-Date:   Tue Feb 8 19:49:46 2022 +0200
+commit 9d9d6c80bf85fbd29ba836808e3a2f58ec6287bd
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Wed Feb 9 11:35:26 2022 +0200
 
-    Revert "fix(ui5-switch): adjust focus outline (#4665)" (#4713)
-    
-    This reverts commit 0cb658083900b891b3e7f0d97f31591eed6ecd7e.
+    fix(ui5-switch): adjust focus outline (#4717)
