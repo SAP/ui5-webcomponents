@@ -69,7 +69,7 @@ describe("Item Navigation Tests", () => {
 	});
 
 
-	it("test PageDown and PageUp in grid", () => {
+	it("test PageDown and PageUp in grid", async () => {
 		const itemOnFocus = await browser.$("#color_palette_item1");
 		const nextFocusedItem = await browser.$("#color_palette_item11");
 
