@@ -1,5 +1,8 @@
-commit 9d9d6c80bf85fbd29ba836808e3a2f58ec6287bd
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Feb 9 11:35:26 2022 +0200
+commit 3b7f9e64324c19be97263fbde635e87e0c16a720
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 9 15:08:03 2022 +0200
 
-    fix(ui5-switch): adjust focus outline (#4717)
+    chore: remove non-existing props (#4718)
+    
+    The `stayOpenOnScroll` private property has been removed from the Popover long time ago with the PR
+    https://github.com/SAP/ui5-webcomponents/pull/779
