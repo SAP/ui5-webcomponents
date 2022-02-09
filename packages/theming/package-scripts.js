@@ -11,7 +11,15 @@ const buildThemesCommandsNames = allThemes.map(theme => `build.themes.${theme}`)
 buildThemesCommands["prepare"] = allThemes.map(theme => `mkdirp dist/themes/${theme}`).join(" && ");
 allThemes.forEach(theme => {
 	buildThemesCommands[theme] = `nps build.themes.copy_${theme}_vars build.themes.copy_${theme}_bundle`;
-	buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${theme.replace("sap_horizon_exp", "sap_horizon")}/css_variables.css" dist/themes/${theme}/`;
+
+	// Temporary, will be removed 
+	// after theme parameters are released in theming-base-content
+	let _varsOfTheme = theme;
+	if (theme.startsWith("sap_horizon")) {
+		_varsOfTheme = "sap_horizon";
+	}
+
+	buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${_varsOfTheme}/css_variables.css" dist/themes/${theme}/`;
 	buildThemesCommands[`copy_${theme}_bundle`] = `copy-and-watch "src/themes/${theme}/parameters-bundle.css" dist/themes/${theme}/`;
 });
 

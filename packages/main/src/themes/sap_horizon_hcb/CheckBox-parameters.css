@@ -1,0 +1,34 @@
+@import "../base/CheckBox-parameters.css";
+
+:root {
+	--_ui5_checkbox_wrapper_padding: .6875rem;
+	--_ui5_checkbox_width_height: 2.75rem;
+	--_ui5_checkbox_wrapped_content_margin_top: 0;
+	--_ui5_checkbox_wrapped_focus_padding: .5rem;
+
+	--_ui5_checkbox_inner_border: solid .0625rem var(--sapField_BorderColor);
+	--_ui5_checkbox_compact_wrapped_label_margin_top: -0.125rem;
+	--_ui5_checkbox_inner_readonly_border: 1px dotted var(--sapField_ReadOnly_BorderColor);
+	--_ui5_checkbox_inner_border_radius: var(--sapField_BorderCornerRadius);
+	--_ui5_checkbox_label_color: var(--sapField_TextColor);
+	--_ui5_checkbox_label_offset_right: 0.3125rem;
+	--_ui5_checkbox_focus_position: 0.3125rem;
+	--_ui5_checkbox_focus_border_radius: var(--sapField_BorderCornerRadius);
+	--_ui5_checkbox_checkmark_warning_color: var(--sapCriticalTextColor);
+	--_ui5_checkbox_inner_warning_background_hover: var(--sapField_Hover_Background);
+	--_ui5_checkbox_inner_error_background_hover: var(--sapField_Hover_Background);
+	--_ui5_checkbox_inner_success_background_hover: var(--sapField_Hover_Background);
+	--_ui5_checkbox_inner_information_background_hover: var(--sapField_Hover_Background);
+	--_ui5_checkbox_hover_background: var(--sapField_Hover_Background);
+	--_ui5_checkbox_active_background: var(--sapField_Hover_Background);
+	--_ui5_checkbox_inner_hover_border_color: var(--sapField_BorderColor);
+	--_ui5_checkbox_inner_hover_checked_border_color: var(--sapField_BorderColor);
+	--_ui5_checkbox_inner_selected_border_color: var(--sapField_BorderColor);
+	--_ui5_checkbox_inner_active_border_color: var(--sapField_BorderColor);
+	--_ui5_checkbox_inner_selected_border_color: var(--sapField_BorderColor);
+	--_ui5_checkbox_inner_information_box_shadow: var(--sapContent_Informative_Shadow);
+	--_ui5_checkbox_inner_warning_box_shadow: var(--sapContent_Critical_Shadow);
+	--_ui5_checkbox_inner_error_box_shadow: var(--sapContent_Negative_Shadow);
+	--_ui5_checkbox_inner_success_box_shadow: var(--sapContent_Positive_Shadow);
+	--_ui5_checkbox_inner_default_box_shadow: var(--sapContent_Interaction_Shadow);
+}
