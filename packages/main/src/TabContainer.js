@@ -255,6 +255,11 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+
+		_tabItems: {
+			type: Object,
+			multiple: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -362,14 +367,14 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// update selected tab
-		const tabs = [];
-		this._getAllSubItems(this._getTabs(), tabs);
-		if (tabs.length) {
-			const selectedTabs = tabs.filter(tab => tab.selected);
+		this._allTabs = [];
+		this._getAllSubItems(this._getTabs(), this._allTabs);
+		if (this._allTabs.length) {
+			const selectedTabs = this._allTabs.filter(tab => tab.selected);
 			if (selectedTabs.length) {
 				this._selectedTab = selectedTabs[0];
 			} else {
-				this._selectedTab = tabs[0];
+				this._selectedTab = this._allTabs[0];
 				this._selectedTab._selected = true;
 			}
 		}
@@ -458,25 +463,30 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onOverflowListItemClick(event) {
+	async _onOverflowListItemClick(event) {
 		event.preventDefault(); // cancel the item selection
 		const { item } = event.detail;
 
 		this._onItemSelect(item);
-		this.responsivePopover.close();
+		await this.responsivePopover.close();
 		if (this.responsivePopoverSubItems) {
-			this.responsivePopoverSubItems.close();
+			await this.responsivePopoverSubItems.close();
 		}
 		this._setItemsForStrip();
-		this._selectedTab.focus();
+		const allItems = [];
+		this._getAllSubItems(this._getTabs(), allItems);
+
+		const selectedTopLevel = this._getParentTab(this._selectedTab);
+
+		selectedTopLevel.focus();
 	}
 
 	_getAllSubItems(items, result) {
 		items.forEach(item => {
 			if (item.getAttribute("ui5-tab") === "") {
 				result.push(item);
-				if (item.items) {
-					this._getAllSubItems(item.items, result);
+				if (item.subTabs) {
+					this._getAllSubItems(item.subTabs, result);
 				}
 			}
 		});
@@ -669,18 +679,20 @@ class TabContainer extends UI5Element {
 		this._itemNavigation.setCurrentItem(this._selectedTab);
 	}
 
+	_getParentTab(tab) {
+		while (tab.getAttribute("ui5-tab") === "") {
+			if (tab.parentElement.getAttribute("ui5-tabcontainer") === "") {
+				break;
+			}
+			tab = tab.parentElement;
+		}
+		return tab;
+	}
+
 	_updateEndOverflow(itemsDomRefs) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
-
-		let selectedTab = this._selectedTab;
-		while (selectedTab.getAttribute("ui5-tab") === "") {
-			if (selectedTab.parentElement.getAttribute("ui5-tabcontainer") === "") {
-				break;
-			}
-			selectedTab = selectedTab.parentElement;
-		}
-
+		const selectedTab = this._getParentTab(this._selectedTab);
 		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const containerWidth = this._getTabStrip().offsetWidth;
 
@@ -697,13 +709,7 @@ class TabContainer extends UI5Element {
 
 	_updateStartAndEndOverflow(itemsDomRefs) {
 		let containerWidth = this._getTabStrip().offsetWidth;
-		let selectedTab = this._selectedTab;
-		while (selectedTab.getAttribute("ui5-tab") === "") {
-			if (selectedTab.parentElement.getAttribute("ui5-tabcontainer") === "") {
-				break;
-			}
-			selectedTab = selectedTab.parentElement;
-		}
+		const selectedTab = this._getParentTab(this._selectedTab);
 		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -938,6 +944,9 @@ class TabContainer extends UI5Element {
 			if (tab.getTabInStripDomRef() && !tab.getTabInStripDomRef().hasAttribute("hidden")) {
 				focusableTabs.push(tab);
 			}
+			if (tab.requiresExpandButton) {
+				focusableTabs.push(tab.getDomRef().querySelector("[ui5-button]"));
+			}
 		});
 
 		if (!this._getEndOverflow().hasAttribute("hidden")) {
@@ -976,8 +985,10 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
-	async _subItemsPopover() {
+	async _subItemsPopover(tabInstance) {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		// TO DO check subTabs for undefined etc.
+		this._tabItems = tabInstance._subItems;
 		return staticAreaItem.querySelector(`#${this._id}-expandButtonPopover`);
 	}
 
@@ -1049,10 +1060,6 @@ class TabContainer extends UI5Element {
 		return getAnimationMode() !== AnimationMode.None;
 	}
 
-	get selectedTabItems() {
-		return this._selectedTab._subItems;
-	}
-
 	static get dependencies() {
 		return [
 			Button,
@@ -1094,17 +1101,18 @@ const findIndex = (arr, predicate) => {
 };
 
 const buildTree = (el, level, result) => {
-	el.items.forEach((item, index) => {
+	el.subTabs.forEach((item, index) => {
 		if (item.getAttribute("ui5-tab") === "") {
 			const subItem = {
 				item,
-				size: el.items.length,
-				posinset: index + 1,
-				style: { "padding-left": `${level / 2}rem` },
+				size: el.subTabs.length,
+				_posinset: index + 1,
+				style: { "padding-left": `${level / 2 + 0.5}rem` },
+				classes: item.overflowClasses,
 			};
 
 			result.push(subItem);
-			if (item.items) {
+			if (item.subTabs) {
 				buildTree(item, level + 1, result);
 			}
 		}

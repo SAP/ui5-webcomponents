@@ -103,6 +103,15 @@
 	display: none;
 }
 
+.ui5-tab-expand-button > [ui5-button] {
+	height: 1.5rem;
+	min-width: 1.5rem;
+	margin-top: 0.25rem;
+}
+
+.ui5-tab-expand-button>[ui5-button]:hover {
+	background-color: var(--sapButton_Hover_Background);
+}
 /*** Responsive paddings ***/
 
 :host([media-range="S"]) .ui5-tc__header {

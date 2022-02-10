@@ -35,8 +35,16 @@ const metadata = {
 		 * @slot items
 		 */
 		"default": {
-			propertyName: "items",
 			type: HTMLElement,
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
+		},
+
+		subTabs: {
+			type: HTMLElement,
+			individualSlots: true,
 			invalidateOnChildChange: {
 				properties: true,
 				slots: false,
@@ -216,7 +224,7 @@ class Tab extends UI5Element {
 	}
 
 	get requiresExpandButton() {
-		return this._subItems.length > 0;
+		return this.subTabs.length > 0 && this.parentElement.getAttribute("ui5-tabcontainer") === "";
 	}
 
 	/**
@@ -242,14 +250,22 @@ class Tab extends UI5Element {
 	}
 
 	async _onTabExpandButtonClick(event) {
+		event.stopPropagation();
 		const button = event.target;
 
-		this.responsivePopoverSubItems = await this._subItemsPopover();
+		const tabInstanceId = event.target.parentElement.parentElement.id;
+		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
+
+		this.responsivePopoverSubItems = await this._subItemsPopover(tabInstance);
 		if (this.responsivePopoverSubItems.opened) {
 			this.responsivePopoverSubItems.close();
 		} else {
 			this.responsivePopoverSubItems.showAt(button);
 		}
+	}
+
+	_getExpandButton() {
+		return this.shadowRoot.querySelector(".ui5-tab-expand-button");
 	}
 
 	get isMixedModeTab() {
@@ -269,7 +285,7 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		const selectedSubItem = this.items.some(elem => elem.effectiveSelected);
+		const selectedSubItem = this.subTabs.some(elem => elem.effectiveSelected);
 		return this.selected || this._selected || selectedSubItem;
 	}
 
