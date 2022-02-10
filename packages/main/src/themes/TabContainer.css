@@ -48,14 +48,19 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	flex: 1 1 100%;
+	padding: var(--_ui5_tc_headerScrollContainer_padding);
+    margin: var(--_ui5_tc_headerScrollContainer_margin);
 }
 
 .ui5-tc__headerList {
 	position: relative;
-	display: flex;
+	display: var(--_ui5_tc_headerList_display);
 	margin: 0;
-	padding: 0;
+	padding: var(--_ui5_tc_headerList_padding);
 	list-style: none;
+	gap: var(--_ui5_tc_headerList_gap);
+	border-radius: var(--_ui5_tc_headerList_border_radius);
+	background: var(--_ui5_tc_headerList_background);
 }
 
 .ui5-tc__separator {

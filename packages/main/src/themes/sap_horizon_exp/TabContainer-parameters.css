@@ -5,36 +5,98 @@
 	--_ui5_tc_header_height_text_with_additional_text: 3.625rem;
 	--_ui5_tc_header_box_shadow: none;
 	--_ui5_tc_header_border_bottom: 0.0625rem solid var(--sapObjectHeader_Background);
+	--_ui5_tc_headerList_display: inline-flex;
 
 	/* Header Item */
+	--_ui5_tc_item_text_padding: 0.5rem 0.375rem;
+	--_ui5_tc_item_text_only_height: 3rem;
+	--_ui5_tc_headerItem_text_only_focus_border: none;
 	--_ui5_tc_item_text_only_with_additional_text_height: 3.625rem;
 	--_ui5_tc_headeritem_padding: 0;
-	--_ui5_tc_headerItem_color: var(--sapNeutralTextColor); /* #5B738B; */
+	--_ui5_tc_headerItem_color: var(--sapGreyColor5);
 	--_ui5_tc_headeritem_text_font_weight: bold;
-	--_ui5_tc_headerItem_text_hover_color: var(--sapTile_TitleTextColor); /* #475E75; */
-	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapContent_Selected_TextColor); /* #0057D2; */
+	--_ui5_tc_headerItem_text_hover_color: var(--sapGreyColor6);
+	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapBlueColor6);
 	--_ui5_tc_headerItem_focus_border: none;
 	--_ui5_tc_headerItem_transition: all 0.2s ease-in-out;
 	--_ui5_tc_headerItemContent_border_radius: 0.125rem;
-	--_ui5_tc_headerItemContent_border_bottom: none; /* #1B90FF; */
-	--_ui5_tc_headerItemContent_border_bg: var(--sapContent_FocusColor); /* #1B90FF; */
+	--_ui5_tc_headerItemContent_border_bottom: none;
+	--_ui5_tc_headerItemContent_border_bg: var(--sapBlueColor4);
 	--_ui5_tc_headerItem_neutral_border_bg: var(--_ui5_tc_headerItem_neutral_color);
 	--_ui5_tc_headerItem_positive_border_bg: var(--_ui5_tc_headerItem_positive_color);
 	--_ui5_tc_headerItem_negative_border_bg: var(--_ui5_tc_headerItem_negative_color);
 	--_ui5_tc_headerItem_critical_border_bg: var(--_ui5_tc_headerItem_critical_color);
-	--_ui5_tc_headerItem_hover_border_bg: var(--sapTile_TitleTextColor); /* #475E75; */
-	--_ui5_tc_headerItem_hover_selected_hover_border_bg: var(--sapContent_Selected_TextColor); /* #0057D2; */
-	--_ui5_tc_headerItem_hover_border_visibility: visible;
+	--_ui5_tc_headerItem_hover_border_bg: var(--sapGreyColor6);
+	--_ui5_tc_headerItem_hover_selected_hover_border_bg: var(--sapBlueColor5);
 
 	--_ui5_tc_headerItemContent_border_height: 0.125rem;
-	--_ui5_tc_headerItemContent_offset: 0.25rem;
-	--_ui5_tc_headerItemContent_focus_offset: 0.25rem;
-	--_ui5_tc_headerItemContent_padding: 0.25rem 0.5rem;
-	--_ui5_tc_headerItemContent_focus_border: 0.125rem solid var(--sapContent_FocusColor);
-	--_ui5_tc_headerItemContent_default_focus_border: 0.125rem solid transparent;
+	--_ui5_tc_headerItemContent_offset: 0.5rem;
+	--_ui5_tc_headerItemContent_offset_bottom: 0;
+	--_ui5_tc_headerItemContent_focus_offset: 0.5rem;
+	--_ui5_tc_headerItemContent_padding: 0.625rem 0.125rem;
+	--_ui5_tc_headerItemContent_focus_color: var(--sapGreyColor8);
+	--_ui5_tc_headerItemContent_focus_color: var(--_ui5_tc_headerItem_color);
 	--_ui5_tc_headerItemContent_focus_border_radius: 0.5rem;
 
 	--_ui5_tc_overflowItem_default_color: var(--sapHighlightColor);
 	--_ui5_tc_overflowItem_current_color: CurrentColor;
 	--_ui5_tc_content_border_bottom: 0.0625rem solid var(--sapObjectHeader_BorderColor);
+	--_ui5_tc_headerItem_focus_border_radius: 0.5rem;
+	--_ui5_tc_headerItem_text_active_hover_color: var(--sapGreyColor7);
+	--_ui5_tc_headerItem_active_hover_border_bg: var(--sapGreyColor7);
+	--_ui5_tc_headeritem_text_active_selected_hover_color: var(--sapBlueColor7);
+	--_ui5_tc_headerItem_active_hover_selected_hover_border_bg: var(--sapBlueColor6);
+	--_ui5_tc_headerItemContent_focus_hover_color: var(--sapGreyColor6);
+	--_ui5_tc_headerItem_text_active_hover_color: var(--sapGreyColor7);
+
+	/* Focus Keyboard */
+	--_ui5_tc_headerItem_focus_keyboard_color: var(--sapGreyColor8);
+	--_ui5_tc_headerItem_focus_keyboard_offset: 0;
+	--_ui5_tc_headerItem_focus_keyboard_border: 0.125rem solid var(--sapBlueColor4);
+	--_ui5_tc_headerItem_text_only_focus_keyboard_border: var(--_ui5_tc_headerItem_focus_keyboard_border);
+	--_ui5_tc_headeritem_text_selected_focus_keyboard_color: var(--sapBlueColor5);
+	--_ui5_tc_headerItemContent_focus_keyboard_offset: 0.125rem;
+
+	/* Disabled */
+	--_ui5_tc_headerItem_disabled_opacity: 1;
+	--_ui5_tc_headeritem_disabled_color: var(--sapGreyColor3);
+	--_ui5_tc_headerItem_selected_disabled_border_bg: var(--sapGreyColor3);
+	--_ui5_tc_headerItemContent_disabled_offset_bottom: 0;
+
+	/* Individual */
+	--_ui5_tc_individual_headerScrollContainer_padding: 1.5rem 0;
+	--_ui5_tc_individual_headerScrollContainer_margin: -1.5rem 0;
+	--_ui5_tc_individual_headerList_gap: 0.5rem;
+	--_ui5_tc_individual_headerList_padding: 0 2px;
+	--_ui5_tc_individual_item_text_padding: .5rem .625rem;
+	--_ui5_tc_individual_item_text_only_height: 2rem;
+	--_ui5_tc_individual_headerItem_color: var(--sapGreyColor6);
+	--_ui5_tc_individual_headeritem_padding: 0;
+	--_ui5_tc_individual_headerItem_focus_border_radius: .5rem;
+	--_ui5_tc_individual_headerItemContent_padding: .5rem 0.125rem;
+	--_ui5_tc_individual_headerItemContent_offset: 0;
+	--_ui5_tc_individual_headerItemContent_focus_offset: 0;
+	--_ui5_tc_individual_headerItemContent_border_height: 0.125rem;
+	--_ui5_tc_individual_headerItemContent_border_radius: 0;
+	--_ui5_tc_individual_headerItemContent_offset_bottom: -0.125rem;
+	--_ui5_tc_individual_headerItemContent_hover_background: white;
+	--_ui5_tc_individual_headerItemContent_selected_background: white;
+	--_ui5_tc_individual_headerItemContent_hover_box_shadow: var(--shadow-grey-medium);
+	--_ui5_tc_individual_headerItemContent_active_box_shadow: var(--shadow-grey-xs);
+	--_ui5_tc_individual_headerItemContent_active_hover_box_shadow: var(--shadow-grey-xs);
+	--_ui5_tc_individual_headerItemContent_selected_box_shadow: var(--shadow-blue-small);
+	--_ui5_tc_individual_headerItemContent_selected_hover_box_shadow: var(--shadow-blue-medium);
+	--_ui5_tc_individual_headerItemContent_selected_active_box_shadow: var(--shadow-blue-xs);
+	--_ui5_tc_individual_headerItemContent_background: var(--sapGreyColor1);
+	--_ui5_tc_individual_headerItemContent_disabled_background: var(--sapGreyColor1);
+	--_ui5_tc_individual_headerItemContent_selected_offset_bottom: 0;
+	--_ui5_tc_individual_headerItemContent_position: relative;
+
+	/* Group */
+	--_ui5_tc_group_headerList_background: var(--sapGreyColor1);
+	--_ui5_tc_group_headerList_border_radius: 0.5rem;
+	--_ui5_tc_group_headerList_gap: 0.125rem;
+	--_ui5_tc_group_headerItem_hover_border_bg: var(--sapGreyColor6);
+	--_ui5_tc_group_headerItemContent_disabled_background: var(--sapGreyColor1);
+	--_ui5_tc_group_headerItemContent_hover_offset_bottom: 0;
 }

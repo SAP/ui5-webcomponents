@@ -8,6 +8,8 @@
 	--_ui5_tc_headerItem_focus_border: 0.125rem dotted var(--sapContent_FocusColor);
 	--_ui5_tc_headeritem_text_selected_color: var(--sapPageHeader_BorderColor);
 	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapPageHeader_BorderColor);
+	--_ui5_tc_headeritem_text_selected_focus_keyboard_color: var(--sapPageHeader_BorderColor);
+	--_ui5_tc_headeritem_text_active_selected_hover_color: var(--sapPageHeader_BorderColor);
 	--_ui5_tc_headerItem_neutral_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_headerItem_positive_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_headerItem_negative_color: var(--sapGroup_TitleTextColor);
