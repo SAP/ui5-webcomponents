@@ -2,11 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineItem from "./TimelineItem.js";
 
 // Styles
