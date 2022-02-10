@@ -496,8 +496,8 @@ class TabContainer extends UI5Element {
 		const _allItemsAndSubItems = [];
 
 		this._getAllSubItems(this.items, _allItemsAndSubItems);
-		const selectedIndex = findIndex(_allItemsAndSubItems, item => item.text.trim() === target.textContent.trim());
-		const selectedTabIndex = findIndex(_allItemsAndSubItems, item => item.text.trim() === target.textContent.trim());
+		const selectedIndex = findIndex(_allItemsAndSubItems, item => item.__id === target.id);
+		const selectedTabIndex = findIndex(_allItemsAndSubItems, item => item.__id === target.id);
 		const selectedTab = _allItemsAndSubItems[selectedIndex];
 
 		// update selected items
@@ -1109,6 +1109,7 @@ const buildTree = (el, level, result) => {
 				_posinset: index + 1,
 				style: { "padding-left": `${level / 2 + 0.5}rem` },
 				classes: item.overflowClasses,
+				_id: item.__id
 			};
 
 			result.push(subItem);
