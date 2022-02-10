@@ -62,18 +62,18 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await input.getProperty("value"), "7", "Event is not fired");
 			assert.notOk(await items[3].getProperty("expanded"), "Expanded is toggled");
 
-            await items[1].click();
-            assert.strictEqual(await input.getProperty("value"), "8", "Event is fired");
+			await items[1].click();
+			assert.strictEqual(await input.getProperty("value"), "8", "Event is fired");
 
-            const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-            const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-            items = await popover.$("ui5-list").$$("ui5-li");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			items = await popover.$("ui5-list").$$("ui5-li");
 
-            await items[1].click();
+			await items[1].click();
 
-            assert.strictEqual(await input.getProperty("value"), "9", "Event is fired");
+			assert.strictEqual(await input.getProperty("value"), "9", "Event is fired");
 
-        });
+		});
 
 		it("Tests header visibility", async () => {
 			let showHeader = null;
@@ -140,6 +140,23 @@ describe("Component Behavior", () => {
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);
+		});
+	
+		it("tests the prevention of the ui5-selection-change event", async () => {
+			const selectionChangeCheckbox = await browser.$("#prevent-selection");
+			await selectionChangeCheckbox.click();
+
+			const selectionChangeCounter = await browser.$("#counter");
+			await selectionChangeCounter.setProperty("value", "0");
+
+			const sideNavigation = await browser.$("#sn1");
+			const items = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			await items[0].click();
+			await items[1].click();
+
+			assert.strictEqual(await selectionChangeCounter.getProperty("value"), "0", "Event is not fired");
+
+			await selectionChangeCheckbox.click();
 		});
 	});
 });
