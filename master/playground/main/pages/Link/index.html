@@ -41,6 +41,7 @@
 	<section class="group">
 		<h2>cross-origin</h2>
 		<ui5-link href="https://www.google.com" target="_blank" id="link">link</ui5-link><span>native span</span>
+		<ui5-link href="https://www.google.com" target="_blank" id="linkAccName" accessible-name="more info">link with accessible-name</ui5-link><span>native span</span>
 	</section>
 
 	<section class="group">
@@ -101,13 +102,13 @@
 					<ui5-label for="email" type="Email" required>Email: </ui5-label>
 					<ui5-input id="email"></ui5-input>
 				</div>
-		
+
 				<div>
 					<ui5-label for="password" required>Password: </ui5-label>
 					<ui5-input id="password" type="Password"></ui5-input>
 				</div>
 			</section>
-		
+
 			<div slot="footer"	class="dialog-footer">
 				<div style="flex: 1;"></div>
 				<ui5-button id="closeDialogButton" design="Emphasized">Sign in</ui5-button>
