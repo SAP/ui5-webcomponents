@@ -8,6 +8,8 @@ import {
 	isUp,
 	isSpace,
 	isRight,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -574,10 +576,6 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (isTabNext(event) || isTabPrevious(event)) {
-			this.allItemsPopover.close();
-		}
-
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
 	}
@@ -593,6 +591,10 @@ class MultiComboBox extends UI5Element {
 		if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
 			this.value = this._lastValue;
 		}
+	}
+
+	_handleTab(event) {
+		this.allItemsPopover.close();
 	}
 
 	_onValueStateKeydown(event) {
