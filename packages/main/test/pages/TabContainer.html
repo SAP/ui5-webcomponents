@@ -23,6 +23,33 @@
 
 <body class="tabcontainer1auto">
 
+	<!-- <custom-element>
+<ul>
+	<li>
+		{{#each a}}
+		<slot name="{{_individualSlot}}"></slot>
+		{{/each}}
+	</li>
+	<div>
+		{{#each b}}
+		<slot name="{{_individualSlot}}"></slot>
+		{{/each}}
+	</div>
+</ul>
+
+		<div slot="a"></div>
+		<div slot="a"></div>
+		<div slot="a"></div>
+		<div slot="a"></div>
+		<div slot="a"></div>
+
+		<d slot="b"></d>
+		<d slot="b"></d>
+		<d slot="b"></d>
+		<d slot="b"></d>
+		<d slot="b"></d>
+	</custom-element> -->
+
 	<header class="header">
 		<h1 class="header-title">ui5-tabcontainer</h1>
 	</header>
@@ -30,22 +57,53 @@
 		<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>
 		<h2>Nested Tabs</h2>
 		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed>
-			<ui5-tab text="One"><ui5-button>Button 1</ui5-button></ui5-tab>
-			<ui5-tab text="Two"><ui5-button>Button 2</ui5-button>
-				<ui5-tab slot="subTabs" text="2.1"><ui5-button>Button 21</ui5-button>
-					<ui5-tab slot="subTabs" text="2.1.1"><ui5-button>Button 211</ui5-button></ui5-tab>
+			<ui5-tab text="One">
+				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+
+			<ui5-tab text="Two">
+				<ui5-button>Button 2</ui5-button>
+				<ui5-button>Button 2</ui5-button>
+
+				<ui5-tab slot="subTabs" text="2.1">
+					<ui5-button>Button 21</ui5-button>
+				<ui5-button>Button 21</ui5-button>
+
+					<ui5-tab slot="subTabs" text="2.1.1">
+						<ui5-button>Button 211</ui5-button>
+						<ui5-button>Button 211</ui5-button>
+					</ui5-tab>
+					
+
 					<ui5-tab slot="subTabs" text="2.1.2">
-						<ui5-tab slot="subTabs" text="2.1.2.1"><ui5-button>Button 2121</ui5-button></ui5-tab>
+						<ui5-tab slot="subTabs" text="2.1.2.1">
+							<ui5-button>Button 2121</ui5-button>
+							<ui5-button>Button 2121</ui5-button>
+						</ui5-tab>
+						
+						<ui5-button>Button 212</ui5-button>
 						<ui5-button>Button 212</ui5-button>
 					</ui5-tab>
 				</ui5-tab>
-				<ui5-tab text="2.2"></ui5-tab>
+
+				<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+
+				<ui5-tab text="2.2" slot="subTabs">
+					Text for 2.2
+				</ui5-tab>
 			</ui5-tab>
-			<ui5-tab text="Three"><ui5-button>Button 3</ui5-button>
+
+			<ui5-tab text="Three">
+				<ui5-button>Button 3</ui5-button>
+				<ui5-button>Button 3</ui5-button>
+
 				<ui5-tab slot="subTabs" text="3.1">
+					<ui5-button>Button 31</ui5-button>
 					<ui5-button>Button 31</ui5-button>
 				</ui5-tab>
 			</ui5-tab>
+
 		</ui5-tabcontainer>
 	</section>
 

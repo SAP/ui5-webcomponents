@@ -26,9 +26,7 @@ const metadata = {
 
 		/**
 		/**
-		 * Defines the sub tabs.
-		 * <br><br>
-		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 * Defines the content of this tab.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
@@ -42,6 +40,16 @@ const metadata = {
 			},
 		},
 
+		/**
+		/**
+		 * Defines the sub tabs.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 *
+		 * @type {sap.ui.webcomponents.main.ITab[]}
+		 * @public
+		 * @slot items
+		 */
 		subTabs: {
 			type: HTMLElement,
 			individualSlots: true,
@@ -255,6 +263,7 @@ class Tab extends UI5Element {
 
 		const tabInstanceId = event.target.parentElement.parentElement.id;
 		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
+
 
 		this.responsivePopoverSubItems = await this._subItemsPopover(tabInstance);
 		if (this.responsivePopoverSubItems.opened) {

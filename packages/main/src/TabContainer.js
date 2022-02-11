@@ -483,7 +483,7 @@ class TabContainer extends UI5Element {
 
 	_getAllSubItems(items, result) {
 		items.forEach(item => {
-			if (item.getAttribute("ui5-tab") === "") {
+			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				result.push(item);
 				if (item.subTabs) {
 					this._getAllSubItems(item.subTabs, result);
@@ -1102,7 +1102,7 @@ const findIndex = (arr, predicate) => {
 
 const buildTree = (el, level, result) => {
 	el.subTabs.forEach((item, index) => {
-		if (item.getAttribute("ui5-tab") === "") {
+		if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 			const subItem = {
 				item,
 				size: el.subTabs.length,
