@@ -1,5 +1,5 @@
 <header>
-	<h2 class="control-header">ColorPalette</h2>
+	<h2 class="control-header">ColorPalettePopover</h2>
 </header>
 
 <div class="component-package">@ui5/webcomponents</div>
@@ -27,7 +27,7 @@
 	</div>
 	<script>
 		colorPaletteBtn.addEventListener("click", function(event) {
-			colorPalettePopover.openPopover(this);
+			colorPalettePopover.showAt(this);
 		});
 	</script>
 	<pre class="prettyprint lang-html"><xmp>
@@ -48,7 +48,7 @@
 </ui5-color-palette-popover>
 <script>
 	colorPaletteBtn.addEventListener("click", (event) => {
-		colorPalettePopover.openPopover(this);
+		colorPalettePopover.showAt(this);
 	});
 </script>
 </xmp></pre>
@@ -75,7 +75,7 @@
 	</div>
 	<script>
 		colorPaletteBtn1.addEventListener("click", function (event) {
-			colorPalettePopover1.openPopover(this);
+			colorPalettePopover1.showAt(this);
 		});
 	</script>
 	<pre class="prettyprint lang-html"><xmp>
@@ -96,7 +96,7 @@
 </ui5-color-palette-popover>
 <script>
 	colorPaletteBtn1.addEventListener("click", (event) => {
-		colorPalettePopover1.openPopover(this);
+		colorPalettePopover1.showAt(this);
 	});
 </script>
 </xmp></pre>

@@ -10,6 +10,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
@@ -169,6 +170,7 @@ const metadata = {
 			type: String,
 			multiple: true,
 		},
+
 		_menuPopoverExpanded: {
 			type: Boolean,
 			noAttribute: true,
@@ -177,6 +179,7 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_fullWidthSearch: {
 			type: Boolean,
 			noAttribute: true,
@@ -298,7 +301,7 @@ const metadata = {
 
 		/**
 		 * Fired, when the product switch icon is activated.
-		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
+		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
 		 * @allowPreventDefault
@@ -341,7 +344,7 @@ const metadata = {
 
 		/**
 		 * Fired, when a menu item is activated
-		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
+		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#menu-item-click
 		 * @param {HTMLElement} item DOM ref of the activated list item
@@ -1112,7 +1115,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get menuBtnHasPopup() {
-		return this.hasMenuItems ? true : undefined;
+		return this.hasMenuItems ? HasPopup.Menu : undefined;
 	}
 
 	get menuBtnTabindex() {
@@ -1178,13 +1181,17 @@ class ShellBar extends UI5Element {
 				"title": this._productsText,
 			},
 			search: {
-				"ariaExpanded": this.showSearchField,
 				"title": this._searchText,
+				"accessibilityAttributes": {
+					expanded: this.showSearchField,
+				},
 			},
 			overflow: {
 				"title": this._overflowText,
-				"ariaHaspopup": true,
-				"ariaExpanded": this._overflowPopoverExpanded,
+				"accessibilityAttributes": {
+					hasPopup: HasPopup.Menu,
+					expanded: this._overflowPopoverExpanded,
+				},
 			},
 		};
 	}

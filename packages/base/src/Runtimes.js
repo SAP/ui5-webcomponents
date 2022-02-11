@@ -1,6 +1,5 @@
 import VersionInfo from "./generated/VersionInfo.js";
 import getSharedResource from "./getSharedResource.js";
-import metaUrl from "./util/metaUrl.js"; // eslint-disable-line
 
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -22,7 +21,6 @@ const registerCurrentRuntime = () => {
 		currentRuntimeIndex = Runtimes.length;
 		Runtimes.push({
 			...VersionInfo,
-			url: metaUrl,
 			alias: currentRuntimeAlias,
 			description: `Runtime ${currentRuntimeIndex} - ver ${VersionInfo.version}${currentRuntimeAlias ? ` (${currentRuntimeAlias})` : ""}`,
 		});

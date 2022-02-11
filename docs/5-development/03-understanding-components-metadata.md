@@ -61,7 +61,7 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 | `type`         | Property type                | N/A       | The type of the property. For more information on types see the table below.                                  |
 | `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML.|
 | `multiple`     | Boolean                      | false     | Indicates whether the property represents a single value or is an array of values of the given type.          |
-| `noAttribute`  | Boolean                      | false     | No attribute equivalent will be created for that property. Always false for properties of type Object.        |
+| `noAttribute`  | Boolean                      | false     | No attribute equivalent will be created for that property. Always true for properties of type Object.        |
 
 The `type` setting is required.
 

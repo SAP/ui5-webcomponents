@@ -14,8 +14,11 @@ such as a common header (ShellBar).
 |-------------------------------------------|--------------------------------|-----------------------------------------------------------------------|
 | Bar                                       | `ui5-bar`                      | `import "@ui5/webcomponents-fiori/dist/Bar.js";`                      |
 | Barcode Scanner Dialog                    | `ui5-barcode-scanner-dialog`   | `import "@ui5/webcomponents-fiori/dist/BarcodeScannerDialog.js";`     |
+| Dynamic Side Content                      | `ui5-dynamic-side-content`     | `import "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";`       |
 | Flexible Column Layout                    | `ui5-flexible-column-layout`   | `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`     |
 | Illustrated Message                       | `ui5-illustrated-message`      | `import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";`       |
+| Media Gallery                             | `ui5-media-gallery`            | `import "@ui5/webcomponents-fiori/dist/MediaGallery.js";`             |
+| Media Gallery Item                        | `ui5-media-gallery-item`       | comes with  `ui5-media-gallery`                                       |
 | Notification List Item                    | `ui5-li-notifcation`           | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`      |
 | Notification Group List Item              | `ui5-li-notification-group`    | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";` |
 | Notification Action                       | `ui5-notification-action`      | `import "@ui5/webcomponents-fiori/dist/NotificationAction.js";`       |

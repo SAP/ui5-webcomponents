@@ -95,7 +95,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @defaultvalue: ""
@@ -211,11 +211,15 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
 		/**
 		 * Fired when the user clicks on the default action.
+		 * @event
+		 * @public
 		 */
 		"click": {},
 
 		/**
 		 * Fired when the user clicks on the arrow action.
+		 * @event sap.ui.webcomponents.main.SplitButton#arrow-click
+		 * @public
 		 */
 		"arrow-click": {},
 	 },
@@ -247,8 +251,8 @@ const metadata = {
  * the style to provide visual feedback to the user that it is pressed or hovered over with
  * the mouse cursor. A disabled <code>ui5-split-button</code> appears inactive and any of the two buttons
  * cannot be pressed.
- * <br><br>
- * <b>Keyboard handing</b>
+ *
+ * <h3>Keyboard Handling</h3>
  * <ul>
  * <li><code>Space</code> or <code>Enter</code> - triggers the default action</li>
  * <li><code>Shift</code> or <code>Escape</code> - if <code>Space</code> is pressed, releases the default action button without triggering the click event.</li>
@@ -258,10 +262,11 @@ const metadata = {
  * <li><code>click</code> for the first button (default action)</li>
  * <li><code>arrow-click</code> for the second button (arrow action)</li>
  * </ul>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/SplitButton.js";</code>
+ * <code>import "@ui5/webcomponents/dist/SplitButton.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -389,7 +394,7 @@ class SplitButton extends UI5Element {
 	}
 
 	get textButtonAccText() {
-		return this.text[0].textContent;
+		return this.textContent;
 	}
 
 	get textButton() {

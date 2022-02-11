@@ -78,7 +78,7 @@ describe("Color Picker general interaction", () => {
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 183, 0.83)", "Color properly changed");
+		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 182, 0.83)", "Color properly changed");
 		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on hue slider change");
 	});
 
@@ -120,6 +120,22 @@ describe("Color Picker general interaction", () => {
 		await browser.keys("Enter");
 
 		assert.strictEqual(await colorPicker.getAttribute("color"), color, "Color is changed to the old color");
+	});
+
+	it("Hue value remains unchanged when user presses over the main color section", async () => {
+		const colorPicker = await browser.$("#change-event");
+		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
+		const mainColorSection = await colorPicker.shadow$(".ui5-color-picker-main-color");
+
+		await hexInput.doubleClick();
+		await browser.keys("0a6ed1");
+		await browser.keys("Enter");
+
+		const hueValue = await colorPicker.getAttribute("_hue");
+
+		await mainColorSection.click();
+
+		assert.strictEqual(await colorPicker.getAttribute("_hue"), hueValue, "Hue value remained unchanged");
 	});
 
 });

@@ -139,6 +139,10 @@ const isLeftShift = event => (event.key ? (event.key === "ArrowLeft" || event.ke
 
 const isRightShift = event => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, false, false, true);
 
+const isLeftShiftCtrl = event => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, true, false, true);
+
+const isRightShiftCtrl = event => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, true, false, true);
+
 const isUpShiftCtrl = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, true);
 
 const isDownShiftCtrl = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, true);
@@ -149,7 +153,11 @@ const isEnd = event => (event.key ? event.key === "End" : event.keyCode === KeyC
 
 const isHomeCtrl = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, true, false, false);
 
+const isHomeShift = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, false, false, true);
+
 const isEndCtrl = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, true, false, false);
+
+const isEndShift = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, false, false, true);
 
 const isEscape = event => (event.key ? event.key === "Escape" || event.key === "Esc" : event.keyCode === KeyCodes.ESCAPE) && !hasModifierKeys(event);
 
@@ -209,6 +217,8 @@ const isShowByArrows = event => {
 
 const isShift = event => event.key === "Shift" || event.keyCode === KeyCodes.SHIFT;
 
+const isCtrlA = event => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, true, false, false);
+
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = event => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
@@ -234,6 +244,8 @@ export {
 	isDownAlt,
 	isLeftShift,
 	isRightShift,
+	isLeftShiftCtrl,
+	isRightShiftCtrl,
 	isUpShiftCtrl,
 	isDownShiftCtrl,
 	isHome,
@@ -242,6 +254,8 @@ export {
 	isMinus,
 	isHomeCtrl,
 	isEndCtrl,
+	isHomeShift,
+	isEndShift,
 	isEscape,
 	isTabNext,
 	isTabPrevious,
@@ -262,4 +276,5 @@ export {
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
 	isShift,
+	isCtrlA,
 };

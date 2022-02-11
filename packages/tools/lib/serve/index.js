@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const commandLineArgs = require("command-line-args");
 const { exec } = require("child_process");
-const colors = require("colors/safe");
+const colors = require("cli-color");
 const isPortReachable = require("is-port-reachable");
 
 const options = commandLineArgs([

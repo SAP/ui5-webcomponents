@@ -66,6 +66,11 @@
 	<div class="samples-margin">
 		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-input>
 	</div>
+
+	<h3>Test textContent</h3>
+	<ui5-split-button id="emptySpBtn" design="Default"></ui5-split-button>
+	<ui5-split-button id="defaultSpBtn" design="Default">Default</ui5-split-button>
+
 </body>
 <script>
 	var displayEvent = document.getElementById("displayEvent"),
@@ -84,7 +89,7 @@
 
 	function displayEventDetails(event) {
 		displayEvent.value = event.type;
-		displayElement.value = event.target.text[0].textContent;
+		displayElement.value = event.target.textContent;
 		setTimeout(function() {
 			displayEvent.value = "";
 			displayElement.value = "";
