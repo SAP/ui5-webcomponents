@@ -1,9 +1,5 @@
-commit 6597afaf207a2a61b25c35fc3365f18bf82cddc4
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Thu Feb 10 10:40:59 2022 +0200
+commit 16246a8ec08f4f4f287e4dcac53266da6d4bc60d
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri Feb 11 08:59:15 2022 +0200
 
-    feat(ui5-link): provide accessible-name support (#4711)
-    
-    Аdd new property "accessibleName" define custom accessible name  text for the link.
-    
-    Fixes: #4498
+    Refactor existing MultiComboBox keyboard handling (#4727)
