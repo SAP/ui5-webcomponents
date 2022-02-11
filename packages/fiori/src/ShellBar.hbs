@@ -112,7 +112,7 @@
 					data-ui5-stable="toggle-search"
 					@click={{_handleSearchIconPress}}
 					title="{{_searchText}}"
-					._buttonAccInfo="{{accInfo.search}}"
+					.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
 				></ui5-button>
 			{{/if}}
 
@@ -141,7 +141,6 @@
 				data-ui5-notifications-count="{{notificationsCount}}"
 				@click={{_handleNotificationsPress}}
 				title="{{_notificationsText}}"
-				._buttonAccInfo="{{accInfo.notifications}}"
 				data-ui5-stable="notifications"
 			></ui5-button>
 			{{/if}}
@@ -153,7 +152,7 @@
 				icon="sap-icon://overflow"
 				@click="{{_handleOverflowPress}}"
 				title="{{_overflowText}}"
-				._buttonAccInfo="{{accInfo.overflow}}"
+				.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
 				data-ui5-stable="overflow"
 			></ui5-button>
 
@@ -170,7 +169,6 @@
 				data-ui5-text="Product Switch"
 				@click={{_handleProductSwitchPress}}
 				title="{{_productsText}}"
-				._buttonAccInfo="{{accInfo.products}}"
 				data-ui5-stable="product-switch"
 			></ui5-button>
 			{{/if}}
@@ -185,7 +183,6 @@
 		@click={{_handleProfilePress}}
 		style="{{styles.items.profile}}"
 		title="{{_profileText}}"
-		._buttonAccInfo="{{accInfo.profile}}"
 		class="ui5-shellbar-button ui5-shellbar-image-button"
 		data-ui5-stable="profile"
 	>

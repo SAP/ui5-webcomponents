@@ -2,10 +2,8 @@
 
 :root {
 	/* Switch */
-	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_root_outline_top_bottom_hcb);
-	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_root_outline_left_right_hcb);
-	--_ui5_switch_compact_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom_hcb);
-	--_ui5_switch_compact_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right_hcb);
+	--_ui5_switch_root_outline_top_bottom: 0.1875rem;
+	--_ui5_switch_compact_root_outline_top_bottom: 0;
 	--_ui5_switch_foucs_size: 0.125rem;
 	--_ui5_switch_root_after_outline: none;
 	--_ui5_switch_focus_outline: 0.125rem dotted var(--sapContent_FocusColor);

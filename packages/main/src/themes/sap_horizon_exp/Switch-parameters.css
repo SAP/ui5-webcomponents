@@ -15,7 +15,7 @@
 	--_ui5-switch-root-box-shadow: 0 0 2px rgb(27 144 255 / 16%), 0 8px 16px rgb(27 144 255 / 16%);
 	--_ui5-switch-focus: none;
 	--_ui5_switch_root_outline_top_bottom: -0.25rem;
-	--_ui5_switch_root_outline_left_right: -0.25rem;
+	--_ui5_switch_root_outline_left_right: 0.125rem;;
 	--_ui5_switch_root_after_boreder_radius: 2rem;
 	--_ui5_switch_track_no_label_height: 24px;
 	--_ui5_switch_track_height: 24px;
