@@ -601,6 +601,11 @@ class MultiComboBox extends UI5Element {
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
 
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._onItemTab(event);
+			return;
+		}
+
 		event.preventDefault();
 
 		if (isArrowDown) {
