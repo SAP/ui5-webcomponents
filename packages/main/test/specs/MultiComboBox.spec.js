@@ -539,8 +539,10 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-warning");
+			const input = await mcb.shadow$("input");
 			const mcb2 = await browser.$("#mcb-error");
 
+			await input.click();
 			await mcb.keys("F4");
 			await mcb.keys("ArrowDown");
 			await mcb.keys("Tab");
