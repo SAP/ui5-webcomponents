@@ -90,6 +90,20 @@ const metadata = {
 		/**
 		 * @private
 		 */
+		_isSelectedColorChanged: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		 _isHueValueChanged: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
 		_wrongHEX: {
 			type: Boolean,
 		},
@@ -326,6 +340,8 @@ class ColorPicker extends UI5Element {
 		this.selectedHue = event.target.value;
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
+		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
+		this._isHueValueChanged = true;
 
 		const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
 
@@ -425,6 +441,9 @@ class ColorPicker extends UI5Element {
 			y: y - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
+		// Idication that changes to the color settings are triggered as a result of user pressing over the main color section.
+		this._isSelectedColorChanged = true;
+
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
 			this._setColor(HSLToRGB(tempColor));
@@ -435,7 +454,7 @@ class ColorPicker extends UI5Element {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
 
-		const h = Math.round(this._hue / 4.25), // 0 ≤ H < 360
+		const h = this._hue / 4.25, // 0 ≤ H < 360
 			// 0 ≤ S ≤ 1
 			s = 1 - +(Math.round((y / 256) + "e+2") + "e-2"), // eslint-disable-line
 			// 0 ≤ V ≤ 1
@@ -488,7 +507,15 @@ class ColorPicker extends UI5Element {
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
+		if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.
+			this._isSelectedColorChanged = false;
+		} else if (this._isHueValueChanged) { // We shouldn't recalculate the hue value when user changes the hue slider.
+			this._isHueValueChanged = false;
+			this._hue = this.selectedHue ? this.selectedHue : this._hue;
+		} else {
+			this._hue = Math.round(hslColours.h * 4.25);
+		}
+
 		this._setMainColor(this._hue);
 	}
 
