@@ -1,9 +1,7 @@
-commit 0562e89f88cd7c7837adfb515fd430990ebe0603
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon Feb 14 10:12:06 2022 +0200
+commit 1a33694f73ed2975b991cf18b1aba1b1a12c7c22
+Author: Henrique Mattos <henrique@visualworks.com.br>
+Date:   Mon Feb 14 09:32:56 2022 +0100
 
-    feat(ui5-timeline): add `accessible-name` support (#4721)
+    doc(ui5-tabcontainer): fix typo in code sample (#4731)
     
-    Add new property "accessibleName"
-    
-    FIXES: #4644
+    Attribute `text` was missing a `t` for component `ui5-tabcontainer`.
