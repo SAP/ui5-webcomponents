@@ -1,10 +1,19 @@
-commit 81a00d7779de870fa7d4a09a327ed62cbf3a4bff
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Mon Feb 14 13:53:55 2022 +0200
+commit ebc5cfcc072319784b99aed245d09bbbd6dc628d
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Mon Feb 14 17:29:46 2022 +0200
 
-    fix(ui5-input): aria-invalid is now properly rendered (#4734)
+    chore(deps): bump follow-redirects from 1.14.7 to 1.14.8 (#4739)
     
-    The attribute is bulean, however, it is now anounced by
-    JAWS in case it is not rendered as aria-invalid="true"
+    Bumps [follow-redirects](https://github.com/follow-redirects/follow-redirects) from 1.14.7 to 1.14.8.
+    - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
+    - [Commits](https://github.com/follow-redirects/follow-redirects/compare/v1.14.7...v1.14.8)
     
-    Fixes #4723
+    ---
+    updated-dependencies:
+    - dependency-name: follow-redirects
+      dependency-type: indirect
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
