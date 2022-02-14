@@ -1,5 +1,9 @@
-commit 16246a8ec08f4f4f287e4dcac53266da6d4bc60d
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Feb 11 08:59:15 2022 +0200
+commit 0562e89f88cd7c7837adfb515fd430990ebe0603
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Feb 14 10:12:06 2022 +0200
 
-    Refactor existing MultiComboBox keyboard handling (#4727)
+    feat(ui5-timeline): add `accessible-name` support (#4721)
+    
+    Add new property "accessibleName"
+    
+    FIXES: #4644
