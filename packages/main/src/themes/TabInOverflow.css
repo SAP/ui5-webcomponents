@@ -37,7 +37,7 @@
 	padding: 0 0.5rem;
 	height: var(--_ui5_tc_item_text);
 	pointer-events: none;
-	font-size: 0.875rem
+	font-size: 0.875rem;
 }
 
 .ui5-tab-overflow-item [ui5-icon] {

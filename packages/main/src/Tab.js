@@ -264,8 +264,7 @@ class Tab extends UI5Element {
 		const tabInstanceId = event.target.parentElement.parentElement.id;
 		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
 
-
-		this.responsivePopoverSubItems = await this._subItemsPopover(tabInstance);
+		this.responsivePopoverSubItems = await this._respPopover(tabInstance);
 		if (this.responsivePopoverSubItems.opened) {
 			this.responsivePopoverSubItems.close();
 		} else {

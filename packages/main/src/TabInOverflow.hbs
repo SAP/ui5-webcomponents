@@ -7,7 +7,7 @@
 	aria-selected="{{this.effectiveSelected}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
 >
-	<div class="ui5-tab-overflow-itemContent">
+	<div class="ui5-tab-overflow-itemContent" style="{{this._style}}">
 		{{#if this.icon}}
 			<ui5-icon name="{{this.icon}}"></ui5-icon>
 		{{/if}}
@@ -19,20 +19,4 @@
 		{{/if}}
 	</div>
 </ui5-li-custom>
-{{#each _subItems}}
-<ui5-li-custom id="{{this._id}}" class="{{this.classes}}" type="{{this.overflowState}}"
-	?disabled="{{this.effectiveDisabled}}" aria-disabled="{{this.effectiveDisabled}}"
-	aria-selected="{{this.effectiveSelected}}" aria-labelledby="{{this.ariaLabelledBy}}">
-	<div class="ui5-tab-overflow-itemContent" style="{{this.style}}">
-		{{#if item.icon}}
-		<ui5-icon name="{{item.icon}}"></ui5-icon>
-		{{/if}}
 
-		{{item.text}}
-
-		{{#if item.additionalText}}
-		({{item.additionalText}})
-		{{/if}}
-	</div>
-</ui5-li-custom>
-{{/each}}
