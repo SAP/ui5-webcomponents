@@ -666,12 +666,15 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	get _tickmarks() {
+		const currentTheme = getTheme();
+		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
+
 		if (!this.showTickmarks || !this._effectiveStep) {
 			return;
 		}
 
 		if (this._hiddenTickmarks) {
-			return `linear-gradient(to right, currentColor 1px, transparent 0) 0 center / calc(100% - 1px) 100% repeat-x`;
+			return `linear-gradient(to right, ${currentColor} 1px, transparent 0) 0 center / calc(100% - 1px) 100% repeat-x`;
 		}
 
 		// Convert number values to strings to let the CSS do calculations better
@@ -682,9 +685,7 @@ class SliderBase extends UI5Element {
 
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
-		const currentTheme = getTheme();
 		const tickmarkWidth = "1px";
-		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
 		this._hiddenTickmarks = false;

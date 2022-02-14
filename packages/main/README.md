@@ -61,6 +61,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Select                   | `ui5-select`                | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`                | comes with `ui5-select `                                   |
 | Slider                   | `ui5-slider`                | `import "@ui5/webcomponents/dist/Slider.js";`              |
+| Split Button             | `ui5-split-button`          | `import "@ui5/webcomponents/dist/SplitButton.js";`         |
 | Step Input               | `ui5-step-input`            | `import "@ui5/webcomponents/dist/StepInput.js";`           |
 | Suggestion Item          | `ui5-suggestion-item`       | comes with `InputSuggestions.js` feature - see below       |
 | Switch                   | `ui5-switch`                | `import "@ui5/webcomponents/dist/Switch.js";`              |

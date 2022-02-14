@@ -133,6 +133,19 @@
 	</div>
 
 	<div class="breadcrumbs9auto">
+
+		<h2>Breadcrumbs with links and preventDefault</h2>
+
+		<ui5-breadcrumbs id="breadcrumbsPreventDefault" separator-class="Slash">
+			<ui5-breadcrumbs-item href="#shouldnotbehere">Link1 </ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="..">Link2</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#shouldnotbehere">Link3</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#shouldnotbehere">Link4</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
+		</ui5-breadcrumbs>
+	</div>
+
+	<div class="breadcrumbs9auto">
 		<h2>Empty Breadcrumbs</h2>
 		<ui5-breadcrumbs></ui5-breadcrumbs>
 	</div>
@@ -162,6 +175,12 @@
 
 		// log events
 		breadcrumbs1.addEventListener("ui5-item-click", (event) => {result.innerText = event.detail.item.innerText});
+
+		var breadcrumbsPreventDefault = document.querySelector("#breadcrumbsPreventDefault");
+		breadcrumbsPreventDefault.addEventListener("ui5-item-click", (event) => {
+			event.preventDefault();
+			result.innerText = event.detail.item.innerText;
+		});
 
 		extendSizeBtn.addEventListener("click", () => resizeContainer(true));
 		shrinkSizeBtn.addEventListener("click", () => resizeContainer());

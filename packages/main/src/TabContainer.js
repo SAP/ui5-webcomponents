@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -595,11 +596,13 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_handleResize() {
+	async _handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		}
 		this._updateMediaRange();
+
+		await renderFinished(); // await the tab container to have rendered its representation of tabs
 		this._setItemsForStrip();
 	}
 

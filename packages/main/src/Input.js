@@ -24,6 +24,10 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 // Templates
@@ -307,7 +311,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
 		 * @type {String}
 		 * @public
@@ -328,6 +332,30 @@ const metadata = {
 		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * Defines whether the clear icon of the input will be shown.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.2.0
+		 */
+		showClearIcon: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the clear icon is visible.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 * @since 1.2.0
+		 */
+		effectiveShowClearIcon: {
+			type: Boolean,
 		},
 
 		/**
@@ -587,6 +615,7 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
+		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
 
 		const FormSupport = getFeature("FormSupport");
@@ -783,6 +812,8 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
+		this._preventNextChange = this.effectiveShowClearIcon && this.shadowRoot.contains(event.relatedTarget);
+
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
@@ -832,9 +863,24 @@ class Input extends UI5Element {
 	}
 
 	_handleChange() {
+		if (this._preventNextChange) {
+			this._preventNextChange = false;
+			return;
+		}
+
 		if (this._changeFiredValue !== this.value) {
 			this._changeFiredValue = this.value;
 			this.fireEvent(this.EVENT_CHANGE);
+		}
+	}
+
+	_clear() {
+		this.value = "";
+		this.fireEvent(this.EVENT_INPUT);
+		this._handleChange();
+
+		if (!this._isPhone) {
+			this.focus();
 		}
 	}
 
