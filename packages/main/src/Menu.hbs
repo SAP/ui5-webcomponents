@@ -1,0 +1,77 @@
+<ui5-responsive-popover
+	id="{{_id}}-menu-rp"
+	dir={{effectiveDir}}
+	horizontal-align="Left"
+	placement-type={{placementType}}
+	vertical-align={{verticalAlign}}
+	hide-arrow
+	allow-target-overlap
+	@before-close={{_beforePopoverClose}}
+>
+	{{#if isPhone}}
+	<div slot="header" class="ui5-menu-dialog-header">
+		{{#if isSubMenuOpened}}
+		<ui5-button
+			icon="nav-back"
+			class="ui5-menu-back-button"
+			design="Transparent"
+			aria-label="{{labelBack}}"
+			@click={{_navigateBack}}
+		>
+		</ui5-button>
+		{{/if}}
+		<div class="ui5-menu-dialog-title">
+			<div>
+				{{menuTitlePhone}}
+			</div>
+		</div>
+		<ui5-button
+			icon="decline"
+			design="Transparent"
+			aria-label="{{labelClose}}"
+			@click={{close}}
+		>
+		</ui5-button>
+	</div>
+	{{/if}}
+	<div
+		id="{{_id}}-menu-main"
+	>
+		{{#if _currentItems.length}}
+			<ui5-list
+				id="{{_id}}-menu-list"
+				mode="None"
+				separators="None"
+				@item-click={{_itemClick}}
+			>
+			{{#each _currentItems}}
+				<ui5-li
+					.associatedItem="{{this}}"
+					class="ui5-menu-item"
+					id="{{../_id}}-menu-item-{{@index}}"
+					icon="{{this.icon}}"
+					?disabled={{this.disabled}}
+					?starts-section={{this.startsSection}}
+					?selected={{this.subMenuOpened}}
+					@mouseover={{../_itemMouseOver}}
+					@mouseout={{../_itemMouseOut}}
+					@keydown={{../_itemKeyDown}}
+				>
+					{{#if this.hasDummyIcon}}
+						<div class="ui5-menu-item-dummy-icon"></div>
+					{{/if}}
+					{{this.text}}
+					{{#if this.hasChildren}}
+						<ui5-icon part="icon" name="slim-arrow-right" class="ui5-menu-item-icon-end"></ui5-icon>
+					{{else if this._siblingsWithChildren}}
+						<div class="ui5-menu-item-no-icon-end"></div>
+					{{/if}}
+				</ui5-li>
+			{{/each}}
+			</ui5-list>
+
+		{{/if}}
+	</div>
+
+</ui5-responsive-popover>
+
