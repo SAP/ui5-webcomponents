@@ -32,6 +32,12 @@
 		padding: 0 1rem 0.5rem 1rem;
 	}
 
+	#titleBar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	#headerTitle {
 		margin-top: 1em !important;
 		font-size: 1rem;
@@ -303,7 +309,10 @@
 	
 		<ui5-dialog id="dialog" accessible-name="Products Value Help">
 			<div slot="header" id="dialogHeader">
-				<h2 id="headerTitle">Products</h2>
+				<div id="titleBar">
+					<h2 id="headerTitle">Products</h2>
+					<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
+				</div>
 				<ui5-input id="dialogSearchInput" placeholder="Search">
 					<ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
 				</ui5-input>
@@ -321,6 +330,7 @@
 			valueHelpIcon.addEventListener("click", showDialog);
 			dialogSearchInput.addEventListener("change", loadList);
 			dialogSearchIcon.addEventListener("click", loadList);
+			clearButton.addEventListener("click", clearQuery);
 			cancelButton.addEventListener("click", closeDialog);
 			itemsList.addEventListener("item-click", handleItemClick);
 
@@ -365,6 +375,10 @@
 				}
 
 				dialog.show();
+
+				// Required by UX as the VH dialog's popup content has no padding in UI5.
+				dialog.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
+				dialog.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
 			}
 
 			function closeDialog() {
@@ -400,6 +414,11 @@
 				valueHelpInput.setAttribute("value", item.innerHTML);
 				dialog.close();
 			}
+
+			function clearQuery() {
+				dialogSearchInput.setAttribute("value", "");
+				loadList();
+			}
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
@@ -409,7 +428,10 @@
 
 <ui5-dialog id="dialog" accessible-name="Products Value Help">
 	<div slot="header" id="dialogHeader">
-		<h2 id="headerTitle">Products</h2>
+		<div id="titleBar">
+			<h2 id="headerTitle">Products</h2>
+			<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
+		</div>
 		<ui5-input id="dialogSearchInput" placeholder="Search">
 			<ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
@@ -427,6 +449,7 @@
 	valueHelpIcon.addEventListener("click", showDialog);
 	dialogSearchInput.addEventListener("change", loadList);
 	dialogSearchIcon.addEventListener("click", loadList);
+	clearButton.addEventListener("click", clearQuery);
 	cancelButton.addEventListener("click", closeDialog);
 	itemsList.addEventListener("item-click", handleItemClick);
 
@@ -490,6 +513,11 @@
 		var item = event.detail.item;
 		valueHelpInput.setAttribute("value", item.innerHTML);
 		dialog.close();
+	}
+
+	function clearQuery() {
+		dialogSearchInput.setAttribute("value", "");
+		loadList();
 	}
 </script>
 	</xmp></pre>
