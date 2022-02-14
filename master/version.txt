@@ -1,7 +1,11 @@
-commit 1a33694f73ed2975b991cf18b1aba1b1a12c7c22
-Author: Henrique Mattos <henrique@visualworks.com.br>
-Date:   Mon Feb 14 09:32:56 2022 +0100
+commit ee6819f44578b4b2abe7d7661a487a38544fd2b9
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Feb 14 10:58:13 2022 +0200
 
-    doc(ui5-tabcontainer): fix typo in code sample (#4731)
+    feat(ui5-switch): provide accessible-name attribute support (#4735)
     
-    Attribute `text` was missing a `t` for component `ui5-tabcontainer`.
+    Application developers could now provide additional label
+    text for the aria-label attribute of the ui5-switch root element
+    trough the "accessibleName" property.
+    
+    Fixes: #4147
