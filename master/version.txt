@@ -1,19 +1,27 @@
-commit ebc5cfcc072319784b99aed245d09bbbd6dc628d
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Mon Feb 14 17:29:46 2022 +0200
+commit 822a73ca4a8586f8b4a39533b1c7c5c81c435919
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Mon Feb 14 18:54:44 2022 +0200
 
-    chore(deps): bump follow-redirects from 1.14.7 to 1.14.8 (#4739)
+    feat(ui5-illustrated-message): add TNT illustrations (#4710)
     
-    Bumps [follow-redirects](https://github.com/follow-redirects/follow-redirects) from 1.14.7 to 1.14.8.
-    - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
-    - [Commits](https://github.com/follow-redirects/follow-redirects/compare/v1.14.7...v1.14.8)
+    * feat(ui5-illustrated-message): added TNT illustrations
     
-    ---
-    updated-dependencies:
-    - dependency-name: follow-redirects
-      dependency-type: indirect
-    ...
+    Add the following illustrations to the TNT illustrations set:
     
-    Signed-off-by: dependabot[bot] <support@github.com>
-    
-    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+    -ChartArea
+    -ChartArea2
+    -ChartBar
+    -ChartBPMNFlow
+    -ChartBullet
+    -ChartDoughnut
+    -ChartFlow
+    -ChartGantt
+    -ChartOrg
+    -ChartPie
+    -Components
+    -Secrets
+    -Systems
+    -Teams
+    -Tools
+    -UnableToLoad
+    -User2
