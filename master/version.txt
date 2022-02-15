@@ -1,27 +1,5 @@
-commit 822a73ca4a8586f8b4a39533b1c7c5c81c435919
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Mon Feb 14 18:54:44 2022 +0200
+commit 88867ca7ad458051bfcc4e1bc5b655cbb7aed360
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Tue Feb 15 08:46:51 2022 +0200
 
-    feat(ui5-illustrated-message): add TNT illustrations (#4710)
-    
-    * feat(ui5-illustrated-message): added TNT illustrations
-    
-    Add the following illustrations to the TNT illustrations set:
-    
-    -ChartArea
-    -ChartArea2
-    -ChartBar
-    -ChartBPMNFlow
-    -ChartBullet
-    -ChartDoughnut
-    -ChartFlow
-    -ChartGantt
-    -ChartOrg
-    -ChartPie
-    -Components
-    -Secrets
-    -Systems
-    -Teams
-    -Tools
-    -UnableToLoad
-    -User2
+    docs(ui5-input): add value help dialog sample (#4679)

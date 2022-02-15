@@ -5392,6 +5392,44 @@
 	.inputIcon:hover{
 		background: rgba(224,224,224,0.5)
 	}
+
+	#valueHelpInput {
+		width: 100%;
+	}
+
+	#dialog[on-desktop] {
+		/* The playground's header has a z-index of 151, which is
+		higher than the dialog's default, and cuts off the dialog */
+		z-index: 200 !important;
+	}
+
+	#dialogHeader {
+		width: 100%;
+		padding: 0 1rem 0.5rem 1rem;
+	}
+
+	#titleBar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	#headerTitle {
+		margin-top: 1em !important;
+		font-size: 1rem;
+		font-weight: 500;
+	}
+
+	#dialogSearchInput {
+		width: 100%;
+	}
+
+	#footer {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		padding: 0.25rem 1rem;
+	}
 </style>
 
 <header>
@@ -5632,6 +5670,228 @@
 	});
 </script>
 
+<section>
+	<h3>Input With Value Help Dialog</h3>
+	<div class="snippet">
+		<ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions>
+			<ui5-icon id="valueHelpIcon" slot="icon" name="value-help"></ui5-icon>
+		</ui5-input>
+	
+		<ui5-dialog id="dialog" accessible-name="Products Value Help">
+			<div slot="header" id="dialogHeader">
+				<div id="titleBar">
+					<h2 id="headerTitle">Products</h2>
+					<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
+				</div>
+				<ui5-input id="dialogSearchInput" placeholder="Search">
+					<ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
+				</ui5-input>
+			</div>
+	
+			<ui5-list id="itemsList" no-data-text="No data"></ui5-list>
+	
+			<div slot="footer" id="footer">
+				<ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
+			</div>
+		</ui5-dialog>
+	
+		<script>
+			valueHelpInput.addEventListener("input", loadSuggestions);
+			valueHelpIcon.addEventListener("click", showDialog);
+			dialogSearchInput.addEventListener("change", loadList);
+			dialogSearchIcon.addEventListener("click", loadList);
+			clearButton.addEventListener("click", clearQuery);
+			cancelButton.addEventListener("click", closeDialog);
+			itemsList.addEventListener("item-click", handleItemClick);
+
+			async function loadSuggestions() {
+				var response = await fetch("../../../assets/data/products.json");
+				var products = await response.json();
+
+				var query = valueHelpInput.value.toLowerCase();
+				var suggestionItems = [];
+
+				if (query) {
+					suggestionItems = products
+						.filter(function (product) {
+							return product.name.toLowerCase().indexOf(query) === 0;
+						})
+						.map(function (product) {
+							return product.name;
+						})
+						.sort(function (a, b) {
+							return a.localeCompare(b);
+						})
+						.slice(0, 10);
+				}
+
+				[].slice.call(valueHelpInput.children, 1).forEach(function (item) {
+					valueHelpInput.removeChild(item);
+				});
+
+				suggestionItems.forEach(function (item) {
+					var li = document.createElement("ui5-suggestion-item");
+					li.text = item;
+					valueHelpInput.appendChild(li);
+				});
+			}
+
+			function showDialog() {
+				dialogSearchInput.value = valueHelpInput.value;
+				loadList();
+
+				if (screen.width <= 768) {
+					dialog.setAttribute("stretch", "");
+				}
+
+				dialog.show();
+
+				// Required by UX as the VH dialog's popup content has no padding in UI5.
+				dialog.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
+				dialog.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
+			}
+
+			function closeDialog() {
+				dialog.close();
+			}
+
+			async function loadList() {
+				var response = await fetch("../../../assets/data/products.json");
+				var products = await response.json();
+				var query = dialogSearchInput.value.toLowerCase();
+
+				itemsList.innerHTML = "";
+
+				products
+					.filter(function (product) {
+						return product.name.toLowerCase().indexOf(query) === 0;
+					})
+					.sort(function (a, b) {
+						return a.name.localeCompare(b.name);
+					})
+					.forEach(function (item) {
+						var li = document.createElement("ui5-li");
+						li.innerHTML = item.name;
+						li.image = item.productPicUrl;
+						li.description = item.productId;
+
+						itemsList.appendChild(li);
+					});
+			}
+
+			function handleItemClick(event) {
+				var item = event.detail.item;
+				valueHelpInput.setAttribute("value", item.innerHTML);
+				dialog.close();
+			}
+
+			function clearQuery() {
+				dialogSearchInput.setAttribute("value", "");
+				loadList();
+			}
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"valueHelpInput"</span> <span class="na">placeholder=</span><span class="s">"Enter product"</span> <span class="na">show-suggestions</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-icon</span> <span class="na">id=</span><span class="s">"valueHelpIcon"</span> <span class="na">slot=</span><span class="s">"icon"</span> <span class="na">name=</span><span class="s">"value-help"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+<span class="nt">&lt;/ui5-input&gt;</span>
+
+<span class="nt">&lt;ui5-dialog</span> <span class="na">id=</span><span class="s">"dialog"</span> <span class="na">accessible-name=</span><span class="s">"Products Value Help"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"header"</span> <span class="na">id=</span><span class="s">"dialogHeader"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"titleBar"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h2</span> <span class="na">id=</span><span class="s">"headerTitle"</span><span class="nt">&gt;</span>Products<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">id=</span><span class="s">"clearButton"</span><span class="nt">&gt;</span>Clear<span class="nt">&lt;/ui5-button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"dialogSearchInput"</span> <span class="na">placeholder=</span><span class="s">"Search"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-icon</span> <span class="na">id=</span><span class="s">"dialogSearchIcon"</span> <span class="na">slot=</span><span class="s">"icon"</span> <span class="na">name=</span><span class="s">"search"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+		<span class="nt">&lt;/ui5-input&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+
+	<span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"itemsList"</span> <span class="na">no-data-text=</span><span class="s">"No data"</span><span class="nt">&gt;&lt;/ui5-list&gt;</span>
+
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"footer"</span> <span class="na">id=</span><span class="s">"footer"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">id=</span><span class="s">"cancelButton"</span><span class="nt">&gt;</span>Cancel<span class="nt">&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ui5-dialog&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">,</span> <span class="nx">loadSuggestions</span><span class="p">);</span>
+	<span class="nx">valueHelpIcon</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">showDialog</span><span class="p">);</span>
+	<span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">loadList</span><span class="p">);</span>
+	<span class="nx">dialogSearchIcon</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">loadList</span><span class="p">);</span>
+	<span class="nx">clearButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">clearQuery</span><span class="p">);</span>
+	<span class="nx">cancelButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">closeDialog</span><span class="p">);</span>
+	<span class="nx">itemsList</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">handleItemClick</span><span class="p">);</span>
+
+	<span class="k">async</span> <span class="kd">function</span> <span class="nx">loadSuggestions</span><span class="p">()</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">../../../assets/data/products.json</span><span class="dl">"</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+		<span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+		<span class="kd">var</span> <span class="nx">suggestionItems</span> <span class="o">=</span> <span class="p">[];</span>
+
+		<span class="k">if</span> <span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">suggestionItems</span> <span class="o">=</span> <span class="nx">products</span>
+				<span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+				<span class="p">.</span><span class="nx">map</span><span class="p">(({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">name</span><span class="p">)</span>
+				<span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">))</span>
+				<span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+		<span class="p">}</span>
+
+		<span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+			<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+		<span class="p">});</span>
+
+		<span class="nx">suggestionItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-suggestion-item</span><span class="dl">"</span><span class="p">);</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
+			<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">showDialog</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="nx">loadList</span><span class="p">();</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">closeDialog</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="k">async</span> <span class="kd">function</span> <span class="nx">loadList</span><span class="p">()</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">../../../assets/data/products.json</span><span class="dl">"</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+		<span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+
+		<span class="nx">itemsList</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+
+		<span class="nx">products</span>
+			<span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+			<span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span>
+			<span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+				<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-li</span><span class="dl">"</span><span class="p">);</span>
+				<span class="nx">li</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+				<span class="nx">li</span><span class="p">.</span><span class="nx">image</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">productPicUrl</span><span class="p">;</span>
+				<span class="nx">li</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">productId</span><span class="p">;</span>
+
+				<span class="nx">itemsList</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+			<span class="p">});</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">handleItemClick</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">;</span>
+		<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">);</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">clearQuery</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">);</span>
+		<span class="nx">loadList</span><span class="p">();</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -5642,7 +5902,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
 
 <h3>Keyboard Handling</h3> The <code>ui5-input</code> provides the following keyboard shortcuts: <br>
 
-<ul> <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li> <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li> <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li> <li>[DOWN] - Focuses the next matching item in the suggestion list.</li> <li>[UP] - Focuses the previous matching item in the suggestion list.</li> <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li> <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li> <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li> <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li> </ul>
+<ul> <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li> <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li> <li>[DOWN] - Focuses the next matching item in the suggestion list.</li> <li>[UP] - Focuses the previous matching item in the suggestion list.</li> <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li> <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li> <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li> <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li> </ul>
 
 <h3>ES6 Module Import</h3>
 
