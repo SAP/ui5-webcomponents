@@ -612,6 +612,8 @@ class MultiComboBox extends UI5Element {
 			event.preventDefault();
 			this._inputDom.focus();
 		}
+	}
+
 	_handleTab(event) {
 		this.allItemsPopover.close();
 	}
