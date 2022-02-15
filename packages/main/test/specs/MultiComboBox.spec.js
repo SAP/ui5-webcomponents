@@ -506,6 +506,109 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
+
+		it ("BACKSPACE should delete token and place the focus on the previous one", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys("ArrowLeft");
+			await mcb.keys("Backspace");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+
+			assert.equal(await tokens.length, 2, "should have two tokens");
+			assert.equal(await tokens[0].getProperty("focused"), true, "Previous token is focused");
+		});
+
+		it ("DELETE should delete token and place the focus on the next one", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys("ArrowLeft");
+
+			await mcb.keys("Delete");
+
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 2, "should have two tokens");
+			assert.equal(await tokens[1].getProperty("focused"), true, "Previous token is focused");
+		});
+
+		it ("BACKSPACE should delete token all selected tokens and place the focus on the first token before the deleted ones", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-items");
+			const input = await mcb.shadow$("input");
+
+			// Select 5 items
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("Escape");
+
+			// Select 3th and 4th token
+			await mcb.keys("ArrowLeft");
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Shift", "ArrowLeft"]);
+			await mcb.keys("Backspace");
+
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "should have two tokens");
+			assert.equal(await tokens[1].getProperty("focused"), true, "Second token is focused");
+		});
+
+		it ("DELETE should delete token all selected tokens and place the focus on the first token after the deleted ones", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-items");
+			const input = await mcb.shadow$("input");
+
+			// Select 5 items
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys("Escape");
+
+			// Select 3th and 4th token
+			await mcb.keys("ArrowLeft");
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Shift", "ArrowLeft"]);
+			await mcb.keys("Delete");
+
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "should have two tokens");
+			assert.equal(await tokens[2].getProperty("focused"), true, "Last token is focused");
+		});
+
 	});
 
 	describe("General", () => {

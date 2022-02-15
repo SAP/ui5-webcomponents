@@ -215,16 +215,36 @@ class Tokenizer extends UI5Element {
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
-	_tokenDelete(event) {
+	_delete(event) {
+		if (this._selectedTokens.length) {
+			this._selectedTokens.forEach(token => this._tokenDelete(event, token));
+		} else {
+			this._tokenDelete(event);
+		}
+	}
+
+	_tokenDelete(event, token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
-		const deletedTokenIndex = this._getVisibleTokens().indexOf(event.target); // The index of the token that just got deleted
+
+		const tokens = this._getVisibleTokens();
+		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(event.target); // The index of the token that just got deleted
+		const notSelectedTokens = tokens.filter(t => !t.selected);
 
 		if (event.detail && event.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
 			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
 		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
-			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
+			nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
-		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		let nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		if (notSelectedTokens.length > 1) {
+			while (nextToken && nextToken.selected) {
+				nextToken = event.detail.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+			}
+		} else {
+			nextToken = notSelectedTokens[0];
+		}
 
 		if (nextToken && !isPhone()) {
 			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
@@ -234,7 +254,7 @@ class Tokenizer extends UI5Element {
 			}, 0);
 		}
 
-		this.fireEvent("token-delete", { ref: event.target });
+		this.fireEvent("token-delete", { ref: token || event.target });
 	}
 
 	itemDelete(event) {
@@ -450,6 +470,10 @@ class Tokenizer extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _selectedTokens() {
+		return this._getTokens().filter(token => token.selected);
 	}
 
 	get classes() {
