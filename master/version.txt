@@ -1,7 +1,11 @@
-commit 31915d7ef4738ae63500c618a0a6f633ea3a4b82
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Tue Feb 15 18:26:13 2022 +0200
+commit a09cdb54588cde1340788b83d8c26fe1556fdbf0
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Feb 15 19:03:53 2022 +0200
 
-    fix(ui5-button): remove focus on phone and tablet (#4746)
+    feat(ui5-multi-combobox) Add Home/End navigation (#4740)
     
-    Focus outline removed on phone and tablet devices. Now "focused" attribute is placed only on Desktop devices.
+    * Implement HOME + END keys handling
+    
+    * Add HOME/END navigation
+    
+    * Fix syntax error
