@@ -549,22 +549,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-items");
 			const input = await mcb.shadow$("input");
 
-			// Select 5 items
 			await input.click();
-			await mcb.keys("F4");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("Escape");
-
-			// Select 3th and 4th token
 			await mcb.keys("ArrowLeft");
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Shift", "ArrowLeft"]);
@@ -582,22 +567,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-items");
 			const input = await mcb.shadow$("input");
 
-			// Select 5 items
 			await input.click();
-			await mcb.keys("F4");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("ArrowDown");
-			await mcb.keys("Space");
-			await mcb.keys("Escape");
-
-			// Select 3th and 4th token
 			await mcb.keys("ArrowLeft");
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Shift", "ArrowLeft"]);
@@ -613,7 +583,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
-			const mcb2 = await browser.$("#another-mcb");
+			const mcb2 = await browser.$("#mcb-items");
 
 			await mcb.click();
 			await mcb.keys("F4");
