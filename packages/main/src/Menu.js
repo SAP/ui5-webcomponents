@@ -327,7 +327,7 @@ class Menu extends UI5Element {
 	}
 
 	_createSubMenu(item, openerId) {
-		const subMenu = document.createElement("ui5-menu");
+		const subMenu = document.createElement(this.constructor.getMetadata().getTag());
 
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
@@ -339,7 +339,7 @@ class Menu extends UI5Element {
 			clonedItem = subItems[idx].cloneNode(true);
 			subMenu.appendChild(clonedItem);
 		}
-		document.body.appendChild(subMenu);
+		this.staticAreaItem.shadowRoot.querySelector(".submenus").appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
