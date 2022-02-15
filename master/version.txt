@@ -1,5 +1,5 @@
-commit 88867ca7ad458051bfcc4e1bc5b655cbb7aed360
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Tue Feb 15 08:46:51 2022 +0200
+commit 2cd4c7e1aa39206e06ee92d3497c6c237b206e08
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 15 09:05:02 2022 +0200
 
-    docs(ui5-input): add value help dialog sample (#4679)
+    fix: scoped bundles (#4745)
