@@ -1,4 +1,3 @@
-function onload() {
 	// web component dialog
 	var wcBtnOpenDialog = document.querySelector('.wcBtnOpenDialog');
 	wcBtnOpenDialog.addEventListener('click', function () {
@@ -48,4 +47,3 @@ function onload() {
 		var wcNewPopoverDialog11 = document.querySelector('.wcNewPopoverDialog11');
 		wcNewPopoverDialog11.show();
 	});
-}

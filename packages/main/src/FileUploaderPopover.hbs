@@ -2,14 +2,15 @@
 	skip-registry-update
 	_disable-initial-focus
 	prevent-focus-restore
-	no-padding
 	hide-arrow
 	class="ui5-valuestatemessage-popover"
 	placement-type="Bottom"
 	horizontal-align="Left"
 >
 	<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
-		<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
+		{{#if _valueStateMessageInputIcon}}
+			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
+		{{/if}}
 		{{> valueStateMessage}}
 	</div>
 </ui5-popover>

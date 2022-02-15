@@ -269,10 +269,10 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-		this._detachResizeHandlers();
 	}
 
-	onAfterRendering() {
+	onEnterDOM() {
+		super.onEnterDOM();
 		this._attachResizeHandlers();
 
 		if (!this.isOpen() && this.open) {
@@ -287,15 +287,26 @@ class Dialog extends Popup {
 		this._detachResizeHandlers();
 	}
 
+	/**
+	 * @override
+	 */
+	_resize() {
+		super._resize();
+
+		if (this._resizeHandlersAttached) {
+			this._center();
+		}
+	}
+
 	_attachResizeHandlers() {
-		ResizeHandler.register(this, this._screenResizeHandler);
-		ResizeHandler.register(document.body, this._screenResizeHandler);
-		this._resizeHandlersAttached = true;
+		if (!this._resizeHandlersAttached) {
+			ResizeHandler.register(document.body, this._screenResizeHandler);
+			this._resizeHandlersAttached = true;
+		}
 	}
 
 	_detachResizeHandlers() {
 		if (this._resizeHandlersAttached) {
-			ResizeHandler.deregister(this, this._screenResizeHandler);
 			ResizeHandler.deregister(document.body, this._screenResizeHandler);
 			this._resizeHandlersAttached = false;
 		}

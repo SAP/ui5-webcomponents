@@ -249,14 +249,6 @@ class MessageStrip extends UI5Element {
 	get designClasses() {
 		return MessageStrip.designClassesMappings()[this.design];
 	}
-
-	get accInfo() {
-		return {
-			"button": {
-				"title": this._closeButtonText,
-			},
-		};
-	}
 }
 
 MessageStrip.define();

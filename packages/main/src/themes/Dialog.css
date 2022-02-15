@@ -20,10 +20,6 @@
 	border-radius: 0;
 }
 
-.ui5-popup-header-root {
-	background: var(--sapPageHeader_Background);
-}
-
 :host([draggable]) .ui5-popup-header-root,
 :host([draggable]) ::slotted([slot="header"]) {
 	cursor: move;

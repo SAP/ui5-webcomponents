@@ -6,12 +6,10 @@ import {
 	isShow,
 	isDown,
 	isUp,
-	isBackSpace,
 	isSpace,
-	isLeft,
 	isRight,
-	isEscape,
-	isEnter,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -20,6 +18,10 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -413,6 +415,7 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 		this._validationTimeout = null;
 		this._handleResizeBound = this._handleResize.bind(this);
+		this.currentItemIdx = -1;
 	}
 
 	onEnterDOM() {
@@ -524,7 +527,7 @@ class MultiComboBox extends UI5Element {
 		return this.placeholder;
 	}
 
-	_handleLeft() {
+	_handleArrowLeft() {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
 		if (cursorPosition === 0) {
@@ -563,40 +566,45 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
-		if (isLeft(event)) {
-			this._handleLeft(event);
-		}
-
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this.togglePopover();
 		}
 
-		if (this.open && (isUp(event) || isDown(event))) {
+		if (isUp(event) || isDown(event)) {
 			this._handleArrowNavigation(event);
-		}
-
-		if (isBackSpace(event) && event.target.value === "") {
-			event.preventDefault();
-
-			this._tokenizer._focusLastToken();
-		}
-
-		// Reset value on ESC
-		if (isEscape(event) && (!this.allowCustomValues || (!this.open && this.allowCustomValues))) {
-			this.value = this._lastValue;
-		}
-
-		if (isEnter(event)) {
-			this.handleEnter();
+			return;
 		}
 
 		this._keyDown = true;
+		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+	}
+
+	_handleBackspace(event) {
+		if (event.target.value === "") {
+			event.preventDefault();
+			this._tokenizer._focusLastToken();
+		}
+	}
+
+	_handleEscape(event) {
+		if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
+			this.value = this._lastValue;
+		}
+	}
+
+	_handleTab(event) {
+		this.allItemsPopover.close();
 	}
 
 	_onValueStateKeydown(event) {
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
+
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._onItemTab(event);
+			return;
+		}
 
 		event.preventDefault();
 
@@ -612,6 +620,11 @@ class MultiComboBox extends UI5Element {
 	_onItemKeydown(event) {
 		const isFirstItem = this.list.items[0] === event.target;
 
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._onItemTab(event);
+			return;
+		}
+
 		event.preventDefault();
 
 		if (!isUp(event) || !isFirstItem) {
@@ -626,9 +639,15 @@ class MultiComboBox extends UI5Element {
 		this._inputDom.focus();
 	}
 
+	_onItemTab(event) {
+		this._inputDom.focus();
+		this.allItemsPopover.close();
+	}
+
 	async _handleArrowNavigation(event) {
 		const isArrowDown = isDown(event);
-		const hasSuggestions = this.allItemsPopover.opened && this.items.length;
+		const hasSuggestions = this.items.length;
+		const isOpen = this.allItemsPopover.opened;
 
 		event.preventDefault();
 
@@ -636,7 +655,7 @@ class MultiComboBox extends UI5Element {
 			await this._setValueStateHeader();
 		}
 
-		if (isArrowDown && this.focused && this.valueStateHeader) {
+		if (isArrowDown && isOpen && this.focused && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 			return;
 		}
@@ -644,16 +663,91 @@ class MultiComboBox extends UI5Element {
 		if (isArrowDown && this.focused && hasSuggestions) {
 			this._handleArrowDown(event);
 		}
+
+		if (!isArrowDown && !isOpen && !this.readonly) {
+			this._navigateToPrevItem();
+		}
 	}
 
 	_handleArrowDown(event) {
+		const isOpen = this.allItemsPopover.opened;
 		const firstListItem = this.list.items[0];
 
-		this.list._itemNavigation.setCurrentItem(firstListItem);
-		firstListItem.focus();
+		if (isOpen) {
+			this.list._itemNavigation.setCurrentItem(firstListItem);
+			firstListItem.focus();
+		} else if (!this.readonly) {
+			this._navigateToNextItem();
+		}
 	}
 
-	handleEnter() {
+	_navigateToNextItem() {
+		const items = this.items;
+		const itemsCount = items.length;
+		const previousItemIdx = this.currentItemIdx;
+
+		if (previousItemIdx > -1 && items[previousItemIdx].text !== this.value) {
+			this.currentItemIdx = -1;
+		}
+
+		if (previousItemIdx >= itemsCount - 1) {
+			return;
+		}
+
+		let currentItem = this.items[++this.currentItemIdx];
+
+		while (this.currentItemIdx < itemsCount - 1 && currentItem.selected) {
+			currentItem = this.items[++this.currentItemIdx];
+		}
+
+		if (currentItem.selected === true) {
+			this.currentItemIdx = previousItemIdx;
+			return;
+		}
+
+		this.value = currentItem.text;
+		this._innerInput.value = currentItem.text;
+		this._innerInput.setSelectionRange(0, currentItem.text.length);
+	}
+
+	_navigateToPrevItem() {
+		const items = this.items;
+		let previousItemIdx = this.currentItemIdx;
+
+		if ((!this.value && previousItemIdx !== -1) || (previousItemIdx !== -1 && this.value && this.value !== items[previousItemIdx].text)) {
+			previousItemIdx = -1;
+		}
+
+		if (previousItemIdx === -1) {
+			this.currentItemIdx = items.length;
+		}
+
+		if (previousItemIdx === 0) {
+			this.currentItemIdx = 0;
+			return;
+		}
+
+		let currentItem = this.items[--this.currentItemIdx];
+
+		while (currentItem && currentItem.selected && this.currentItemIdx > 0) {
+			currentItem = this.items[--this.currentItemIdx];
+		}
+
+		if (!currentItem) {
+			return;
+		}
+
+		if (currentItem.selected) {
+			this.currentItemIdx = previousItemIdx;
+			return;
+		}
+
+		this.value = currentItem.text;
+		this._innerInput.value = currentItem.text;
+		this._innerInput.setSelectionRange(0, currentItem.text.length);
+	}
+
+	_handleEnter() {
 		const lowerCaseValue = this.value.toLowerCase();
 		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
 		const oldValueState = this.valueState;
