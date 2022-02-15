@@ -1,19 +1,7 @@
-commit c384736c948a3c74be3bd482f25ef66a458a7a09
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Feb 15 10:24:49 2022 +0200
+commit cf45552fe96e7f50c58d7352de73890554e565c6
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue Feb 15 12:50:30 2022 +0200
 
-    feat(ui5-multi-combobox) Implement tab navigation (#4709)
+    fix(ui5-color-picker): enable hex value input change on enter (#4621)
     
-    * Fix TAB handling functionality
-    
-    * Lint
-    
-    * Improve tab nav
-    
-    * Handle TAB on  value state header
-    
-    * Add tests
-    
-    * Update test page
-    
-    * Fix tests
+    Fixes: #4541
