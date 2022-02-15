@@ -14,18 +14,6 @@ class LabelPageCustomElement extends HTMLElement {
 
 		this.shadowRoot.append(container);
 	}
-
-	// connectedCallback() {
-	// 	this.shadowRoot.getElementById("input").addEventListener("focus", this.handleInputFocus);
-	// }
-
-	// handleInputFocus(event) {
-	// 	event.currentTarget.value = "focused";
-	// }
-
-	// disconnectedCallback() {
-	// 	this.shadowRoot.getElementById("input").removeEventListener("focus", this.handleInputFocus);
-	// }
 }
 
 customElements.define("label-page-custom-element", LabelPageCustomElement);
