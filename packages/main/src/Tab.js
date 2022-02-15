@@ -148,12 +148,6 @@ const metadata = {
 		_selected: {
 			type: Boolean,
 		},
-
-		_subItems: {
-			type: Object,
-			multiple: true,
-		},
-
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},

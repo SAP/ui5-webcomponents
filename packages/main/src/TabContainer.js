@@ -367,14 +367,14 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// update selected tab
-		this._allTabs = [];
-		this._getAllSubItems(this._getTabs(), this._allTabs, 1);
-		if (this._allTabs.length) {
-			const selectedTabs = this._allTabs.filter(tab => tab.selected);
+		this._allItemsAndSubItems = [];
+		this._getAllSubItems(this._getTabs(), this._allItemsAndSubItems, 1);
+		if (this._allItemsAndSubItems.length) {
+			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 			if (selectedTabs.length) {
 				this._selectedTab = selectedTabs[0];
 			} else {
-				this._selectedTab = this._allTabs[0];
+				this._selectedTab = this._allItemsAndSubItems[0];
 				this._selectedTab._selected = true;
 			}
 		}
@@ -390,8 +390,6 @@ class TabContainer extends UI5Element {
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
-			item._subItems = [];
-			this._getAllSubItems(item.subTabs, item._subItems, 1);
 		});
 
 		if (!this._animationRunning) {
@@ -473,8 +471,6 @@ class TabContainer extends UI5Element {
 			await this.responsivePopoverSubItems.close();
 		}
 		this._setItemsForStrip();
-		const allItems = [];
-		this._getAllSubItems(this._getTabs(), allItems);
 
 		const selectedTopLevel = this._getParentTab(this._selectedTab);
 
@@ -497,15 +493,12 @@ class TabContainer extends UI5Element {
 	}
 
 	_onItemSelect(target) {
-		const _allItemsAndSubItems = [];
-
-		this._getAllSubItems(this.items, _allItemsAndSubItems);
-		const selectedIndex = findIndex(_allItemsAndSubItems, item => item.__id === target.id);
-		const selectedTabIndex = findIndex(_allItemsAndSubItems, item => item.__id === target.id);
-		const selectedTab = _allItemsAndSubItems[selectedIndex];
+		const selectedIndex = findIndex(this._allItemsAndSubItems, item => item.__id === target.id);
+		const selectedTabIndex = findIndex(this._allItemsAndSubItems, item => item.__id === target.id);
+		const selectedTab = this._allItemsAndSubItems[selectedIndex];
 
 		// update selected items
-		_allItemsAndSubItems
+		this._allItemsAndSubItems
 			.forEach((item, index) => {
 				const selected = selectedIndex === index;
 				item.selected = selected;
@@ -680,7 +673,7 @@ class TabContainer extends UI5Element {
 		}
 
 		this._itemNavigation._init();
-		this._itemNavigation.setCurrentItem(this._selectedTab);
+		this._itemNavigation.setCurrentItem(this._getParentTab(this._selectedTab));
 	}
 
 	_getParentTab(tab) {
@@ -987,7 +980,7 @@ class TabContainer extends UI5Element {
 	async _respPopover(tabInstance) {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		if (tabInstance) {
-			this._tabItems = tabInstance._subItems;
+			this._tabItems = tabInstance.subTabs;
 		}
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
