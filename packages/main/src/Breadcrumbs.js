@@ -457,21 +457,18 @@ class Breadcrumbs extends UI5Element {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
 	}
 
-	_getItemAccessibleNameData(item, position, size) {
+	_getItemAccessibleName(item, position, size) {
 		const positionText = this._getItemPositionText(position, size);
 
 		// innerText is needed as it is no longer read out when label is set
 		let text = "";
 		if (item.accessibleName) {
-			text = `${item.innerText} ${item.accessibleName} ${positionText}`;
+			text = `${item.textContent.trim()} ${item.accessibleName} ${positionText}`;
 		} else {
-			text = `${item.innerText} ${positionText}`;
+			text = `${item.textContent.trim()} ${positionText}`;
 		}
 
-		return {
-			accessibleNameRef: `${item._id}-accessible-name`,
-			accessibleName: text,
-		};
+		return text;
 	}
 
 	getCurrentLocationLabelWrapper() {
@@ -548,11 +545,7 @@ class Breadcrumbs extends UI5Element {
 		return items
 			.filter(item => this._isItemVisible(item))
 			.map((item, index) => {
-				const { accessibleNameRef, accessibleName } = this._getItemAccessibleNameData(item, index + 1, itemsCount);
-
-				item.accessibleNameRef = accessibleNameRef;
-				item._accessibleNameText = accessibleName;
-
+				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);;
 				return item;
 			});
 	}
@@ -572,10 +565,10 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		if (lastItem.accessibleName) {
-			return `${lastItem.accessibleName} ${lastItem.innerText} ${positionText}`;
+			return `${lastItem.textContent.trim()} ${lastItem.accessibleName} ${positionText}`;
 		}
 
-		return `${lastItem.innerText} ${positionText}`;
+		return `${lastItem.textContent.trim()} ${positionText}`;
 	}
 
 	/**

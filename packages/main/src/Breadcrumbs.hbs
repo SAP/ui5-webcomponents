@@ -19,14 +19,12 @@
             <li class="ui5-breadcrumbs-link-wrapper" 
                 id="{{this._id}}-link-wrapper">
                 
-                <span id="{{this.accessibleNameRef}}" class="ui5-hidden-text">{{this._accessibleNameText}}</span>
-
                 <ui5-link
                     @click="{{../_onLinkPress}}"
                     href="{{this.href}}"
                     target="{{this.target}}"
                     id="{{this._id}}-link"
-                    accessible-name-ref="{{this.accessibleNameRef}}"
+                    accessible-name="{{this._accessibleNameText}}"
                     data-ui5-stable="{{this.stableDomRef}}">
                     {{this.innerText}}
                 </ui5-link>
