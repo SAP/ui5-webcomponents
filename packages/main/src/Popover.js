@@ -1,6 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
@@ -274,8 +273,6 @@ const metadata = {
 class Popover extends Popup {
 	constructor() {
 		super();
-
-		this._handleResize = this.handleResize.bind(this);
 	}
 
 	static get metadata() {
@@ -296,14 +293,6 @@ class Popover extends Popup {
 
 	static get ARROW_MARGIN() {
 		return 6; // px
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._handleResize);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._handleResize);
 	}
 
 	onAfterRendering() {
@@ -383,7 +372,12 @@ class Popover extends Popup {
 			&& openerRect.right === 0;
 	}
 
-	handleResize() {
+	/**
+	 * @override
+	 */
+	_resize() {
+		super._resize();
+
 		if (this.opened) {
 			this.reposition();
 		}
