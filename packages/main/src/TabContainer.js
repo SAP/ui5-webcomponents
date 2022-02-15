@@ -980,7 +980,8 @@ class TabContainer extends UI5Element {
 	async _respPopover(tabInstance) {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		if (tabInstance) {
-			this._tabItems = tabInstance.subTabs;
+			this._startOverflowItems = [];
+			this._endOverflowItems = [];
 		}
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
