@@ -18,15 +18,6 @@ import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-
-		/**
-		 * Defines if padding would be added around the content.
-		 * @private
-		 */
-		withPadding: {
-			type: Boolean,
-		},
-
 		/**
 		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
 		 * By default both the header and footer would be displayed.
