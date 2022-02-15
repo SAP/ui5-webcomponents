@@ -1,5 +1,19 @@
-commit 2cd4c7e1aa39206e06ee92d3497c6c237b206e08
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 15 09:05:02 2022 +0200
+commit c384736c948a3c74be3bd482f25ef66a458a7a09
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Feb 15 10:24:49 2022 +0200
 
-    fix: scoped bundles (#4745)
+    feat(ui5-multi-combobox) Implement tab navigation (#4709)
+    
+    * Fix TAB handling functionality
+    
+    * Lint
+    
+    * Improve tab nav
+    
+    * Handle TAB on  value state header
+    
+    * Add tests
+    
+    * Update test page
+    
+    * Fix tests
