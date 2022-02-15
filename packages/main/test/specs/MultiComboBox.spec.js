@@ -435,6 +435,137 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
 			assert.equal(await listItem.getProperty("focused"), false, "The first item is not focused");
 		});
+
+		it ("should navigate through the items with arrow keys when the picker is closed", async () => {
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("ArrowDown");
+
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The first item name is seleted");
+
+			await mcb.keys("ArrowDown");
+			assert.equal(await mcb.getProperty("value"), "Compact", "The second item name is selected");
+
+			await mcb.keys("ArrowUp");
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The value is set back to the first item name");
+
+			await mcb.keys("ArrowUp");
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The value remains the same when pressing arrow up while the first item is set");
+		});
+
+		it ("should only navigate through not already selected items with arrow keys when the picker is closed", async () => {
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await input.keys("ArrowDown");
+
+			assert.equal(await mcb.getProperty("value"), "Compact", "The only not selected item is set");
+
+			await input.keys("ArrowDown");
+			assert.equal(await mcb.getProperty("value"), "Compact", "The only not selected item remains set");
+
+			await input.keys("ArrowUp");
+			assert.equal(await mcb.getProperty("value"), "Compact", "The only not selected item remains set");
+		});
+
+		it ("should reset current navigation state on user input", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("ArrowDown");
+			await mcb.keys("ArrowDown");
+
+			assert.equal(await mcb.getProperty("value"), "Compact", "The second item name is selected");
+
+			await mcb.keys("a");
+			await mcb.keys("ArrowDown");
+
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The value is set to the first item name");
+
+			await mcb.keys("ArrowDown");
+			await mcb.keys("ArrowDown");
+
+			assert.equal(await mcb.getProperty("value"), "Condensed", "The value is set to the third item name");
+
+			await mcb.keys("a");
+			await mcb.keys("ArrowUp");
+			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "The last item is selected if there is a custom value in the input");
+		});
+
+		it ("arrow up when no item is selected should go to the last item", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("ArrowUp");
+
+			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
+		});
+
+		it ("should close the picker and focus the next element on TAB", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const mcb2 = await browser.$("#another-mcb");
+
+			await mcb.click();
+			await mcb.keys("F4");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+
+			await mcb2.keys("F4");
+			await mcb2.keys(["Shift", "Tab"]);
+
+			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed");
+			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused");
+
+			await mcb.keys(["a", "b", "c"]);
+			await mcb.keys("F4");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb.getProperty("value"), "abc", "The previous control value is set");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+		});
+
+		it ("should close the picker and focus the next element on TAB over an item or value state header", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-warning");
+			const input = await mcb.shadow$("input");
+			const mcb2 = await browser.$("#mcb-error");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on value state header");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on value state header");
+
+			await mcb2.keys("F4");
+			await mcb2.keys("ArrowDown");
+			await mcb2.keys("ArrowDown");
+			await mcb2.keys(["Shift", "Tab"]);
+
+			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed after TAB on suggestion item");
+			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused after TAB on suggestion item");
+
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
+		});
 	});
 
 	describe("General", () => {

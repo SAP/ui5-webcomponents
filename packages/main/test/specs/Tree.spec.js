@@ -76,6 +76,16 @@ describe("Tree proxies properties to list", () => {
 		assert.strictEqual(await inputMouseover.getAttribute("value"), "2", "Mouseover event is fired when other item is accessed result");
 		assert.strictEqual(await inputMouseout.getAttribute("value"), "1", "Mouseout event is fired when the first item is not hovered");
 	})
+	
+	it("Tests the prevention of the ui5-itemClick event", async () => {
+		const tree = await browser.$("#preventable-click-event");
+		const treeItems = await tree.shadow$$("ui5-li-tree");
+		const firstItem = treeItems[0];
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected when we prevent the click event.");
+	});
 });
 
 describe("Tree has screen reader support", () => {

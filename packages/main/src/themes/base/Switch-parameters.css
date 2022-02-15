@@ -3,26 +3,16 @@
 	--_ui5_switch_height: 2.75rem;
 	--_ui5_switch_width: 3.875rem;
 	--_ui5_switch_no_label_width: 3.25rem;
-	--_ui5_switch_no_label_width_horizon: 3.875rem;
 
 	--_ui5_switch_root_outline_top_bottom: 0.25rem;
-	--_ui5_switch_root_outline_left_right: -0.125rem;
-	--_ui5_switch_root_outline_top_bottom_horizon: 0.3125rem;
-	--_ui5_switch_root_outline_left_right_horizon: -0.0625rem;
-	--_ui5_switch_root_outline_top_bottom_hcb: 0.1875rem;
-	--_ui5_switch_root_outline_left_right_hcb: -0.1875rem;
+	--_ui5_switch_root_outline_left_right: 0;
 
 	--_ui5_switch_compact_height: 2rem;
 	--_ui5_switch_compact_width: 3.5rem;
 	--_ui5_switch_compact_no_label_width: 2.5rem;
-	--_ui5_switch_compact_no_label_width_horizon: 3.5rem;
 
 	--_ui5_switch_compact_root_outline_top_bottom: 0.0625rem;
-	--_ui5_switch_compact_root_outline_left_right: -0.125rem;
-	--_ui5_switch_compact_root_outline_top_bottom_horizon: 0.125em;
-	--_ui5_switch_compact_root_outline_left_right_horizon: -0.125rem;
-	--_ui5_switch_compact_root_outline_top_bottom_hcb: 0;
-	--_ui5_switch_compact_root_outline_left_right_hcb: -0.1875rem;
+	--_ui5_switch_compact_root_outline_left_right: 0;
 	
 	--_ui5_switch_foucs_border_size: 1px;
 	--_ui5_switch_focus_outline: var(--_ui5_switch_foucs_border_size) dotted var(--sapContent_FocusColor);
@@ -36,7 +26,6 @@
 	/* switch track */
 	--_ui5_switch_track_height: 1.375rem;
 	--_ui5_switch_track_no_label_height: 1.25rem;
-	--_ui5_switch_track_no_label_height_horizont:var(--_ui5_switch_track_height);
 	--_ui5-switch-track-border: 1px solid;
 	--_ui5-switch-track-border_color: var(--sapContent_ForegroundBorderColor);
 	--_ui5-switch_handle-off-hover_box_shadow: none;
