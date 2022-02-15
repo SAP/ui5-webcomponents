@@ -1,51 +1,31 @@
-commit ddc1e3909e624aa1643e424284ec1144e8b81bb9
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Tue Feb 15 13:27:26 2022 +0200
+commit ddc38eb5848fdd25e6550fb263be6392e30d7562
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 15 15:28:31 2022 +0200
 
-    feat(ui5-popup): аdd default responsive paddings (#4567)
+    fix(templates): replace HTML comments with HBS ones (#4681)
     
-    * feat(ui5-popup): Add default responsive paddings
+    Replaces the HTML comments inside the HBS templates with HBS comments as suggested in the related issue and following the [official docs](https://handlebarsjs.com/examples/comments.html). The HBS comments are stripped from the output and are available only to developers at DEV time, while the HTML ones are part of the output and could be observed in the browser. After this change only the lit-html comments can be seen.
     
-    Default responsive paddings for the content are added for all popups.
-    In the controls that they are not needed they are removed.
-    In addition for Dialog's Header and Footer are added responsive paddings.
-    Sample with way to remove the paddings by the user added in the test pages.
+    Previously (the comment is part of the lit template)
     
-    Example with removed TabContainer's content paddings added.
+    ```js
+    const block0 = (context, tags, suffix) => html`<div class="ui5-panel-root"><!-- header: either header or h1 with header text --><div @click="${context._headerClick}"
+    ```
+    After (the comment is removed)
     
-    Fixes: #4402
+    ```js
+    const block0 = (context, tags, suffix) => html`<div class="ui5-panel-root"><div @click="${context._headerClick}"
+    ```
     
-    * "part" atribute added to the Header and Footer of the Dialog
+    As the related issue suggests, I went trough the list of tasks:
     
-    * ViewSettingsDialog unwanted shadow removed
-    Header styles of Dialog moved to PopupsCommon
+    - [ ] investigate the hbs2lit script's handling of comments  - we can look at this more closely, so far haven't found anything specific to comments, the following [line] somehow seems relevant at least it has "comment" in the name (https://github.com/SAP/ui5-webcomponents/blob/master/packages/tools/lib/hbs2lit/src/partialsVisitor.js#L95)
+    ```js
+    CommentStatement: function(/* comment */) {},
+    ```
     
-    * ViewSettingsDialog.css - declaration moved
     
-    * ValueStateMessage min height fixed
+    - [X] add support for hbs comments, if necessary - have not found issues so far, HBS comments work as expected
+    - [x] use hbs comments everywhere (fix all current  templates) - done with the change
     
-    * in CSS: some selectors changed from tag to attribute
-    
-    * - SuggestionPopover paddings on mobile fixed with experimental attribute "exportparts"
-    - Test page for Popups fixed
-    - ResizeHandlers reworked for Dialog and Popover
-    - Min height removed for Header and Footer removed as it causes issues
-    
-    * Resizable Dialog positioning when resize fixed.
-    
-    * ViewSettingsDialog, Dialog and Suggestion popover styles adjusted
-    
-    * "no-padding" attribute removed since is not needed anymore
-    
-    * hash is edited
-    
-    * ResponsivePopover header fixed
-    
-    * Typo fixed
-    
-    * MultiInput's tokenizer's dialog paddings removed from header and footer (for mobile and desktop)
-    
-    * ColorPalettePopover and BarcodeScanner paddings in header and footer adjusted
-    
-    * - TokenizerPopover.css file created
-    - Some styles and tests adjusted
+    Related to: https://github.com/SAP/ui5-webcomponents/issues/2802
