@@ -149,6 +149,7 @@ const metadata = {
 		 * @public
 		 * @type {String}
 		 * @defaultvalue ""
+		 * @since 1.2.0
 		 */
 		opener: {
 			type: String,
@@ -297,7 +298,13 @@ class Popover extends Popup {
 
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
-			this.showAt(document.getElementById(this.opener));
+			const opener = document.getElementById(this.opener);
+			if (!opener) {
+				console.warn("Valid opener id is required."); // eslint-disable-line
+				return;
+			}
+
+			this.showAt(opener);
 		} else if (this.isOpen() && !this.open) {
 			this.close();
 		}

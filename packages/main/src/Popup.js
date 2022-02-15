@@ -65,6 +65,7 @@ const metadata = {
 		 * @public
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @since 1.2.0
 		 */
 		open: {
 			type: Boolean,
