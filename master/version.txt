@@ -1,31 +1,7 @@
-commit ddc38eb5848fdd25e6550fb263be6392e30d7562
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 15 15:28:31 2022 +0200
+commit 31915d7ef4738ae63500c618a0a6f633ea3a4b82
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Tue Feb 15 18:26:13 2022 +0200
 
-    fix(templates): replace HTML comments with HBS ones (#4681)
+    fix(ui5-button): remove focus on phone and tablet (#4746)
     
-    Replaces the HTML comments inside the HBS templates with HBS comments as suggested in the related issue and following the [official docs](https://handlebarsjs.com/examples/comments.html). The HBS comments are stripped from the output and are available only to developers at DEV time, while the HTML ones are part of the output and could be observed in the browser. After this change only the lit-html comments can be seen.
-    
-    Previously (the comment is part of the lit template)
-    
-    ```js
-    const block0 = (context, tags, suffix) => html`<div class="ui5-panel-root"><!-- header: either header or h1 with header text --><div @click="${context._headerClick}"
-    ```
-    After (the comment is removed)
-    
-    ```js
-    const block0 = (context, tags, suffix) => html`<div class="ui5-panel-root"><div @click="${context._headerClick}"
-    ```
-    
-    As the related issue suggests, I went trough the list of tasks:
-    
-    - [ ] investigate the hbs2lit script's handling of comments  - we can look at this more closely, so far haven't found anything specific to comments, the following [line] somehow seems relevant at least it has "comment" in the name (https://github.com/SAP/ui5-webcomponents/blob/master/packages/tools/lib/hbs2lit/src/partialsVisitor.js#L95)
-    ```js
-    CommentStatement: function(/* comment */) {},
-    ```
-    
-    
-    - [X] add support for hbs comments, if necessary - have not found issues so far, HBS comments work as expected
-    - [x] use hbs comments everywhere (fix all current  templates) - done with the change
-    
-    Related to: https://github.com/SAP/ui5-webcomponents/issues/2802
+    Focus outline removed on phone and tablet devices. Now "focused" attribute is placed only on Desktop devices.
