@@ -1,7 +1,51 @@
-commit cf45552fe96e7f50c58d7352de73890554e565c6
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Feb 15 12:50:30 2022 +0200
+commit ddc1e3909e624aa1643e424284ec1144e8b81bb9
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Tue Feb 15 13:27:26 2022 +0200
 
-    fix(ui5-color-picker): enable hex value input change on enter (#4621)
+    feat(ui5-popup): аdd default responsive paddings (#4567)
     
-    Fixes: #4541
+    * feat(ui5-popup): Add default responsive paddings
+    
+    Default responsive paddings for the content are added for all popups.
+    In the controls that they are not needed they are removed.
+    In addition for Dialog's Header and Footer are added responsive paddings.
+    Sample with way to remove the paddings by the user added in the test pages.
+    
+    Example with removed TabContainer's content paddings added.
+    
+    Fixes: #4402
+    
+    * "part" atribute added to the Header and Footer of the Dialog
+    
+    * ViewSettingsDialog unwanted shadow removed
+    Header styles of Dialog moved to PopupsCommon
+    
+    * ViewSettingsDialog.css - declaration moved
+    
+    * ValueStateMessage min height fixed
+    
+    * in CSS: some selectors changed from tag to attribute
+    
+    * - SuggestionPopover paddings on mobile fixed with experimental attribute "exportparts"
+    - Test page for Popups fixed
+    - ResizeHandlers reworked for Dialog and Popover
+    - Min height removed for Header and Footer removed as it causes issues
+    
+    * Resizable Dialog positioning when resize fixed.
+    
+    * ViewSettingsDialog, Dialog and Suggestion popover styles adjusted
+    
+    * "no-padding" attribute removed since is not needed anymore
+    
+    * hash is edited
+    
+    * ResponsivePopover header fixed
+    
+    * Typo fixed
+    
+    * MultiInput's tokenizer's dialog paddings removed from header and footer (for mobile and desktop)
+    
+    * ColorPalettePopover and BarcodeScanner paddings in header and footer adjusted
+    
+    * - TokenizerPopover.css file created
+    - Some styles and tests adjusted
