@@ -475,6 +475,12 @@ class Breadcrumbs extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
 	}
 
+	get _visibleItems() {
+		return this.getSlottedNodes("items")
+			.slice(this._overflowSize)
+			.filter(i => this._isItemVisible(i));
+	}
+
 	get _endsWithCurrentLocationLabel() {
 		return this.design === BreadcrumbsDesign.Standard;
 	}
@@ -535,7 +541,7 @@ class Breadcrumbs extends UI5Element {
 	 * Getter for the list of abstract breadcrumb items to be rendered as links outside the overflow
 	 */
 	get _linksData() {
-		const items = this.getSlottedNodes("items").slice(this._overflowSize);
+		const items = this._visibleItems;
 		const itemsCount = items.length; // get size before removing of current location
 
 		if (this._endsWithCurrentLocationLabel) {
@@ -543,9 +549,8 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		return items
-			.filter(item => this._isItemVisible(item))
 			.map((item, index) => {
-				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);;
+				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);
 				return item;
 			});
 	}
@@ -554,8 +559,7 @@ class Breadcrumbs extends UI5Element {
 	 * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
 	 */
 	get _currentLocationAccName() {
-		let items = this.getSlottedNodes("items").slice(this._overflowSize);
-		items = items.filter(item => this._isItemVisible(item));
+		const items = this._visibleItems;
 
 		const positionText = this._getItemPositionText(items.length, items.length);
 		const lastItem = items[items.length - 1];
