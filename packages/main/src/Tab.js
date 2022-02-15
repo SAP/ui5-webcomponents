@@ -115,7 +115,7 @@ const metadata = {
 
 		/**
 		 * Used to switch the active state (pressed or not) of the component.
-		 * @public
+		 * @private
 		 */
 		active: {
 			type: Boolean,
