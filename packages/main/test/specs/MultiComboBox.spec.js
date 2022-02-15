@@ -507,6 +507,33 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
 
+		it ("first HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await mcb.click();
+			await input.keys(['c', 'o', 'm', 'p']);
+			await input.keys("Home");
+
+			const caretPosition = await browser.executeAsync(done => {
+				return done(document.querySelector("#mcb").shadowRoot.querySelector("input").selectionStart);
+			});
+
+			assert.equal(await caretPosition, 0, "The caret is at the start of the input");
+
+			await input.keys("Home");
+			assert.equal(await tokens[0].getProperty("focused"), true, "The first token is focused");
+
+			await input.keys("End");
+			assert.equal(await tokens[tokens.length - 1].getProperty("focused"), true, "The last token is focused");
+		
+			await input.keys("End");
+			assert.equal(await mcb.getProperty("focused"), true, "The input is focused");
+		});
+
 		it ("should close the picker and focus the next element on TAB", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
