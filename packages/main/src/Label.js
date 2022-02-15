@@ -145,8 +145,8 @@ class Label extends UI5Element {
 			return;
 		}
 
-		const owner = findNodeOwner(this);
-		const elementToFocus = owner.querySelector(`#${this.for}`);
+		const ownerNode = findNodeOwner(this);
+		const elementToFocus = ownerNode.querySelector(`#${this.for}`);
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
