@@ -23,6 +23,8 @@ const metadata = {
 		 * @public
 		 */
 		additionalText: { type: String },
+
+		selected: { type: Boolean },
 	},
 };
 
