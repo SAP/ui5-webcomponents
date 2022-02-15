@@ -77,13 +77,10 @@
 
 .ui5-valuestatemessage-popover::part(header),
 .ui5-valuestatemessage-popover::part(content) {
-	padding: 0; 
+	padding: 0;
 }
 
-.ui5-valuestatemessage-popover::part(header) {
-	min-height: 0;
-}
-
+.ui5-valuestatemessage-popover::part(header),
 .ui5-valuestatemessage-popover::part(footer) {
 	min-height: 0;
 }

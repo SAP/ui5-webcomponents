@@ -404,7 +404,7 @@ describe("Responsive paddings", () => {
 		assert.strictEqual(actualHeaderPadding.value, expectedPadding, "dialog has correct padding set on the header");
 		assert.strictEqual(actualFooterPadding.value, expectedPadding, "dialog has correct padding set on the footer");
 
-		browser.$("#btnCloseDialog").click();
+		await browser.$("#btnCloseDialog").click();
 	});
 
 	it("tests removing of responsive paddings for the content", async () => {
@@ -427,5 +427,7 @@ describe("Responsive paddings", () => {
 		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "dialog has correct padding set on the content");
 		assert.strictEqual(actualHeaderPadding.value, expectedPadding, "dialog has correct padding set on the header");
 		assert.strictEqual(actualFooterPadding.value, expectedPadding, "dialog has correct padding set on the footer");
+
+		await browser.$("#btnCloseDialogNoPaddings").click();
 	});
 });
