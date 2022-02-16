@@ -265,6 +265,20 @@ describe("Input general interaction", () => {
 		await btn.click();
 
 		assert.strictEqual(await input.getProperty("value"), "", "Input's value is removed");
+
+		// Act
+		await input.click();
+		await input.keys("12,5");
+
+		// Assert
+		assert.strictEqual(await input.getProperty("value"), "12.5", "Value is set correctly");
+
+		// Act
+		await browser.keys(["Meta", "a"]);
+		await input.keys("Backspace");
+
+		// Assert
+		assert.strictEqual(await input.getProperty("value"), "", "Removed properly");
 	});
 
 

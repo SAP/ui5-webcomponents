@@ -916,6 +916,10 @@ class Input extends UI5Element {
 
 			// Perform manual handling in case of floating number
 			// and if the user did not select the entire input value
+			if (this._selectedText.indexOf(",") > -1) {
+				this._selectedText = this._selectedText.replace(",", ".");
+			}
+
 			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
 				const newValue = this.removeFractionalPart(this.value);
 
