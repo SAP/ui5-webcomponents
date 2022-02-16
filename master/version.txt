@@ -1,5 +1,7 @@
-commit dc2de5ba0af0cbe900039bc763bbd4536057ecfc
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed Feb 16 08:32:58 2022 +0200
+commit bd7a8a1e3c72e123e50fa7414cca94468286edb7
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Wed Feb 16 16:56:39 2022 +0200
 
-    fix(ui5-slider): prevent handle's jumping on focus (#4752)
+    fix(ui5-label): allow focusing elements linked with for attribute inside a shadow root (#4754)
+    
+    Fixes: #4751
