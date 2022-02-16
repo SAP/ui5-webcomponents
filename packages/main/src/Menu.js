@@ -339,7 +339,7 @@ class Menu extends UI5Element {
 			clonedItem = subItems[idx].cloneNode(true);
 			subMenu.appendChild(clonedItem);
 		}
-		this.staticAreaItem.shadowRoot.querySelector(".submenus").appendChild(subMenu);
+		this.staticAreaItem.shadowRoot.querySelector(".ui5-menu-submenus").appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
