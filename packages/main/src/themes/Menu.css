@@ -65,6 +65,17 @@
 	background-color: var(--sapList_Hover_Background);
 }
 
+.ui5-menu-rp[sub-menu] {
+	margin-top: 0.25rem;
+	margin-inline-start: -0.25rem;
+}
+
+.ui5-menu-rp[dir="rtl"][sub-menu] {
+	margin-top: 0.25rem;
+	margin-inline-start: 0;
+	margin-inline-end: 0.25rem;
+}
+
 [dir="rtl"] .ui5-menu-item-icon-end {
 	padding-left: 0;
 	padding-right: 0.5rem;
