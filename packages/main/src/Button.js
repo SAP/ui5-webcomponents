@@ -9,6 +9,7 @@ import {
 	isPhone,
 	isTablet,
 	isCombi,
+	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -436,7 +437,9 @@ class Button extends UI5Element {
 			return;
 		}
 		this.active = false;
-		this.focused = false;
+		if (isDesktop()) {
+			this.focused = false;
+		}
 	}
 
 	_onfocusin(event) {
@@ -445,7 +448,9 @@ class Button extends UI5Element {
 		}
 
 		event.isMarked = "button";
-		this.focused = true;
+		if (isDesktop()) {
+			this.focused = true;
+		}
 	}
 
 	get hasButtonType() {

@@ -57,13 +57,9 @@
     overflow: auto;
 
     /* Consider how to make this top level */
-    padding: var(--_ui5_popup_content_padding);
     box-sizing: border-box;
 }
 
-:host([no-padding]) .ui5-popup-content {
-    padding: 0;
-}
 
 :host([header-text]) .ui5-popup-header-text {
     padding: 0 0.25rem;
@@ -84,4 +80,48 @@
 
 :host([disable-scrolling]) .ui5-popup-content {
     overflow: hidden;
+}
+
+/*** Responsive paddings for the content***/
+:host([media-range="S"]) .ui5-popup-content {
+	padding: 1rem var(--_ui5_popup_content_padding_s);
+}
+
+:host([media-range="M"]) .ui5-popup-content,
+:host([media-range="L"]) .ui5-popup-content {
+	padding: 1rem var(--_ui5_popup_content_padding_m_l);
+}
+
+:host([media-range="XL"]) .ui5-popup-content {
+	padding: 1rem var(--_ui5_popup_content_padding_xl);
+}
+
+.ui5-popup-footer-root {
+	justify-content: end;
+}
+
+.ui5-popup-header-root {
+	background: var(--sapPageHeader_Background);
+	justify-content: start;
+}
+
+/*** Responsive paddings for the Header and Footer ***/
+:host([media-range="S"]) .ui5-popup-header-root,
+:host([media-range="S"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_s);
+	padding-right: var(--_ui5_popup_header_footer_padding_s);
+}
+
+:host([media-range="M"]) .ui5-popup-header-root,
+:host([media-range="L"]) .ui5-popup-header-root,
+:host([media-range="M"]) .ui5-popup-footer-root,
+:host([media-range="L"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_m_l);
+	padding-right: var(--_ui5_popup_header_footer_padding_m_l);
+}
+
+:host([media-range="XL"]) .ui5-popup-header-root,
+:host([media-range="XL"]) .ui5-popup-footer-root {
+	padding-left: var(--_ui5_popup_header_footer_padding_xl);
+	padding-right: var(--_ui5_popup_header_footer_padding_xl);
 }
