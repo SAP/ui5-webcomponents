@@ -1,0 +1,9 @@
+<div class="tb">
+
+	<slot name="{{this._defaultSlotName}}"></slot>
+
+	{{#each subtabs}}
+		<slot name="{{this._effectiveSlotName}}"></slot>
+	{{/each}}
+
+</div>

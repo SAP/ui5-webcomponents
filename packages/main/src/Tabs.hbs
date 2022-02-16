@@ -1,0 +1,14 @@
+<div class="root">
+
+	<div class="menu" @click="{{_handleMenuClick}}">
+		{{#each _menu}}
+			<button .associatedTab="{{this}}">{{this._id}}</button>
+		{{/each}}
+	</div>
+
+
+	{{#each tabs}}
+		<slot name="{{this._effectiveSlotName}}"></slot>
+	{{/each}}
+
+</div>
