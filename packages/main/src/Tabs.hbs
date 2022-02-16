@@ -2,7 +2,7 @@
 
 	<div class="menu" @click="{{_handleMenuClick}}">
 		{{#each _menu}}
-			<button .associatedTab="{{this}}">{{this._id}}</button>
+			<button .associatedTab="{{this}}">{{this.title}}</button>
 		{{/each}}
 	</div>
 
