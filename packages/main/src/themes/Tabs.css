@@ -2,3 +2,11 @@
 	width: 100%;
 	padding: 0;
 }
+
+.menu {
+	margin: 0 0 10px 0;
+}
+
+.menu-item {
+	margin: 5px;
+}

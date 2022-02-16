@@ -25,6 +25,7 @@ const metadata = {
 		"subtabs": {
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tb.prototype */ {

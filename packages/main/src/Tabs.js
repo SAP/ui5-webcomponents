@@ -2,6 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TabsCss from "./generated/themes/Tabs.css.js";
 import TabsTemplate from "./generated/templates/TabsTemplate.lit.js";
+import Tb from "./Tb.js";
+
 /**
  * @public
  */
@@ -23,6 +25,7 @@ const metadata = {
 			propertyName: "tabs",
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tabs.prototype */ {
@@ -63,6 +66,10 @@ class Tabs extends UI5Element {
 
 	static get template() {
 		return TabsTemplate;
+	}
+
+	static get dependencies() {
+		return [Tb];
 	}
 
 	get _menu() {
