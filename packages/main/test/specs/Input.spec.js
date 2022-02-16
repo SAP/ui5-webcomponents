@@ -256,8 +256,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("tests value removal when Input type is 'Number'", async () => {
-		const input = await $("#input-number3").shadow$("input");
-		const btn = await $("#input-number3-focusout");
+		const input = await browser.$("#input-number3");
+		const btn = await browser.$("#input-number3-focusout");
 
 		// Press Backspace and focus out the
 		await input.click();
@@ -265,15 +265,6 @@ describe("Input general interaction", () => {
 		await btn.click();
 
 		assert.strictEqual(await input.getProperty("value"), "", "Input's value is removed");
-
-		// Act
-		await input.click();
-		await input.keys("12,5");
-		await browser.keys(["Meta", "A"]);
-		await input.keys("Backspace");
-
-		// Assert
-		assert.strictEqual(await input.getProperty("value"), "", "Removed properly");
 	});
 
 
