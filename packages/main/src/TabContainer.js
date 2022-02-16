@@ -260,6 +260,10 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+
+		selectedTab: {
+			type: Object,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -420,6 +424,11 @@ class TabContainer extends UI5Element {
 		if (!tab) {
 			return;
 		}
+		this.selectedTab = tab.associatedTab;
+
+		walk(this.items, item => {
+			item.selectedTab = this.selectedTab;
+		});
 
 		this._onHeaderItemSelect(tab);
 	}
@@ -464,6 +473,12 @@ class TabContainer extends UI5Element {
 	async _onOverflowListItemClick(event) {
 		event.preventDefault(); // cancel the item selection
 		const { item } = event.detail;
+
+		this.selectedTab = item.associatedTab;
+
+		walk(this.items, tab => {
+			tab.selectedTab = this.selectedTab;
+		});
 
 		this._onItemSelect(item);
 		await this.responsivePopover.close();
@@ -901,6 +916,15 @@ class TabContainer extends UI5Element {
 		return this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
 	}
 
+	get _menu() {
+		const items = [];
+		walk(this.items, tab => {
+			items.push(tab);
+		});
+
+		return items;
+	}
+
 	_updateOverflowCounters() {
 		let startOverflowItemsCount = 0;
 		let endOverflowItemsCount = 0;
@@ -1092,6 +1116,15 @@ const findIndex = (arr, predicate) => {
 	}
 
 	return -1;
+};
+
+const walk = (tabs, callback) => {
+	[...tabs].forEach(tab => {
+		callback(tab);
+		if (tab.subTabs) {
+			walk(tab.subTabs, callback);
+		}
+	});
 };
 
 TabContainer.define();

@@ -73,7 +73,9 @@
 					role="tabpanel"
 					aria-labelledby="{{this._selectedTab._id}}"
 				>
-					<slot name="{{../this._selectedTab._individualSlot}}"></slot>
+					{{#each items}}
+						<slot name="{{this._effectiveSlotName}}"></slot>
+					{{/each}}
 				</div>
 	</div>
 {{/inline}}

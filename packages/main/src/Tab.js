@@ -148,6 +148,10 @@ const metadata = {
 		_selected: {
 			type: Boolean,
 		},
+
+		selectedTab: {
+			type: Object,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},
@@ -229,6 +233,18 @@ class Tab extends UI5Element {
 		return this.subTabs.length > 0 && this.parentElement.getAttribute("ui5-tabcontainer") === "";
 	}
 
+	isOnSelectedTabPath() {
+		return this.selectedTab === this || this.subTabs.some(subTab => subTab.isOnSelectedTabPath());
+	}
+
+	get _effectiveSlotName() {
+		return this.isOnSelectedTabPath() ? this._individualSlot : "disabled-slot";
+	}
+
+	get _defaultSlotName() {
+		return this.selectedTab === this ? "" : "disabled-slot";
+	}
+
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
@@ -257,7 +273,7 @@ class Tab extends UI5Element {
 
 		const tabInstanceId = event.target.parentElement.parentElement.id;
 		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
-
+		this._tabItems = tabInstance.subTabs;
 		this.responsivePopoverSubItems = await this._respPopover(tabInstance);
 		if (this.responsivePopoverSubItems.opened) {
 			this.responsivePopoverSubItems.close();
