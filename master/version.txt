@@ -1,11 +1,5 @@
-commit a09cdb54588cde1340788b83d8c26fe1556fdbf0
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Feb 15 19:03:53 2022 +0200
+commit dc2de5ba0af0cbe900039bc763bbd4536057ecfc
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Feb 16 08:32:58 2022 +0200
 
-    feat(ui5-multi-combobox) Add Home/End navigation (#4740)
-    
-    * Implement HOME + END keys handling
-    
-    * Add HOME/END navigation
-    
-    * Fix syntax error
+    fix(ui5-slider): prevent handle's jumping on focus (#4752)
