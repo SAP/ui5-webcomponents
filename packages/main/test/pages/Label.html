@@ -21,6 +21,7 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<script src="./modules/LabelPageCustomElement.js" defer></script>
 	<link rel="stylesheet" type="text/css" href="styles/Label.css">
 </head>
 
@@ -148,6 +149,11 @@
 		<ui5-label wrapping-type="Normal" required> Long label - Reprehenderit amet cillum temporH</ui5-label>
 		<ui5-label wrapping-type="Normal" show-colon> Long label - Reprehenderit amet cillum temporH</ui5-label>
 		<ui5-label wrapping-type="Normal" required show-colon> Long label - Reprehenderit amet cillum temporH</ui5-label>
+	</section>
+
+	<section>
+		<h2>Using a Label inside Shadow Root</h2>
+		<label-page-custom-element id="custom-element-with-label"></label-page-custom-element>
 	</section>
 </body>
 
