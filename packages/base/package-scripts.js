@@ -15,9 +15,8 @@ const scripts = {
 	lint: "eslint . --config config/.eslintrc.js",
 	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles",
 	integrate: {
-		default: "nps integrate.copy-used-modules integrate.copy-overlay integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
+		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
-		"copy-overlay": `copy-and-watch "overlay/**/*.js" dist/`,
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
 		"amd-to-es6": "amdtoes6 --src=dist/ --replace --glob=**/*.js",
 		"esm-abs-to-rel": `node "${esmAbsToRel}" dist/ dist/`,
