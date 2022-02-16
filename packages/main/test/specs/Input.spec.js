@@ -269,11 +269,13 @@ describe("Input general interaction", () => {
 		// Act
 		await input.click();
 		await input.keys("12,5");
+		await btn.click();
 
 		// Assert
 		assert.strictEqual(await input.getProperty("value"), "12.5", "Value is set correctly");
 
 		// Act
+		await input.click();
 		await browser.keys(["Meta", "a"]);
 		await input.keys("Backspace");
 
