@@ -506,6 +506,93 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
+
+		it ("first HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await mcb.click();
+			await input.keys(['c', 'o', 'm', 'p']);
+			await input.keys("Home");
+
+			const caretPosition = await browser.executeAsync(done => {
+				return done(document.querySelector("#mcb").shadowRoot.querySelector("input").selectionStart);
+			});
+
+			assert.equal(await caretPosition, 0, "The caret is at the start of the input");
+
+			await input.keys("Home");
+			assert.equal(await tokens[0].getProperty("focused"), true, "The first token is focused");
+
+			await input.keys("End");
+			assert.equal(await tokens[tokens.length - 1].getProperty("focused"), true, "The last token is focused");
+		
+			await input.keys("End");
+			assert.equal(await mcb.getProperty("focused"), true, "The input is focused");
+		});
+
+		it ("should close the picker and focus the next element on TAB", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const mcb2 = await browser.$("#another-mcb");
+
+			await mcb.click();
+			await mcb.keys("F4");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+
+			await mcb2.keys("F4");
+			await mcb2.keys(["Shift", "Tab"]);
+
+			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed");
+			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused");
+
+			await mcb.keys(["a", "b", "c"]);
+			await mcb.keys("F4");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb.getProperty("value"), "abc", "The previous control value is set");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+		});
+
+		it ("should close the picker and focus the next element on TAB over an item or value state header", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-warning");
+			const input = await mcb.shadow$("input");
+			const mcb2 = await browser.$("#mcb-error");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on value state header");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on value state header");
+
+			await mcb2.keys("F4");
+			await mcb2.keys("ArrowDown");
+			await mcb2.keys("ArrowDown");
+			await mcb2.keys(["Shift", "Tab"]);
+
+			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed after TAB on suggestion item");
+			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused after TAB on suggestion item");
+
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
+		});
 	});
 
 	describe("General", () => {

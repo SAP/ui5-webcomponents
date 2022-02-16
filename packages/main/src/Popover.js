@@ -1,6 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
@@ -249,6 +248,17 @@ const metadata = {
  * or selects an action within the popover. You can prevent this with the
  * <code>modal</code> property.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-popover</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>header - Used to style the header of the component</li>
+ * <li>content - Used to style the content of the component</li>
+ * <li>footer - Used to style the footer of the component</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
@@ -264,8 +274,6 @@ const metadata = {
 class Popover extends Popup {
 	constructor() {
 		super();
-
-		this._handleResize = this.handleResize.bind(this);
 	}
 
 	static get metadata() {
@@ -286,14 +294,6 @@ class Popover extends Popup {
 
 	static get ARROW_MARGIN() {
 		return 6; // px
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._handleResize);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._handleResize);
 	}
 
 	isOpenerClicked(event) {
@@ -365,7 +365,12 @@ class Popover extends Popup {
 			&& openerRect.right === 0;
 	}
 
-	handleResize() {
+	/**
+	 * @override
+	 */
+	_resize() {
+		super._resize();
+
 		if (this.opened) {
 			this.reposition();
 		}

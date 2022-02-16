@@ -378,3 +378,56 @@ describe("Page scrolling", () => {
 		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
 	});
 });
+
+describe("Responsive paddings", () => {
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	});
+
+	it("tests responsive paddings", async () => {
+		const openDialog = await browser.$("#btnOpenDialog");
+		await openDialog.click();
+
+		const expectedPadding = "16px";
+		const dialog = await browser.$("#dialog");
+
+		// content
+		const actualContentPadding = await dialog.shadow$(".ui5-popup-content").getCSSProperty("padding-left");
+
+		// header
+		const actualHeaderPadding = await dialog.shadow$(".ui5-popup-header-root").getCSSProperty("padding-left");
+
+		// footer
+		const actualFooterPadding = await dialog.shadow$(".ui5-popup-footer-root").getCSSProperty("padding-left");
+
+		assert.strictEqual(actualContentPadding.value, expectedPadding, "dialog has correct padding set on the content");
+		assert.strictEqual(actualHeaderPadding.value, expectedPadding, "dialog has correct padding set on the header");
+		assert.strictEqual(actualFooterPadding.value, expectedPadding, "dialog has correct padding set on the footer");
+
+		await browser.$("#btnCloseDialog").click();
+	});
+
+	it("tests removing of responsive paddings for the content", async () => {
+		const openDialog = await browser.$("#btnOpenDialogNoPaddings");
+		await openDialog.click();
+
+		const expectedPadding = "16px";
+		const expectedContentPadding = "0px";
+		const dialog = await browser.$("#dialogNoPaddings");
+
+		// content
+		const actualContentPadding = await dialog.shadow$(".ui5-popup-content").getCSSProperty("padding-left");
+
+		// header
+		const actualHeaderPadding = await dialog.shadow$(".ui5-popup-header-root").getCSSProperty("padding-left");
+
+		// footer
+		const actualFooterPadding = await dialog.shadow$(".ui5-popup-footer-root").getCSSProperty("padding-left");
+
+		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "dialog has correct padding set on the content");
+		assert.strictEqual(actualHeaderPadding.value, expectedPadding, "dialog has correct padding set on the header");
+		assert.strictEqual(actualFooterPadding.value, expectedPadding, "dialog has correct padding set on the footer");
+
+		await browser.$("#btnCloseDialogNoPaddings").click();
+	});
+});

@@ -8,6 +8,9 @@ import {
 	isUp,
 	isSpace,
 	isRight,
+	isHome,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -591,9 +594,38 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_handleHome(event) {
+		const shouldFocusToken = this._isFocusInside && event.target.selectionStart === 0 && this._tokenizer.tokens.length > 0;
+
+		if (shouldFocusToken) {
+			event.preventDefault();
+			this._tokenizer.tokens[0].focus();
+		}
+	}
+
+	_handleEnd(event) {
+		const tokens = this._tokenizer.tokens;
+		const lastTokenIdx = tokens.length - 1;
+		const shouldFocusInput = event.target === tokens[lastTokenIdx] && tokens[lastTokenIdx] === this.shadowRoot.activeElement;
+
+		if (shouldFocusInput) {
+			event.preventDefault();
+			this._inputDom.focus();
+		}
+	}
+
+	_handleTab(event) {
+		this.allItemsPopover.close();
+	}
+
 	_onValueStateKeydown(event) {
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
+
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._onItemTab(event);
+			return;
+		}
 
 		event.preventDefault();
 
@@ -609,18 +641,25 @@ class MultiComboBox extends UI5Element {
 	_onItemKeydown(event) {
 		const isFirstItem = this.list.items[0] === event.target;
 
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._onItemTab(event);
+			return;
+		}
+
 		event.preventDefault();
 
-		if (!isUp(event) || !isFirstItem) {
-			return;
-		}
-
-		if (this.valueStateHeader) {
+		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
-			return;
 		}
 
+		if (!this.valueStateHeader && isUp(event) && isFirstItem) {
+			this._inputDom.focus();
+		}
+	}
+
+	_onItemTab(event) {
 		this._inputDom.focus();
+		this.allItemsPopover.close();
 	}
 
 	async _handleArrowNavigation(event) {
@@ -771,6 +810,8 @@ class MultiComboBox extends UI5Element {
 				}, 0);
 			}
 		}
+
+		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
 	}
 
 	_filterItems(str) {

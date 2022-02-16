@@ -59,3 +59,7 @@
 	border-bottom-left-radius: var(--_ui5_tc_overflowItem_focus_border);
 	border-bottom-right-radius: var(--_ui5_tc_overflowItem_focus_border);
 }
+
+.ui5-tab-container-responsive-popover::part(content) {
+	padding: 0;
+}
