@@ -69,7 +69,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		assert.include(sortBySelectedLiText, "Position", "sortBy should change selected option");
 
 		await browser.keys("Escape");
-	})
+	});
 
 	it("test ViewSettingsDialog cancel selected settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
@@ -93,7 +93,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		assert.include(selectedLiText, "Descending", "sortOrder should not have a change in the selected option");
 
 		await browser.keys("Escape");
-	})
+	});
 
 	it("test ViewSettingsDialog reset settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");

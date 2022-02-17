@@ -68,7 +68,7 @@
 						sort-by>
 						<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
 						{{#each _currentSettings.sortBy}}
-							<ui5-li ?selected="{{this.selected}}">{{this.text}}</ui5-li>
+							<ui5-li ?selected="{{this.selected}}" .associatedItem="{{this.item2}}">{{this.text}}</ui5-li>
 						{{/each}}
 					</ui5-list>
 				</div>
