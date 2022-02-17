@@ -512,14 +512,13 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#multi1");
 			const input = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const secondToken = tokens[1];
 
-			await input.click();
-			await mcb.keys("ArrowLeft");
-			await mcb.keys("ArrowLeft");
+			await secondToken.click();
 			await mcb.keys("Backspace");
 
-			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 2, "should have two tokens");
 			assert.equal(await tokens[0].getProperty("focused"), true, "Previous token is focused");
@@ -548,16 +547,15 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-items");
 			const input = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const fourthToken = tokens[3];
 
-			await input.click();
-			await mcb.keys("ArrowLeft");
-			await mcb.keys("ArrowLeft");
+			await fourthToken.click();
 			await mcb.keys(["Shift", "ArrowLeft"]);
 			await mcb.keys("Backspace");
 
-			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-
-			assert.equal(await tokens.length, 3, "should have two tokens");
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 3, "should have three tokens");
 			assert.equal(await tokens[1].getProperty("focused"), true, "Second token is focused");
 		});
 
@@ -566,17 +564,33 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-items");
 			const input = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const fourthToken = tokens[3];
+
+			await fourthToken.click();
+			await mcb.keys(["Shift", "ArrowLeft"]);
+			await mcb.keys("Delete");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "should have two tokens");
+			assert.equal(await tokens[2].getProperty("focused"), true, "Last token is focused");
+		});
+
+		it ("should focus input after all tokens are deleted", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-compact");
+			const input = await mcb.shadow$("input");
 
 			await input.click();
-			await mcb.keys("ArrowLeft");
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Shift", "ArrowLeft"]);
 			await mcb.keys("Delete");
 
-			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await mcb.getProperty("focused"), true, "Input should be focused");
+		});
 
-			assert.equal(await tokens.length, 3, "should have two tokens");
-			assert.equal(await tokens[2].getProperty("focused"), true, "Last token is focused");
 		it ("first HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
