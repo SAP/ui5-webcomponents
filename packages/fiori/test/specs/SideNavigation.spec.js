@@ -143,18 +143,19 @@ describe("Component Behavior", () => {
 		});
 	
 		it("tests the prevention of the ui5-selection-change event", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			const items = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+
+			await items[3].click();
+
 			const selectionChangeCheckbox = await browser.$("#prevent-selection");
 			await selectionChangeCheckbox.click();
 
-			const selectionChangeCounter = await browser.$("#counter");
-			await selectionChangeCounter.setProperty("value", "0");
-
-			const sideNavigation = await browser.$("#sn1");
-			const items = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
 			await items[0].click();
-			await items[1].click();
 
-			assert.strictEqual(await selectionChangeCounter.getProperty("value"), "0", "Event is not fired");
+			assert.strictEqual(await items[0].getAttribute("selected"), null, "new item was not selected");
+
+			assert.strictEqual(await items[3].getAttribute("selected"), "true", "initially selected item has not changed");
 
 			await selectionChangeCheckbox.click();
 		});
