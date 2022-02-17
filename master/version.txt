@@ -1,7 +1,5 @@
-commit d9084654400007ac78febdcda7673d8b14fe2850
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Feb 17 13:00:11 2022 +0200
+commit 199e860748134f5e457b259e18cd379701800bf7
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Feb 17 17:46:35 2022 +0200
 
-    feat(ui5-side-navigation): make selection-change event preventable (#4732)
-    
-    Fixes #4700
+    fix(ui5-combobox): prevent dropdown closing on scroll (#4773)
