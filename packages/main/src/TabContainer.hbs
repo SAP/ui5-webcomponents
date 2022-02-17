@@ -25,6 +25,8 @@
 					@click="{{_onHeaderClick}}"
 					@keydown="{{_onHeaderKeyDown}}"
 					@keyup="{{_onHeaderKeyUp}}"
+					@mousedown={{_onHeaderMouseDown}}
+					@mouseup={{_onHeaderMouseUp}}
 				>
 					{{#each items}}
 						{{#unless this.isSeparator}}

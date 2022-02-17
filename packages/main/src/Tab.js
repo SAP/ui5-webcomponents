@@ -113,6 +113,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Used to switch the active state (pressed or not) of the component.
+		 * @private
+		 */
+		active: {
+			type: Boolean,
+		},
+
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
@@ -264,6 +272,10 @@ class Tab extends UI5Element {
 
 		if (this.selected) {
 			classes.push("ui5-tab-strip-item--selected");
+		}
+
+		if (this.active) {
+			classes.push("ui5-tab-strip-item--active");
 		}
 
 		if (this.disabled) {

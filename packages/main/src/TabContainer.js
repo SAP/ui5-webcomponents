@@ -380,6 +380,25 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	_onHeaderMouseDown(event) {
+		this._onHeaderItemActive(event, true);
+	}
+
+	_onHeaderMouseUp(event) {
+		this._onHeaderItemActive(event, false);
+	}
+
+	_onHeaderItemActive(event, isActive) {
+		const tab = getTab(event.target);
+
+		if (!tab || tab.hasAttribute("disabled")) {
+			return;
+		}
+
+		const selectedIndex = findIndex(this.items, item => item._id === tab.id);
+		this.items[selectedIndex].active = isActive;
+	}
+
 	_onHeaderKeyUp(event) {
 		const tab = getTab(event.target);
 		if (!tab) {
