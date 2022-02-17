@@ -62,6 +62,10 @@ class TabSeparator extends UI5Element {
 		return this._getTabInStripDomRef;
 	}
 
+	isOnSelectedTabPath() {
+		return false;
+	}
+
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
