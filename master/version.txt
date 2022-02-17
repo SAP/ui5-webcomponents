@@ -1,5 +1,5 @@
-commit f8dc9f00ebd072869911424e2617533396a770cb
+commit f2fd6fbd107ba39e183ff1a1cac239c63c3ec0e1
 Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Feb 17 10:18:21 2022 +0200
+Date:   Thu Feb 17 11:05:58 2022 +0200
 
-    feat(ui5-rating-indicator): Accessibility enhancements (#4736)
+    fix(ui5-textarea): enhance aria-invalid attribute handling (#4767)
