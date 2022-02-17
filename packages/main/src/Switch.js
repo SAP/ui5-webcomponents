@@ -98,6 +98,18 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.2.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
 		 * @type {String}

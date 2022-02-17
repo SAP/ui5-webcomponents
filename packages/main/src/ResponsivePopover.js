@@ -18,15 +18,6 @@ import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-
-		/**
-		 * Defines if padding would be added around the content.
-		 * @private
-		 */
-		withPadding: {
-			type: Boolean,
-		},
-
 		/**
 		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
 		 * By default both the header and footer would be displayed.
@@ -68,6 +59,17 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * Use it when you want to make sure that all the content is visible on any device.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-responsive-popover</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>header - Used to style the header of the component</li>
+ * <li>content - Used to style the content of the component</li>
+ * <li>footer - Used to style the footer of the component</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE
