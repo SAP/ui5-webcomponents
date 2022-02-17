@@ -384,10 +384,15 @@ class TabContainer extends UI5Element {
 		this._getAllSubItems(this._getTabs(), this._allItemsAndSubItems, 1);
 		if (this._allItemsAndSubItems.length) {
 			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
+			walk(selectedTabs, item => {
+				item.selectedTab = this.selectedTab;
+			});
 			if (selectedTabs.length) {
 				this._selectedTab = selectedTabs[0];
+				this.selectedTab = selectedTabs[0];
 			} else {
 				this._selectedTab = this._allItemsAndSubItems[0];
+				this.selectedTab = this._allItemsAndSubItems[0];
 				this._selectedTab._selected = true;
 			}
 		}
