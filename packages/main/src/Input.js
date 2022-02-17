@@ -365,6 +365,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		open: {
+			type: Boolean,
+		},
+
 		/**
 		 * Indicates whether the visual focus is on the value state header
 		 * @private
@@ -832,7 +836,7 @@ class Input extends UI5Element {
 			return;
 		}
 
-		this.closePopover();
+		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
 		this.previousValue = "";
@@ -987,6 +991,7 @@ class Input extends UI5Element {
 
 		this.isTyping = false;
 		this.openOnMobile = false;
+		this.open = false;
 	}
 
 	/**

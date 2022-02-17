@@ -159,7 +159,7 @@
           const data = await fetchData();
 
           // fill new items (posibly redux / react state)
-          fillItems(data, event.target);
+          fillItems(data, event.target, "ui5-suggestion-item");
 
         } else if (!value.length && suggestionItems.length) {
           clearChildren(event.target);
@@ -170,7 +170,7 @@
     const enablePreload = async () => {
       const data = await fetchData();
 
-      fillItems(data, document.getElementById("preload"));
+      fillItems(data, document.getElementById("preload"), "ui5-suggestion-item");
     };
 
     enableLazyLoadingOnInput();
