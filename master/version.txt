@@ -1,9 +1,5 @@
-commit f93909c083f039f83c2f96f8b9b2e736a02f345f
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Wed Feb 16 17:09:08 2022 +0200
+commit f8dc9f00ebd072869911424e2617533396a770cb
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Feb 17 10:18:21 2022 +0200
 
-    fix(ui5-popup): Usage of parts in Dialog, Popover, ResponsivePopover and TabContainer documented (#4747)
-    
-    Using parts is the way to remove the default responsive paddings from the header, footer and content, if they are not needed.
-    
-    Fixes: #4402
+    feat(ui5-rating-indicator): Accessibility enhancements (#4736)
