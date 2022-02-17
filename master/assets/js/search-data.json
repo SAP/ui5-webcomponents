@@ -1171,7 +1171,7 @@
   "168": {
     "id": "168",
     "title": "Side Navigation",
-    "content": "&lt;!DOCTYPE html&gt; Side Navigation Willam Brown UX expert selection-change event click event",
+    "content": "&lt;!DOCTYPE html&gt; Side Navigation Willam Brown UX expert selection-change event click event prevent selection-change event",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/SideNavigation/",
     "relUrl": "/playground/fiori/pages/SideNavigation/"
   },

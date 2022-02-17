@@ -1,15 +1,7 @@
-commit 0aa997977fca4c7a1477b9d5fc4380e82ef2f282
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Feb 17 12:15:23 2022 +0200
+commit d9084654400007ac78febdcda7673d8b14fe2850
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Thu Feb 17 13:00:11 2022 +0200
 
-    fix(ui5-input): delete whole value of ui5-input with type number when… (#4760)
+    feat(ui5-side-navigation): make selection-change event preventable (#4732)
     
-    * fix(ui5-input): delete whole value of ui5-input with type number when selected
-    
-    * adjust tests
-    
-    * test fix
-    
-    * test issue
-    
-    * unstable test removed
+    Fixes #4700
