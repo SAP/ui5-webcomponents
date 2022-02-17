@@ -1,5 +1,15 @@
-commit f2fd6fbd107ba39e183ff1a1cac239c63c3ec0e1
+commit 0aa997977fca4c7a1477b9d5fc4380e82ef2f282
 Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Feb 17 11:05:58 2022 +0200
+Date:   Thu Feb 17 12:15:23 2022 +0200
 
-    fix(ui5-textarea): enhance aria-invalid attribute handling (#4767)
+    fix(ui5-input): delete whole value of ui5-input with type number when… (#4760)
+    
+    * fix(ui5-input): delete whole value of ui5-input with type number when selected
+    
+    * adjust tests
+    
+    * test fix
+    
+    * test issue
+    
+    * unstable test removed
