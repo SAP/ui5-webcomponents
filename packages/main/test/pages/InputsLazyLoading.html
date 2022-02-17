@@ -102,10 +102,17 @@
 
 
   <script>
+    const entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+
 
     const fetchData = async () => {
-      // load data
-      return (await (await fetch("https://restcountries.com/v3.1/all")).json());
+      // load data real API
+      // return (await (await fetch("https://restcountries.com/v3.1/all")).json());
+
+      // load data fake request
+      await new Promise(e => setTimeout(e, 1000));
+
+      return entries;
     };
 
     const clearChildren = element => {
@@ -117,7 +124,7 @@
     const fillItems = (itemsData, inputElement, tagName) => {
       itemsData.forEach(data => {
         const element = document.createElement(tagName);
-        element.setAttribute("text", data.name.common);
+        element.setAttribute("text", data.text);
 
         inputElement.appendChild(element);
       });
@@ -125,12 +132,12 @@
 
     const filterData = (data, value) => {
       return data.filter(entry => {
-        return entry.name.common.toLowerCase().startsWith(value.toLowerCase())
+        return entry.text.toLowerCase().startsWith(value.toLowerCase())
       });
     };
 
     const enableLazyLoadingOnInput = () => {
-      document.getElementById("field").addEventListener("input", async event => {
+      document.getElementById("field").addEventListener("ui5-input", async event => {
         if (event.target.value === "") {
           return clearChildren(event.target);
         }
@@ -152,7 +159,7 @@
     const enableFirsTypein = () => {
       const field = document.getElementById("first-type");
 
-      field.addEventListener("input", async event => {
+      field.addEventListener("ui5-input", async event => {
         const { value, suggestionItems } = event.target;
 
         if (value.length === 1 && !suggestionItems.length) {
@@ -180,15 +187,10 @@
     const enableCbLazyOnInput = () => {
       const cb = document.getElementById("combo-field");
 
-      cb.addEventListener("input", async event => {
+      cb.addEventListener("ui5-input", async event => {
         const { value } = event.target;
 
-        // load data
-        
         const data = await fetchData();
-
-        // filter data
-        // const filteredData = filterData(data, event.target.value);
 
         // cleanup old items
         clearChildren(event.target);

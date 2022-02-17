@@ -1108,3 +1108,25 @@ describe("XSS tests for suggestions", () => {
 		}));
 	});
 });
+
+
+describe("Lazy loading", () => {
+	beforeEach(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/InputsLazyLoading.html`);
+	});
+
+	it("Lazy loading opens the picker once items are populated", async () => {
+		const input = await $("#field");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("a");
+
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+			timeout: 3000,
+			timeoutMsg: "Popover should be displayed"
+		});
+	});
+});
