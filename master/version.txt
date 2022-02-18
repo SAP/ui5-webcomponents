@@ -1,5 +1,13 @@
-commit 199e860748134f5e457b259e18cd379701800bf7
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Feb 17 17:46:35 2022 +0200
+commit cece8d7f5cadc8fada3d1744ccdeb3d20cfbcc3b
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri Feb 18 09:57:21 2022 +0200
 
-    fix(ui5-combobox): prevent dropdown closing on scroll (#4773)
+    feat(ui5-tokenizer): Implement token range deletion (#4750)
+    
+    * Implement deletion of multiple tokens (range delete)
+    
+    * Improve the tests according to the code review
+    
+    * Fix test page
+    
+    * Fix input focus after all tokens are deleted
