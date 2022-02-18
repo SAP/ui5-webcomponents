@@ -69,7 +69,7 @@ const metadata = {
 		/**
 		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot colors
 		 * @public
 		 */
 		"default": {
