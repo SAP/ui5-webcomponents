@@ -170,7 +170,7 @@ const metadata = {
 		/**
 		 * Defines the aria-label attribute for the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -181,7 +181,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -244,8 +244,8 @@ const metadata = {
 		 * @event
 		 * @allowPreventDefault
 		 * @public
-		 * @param {String} value The submitted value.
-		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
+		 * @param {string} value The submitted value.
+		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
 			details: {
@@ -264,8 +264,8 @@ const metadata = {
 		 * @event
 		 * @allowPreventDefault
 		 * @public
-		 * @param {String} value The submitted value.
-		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
+		 * @param {string} value The submitted value.
+		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
 			details: {
