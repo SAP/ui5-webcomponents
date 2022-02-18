@@ -112,7 +112,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await startArrow.click();
 
 		// assert
-		assert.strictEqual(await startArrow.getAttribute("title"), startArrowText2,
+		assert.strictEqual(await startArrow.getAttribute("tooltip"), startArrowText2,
 			"Start arrow has the correct tooltip.");
 	});
 
