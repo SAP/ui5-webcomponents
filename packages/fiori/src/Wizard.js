@@ -126,7 +126,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
 		 * @param {HTMLElement} step The new step.
 		 * @param {HTMLElement} previousStep The previous step.
-		 * @param {Boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
+		 * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
 		 * @public
 		 */
 		"step-change": {
@@ -985,7 +985,7 @@ class Wizard extends UI5Element {
 	 * @param {HTMLElement} selectedStep the old step
 	 * @param {HTMLElement} stepToSelect the step to be selected
 	 * @param {Integer} stepToSelectIndex the index of the newly selected step
-	 * @param {Boolean} changeWithClick the selection changed due to user click in the step navigation
+	 * @param {boolean} changeWithClick the selection changed due to user click in the step navigation
 	 * @private
 	 */
 	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {

@@ -313,7 +313,7 @@ const metadata = {
 		/**
 		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -324,7 +324,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the input.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -1488,7 +1488,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Removes the fractional part of floating-point number.
-	 * @param {String} value the numeric value of Input of type "Number"
+	 * @param {string} value the numeric value of Input of type "Number"
 	 */
 	removeFractionalPart(value) {
 		if (value.includes(".")) {

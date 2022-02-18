@@ -35,7 +35,7 @@ const metadata = {
 
 		/**
 		 * Receives id(or many ids) of the elements that label the component
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0
@@ -48,7 +48,7 @@ const metadata = {
 		/**
 		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @defaultvalue ""
 		 * @since 1.1.0
