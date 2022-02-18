@@ -21,11 +21,13 @@ describe("ViewSettingsDialog general interaction", () => {
 	it("test ViewSettingsDialog - sortOrder confirm selected settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const viewSettingsDialog = await browser.$("#vsd");
+		const input = await browser.$("#sortOrder")
 		await btnOpenDialog.click();
 
 		await (await viewSettingsDialog.shadow$("ui5-list").$$("ui5-li"))[1].click();
 
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
+		assert.equal(await input.getAttribute("value"), "true", "SortOrder in confirm event should have correct value true");
 
 		await btnOpenDialog.click();
 
@@ -38,13 +40,14 @@ describe("ViewSettingsDialog general interaction", () => {
 	it("test ViewSettingsDialog - sortBy confirm selected settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const viewSettingsDialog = await browser.$("#vsd");
+		const input = await browser.$("#sortByItem");
 		await btnOpenDialog.click();
 
 		assert.notOk(await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li[selected]").isExisting(), "sortBy should not have an option selected");
 
 		await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").click();
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
-
+		assert.equal(await input.getAttribute("value"), "UI5-SORT-ITEM", "sortByItem should return HTML element");
 		await btnOpenDialog.click();
 
 		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();
