@@ -593,6 +593,41 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
 		});
+
+		it ("should select all filtered items on CTRL+A", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 6, "All items are selected");
+
+			await mcb.keys(["Control", "a"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 0, "All items are deselected");
+
+			await input.click();
+			await mcb.keys("c");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "All filtered items are selected");
+
+			await mcb.keys(["Control", "a"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
+		});
 	});
 
 	describe("General", () => {
