@@ -1,7 +1,9 @@
-commit 0aca15ff0a1cb7c196c6a9309928aa9d4735b215
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Fri Feb 18 13:29:25 2022 +0100
+commit 88a13df88e2b4b2224a64a3eeda277f9d56f0eeb
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Feb 18 14:51:45 2022 +0200
 
-    docs: fix JSDoc type for `DynamicSideContent` and `DatePicker` (#4781)
+    fix(ui5-view-settings-dialog): improve `title` text accessibility  (#4783)
     
-    Co-authored-by: ilhan orhan <ilhan.myumyun@sap.com>
+    We need the default heading level (2) for accessibility reasons, but we also need the sizing of heading level 5 based on the visual specification and openui5 implementation of the control.
+    
+    Related to: #4660
