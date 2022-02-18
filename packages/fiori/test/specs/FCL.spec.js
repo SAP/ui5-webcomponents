@@ -99,9 +99,9 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const endArrowContainerText = "End Arrow Container";
 
 		// assert
-		assert.strictEqual(await startArrow.getAttribute("title"), startArrowText1,
+		assert.strictEqual(await startArrow.getAttribute("tooltip"), startArrowText1,
 			"Start arrow has the correct tooltip.");
-		assert.strictEqual(await endArrow.getAttribute("title"), endArrowText,
+		assert.strictEqual(await endArrow.getAttribute("tooltip"), endArrowText,
 			"End arrow has the correct tooltip.");
 		assert.strictEqual(await startArrowContainerDOM.getAttribute("aria-label"), startArrowContainerText,
 			"Start arrow container has the correct label.");
