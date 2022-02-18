@@ -1,9 +1,5 @@
-commit 88a13df88e2b4b2224a64a3eeda277f9d56f0eeb
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Feb 18 14:51:45 2022 +0200
+commit b59f3dab71a2f3777e9ed16d6821f816fc06731a
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Fri Feb 18 15:00:47 2022 +0200
 
-    fix(ui5-view-settings-dialog): improve `title` text accessibility  (#4783)
-    
-    We need the default heading level (2) for accessibility reasons, but we also need the sizing of heading level 5 based on the visual specification and openui5 implementation of the control.
-    
-    Related to: #4660
+    docs: add notes about testing (#4785)

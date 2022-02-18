@@ -53,6 +53,7 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
+
 	<ui5-popover header-text="My Heading" id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
@@ -108,6 +109,14 @@
 		<div slot="footer">
 			<ui5-button>I am in the footer</ui5-button>
 		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
+	<ui5-popover id="popoverAttr" opener="btnOpenWithAttr">
+		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
+		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-popover>
 
 	<br>
@@ -422,6 +431,18 @@
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
+		});
+
+		btnOpenWithAttr.addEventListener("click", function () {
+			popoverAttr.setAttribute("open", "");
+		});
+
+		btnCloseWithMethod.addEventListener("click", function () {
+			popoverAttr.close();
+		});
+
+		btnCloseWithAttr.addEventListener("click", function () {
+			popoverAttr.removeAttribute("open");
 		});
 
 		popbtn.addEventListener("click", function (event) {
