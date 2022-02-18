@@ -1,5 +1,7 @@
-commit ad4608cd2edced49ab5b35b9319512785a73bfa2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 18 13:14:02 2022 +0200
+commit 0aca15ff0a1cb7c196c6a9309928aa9d4735b215
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Fri Feb 18 13:29:25 2022 +0100
 
-    fix: attached boot tasks always run (#4777)
+    docs: fix JSDoc type for `DynamicSideContent` and `DatePicker` (#4781)
+    
+    Co-authored-by: ilhan orhan <ilhan.myumyun@sap.com>
