@@ -7,6 +7,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
+	isLeft,
+	isRight,
 	isLeftCtrl,
 	isRightCtrl,
 	isLeftShift,
@@ -256,6 +258,12 @@ class Tokenizer extends UI5Element {
 
 	_handleItemNavigation(event, tokens) {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
+
+		if (isLeft(event) || isRight(event)) {
+			const nextIdx = this._calcNextTokenIndex(event.target, tokens, isRight(event));
+			setTimeout(() => tokens[nextIdx].focus(), 0);
+		}
+
 		if (isLeftCtrl(event) || isRightCtrl(event)) {
 			event.preventDefault();
 			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
@@ -328,7 +336,7 @@ class Tokenizer extends UI5Element {
 
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
-		tokens[nextIndex].focus();
+		setTimeout(() => tokens[nextIndex].focus(), 0);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 

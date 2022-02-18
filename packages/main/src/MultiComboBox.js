@@ -11,6 +11,8 @@ import {
 	isHome,
 	isTabNext,
 	isTabPrevious,
+	isUpShift,
+	isDownShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -648,6 +650,11 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
+		if (isDownShift(event) || isUpShift(event)) {
+			this._handleItemRangeSelection(event);
+			return;
+		}
+
 		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 		}
@@ -697,6 +704,25 @@ class MultiComboBox extends UI5Element {
 		} else if (!this.readonly) {
 			this._navigateToNextItem();
 		}
+	}
+
+	_handleItemRangeSelection(event) {
+		const items = this.list.items;
+		const currentItemIdx = items.indexOf(event.target);
+		const nextItemIdx = currentItemIdx + 1;
+		const prevItemIdx = currentItemIdx - 1;
+
+		if (isDownShift(event)) {
+			items[nextItemIdx].selected = items[currentItemIdx].selected;
+			items[nextItemIdx].focus();
+		}
+
+		if (isUpShift(event)) {
+			items[prevItemIdx].selected = items[currentItemIdx].selected;
+			items[prevItemIdx].focus();
+		}
+
+		this.fireSelectionChange();
 	}
 
 	_navigateToNextItem() {
