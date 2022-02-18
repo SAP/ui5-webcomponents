@@ -84,7 +84,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.ColorPalettePopover#item-click
 		 * @public
-		 * @param {String} color the selected color
+		 * @param {string} color the selected color
 		 */
 		"item-click": {
 			details: {

@@ -48,7 +48,7 @@ const metadata = {
 		 * Defines the index of the item inside of the SegmentedButton.
 		 *
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 */
 		posInSet: {
 			type: String,
@@ -58,7 +58,7 @@ const metadata = {
 		 * Defines how many items are inside of the SegmentedButton.
 		 *
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 */
 		sizeOfSet: {
 			type: String,

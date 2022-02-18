@@ -145,6 +145,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the opener id of the element that the popover is shown at
+		 * @public
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.2.0
+		 */
+		opener: {
+			type: String,
+		},
+
+		/**
 		 * Defines whether the content is scrollable.
 		 *
 		 * @type {boolean}
@@ -294,6 +305,20 @@ class Popover extends Popup {
 
 	static get ARROW_MARGIN() {
 		return 6; // px
+	}
+
+	onAfterRendering() {
+		if (!this.isOpen() && this.open) {
+			const opener = document.getElementById(this.opener);
+			if (!opener) {
+				console.warn("Valid opener id is required."); // eslint-disable-line
+				return;
+			}
+
+			this.showAt(opener);
+		} else if (this.isOpen() && !this.open) {
+			this.close();
+		}
 	}
 
 	isOpenerClicked(event) {
