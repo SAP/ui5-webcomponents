@@ -73,7 +73,7 @@ const metadata = {
 		/**
 		 * Defines the accessible name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -86,7 +86,7 @@ const metadata = {
 		/**
 		 * Defines the IDs of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0
@@ -556,7 +556,7 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaLabelledBy() {} // eslint-disable-line
 
@@ -565,13 +565,13 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaModal() {} // eslint-disable-line
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {String|undefined}
+	 * @returns {string|undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
