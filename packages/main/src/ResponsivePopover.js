@@ -40,7 +40,7 @@ const metadata = {
 		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
 		 *
 		 * @private
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.16
 		 */
