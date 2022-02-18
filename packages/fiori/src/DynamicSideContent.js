@@ -345,7 +345,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
-	 * @type {String}
 	 * @public
 	 */
 	 toggleContents() {
