@@ -141,4 +141,16 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "tabContainer has correct padding set on the content");
 	});
 
+	it("tests nested tabs", async () => {
+		const tabContainer = await browser.$("#tabContainerNestedTabs");
+		const expandButton = await tabContainer.shadow$(".ui5-tab-expand-button");
+		await expandButton.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
+
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
+		const newlySelectedItem = await tabContainer.$("[selected]");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1", "Sub tabs are selectable and the selected tab is 2.1");
+	});
+
 });
