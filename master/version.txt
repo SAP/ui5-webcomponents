@@ -1,5 +1,5 @@
-commit 34f629ec0089069463f83128055b1df1665baca3
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Feb 18 12:26:34 2022 +0200
+commit ad4608cd2edced49ab5b35b9319512785a73bfa2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 18 13:14:02 2022 +0200
 
-    fix(ui5-color-palette-popover): update documentation (#4778)
+    fix: attached boot tasks always run (#4777)
