@@ -905,8 +905,8 @@ class TabContainer extends UI5Element {
 		const focusableTabs = [];
 
 		if (!this._getStartOverflow().hasAttribute("hidden")) {
-			if (this.shadowRoot.querySelector('slot[name=startOverflowButton]')) {
-				focusableTabs.push(this.shadowRoot.querySelector('slot[name=startOverflowButton]'));
+			if (this.shadowRoot.querySelector("slot[name=startOverflowButton]")) {
+				focusableTabs.push(this.shadowRoot.querySelector("slot[name=startOverflowButton]"));
 			} else {
 				focusableTabs.push(this._getStartOverflow().querySelector("[ui5-button]"));
 			}
@@ -919,8 +919,8 @@ class TabContainer extends UI5Element {
 		});
 
 		if (!this._getEndOverflow().hasAttribute("hidden")) {
-			if (this.shadowRoot.querySelector('slot[name=overflowButton]')) {
-				focusableTabs.push(this.shadowRoot.querySelector('slot[name=overflowButton]'));
+			if (this.shadowRoot.querySelector("slot[name=overflowButton]")) {
+				focusableTabs.push(this.shadowRoot.querySelector("slot[name=overflowButton]"));
 			} else {
 				focusableTabs.push(this._getEndOverflow().querySelector("[ui5-button]"));
 			}
