@@ -62,12 +62,24 @@ const metadata = {
 
 		/**
 		 * Indicates if the element is open
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.2.0
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is already open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
 		 */
 		opened: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		/**
@@ -450,6 +462,7 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
+		this.open = true;
 
 		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
@@ -484,6 +497,7 @@ class Popup extends UI5Element {
 
 		this.hide();
 		this.opened = false;
+		this.open = false;
 
 		if (!preventRegistryUpdate) {
 			this._removeOpenedPopup();
