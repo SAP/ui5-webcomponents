@@ -707,8 +707,9 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_handleItemRangeSelection(event) {
-		const items = this.list.items;
-		const currentItemIdx = items.indexOf(event.target);
+		const items = this.items;
+		const listItems = this.list.items;
+		const currentItemIdx = listItems.indexOf(event.target);
 		const nextItemIdx = currentItemIdx + 1;
 		const prevItemIdx = currentItemIdx - 1;
 

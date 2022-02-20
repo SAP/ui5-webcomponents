@@ -593,6 +593,95 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
 		});
+
+		it ("should select/unselect next/previous item on shift+arrow", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys(["Shift", "ArrowDown"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 2, "should have two items selected");
+
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Shift", "ArrowUp"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 1, "should have two items selected");
+		});
+
+		it ("should move focus to the previous token with arrow left", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens[2].getProperty("focused"), true, "Last token should be focused");
+
+			await mcb.keys("ArrowLeft");
+			assert.strictEqual(await tokens[1].getProperty("focused"), true, "Second token should be focused");
+
+			await mcb.keys("ArrowLeft");
+			assert.strictEqual(await tokens[0].getProperty("focused"), true, "First token should be focused");
+		});
+
+		it ("should select multiple tokens and move focus with shift+arrow keys", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const mcb2 = await browser.$("#mcb-warning");
+			const input = await mcb.shadow$("input");
+			const input2 = await mcb2.shadow$("input");
+
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Shift", "ArrowLeft"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
+			assert.strictEqual(await tokens[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens[1].getProperty("focused"), true, "Second token should be focused");
+
+			await mcb.keys(["Shift", "ArrowLeft"]);
+
+			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
+			assert.strictEqual(await tokens[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens[0].getProperty("selected"), true, "First token should be selected");
+			assert.strictEqual(await tokens[0].getProperty("focused"), true, "First token should be focused");
+
+			await input2.click();
+			await mcb2.keys("ArrowLeft");
+			await mcb2.keys("ArrowLeft");
+			await mcb2.keys("ArrowLeft");
+
+			await mcb2.keys(["Shift", "ArrowRight"]);
+
+			let tokens2 = await mcb2.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens2[0].getProperty("selected"), true, "First token should be selected");
+			assert.strictEqual(await tokens2[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens2[1].getProperty("focused"), true, "second token should be focused");
+
+			await mcb2.keys(["Shift", "ArrowRight"]);
+
+			assert.strictEqual(await tokens2[2].getProperty("focused"), true, "Last token should be focused");
+			assert.strictEqual(await tokens2[2].getProperty("selected"), true, "Last token should be selected");
+			assert.strictEqual(await tokens2[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens2[0].getProperty("selected"), true, "First token should be selected");
+		});
 	});
 
 	describe("General", () => {
