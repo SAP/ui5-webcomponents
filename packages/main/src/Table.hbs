@@ -1,7 +1,9 @@
-<div class="ui5-table-root">
+<div class="ui5-table-root" @focusin="{{_onfocusin}}">
 	{{#if busy}}
 		{{> busyRow}}
 	{{/if}}
+
+	<div id="{{_id}}-before" tabindex="0" class="ui5-table-focusarea"></div>
 
 	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
 		<thead>
@@ -59,6 +61,8 @@
 			{{/if}}
 		</tbody>
 	</table>
+
+	<div id="{{_id}}-after" tabindex="0" class="ui5-table-focusarea"></div>
 </div>
 
 {{#*inline "moreRow"}}

@@ -89,3 +89,7 @@ tr {
 th {
 	background: var(--sapList_HeaderBackground);
 }
+
+.ui5-table-focusarea {
+	position: fixed;
+}

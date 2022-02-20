@@ -6,6 +6,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import {
+	isTabNext,
+	isTabPrevious,
 	isSpace,
 	isEnter,
 	isCtrlA,
@@ -18,6 +20,8 @@ import {
 	isHomeShift,
 	isEndShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
@@ -42,6 +46,8 @@ import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import styles from "./generated/themes/Table.css.js";
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
+
+const PAGE_UP_DOWN_SIZE = 20;
 
 /**
  * @public
@@ -397,7 +403,8 @@ const metadata = {
  * <li>[ALT]+[DOWN]/[UP] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
  * <li>[SHIFT]+[DOWN]/[UP] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).</li>
  * <li>[SHIFT]+[HOME]/[END] - Range selection to the first/last item of the List.</li>
- * <li>[CTRL]+[HOME]/[END] - Same behavior as HOME & END.</li> * </ul>
+ * <li>[CTRL]+[HOME]/[END] - Same behavior as HOME & END.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -455,7 +462,7 @@ class Table extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			affectedPropertiesNames: ["_columnHeader"],
 			getItemsCallback: () => [this._columnHeader, ...this.rows],
-			skipItemsSize: 20,
+			skipItemsSize: PAGE_UP_DOWN_SIZE,
 		});
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
@@ -467,6 +474,14 @@ class Table extends UI5Element {
 		this.tableEndObserved = false;
 
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
+		this.addEventListener("ui5-_forward-after", this._onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forward-before", this._onForwardBefore.bind(this));
+
+		// Stores the last focused element within the table.
+		this.lastFocusedElement = null;
+
+		// Indicates whether the table is forwarding focus before or after the current table row.
+		this._forwardingFocus = false;
 
 		this._prevNestedElementIndex = 0;
 	}
@@ -487,6 +502,8 @@ class Table extends UI5Element {
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7);
+			row.addEventListener("ui5-f7-pressed", this.fnHandleF7);
 			row.mode = this.mode;
 		});
 
@@ -518,12 +535,6 @@ class Table extends UI5Element {
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 
 		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
-
-		this.rows.forEach((row, index) => {
-			row._tabbableElements = getTabbableElements(row);
-			row._tabbableElements.forEach(el => el.setAttribute("tabindex", "-1"));
-			row.addEventListener("ui5-f7-pressed", this.fnHandleF7);
-		});
 	}
 
 	onExitDOM() {
@@ -537,16 +548,17 @@ class Table extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._handleTab(event);
+		}
+
 		if (isCtrlA(event)) {
 			event.preventDefault();
 			this.isMultiSelect && this._selectAll(event);
-			return;
 		}
 
-		const isAltUp = isUpAlt(event);
-
-		if (isAltUp || isDownAlt(event)) {
-			return this._handleArrowAlt(isAltUp, event.target);
+		if (isUpAlt(event) || isDownAlt(event)) {
+			this._handleArrowAlt(event);
 		}
 
 		if ((isUpShift(event) || isDownShift(event)) && this.isMultiSelect) {
@@ -571,6 +583,37 @@ class Table extends UI5Element {
 
 		if ((isHomeShift(event) || isEndShift(event)) && this.isMultiSelect) {
 			this._handleHomeEndSelection(event);
+		}
+	}
+
+	_handleTab(event) {
+		const target = getNormalizedTarget(event.target);
+		const isNext = isTabNext(event);
+		const isHeaderFocused = target === this.getColumnHeader();
+		const isMoreBtnFocused = target === this.getMoreButton();
+
+		if (isNext) {
+			if (isHeaderFocused) {
+				this._focusForwardElement(event, true);
+				this.lastFocusedElement = this.getColumnHeader();
+			} else if (isMoreBtnFocused) {
+				this._focusForwardElement(event, true);
+				this.moreBtnMarked = true;
+				this.lastFocusedElement = this.getMoreButton();
+			}
+
+			return;
+		}
+
+		if (isHeaderFocused) {
+			this._focusForwardElement(event, false);
+			this.lastFocusedElement = this.getColumnHeader();
+		} else if (isMoreBtnFocused) {
+			if (this.lastFocusedElement) {
+				this.lastFocusedElement.focus();
+			} else {
+				this.currentElement.focus();
+			}
 		}
 	}
 
@@ -654,17 +697,17 @@ class Table extends UI5Element {
 	 * Handles Alt + Up/Down.
 	 * Switches focus between column header, last focused item, and "More" button (if applicable).
 	 * @private
-	 * @param {boolean} shouldMoveUp Whether to move focus upward
-	 * @param {object} focusedElement The element currently in focus
+	 * @param {CustomEvent} event
 	 */
-	_handleArrowAlt(shouldMoveUp, focusedElement) {
-		const focusedElementType = this.getFocusedElementType(focusedElement);
+	_handleArrowAlt(event) {
+		const shouldMoveUp = isUpAlt(event);
+		const focusedElementType = this.getFocusedElementType(event.target);
 		const moreButton = this.getMoreButton();
 
 		if (shouldMoveUp) {
 			switch (focusedElementType) {
 			case "tableRow":
-				this._previousFocusedRow = focusedElement;
+				this._previousFocusedRow = event.target;
 				return this._onColumnHeaderClick();
 			case "columnHeader":
 				return moreButton ? moreButton.focus() : this._previousFocusedRow.focus();
@@ -674,7 +717,7 @@ class Table extends UI5Element {
 		} else {
 			switch (focusedElementType) {
 			case "tableRow":
-				this._previousFocusedRow = focusedElement;
+				this._previousFocusedRow = event.target;
 				return moreButton ? moreButton.focus() : this._onColumnHeaderClick();
 			case "columnHeader":
 				if (this._previousFocusedRow) {
@@ -719,33 +762,94 @@ class Table extends UI5Element {
 	 */
 	_handleF7(event) {
 		const row = event.detail.row;
-		const activeElement = row.getRootNode().activeElement;
-		const elements = row._tabbableElements;
+		const activeElement = getActiveElement();
+		row._tabbables = getTabbableElements(row);
 
-		if (!elements.length) {
+		if (!row._tabbables.length) {
 			return;
 		}
 
-		if (activeElement === row) {
-			const lastFocusedElement = elements[this._prevNestedElementIndex];
+		if (activeElement === row.root) {
+			const lastFocusedElement = row._tabbables[this._prevNestedElementIndex];
 
 			if (lastFocusedElement) {
 				lastFocusedElement.focus();
 			} else {
-				elements[0].focus();
+				row._tabbables[0].focus();
 			}
 
 			return;
 		}
 
-		const shadowRoot = activeElement.shadowRoot;
-		const target = shadowRoot ? shadowRoot.activeElement : activeElement;
-		const targetIndex = elements.indexOf(target);
+		const targetIndex = row._tabbables.indexOf(activeElement);
 
 		if (targetIndex > -1) {
 			this._prevNestedElementIndex = targetIndex;
-			row.focus();
 		}
+
+		row.focus();
+	}
+
+	_onfocusin(event) {
+		if (!this._isForwardElement(getNormalizedTarget(event.target))) {
+			event.stopImmediatePropagation();
+			return;
+		}
+
+		if (this.moreBtnMarked) {
+			this.getMoreButton().focus();
+			this.moreBtnMarked = false;
+		}
+
+		if (!this._forwardingFocus) {
+			if (this.lastFocusedElement) {
+				this.lastFocusedElement.focus();
+			} else {
+				this.currentElement.focus();
+			}
+
+			event.stopImmediatePropagation();
+		}
+
+		this._forwardingFocus = false;
+	}
+
+	_onForwardBefore(event) {
+		this.lastFocusedElement = event.detail.target;
+		this._focusForwardElement(event, false);
+		event.stopImmediatePropagation();
+	}
+
+	_onForwardAfter(event) {
+		this.lastFocusedElement = event.detail.target;
+		this._focusForwardElement(event, true);
+	}
+
+	_focusForwardElement(event, isAfter) {
+		this._forwardingFocus = true;
+		this.shadowRoot.querySelector(`#${this._id}-${isAfter ? "after" : "before"}`).focus();
+	}
+
+	_isForwardElement(node) {
+		const nodeId = node.id;
+		const afterElement = this._getForwardElement(true);
+		const beforeElement = this._getForwardElement(false);
+
+		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
+			return true;
+		}
+
+		return afterElement && afterElement.id === nodeId;
+	}
+
+	_getForwardElement(isAfter) {
+		const dir = isAfter ? "after" : "before";
+
+		if (!this[`_${dir}Element`]) {
+			this[`_${dir}Element`] = this.shadowRoot.querySelector(`#${this._id}-${dir}`);
+		}
+
+		return this[`_${dir}Element`];
 	}
 
 	onRowFocused(event) {
