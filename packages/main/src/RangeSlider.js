@@ -502,7 +502,7 @@ class RangeSlider extends SliderBase {
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
 	 *
-	 * @param {String} valuePropAffectedByInteraction The value that will get modified by the interaction
+	 * @param {string} valuePropAffectedByInteraction The value that will get modified by the interaction
 	 * @private
 	 */
 	_setAffectedValue(valuePropAffectedByInteraction) {

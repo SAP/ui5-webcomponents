@@ -18,6 +18,10 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -174,9 +178,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @since 1.0.0-rc.9
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -188,7 +192,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the select.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15

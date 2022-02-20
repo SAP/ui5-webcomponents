@@ -33,7 +33,7 @@
 
 .ui5-wiz-content-item[stretch] {
 	/* Add 2rem to ensure there is enough scroll height to reach the last step */
-	min-height: calc(100% + 2rem);
+	min-height: 100%;
 }
 
 [ui5-wizard-tab][data-ui5-wizard-expanded-tab="true"] + [ui5-wizard-tab][data-ui5-wizard-expanded-tab="false"] {

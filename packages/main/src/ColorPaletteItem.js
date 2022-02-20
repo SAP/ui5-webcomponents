@@ -43,7 +43,7 @@ const metadata = {
 		/**
 		 * Defines the index of the item inside of the ColorPalette.
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 */
 		index: {
 			type: String,
@@ -52,7 +52,7 @@ const metadata = {
 		/**
 		 * Defines if the ColorPalette is on phone mode.
 		 * @private
-		 * @type {Boolean}
+		 * @type {boolean}
 		 */
 		phone: {
 			type: Boolean,

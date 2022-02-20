@@ -5,6 +5,7 @@ You may also find an ESLint integration for your favorite IDE [here](https://esl
 
 ## Testing
 Integration testing is based on [Webdriver.io](https://webdriver.io/). You can run all tests using `npm run test`.
+If reasonable, take the time and write a test for the proposed change or fix. Learn more about testing at the [Testing UI5 Web Components page](https://github.com/SAP/ui5-webcomponents/blob/master/docs/5-development/04-testing-UI5-Web-Components.md).
 
 ## Git Guidelines
 
@@ -21,7 +22,7 @@ The commit header is the first line of the commit message. It consists of three 
 
 ##### Commit Type
 - It must be one of the following:
-    + `fix` - a bug fix (note: this will indicate a release)
+    + `fix` - a bug fix (note: this will indicate a release). If possible, include a test in your change.
     + `feat` - a new feature (note: this will indicate a release)
     + `docs` - documentation only changes
     + `style` - changes that do not affect the meaning of the code

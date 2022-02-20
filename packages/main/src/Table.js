@@ -287,7 +287,7 @@ const metadata = {
 
 		/**
 		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.15
 		 * @private

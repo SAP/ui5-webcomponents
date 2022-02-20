@@ -1,7 +1,6 @@
 @import "../base/PopupsCommon-parameters.css";
 
 :root {
-	--_ui5_popup_content_padding: .4375em;
 	--_ui5_popup_viewport_margin: 10px;
 	--_ui5-popup-border-radius: 0.75rem;
 	--_ui5_popup_header_shadow: none;

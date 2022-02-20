@@ -1,0 +1,4 @@
+[ui5-responsive-popover]::part(header),
+[ui5-responsive-popover]::part(content) {
+	padding: 0;
+}

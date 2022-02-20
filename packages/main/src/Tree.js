@@ -188,6 +188,7 @@ const metadata = {
 		 * Fired when a tree item is activated.
 		 *
 		 * @event sap.ui.webcomponents.main.Tree#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -354,7 +355,10 @@ class Tree extends UI5Element {
 	_onListItemClick(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("item-click", { item: treeItem });
+
+		if (!this.fireEvent("item-click", { item: treeItem }, true)) {
+			event.preventDefault();
+		}
 	}
 
 	_onListItemDelete(event) {
