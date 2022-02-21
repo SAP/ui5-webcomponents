@@ -40,7 +40,7 @@ const metadata = {
 		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
 		 *
 		 * @private
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.16
 		 */
@@ -184,11 +184,13 @@ class ResponsivePopover extends Popover {
 	}
 
 	_afterDialogOpen(event) {
+		this.open = true;
 		this.opened = true;
 		this._propagateDialogEvent(event);
 	}
 
 	_afterDialogClose(event) {
+		this.open = false;
 		this.opened = false;
 		this._propagateDialogEvent(event);
 	}

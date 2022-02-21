@@ -116,7 +116,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.ColorPalette#item-click
 		 * @public
 		 * @since 1.0.0-rc.15
-		 * @param {String} color the selected color
+		 * @param {string} color the selected color
 		 */
 		"item-click": {
 			details: {

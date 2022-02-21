@@ -62,18 +62,30 @@ const metadata = {
 
 		/**
 		 * Indicates if the element is open
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.2.0
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is already open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
 		 */
 		opened: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		/**
 		 * Defines the accessible name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -86,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the IDs of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0
@@ -450,6 +462,7 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
+		this.open = true;
 
 		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
@@ -484,6 +497,7 @@ class Popup extends UI5Element {
 
 		this.hide();
 		this.opened = false;
+		this.open = false;
 
 		if (!preventRegistryUpdate) {
 			this._removeOpenedPopup();
@@ -556,7 +570,7 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaLabelledBy() {} // eslint-disable-line
 
@@ -565,13 +579,13 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaModal() {} // eslint-disable-line
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {String|undefined}
+	 * @returns {string|undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {

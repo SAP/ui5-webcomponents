@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
 		 * @since 1.0.3

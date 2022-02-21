@@ -117,7 +117,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the input
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
