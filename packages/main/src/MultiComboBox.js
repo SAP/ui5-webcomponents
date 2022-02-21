@@ -877,7 +877,7 @@ class MultiComboBox extends UI5Element {
 		if (isRight(event)) {
 			const lastTokenIndex = this._tokenizer.tokens.length - 1;
 
-			if (this._tokenizer.tokens[lastTokenIndex] === document.activeElement.shadowRoot.activeElement) {
+			if (event.target === this._tokenizer.tokens[lastTokenIndex]) {
 				setTimeout(() => {
 					this.shadowRoot.querySelector("input").focus();
 				}, 0);
