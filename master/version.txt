@@ -1,9 +1,5 @@
-commit 08d75fac81abfb18bd4dded3ec4a322690a5f353
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Fri Feb 18 16:45:19 2022 +0200
+commit 84eb014e9e32476e5623c4882332992799e7af4e
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Mon Feb 21 09:09:44 2022 +0200
 
-    fix(ui5-tabcontainer): fix overflow button runtime error (#4780)
-    
-    Runtime error is no longer thrown when custom overflow buttons are used via slots
-    
-    FIXES: #4770
+    docs: fix typo (#4787)
