@@ -47,7 +47,7 @@ describe("ViewSettingsDialog general interaction", () => {
 
 		await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").click();
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
-		assert.equal(await input.getAttribute("value"), "UI5-SORT-ITEM", "sortByItem should return HTML element");
+		assert.equal(await input.getAttribute("value"), "UI5-SORT-ITEM with text Name", "sortByItem should return HTML element");
 		await btnOpenDialog.click();
 
 		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();

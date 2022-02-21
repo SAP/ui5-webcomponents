@@ -100,9 +100,8 @@
 		vsd.addEventListener("ui5-confirm", function(evt) {
 			const sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
 			const isSortDescending = evt.detail.sortDescending;
-			sortByItemTagName && document.getElementById("sortByItem").setAttribute("value", sortByItemTagName);
-			document.getElementById("sortOrder").setAttribute("value", isSortDescending);
-
+			sortByItem.value = `${sortByItemTagName} with text ${evt.detail.sortBy}`;
+			sortOrder.value = isSortDescending;
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogSort.addEventListener("click", function () {
