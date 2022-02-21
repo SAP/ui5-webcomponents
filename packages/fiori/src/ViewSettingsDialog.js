@@ -213,7 +213,6 @@ class ViewSettingsDialog extends UI5Element {
 			sortBy: [],
 			filters: [],
 		};
-		this._associatedSortByItem = null;
 	}
 
 	onBeforeRendering() {
@@ -552,7 +551,7 @@ class ViewSettingsDialog extends UI5Element {
 			sortOrder = _currentSortOrderSelected && _currentSortOrderSelected.text,
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
 			sortBy = _currentSortBySelected && _currentSortBySelected.text,
-			sortByItem = this._associatedSortByItem;
+			sortByItem = sortBy && this.initSortByItems.filter(item => item.text === sortBy)[0].associatedItem;
 		return {
 			sortOrder,
 			sortDescending,
@@ -601,7 +600,6 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_resetSettings() {
 		this._restoreSettings(this._initialSettings);
-		this._associatedSortByItem = null;
 		this._filterStepTwo = false;
 		this._recentlyFocused = this._sortOrder;
 		this._focusRecentlyUsedControl();
@@ -637,9 +635,6 @@ class ViewSettingsDialog extends UI5Element {
 		this._recentlyFocused = this._sortBy;
 		this._currentSettings.sortBy = this.initSortByItems.map(item => {
 			item.selected = item.text === event.detail.item.innerText;
-			if (item.text === event.detail.item.innerText) {
-				this._associatedSortByItem = item.associatedItem;
-			}
 			return item;
 		});
 
