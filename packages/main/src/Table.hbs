@@ -14,6 +14,7 @@
 				aria-label="{{ariaLabelText}}"
 				tabindex="{{_columnHeader._tabIndex}}"
 				@click="{{_onColumnHeaderClick}}"
+				@focusin="{{_onColumnHeaderFocused}}"
 				@keydown="{{_onColumnHeaderKeydown}}"
 			>
 				{{#if isMultiSelect}}

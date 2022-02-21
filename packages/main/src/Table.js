@@ -594,12 +594,14 @@ class Table extends UI5Element {
 
 		if (isNext) {
 			if (isHeaderFocused) {
-				this._focusForwardElement(event, true);
-				this.lastFocusedElement = this.getColumnHeader();
+				if (!this.growsWithButton) {
+					this._focusForwardElement(event, true);
+					this.lastFocusedElement = this.getColumnHeader();
+				} else {
+					this.getMoreButton().focus();
+				}
 			} else if (isMoreBtnFocused) {
 				this._focusForwardElement(event, true);
-				this.moreBtnMarked = true;
-				this.lastFocusedElement = this.getMoreButton();
 			}
 
 			return;
@@ -791,14 +793,13 @@ class Table extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		if (!this._isForwardElement(getNormalizedTarget(event.target))) {
+		const target = getNormalizedTarget(event.target);
+
+		if (!this._isForwardElement(target)) {
+			this.lastFocusedElement = target;
+
 			event.stopImmediatePropagation();
 			return;
-		}
-
-		if (this.moreBtnMarked) {
-			this.getMoreButton().focus();
-			this.moreBtnMarked = false;
 		}
 
 		if (!this._forwardingFocus) {
@@ -822,7 +823,12 @@ class Table extends UI5Element {
 
 	_onForwardAfter(event) {
 		this.lastFocusedElement = event.detail.target;
-		this._focusForwardElement(event, true);
+
+		if (!this.growsWithButton) {
+			this._focusForwardElement(event, true);
+		} else {
+			this.getMoreButton().focus();
+		}
 	}
 
 	_focusForwardElement(event, isAfter) {
@@ -856,9 +862,12 @@ class Table extends UI5Element {
 		this._itemNavigation.setCurrentItem(event.target);
 	}
 
+	_onColumnHeaderFocused(event) {
+		this._itemNavigation.setCurrentItem(this._columnHeader);
+	}
+
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
-		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
 
 	_onColumnHeaderKeydown(event) {
