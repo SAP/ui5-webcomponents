@@ -539,14 +539,17 @@ class MultiComboBox extends UI5Element {
 	_tokenizerFocusOut(event) {
 		this._tokenizerFocused = false;
 
-		const tokensCount = this._tokenizer.tokens.length - 1;
+		const tokensCount = this._tokenizer.tokens.length;
+		const selectedTokens = this._selectedTokensCount;
+		const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
+		const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
 
 		if (!event.relatedTarget || !event.relatedTarget.hasAttribute("ui5-token")) {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
 			this._tokenizer.scrollToStart();
 		}
 
-		if (tokensCount === 0 && this._deleting) {
+		if (allTokensAreBeingDeleted || lastTokenBeingDeleted) {
 			setTimeout(() => {
 				if (!isPhone()) {
 					this.shadowRoot.querySelector("input").focus();
@@ -1115,6 +1118,10 @@ class MultiComboBox extends UI5Element {
 
 	get _tokensCountTextId() {
 		return `${this._id}-hiddenText-nMore`;
+	}
+
+	get _selectedTokensCount() {
+		return this._tokenizer.tokens.filter(token => token.selected).length;
 	}
 
 	get ariaDescribedByText() {

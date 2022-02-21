@@ -144,8 +144,8 @@ const metadata = {
 		 * Fired when confirmation button is activated.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
-		 * @param {String} sortOrder The current sort order selected.
-		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+		 * @param {string} sortOrder The current sort order selected.
+		 * @param {string} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
 		 * @public
 		 */
 		confirm: {
@@ -160,8 +160,8 @@ const metadata = {
 		 * Fired when cancel button is activated.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
-		 * @param {String} sortOrder The current sort order selected.
-		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+		 * @param {string} sortOrder The current sort order selected.
+		 * @param {string} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
 		 * @public
 		 */
 		cancel: {

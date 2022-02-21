@@ -339,9 +339,6 @@ describe("Date Picker Tests", () => {
 		let timestampToday = new Date().getTime();
 		timestampToday = (timestampToday - timestampToday % (24 * 60 * 60 * 1000)) / 1000;
 
-		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getProperty("value"), "today", "input value is ok");
-
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
 		await valueHelpIcon.click();
 		const calendar = await datepicker.getCalendar();
@@ -1112,7 +1109,7 @@ describe("Date Picker Tests", () => {
 	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
 		datepicker.id = "#dp33";
 		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
+		await innerInput.doubleClick();
 		await browser.keys("Jan 1, 2000");
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -1124,8 +1121,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
 		await browser.keys("Escape");
-		await innerInput.click();
-		await browser.keys(["Control", "A"]);
+		await innerInput.doubleClick();
 		await browser.keys("Backspace");
 	});
 

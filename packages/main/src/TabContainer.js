@@ -905,7 +905,11 @@ class TabContainer extends UI5Element {
 		const focusableTabs = [];
 
 		if (!this._getStartOverflow().hasAttribute("hidden")) {
-			focusableTabs.push(this._getStartOverflow().querySelector("[ui5-button]"));
+			if (this._getCustomStartOverflowBtnDOM()) {
+				focusableTabs.push(this._getCustomStartOverflowBtnDOM());
+			} else {
+				focusableTabs.push(this._getStartOverflowBtnDOM());
+			}
 		}
 
 		this._getTabs().forEach(tab => {
@@ -915,7 +919,11 @@ class TabContainer extends UI5Element {
 		});
 
 		if (!this._getEndOverflow().hasAttribute("hidden")) {
-			focusableTabs.push(this._getEndOverflow().querySelector("[ui5-button]"));
+			if (this._getCustomEndOverflowBtnDOM()) {
+				focusableTabs.push(this._getCustomEndOverflowBtnDOM());
+			} else {
+				focusableTabs.push(this._getEndOverflowBtnDOM());
+			}
 		}
 
 		return focusableTabs;
@@ -943,6 +951,22 @@ class TabContainer extends UI5Element {
 
 	_getEndOverflow() {
 		return this.shadowRoot.querySelector(".ui5-tc__overflow--end");
+	}
+
+	_getCustomStartOverflowBtnDOM() {
+		return this.shadowRoot.querySelector("slot[name=startOverflowButton]");
+	}
+
+	_getStartOverflowBtnDOM() {
+		return this._getStartOverflow().querySelector("[ui5-button]");
+	}
+
+	_getCustomEndOverflowBtnDOM() {
+		return this.shadowRoot.querySelector("slot[name=overflowButton]");
+	}
+
+	_getEndOverflowBtnDOM() {
+		return this._getEndOverflow().querySelector("[ui5-button]");
 	}
 
 	async _respPopover() {
