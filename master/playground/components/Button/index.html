@@ -5523,7 +5523,7 @@ For the <code>ui5-button</code> UI, you can define text, icon, or both. You can 
             
             It supports the following fields:
             
-            <ul> <li><code>expanded</code>: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values: <ul> <li><code>true</code></li> <li><code>false</code></li> <ul> </li> <li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values: <ul> <li><code>Dialog</code></li> <li><code>Grid</code></li> <li><code>ListBox</code></li> <li><code>Menu</code></li> <li><code>Tree</code></li> </ul> </li> <li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li> </ul>
+            <ul> <li><code>expanded</code>: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values: <ul> <li><code>true</code></li> <li><code>false</code></li> </ul> </li> <li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values: <ul> <li><code>Dialog</code></li> <li><code>Grid</code></li> <li><code>ListBox</code></li> <li><code>Menu</code></li> <li><code>Tree</code></li> </ul> </li> <li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li> </ul>
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
                         </div>
                       </div>
@@ -5613,6 +5613,18 @@ For the <code>ui5-button</code> UI, you can define text, icon, or both. You can 
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             When set to <code>true</code>, the component will automatically submit the nearest form element upon <code>press</code>. <br><br> <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          tooltip
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the tooltip of the button. <br> <b>Note:</b> Tooltips should only be set to icon-only buttons.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
                         </div>
                       </div>
             

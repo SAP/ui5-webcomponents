@@ -1,5 +1,19 @@
-commit 84eb014e9e32476e5623c4882332992799e7af4e
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Feb 21 09:09:44 2022 +0200
+commit df8f0137dbf628325db8d0291244d98b5ad1b78c
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Feb 21 15:57:38 2022 +0200
 
-    docs: fix typo (#4787)
+    feat(ui5-button): add new `tooltip` property (#4737)
+    
+    Problem description:
+    The ui5-button tooltip text was supplied trough the
+    private "title" property. As result the same title
+    attribute was placed to the ui5-button element and
+    to the inner native button element, which was causing
+    duplicate tooltip announcements.
+    
+    Solution:
+    New public "tooltip" property is added, which results
+    in placing "tooltip" attribute to the ui5-button element
+    and a "title" attribute to the inner native button element.
+    
+    Fixes: #4689
