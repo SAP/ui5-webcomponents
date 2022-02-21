@@ -376,7 +376,8 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// update selected tab
-		this._allItemsAndSubItems = this._getAllSubItems(this._getTabs());
+		this._allItemsAndSubItems = [];
+		this._getAllSubItems(this._getTabs(), this._allItemsAndSubItems, 1);
 		if (this._allItemsAndSubItems.length) {
 			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 			if (selectedTabs.length) {
@@ -492,9 +493,7 @@ class TabContainer extends UI5Element {
 		selectedTopLevel.focus();
 	}
 
-	_getAllSubItems(items, level = 1) {
-		const result = [];
-
+	_getAllSubItems(items, result, level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item._style = {
@@ -503,11 +502,10 @@ class TabContainer extends UI5Element {
 
 				result.push(item);
 				if (item.subTabs) {
-					this._getAllSubItems(item.subTabs, level + 1);
+					this._getAllSubItems(item.subTabs, result, level + 1);
 				}
 			}
 		});
-		return result;
 	}
 
 	_onItemSelect(target) {
