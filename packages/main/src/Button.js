@@ -118,10 +118,10 @@ const metadata = {
 		 * <b>Note:</b> Tooltips should only be set to icon-only buttons.
 		 * @type {string}
 		 * @defaultvalue: ""
-		 * @private
-		 * @since 1.0.0-rc.11
+		 * @public
+		 * @since 1.2.0
 		 */
-		title: {
+		tooltip: {
 			type: String,
 		},
 
@@ -194,7 +194,7 @@ const metadata = {
 		 *			<ul>
 		 *				<li><code>true</code></li>
 		 *				<li><code>false</code></li>
-		 *			<ul>
+		 *			</ul>
 		 * 		</li>
 		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
 		 * 			<ul>
@@ -487,7 +487,7 @@ class Button extends UI5Element {
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.title;
+		return this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {
