@@ -9,9 +9,9 @@ const metadata = {
 		/**
 		 * Defines the text of the tree item.
 		 *
-		 * @public
 		 * @type {String}
 		 * @defaultValue ""
+		 * @public
 		 */
 		text: {
 			type: String,
@@ -21,8 +21,7 @@ const metadata = {
 		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
-		 * Example:
-		 *
+		 <b>* Example:</b>
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
@@ -45,12 +44,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-li</code> is in disabled state.
+		 * Defines whether <code>ui5-menu-item</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-menu-item</code> is noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @protected
+		 * @public
 		 */
 		disabled: {
 			type: Boolean,
@@ -58,6 +57,7 @@ const metadata = {
 
 		/**
 		 * Indicates if the any of the element siblings have children items.
+		 * @type {boolean}
 		 * @private
 		 */
 		 _siblingsWithChildren: {
@@ -67,6 +67,7 @@ const metadata = {
 
 		/**
 		 * Indicates if the any of the element siblings have icon.
+		 * @type {boolean}
 		 * @private
 		 */
 		 _siblingsWithIcon: {

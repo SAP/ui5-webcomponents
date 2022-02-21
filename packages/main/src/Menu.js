@@ -39,7 +39,7 @@ const metadata = {
 		 * Defines the title of the menu (displayed on mobile).
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @private
+		 * @public
 		 */
 		 title: {
 			type: String,
@@ -135,10 +135,12 @@ const metadata = {
 		 * Fired when an item is being selected.
 		 *
 		 * @event sap.ui.webcomponents.main.Menu#item-selected
+		 * @param {object} item The currently selected menu item.
+		 * @param {string} text The text of the currently selected menu item.
 		 * @public
 		 */
 		 "item-selected": {
-			details: {
+			detail: {
 				item: {
 					type: Object,
 				},
@@ -184,6 +186,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Menu
  * @extends UI5Element
  * @tagname ui5-menu
+ * @appenddocs MenuItem
  * @public
  */
 class Menu extends UI5Element {
@@ -288,7 +291,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Closes the Menu.
-	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
 	 */
 	close() {
