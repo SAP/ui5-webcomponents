@@ -11,6 +11,8 @@ import {
 	isRight,
 	isLeftCtrl,
 	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
 	isLeftShift,
 	isRightShift,
 	isLeftShiftCtrl,
@@ -264,9 +266,9 @@ class Tokenizer extends UI5Element {
 			setTimeout(() => tokens[nextIdx].focus(), 0);
 		}
 
-		if (isLeftCtrl(event) || isRightCtrl(event)) {
+		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
+			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
 		}
 
 		if (isLeftCtrl(event)) {
@@ -324,7 +326,7 @@ class Tokenizer extends UI5Element {
 			return;
 		}
 
-		tokens[nextIndex].focus();
+		setTimeout(() => tokens[nextIndex].focus(), 0);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 

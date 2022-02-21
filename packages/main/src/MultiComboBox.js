@@ -13,6 +13,10 @@ import {
 	isTabPrevious,
 	isUpShift,
 	isDownShift,
+	isLeftCtrl,
+	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -568,15 +572,25 @@ class MultiComboBox extends UI5Element {
 		this._keyDown = false;
 	}
 
-	async _onkeydown(event) {
+	_onkeydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this.togglePopover();
 		}
 
-		if (isUp(event) || isDown(event)) {
-			this._handleArrowNavigation(event);
+		if (isUp(event) || isDown(event) || isUpCtrl(event)) {
+			this._handleArrowNavigation(event, isDown(event));
 			return;
+		}
+
+		// CTRL + Arrow Down navigation is performed by the ItemNavigation module of the List,
+		// here we only implement the text selection of the selected item
+		if (isDownCtrl(event) && !this.allItemsPopover.opened) {
+			setTimeout(() => this._inputDom.setSelectionRange(0, this._inputDom.value.length), 0);
+		}
+
+		if (isLeftCtrl(event) || isRightCtrl(event)) {
+			this._handleArrowCtrl(event);
 		}
 
 		this._keyDown = true;
@@ -655,6 +669,16 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (isLeftCtrl(event) || isUpCtrl(event)) {
+			this.list._itemNavigation._handleUp(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
+		if (isRightCtrl(event) || isDownCtrl(event)) {
+			this.list._itemNavigation._handleDown(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
 		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 		}
@@ -664,13 +688,29 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_handleArrowCtrl(event) {
+		const input = this._inputDom;
+		const isArrowDown = isDownCtrl(event);
+		const isArrowUp = isUpCtrl(event);
+		const isArrowLeft = isLeftCtrl(event);
+		const isArrowRight = isRightCtrl(event);
+
+		if (isArrowLeft && input.selectionStart === 0 && input.selectionEnd === 0) {
+			event.preventDefault();
+		}
+
+		if (isArrowLeft && ((input.selectionEnd - input.selectionStart) > 0)) {
+			input.setSelectionRange(0, 0);
+		}
+	}
+
 	_onItemTab(event) {
 		this._inputDom.focus();
 		this.allItemsPopover.close();
 	}
 
-	async _handleArrowNavigation(event) {
-		const isArrowDown = isDown(event);
+	async _handleArrowNavigation(event, isDownCtrl) {
+		const isArrowDown = isDownCtrl || isDown(event) ;
 		const hasSuggestions = this.items.length;
 		const isOpen = this.allItemsPopover.opened;
 
@@ -838,7 +878,13 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
-		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+		if (isHome(event)) {
+			this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			this._handleEnd(event);
+		}
 	}
 
 	_filterItems(str) {
