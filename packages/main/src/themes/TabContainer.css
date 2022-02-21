@@ -107,6 +107,7 @@
 	height: 1.5rem;
 	min-width: 1.5rem;
 	margin-top: 0.25rem;
+	margin-left: 0.625rem;
 }
 
 .ui5-tab-expand-button>[ui5-button]:hover {

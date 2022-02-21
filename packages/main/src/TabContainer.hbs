@@ -72,6 +72,7 @@
 					?hidden="{{this._selectedTab.effectiveHidden}}"
 					role="tabpanel"
 					aria-labelledby="{{this._selectedTab._id}}"
+					aria-controls="{{this._selectedTab._id}}"
 				>
 					{{#each items}}
 						<slot name="{{this._effectiveSlotName}}"></slot>

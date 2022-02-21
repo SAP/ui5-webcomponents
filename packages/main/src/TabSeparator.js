@@ -62,7 +62,7 @@ class TabSeparator extends UI5Element {
 		return this._getTabInStripDomRef;
 	}
 
-	isOnSelectedTabPath() {
+	get isOnSelectedTabPath() {
 		return false;
 	}
 

@@ -25,22 +25,19 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
-		/**
-		 * Defines the content of this tab.
+		 * Holds the content associated with this tab.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITab[]}
+		 * @type {Node[]}
 		 * @public
-		 * @slot items
 		 */
 		"default": {
-			type: HTMLElement,
+			type: Node,
 			invalidateOnChildChange: {
 				properties: true,
 				slots: false,
 			},
 		},
 
-		/**
 		/**
 		 * Defines the sub tabs.
 		 * <br><br>
@@ -149,7 +146,7 @@ const metadata = {
 			type: Boolean,
 		},
 
-		selectedTab: {
+		_selectedTab: {
 			type: Object,
 		},
 	},
@@ -230,19 +227,19 @@ class Tab extends UI5Element {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this.parentElement.getAttribute("ui5-tabcontainer") === "";
+		return this.subTabs.length > 0 && this.parentElement.hasAttribute("ui5-tabcontainer");
 	}
 
-	isOnSelectedTabPath() {
-		return this.selectedTab === this || this.subTabs.some(subTab => subTab.isOnSelectedTabPath());
+	get isOnSelectedTabPath() {
+		return this._selectedTab === this || this.subTabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
 	get _effectiveSlotName() {
-		return this.isOnSelectedTabPath() ? this._individualSlot : "disabled-slot";
+		return this.isOnSelectedTabPath ? this._individualSlot : "disabled-slot";
 	}
 
 	get _defaultSlotName() {
-		return this.selectedTab === this ? "" : "disabled-slot";
+		return this._selectedTab === this ? "" : "disabled-slot";
 	}
 
 	/**
@@ -271,7 +268,7 @@ class Tab extends UI5Element {
 		event.stopPropagation();
 		const button = event.target;
 
-		const tabInstanceId = event.target.parentElement.parentElement.id;
+		const tabInstanceId = button.parentElement.parentElement.id;
 		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
 		if (tabInstance) {
 			this._tabItems = tabInstance.subTabs;
@@ -282,10 +279,6 @@ class Tab extends UI5Element {
 		} else {
 			this.responsivePopoverSubItems.showAt(button);
 		}
-	}
-
-	_getExpandButton() {
-		return this.shadowRoot.querySelector(".ui5-tab-expand-button");
 	}
 
 	get isMixedModeTab() {

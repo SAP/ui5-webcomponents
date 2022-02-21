@@ -260,10 +260,6 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
-
-		selectedTab: {
-			type: Object,
-		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -384,15 +380,10 @@ class TabContainer extends UI5Element {
 		this._getAllSubItems(this._getTabs(), this._allItemsAndSubItems, 1);
 		if (this._allItemsAndSubItems.length) {
 			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
-			walk(selectedTabs, item => {
-				item.selectedTab = this.selectedTab;
-			});
 			if (selectedTabs.length) {
 				this._selectedTab = selectedTabs[0];
-				this.selectedTab = selectedTabs[0];
 			} else {
 				this._selectedTab = this._allItemsAndSubItems[0];
-				this.selectedTab = this._allItemsAndSubItems[0];
 				this._selectedTab._selected = true;
 			}
 		}
@@ -408,6 +399,7 @@ class TabContainer extends UI5Element {
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+			item._selectedTab = this._selectedTab;
 		});
 
 		if (!this._animationRunning) {
@@ -438,10 +430,9 @@ class TabContainer extends UI5Element {
 		if (!tab) {
 			return;
 		}
-		this.selectedTab = tab.associatedTab;
 
 		walk(this.items, item => {
-			item.selectedTab = this.selectedTab;
+			item._selectedTab = tab.associatedTab;
 		});
 
 		this._onHeaderItemSelect(tab);
@@ -488,10 +479,8 @@ class TabContainer extends UI5Element {
 		event.preventDefault(); // cancel the item selection
 		const { item } = event.detail;
 
-		this.selectedTab = item.associatedTab;
-
 		walk(this.items, tab => {
-			tab.selectedTab = this.selectedTab;
+			tab._selectedTab = item.associatedTab;
 		});
 
 		this._onItemSelect(item);
@@ -501,7 +490,7 @@ class TabContainer extends UI5Element {
 		}
 		this._setItemsForStrip();
 
-		const selectedTopLevel = this._getParentTab(this._selectedTab);
+		const selectedTopLevel = this._getRootTab(this._selectedTab);
 
 		selectedTopLevel.focus();
 	}
@@ -702,10 +691,10 @@ class TabContainer extends UI5Element {
 		}
 
 		this._itemNavigation._init();
-		this._itemNavigation.setCurrentItem(this._getParentTab(this._selectedTab));
+		this._itemNavigation.setCurrentItem(this._getRootTab(this._selectedTab));
 	}
 
-	_getParentTab(tab) {
+	_getRootTab(tab) {
 		while (tab.hasAttribute("ui5-tab")) {
 			if (tab.parentElement.hasAttribute("ui5-tabcontainer")) {
 				break;
@@ -718,7 +707,7 @@ class TabContainer extends UI5Element {
 	_updateEndOverflow(itemsDomRefs) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
-		const selectedTab = this._getParentTab(this._selectedTab);
+		const selectedTab = this._getRootTab(this._selectedTab);
 		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const containerWidth = this._getTabStrip().offsetWidth;
 
@@ -735,7 +724,7 @@ class TabContainer extends UI5Element {
 
 	_updateStartAndEndOverflow(itemsDomRefs) {
 		let containerWidth = this._getTabStrip().offsetWidth;
-		const selectedTab = this._getParentTab(this._selectedTab);
+		const selectedTab = this._getRootTab(this._selectedTab);
 		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -930,15 +919,6 @@ class TabContainer extends UI5Element {
 		return this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
 	}
 
-	get _menu() {
-		const items = [];
-		walk(this.items, tab => {
-			items.push(tab);
-		});
-
-		return items;
-	}
-
 	_updateOverflowCounters() {
 		let startOverflowItemsCount = 0;
 		let endOverflowItemsCount = 0;
@@ -982,9 +962,6 @@ class TabContainer extends UI5Element {
 		this._getTabs().forEach(tab => {
 			if (tab.getTabInStripDomRef() && !tab.getTabInStripDomRef().hasAttribute("hidden")) {
 				focusableTabs.push(tab);
-			}
-			if (tab.requiresExpandButton) {
-				focusableTabs.push(tab.getDomRef().querySelector("[ui5-button]"));
 			}
 		});
 
@@ -1039,11 +1016,13 @@ class TabContainer extends UI5Element {
 		return this._getEndOverflow().querySelector("[ui5-button]");
 	}
 
-	async _respPopover() {
+	async _respPopover(tabInstance) {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		if (tabInstance) {
 			this._startOverflowItems = [];
 			this._endOverflowItems = [];
+		} else {
+			this._tabItems = [];
 		}
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
