@@ -256,7 +256,7 @@ const metadata = {
 			multiple: true,
 		},
 
-		_tabItems: {
+		_overflowItems: {
 			type: Object,
 			multiple: true,
 		},
@@ -485,9 +485,7 @@ class TabContainer extends UI5Element {
 
 		this._onItemSelect(item);
 		await this.responsivePopover.close();
-		if (this.responsivePopoverSubItems) {
-			await this.responsivePopoverSubItems.close();
-		}
+
 		this._setItemsForStrip();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
@@ -600,8 +598,7 @@ class TabContainer extends UI5Element {
 
 		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
 
-		this._startOverflowItems = [];
-		this._endOverflowItems = [];
+		this._overflowItems = [];
 
 		this.items.forEach(item => {
 			if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute(overflowAttr)) {
@@ -612,12 +609,12 @@ class TabContainer extends UI5Element {
 		let button;
 		if (isEndOverflow) {
 			button = this.overflowButton[0] || overflow.querySelector("[ui5-button]");
-			this._endOverflowItems = items;
+			this._overflowItems = items;
 		}
 
 		if (isStartOverflow) {
 			button = this.startOverflowButton[0] || overflow.querySelector("[ui5-button]");
-			this._startOverflowItems = items;
+			this._overflowItems = items;
 		}
 
 		this.responsivePopover = await this._respPopover();
@@ -1016,14 +1013,8 @@ class TabContainer extends UI5Element {
 		return this._getEndOverflow().querySelector("[ui5-button]");
 	}
 
-	async _respPopover(tabInstance) {
+	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		if (tabInstance) {
-			this._startOverflowItems = [];
-			this._endOverflowItems = [];
-		} else {
-			this._tabItems = [];
-		}
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 

@@ -8,19 +8,9 @@
 	class="ui5-tab-container-responsive-popover"
 >
 	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
-		{{#if _endOverflowItems.length}}
-			{{#each _endOverflowItems}}
-				{{this.overflowPresentation}}
+			{{#each _overflowItems}}
+				{{overflowPresentation}}
 			{{/each}}
-		{{else if _tabItems.length}}
-			{{#each _tabItems}}
-				{{this.overflowPresentation}}
-			{{/each}}
-		{{else if _startOverflowItems.length}}
-			{{#each _startOverflowItems}}
-				{{this.overflowPresentation}}
-			{{/each}}
-		{{/if}}
 	</ui5-list>
 	<div slot="footer" class="ui5-responsive-popover-footer">
 		<ui5-button
