@@ -9,6 +9,7 @@ import {
 	isSpace,
 	isRight,
 	isHome,
+	isEnd,
 	isTabNext,
 	isTabPrevious,
 	isUpShift,
@@ -690,10 +691,7 @@ class MultiComboBox extends UI5Element {
 
 	_handleArrowCtrl(event) {
 		const input = this._inputDom;
-		const isArrowDown = isDownCtrl(event);
-		const isArrowUp = isUpCtrl(event);
 		const isArrowLeft = isLeftCtrl(event);
-		const isArrowRight = isRightCtrl(event);
 
 		if (isArrowLeft && input.selectionStart === 0 && input.selectionEnd === 0) {
 			event.preventDefault();
@@ -709,8 +707,8 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover.close();
 	}
 
-	async _handleArrowNavigation(event, isDownCtrl) {
-		const isArrowDown = isDownCtrl || isDown(event) ;
+	async _handleArrowNavigation(event, isDownControl) {
+		const isArrowDown = isDownControl || isDown(event);
 		const hasSuggestions = this.items.length;
 		const isOpen = this.allItemsPopover.opened;
 
