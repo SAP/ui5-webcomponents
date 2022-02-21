@@ -579,7 +579,7 @@ class MultiComboBox extends UI5Element {
 			this.togglePopover();
 		}
 
-		if (isUp(event) || isDown(event) || isUpCtrl(event)) {
+		if (isUp(event) || isDown(event) || isUpCtrl(event) || isDownCtrl(event)) {
 			this._handleArrowNavigation(event, isDown(event));
 			return;
 		}
@@ -646,12 +646,12 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if (isArrowDown) {
-			this._handleArrowDown(event);
+		if (isArrowDown || isDownCtrl(event)) {
+			setTimeout(() => this._handleArrowDown(event), 0);
 		}
 
-		if (isArrowUp) {
-			this._inputDom.focus();
+		if (isArrowUp || isUpCtrl(event)) {
+			setTimeout(() => this._inputDom.focus(), 0);
 		}
 	}
 
@@ -684,8 +684,16 @@ class MultiComboBox extends UI5Element {
 			this.valueStateHeader.focus();
 		}
 
-		if (!this.valueStateHeader && isUp(event) && isFirstItem) {
+		if (!this.valueStateHeader && isFirstItem && (isUpCtrl(event) || isUp(event))) {
 			this._inputDom.focus();
+		}
+
+		if (isUpCtrl(event) && isFirstItem && this.valueStateHeader) {
+			setTimeout(() => this.valueStateHeader.focus(), 0);
+		}
+
+		if (!this.valueStateHeader && isFirstItem && isUpCtrl(event)) {
+			setTimeout(() => this._inputDom.focus(), 0);
 		}
 	}
 
@@ -718,16 +726,16 @@ class MultiComboBox extends UI5Element {
 			await this._setValueStateHeader();
 		}
 
-		if (isArrowDown && isOpen && this.focused && this.valueStateHeader) {
-			this.valueStateHeader.focus();
+		if ((isArrowDown || isDownCtrl(event)) && isOpen && this.focused && this.valueStateHeader) {
+			setTimeout(() => this.valueStateHeader.focus(), 0);
 			return;
 		}
 
-		if (isArrowDown && this.focused && hasSuggestions) {
+		if ((isArrowDown || isDownCtrl(event)) && this.focused && hasSuggestions) {
 			this._handleArrowDown(event);
 		}
 
-		if (!isArrowDown && !isOpen && !this.readonly) {
+		if ((!isArrowDown && !isDownCtrl(event)) && !isOpen && !this.readonly) {
 			this._navigateToPrevItem();
 		}
 	}
