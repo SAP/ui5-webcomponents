@@ -11,6 +11,8 @@ import {
 	isHome,
 	isTabNext,
 	isTabPrevious,
+	isHomeCtrl,
+	isEndCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -647,6 +649,16 @@ class MultiComboBox extends UI5Element {
 		if (isTabNext(event) || isTabPrevious(event)) {
 			this._onItemTab(event);
 			return;
+		}
+
+		if (isHomeCtrl(event)) {
+			this.list._itemNavigation._handleHome(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
+		if (isEndCtrl(event)) {
+			this.list._itemNavigation._handleEnd(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
 		}
 
 		event.preventDefault();

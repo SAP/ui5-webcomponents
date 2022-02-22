@@ -634,6 +634,31 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await tokens[tokens.length - 1].getProperty("focused"), true, "The last token is focused");
 		});
 
+		it ("CTRL + HOME focus the first item, CTRL + END should focus last item", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(['Control','End']);
+
+			const lastItem = await popover.$("ui5-list").$$("ui5-li")[5];
+			assert.equal(await lastItem.getProperty("focused"), true, "The last item is focused");
+
+			await mcb.keys(['Control','Home']);
+
+			const firstItem = await popover.$("ui5-list").$("ui5-li");
+			assert.equal(await firstItem.getProperty("focused"), true, "The first item is focused");
+
+		});
+
 		it ("SHIFT + HOME should select all tokens from the current one to the first one", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
