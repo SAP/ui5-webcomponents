@@ -1,26 +1,7 @@
-commit a9e88f0e0c2bc9827839aed611364d084968942b
+commit 1929d08ff0ee78adb7e257e0436c00e577d2acd3
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Feb 21 19:02:30 2022 +0200
+Date:   Tue Feb 22 09:20:17 2022 +0200
 
-    feat: add and update icons from 4.13 and 5.01 icon fonts  (#4790)
+    fix: display methods in child components API (#4792)
     
-    ### Background
-    SFSF has requested a missing icon ("bookmark-2") that they would need in 3 weeks for their 2205 release.
-    The icon has been implemented and part of the latest icon font editions since end of January.
-    The change adds the requested icon + several more new icons that are missing and adopts all updates in the latest 4.13 (v4) and 5.01 (v5) icon fonts.
-    
-    ###  Update existing v4  and v5 icons to latest
-    - adopt icon font version 4.13 for SAP Quartz (shows too many changes because spaces have been turned to tabs)
-    - adopt icon font version 5.01 for SAP Horizon
-    
-    ### New icons
-    - e293; icon-heart
-    - e294; icon-heart-2
-    - e296; icon-bookmark-2
-    - e297; icon-detail-less
-    - e298; icon-detail-more
-    - e299; icon-flag-2
-    - e29a; icon-folder-2
-    - e29b; icon-paint-bucket
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/4788
+    For child components, like the TreeItem, the playground only displays props and slots, but not methods. The change adds the method API info.
