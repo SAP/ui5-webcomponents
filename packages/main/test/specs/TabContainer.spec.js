@@ -183,6 +183,6 @@ describe("TabContainer general interaction", () => {
 
 		newlySelectedItem = await tabContainer.$("[selected]");
 
-		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Fourteen", "The first item in the overflow is 14");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Thirteen", "The first item in the overflow is 13");
 	});
 });
