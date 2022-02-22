@@ -27,4 +27,4 @@ A clear and concise description of the impact/urgency of the required feature.
 ### **Stakeholder Info** (if applicable)
 
 - Organization: {...}
-- Bussiness impact: {...}
+- Business impact: {...}
