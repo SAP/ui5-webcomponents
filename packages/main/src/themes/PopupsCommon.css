@@ -55,6 +55,7 @@
 
 .ui5-popup-content {
     overflow: auto;
+    scrollbar-gutter: stable;
 
     /* Consider how to make this top level */
     box-sizing: border-box;
