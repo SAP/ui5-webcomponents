@@ -2,29 +2,63 @@
 
 :root {
 	--_ui5_radio_button_height: 2rem;
-	--_ui5_radio_button_inner_size: 100%;
-	--_ui5_radio_button_svg_size: 1.25rem;
-	--_ui5_radio_button_svg_size: 1.25rem;
-	--_ui5_radio_button_checked_fill: var(--sapContent_FocusColor);
-	--_ui5_radio_button_color: var(--sapNeutralColor);
-	--_ui5_radio_button_outer_ring_color: var(--sapContent_FocusColor);
-	--_ui5_radio_button_outer_ring_hover_color: #475E75;
-	--_ui5_radio_button_outer_ring_active_color: #354A5F;
-	--_ui5_radio_button_outer_ring_checked_hover_color: var(--sapContent_FocusColor);
+	--_ui5_radio_button_inner_size: 2rem;
+	--_ui5_radio_button_svg_size: 1.125rem;
+	--_ui5_radio_button_checked_fill: var(--sapBlueColor4);
+	--_ui5_radio_button_hover_fill: #fff;
+
+	--_ui5_radio_button_color:  var(--sapGreyColor5);
+	--_ui5_radio_button_hover_color: var(--sapGreyColor6);
+	--_ui5_radio_button_disabled_color: var(--sapGreyColor3);
+	--_ui5_radio_button_outer_ring_color: var(--sapBlueColor4);
+	--_ui5_radio_button_outer_ring_hover_color: var(--sapGreyColor6);
+	--_ui5_radio_button_outer_ring_active_color: var(--sapGreyColor7);
+	--_ui5_radio_button_outer_ring_checked_hover_color: var(--sapBlueColor4);
 	--_ui5_radio_button_outer_ring_width: 2;
-	--_ui5_radio_button_outer_ring_bg: var(--sapHighlightTextColor);
+	--_ui5_radio_button_outer_ring_bg: transparent;
+	--_ui5_radio_button_outer_ring_padding: 0 0.375rem;
 	--_ui5_radio_button_outer_ring_padding: 0 0.375rem;
 	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.625rem 0 0.375rem;
 	--_ui5_radio_button_outer_ring_padding_rtl: 0 0.375rem 0 0.625rem;
+	--_ui5_radio_button_outer_transition: stroke .2s ease-in-out;
 	--_ui5_radio_button_border_radius: 1rem;
-	--_ui5_radio_button_border: 0.125rem solid transparent;
-	--_ui5_radio_button_focus_border: 0.125rem solid var(--sapContent_FocusColor);
+	--_ui5_radio_button_border: none;
+	--_ui5_radio_button_border_width: 0;
+	--_ui5_radio_button_focus_border: none;
 	--_ui5_radio_button_focus_outline: none;
-	--_ui5_radio_button_hover_shadow: 0px 0px 2px rgba(131, 150, 168, 0.16), 0px 8px 16px rgba(131, 150, 168, 0.16);
-	--_ui5_radio_button_hover_background: var(--sapHighlightTextColor);
-	--_ui5_radio_button_transition: all 0.2s ease-in-out;
+	--_ui5_radio_button_hover_shadow: var(--shadow-grey-medium);
+	--_ui5_radio_button_hover_background: #fff;
+	--_ui5_radio_button_transition: box-shadow .2s ease-in-out, outline .2s ease-in-out, background-color .2s ease-in-out;
 	--_ui5_radio_button_label_offset: 0.375rem;
-	--_ui5_radio_button_label_color: var(--sapTitleColor);
+	--_ui5_radio_button_label_color: var(--sapGreyColor8);
+	--_ui5_radio_button_label_side_padding: 0.5rem;
 	--_ui5_radio_button_items_align: center;
 	--_ui5_radio_button_inner_width: 100%;
+	--_ui5_radio_button_inner_transition: fill-opacity .2s ease-in-out;
+	--_ui5_radio_button_inner_fill_opacity: 0;
+	--_ui5_radio_button_checked_inner_fill_opacity: 1;
+	--_ui5_radio_button_active_shadow: var(--shadow-grey-xs);
+	
+	/* keyboard focus */
+	--_ui5_radio_button_focus_keyboard_shadow: var(--shadow-blue-medium);
+	--_ui5_radio_button_focus_keyboard_outline: 2px solid var(--sapBlueColor4);
+	--_ui5_radio_button_focus_keyboard_background: #fff;
+	--_ui5_radio_button_focus_keyboard_hover_shadow: var(--shadow-blue-medium);
+	--_ui5_radio_button_focus_keyboard_active_shadow: var(--shadow-blue-xs);
+	
+	/* readonly */
+	--_ui5_radio_button_readonly_inner_stroke: var(--sapGreyColor3);
+	--_ui5_radio_button_readonly_inner_fill: transparent;
+	--_ui5_radio_button_readonly_checked_inner_fill: var(--sapGreyColor3);
+	
+	/* disabled */
+	--_ui5_radio_button_disabled_opacity: 1;
+	--_ui5_radio_button_disabled_color: var(--sapGreyColor3);
+	--_ui5_radio_button_disabled_label_color: var(--sapGreyColor3);
+	--_ui5_radio_button_disabled_checked_fill: var(--sapGreyColor3);
+	--_ui5_radio_button_disabled_hover_background: transparent;
+	--_ui5_radio_button_disabled_hover_shadow: none;
+	--_ui5_radio_button_disabled_active_shadow: none;
+	--_ui5_radio_button_disabled_outer_ring_active_color: var(--sapGreyColor3);
+	--_ui5_radio_button_disabled_outer_ring_checked_hover_color: var(--sapGreyColor3);
 }
