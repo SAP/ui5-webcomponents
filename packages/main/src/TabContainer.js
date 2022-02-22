@@ -628,7 +628,7 @@ class TabContainer extends UI5Element {
 	_addStyleIndent(tabs, step) {
 		walk(tabs, tab => {
 			tab._style = {
-				"padding-left": `${tab._level / 2 - step}rem`,
+				"margin-left": `${tab._level / 2 - step}rem`,
 			};
 		});
 	}
