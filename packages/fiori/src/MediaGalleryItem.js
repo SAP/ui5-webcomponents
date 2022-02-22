@@ -124,7 +124,7 @@ const metadata = {
 		 * Defines the content of the component.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		 "default": {
@@ -140,7 +140,6 @@ const metadata = {
 		 * @public
 		 */
 		 "thumbnail": {
-			propertyName: "thumbnail",
 			type: HTMLElement,
 		},
 	},
