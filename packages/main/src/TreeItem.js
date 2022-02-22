@@ -12,7 +12,7 @@ const metadata = {
 		 * Defines the text of the tree item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 */
 		text: {
@@ -82,7 +82,7 @@ const metadata = {
 		 * If set, an icon will be displayed before the text, representing the tree item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 */
 		icon: {

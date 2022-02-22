@@ -202,10 +202,10 @@ const metadata = {
 		/**
 		 * Fires when the current breakpoint has been changed.
 		 * @event sap.ui.webcomponents.fiori.DynamicSideContent#layout-change
-		 * @param {String} currentBreakpoint the current breakpoint.
-		 * @param {String} previousBreakpoint the breakpoint that was active before change to current breakpoint.
-		 * @param {Boolean} mainContentVisible visibility of the main content.
-		 * @param {Boolean} sideContentVisible visibility of the side content.
+		 * @param {string} currentBreakpoint the current breakpoint.
+		 * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
+		 * @param {boolean} mainContentVisible visibility of the main content.
+		 * @param {boolean} sideContentVisible visibility of the side content.
 		 * @public
 		 */
 		"layout-change": {
@@ -345,7 +345,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
-	 * @type {String}
 	 * @public
 	 */
 	 toggleContents() {

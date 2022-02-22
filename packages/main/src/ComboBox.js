@@ -210,9 +210,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -224,7 +224,7 @@ const metadata = {
 
 		/**
 		 * Receives id(or many ids) of the elements that label the component
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -472,7 +472,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!this.shadowRoot.contains(event.relatedTarget)) {
+		if (!this.shadowRoot.contains(event.relatedTarget) && (this.staticAreaItem !== event.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(event);
 		}

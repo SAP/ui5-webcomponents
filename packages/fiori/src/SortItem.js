@@ -9,7 +9,7 @@ const metadata = {
 		/**
 		 * Defines the text of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
@@ -19,7 +19,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component is selected.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */

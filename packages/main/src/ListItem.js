@@ -77,7 +77,7 @@ const metadata = {
 		 * Used to define the role of the list item.
 		 *
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "listitem"
 		 * @since 1.0.0-rc.9
 		 *

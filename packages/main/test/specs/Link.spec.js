@@ -81,4 +81,10 @@ describe("General API", () => {
 		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Proper aria-haspopup attribute is set");
 	});
 
+	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {
+		const link = await browser.$("#linkAccName");
+
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-label"), "more info", "Attribute is reflected");
+	});
+
 });

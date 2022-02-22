@@ -4,7 +4,7 @@
 	aria-label="{{effectiveAccessibleName}}"
 	dir="{{effectiveDir}}"
 >
-	<!-- header: either header or h1 with header text -->
+	{{! header: either header or h1 with header text}}
 	<div
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeyDown}}"
@@ -25,7 +25,7 @@
 						icon="slim-arrow-right"
 						@click="{{_toggleButtonClick}}"
 						.accessibilityAttributes={{accInfo.button.accessibilityAttributes}}
-						title="{{accInfo.button.title}}"
+						tooltip="{{accInfo.button.title}}"
 						accessible-name="{{accInfo.button.ariaLabelButton}}"
 					></ui5-button>
 				{{else}}
@@ -51,7 +51,7 @@
 		{{/if}}
 	</div>
 
-	<!-- content area -->
+	{{! content area}}
 	<div
 		class="ui5-panel-content"
 		id="{{_id}}-content"

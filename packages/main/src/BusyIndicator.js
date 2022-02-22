@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.7

@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component middle area needs to be centered between start and end area
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @private
 		 */
 		_shrinked: {

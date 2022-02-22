@@ -7,6 +7,8 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -60,18 +62,30 @@ const metadata = {
 
 		/**
 		 * Indicates if the element is open
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.2.0
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is already open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
 		 */
 		opened: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		/**
 		 * Defines the accessible name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -84,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the IDs of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0
@@ -92,6 +106,16 @@ const metadata = {
 		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		 mediaRange: {
+			type: String,
 		},
 
 		/**
@@ -200,6 +224,12 @@ const bodyScrollingBlockers = new Set();
  * @public
  */
 class Popup extends UI5Element {
+	constructor() {
+		super();
+
+		this._resizeHandler = this._resize.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -228,6 +258,8 @@ class Popup extends UI5Element {
 		if (!this.isOpen()) {
 			this._blockLayerHidden = true;
 		}
+
+		ResizeHandler.register(this, this._resizeHandler);
 	}
 
 	onExitDOM() {
@@ -235,10 +267,16 @@ class Popup extends UI5Element {
 			Popup.unblockBodyScrolling(this);
 			this._removeOpenedPopup();
 		}
+
+		ResizeHandler.deregister(this, this._resizeHandler);
 	}
 
 	get _displayProp() {
 		return "block";
+	}
+
+	_resize() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	/**
@@ -424,6 +462,7 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
+		this.open = true;
 
 		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
@@ -458,6 +497,7 @@ class Popup extends UI5Element {
 
 		this.hide();
 		this.opened = false;
+		this.open = false;
 
 		if (!preventRegistryUpdate) {
 			this._removeOpenedPopup();
@@ -530,7 +570,7 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaLabelledBy() {} // eslint-disable-line
 
@@ -539,13 +579,13 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaModal() {} // eslint-disable-line
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {String|undefined}
+	 * @returns {string|undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
