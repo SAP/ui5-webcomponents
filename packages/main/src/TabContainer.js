@@ -493,13 +493,10 @@ class TabContainer extends UI5Element {
 		selectedTopLevel.focus();
 	}
 
-	_getAllSubItems(items, result, level = 1) {
+	_getAllSubItems(items, result, level = 0) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
-				item._style = {
-					"padding-left": `${level / 2}rem`,
-				};
-
+				item._level = level;
 				result.push(item);
 				if (item.subTabs) {
 					this._getAllSubItems(item.subTabs, result, level + 1);
@@ -610,11 +607,13 @@ class TabContainer extends UI5Element {
 		if (isEndOverflow) {
 			button = this.overflowButton[0] || overflow.querySelector("[ui5-button]");
 			this._overflowItems = items;
+			this._addStyleIndent(this._overflowItems, 0.5);
 		}
 
 		if (isStartOverflow) {
 			button = this.startOverflowButton[0] || overflow.querySelector("[ui5-button]");
 			this._overflowItems = items;
+			this._addStyleIndent(this._overflowItems, 0.5);
 		}
 
 		this.responsivePopover = await this._respPopover();
@@ -624,6 +623,14 @@ class TabContainer extends UI5Element {
 			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
 			this.responsivePopover.showAt(button);
 		}
+	}
+
+	_addStyleIndent(tabs, step) {
+		walk(tabs, tab => {
+			tab._style = {
+				"padding-left": `${tab._level / 2 - step}rem`,
+			};
+		});
 	}
 
 	async _onOverflowKeyDown(event) {

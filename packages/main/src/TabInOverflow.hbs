@@ -8,19 +8,20 @@
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	.associatedTab="{{this}}"
 >
-	<div class="ui5-tab-overflow-itemContent" style="{{this._style}}">
-		{{#if this.icon}}
-			<ui5-icon name="{{this.icon}}"></ui5-icon>
-		{{/if}}
+	<div class="ui5-tab-overflow-itemContent">
+		<span style="{{this._style}}">
+			{{#if this.icon}}
+				<ui5-icon name="{{this.icon}}"></ui5-icon>
+			{{/if}}
 
-		{{this.text}}
+			{{this.text}}
 
-		{{#if this.additionalText}}
-			({{this.additionalText}})
-		{{/if}}
+			{{#if this.additionalText}}
+				({{this.additionalText}})
+			{{/if}}
+		</span>
 	</div>
 </ui5-li-custom>
 {{#each subTabs}}
 	{{overflowPresentation}}
 {{/each}}
-

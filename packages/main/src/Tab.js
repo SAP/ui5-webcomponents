@@ -276,6 +276,8 @@ class Tab extends UI5Element {
 		}
 		this._overflowItems = [];
 		this._overflowItems = tabInstance.subTabs;
+		this._addStyleIndent(this._overflowItems, 1);
+
 		this.responsivePopover = await this._respPopover();
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
