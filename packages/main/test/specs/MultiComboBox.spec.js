@@ -618,6 +618,54 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("focused"), true, "The input is focused");
 		});
 
+		it ("CTRL + HOME focus the first token, CTRL + END should focus last token", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await input.keys(['Control','Home']);
+
+			assert.equal(await tokens[0].getProperty("focused"), true, "The first token is focused");
+
+			await input.keys(['Control','End']);
+			assert.equal(await tokens[tokens.length - 1].getProperty("focused"), true, "The last token is focused");
+		});
+
+		it ("SHIFT + HOME should select all tokens from the current one to the first one", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await input.keys(['Shift','Home']);
+
+			assert.equal(await tokens[0].getProperty("focused"), true, "The first token is focused");
+			assert.equal(await tokens[0].getProperty("selected"), true, "The first token is selected");
+			assert.equal(await tokens[1].getProperty("selected"), true, "The second token is selected");
+			assert.equal(await tokens[2].getProperty("selected"), false, "The last token is not selected");
+		});
+
+		it ("SHIFT + HOME should select all tokens from the current one to the last one", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await input.keys(['Shift','End']);
+
+			assert.equal(await tokens[2].getProperty("focused"), true, "The last token is focused");
+			assert.equal(await tokens[2].getProperty("selected"), true, "The last token is selected");
+			assert.equal(await tokens[1].getProperty("selected"), true, "The second token is selected");
+			assert.equal(await tokens[0].getProperty("selected"), false, "The first token is not selected");
+		});
+
 		it ("should close the picker and focus the next element on TAB", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 

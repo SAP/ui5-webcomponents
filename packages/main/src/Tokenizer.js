@@ -15,6 +15,10 @@ import {
 	isRightShiftCtrl,
 	isEnd,
 	isHome,
+	isHomeShift,
+	isEndShift,
+	isHomeCtrl,
+	isEndCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -271,6 +275,14 @@ class Tokenizer extends UI5Element {
 			return this._handleTokenSelection(event, false);
 		}
 
+		if (isHomeShift(event)) {
+			this._handleHomeShift(event);
+		}
+
+		if (isEndShift(event)) {
+			this._handleEndShift(event);
+		}
+
 		this._handleItemNavigation(event, this.tokens);
 	}
 
@@ -291,8 +303,9 @@ class Tokenizer extends UI5Element {
 			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
 		}
 
-		if (isHome(event) || isEnd(event)) {
-			return this._handleHome(tokens, isEnd(event));
+		if (isHome(event) || isEnd(event) || isHomeCtrl(event) || isEndCtrl(event)) {
+			event.preventDefault();
+			return this._handleHome(tokens, isEnd(event) || isEndCtrl(event));
 		}
 
 		if (isCtrl && event.key.toLowerCase() === "a") {
@@ -311,6 +324,30 @@ class Tokenizer extends UI5Element {
 
 		tokens[index].focus();
 		this._itemNav.setCurrentItem(tokens[index]);
+	}
+
+	_handleHomeShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index <= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[0].focus();
+		this._itemNav.setCurrentItem(tokens[0]);
+	}
+
+	_handleEndShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index >= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[tokens.length - 1].focus();
+		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
 	}
 
 	_calcNextTokenIndex(focusedToken, tokens, backwards) {
