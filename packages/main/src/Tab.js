@@ -266,10 +266,18 @@ class Tab extends UI5Element {
 
 	async _onTabExpandButtonClick(event) {
 		event.stopPropagation();
-		const button = event.target;
+		let button = event.target;
+		let tabInstanceId;
 
-		const tabInstanceId = button.parentElement.parentElement.id;
+		if (event.type === "keydown") {
+			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
+			tabInstanceId = button.parentElement.id;
+		} else {
+			tabInstanceId = button.parentElement.parentElement.id;
+		}
+
 		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
+
 		if (!tabInstance) {
 			this._onHeaderItemSelect(event.currentTarget.parentElement);
 			return;

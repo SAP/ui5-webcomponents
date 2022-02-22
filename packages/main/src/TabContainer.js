@@ -452,6 +452,10 @@ class TabContainer extends UI5Element {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
+
+		if (isDown(event)) {
+			return this._handleDown(event);
+		}
 	}
 
 	_onTabStripKeyUp(event) {
@@ -978,6 +982,12 @@ class TabContainer extends UI5Element {
 		}
 
 		return focusableTabs;
+	}
+
+	_handleDown(event) {
+		if (event.target.querySelectorAll(".ui5-tab-expand-button").length) {
+			event.target.associatedTab._onTabExpandButtonClick.bind(this)(event);
+		}
 	}
 
 	_updateMediaRange() {

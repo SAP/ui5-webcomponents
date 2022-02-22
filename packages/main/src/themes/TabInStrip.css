@@ -372,3 +372,15 @@
 	margin-right: 0;
 	margin-left: 0.5rem;
 }
+
+.ui5-tab-strip-item--selected .ui5-tab-expand-button>[ui5-button]::after {
+	content: "";
+	position: absolute;
+	bottom: 1px;
+	left: 12px;
+	right: 16px;
+	border-bottom: var(--_ui5_tc_headerItemContent_border_bottom);
+	border-radius: var(--_ui5_tc_headerItemContent_border_radius);
+	background-color: var(--_ui5_tc_headerItemContent_border_bg);
+	height: var(--_ui5_tc_headerItemContent_border_height);
+}
