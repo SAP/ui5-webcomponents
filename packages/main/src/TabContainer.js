@@ -400,6 +400,7 @@ class TabContainer extends UI5Element {
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 			item._selectedTab = this._selectedTab;
+			item._hasOwnContent = this._checkForContent(item);
 		});
 
 		if (!this._animationRunning) {
@@ -431,6 +432,10 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		if (!tab.associatedTab._hasOwnContent && tab.associatedTab.subTabs.length) {
+			tab.associatedTab._onTabExpandButtonClick.bind(this)(event);
+			return;
+		}
 		walk(this.items, item => {
 			item._selectedTab = tab.associatedTab;
 		});
@@ -982,6 +987,16 @@ class TabContainer extends UI5Element {
 		}
 
 		return focusableTabs;
+	}
+
+	_checkForContent(item) {
+		let hasContent = false;
+		item.content.forEach(content => {
+			if (content.nodeName !== "#text") {
+				hasContent = true;
+			}
+		});
+		return hasContent;
 	}
 
 	_handleDown(event) {

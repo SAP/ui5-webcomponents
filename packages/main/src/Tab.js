@@ -32,6 +32,7 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
+			propertyName: "content",
 			invalidateOnChildChange: {
 				properties: true,
 				slots: false,
@@ -148,6 +149,10 @@ const metadata = {
 
 		_selectedTab: {
 			type: Object,
+		},
+
+		_hasOwnContent: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -318,6 +323,10 @@ class Tab extends UI5Element {
 
 	get effectiveHidden() {
 		return !this.effectiveSelected;
+	}
+
+	get effectiveTabs() {
+		return this.subTabs.filter(tab => !tab.isSeparator);
 	}
 
 	get ariaLabelledBy() {
