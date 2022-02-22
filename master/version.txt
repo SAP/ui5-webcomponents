@@ -1,7 +1,5 @@
-commit 1929d08ff0ee78adb7e257e0436c00e577d2acd3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 22 09:20:17 2022 +0200
+commit 9538656de642c34862c29bac1f6bf8502e12611d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 22 14:21:03 2022 +0200
 
-    fix: display methods in child components API (#4792)
-    
-    For child components, like the TreeItem, the playground only displays props and slots, but not methods. The change adds the method API info.
+    docs: document slots properly (#4798)
