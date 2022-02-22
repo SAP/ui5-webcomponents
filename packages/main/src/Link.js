@@ -117,7 +117,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the input
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -147,7 +147,7 @@ const metadata = {
 		 *			<ul>
 		 *				<li><code>true</code></li>
 		 *				<li><code>false</code></li>
-		 *			<ul>
+		 *			</ul>
 		 * 		</li>
 		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
 		 * 			<ul>

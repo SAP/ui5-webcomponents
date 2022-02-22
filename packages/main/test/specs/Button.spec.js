@@ -105,4 +105,10 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(await button.getAttribute("aria-label"), "Download Application", "Attribute is reflected");
 	});
+
+	it("setting tooltip on the host is reflected on the button tag", async () => {
+		const button = await browser.$("#customTooltip").shadow$("button");
+
+		assert.strictEqual(await button.getAttribute("title"), "Go home", "Attribute is reflected");
+	});
 });

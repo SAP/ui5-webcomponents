@@ -95,5 +95,17 @@ describe("General API", () => {
 
 			assert.ok(await field.isFocused(), "ui5-datepicker should be focussed");
 		});
+
+		it("should focus within a shadow root", async () => {
+			const customComponent = await browser.$("#custom-element-with-label");
+			const label = await customComponent.shadow$('ui5-label[for="input"]');
+			const input = await customComponent.shadow$("#input");
+
+			await label.click();
+
+			const activeElement = await browser.custom$("activeElement", "#custom-element-with-label");
+			assert.strictEqual(await activeElement.getProperty("id"), await input.getProperty("id"), "the input is focused after the label was clicked");
+		});
+
 	});
 });

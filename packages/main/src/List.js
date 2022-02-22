@@ -208,7 +208,7 @@ const metadata = {
 		/**
 		 * Defines the accessible name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -220,7 +220,7 @@ const metadata = {
 		/**
 		 * Defines the IDs of the elements that label the input.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -234,7 +234,7 @@ const metadata = {
 		 * Defines the accessible role of the component.
 		 * <br><br>
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "list"
 		 * @since 1.0.0-rc.15
 		 */

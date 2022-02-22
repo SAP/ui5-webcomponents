@@ -74,6 +74,11 @@
 			<ui5-label>click event</ui5-label>
 			<ui5-input id="click-counter" value="0"></ui5-input>
 		</div>
+
+		<div>
+			<ui5-label>prevent selection-change event</ui5-label>
+			<ui5-checkbox id="prevent-selection"></ui5-checkbox>
+		</div>
 	</div>
 
 
@@ -83,19 +88,31 @@
 		var sideNavigation = document.querySelector("ui5-side-navigation"),
 			input = document.querySelector("#counter"),
 			clickInput = document.querySelector("#click-counter"),
+			preventDefaultCb = document.querySelector("#prevent-selection"),
+			preventSelectionChange = false,
 			counter = 0,
 			clickCounter = 0;
-		document.querySelector("#startButton").addEventListener("click", function(event) {
+
+		document.querySelector("#startButton").addEventListener("click", function (event) {
 			sideNavigation.collapsed = !sideNavigation.collapsed;
 		});
 
-		document.querySelectorAll("ui5-side-navigation-item").forEach(item => {
-			item.addEventListener("ui5-click", event => {
+		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
+			item.addEventListener("ui5-click", function (event) {
 				clickInput.value = ++clickCounter;
 			});
-		})
+		});
 
-		sideNavigation.addEventListener("ui5-selection-change", function() {
+		preventDefaultCb.addEventListener("ui5-change", function (event) {
+			preventSelectionChange = event.target.checked;
+		});
+
+		sideNavigation.addEventListener("ui5-selection-change", function (event) {
+			if (preventSelectionChange) {
+				event.preventDefault();
+				return;
+			}
+
 			input.value = ++counter;
 		});
 

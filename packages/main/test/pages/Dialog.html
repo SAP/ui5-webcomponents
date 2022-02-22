@@ -36,6 +36,9 @@
 	<ui5-button id="btnOpenDialogNoPaddings">Open Stretched Dialog - no paddings</ui5-button>
 	<br>
 	<br>
+	<ui5-button id="btnOpenDialogWithAttr">Open with Attribute</ui5-button>
+	<br>
+	<br>
 	<ui5-button id="message">Open Message Dialog</ui5-button>
 	<br>
 	<br>
@@ -127,6 +130,10 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-dialog id="dlgAttr">
+		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
+		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
+	</ui5-dialog>
 
 	<ui5-dialog id="dialog" accessible-name="Resizable" stretch>
 		<div slot="header">
@@ -473,6 +480,18 @@
 
 		btnCloseDialog.addEventListener("click", function () {
 			dialog.close();
+		});
+
+		btnOpenDialogWithAttr.addEventListener("click", function () {
+			dlgAttr.setAttribute("open", "");
+		});
+
+		btnCloseWithMethod.addEventListener("click", function () {
+			dlgAttr.close();
+		});
+
+		btnCloseWithAttr.addEventListener("click", function () {
+			dlgAttr.removeAttribute("open");
 		});
 
 		btnCloseDialogNoPaddings.addEventListener("click", function () {

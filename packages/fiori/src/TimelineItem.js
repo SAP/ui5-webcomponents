@@ -107,7 +107,7 @@ const metadata = {
 		/**
 		 * Defines the indicator line width.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		_lineWidth: {
