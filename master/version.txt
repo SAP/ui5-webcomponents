@@ -1,5 +1,5 @@
-commit 9538656de642c34862c29bac1f6bf8502e12611d
+commit f93f22ff3ee4beee60fe25fb8022959bbaa94b4a
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 22 14:21:03 2022 +0200
+Date:   Tue Feb 22 17:04:54 2022 +0200
 
-    docs: document slots properly (#4798)
+    fix(ui5-color-palette-popover): showDefaultColor works (#4802)
