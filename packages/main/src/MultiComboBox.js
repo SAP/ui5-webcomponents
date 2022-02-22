@@ -574,19 +574,21 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		const isArrowDownCtrl = isDownCtrl(event);
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this.togglePopover();
 		}
 
-		if (isUp(event) || isDown(event) || isUpCtrl(event) || isDownCtrl(event)) {
-			this._handleArrowNavigation(event, isDown(event));
+		if (isUp(event) || isDown(event) || isUpCtrl(event) || isArrowDownCtrl) {
+			this._handleArrowNavigation(event, isArrowDownCtrl);
 			return;
 		}
 
 		// CTRL + Arrow Down navigation is performed by the ItemNavigation module of the List,
 		// here we only implement the text selection of the selected item
-		if (isDownCtrl(event) && !this.allItemsPopover.opened) {
+		if (isArrowDownCtrl && !this.allItemsPopover.opened) {
 			setTimeout(() => this._inputDom.setSelectionRange(0, this._inputDom.value.length), 0);
 		}
 
@@ -647,16 +649,17 @@ class MultiComboBox extends UI5Element {
 		event.preventDefault();
 
 		if (isArrowDown || isDownCtrl(event)) {
-			setTimeout(() => this._handleArrowDown(event), 0);
+			this._handleArrowDown(event);
 		}
 
 		if (isArrowUp || isUpCtrl(event)) {
-			setTimeout(() => this._inputDom.focus(), 0);
+			this._inputDom.focus();
 		}
 	}
 
 	_onItemKeydown(event) {
 		const isFirstItem = this.list.items[0] === event.target;
+		const isArrowUp = isUp(event) || isUpCtrl(event);
 
 		if (isTabNext(event) || isTabPrevious(event)) {
 			this._onItemTab(event);
@@ -670,7 +673,7 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (isLeftCtrl(event) || isUpCtrl(event)) {
+		if ((isLeftCtrl(event) || isUpCtrl(event)) && !isFirstItem) {
 			this.list._itemNavigation._handleUp(event);
 			this.list.items[this.list._itemNavigation._currentIndex].focus();
 		}
@@ -680,20 +683,12 @@ class MultiComboBox extends UI5Element {
 			this.list.items[this.list._itemNavigation._currentIndex].focus();
 		}
 
-		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
+		if (((isArrowUp && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 		}
 
-		if (!this.valueStateHeader && isFirstItem && (isUpCtrl(event) || isUp(event))) {
+		if (!this.valueStateHeader && isFirstItem && isArrowUp) {
 			this._inputDom.focus();
-		}
-
-		if (isUpCtrl(event) && isFirstItem && this.valueStateHeader) {
-			setTimeout(() => this.valueStateHeader.focus(), 0);
-		}
-
-		if (!this.valueStateHeader && isFirstItem && isUpCtrl(event)) {
-			setTimeout(() => this._inputDom.focus(), 0);
 		}
 	}
 
@@ -726,16 +721,16 @@ class MultiComboBox extends UI5Element {
 			await this._setValueStateHeader();
 		}
 
-		if ((isArrowDown || isDownCtrl(event)) && isOpen && this.focused && this.valueStateHeader) {
-			setTimeout(() => this.valueStateHeader.focus(), 0);
+		if (isArrowDown && isOpen && this.valueStateHeader) {
+			this.valueStateHeader.focus();
 			return;
 		}
 
-		if ((isArrowDown || isDownCtrl(event)) && this.focused && hasSuggestions) {
+		if (isArrowDown && hasSuggestions) {
 			this._handleArrowDown(event);
 		}
 
-		if ((!isArrowDown && !isDownCtrl(event)) && !isOpen && !this.readonly) {
+		if (!isArrowDown && !isOpen && !this.readonly) {
 			this._navigateToPrevItem();
 		}
 	}
