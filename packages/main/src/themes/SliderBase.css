@@ -21,7 +21,7 @@
 .ui5-slider-root {
 	box-sizing: border-box;
 	height: 3.3125rem;
-	padding: 1rem 0;
+	padding: 1rem;
 	outline: none;
 	touch-action: none;
 	-ms-touch-action: pan-y;
