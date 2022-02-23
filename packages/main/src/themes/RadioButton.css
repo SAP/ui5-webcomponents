@@ -24,6 +24,7 @@
 }
 
 :host([checked]) .ui5-radio-svg-inner {
+	fill-opacity: var(--_ui5_radio_button_checked_inner_fill_opacity);
 	fill: currentColor;
 }
 
@@ -33,8 +34,8 @@
 
 /* disabled */
 :host([disabled]) .ui5-radio-root {
-	color: var(--_ui5_radio_button_color);
-	opacity: var(--sapContent_DisabledOpacity);
+	color: var(--_ui5_radio_button_disabled_color);
+	opacity: var(--_ui5_radio_button_disabled_opacity);
 }
 
 :host([disabled][checked]) .ui5-radio-svg-outer {
@@ -65,6 +66,19 @@
 	border: var(--_ui5_radio_button_focus_border);
 }
 
+/* keyboard focus */
+:host(:not([disabled]).focus-visible) {
+	box-shadow: var(--_ui5_radio_button_focus_keyboard_shadow);
+	outline: var(--_ui5_radio_button_focus_keyboard_outline);
+
+	--_ui5_radio_button_hover_shadow: var(--_ui5_radio_button_focus_keyboard_hover_shadow);
+	--_ui5_radio_button_active_shadow: var(--_ui5_radio_button_focus_keyboard_active_shadow);
+}
+
+:host(:not([disabled]).focus-visible) .ui5-radio-root {
+	background: var(--_ui5_radio_button_focus_keyboard_background);
+}
+
 /* hovered */
 :host(:not([disabled]):hover) {
 	background: var(--_ui5_radio_button_hover_background);
@@ -82,9 +96,26 @@
 	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
 }
 
+/* active */
+:host(:not([disabled])[active]) {
+	box-shadow: var(--_ui5_radio_button_active_shadow);
+}
+
 /* active, checked */
 :host([active][checked]:not([value-state])) .ui5-radio-svg-outer {
 	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
+}
+
+:host([disabled]),
+:host([readonly]) {
+	--_ui5_radio_button_outer_ring_active_color: var(--_ui5_radio_button_disabled_outer_ring_active_color);
+	--_ui5_radio_button_label_color: var(--_ui5_radio_button_disabled_label_color);
+	--_ui5_radio_button_color: var(--_ui5_radio_button_disabled_color);
+	--_ui5_radio_button_checked_fill: var(--_ui5_radio_button_disabled_checked_fill);
+	--_ui5_radio_button_outer_ring_checked_hover_color: var(--_ui5_radio_button_disabled_outer_ring_checked_hover_color);
+	--_ui5_radio_button_hover_background: var(--_ui5_radio_button_disabled_hover_background);
+	--_ui5_radio_button_active_shadow: var(--_ui5_radio_button_disabled_active_shadow);
+	--_ui5_radio_button_hover_shadow: var(--_ui5_radio_button_disabled_hover_shadow);
 }
 
 /* active, not checked */
@@ -103,12 +134,12 @@
 
 /* readonly */
 :host([checked][readonly]) .ui5-radio-svg-inner {
-	fill: var(--sapContent_NonInteractiveIconColor);
+	fill: var(--_ui5_radio_button_readonly_checked_inner_fill);
 }
 
 :host([readonly]) .ui5-radio-root .ui5-radio-svg-outer {
-	fill: var(--sapField_ReadOnly_Background);
-	stroke: var(--sapField_ReadOnly_BorderColor);
+	fill: var(--_ui5_radio_button_readonly_inner_fill);
+	stroke: var(--_ui5_radio_button_readonly_inner_stroke);
 }
 
 /* value states */
@@ -217,10 +248,13 @@
 	fill: var(--_ui5_radio_button_outer_ring_bg);
 	stroke: currentColor;
 	stroke-width: var(--_ui5_radio_button_outer_ring_width);
+	transition: var(--_ui5_radio_button_outer_transition);
 }
 
 .ui5-radio-svg-inner {
 	fill: none;
+	fill-opacity: var(--_ui5_radio_button_inner_fill_opacity);
+	transition: var(--_ui5_radio_button_inner_transition);
 }
 
 .ui5-radio-svg-outer,

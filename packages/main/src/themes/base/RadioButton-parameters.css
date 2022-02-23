@@ -16,6 +16,7 @@
 	--_ui5_radio_button_outer_ring_padding: 0 0.625rem;
 	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.625rem;
 	--_ui5_radio_button_outer_ring_padding_rtl: 0 0.625rem;
+	--_ui5_radio_button_outer_transition: none;
 	--_ui5_radio_button_border_radius: 0;
 	--_ui5_radio_button_border: none;
 	--_ui5_radio_button_focus_border: none;
@@ -28,5 +29,33 @@
 	--_ui5_radio_button_label_color: var(--sapContent_LabelColor);
 	--_ui5_radio_button_items_align: unset;
 	--_ui5_radio_button_inner_width: initial;
+	--_ui5_radio_button_inner_transition: none;
+	--_ui5_radio_button_inner_fill_opacity: 1;
+	--_ui5_radio_button_inner_transition: none;
+	--_ui5_radio_button_checked_inner_fill_opacity: 1;
 	--_ui5_radio_button_border_readonly_focus_style: var(--sapContent_FocusStyle);
+	--_ui5_radio_button_active_shadow: none;
+	
+	/* keyboard focus */
+	--_ui5_radio_button_focus_keyboard_shadow: none;
+	--_ui5_radio_button_focus_keyboard_outline: block;
+	--_ui5_radio_button_focus_keyboard_background: transparent;
+	--_ui5_radio_button_focus_keyboard_hover_shadow: none;
+	--_ui5_radio_button_focus_keyboard_active_shadow: none;
+	
+	/* readonly */
+	--_ui5_radio_button_readonly_inner_stroke: var(--sapField_ReadOnly_BorderColor);
+	--_ui5_radio_button_readonly_inner_fill: var(--sapField_ReadOnly_Background);
+	--_ui5_radio_button_readonly_checked_inner_fill: var(--sapContent_NonInteractiveIconColor);
+	
+	/* disabled */
+	--_ui5_radio_button_disabled_opacity: var(--sapContent_DisabledOpacity);
+	--_ui5_radio_button_disabled_color: var(--sapField_BorderColor);
+	--_ui5_radio_button_disabled_label_color: var(--sapContent_LabelColor);
+	--_ui5_radio_button_disabled_checked_fill: var(--sapSelectedColor);
+	--_ui5_radio_button_disabled_hover_background: inherit;
+	--_ui5_radio_button_disabled_hover_shadow: none;
+	--_ui5_radio_button_disabled_active_shadow: none;
+	--_ui5_radio_button_disabled_outer_ring_active_color: var(--sapField_Hover_BorderColor);
+	--_ui5_radio_button_disabled_outer_ring_checked_hover_color: var(--sapField_Hover_BorderColor);
 }
