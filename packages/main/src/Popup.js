@@ -188,7 +188,7 @@ const createBlockingStyle = () => {
 
 createBlockingStyle();
 
-const bodyScrollingBlockers = new Set();
+const pageScrollingBlockers = new Set();
 
 /**
  * @class
@@ -200,7 +200,7 @@ const bodyScrollingBlockers = new Set();
  *
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
- *  - Derivatives may call the "blockBodyScrolling" and "unblockBodyScrolling" static methods to temporarily remove scrollbars on the body
+ *  - Derivatives may call the "blockPageScrolling" and "unblockPageScrolling" static methods to temporarily remove scrollbars on the html element
  *  - Derivatives may call the "open" and "close" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
@@ -245,7 +245,7 @@ class Popup extends UI5Element {
 	static get template() {
 		return PopupTemplate;
 	}
-
+// $0.addEventListener("change", () => {debugger})
 	static get staticAreaTemplate() {
 		return PopupBlockLayer;
 	}
@@ -264,7 +264,7 @@ class Popup extends UI5Element {
 
 	onExitDOM() {
 		if (this.isOpen()) {
-			Popup.unblockBodyScrolling(this);
+			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
 
@@ -287,36 +287,31 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Temporarily removes scrollbars from the body
+	 * Temporarily removes scrollbars from the html element
 	 * @protected
 	 */
-	static blockBodyScrolling(popup) {
-		bodyScrollingBlockers.add(popup);
+	static blockPageScrolling(popup) {
+		pageScrollingBlockers.add(popup);
 
-		if (bodyScrollingBlockers.size !== 1) {
+		if (pageScrollingBlockers.size !== 1) {
 			return;
 		}
 
-		if (window.pageYOffset > 0) {
-			document.body.style.top = `-${window.pageYOffset}px`;
-		}
-		document.body.classList.add("ui5-popup-scroll-blocker");
+		document.documentElement.classList.add("ui5-popup-scroll-blocker");
 	}
 
 	/**
-	 * Restores scrollbars on the body, if needed
+	 * Restores scrollbars on the html element, if needed
 	 * @protected
 	 */
-	static unblockBodyScrolling(popup) {
-		bodyScrollingBlockers.delete(popup);
+	static unblockPageScrolling(popup) {
+		pageScrollingBlockers.delete(popup);
 
-		if (bodyScrollingBlockers.size !== 0) {
+		if (pageScrollingBlockers.size !== 0) {
 			return;
 		}
 
-		document.body.classList.remove("ui5-popup-scroll-blocker");
-		window.scrollTo(0, -parseFloat(document.body.style.top));
-		document.body.style.top = "";
+		document.documentElement.classList.remove("ui5-popup-scroll-blocker");
 	}
 
 	_scroll(e) {
@@ -446,7 +441,7 @@ class Popup extends UI5Element {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
-			Popup.blockBodyScrolling(this);
+			Popup.blockPageScrolling(this);
 		}
 
 		this._zIndex = getNextZIndex();
@@ -492,7 +487,7 @@ class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling(this);
+			Popup.unblockPageScrolling(this);
 		}
 
 		this.hide();
