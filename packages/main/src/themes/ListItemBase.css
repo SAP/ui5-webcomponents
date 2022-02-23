@@ -22,8 +22,13 @@
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([selected][has-border]) {
+:host(:not([focused])[selected][has-border]) {
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
+}
+
+/* focused & selected */
+:host([focused][selected]) {
+	border-bottom: var(--ui5-listitem-focused-selected-border-bottom);
 }
 
 .ui5-li-root {
@@ -36,6 +41,7 @@
 	box-sizing: border-box;
 }
 
+/* focused */
 :host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;
 }
@@ -44,10 +50,10 @@
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	left: 0.0625rem;
 	pointer-events: none;
 }
 
