@@ -150,7 +150,9 @@ class MultiInput extends Input {
 			this.fireEvent("token-delete", { token });
 		});
 
-		this.focus();
+		setTimeout(() => {
+			!this.tokens[0] && this.focus();
+		}, 0);
 	}
 
 	valueHelpMouseDown(event) {

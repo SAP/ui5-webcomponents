@@ -274,5 +274,30 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await secondToken.getProperty("selected"), false, "The second token should NOT be selected");
 		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
 	});
-})
 
+	it("should not move focus when backspace/delete is pressed, but token is not deleted", async () => {
+		input = await browser.$("#single-token");
+		innerInput = await input.shadow$("input");
+
+		await browser.$("#add-to-single").click(); // adding a second token
+
+		firstToken = await browser.$("#single-token ui5-token:first-child");
+		lastToken = await browser.$("#single-token ui5-token:last-child");
+
+		// Act
+		await innerInput.click();
+		await browser.keys("Backspace");
+
+		// Assert
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+
+		// Act
+		await browser.keys("Backspace");
+
+		// Assert
+		assert.ok(await lastToken.getProperty("focused"), "The last token is still focused on Backspace, as token-delete was not handled");
+		assert.notOk(await firstToken.getProperty("focused"), "The first token is not focused");
+		assert.notOk(await input.getProperty("focused"), "The input is not focused");
+	});
+});
