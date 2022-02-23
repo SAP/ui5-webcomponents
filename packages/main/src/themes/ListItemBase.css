@@ -28,7 +28,7 @@
 
 /* focused & selected */
 :host([focused][selected]) {
-	border-bottom: var(--ui5-listitem-focused-border-bottom);
+	border-bottom: var(--ui5-listitem-focused-selected-border-bottom);
 }
 
 .ui5-li-root {
@@ -42,10 +42,6 @@
 }
 
 /* focused */
-:host([focused]) {
-	border-bottom: var(--ui5-listitem-focused-border-bottom);
-}
-
 :host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;
 }
