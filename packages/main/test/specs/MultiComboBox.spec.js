@@ -684,6 +684,32 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 		});
 
+		it ("tests text selection on focus", async () => {
+			const mcb = await browser.$("#multi-acv");
+			const mcb2 = await browser.$("#mcb-with-placeholder");
+			
+			await mcb.click();
+
+			const selectionStartIndex = await browser.execute(() => {
+				return document.querySelector("#multi-acv").shadowRoot.querySelector("input").selectionStart;
+			});
+			const selectionEndIndex = await browser.execute(() => {
+				return document.querySelector("#multi-acv").shadowRoot.querySelector("input").selectionEnd;
+			});
+
+			assert.equal(await selectionStartIndex, 0, "The selection starts from the beginning of the value");
+			assert.equal(await selectionEndIndex, 3, "The whole value is selected");
+
+			await mcb.keys("Tab");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+
+			await mcb2.keys(["Shift", "Tab"]);
+			assert.equal(await selectionStartIndex, 0, "The selection starts from the beginning of the value");
+			assert.equal(await selectionEndIndex, 3, "The whole value is selected");
+
+
+		});
+
 		it ("tests two-column layout", async () => {
 			const mcb = await browser.$("#mcb-two-column-layout");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-two-column-layout");
