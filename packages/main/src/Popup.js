@@ -245,7 +245,7 @@ class Popup extends UI5Element {
 	static get template() {
 		return PopupTemplate;
 	}
-// $0.addEventListener("change", () => {debugger})
+
 	static get staticAreaTemplate() {
 		return PopupBlockLayer;
 	}
