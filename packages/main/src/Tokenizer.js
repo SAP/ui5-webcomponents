@@ -249,9 +249,8 @@ class Tokenizer extends UI5Element {
 
 		if (!isPhone()) {
 			setTimeout(() => {
-				const deletedToken = this._getVisibleTokens()[deletedTokenIndex]; // make sure the token is actually deleted
-
-				if ((!deletedToken && nextToken) || (deletedToken === nextToken)) { // only if deleted, move focus and set current item to be nextToken
+				const deletedTokenIdx = token ? this._tokens.indexOf(token) : this._tokens.indexOf(event.target);
+				if (nextToken && deletedTokenIdx === -1) { // only if deleted, move focus and set current item to be nextToken
 					this._itemNav.setCurrentItem(nextToken);
 					nextToken.focus();
 				}
