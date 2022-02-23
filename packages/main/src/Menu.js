@@ -294,11 +294,13 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	close() {
-		if (isPhone()) {
-			this._parentItemsStack = [];
+		if (Object.keys(this._popover).length) {
+			if (isPhone()) {
+				this._parentItemsStack = [];
+			}
+			this._popover.close();
+			this._popover.resetFocus();
 		}
-		this._popover.close();
-		this._popover.resetFocus();
 	}
 
 	async _getPopover() {

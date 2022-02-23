@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="responsivepopover1auto">
+<html class="height100percent">
 
 <head>
 	<meta charset="UTF-8">
@@ -40,11 +40,20 @@
 	</ui5-menu>
 
 	<header class="header">
+		<h3 class="header-title">Selected menu item text</h3>
+	</header>
+
+	<div class="samples-margin">
+		<ui5-input id="selectionInput"></ui5-input>
+	</div>
+
+	<header class="header">
 		<h3 class="header-title">Text Direction</h3>
 	</header>
 	<div class="samples-margin">
 		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-input>
 	</div>
+
 
 	<ui5-toast id="toastMessage" duration="5000"></ui5-toast>
 
@@ -53,9 +62,12 @@
 			menu.showAt(btnOpen);
 		});
 
-		menu.addEventListener("item-selected", function(event){
+		menu.addEventListener("ui5-item-selected", function(event){
 			var item = event.detail.item;
 			var path = [];
+
+			selectionInput.value = item.text;
+
 			while (item) {
 				path.unshift(item.text);
 				item = item.parent();
