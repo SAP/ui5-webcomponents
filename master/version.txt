@@ -1,5 +1,5 @@
-commit f93f22ff3ee4beee60fe25fb8022959bbaa94b4a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 22 17:04:54 2022 +0200
+commit 08ea79437acdf03f38fdbeef4bd53c799f265475
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Feb 23 12:04:29 2022 +0200
 
-    fix(ui5-color-palette-popover): showDefaultColor works (#4802)
+    fix(ui5-multi-combobox): add value selection on focus (#4804)
