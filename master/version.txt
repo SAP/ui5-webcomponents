@@ -1,5 +1,5 @@
-commit 1cf148f6dd53f95e0a75d9e13c7421b9dd2cd58d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Feb 23 15:54:06 2022 +0200
+commit cf6dd1a5016443e9055128240b47dcf1791c73ed
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Feb 23 16:05:56 2022 +0200
 
-    fix: describe all dependencies for some components (#4807)
+    fix(ui5-list): initial focus target (#4809)
