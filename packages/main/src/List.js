@@ -833,12 +833,7 @@ class List extends UI5Element {
 		// The focus arrives in the List for the first time.
 		// If there is selected item - focus it or focus the first item.
 		if (!this.getPreviouslyFocusedItem()) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
-				this.focusFirstSelectedItem();
-			} else {
-				this.focusFirstItem();
-			}
-
+			this.focusFirstItem();
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -846,12 +841,7 @@ class List extends UI5Element {
 		// The focus returns to the List,
 		// focus the first selected item or the previously focused element.
 		if (!this.getForwardingFocus()) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
-				this.focusFirstSelectedItem();
-			} else {
-				this.focusPreviouslyFocusedItem();
-			}
-
+			this.focusPreviouslyFocusedItem();
 			event.stopImmediatePropagation();
 		}
 
