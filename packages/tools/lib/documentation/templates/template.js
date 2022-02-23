@@ -23,6 +23,7 @@ module.exports = {
             {{> properties this}}
             {{> slots this}}
             {{> events this}}
+            {{> methods this}}
             {{> cssVariables this}} 
           </section>
         </section>
