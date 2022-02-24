@@ -1035,6 +1035,7 @@ class MultiComboBox extends UI5Element {
 			this._innerInput.blur();
 		}
 
+		!isPhone() && this._innerInput.setSelectionRange(0, this.value.length);
 		this._lastValue = this.value;
 	}
 

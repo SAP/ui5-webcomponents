@@ -44,7 +44,7 @@ const getTimeSlidersCount = async id => {
 
 describe("DateTimePicker general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html`);
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html?sap-ui-language=en`);
 	});
 
 	it("tests picker opens/closes programmatically", async () => {
