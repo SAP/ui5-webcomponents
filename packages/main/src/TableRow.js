@@ -185,7 +185,7 @@ class TableRow extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [CheckBox]
+		return [CheckBox];
 	}
 
 	_onmouseup() {
