@@ -712,6 +712,40 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
 		});
+
+		it ("should select token with CTRL+SPACE", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "Space"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
+		});
+
+		it ("should select item with CTRL+SPACE", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "Space"]);
+
+			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.ok(await listItem.getAttribute("selected"), "Item is selected");
+		});
 	});
 
 	describe("General", () => {
