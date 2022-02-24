@@ -40,6 +40,10 @@
 	font-size: 0.875rem;
 }
 
+.ui5-tab-overflow-itemContent-wrapper {
+	padding-left: calc(var(--_ui5-indentation-level, 0) * 1rem);
+}
+
 .ui5-tab-overflow-item [ui5-icon] {
 	width: 1.375rem;
 	height: 1.375rem;

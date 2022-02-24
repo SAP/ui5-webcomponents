@@ -373,7 +373,7 @@
 	margin-left: 0.5rem;
 }
 
-.ui5-tab-strip-item--selected .ui5-tab-expand-button>[ui5-button]::after {
+.ui5-tab-strip-item--selected:not(.ui5-tab-strip-item--withIcon) .ui5-tab-expand-button>[ui5-button]::after {
 	content: "";
 	position: absolute;
 	bottom: 1px;

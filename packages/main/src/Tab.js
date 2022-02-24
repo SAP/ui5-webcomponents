@@ -22,6 +22,7 @@ import overflowCss from "./generated/themes/TabInOverflow.css.js";
 const metadata = {
 	tag: "ui5-tab",
 	managedSlots: true,
+	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
@@ -29,6 +30,7 @@ const metadata = {
 		 *
 		 * @type {Node[]}
 		 * @public
+		 * @slot
 		 */
 		"default": {
 			type: Node,
@@ -46,7 +48,7 @@ const metadata = {
 		 *
 		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
-		 * @slot items
+		 * @slot subTabs
 		 */
 		subTabs: {
 			type: HTMLElement,
@@ -147,7 +149,7 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_selectedTab: {
+		_realTab: {
 			type: Object,
 		},
 
@@ -236,7 +238,7 @@ class Tab extends UI5Element {
 	}
 
 	get isOnSelectedTabPath() {
-		return this._selectedTab === this || this.subTabs.some(subTab => subTab.isOnSelectedTabPath);
+		return this._realTab === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
 	get _effectiveSlotName() {
@@ -244,7 +246,17 @@ class Tab extends UI5Element {
 	}
 
 	get _defaultSlotName() {
-		return this._selectedTab === this ? "" : "disabled-slot";
+		return this._realTab === this ? "" : "disabled-slot";
+	}
+
+	get _checkForContent() {
+		this.content.forEach(node => {
+			if (node.nodeType !== Node.COMMENT_NODE
+				&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)) {
+				this._hasOwnContent = true;
+			}
+		});
+		return this._hasOwnContent;
 	}
 
 	/**
@@ -269,35 +281,8 @@ class Tab extends UI5Element {
 		return focusedDomRef;
 	}
 
-	async _onTabExpandButtonClick(event) {
-		event.stopPropagation();
-		event.preventDefault();
-		let button = event.target;
-		let tabInstanceId;
-
-		if (event.type === "keydown" || (event.target.associatedTab && event.target.associatedTab.hasAttribute("ui5-tab"))) {
-			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
-			tabInstanceId = button.parentElement.id;
-		} else {
-			tabInstanceId = button.parentElement.parentElement.id;
-		}
-
-		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
-
-		if (!tabInstance) {
-			this._onHeaderItemSelect(event.currentTarget.parentElement);
-			return;
-		}
-		this._overflowItems = [];
-		this._overflowItems = tabInstance.subTabs;
-		this._addStyleIndent(this._overflowItems, 1);
-
-		this.responsivePopover = await this._respPopover();
-		if (this.responsivePopover.opened) {
-			this.responsivePopover.close();
-		} else {
-			this.responsivePopover.showAt(button);
-		}
+	_onExpandButtonClick(event) {
+		this._onTabExpandButtonClick(event);
 	}
 
 	get isMixedModeTab() {
@@ -317,7 +302,7 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		const selectedSubItem = this.subTabs.some(elem => elem.effectiveSelected);
+		const selectedSubItem = this.tabs.some(elem => elem.effectiveSelected);
 		return this.selected || this._selected || selectedSubItem;
 	}
 
@@ -325,7 +310,7 @@ class Tab extends UI5Element {
 		return !this.effectiveSelected;
 	}
 
-	get effectiveTabs() {
+	get tabs() {
 		return this.subTabs.filter(tab => !tab.isSeparator);
 	}
 

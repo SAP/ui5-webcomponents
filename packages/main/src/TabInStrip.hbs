@@ -10,7 +10,7 @@
 	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	data-ui5-stable="{{this.stableDomRef}}"
-	.associatedTab="{{this}}"
+	._realTab="{{this}}"
 >
 	{{#if this.icon}}
 		<div class="ui5-tab-strip-item-icon-outer">
@@ -31,7 +31,7 @@
 		{{/if}}
 	</div>
 		{{#if this.requiresExpandButton}}
-		<div class="ui5-tab-expand-button" @click="{{_onTabExpandButtonClick}}">
+		<div class="ui5-tab-expand-button" @click="{{_onExpandButtonClick}}">
 			<ui5-button
 				icon="slim-arrow-down"
 				design="Transparent"
