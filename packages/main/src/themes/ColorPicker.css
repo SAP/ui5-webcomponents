@@ -55,6 +55,10 @@
     margin-left: -10px;
 }
 
+[ui5-slider] {
+    padding: 1rem 0;
+}
+
 [ui5-slider]::part(handle) {
     width: 11px;
     height: 1.25rem;

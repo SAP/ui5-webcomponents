@@ -11,6 +11,7 @@
 	cursor: pointer;
 	vertical-align: top;
 	width: 100%;
+	padding: 1rem;
 	height: 3.3125rem;
 }
 
@@ -21,14 +22,9 @@
 .ui5-slider-root {
 	box-sizing: border-box;
 	height: 3.3125rem;
-	padding: 1rem;
 	outline: none;
 	touch-action: none;
 	-ms-touch-action: pan-y;
-}
-
-:host-context([ui5-color-picker]) .ui5-slider-root {
-	padding: 1rem 0;
 }
 
 .ui5-slider-inner {
