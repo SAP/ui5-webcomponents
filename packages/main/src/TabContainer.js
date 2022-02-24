@@ -23,7 +23,7 @@ import {
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
 	TABCONTAINER_OVERFLOW_MENU_TITLE,
 	TABCONTAINER_END_OVERFLOW,
-	TABCONTAINER_POPOVER_CANCEL_BUTTON
+	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
