@@ -727,6 +727,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
 		});
+	});
 
 	describe("General", () => {
 		before(async () => {
