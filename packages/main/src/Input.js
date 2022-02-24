@@ -30,6 +30,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -1504,7 +1505,7 @@ class Input extends UI5Element {
 	static get dependencies() {
 		const Suggestions = getFeature("InputSuggestions");
 
-		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
+		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {
