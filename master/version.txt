@@ -1,5 +1,5 @@
-commit b877829d383c4330f5196d8eb16b63f89bbfe984
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 23 18:24:04 2022 +0200
+commit 482245f094aa2495d46e14b9e25f76427f60c207
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Feb 24 11:31:30 2022 +0200
 
-    chore: enforce "en" locale for datetime tests (#4808)
+    Implement 'Select All' functionality (#4776)
