@@ -1,5 +1,9 @@
-commit 482245f094aa2495d46e14b9e25f76427f60c207
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Feb 24 11:31:30 2022 +0200
+commit d9f514f7d3d4c289130d4bed9f48d194d5ac630e
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Thu Feb 24 12:36:04 2022 +0200
 
-    Implement 'Select All' functionality (#4776)
+    fix(ui5-flexible-column-layout): fix accessibility of hidden columns (#4811)
+    
+    Hidden columns are rendered in the DOM but not visible to the users, so they should be hidden from the accessibility tree. Changes: remove the role attribute and set aria-hidden to true.
+    
+    Fixes: #4789
