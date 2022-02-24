@@ -41,7 +41,7 @@
 }
 
 .ui5-tab-overflow-itemContent-wrapper {
-	padding-left: calc(var(--_ui5-indentation-level, 0) * 1rem);
+	padding-left: calc(var(--_ui5-indentation-level, 0) * 0.5rem);
 }
 
 .ui5-tab-overflow-item [ui5-icon] {
