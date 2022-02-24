@@ -181,7 +181,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 			"Start column is not hidden from the acc tree.");
 
 		assert.strictEqual(await middleColumnDOM.getAttribute("aria-hidden"), "true",
-			"Middle column is hidden from the acc tre.");
+			"Middle column is hidden from the acc tree.");
 
 	});
 });
