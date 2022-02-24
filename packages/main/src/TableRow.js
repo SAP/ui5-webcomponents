@@ -196,7 +196,7 @@ class TableRow extends UI5Element {
 		const itemActive = this.type === TableRowType.Active;
 		const isSingleSelect = this.isSingleSelect;
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
-		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
 		if (isTabNext(event) || isTabPrevious(event)) {
@@ -257,7 +257,7 @@ class TableRow extends UI5Element {
 	_onfocusin(event, forceSelfFocus = false) {
 		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
 
-		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
+		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
 			tableRowRoot.focus();
 			this.activate();
 		}
@@ -285,7 +285,7 @@ class TableRow extends UI5Element {
 			this.deactivate();
 		}
 
-		if (this._getActiveElementTagName() === "ui5-table-row") {
+		if (this._activeElementHasAttribute("ui5-table-row")) {
 			if (this.isSingleSelect) {
 				this._handleSelection();
 			}
@@ -338,8 +338,8 @@ class TableRow extends UI5Element {
 		}
 	}
 
-	_getActiveElementTagName() {
-		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
+	_activeElementHasAttribute(attr) {
+		return this.getRootNode().activeElement.hasAttribute(attr);
 	}
 
 	activate() {
