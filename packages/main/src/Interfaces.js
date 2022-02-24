@@ -44,7 +44,7 @@ const ICalendarDate = "sap.ui.webcomponents.main.ICalendarDate";
 const IComboBoxItem = "sap.ui.webcomponents.main.IComboBoxItem";
 
 /**
- * Interface for components that may be used inside a <code>ui5-color-palette</code>
+ * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
  *
  * @name sap.ui.webcomponents.main.IColorPaletteItem
  * @interface
