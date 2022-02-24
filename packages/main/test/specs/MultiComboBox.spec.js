@@ -744,7 +744,10 @@ describe("MultiComboBox general interaction", () => {
 			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
-			assert.ok(await listItem.getAttribute("selected"), "Item is selected");
+			await browser.waitUntil(async () => (await listItem.getProperty("selected")), {
+				timeout: 500,
+				timeoutMsg: "Item is selected"
+			});
 		});
 	});
 
