@@ -1,9 +1,5 @@
-commit d9f514f7d3d4c289130d4bed9f48d194d5ac630e
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Thu Feb 24 12:36:04 2022 +0200
+commit 2012f433553b17742499892442e0a49c9c94c39c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Feb 24 16:26:20 2022 +0200
 
-    fix(ui5-flexible-column-layout): fix accessibility of hidden columns (#4811)
-    
-    Hidden columns are rendered in the DOM but not visible to the users, so they should be hidden from the accessibility tree. Changes: remove the role attribute and set aria-hidden to true.
-    
-    Fixes: #4789
+    docs: document color palette popover slot better (#4818)
