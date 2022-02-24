@@ -123,7 +123,7 @@ const metadata = {
 		/**
 		 * Defines the content of the component.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {HTMLElement}
 		 * @slot content
 		 * @public
 		 */
@@ -135,7 +135,7 @@ const metadata = {
 		/**
 		 * Defines the content of the thumbnail.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 */

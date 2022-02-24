@@ -1126,7 +1126,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Value state changes only on submit", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
