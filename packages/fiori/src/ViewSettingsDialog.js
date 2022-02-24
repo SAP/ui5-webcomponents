@@ -146,12 +146,17 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+		 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+		 * @param {Array} filterItems The selected filters items.
 		 * @public
 		 */
 		confirm: {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
+				sortByItem: { type: HTMLElement },
+				sortDescending: { type: Boolean },
 				filters: { type: Array },
 			},
 		},
@@ -162,12 +167,17 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+		 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+		 * @param {Array} filterItems The selected filters items.
 		 * @public
 		 */
 		cancel: {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
+				sortByItem: { type: HTMLElement },
+				sortDescending: { type: Boolean },
 				filters: { type: Array },
 			},
 		},
