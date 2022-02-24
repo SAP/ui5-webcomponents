@@ -1,5 +1,5 @@
-commit 2012f433553b17742499892442e0a49c9c94c39c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 24 16:26:20 2022 +0200
+commit 5783fa7222af4737b2a09824d2d0947d89104b88
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Thu Feb 24 17:26:09 2022 +0200
 
-    docs: document color palette popover slot better (#4818)
+    fix(ui5-media-gallery-item): correct jsdoc (#4819)
