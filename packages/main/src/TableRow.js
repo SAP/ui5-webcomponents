@@ -8,6 +8,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
@@ -181,6 +182,10 @@ class TableRow extends UI5Element {
 
 	static get template() {
 		return TableRowTemplate;
+	}
+
+	static get dependencies() {
+		return [CheckBox]
 	}
 
 	_onmouseup() {
