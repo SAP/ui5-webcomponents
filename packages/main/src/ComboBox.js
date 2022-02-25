@@ -61,6 +61,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
+import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
 /**
  * @public
@@ -1067,6 +1068,7 @@ class ComboBox extends UI5Element {
 			BusyIndicator,
 			Button,
 			StandardListItem,
+			GroupHeaderListItem,
 			Popover,
 			ComboBoxGroupItem,
 		];

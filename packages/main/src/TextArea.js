@@ -9,6 +9,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -688,7 +689,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Popover];
+		return [Popover, Icon];
 	}
 
 	static async onDefine() {
