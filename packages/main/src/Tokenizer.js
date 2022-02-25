@@ -20,6 +20,8 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import Title from "./Title.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -549,6 +551,8 @@ class Tokenizer extends UI5Element {
 			ResponsivePopover,
 			List,
 			StandardListItem,
+			Title,
+			Button,
 		];
 	}
 

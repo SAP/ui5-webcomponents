@@ -8,6 +8,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 import Bar from "./Bar.js";
@@ -251,6 +252,7 @@ class ViewSettingsDialog extends UI5Element {
 		return [
 			Bar,
 			Button,
+			Title,
 			Dialog,
 			Label,
 			List,
