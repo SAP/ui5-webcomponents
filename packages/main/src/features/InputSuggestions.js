@@ -7,6 +7,8 @@ import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
+import Icon from "../Icon.js";
+import Popover from "../Popover.js";
 import GroupHeaderListItem from "../GroupHeaderListItem.js";
 import SuggestionListItem from "../SuggestionListItem.js";
 
@@ -578,6 +580,8 @@ class Suggestions {
 			SuggestionListItem,
 			GroupHeaderListItem,
 			Button,
+			Icon,
+			Popover,
 		];
 	}
 
