@@ -377,7 +377,7 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// update selected tab
-		this._allItemsAndSubItems = this._getAllSubItems(this._getTabs(), [], 1);
+		this._allItemsAndSubItems = this._getAllSubItems(this.items, []);
 		if (this._allItemsAndSubItems.length) {
 			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 			if (selectedTabs.length) {
@@ -546,7 +546,7 @@ class TabContainer extends UI5Element {
 		selectedTopLevel.focus();
 	}
 
-	_getAllSubItems(items, result, level = 0) {
+	_getAllSubItems(items, result, level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item._level = level;
@@ -681,13 +681,17 @@ class TabContainer extends UI5Element {
 
 	_addStyleIndent(tabs, isOverflow) {
 		walk(tabs, tab => {
-			let level = tab._level - 1;
+			let level = tab._level;
 			if (!isOverflow) {
 				level -= 1;
 			}
 
+			if (tab._level > 1 && tab.isSeparator) {
+				level -= 1;
+			}
+
 			tab._style = {
-				"--_ui5-indentation-level": level,
+				"--_ui5-indentation-level": level / 2,
 			};
 		});
 	}

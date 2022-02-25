@@ -23,7 +23,7 @@ describe("TabContainer general interaction", () => {
 		const resultIdx = await browser.$("#resultIdx");
 
 		const SELECTED_TAB_TEXT = "Laptops";
-		const SELECTED_TAB_INDEX = "1";
+		const SELECTED_TAB_INDEX = "2";
 
 		await item.click();
 
@@ -202,6 +202,6 @@ describe("TabContainer general interaction", () => {
 
 		newlySelectedItem = await tabContainer.$("[selected]");
 
-		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Fourteen", "The first item in the overflow is 13");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Thirteen", "The first item in the overflow is 13");
 	});
 });
