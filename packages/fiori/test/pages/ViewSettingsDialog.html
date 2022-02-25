@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">x
 
 	<title>ViewSettingsDialog test page</title>
 
@@ -98,10 +98,9 @@
 			vsd.show();
 		});
 		vsd.addEventListener("ui5-confirm", function(evt) {
-			const sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
-			const isSortDescending = evt.detail.sortDescending;
+			var sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
 			sortByItem.value = `${sortByItemTagName} with text ${evt.detail.sortBy}`;
-			sortOrder.value = isSortDescending;
+			sortOrder.value = evt.detail.sortDescending;
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogSort.addEventListener("click", function () {
