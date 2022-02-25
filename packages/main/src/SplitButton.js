@@ -23,7 +23,6 @@ import {
 
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
-import Icon from "./Icon";
 
 /**
  * @public
