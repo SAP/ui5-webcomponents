@@ -1,5 +1,8 @@
-commit 7058648f65c067dcf0f5acc967899ded9e043af7
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Fri Feb 25 10:48:45 2022 +0200
+commit 35342be84520e12e538146515d00d1cbc0382141
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Feb 25 14:20:52 2022 +0200
 
-    docs(ui5-avatar-group): Fixed sample with image avatars (#4821)
+    fix(ui5-input): improve lazy loading behaviour (#4763)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/4425
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/4585
