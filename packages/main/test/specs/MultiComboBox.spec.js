@@ -711,6 +711,21 @@ describe("MultiComboBox general interaction", () => {
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
+		});		
+		
+		it ("F4 should focus the selected item or the first one if there is no selected", async () => {
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await input.click();
+			await input.keys("F4");
+			const listItem = await popover.$("ui5-list").$("ui5-li");
+
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
 		});
 	});
 

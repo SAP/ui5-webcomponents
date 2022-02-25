@@ -572,8 +572,8 @@ class MultiComboBox extends UI5Element {
 
 	async _onkeydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
-			event.preventDefault();
-			this.togglePopover();
+			this._handleShow(event);
+			return;
 		}
 
 		if (isUp(event) || isDown(event)) {
@@ -583,6 +583,27 @@ class MultiComboBox extends UI5Element {
 
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+	}
+
+	_handleShow(event) {
+		const items = this._filteredItems;
+		const listItems = this.list.items;
+		const selectedItems = this._getSelectedItems();
+
+		this._isOpenedByKeyboard = true;
+
+		event.preventDefault();
+		this.togglePopover();
+
+		if (selectedItems.length === 1) {
+			listItems[items.indexOf(selectedItems[0])].focus();
+		} else if (items.length) {
+			listItems[0].focus();
+		}
+	}
+
+	_handleItemShow(event) {
+		this.togglePopover();
 	}
 
 	_handleBackspace(event) {
@@ -662,6 +683,10 @@ class MultiComboBox extends UI5Element {
 		}
 
 		event.preventDefault();
+
+		if (isShow(event)) {
+			this._handleItemShow(event);
+		}
 
 		if (isCtrlA(event)) {
 			this._handleSelectAll(event);
@@ -831,6 +856,10 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
+		if (isShow(event) && !this.readonly && !this.disabled) {
+			this._handleShow(event);
+		}
+
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
 	}
 
@@ -841,11 +870,15 @@ class MultiComboBox extends UI5Element {
 	_afterOpenPicker() {
 		this._toggle();
 
-		if (!isPhone()) {
+		if (!isPhone() && !this._isOpenedByKeyboard) {
 			this._innerInput.focus();
-		} else {
+		}
+
+		if (isPhone()) {
 			this.allItemsPopover.focus();
 		}
+
+		this._isOpenedByKeyboard = false;
 	}
 
 	_toggle() {
