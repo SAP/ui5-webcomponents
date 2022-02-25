@@ -677,11 +677,72 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
 		});
+
+		it ("should select all filtered items on CTRL+A", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 6, "All items are selected");
+
+			await mcb.keys(["Control", "a"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 0, "All items are deselected");
+
+			await input.click();
+			await mcb.keys("c");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "All filtered items are selected");
+
+			await mcb.keys(["Control", "a"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
+		});
 	});
 
 	describe("General", () => {
 		before(async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+		});
+
+		it ("tests text selection on focus", async () => {
+			const mcb = await browser.$("#multi-acv");
+			const mcb2 = await browser.$("#mcb-with-placeholder");
+			
+			await mcb.click();
+
+			const selectionStartIndex = await browser.execute(() => {
+				return document.querySelector("#multi-acv").shadowRoot.querySelector("input").selectionStart;
+			});
+			const selectionEndIndex = await browser.execute(() => {
+				return document.querySelector("#multi-acv").shadowRoot.querySelector("input").selectionEnd;
+			});
+
+			assert.equal(await selectionStartIndex, 0, "The selection starts from the beginning of the value");
+			assert.equal(await selectionEndIndex, 3, "The whole value is selected");
+
+			await mcb.keys("Tab");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+
+			await mcb2.keys(["Shift", "Tab"]);
+			assert.equal(await selectionStartIndex, 0, "The selection starts from the beginning of the value");
+			assert.equal(await selectionEndIndex, 3, "The whole value is selected");
+
+
 		});
 
 		it ("tests two-column layout", async () => {
