@@ -6,6 +6,7 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
+import Icon from "./Icon.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
 // Texts
@@ -122,6 +123,10 @@ class RangeSlider extends SliderBase {
 			start: "startValue",
 			end: "endValue",
 		};
+	}
+
+	static get dependencies() {
+		return [Icon];
 	}
 
 	constructor() {
