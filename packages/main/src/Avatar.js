@@ -200,7 +200,7 @@ const metadata = {
 		 *		} <br />
 		 * </code>
 		 * @type {HTMLElement}
-		 * @slot
+		 * @slot image
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */

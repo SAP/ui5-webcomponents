@@ -46,6 +46,7 @@
             <ui5-input
                 class="ui5-color-picker-hex-input"
                 value="{{hex}}"
+                @keydown="{{_onkeydown}}"
                 @ui5-change="{{_handleHEXChange}}"
                 value-state="{{hexInputErrorState}}"
             ></ui5-input>

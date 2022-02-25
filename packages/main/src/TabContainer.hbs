@@ -19,7 +19,7 @@
 					icon="{{overflowMenuIcon}}"
 					data-ui5-stable="overflow-start"
 					tabindex="-1"
-					title="{{overflowMenuTitle}}"
+					tooltip="{{overflowMenuTitle}}"
 					aria-haspopup="true"
 					icon-end>{{this._startOverflowText}}</ui5-button>
 			{{/if}}
@@ -51,7 +51,7 @@
 					icon="{{overflowMenuIcon}}"
 					data-ui5-stable="overflow-end"
 					tabindex="-1"
-					title="{{overflowMenuTitle}}"
+					tooltip="{{overflowMenuTitle}}"
 					aria-haspopup="true"
 					icon-end>{{this._endOverflowText}}</ui5-button>
 			{{/if}}
@@ -65,7 +65,7 @@
 </div>
 
 {{#*inline "contentArea"}}
-	<div class="{{classes.content}}">
+	<div class="{{classes.content}}" part="content">
 		{{#each items}}
 			{{#unless this.isSeparator}}
 				<div

@@ -494,6 +494,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
 
+	it("Checks if aria-invalid is set correctly", async () => {
+		const inputError = await browser.$("#inputError");
+		const inputWarning = await browser.$("#input1"); 
+		const innerInputError = await inputError.shadow$("input");
+		const innerInputWarning = await inputWarning.shadow$("input");
+
+		assert.notOk(await innerInputWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
+		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
+	});
+
 	it("Tests suggestions highlighting", async () => {
 		const input = await browser.$("#myInputHighlighted").shadow$("input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputHighlighted");

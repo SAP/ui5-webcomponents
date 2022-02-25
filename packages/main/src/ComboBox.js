@@ -8,6 +8,10 @@ import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isBackSpace,
@@ -206,9 +210,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -220,7 +224,7 @@ const metadata = {
 
 		/**
 		 * Receives id(or many ids) of the elements that label the component
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -468,7 +472,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!this.shadowRoot.contains(event.relatedTarget)) {
+		if (!this.shadowRoot.contains(event.relatedTarget) && (this.staticAreaItem !== event.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(event);
 		}

@@ -192,6 +192,7 @@
 
 :host([_has-image]) {
 	background-color: transparent;
+	vertical-align: middle;
 }
 
 :host([image-fit-type="Contain"]) .ui5-avatar-img {
