@@ -102,6 +102,26 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(await hexInput.getProperty("value"), "808080", "CSS values are parsed correctly");
 	});
 
+	it("Hex value input submit triggers hue value change", async () => {
+		const colorPicker = await browser.$("#change-event");
+		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
+		const hueSliderHandle = await colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
+
+		await hexInput.doubleClick();
+		await browser.keys("0854a0");
+		await browser.keys("Enter");
+
+		const color = await colorPicker.getAttribute("color");
+
+		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		await hexInput.doubleClick();
+		await browser.keys("0854a0");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await colorPicker.getAttribute("color"), color, "Color is changed to the old color");
+	});
+
 	it("Hue value remains unchanged when user presses over the main color section", async () => {
 		const colorPicker = await browser.$("#change-event");
 		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");

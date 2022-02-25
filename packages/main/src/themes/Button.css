@@ -301,6 +301,6 @@ bdi {
 	text-shadow: none;
 }
 
-:host([design="Transparent"]:not([active]):hover) {
+:host([design="Transparent"]:not([active]):not([_is-touch]):hover) {
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 }

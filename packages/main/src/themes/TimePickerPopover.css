@@ -9,3 +9,7 @@
 	margin: 1%;
 	min-width: 20%;
 }
+
+.ui5-time-picker-popover::part(content) {
+	padding: 0;
+}

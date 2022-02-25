@@ -40,7 +40,6 @@ describe("ResponsivePopover general interaction", () => {
 
 		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 		assert.strictEqual(activeElementId, "simpleRPInitialFocus", "Initial focus is not prevented");
-
 	});
 
 	it("Initial focus not prevented", async () => {
@@ -49,6 +48,18 @@ describe("ResponsivePopover general interaction", () => {
 
 		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 		assert.strictEqual(activeElementId, "btnInitialFocusPrevented", "Initial focus is prevented");
+	});
 
+	it("tests popover toggling with 'open' attribute", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenWithAttr");
+		const btnCloseWithAttr = await browser.$("#btnCloseWithAttr");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#popoverAttr");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await btnCloseWithAttr.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 });

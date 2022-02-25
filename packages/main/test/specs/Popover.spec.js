@@ -50,6 +50,19 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests popover toggling with 'open' attribute", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenWithAttr");
+		const btnCloseWithAttr = await browser.$("#btnCloseWithAttr");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#popoverAttr");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await btnCloseWithAttr.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
 	it("tests popover does not close with opener", async () => {
 		const popover = await browser.$("#quickViewCard");
 		const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
@@ -65,7 +78,7 @@ describe("Popover general interaction", () => {
 		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(await popover.getAttribute("opened"), "",
+		assert.strictEqual(await popover.getProperty("opened"), true,
 			"Popover remains open.");
 		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -145,7 +158,7 @@ describe("Popover general interaction", () => {
 		const popover = await browser.$("#modalPopover");
 
 		await btnOpenPopover.click();
-		assert.ok(await popover.getProperty("opened"), "Popover is opened.");
+		assert.ok(await popover.getProperty("open"), "Popover is opened.");
 
 		try {
 			await browser.$("#btn").click();
@@ -153,7 +166,7 @@ describe("Popover general interaction", () => {
 			assert.ok(true, "The click was intercepted.");
 		}
 
-		assert.ok(await popover.getProperty("opened"), "Popover is still opened.");
+		assert.ok(await popover.getProperty("open"), "Popover is still opened.");
 
 		await popoverClose.click();
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
@@ -165,7 +178,7 @@ describe("Popover general interaction", () => {
 		const popoverId = await popover.getProperty("_id");
 
 		await btnOpenPopover.click();
-		assert.ok(await popover.getProperty("opened"), "Popover is opened.");
+		assert.ok(await popover.getProperty("open"), "Popover is opened.");
 
 		const blockLayerIsCreated = await browser.executeAsync((popoverId, done) => {
 			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");

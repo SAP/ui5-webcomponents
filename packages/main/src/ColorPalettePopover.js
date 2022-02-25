@@ -68,8 +68,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Defines the content of the component.
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
+		 * @slot colors
 		 * @public
 		 */
 		"default": {
@@ -84,7 +84,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.ColorPalettePopover#item-click
 		 * @public
-		 * @param {String} color the selected color
+		 * @param {string} color the selected color
 		 */
 		"item-click": {
 			details: {

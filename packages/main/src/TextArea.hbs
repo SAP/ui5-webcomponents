@@ -1,7 +1,6 @@
 <div
 	class="ui5-textarea-root"
 	style="{{styles.main}}"
-	?aria-invalid="{{ariaInvalid}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
@@ -23,6 +22,7 @@
 		?readonly="{{readonly}}"
 		aria-label="{{ariaLabelText}}"
 		aria-describedby="{{ariaDescribedBy}}"
+		aria-invalid="{{ariaInvalid}}"
 		aria-required="{{required}}"
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		.value="{{value}}"
