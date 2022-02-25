@@ -1,5 +1,7 @@
-commit 5783fa7222af4737b2a09824d2d0947d89104b88
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Thu Feb 24 17:26:09 2022 +0200
+commit 1030e41305dd589b0c47bd14f07bda1cec06bf5e
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Feb 24 23:31:32 2022 -0800
 
-    fix(ui5-media-gallery-item): correct jsdoc (#4819)
+    chore: translation delivery (#4822)
+    
+    Change-Id: I1bf0553f7b4b8ae8b7022b51d4956df9bc277f64
