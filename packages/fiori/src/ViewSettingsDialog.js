@@ -410,11 +410,12 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get initSortByItems() {
-		return this.sortItems.map(item => {
+		return this.sortItems.map((item, index) => {
 			return {
 				text: item.text,
 				selected: item.selected,
 				associatedItem: item,
+				index,
 			};
 		});
 	}
@@ -561,7 +562,9 @@ class ViewSettingsDialog extends UI5Element {
 			sortOrder = _currentSortOrderSelected && _currentSortOrderSelected.text,
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
 			sortBy = _currentSortBySelected && _currentSortBySelected.text,
-			sortByItem = sortBy && this.initSortByItems.filter(item => item.text === sortBy)[0].associatedItem;
+			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
+			initSortIByItem = this.initSortByItems.find((item, index) => index === sortByElementIndex),
+			sortByItem = initSortIByItem && initSortIByItem.associatedItem;
 		return {
 			sortOrder,
 			sortDescending,
@@ -642,12 +645,12 @@ class ViewSettingsDialog extends UI5Element {
 	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
 	 */
 	 _onSortByChange(event) {
+		const selectedItemIndex = Number(event.detail.item.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy;
-		this._currentSettings.sortBy = this.initSortByItems.map(item => {
-			item.selected = item.text === event.detail.item.innerText;
+		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
+			item.selected = index === selectedItemIndex;
 			return item;
 		});
-
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
