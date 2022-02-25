@@ -37,15 +37,14 @@
 
 	</div>
 	{{#if this.requiresExpandButton}}
-			<div class="ui5-tab-expand-button" @click="{{_onExpandButtonClick}}">
-				<ui5-button
-					icon="slim-arrow-down"
-					design="Transparent"
-					tabindex="-1"
-					aria-haspopup="true">
-				</ui5-button>
-			</div>
-		{{/if}}
+		<div class="ui5-tab-expand-button" @click="{{_onExpandButtonClick}}">
+			<ui5-button
+				icon="slim-arrow-down"
+				design="Transparent"
+				tabindex="-1"
+				aria-haspopup="true">
+			</ui5-button>
+		</div>
 	{{/if}}
 
 {{#*inline additionalText}}
