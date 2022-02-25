@@ -457,14 +457,18 @@
 		<span>Hello World!</span>
 	</ui5-dialog>
 
-	<span id="scrollHelper" class="dialog9auto">SCroll Helper</span>
+	<div id="scrollHelper" class="dialog9scrollHelper">
+		<span>Scroll Helper</span>
+		<ui5-button id="scrolledBtn" class="scrolledBtn">open</ui5-button>
+	</div>
 
 	<script>
-		cbCompact.addEventListener("change", function () {
+		cbCompact.addEventListener("ui5-change", function () {
 			document.body.classList.toggle("ui5-content-density-compact", cbCompact.checked);
 		});
 
-		cbScrollable.addEventListener("change", function () {
+		cbScrollable.addEventListener("ui5-change", function () {
+			console.error("change")
 			scrollHelper.style.display = cbScrollable.checked ? "block" : "none";
 		});
 
@@ -580,6 +584,10 @@
 
 		window["btn-acc-name-ref"].addEventListener("click", function () {
 			window["dialog-acc-name-ref"].show();
+		});
+
+		window["scrolledBtn"].addEventListener("click", function () {
+			window["dialog"].show();
 		});
 
 	</script>
