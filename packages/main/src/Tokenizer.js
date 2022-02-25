@@ -247,13 +247,11 @@ class Tokenizer extends UI5Element {
 			nextToken = notSelectedTokens[0];
 		}
 
-		if (!isPhone()) {
+		if (nextToken && !isPhone()) {
+			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
+
 			setTimeout(() => {
-				const deletedTokenIdx = token ? this._tokens.indexOf(token) : this._tokens.indexOf(event.target);
-				if (nextToken && deletedTokenIdx === -1) { // only if deleted, move focus and set current item to be nextToken
-					this._itemNav.setCurrentItem(nextToken);
-					nextToken.focus();
-				}
+				nextToken.focus();
 			}, 0);
 		}
 
@@ -273,7 +271,7 @@ class Tokenizer extends UI5Element {
 			return this._handleTokenSelection(event, false);
 		}
 
-		this._handleItemNavigation(event, this._tokens);
+		this._handleItemNavigation(event, this._getVisibleTokens());
 	}
 
 	_handleItemNavigation(event, tokens) {

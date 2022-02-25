@@ -275,16 +275,46 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
 	});
 
-	it("should not move focus when backspace/delete is pressed, but token is not deleted", async () => {
-		input = await browser.$("#single-token");
-		innerInput = await input.shadow$("input");
+	it("should move caret to start of input, when a value is present and home is pressed", async () => {
+		const input =  await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const firstToken = await browser.$("#two-tokens ui5-token:first-child");
+		let caretPosition;
+		
+		await browser.$("#two-tokens").scrollIntoView();
 
-		await browser.$("#add-to-single").click(); // adding a second token
+		await innerInput.click();
+		await innerInput.keys("End");
 
-		firstToken = await browser.$("#single-token ui5-token:first-child");
-		lastToken = await browser.$("#single-token ui5-token:last-child");
+		caretPosition = await browser.execute(() => {
+			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
+			return multiInputShadowRoot.querySelector("input").selectionStart;
+		});
+		
+		assert.strictEqual(caretPosition, 3, "The inner input's cursor is at the end");
+
+		await innerInput.keys("Home");
+
+		caretPosition = await browser.execute(() => {
+			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
+			return multiInputShadowRoot.querySelector("input").selectionStart;
+		});
+
+		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at the beginning");
+		assert.strictEqual(await firstToken.getProperty("focused"), false, "The first token is not focused, as text was present");
+
+		await innerInput.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
+	});
+
+	it("should delete token on backspace", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const firstToken = await browser.$("#two-tokens ui5-token:first-child");
+		const lastToken = await browser.$("#two-tokens ui5-token:last-child");
 
 		// Act
+		await input.setProperty("value", "");
 		await innerInput.click();
 		await browser.keys("Backspace");
 
@@ -296,8 +326,7 @@ describe("Keyboard handling", () => {
 		await browser.keys("Backspace");
 
 		// Assert
-		assert.ok(await lastToken.getProperty("focused"), "The last token is still focused on Backspace, as token-delete was not handled");
-		assert.notOk(await firstToken.getProperty("focused"), "The first token is not focused");
+		assert.ok(await firstToken.getProperty("focused"), "The first token is focused on Backspace, as the second was deleted");
 		assert.notOk(await input.getProperty("focused"), "The input is not focused");
 	});
 });

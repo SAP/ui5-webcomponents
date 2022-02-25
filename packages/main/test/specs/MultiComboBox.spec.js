@@ -521,7 +521,7 @@ describe("MultiComboBox general interaction", () => {
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 2, "should have two tokens");
-			setTimeout(async() => assert.equal(await tokens[0].getProperty("focused"), true, "Previous token is focused"));
+			assert.equal(await tokens[0].getProperty("focused"), true, "Previous token is focused");
 		});
 
 		it ("DELETE should delete token and place the focus on the next one", async () => {
