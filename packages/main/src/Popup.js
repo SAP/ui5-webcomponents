@@ -28,7 +28,7 @@ const metadata = {
 		/**
 		 * Defines the content of the Popup.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {
