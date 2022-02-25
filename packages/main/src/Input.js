@@ -842,6 +842,7 @@ class Input extends UI5Element {
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
+		this.isTyping = false;
 	}
 
 	_clearPopoverFocusAndSelection() {

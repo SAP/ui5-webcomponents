@@ -1129,4 +1129,24 @@ describe("Lazy loading", () => {
 			timeoutMsg: "Popover should be displayed"
 		});
 	});
+
+	it("Does not reopeon picker on focus in", async () => {
+		const input = await $("#field");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("a");
+
+		// go to next focusable
+		await browser.keys(["Shift", "Tab"]);
+
+		// go to previous
+		await browser.keys("Tab");
+
+		await browser.pause(3000);
+		
+		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
+	});
 });
