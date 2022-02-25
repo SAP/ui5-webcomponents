@@ -2,6 +2,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
+import Icon from "./Icon.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
@@ -116,6 +117,10 @@ class Slider extends SliderBase {
 		super();
 		this._stateStorage.value = null;
 		this._setInitialValue("value", null);
+	}
+
+	static get dependencies() {
+		return [Icon];
 	}
 
 	/**

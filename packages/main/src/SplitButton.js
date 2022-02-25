@@ -14,6 +14,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import Button from "./Button.js";
 
 import {
 	SPLIT_BUTTON_DESCRIPTION,
@@ -22,6 +23,7 @@ import {
 
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
+import Icon from "./Icon";
 
 /**
  * @public
@@ -291,6 +293,10 @@ class SplitButton extends UI5Element {
 
 	static get template() {
 		return SplitButtonTemplate;
+	}
+
+	static get dependencies() {
+		return [Button];
 	}
 
 	static async onDefine() {
