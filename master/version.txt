@@ -1,5 +1,11 @@
-commit 621dc205faa9f49cb220941314a47fd1d1071d83
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 25 16:39:59 2022 +0200
+commit a3eca7ade0a03a6ada41f23497996bf5bd38bf57
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Fri Feb 25 18:19:30 2022 +0200
 
-    fix: correct scoping issues with several components (#4820)
+    feat(ui5-view-settings-dialog): add more event.details to confirm/cancel events (#4772)
+    
+    The confirm event now contains two more fields:
+    sortByItem selected item (reference to element)
+    sortDescending Boolean result for SortOrder (if is true - Descending order is selected)
+    
+    Fixes: #4539
