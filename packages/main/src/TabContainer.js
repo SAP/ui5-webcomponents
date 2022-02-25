@@ -424,18 +424,27 @@ class TabContainer extends UI5Element {
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 			item._realTab = this._selectedTab;
+			item._hasOwnContent = item._checkForContent;
 		});
 	}
 
-	_onTabStripClick(event) {
+	async _onTabStripClick(event) {
 		const tab = getTab(event.target);
 		if (!tab) {
 			return;
 		}
 
 		if (!tab._realTab._checkForContent && tab._realTab.tabs.length) {
-			this._onTabExpandButtonClick(event);
-			return;
+			this._overflowItems = [];
+			this._overflowItems = tab._realTab.subTabs;
+			this._addStyleIndent(this._overflowItems, false);
+
+			this.responsivePopover = await this._respPopover();
+			if (this.responsivePopover.opened) {
+				this.responsivePopover.close();
+			} else {
+				this.responsivePopover.showAt(tab);
+			}
 		}
 
 		walk(this.items, item => {
@@ -450,8 +459,9 @@ class TabContainer extends UI5Element {
 		event.preventDefault();
 		let button = event.target;
 		let tabInstanceId;
+		const isRealTab = event.target._realTab && event.target._realTab.hasAttribute("ui5-tab");
 
-		if (event.type === "keydown" || (event.target._realTab && event.target._realTab.hasAttribute("ui5-tab"))) {
+		if ((event.type === "keydown" || isRealTab) && !event.target._realTab.isSingleClickArea) {
 			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
 			tabInstanceId = button.parentElement.id;
 		} else {

@@ -44,13 +44,12 @@
 .ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly {
 	color: var(--_ui5_tc_headeritem_text_selected_color);
 }
+.ui5-tab-strip-item--selected .ui5-tab-single-click-icon>[ui5-icon] {
+	color: var(--_ui5_tc_headeritem_text_selected_color);
+}
 
 .ui5-tab-strip-item:hover:not(.ui5-tab-strip-item--selected).ui5-tab-strip-item--textOnly {
 	color: var(--_ui5_tc_headerItem_text_hover_color);
-}
-
-.ui5-tab-strip-item:hover.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly {
-	color: var(--_ui5_tc_headeritem_text_selected_hover_color);
 }
 
 /* the outline when hover or selected */

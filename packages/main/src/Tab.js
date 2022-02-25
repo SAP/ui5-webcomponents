@@ -234,7 +234,11 @@ class Tab extends UI5Element {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this.parentElement.hasAttribute("ui5-tabcontainer");
+		return this.subTabs.length > 0 && this.parentElement.hasAttribute("ui5-tabcontainer") && this._hasOwnContent;
+	}
+
+	get isSingleClickArea() {
+		return this.subTabs.length > 0 && this.parentElement.hasAttribute("ui5-tabcontainer") && !this._hasOwnContent;
 	}
 
 	get isOnSelectedTabPath() {
@@ -365,6 +369,10 @@ class Tab extends UI5Element {
 
 		if (this.design !== SemanticColor.Default) {
 			classes.push(`ui5-tab-strip-item--${this.design.toLowerCase()}`);
+		}
+
+		if (this.isSingleClickArea) {
+			classes.push(`ui5-tab-strip-item--singleClickArea`);
 		}
 
 		return classes.join(" ");

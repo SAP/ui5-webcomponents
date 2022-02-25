@@ -27,19 +27,26 @@
 			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
 				<span class="{{this.headerSemanticIconClasses}}"></span>
 				{{this.displayText}}
+			{{#if this.isSingleClickArea}}
+			<span class="ui5-tab-single-click-icon">
+				<ui5-icon name="slim-arrow-down"></ui5-icon>
+			</span>
+			{{/if}}
 			</span>
 		{{/if}}
+
 	</div>
-		{{#if this.requiresExpandButton}}
-		<div class="ui5-tab-expand-button" @click="{{_onExpandButtonClick}}">
-			<ui5-button
-				icon="slim-arrow-down"
-				design="Transparent"
-				tabindex="-1"
-				aria-haspopup="true">
-			</ui5-button>
-		</div>
+	{{#if this.requiresExpandButton}}
+			<div class="ui5-tab-expand-button" @click="{{_onExpandButtonClick}}">
+				<ui5-button
+					icon="slim-arrow-down"
+					design="Transparent"
+					tabindex="-1"
+					aria-haspopup="true">
+				</ui5-button>
+			</div>
 		{{/if}}
+	{{/if}}
 
 {{#*inline additionalText}}
 	{{#if this.additionalText}}

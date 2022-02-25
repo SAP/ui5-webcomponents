@@ -158,6 +158,7 @@ describe("TabContainer general interaction", () => {
 		await expandButton.click();
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[1].click();
 		newlySelectedItem = await tabContainer.$("[selected]");
+			assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1.1", "Sub tabs are selectable and the selected tab is 2.1.1");
 		assert.ok(await browser.$("#button211").isDisplayed(), "Proper content for tab 2.1.1 is displayed")
 
@@ -165,6 +166,8 @@ describe("TabContainer general interaction", () => {
 		await expandButton.click();
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[4].click();
 		newlySelectedItem = await tabContainer.$("[selected]");
+		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
+		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed")
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1.2.1", "Sub tabs are selectable and the selected tab is 2.1.2.1");
 		assert.ok(await browser.$("#button2121").isDisplayed(), "Proper content for tab 2.1.2.1 is displayed")
 	});
@@ -199,6 +202,6 @@ describe("TabContainer general interaction", () => {
 
 		newlySelectedItem = await tabContainer.$("[selected]");
 
-		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Thirteen", "The first item in the overflow is 13");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Fourteen", "The first item in the overflow is 13");
 	});
 });
