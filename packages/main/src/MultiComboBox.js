@@ -589,15 +589,19 @@ class MultiComboBox extends UI5Element {
 		const items = this._filteredItems;
 		const listItems = this.list.items;
 		const selectedItems = this._getSelectedItems();
+		const selectedTokensCount = this._selectedTokensCount;
+		const selectedToken = this._tokenizer.tokens.find(token => token.selected);
 
 		this._isOpenedByKeyboard = true;
 
 		event.preventDefault();
 		this.togglePopover();
 
-		if (selectedItems.length === 1) {
+		if (selectedTokensCount > 1 || (selectedTokensCount === 0 && selectedItems.length > 0)) {
 			listItems[items.indexOf(selectedItems[0])].focus();
-		} else if (items.length) {
+		} else if (selectedTokensCount === 1 && event.target === selectedToken) {
+			listItems.find(item => item.textContent === selectedToken.text).focus();
+		} else {
 			listItems[0].focus();
 		}
 	}
@@ -858,6 +862,7 @@ class MultiComboBox extends UI5Element {
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			this._handleShow(event);
+			return;
 		}
 
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
