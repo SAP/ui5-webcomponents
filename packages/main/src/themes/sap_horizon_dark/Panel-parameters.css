@@ -1,0 +1,12 @@
+@import "../base/Panel-parameters.css";
+
+:root {
+	--_ui5_panel_header_height: 2.75rem;
+	--_ui5_panel_button_root_width: 2.75rem;
+	--_ui5_panel_background_color: var(--sapGroup_ContentBackground);
+	--_ui5_panel_border_radius: var(--sapElement_BorderCornerRadius);
+	--_ui5_panel_border_bottom: none;
+	--_ui5_panel_outline_offset: -0.125rem;
+	--_ui5_panel_title_font_weight: bold;
+	--_ui5_panel_border_radius_expanded: var(--sapElement_BorderCornerRadius) var(--sapElement_BorderCornerRadius) 0 0;
+}
