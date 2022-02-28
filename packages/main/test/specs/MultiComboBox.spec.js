@@ -751,7 +751,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
 		});
 
-<<<<<<< HEAD
 		it ("should select/unselect next/previous item on shift+arrow", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
@@ -929,7 +928,8 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
 			assert.equal(await listItem.getProperty("focused"), false, "The first item should not be focused");
 			assert.equal(focusedElement, null, "The value state header or item should not be focused");
-=======
+		});
+
 		it ("should select all filtered items on CTRL+A", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
@@ -963,7 +963,6 @@ describe("MultiComboBox general interaction", () => {
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
->>>>>>> master
 		});
 	});
 
