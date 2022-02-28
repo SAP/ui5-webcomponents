@@ -669,12 +669,6 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if (isSpaceCtrl(event)) {
-			const itemIdx = this.list.items.indexOf(event.target);
-			this.items[itemIdx].selected = !event.target.selected;
-			this.fireSelectionChange();
-		}
-
 		if (isCtrlA(event)) {
 			this._handleSelectAll(event);
 			return;
