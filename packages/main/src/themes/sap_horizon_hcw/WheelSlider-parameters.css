@@ -1,0 +1,17 @@
+@import "../base/WheelSlider-parameters.css";
+
+:root{
+	--_ui5_wheelslider_item_background_color: var(--sapLegend_WorkingBackground);
+	--_ui5_wheelslider_item_text_color: var(--sapTextColor);
+	--_ui_wheelslider_item_hover_color: var(--sapList_Hover_Background);
+	--_ui_wheelslider_item_hovered_color: var(--sapList_Hover_Background);
+	--_ui5_wheelslider_item_border_color: var(--sapList_Background);
+	--_ui5_wheelslider_item_hovered_border_color: var(--sapField_BorderColor);
+	--_ui5_wheelslider_collapsed_item_text_color: var(--sapField_BorderColor);
+	--_ui5_wheelslider_selected_item_background_color: var(--sapContent_Selected_Background);
+	--_ui5_wheelslider_selected_item_hover_background_color: var(--sapButton_Emphasized_Hover_BorderColor);
+	--_ui5_wheelslider_active_item_background_color:var(--sapContent_Selected_Background);
+	--_ui5_wheelslider_active_item_text_color: var(--sapContent_Selected_TextColor);
+	--_ui5_wheelslider_selection_frame_color: var(--sapList_SelectionBorderColor);
+	--_ui_wheelslider_item_border_radius: var(--_ui5_button_border_radius);
+}

@@ -30,6 +30,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -313,7 +314,7 @@ const metadata = {
 		/**
 		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -324,7 +325,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the input.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -365,15 +366,19 @@ const metadata = {
 			type: Boolean,
 		},
 
+		openOnMobile: {
+			type: Boolean,
+		},
+
+		open: {
+			type: Boolean,
+		},
+
 		/**
 		 * Indicates whether the visual focus is on the value state header
 		 * @private
 		 */
 		_isValueStateFocused: {
-			type: Boolean,
-		},
-
-		open: {
 			type: Boolean,
 		},
 
@@ -585,6 +590,9 @@ class Input extends UI5Element {
 		// Indicates, if the user pressed the BACKSPACE key.
 		this._backspaceKeyDown = false;
 
+		// Indicates, if the user is typing. Gets reset once popup is closed
+		this.isTyping = false;
+
 		// all sementic events
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
@@ -615,9 +623,17 @@ class Input extends UI5Element {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
-		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
 
 		const FormSupport = getFeature("FormSupport");
+		const hasItems = this.suggestionItems.length;
+		const hasValue = !!this.value;
+		const isFocused = this === document.activeElement;
+
+		if (this._isPhone) {
+			this.open = this.openOnMobile;
+		} else {
+			this.open = hasValue && hasItems && isFocused && this.isTyping;
+		}
 
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -793,8 +809,6 @@ class Input extends UI5Element {
 			this._isValueStateFocused = false;
 			this.focused = true;
 		}
-
-		this.open = false;
 	}
 
 	async _onfocusin(event) {
@@ -826,13 +840,13 @@ class Input extends UI5Element {
 			return;
 		}
 
-		this.closePopover();
+		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
-		this.open = false;
+		this.isTyping = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -850,7 +864,7 @@ class Input extends UI5Element {
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this.open = true;
+			this.openOnMobile = true;
 		}
 	}
 
@@ -916,6 +930,10 @@ class Input extends UI5Element {
 
 			// Perform manual handling in case of floating number
 			// and if the user did not select the entire input value
+			if (this._selectedText.indexOf(",") > -1) {
+				this._selectedText = this._selectedText.replace(",", ".");
+			}
+
 			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
 				const newValue = this.removeFractionalPart(this.value);
 
@@ -951,11 +969,9 @@ class Input extends UI5Element {
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
-
-			if (!this._isPhone) {
-				this.open = !!inputDomRef.value;
-			}
 		}
+
+		this.isTyping = true;
 	}
 
 	_handleResize() {
@@ -981,6 +997,10 @@ class Input extends UI5Element {
 			this.blur();
 			this.focused = false;
 		}
+
+		this.isTyping = false;
+		this.openOnMobile = false;
+		this.open = false;
 	}
 
 	/**
@@ -1048,6 +1068,9 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
+
+		this.isTyping = false;
+		this.openOnMobile = false;
 	}
 
 	previewSuggestion(item) {
@@ -1484,7 +1507,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Removes the fractional part of floating-point number.
-	 * @param {String} value the numeric value of Input of type "Number"
+	 * @param {string} value the numeric value of Input of type "Number"
 	 */
 	removeFractionalPart(value) {
 		if (value.includes(".")) {
@@ -1500,7 +1523,7 @@ class Input extends UI5Element {
 	static get dependencies() {
 		const Suggestions = getFeature("InputSuggestions");
 
-		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
+		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {

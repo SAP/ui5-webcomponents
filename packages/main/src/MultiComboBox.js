@@ -18,6 +18,9 @@ import {
 	isRightCtrl,
 	isUpCtrl,
 	isDownCtrl,
+	isHomeCtrl,
+	isEndCtrl,
+	isCtrlA,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -546,14 +549,17 @@ class MultiComboBox extends UI5Element {
 	_tokenizerFocusOut(event) {
 		this._tokenizerFocused = false;
 
-		const tokensCount = this._tokenizer.tokens.length - 1;
+		const tokensCount = this._tokenizer.tokens.length;
+		const selectedTokens = this._selectedTokensCount;
+		const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
+		const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
 
 		if (!event.relatedTarget || !event.relatedTarget.hasAttribute("ui5-token")) {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
 			this._tokenizer.scrollToStart();
 		}
 
-		if (tokensCount === 0 && this._deleting) {
+		if (allTokensAreBeingDeleted || lastTokenBeingDeleted) {
 			setTimeout(() => {
 				if (!isPhone()) {
 					this.shadowRoot.querySelector("input").focus();
@@ -641,6 +647,17 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover.close();
 	}
 
+	_handleSelectAll(event) {
+		const filteredItems = this._filteredItems;
+		const allItemsSelected = filteredItems.every(item => item.selected);
+
+		filteredItems.forEach(item => {
+			item.selected = !allItemsSelected;
+		});
+
+		this.fireSelectionChange();
+	}
+
 	_onValueStateKeydown(event) {
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
@@ -670,6 +687,16 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (isHomeCtrl(event)) {
+			this.list._itemNavigation._handleHome(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
+		if (isEndCtrl(event)) {
+			this.list._itemNavigation._handleEnd(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
 		event.preventDefault();
 
 		if (isDownShift(event) || isUpShift(event)) {
@@ -685,6 +712,11 @@ class MultiComboBox extends UI5Element {
 		if (isRightCtrl(event) || isDownCtrl(event)) {
 			this.list._itemNavigation._handleDown(event);
 			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
+		if (isCtrlA(event)) {
+			this._handleSelectAll(event);
+			return;
 		}
 
 		if (((isArrowUp && isFirstItem) || isHome(event)) && this.valueStateHeader) {
@@ -1110,6 +1142,7 @@ class MultiComboBox extends UI5Element {
 			this._innerInput.blur();
 		}
 
+		!isPhone() && this._innerInput.setSelectionRange(0, this.value.length);
 		this._lastValue = this.value;
 	}
 
@@ -1193,6 +1226,10 @@ class MultiComboBox extends UI5Element {
 
 	get _tokensCountTextId() {
 		return `${this._id}-hiddenText-nMore`;
+	}
+
+	get _selectedTokensCount() {
+		return this._tokenizer.tokens.filter(token => token.selected).length;
 	}
 
 	get ariaDescribedByText() {

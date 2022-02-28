@@ -90,6 +90,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.fiori.SideNavigation#selection-change
 		 * @param {HTMLElement} item the clicked item.
+		 * @allowPreventDefault
 		 * @public
 		 */
 		"selection-change": {
@@ -198,12 +199,14 @@ class SideNavigation extends UI5Element {
 	}
 
 	_setSelectedItem(item) {
+		if (!this.fireEvent("selection-change", { item }, true)) {
+			return;
+		}
+
 		this._walk(current => {
 			current.selected = false;
 		});
 		item.selected = true;
-
-		this.fireEvent("selection-change", { item });
 	}
 
 	_buildPopoverContent(item) {

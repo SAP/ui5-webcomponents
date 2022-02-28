@@ -21,11 +21,17 @@ import {
 	isRightShiftCtrl,
 	isEnd,
 	isHome,
+	isHomeShift,
+	isEndShift,
+	isHomeCtrl,
+	isEndCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import Title from "./Title.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -222,16 +228,36 @@ class Tokenizer extends UI5Element {
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
-	_tokenDelete(event) {
+	_delete(event) {
+		if (this._selectedTokens.length) {
+			this._selectedTokens.forEach(token => this._tokenDelete(event, token));
+		} else {
+			this._tokenDelete(event);
+		}
+	}
+
+	_tokenDelete(event, token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
-		const deletedTokenIndex = this._getVisibleTokens().indexOf(event.target); // The index of the token that just got deleted
+
+		const tokens = this._getVisibleTokens();
+		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(event.target); // The index of the token that just got deleted
+		const notSelectedTokens = tokens.filter(t => !t.selected);
 
 		if (event.detail && event.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
 			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
 		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
-			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
+			nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
-		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		let nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		if (notSelectedTokens.length > 1) {
+			while (nextToken && nextToken.selected) {
+				nextToken = event.detail.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+			}
+		} else {
+			nextToken = notSelectedTokens[0];
+		}
 
 		if (nextToken && !isPhone()) {
 			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
@@ -241,7 +267,7 @@ class Tokenizer extends UI5Element {
 			}, 0);
 		}
 
-		this.fireEvent("token-delete", { ref: event.target });
+		this.fireEvent("token-delete", { ref: token || event.target });
 	}
 
 	itemDelete(event) {
@@ -255,6 +281,14 @@ class Tokenizer extends UI5Element {
 			event.preventDefault();
 
 			return this._handleTokenSelection(event, false);
+		}
+
+		if (isHomeShift(event)) {
+			this._handleHomeShift(event);
+		}
+
+		if (isEndShift(event)) {
+			this._handleEndShift(event);
 		}
 
 		this._handleItemNavigation(event, this.tokens);
@@ -278,8 +312,9 @@ class Tokenizer extends UI5Element {
 			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event) || isDownShift(event)));
 		}
 
-		if (isHome(event) || isEnd(event)) {
-			return this._handleHome(tokens, isEnd(event));
+		if (isHome(event) || isEnd(event) || isHomeCtrl(event) || isEndCtrl(event)) {
+			event.preventDefault();
+			return this._handleHome(tokens, isEnd(event) || isEndCtrl(event));
 		}
 
 		if (isCtrl && event.key.toLowerCase() === "a") {
@@ -298,6 +333,30 @@ class Tokenizer extends UI5Element {
 
 		tokens[index].focus();
 		this._itemNav.setCurrentItem(tokens[index]);
+	}
+
+	_handleHomeShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index <= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[0].focus();
+		this._itemNav.setCurrentItem(tokens[0]);
+	}
+
+	_handleEndShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index >= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[tokens.length - 1].focus();
+		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
 	}
 
 	_calcNextTokenIndex(focusedToken, tokens, backwards) {
@@ -463,6 +522,10 @@ class Tokenizer extends UI5Element {
 		return isPhone();
 	}
 
+	get _selectedTokens() {
+		return this._getTokens().filter(token => token.selected);
+	}
+
 	get classes() {
 		return {
 			wrapper: {
@@ -535,6 +598,8 @@ class Tokenizer extends UI5Element {
 			ResponsivePopover,
 			List,
 			StandardListItem,
+			Title,
+			Button,
 		];
 	}
 

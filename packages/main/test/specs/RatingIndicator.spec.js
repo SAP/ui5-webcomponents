@@ -88,20 +88,33 @@ describe("Rating Indicator general interaction", () => {
 	});
 
 	it("Tests ACC attrs", async () => {
-		const ratingIndicator = await browser.$("#rating-indicator1").shadow$(".ui5-rating-indicator-root");
+		const ratingIndicator = await browser.$("#rating-indicator1");
+		const ratingIndicatorRoot = ratingIndicator.shadow$(".ui5-rating-indicator-root");
+		const ratingIndicatorWrapper = ratingIndicator.shadow$(".ui5-rating-indicator-stars-wrapper");
+		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
 		const ratingIndicatorReadOnly = await browser.$("#rating-indicator-readonly").shadow$(".ui5-rating-indicator-root");
 
 		const TOOLTIP = "Rating";
 		const ARIA_LABEL = "Hello World";
 
-		assert.strictEqual(await ratingIndicator.getAttribute("aria-label"), ARIA_LABEL,
+		assert.strictEqual(await ratingIndicatorRoot.getAttribute("aria-label"), ARIA_LABEL,
 			"The aria-label is set");
 
-		assert.strictEqual(await ratingIndicator.getAttribute("title"), TOOLTIP,
+		assert.strictEqual(await ratingIndicatorRoot.getAttribute("title"), TOOLTIP,
 			"The default tooltip is displayed");
 
-		assert.notOk(await ratingIndicator.getAttribute("aria-readonly"), "The aria-readonly attribute is not presented");
+		assert.notOk(await ratingIndicatorRoot.getAttribute("aria-readonly"), "The aria-readonly attribute is not presented");
 		assert.strictEqual(await ratingIndicatorReadOnly.getAttribute("aria-readonly"), 'true', "The aria-readonly attribute is presented");
+		
+		assert.strictEqual(await ratingIndicatorRoot.getAttribute("aria-valuetext"),
+			`${await ratingIndicator.getProperty("value")} of ${await ratingIndicator.getProperty("max")}`, "aria-valuetext is set correctly");
+
+		await thirdStar.click();
+
+		assert.strictEqual(await ratingIndicatorRoot.getAttribute("aria-valuetext"),
+			"3 of 5", "aria-valuetext is updated correctly");
+
+		assert.strictEqual(await ratingIndicatorWrapper.getAttribute("aria-hidden"), "true", "aria-hidden is set");
 	});
 
 	it("Tests ACC attrs - title attribute provided", async () => {

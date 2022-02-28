@@ -1,6 +1,7 @@
 <div class="{{classes.root}}">
 	<div
-		role="{{accStartColumnRole}}"
+		role="{{_accAttributes.columns.start.role}}"
+		aria-hidden="{{_accAttributes.columns.start.ariaHidden}}"
 		class="{{classes.columns.start}}"
 		aria-labelledby="{{_id}}-startColumnText"
 	>
@@ -13,7 +14,8 @@
 	</div>
 
 	<div
-		role="{{accMiddleColumnRole}}"
+		role="{{_accAttributes.columns.middle.role}}"
+		aria-hidden="{{_accAttributes.columns.middle.ariaHidden}}"
 		class="{{classes.columns.middle}}"
 		aria-labelledby="{{_id}}-midColumnText"
 	>
@@ -26,7 +28,8 @@
 	</div>
 
 	<div
-		role="{{accEndColumnRole}}"
+		role="{{_accAttributes.columns.end.role}}"
+		aria-hidden="{{_accAttributes.columns.end.ariaHidden}}"
 		class="{{classes.columns.end}}"
 		aria-labelledby="{{_id}}-endColumnText"
 	>
@@ -42,7 +45,7 @@
 		design="Transparent"
 		@click="{{startArrowClick}}"
 		style="{{styles.arrows.start}}"
-		title="{{accStartArrowText}}"
+		tooltip="{{accStartArrowText}}"
 	></ui5-button>
 {{/inline}}
 
@@ -54,6 +57,6 @@
 		icon="slim-arrow-left"
 		design="Transparent"
 		@click="{{endArrowClick}}"
-		title="{{accEndArrowText}}"
+		tooltip="{{accEndArrowText}}"
 	></ui5-button>
 {{/inline}}

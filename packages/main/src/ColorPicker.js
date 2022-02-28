@@ -42,7 +42,7 @@ const metadata = {
 		/**
 		 * Defines the HEX code of the currently selected color
 		 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		hex: {
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		_mainColor: {

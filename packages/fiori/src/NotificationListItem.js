@@ -99,12 +99,11 @@ const metadata = {
 		/**
 		 * Defines the elements, displayed in the footer of the of the component.
 		 * @type {HTMLElement[]}
-		 * @slot footnotes
+		 * @slot
 		 * @public
 		 */
 		footnotes: {
 			type: HTMLElement,
-			propertyName: "footnotes",
 			individualSlots: true,
 		},
 
