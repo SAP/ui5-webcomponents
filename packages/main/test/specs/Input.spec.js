@@ -494,6 +494,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
 
+	it("Checks if aria-invalid is set correctly", async () => {
+		const inputError = await browser.$("#inputError");
+		const inputWarning = await browser.$("#input1"); 
+		const innerInputError = await inputError.shadow$("input");
+		const innerInputWarning = await inputWarning.shadow$("input");
+
+		assert.notOk(await innerInputWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
+		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
+	});
+
 	it("Tests suggestions highlighting", async () => {
 		const input = await browser.$("#myInputHighlighted").shadow$("input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputHighlighted");
@@ -635,6 +645,77 @@ describe("Input general interaction", () => {
 		await input.click();
 
 		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+	});
+
+	it("Displays clear icon when typing and pressing it clears the value", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#clear-input");
+		const innerInput = await input.shadow$("input");
+		const changeCounter = await $("#clear-input-change-event-count");
+		const inputCounter = await $("#clear-input-input-event-count");
+
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+
+		// type
+		await innerInput.click();
+		await innerInput.keys("a");
+
+		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
+		assert.strictEqual(await inputCounter.getText(), "1", "Input event called when typing");
+
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+
+		// press clear icon
+		await clearIcon.click();
+
+		assert.strictEqual(await input.getProperty("value"), "", "Clear icon clear the value");
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
+		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
+	});
+
+	it("Change event is called when value of input is cleared with clear icon and input is focused out", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#clear-input");
+		const innerInput = await input.shadow$("input");
+		const changeCounter = await $("#clear-input-change-event-count");
+		const inputCounter = await $("#clear-input-input-event-count");
+
+		// type
+		await innerInput.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+
+		// press clear icon
+		await clearIcon.click();
+
+		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, second - clear icon)");
+		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
+	});
+
+	it("Setting readonly or disabled hides clear icon", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const input = await $("#clear-input-compact");
+		const readonly = await $("#clear-icon-readonly-toggle");
+		const disable = await $("#clear-icon-disabled-toggle");
+
+		await readonly.click();
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
+
+		await readonly.click();
+		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+
+		await disable.click();
+		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when disabled");
+
+		await disable.click();
+		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
 	});
 });
 
@@ -1035,5 +1116,47 @@ describe("XSS tests for suggestions", () => {
 		await Promise.all(listItems.map(async (item, index) => {
 			assert.strictEqual(await item.getProperty("innerText"), expected[index], "Items text should be escaped");
 		}));
+	});
+});
+
+
+describe("Lazy loading", () => {
+	beforeEach(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/InputsLazyLoading.html`);
+	});
+
+	it("Lazy loading opens the picker once items are populated", async () => {
+		const input = await $("#field");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("a");
+
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+			timeout: 3000,
+			timeoutMsg: "Popover should be displayed"
+		});
+	});
+
+	it("Does not reopeon picker on focus in", async () => {
+		const input = await $("#field");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("a");
+
+		// go to next focusable
+		await browser.keys(["Shift", "Tab"]);
+
+		// go to previous
+		await browser.keys("Tab");
+
+		await browser.pause(3000);
+		
+		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
 	});
 });

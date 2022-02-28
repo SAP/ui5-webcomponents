@@ -81,24 +81,34 @@ describe("Button general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 6 times");
 	});
 
-	it("setting aria-expanded on the host is reflected on the button tag", async () => {
+	it("aria-expanded is properly applied on the button tag", async () => {
 		const button = await browser.$("#button1");
 		const innerButton = await button.shadow$("button");
 
 		assert.strictEqual(await innerButton.getAttribute("aria-expanded"), "true", "Attribute is reflected");
 
-		await button.setAttribute("aria-expanded", "false");
+		await button.click();
 
 		assert.strictEqual(await innerButton.getAttribute("aria-expanded"), "false", "Attribute is reflected");
+	});
 
-		await button.removeAttribute("aria-expanded");
+	it("aria-haspopup and aira-controls are properly applied on the button tag", async () => {
+		const button = await browser.$("#openDialogButton");
+		const innerButton = await button.shadow$("button");
 
-		assert.strictEqual(await innerButton.getAttribute("aria-expanded"), null, "Attribute is reflected");
+		assert.strictEqual(await innerButton.getAttribute("aria-haspopup"), "dialog", "Attribute is reflected");
+		assert.strictEqual(await innerButton.getAttribute("aria-controls"), "registration-dialog", "Attribute is reflected");
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {
 		const button = await browser.$("#buttonAccNameRef").shadow$("button");
 
 		assert.strictEqual(await button.getAttribute("aria-label"), "Download Application", "Attribute is reflected");
+	});
+
+	it("setting tooltip on the host is reflected on the button tag", async () => {
+		const button = await browser.$("#customTooltip").shadow$("button");
+
+		assert.strictEqual(await button.getAttribute("title"), "Go home", "Attribute is reflected");
 	});
 });

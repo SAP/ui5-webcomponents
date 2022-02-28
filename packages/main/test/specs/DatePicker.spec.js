@@ -16,6 +16,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
 	});
 
 	it("input receives value", async () => {
@@ -337,9 +338,6 @@ describe("Date Picker Tests", () => {
 
 		let timestampToday = new Date().getTime();
 		timestampToday = (timestampToday - timestampToday % (24 * 60 * 60 * 1000)) / 1000;
-
-		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getProperty("value"), "today", "input value is ok");
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
 		await valueHelpIcon.click();
@@ -1111,7 +1109,7 @@ describe("Date Picker Tests", () => {
 	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
 		datepicker.id = "#dp33";
 		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
+		await innerInput.doubleClick();
 		await browser.keys("Jan 1, 2000");
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -1123,13 +1121,12 @@ describe("Date Picker Tests", () => {
 		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
 		await browser.keys("Escape");
-		await innerInput.click();
-		await browser.keys(["Control", "A"]);
+		await innerInput.doubleClick();
 		await browser.keys("Backspace");
 	});
 
 	it("Value state changes only on submit", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();

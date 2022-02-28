@@ -20,6 +20,20 @@ describe("Dialog general interaction", () => {
 		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
 	});
 
+	it("tests dialog toggling with 'open' attribute", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialogWithAttr");
+		const btnCloseDialog= await browser.$("#btnCloseWithAttr");
+
+		await btnOpenDialog.click();
+
+		const dialog = await browser.$("#dlgAttr");
+
+		assert.ok(await dialog.isDisplayedInViewport(), "Dialog is opened.");
+
+		await btnCloseDialog.click();
+		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
+	});
+
 	it("tests popover in dialog", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const select = await browser.$("#mySelect");
@@ -320,40 +334,57 @@ describe("Page scrolling", () => {
 	});
 
 	it("tests that page scrolling is blocked and restored", async () => {
-		await browser.$("#cbScrollable").click();
-		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
-
 		await browser.$("#btnOpenDialog").click();
+		let pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
 
-		assert.isBelow(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is blocked");
+		assert.strictEqual(pageOverflow, "hidden", "Page scrolling is blocked");
 
 		await browser.$("#btnCloseDialog").click();
+		pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
 
-		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+		assert.strictEqual(pageOverflow, "visible", "Page scrolling is restored");
+	});
+
+	it("tests that page scrolling position is preserved", async () => {
+		// scroll position might change slightly when the scrollbars hide and then appear again
+		const SCROLLBAR_DELTA = 20;
+		await browser.$("#cbScrollable").click();
+		const scrolledButton = await $("#scrolledBtn");
+		await scrolledButton.scrollIntoView();
+		const scrollLeftBefore = await browser.$("html").getProperty("scrollLeft");
+		const scrollTopBefore = await browser.$("html").getProperty("scrollTop");
+		await scrolledButton.click();
+
+		assert.strictEqual(await browser.$("html").getProperty("scrollLeft"), scrollLeftBefore, "Horizontal page scroll position is preserved");
+		assert.approximately(await browser.$("html").getProperty("scrollTop"), scrollTopBefore, SCROLLBAR_DELTA, "Vertical page scroll position is preserved");
+
+		await browser.keys("Escape");
+
+		assert.strictEqual(await browser.$("html").getProperty("scrollLeft"), scrollLeftBefore, "Horizontal page scroll position is preserved");
+		assert.approximately(await browser.$("html").getProperty("scrollTop"), scrollTopBefore, SCROLLBAR_DELTA, "Vertical page scroll position is preserved");
+
 		await browser.$("#cbScrollable").click();
 	});
 
 	it("tests that page scrolling is blocked and restored after multiple show() of same dialog", async () => {
-		await browser.$("#cbScrollable").click();
-		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
-
 		await browser.$("#multiple-show").click();
+		let pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
 
-		assert.isBelow(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is blocked");
+		assert.strictEqual(pageOverflow, "hidden", "Page scrolling is blocked");
 
 		await browser.$("#btnCloseDialog").click();
+		pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
 
-		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
-		await browser.$("#cbScrollable").click();
+		assert.strictEqual(pageOverflow, "visible", "Page scrolling is restored");
 	});
 
 	it("test page scrolling is restored after close with ESC", async () => {
 		await browser.$("#cbScrollable").click();
-		const offsetHeightBefore = await browser.$("body").getProperty("offsetHeight");
+		const scrollHeightBefore = await browser.$("html").getProperty("scrollHeight");
 
 		await browser.$("#btnOpenDialog").click();
 		await browser.keys("Escape");
-		assert.strictEqual(await browser.$("body").getProperty("offsetHeight"), offsetHeightBefore, "Body scrolling is restored");
+		assert.strictEqual(await browser.$("html").getProperty("scrollHeight"), scrollHeightBefore, "Body scrolling is restored");
 
 		await browser.$("#cbScrollable").click();
 	});
@@ -376,5 +407,58 @@ describe("Page scrolling", () => {
 		const offsetAfter = await preventButtonBefore.getLocation('y');
 
 		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
+	});
+});
+
+describe("Responsive paddings", () => {
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	});
+
+	it("tests responsive paddings", async () => {
+		const openDialog = await browser.$("#btnOpenDialog");
+		await openDialog.click();
+
+		const expectedPadding = "16px";
+		const dialog = await browser.$("#dialog");
+
+		// content
+		const actualContentPadding = await dialog.shadow$(".ui5-popup-content").getCSSProperty("padding-left");
+
+		// header
+		const actualHeaderPadding = await dialog.shadow$(".ui5-popup-header-root").getCSSProperty("padding-left");
+
+		// footer
+		const actualFooterPadding = await dialog.shadow$(".ui5-popup-footer-root").getCSSProperty("padding-left");
+
+		assert.strictEqual(actualContentPadding.value, expectedPadding, "dialog has correct padding set on the content");
+		assert.strictEqual(actualHeaderPadding.value, expectedPadding, "dialog has correct padding set on the header");
+		assert.strictEqual(actualFooterPadding.value, expectedPadding, "dialog has correct padding set on the footer");
+
+		await browser.$("#btnCloseDialog").click();
+	});
+
+	it("tests removing of responsive paddings for the content", async () => {
+		const openDialog = await browser.$("#btnOpenDialogNoPaddings");
+		await openDialog.click();
+
+		const expectedPadding = "16px";
+		const expectedContentPadding = "0px";
+		const dialog = await browser.$("#dialogNoPaddings");
+
+		// content
+		const actualContentPadding = await dialog.shadow$(".ui5-popup-content").getCSSProperty("padding-left");
+
+		// header
+		const actualHeaderPadding = await dialog.shadow$(".ui5-popup-header-root").getCSSProperty("padding-left");
+
+		// footer
+		const actualFooterPadding = await dialog.shadow$(".ui5-popup-footer-root").getCSSProperty("padding-left");
+
+		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "dialog has correct padding set on the content");
+		assert.strictEqual(actualHeaderPadding.value, expectedPadding, "dialog has correct padding set on the header");
+		assert.strictEqual(actualFooterPadding.value, expectedPadding, "dialog has correct padding set on the footer");
+
+		await browser.$("#btnCloseDialogNoPaddings").click();
 	});
 });

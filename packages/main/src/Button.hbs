@@ -15,11 +15,11 @@
 	@touchstart="{{_ontouchstart}}"
 	@touchend="{{_ontouchend}}"
 	tabindex={{tabIndexValue}}
-	aria-expanded="{{accInfo.ariaExpanded}}"
-	aria-controls="{{accInfo.ariaControls}}"
-	aria-haspopup="{{accInfo.ariaHaspopup}}"
+	aria-expanded="{{accessibilityAttributes.expanded}}"
+	aria-controls="{{accessibilityAttributes.controls}}"
+	aria-haspopup="{{accessibilityAttributes.hasPopup}}"
 	aria-label="{{ariaLabelText}}"
-	title="{{accInfo.title}}"
+	title="{{tooltip}}"
 	part="button"
 >
 	{{#if icon}}

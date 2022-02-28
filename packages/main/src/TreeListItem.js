@@ -43,7 +43,7 @@ const metadata = {
 		 * If set, an icon will be displayed before the text of the tree list item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 */
 		icon: {
@@ -331,7 +331,10 @@ class TreeListItem extends ListItem {
 	}
 
 	static async onDefine() {
-		TreeListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		[TreeListItem.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 }
 

@@ -24,6 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
@@ -117,8 +118,10 @@ const metadata = {
 
 		/**
 		 * Fires when a <code>BreadcrumbsItem</code> is clicked.
+		 * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.Breadcrumbs#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -387,7 +390,9 @@ class Breadcrumbs extends UI5Element {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-link` === link.id);
-		this.fireEvent("item-click", { item });
+		if (!this.fireEvent("item-click", { item }, true)) {
+			event.preventDefault();
+		}
 	}
 
 	_onLabelPress() {
@@ -401,9 +406,10 @@ class Breadcrumbs extends UI5Element {
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-li` === listItem.id);
 
-		window.open(item.href, item.target || "_self", "noopener,noreferrer");
-		this.responsivePopover.close();
-		this.fireEvent("item-click", { item });
+		if (this.fireEvent("item-click", { item }, true)) {
+			window.open(item.href, item.target || "_self", "noopener,noreferrer");
+			this.responsivePopover.close();
+		}
 	}
 
 	async _respPopover() {
@@ -562,6 +568,7 @@ class Breadcrumbs extends UI5Element {
 			List,
 			StandardListItem,
 			Icon,
+			Button,
 		];
 	}
 

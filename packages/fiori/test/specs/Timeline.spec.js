@@ -13,4 +13,10 @@ describe("Timeline general interaction", () => {
 		await timelineItemName.click();
 		assert.strictEqual(await result.getText(), "Stanislava Baltova", "Click event is fired");
 	});
+
+	it("setting accessible-name applied on the host element is reflected on the ul tag", async () => {
+		const timeline = await browser.$("#timelineAccName");
+
+		assert.strictEqual(await timeline.shadow$("ul").getAttribute("aria-label"), "Timeline vertical", "Attribute is reflected");
+	});
 });

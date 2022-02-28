@@ -17,7 +17,7 @@
 			<slot name="overflowButton"></slot>
 		{{else}}
 			<ui5-button
-				._buttonAccInfo="{{_overflowButtonAccInfo}}"
+				.accessibilityAttributes="{{_overflowButtonAccAttributes}}"
 				aria-label="{{_overflowButtonAriaLabelText}}"
 				?hidden="{{_overflowBtnHidden}}"
 				?non-interactive={{_isGroup}}

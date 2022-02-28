@@ -187,9 +187,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -200,7 +200,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -221,7 +221,7 @@ const metadata = {
 		},
 
 		/**
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @private
 		 */
 		focused: {

@@ -8,6 +8,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
@@ -132,7 +133,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -174,10 +175,6 @@ const metadata = {
 		_animationRunning: {
 			type: Boolean,
 			noAttribute: true,
-		},
-
-		_buttonAccInfo: {
-			type: Object,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -409,8 +406,10 @@ class Panel extends UI5Element {
 	get accInfo() {
 		return {
 			"button": {
-				"ariaExpanded": this.expanded,
-				"ariaControls": `${this._id}-content`,
+				"accessibilityAttributes": {
+					"expanded": this.expanded,
+					"controls": `${this._id}-content`,
+				},
 				"title": this.toggleButtonTitle,
 				"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.effectiveAccessibleName : undefined,
 			},
@@ -458,7 +457,7 @@ class Panel extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Button];
+		return [Button, Icon];
 	}
 
 	static async onDefine() {

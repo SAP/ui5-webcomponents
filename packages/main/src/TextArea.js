@@ -9,6 +9,11 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
@@ -213,9 +218,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -226,7 +231,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the textarea.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -684,7 +689,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Popover];
+		return [Popover, Icon];
 	}
 
 	static async onDefine() {

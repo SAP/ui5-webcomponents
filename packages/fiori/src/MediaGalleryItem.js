@@ -123,8 +123,8 @@ const metadata = {
 		/**
 		 * Defines the content of the component.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {HTMLElement}
+		 * @slot content
 		 * @public
 		 */
 		 "default": {
@@ -135,12 +135,11 @@ const metadata = {
 		/**
 		 * Defines the content of the thumbnail.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 */
 		 "thumbnail": {
-			propertyName: "thumbnail",
 			type: HTMLElement,
 		},
 	},
@@ -165,7 +164,7 @@ const metadata = {
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code> (comes with <code>ui5-media-gallery</code>)
  *
  * @constructor
  * @author SAP SE

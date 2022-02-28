@@ -111,8 +111,8 @@
 					data-ui5-notifications-count="{{notificationsCount}}"
 					data-ui5-stable="toggle-search"
 					@click={{_handleSearchIconPress}}
-					title="{{_searchText}}"
-					._buttonAccInfo="{{accInfo.search}}"
+					tooltip="{{_searchText}}"
+					.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
 				></ui5-button>
 			{{/if}}
 
@@ -122,7 +122,7 @@
 					style="{{this.styles}}"
 					class="{{this.classes}}"
 					icon="{{this.icon}}"
-					title="{{this.title}}"
+					tooltip="{{this.title}}"
 					data-count="{{this.count}}"
 					data-ui5-notifications-count="{{../notificationsCount}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
@@ -140,8 +140,7 @@
 				data-ui5-text="Notifications"
 				data-ui5-notifications-count="{{notificationsCount}}"
 				@click={{_handleNotificationsPress}}
-				title="{{_notificationsText}}"
-				._buttonAccInfo="{{accInfo.notifications}}"
+				tooltip="{{_notificationsText}}"
 				data-ui5-stable="notifications"
 			></ui5-button>
 			{{/if}}
@@ -152,8 +151,8 @@
 				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
 				icon="sap-icon://overflow"
 				@click="{{_handleOverflowPress}}"
-				title="{{_overflowText}}"
-				._buttonAccInfo="{{accInfo.overflow}}"
+				tooltip="{{_overflowText}}"
+				.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
 				data-ui5-stable="overflow"
 			></ui5-button>
 
@@ -169,8 +168,7 @@
 				icon="sap-icon://grid"
 				data-ui5-text="Product Switch"
 				@click={{_handleProductSwitchPress}}
-				title="{{_productsText}}"
-				._buttonAccInfo="{{accInfo.products}}"
+				tooltip="{{_productsText}}"
 				data-ui5-stable="product-switch"
 			></ui5-button>
 			{{/if}}
@@ -184,8 +182,7 @@
 		id="{{this._id}}-item-3"
 		@click={{_handleProfilePress}}
 		style="{{styles.items.profile}}"
-		title="{{_profileText}}"
-		._buttonAccInfo="{{accInfo.profile}}"
+		tooltip="{{_profileText}}"
 		class="ui5-shellbar-button ui5-shellbar-image-button"
 		data-ui5-stable="profile"
 	>

@@ -5,7 +5,7 @@
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
-	<!-- Decrement Icon -->
+	{{! Decrement Icon}}
 	{{#unless readonly}}
 	<div
 		class="ui5-step-icon ui5-step-dec"
@@ -28,7 +28,8 @@
 		></ui5-icon>
 	</div>
 	{{/unless}}
-	<!-- INPUT -->
+
+	{{! INPUT}}
 	<ui5-input
 			id="{{_id}}-inner"
 			class="ui5-step-input-input"
@@ -53,7 +54,7 @@
 
 	</ui5-input>
 
-	<!-- Increment Icon -->
+	{{! Increment Icon}}
 	{{#unless readonly}}
 	<div
 		class="ui5-step-icon ui5-step-inc"

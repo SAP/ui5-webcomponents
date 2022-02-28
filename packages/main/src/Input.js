@@ -24,8 +24,13 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -307,9 +312,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -320,7 +325,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the input.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -331,9 +336,41 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the clear icon of the input will be shown.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.2.0
+		 */
+		showClearIcon: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the clear icon is visible.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 * @since 1.2.0
+		 */
+		effectiveShowClearIcon: {
+			type: Boolean,
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
+			type: Boolean,
+		},
+
+		openOnMobile: {
+			type: Boolean,
+		},
+
+		open: {
 			type: Boolean,
 		},
 
@@ -342,10 +379,6 @@ const metadata = {
 		 * @private
 		 */
 		_isValueStateFocused: {
-			type: Boolean,
-		},
-
-		open: {
 			type: Boolean,
 		},
 
@@ -470,7 +503,6 @@ const metadata = {
  * <br>
  *
  * <ul>
- * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li>
  * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
  * <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li>
  * <li>[DOWN] - Focuses the next matching item in the suggestion list.</li>
@@ -558,6 +590,9 @@ class Input extends UI5Element {
 		// Indicates, if the user pressed the BACKSPACE key.
 		this._backspaceKeyDown = false;
 
+		// Indicates, if the user is typing. Gets reset once popup is closed
+		this.isTyping = false;
+
 		// all sementic events
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
@@ -587,9 +622,18 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
-		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
+		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
 		const FormSupport = getFeature("FormSupport");
+		const hasItems = this.suggestionItems.length;
+		const hasValue = !!this.value;
+		const isFocused = this === document.activeElement;
+
+		if (this._isPhone) {
+			this.open = this.openOnMobile;
+		} else {
+			this.open = hasValue && hasItems && isFocused && this.isTyping;
+		}
 
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -765,8 +809,6 @@ class Input extends UI5Element {
 			this._isValueStateFocused = false;
 			this.focused = true;
 		}
-
-		this.open = false;
 	}
 
 	async _onfocusin(event) {
@@ -783,6 +825,8 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
+		this._preventNextChange = this.effectiveShowClearIcon && this.shadowRoot.contains(event.relatedTarget);
+
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
@@ -796,13 +840,13 @@ class Input extends UI5Element {
 			return;
 		}
 
-		this.closePopover();
+		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
-		this.open = false;
+		this.isTyping = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -820,7 +864,7 @@ class Input extends UI5Element {
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this.open = true;
+			this.openOnMobile = true;
 		}
 	}
 
@@ -832,9 +876,24 @@ class Input extends UI5Element {
 	}
 
 	_handleChange() {
+		if (this._preventNextChange) {
+			this._preventNextChange = false;
+			return;
+		}
+
 		if (this._changeFiredValue !== this.value) {
 			this._changeFiredValue = this.value;
 			this.fireEvent(this.EVENT_CHANGE);
+		}
+	}
+
+	_clear() {
+		this.value = "";
+		this.fireEvent(this.EVENT_INPUT);
+		this._handleChange();
+
+		if (!this._isPhone) {
+			this.focus();
 		}
 	}
 
@@ -871,6 +930,10 @@ class Input extends UI5Element {
 
 			// Perform manual handling in case of floating number
 			// and if the user did not select the entire input value
+			if (this._selectedText.indexOf(",") > -1) {
+				this._selectedText = this._selectedText.replace(",", ".");
+			}
+
 			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
 				const newValue = this.removeFractionalPart(this.value);
 
@@ -906,11 +969,9 @@ class Input extends UI5Element {
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
-
-			if (!this._isPhone) {
-				this.open = !!inputDomRef.value;
-			}
 		}
+
+		this.isTyping = true;
 	}
 
 	_handleResize() {
@@ -936,6 +997,10 @@ class Input extends UI5Element {
 			this.blur();
 			this.focused = false;
 		}
+
+		this.isTyping = false;
+		this.openOnMobile = false;
+		this.open = false;
 	}
 
 	/**
@@ -1003,6 +1068,9 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
+
+		this.isTyping = false;
+		this.openOnMobile = false;
 	}
 
 	previewSuggestion(item) {
@@ -1439,7 +1507,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Removes the fractional part of floating-point number.
-	 * @param {String} value the numeric value of Input of type "Number"
+	 * @param {string} value the numeric value of Input of type "Number"
 	 */
 	removeFractionalPart(value) {
 		if (value.includes(".")) {
@@ -1455,7 +1523,7 @@ class Input extends UI5Element {
 	static get dependencies() {
 		const Suggestions = getFeature("InputSuggestions");
 
-		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
+		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {

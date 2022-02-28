@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getAriaLabelledByTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
@@ -103,16 +103,27 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.2.0
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Receives id(or many ids) of the elements that label the input
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
 		accessibleNameRef: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -136,7 +147,7 @@ const metadata = {
 		 *			<ul>
 		 *				<li><code>true</code></li>
 		 *				<li><code>false</code></li>
-		 *			<ul>
+		 *			</ul>
 		 * 		</li>
 		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
 		 * 			<ul>
@@ -289,7 +300,7 @@ class Link extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getAriaLabelledByTexts(this);
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get hasLinkType() {

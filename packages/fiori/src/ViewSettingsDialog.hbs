@@ -15,10 +15,10 @@
 						class="ui5-vsd-back-button"
 						@click="{{_navigateToFilters}}"
 					></ui5-button>
-					<ui5-label>{{_filterByTitle}}</ui5-label>
+					<ui5-title>{{_filterByTitle}}</ui5-title>
 				{{else}}
 					<div class="ui5-vsd-bar-title">
-						<ui5-label class="ui5-vsd-title">{{_dialogTitle}}</ui5-label>
+						<ui5-title class="ui5-vsd-title">{{_dialogTitle}}</ui5-title>
 						{{#if hasPagination}}
 							<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
 									<ui5-segmented-button-item
@@ -68,7 +68,7 @@
 						sort-by>
 						<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
 						{{#each _currentSettings.sortBy}}
-							<ui5-li ?selected="{{this.selected}}">{{this.text}}</ui5-li>
+							<ui5-li data-ui5-external-action-item-index="{{@index}}" ?selected="{{this.selected}}">{{this.text}}</ui5-li>
 						{{/each}}
 					</ui5-list>
 				</div>

@@ -4,10 +4,6 @@
 	min-height: 2rem;
 }
 
-:host(:not([with-padding])) {
-	--_ui5_popup_content_padding: 0;
-}
-
 :host([opened]) {
 	display: inline-block;
 }
@@ -17,8 +13,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 1rem;
-	box-shadow: var(--sapContent_HeaderShadow);
+	width:100%;
 }
 
 :host [dir="rtl"] .ui5-responsive-popover-header {

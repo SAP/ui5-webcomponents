@@ -61,6 +61,7 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | `accessibleNameRef`                           | `aria-label`    | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
 | `accessibleRole`                              | `role`          | Sets the accessible aria role of the component.                                                                                                                                                     |
 | `accessibilityTexts` (`FlexibleColumnLayout`) | `aria-label`    | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
+| `accessibilityAttributes`                     | `aria-expanded`, `aria-haspopup`, `aria-controls`    | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. |
 | `accessibilityRoles` (`FlexibleColumnLayout`) | `role`          | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
 | `required`                                    | `aria-required` | Defines whether the component is required.                                                                                                                                                          |
 | `readonly`                                    | `aria-readonly` | Defines whether the component is read-only.                                                                                                                                                         |
@@ -118,7 +119,7 @@ The `accessible-name-ref` property is currently supported in:
 
 ### accessibilityTexts
 
-This property accepts `object` with properties values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout). 
+This property accepts `object` with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout). 
 
 Setting the property on the custom element as:
 ```html
@@ -141,6 +142,33 @@ Will result in the shadow DOM as:
     </span>
     ...
 </div>
+```
+
+---
+
+### accessibilityAttributes
+
+This property accepts an `object` with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button/). 
+
+Setting the property on the custom element as:
+```html
+<ui5-button id="button">...</ui5-button>
+<ui5-dialog id="dialogIdentificator">...</ui5-dialog>
+
+<script>
+    const component = document.getElemetnById("button");
+    component.accessibilityAttributes = {
+        hasPopup: "dialog",
+        controls: "dialogIdentificator"
+    };
+</script>
+```
+
+Will result in the shadow DOM as: 
+```html
+<button type="button" class="ui5-button-root" part="button" aria-controls="dialogIdentificator" aria-haspopup="dialog">
+	...
+</button>
 ```
 
 ---

@@ -21,6 +21,8 @@
     "./bundle.esm.js": "./bundle.esm.js",
     "./bundle.es5.js": "./bundle.es5.js",
     "./bundle.common.js": "./bundle.common.js",
+    "./bundle.scoped.esm.js": "./bundle.scoped.esm.js",
+    "./bundle.scoped.es5.js": "./bundle.scoped.es5.js",
     "./*": "./dist/*"
   },
   "scripts": {
@@ -49,6 +51,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.1.2",
-    "chromedriver": "96.0.0"
+    "chromedriver": "98.0.0"
   }
 }

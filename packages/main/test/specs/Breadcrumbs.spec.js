@@ -216,4 +216,21 @@ describe("Breadcrumbs general interaction", () => {
 		// Check
 		assert.strictEqual(await link.getProperty("ariaLabel"), expectedAriaLabel, "label for last link is correct");
 	});
+
+	it("cancels default if item-click event listener calls preventDefault", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		const initialUrl = await browser.getUrl();
+
+		// Act
+		await link.click();
+
+		// Check
+		const eventResult = await browser.$("#result");
+		const url = await browser.getUrl();
+		assert.strictEqual(url, initialUrl, "url should not have changed");
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+	});
+
 });

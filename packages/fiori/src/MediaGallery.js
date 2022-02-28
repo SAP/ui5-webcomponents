@@ -460,7 +460,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	_onThumbnailClick(event) {
-		const item = event.target.closest("ui5-media-gallery-item");
+		const item = event.target.closest("[ui5-media-gallery-item]");
 
 		if (item.disabled) {
 			return;

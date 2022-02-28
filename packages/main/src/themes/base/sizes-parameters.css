@@ -2,7 +2,9 @@
 	/* Calendar */
 	--_ui5_calendar_height: 24.5rem;
 	--_ui5_calendar_width: 20.5rem;
-	--_ui5_calendar_padding: 0.75rem;
+	--_ui5_calendar_padding: 1rem;
+	--_ui5_calendar_left_right_padding:  0.5rem;
+	--_ui5_calendar_top_bottom_padding: 1rem;
 	--_ui5_calendar_header_height: 3rem;
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
@@ -40,6 +42,7 @@
 	--_ui5_list_item_title_size: var(--sapFontLargeSize);
 	--_ui5_list_item_img_size: 3rem;
 	--_ui5_list_item_img_margin: 0.5rem 0.75rem 0.5rem 0rem;
+	--_ui5_list_item_dropdown_base_height: 2.5rem;
 	--_ui5_list_item_base_height: 2.75rem;
 	--_ui5_list_item_icon_size: 1.125rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
@@ -131,7 +134,8 @@
 	/* Calendar */
 	--_ui5_calendar_height: 18rem;
 	--_ui5_calendar_width: 17.75rem;
-	--_ui5_calendar_padding: 0.5rem;
+	--_ui5_calendar_left_right_padding: 0.25rem;
+	--_ui5_calendar_top_bottom_padding: 0.5rem;
 	--_ui5_calendar_header_height: 2rem;
 	--_ui5_calendar_header_arrow_button_width: 2rem;
 	--_ui5_calendar_header_padding: 0;
@@ -197,6 +201,7 @@
 	--_ui5_list_item_cb_margin_right: .5rem;
 	--_ui5_list_item_title_size: var(--sapFontSize);
 	--_ui5_list_item_img_margin: 0.55rem 0.75rem 0.5rem 0rem;
+	--_ui5_list_item_dropdown_base_height: 2rem;
 	--_ui5_list_item_base_height: 2rem;
 	--_ui5_list_item_icon_size: 1rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
@@ -234,16 +239,11 @@
 	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
 	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
 	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
-	--_ui5_switch_no_label_width_horizon: var(--_ui5_switch_compact_no_label_width_horizon);
 	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
 	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
 
 	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom);
 	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right);
-	--_ui5_switch_root_outline_top_bottom_horizon: var(--_ui5_switch_compact_root_outline_top_bottom_horizon);
-	--_ui5_switch_root_outline_left_right_horizon: var(--_ui5_switch_compact_root_outline_left_right_horizon);
-	--_ui5_switch_root_outline_top_bottom_hcb: var(--_ui5_switch_compact_root_outline_top_bottom_hcb);
-	--_ui5_switch_root_outline_left_right_hcb: var(--_ui5_switch_compact_root_outline_left_right_hcb);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;

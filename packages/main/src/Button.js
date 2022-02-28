@@ -9,6 +9,7 @@ import {
 	isPhone,
 	isTablet,
 	isCombi,
+	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -117,10 +118,10 @@ const metadata = {
 		 * <b>Note:</b> Tooltips should only be set to icon-only buttons.
 		 * @type {string}
 		 * @defaultvalue: ""
-		 * @private
-		 * @since 1.0.0-rc.11
+		 * @public
+		 * @since 1.2.0
 		 */
-		title: {
+		tooltip: {
 			type: String,
 		},
 
@@ -157,9 +158,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -172,7 +173,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0
@@ -183,13 +184,35 @@ const metadata = {
 		},
 
 		/**
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.8
+		 * An object of strings that defines several additional accessibility attribute values
+		 * for customization depending on the use case.
+		 *
+		 * It supports the following fields:
+		 *
+		 * <ul>
+		 * 		<li><code>expanded</code>: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+		 *			<ul>
+		 *				<li><code>true</code></li>
+		 *				<li><code>false</code></li>
+		 *			</ul>
+		 * 		</li>
+		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
+		 * 			<ul>
+		 *				<li><code>Dialog</code></li>
+		 *				<li><code>Grid</code></li>
+		 *				<li><code>ListBox</code></li>
+		 *				<li><code>Menu</code></li>
+		 *				<li><code>Tree</code></li>
+		 * 			</ul>
+		 * 		</li>
+		 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
+		 * </ul>
+		 * @type {object}
+		 * @public
+		 * @since 1.2.0
 		 */
-		ariaExpanded: {
-			type: String,
+		accessibilityAttributes: {
+			type: Object,
 		},
 
 		/**
@@ -201,10 +224,6 @@ const metadata = {
 		},
 
 		_iconSettings: {
-			type: Object,
-		},
-
-		_buttonAccInfo: {
 			type: Object,
 		},
 
@@ -418,7 +437,9 @@ class Button extends UI5Element {
 			return;
 		}
 		this.active = false;
-		this.focused = false;
+		if (isDesktop()) {
+			this.focused = false;
+		}
 	}
 
 	_onfocusin(event) {
@@ -427,7 +448,9 @@ class Button extends UI5Element {
 		}
 
 		event.isMarked = "button";
-		this.focused = true;
+		if (isDesktop()) {
+			this.focused = true;
+		}
 	}
 
 	get hasButtonType() {
@@ -439,15 +462,6 @@ class Button extends UI5Element {
 			return node.nodeType !== Node.COMMENT_NODE
 			&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0);
 		}).length;
-	}
-
-	get accInfo() {
-		return {
-			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
-			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
-			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
-			"title": this.title || (this._buttonAccInfo && this._buttonAccInfo.title),
-		};
 	}
 
 	static typeTextMappings() {
@@ -473,7 +487,7 @@ class Button extends UI5Element {
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.title;
+		return this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {

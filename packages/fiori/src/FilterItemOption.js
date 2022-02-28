@@ -10,7 +10,7 @@ const metadata = {
 		 * Defines the text of the component.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 */
 		text: {
@@ -21,7 +21,7 @@ const metadata = {
 		 * Defines whether the option is selected
 		 *
 		 * @public
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 */
 		selected: {

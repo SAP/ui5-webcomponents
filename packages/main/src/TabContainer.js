@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -22,6 +23,7 @@ import {
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
 	TABCONTAINER_OVERFLOW_MENU_TITLE,
 	TABCONTAINER_END_OVERFLOW,
+	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -289,6 +291,15 @@ const metadata = {
  * <ul>
  * <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li>
  * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
+ * </ul>
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-tabcontainer</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>content - Used to style the content of the component</li>
  * </ul>
  *
  * <h3>Keyboard Handling</h3>
@@ -595,11 +606,13 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_handleResize() {
+	async _handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		}
 		this._updateMediaRange();
+
+		await renderFinished(); // await the tab container to have rendered its representation of tabs
 		this._setItemsForStrip();
 	}
 
@@ -893,7 +906,11 @@ class TabContainer extends UI5Element {
 		const focusableTabs = [];
 
 		if (!this._getStartOverflow().hasAttribute("hidden")) {
-			focusableTabs.push(this._getStartOverflow().querySelector("[ui5-button]"));
+			if (this._getCustomStartOverflowBtnDOM()) {
+				focusableTabs.push(this._getCustomStartOverflowBtnDOM());
+			} else {
+				focusableTabs.push(this._getStartOverflowBtnDOM());
+			}
 		}
 
 		this._getTabs().forEach(tab => {
@@ -903,7 +920,11 @@ class TabContainer extends UI5Element {
 		});
 
 		if (!this._getEndOverflow().hasAttribute("hidden")) {
-			focusableTabs.push(this._getEndOverflow().querySelector("[ui5-button]"));
+			if (this._getCustomEndOverflowBtnDOM()) {
+				focusableTabs.push(this._getCustomEndOverflowBtnDOM());
+			} else {
+				focusableTabs.push(this._getEndOverflowBtnDOM());
+			}
 		}
 
 		return focusableTabs;
@@ -931,6 +952,22 @@ class TabContainer extends UI5Element {
 
 	_getEndOverflow() {
 		return this.shadowRoot.querySelector(".ui5-tc__overflow--end");
+	}
+
+	_getCustomStartOverflowBtnDOM() {
+		return this.shadowRoot.querySelector("slot[name=startOverflowButton]");
+	}
+
+	_getStartOverflowBtnDOM() {
+		return this._getStartOverflow().querySelector("[ui5-button]");
+	}
+
+	_getCustomEndOverflowBtnDOM() {
+		return this.shadowRoot.querySelector("slot[name=overflowButton]");
+	}
+
+	_getEndOverflowBtnDOM() {
+		return this._getEndOverflow().querySelector("[ui5-button]");
 	}
 
 	async _respPopover() {
@@ -1000,6 +1037,10 @@ class TabContainer extends UI5Element {
 
 	get overflowButtonText() {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
+	}
+
+	get popoverCancelButtonText() {
+		return TabContainer.i18nBundle.getText(TABCONTAINER_POPOVER_CANCEL_BUTTON);
 	}
 
 	get animate() {

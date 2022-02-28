@@ -19,6 +19,7 @@ import {
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import HasPopup from "./types/HasPopup.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -169,7 +170,7 @@ const metadata = {
 		/**
 		 * Defines the aria-label attribute for the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -180,7 +181,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -243,8 +244,8 @@ const metadata = {
 		 * @event
 		 * @allowPreventDefault
 		 * @public
-		 * @param {String} value The submitted value.
-		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
+		 * @param {string} value The submitted value.
+		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
 			details: {
@@ -263,8 +264,8 @@ const metadata = {
 		 * @event
 		 * @allowPreventDefault
 		 * @public
-		 * @param {String} value The submitted value.
-		 * @param {Boolean} valid Indicator if the value is in correct format pattern and in valid range.
+		 * @param {string} value The submitted value.
+		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
 			details: {
@@ -414,6 +415,7 @@ class DatePicker extends DateComponentBase {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
+		this.value = this.normalizeValue(this.value);
 		this.liveValue = this.value;
 	}
 
@@ -600,6 +602,7 @@ class DatePicker extends DateComponentBase {
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
 	 * @param {string} value A value to be tested against the current date format
+	 * @returns {boolean}
 	 * @public
 	 */
 	isValid(value = "") {
@@ -671,9 +674,8 @@ class DatePicker extends DateComponentBase {
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": "true",
+			"ariaHasPopup": HasPopup.Grid,
 			"ariaAutoComplete": "none",
-			"role": "combobox",
 			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaRequired": this.required,

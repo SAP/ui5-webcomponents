@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -41,7 +42,7 @@ const metadata = {
 		/**
 		 * Defines the HEX code of the currently selected color
 		 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		hex: {
@@ -52,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		_mainColor: {
@@ -85,6 +86,20 @@ const metadata = {
 		_hue: {
 			type: Integer,
 			defaultValue: 0,
+		},
+
+		/**
+		 * @private
+		 */
+		_isSelectedColorChanged: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		 _isHueValueChanged: {
+			type: Boolean,
 		},
 
 		/**
@@ -326,6 +341,8 @@ class ColorPicker extends UI5Element {
 		this.selectedHue = event.target.value;
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
+		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
+		this._isHueValueChanged = true;
 
 		const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
 
@@ -341,6 +358,10 @@ class ColorPicker extends UI5Element {
 		// Shorthand Syntax
 		if (newValue.length === 3) {
 			newValue = `${newValue[0]}${newValue[0]}${newValue[1]}${newValue[1]}${newValue[2]}${newValue[2]}`;
+		}
+
+		if (newValue === this.hex) {
+			return;
 		}
 
 		this.hex = newValue;
@@ -425,9 +446,18 @@ class ColorPicker extends UI5Element {
 			y: y - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
+		// Idication that changes to the color settings are triggered as a result of user pressing over the main color section.
+		this._isSelectedColorChanged = true;
+
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
 			this._setColor(HSLToRGB(tempColor));
+		}
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._handleHEXChange(event);
 		}
 	}
 
@@ -435,7 +465,7 @@ class ColorPicker extends UI5Element {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
 
-		const h = Math.round(this._hue / 4.25), // 0 ≤ H < 360
+		const h = this._hue / 4.25, // 0 ≤ H < 360
 			// 0 ≤ S ≤ 1
 			s = 1 - +(Math.round((y / 256) + "e+2") + "e-2"), // eslint-disable-line
 			// 0 ≤ V ≤ 1
@@ -488,7 +518,15 @@ class ColorPicker extends UI5Element {
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		this._hue = this.selectedHue ? this.selectedHue : Math.round(hslColours.h * 4.25);
+		if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.
+			this._isSelectedColorChanged = false;
+		} else if (this._isHueValueChanged) { // We shouldn't recalculate the hue value when user changes the hue slider.
+			this._isHueValueChanged = false;
+			this._hue = this.selectedHue ? this.selectedHue : this._hue;
+		} else {
+			this._hue = Math.round(hslColours.h * 4.25);
+		}
+
 		this._setMainColor(this._hue);
 	}
 

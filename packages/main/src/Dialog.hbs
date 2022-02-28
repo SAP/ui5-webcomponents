@@ -7,7 +7,8 @@
 			id="ui5-popup-header"
 			tabindex="{{_headerTabIndex}}"
 			@keydown="{{_onDragOrResizeKeyDown}}"
-			@mousedown="{{_onDragMouseDown}}">
+			@mousedown="{{_onDragMouseDown}}"
+			part="header">
 			{{#if header.length }}
 				<slot name="header"></slot>
 			{{else}}
@@ -19,7 +20,7 @@
 
 {{#*inline "afterContent"}}
 	{{#if footer.length }}
-		<footer class="ui5-popup-footer-root">
+		<footer class="ui5-popup-footer-root" part="footer">
 			<slot name="footer"></slot>
 		</footer>
 	{{/if}}

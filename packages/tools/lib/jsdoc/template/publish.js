@@ -2804,6 +2804,10 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 						attrib("export", undefined, '', true);
 					}
 
+					if (member.noattribute) {
+						attrib("noattribute", true);
+					}
+
 					if (member.readonly) {
 						attrib("readonly", member.readonly, null);
 					}
@@ -2815,7 +2819,14 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 					if ( member.since ) {
 						attrib("since", extractVersion(member.since));
 					}
-					attrib("type", listTypes(member.type));
+
+					var type = listTypes(member.type);
+					attrib("type", type);
+
+					if ((type === "object" || type === "Object") && visibility(member) === "public") {
+						attrib("noattribute", true);
+					}
+
 					tag("description", normalizeWS(member.description), true);
 					if (member.defaultvalue) {
 						attrib("defaultValue", member.defaultvalue);
@@ -3854,7 +3865,7 @@ function createAPIJS(symbols, filename) {
 
 	var output = [];
 
-	var rkeywords = /^(?:abstract|as|boolean|break|byte|case|catch|char|class|continue|const|debugger|default|delete|do|double|else|enum|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|is|long|namespace|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|use|var|void|volatile|while|with)$/;
+	var rkeywords = /^(?:abstract|as|boolean|break|byte|case|catch|char|class|continue|const|debugger|default|delete|do|double|else|enum|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|is|long|namespace|native|new|null|noattribute|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|use|var|void|volatile|while|with)$/;
 
 	function isNoKeyword($) { return !rkeywords.test($.name); }
 
