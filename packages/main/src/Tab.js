@@ -399,6 +399,10 @@ class Tab extends UI5Element {
 			classes.push("ui5-tab-overflow-item--disabled");
 		}
 
+		if (this.selected) {
+			classes.push("ui5-tab-overflow-item--selectedSubTab");
+		}
+
 		return classes.join(" ");
 	}
 
