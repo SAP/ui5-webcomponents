@@ -1,11 +1,11 @@
-commit a3eca7ade0a03a6ada41f23497996bf5bd38bf57
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Fri Feb 25 18:19:30 2022 +0200
+commit 0bf5b3214fef59c5d437e2ee59c011fda2e519e2
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Mon Feb 28 15:27:21 2022 +0200
 
-    feat(ui5-view-settings-dialog): add more event.details to confirm/cancel events (#4772)
+    feat(ui5-multi-combobox, ui5-tokenizer): Full Home/End implementation (#4796)
     
-    The confirm event now contains two more fields:
-    sortByItem selected item (reference to element)
-    sortDescending Boolean result for SortOrder (if is true - Descending order is selected)
+    * Tokenizer: Full Home/End implementation
     
-    Fixes: #4539
+    * Enable CTRL+Home/End for the items in the picker
+    
+    * Fix tests
