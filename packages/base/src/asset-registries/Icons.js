@@ -1,6 +1,6 @@
 import getSharedResource from "../getSharedResource.js";
 import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
-import { isTheme } from "../config/Theme.js";
+import { isThemeFamily } from "../config/Theme.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
@@ -118,7 +118,7 @@ const _getRegisteredNames = async () => {
 };
 
 const _getDefaultCollection = () => {
-	return isTheme("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
+	return isThemeFamily("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
 };
 
 const _normalizeCollection = collectionName => {
