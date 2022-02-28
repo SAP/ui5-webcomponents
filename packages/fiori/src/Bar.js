@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component middle area needs to be centered between start and end area
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @private
 		 */
 		_shrinked: {
@@ -60,7 +60,7 @@ const metadata = {
 		/**
 		 * Defines the content in the middle of the bar
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot middleContent
 		 * @public
 		 */
 		"default": {

@@ -87,6 +87,17 @@
 	</div>
 
 	<div class="demo-section">
+		<span>allow-custom-values and predefined value</span>
+
+		<br>
+		<ui5-multi-combobox id="multi-acv" allow-custom-values value="com">
+			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
+			<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
 		<span>Validating input and placeholder </span>
 
 		<br>
@@ -141,7 +152,7 @@
 		<span>value state warning </span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text"
+		<ui5-multi-combobox id="mcb-warning" allow-custom-values placeholder="Some initial text"
 			value-state="Warning">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
@@ -198,6 +209,26 @@
 			<ui5-mcb-item text="Longest word in the world"></ui5-mcb-item>
 			<ui5-mcb-item text="Longest word in the world 1"></ui5-mcb-item>
 			<ui5-mcb-item text="Longest word in the world 2"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
+		<span>MultiComboBox with more items</span>
+
+		<br>
+		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" id="mcb-items">
+			<ui5-mcb-item text="Item 0" id="first-item"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 1"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 2"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 3"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 4"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 5"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 0" ></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 1"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 2"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 3"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 4"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 

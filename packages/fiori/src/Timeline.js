@@ -4,8 +4,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
+import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
 
 // Styles
@@ -42,6 +42,18 @@ const metadata = {
 		layout: {
 			type: TimelineLayout,
 			defaultValue: TimelineLayout.Vertical,
+		},
+
+		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.2.0
+		 */
+		accessibleName: {
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
@@ -115,7 +127,9 @@ class Timeline extends UI5Element {
 	}
 
 	get ariaLabel() {
-		return Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+		return this.accessibleName
+			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL)} ${this.accessibleName}`
+			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
 	}
 
 	_onfocusin(event) {

@@ -324,6 +324,66 @@ const IllustrationMessageTypes = {
 	 */
 	UploadCollection: "UploadCollection",
 	/**
+	* "TntChartArea" illustration type.
+	* @public
+	* @type {TntChartArea}
+	*/
+	TntChartArea: "TntChartArea",
+	/**
+	* "TntChartArea2" illustration type.
+	* @public
+	* @type {TntChartArea2}
+	*/
+	TntChartArea2: "TntChartArea2",
+	/**
+	* "TntChartBar" illustration type.
+	* @public
+	* @type {TntChartBar}
+	*/
+	TntChartBar: "TntChartBar",
+	/**
+	* "TntChartBPMNFlow" illustration type.
+	* @public
+	* @type {TntChartBPMNFlow}
+	*/
+	TntChartBPMNFlow: "TntChartBPMNFlow",
+	/**
+	* "TntChartBullet" illustration type.
+	* @public
+	* @type {TntChartBullet}
+	*/
+	TntChartBullet: "TntChartBullet",
+	/**
+	* "TntChartDoughnut" illustration type.
+	* @public
+	* @type {TntChartDoughnut}
+	*/
+	TntChartDoughnut: "TntChartDoughnut",
+	/**
+	* "TntChartFlow" illustration type.
+	* @public
+	* @type {TntChartFlow}
+	*/
+	TntChartFlow: "TntChartFlow",
+	/**
+	* "TntChartGantt" illustration type.
+	* @public
+	* @type {TntChartGantt}
+	*/
+	TntChartGantt: "TntChartGantt",
+	/**
+	* "TntChartOrg" illustration type.
+	* @public
+	* @type {TntChartOrg}
+	*/
+	TntChartOrg: "TntChartOrg",
+	/**
+	* "TntChartPie" illustration type.
+	* @public
+	* @type {TntChartPie}
+	*/
+	TntChartPie: "TntChartPie",
+	/**
 	* "TntCodePlaceholder" illustration type.
 	* @public
 	* @type {TntCodePlaceholder}
@@ -335,6 +395,12 @@ const IllustrationMessageTypes = {
 	* @type {TntCompany}
 	*/
 	TntCompany: "TntCompany",
+	/**
+	* "TntComponents" illustration type.
+	* @public
+	* @type {TntComponents}
+	*/
+	TntComponents: "TntComponents",
 	/**
 	* "TntExternalLink" illustration type.
 	* @public
@@ -390,6 +456,12 @@ const IllustrationMessageTypes = {
 	*/
 	TntRadar: "TntRadar",
 	/**
+	* "TntSecrets" illustration type.
+	* @public
+	* @type {TntSecrets}
+	*/
+	TntSecrets: "TntSecrets",
+	/**
 	* "TntServices" illustration type.
 	* @public
 	* @type {TntServices}
@@ -420,6 +492,30 @@ const IllustrationMessageTypes = {
 	*/
 	TntSuccessfulAuth: "TntSuccessfulAuth",
 	/**
+	* "TntSystems" illustration type.
+	* @public
+	* @type {TntSystems}
+	*/
+	TntSystems: "TntSystems",
+	/**
+	* "TntTeams" illustration type.
+	* @public
+	* @type {TntTeams}
+	*/
+	TntTeams: "TntTeams",
+	/**
+	* "TntTools" illustration type.
+	* @public
+	* @type {TntTools}
+	*/
+	TntTools: "TntTools",
+	/**
+	* "TntUnableToLoad" illustration type.
+	* @public
+	* @type {TntUnableToLoad}
+	*/
+	TntUnableToLoad: "TntUnableToLoad",
+	/**
 	* "TntUnlock" illustration type.
 	* @public
 	* @type {TntUnlock}
@@ -431,6 +527,12 @@ const IllustrationMessageTypes = {
 	* @type {TntUnsuccessfulAuth}
 	*/
 	TntUnsuccessfulAuth: "TntUnsuccessfulAuth",
+	/**
+	* "TntUser2" illustration type.
+	* @public
+	* @type {TntUser2}
+	*/
+	TntUser2: "TntUser2",
 
 };
 

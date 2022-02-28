@@ -9,10 +9,16 @@
 
 .ui5-vsd-header > [ui5-bar] {
 	height: 4rem;
+	box-shadow: none;
+}
+
+.ui5-vsd-content {
+	margin: 0 -1rem;
 }
 
 .ui5-vsd-title {
 	margin-bottom: 0.3rem;
+	font-size: var(--ui5_title_level_5Size);
 }
 
 .ui5-vsd-start {
@@ -52,5 +58,10 @@
 
 [ui5-li-groupheader] {
 	overflow: hidden;
+}
+
+[ui5-dialog]::part(content) {
+	padding-top: 0;
+	padding-bottom: 0;
 }
 

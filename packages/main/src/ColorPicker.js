@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -41,7 +42,7 @@ const metadata = {
 		/**
 		 * Defines the HEX code of the currently selected color
 		 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		hex: {
@@ -52,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-		 * @type {String}
+		 * @type {string}
 		 * @private
 		 */
 		_mainColor: {
@@ -359,6 +360,10 @@ class ColorPicker extends UI5Element {
 			newValue = `${newValue[0]}${newValue[0]}${newValue[1]}${newValue[1]}${newValue[2]}${newValue[2]}`;
 		}
 
+		if (newValue === this.hex) {
+			return;
+		}
+
 		this.hex = newValue;
 		if (newValue.length !== 6 || !hexRegex.test(newValue)) {
 			this._wrongHEX = true;
@@ -447,6 +452,12 @@ class ColorPicker extends UI5Element {
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
 			this._setColor(HSLToRGB(tempColor));
+		}
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._handleHEXChange(event);
 		}
 	}
 

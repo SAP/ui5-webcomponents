@@ -1,6 +1,7 @@
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 import ToggleButton from "./ToggleButton.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import Icon from "./Icon.js";
 
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
@@ -48,7 +49,7 @@ const metadata = {
 		 * Defines the index of the item inside of the SegmentedButton.
 		 *
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 */
 		posInSet: {
 			type: String,
@@ -58,7 +59,7 @@ const metadata = {
 		 * Defines how many items are inside of the SegmentedButton.
 		 *
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 */
 		sizeOfSet: {
 			type: String,
@@ -97,6 +98,10 @@ class SegmentedButtonItem extends ToggleButton {
 
 	static get template() {
 		return SegmentedButtonItemTemplate;
+	}
+
+	static get dependencies() {
+		return [Icon];
 	}
 
 	get ariaDescription() {

@@ -29,7 +29,14 @@
 	<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
 	<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
 	<br>
-	<ui5-button id="btnOpenDialog">Open Streched Dialog</ui5-button>
+	<br>
+	<ui5-button id="btnOpenDialog">Open Stretched Dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="btnOpenDialogNoPaddings">Open Stretched Dialog - no paddings</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="btnOpenDialogWithAttr">Open with Attribute</ui5-button>
 	<br>
 	<br>
 	<ui5-button id="message">Open Message Dialog</ui5-button>
@@ -123,6 +130,10 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-dialog id="dlgAttr">
+		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
+		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
+	</ui5-dialog>
 
 	<ui5-dialog id="dialog" accessible-name="Resizable" stretch>
 		<div slot="header">
@@ -225,6 +236,66 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-dialog id="dialogNoPaddings" stretch class="noContentPaddingsDialog">
+		<div slot="header">
+			<ui5-title level="H2">No content paddings</ui5-title>
+		</div>
+
+		<div class="dialog3auto">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select id="mySelect">
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea id="area" placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+		<div class="dialog3auto">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+		<div class="dialog3auto">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div class="dialog3auto">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+		<div slot="footer" class="dialog4auto">
+			<div class="dialog5auto"></div>
+			<ui5-button id="btnCloseDialogNoPaddings">Close</ui5-button>
+		</div>
+
+	</ui5-dialog>
 
 
 	<ui5-dialog id="prevent-dialog" header-text="Message dialog">
@@ -386,14 +457,18 @@
 		<span>Hello World!</span>
 	</ui5-dialog>
 
-	<span id="scrollHelper" class="dialog9auto">SCroll Helper</span>
+	<div id="scrollHelper" class="dialog9scrollHelper">
+		<span>Scroll Helper</span>
+		<ui5-button id="scrolledBtn" class="scrolledBtn">open</ui5-button>
+	</div>
 
 	<script>
-		cbCompact.addEventListener("change", function () {
+		cbCompact.addEventListener("ui5-change", function () {
 			document.body.classList.toggle("ui5-content-density-compact", cbCompact.checked);
 		});
 
-		cbScrollable.addEventListener("change", function () {
+		cbScrollable.addEventListener("ui5-change", function () {
+			console.error("change")
 			scrollHelper.style.display = cbScrollable.checked ? "block" : "none";
 		});
 
@@ -402,8 +477,29 @@
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.show();
 		});
+
+		btnOpenDialogNoPaddings.addEventListener("click", function () {
+			window["dialogNoPaddings"].show();
+		});
+
 		btnCloseDialog.addEventListener("click", function () {
 			dialog.close();
+		});
+
+		btnOpenDialogWithAttr.addEventListener("click", function () {
+			dlgAttr.setAttribute("open", "");
+		});
+
+		btnCloseWithMethod.addEventListener("click", function () {
+			dlgAttr.close();
+		});
+
+		btnCloseWithAttr.addEventListener("click", function () {
+			dlgAttr.removeAttribute("open");
+		});
+
+		btnCloseDialogNoPaddings.addEventListener("click", function () {
+			window["dialogNoPaddings"].close();
 		});
 
 		prevent.addEventListener("click", function () {
@@ -488,6 +584,10 @@
 
 		window["btn-acc-name-ref"].addEventListener("click", function () {
 			window["dialog-acc-name-ref"].show();
+		});
+
+		window["scrolledBtn"].addEventListener("click", function () {
+			window["dialog"].show();
 		});
 
 	</script>

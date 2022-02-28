@@ -6,6 +6,7 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
+import Icon from "./Icon.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
 // Texts
@@ -122,6 +123,10 @@ class RangeSlider extends SliderBase {
 			start: "startValue",
 			end: "endValue",
 		};
+	}
+
+	static get dependencies() {
+		return [Icon];
 	}
 
 	constructor() {
@@ -502,7 +507,7 @@ class RangeSlider extends SliderBase {
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
 	 *
-	 * @param {String} valuePropAffectedByInteraction The value that will get modified by the interaction
+	 * @param {string} valuePropAffectedByInteraction The value that will get modified by the interaction
 	 * @private
 	 */
 	_setAffectedValue(valuePropAffectedByInteraction) {

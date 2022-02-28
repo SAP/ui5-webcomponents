@@ -506,11 +506,243 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
 		});
+
+		it ("BACKSPACE should delete token and place the focus on the previous one", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const secondToken = tokens[1];
+
+			await secondToken.click();
+			await mcb.keys("Backspace");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 2, "should have two tokens");
+			assert.equal(await tokens[0].getProperty("focused"), true, "Previous token is focused");
+		});
+
+		it ("DELETE should delete token and place the focus on the next one", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys("ArrowLeft");
+
+			await mcb.keys("Delete");
+
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 2, "should have two tokens");
+			assert.equal(await tokens[1].getProperty("focused"), true, "Previous token is focused");
+		});
+
+		it ("BACKSPACE should delete token all selected tokens and place the focus on the first token before the deleted ones", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-items");
+			const input = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const fourthToken = tokens[3];
+
+			await fourthToken.click();
+			await mcb.keys(["Shift", "ArrowLeft"]);
+			await mcb.keys("Backspace");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 3, "should have three tokens");
+			assert.equal(await tokens[1].getProperty("focused"), true, "Second token is focused");
+		});
+
+		it ("DELETE should delete token all selected tokens and place the focus on the first token after the deleted ones", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-items");
+			const input = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const fourthToken = tokens[3];
+
+			await fourthToken.click();
+			await mcb.keys(["Shift", "ArrowLeft"]);
+			await mcb.keys("Delete");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "should have two tokens");
+			assert.equal(await tokens[2].getProperty("focused"), true, "Last token is focused");
+		});
+
+		it ("should focus input after all tokens are deleted", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-compact");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Shift", "ArrowLeft"]);
+			await mcb.keys("Delete");
+
+			assert.equal(await mcb.getProperty("focused"), true, "Input should be focused");
+		});
+
+		it ("first HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await mcb.click();
+			await input.keys(['c', 'o', 'm', 'p']);
+			await input.keys("Home");
+
+			const caretPosition = await browser.executeAsync(done => {
+				return done(document.querySelector("#mcb").shadowRoot.querySelector("input").selectionStart);
+			});
+
+			assert.equal(await caretPosition, 0, "The caret is at the start of the input");
+
+			await input.keys("Home");
+			assert.equal(await tokens[0].getProperty("focused"), true, "The first token is focused");
+
+			await input.keys("End");
+			assert.equal(await tokens[tokens.length - 1].getProperty("focused"), true, "The last token is focused");
+		
+			await input.keys("End");
+			assert.equal(await mcb.getProperty("focused"), true, "The input is focused");
+		});
+
+		it ("should close the picker and focus the next element on TAB", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const mcb2 = await browser.$("#mcb-items");
+
+			await mcb.click();
+			await mcb.keys("F4");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+
+			await mcb2.keys("F4");
+			await mcb2.keys(["Shift", "Tab"]);
+
+			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed");
+			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused");
+
+			await mcb.keys(["a", "b", "c"]);
+			await mcb.keys("F4");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb.getProperty("value"), "abc", "The previous control value is set");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+		});
+
+		it ("should close the picker and focus the next element on TAB over an item or value state header", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-warning");
+			const input = await mcb.shadow$("input");
+			const mcb2 = await browser.$("#mcb-error");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on value state header");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on value state header");
+
+			await mcb2.keys("F4");
+			await mcb2.keys("ArrowDown");
+			await mcb2.keys("ArrowDown");
+			await mcb2.keys(["Shift", "Tab"]);
+
+			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed after TAB on suggestion item");
+			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused after TAB on suggestion item");
+
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Tab");
+
+			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
+		});
+
+		it ("should select all filtered items on CTRL+A", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 6, "All items are selected");
+
+			await mcb.keys(["Control", "a"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 0, "All items are deselected");
+
+			await input.click();
+			await mcb.keys("c");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 3, "All filtered items are selected");
+
+			await mcb.keys(["Control", "a"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
+		});
 	});
 
 	describe("General", () => {
 		before(async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+		});
+
+		it ("tests text selection on focus", async () => {
+			const mcb = await browser.$("#multi-acv");
+			const mcb2 = await browser.$("#mcb-with-placeholder");
+			
+			await mcb.click();
+
+			const selectionStartIndex = await browser.execute(() => {
+				return document.querySelector("#multi-acv").shadowRoot.querySelector("input").selectionStart;
+			});
+			const selectionEndIndex = await browser.execute(() => {
+				return document.querySelector("#multi-acv").shadowRoot.querySelector("input").selectionEnd;
+			});
+
+			assert.equal(await selectionStartIndex, 0, "The selection starts from the beginning of the value");
+			assert.equal(await selectionEndIndex, 3, "The whole value is selected");
+
+			await mcb.keys("Tab");
+			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
+
+			await mcb2.keys(["Shift", "Tab"]);
+			assert.equal(await selectionStartIndex, 0, "The selection starts from the beginning of the value");
+			assert.equal(await selectionEndIndex, 3, "The whole value is selected");
+
+
 		});
 
 		it ("tests two-column layout", async () => {

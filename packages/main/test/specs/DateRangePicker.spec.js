@@ -39,6 +39,17 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = await browser.$("#daterange-picker2");
 
 		assert.strictEqual(await daterangepicker.getProperty("delimiter"), "@", "The delimiter is set to @");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("Feb 25, 2022 @ Feb 28, 2022");
+		await daterangepicker.keys("Enter");
+		await daterangepicker.setAttribute("delimiter", "###");
+
+		assert.strictEqual(await daterangepicker.getAttribute("value"), "Feb 25, 2022 ### Feb 28, 2022", "Value is updated with the new delimiter");
+
+		await daterangepicker.doubleClick();
+		await daterangepicker.keys("Backspace");
+		await daterangepicker.keys("Enter");
 	});
 
 	it("startDateValue and endDateValue getter", async () => {

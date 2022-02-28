@@ -133,4 +133,44 @@ describe("TabContainer general interaction", () => {
 
 	});
 
+	it("tests removing of responsive paddings for the content", async () => {
+		const tabContainer = await browser.$(".tabContainerNoContentPaddings");
+		const expectedContentPadding = "0px";
+		const actualContentPadding = await tabContainer.shadow$(".ui5-tc__content").getCSSProperty("padding-left");
+
+		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "tabContainer has correct padding set on the content");
+	});
+
+	it("tests custom overflow buttons via slots", async () => {
+		await browser.setWindowSize(1000, 1080);
+
+		const tabContainer = await browser.$("#tabContainerCustomOverflowButtons");
+		const startOverflow = await tabContainer.shadow$("slot[name=startOverflowButton]");
+		const endOverflow = await tabContainer.shadow$("slot[name=overflowButton]");
+
+		assert.ok(startOverflow.isExisting(), "tabContainer has custom start overflow button");
+		assert.ok(endOverflow.isExisting(), "tabContainer has custom end overflow button");
+
+		assert.ok(startOverflow.isDisplayed(), "tabContainer has custom start overflow button displayed");
+		assert.ok(endOverflow.isDisplayed(), "tabContainer has custom end overflow button displayed ");
+
+		const startButton = await browser.$("#startOverflowButton");
+		startButton.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerCustomOverflowButtons");
+		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
+
+		let newlySelectedItem = await tabContainer.$("[selected]");
+
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "One", "The first item in the overflow is 1");
+
+		const endButton = await browser.$("#endOverflowButton");
+		endButton.click();
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
+
+		newlySelectedItem = await tabContainer.$("[selected]");
+
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Thirteen", "The first item in the overflow is 13");
+	});
 });
