@@ -1,0 +1,46 @@
+@import "../base/Switch-parameters.css";
+
+:root {
+	--_ui5_switch_width: 40px;
+	--_ui5_switch_no_label_width: 40px;
+	--_ui5_switch_height: 24px;
+	--_ui5_switch_outline: -4px;
+
+	--_ui5_switch_focus_width_size: var(--_ui5_switch_focus_width_size_horizon_exp);
+	--_ui5_switch_focus_height_size: var(--_ui5_switch_focus_height_size_horizon_exp);
+
+	--_ui5_switch_focus_outline: 2px solid var(--sapContent_FocusColor);
+	
+	--_ui5-switch-root-border-radius: 100px;
+	--_ui5-switch-root-box-shadow: 0 0 2px rgb(27 144 255 / 16%), 0 8px 16px rgb(27 144 255 / 16%);
+	--_ui5-switch-focus: none;
+	--_ui5_switch_root_outline_top_bottom: -0.25rem;
+	--_ui5_switch_root_outline_left_right: 0.125rem;;
+	--_ui5_switch_root_after_boreder_radius: 2rem;
+	--_ui5_switch_track_no_label_height: 24px;
+	--_ui5_switch_track_height: 24px;
+	--_ui5-switch-track-border: none;
+	--_ui5-switch_track-off-background: var(--sapContent_ShadowColor);
+	--_ui5-switch_track-on-background: #0070F2;
+	--_ui5-switch-track-transition: all .2s ease-in-out;
+	--_ui5_switch_track_disabled_checked_bg: var(--_ui5-switch_track-on-background);
+	--_ui5-switch_track-on-hover-color: #0057D2;
+	--_ui5_switch_disabled_opacity: 1;
+	
+	--_ui5_switch_handle_width: 25px;
+	--_ui5_switch_handle_height: 20px;
+	--_ui5-switch-handle-border: none;
+	--_ui5_switch_handle_bg: #fff;
+	--_ui5-switch-handle-left: 0.15625rem;
+	
+	--_ui5-switch-handle-icon-display: inline-block;
+	--_ui5-switch-slider-texts-display: none;
+	
+	/* Hover effects */
+	--_ui5-switch_track-off-hover-background: var(--sapNeutralColor);
+	--_ui5-switch_track-on-hover-background: #0057D2;
+	
+	/* Active effects */
+	--_ui5-switch_track-off-active-background: var(--sapTile_TitleTextColor);
+	--_ui5-switch_track-on-active-color: #0040B0;
+}
