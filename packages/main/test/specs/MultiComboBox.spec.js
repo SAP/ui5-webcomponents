@@ -675,7 +675,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await tokens[2].getProperty("selected"), false, "The last token is not selected");
 		});
 
-		it ("SHIFT + HOME should select all tokens from the current one to the last one", async () => {
+		it ("SHIFT + END should select all tokens from the current one to the last one", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
