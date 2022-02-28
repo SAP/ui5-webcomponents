@@ -4,6 +4,7 @@ import {
 	svg,
 	unsafeStatic,
 } from "lit-html/static.js";
+import { getFeature } from "../FeaturesRegistry.js";
 
 const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
 	if (typeof styleStrOrHrefsArr === "string") {
@@ -11,6 +12,12 @@ const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) =
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
 		templateResult = html`${styleStrOrHrefsArr.map(href => html`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
 	}
+
+	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
+	if (OpenUI5Enablement) {
+		templateResult = OpenUI5Enablement.setBusyLit(html, host, templateResult);
+	}
+
 	render(templateResult, domNode, { host });
 };
 
