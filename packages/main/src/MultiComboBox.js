@@ -597,7 +597,7 @@ class MultiComboBox extends UI5Element {
 
 		if (selectedItems.length > 0 && !focusedToken && items.indexOf(selectedItems[0]) !== -1) {
 			selectedItems[0].focus();
-		} else if (focusedToken && event.target === focusedToken) {
+		} else if (focusedToken && event.target === focusedToken && items.some(item => item.text === focusedToken.text)) {
 			items.find(item => item.text === focusedToken.text).focus();
 		} else {
 			items[0].focus();
