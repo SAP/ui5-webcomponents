@@ -587,22 +587,20 @@ class MultiComboBox extends UI5Element {
 
 	_handleShow(event) {
 		const items = this._filteredItems;
-		const listItems = this.list.items;
 		const selectedItems = this._getSelectedItems();
-		const selectedTokensCount = this._selectedTokensCount;
-		const selectedToken = this._tokenizer.tokens.find(token => token.selected);
+		const focusedToken = this._tokenizer.tokens.find(token => token.focused);
 
 		this._isOpenedByKeyboard = true;
 
 		event.preventDefault();
 		this.togglePopover();
 
-		if (selectedTokensCount > 1 || (selectedTokensCount === 0 && selectedItems.length > 0)) {
-			listItems[items.indexOf(selectedItems[0])].focus();
-		} else if (selectedTokensCount === 1 && event.target === selectedToken) {
-			listItems.find(item => item.textContent === selectedToken.text).focus();
+		if (selectedItems.length > 0 && !focusedToken && items.indexOf(selectedItems[0]) !== -1) {
+			selectedItems[0].focus();
+		} else if (focusedToken && event.target === focusedToken) {
+			items.find(item => item.text === focusedToken.text).focus();
 		} else {
-			listItems[0].focus();
+			items[0].focus();
 		}
 	}
 
