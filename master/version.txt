@@ -1,11 +1,10 @@
-commit 0bf5b3214fef59c5d437e2ee59c011fda2e519e2
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Mon Feb 28 15:27:21 2022 +0200
+commit dc070a12f5ce5860e013be052c8dc0fc5ca1f125
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Feb 28 15:52:04 2022 +0200
 
-    feat(ui5-multi-combobox, ui5-tokenizer): Full Home/End implementation (#4796)
+    feat: add ` sap_horizon_dark` and `sap_horizon_hcb(hcw)` theme params (#4722)
     
-    * Tokenizer: Full Home/End implementation
-    
-    * Enable CTRL+Home/End for the items in the picker
-    
-    * Fix tests
+    Updates to theming-base-content 11.1.35 to consume the updated params for sap_horizon and the new parameters for sap_horizon_dark, sap_horizon_hcb and sap_horizon_hcw themes.
+    Prepares folder structure and theme registration for the new sap_horizon_dark, sap_horizon_hcb and sap_horizon_hcw themes.
+    Initialise new themes with component parameters files (for sap_horizon_dark copied from sap_horizon, for sap_horizon_hcb/hcw copied from sap_fiori_3_hcb/hcw). After we merge the change, the teams will take from here and apply the needed changes based on the spec.
+    Ensures that the proper icons (5.x or 4.x) are used for all themes from the sap_horizon family.
