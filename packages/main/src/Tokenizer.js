@@ -13,6 +13,8 @@ import {
 	isRightCtrl,
 	isUpCtrl,
 	isDownCtrl,
+	isUpShift,
+	isDownShift,
 	isLeftShift,
 	isRightShift,
 	isLeftShiftCtrl,
@@ -262,23 +264,18 @@ class Tokenizer extends UI5Element {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
 
 		if (isLeft(event) || isRight(event)) {
+			event.preventDefault();
 			const nextIdx = this._calcNextTokenIndex(event.target, tokens, isRight(event));
 			tokens[nextIdx].focus();
 		}
 
 		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
-			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
+			return this._handleArrowCtrl(event, event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
 		}
 
-		if (isLeftCtrl(event)) {
+		if (isLeftShift(event) || isRightShift(event) || isUpShift(event) || isDownShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, false);
-		}
-
-		if (isLeftShift(event) || isRightShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
-			event.preventDefault();
-			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event) || isDownShift(event)));
 		}
 
 		if (isHome(event) || isEnd(event)) {
@@ -320,8 +317,11 @@ class Tokenizer extends UI5Element {
 		return nextIndex;
 	}
 
-	_handleArrowCtrl(focusedToken, tokens, backwards) {
+	_handleArrowCtrl(event, focusedToken, tokens, backwards) {
 		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+
+		event.preventDefault();
+
 		if (nextIndex === -1) {
 			return;
 		}

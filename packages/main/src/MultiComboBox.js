@@ -581,6 +581,10 @@ class MultiComboBox extends UI5Element {
 			this.togglePopover();
 		}
 
+		if (isDownShift(event) || isUpShift(event)) {
+			return;
+		}
+
 		if (isUp(event) || isDown(event) || isUpCtrl(event) || isArrowDownCtrl) {
 			this._handleArrowNavigation(event, isArrowDownCtrl);
 			return;
@@ -754,12 +758,12 @@ class MultiComboBox extends UI5Element {
 		const nextItemIdx = currentItemIdx + 1;
 		const prevItemIdx = currentItemIdx - 1;
 
-		if (isDownShift(event)) {
+		if (isDownShift(event) && items[nextItemIdx]) {
 			items[nextItemIdx].selected = items[currentItemIdx].selected;
 			items[nextItemIdx].focus();
 		}
 
-		if (isUpShift(event)) {
+		if (isUpShift(event) && items[prevItemIdx]) {
 			items[prevItemIdx].selected = items[currentItemIdx].selected;
 			items[prevItemIdx].focus();
 		}
