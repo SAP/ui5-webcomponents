@@ -10,6 +10,7 @@ const metadata = {
 		},
 	},
 };
+
 class OpenUI5Element extends UI5Element {
 	constructor() {
 		super();
