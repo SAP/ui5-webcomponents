@@ -1,0 +1,44 @@
+@import "../base/SliderBase-parameters.css";
+
+:root {
+	--_ui5_slider_progress_container_background: var(--sapButton_Track_Background);
+	--_ui5_slider_progress_container_dot_display: block;
+	--_ui5_slider_inner_min_width: 4rem;
+	--_ui5_slider_progress_background: var(--sapContent_Selected_ForegroundColor);
+	--_ui5_slider_handle_background: #FFF;
+	--_ui5_slider_handle_icon_display: inline-block;
+	--_ui5_slider_handle_border: 0.0625rem solid transparent;
+	--_ui5_slider_handle_border_radius: 0.5rem;
+	--_ui5_slider_handle_box_shadow: var(--sapContent_Selected_Shadow);
+	--_ui5_slider_handle_top: -0.563rem;
+	--_ui5_slider_handle_height: 1.5rem;
+	--_ui5_slider_handle_width: 2rem;
+	--_ui5_slider_handle_top: -0.75rem;
+	--_ui5_slider_handle_focused_top: -0.688rem;
+	--_ui5_slider_handle_focused_margin_left: -0.938rem;
+	--_ui5_slider_handle_font_family: "SAP-icons";
+	--_ui5_slider_handle_hover_border: 0.0625rem solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_slider_handle_focus_border: none;
+	--_ui5_slider_handle_active_border: var(--_ui5_slider_handle_focus_border);
+	--_ui5_slider_handle_box_shadow_focus: 0 0 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor);
+	--_ui5_slider_handle_outline: none;
+	--_ui5_slider_tooltip_background: var(--sapField_Focus_Background);
+	--_ui5_slider_tooltip_border: none;
+	--_ui5_slider_tooltip_border_radius: 0.5rem;
+	--_ui5_slider_tooltip_box_shadow: var(--sapContent_Shadow1);
+	--_ui5_range_slider_legacy_progress_focus_display: none;
+	--_ui5_range_slider_progress_focus_display: block;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_slider_icon_left: 0.125rem;
+	--_ui5_slider_icon_top: 0;
+	--_ui5_slider_handle_focused_top: -0.5625rem;
+	--_ui5_slider_handle_focused_margin_left: -0.6875rem;
+	--_ui5_range_slider_progress_focus_top: -0.9375rem;
+	--_ui5_range_slider_progress_focus_height: 1.6875rem;
+	--_ui5_range_slider_progress_focus_left: -1.1875rem;
+	--_ui5_range_slider_progress_focus_padding: 0 1rem 0 0.9375rem;
+}
