@@ -6,6 +6,8 @@ import {
 	isShow,
 	isDown,
 	isUp,
+	isPageUp,
+	isPageDown,
 	isSpace,
 	isRight,
 	isHome,
@@ -585,6 +587,14 @@ class MultiComboBox extends UI5Element {
 
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+	}
+
+	_handlePageUp(event) {
+		event.preventDefault();
+	}
+
+	_handlePageDown(event) {
+		event.preventDefault();
 	}
 
 	_handleBackspace(event) {
