@@ -38,10 +38,10 @@ export default { pathData, accData };`;
 
 
 
-const collectionTemplate = (name) => `import { isTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+const collectionTemplate = (name) => `import { isThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import pathDataV4 from "./v5/${name}.js";
 import pathDataV5 from "./v4/${name}.js";
-const pathData = isTheme("sap_horizon") ? pathDataV5 : pathDataV4;
+const pathData = isThemeFamily("sap_horizon") ? pathDataV5 : pathDataV4;
 export default { pathData };`;
 
 

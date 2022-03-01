@@ -183,7 +183,7 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
 	}
 
-	_afterDialogOpen(event) {
+	_beforeDialogOpen(event) {
 		this.open = true;
 		this.opened = true;
 		this._propagateDialogEvent(event);
