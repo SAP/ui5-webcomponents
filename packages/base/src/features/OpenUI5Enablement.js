@@ -79,8 +79,8 @@ const getBusyStyles = () => {
 	return busyStyles;
 };
 
-const setBusyLit = (html, host, templateResult) => {
-	if (host.isOpenUI5Component && host.__isComponentBusy) {
+const setBusyLit = (html, host, templateResult, forStaticArea) => {
+	if (host.isOpenUI5Component && host.__isBusy && !forStaticArea) {
 		templateResult = html`
 		<style>${getBusyStyles()}</style>
 		<div style="position:relative; height: 100%; width: 100%;">

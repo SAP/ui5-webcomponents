@@ -6,7 +6,7 @@ import {
 } from "lit-html/static.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
-const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
+const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, { host } = {}) => {
 	if (typeof styleStrOrHrefsArr === "string") {
 		templateResult = html`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
@@ -15,7 +15,7 @@ const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) =
 
 	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
 	if (OpenUI5Enablement) {
-		templateResult = OpenUI5Enablement.setBusyLit(html, host, templateResult);
+		templateResult = OpenUI5Enablement.setBusyLit(html, host, templateResult, forStaticArea);
 	}
 
 	render(templateResult, domNode, { host });
