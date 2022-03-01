@@ -1,0 +1,5 @@
+@import "../base/Select-parameters.css";
+
+:root {
+	--_ui5_select_hover_icon_left_border: none;
+}

@@ -1,24 +1,24 @@
 @import "../base/Avatar-parameters.css";
 
 :root {
-    --ui5-avatar-initials-color: var(--sapTextColor);
-    --ui5-avatar-initials-border: .0625rem solid var(--sapField_BorderColor);
-    --ui5-avatar-accent1: var(--sapBackgroundColor);
-    --ui5-avatar-accent2: var(--sapBackgroundColor);
-    --ui5-avatar-accent3: var(--sapBackgroundColor);
-    --ui5-avatar-accent4: var(--sapBackgroundColor);
-    --ui5-avatar-accent5: var(--sapBackgroundColor);
-    --ui5-avatar-accent6: var(--sapBackgroundColor);
-    --ui5-avatar-accent7: var(--sapBackgroundColor);
-    --ui5-avatar-accent8: var(--sapBackgroundColor);
-    --ui5-avatar-accent9: var(--sapBackgroundColor);
-    --ui5-avatar-accent10: var(--sapBackgroundColor);
-    --ui5-avatar-placeholder: var(--sapBackgroundColor);
-    --_ui5_avatar_outline: 0.125rem dotted var(--sapContent_FocusColor);
+	--ui5-avatar-initials-color: var(--sapTextColor);
+	--ui5-avatar-initials-border: .0625rem solid var(--sapField_BorderColor);
+	--ui5-avatar-accent1: var(--sapBackgroundColor);
+	--ui5-avatar-accent2: var(--sapBackgroundColor);
+	--ui5-avatar-accent3: var(--sapBackgroundColor);
+	--ui5-avatar-accent4: var(--sapBackgroundColor);
+	--ui5-avatar-accent5: var(--sapBackgroundColor);
+	--ui5-avatar-accent6: var(--sapBackgroundColor);
+	--ui5-avatar-accent7: var(--sapBackgroundColor);
+	--ui5-avatar-accent8: var(--sapBackgroundColor);
+	--ui5-avatar-accent9: var(--sapBackgroundColor);
+	--ui5-avatar-accent10: var(--sapBackgroundColor);
+	--ui5-avatar-placeholder: var(--sapBackgroundColor);
+	--_ui5_avatar_outline: 0.125rem dotted var(--sapContent_FocusColor);
 
-    --_ui5_avatar_fontsize_XS: 1rem;
-    --_ui5_avatar_fontsize_S: 1.125rem;
-    --_ui5_avatar_fontsize_M: 1.5rem;
-    --_ui5_avatar_fontsize_L: 2.25rem;
-    --_ui5_avatar_fontsize_XL: 3rem;
+	--_ui5_avatar_fontsize_XS: 1rem;
+	--_ui5_avatar_fontsize_S: 1.125rem;
+	--_ui5_avatar_fontsize_M: 1.5rem;
+	--_ui5_avatar_fontsize_L: 2.25rem;
+	--_ui5_avatar_fontsize_XL: 3rem;
 }

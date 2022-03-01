@@ -1,0 +1,5 @@
+@import "../base/Suggestions-parameters.css";
+
+:root {
+	--_ui5_suggestions_item_focus_border_radius: var(--sapElement_BorderCornerRadius);
+}
