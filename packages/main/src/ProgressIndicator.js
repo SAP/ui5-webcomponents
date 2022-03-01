@@ -5,6 +5,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Icon from "./Icon.js";
 import ProgressIndicatorTemplate from "./generated/templates/ProgressIndicatorTemplate.lit.js";
 import {
 	VALUE_STATE_ERROR,
@@ -136,6 +137,10 @@ class ProgressIndicator extends UI5Element {
 
 	static get template() {
 		return ProgressIndicatorTemplate;
+	}
+
+	static get dependencies() {
+		return [Icon];
 	}
 
 	constructor() {

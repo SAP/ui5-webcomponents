@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
+
+
+### Bug Fixes
+
+* correct scoping issues with several components ([#4820](https://github.com/SAP/ui5-webcomponents/issues/4820)) ([621dc20](https://github.com/SAP/ui5-webcomponents/commit/621dc20))
+* **ui5-flexible-column-layout:** fix accessibility of hidden columns ([#4811](https://github.com/SAP/ui5-webcomponents/issues/4811)) ([d9f514f](https://github.com/SAP/ui5-webcomponents/commit/d9f514f)), closes [#4789](https://github.com/SAP/ui5-webcomponents/issues/4789)
+* **ui5-media-gallery-item:** correct jsdoc ([#4819](https://github.com/SAP/ui5-webcomponents/issues/4819)) ([5783fa7](https://github.com/SAP/ui5-webcomponents/commit/5783fa7))
+* **ui5-view-settings-dialog:** improve `title` text accessibility  ([#4783](https://github.com/SAP/ui5-webcomponents/issues/4783)) ([88a13df](https://github.com/SAP/ui5-webcomponents/commit/88a13df)), closes [#4660](https://github.com/SAP/ui5-webcomponents/issues/4660)
+* **ui5-wizard:** prevent unnecessary content scrolling ([#4774](https://github.com/SAP/ui5-webcomponents/issues/4774)) ([751db3f](https://github.com/SAP/ui5-webcomponents/commit/751db3f))
+* scoped bundles ([#4745](https://github.com/SAP/ui5-webcomponents/issues/4745)) ([2cd4c7e](https://github.com/SAP/ui5-webcomponents/commit/2cd4c7e))
+
+
+### Features
+
+* **ui5-breadcrumbs:** allow preventDefault in item-click event listener ([#4589](https://github.com/SAP/ui5-webcomponents/issues/4589)) ([ccb4c83](https://github.com/SAP/ui5-webcomponents/commit/ccb4c83))
+* **ui5-button:** add new `tooltip` property ([#4737](https://github.com/SAP/ui5-webcomponents/issues/4737)) ([df8f013](https://github.com/SAP/ui5-webcomponents/commit/df8f013)), closes [#4689](https://github.com/SAP/ui5-webcomponents/issues/4689)
+* **ui5-button:** implement accessibilityAttributes property ([#4655](https://github.com/SAP/ui5-webcomponents/issues/4655)) ([d27c4b5](https://github.com/SAP/ui5-webcomponents/commit/d27c4b5)), closes [#3546](https://github.com/SAP/ui5-webcomponents/issues/3546)
+* **ui5-illustrated-message:** add TNT illustrations ([#4710](https://github.com/SAP/ui5-webcomponents/issues/4710)) ([822a73c](https://github.com/SAP/ui5-webcomponents/commit/822a73c))
+* **ui5-popup:** аdd default responsive paddings ([#4567](https://github.com/SAP/ui5-webcomponents/issues/4567)) ([ddc1e39](https://github.com/SAP/ui5-webcomponents/commit/ddc1e39)), closes [#4402](https://github.com/SAP/ui5-webcomponents/issues/4402)
+* **ui5-side-navigation:** make selection-change event preventable ([#4732](https://github.com/SAP/ui5-webcomponents/issues/4732)) ([d908465](https://github.com/SAP/ui5-webcomponents/commit/d908465)), closes [#4700](https://github.com/SAP/ui5-webcomponents/issues/4700)
+* **ui5-timeline:** add `accessible-name` support ([#4721](https://github.com/SAP/ui5-webcomponents/issues/4721)) ([0562e89](https://github.com/SAP/ui5-webcomponents/commit/0562e89)), closes [#4644](https://github.com/SAP/ui5-webcomponents/issues/4644)
+* **ui5-view-settings-dialog:** add more event.details to confirm/cancel events ([#4772](https://github.com/SAP/ui5-webcomponents/issues/4772)) ([a3eca7a](https://github.com/SAP/ui5-webcomponents/commit/a3eca7a)), closes [#4539](https://github.com/SAP/ui5-webcomponents/issues/4539)
+
+
+
+
+
 ## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
 
 
