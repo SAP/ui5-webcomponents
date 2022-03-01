@@ -68,7 +68,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Defines the content of the component.
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
 		 * @slot colors
 		 * @public
 		 */

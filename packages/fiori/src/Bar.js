@@ -60,7 +60,7 @@ const metadata = {
 		/**
 		 * Defines the content in the middle of the bar
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot middleContent
 		 * @public
 		 */
 		"default": {

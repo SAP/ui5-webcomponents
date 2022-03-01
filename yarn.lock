@@ -1117,10 +1117,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.34":
-  version "11.1.34"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.34.tgz#8fcd96c5c464fa1474786e6a50fec5ca5172b8b3"
-  integrity sha512-xzJ6eZHyxzJCuve6IVAhBkWoCUpM81Vgmfc4H1EJ/+gY7VTsJK4AXcHm/RTby+33zp4+b6NzM7tSL2RmxwsJtA==
+"@sap-theming/theming-base-content@11.1.35":
+  version "11.1.35"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.35.tgz#3f526afa9020a41e636d9d4b41ad363338ce879f"
+  integrity sha512-6OZQhpiUgKzT1u0ksJBO2WoijEMz6GT4c/e60HbZBzRXqhNiLl/UglsxBeQwy4rSOd59ogL8ygvKpvKcpTSRtA==
 
 "@sindresorhus/is@^4.0.0":
   version "4.4.0"

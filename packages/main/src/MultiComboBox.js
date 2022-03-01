@@ -11,6 +11,9 @@ import {
 	isHome,
 	isTabNext,
 	isTabPrevious,
+	isHomeCtrl,
+	isEndCtrl,
+	isCtrlA,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -621,6 +624,17 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover.close();
 	}
 
+	_handleSelectAll(event) {
+		const filteredItems = this._filteredItems;
+		const allItemsSelected = filteredItems.every(item => item.selected);
+
+		filteredItems.forEach(item => {
+			item.selected = !allItemsSelected;
+		});
+
+		this.fireSelectionChange();
+	}
+
 	_onValueStateKeydown(event) {
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
@@ -649,7 +663,22 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (isHomeCtrl(event)) {
+			this.list._itemNavigation._handleHome(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
+		if (isEndCtrl(event)) {
+			this.list._itemNavigation._handleEnd(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
 		event.preventDefault();
+
+		if (isCtrlA(event)) {
+			this._handleSelectAll(event);
+			return;
+		}
 
 		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
@@ -1035,6 +1064,7 @@ class MultiComboBox extends UI5Element {
 			this._innerInput.blur();
 		}
 
+		!isPhone() && this._innerInput.setSelectionRange(0, this.value.length);
 		this._lastValue = this.value;
 	}
 
