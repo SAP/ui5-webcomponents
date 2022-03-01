@@ -1,10 +1,7 @@
-commit dc070a12f5ce5860e013be052c8dc0fc5ca1f125
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Feb 28 15:52:04 2022 +0200
+commit 10f3504e9191b2471b53a66436e89875c6469934
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Mar 1 11:51:56 2022 +0200
 
-    feat: add ` sap_horizon_dark` and `sap_horizon_hcb(hcw)` theme params (#4722)
+    fix(ui5-responsive-popover): fix auto close during re-rendering (#4828)
     
-    Updates to theming-base-content 11.1.35 to consume the updated params for sap_horizon and the new parameters for sap_horizon_dark, sap_horizon_hcb and sap_horizon_hcw themes.
-    Prepares folder structure and theme registration for the new sap_horizon_dark, sap_horizon_hcb and sap_horizon_hcw themes.
-    Initialise new themes with component parameters files (for sap_horizon_dark copied from sap_horizon, for sap_horizon_hcb/hcw copied from sap_fiori_3_hcb/hcw). After we merge the change, the teams will take from here and apply the needed changes based on the spec.
-    Ensures that the proper icons (5.x or 4.x) are used for all themes from the sap_horizon family.
+    Fixes #4816
