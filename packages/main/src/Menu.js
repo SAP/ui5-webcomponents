@@ -221,11 +221,11 @@ class Menu extends UI5Element {
 	}
 
 	get itemsWithChildren() {
-		return !!this._currentItems.filter(item => item.items.length).length;
+		return !!this._currentItems.filter(item => item.item.items.length).length;
 	}
 
 	get itemsWithIcon() {
-		return !!this._currentItems.filter(item => item.icon !== "").length;
+		return !!this._currentItems.filter(item => item.item.icon !== "").length;
 	}
 
 	get isRtl() {
@@ -262,14 +262,14 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		!isPhone() && this._prepareCurrentItems();
+		!isPhone() && this._prepareCurrentItems(this.items);
 
 		const itemsWithChildren = this.itemsWithChildren;
 		const itemsWithIcon = this.itemsWithIcon;
 
 		this._currentItems.forEach(item => {
-			item._siblingsWithChildren = itemsWithChildren;
-			item._siblingsWithIcon = itemsWithIcon;
+			item.item._siblingsWithChildren = itemsWithChildren;
+			item.item._siblingsWithIcon = itemsWithIcon;
 		});
 	}
 
@@ -280,7 +280,7 @@ class Menu extends UI5Element {
 	 */
 	async showAt(opener) {
 		if (isPhone()) {
-			this._prepareCurrentItems();
+			this._prepareCurrentItems(this.items);
 			this._parentItemsStack = [];
 		}
 		if (!this._isSubMenu) {
@@ -321,13 +321,19 @@ class Menu extends UI5Element {
 		const parentMenuItem = this._parentItemsStack.pop();
 		this.focus();
 		if (parentMenuItem) {
-			this._currentItems = parentMenuItem.parentElement.items;
+			this._currentItems = this._prepareCurrentItems(parentMenuItem.parentElement.items);
 			this._parentMenuItem = this._parentItemsStack.length ? this._parentItemsStack[this._parentItemsStack.length - 1] : undefined;
 		}
 	}
 
-	_prepareCurrentItems() {
-		this._currentItems = this.items;
+	_prepareCurrentItems(items) {
+		this._currentItems = items.map((item, index) => {
+			return {
+				item,
+				position: index + 1,
+				ariahaspopup: item.hasChildren ? "menu" : undefined,
+			};
+		});
 	}
 
 	_createSubMenu(item, openerId) {
@@ -395,7 +401,7 @@ class Menu extends UI5Element {
 	}
 
 	_prepareSubMenuPhone(item, opener, actionId) {
-		this._currentItems = item.items;
+		this._currentItems = this._prepareCurrentItems(item.items);
 		this._parentMenuItem = item;
 		this._parentItemsStack.push(item);
 	}

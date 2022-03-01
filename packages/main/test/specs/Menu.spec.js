@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
-describe("Menu tests", () => {
+describe("Menu interaction", () => {
 
 	it("Menu opens after button click", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
@@ -102,43 +102,22 @@ describe("Menu tests", () => {
 
 		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Pressing [Enter] on first item fires an event");
 	});
+});
 
-	it("Event firing after [Space] on nested menu item", async () => {
+describe("Menu Accessibility", () => {
+	it("Menu and Menu items accessibility attributes", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
+		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
 
 		openButton.click();
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const list = await popover.$("ui5-list");
 		const listItems = await popover.$("ui5-list").$$("ui5-li");
-		const selectionInput = await browser.$("#selectionInput");
 
-		await browser.keys("ArrowDown");
-		await browser.keys("Space");
-		await browser.keys("Space");
-		await browser.keys("Space");
-
-		assert.strictEqual(await selectionInput.getAttribute("value"), "Open from C", "Pressing [Space] on nested menu item fires an event");
+		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
+		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
 	});
-
-	it("Event firing after [Enter] on nested menu item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Menu.html`);
-		const openButton = await browser.$("#btnOpen");
-
-		openButton.click();
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
-		const selectionInput = await browser.$("#selectionInput");
-
-		await browser.keys("ArrowDown");
-		await browser.keys("Enter");
-		await browser.keys("Enter");
-		await browser.keys("Enter");
-
-		assert.strictEqual(await selectionInput.getAttribute("value"), "Open from C", "Pressing [Enter] on nested menu item fires an event");
-	});
-
 });

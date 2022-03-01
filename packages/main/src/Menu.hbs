@@ -44,28 +44,31 @@
 				id="{{_id}}-menu-list"
 				mode="None"
 				separators="None"
+				accessible-role="menu"
 				@ui5-item-click={{_itemClick}}
 			>
 			{{#each _currentItems}}
 				<ui5-li
-					.associatedItem="{{this}}"
+					.associatedItem="{{this.item}}"
 					class="ui5-menu-item"
 					id="{{../_id}}-menu-item-{{@index}}"
-					icon="{{this.icon}}"
-					?disabled={{this.disabled}}
-					?starts-section={{this.startsSection}}
-					?selected={{this.subMenuOpened}}
+					icon="{{this.item.icon}}"
+					accessible-role="menuitem"
+					._ariahaspopup={{this.ariahaspopup}}
+					?disabled={{this.item.disabled}}
+					?starts-section={{this.item.startsSection}}
+					?selected={{this.item.subMenuOpened}}
 					@mouseover={{../_itemMouseOver}}
 					@mouseout={{../_itemMouseOut}}
 					@keydown={{../_itemKeyDown}}
 				>
-					{{#if this.hasDummyIcon}}
+					{{#if this.item.hasDummyIcon}}
 						<div class="ui5-menu-item-dummy-icon"></div>
 					{{/if}}
-					{{this.text}}
-					{{#if this.hasChildren}}
+					{{this.item.text}}
+					{{#if this.item.hasChildren}}
 						<ui5-icon part="icon" name="slim-arrow-right" class="ui5-menu-item-icon-end"></ui5-icon>
-					{{else if this._siblingsWithChildren}}
+					{{else if this.item._siblingsWithChildren}}
 						<div class="ui5-menu-item-no-icon-end"></div>
 					{{/if}}
 				</ui5-li>
@@ -78,4 +81,3 @@
 </ui5-responsive-popover>
 
 <div class="ui5-menu-submenus"></div>
-

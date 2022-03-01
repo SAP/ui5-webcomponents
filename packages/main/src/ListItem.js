@@ -74,15 +74,15 @@ const metadata = {
 		},
 
 		/**
-		 * Used to define the role of the list item.
+		 * Used to define the role of the internal list item.
 		 *
 		 * @private
 		 * @type {string}
 		 * @defaultvalue "listitem"
-		 * @since 1.0.0-rc.9
+		 * @since 1.2.0
 		 *
 		 */
-		role: {
+		accessibleRole: {
 			type: String,
 			defaultValue: "listitem",
 		},
@@ -91,6 +91,12 @@ const metadata = {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
+
+		_ariahaspopup: {
+			type: String,
+			noAttribute: true,
+		},
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -354,12 +360,13 @@ class ListItem extends ListItemBase {
 
 	get _accInfo() {
 		return {
-			role: this.role,
+			role: this.accessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
+			ariaHaspopup: this._ariahaspopup || undefined,
 		};
 	}
 
