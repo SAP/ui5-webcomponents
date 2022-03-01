@@ -1,7 +1,9 @@
-commit 10f3504e9191b2471b53a66436e89875c6469934
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Mar 1 11:51:56 2022 +0200
+commit 117d86410cd0ba1b43495d0d32bd00db7d3b3fd2
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Mar 1 14:43:50 2022 +0200
 
-    fix(ui5-responsive-popover): fix auto close during re-rendering (#4828)
+    fix(ui5-multi-combobox): Prevent scrolling on page up/down (#4835)
     
-    Fixes #4816
+    * Prevent scrolling on page up/down in the Multi Combobox
+    
+    * Remove redundant imports
