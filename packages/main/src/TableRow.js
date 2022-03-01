@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
@@ -186,6 +187,10 @@ class TableRow extends UI5Element {
 		return TableRowTemplate;
 	}
 
+	static get dependencies() {
+		return [CheckBox];
+	}
+
 	_onmouseup() {
 		this.deactivate();
 	}
@@ -195,7 +200,7 @@ class TableRow extends UI5Element {
 		const itemActive = this.type === TableRowType.Active;
 		const isSingleSelect = this.isSingleSelect;
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
-		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
 		if (isTabNext(event) && activeElement === (getLastTabbableElement(this) || this.root)) {
@@ -248,7 +253,7 @@ class TableRow extends UI5Element {
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
-		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
+		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
 			this.root.focus();
 			this.activate();
 		}
@@ -274,7 +279,7 @@ class TableRow extends UI5Element {
 			this.deactivate();
 		}
 
-		if (this._getActiveElementTagName() === "ui5-table-row") {
+		if (this._activeElementHasAttribute("ui5-table-row")) {
 			if (this.isSingleSelect) {
 				this._handleSelection();
 			}
@@ -289,8 +294,8 @@ class TableRow extends UI5Element {
 		this.fireEvent("selection-requested", { row: this });
 	}
 
-	_getActiveElementTagName() {
-		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
+	_activeElementHasAttribute(attr) {
+		return this.getRootNode().activeElement.hasAttribute(attr);
 	}
 
 	activate() {

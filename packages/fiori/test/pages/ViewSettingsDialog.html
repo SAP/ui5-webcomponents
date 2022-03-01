@@ -88,11 +88,19 @@
 		</ui5-filter-item>
 	</ui5-view-settings-dialog>
 
+	<br>
+	<br>
+	<ui5-input id="sortByItem" style="display: none"></ui5-input>
+	<ui5-input id="sortOrder" style="display: none"></ui5-input>
+
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.show();
 		});
-		vsd.addEventListener("confirm", function(evt) {
+		vsd.addEventListener("ui5-confirm", function(evt) {
+			var sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
+			sortByItem.value = `${sortByItemTagName} with text ${evt.detail.sortBy}`;
+			sortOrder.value = evt.detail.sortDescending;
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogSort.addEventListener("click", function () {

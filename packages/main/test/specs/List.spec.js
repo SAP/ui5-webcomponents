@@ -217,6 +217,7 @@ describe("List Tests", () => {
 
 	it("keyboard handling on TAB", async () => {
 		const headerBtn = await browser.$("#headerBtn");
+		const firstItem = await browser.$("ui5-li.firstItem");
 		const item = await browser.$("ui5-li-custom.item");
 		const itemBtn = await browser.$("ui5-button.itemBtn");
 		const itemLink = await browser.$("ui5-link.itemLink");
@@ -228,7 +229,10 @@ describe("List Tests", () => {
 
 		// act: TAB from headerButton -> the focus should go to the 1st selected item
 		await headerBtn.keys("Tab");
-		assert.ok(await item.isFocused(), "selected item is focused");
+		assert.ok(await firstItem.isFocused(), "first item is focused");
+
+		await firstItem.keys("ArrowDown");
+		assert.ok(await item.isFocused(), "custom item is focused");
 
 		// act: TAB from item -> the focus should go to "Click me" button
 		await item.keys("Tab");
