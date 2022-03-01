@@ -6,8 +6,6 @@ import {
 	isShow,
 	isDown,
 	isUp,
-	isPageUp,
-	isPageDown,
 	isSpace,
 	isRight,
 	isHome,
