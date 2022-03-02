@@ -607,7 +607,7 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = this.items;
 		this.togglePopover();
 
-		if (selectedItem  && !focusedToken) {
+		if (selectedItem && !focusedToken) {
 			this._itemToFocus = selectedItem;
 		} else if (focusedToken && event.target === focusedToken) {
 			this._itemToFocus = items.find(item => item.text === focusedToken.text);
