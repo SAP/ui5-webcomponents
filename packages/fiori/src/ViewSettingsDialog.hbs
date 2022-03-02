@@ -18,18 +18,16 @@
 					<ui5-title>{{_filterByTitle}}</ui5-title>
 				{{else}}
 					<div class="ui5-vsd-bar-title">
-						<ui5-title class="ui5-vsd-title">{{_dialogTitle}}</ui5-title>
+						<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_dialogTitle}}</ui5-title>
 						{{#if hasPagination}}
 							<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
 									<ui5-segmented-button-item
 										?pressed="{{isModeSort}}"
-										?focused="{{isModeSort}}"
 										icon="sort"
 										mode="Sort"
 									></ui5-segmented-button-item>
 									<ui5-segmented-button-item
 										?pressed="{{isModeFilter}}"
-										?focused="{{isModeFilter}}"
 										icon="filter"
 										mode="Filter"
 									></ui5-segmented-button-item>
