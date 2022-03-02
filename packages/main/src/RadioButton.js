@@ -189,7 +189,7 @@ const metadata = {
 		/**
 		 * Defines the IDs of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.1.0

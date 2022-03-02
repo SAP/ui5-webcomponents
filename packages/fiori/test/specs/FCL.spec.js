@@ -99,9 +99,9 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const endArrowContainerText = "End Arrow Container";
 
 		// assert
-		assert.strictEqual(await startArrow.getAttribute("title"), startArrowText1,
+		assert.strictEqual(await startArrow.getAttribute("tooltip"), startArrowText1,
 			"Start arrow has the correct tooltip.");
-		assert.strictEqual(await endArrow.getAttribute("title"), endArrowText,
+		assert.strictEqual(await endArrow.getAttribute("tooltip"), endArrowText,
 			"End arrow has the correct tooltip.");
 		assert.strictEqual(await startArrowContainerDOM.getAttribute("aria-label"), startArrowContainerText,
 			"Start arrow container has the correct label.");
@@ -112,7 +112,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await startArrow.click();
 
 		// assert
-		assert.strictEqual(await startArrow.getAttribute("title"), startArrowText2,
+		assert.strictEqual(await startArrow.getAttribute("tooltip"), startArrowText2,
 			"Start arrow has the correct tooltip.");
 	});
 
@@ -133,7 +133,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		assert.strictEqual(await middleColumnDOM.getAttribute("role"), "region",
 			"Middle column has the correct default role.");
 
-		assert.strictEqual(await endColumnDOM.getAttribute("role"), "region",
+		assert.strictEqual(await endColumnDOM.getAttribute("role"), null, /* hidden column */
 			"End column has the correct default role.");
 
 		assert.strictEqual(await startArrowContainerDOM.getAttribute("role"), null,
@@ -168,5 +168,20 @@ describe("FlexibleColumnLayout Behavior", () => {
 
 		assert.strictEqual(await endArrowContainerDOM.getAttribute("role"), "navigation",
 			"End arrow container has the correct custom role.");
+	});
+
+	it("tests acc attrs", async () => {
+		let fcl = await browser.$("#fclAccAttrs");
+
+		const startColumnDOM = await fcl.shadow$(".ui5-fcl-column--start");
+		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
+
+		// assert
+		assert.strictEqual(await startColumnDOM.getAttribute("aria-hidden"), null,
+			"Start column is not hidden from the acc tree.");
+
+		assert.strictEqual(await middleColumnDOM.getAttribute("aria-hidden"), "true",
+			"Middle column is hidden from the acc tree.");
+
 	});
 });

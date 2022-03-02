@@ -18,15 +18,6 @@ import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-
-		/**
-		 * Defines if padding would be added around the content.
-		 * @private
-		 */
-		withPadding: {
-			type: Boolean,
-		},
-
 		/**
 		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
 		 * By default both the header and footer would be displayed.
@@ -49,7 +40,7 @@ const metadata = {
 		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
 		 *
 		 * @private
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.16
 		 */
@@ -68,6 +59,17 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * Use it when you want to make sure that all the content is visible on any device.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-responsive-popover</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>header - Used to style the header of the component</li>
+ * <li>content - Used to style the content of the component</li>
+ * <li>footer - Used to style the footer of the component</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE
@@ -181,12 +183,14 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
 	}
 
-	_afterDialogOpen(event) {
+	_beforeDialogOpen(event) {
+		this.open = true;
 		this.opened = true;
 		this._propagateDialogEvent(event);
 	}
 
 	_afterDialogClose(event) {
+		this.open = false;
 		this.opened = false;
 		this._propagateDialogEvent(event);
 	}

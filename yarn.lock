@@ -1117,10 +1117,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.34":
-  version "11.1.34"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.34.tgz#8fcd96c5c464fa1474786e6a50fec5ca5172b8b3"
-  integrity sha512-xzJ6eZHyxzJCuve6IVAhBkWoCUpM81Vgmfc4H1EJ/+gY7VTsJK4AXcHm/RTby+33zp4+b6NzM7tSL2RmxwsJtA==
+"@sap-theming/theming-base-content@11.1.35":
+  version "11.1.35"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.35.tgz#3f526afa9020a41e636d9d4b41ad363338ce879f"
+  integrity sha512-6OZQhpiUgKzT1u0ksJBO2WoijEMz6GT4c/e60HbZBzRXqhNiLl/UglsxBeQwy4rSOd59ogL8ygvKpvKcpTSRtA==
 
 "@sindresorhus/is@^4.0.0":
   version "4.4.0"
@@ -2401,10 +2401,10 @@ chrome-launcher@^0.15.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@97.0.4:
-  version "97.0.4"
-  resolved "https://registry.npmjs.org/chromedriver/-/chromedriver-97.0.4.tgz#69dbfae6194d32c64e34f88d60897835d86f7a99"
-  integrity sha512-mAOH1QSCaeYgniNOqceAzC8BVORQtWxsmgSOBuy8TV/CyyDTllLmKtNNORsxdqrDtefVlxRVQkEzYrlKiJsfFw==
+chromedriver@98.0.0:
+  version "98.0.0"
+  resolved "https://registry.npmjs.org/chromedriver/-/chromedriver-98.0.0.tgz#b2c3c1941fad4cdfadad5d4c46923e02f089fd30"
+  integrity sha512-Oi6Th5teK+VI4nti+423/dFkENYHEMOdUvqwJHzOaNwXqLwZ8FuSaKBybgALCctGapwJbd+tmPv3qSd6tUUIHQ==
   dependencies:
     "@testim/chrome-version" "^1.1.2"
     axios "^0.24.0"
@@ -3806,9 +3806,9 @@ folder-hash@^4.0.1:
     minimatch "~3.0.4"
 
 follow-redirects@^1.14.4:
-  version "1.14.7"
-  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
-  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
+  version "1.14.8"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
+  integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==
 
 forever-agent@~0.6.1:
   version "0.6.1"

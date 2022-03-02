@@ -44,5 +44,5 @@ The priority indicates the severity of the issue. To set the appropriate priorit
 ### **Stakeholder Info** (if applicable)
 
 - Organization: {...}
-- Bussiness impact: {...}
+- Business impact: {...}
 

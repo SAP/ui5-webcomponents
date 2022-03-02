@@ -215,27 +215,6 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click();
 	});
 
-	// it("Calendar selection works on different timezones", async () => {
-	// 	datepicker.id = "#dp7";
-
-	// 	await browser.$("#inputTimezone").setValue(-6); //CST
-	// 	await browser.$("#btnApplyTimezone").click();
-
-	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
-	// 	await valueHelpIcon.click();
-
-	// 	let calendarDate_4_Jan_2019 = await datepicker.getPickerDate(1546560000); //Jan 4, 2019
-	// 	await calendarDate_4_Jan_2019.click();
-
-	// 	const innerInput = await datepicker.getInnerInput();
-	// 	assert.strictEqual(await innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
-	// 	//restore timezone
-	// 	await browser.$('#btnRestoreTimezone').click();
-
-	// 	// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
-	// 	assert.equal(await browser.$("#inputTimezone").getValue(), "", "timezone is reset");
-	// });
-
 	it("respect first day of the week - monday", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp7_1";
@@ -338,9 +317,6 @@ describe("Date Picker Tests", () => {
 
 		let timestampToday = new Date().getTime();
 		timestampToday = (timestampToday - timestampToday % (24 * 60 * 60 * 1000)) / 1000;
-
-		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getProperty("value"), "today", "input value is ok");
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
 		await valueHelpIcon.click();
@@ -1112,7 +1088,7 @@ describe("Date Picker Tests", () => {
 	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
 		datepicker.id = "#dp33";
 		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
+		await innerInput.doubleClick();
 		await browser.keys("Jan 1, 2000");
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -1124,13 +1100,12 @@ describe("Date Picker Tests", () => {
 		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
 		await browser.keys("Escape");
-		await innerInput.click();
-		await browser.keys(["Control", "A"]);
+		await innerInput.doubleClick();
 		await browser.keys("Backspace");
 	});
 
 	it("Value state changes only on submit", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();

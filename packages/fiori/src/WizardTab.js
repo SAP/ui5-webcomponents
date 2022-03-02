@@ -11,7 +11,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
 		/**
 		 * Defines the <code>icon</code> of the step.
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @private
 		 */
@@ -21,7 +21,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>titleText</code> of the step.
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @private
 		 * @since 1.0.0-rc.15
@@ -32,7 +32,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>subtitleText</code> of the step.
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @private
 		 * @since 1.0.0-rc.15
@@ -43,7 +43,7 @@ const metadata = {
 
 		/**
 		 * Defines the number that will be displayed in place of the <code>icon</code>, when it's missing.
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @private
 		 */
@@ -105,7 +105,7 @@ const metadata = {
 
 		/**
 		 * Defines the tabindex of the step.
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue -1
 		 * @private
 		 */

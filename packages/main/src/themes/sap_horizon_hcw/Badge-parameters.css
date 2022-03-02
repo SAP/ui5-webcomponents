@@ -1,0 +1,43 @@
+@import "../base/Badge-parameters.css";
+
+:root {
+	--ui5-badge-color-scheme-1-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-1-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-1-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-2-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-2-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-2-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-3-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-3-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-3-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-4-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-4-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-4-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-5-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-5-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-5-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-6-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-6-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-6-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-7-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-7-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-7-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-8-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-8-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-8-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-9-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-9-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-9-color: var(--sapTextColor);
+
+	--ui5-badge-color-scheme-10-background: var(--sapGroup_ContentBackground);
+	--ui5-badge-color-scheme-10-border: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-color-scheme-10-color: var(--sapTextColor);
+}

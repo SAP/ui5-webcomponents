@@ -63,7 +63,7 @@
 					<ui5-button
 						icon="refresh"
 						design="Transparent"
-						title="{{_retryButtonTooltip}}"
+						tooltip="{{_retryButtonTooltip}}"
 						@click="{{_onRetry}}"
 						@keyup="{{_onRetryKeyup}}"
 					></ui5-button>
@@ -72,7 +72,7 @@
 					<ui5-button
 						icon="stop"
 						design="Transparent"
-						title="{{_terminateButtonTooltip}}"
+						tooltip="{{_terminateButtonTooltip}}"
 						@click="{{_onTerminate}}"
 						@keyup="{{_onTerminateKeyup}}">
 					</ui5-button>
@@ -82,7 +82,7 @@
 					<ui5-button
 						id="{{_id}}-editing-button"
 						design="Transparent"
-						title="{{_editButtonTooltip}}"
+						tooltip="{{_editButtonTooltip}}"
 						icon="edit"
 						@click="{{onDetailClick}}"
 						@keyup="{{_onDetailKeyup}}"

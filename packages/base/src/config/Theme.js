@@ -35,8 +35,19 @@ const isTheme = _theme => {
 	return currentTheme === _theme || currentTheme === `${_theme}_exp`;
 };
 
+/**
+ * Returns if the current theme is part of given theme family
+ * @private
+ * @param {String} the theme family
+ * @returns {boolean}
+ */
+const isThemeFamily = _theme => {
+	return getTheme().startsWith(_theme);
+};
+
 export {
 	getTheme,
 	setTheme,
 	isTheme,
+	isThemeFamily,
 };

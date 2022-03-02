@@ -494,6 +494,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
 
+	it("Checks if aria-invalid is set correctly", async () => {
+		const inputError = await browser.$("#inputError");
+		const inputWarning = await browser.$("#input1"); 
+		const innerInputError = await inputError.shadow$("input");
+		const innerInputWarning = await inputWarning.shadow$("input");
+
+		assert.notOk(await innerInputWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
+		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
+	});
+
 	it("Tests suggestions highlighting", async () => {
 		const input = await browser.$("#myInputHighlighted").shadow$("input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputHighlighted");
@@ -1106,5 +1116,47 @@ describe("XSS tests for suggestions", () => {
 		await Promise.all(listItems.map(async (item, index) => {
 			assert.strictEqual(await item.getProperty("innerText"), expected[index], "Items text should be escaped");
 		}));
+	});
+});
+
+
+describe("Lazy loading", () => {
+	beforeEach(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/InputsLazyLoading.html`);
+	});
+
+	it("Lazy loading opens the picker once items are populated", async () => {
+		const input = await $("#field");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("a");
+
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+			timeout: 3000,
+			timeoutMsg: "Popover should be displayed"
+		});
+	});
+
+	it("Does not reopeon picker on focus in", async () => {
+		const input = await $("#field");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("a");
+
+		// go to next focusable
+		await browser.keys(["Shift", "Tab"]);
+
+		// go to previous
+		await browser.keys("Tab");
+
+		await browser.pause(3000);
+		
+		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
 	});
 });
