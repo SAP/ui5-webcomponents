@@ -857,6 +857,24 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await listItem.getProperty("focused"), true, "The items are not filtered and the first item is focused");
 		});
+
+		it ("Alt + Down should focus the item corresponding to the text value", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+			await input.click();
+			await input.keys("ArrowDown");
+			await input.keys("ArrowDown");
+			await input.keys(["Alt", "ArrowDown"]);
+
+			let listItem = await popover.$("ui5-list").$$("ui5-li")[1];
+
+			assert.equal(await listItem.getProperty("focused"), true, "The second item should be focused");
+		});
 	});
 
 	describe("General", () => {

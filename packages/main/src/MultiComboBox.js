@@ -598,6 +598,8 @@ class MultiComboBox extends UI5Element {
 		const items = this.items;
 		const selectedItem = this._getSelectedItems()[0];
 		const focusedToken = this._tokenizer.tokens.find(token => token.focused);
+		const value = this.value;
+		const matchingItem = this.items.find(item => item.text === value);
 
 		this._isOpenedByKeyboard = true;
 		this._shouldFilterItems = false;
@@ -606,6 +608,11 @@ class MultiComboBox extends UI5Element {
 
 		this._filteredItems = this.items;
 		this.togglePopover();
+
+		if (!focusedToken && matchingItem) {
+			this._itemToFocus = matchingItem;
+			return;
+		}
 
 		if (selectedItem && !focusedToken) {
 			this._itemToFocus = selectedItem;
