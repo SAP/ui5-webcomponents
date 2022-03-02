@@ -713,7 +713,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
 		});
 
-		it ("should select token with CTRL+SPACE", async () => {
+		it ("should select а token with CTRL+SPACE", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
