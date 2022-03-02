@@ -1,9 +1,9 @@
-commit 43b1e4de66b9619bc3d61cebefb2c3d406cee8f0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 2 11:08:01 2022 +0200
+commit fd62640518cdee75aa4e95b0a3bb739c4ff0ab00
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Wed Mar 2 11:25:06 2022 +0200
 
-    fix(ui5-segmented-button-item): adopt inherited `tooltip` property (#4843)
+    fix(ui5-view-settings-dialog): fix circular dependency JS error (#4844)
     
-    The tooltip property, inherited from the Button has not been adopted. As a result we have a property in the API that does not have any effect. This is now fixed with the current PR.
+    Fixes circular dependency JS error by removing self reference associatedItem property in initSortByItems getters
     
-    FIXES: #4840
+    FIXES: #4837
