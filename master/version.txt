@@ -1,9 +1,7 @@
-commit fd62640518cdee75aa4e95b0a3bb739c4ff0ab00
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Wed Mar 2 11:25:06 2022 +0200
+commit 25d1472af69d9f5c79fbcc27740251f51a35b45b
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Mar 2 05:29:49 2022 -0800
 
-    fix(ui5-view-settings-dialog): fix circular dependency JS error (#4844)
+    chore: translation delivery (#4848)
     
-    Fixes circular dependency JS error by removing self reference associatedItem property in initSortByItems getters
-    
-    FIXES: #4837
+    Change-Id: If11463d156a0e91bfe2122d4c16c09c00449a5d3
