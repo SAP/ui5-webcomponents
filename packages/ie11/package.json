@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-ie11",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "UI5 Web Components: webcomponents.ie11",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -23,7 +23,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.2.0",
+    "@ui5/webcomponents-base": "1.2.1",
     "core-js": "^3.19.1",
     "css-vars-ponyfill": "^2.4.3",
     "lit-html": "2.0.1",
@@ -31,7 +31,7 @@
     "url-search-params-polyfill": "^8.1.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.2.0",
+    "@ui5/webcomponents-tools": "1.2.1",
     "resolve": "^1.20.0"
   }
 }
