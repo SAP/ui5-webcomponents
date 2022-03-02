@@ -1,0 +1,11 @@
+@import "../base/MonthPicker-parameters.css";
+
+:root {
+	--_ui5_monthpicker_item_border: 1px solid #000;
+	--_ui5_monthpicker_item_border_radius: 0.25rem;
+	--_ui5_monthpicker_item_margin: 0;
+	--_ui5_monthpicker_item_focus_after_width: calc(100% - 0.25rem);
+	--_ui5_monthpicker_item_focus_after_height: calc(100% - 0.25rem);
+	--_ui5_monthpicker_item_focus_after_border: 2px dotted var(--sapContent_FocusColor);
+	--_ui5_monthpicker_item_focus_after_offset: 0;
+}
