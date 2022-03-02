@@ -17,7 +17,7 @@
 }
 
 .ui5-vsd-title {
-	margin-bottom: 0.3rem;
+	/* margin-bottom: 0.3rem; */
 	font-size: var(--ui5_title_level_5Size);
 }
 
@@ -65,3 +65,37 @@
 	padding-bottom: 0;
 }
 
+[ui5-li]::part(native-li):first-child{
+	background: red;
+}
+/* [sort-order] [ui5-li]:not([ui5-li-groupheader]){
+	margin-right: -0.6875rem;
+} */
+.ui5-li-singlesel-radiobtn{
+	/* margin-right: -0.6875rem; */
+	/* background: red; */
+}
+.ui5-li-singlesel-radiobtn.gosho {
+	background: red;
+}
+
+[ui5-radio-button] {
+	 background: red;
+}
+.ui5-vsd-bar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 2.75rem;
+	line-height: 2.75rem;
+}
+
+.ui5-vsd-bar-start {
+	display: flex;
+	align-items: center;
+}
+
+.ui5-vsd-bar-sub-header {
+	height: 2.75rem;
+	line-height: 2.75rem;
+}
