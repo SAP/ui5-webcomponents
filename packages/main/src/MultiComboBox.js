@@ -580,7 +580,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
-		if (isShow(event) && !this.readonly && !this.disabled) {
+		if (isShow(event) && !this.disabled) {
 			this._handleShow(event);
 			return;
 		}
@@ -599,14 +599,18 @@ class MultiComboBox extends UI5Element {
 		const selectedItem = this._getSelectedItems()[0];
 		const focusedToken = this._tokenizer.tokens.find(token => token.focused);
 		const value = this.value;
-		const matchingItem = this.items.find(item => item.text === value);
+		const matchingItem = this.items.find(item => item.text.localeCompare(value, undefined, { sensitivity: "base" }) === 0);
 
-		this._isOpenedByKeyboard = true;
-		this._shouldFilterItems = false;
+		if (this.readonly) {
+			return;
+		}
 
 		event.preventDefault();
 
+		this._isOpenedByKeyboard = true;
+		this._shouldFilterItems = false;
 		this._filteredItems = this.items;
+
 		this.togglePopover();
 
 		if (!focusedToken && matchingItem) {
@@ -908,11 +912,9 @@ class MultiComboBox extends UI5Element {
 
 		if (!isPhone() && !this._isOpenedByKeyboard) {
 			this._innerInput.focus();
-		} else {
+		} else if (this._isOpenedByKeyboard) {
 			this._itemToFocus.focus();
-		}
-
-		if (isPhone()) {
+		} else {
 			this.allItemsPopover.focus();
 		}
 

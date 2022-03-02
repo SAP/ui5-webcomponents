@@ -826,7 +826,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await listItem.getProperty("focused"), true, "The selected item corresponding to the token is focused");
 		});
 
-		it ("Alt + Down should focus the first item if no selected filtered items are present", async () => {
+		it ("Alt + Down should focus the first item if no selected items are present", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi-acv");
