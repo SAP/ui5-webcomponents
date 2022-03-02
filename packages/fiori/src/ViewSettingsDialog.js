@@ -479,8 +479,8 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this._dialog.show(true);
-		
-		this._dialog.querySelector("ui5-list").accessibleNameRef = this.id + "-label";
+
+		this._dialog.querySelector("ui5-list").accessibleNameRef = `${this.id}-label`;
 		this._dialog.querySelector("ui5-list").focusFirstItem();
 	}
 
