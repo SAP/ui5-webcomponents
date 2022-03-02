@@ -1,7 +1,14 @@
-commit a3a0cb179d21838f2f853aa4552f94d1125e4f93
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Mar 2 06:09:26 2022 -0800
+commit 14552cf6850ea5e3d7e5beee57f6a2e5d60172bc
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Wed Mar 2 18:23:30 2022 +0200
 
-    chore: translation delivery (#4849)
+    fix(ui5-date-picker): remove timezone test (#4829)
     
-    Change-Id: Iadd4036f79185cf6c9d92514248dcaca5e2ab9a0
+    - The DateFormat's parse method wasn't expected
+    to call getDate on the already correctly parsed
+    JavaScript Date object. The result is declared
+    invalid and replaced with null when the day doen't
+    match the one from the string. The timezone test
+    is removed as we don't have a way to mock the JS Date.
+    
+    Fixes: 4443
