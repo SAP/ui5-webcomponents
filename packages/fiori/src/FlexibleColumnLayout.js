@@ -705,15 +705,24 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnRole() {
-		return this.accessibilityRoles.startColumnRole || "region";
+		if (this.startColumnVisible) {
+			return this.accessibilityRoles.startColumnRole || "region";
+		}
+		return undefined;
 	}
 
 	get accMiddleColumnRole() {
-		return this.accessibilityRoles.midColumnRole || "region";
+		if (this.midColumnVisible) {
+			return this.accessibilityRoles.midColumnRole || "region";
+		}
+		return undefined;
 	}
 
 	get accEndColumnRole() {
-		return this.accessibilityRoles.endColumnRole || "region";
+		if (this.endColumnVisible) {
+			return this.accessibilityRoles.endColumnRole || "region";
+		}
+		return undefined;
 	}
 
 	get accStartArrowContainerRole() {
@@ -726,6 +735,25 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get _effectiveLayoutsByMedia() {
 		return this._layoutsConfiguration || getLayoutsByMedia();
+	}
+
+	get _accAttributes() {
+		return {
+			columns: {
+				start: {
+					role: this.accStartColumnRole,
+					ariaHidden: !this.startColumnVisible || undefined,
+				},
+				middle: {
+					role: this.accMiddleColumnRole,
+					ariaHidden: !this.midColumnVisible || undefined,
+				},
+				end: {
+					role: this.accEndColumnRole,
+					ariaHidden: !this.endColumnVisible || undefined,
+				},
+			},
+		};
 	}
 
 	get accStartArrowText() {

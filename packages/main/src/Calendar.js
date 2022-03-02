@@ -277,7 +277,7 @@ class Calendar extends CalendarPart {
 
 		// Create tags for the selected dates that don't already exist in DOM
 		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
-			const dateElement = document.createElement("ui5-date");
+			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag());
 			dateElement.value = value;
 			this.appendChild(dateElement);
 		});

@@ -24,6 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
@@ -567,6 +568,7 @@ class Breadcrumbs extends UI5Element {
 			List,
 			StandardListItem,
 			Icon,
+			Button,
 		];
 	}
 

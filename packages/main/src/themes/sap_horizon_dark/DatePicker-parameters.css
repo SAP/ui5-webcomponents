@@ -1,0 +1,6 @@
+@import "../base/DatePicker-parameters.css";
+
+:root {
+    --_ui5-datepicker_border_radius: 0.25rem;
+    --_ui5-datepicker_icon_border_radius: 0.125rem;
+}
