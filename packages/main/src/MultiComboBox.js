@@ -540,8 +540,9 @@ class MultiComboBox extends UI5Element {
 
 	_handleArrowLeft() {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+		const isTextSelected = this.getDomRef().querySelector(`input`).selectionEnd - cursorPosition > 0;
 
-		if (cursorPosition === 0) {
+		if (cursorPosition === 0 && !isTextSelected) {
 			this._tokenizer._focusLastToken();
 		}
 	}
@@ -588,6 +589,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isDownShift(event) || isUpShift(event)) {
+			event.preventDefault();
 			return;
 		}
 
@@ -604,6 +606,7 @@ class MultiComboBox extends UI5Element {
 
 		if (isLeftCtrl(event) || isRightCtrl(event)) {
 			this._handleArrowCtrl(event);
+			return;
 		}
 
 		this._keyDown = true;
@@ -704,12 +707,12 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if ((isLeftCtrl(event) || isUpCtrl(event)) && !isFirstItem) {
+		if ((isUpCtrl(event)) && !isFirstItem) {
 			this.list._itemNavigation._handleUp(event);
 			this.list.items[this.list._itemNavigation._currentIndex].focus();
 		}
 
-		if (isRightCtrl(event) || isDownCtrl(event)) {
+		if (isDownCtrl(event)) {
 			this.list._itemNavigation._handleDown(event);
 			this.list.items[this.list._itemNavigation._currentIndex].focus();
 		}

@@ -873,18 +873,6 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
 			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
-
-			await mcb.keys(["Control", "ArrowRight"]);
-
-			const listItem2 = await popover.$("ui5-list").$$("ui5-li")[1];
-
-			assert.equal(await listItem.getProperty("focused"), false, "The first item should not be focused");
-			assert.equal(await listItem2.getProperty("focused"), true, "The second item is focused");
-
-			await mcb.keys(["Control", "ArrowLeft"]);
-
-			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
-			assert.equal(await listItem2.getProperty("focused"), false, "The second item is not focused");
 		});
 
 		it ("focuses the value state header and item on CTRL + arrow down then the value state and the input on CTRL + arrow up", async () => {
