@@ -113,9 +113,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the tooltip of the button.
+		 * Defines the tooltip of the component.
 		 * <br>
-		 * <b>Note:</b> Tooltips should only be set to icon-only buttons.
+		 * <b>Note:</b> We recommend setting tooltip to icon-only components.
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public

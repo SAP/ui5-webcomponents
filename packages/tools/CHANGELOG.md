@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
+
+
+### Bug Fixes
+
+* correct scoping issues with several components ([#4820](https://github.com/SAP/ui5-webcomponents/issues/4820)) ([621dc20](https://github.com/SAP/ui5-webcomponents/commit/621dc20))
+* display methods in child components API ([#4792](https://github.com/SAP/ui5-webcomponents/issues/4792)) ([1929d08](https://github.com/SAP/ui5-webcomponents/commit/1929d08))
+
+
+### Features
+
+* **jsdoc:** remove attr name for Object props ([#4680](https://github.com/SAP/ui5-webcomponents/issues/4680)) ([1741bd6](https://github.com/SAP/ui5-webcomponents/commit/1741bd6)), closes [#4674](https://github.com/SAP/ui5-webcomponents/issues/4674)
+
+
+
+
+
 ## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

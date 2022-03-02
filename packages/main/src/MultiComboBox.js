@@ -616,6 +616,14 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_handlePageUp(event) {
+		event.preventDefault();
+	}
+
+	_handlePageDown(event) {
+		event.preventDefault();
+	}
+
 	_handleBackspace(event) {
 		if (event.target.value === "") {
 			event.preventDefault();

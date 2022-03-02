@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** improve lazy loading behaviour ([#4763](https://github.com/SAP/ui5-webcomponents/issues/4763)) ([35342be](https://github.com/SAP/ui5-webcomponents/commit/35342be))
+* **ui5-list:** initial focus target ([#4809](https://github.com/SAP/ui5-webcomponents/issues/4809)) ([cf6dd1a](https://github.com/SAP/ui5-webcomponents/commit/cf6dd1a))
+* attached boot tasks always run ([#4777](https://github.com/SAP/ui5-webcomponents/issues/4777)) ([ad4608c](https://github.com/SAP/ui5-webcomponents/commit/ad4608c))
+* **framework:** Tabbable elements error ([#4704](https://github.com/SAP/ui5-webcomponents/issues/4704)) ([650473f](https://github.com/SAP/ui5-webcomponents/commit/650473f))
+* **ui5-badge:** update color-scheme parameters ([#4678](https://github.com/SAP/ui5-webcomponents/issues/4678)) ([c7d75ef](https://github.com/SAP/ui5-webcomponents/commit/c7d75ef)), closes [#3940](https://github.com/SAP/ui5-webcomponents/issues/3940)
+* **ui5-label:** allow focusing elements linked with for attribute inside a shadow root ([#4754](https://github.com/SAP/ui5-webcomponents/issues/4754)) ([bd7a8a1](https://github.com/SAP/ui5-webcomponents/commit/bd7a8a1)), closes [#4751](https://github.com/SAP/ui5-webcomponents/issues/4751)
+* **ui5-li-tree:** correct usage of i18nBudnle ([#4668](https://github.com/SAP/ui5-webcomponents/issues/4668)) ([67848d7](https://github.com/SAP/ui5-webcomponents/commit/67848d7))
+* **ui5-select:** incorrect popover styles when value state is used ([#4651](https://github.com/SAP/ui5-webcomponents/issues/4651)) ([2d8ce46](https://github.com/SAP/ui5-webcomponents/commit/2d8ce46))
+* **ui5-tabcontainer:** await for renderFinished in resize handler ([#4675](https://github.com/SAP/ui5-webcomponents/issues/4675)) ([cd8dc26](https://github.com/SAP/ui5-webcomponents/commit/cd8dc26)), closes [#4628](https://github.com/SAP/ui5-webcomponents/issues/4628)
+
+
+### Features
+
+* add and update icons from 4.13 and 5.01 icon fonts  ([#4790](https://github.com/SAP/ui5-webcomponents/issues/4790)) ([a9e88f0](https://github.com/SAP/ui5-webcomponents/commit/a9e88f0))
+* **ui5-input:** implement showClearIcon property ([#4641](https://github.com/SAP/ui5-webcomponents/issues/4641)) ([b1c1620](https://github.com/SAP/ui5-webcomponents/commit/b1c1620))
+* **ui5-table:** extend keyboard handling ([#4550](https://github.com/SAP/ui5-webcomponents/issues/4550)) ([8daa764](https://github.com/SAP/ui5-webcomponents/commit/8daa764)), closes [#3090](https://github.com/SAP/ui5-webcomponents/issues/3090)
+* **ui5-table:** improve keyboard handling ([#4631](https://github.com/SAP/ui5-webcomponents/issues/4631)) ([f1f2b1b](https://github.com/SAP/ui5-webcomponents/commit/f1f2b1b))
+* **ui5-tree:** make `item-click` event preventable ([#4708](https://github.com/SAP/ui5-webcomponents/issues/4708)) ([29967f0](https://github.com/SAP/ui5-webcomponents/commit/29967f0)), closes [#4502](https://github.com/SAP/ui5-webcomponents/issues/4502)
+
+
+
+
+
 ## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
 
 
