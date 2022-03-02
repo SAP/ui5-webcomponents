@@ -100,6 +100,19 @@
 		</ui5-tree>
 	</ui5-busy-indicator>
 
+	<br><br>
+
+	<ui5-tree id="preventable-click-event" class="full-width" mode="MultiSelect">
+		<div slot="header" class="hdr">
+			<ui5-title>Prevent item-click Events</ui5-title>
+		</div>
+		<ui5-tree-item expanded text="Tree 1" >
+			<ui5-tree-item text="Tree 1.1" ></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
+	Prevented events counter
+	<ui5-input id="prevented-counter" value="0"></ui5-input>
+
 	<script>
 		const mouseOverInput = document.getElementById("mouseover-counter");
 		const mouseOutInput = document.getElementById("mouseout-counter");
@@ -192,6 +205,13 @@
 					busyIndicator.active = false;
 				}, 2000);
 			}
+		});
+
+		var preventableClickTree = document.getElementById("preventable-click-event");
+		var preventedCounter = document.getElementById("prevented-counter");
+		preventableClickTree.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			preventedCounter.value++;
 		});
 	</script>
 

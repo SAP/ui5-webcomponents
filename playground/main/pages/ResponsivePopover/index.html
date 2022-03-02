@@ -18,6 +18,7 @@
 	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
 	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
 	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
+	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
 
 	<!-- with header and footer slots -->
 	<ui5-responsive-popover id="respPopover">
@@ -63,7 +64,7 @@
 		</div>
 	</ui5-responsive-popover>
 
-	
+
 	<ui5-responsive-popover id="respPopover4" accessible-name="Some label">
 		<div slot="header">
 			<ui5-title>Header</ui5-title>
@@ -74,6 +75,11 @@
 		<div slot="footer" class="popover-footer">
 			<ui5-button id="btnClose4" design="Emphasized">Close</ui5-button>
 		</div>
+	</ui5-responsive-popover>
+
+	<ui5-responsive-popover id="popoverAttr" opener="btnOpenWithAttr">
+		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
+		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-responsive-popover>
 
 	<h2> Inputs based component that opens popover/dialog within dialog</h2>
@@ -165,6 +171,18 @@
 
 		btnInitialFocusPrevented.addEventListener("click", function(event) {
 			simpleRPInitialFocusPrevented.showAt(event.target, true);
+		});
+
+		btnOpenWithAttr.addEventListener("click", function () {
+			popoverAttr.setAttribute("open", "");
+		});
+
+		btnCloseWithMethod.addEventListener("click", function () {
+			popoverAttr.close();
+		});
+
+		btnCloseWithAttr.addEventListener("click", function () {
+			popoverAttr.removeAttribute("open");
 		});
 	</script>
 </body>

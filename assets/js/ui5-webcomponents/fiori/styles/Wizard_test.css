@@ -56,3 +56,7 @@ html, body {
     background-color: red;
     display: none;
 }
+
+#dialog::part(content) {
+	padding: 0;
+}

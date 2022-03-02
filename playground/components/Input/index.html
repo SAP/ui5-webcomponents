@@ -317,6 +317,8 @@
       
     
       
+    
+      
         
       
     
@@ -356,6 +358,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -922,6 +926,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1763,6 +1769,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" class="navigation-list-link">
@@ -2010,6 +2018,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2784,6 +2794,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3047,6 +3059,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -3895,6 +3909,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.0.0.md/" class="navigation-list-link">
@@ -4133,6 +4149,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5392,6 +5410,44 @@
 	.inputIcon:hover{
 		background: rgba(224,224,224,0.5)
 	}
+
+	#valueHelpInput {
+		width: 100%;
+	}
+
+	#dialog[on-desktop] {
+		/* The playground's header has a z-index of 151, which is
+		higher than the dialog's default, and cuts off the dialog */
+		z-index: 200 !important;
+	}
+
+	#dialogHeader {
+		width: 100%;
+		padding: 0 1rem 0.5rem 1rem;
+	}
+
+	#titleBar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	#headerTitle {
+		margin-top: 1em !important;
+		font-size: 1rem;
+		font-weight: 500;
+	}
+
+	#dialogSearchInput {
+		width: 100%;
+	}
+
+	#footer {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		padding: 0.25rem 1rem;
+	}
 </style>
 
 <header>
@@ -5405,11 +5461,11 @@
 <section>
 	<h3>Basic Input</h3>
 	<div class="snippet">
-		<ui5-input class="samples-margin samples-responsive-margin-bottom" value="Input"></ui5-input>
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" show-clear-icon value="Input"></ui5-input>
 		<ui5-input class="samples-margin samples-responsive-margin-bottom" readonly value="readonly Input"></ui5-input>
 		<ui5-input class="samples-margin samples-responsive-margin-bottom" disabled value="Disabled Input"></ui5-input>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">value=</span><span class="s">"Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">show-clear-icon</span> <span class="na">value=</span><span class="s">"Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 <span class="nt">&lt;ui5-input</span> <span class="na">readonly</span> <span class="na">value=</span><span class="s">"readonly Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 <span class="nt">&lt;ui5-input</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">"Disabled Input"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 	</code></pre></figure></pre>
@@ -5422,6 +5478,7 @@
 			id="suggestions-input"
 			placeholder="Start typing country name"
 			show-suggestions
+			show-clear-icon
 		></ui5-input>
 
 		<script>
@@ -5456,7 +5513,7 @@
 			});
 		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"suggestions-input"</span> <span class="na">show-suggestions</span> <span class="na">placeholder=</span><span class="s">"Start typing country name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"suggestions-input"</span> <span class="na">show-suggestions</span> <span class="na">show-clear-icon</span> <span class="na">placeholder=</span><span class="s">"Start typing country name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
 	<span class="c1">// data</span>
@@ -5631,6 +5688,228 @@
 	});
 </script>
 
+<section>
+	<h3>Input With Value Help Dialog</h3>
+	<div class="snippet">
+		<ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions>
+			<ui5-icon id="valueHelpIcon" slot="icon" name="value-help"></ui5-icon>
+		</ui5-input>
+	
+		<ui5-dialog id="dialog" accessible-name="Products Value Help">
+			<div slot="header" id="dialogHeader">
+				<div id="titleBar">
+					<h2 id="headerTitle">Products</h2>
+					<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
+				</div>
+				<ui5-input id="dialogSearchInput" placeholder="Search">
+					<ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
+				</ui5-input>
+			</div>
+	
+			<ui5-list id="itemsList" no-data-text="No data"></ui5-list>
+	
+			<div slot="footer" id="footer">
+				<ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
+			</div>
+		</ui5-dialog>
+	
+		<script>
+			valueHelpInput.addEventListener("input", loadSuggestions);
+			valueHelpIcon.addEventListener("click", showDialog);
+			dialogSearchInput.addEventListener("change", loadList);
+			dialogSearchIcon.addEventListener("click", loadList);
+			clearButton.addEventListener("click", clearQuery);
+			cancelButton.addEventListener("click", closeDialog);
+			itemsList.addEventListener("item-click", handleItemClick);
+
+			async function loadSuggestions() {
+				var response = await fetch("../../../assets/data/products.json");
+				var products = await response.json();
+
+				var query = valueHelpInput.value.toLowerCase();
+				var suggestionItems = [];
+
+				if (query) {
+					suggestionItems = products
+						.filter(function (product) {
+							return product.name.toLowerCase().indexOf(query) === 0;
+						})
+						.map(function (product) {
+							return product.name;
+						})
+						.sort(function (a, b) {
+							return a.localeCompare(b);
+						})
+						.slice(0, 10);
+				}
+
+				[].slice.call(valueHelpInput.children, 1).forEach(function (item) {
+					valueHelpInput.removeChild(item);
+				});
+
+				suggestionItems.forEach(function (item) {
+					var li = document.createElement("ui5-suggestion-item");
+					li.text = item;
+					valueHelpInput.appendChild(li);
+				});
+			}
+
+			function showDialog() {
+				dialogSearchInput.value = valueHelpInput.value;
+				loadList();
+
+				if (screen.width <= 768) {
+					dialog.setAttribute("stretch", "");
+				}
+
+				dialog.show();
+
+				// Required by UX as the VH dialog's popup content has no padding in UI5.
+				dialog.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
+				dialog.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
+			}
+
+			function closeDialog() {
+				dialog.close();
+			}
+
+			async function loadList() {
+				var response = await fetch("../../../assets/data/products.json");
+				var products = await response.json();
+				var query = dialogSearchInput.value.toLowerCase();
+
+				itemsList.innerHTML = "";
+
+				products
+					.filter(function (product) {
+						return product.name.toLowerCase().indexOf(query) === 0;
+					})
+					.sort(function (a, b) {
+						return a.name.localeCompare(b.name);
+					})
+					.forEach(function (item) {
+						var li = document.createElement("ui5-li");
+						li.innerHTML = item.name;
+						li.image = item.productPicUrl;
+						li.description = item.productId;
+
+						itemsList.appendChild(li);
+					});
+			}
+
+			function handleItemClick(event) {
+				var item = event.detail.item;
+				valueHelpInput.setAttribute("value", item.innerHTML);
+				dialog.close();
+			}
+
+			function clearQuery() {
+				dialogSearchInput.setAttribute("value", "");
+				loadList();
+			}
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"valueHelpInput"</span> <span class="na">placeholder=</span><span class="s">"Enter product"</span> <span class="na">show-suggestions</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-icon</span> <span class="na">id=</span><span class="s">"valueHelpIcon"</span> <span class="na">slot=</span><span class="s">"icon"</span> <span class="na">name=</span><span class="s">"value-help"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+<span class="nt">&lt;/ui5-input&gt;</span>
+
+<span class="nt">&lt;ui5-dialog</span> <span class="na">id=</span><span class="s">"dialog"</span> <span class="na">accessible-name=</span><span class="s">"Products Value Help"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"header"</span> <span class="na">id=</span><span class="s">"dialogHeader"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"titleBar"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h2</span> <span class="na">id=</span><span class="s">"headerTitle"</span><span class="nt">&gt;</span>Products<span class="nt">&lt;/h2&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">id=</span><span class="s">"clearButton"</span><span class="nt">&gt;</span>Clear<span class="nt">&lt;/ui5-button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"dialogSearchInput"</span> <span class="na">placeholder=</span><span class="s">"Search"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-icon</span> <span class="na">id=</span><span class="s">"dialogSearchIcon"</span> <span class="na">slot=</span><span class="s">"icon"</span> <span class="na">name=</span><span class="s">"search"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+		<span class="nt">&lt;/ui5-input&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+
+	<span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"itemsList"</span> <span class="na">no-data-text=</span><span class="s">"No data"</span><span class="nt">&gt;&lt;/ui5-list&gt;</span>
+
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"footer"</span> <span class="na">id=</span><span class="s">"footer"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">id=</span><span class="s">"cancelButton"</span><span class="nt">&gt;</span>Cancel<span class="nt">&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ui5-dialog&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">,</span> <span class="nx">loadSuggestions</span><span class="p">);</span>
+	<span class="nx">valueHelpIcon</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">showDialog</span><span class="p">);</span>
+	<span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">loadList</span><span class="p">);</span>
+	<span class="nx">dialogSearchIcon</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">loadList</span><span class="p">);</span>
+	<span class="nx">clearButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">clearQuery</span><span class="p">);</span>
+	<span class="nx">cancelButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">closeDialog</span><span class="p">);</span>
+	<span class="nx">itemsList</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">handleItemClick</span><span class="p">);</span>
+
+	<span class="k">async</span> <span class="kd">function</span> <span class="nx">loadSuggestions</span><span class="p">()</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">../../../assets/data/products.json</span><span class="dl">"</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+		<span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+		<span class="kd">var</span> <span class="nx">suggestionItems</span> <span class="o">=</span> <span class="p">[];</span>
+
+		<span class="k">if</span> <span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">suggestionItems</span> <span class="o">=</span> <span class="nx">products</span>
+				<span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+				<span class="p">.</span><span class="nx">map</span><span class="p">(({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">name</span><span class="p">)</span>
+				<span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">))</span>
+				<span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+		<span class="p">}</span>
+
+		<span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+			<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+		<span class="p">});</span>
+
+		<span class="nx">suggestionItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-suggestion-item</span><span class="dl">"</span><span class="p">);</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
+			<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">showDialog</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="nx">loadList</span><span class="p">();</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">closeDialog</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="k">async</span> <span class="kd">function</span> <span class="nx">loadList</span><span class="p">()</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">../../../assets/data/products.json</span><span class="dl">"</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+		<span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+
+		<span class="nx">itemsList</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+
+		<span class="nx">products</span>
+			<span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+			<span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span>
+			<span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+				<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-li</span><span class="dl">"</span><span class="p">);</span>
+				<span class="nx">li</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+				<span class="nx">li</span><span class="p">.</span><span class="nx">image</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">productPicUrl</span><span class="p">;</span>
+				<span class="nx">li</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">productId</span><span class="p">;</span>
+
+				<span class="nx">itemsList</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+			<span class="p">});</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">handleItemClick</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">;</span>
+		<span class="nx">valueHelpInput</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">);</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">clearQuery</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialogSearchInput</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">);</span>
+		<span class="nx">loadList</span><span class="p">();</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -5641,7 +5920,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
 
 <h3>Keyboard Handling</h3> The <code>ui5-input</code> provides the following keyboard shortcuts: <br>
 
-<ul> <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Opens value help if available, same as clicking the value help icon. (Does not open suggestion list.)</li> <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li> <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li> <li>[DOWN] - Focuses the next matching item in the suggestion list.</li> <li>[UP] - Focuses the previous matching item in the suggestion list.</li> <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li> <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li> <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li> <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li> </ul>
+<ul> <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li> <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li> <li>[DOWN] - Focuses the next matching item in the suggestion list.</li> <li>[UP] - Focuses the previous matching item in the suggestion list.</li> <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li> <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li> <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li> <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li> </ul>
 
 <h3>ES6 Module Import</h3>
 
@@ -5663,12 +5942,12 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           accessibleName
                             <br>
-                            <code>accessible-name</code>
+                                 <code>accessible-name</code>
                         </div>
-                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Sets the accessible aria name of the component.
+                            Defines the accessible aria name of the component.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
@@ -5676,9 +5955,9 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           accessibleNameRef
                             <br>
-                            <code>accessible-name-ref</code>
+                                 <code>accessible-name-ref</code>
                         </div>
-                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Receives id(or many ids) of the elements that label the input.
@@ -5739,7 +6018,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                           previewItem
                             (readonly)
                             <br>
-                            <code>preview-item</code>
+                                 <code>preview-item</code>
                         </div>
                         <div class="cell api-table-content-cell">sap.ui.webcomponents.main.IInputSuggestionItem</div>
                         <div class="cell api-table-content-cell"></div>
@@ -5772,9 +6051,22 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showClearIcon
+                            <br>
+                                 <code>show-clear-icon</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the clear icon of the input will be shown.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showSuggestions
                             <br>
-                            <code>show-suggestions</code>
+                                 <code>show-suggestions</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -5782,7 +6074,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the component should show suggestions, if such are present. <br><br> <b>Note:</b> You need to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           type
                             <br>
@@ -5793,7 +6085,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the HTML type of the component. Available options are: <code>Text</code>, <code>Email</code>, <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>. <br><br> <b>Notes:</b> <ul> <li>The particular effect of this property differs depending on the browser and the current language settings, especially for type <code>Number</code>.</li> <li>The property is mostly intended to be used with touch devices that use different soft keyboard layouts depending on the given input type.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -5804,11 +6096,11 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the value of the component. <br><br> <b>Note:</b> The property is updated upon typing.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
-                            <code>value-state</code>
+                                 <code>value-state</code>
                         </div>
                         <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
@@ -5937,7 +6229,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           additionalText
                             <br>
-                            <code>additional-text</code>
+                                 <code>additional-text</code>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
@@ -5950,7 +6242,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           additionalTextState
                             <br>
-                            <code>additional-text-state</code>
+                                 <code>additional-text-state</code>
                         </div>
                         <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
@@ -5985,7 +6277,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           iconEnd
                             <br>
-                            <code>icon-end</code>
+                                 <code>icon-end</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -6032,6 +6324,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
             
             
             
+            
           </section>
         </section>
       </div>
@@ -6065,6 +6358,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
             
                   </div>
+            
             
             
             

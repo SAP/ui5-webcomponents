@@ -317,6 +317,8 @@
       
     
       
+    
+      
         
       
     
@@ -356,6 +358,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -922,6 +926,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1763,6 +1769,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" class="navigation-list-link">
@@ -2010,6 +2018,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2784,6 +2794,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3047,6 +3059,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -3895,6 +3909,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.0.0.md/" class="navigation-list-link">
@@ -4133,6 +4149,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5389,15 +5407,15 @@
 	<h3>Header Bar</h3>
 	<div class="snippet">
 		<ui5-bar design="Header">
-			<ui5-button icon="home" title="Go home" design="Transparent" slot="startContent"></ui5-button>
+			<ui5-button icon="home" tooltip="Go home" design="Transparent" slot="startContent"></ui5-button>
 			<ui5-label id="basic-label">Header Title</ui5-label>
-			<ui5-button icon="action-settings" title="Go to settings" slot="endContent"></ui5-button>
+			<ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
 		</ui5-bar>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-bar</span> <span class="na">design=</span><span class="s">"Header"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">title=</span><span class="s">"Go home"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">slot=</span><span class="s">"startContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">tooltip=</span><span class="s">"Go home"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">slot=</span><span class="s">"startContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;ui5-label&gt;</span>Header Title<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">title=</span><span class="s">"Go to settings"</span> <span class="na">slot=</span><span class="s">"endContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">tooltip=</span><span class="s">"Go to settings"</span> <span class="na">slot=</span><span class="s">"endContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;/ui5-bar&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -5405,15 +5423,15 @@
 	<h3>Subheader Bar</h3>
 	<div class="snippet">
 		<ui5-bar design="Subheader">
-			<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
+			<ui5-button icon="home" tooltip="Go home" slot="startContent"></ui5-button>
 			<ui5-label id="basic-label">Subheader Title</ui5-label>
-			<ui5-button icon="action-settings" title="Go to settings" slot="endContent"></ui5-button>
+			<ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
 		</ui5-bar>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-bar</span> <span class="na">design=</span><span class="s">"Subheader"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">title=</span><span class="s">"Go home"</span> <span class="na">slot=</span><span class="s">"startContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">tooltip=</span><span class="s">"Go home"</span> <span class="na">slot=</span><span class="s">"startContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;ui5-label&gt;</span>Subheader Title<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">title=</span><span class="s">"Go to settings"</span> <span class="na">slot=</span><span class="s">"endContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">tooltip=</span><span class="s">"Go to settings"</span> <span class="na">slot=</span><span class="s">"endContent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;/ui5-bar&gt;</span>
 	</code></pre></figure></pre>
 </section>

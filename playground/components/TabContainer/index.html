@@ -317,6 +317,8 @@
       
     
       
+    
+      
         
       
     
@@ -356,6 +358,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -922,6 +926,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1763,6 +1769,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" class="navigation-list-link">
@@ -2010,6 +2018,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2784,6 +2794,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3047,6 +3059,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -3895,6 +3909,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.0.0.md/" class="navigation-list-link">
@@ -4133,6 +4149,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5638,38 +5656,38 @@
 	<h3>TabContainer with tabLayout="Inline"</h3>
 	<div class="snippet">
 		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
-			<ui5-tab text="Monitors" additional-text="(10)">
+			<ui5-tab text="Monitors" additional-text="10">
 			</ui5-tab>
-			<ui5-tab text="Cameras" additional-text="(2)" selected>
+			<ui5-tab text="Cameras" additional-text="2" selected>
 			</ui5-tab>
-			<ui5-tab text="Rooms" additional-text="(16)">
+			<ui5-tab text="Rooms" additional-text="16">
 			</ui5-tab>
 		</ui5-tabcontainer>
 
 		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
-			<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
+			<ui5-tab icon="laptop" text="Monitors" additional-text="10">
 			</ui5-tab>
-			<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
+			<ui5-tab icon="video" text="Cameras" additional-text="2" selected>
 			</ui5-tab>
-			<ui5-tab icon="home" text="Rooms" additional-text="(16)">
+			<ui5-tab icon="home" text="Rooms" additional-text="16">
 			</ui5-tab>
 		</ui5-tabcontainer>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"10"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"2"</span> <span class="na">selected</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"(16)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"16"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
 <span class="nt">&lt;/ui5-tabcontainer&gt;</span>
 
 <span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"laptop"</span> <span class="na">ext=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"laptop"</span> <span class="na">text=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"10"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"video"</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"video"</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"2"</span> <span class="na">selected</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"(16)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"16"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;/ui5-tab&gt;</span>
 <span class="nt">&lt;/ui5-tabcontainer&gt;</span>
 	</code></pre></figure></pre>
@@ -5686,6 +5704,10 @@ The <code>ui5-tabcontainer</code> represents a collection of tabs with associate
 <h3>Structure</h3>
 
 The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li> <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li> </ul>
+
+<h3>CSS Shadow Parts</h3>
+
+<ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM. <br> The <code>ui5-tabcontainer</code> exposes the following CSS Shadow Parts: <ul> <li>content - Used to style the content of the component</li> </ul>
 
 <h3>Keyboard Handling</h3>
 
@@ -5733,7 +5755,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showOverflow
                             <br>
-                            <code>show-overflow</code>
+                                 <code>show-overflow</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -5745,7 +5767,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           tabLayout
                             <br>
-                            <code>tab-layout</code>
+                                 <code>tab-layout</code>
                         </div>
                         <div class="cell api-table-content-cell">TabLayout</div>
                         <div class="cell api-table-content-cell">&quot;Standard&quot;</div>
@@ -5761,7 +5783,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           tabsOverflowMode
                             <br>
-                            <code>tabs-overflow-mode</code>
+                                 <code>tabs-overflow-mode</code>
                         </div>
                         <div class="cell api-table-content-cell">TabsOverflowMode</div>
                         <div class="cell api-table-content-cell">&quot;End&quot;</div>
@@ -5865,7 +5887,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           additionalText
                             <br>
-                            <code>additional-text</code>
+                                 <code>additional-text</code>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -5958,6 +5980,22 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                 </div>
             
             
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">getTabInStripDomRef</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Returns the DOM reference of the tab that is placed in the header. <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.</div>
+                      </div>
+            
+                  </div>
+            
           </section>
         </section>
       </div>
@@ -5966,6 +6004,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
         <section class="component-description">
           The <code>ui5-tab-separator</code> represents a vertical line to separate tabs inside a <code>ui5-tabcontainer</code>.
           <section class="component-api space-top">
+            
             
             
             
