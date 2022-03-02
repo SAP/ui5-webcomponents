@@ -239,6 +239,7 @@ const metadata = {
 		_startOverflowText: {
 			type: String,
 			noAttribute: true,
+			defaultValue: "0",
 		},
 
 		_endOverflowText: {
