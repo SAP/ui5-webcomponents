@@ -440,6 +440,11 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover.toggle(this);
 	}
 
+	togglePopoverByDropdownIcon() {
+		this._shouldFilterItems = false;
+		this.allItemsPopover.toggle(this);
+	}
+
 	_showFilteredItems() {
 		this.filterSelected = true;
 		this._showMorePressed = true;
@@ -465,6 +470,8 @@ class MultiComboBox extends UI5Element {
 		const value = input.value;
 		const filteredItems = this._filterItems(value);
 		const oldValueState = this.valueState;
+
+		this._shouldFilterItems = true;
 
 		if (this.filterSelected) {
 			this.filterSelected = false;
@@ -586,26 +593,25 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_handleShow(event) {
-		const items = this._filteredItems;
-		const selectedItems = this._getSelectedItems();
+		const items = this.items;
+		const selectedItem = this._getSelectedItems()[0];
 		const focusedToken = this._tokenizer.tokens.find(token => token.focused);
 
 		this._isOpenedByKeyboard = true;
+		this._shouldFilterItems = false;
 
 		event.preventDefault();
+
+		this._filteredItems = this.items;
 		this.togglePopover();
 
-		if (selectedItems.length > 0 && !focusedToken && items.indexOf(selectedItems[0]) !== -1) {
-			selectedItems[0].focus();
-		} else if (focusedToken && event.target === focusedToken && items.some(item => item.text === focusedToken.text)) {
-			items.find(item => item.text === focusedToken.text).focus();
+		if (selectedItem  && !focusedToken) {
+			this._itemToFocus = selectedItem;
+		} else if (focusedToken && event.target === focusedToken) {
+			this._itemToFocus = items.find(item => item.text === focusedToken.text);
 		} else {
-			items[0].focus();
+			this._itemToFocus = items[0];
 		}
-	}
-
-	_handleItemShow(event) {
-		this.togglePopover();
 	}
 
 	_handleBackspace(event) {
@@ -687,7 +693,7 @@ class MultiComboBox extends UI5Element {
 		event.preventDefault();
 
 		if (isShow(event)) {
-			this._handleItemShow(event);
+			this.togglePopover();
 		}
 
 		if (isCtrlA(event)) {
@@ -875,6 +881,8 @@ class MultiComboBox extends UI5Element {
 
 		if (!isPhone() && !this._isOpenedByKeyboard) {
 			this._innerInput.focus();
+		} else {
+			this._itemToFocus.focus();
 		}
 
 		if (isPhone()) {
@@ -990,8 +998,11 @@ class MultiComboBox extends UI5Element {
 			item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 		});
 
-		const filteredItems = this._filterItems(this.value);
-		this._filteredItems = filteredItems;
+		if (this._shouldFilterItems) {
+			this._filteredItems = this._filterItems(this.value);
+		} else {
+			this._filteredItems = this.items;
+		}
 	}
 
 	async onAfterRendering() {
