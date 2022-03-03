@@ -219,6 +219,8 @@ const isShift = event => event.key === "Shift" || event.keyCode === KeyCodes.SHI
 
 const isCtrlA = event => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, true, false, false);
 
+const isCtrlV = event => ((event.key === "V" || event.key === "v") || event.which === KeyCodes.V) && checkModifierKeys(event, true, false, false);
+
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = event => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
@@ -277,4 +279,5 @@ export {
 	isPageDownShiftCtrl,
 	isShift,
 	isCtrlA,
+	isCtrlV,
 };

@@ -14,6 +14,7 @@ import {
 	isHomeCtrl,
 	isEndCtrl,
 	isCtrlA,
+	isCtrlV,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -583,6 +584,21 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (isCtrlV(event)) {
+			const pastedText = await navigator.clipboard.readText();
+			const separatedText = pastedText.split(/\r\n|\r|\n/g);
+
+			const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1);
+
+			if (matchingItems.length) {
+				matchingItems.forEach(item => {
+					item.selected = true;
+					this.value = "";
+					this.fireSelectionChange();
+				});
+			}
+		}
+
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
 	}
@@ -841,6 +857,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_onTokenizerKeydown(event) {
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+
 		if (isRight(event)) {
 			const lastTokenIndex = this._tokenizer.tokens.length - 1;
 
@@ -849,6 +867,27 @@ class MultiComboBox extends UI5Element {
 					this.shadowRoot.querySelector("input").focus();
 				}, 0);
 			}
+		}
+
+		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
+			event.preventDefault();
+
+			const isCut = event.key.toLowerCase() === "x";
+			const selectedTokens = this._tokenizer.tokens.filter(token => token.selected);
+
+			if (isCut) {
+				const cutResult = this._tokenizer._fillClipboard("cut", selectedTokens);
+
+				selectedTokens.forEach(token => {
+					this._tokenizer._tokenDelete(event, token);
+				});
+
+				this.focus();
+
+				return cutResult;
+			}
+
+			return this._tokenizer._fillClipboard("copy", selectedTokens);
 		}
 
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
