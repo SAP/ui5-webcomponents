@@ -737,7 +737,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await mcb.keys(["Shift", "Space"]);
 
-			assert.strictEqual(await mcb.getProperty("value"), "", "Last token should be selected");
+			assert.strictEqual(await mcb.getProperty("value"), "", "Input field is empty");
 		});
 	});
 
