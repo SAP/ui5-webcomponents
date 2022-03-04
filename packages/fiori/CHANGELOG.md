@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
+
+
+### Bug Fixes
+
+* **ui5-view-settings-dialog:** fix circular dependency JS error ([#4844](https://github.com/SAP/ui5-webcomponents/issues/4844)) ([057a7d8](https://github.com/SAP/ui5-webcomponents/commit/057a7d8)), closes [#4837](https://github.com/SAP/ui5-webcomponents/issues/4837)
+
+
+
+
+
 # [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
 
 

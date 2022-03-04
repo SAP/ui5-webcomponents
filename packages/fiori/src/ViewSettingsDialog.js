@@ -416,7 +416,6 @@ class ViewSettingsDialog extends UI5Element {
 			return {
 				text: item.text,
 				selected: item.selected,
-				associatedItem: item,
 				index,
 			};
 		});
@@ -477,7 +476,10 @@ class ViewSettingsDialog extends UI5Element {
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
-		this._dialog.show();
+
+		this._dialog.show(true);
+
+		this._dialog.querySelector("[ui5-list]").focusFirstItem();
 	}
 
 	_handleModeChange(event) {
@@ -565,8 +567,7 @@ class ViewSettingsDialog extends UI5Element {
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
 			sortBy = _currentSortBySelected && _currentSortBySelected.text,
 			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
-			initSortIByItem = this.initSortByItems.find((item, index) => index === sortByElementIndex),
-			sortByItem = initSortIByItem && initSortIByItem.associatedItem;
+			sortByItem = this.sortItems[sortByElementIndex];
 		return {
 			sortOrder,
 			sortDescending,
