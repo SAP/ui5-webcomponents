@@ -9,6 +9,8 @@ import {
 	isSpace,
 	isLeft,
 	isRight,
+	isSpaceCtrl,
+	isSpaceShift,
 	isLeftCtrl,
 	isRightCtrl,
 	isUpCtrl,
@@ -277,7 +279,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isSpace(event)) {
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+		}
+
+		if (isSpace(event) || isSpaceCtrl(event)) {
 			event.preventDefault();
 
 			return this._handleTokenSelection(event, false);

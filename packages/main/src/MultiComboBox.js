@@ -7,6 +7,8 @@ import {
 	isDown,
 	isUp,
 	isSpace,
+	isSpaceCtrl,
+	isSpaceShift,
 	isRight,
 	isHome,
 	isEnd,
@@ -609,8 +611,20 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+		}
+
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+	}
+
+	_handlePageUp(event) {
+		event.preventDefault();
+	}
+
+	_handlePageDown(event) {
+		event.preventDefault();
 	}
 
 	_handleBackspace(event) {
@@ -961,7 +975,7 @@ class MultiComboBox extends UI5Element {
 			this.fireSelectionChange();
 		}
 
-		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
+		if (!event.detail.selectionComponentPressed && !isSpace(event.detail) && !isSpaceCtrl(event.detail)) {
 			this.allItemsPopover.close();
 			this.value = "";
 
