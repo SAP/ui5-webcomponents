@@ -15,6 +15,9 @@ import {
 	isEndCtrl,
 	isCtrlA,
 	isCtrlV,
+	isDeleteShift,
+	isInsertShift,
+	isInsertCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -584,7 +587,7 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (isCtrlV(event)) {
+		if (isCtrlV(event) || isInsertShift(event)) {
 			const pastedText = await navigator.clipboard.readText();
 			const separatedText = pastedText.split(/\r\n|\r|\n/g);
 
@@ -869,10 +872,10 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
-		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
+		if ((isCtrl && ["c", "x"].includes(event.key.toLowerCase())) || isDeleteShift(event) || isInsertCtrl(event)) {
 			event.preventDefault();
 
-			const isCut = event.key.toLowerCase() === "x";
+			const isCut = event.key.toLowerCase() === "x" || isDeleteShift(event);
 			const selectedTokens = this._tokenizer.tokens.filter(token => token.selected);
 
 			if (isCut) {

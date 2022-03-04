@@ -785,6 +785,78 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
 		});
+
+		it ("should copy a token with CTRL+C and paste it with CTRL+V", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const mcb2 = await browser.$("#mcb");
+			const input = await mcb2.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await tokens[1].keys(["Control", "c"]);
+			await input.click();
+			await input.keys(["Control", "v"]);
+
+			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+		});
+
+		it ("should cut a token with CTRL+X and paste it with CTRL+V", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const mcb2 = await browser.$("#mcb");
+			const input = await mcb2.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await tokens[1].keys(["Control", "x"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
+
+			await input.click();
+			await input.keys(["Control", "v"]);
+
+			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+		});
+
+		it ("should cut a token with SHIFT+DELETE and paste it with SHIFT+INSERT", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const mcb2 = await browser.$("#mcb");
+			const input = await mcb2.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await tokens[1].keys(["Shift", "Delete"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
+
+			await input.click();
+			await input.keys(["Shift", "Insert"]);
+
+			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+		});
+
+		it ("should copy a token with CTRL+INSERT and paste it with SHIFT+INSERT", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const mcb2 = await browser.$("#mcb");
+			const input = await mcb2.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await tokens[1].keys(["Control", "Insert"]);
+			await input.click();
+			await input.keys(["Shift", "Insert"]);
+
+			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+		});
 	});
 
 	describe("General", () => {
