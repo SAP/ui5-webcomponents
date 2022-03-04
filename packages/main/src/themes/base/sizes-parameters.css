@@ -131,6 +131,8 @@
 	--_ui5_button_base_min_width: 2rem;
 	--_ui5_button_icon_font_size: 1rem;
 
+	--_ui5_vsd_sub_header_height: 2rem;
+
 	/* Calendar */
 	--_ui5_calendar_height: 18rem;
 	--_ui5_calendar_width: 17.75rem;
