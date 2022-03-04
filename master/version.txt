@@ -1,14 +1,21 @@
-commit 14552cf6850ea5e3d7e5beee57f6a2e5d60172bc
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Mar 2 18:23:30 2022 +0200
+commit 0fbe1e1a895dcf94ba9c2a11e0f52c57fc79d2e3
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri Mar 4 09:54:49 2022 +0200
 
-    fix(ui5-date-picker): remove timezone test (#4829)
+    feat(ui5-multi-combobox, ui5-tokenizer):  Handle 'Space' key combinations (#4817)
     
-    - The DateFormat's parse method wasn't expected
-    to call getDate on the already correctly parsed
-    JavaScript Date object. The result is declared
-    invalid and replaced with null when the day doen't
-    match the one from the string. The timezone test
-    is removed as we don't have a way to mock the JS Date.
+    * mcb-space-full
     
-    Fixes: 4443
+    * Merge with master, add tests
+    
+    * Fix test
+    
+    * Clean test
+    
+    * Fix testing suite
+    
+    * Remove CTRL+Space handling on the list, add test
+    
+    * Retrigger the build
+    
+    * Fix test assertion
