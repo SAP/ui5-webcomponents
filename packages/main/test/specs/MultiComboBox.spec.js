@@ -785,6 +785,33 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
 		});
+
+		it ("should select а token with CTRL+SPACE", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "Space"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
+		});
+
+		it ("CTRL+SPACE should do nothing when pressed in the input field", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys(["Shift", "Space"]);
+
+			assert.strictEqual(await mcb.getProperty("value"), "", "Input field is empty");
+		});
 	});
 
 	describe("General", () => {

@@ -7,6 +7,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
+	isSpaceCtrl,
+	isSpaceShift,
 	isLeftCtrl,
 	isRightCtrl,
 	isLeftShift,
@@ -271,7 +273,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isSpace(event)) {
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+		}
+
+		if (isSpace(event) || isSpaceCtrl(event)) {
 			event.preventDefault();
 
 			return this._handleTokenSelection(event, false);
