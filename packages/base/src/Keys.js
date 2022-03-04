@@ -111,6 +111,8 @@ const isSpace = event => (event.key ? (event.key === "Spacebar" || event.key ===
 
 const isSpaceShift = event => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
 
+const isSpaceCtrl = event => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, true, false, false);
+
 const isLeft = event => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && !hasModifierKeys(event);
 
 const isRight = event => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && !hasModifierKeys(event);
@@ -238,6 +240,7 @@ export {
 	isEnterShift,
 	isSpace,
 	isSpaceShift,
+	isSpaceCtrl,
 	isLeft,
 	isRight,
 	isUp,
