@@ -590,18 +590,8 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isCtrlV(event) || isInsertShift(event)) {
-			const pastedText = await navigator.clipboard.readText();
-			const separatedText = pastedText.split(/\r\n|\r|\n/g);
-
-			const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1);
-
-			if (matchingItems.length) {
-				matchingItems.forEach(item => {
-					item.selected = true;
-					this.value = "";
-					this.fireSelectionChange();
-				});
-			}
+			this._handlePaste(event);
+			return;
 		}
 
 		if (isSpaceShift(event)) {
@@ -610,6 +600,21 @@ class MultiComboBox extends UI5Element {
 
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+	}
+
+	async _handlePaste(event) {
+		const pastedText = await navigator.clipboard.readText();
+		const separatedText = pastedText.split(/\r\n|\r|\n/g);
+
+		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1);
+
+		if (matchingItems.length) {
+			matchingItems.forEach(item => {
+				item.selected = true;
+				this.value = "";
+				this.fireSelectionChange();
+			});
+		}
 	}
 
 	_handlePageUp(event) {
@@ -886,17 +891,19 @@ class MultiComboBox extends UI5Element {
 
 			if (isCut) {
 				const cutResult = this._tokenizer._fillClipboard("cut", selectedTokens);
-
 				selectedTokens.forEach(token => {
 					this._tokenizer._tokenDelete(event, token);
 				});
 
 				this.focus();
-
 				return cutResult;
 			}
-
 			return this._tokenizer._fillClipboard("copy", selectedTokens);
+		}
+
+		if (isCtrlV(event) || isInsertShift(event)) {
+			this._handlePaste(event);
+			return;
 		}
 
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
