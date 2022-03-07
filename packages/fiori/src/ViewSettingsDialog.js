@@ -476,7 +476,10 @@ class ViewSettingsDialog extends UI5Element {
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
-		this._dialog.show();
+
+		this._dialog.show(true);
+
+		this._dialog.querySelector("[ui5-list]").focusFirstItem();
 	}
 
 	_handleModeChange(event) {
