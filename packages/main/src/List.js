@@ -933,6 +933,10 @@ class List extends UI5Element {
 		this.getAfterElement().focus();
 	}
 
+	/**
+	 * Focuses the first list item and sets its tabindex to "0" via the ItemNavigation
+	 * @protected
+	 */
 	focusFirstItem() {
 		// only enabled items are focusable
 		const firstItem = this.getFirstItem(x => !x.disabled);
