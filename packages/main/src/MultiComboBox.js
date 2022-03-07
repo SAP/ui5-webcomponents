@@ -607,11 +607,11 @@ class MultiComboBox extends UI5Element {
 		const value = this.value;
 		const matchingItem = this.items.find(item => item.text.localeCompare(value, undefined, { sensitivity: "base" }) === 0);
 
+		event.preventDefault();
+
 		if (this.readonly) {
 			return;
 		}
-
-		event.preventDefault();
 
 		this._isOpenedByKeyboard = true;
 		this._shouldFilterItems = false;
