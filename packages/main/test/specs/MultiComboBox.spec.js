@@ -864,7 +864,6 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys(["Alt", "ArrowDown"]);
 
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[0];
-
 			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
 		});
 
