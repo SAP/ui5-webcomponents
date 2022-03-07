@@ -1,7 +1,27 @@
-commit b6eb129ce411751403d7c197cd42f46cd35f5426
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Mon Mar 7 06:23:44 2022 -0800
+commit 01b56f37b7206d13ccb045c0d8bceaa29a12522d
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Mon Mar 7 19:29:31 2022 +0200
 
-    chore: translation delivery (#4855)
+    feat(ui5-multi-combobox): Improve F4/Alt+Down focus handling (#4825)
     
-    Change-Id: Icd98f681c7bce6f8b0d35693617a86bef03cb68e
+    * Improve F4/Alt+Down focus handling
+    
+    * Fix Alt+Down bug, add tests
+    
+    * Fix comments, add test
+    
+    * Fix big when opened from focused token that is filtered out of the showed items
+    
+    * Fix comments, don't filter items on ALT+DOWN/F4/Dropdown icon click
+    
+    * Lint
+    
+    * Add test
+    
+    * Focus the item corresponding to the text value, if there is one
+    
+    * Fix comments
+    
+    * Prevent scrolling in read-only mode
+    
+    * Retrigger build
