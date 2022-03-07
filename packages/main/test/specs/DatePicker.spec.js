@@ -302,6 +302,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("Enter");
 		tomorrowDate = await lblTomorrowDate.getHTML(false);
 		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		await innerInput.keys("Enter");
 
 		// Type tomorrow and press Enter for the second time.
 		await innerInput.keys("tomorrow");

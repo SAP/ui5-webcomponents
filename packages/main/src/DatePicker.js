@@ -472,10 +472,6 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
-		if (isEnter(event)) {
-			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
-		}
-
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._modifyDateValue(1, "year");
