@@ -210,8 +210,6 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("renders accessible names of non-overflowing link items", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsWithAccName"),
-			item = await browser.$("#lastItemWithACCName"),
-			itemId = await item.getProperty('_id'),
 			link = (await breadcrumbs.shadow$$("ui5-link"))[3], // we take the last link, because the first overflow
 			expectedAccessibleName = 'Link5 last link acc name 3 of 3';
 
