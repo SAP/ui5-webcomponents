@@ -153,7 +153,7 @@ const metadata = {
 			type: Object,
 		},
 
-		_hasOwnContent: {
+		_isTopLevelTab: {
 			type: Boolean,
 		},
 	},
@@ -234,11 +234,11 @@ class Tab extends UI5Element {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this.parentElement.hasAttribute("ui5-tabcontainer") && this._hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
 	}
 
 	get isSingleClickArea() {
-		return this.subTabs.length > 0 && this.parentElement.hasAttribute("ui5-tabcontainer") && !this._hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && !this._hasOwnContent;
 	}
 
 	get isOnSelectedTabPath() {
@@ -253,14 +253,9 @@ class Tab extends UI5Element {
 		return this._realTab === this ? "" : "disabled-slot";
 	}
 
-	get _checkForContent() {
-		this.content.forEach(node => {
-			if (node.nodeType !== Node.COMMENT_NODE
-				&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)) {
-				this._hasOwnContent = true;
-			}
-		});
-		return this._hasOwnContent;
+	get _hasOwnContent() {
+		return this.content.some(node => (node.nodeType !== Node.COMMENT_NODE
+				&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)));
 	}
 
 	/**
@@ -285,10 +280,6 @@ class Tab extends UI5Element {
 		return focusedDomRef;
 	}
 
-	_onExpandButtonClick(event) {
-		this._onTabExpandButtonClick(event);
-	}
-
 	get isMixedModeTab() {
 		return !this.icon && this._mixedMode;
 	}
@@ -306,8 +297,8 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		const selectedSubItem = this.tabs.some(elem => elem.effectiveSelected);
-		return this.selected || this._selected || selectedSubItem;
+		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
+		return this.selected || this._selected || subItemSelected;
 	}
 
 	get effectiveHidden() {

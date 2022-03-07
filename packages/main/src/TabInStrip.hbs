@@ -37,8 +37,9 @@
 
 	</div>
 	{{#if this.requiresExpandButton}}
-		<div class="ui5-tab-expand-button" @click="{{_onExpandButtonClick}}">
+		<div class="ui5-tab-expand-button" @click="{{_onTabExpandButtonClick}}">
 			<ui5-button
+				.tab={{this}}
 				icon="slim-arrow-down"
 				design="Transparent"
 				tabindex="-1"

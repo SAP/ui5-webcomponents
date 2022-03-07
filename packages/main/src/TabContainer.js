@@ -420,13 +420,14 @@ class TabContainer extends UI5Element {
 			item._mixedMode = this.mixedMode;
 			item._posinset = index + 1;
 			item._setsize = arr.length;
-			item._getTabContainerHeaderItemCallback = _ => {
-				return this.getDomRef().querySelector(`#${item._id}`);
-			};
+			item._getTabContainerHeaderItemCallback = _ => this.getDomRef().querySelector(`#${item._id}`);
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 			item._realTab = this._selectedTab;
-			item._hasOwnContent = item._checkForContent;
+			item._isTopLevelTab = this.items.some(i => i === item);
+			walk(items, tab => {
+				tab._realTab = item._realTab;
+			});
 		});
 	}
 
@@ -435,8 +436,12 @@ class TabContainer extends UI5Element {
 		if (!tab) {
 			return;
 		}
+		if (event.target.hasAttribute("ui5-button")) {
+			this._onTabExpandButtonClick(event);
+			return;
+		}
 
-		if (!tab._realTab._checkForContent && tab._realTab.tabs.length) {
+		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
 			this._overflowItems = [];
 			this._overflowItems = tab._realTab.subTabs;
 			this._addStyleIndent(this._overflowItems, false);
@@ -451,11 +456,6 @@ class TabContainer extends UI5Element {
 			this.selectTab(this._getRootTab(tab._realTab), this._allItemsAndSubItems.indexOf(this._getRootTab(tab._realTab)));
 			return;
 		}
-
-		walk(this.items, item => {
-			item._realTab = tab._realTab;
-		});
-
 		this._onHeaderItemSelect(tab);
 	}
 
@@ -463,23 +463,19 @@ class TabContainer extends UI5Element {
 		event.stopPropagation();
 		event.preventDefault();
 		let button = event.target;
-		let tabInstanceId;
-		const isRealTab = event.target._realTab && event.target._realTab.hasAttribute("ui5-tab");
+		let tabInstance = button.tab;
 
-		if ((event.type === "keydown" || isRealTab) && !event.target._realTab.isSingleClickArea) {
+		if ((event.type === "keydown") && !event.target._realTab.isSingleClickArea) {
 			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
-			tabInstanceId = button.parentElement.id;
-		} else {
-			tabInstanceId = button.parentElement.parentElement.id;
+			tabInstance = event.target._realTab;
 		}
 
-		const tabInstance = this._getTabs().find(item => item._id === tabInstanceId);
-
+		// if clicked between the expand button and the tab
 		if (!tabInstance) {
-			this._onHeaderItemSelect(event.currentTarget.parentElement);
+			this._onHeaderItemSelect(button.parentElement);
 			return;
 		}
-		this._overflowItems = [];
+
 		this._overflowItems = tabInstance.subTabs;
 		this._addStyleIndent(this._overflowItems, false);
 
@@ -500,8 +496,9 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (isEnter(event)) {
-			event.preventDefault();
+		event.preventDefault();
+
+		if (isEnter(event) || isSpace(event)) {
 			if (tab._realTab.isSingleClickArea) {
 				this._onTabStripClick(event);
 			} else {
@@ -509,40 +506,13 @@ class TabContainer extends UI5Element {
 			}
 		}
 
-		// Prevent Scrolling
-		if (isSpace(event)) {
-			event.preventDefault();
-			if (tab._realTab.isSingleClickArea) {
-				this._onTabStripClick(event);
-			}
-			walk(this.items, item => {
-				item._realTab = tab._realTab;
-			});
-		}
-
 		if (isDown(event)) {
 			if (tab._realTab.requiresExpandButton) {
-				event.preventDefault();
 				this._onTabExpandButtonClick(event);
 			}
 			if (tab._realTab.isSingleClickArea) {
-				event.preventDefault();
 				this._onTabStripClick(event);
 			}
-			walk(this.items, item => {
-				item._realTab = tab._realTab;
-			});
-		}
-	}
-
-	_onTabStripKeyUp(event) {
-		const tab = getTab(event.target);
-		if (!tab) {
-			return;
-		}
-
-		if (isSpace(event) && !tab.isSingleClickArea) {
-			this._onHeaderItemSelect(tab);
 		}
 	}
 
@@ -559,10 +529,6 @@ class TabContainer extends UI5Element {
 	async _onOverflowListItemClick(event) {
 		event.preventDefault(); // cancel the item selection
 		const { item } = event.detail;
-
-		walk(this.items, tab => {
-			tab._realTab = item._realTab;
-		});
 
 		this._onItemSelect(item);
 		await this.responsivePopover.close();
