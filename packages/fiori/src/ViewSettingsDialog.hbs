@@ -1,4 +1,5 @@
 <ui5-dialog
+	dir="{{effectiveDir}}"
 	aria-label="{{_dialogTitle}}"
 	@ui5-after-open={{_focusRecentlyUsedControl}}
 	@ui5-before-close={{_restoreConfirmedOnEscape}}
@@ -6,8 +7,8 @@
 >
 
 	<div slot="header" class="ui5-vsd-header">
-		<ui5-bar>
-			<div slot="startContent" class="ui5-vsd-start">
+		<div class="ui5-vsd-header-container">
+			<div class="ui5-vsd-header-start">
 				{{#if showBackButton}}
 					<ui5-button
 						design="Transparent"
@@ -16,34 +17,40 @@
 						@click="{{_navigateToFilters}}"
 					></ui5-button>
 					<ui5-title>{{_filterByTitle}}</ui5-title>
-				{{else}}
-					<div class="ui5-vsd-bar-title">
-						<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_dialogTitle}}</ui5-title>
-						{{#if hasPagination}}
-							<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
-									<ui5-segmented-button-item
-										?pressed="{{isModeSort}}"
-										icon="sort"
-										mode="Sort"
-									></ui5-segmented-button-item>
-									<ui5-segmented-button-item
-										?pressed="{{isModeFilter}}"
-										icon="filter"
-										mode="Filter"
-									></ui5-segmented-button-item>
-							</ui5-segmented-button>
-						{{/if}}
-					</div>
 				{{/if}}
+				<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_dialogTitle}}</ui5-title>
 			</div>
-			<ui5-button
-				slot="endContent"
-				design="Transparent"
-				@click="{{_resetSettings}}"
-				?disabled={{_disableResetButton}}
-				reset-button>{{_resetButtonLabel}}</ui5-button>
-		</ui5-bar>
-	</div>
+			<div class="ui5-vsd-header-end">
+				<ui5-button
+					design="Transparent"
+					@click="{{_resetSettings}}"
+					?disabled={{_disableResetButton}}
+					>
+						{{_resetButtonLabel}}
+					</ui5-button>
+			</div>
+		</div>
+				{{#unless showBackButton}}
+					<div class="ui5-vsd-sub-header-container">
+						<div class="ui5-vsd-sub-header">
+							{{#if hasPagination}}
+								<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
+										<ui5-segmented-button-item
+											?pressed="{{isModeSort}}"
+											icon="sort"
+											mode="Sort"
+										></ui5-segmented-button-item>
+										<ui5-segmented-button-item
+											?pressed="{{isModeFilter}}"
+											icon="filter"
+											mode="Filter"
+										></ui5-segmented-button-item>
+								</ui5-segmented-button>
+							{{/if}}
+						</div>
+					</div>
+				{{/unless}}
+			</div>
 
 	<div class="ui5-vsd-content">
 		{{#if shouldBuildSort}}

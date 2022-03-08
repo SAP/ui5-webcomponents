@@ -299,4 +299,7 @@
 	--_ui5_timeline_tli_indicator_before_right: -0.5rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -0.75rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -0.8125rem;
+
+	/* ViewSettingsDialog */
+	--_ui5_vsd_sub_header_height: 2rem;
 }
