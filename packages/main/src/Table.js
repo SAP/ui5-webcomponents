@@ -22,7 +22,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -483,6 +483,7 @@ class Table extends UI5Element {
 		// Indicates whether the table is forwarding focus before or after the current table row.
 		this._forwardingFocus = false;
 
+		// Stores the last focused nested element index (within a table row) for F7 navigation.
 		this._prevNestedElementIndex = 0;
 	}
 
@@ -516,7 +517,7 @@ class Table extends UI5Element {
 
 		this._allRowsSelected = selectedRows.length === this.rows.length;
 
-		this._previousFocusedRow = this._previousFocusedRow || this.rows[0];
+		this._prevFocusedRow = this._prevFocusedRow || this.rows[0];
 	}
 
 	onAfterRendering() {
@@ -587,35 +588,50 @@ class Table extends UI5Element {
 	}
 
 	_handleTab(event) {
-		const target = getNormalizedTarget(event.target);
 		const isNext = isTabNext(event);
-		const isHeaderFocused = target === this.getColumnHeader();
-		const isMoreBtnFocused = target === this.getMoreButton();
+		const target = getNormalizedTarget(event.target);
+		const targetType = this.getFocusedElementType(event.target);
 
-		if (isNext) {
-			if (isHeaderFocused) {
-				if (!this.growsWithButton) {
-					this._focusForwardElement(event, true);
-					this.lastFocusedElement = this.getColumnHeader();
-				} else {
-					this.getMoreButton().focus();
-				}
-			} else if (isMoreBtnFocused) {
-				this._focusForwardElement(event, true);
+		if (this.columnHeaderTabbables.includes(target)) {
+			if (isNext && this.columnHeaderLastElement === target) {
+				return this._focusNextElement(event);
 			}
 
 			return;
 		}
 
-		if (isHeaderFocused) {
-			this._focusForwardElement(event, false);
-			this.lastFocusedElement = this.getColumnHeader();
-		} else if (isMoreBtnFocused) {
-			if (this.lastFocusedElement) {
-				this.lastFocusedElement.focus();
-			} else {
-				this.currentElement.focus();
+		if (isNext && targetType === "columnHeader" && !this.columnHeaderTabbables.length) {
+			return this._focusNextElement(event);
+		}
+
+		if (targetType === "tableRow" || !targetType) {
+			return;
+		}
+
+		if (isNext) {
+			switch (targetType) {
+			case "tableGroupRow":
+				return this._focusNextElement(event);
+			case "moreButton":
+				return this._focusForwardElement(event, true);
 			}
+		} else {
+			switch (targetType) {
+			case "tableGroupRow":
+			case "columnHeader":
+				return this._focusForwardElement(event, false);
+			case "moreButton":
+				event.preventDefault();
+				return this.currentElement.focus();
+			}
+		}
+	}
+
+	_focusNextElement(event) {
+		if (!this.growsWithButton) {
+			this._focusForwardElement(event, true);
+		} else {
+			this.morеBtn.focus();
 		}
 	}
 
@@ -704,35 +720,34 @@ class Table extends UI5Element {
 	_handleArrowAlt(event) {
 		const shouldMoveUp = isUpAlt(event);
 		const focusedElementType = this.getFocusedElementType(event.target);
-		const moreButton = this.getMoreButton();
 
 		if (shouldMoveUp) {
 			switch (focusedElementType) {
 			case "tableRow":
-				this._previousFocusedRow = event.target;
-				return this._onColumnHeaderClick();
+			case "tableGroupRow":
+				this._prevFocusedRow = event.target;
+				return this._onColumnHeaderClick(event);
 			case "columnHeader":
-				return moreButton ? moreButton.focus() : this._previousFocusedRow.focus();
+				return this.morеBtn ? this.morеBtn.focus() : this._prevFocusedRow.focus();
 			case "moreButton":
-				return this._previousFocusedRow ? this._previousFocusedRow.focus() : this._onColumnHeaderClick();
+				return this._prevFocusedRow ? this._prevFocusedRow.focus() : this._onColumnHeaderClick(event);
 			}
 		} else {
 			switch (focusedElementType) {
 			case "tableRow":
-				this._previousFocusedRow = event.target;
-				return moreButton ? moreButton.focus() : this._onColumnHeaderClick();
+			case "tableGroupRow":
+				this._prevFocusedRow = event.target;
+				return this.morеBtn ? this.morеBtn.focus() : this._onColumnHeaderClick(event);
 			case "columnHeader":
-				if (this._previousFocusedRow) {
-					return this._previousFocusedRow.focus();
-				}
-
-				if (moreButton) {
-					return moreButton.focus();
+				if (this._prevFocusedRow) {
+					this._prevFocusedRow.focus();
+				} else if (this.morеBtn) {
+					this.morеBtn.focus();
 				}
 
 				return;
 			case "moreButton":
-				return this._onColumnHeaderClick();
+				return this._onColumnHeaderClick(event);
 			}
 		}
 	}
@@ -740,20 +755,21 @@ class Table extends UI5Element {
 	/**
 	 * Determines the type of the currently focused element.
 	 * @private
-	 * @param {object} element The object representation of the DOM element
-	 * @returns {("columnHeader"|"tableRow"|"moreButton")} A string identifier
+	 * @param {object} element The DOM element
+	 * @returns {("columnHeader"|"tableRow"|"tableGroupRow"|"moreButton")} A string identifier
 	 */
 	getFocusedElementType(element) {
-		if (element === this.getColumnHeader()) {
+		if (element === this.columnHeader) {
 			return "columnHeader";
 		}
 
-		if (element === this.getMoreButton()) {
+		if (element === this.morеBtn) {
 			return "moreButton";
 		}
 
 		if (this.rows.includes(element)) {
-			return "tableRow";
+			const isGroupRow = element.hasAttribute("ui5-table-group-row");
+			return isGroupRow ? "tableGroupRow" : "tableRow";
 		}
 	}
 
@@ -764,32 +780,21 @@ class Table extends UI5Element {
 	 */
 	_handleF7(event) {
 		const row = event.detail.row;
-		const activeElement = getActiveElement();
 		row._tabbables = getTabbableElements(row);
+		const activeElement = getActiveElement();
+		const lastFocusedElement = row._tabbables[this._prevNestedElementIndex] || row._tabbables[0];
+		const targetIndex = row._tabbables.indexOf(activeElement);
 
 		if (!row._tabbables.length) {
 			return;
 		}
 
 		if (activeElement === row.root) {
-			const lastFocusedElement = row._tabbables[this._prevNestedElementIndex];
-
-			if (lastFocusedElement) {
-				lastFocusedElement.focus();
-			} else {
-				row._tabbables[0].focus();
-			}
-
-			return;
-		}
-
-		const targetIndex = row._tabbables.indexOf(activeElement);
-
-		if (targetIndex > -1) {
+			lastFocusedElement.focus();
+		} else if (targetIndex > -1) {
 			this._prevNestedElementIndex = targetIndex;
+			row.root.focus();
 		}
-
-		row.focus();
 	}
 
 	_onfocusin(event) {
@@ -797,8 +802,6 @@ class Table extends UI5Element {
 
 		if (!this._isForwardElement(target)) {
 			this.lastFocusedElement = target;
-
-			event.stopImmediatePropagation();
 			return;
 		}
 
@@ -827,7 +830,7 @@ class Table extends UI5Element {
 		if (!this.growsWithButton) {
 			this._focusForwardElement(event, true);
 		} else {
-			this.getMoreButton().focus();
+			this.morеBtn.focus();
 		}
 	}
 
@@ -867,7 +870,16 @@ class Table extends UI5Element {
 	}
 
 	_onColumnHeaderClick(event) {
-		this.getColumnHeader().focus();
+		if (!event.target) {
+			this.columnHeader.focus();
+		}
+
+		const target = getNormalizedTarget(event.target);
+		const isNestedElement = this.columnHeaderTabbables.includes(target);
+
+		if (!isNestedElement) {
+			this.columnHeader.focus();
+		}
 	}
 
 	_onColumnHeaderKeydown(event) {
@@ -990,11 +1002,11 @@ class Table extends UI5Element {
 		this.getRowParent(parent);
 	}
 
-	getColumnHeader() {
+	get columnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
 
-	getMoreButton() {
+	get morеBtn() {
 		return this.growsWithButton && this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-growingButton`);
 	}
 
@@ -1151,6 +1163,14 @@ class Table extends UI5Element {
 
 	get currentElement() {
 		return this._itemNavigation._getCurrentItem();
+	}
+
+	get columnHeaderTabbables() {
+		return getTabbableElements(this.columnHeader);
+	}
+
+	get columnHeaderLastElement() {
+		return getLastTabbableElement(this.columnHeader);
 	}
 }
 
