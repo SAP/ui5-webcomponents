@@ -308,7 +308,6 @@ class Tokenizer extends UI5Element {
 
 			const nextIdx = this._calcNextTokenIndex(event.target, tokens, isRight(event));
 			tokens[nextIdx].focus();
-			this._itemNav.setCurrentItem(tokens[nextIdx]);
 		}
 
 		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
