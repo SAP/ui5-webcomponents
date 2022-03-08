@@ -606,7 +606,7 @@ class MultiComboBox extends UI5Element {
 		const pastedText = await navigator.clipboard.readText();
 		const separatedText = pastedText.split(/\r\n|\r|\n/g);
 
-		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1);
+		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
 		if (matchingItems.length) {
 			matchingItems.forEach(item => {
@@ -614,6 +614,9 @@ class MultiComboBox extends UI5Element {
 				this.value = "";
 				this.fireSelectionChange();
 			});
+		} else {
+			this.value = pastedText;
+			this.fireEvent("input");
 		}
 	}
 
