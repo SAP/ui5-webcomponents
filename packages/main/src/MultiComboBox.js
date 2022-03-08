@@ -735,9 +735,13 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_onItemKeydown(event) {
+	async _onItemKeydown(event) {
 		const isFirstItem = this.list.items[0] === event.target;
 		const isArrowUp = isUp(event) || isUpCtrl(event);
+
+		if (this.hasValueStateMessage && !this.valueStateHeader) {
+			await this._setValueStateHeader();
+		}
 
 		if (isTabNext(event) || isTabPrevious(event)) {
 			this._onItemTab(event);

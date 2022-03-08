@@ -305,7 +305,10 @@ class Tokenizer extends UI5Element {
 
 		if (isLeft(event) || isRight(event)) {
 			event.preventDefault();
+
 			const nextIdx = this._calcNextTokenIndex(event.target, tokens, isRight(event));
+
+			this._itemNav.setCurrentItem(tokens[nextIndex]);
 			tokens[nextIdx].focus();
 		}
 
