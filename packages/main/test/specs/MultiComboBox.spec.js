@@ -751,6 +751,158 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
 		});
 
+		it ("should select/unselect next/previous item on shift+arrow", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys("Space");
+			await mcb.keys(["Shift", "ArrowDown"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 2, "should have two items selected");
+
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Shift", "ArrowUp"]);
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 1, "should have two items selected");
+		});
+
+		it ("should move focus to the previous token with arrow left", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens[2].getProperty("focused"), true, "Last token should be focused");
+
+			await mcb.keys("ArrowLeft");
+			assert.strictEqual(await tokens[1].getProperty("focused"), true, "Second token should be focused");
+
+			await mcb.keys("ArrowLeft");
+			assert.strictEqual(await tokens[0].getProperty("focused"), true, "First token should be focused");
+		});
+
+		it ("should select multiple tokens and move focus with shift+arrow keys", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const mcb2 = await browser.$("#mcb-warning");
+			const input = await mcb.shadow$("input");
+			const input2 = await mcb2.shadow$("input");
+
+
+			await input.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Shift", "ArrowLeft"]);
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
+			assert.strictEqual(await tokens[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens[1].getProperty("focused"), true, "Second token should be focused");
+
+			await mcb.keys(["Shift", "ArrowLeft"]);
+
+			assert.strictEqual(await tokens[2].getProperty("selected"), true, "Last token should be selected");
+			assert.strictEqual(await tokens[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens[0].getProperty("selected"), true, "First token should be selected");
+			assert.strictEqual(await tokens[0].getProperty("focused"), true, "First token should be focused");
+
+			await input2.click();
+			await mcb2.keys("ArrowLeft");
+			await mcb2.keys("ArrowLeft");
+			await mcb2.keys("ArrowLeft");
+
+			await mcb2.keys(["Shift", "ArrowRight"]);
+
+			let tokens2 = await mcb2.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(await tokens2[0].getProperty("selected"), true, "First token should be selected");
+			assert.strictEqual(await tokens2[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens2[1].getProperty("focused"), true, "second token should be focused");
+
+			await mcb2.keys(["Shift", "ArrowRight"]);
+
+			assert.strictEqual(await tokens2[2].getProperty("focused"), true, "Last token should be focused");
+			assert.strictEqual(await tokens2[2].getProperty("selected"), true, "Last token should be selected");
+			assert.strictEqual(await tokens2[1].getProperty("selected"), true, "Second token should be selected");
+			assert.strictEqual(await tokens2[0].getProperty("selected"), true, "First token should be selected");
+		});
+
+		it ("should navigate through the items with CTRL + arrow up/down keys when the picker is closed", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+
+			await mcb.click();
+			await mcb.keys(["Control", "ArrowDown"]);
+
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The first item name is selected");
+
+			await mcb.keys(["Control", "ArrowDown"]);
+			assert.equal(await mcb.getProperty("value"), "Compact", "The second item name is selected");
+
+			await mcb.keys(["Control", "ArrowUp"]);
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The value is set back to the first item name");
+
+			await mcb.keys(["Control", "ArrowUp"]);
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The value remains the same when pressing arrow up while the first item is set");
+		});
+
+		it ("focuses the value state header and item on CTRL + arrow down then the value state and the input on CTRL + arrow up", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-error");
+			const input = await mcb.shadow$("input");
+			const icon = await mcb.shadow$("[input-icon]");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await icon.click();
+			await mcb.keys(["Control", "ArrowDown"]);
+
+			let valueStateHeader = await browser.execute(staticArea => staticArea.shadowRoot.querySelector(".ui5-responsive-popover-header.ui5-valuestatemessage-root"), staticArea);
+			let focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
+			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should be focused");
+
+			await mcb.keys(["Control", "ArrowDown"]);
+
+			let listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
+			assert.notEqual(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should not be focused");
+
+			await mcb.keys(["Control", "ArrowUp"]);
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is no longer focused");
+			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header is focused again");
+
+			await mcb.keys(["Control", "ArrowUp"]);
+			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
+
+			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
+			assert.equal(await listItem.getProperty("focused"), false, "The first item should not be focused");
+			assert.equal(focusedElement, null, "The value state header or item should not be focused");
+		});
+
 		it ("should select all filtered items on CTRL+A", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
