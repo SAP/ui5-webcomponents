@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
+
+
+### Bug Fixes
+
+* **ui5-multi-combobox:** Prevent scrolling on page up/down ([#4835](https://github.com/SAP/ui5-webcomponents/issues/4835)) ([6c85e8d](https://github.com/SAP/ui5-webcomponents/commit/6c85e8d))
+* **ui5-responsive-popover:** fix auto close during re-rendering ([#4828](https://github.com/SAP/ui5-webcomponents/issues/4828)) ([5859ce7](https://github.com/SAP/ui5-webcomponents/commit/5859ce7)), closes [#4816](https://github.com/SAP/ui5-webcomponents/issues/4816)
+* **ui5-segmented-button-item:** adopt inherited `tooltip` property ([#4843](https://github.com/SAP/ui5-webcomponents/issues/4843)) ([b04db63](https://github.com/SAP/ui5-webcomponents/commit/b04db63)), closes [#4840](https://github.com/SAP/ui5-webcomponents/issues/4840)
+
+
+### Features
+
+* **ui5-multi-combobox, ui5-tokenizer:** Full Home/End implementation ([#4796](https://github.com/SAP/ui5-webcomponents/issues/4796)) ([8d83d33](https://github.com/SAP/ui5-webcomponents/commit/8d83d33))
+
+
+
+
+
 # [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
 
 
