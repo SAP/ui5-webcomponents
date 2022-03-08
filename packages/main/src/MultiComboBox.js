@@ -590,6 +590,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
+		const isArrowDownCtrl = isDownCtrl(event);
+
 		if (isShow(event) && !this.disabled) {
 			this._handleShow(event);
 			return;
