@@ -986,10 +986,7 @@ class MultiComboBox extends UI5Element {
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			this._handleShow(event);
-			return;
 		}
-
-		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
 	}
 
 	_filterItems(str) {

@@ -841,6 +841,8 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should navigate through the items with CTRL + arrow up/down keys when the picker is closed", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
@@ -856,23 +858,6 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.keys(["Control", "ArrowUp"]);
 			assert.equal(await mcb.getProperty("value"), "Cosy", "The value remains the same when pressing arrow up while the first item is set");
-		});
-
-		it ("should navigate through the items with CTRL + arrow left/right keys when the picker is opened", async () => {
-			const mcb = await browser.$("#mcb-with-placeholder");
-			const input = await mcb.shadow$("input");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-with-placeholder");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
-
-			await input.click();
-			await input.keys(["Alt", "ArrowDown"]);
-			await mcb.keys("ArrowDown");
-
-			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
-
-			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
-			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
 		});
 
 		it ("focuses the value state header and item on CTRL + arrow down then the value state and the input on CTRL + arrow up", async () => {
