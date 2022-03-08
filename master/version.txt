@@ -1,41 +1,5 @@
-commit 25cc16c24233d133493793a992a81d32239750a1
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Mar 8 19:54:38 2022 +0200
+commit 6cb7dc3b6eb0710d223f6b125fefc958010a100a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 8 22:31:15 2022 +0200
 
-    feat(ui5-multi-combobox, ui5-tokenizer): Complete arrow navigation functionality (#4784)
-    
-    * Implement Range Selection
-    
-    * Fix selection bug, add tests
-    
-    * Complete arrow navigation and combinations
-    
-    * Lint
-    
-    * Fix bugs, add more tests
-    
-    * Fix focusing the input with arrow right on the last token
-    
-    * Refactoring
-    
-    * Fix comments
-    
-    * Finish the merging with master properly
-    
-    * Fix comments
-    
-    * Merge with master
-    
-    * Fix merge conflicts with master
-    
-    * Do not range select last or first tokens
-    
-    * Fix bugs from code review
-    
-    * Fix Tokenizer error
-    
-    * Revert the last change in the tokenizer
-    
-    * Fix left/right arrow nav in tokenizer
-    
-    * Fix lint error
+    chore: commit css vars usage report (#4868)
