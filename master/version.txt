@@ -1,27 +1,5 @@
-commit 01b56f37b7206d13ccb045c0d8bceaa29a12522d
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Mon Mar 7 19:29:31 2022 +0200
+commit 346fa64aa1f0b5fe63afa9a3b21564db514f9e35
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Mar 8 18:53:29 2022 +0200
 
-    feat(ui5-multi-combobox): Improve F4/Alt+Down focus handling (#4825)
-    
-    * Improve F4/Alt+Down focus handling
-    
-    * Fix Alt+Down bug, add tests
-    
-    * Fix comments, add test
-    
-    * Fix big when opened from focused token that is filtered out of the showed items
-    
-    * Fix comments, don't filter items on ALT+DOWN/F4/Dropdown icon click
-    
-    * Lint
-    
-    * Add test
-    
-    * Focus the item corresponding to the text value, if there is one
-    
-    * Fix comments
-    
-    * Prevent scrolling in read-only mode
-    
-    * Retrigger build
+    feat(ui5-toast): implement SAP Horizon Dark and HC themes (#4864)
