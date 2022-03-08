@@ -11,6 +11,7 @@ import {
 	isSpaceShift,
 	isRight,
 	isHome,
+	isEnd,
 	isTabNext,
 	isTabPrevious,
 	isHomeCtrl,
@@ -954,15 +955,19 @@ class MultiComboBox extends UI5Element {
 
 		if (isCtrlV(event) || isInsertShift(event)) {
 			this._handlePaste(event);
+		}
 
+		if (isHome(event)) {
+			this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			this._handleEnd(event);
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			this._handleShow(event);
-			return;
 		}
-
-		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
 	}
 
 	_filterItems(str) {
