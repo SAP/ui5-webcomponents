@@ -7,8 +7,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
-	isLeft,
-	isRight,
 	isSpaceCtrl,
 	isSpaceShift,
 	isLeftCtrl,
