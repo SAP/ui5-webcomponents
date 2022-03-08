@@ -396,8 +396,10 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleArrowShift(focusedToken, tokens, backwards) {
-		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
-		if (nextIndex === -1) {
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		const nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex === -1 || nextIndex === tokens.length) {
 			return;
 		}
 
