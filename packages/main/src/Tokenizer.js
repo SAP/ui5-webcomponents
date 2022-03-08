@@ -303,13 +303,6 @@ class Tokenizer extends UI5Element {
 	_handleItemNavigation(event, tokens) {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
 
-		if (isLeft(event) || isRight(event)) {
-			event.preventDefault();
-
-			const nextIdx = this._calcNextTokenIndex(event.target, tokens, isRight(event));
-			tokens[nextIdx].focus();
-		}
-
 		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
 			return this._handleArrowCtrl(event, event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
 		}
