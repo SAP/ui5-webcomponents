@@ -54,6 +54,7 @@
 	--_ui5_range_slider_progress_focus_padding: 0 1.375rem 0 1.438rem;
 	--_ui5_range_slider_progress_focus_height: 2rem;
 	--_ui5_range_slider_legacy_progress_focus_display: block;
+	--_ui5_slider_padding: 1.406rem 1.0625rem;
 }
 
 [data-ui5-compact-size],
@@ -61,4 +62,5 @@
 .sapUiSizeCompact {
 	--_ui5_slider_handle_focused_top: -0.625rem;
 	--_ui5_slider_handle_focused_margin_left: -0.75rem;
+	--_ui5_slider_padding: 1rem 1.0625rem;
 }

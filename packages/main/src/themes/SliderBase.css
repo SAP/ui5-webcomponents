@@ -11,7 +11,7 @@
 	cursor: pointer;
 	vertical-align: top;
 	width: 100%;
-	padding: 1rem;
+	padding: var(--_ui5_slider_padding);
 	height: 3.3125rem;
 }
 
