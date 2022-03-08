@@ -11,8 +11,15 @@ import {
 	isSpaceShift,
 	isRight,
 	isHome,
+	isEnd,
 	isTabNext,
 	isTabPrevious,
+	isUpShift,
+	isDownShift,
+	isLeftCtrl,
+	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
 	isHomeCtrl,
 	isEndCtrl,
 	isCtrlA,
@@ -542,8 +549,9 @@ class MultiComboBox extends UI5Element {
 
 	_handleArrowLeft() {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+		const isTextSelected = this.getDomRef().querySelector(`input`).selectionEnd - cursorPosition > 0;
 
-		if (cursorPosition === 0) {
+		if (cursorPosition === 0 && !isTextSelected) {
 			this._tokenizer._focusLastToken();
 		}
 	}
@@ -582,13 +590,31 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
+		const isArrowDownCtrl = isDownCtrl(event);
+
 		if (isShow(event) && !this.disabled) {
 			this._handleShow(event);
 			return;
 		}
 
-		if (isUp(event) || isDown(event)) {
-			this._handleArrowNavigation(event);
+		if (isDownShift(event) || isUpShift(event)) {
+			event.preventDefault();
+			return;
+		}
+
+		if (isUp(event) || isDown(event) || isUpCtrl(event) || isArrowDownCtrl) {
+			this._handleArrowNavigation(event, isArrowDownCtrl);
+			return;
+		}
+
+		// CTRL + Arrow Down navigation is performed by the ItemNavigation module of the List,
+		// here we only implement the text selection of the selected item
+		if (isArrowDownCtrl && !this.allItemsPopover.opened) {
+			setTimeout(() => this._inputDom.setSelectionRange(0, this._inputDom.value.length), 0);
+		}
+
+		if (isLeftCtrl(event) || isRightCtrl(event)) {
+			this._handleArrowCtrl(event);
 			return;
 		}
 
@@ -700,17 +726,22 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
-		if (isArrowDown) {
+		if (isArrowDown || isDownCtrl(event)) {
 			this._handleArrowDown(event);
 		}
 
-		if (isArrowUp) {
+		if (isArrowUp || isUpCtrl(event)) {
 			this._inputDom.focus();
 		}
 	}
 
-	_onItemKeydown(event) {
+	async _onItemKeydown(event) {
 		const isFirstItem = this.list.items[0] === event.target;
+		const isArrowUp = isUp(event) || isUpCtrl(event);
+
+		if (this.hasValueStateMessage && !this.valueStateHeader) {
+			await this._setValueStateHeader();
+		}
 
 		if (isTabNext(event) || isTabPrevious(event)) {
 			this._onItemTab(event);
@@ -729,6 +760,21 @@ class MultiComboBox extends UI5Element {
 
 		event.preventDefault();
 
+		if (isDownShift(event) || isUpShift(event)) {
+			this._handleItemRangeSelection(event);
+			return;
+		}
+
+		if ((isUpCtrl(event)) && !isFirstItem) {
+			this.list._itemNavigation._handleUp(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
+		if (isDownCtrl(event)) {
+			this.list._itemNavigation._handleDown(event);
+			this.list.items[this.list._itemNavigation._currentIndex].focus();
+		}
+
 		if (isShow(event)) {
 			this.togglePopover();
 		}
@@ -738,12 +784,25 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (((isUp(event) && isFirstItem) || isHome(event)) && this.valueStateHeader) {
+		if (((isArrowUp && isFirstItem) || isHome(event)) && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 		}
 
-		if (!this.valueStateHeader && isUp(event) && isFirstItem) {
+		if (!this.valueStateHeader && isFirstItem && isArrowUp) {
 			this._inputDom.focus();
+		}
+	}
+
+	_handleArrowCtrl(event) {
+		const input = this._inputDom;
+		const isArrowLeft = isLeftCtrl(event);
+
+		if (isArrowLeft && input.selectionStart === 0 && input.selectionEnd === 0) {
+			event.preventDefault();
+		}
+
+		if (isArrowLeft && ((input.selectionEnd - input.selectionStart) > 0)) {
+			input.setSelectionRange(0, 0);
 		}
 	}
 
@@ -752,8 +811,8 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover.close();
 	}
 
-	async _handleArrowNavigation(event) {
-		const isArrowDown = isDown(event);
+	async _handleArrowNavigation(event, isDownControl) {
+		const isArrowDown = isDownControl || isDown(event);
 		const hasSuggestions = this.items.length;
 		const isOpen = this.allItemsPopover.opened;
 
@@ -763,12 +822,12 @@ class MultiComboBox extends UI5Element {
 			await this._setValueStateHeader();
 		}
 
-		if (isArrowDown && isOpen && this.focused && this.valueStateHeader) {
+		if (isArrowDown && isOpen && this.valueStateHeader) {
 			this.valueStateHeader.focus();
 			return;
 		}
 
-		if (isArrowDown && this.focused && hasSuggestions) {
+		if (isArrowDown && hasSuggestions) {
 			this._handleArrowDown(event);
 		}
 
@@ -787,6 +846,26 @@ class MultiComboBox extends UI5Element {
 		} else if (!this.readonly) {
 			this._navigateToNextItem();
 		}
+	}
+
+	_handleItemRangeSelection(event) {
+		const items = this.items;
+		const listItems = this.list.items;
+		const currentItemIdx = listItems.indexOf(event.target);
+		const nextItemIdx = currentItemIdx + 1;
+		const prevItemIdx = currentItemIdx - 1;
+
+		if (isDownShift(event) && items[nextItemIdx]) {
+			items[nextItemIdx].selected = items[currentItemIdx].selected;
+			items[nextItemIdx].focus();
+		}
+
+		if (isUpShift(event) && items[prevItemIdx]) {
+			items[prevItemIdx].selected = items[currentItemIdx].selected;
+			items[prevItemIdx].focus();
+		}
+
+		this.fireSelectionChange();
 	}
 
 	_navigateToNextItem() {
@@ -894,19 +973,24 @@ class MultiComboBox extends UI5Element {
 		if (isRight(event)) {
 			const lastTokenIndex = this._tokenizer.tokens.length - 1;
 
-			if (this._tokenizer.tokens[lastTokenIndex] === document.activeElement.shadowRoot.activeElement) {
+			if (event.target === this._tokenizer.tokens[lastTokenIndex]) {
 				setTimeout(() => {
 					this.shadowRoot.querySelector("input").focus();
 				}, 0);
 			}
 		}
 
-		if (isShow(event) && !this.readonly && !this.disabled) {
-			this._handleShow(event);
-			return;
+		if (isHome(event)) {
+			this._handleHome(event);
 		}
 
-		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+		if (isEnd(event)) {
+			this._handleEnd(event);
+		}
+
+		if (isShow(event) && !this.readonly && !this.disabled) {
+			this._handleShow(event);
+		}
 	}
 
 	_filterItems(str) {
