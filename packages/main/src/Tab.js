@@ -398,7 +398,7 @@ class Tab extends UI5Element {
 	}
 
 	get overflowState() {
-		return this.disabled ? "Inactive" : "Active";
+		return (this.disabled || this.isSingleClickArea) ? "Inactive" : "Active";
 	}
 }
 

@@ -436,6 +436,8 @@ class TabContainer extends UI5Element {
 		if (!tab) {
 			return;
 		}
+		event.preventDefault();
+		event.stopPropagation();
 		if (event.target.hasAttribute("ui5-button")) {
 			this._onTabExpandButtonClick(event);
 			return;
@@ -464,6 +466,10 @@ class TabContainer extends UI5Element {
 		event.preventDefault();
 		let button = event.target;
 		let tabInstance = button.tab;
+
+		if (tabInstance) {
+			tabInstance.focus();
+		}
 
 		if ((event.type === "keydown") && !event.target._realTab.isSingleClickArea) {
 			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
