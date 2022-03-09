@@ -23,6 +23,10 @@ import {
 	isHomeCtrl,
 	isEndCtrl,
 	isCtrlA,
+	isCtrlV,
+	isDeleteShift,
+	isInsertShift,
+	isInsertCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -618,12 +622,39 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
+		if (isCtrlV(event) || isInsertShift(event)) {
+			this._handlePaste(event);
+			return;
+		}
+
 		if (isSpaceShift(event)) {
 			event.preventDefault();
 		}
 
 		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+	}
+
+	async _handlePaste(event) {
+		const pastedText = await navigator.clipboard.readText();
+
+		if (!pastedText) {
+			return;
+		}
+
+		const separatedText = pastedText.split(/\r\n|\r|\n/g);
+		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
+
+		if (matchingItems.length) {
+			matchingItems.forEach(item => {
+				item.selected = true;
+				this.value = "";
+				this.fireSelectionChange();
+			});
+		} else {
+			this.value = pastedText;
+			this.fireEvent("input");
+		}
 	}
 
 	_handleShow(event) {
@@ -970,6 +1001,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_onTokenizerKeydown(event) {
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+
 		if (isRight(event)) {
 			const lastTokenIndex = this._tokenizer.tokens.length - 1;
 
@@ -978,6 +1011,28 @@ class MultiComboBox extends UI5Element {
 					this.shadowRoot.querySelector("input").focus();
 				}, 0);
 			}
+		}
+
+		if ((isCtrl && ["c", "x"].includes(event.key.toLowerCase())) || isDeleteShift(event) || isInsertCtrl(event)) {
+			event.preventDefault();
+
+			const isCut = event.key.toLowerCase() === "x" || isDeleteShift(event);
+			const selectedTokens = this._tokenizer.tokens.filter(token => token.selected);
+
+			if (isCut) {
+				const cutResult = this._tokenizer._fillClipboard("cut", selectedTokens);
+				selectedTokens.forEach(token => {
+					this._tokenizer._tokenDelete(event, token);
+				});
+
+				this.focus();
+				return cutResult;
+			}
+			return this._tokenizer._fillClipboard("copy", selectedTokens);
+		}
+
+		if (isCtrlV(event) || isInsertShift(event)) {
+			this._handlePaste(event);
 		}
 
 		if (isHome(event)) {
