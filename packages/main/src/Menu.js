@@ -331,7 +331,7 @@ class Menu extends UI5Element {
 			return {
 				item,
 				position: index + 1,
-				ariahaspopup: item.hasChildren ? "menu" : undefined,
+				ariaHasPopup: item.hasChildren ? "menu" : undefined,
 			};
 		});
 	}

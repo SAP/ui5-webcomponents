@@ -58,6 +58,10 @@
 	<ui5-toast id="toastMessage" duration="5000"></ui5-toast>
 
 	<script>
+		btnOpen.accessibilityAttributes = {
+			hasPopup: "Menu",
+		};
+
 		btnOpen.addEventListener("click", function(event) {
 			menu.showAt(btnOpen);
 		});

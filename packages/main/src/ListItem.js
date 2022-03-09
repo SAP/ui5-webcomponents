@@ -74,17 +74,30 @@ const metadata = {
 		},
 
 		/**
-		 * Used to define the role of the internal list item.
+		 * Used to define the role of the list item.
 		 *
 		 * @private
 		 * @type {string}
 		 * @defaultvalue "listitem"
+		 * @since 1.0.0-rc.9
+		 *
+		 */
+		role: {
+			type: String,
+			defaultValue: "listitem",
+		},
+
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @private
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @since 1.2.0
 		 *
 		 */
 		accessibleRole: {
 			type: String,
-			defaultValue: "listitem",
 		},
 
 		_mode: {
@@ -92,7 +105,7 @@ const metadata = {
 			defaultValue: ListMode.None,
 		},
 
-		_ariahaspopup: {
+		_ariaHasPopup: {
 			type: String,
 			noAttribute: true,
 		},
@@ -360,13 +373,13 @@ class ListItem extends ListItemBase {
 
 	get _accInfo() {
 		return {
-			role: this.accessibleRole,
+			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this._ariahaspopup || undefined,
+			ariaHaspopup: this._ariaHasPopup || undefined,
 		};
 	}
 
