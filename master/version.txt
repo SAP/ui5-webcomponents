@@ -1,5 +1,15 @@
-commit 6cb7dc3b6eb0710d223f6b125fefc958010a100a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 8 22:31:15 2022 +0200
+commit 18c59123c136f1a1da5eacf21e68f8ccdbab9762
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Wed Mar 9 08:34:38 2022 +0200
 
-    chore: commit css vars usage report (#4868)
+    feat(ui5-multi-combobox): Add cut/copy & paste handling (#4854)
+    
+    * Add cut/copy & paste handling
+    
+    * Handle the alternative cut/copy and paste shortcuts, add tests
+    
+    * Paste tokens when the focus is on another token
+    
+    * Handle paste of text if there is no token to be created
+    
+    * Merge with master
