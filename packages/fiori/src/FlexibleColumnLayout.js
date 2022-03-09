@@ -475,15 +475,15 @@ class FlexibleColumnLayout extends UI5Element {
 		return colLayot.filter(col => col !== 0).length;
 	}
 
-	fireLayoutChange(arrowsUsed, resize) {
+	fireLayoutChange(arrowUsed, resize) {
 		this.fireEvent("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout,
 			startColumnVisible: this.startColumnVisible,
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
-			arrowsUsed,
-			arrowUsed: arrowsUsed, // for backwards compatibility
+			arrowUsed, // for backwards compatibility
+			arrowsUsed: arrowUsed, // as documented
 			resize,
 		});
 	}
