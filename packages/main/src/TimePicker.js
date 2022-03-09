@@ -150,9 +150,7 @@ class TimePicker extends TimePickerBase {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
 			"ariaAutoComplete": "none",
-			"role": "combobox",
 			"ariaControls": `${this._id}-responsive-popover`,
-			"ariaExpanded": this.isOpen(),
 		};
 	}
 
