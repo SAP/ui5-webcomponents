@@ -5,6 +5,7 @@ import {
 	isBackSpace,
 	isSpace,
 	isDelete,
+	isSpaceCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
@@ -186,7 +187,7 @@ class Token extends UI5Element {
 			});
 		}
 
-		if (isSpace(event)) {
+		if (isSpace(event) || isSpaceCtrl(event)) {
 			event.preventDefault();
 
 			this._handleSelect();

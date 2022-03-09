@@ -21,7 +21,7 @@
     "build:fiori": "cd packages/fiori && yarn build",
     "build:playground": "yarn build:main && yarn build:fiori && yarn copy-css && cd packages/playground && yarn build",
     "build:playground:master": "yarn build:main && yarn build:fiori && yarn copy-css && cd packages/playground && yarn build:master",
-    "clean": "npm-run-all --sequential clean:base clean:ie11 clean:localization clean:theming clean:icons clean:icons-business-suite clean:icons-tnt clean:main clean:fiori",
+    "clean": "npm-run-all --parallel clean:base clean:ie11 clean:localization clean:theming clean:icons clean:icons-business-suite clean:icons-tnt clean:main clean:fiori",
     "clean:localization": "cd packages/localization && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
     "clean:ie11": "cd packages/ie11 && yarn clean",
