@@ -1,15 +1,5 @@
-commit 18c59123c136f1a1da5eacf21e68f8ccdbab9762
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed Mar 9 08:34:38 2022 +0200
+commit a76908dcacdf714f19ae2c5159d98900404c9ec0
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Mar 9 14:05:18 2022 +0200
 
-    feat(ui5-multi-combobox): Add cut/copy & paste handling (#4854)
-    
-    * Add cut/copy & paste handling
-    
-    * Handle the alternative cut/copy and paste shortcuts, add tests
-    
-    * Paste tokens when the focus is on another token
-    
-    * Handle paste of text if there is no token to be created
-    
-    * Merge with master
+    refactor: make breadcrumbs scoping friendly (#4874)
