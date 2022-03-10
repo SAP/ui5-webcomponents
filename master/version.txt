@@ -1,5 +1,9 @@
-commit 3dae27cd4c732722aa0c0a54c77c8e1c80898f2d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Mar 10 10:13:22 2022 +0200
+commit cb9f55fd39de8ff43c55a9ac93e0835309b17ca4
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Mar 10 16:30:35 2022 +0200
 
-    refactor: several fixes (#4876)
+    fix(ui5-avatar): wrong border-radius (#4877)
+    
+    Safari applies styles of last defined slot selector.
+    
+    Fixes: #4873
