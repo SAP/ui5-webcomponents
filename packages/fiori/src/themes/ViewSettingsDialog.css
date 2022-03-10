@@ -32,7 +32,7 @@
 	line-height: var(--_ui5_vsd_sub_header_height);
 }
 
-.ui5-vsd-bar-header-start {
+.ui5-vsd-header-start {
 	display: flex;
 	align-items: center;
 }
@@ -67,7 +67,7 @@
 	padding-bottom: 0;
 }
 
-[ui5-li]::part(native-li) {
+:host [ui5-li]::part(native-li) {
 	padding-left: var(--_ui5_vsd_content_li_padding);
 }
 
