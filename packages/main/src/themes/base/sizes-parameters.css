@@ -282,6 +282,9 @@
 	--_ui5_slider_progress_outline_offset: -0.625rem;
 	--_ui5_slider_outer_height: 1.3125rem;
 
+	/* StepInput */
+	--_ui5_input_min_width: 6rem;
+
 	/* Table */
 	--_ui5_load_more_text_height: 2.625rem;
 	--_ui5_load_more_text_font_size: var(--sapFontSize);
