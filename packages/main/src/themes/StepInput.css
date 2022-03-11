@@ -14,7 +14,7 @@
 	box-sizing: border-box;
 	height: var(--_ui5_input_height);
 	position: relative;
-	min-width: var(--_ui5_input_min_width);
+	min-width: var(--_ui5_step_input_min_width);
 }
 
 :host .ui5-step-input-input {
@@ -145,7 +145,7 @@
 	box-sizing: border-box;
 	vertical-align: top;
 	margin-top: var(--_ui5_step_input_input_margin_top);
-	min-width: var(--_ui5_input_min_width);
+	min-width: var(--_ui5_step_input_min_width);
 	position: relative;
 	padding: 0px 2.5rem 0px 2.4375rem;
 	outline: none;
