@@ -23,7 +23,8 @@ const getAriaLabelledByTexts = (el, ownerDocument, readyIds = "") => {
 	const owner = ownerDocument || findNodeOwner(el);
 	let result = "";
 
-	ids.forEach((elementId, index) => {
+	// it is possible that in some situations the arriving element is no longer available in the DOM and therefore has no owner
+	owner && ids.forEach((elementId, index) => {
 		const element = owner.querySelector(`[id='${elementId}']`);
 		result += `${element ? element.textContent : ""}`;
 
