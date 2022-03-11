@@ -1,6 +1,6 @@
 :host {
 	font-family: "72override", var(--sapFontFamily);
-	color: var(--sapTextColor);
+	color: var(--sapList_TextColor);
 	font-size: var(--sapFontSize);
 }
 
