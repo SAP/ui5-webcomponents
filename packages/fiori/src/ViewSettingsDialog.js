@@ -312,8 +312,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _dialogTitle() {
-		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
-		return ViewSettingsDialog.i18nBundle.getText(currentModeText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
 	}
 
 	get _okButtonLabel() {
