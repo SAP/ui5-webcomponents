@@ -5,7 +5,12 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isSpace, isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isTabNext,
+	isSpace,
+	isEnter,
+	isTabPrevious,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
