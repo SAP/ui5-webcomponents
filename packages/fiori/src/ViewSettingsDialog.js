@@ -356,6 +356,12 @@ class ViewSettingsDialog extends UI5Element {
 		return !this.sortDescending;
 	}
 
+	get _title() {
+		return this.showBackButton
+			? this._filterByTitle
+			: this._dialogTitle;
+	}
+
 	/**
 	 * Determines disabled state of the <code>Reset</code> button.
 	 */
