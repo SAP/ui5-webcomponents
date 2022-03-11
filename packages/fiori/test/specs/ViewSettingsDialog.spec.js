@@ -118,7 +118,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		await btnOpenDialog.click();
 
 		const vsdTitle = await viewSettingsDialog.shadow$(".ui5-vsd-header-start").$(".ui5-vsd-title").getText();
-		assert.strictEqual(vsdTitle, "Filter By", "Only filters are presented, when there are no sort items");
+		assert.strictEqual(vsdTitle, "View Settings", "Only filters are presented, when there are no sort items");
 
 		await browser.keys("Escape");
 	});
