@@ -15,6 +15,8 @@ class F6Navigation {
 	}
 
 	async _keydownHandler(event) {
+		event.preventDefault();
+
 		if (isF6Next(event)) {
 			this.updateGroups();
 			if (this.groups.length < 1) {
