@@ -42,7 +42,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the sub tabs.
+		 * Defines hierarchies with nested sub tabs.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
