@@ -26,18 +26,13 @@
 	color: var(--ui5-avatar-initials-color);
 }
 
-/* Shapes */
-:host([shape="Square"]),
-:host([shape="Square"]) ::slotted(*){
-	border-radius: .25rem;
-}
-
-:host([shape="Square"]) .ui5-avatar-root {
-	border-radius: inherit;
-}
-
-:host([shape="Square"]) .ui5-avatar-img {
-	border-radius: inherit;
+.ui5-avatar-root {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	outline: none;
+	height: 100%;
+	width: 100%;
 }
 
 /* Sizes */
@@ -120,6 +115,13 @@
 	border-radius: 50%;
     width: 100%;
     height: 100%;
+	pointer-events: none;
+}
+
+/* Shapes */
+:host([shape="Square"]),
+:host([shape="Square"]) ::slotted(*) {
+	border-radius: .25rem;
 }
 
 :host(:not([color-scheme])),
@@ -192,36 +194,9 @@
 
 :host([_has-image]) {
 	background-color: transparent;
-}
-
-:host([image-fit-type="Contain"]) .ui5-avatar-img {
-	background-size: contain;
-}
-
-.ui5-avatar-root {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	outline: none;
-}
-
-.ui5-avatar-root,
-.ui5-avatar-img {
-	height: 100%;
-	width: 100%;
-	border-radius: 50%;
-}
-
-.ui5-avatar-img {
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+	vertical-align: middle;
 }
 
 .ui5-avatar-initials {
 	color: inherit;
-}
-
-::slotted(*) {
-	pointer-events: none;
 }

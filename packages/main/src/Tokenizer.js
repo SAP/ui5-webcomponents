@@ -7,19 +7,31 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
+	isSpaceCtrl,
+	isSpaceShift,
 	isLeftCtrl,
 	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
+	isUpShift,
+	isDownShift,
 	isLeftShift,
 	isRightShift,
 	isLeftShiftCtrl,
 	isRightShiftCtrl,
 	isEnd,
 	isHome,
+	isHomeShift,
+	isEndShift,
+	isHomeCtrl,
+	isEndCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import Title from "./Title.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -265,34 +277,42 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isSpace(event)) {
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+		}
+
+		if (isSpace(event) || isSpaceCtrl(event)) {
 			event.preventDefault();
 
 			return this._handleTokenSelection(event, false);
 		}
 
-		this._handleItemNavigation(event, this._getVisibleTokens());
+		if (isHomeShift(event)) {
+			this._handleHomeShift(event);
+		}
+
+		if (isEndShift(event)) {
+			this._handleEndShift(event);
+		}
+
+		this._handleItemNavigation(event,  this._getVisibleTokens());
 	}
 
 	_handleItemNavigation(event, tokens) {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
-		if (isLeftCtrl(event) || isRightCtrl(event)) {
-			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
+
+		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
+			return this._handleArrowCtrl(event, event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
 		}
 
-		if (isLeftCtrl(event)) {
+		if (isLeftShift(event) || isRightShift(event) || isUpShift(event) || isDownShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, false);
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event) || isDownShift(event)));
 		}
 
-		if (isLeftShift(event) || isRightShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
+		if (isHome(event) || isEnd(event) || isHomeCtrl(event) || isEndCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
-		}
-
-		if (isHome(event) || isEnd(event)) {
-			return this._handleHome(tokens, isEnd(event));
+			return this._handleHome(tokens, isEnd(event) || isEndCtrl(event));
 		}
 
 		if (isCtrl && event.key.toLowerCase() === "a") {
@@ -313,6 +333,30 @@ class Tokenizer extends UI5Element {
 		this._itemNav.setCurrentItem(tokens[index]);
 	}
 
+	_handleHomeShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index <= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[0].focus();
+		this._itemNav.setCurrentItem(tokens[0]);
+	}
+
+	_handleEndShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index >= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[tokens.length - 1].focus();
+		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
+	}
+
 	_calcNextTokenIndex(focusedToken, tokens, backwards) {
 		if (!tokens.length) {
 			return -1;
@@ -330,25 +374,30 @@ class Tokenizer extends UI5Element {
 		return nextIndex;
 	}
 
-	_handleArrowCtrl(focusedToken, tokens, backwards) {
+	_handleArrowCtrl(event, focusedToken, tokens, backwards) {
 		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+
+		event.preventDefault();
+
 		if (nextIndex === -1) {
 			return;
 		}
 
-		tokens[nextIndex].focus();
+		setTimeout(() => tokens[nextIndex].focus(), 0);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_handleArrowShift(focusedToken, tokens, backwards) {
-		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
-		if (nextIndex === -1) {
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		const nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex === -1 || nextIndex === tokens.length) {
 			return;
 		}
 
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
-		tokens[nextIndex].focus();
+		setTimeout(() => tokens[nextIndex].focus(), 0);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
@@ -549,6 +598,8 @@ class Tokenizer extends UI5Element {
 			ResponsivePopover,
 			List,
 			StandardListItem,
+			Title,
+			Button,
 		];
 	}
 

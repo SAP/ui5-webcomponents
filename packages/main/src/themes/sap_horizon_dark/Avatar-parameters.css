@@ -1,0 +1,33 @@
+@import "../base/Avatar-parameters.css";
+
+:root {
+    --_ui5_avatar_fontsize_XS: 1rem;
+    --_ui5_avatar_fontsize_S: 1.125rem;
+    --_ui5_avatar_fontsize_M: 1.5rem;
+    --_ui5_avatar_fontsize_L: 2.25rem;
+    --_ui5_avatar_fontsize_XL: 3rem;
+
+    --ui5-avatar-accent1: #FFF3B8;
+    --ui5-avatar-accent2: #FFD0E7;
+    --ui5-avatar-accent3: #FFF0FA;
+    --ui5-avatar-accent4: #FFDCF3;
+    --ui5-avatar-accent5: #DED3FF;
+    --ui5-avatar-accent6: #D1EFFF;
+    --ui5-avatar-accent7: #C2FCEE;
+    --ui5-avatar-accent8: #EBF5CB;
+    --ui5-avatar-accent9: #DAFDF5;
+    --ui5-avatar-accent10: #EAECEE;
+    --ui5-avatar-placeholder: #EAECEE;
+
+    --ui5-avatar-accent1-color: #c26e00;
+    --ui5-avatar-accent2-color: #aa0808;
+    --ui5-avatar-accent3-color: #9d00a9;
+    --ui5-avatar-accent4-color: #a100c2;
+    --ui5-avatar-accent5-color: #552cff;
+    --ui5-avatar-accent6-color: #0057d2;
+    --ui5-avatar-accent7-color: #046c7a;
+    --ui5-avatar-accent8-color: #256f3a;
+    --ui5-avatar-accent9-color: #077a85;
+    --ui5-avatar-accent10-color: #556b82;
+    --ui5-avatar-placeholder-color: var(--sapTile_IconColor);
+}

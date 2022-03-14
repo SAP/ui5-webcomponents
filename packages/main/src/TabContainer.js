@@ -23,6 +23,7 @@ import {
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
 	TABCONTAINER_OVERFLOW_MENU_TITLE,
 	TABCONTAINER_END_OVERFLOW,
+	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -238,6 +239,7 @@ const metadata = {
 		_startOverflowText: {
 			type: String,
 			noAttribute: true,
+			defaultValue: "0",
 		},
 
 		_endOverflowText: {
@@ -1036,6 +1038,10 @@ class TabContainer extends UI5Element {
 
 	get overflowButtonText() {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
+	}
+
+	get popoverCancelButtonText() {
+		return TabContainer.i18nBundle.getText(TABCONTAINER_POPOVER_CANCEL_BUTTON);
 	}
 
 	get animate() {

@@ -40,10 +40,6 @@
 	
 
 	<label id='lbl'>0</label>
-	<label for="inputTimezone">Timezone:</label>
-	<input id="inputTimezone" type="number"/>
-	<button id="btnApplyTimezone" onclick="stubTimezone();">Apply</button>
-	<button id="btnRestoreTimezone" onclick="restore();">Restore</button>
 	<button id="downThere" class="datepicker_test_page2auto"></button>
 	<label id='lblTomorrow'>0</label>
 	<label id='lblTomorrowDate'></label>
@@ -76,21 +72,6 @@
 	</section>
 
 	<script>
-		var originalGetDate = Date.prototype.getDate;
-
-		function stubTimezone() {
-			var timezone = parseInt(document.querySelector("#inputTimezone").value, 10);
-			Date.prototype.getDate = function() {
-				var stubedDate = new Date(this.getTime() + timezone * 60 * 60 * 1000);
-				return stubedDate.getUTCDate();
-			};
-		}
-
-		function restore() {
-			Date.prototype.getDate = originalGetDate;
-			document.querySelector("#inputTimezone").value = "";
-		};
-
 		var counter = 0;
 		var counterTomorrow = 0;
 		function increaseCounter() {

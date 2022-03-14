@@ -24,6 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
@@ -471,7 +472,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _currentLocationLabel() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location ui5-label");
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location [ui5-label]");
 	}
 
 	get _isDropdownArrowFocused() {
@@ -498,7 +499,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	get _dropdownArrowLink() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper ui5-link");
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link]");
 	}
 
 	/**
@@ -528,7 +529,7 @@ class Breadcrumbs extends UI5Element {
 	 * Getter for the list of links corresponding to the abstract breadcrumb items
 	 */
 	get _links() {
-		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper ui5-link"));
+		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper [ui5-link]"));
 	}
 
 	get _isOverflowEmpty() {
@@ -567,6 +568,7 @@ class Breadcrumbs extends UI5Element {
 			List,
 			StandardListItem,
 			Icon,
+			Button,
 		];
 	}
 

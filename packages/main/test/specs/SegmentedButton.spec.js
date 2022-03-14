@@ -6,11 +6,15 @@ describe("SegmentedButton general interaction", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/SegmentedButton.html`);
 	});
 
-	it("tests if pressed attribute is applied", async () => {
+	it("tests if pressed and tooltip attributes are applied", async () => {
 		const segmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");
+		const segmentedButtonItemInner = await segmentedButtonItem.shadow$(".ui5-button-root");
 
 		assert.ok(await segmentedButtonItem.getProperty("pressed"), "SegmentedButtonItem has property pressed");
+		assert.strictEqual(await segmentedButtonItemInner.getProperty("title"), "Employee",
+			"SegmentedButtonItem root element has property title");
 	});
+
 
 	it("tests if pressed attribute is switched to the newly pressed item when selected with enter key", async () => {
 		const firstSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");

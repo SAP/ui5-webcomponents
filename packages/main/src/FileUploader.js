@@ -15,6 +15,7 @@ import {
 
 import Input from "./Input.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 
 // Template
 import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
@@ -517,7 +518,7 @@ class FileUploader extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Input, Popover];
+		return [Input, Popover, Icon];
 	}
 
 	static async onDefine() {
