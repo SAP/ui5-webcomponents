@@ -1,9 +1,5 @@
-commit cb9f55fd39de8ff43c55a9ac93e0835309b17ca4
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Mar 10 16:30:35 2022 +0200
+commit 36fd3d163e90ff9ad555dd7de28eb9544cdea115
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Mar 14 13:37:12 2022 +0200
 
-    fix(ui5-avatar): wrong border-radius (#4877)
-    
-    Safari applies styles of last defined slot selector.
-    
-    Fixes: #4873
+    fix(f6 fast navigation): fix behaviour on windows browsers (#4886)
