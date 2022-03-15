@@ -14,7 +14,6 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
-	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -470,10 +469,6 @@ class DatePicker extends DateComponentBase {
 
 		if (this.isOpen()) {
 			return;
-		}
-
-		if (isEnter(event)) {
-			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
 		}
 
 		if (isPageUpShiftCtrl(event)) {
