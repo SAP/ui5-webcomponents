@@ -1,17 +1,11 @@
-commit 8f58fd5460433e954937d5144ddec7f1b4e3a5c8
+commit fc2cec05b08c0da05606eb7398e0cac9a245e90b
 Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Mar 15 13:38:52 2022 +0200
+Date:   Tue Mar 15 17:12:57 2022 +0200
 
-    fix(ui5-view-settings-dialog): adjust scrollbar behavior  (#4795)
+    fix(ui5-date-picker): handle date selection via enter keyboard key (#4863)
     
-    Problem description:
-    The ui5-dialog's content could have a redundant
-    horizontal scrollbar on Safari and Firefox when
-    there is a vertical scrollbar placed as an overlay.
-    Solution:
-    A right margin is applied to the ui5-view-settings-dialog
-    content and ui5-date-picker content.
+    We don't need explicit handling on enter keyboard key
+    press after adaptations in the ui5-input control related
+    to change event handling.
     
-    Fixes: #4724
-    Fixes: #4725
-    Fixes: #4860
+    Fixes: #4826
