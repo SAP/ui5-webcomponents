@@ -850,6 +850,7 @@ describe("Date Picker Tests", () => {
 
 		const root = await datepicker.getRoot();
 		await root.keys("Escape");
+		await browser.$("#dp33").scrollIntoView();
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);
