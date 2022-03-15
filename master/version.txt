@@ -1,11 +1,7 @@
-commit fc2cec05b08c0da05606eb7398e0cac9a245e90b
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Mar 15 17:12:57 2022 +0200
+commit 336737eecb05ab9c624a5c3021e4178209e181dc
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Tue Mar 15 16:43:54 2022 +0100
 
-    fix(ui5-date-picker): handle date selection via enter keyboard key (#4863)
+    refactor(ui5-title): remove custom css variables (#4885)
     
-    We don't need explicit handling on enter keyboard key
-    press after adaptations in the ui5-input control related
-    to change event handling.
-    
-    Fixes: #4826
+    The `ui5-title` used custom `ui5-` css variables for displaying the font size. As they are consistent in all themes I removed the custom variables which makes it more intuitive to modify the title font sizes via SAP Theme Designer.
