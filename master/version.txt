@@ -1,5 +1,17 @@
-commit 36fd3d163e90ff9ad555dd7de28eb9544cdea115
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Mar 14 13:37:12 2022 +0200
+commit 8f58fd5460433e954937d5144ddec7f1b4e3a5c8
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue Mar 15 13:38:52 2022 +0200
 
-    fix(f6 fast navigation): fix behaviour on windows browsers (#4886)
+    fix(ui5-view-settings-dialog): adjust scrollbar behavior  (#4795)
+    
+    Problem description:
+    The ui5-dialog's content could have a redundant
+    horizontal scrollbar on Safari and Firefox when
+    there is a vertical scrollbar placed as an overlay.
+    Solution:
+    A right margin is applied to the ui5-view-settings-dialog
+    content and ui5-date-picker content.
+    
+    Fixes: #4724
+    Fixes: #4725
+    Fixes: #4860
