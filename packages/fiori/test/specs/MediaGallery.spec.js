@@ -389,4 +389,20 @@ describe("MediaGallery layout", () => {
 		assert.strictEqual(await display.getProperty("offsetWidth"), expectedDisplayWidth, "correct display width");
 		assert.strictEqual(await display.getProperty("offsetHeight"), expectedDisplayHeight, "correct display height");
 	});
+
+	it("narrow container", async () => {
+
+		const newWidth = 80, // width allows only the overflow button to be displayed; all items will overflow
+			gallery = await browser.$("#galleryInNarrowContainer"),
+			itemsCount = await browser.$$("#galleryInNarrowContainer ui5-media-gallery-item").length;
+
+		// Setup
+		await browser.executeAsync(async (newWidth, done) => {
+			document.getElementById("galleryInNarrowContainer").style.width = `${newWidth}px`;
+			done();
+		}, newWidth);
+
+		// Check
+		assert.strictEqual(await gallery.getProperty("_overflowSize"), itemsCount, "correct overflow size");
+	});
 });
