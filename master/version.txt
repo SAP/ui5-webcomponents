@@ -1,7 +1,7 @@
-commit 336737eecb05ab9c624a5c3021e4178209e181dc
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Tue Mar 15 16:43:54 2022 +0100
+commit b947d1b890d19f8c480de4eb46dd18ea36841cbd
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Mar 16 10:40:15 2022 +0200
 
-    refactor(ui5-title): remove custom css variables (#4885)
+    fix(ui5-shellbar, ui5-breadcrumbs, ui5-barcode-scanner-dialog): align popover paddings (#4894)
     
-    The `ui5-title` used custom `ui5-` css variables for displaying the font size. As they are consistent in all themes I removed the custom variables which makes it more intuitive to modify the title font sizes via SAP Theme Designer.
+    Fixes: #4872
