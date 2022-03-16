@@ -64,24 +64,10 @@ const metadata = {
 		 * <br><br>
 		 * Available illustrations are:
 		 * <ul>
-		 * <li><code>BeforeSearch</code></li>
-		 * <li><code>NoActivities</code></li>
-		 * <li><code>NoData</code></li>
-		 * <li><code>NoMail</code></li>
-		 * <li><code>NoMail_v1</code></li>
-		 * <li><code>NoEntries</code></li>
-		 * <li><code>NoNotifications</code></li>
-		 * <li><code>NoSavedItems</code></li>
-		 * <li><code>NoSavedItems_v1</code></li>
-		 * <li><code>NoSearchResults</code></li>
-		 * <li><code>NoTasks</code></li>
-		 * <li><code>NoTasks_v1</code></li>
-		 * <li><code>UnableToLoad</code></li>
-		 * <li><code>UnableToLoadImage</code></li>
-		 * <li><code>UnableToUpload</code></li>
 		 * <li><code>AddColumn</code></li>
 		 * <li><code>AddPeople</code></li>
 		 * <li><code>BalloonSky</code></li>
+		 * <li><code>BeforeSearch</code></li>
 		 * <li><code>Connection</code></li>
 		 * <li><code>EmptyCalendar</code></li>
 		 * <li><code>EmptyList</code></li>
@@ -89,7 +75,18 @@ const metadata = {
 		 * <li><code>ErrorScreen</code></li>
 		 * <li><code>FilterTable</code></li>
 		 * <li><code>GroupTable</code></li>
+		 * <li><code>NoActivities</code></li>
+		 * <li><code>NoData</code></li>
+		 * <li><code>NoEntries</code></li>
 		 * <li><code>NoFilterResults</code></li>
+		 * <li><code>NoMail_v1</code></li>
+		 * <li><code>NoMail</code></li>
+		 * <li><code>NoNotifications</code></li>
+		 * <li><code>NoSavedItems_v1</code></li>
+		 * <li><code>NoSavedItems</code></li>
+		 * <li><code>NoSearchResults</code></li>
+		 * <li><code>NoTasks_v1</code></li>
+		 * <li><code>NoTasks</code></li>
 		 * <li><code>PageNotFound</code></li>
 		 * <li><code>ReloadScreen</code></li>
 		 * <li><code>ResizeColumn</code></li>
@@ -116,8 +113,23 @@ const metadata = {
 		 * <li><code>SuccessHighFive</code></li>
 		 * <li><code>SuccessScreen</code></li>
 		 * <li><code>Tent</code></li>
+		 * <li><code>UnableToLoad</code></li>
+		 * <li><code>UnableToLoadImage</code></li>
+		 * <li><code>UnableToUpload</code></li>
 		 * <li><code>UploadCollection</code></li>
+		 * <li><code>TntChartArea</code></li>
+		 * <li><code>TntChartArea2</code></li>
+		 * <li><code>TntChartBar</code></li>
+		 * <li><code>TntChartBPMNFlow</code></li>
+		 * <li><code>TntChartBullet</code></li>
+		 * <li><code>TntChartDoughnut</code></li>
+		 * <li><code>TntChartFlow</code></li>
+		 * <li><code>TntChartGantt</code></li>
+		 * <li><code>TntChartOrg</code></li>
+		 * <li><code>TntChartPie</code></li>
+		 * <li><code>TntCodePlaceholder</code></li>
 		 * <li><code>TntCompany</code></li>
+		 * <li><code>TntComponents</code></li>
 		 * <li><code>TntExternalLink</code></li>
 		 * <li><code>TntFaceID</code></li>
 		 * <li><code>TntFingerprint</code></li>
@@ -127,13 +139,19 @@ const metadata = {
 		 * <li><code>TntNoFlows</code></li>
 		 * <li><code>TntNoUsers</code></li>
 		 * <li><code>TntRadar</code></li>
+		 * <li><code>TntSecrets</code></li>
 		 * <li><code>TntServices</code></li>
 		 * <li><code>TntSessionExpired</code></li>
 		 * <li><code>TntSessionExpiring</code></li>
 		 * <li><code>TntSuccess</code></li>
 		 * <li><code>TntSuccessfulAuth</code></li>
+		 * <li><code>TntSystems</code></li>
+		 * <li><code>TntTeams</code></li>
+		 * <li><code>TntTools</code></li>
+		 * <li><code>TntUnableToLoad</code></li>
 		 * <li><code>TntUnlock</code></li>
 		 * <li><code>TntUnsuccessfulAuth</code></li>
+		 * <li><code>TntUser2</code></li>
 		 * </ul>
 		 * <br><br>
 		 * <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
