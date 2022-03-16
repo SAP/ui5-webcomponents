@@ -35,6 +35,7 @@ import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTempla
 
 // Styles
 import styles from "./generated/themes/ShellBar.css.js";
+import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
 
 const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
@@ -413,10 +414,6 @@ class ShellBar extends UI5Element {
 		return metadata;
 	}
 
-	static get styles() {
-		return styles;
-	}
-
 	static get render() {
 		return litRender;
 	}
@@ -427,6 +424,14 @@ class ShellBar extends UI5Element {
 
 	static get staticAreaTemplate() {
 		return ShellBarPopoverTemplate;
+	}
+
+	static get styles() {
+		return styles;
+	}
+
+	static get staticAreaStyles() {
+		return [ShellBarPopoverCss];
 	}
 
 	static get FIORI_3_BREAKPOINTS() {
