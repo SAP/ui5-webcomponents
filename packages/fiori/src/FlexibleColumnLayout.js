@@ -482,7 +482,8 @@ class FlexibleColumnLayout extends UI5Element {
 			startColumnVisible: this.startColumnVisible,
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
-			arrowUsed,
+			arrowUsed, // for backwards compatibility
+			arrowsUsed: arrowUsed, // as documented
 			resize,
 		});
 	}
