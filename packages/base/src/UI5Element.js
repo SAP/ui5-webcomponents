@@ -902,7 +902,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Sets new metadata object for this UI5 Web Component Class
+	 * Sets a new metadata object for this UI5 Web Component Class
 	 * @protected
 	 */
 	static set metadata(newMetadata) {

@@ -14,8 +14,8 @@ const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, {
 	}
 
 	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
-	if (OpenUI5Enablement) {
-		templateResult = OpenUI5Enablement.setBusyLit(html, host, templateResult, forStaticArea);
+	if (OpenUI5Enablement && !forStaticArea) {
+		templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(html, host, templateResult);
 	}
 
 	render(templateResult, domNode, { host });

@@ -19,16 +19,18 @@ const enrichMethods = UI5ElementPrototype => {
 	Object.defineProperties(UI5ElementPrototype, {
 		"__redirectFocus": { value: true, writable: true },
 		"__suppressFocusBack": {
-			get: function () { // eslint-disable-line
+			get() {
+				const that = this;
+
 				return {
-					handleEvent: function handleFocusOut(e) {
+					handleEvent: e => {
 						if (isTabPrevious(e)) {
-							const beforeElem = this.shadowRoot.querySelector("[busy-indicator-before-span]");
-							this.__redirectFocus = false;
+							const beforeElem = that.shadowRoot.querySelector("[busy-indicator-before-span]");
+							that.__redirectFocus = false;
 							beforeElem.focus();
-							this.__redirectFocus = true;
+							that.__redirectFocus = true;
 						}
-					}.bind(this),
+					},
 					capture: true,
 					passive: false,
 				};
