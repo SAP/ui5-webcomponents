@@ -1,10 +1,7 @@
-commit 979bca2cb24224e8a34b8f23e8f01d27dfde8436
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 16 15:08:01 2022 +0200
+commit c944efd5da59fa428ff029c5da0ff4631f27e885
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Wed Mar 16 17:41:46 2022 +0200
 
-    fix(localization): fix js error if "sh" locale set (#4905)
+    fix(ui5-popover): fix auto close when opener is outside the viewport (#4847)
     
-    Support for Serbian Latin has been added in UI5, now we add support for the same in UI5 Web Components.
-    For Serbian, there are Cyrillic and Latin scripts - "sr" maps to Cyrillic (supported prior to the change), while "sh" and "sr_latn" map to "Latin" (now supported with the current change).
-    
-    FIXES: #4904
+    Fixes #4716
