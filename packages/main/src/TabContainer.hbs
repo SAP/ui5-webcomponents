@@ -31,6 +31,7 @@
 			role="tablist"
 			@click="{{_onTabStripClick}}"
 			@keydown="{{_onTabStripKeyDown}}"
+			@keyup="{{_onTabStripKeyUp}}"
 		>
 			{{#each items}}
 				{{this.stripPresentation}}

@@ -507,14 +507,16 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		event.preventDefault();
-
-		if (isEnter(event) || isSpace(event)) {
+		if (isEnter(event)) {
 			if (tab._realTab.isSingleClickArea) {
 				this._onTabStripClick(event);
 			} else {
 				this._onHeaderItemSelect(tab);
 			}
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scrolling
 		}
 
 		if (isDown(event)) {
@@ -523,6 +525,22 @@ class TabContainer extends UI5Element {
 			}
 			if (tab._realTab.isSingleClickArea) {
 				this._onTabStripClick(event);
+			}
+		}
+	}
+
+	_onTabStripKeyUp(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+			if (tab._realTab.isSingleClickArea) {
+				this._onTabStripClick(event);
+			} else {
+				this._onHeaderItemSelect(tab);
 			}
 		}
 	}
