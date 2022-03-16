@@ -1,7 +1,5 @@
-commit b947d1b890d19f8c480de4eb46dd18ea36841cbd
+commit 0ca163debfde9faacf617023f136ecd39d36796a
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Mar 16 10:40:15 2022 +0200
+Date:   Wed Mar 16 14:03:31 2022 +0200
 
-    fix(ui5-shellbar, ui5-breadcrumbs, ui5-barcode-scanner-dialog): align popover paddings (#4894)
-    
-    Fixes: #4872
+    docs(ui5-illustrated-message): add missing illustrations (#4900)
