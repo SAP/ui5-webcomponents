@@ -11,10 +11,10 @@
 	--_ui5_button_text_shadow: none;
 	--_ui5_button_outline: 0.125rem solid #0070F2;
 	--_ui5_button_outline_offset: -0.125rem;
+	--_ui5_button_emphasized_border_width: .0625rem;
 	--_ui5_button_emphasized_focused_border: 0.125rem solid var(--sapContent_ContrastFocusColor);
 	--_ui5_button_fontFamily:  "72override", var(--sapFontBoldFamily);
 	--_ui5_button_emphasized_focused_border_radius: 0.375rem;
 	--_ui5_button_emphasized_outline: var(--_ui5_button_outline);
 	--_ui5_button_focus_outline_focus_color:var(--sapContent_FocusColor);
-	--_ui5_button_transparent_hover: var(--sapButton_Hover_Background);
 }
