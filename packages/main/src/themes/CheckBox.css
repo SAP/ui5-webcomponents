@@ -19,12 +19,25 @@
 	cursor: default;
 }
 
+:host([readonly]) {
+	--_ui5_checkbox_label_color: var(--_ui5_checkbox_readonly_label_color);
+	--_ui5_checkbox_outer_hover_background: transparent;
+	--_ui5_checkbox_box_shadow: none;
+}
+
+:host(:not([disabled]):not([readonly])[active]) {
+	box-shadow: var(--_ui5_checkbox_active_box_shadow);
+}
+
 :host([disabled]) .ui5-checkbox-root {
-	opacity: .5;
+	opacity: var(--_ui5_checkbox_disabled_opacity);
 }
 
 :host([disabled]) .ui5-checkbox-inner {
 	border-color: var(--_ui5_checkbox_inner_disabled_border_color);
+
+	--_ui5_checkbox_inner_selected_border_color: var(--_ui5_checkbox_inner_disabled_border_color);
+	--_ui5_checkbox_checkmark_color: var(--_ui5_checkbox_readonly_icon_color);
 }
 
 :host([disabled]) .ui5-checkbox-label {
@@ -33,9 +46,9 @@
 
 /* readonly */
 :host([readonly]:not([value-state="Warning"]):not([value-state="Error"])) .ui5-checkbox-inner {
-	background: var(--sapField_ReadOnly_Background);
+	background: var(--_ui5_checkbox_readonly_background);
 	border: var(--_ui5_checkbox_inner_readonly_border);
-	color: var(--sapContent_NonInteractiveIconColor);
+	color: var(--_ui5_checkbox_readonly_icon_color);
 }
 
 /* wrap */
@@ -121,7 +134,7 @@
 }
 
 :host([text]) .ui5-checkbox-root {
-	padding-right: 0;
+	padding-right: var(--_ui5_checkbox_wrapper_padding_right);
 }
 
 :host([text]) .ui5-checkbox-root:focus::before {
@@ -214,6 +227,18 @@ https://github.com/philipwalton/flexbugs/issues/231
 	border-color: var(--_ui5_checkbox_inner_selected_border_color);
 }
 
+/* keyboard focus */
+:host(.focus-visible) {
+	box-shadow: var(--_ui5_checkbox_focus_keyboard_shadow);
+	outline: var(--_ui5_checkbox_focus_keyboard_outline);
+	background: var(--_ui5_checkbox_focus_keyboard_background);
+}
+
+/* keyboard focus, hover */
+:host(:hover:not([disabled]).focus-visible) {
+	box-shadow: var(--_ui5_checkbox_focus_keyboard_hover_shadow);
+}
+
 .ui5-checkbox-inner {
 	min-width: var(--_ui5_checkbox_inner_width_height);
 	max-width: var(--_ui5_checkbox_inner_width_height);
@@ -262,6 +287,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 .ui5-checkbox-icon {
+	display: var(--_ui5_checkbox_icon_display);
 	width: var(--_ui5_checkbox_icon_size);
 	height: var(--_ui5_checkbox_icon_size);
 	color: currentColor;
@@ -270,6 +296,11 @@ https://github.com/philipwalton/flexbugs/issues/231
 	left:50%;
 	top:50%;
 	transform: translate(-50%, -50%);
+}
+
+.ui5-checkbox-custom-icon {
+	display: var(--_ui5_checkbox_custom_icon_display);
+	fill: currentcolor;
 }
 
 /* RTL */

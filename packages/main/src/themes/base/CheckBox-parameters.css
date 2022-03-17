@@ -36,6 +36,7 @@
 --_ui5_checkbox_inner_success_border: var(--sapField_BorderWidth) solid var(--sapField_SuccessColor);
 --_ui5_checkbox_inner_readonly_border: 0.125rem solid var(--sapField_ReadOnly_BorderColor);
 --_ui5_checkbox_inner_background: var(--sapField_Background);
+--_ui5_checkbox_inner_border_color: var(--sapField_BorderColor);
 --_ui5_checkbox_wrapped_focus_padding: .375rem;
 --_ui5_checkbox_wrapped_content_margin_top: .125rem;
 --_ui5_checkbox_wrapped_focus_left_top_bottom_position: .5625rem;
@@ -48,6 +49,23 @@
 --_ui5_checkbox_label_offset_left: var(--_ui5_checkbox_wrapper_padding);
 --_ui5_checkbox_label_offset_right: 0;
 --_ui5_checkbox_disabled_label_color: var(--sapContent_LabelColor);
+--_ui5_checkbox_disabled_opacity: .5;
 --_ui5_checkbox_default_focus_border: none;
 --_ui5_checkbox_focus_outline_display: block;
+--_ui5_checkbox_focus_box_shadow: none;
+--_ui5_checkbox_active_box_shadow: none;
+--_ui5_checkbox_active_focus_box_shadow: none;
+--_ui5_checkbox_wrapper_padding_right: 0;
+--_ui5_checkbox_hover_box_shadow: none;
+--_ui5_checkbox_icon_display: block;
+--_ui5_checkbox_custom_icon_display: none;
+--_ui5_checkbox_readonly_background: var(--sapField_ReadOnly_Background);
+--_ui5_checkbox_readonly_box_shadow: none;
+--_ui5_checkbox_readonly_icon_color: var(--sapContent_NonInteractiveIconColor);
+--_ui5_checkbox_readonly_label_color: var(--sapContent_LabelColor);
+--_ui5_checkbox_outer_readonly_hover_background: transparent;
+--_ui5_checkbox_focus_keyboard_hover_shadow: none;
+--_ui5_checkbox_focus_keyboard_shadow: none;
+--_ui5_checkbox_focus_keyboard_outline: none;
+--_ui5_checkbox_focus_keyboard_background: transparent;
 }

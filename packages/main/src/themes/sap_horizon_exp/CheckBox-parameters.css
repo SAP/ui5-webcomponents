@@ -2,34 +2,54 @@
 
 :root {
 	--_ui5_checkbox_wrapper_padding: 0.4375rem; /* might need compact/cosy value later */
-	--_ui5_checkbox_inner_width_height: 1.25rem; /* might need compact/cosy value later */
-	--_ui5_checkbox_width_height: 1.75rem; /* might need compact/cosy value later */
+	--_ui5_checkbox_inner_width_height: 1.125rem; /* might need compact/cosy value later */
+	--_ui5_checkbox_width_height: 2rem; /* might need compact/cosy value later */
 	--_ui5_checkbox_icon_size: 0.875rem; /* might need compact/cosy value later */
 	--_ui5_checkbox_partially_icon_size: .5rem; /* might need compact/cosy value later */
-	--_ui5_checkbox_checkmark_color: var(--sapContent_FocusColor);
-	--_ui5_checkbox_focus_border: 0.125rem solid var(--sapContent_FocusColor);
-	--_ui5_checkbox_default_focus_border: 0.125rem solid transparent;
-	--_ui5_checkbox_box_shadow: 0 0 2px rgb(131 150 168 / 16%), 0 8px 16px rgb(131 150 168 / 16%);
+	--_ui5_checkbox_icon_display: none;
+	--_ui5_checkbox_custom_icon_display: block;
+	--_ui5_checkbox_checkmark_color: var(--sapBlueColor4);
+	--_ui5_checkbox_focus_border: none;
+	--_ui5_checkbox_default_focus_border: none;
+	--_ui5_checkbox_box_shadow: var(--shadow-grey-medium);
+	--_ui5_checkbox_active_box_shadow: var(--shadow-grey-xs);
+	--_ui5_checkbox_focus_box_shadow: var(--shadow-blue-medium), 0 0 0 2px var(--sapBlueColor4);
+	--_ui5_checkbox_active_focus_box_shadow: var(--shadow-blue-xs), 0 0 0 2px var(--sapBlueColor4);
 	--_ui5_checkbox_border_radius: 0.5rem;
-	--_ui5_checkbox_transition: all 0.2s ease-in-out;
-	--_ui5_checkbox_inner_border: 0.125rem solid var(--sapNeutralColor);
-	--_ui5_checkbox_hover_background: var(--sapHighlightTextColor);
-	--_ui5_checkbox_outer_hover_background: var(--sapHighlightTextColor);
-	--_ui5_checkbox_inner_hover_border_color: #475E75;
-	--_ui5_checkbox_inner_hover_checked_border_color: var(--sapContent_FocusColor);
-	--_ui5_checkbox_inner_disabled_border_color: #A9B4BE;
-	--_ui5_checkbox_inner_active_border_color: #354A5F;
+	--_ui5_checkbox_transition: all 0.2s ease-in-out;	
+	--_ui5_checkbox_hover_background: #fff;
+	--_ui5_checkbox_outer_hover_background: #fff;
 	--_ui5_checkbox_focus_position: 0.5625rem;
-	--_ui5_checkbox_inner_border_radius: 0.25rem;
+	--_ui5_checkbox_inner_border_color: var(--sapGreyColor5);
+	--_ui5_checkbox_inner_border: 0.125rem solid var(--sapGreyColor5);
+	--_ui5_checkbox_inner_hover_border_color: var(--sapGreyColor6);
+	--_ui5_checkbox_inner_hover_checked_border_color: var(--sapBlueColor4);
+	--_ui5_checkbox_inner_disabled_border_color: var(--sapGreyColor3);
+	--_ui5_checkbox_inner_active_border_color: var(--sapGreyColor7);
+	--_ui5_checkbox_inner_border_radius:  0.1875rem;
 	--_ui5_checkbox_inner_success_border: 0.125rem solid var(--sapField_SuccessColor);
-	--_ui5_checkbox_inner_readonly_border: 0.125rem solid var(--sapField_ReadOnly_BorderColor);
+	--_ui5_checkbox_inner_readonly_border: 0.125rem solid var(--sapGreyColor3);
 	--_ui5_checkbox_inner_background: var(--sapHighlightTextColor);
-	--_ui5_checkbox_inner_selected_border_color: var(--sapContent_FocusColor);
+	--_ui5_checkbox_inner_selected_border_color: var(--_ui5_checkbox_checkmark_color);
 	--_ui5_checkbox_wrapped_content_margin_top: 0;
 	--_ui5_checkbox_wrapped_focus_padding: .5rem;
 	--_ui5_checkbox_compact_wrapped_label_margin_top: -0.125rem;
-	--_ui5_checkbox_label_color: var(--sapGroup_TitleTextColor);
-	--_ui5_checkbox_disabled_label_color: #A9B4BE;
+	--_ui5_checkbox_label_color: var(--sapGreyColor8);
 	--_ui5_checkbox_label_offset: 0.6875rem;
 	--_ui5_checkbox_focus_outline_display: none;
+	--_ui5_checkbox_label_offset_left: 0.6875rem;
+	--_ui5_checkbox_wrapper_padding_right: var(--_ui5_checkbox_wrapper_padding);
+	--_ui5_checkbox_readonly_background: #fff;
+	--_ui5_checkbox_readonly_box_shadow: none;
+	--_ui5_checkbox_readonly_icon_color: var(--sapGreyColor3);
+	--_ui5_checkbox_readonly_label_color: var(--_ui5_checkbox_inner_disabled_border_color);
+	--_ui5_checkbox_outer_readonly_hover_background: transparent;
+	--_ui5_checkbox_disabled_opacity: 1;
+	--_ui5_checkbox_disabled_label_color: var(--_ui5_checkbox_inner_disabled_border_color);
+
+	/* Focus keyboard */
+	--_ui5_checkbox_focus_keyboard_shadow: var(--shadow-blue-medium);
+	--_ui5_checkbox_focus_keyboard_hover_shadow: var(--shadow-blue-xs);
+	--_ui5_checkbox_focus_keyboard_outline: 2px solid var(--sapBlueColor4);
+	--_ui5_checkbox_focus_keyboard_background: #fff;
 }
