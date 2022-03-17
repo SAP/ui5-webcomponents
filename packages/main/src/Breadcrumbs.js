@@ -123,11 +123,19 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Breadcrumbs#item-click
 		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
+		 * @param {Boolean} altKey 	Returns whether the "ALT" key was pressed when the event was triggered.
+		 * @param {Boolean} shiftKey 	Returns whether the "SHIFT" key was pressed when the event was triggered.
+		 * @param {Boolean} ctrlKey 	Returns whether the "CTRL" key was pressed when the event was triggered.
+		 * @param {Boolean} metaKey 	Returns whether the "META" key was pressed when the event was triggered.
 		 * @public
 		 */
 		"item-click": {
 			detail: {
 				item: { type: HTMLElement },
+				altKey: { type: Boolean },
+				shiftKey: { type: Boolean },
+				ctrlKey: { type: Boolean },
+				metaKey: { type: Boolean },
 			},
 		},
 	},
@@ -390,7 +398,13 @@ class Breadcrumbs extends UI5Element {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-link` === link.id);
-		if (!this.fireEvent("item-click", { item }, true)) {
+		if (!this.fireEvent("item-click", {
+			item,
+			altKey: event.altKey,
+			ctrlKey: event.ctrlKey,
+			shiftKey: event.shiftKey,
+			metaKey: event.metaKey,
+		}, true)) {
 			event.preventDefault();
 		}
 	}

@@ -1,9 +1,19 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
+const KEYS = {
+	SHIFT: '\uE008',
+	CTRL: '\uE009',
+	ALT: '\uE00A',
+	META: '\uE03D',
+}
 
 describe("Breadcrumbs general interaction", () => {
 	before(async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+	});
+
+	afterEach(async () => {
+		browser.releaseActions();
 	});
 
 	it("tests getDomRef", async () => {
@@ -231,6 +241,55 @@ describe("Breadcrumbs general interaction", () => {
 		const url = await browser.getUrl();
 		assert.strictEqual(url, initialUrl, "url should not have changed");
 		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+	});
+
+	it("passes special keys pressed while item clicked", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		// Act
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard1',
+			actions: [{ type: 'keyDown', value: KEYS.SHIFT }],
+		  },{
+			type: 'key',
+			id: 'keyboard2',
+			actions: [{ type: 'keyDown', value: KEYS.CTRL }],
+		  },{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.META }],
+		  },{
+			type: 'key',
+			id: 'keyboard4',
+			actions: [{ type: 'keyDown', value: KEYS.ALT }],
+		  }]);
+
+		await link.click();
+
+		browser.releaseActions();
+
+		// Check
+		let eventResult = await browser.$("#result");
+		assert.isTrue((await eventResult.getText()).indexOf('ALT:') >= 0, 'label should contain "ALT:"');
+		assert.isTrue((await eventResult.getText()).indexOf('SHIFT:') >= 0, 'label should contain "SHIFT:"');
+		assert.isTrue((await eventResult.getText()).indexOf('CTRL:') >= 0, 'label should contain "CTRL:"');
+		assert.isTrue((await eventResult.getText()).indexOf('META:') >= 0, 'label should contain "META:"');
+
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard',
+			actions: [{ type: 'keyDown', value: KEYS.CTRL }],
+		  }]);
+
+		await link.click();
+
+		browser.releaseActions();
+
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'CTRL:' + await link.getText(), "label for pressed link is correct");
 	});
 
 });
