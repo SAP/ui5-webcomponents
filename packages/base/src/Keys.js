@@ -171,6 +171,12 @@ const isBackSpace = event => (event.key ? event.key === "Backspace" : event.keyC
 
 const isDelete = event => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
 
+const isDeleteShift = event => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, false, false, true);
+
+const isInsertShift = event => (event.key ? event.key === "Insert" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, false, false, true);
+
+const isInsertCtrl = event => (event.key ? event.key === "Insert" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, true, false, false);
+
 const isPageUp = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && !hasModifierKeys(event);
 
 const isPageDown = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && !hasModifierKeys(event);
@@ -220,6 +226,8 @@ const isShowByArrows = event => {
 const isShift = event => event.key === "Shift" || event.keyCode === KeyCodes.SHIFT;
 
 const isCtrlA = event => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, true, false, false);
+
+const isCtrlV = event => ((event.key === "V" || event.key === "v") || event.which === KeyCodes.V) && checkModifierKeys(event, true, false, false);
 
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 
@@ -280,4 +288,8 @@ export {
 	isPageDownShiftCtrl,
 	isShift,
 	isCtrlA,
+	isCtrlV,
+	isDeleteShift,
+	isInsertShift,
+	isInsertCtrl,
 };

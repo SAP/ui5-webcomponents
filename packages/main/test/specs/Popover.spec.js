@@ -63,6 +63,21 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests if popover auto closes when opener goes out of the viewport", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenWithAttr");
+		const btnAccNameRef = await browser.$("#btnAccNameRef");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#popoverAttr");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await btnAccNameRef.scrollIntoView();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+
+		await browser.$("#btn").scrollIntoView();
+	});
+
 	it("tests popover does not close with opener", async () => {
 		const popover = await browser.$("#quickViewCard");
 		const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
