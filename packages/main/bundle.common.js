@@ -92,6 +92,10 @@ import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
+import ComboBoxNew from "./dist/ComboBoxNew.js";
+import ComboBoxNewMenu from "./dist/ComboBoxNewMenu.js";
+import ComboBoxNewItem from "./dist/ComboBoxNewItem.js";
+
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";

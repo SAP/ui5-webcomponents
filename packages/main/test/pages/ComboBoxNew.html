@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ComboBoxNew test page</title>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		[ui5-cb-new-item] div [ui5-icon] {
+			color: darkseagreen;
+		}
+		[ui5-cb-new-item] div [ui5-badge] {
+			margin-left: 5px;
+		}
+	</style>
+
+</head>
+
+<body class="combobox1auto">
+
+<ui5-combobox-new-menu for="combo">
+	<ui5-cb-new-item>
+		<div style="display: flex">
+			<ui5-icon name="world"></ui5-icon>
+			<ui5-badge color-scheme="7">Algeria</ui5-badge>
+		</div>
+	</ui5-cb-new-item>
+	<ui5-cb-new-item>
+		<div style="display: flex">
+			<ui5-icon name="world"></ui5-icon>
+			<ui5-badge color-scheme="4">Argentina</ui5-badge>
+		</div>
+	</ui5-cb-new-item>
+	<ui5-cb-new-item>
+		<div style="display: flex">
+			<ui5-icon name="world"></ui5-icon>
+			<ui5-badge color-scheme="2">Australia</ui5-badge>
+		</div>
+	</ui5-cb-new-item>
+	<ui5-cb-new-item>
+		<div style="display: flex">
+			<ui5-icon name="world"></ui5-icon>
+			<ui5-badge color-scheme="1">Austria</ui5-badge>
+		</div>
+	</ui5-cb-new-item>
+	<ui5-cb-new-item>
+		<div style="display: flex">
+			<ui5-icon name="world"></ui5-icon>
+			<ui5-badge color-scheme="3">Bahrein</ui5-badge>
+		</div>
+	</ui5-cb-new-item>
+	<ui5-cb-new-item>
+		<div style="display: flex">
+			<ui5-icon name="world"></ui5-icon>
+			<ui5-badge color-scheme="4">Belgium</ui5-badge>
+		</div>
+	</ui5-cb-new-item>
+</ui5-combobox-new-menu>
+
+<div style="padding:50px; width: 500px; height: 100px; overflow:hidden; border: 1px dashed black; transform: translate(200px);">
+
+	<ui5-combobox-new id="combo" value="Bulgaria" accessible-name-ref="countryLabel">
+		<ui5-cb-new-item text="asdfasd"></ui5-cb-new-item>
+	</ui5-combobox-new>
+	<br><br>
+	<ui5-card header-text=", and ">
+		<ui5-card-header
+				slot="header"
+				status="Card status"
+				title-text="This is a card"
+				subtitle-text="the div has overflow:hidden; and transform;translate"
+		>
+		</ui5-card-header>
+
+		Card content that is cut<Br>
+		asdfasd<Br>
+		asdf<Br>
+		asd<Br>
+		f<Br>
+		ds<Br>
+		fd<Br>
+		f<Br>
+		sd<Br>
+		f<Br>
+		asd<Br>
+		fa<Br>
+		sdf<Br>
+		as<Br><Br>
+		df<Br>
+		asdv<Br><Br>v
+		fa<Br><Br>
+		sdf<Br>vvv
+		asdv<Br>
+		fa<Br>
+		sdf<Br>
+		asd<Br>
+		f<Br>
+		asdv
+		fasd<Br>
+		fav
+		sdv
+	</ui5-card>
+</div>
+
+</body>
+
+</html>
