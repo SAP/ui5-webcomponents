@@ -5838,6 +5838,91 @@
 	</code></pre></figure></pre>
 </section>
 
+<!-- Nested tabs -->
+
+<section>
+	<h3>TabContainer with nested tabs</h3>
+	<div class="snippet">
+		<ui5-tabcontainer collapsed>
+			<ui5-tab text="Notes">
+				Notes go here ...
+			</ui5-tab>
+			<ui5-tab text="Products">
+				Products go here ...
+				<ui5-tab slot="subTabs" text="Computers">
+					Computers go here ...
+					<ui5-tab slot="subTabs" text="Laptops">
+						Laptops go here ...
+					</ui5-tab>
+					<ui5-tab slot="subTabs" text="Desktops">
+						<ui5-tab slot="subTabs" text="Work Stations">
+							Work Stations go here ...
+						</ui5-tab>
+						<ui5-tab slot="subTabs" text="Game Stations">
+							Game Stations go here ...
+						</ui5-tab>
+						Desktops go here ...
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab text="Phones" slot="subTabs">
+					<ui5-tab text="Smartphones" slot="subTabs">
+						Smartphones go here ...
+					</ui5-tab>
+					<ui5-tab text="Tablets" slot="subTabs">
+						Tablets go here ...
+					</ui5-tab>
+					Phones go here ...
+				</ui5-tab>
+			</ui5-tab>
+			<ui5-tab text="Orders">
+				Orders go here ...
+				<ui5-tab slot="subTabs" text="Attachments">
+					Order attachments go here ...
+				</ui5-tab>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">collapsed</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Notes"</span><span class="nt">&gt;</span>
+		Notes go here ...
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Products"</span><span class="nt">&gt;</span>
+		Products go here ...
+		<span class="nt">&lt;ui5-tab</span> <span class="na">slot=</span><span class="s">"subTabs"</span> <span class="na">text=</span><span class="s">"Computers"</span><span class="nt">&gt;</span>
+			Computers go here ...
+			<span class="nt">&lt;ui5-tab</span> <span class="na">slot=</span><span class="s">"subTabs"</span> <span class="na">text=</span><span class="s">"Laptops"</span><span class="nt">&gt;</span>
+				Laptops go here ...
+			<span class="nt">&lt;/ui5-tab&gt;</span>
+			<span class="nt">&lt;ui5-tab</span> <span class="na">slot=</span><span class="s">"subTabs"</span> <span class="na">text=</span><span class="s">"Desktops"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-tab</span> <span class="na">slot=</span><span class="s">"subTabs"</span> <span class="na">text=</span><span class="s">"Work Stations"</span><span class="nt">&gt;</span>
+					Work Stations go here ...
+				<span class="nt">&lt;/ui5-tab&gt;</span>
+				<span class="nt">&lt;ui5-tab</span> <span class="na">slot=</span><span class="s">"subTabs"</span> <span class="na">text=</span><span class="s">"Game Stations"</span><span class="nt">&gt;</span>
+					Game Stations go here ...
+				<span class="nt">&lt;/ui5-tab&gt;</span>
+				Desktops go here ...
+			<span class="nt">&lt;/ui5-tab&gt;</span>
+		<span class="nt">&lt;/ui5-tab&gt;</span>
+		<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Phones"</span> <span class="na">slot=</span><span class="s">"subTabs"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Smartphones"</span> <span class="na">slot=</span><span class="s">"subTabs"</span><span class="nt">&gt;</span>
+				Smartphones go here ...
+			<span class="nt">&lt;/ui5-tab&gt;</span>
+			<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tablets"</span> <span class="na">slot=</span><span class="s">"subTabs"</span><span class="nt">&gt;</span>
+				Tablets go here ...
+			<span class="nt">&lt;/ui5-tab&gt;</span>
+			Phones go here ...
+		<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Orders"</span><span class="nt">&gt;</span>
+		Orders go here ...
+		<span class="nt">&lt;ui5-tab</span> <span class="na">slot=</span><span class="s">"subTabs"</span> <span class="na">text=</span><span class="s">"Attachments"</span><span class="nt">&gt;</span>
+			Order attachments go here ...
+		<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -5848,7 +5933,9 @@ The <code>ui5-tabcontainer</code> represents a collection of tabs with associate
 
 <h3>Structure</h3>
 
-The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li> <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li> </ul>
+The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li> <li><code>ui5-tab-separator</code> - used to separate tabs with a line</li> </ul>
+
+<h3>Hierarchies</h3> Multiple sub tabs could be placed underneath one main tab. Nesting allows deeper hierarchies with indentations to indicate the level of each nested tab. When a tab has both sub tabs and own content its click area is split to allow the user to display the content or alternatively to expand / collapse the list of sub tabs.
 
 <h3>CSS Shadow Parts</h3>
 
@@ -6119,7 +6206,12 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the tab content.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Holds the content associated with this tab.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">subTabs</div>
+                      <div class="cell api-table-content-cell">sap.ui.webcomponents.main.ITab [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines hierarchies with nested sub tabs. <br><br> <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.</div>
                     </div>
             
                 </div>
