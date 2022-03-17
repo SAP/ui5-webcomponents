@@ -457,10 +457,10 @@ class TabContainer extends UI5Element {
 			if (this.responsivePopover.opened) {
 				this.responsivePopover.close();
 			} else {
-				this.responsivePopover.showAt(tab);
+				this._setInitialFocus(this._getSelectedInPopover());
 			}
 
-			this.selectTab(this._getRootTab(tab._realTab), this._allItemsAndSubItems.indexOf(this._getRootTab(tab._realTab)));
+			this.responsivePopover.showAt(tab);
 			return;
 		}
 		this._onHeaderItemSelect(tab);
@@ -493,12 +493,18 @@ class TabContainer extends UI5Element {
 		this.responsivePopover = await this._respPopover();
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
-		} else if (this._getSelectedInPopover().length) {
-			this.responsivePopover.initialFocus = this._getSelectedInPopover()[0].id;
+		} else {
+			this._setInitialFocus(this._getSelectedInPopover());
+		}
+		this.responsivePopover.showAt(button);
+	}
+
+	_setInitialFocus(selectedInPopover) {
+		if (selectedInPopover.length) {
+			this.responsivePopover.initialFocus = selectedInPopover[0].id;
 		} else {
 			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
 		}
-		this.responsivePopover.showAt(button);
 	}
 
 	_onTabStripKeyDown(event) {
