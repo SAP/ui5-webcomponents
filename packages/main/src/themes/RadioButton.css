@@ -24,7 +24,7 @@
 }
 
 :host([checked]) .ui5-radio-svg-inner {
-	fill: currentColor;
+	fill: var(--_ui5_radio_button_inner_ring_color);
 }
 
 :host([checked]) .ui5-radio-svg-outer {
@@ -73,13 +73,18 @@
 
 /* hovered and value-state */
 :host(:not([active]):not([value-state="Error"]):not([value-state="Warning"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
-	fill: var(--_ui5_radio_button_hover_fill);
 	stroke: var(--_ui5_radio_button_outer_ring_hover_color);
+	filter: drop-shadow(var(--_ui5_radio_button_outer_ring_hover_shadow));
+
 }
 
 :host(:not([value-state="Error"]):not([value-state="Warning"])[checked]) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
-	fill: var(--_ui5_radio_button_hover_fill);
 	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
+}
+
+:host(:not([active])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer, 
+:host([checked]) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
+	fill: var(--_ui5_radio_button_hover_fill);
 }
 
 /* active, checked */
@@ -109,12 +114,13 @@
 :host([readonly]) .ui5-radio-root .ui5-radio-svg-outer {
 	fill: var(--sapField_ReadOnly_Background);
 	stroke: var(--sapField_ReadOnly_BorderColor);
+	stroke-dasharray: var(--_ui5_radio_button_read_only_border_type);
 }
 
 /* value states */
 :host([value-state="Error"]) .ui5-radio-svg-outer,
 :host([value-state="Warning"]) .ui5-radio-svg-outer {
-	stroke-width: 2;
+	stroke-width: var(--sapField_InvalidBorderWidth);
 }
 
 /* Error state */
@@ -127,6 +133,11 @@
 	fill: var(--sapField_InvalidBackground);
 }
 
+:host([value-state="Error"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable .ui5-radio-svg-outer {
+	filter: drop-shadow(var(--_ui5_radio_button_outer_ring_hover_shadow_error));
+	fill: var(--_ui5_radio_button_hover_fill_error);
+}
+
 /* Warning state */
 :host([value-state="Warning"][checked]) .ui5-radio-svg-inner {
 	fill: var(--_ui5_radio_button_checked_warning_fill);
@@ -135,6 +146,15 @@
 :host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
 	stroke: var(--sapField_WarningColor);
 	fill: var(--sapField_WarningBackground);
+}
+
+:host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable .ui5-radio-svg-outer {
+	filter: drop-shadow(var(--_ui5_radio_button_outer_ring_hover_shadow_warning));
+}
+
+:host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable .ui5-radio-svg-outer {
+	filter: drop-shadow(var(--_ui5_radio_button_outer_ring_hover_shadow_error));
+	fill: var(--_ui5_radio_button_hover_fill_warning);
 }
 
 :host([value-state="Error"]) .ui5-radio-root,
@@ -221,6 +241,7 @@
 
 .ui5-radio-svg-inner {
 	fill: none;
+	r: var(--_ui5_radio_button_inner_ring_radius);
 }
 
 .ui5-radio-svg-outer,
