@@ -409,10 +409,16 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
-	_onLabelPress() {
+	_onLabelPress(event) {
 		const items = this.getSlottedNodes("items"),
 			item = items[items.length - 1];
-		this.fireEvent("item-click", { item });
+		this.fireEvent("item-click", {
+			item,
+			altKey: event.altKey,
+			ctrlKey: event.ctrlKey,
+			shiftKey: event.shiftKey,
+			metaKey: event.metaKey,
+		 });
 	}
 
 	_onOverflowListItemSelect(event) {
