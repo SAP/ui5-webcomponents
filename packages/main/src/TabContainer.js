@@ -257,6 +257,11 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+
+		_overflowItems: {
+			type: Object,
+			multiple: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -291,8 +296,13 @@ const metadata = {
  * The <code>ui5-tabcontainer</code> can hold two types of entities:
  * <ul>
  * <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li>
- * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
+ * <li><code>ui5-tab-separator</code> - used to separate tabs with a line</li>
  * </ul>
+ *
+ * <h3>Hierarchies</h3>
+ * Multiple sub tabs could be placed underneath one main tab. Nesting allows deeper hierarchies with indentations
+ * to indicate the level of each nested tab. When a tab has both sub tabs and own content its click area is split
+ * to allow the user to display the content or alternatively to expand / collapse the list of sub tabs.
  *
  * <h3>CSS Shadow Parts</h3>
  *
@@ -373,29 +383,18 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// update selected tab
-		const tabs = this._getTabs();
-		if (tabs.length) {
-			const selectedTabs = tabs.filter(tab => tab.selected);
+		this._allItemsAndSubItems = this._getAllSubItems(this.items, []);
+		if (this._allItemsAndSubItems.length) {
+			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 			if (selectedTabs.length) {
 				this._selectedTab = selectedTabs[0];
 			} else {
-				this._selectedTab = tabs[0];
+				this._selectedTab = this._allItemsAndSubItems[0];
 				this._selectedTab._selected = true;
 			}
 		}
 
-		// Set external properties to items
-		this.items.filter(item => !item.isSeparator).forEach((item, index, arr) => {
-			item._isInline = this.tabLayout === TabLayout.Inline;
-			item._mixedMode = this.mixedMode;
-			item._posinset = index + 1;
-			item._setsize = arr.length;
-			item._getTabContainerHeaderItemCallback = _ => {
-				return this.getDomRef().querySelector(`#${item._id}`);
-			};
-			item._itemSelectCallback = this._onItemSelect.bind(this);
-			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
-		});
+		this._setItemsExternalProperties(this.items);
 
 		if (!this._animationRunning) {
 			this._contentCollapsed = this.collapsed;
@@ -420,13 +419,92 @@ class TabContainer extends UI5Element {
 		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
-	_onTabStripClick(event) {
+	_setItemsExternalProperties(items) {
+		items.filter(item => !item.isSeparator).forEach((item, index, arr) => {
+			item._isInline = this.tabLayout === TabLayout.Inline;
+			item._mixedMode = this.mixedMode;
+			item._posinset = index + 1;
+			item._setsize = arr.length;
+			item._getTabContainerHeaderItemCallback = _ => this.getDomRef().querySelector(`#${item._id}`);
+			item._itemSelectCallback = this._onItemSelect.bind(this);
+			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+			item._realTab = this._selectedTab;
+			item._isTopLevelTab = this.items.some(i => i === item);
+			walk(items, tab => {
+				tab._realTab = item._realTab;
+			});
+		});
+	}
+
+	async _onTabStripClick(event) {
 		const tab = getTab(event.target);
 		if (!tab) {
 			return;
 		}
+		event.preventDefault();
+		event.stopPropagation();
+		if (event.target.hasAttribute("ui5-button")) {
+			this._onTabExpandButtonClick(event);
+			return;
+		}
 
+		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
+			this._overflowItems = [];
+			this._overflowItems = tab._realTab.subTabs;
+			this._addStyleIndent(this._overflowItems, false);
+
+			this.responsivePopover = await this._respPopover();
+			if (this.responsivePopover.opened) {
+				this.responsivePopover.close();
+			} else {
+				this._setInitialFocus(this._getSelectedInPopover());
+			}
+
+			this.responsivePopover.showAt(tab);
+			return;
+		}
 		this._onHeaderItemSelect(tab);
+	}
+
+	async _onTabExpandButtonClick(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		let button = event.target;
+		let tabInstance = button.tab;
+
+		if (tabInstance) {
+			tabInstance.focus();
+		}
+
+		if ((event.type === "keydown") && !event.target._realTab.isSingleClickArea) {
+			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
+			tabInstance = event.target._realTab;
+		}
+
+		// if clicked between the expand button and the tab
+		if (!tabInstance) {
+			this._onHeaderItemSelect(button.parentElement);
+			return;
+		}
+
+		this._overflowItems = tabInstance.subTabs;
+		this._addStyleIndent(this._overflowItems, false);
+
+		this.responsivePopover = await this._respPopover();
+		if (this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		} else {
+			this._setInitialFocus(this._getSelectedInPopover());
+		}
+		this.responsivePopover.showAt(button);
+	}
+
+	_setInitialFocus(selectedInPopover) {
+		if (selectedInPopover.length) {
+			this.responsivePopover.initialFocus = selectedInPopover[0].id;
+		} else {
+			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
+		}
 	}
 
 	_onTabStripKeyDown(event) {
@@ -436,12 +514,24 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._onHeaderItemSelect(tab);
+			if (tab._realTab.isSingleClickArea) {
+				this._onTabStripClick(event);
+			} else {
+				this._onHeaderItemSelect(tab);
+			}
 		}
 
-		// Prevent Scrolling
 		if (isSpace(event)) {
-			event.preventDefault();
+			event.preventDefault(); // prevent scrolling
+		}
+
+		if (isDown(event)) {
+			if (tab._realTab.requiresExpandButton) {
+				this._onTabExpandButtonClick(event);
+			}
+			if (tab._realTab.isSingleClickArea) {
+				this._onTabStripClick(event);
+			}
 		}
 	}
 
@@ -452,7 +542,12 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isSpace(event)) {
-			this._onHeaderItemSelect(tab);
+			event.preventDefault();
+			if (tab._realTab.isSingleClickArea) {
+				this._onTabStripClick(event);
+			} else {
+				this._onHeaderItemSelect(tab);
+			}
 		}
 	}
 
@@ -466,23 +561,40 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onOverflowListItemClick(event) {
+	async _onOverflowListItemClick(event) {
 		event.preventDefault(); // cancel the item selection
 		const { item } = event.detail;
 
 		this._onItemSelect(item);
-		this.responsivePopover.close();
+		await this.responsivePopover.close();
+
 		this._setItemsForStrip();
-		this.shadowRoot.querySelector(`#${item.id}`).focus();
+
+		const selectedTopLevel = this._getRootTab(this._selectedTab);
+
+		selectedTopLevel.focus();
+	}
+
+	_getAllSubItems(items, result, level = 1) {
+		items.forEach(item => {
+			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
+				item._level = level;
+				result.push(item);
+				if (item.subTabs) {
+					this._getAllSubItems(item.subTabs, result, level + 1);
+				}
+			}
+		});
+		return result;
 	}
 
 	_onItemSelect(target) {
-		const selectedIndex = findIndex(this.items, item => item._id === target.id);
-		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
-		const selectedTab = this.items[selectedIndex];
+		const selectedIndex = findIndex(this._allItemsAndSubItems, item => item.__id === target.id);
+		const selectedTabIndex = findIndex(this._allItemsAndSubItems, item => item.__id === target.id);
+		const selectedTab = this._allItemsAndSubItems[selectedIndex];
 
 		// update selected items
-		this.items
+		this._allItemsAndSubItems
 			.forEach((item, index) => {
 				const selected = selectedIndex === index;
 				item.selected = selected;
@@ -566,8 +678,7 @@ class TabContainer extends UI5Element {
 
 		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
 
-		this._startOverflowItems = [];
-		this._endOverflowItems = [];
+		this._overflowItems = [];
 
 		this.items.forEach(item => {
 			if (item.getTabInStripDomRef() && item.getTabInStripDomRef().hasAttribute(overflowAttr)) {
@@ -578,12 +689,14 @@ class TabContainer extends UI5Element {
 		let button;
 		if (isEndOverflow) {
 			button = this.overflowButton[0] || overflow.querySelector("[ui5-button]");
-			this._endOverflowItems = items;
+			this._overflowItems = items;
+			this._addStyleIndent(this._overflowItems, true);
 		}
 
 		if (isStartOverflow) {
 			button = this.startOverflowButton[0] || overflow.querySelector("[ui5-button]");
-			this._startOverflowItems = items;
+			this._overflowItems = items;
+			this._addStyleIndent(this._overflowItems, true);
 		}
 
 		this.responsivePopover = await this._respPopover();
@@ -595,14 +708,32 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	_getSelectedInPopover() {
+		return this.responsivePopover.content[0].items.filter(item => (item._realTab && item._realTab.selected));
+	}
+
+	_addStyleIndent(tabs, isOverflow) {
+		walk(tabs, tab => {
+			let level = tab._level;
+			if (!isOverflow) {
+				level -= 1;
+			}
+
+			if (tab._level > 1 && tab.isSeparator) {
+				level -= 1;
+			}
+
+			tab._style = {
+				"--_ui5-indentation-level": level / 2,
+			};
+		});
+	}
+
 	async _onOverflowKeyDown(event) {
 		const isEndOverflow = event.currentTarget.classList.contains("ui5-tc__overflow--end");
 		const isStartOverflow = event.currentTarget.classList.contains("ui5-tc__overflow--start");
 
-		switch (true) {
-		case isDown(event):
-		case isStartOverflow && isLeft(event):
-		case isEndOverflow && isRight(event):
+		if (isDown(event) || (isStartOverflow && isLeft(event)) || (isEndOverflow && isRight(event))) {
 			await this._onOverflowClick(event);
 		}
 	}
@@ -657,14 +788,24 @@ class TabContainer extends UI5Element {
 		}
 
 		this._itemNavigation._init();
-		this._itemNavigation.setCurrentItem(this._selectedTab);
+		this._itemNavigation.setCurrentItem(this._getRootTab(this._selectedTab));
+	}
+
+	_getRootTab(tab) {
+		while (tab.hasAttribute("ui5-tab")) {
+			if (tab.parentElement.hasAttribute("ui5-tabcontainer")) {
+				break;
+			}
+			tab = tab.parentElement;
+		}
+		return tab;
 	}
 
 	_updateEndOverflow(itemsDomRefs) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
-
-		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
+		const selectedTab = this._getRootTab(this._selectedTab);
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -680,7 +821,8 @@ class TabContainer extends UI5Element {
 
 	_updateStartAndEndOverflow(itemsDomRefs) {
 		let containerWidth = this._getTabStrip().offsetWidth;
-		const selectedTabDomRef = this._selectedTab.getTabInStripDomRef();
+		const selectedTab = this._getRootTab(this._selectedTab);
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1086,6 +1228,15 @@ const findIndex = (arr, predicate) => {
 	}
 
 	return -1;
+};
+
+const walk = (tabs, callback) => {
+	[...tabs].forEach(tab => {
+		callback(tab);
+		if (tab.subTabs) {
+			walk(tab.subTabs, callback);
+		}
+	});
 };
 
 TabContainer.define();
