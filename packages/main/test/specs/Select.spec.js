@@ -400,7 +400,7 @@ describe("Select general interaction", () => {
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
 	});
 
-	it.only("Tests accessibility", async () => {
+	it("Tests accessibility", async () => {
 		const select1 = await browser.$("#textAreaAriaLabel").shadow$(".ui5-select-label-root");
 		const select2 = await browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
