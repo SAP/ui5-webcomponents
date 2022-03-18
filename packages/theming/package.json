@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.2.1",
-    "chromedriver": "98.0.0",
+    "chromedriver": "99.0.0",
     "cssnano": "^4.1.11",
     "glob": "^7.1.6",
     "json-beautify": "^1.1.1",
