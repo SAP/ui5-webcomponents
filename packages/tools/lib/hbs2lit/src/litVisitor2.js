@@ -197,6 +197,7 @@ function normalizePath(sPath) {
 	if (result.indexOf("../") === 0) {
 		const absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
 		result = replaceAll(path.normalize(absolutePath), path.sep, ".");
+		result = result.replace("item.", "context.");
 	} else {
 		const blockPath = this.blockLevel > 0 ? "item" : "context";
 		result = result ? replaceAll(blockPath + "/" + result, "/", ".") : blockPath;
