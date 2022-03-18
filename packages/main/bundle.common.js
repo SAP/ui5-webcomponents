@@ -92,7 +92,6 @@ import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
-import WithComplexTemplate from "./dist/WithComplexTemplate.js";
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
