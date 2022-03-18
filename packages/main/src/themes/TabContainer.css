@@ -138,6 +138,10 @@
 	padding: 0 2rem;
 }
 
+:host([media-range="XL"]) .ui5-tc__content {
+	padding: 1rem 3rem;
+}
+
 /*** RTL ***/
 [dir=rtl] .ui5-tc__overflow {
 	margin-right: auto;
