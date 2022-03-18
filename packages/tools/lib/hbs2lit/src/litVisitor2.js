@@ -34,7 +34,6 @@ function HTMLLitVisitor(debug) {
 	this.blocks = {};
 	this.result = "";
 	this.mainBlock = "";
-	this.blockPath = "context";
 	this.blockParameters = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
@@ -58,7 +57,6 @@ HTMLLitVisitor.prototype.Program = function(program) {
 		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
-		this.paths.push(this.blockPath);
 	}
 
 	this.blocks[this.currentKey()] += "html`";
@@ -169,14 +167,12 @@ function visitUnlessBlock(block) {
 }
 
 function visitEachBlock(block) {
-	this.blockLevel++;
-
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
 	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
-	this.blockPath = "item";
+	this.blockLevel++;
 
 	if (this.blockParameters.indexOf("item") === -1) {
 		bParamAdded = true;
@@ -190,10 +186,6 @@ function visitEachBlock(block) {
 	}
 
 	this.blockLevel--;
-	if (this.blockLevel === 0) {
-		this.blockPath = "context";
-	}
-
 	this.blocks[this.currentKey()] += ") }";
 }
 
@@ -205,9 +197,9 @@ function normalizePath(sPath) {
 	if (result.indexOf("../") === 0) {
 		const absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
 		result = replaceAll(path.normalize(absolutePath), path.sep, ".");
-		result = this.blockLevel <= 1 ? result.replace("item", "context") : result;
 	} else {
-		result = result ? replaceAll(this.blockPath + "/" + result, "/", ".") : this.blockPath;
+		const blockPath = this.blockLevel > 0 ? "item" : "context";
+		result = result ? replaceAll(blockPath + "/" + result, "/", ".") : blockPath;
 	}
 	return result;
 }
