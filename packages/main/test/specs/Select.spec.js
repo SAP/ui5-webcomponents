@@ -400,11 +400,12 @@ describe("Select general interaction", () => {
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
 	});
 
-	it("Tests aria-label, aria-labelledby and aria-expanded", async () => {
+	it("Tests accessibility", async () => {
 		const select1 = await browser.$("#textAreaAriaLabel").shadow$(".ui5-select-label-root");
 		const select2 = await browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
 		const EXPECTED_ARIA_LABEL2 = "info text";
+		const EXPECTER_ARIA_ROLEDESCRIPTION = "Select ComboBox";
 
 		assert.strictEqual(await select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
@@ -415,5 +416,8 @@ describe("Select general interaction", () => {
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(await select2.getAttribute("aria-expanded"), "false",
 			"The aria-expanded is false by default.");
+			
+		assert.strictEqual(await select2.getAttribute("aria-roledescription"), EXPECTER_ARIA_ROLEDESCRIPTION,
+			"The aria-roledescription is correct.");
 	});
 });
