@@ -21,7 +21,12 @@ import WrappingType from "./types/WrappingType.js";
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
 // i18n
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION } from "./generated/i18n/i18n-defaults.js";
+import {
+	VALUE_STATE_ERROR, 
+	VALUE_STATE_WARNING, 
+	VALUE_STATE_SUCCESS, 
+	VALUE_STATE_INFORMATION
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
