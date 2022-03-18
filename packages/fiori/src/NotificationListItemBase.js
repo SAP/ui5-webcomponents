@@ -166,8 +166,8 @@ class NotificationListItemBase extends ListItemBase {
 			actionsPopover: {
 				"ui5-notification-overflow-popover": true,
 				"ui5-notification-overflow-popover-mobile": isPhone() || isTablet(),
-				"ui5-notification-overflow-popover-desktop": isDesktop()
-			}
+				"ui5-notification-overflow-popover-desktop": isDesktop(),
+			},
 		};
 	}
 

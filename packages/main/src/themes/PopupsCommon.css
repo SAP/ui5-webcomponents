@@ -77,7 +77,8 @@
 }
 
 :host([header-text]) .ui5-popup-header-root {
-	justify-content: flex-start;
+	justify-content: var(--_ui5_popup_header_prop_header_text_alignment);
+    
 }
 
 :host(:not([header-text])) .ui5-popup-header-text {
