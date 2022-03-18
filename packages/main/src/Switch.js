@@ -275,7 +275,7 @@ class Switch extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ");
 	}
 
 	static get dependencies() {
