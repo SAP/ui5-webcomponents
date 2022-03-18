@@ -34,9 +34,18 @@
 .ui5-tab-overflow-itemContent {
 	display: flex;
 	align-items: center;
-	padding: 0 0.5rem;
+	padding-right: 0.5rem;
 	height: var(--_ui5_tc_item_text);
 	pointer-events: none;
+	font-size: 0.875rem;
+}
+
+.ui5-tab-overflow-itemContent-wrapper {
+	padding-left: calc(var(--_ui5-indentation-level, 0) * 1rem);
+}
+
+.ui5-tab-overflow-item--selectedSubTab {
+	background-color: var(--sapList_SelectionBackgroundColor);
 }
 
 .ui5-tab-overflow-item [ui5-icon] {

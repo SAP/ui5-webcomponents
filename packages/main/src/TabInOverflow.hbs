@@ -6,16 +6,23 @@
 	aria-disabled="{{this.effectiveDisabled}}"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
+	._realTab="{{this}}"
+	style="{{this._style}}"
 >
-	<div class="ui5-tab-overflow-itemContent">
-		{{#if this.icon}}
-			<ui5-icon name="{{this.icon}}"></ui5-icon>
-		{{/if}}
+	<div class="ui5-tab-overflow-itemContent-wrapper">
+		<div class="ui5-tab-overflow-itemContent">
+			{{#if this.icon}}
+				<ui5-icon name="{{this.icon}}"></ui5-icon>
+			{{/if}}
 
-		{{this.text}}
+			{{this.text}}
 
-		{{#if this.additionalText}}
-			({{this.additionalText}})
-		{{/if}}
+			{{#if this.additionalText}}
+				({{this.additionalText}})
+			{{/if}}
+		</div>
 	</div>
 </ui5-li-custom>
+{{#each subTabs}}
+	{{overflowPresentation}}
+{{/each}}
