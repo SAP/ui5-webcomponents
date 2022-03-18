@@ -12,10 +12,9 @@
 	font-size: var(--sapFontSize);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
-	border-width: var(--sapButton_BorderWidth);
 	cursor: pointer;
 	background-color: var(--sapButton_Background);
-	border: 1px solid var(--sapButton_BorderColor);
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 	color: var(--sapButton_TextColor);
 	box-sizing: border-box;
 	white-space: nowrap;
@@ -255,6 +254,7 @@ bdi {
 :host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
+	border-width: var(--_ui5_button_emphasized_border_width);
 	color: var(--sapButton_Emphasized_Hover_TextColor);
 	box-shadow: var(--sapContent_Informative_Shadow);
 }
