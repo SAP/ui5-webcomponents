@@ -22,10 +22,10 @@ import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.j
 
 // i18n
 import {
-	VALUE_STATE_ERROR, 
-	VALUE_STATE_WARNING, 
-	VALUE_STATE_SUCCESS, 
-	VALUE_STATE_INFORMATION
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
