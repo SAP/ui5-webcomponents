@@ -34,13 +34,13 @@ function HTMLLitVisitor(debug) {
 	this.blocks = {};
 	this.result = "";
 	this.mainBlock = "";
-	this.blockPath = "context";
 	this.blockParameters = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
 	if (this.debug) {
 		this.blockByNumber = [];
 	}
+	this.blockLevel = 0;
 }
 
 HTMLLitVisitor.prototype = new Visitor();
@@ -57,7 +57,6 @@ HTMLLitVisitor.prototype.Program = function(program) {
 		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
-		this.paths.push(this.blockPath);
 	}
 
 	this.blocks[this.currentKey()] += "html`";
@@ -173,7 +172,7 @@ function visitEachBlock(block) {
 
 	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
-	this.blockPath = "item";
+	this.blockLevel++;
 
 	if (this.blockParameters.indexOf("item") === -1) {
 		bParamAdded = true;
@@ -185,8 +184,8 @@ function visitEachBlock(block) {
 		this.blockParameters.shift("item");
 		this.blockParameters.shift("index");
 	}
-	this.blockPath = "context";
 
+	this.blockLevel--;
 	this.blocks[this.currentKey()] += ") }";
 }
 
@@ -196,10 +195,11 @@ function normalizePath(sPath) {
 	//read carefully - https://github.com/wycats/handlebars.js/issues/1028
 	//kpdecker commented on May 20, 2015
 	if (result.indexOf("../") === 0) {
-		let absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
+		const absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
 		result = replaceAll(path.normalize(absolutePath), path.sep, ".");
 	} else {
-		result = result ? replaceAll(this.blockPath + "/" + result, "/", ".") : this.blockPath;
+		const blockPath = this.blockLevel > 0 ? "item" : "context";
+		result = result ? replaceAll(blockPath + "/" + result, "/", ".") : blockPath;
 	}
 	return result;
 }
