@@ -3,6 +3,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -12,10 +13,10 @@ import "@ui5/webcomponents-icons/dist/message-warning.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 
 // Templates
-import NotifactionOverflowActionsPopoverTemplate from "./generated/templates/NotifactionOverflowActionsPopoverTemplate.lit.js";
+import NotificationOverflowActionsPopoverTemplate from "./generated/templates/NotificationOverflowActionsPopoverTemplate.lit.js";
 
 // Styles
-import NotifactionOverflowActionsPopoverCss from "./generated/themes/NotifactionOverflowActionsPopover.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 /**
  * @public
@@ -145,11 +146,11 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	static get staticAreaTemplate() {
-		return NotifactionOverflowActionsPopoverTemplate;
+		return NotificationOverflowActionsPopoverTemplate;
 	}
 
 	static get staticAreaStyles() {
-		return NotifactionOverflowActionsPopoverCss;
+		return NotificationOverflowActionsPopoverCss;
 	}
 
 	static priorityIconsMappings() {
@@ -157,6 +158,16 @@ class NotificationListItemBase extends ListItemBase {
 			"High": "message-error",
 			"Medium": "message-warning",
 			"Low": "message-success",
+		};
+	}
+
+	get classes() {
+		return {
+			actionsPopover: {
+				"ui5-notification-overflow-popover": true,
+				"ui5-notification-overflow-popover-mobile": isPhone() || isTablet(),
+				"ui5-notification-overflow-popover-desktop": isDesktop()
+			}
 		};
 	}
 

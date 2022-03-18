@@ -1,0 +1,12 @@
+.ui5-notification-overflow-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.ui5-notification-overflow-popover-desktop::part(content) {
+	padding: 0.25rem 0.5rem;
+}
+
+.ui5-notification-overflow-popover-mobile::part(content) {
+	padding: 0.1875rem 0.375rem;
+}

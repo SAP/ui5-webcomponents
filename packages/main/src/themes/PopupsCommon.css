@@ -64,9 +64,7 @@
     box-sizing: border-box;
 }
 
-
 :host([header-text]) .ui5-popup-header-text {
-    padding: 0 0.25rem;
     text-align: center;
     min-height: var(--_ui5_popup_default_header_height);
     max-height: var(--_ui5_popup_default_header_height);
@@ -76,6 +74,10 @@
     white-space: nowrap;
     max-width: 100%;
     display: inline-block;
+}
+
+:host([header-text]) .ui5-popup-header-root {
+	justify-content: flex-start;
 }
 
 :host(:not([header-text])) .ui5-popup-header-text {
@@ -100,13 +102,8 @@
 	padding: 1rem var(--_ui5_popup_content_padding_xl);
 }
 
-.ui5-popup-footer-root {
-	justify-content: end;
-}
-
 .ui5-popup-header-root {
 	background: var(--sapPageHeader_Background);
-	justify-content: start;
 }
 
 /*** Responsive paddings for the Header and Footer ***/

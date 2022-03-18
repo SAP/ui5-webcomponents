@@ -347,8 +347,14 @@ class NotificationListItem extends NotificationListItemBase {
 		return `${notificationText} ${readText} ${priorityText}`;
 	}
 
+	/**
+	 * @override
+	 */
 	get classes() {
+		const baseClasses = super.classes;
+
 		return {
+			...baseClasses,
 			content: {
 				"ui5-nli-content--ie": isIE(),
 			},
