@@ -1,7 +1,5 @@
-commit e19a9143c789ddf6ba9d675130ca8b19cf596b99
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Fri Mar 18 12:50:17 2022 +0200
+commit 416ac0d132ec76a74dc1ffe0643346f17fd2bb3e
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Mar 18 13:32:21 2022 +0200
 
-    feat(ui5-select): add aria-roledescription attribute (#4921)
-    
-    Closes: #2910
+    chore: Update Chromedriver to 99 (#4922)
