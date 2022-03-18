@@ -1,79 +1,9 @@
-commit 3e715c4d7ce61a5564f2c8aea5af2fd72b6c91c0
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Thu Mar 17 15:15:20 2022 +0200
+commit 197fef153535c7095917a798ad41a801b663d636
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Mar 18 11:47:55 2022 +0200
 
-    feat(ui5-tabcontainer): enable nested tabs (#4705)
+    fix(ui5-step-input): align the min width to visual specification (#4884)
     
-    * Initial commit
+    Aligning the minimum width of the step input control to specification. There is no specific min width by the design team, but by their suggestions we have to combine min width of input field, two buttons and also the borders of the buttons inside.
     
-    * feat(ui5-tabcontainer): Introduced nested-tabs
-    
-    * Fixing bugs
-    
-    * Sub items can be selected if in overflow
-    
-    * Bugs and styles fixing
-    
-    * Better item selection based on ids
-    
-    * wip
-    
-    * WiP
-    
-    * refactoring
-    
-    * Bug fix
-    
-    * Recursive tabs content
-    
-    * Separator bug
-    
-    * Fix tests
-    
-    * Test and sample
-    
-    * Address review comments
-    
-    * Review comments
-    
-    * Review comments
-    
-    * Fix bugs
-    
-    * Fix indentation
-    
-    * Added indentation for separators
-    
-    * Style of selected tab with expand button
-    
-    * Style of selected tab with expand button
-    
-    * Prevent scroll
-    
-    * Fix separators issue
-    
-    * Address comments from review
-    
-    * Add tests
-    
-    * Single click area tabs, improved tests
-    
-    * Build error
-    
-    * Fix separators indentation
-    
-    * Selected sub item styles
-    
-    * Keyboard handling
-    
-    * Address comments from review
-    
-    * Fix bugs
-    
-    * Addressed review comments
-    
-    * Address comments from review
-    
-    * Set initial focus on tab strip click
-    
-    Co-authored-by: Georgi Minkov <georgi.minkov@sap.com>
+    Related to: #4786
