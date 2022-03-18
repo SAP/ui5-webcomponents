@@ -1,9 +1,7 @@
-commit 197fef153535c7095917a798ad41a801b663d636
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Mar 18 11:47:55 2022 +0200
+commit e19a9143c789ddf6ba9d675130ca8b19cf596b99
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Fri Mar 18 12:50:17 2022 +0200
 
-    fix(ui5-step-input): align the min width to visual specification (#4884)
+    feat(ui5-select): add aria-roledescription attribute (#4921)
     
-    Aligning the minimum width of the step input control to specification. There is no specific min width by the design team, but by their suggestions we have to combine min width of input field, two buttons and also the borders of the buttons inside.
-    
-    Related to: #4786
+    Closes: #2910
