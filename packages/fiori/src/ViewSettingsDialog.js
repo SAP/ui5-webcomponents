@@ -112,6 +112,7 @@ const metadata = {
 		 */
 		_filterStepTwo: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
@@ -437,6 +438,10 @@ class ViewSettingsDialog extends UI5Element {
 				selected: this.sortDescending,
 			},
 		];
+	}
+
+	get expandContent() {
+		return this._filterStepTwo;
 	}
 
 	get isModeSort() {

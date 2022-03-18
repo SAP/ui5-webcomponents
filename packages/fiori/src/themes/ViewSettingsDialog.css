@@ -1,10 +1,16 @@
 [on-desktop] .ui5-vsd-content {
-	height: 375px;
+	height: var(--_ui5_vsd_content_height);
+	min-width: 350px;
+}
+
+[on-desktop] [expand-content].ui5-vsd-content {
+	height: var(--_ui5_vsd_expand_content_height);
 	min-width: 350px;
 }
 
 .ui5-vsd-header {
 	width: 100%;
+	padding-bottom: 0.25rem;
 }
 
 .ui5-vsd-content {
@@ -19,8 +25,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: var(--_ui5_vsd_sub_header_height);
-	line-height: var(--_ui5_vsd_sub_header_height);
+	height: var(--_ui5_vsd_header_container);
+	line-height: var(--_ui5_vsd_header_container);
 }
 
 .ui5-vsd-header-end {
@@ -28,8 +34,8 @@
 }
 
 .ui5-vsd-sub-header {
-	height: var(--_ui5_vsd_sub_header_height);
-	line-height: var(--_ui5_vsd_sub_header_height);
+	height: var(--_ui5_vsd_sub_header_container_height);
+	line-height: var(--_ui5_vsd_sub_header_container_height);
 }
 
 .ui5-vsd-header-start {

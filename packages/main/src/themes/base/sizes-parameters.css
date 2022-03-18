@@ -301,5 +301,8 @@
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -0.8125rem;
 
 	/* ViewSettingsDialog */
-	--_ui5_vsd_sub_header_height: 2rem;
+	--_ui5_vsd_header_container: 2.5rem;
+	--_ui5_vsd_sub_header_container_height: 2rem;
+	--_ui5_vsd_header_height: 4rem;
+	--_ui5_vsd_expand_content_height: 25.4375rem;
 }
