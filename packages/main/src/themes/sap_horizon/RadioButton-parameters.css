@@ -9,6 +9,8 @@
 	--_ui5_radio_button_outer_ring_hover_shadow: 0 0 0.125rem rgba(85, 107, 130, 0.72); /* need of parameter */
 	--_ui5_radio_button_outer_ring_hover_shadow_error: 0 0 0.125rem rgba(170, 8, 8, 0.72); /* need of parameter*/
 	--_ui5_radio_button_outer_ring_hover_shadow_warning: 0 0 0.125rem rgba(231, 101, 0, 0.72); /* need of parameter*/
+	--_ui5_radio_button_outer_ring_hover_shadow_success: 0 0 0.125rem rgba(37, 111, 58, 0.72); /* need of parameter*/
+	--_ui5_radio_button_outer_ring_hover_shadow_information: 0 0 0.125rem rgba(0, 112, 242, 0.72); /* need of parameter*/
 	--_ui5_radio_button_read_only_border_type: 4,2;
 	--_ui5_radio_button_inner_ring_color: var(--sapContent_Selected_ForegroundColor);
 }
