@@ -45,6 +45,7 @@ import ColorPaletteItem from "./dist/ColorPaletteItem.js";
 import ColorPalettePopover from "./dist/ColorPalettePopover.js";
 import ColorPicker from "./dist/ColorPicker.js";
 import ComboBox from "./dist/ComboBox.js";
+import ComboBoxNew from "./dist/ComboBoxNew.js";
 import DatePicker from "./dist/DatePicker.js";
 import DateRangePicker from "./dist/DateRangePicker.js";
 import DateTimePicker from "./dist/DateTimePicker.js";

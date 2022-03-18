@@ -1,0 +1,10 @@
+[ui5-li-custom] {
+	display: flex;
+	align-items: center;
+	align-content: space-around;
+	padding: 0.5rem;
+}
+
+[ui5-li-custom] [ui5-icon] {
+	margin-right: 0.5rem;
+}

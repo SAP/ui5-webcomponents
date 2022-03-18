@@ -1,0 +1,22 @@
+{{>include "@ui5/webcomponents/src/ComboBoxPopover.hbs"}}
+
+{{#*inline "item"}}
+	{{#if isGroupItem}}
+		<ui5-li-groupheader ?focused={{this.focused}}>{{ this.effectiveText }}</ui5-li-groupheader>
+	{{else}}
+		<ui5-li-custom
+				type="Active"
+				group-name={{this.groupName}}
+				._tabIndex={{itemTabIndex}}
+				.mappedItem={{this}}
+				?selected={{this.selected}}
+				?focused={{this.focused}}
+		>
+			{{#if this.icon}}
+				<ui5-icon name="{{this.icon}}"></ui5-icon>
+			{{/if}}
+
+			<ui5-badge color-scheme="{{this.colorScheme}}">{{this.effectiveText}}</ui5-badge>
+		</ui5-li-custom>
+	{{/if}}
+{{/inline}}

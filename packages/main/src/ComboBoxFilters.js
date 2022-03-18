@@ -6,7 +6,7 @@ const escapeRegExp = str => {
 
 const StartsWith = (value, items) => {
 	return items.filter(item => {
-		const lowerText = item.text.toLowerCase();
+		const lowerText = item.effectiveText.toLowerCase();
 
 		return lowerText.startsWith(value.toLowerCase());
 	});
@@ -18,13 +18,13 @@ const StartsWithPerTerm = (value, items) => {
 	return items.filter(item => {
 		reg.lastIndex = 0;
 
-		return reg.test(item.text.toLowerCase());
+		return reg.test(item.effectiveText.toLowerCase());
 	});
 };
 
 const Contains = (value, items) => {
 	return items.filter(item => {
-		const lowerText = item.text.toLowerCase();
+		const lowerText = item.effectiveText.toLowerCase();
 
 		return lowerText.includes(value.toLowerCase());
 	});

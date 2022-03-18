@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import ComboBoxItemBase from "./ComboBoxItemBase.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
 /**
@@ -45,7 +45,7 @@ const metadata = {
  * @implements sap.ui.webcomponents.main.IComboBoxItem
  * @since 1.0.0-rc.15
  */
-class ComboBoxGroupItem extends UI5Element {
+class ComboBoxGroupItem extends ComboBoxItemBase {
 	static get metadata() {
 		return metadata;
 	}
@@ -62,6 +62,10 @@ class ComboBoxGroupItem extends UI5Element {
 	 */
 	get isGroupItem() {
 		return true;
+	}
+
+	get effectiveText() {
+		return this.text;
 	}
 }
 

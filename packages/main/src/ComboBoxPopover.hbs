@@ -70,22 +70,7 @@
 		mode="SingleSelect"
 	>
 		{{#each _filteredItems}}
-			{{#if isGroupItem}}
-				<ui5-li-groupheader ?focused={{this.focused}}>{{ this.text }}</ui5-li-groupheader>
-			{{else}}
-				<ui5-li
-					type="Active"
-					additional-text={{this.additionalText}}
-					group-name={{this.groupName}}
-					._tabIndex={{itemTabIndex}}
-					.mappedItem={{this}}
-					?selected={{this.selected}}
-					?focused={{this.focused}}
-				>
-					{{this.text}}
-				</ui5-li>
-			{{/if}}
-
+			{{> item}}
 		{{/each}}
 	</ui5-list>
 
@@ -121,5 +106,23 @@
 		{{#each valueStateMessageText}}
 			{{this}}
 		{{/each}}
+	{{/if}}
+{{/inline}}
+
+{{#*inline "item"}}
+	{{#if isGroupItem}}
+		<ui5-li-groupheader ?focused={{this.focused}}>{{ this.effectiveText }}</ui5-li-groupheader>
+	{{else}}
+		<ui5-li
+				type="Active"
+				additional-text={{this.additionalText}}
+				group-name={{this.groupName}}
+				._tabIndex={{itemTabIndex}}
+				.mappedItem={{this}}
+				?selected={{this.selected}}
+				?focused={{this.focused}}
+		>
+			{{this.effectiveText}}
+		</ui5-li>
 	{{/if}}
 {{/inline}}

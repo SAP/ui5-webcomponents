@@ -4,7 +4,7 @@ import ComboBoxItemBase from "./ComboBoxItemBase.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-cb-item",
+	tag: "ui5-cb-item-new",
 	properties: /** @lends  sap.ui.webcomponents.main.ComboBoxItem.prototype */ {
 		/**
 		 * Defines the text of the component.
@@ -13,16 +13,23 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		text: { type: String },
+		name: { type: String },
+
 		/**
-		 * Defines the additional text of the component.
+		 * Defines the text of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		additionalText: { type: String },
+		surname: { type: String },
+
+		icon: { type: String },
+
+		colorScheme: {
+			type: String,
+			defaultValue: "1",
+		},
 	},
 };
 
@@ -32,22 +39,22 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ComboBoxItem
+ * @alias sap.ui.webcomponents.main.ComboBoxItemNew
  * @extends UI5Element
- * @tagname ui5-cb-item
+ * @tagname ui5-cb-item-new
  * @implements sap.ui.webcomponents.main.IComboBoxItem
  * @public
  */
-class ComboBoxItem extends ComboBoxItemBase {
+class ComboBoxItemNew extends ComboBoxItemBase {
 	static get metadata() {
 		return metadata;
 	}
 
 	get effectiveText() {
-		return this.text;
+		return `${this.name} ${this.surname}`;
 	}
 }
 
-ComboBoxItem.define();
+ComboBoxItemNew.define();
 
-export default ComboBoxItem;
+export default ComboBoxItemNew;

@@ -649,12 +649,12 @@ class ComboBox extends UI5Element {
 
 		if (isOpen) {
 			this._itemFocused = true;
-			this.value = isGroupItem ? "" : currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.effectiveText;
 			this.focused = false;
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
-			this.value = isGroupItem ? nextItem.text : currentItem.text;
+			this.value = isGroupItem ? nextItem.effectiveText : currentItem.effectiveText;
 			currentItem.focused = false;
 		}
 
@@ -885,7 +885,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		const value = (item && item.text) || "";
+		const value = (item && item.effectiveText) || "";
 		this.inner.value = value;
 		if (highlightValue) {
 			filterValue = filterValue || "";
@@ -899,7 +899,7 @@ class ComboBox extends UI5Element {
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+			item.selected = !item.isGroupItem && (item.effectiveText === this.value) && !shouldSelectionBeCleared;
 			return item;
 		});
 	}
@@ -922,7 +922,7 @@ class ComboBox extends UI5Element {
 	_selectItem(event) {
 		const listItem = event.detail.item;
 
-		this._selectedItemText = listItem.mappedItem.text;
+		this._selectedItemText = listItem.mappedItem.effectiveText;
 		this._selectionPerformed = true;
 
 		const sameItemSelected = this.value === this._selectedItemText;
