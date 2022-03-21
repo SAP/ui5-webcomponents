@@ -13,7 +13,6 @@ const M_ISO639_OLD_TO_NEW = {
 	"iw": "he",
 	"ji": "yi",
 	"in": "id",
-	"sh": "sr",
 };
 
 const DEV_MODE = false;
@@ -46,6 +45,12 @@ const calcLocale = (language, region, script) => {
 		} else if (script === "Hant") {
 			region = "TW";
 		}
+	}
+
+	// Special case 3: for Serbian, there are cyrillic and latin scripts, "sh" and "sr-latn" map to "latin", "sr" maps to cyrillic.
+	if (language === "sh" || (language === "sr" && script === "Latn")) {
+		language = "sr";
+		region = "Latn";
 	}
 
 	// try language + region

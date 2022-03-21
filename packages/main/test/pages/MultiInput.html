@@ -197,8 +197,8 @@
 
 		<h1 class="sample-container-title">Multi Input with 2 tokens</h1>
 		<ui5-multi-input id="two-tokens" value="abc">
-			<ui5-token slot="tokens" text="a"></ui5-token>
-			<ui5-token slot="tokens" text="b"></ui5-token>
+			<ui5-token slot="tokens" id="firstToken" text="a"></ui5-token>
+			<ui5-token slot="tokens" id="secondToken" text="b"></ui5-token>
 		</ui5-multi-input>
 		<br>
 		<br>
@@ -341,11 +341,7 @@
 
 		const handleTokenDelete = (event) => {
 			var mi = event.target;
-
 			mi.removeChild(event.detail.token);
-
-			// discuss ?!
-			// mi.focus();
 		}
 
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);

@@ -208,7 +208,22 @@ describe("Keyboard handling", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
 	});
 
-	it("should move the focus from the input to the tokens and back", async () => {
+	it("left/right arrow navigation", async () => {
+		const input =  await browser.$("#basic-overflow");
+		const innerInput =  await input.shadow$("input");
+		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
+		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
+
+		await innerInput.click();
+		await innerInput.keys("ArrowLeft");
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused");
+		assert.notOk(await input.getProperty("focused"), "The input loses focus");
+
+		await innerInput.keys("ArrowRight");
+		assert.notOk(await lastToken.getProperty("focused"), "The last token is not focused anymore");
+	});
+
+	it("home/end navigation", async () => {
 		const input =  await browser.$("#basic-overflow");
 		const innerInput =  await input.shadow$("input");
 		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
@@ -216,24 +231,13 @@ describe("Keyboard handling", () => {
 		let caretPosition;
 
 		await innerInput.click();
-		await innerInput.keys("ArrowLeft");
-		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
-
 		await innerInput.keys("Home");
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
 
 		await innerInput.keys("End");
 		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
 
-
-		await innerInput.keys("ArrowRight");
-		assert.strictEqual(await firstToken.getProperty("focused"), false, "The first token is not focused anymore");
-		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
-
-		await innerInput.keys("Backspace");
-		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused on Backspace");
-
-		await innerInput.keys("ArrowRight");
+		await innerInput.keys("End");
 		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
 
 		caretPosition = await browser.execute(() =>{
@@ -247,7 +251,7 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused on Home press, if the cursor is at 0 index");
 	});
 
-	it("should select tokens with key modifiers", async () => {
+	it("should select tokens with key modifiers (Shift + [Ctrl])", async () => {
 		const input = await browser.$("#basic-overflow");
 		const innerInput = await input.shadow$("input");
 		const firstToken = await browser.$("#basic-overflow ui5-token:last-child");
@@ -310,23 +314,30 @@ describe("Keyboard handling", () => {
 	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
-		const firstToken = await browser.$("#two-tokens ui5-token:first-child");
-		const lastToken = await browser.$("#two-tokens ui5-token:last-child");
+		const firstToken = await browser.$("#two-tokens ui5-token#firstToken");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+		let tokens;
 
 		// Act
 		await input.setProperty("value", "");
 		await innerInput.click();
 		await browser.keys("Backspace");
+		tokens = await input.$$("ui5-token");
 
 		// Assert
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+		assert.strictEqual(tokens.length, 2, "The tokenizer has two tokens");
 
 		// Act
 		await browser.keys("Backspace");
+		tokens = await input.$$("ui5-token");
 
 		// Assert
 		assert.ok(await firstToken.getProperty("focused"), "The first token is focused on Backspace, as the second was deleted");
 		assert.notOk(await input.getProperty("focused"), "The input is not focused");
+
+		// Cannot be checked through wdio, even when using waitFor*
+		// assert.strictEqual(tokens.length, 1, "The tokenizer has one token");
 	});
 });

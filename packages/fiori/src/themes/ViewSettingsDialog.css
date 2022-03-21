@@ -13,12 +13,12 @@
 }
 
 .ui5-vsd-content {
-	margin: 0 -1rem;
+	margin: 0 0.1px 0 -1rem;
 }
 
 .ui5-vsd-title {
 	margin-bottom: 0.3rem;
-	font-size: var(--ui5_title_level_5Size);
+	font-size: var(--sapFontHeader5Size);
 }
 
 .ui5-vsd-start {
