@@ -89,7 +89,7 @@ const enrichBusyIndicatorMethods = UI5ElementPrototype => {
 			return;
 		}
 
-		let children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
+		const children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
 
 		if (children.length !== 1) {
 			console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
