@@ -22,12 +22,6 @@ const init = () => {
 		core.attachInit(() => {
 			window.sap.ui.require(["sap/ui/core/LocaleData", "sap/ui/core/Popup"], (LocaleData, Popup) => {
 				Popup.setInitialZIndex(getCurrentZIndex());
-				Popup.addExternalPopupDetector && Popup.addExternalPopupDetector(el => {
-					while (el && el !== document.body && !el._isAPopup) {
-						el = el.parentElement ? el.parentElement : el.parentNode.host;
-					}
-					return el && el._isAPopup;
-				});
 				resolve();
 			});
 		});
