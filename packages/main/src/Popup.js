@@ -228,6 +228,7 @@ class Popup extends UI5Element {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
+		this._isAPopup = true; // used externally
 	}
 
 	static get metadata() {

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Button</title>
+
+	<script id='sap-ui-bootstrap'
+			src='http://localhost:8080/resources/sap-ui-core.js'
+			data-sap-ui-theme='sap_fiori_3'
+			data-sap-ui-libs='sap.m'
+			data-sap-ui-preload="async"
+	></script>
+
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="styles/Simple.css">
+</head>
+
+<body class="simple1auto">
+
+<ui5-dialog id="hello-dialog" header-text="Dialogs are easy!">
+	<div stype="padding: 2rem; display:flex; justify-content: center;">
+		Now try to use the keyboard to navigate and close this dialog.
+		<ui5-button id="closeDialogButton">Dismiss</ui5-button>
+	</div>
+</ui5-dialog>
+
+<div id="canvas"></div>
+
+<script>
+	const closeBtn = document.getElementById("closeDialogButton");
+	const dialog = document.getElementById("hello-dialog");
+	const { sap } = window;
+	sap.ui.getCore().attachInit(() => {
+		sap.ui.require(
+			["sap/m/Button", "sap/m/Text", "sap/m/Dialog"],
+			(Button, Text, Dialog) => {
+				new Button({
+					text: "Open OpenUI5 Dialog",
+					press: () => {
+						const ui5Dialog = new Dialog({
+							content: [
+								new Text({
+									text: "Use keyboard only please"
+								}),
+								new Button({
+									text: "Open WC Dialog",
+									press: () => {
+										dialog.open = true;
+									}
+								}),
+								new Button({
+									text: "Dismiss",
+									press: () => {
+										ui5Dialog.close();
+									}
+								})
+							]
+						}).open();
+					}
+				}).placeAt("canvas");
+			}
+		);
+	});
+	// openBtn.addEventListener("click", () => {
+	//   dialog.open();
+	// });
+	closeBtn.addEventListener("click", () => {
+		dialog.close();
+	});
+</script>
+
+</body>
+</html>
