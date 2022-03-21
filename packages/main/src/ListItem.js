@@ -93,7 +93,7 @@ const metadata = {
 		 * @private
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.2.0
+		 * @since 1.2.2
 		 *
 		 */
 		accessibleRole: {

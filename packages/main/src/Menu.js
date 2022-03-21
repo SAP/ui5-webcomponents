@@ -7,7 +7,6 @@ import {
 import {
 	isPhone,
 	isTablet,
-	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	getI18nBundle,
@@ -187,6 +186,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-menu
  * @appenddocs MenuItem
+ * @since 1.2.2
  * @public
  */
 class Menu extends UI5Element {
@@ -407,25 +407,19 @@ class Menu extends UI5Element {
 	}
 
 	_itemMouseOver(event) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			const opener = event.target;
-			const item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id");
+		const opener = event.target;
+		const item = opener.associatedItem;
+		const hoverId = opener.getAttribute("id");
 
-			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
-		}
+		this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 	}
 
 	_itemMouseOut(event) {
-		if (isDesktop()) {
-			// respect mouseout only on desktop
-			const item = event.target.associatedItem;
-			if (item.hasChildren && item._subMenu) {
-				// try to close the sub-menu
-				item._preventSubMenuClose = false;
-				this._closeItemSubMenu(item);
-			}
+		const item = event.target.associatedItem;
+		if (item.hasChildren && item._subMenu) {
+			// try to close the sub-menu
+			item._preventSubMenuClose = false;
+			this._closeItemSubMenu(item);
 		}
 	}
 
