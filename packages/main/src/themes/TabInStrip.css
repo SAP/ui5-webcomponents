@@ -44,13 +44,12 @@
 .ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly {
 	color: var(--_ui5_tc_headeritem_text_selected_color);
 }
+.ui5-tab-strip-item--selected .ui5-tab-single-click-icon>[ui5-icon] {
+	color: var(--_ui5_tc_headeritem_text_selected_color);
+}
 
 .ui5-tab-strip-item:hover:not(.ui5-tab-strip-item--selected).ui5-tab-strip-item--textOnly {
 	color: var(--_ui5_tc_headerItem_text_hover_color);
-}
-
-.ui5-tab-strip-item:hover.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly {
-	color: var(--_ui5_tc_headeritem_text_selected_hover_color);
 }
 
 /* the outline when hover or selected */
@@ -371,4 +370,16 @@
 [dir=rtl] .ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemAdditionalText {
 	margin-right: 0;
 	margin-left: 0.5rem;
+}
+
+.ui5-tab-strip-item--selected:not(.ui5-tab-strip-item--withIcon) .ui5-tab-expand-button>[ui5-button]::after {
+	content: "";
+	position: absolute;
+	bottom: 1px;
+	left: 12px;
+	right: 16px;
+	border-bottom: var(--_ui5_tc_headerItemContent_border_bottom);
+	border-radius: var(--_ui5_tc_headerItemContent_border_radius);
+	background-color: var(--_ui5_tc_headerItemContent_border_bg);
+	height: var(--_ui5_tc_headerItemContent_border_height);
 }

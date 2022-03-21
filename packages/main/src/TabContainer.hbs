@@ -66,18 +66,16 @@
 
 {{#*inline "contentArea"}}
 	<div class="{{classes.content}}" part="content">
-		{{#each items}}
-			{{#unless this.isSeparator}}
-				<div
-					class="ui5-tc__contentItem"
-					id="ui5-tc-contentItem-{{this._posinset}}"
-					?hidden="{{this.effectiveHidden}}"
-					role="tabpanel"
-					aria-labelledby="{{this._id}}"
-				>
-					<slot name="{{this._individualSlot}}"></slot>
-				</div>
-			{{/unless}}
-		{{/each}}
+		<div
+			class="ui5-tc__contentItem"
+			id="ui5-tc-content"
+			?hidden="{{this._selectedTab.effectiveHidden}}"
+			role="tabpanel"
+			aria-labelledby="{{this._selectedTab._id}}"
+		>
+			{{#each items}}
+				<slot name="{{this._effectiveSlotName}}"></slot>
+			{{/each}}
+		</div>
 	</div>
 {{/inline}}

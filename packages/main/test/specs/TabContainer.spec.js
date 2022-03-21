@@ -23,7 +23,7 @@ describe("TabContainer general interaction", () => {
 		const resultIdx = await browser.$("#resultIdx");
 
 		const SELECTED_TAB_TEXT = "Laptops";
-		const SELECTED_TAB_INDEX = "1";
+		const SELECTED_TAB_INDEX = "2";
 
 		await item.click();
 
@@ -139,6 +139,37 @@ describe("TabContainer general interaction", () => {
 		const actualContentPadding = await tabContainer.shadow$(".ui5-tc__content").getCSSProperty("padding-left");
 
 		assert.strictEqual(actualContentPadding.value, expectedContentPadding, "tabContainer has correct padding set on the content");
+	});
+
+	it("tests nested tabs", async () => {
+		const tabContainer = await browser.$("#tabContainerNestedTabs");
+		const expandButton = await tabContainer.shadow$(".ui5-tab-expand-button");
+		await expandButton.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
+
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
+		let newlySelectedItem = await tabContainer.$("[selected]");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1", "Sub tabs are selectable and the selected tab is 2.1");
+		assert.ok(await browser.$("#button21").isDisplayed(), "Proper content for tab 2.1 is displayed")
+
+		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed")
+		await expandButton.click();
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[1].click();
+		newlySelectedItem = await tabContainer.$("[selected]");
+			assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1.1", "Sub tabs are selectable and the selected tab is 2.1.1");
+		assert.ok(await browser.$("#button211").isDisplayed(), "Proper content for tab 2.1.1 is displayed")
+
+		assert.notOk(await browser.$("#button2121").isDisplayed(), "Content for tab 2.1.2.1 is not displayed")
+		await expandButton.click();
+		await (await popover.$("ui5-list").$$("ui5-li-custom"))[4].click();
+		newlySelectedItem = await tabContainer.$("[selected]");
+		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
+		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed")
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1.2.1", "Sub tabs are selectable and the selected tab is 2.1.2.1");
+		assert.ok(await browser.$("#button2121").isDisplayed(), "Proper content for tab 2.1.2.1 is displayed")
 	});
 
 	it("tests custom overflow buttons via slots", async () => {
