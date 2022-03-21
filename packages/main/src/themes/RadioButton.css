@@ -90,12 +90,12 @@
 }
 
 /* active, checked */
-:host([active][checked]:not([value-state])) .ui5-radio-svg-outer {
+:host([active][checked]:not([value-state]):not([disabled]):not([readonly])) .ui5-radio-svg-outer {
 	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
 }
 
 /* active, not checked */
-:host([active]:not([checked]):not([value-state])) .ui5-radio-svg-outer {
+:host([active]:not([checked]):not([value-state]):not([disabled]):not([readonly])) .ui5-radio-svg-outer {
 	stroke: var(--_ui5_radio_button_outer_ring_active_color);
 }
 
