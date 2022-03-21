@@ -10,7 +10,7 @@ import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library";
 import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
 
 // Styles
-import barcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
+import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
 
 // Texts
 import {
@@ -134,7 +134,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [barcodeScannerDialogCss];
+		return [BarcodeScannerDialogCss];
 	}
 
 	static async onDefine() {

@@ -20,4 +20,5 @@
 	--_ui5_step_input_border_color_hover: var(--sapField_Hover_Background);
 	--_ui5_step_input_border_hover: 1px solid var(--sapField_Hover_BorderColor);
 	--_ui5_input_input_background_color: var(--sapField_InvalidBackground);
+	--_ui5_step_input_min_width: 7.25rem;
 }
