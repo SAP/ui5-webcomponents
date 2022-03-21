@@ -7,15 +7,15 @@ import {
 import { getFeature } from "../FeaturesRegistry.js";
 
 const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, { host } = {}) => {
+	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
+	if (OpenUI5Enablement && !forStaticArea) {
+		templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(html, host, templateResult);
+	}
+
 	if (typeof styleStrOrHrefsArr === "string") {
 		templateResult = html`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
 		templateResult = html`${styleStrOrHrefsArr.map(href => html`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
-	}
-
-	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
-	if (OpenUI5Enablement && !forStaticArea) {
-		templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(html, host, templateResult);
 	}
 
 	render(templateResult, domNode, { host });
