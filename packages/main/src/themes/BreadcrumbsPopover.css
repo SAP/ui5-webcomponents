@@ -1,3 +1,7 @@
+.ui5-breadcrumbs-popover::part(content) {
+    padding: 0;
+}
+
 .ui5-breadcrumbs-popover-footer {
     display: flex;
     justify-content: flex-end;

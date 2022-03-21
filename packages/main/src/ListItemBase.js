@@ -117,7 +117,9 @@ class ListItemBase extends UI5Element {
 		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
-			this.fireEvent("_forward-after", { item: target });
+			if (!this.fireEvent("_forward-after", { item: target }, true)) {
+				event.preventDefault();
+			}
 		}
 	}
 
