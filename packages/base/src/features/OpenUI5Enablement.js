@@ -20,11 +20,12 @@ const getBusyIndicatorStyles = () => {
 const wrapTemplateResultInBusyMarkup = (html, host, templateResult) => {
 	if (host.isOpenUI5Component && host.__isBusy) {
 		templateResult = html`
-		<div class="busy-indicator-wrapper">
-			<span tabindex="0" busy-indicator-before-span @focusin=${host.__suppressFocusIn}></span>
+		<div class="busy-indicator-wrapper" busy-indicator-element>
+			<span tabindex="0" busy-indicator-before-span  busy-indicator-element @focusin=${host.__suppressFocusIn}></span>
 			${templateResult}
-			<div class="busy-indicator-overlay"></div>
+			<div class="busy-indicator-overlay" busy-indicator-element></div>
 			<div busy-indicator
+				busy-indicator-element
 				class="busy-indicator-busy-area"
 				tabindex="0"
 				role="progressbar"
@@ -32,10 +33,10 @@ const wrapTemplateResultInBusyMarkup = (html, host, templateResult) => {
 				aria-valuemin="0"
 				aria-valuemax="100"
 				aria-valuetext="Busy">
-				<div>
-					<div class="busy-indicator-circle circle-animation-0"></div>
-					<div class="busy-indicator-circle circle-animation-1"></div>
-					<div class="busy-indicator-circle circle-animation-2"></div>
+				<div busy-indicator-element>
+					<div class="busy-indicator-circle circle-animation-0" busy-indicator-element></div>
+					<div class="busy-indicator-circle circle-animation-1" busy-indicator-element></div>
+					<div class="busy-indicator-circle circle-animation-2" busy-indicator-element></div>
 				</div>
 			</div>
 		</div>`;
@@ -77,6 +78,40 @@ const enrichBusyIndicatorMethods = UI5ElementPrototype => {
 		if (busyIndicator && this.__redirectFocus) {
 			busyIndicator.focus();
 		}
+	};
+
+	UI5ElementPrototype.getDomRef = function asd() {
+		// If a component set _getRealDomRef to its children, use the return value of this function
+		if (typeof this._getRealDomRef === "function") {
+			return this._getRealDomRef();
+		}
+
+		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
+			return;
+		}
+
+		let children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
+
+		if (children.length !== 1) {
+			console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
+		}
+
+		if (this.__isBusy) {
+			children = [...children[0].children]
+				.filter(child => {
+					if (["link", "style"].includes(child.localName)) {
+						return false;
+					}
+
+					if (child.hasAttribute("busy-indicator-element")) {
+						return false;
+					}
+
+					return true;
+				});
+		}
+
+		return children[0];
 	};
 };
 
