@@ -80,7 +80,7 @@ const enrichBusyIndicatorMethods = UI5ElementPrototype => {
 		}
 	};
 
-	UI5ElementPrototype.getDomRef = function asd() {
+	UI5ElementPrototype.getDomRef = function getDomRef() {
 		// If a component set _getRealDomRef to its children, use the return value of this function
 		if (typeof this._getRealDomRef === "function") {
 			return this._getRealDomRef();
