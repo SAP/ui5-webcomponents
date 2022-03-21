@@ -441,7 +441,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get expandContent() {
-		return this._filterStepTwo;
+		return this._filterStepTwo || !this.hasPagination;
 	}
 
 	get isModeSort() {

@@ -30,9 +30,9 @@
 			</div>
 		</div>
 		{{#unless showBackButton}}
-			<div class="ui5-vsd-sub-header-container">
-				<div class="ui5-vsd-sub-header">
-					{{#if hasPagination}}
+			{{#if hasPagination}}
+				<div class="ui5-vsd-sub-header-container">
+					<div class="ui5-vsd-sub-header">
 						<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
 								<ui5-segmented-button-item
 									?pressed="{{isModeSort}}"
@@ -45,9 +45,9 @@
 									mode="Filter"
 								></ui5-segmented-button-item>
 						</ui5-segmented-button>
-					{{/if}}
+					</div>
 				</div>
-			</div>
+			{{/if}}
 		{{/unless}}
 	</div>
 	<div class="ui5-vsd-content" ?expand-content="{{expandContent}}">
