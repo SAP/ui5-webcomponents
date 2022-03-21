@@ -51,7 +51,7 @@
 	right: var(--_ui5_dialog_header_focus_right_offset);
 	top: var(--_ui5_dialog_header_focus_top_offset);
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	border-radius: var(--_ui5_dialog_header_border_radius) var(--_ui5_dialog_header_border_radius) 0 0;
+	border-radius: var(--_ui5-popup-border-radius) var(--_ui5-popup-border-radius) 0 0;
 	pointer-events: none;
 }
 
