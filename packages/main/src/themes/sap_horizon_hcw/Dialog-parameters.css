@@ -1,7 +1,6 @@
 @import "../base/Dialog-parameters.css";
 
 :root {
-	--_ui5_dialog_resize_handle_color: var(--sapContent_IconColor);
-	--_ui5_dialog_header_focus_width: 0.125rem;
-	--_ui5_dialog_header_focus_offset: -0.25rem;
+	--_ui5_dialog_resize_handle_right: 3px;
+	--_ui5_dialog_resize_handle_bottom: 3px;
 }
