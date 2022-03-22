@@ -1117,10 +1117,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.35":
-  version "11.1.35"
-  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.35.tgz#3f526afa9020a41e636d9d4b41ad363338ce879f"
-  integrity sha512-6OZQhpiUgKzT1u0ksJBO2WoijEMz6GT4c/e60HbZBzRXqhNiLl/UglsxBeQwy4rSOd59ogL8ygvKpvKcpTSRtA==
+"@sap-theming/theming-base-content@11.1.36":
+  version "11.1.36"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.36.tgz#974d5621c94c48b4cdc0193ebfa63794ff20ee71"
+  integrity sha512-m8rpGfxg8LGoe89L/pZN2ozdZQ6u+JvHHLZdXfF4UJBijBLwx1snqX/gsK6sL5/suzCkxcVaNPac+0sg8TLo0Q==
 
 "@sindresorhus/is@^4.0.0":
   version "4.4.0"
@@ -2383,10 +2383,10 @@ chrome-launcher@^0.15.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@98.0.0:
-  version "98.0.0"
-  resolved "https://registry.npmjs.org/chromedriver/-/chromedriver-98.0.0.tgz#b2c3c1941fad4cdfadad5d4c46923e02f089fd30"
-  integrity sha512-Oi6Th5teK+VI4nti+423/dFkENYHEMOdUvqwJHzOaNwXqLwZ8FuSaKBybgALCctGapwJbd+tmPv3qSd6tUUIHQ==
+chromedriver@99.0.0:
+  version "99.0.0"
+  resolved "https://registry.npmjs.org/chromedriver/-/chromedriver-99.0.0.tgz#fbfcc7e74991dd50962e7dd456d78eaf49f56774"
+  integrity sha512-pyB+5LuyZdb7EBPL3i5D5yucZUD+SlkdiUtmpjaEnLd9zAXp+SvD/hP5xF4l/ZmWvUo/1ZLxAI1YBdhazGTpgA==
   dependencies:
     "@testim/chrome-version" "^1.1.2"
     axios "^0.24.0"
