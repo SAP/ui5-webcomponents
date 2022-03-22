@@ -76,7 +76,7 @@
 	stroke: var(--_ui5_radio_button_outer_ring_hover_color);
 }
 
-:host(:not([active]):not([value-state="Error"]):not([value-state="Warning"]):not([value-state="Success"]):not([value-state="Information"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable {
+:host(:not([value-state="Error"]):not([value-state="Warning"]):not([value-state="Success"]):not([value-state="Information"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable {
 	filter: drop-shadow(var(--_ui5_radio_button_outer_ring_hover_shadow));
 }
 
