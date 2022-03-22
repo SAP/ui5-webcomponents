@@ -1,5 +1,7 @@
-commit 416ac0d132ec76a74dc1ffe0643346f17fd2bb3e
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 18 13:32:21 2022 +0200
+commit 2346c5059f889238a594821a27ccf73f79ff2359
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Mar 22 00:29:19 2022 -0700
 
-    chore: Update Chromedriver to 99 (#4922)
+    chore: translation delivery (#4937)
+    
+    Change-Id: I25059784a23bf2f9c9c42e665824060eaf373ef9
