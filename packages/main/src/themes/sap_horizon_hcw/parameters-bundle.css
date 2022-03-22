@@ -25,7 +25,7 @@
 @import "../base/PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
-@import "../base/SegmentedButtton-parameters.css";
+@import "./SegmentedButton-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";
 @import "./TabContainer-parameters.css";
