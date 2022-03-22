@@ -1,7 +1,15 @@
-commit 1b3f354d85357476cff5e2c6eaa0c019474fbbb6
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 22 05:00:54 2022 -0700
+commit 1f3d212fa388228f74902a94a983b0ee2621c0a7
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Mar 22 15:43:31 2022 +0200
 
-    chore: remove hardcoded CSS params (#4940)
+    feat(ui5-dialog): set horizon themes parameters (#4925)
     
-    These files have been introduced previously within the "src" folder, because the SAP Horizon params were not available in theming-base-content. Now they are obsolete as the latest theming-base-content release includes them, the build also does not process them - it copies the params from node_modules.
+    * style(ui5-dialog): set horizon themes parameters
+    
+    * fix focus borders radius
+    
+    * fix horizon dark theme
+    
+    * fix footer border
+    
+    * fix comments
