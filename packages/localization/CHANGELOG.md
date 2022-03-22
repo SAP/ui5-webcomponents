@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
+
+
+### Bug Fixes
+
+* **localization:** fix js error if "sh" locale set ([#4905](https://github.com/SAP/ui5-webcomponents/issues/4905)) ([9ace82c](https://github.com/SAP/ui5-webcomponents/commit/9ace82c)), closes [#4904](https://github.com/SAP/ui5-webcomponents/issues/4904)
+
+
+
+
+
+
 ## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

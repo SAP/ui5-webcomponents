@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** correct column border styles for RTL ([#4919](https://github.com/SAP/ui5-webcomponents/issues/4919)) ([2f40bd7](https://github.com/SAP/ui5-webcomponents/commit/2f40bd7)), closes [#4906](https://github.com/SAP/ui5-webcomponents/issues/4906)
+* **ui5-view-settings-dialog:** adjust scrollbar behavior  ([#4795](https://github.com/SAP/ui5-webcomponents/issues/4795)) ([ddcb01e](https://github.com/SAP/ui5-webcomponents/commit/ddcb01e)), closes [#4724](https://github.com/SAP/ui5-webcomponents/issues/4724) [#4725](https://github.com/SAP/ui5-webcomponents/issues/4725) [#4860](https://github.com/SAP/ui5-webcomponents/issues/4860)
+
+
+
+
+
 ## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
 
 
