@@ -389,6 +389,12 @@ class DatePicker extends DateComponentBase {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
+	constructor() {
+		super();
+
+		this.FormSupport = undefined;
+	}
+
 	/**
 	 * @protected
 	 */
@@ -402,6 +408,8 @@ class DatePicker extends DateComponentBase {
 	}
 
 	onBeforeRendering() {
+		this.FormSupport = getFeature("FormSupport");
+
 		["minDate", "maxDate"].forEach(prop => {
 			if (this[prop] && !this.isValid(this[prop])) {
 				console.warn(`Invalid value for property "${prop}": ${this[prop]} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
@@ -474,6 +482,10 @@ class DatePicker extends DateComponentBase {
 
 		if (isEnter(event)) {
 			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+
+			if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
 		}
 
 		if (isPageUpShiftCtrl(event)) {
