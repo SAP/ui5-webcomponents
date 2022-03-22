@@ -16,13 +16,15 @@
         </li>
 
         {{#each _linksData}}
-            <li class="ui5-breadcrumbs-link-wrapper" id="{{this._id}}-link-wrapper">
+            <li class="ui5-breadcrumbs-link-wrapper" 
+                id="{{this._id}}-link-wrapper">
+                
                 <ui5-link
                     @click="{{../_onLinkPress}}"
                     href="{{this.href}}"
                     target="{{this.target}}"
                     id="{{this._id}}-link"
-                    aria-label="{{this.accessibleName}}"
+                    accessible-name="{{this._accessibleNameText}}"
                     data-ui5-stable="{{this.stableDomRef}}">
                     {{this.innerText}}
                 </ui5-link>
@@ -31,7 +33,7 @@
 
         {{#if _endsWithCurrentLocationLabel}}
         <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelPress}}">
-            <span id={{this._id}}-labelWrapper>
+            <span aria-label="{{_currentLocationAccName}}" role="link" id="{{this._id}}-labelWrapper">
                 <ui5-label
                     aria-current="page">
                     {{_currentLocationText}}

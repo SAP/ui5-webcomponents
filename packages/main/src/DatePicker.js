@@ -14,7 +14,6 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
-	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -486,9 +485,7 @@ class DatePicker extends DateComponentBase {
 			if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}
-		}
-
-		if (isPageUpShiftCtrl(event)) {
+		} else if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._modifyDateValue(1, "year");
 		} else if (isPageUpShift(event)) {

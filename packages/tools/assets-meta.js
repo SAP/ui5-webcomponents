@@ -136,6 +136,7 @@ const assetsMeta = {
       "sk",
       "sl",
       "sr",
+      "sr_Latn",
       "sv",
       "th",
       "tr",

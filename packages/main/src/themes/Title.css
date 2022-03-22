@@ -6,7 +6,7 @@
 :host {
 	max-width: 100%;
 	color: var(--sapGroup_TitleTextColor);
-	font-size: var(--ui5_title_level_2Size);
+	font-size: var(--sapFontHeader2Size);
 	font-family: "72override", var(--sapFontFamily);
 	text-shadow: var(--sapContent_TextShadow);
 }
@@ -36,30 +36,30 @@
 
 /* Level H1 */
 :host([level="H1"]) {
-	font-size: var(--ui5_title_level_1Size);
+	font-size: var(--sapFontHeader1Size);
 }
 
 /* Level H2 */
 :host([level="H2"]) {
-	font-size: var(--ui5_title_level_2Size);
+	font-size: var(--sapFontHeader2Size);
 }
 
 /* Level H3 */
 :host([level="H3"]) {
-	font-size: var(--ui5_title_level_3Size);
+	font-size: var(--sapFontHeader3Size);
 }
 
 /* Level H4 */
 :host([level="H4"]) {
-	font-size: var(--ui5_title_level_4Size);
+	font-size: var(--sapFontHeader4Size);
 }
 
 /* Level H5 */
 :host([level="H5"]) {
-	font-size: var(--ui5_title_level_5Size);
+	font-size: var(--sapFontHeader5Size);
 }
 
 /* Level H6 */
 :host([level="H6"]) {
-	font-size: var(--ui5_title_level_6Size);
+	font-size: var(--sapFontHeader6Size);
 }
