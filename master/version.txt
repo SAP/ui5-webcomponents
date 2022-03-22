@@ -1,5 +1,13 @@
-commit 48b0d6ed83c50cf281f472e8a77fc3080f95ad28
+commit 4b45d3232c619287c2f4c29e88309cfc6a0a76d1
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 22 02:08:56 2022 -0700
+Date:   Tue Mar 22 02:19:04 2022 -0700
 
-    chore: bump theming-base-content to v11.1.36 (#4936)
+    fix(framework): add 72-* font as system styles (#4934)
+    
+    The **72-Bold** font did not apply correctly on stakeholder side in FireFox (see the linked issue for more information.).
+    This can be also reproduced in our test pages by opening the Card test page **in sap_horizon in FireFox** via this [link](https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Card/?sap-ui-theme=sap_horizon).
+    The headings in the Card header should have been bold, however they appear normal instead.
+    The insertion of the **72-Bold,  '72-Boldfull', '72-Light' and  '72-Lightfull'** fonts explicitly as part of the system vars
+    seem to resolve the issue. The changes is adding the ones that are missing, compared to OpenUi5.
+    
+    FIXES https://github.com/SAP/ui5-webcomponents/issues/4931
