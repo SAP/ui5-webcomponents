@@ -1,5 +1,28 @@
-commit 5cca6f3421b0cb8a0764d06a40ace5bd23b0b8fd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 22 03:48:14 2022 -0700
+commit cbf5b02b8a94ffac98d6ebb493fe27c5d89e71ae
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Tue Mar 22 13:18:45 2022 +0200
 
-    chore: update hashes after theming-base-content update (#4939)
+    fix(ui5-illustrated-message): remove offensive characters (#4929)
+    
+    * fix(ui5-illustrated-message): remove offensive characters
+    
+    Problem:
+    There were 'Z' characters in some of the illustrations. They are now
+    considered offensive.
+    
+    Solution:
+    'Z' characters are removed from the following illustrations:
+    - NoEntries (Spot/Dialog/Scene)
+    - NoData (Scene)
+    - NoNotifications (Spot/Dialog)
+    - TntNoApplications (Spot/Dialog/Scene)
+    - TntNoFlows (Spot/Dialog/Scene)
+    - TntNoUsers (Spot/Dialog/Scene)
+    
+    * More illustrations are now politically correct:
+    - EmptyCalendar
+    - SimpleBell
+    - SleepingBell
+    - Tent
+    
+    * fixed incorrect SVG ID
