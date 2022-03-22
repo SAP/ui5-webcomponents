@@ -7,4 +7,5 @@
 	--_ui5_dialog_header_focus_right_offset: 1px;
 	--_ui5_dialog_resize_handle_right: 3px;
 	--_ui5_dialog_resize_handle_bottom: 3px;
+	--_ui5_dialog_header_border_radius: var(--sapElement_BorderCornerRadius);
 }
