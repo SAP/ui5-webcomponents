@@ -263,11 +263,11 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || Switch.i18nBundle.getText(SWITCH_ON);
+		return this._textOn;
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || Switch.i18nBundle.getText(SWITCH_OFF);
+		return this._textOff;
 	}
 
 	get hiddenText() {
