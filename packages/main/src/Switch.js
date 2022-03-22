@@ -10,11 +10,6 @@ import "@ui5/webcomponents-icons/dist/less.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
-import {
-	SWITCH_ON,
-	SWITCH_OFF,
-} from "./generated/i18n/i18n-defaults.js";
-
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
 
