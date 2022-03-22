@@ -1,28 +1,7 @@
-commit cbf5b02b8a94ffac98d6ebb493fe27c5d89e71ae
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Tue Mar 22 13:18:45 2022 +0200
+commit 1b3f354d85357476cff5e2c6eaa0c019474fbbb6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 22 05:00:54 2022 -0700
 
-    fix(ui5-illustrated-message): remove offensive characters (#4929)
+    chore: remove hardcoded CSS params (#4940)
     
-    * fix(ui5-illustrated-message): remove offensive characters
-    
-    Problem:
-    There were 'Z' characters in some of the illustrations. They are now
-    considered offensive.
-    
-    Solution:
-    'Z' characters are removed from the following illustrations:
-    - NoEntries (Spot/Dialog/Scene)
-    - NoData (Scene)
-    - NoNotifications (Spot/Dialog)
-    - TntNoApplications (Spot/Dialog/Scene)
-    - TntNoFlows (Spot/Dialog/Scene)
-    - TntNoUsers (Spot/Dialog/Scene)
-    
-    * More illustrations are now politically correct:
-    - EmptyCalendar
-    - SimpleBell
-    - SleepingBell
-    - Tent
-    
-    * fixed incorrect SVG ID
+    These files have been introduced previously within the "src" folder, because the SAP Horizon params were not available in theming-base-content. Now they are obsolete as the latest theming-base-content release includes them, the build also does not process them - it copies the params from node_modules.
