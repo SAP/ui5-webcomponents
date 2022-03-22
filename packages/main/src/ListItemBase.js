@@ -89,7 +89,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		if (event.isMarked === "button" || event.isMarked === "link") {
+		if (event.target !== this.getFocusDomRef()) {
 			return;
 		}
 
@@ -117,7 +117,9 @@ class ListItemBase extends UI5Element {
 		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
-			this.fireEvent("_forward-after", { item: target });
+			if (!this.fireEvent("_forward-after", { item: target }, true)) {
+				event.preventDefault();
+			}
 		}
 	}
 

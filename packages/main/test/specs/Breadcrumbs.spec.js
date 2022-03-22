@@ -210,11 +210,11 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("renders accessible names of non-overflowing link items", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsWithAccName"),
-			link = (await breadcrumbs.shadow$$("ui5-link"))[3],
-			expectedAriaLabel = "last link acc name";
+			link = (await breadcrumbs.shadow$$("ui5-link"))[3], // we take the last link, because the first overflow
+			expectedAccessibleName = 'Link5 last link acc name 3 of 3';
 
 		// Check
-		assert.strictEqual(await link.getProperty("ariaLabel"), expectedAriaLabel, "label for last link is correct");
+		assert.strictEqual(await link.getProperty("accessibleName"), expectedAccessibleName, "label for last link is correct");
 	});
 
 	it("cancels default if item-click event listener calls preventDefault", async () => {
