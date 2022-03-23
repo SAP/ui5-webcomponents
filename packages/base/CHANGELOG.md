@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
+
+
+### Bug Fixes
+
+* **framework:** add 72-* font as system styles ([#4934](https://github.com/SAP/ui5-webcomponents/issues/4934)) ([8f9b0d2](https://github.com/SAP/ui5-webcomponents/commit/8f9b0d2))
+* **localization:** fix js error if "sh" locale set ([#4905](https://github.com/SAP/ui5-webcomponents/issues/4905)) ([9ace82c](https://github.com/SAP/ui5-webcomponents/commit/9ace82c)), closes [#4904](https://github.com/SAP/ui5-webcomponents/issues/4904)
+
+
+### Features
+
+* add ` sap_horizon_dark` and `sap_horizon_hcb(hcw)` theme params ([#4722](https://github.com/SAP/ui5-webcomponents/issues/4722)) ([dc070a1](https://github.com/SAP/ui5-webcomponents/commit/dc070a1))
+
+
+
+
+
 ## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
