@@ -88,12 +88,12 @@
 	min-height: var(--_ui5_message_strip_close_button_size);
 	position: absolute;
 	right: 0.125rem;
-	top: 0.125rem;
+	top: var(--_ui5_message_strip_close_button_top);
 }
 
 .ui5-message-strip-close-button::part(icon) {
-	width: .75rem;
-	height: .75rem;
+	width: 1rem;
+	height: 1rem;
 }
 
 /* RTL */
