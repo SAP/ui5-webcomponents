@@ -29,6 +29,6 @@ const getTagsToScope = component => {
 	}
 
 	return tagsToScope;
-}
+};
 
 export default executeTemplate;
