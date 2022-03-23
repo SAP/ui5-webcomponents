@@ -1,15 +1,13 @@
-commit 1f3d212fa388228f74902a94a983b0ee2621c0a7
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Mar 22 15:43:31 2022 +0200
+commit 8299914b0585fb7015e469d914f3914e1c644688
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Mar 23 01:44:20 2022 -0700
 
-    feat(ui5-dialog): set horizon themes parameters (#4925)
+    Translation Delivery (#4947)
     
-    * style(ui5-dialog): set horizon themes parameters
+    * chore: translation delivery
     
-    * fix focus borders radius
+    Change-Id: Ib512dcb6cac378805240e8d03418e729096c0913
     
-    * fix horizon dark theme
+    * chore: translation delivery
     
-    * fix footer border
-    
-    * fix comments
+    Change-Id: Id71f1cc786b895ebe36de0ffb9a7ca750f9d13ed
