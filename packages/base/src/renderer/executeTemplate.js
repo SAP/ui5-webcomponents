@@ -9,9 +9,26 @@ import { getCustomElementsScopingSuffix, shouldScopeCustomElement } from "../Cus
  * @returns {*}
  */
 const executeTemplate = (template, component) => {
-	const tagsToScope = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+	const tagsToScope = getTagsToScope(component);
 	const scope = getCustomElementsScopingSuffix();
 	return template(component, tagsToScope, scope);
 };
+
+/**
+ * Returns all tags, used inside component's template subject to scoping.
+ * @param component - the component
+ * @returns {Array[]}
+ * @private
+ */
+const getTagsToScope = component => {
+	const componentTag = component.constructor.getMetadata().getPureTag();
+	const deps = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+
+	if (shouldScopeCustomElement(componentTag)) {
+		deps.push(componentTag);
+	}
+
+	return deps;
+}
 
 export default executeTemplate;
