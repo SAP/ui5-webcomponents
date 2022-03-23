@@ -21,16 +21,42 @@ import overflowCss from "./generated/themes/TabInOverflow.css.js";
  */
 const metadata = {
 	tag: "ui5-tab",
+	managedSlots: true,
+	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
-		 * Defines the tab content.
+		 * Holds the content associated with this tab.
+		 *
 		 * @type {Node[]}
-		 * @slot
 		 * @public
+		 * @slot
 		 */
 		"default": {
 			type: Node,
+			propertyName: "content",
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
+		},
+
+		/**
+		 * Defines hierarchies with nested sub tabs.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 *
+		 * @type {sap.ui.webcomponents.main.ITab[]}
+		 * @public
+		 * @slot subTabs
+		 */
+		subTabs: {
+			type: HTMLElement,
+			individualSlots: true,
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -122,6 +148,14 @@ const metadata = {
 		_selected: {
 			type: Boolean,
 		},
+
+		_realTab: {
+			type: Object,
+		},
+
+		_isTopLevelTab: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},
@@ -199,6 +233,31 @@ class Tab extends UI5Element {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 
+	get requiresExpandButton() {
+		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+	}
+
+	get isSingleClickArea() {
+		return this.subTabs.length > 0 && this._isTopLevelTab && !this._hasOwnContent;
+	}
+
+	get isOnSelectedTabPath() {
+		return this._realTab === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+	}
+
+	get _effectiveSlotName() {
+		return this.isOnSelectedTabPath ? this._individualSlot : "disabled-slot";
+	}
+
+	get _defaultSlotName() {
+		return this._realTab === this ? "" : "disabled-slot";
+	}
+
+	get _hasOwnContent() {
+		return this.content.some(node => (node.nodeType !== Node.COMMENT_NODE
+				&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)));
+	}
+
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
@@ -238,11 +297,16 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		return this.selected || this._selected;
+		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
+		return this.selected || this._selected || subItemSelected;
 	}
 
 	get effectiveHidden() {
 		return !this.effectiveSelected;
+	}
+
+	get tabs() {
+		return this.subTabs.filter(tab => !tab.isSeparator);
 	}
 
 	get ariaLabelledBy() {
@@ -298,6 +362,10 @@ class Tab extends UI5Element {
 			classes.push(`ui5-tab-strip-item--${this.design.toLowerCase()}`);
 		}
 
+		if (this.isSingleClickArea) {
+			classes.push(`ui5-tab-strip-item--singleClickArea`);
+		}
+
 		return classes.join(" ");
 	}
 
@@ -322,11 +390,15 @@ class Tab extends UI5Element {
 			classes.push("ui5-tab-overflow-item--disabled");
 		}
 
+		if (this.selected) {
+			classes.push("ui5-tab-overflow-item--selectedSubTab");
+		}
+
 		return classes.join(" ");
 	}
 
 	get overflowState() {
-		return this.disabled ? "Inactive" : "Active";
+		return (this.disabled || this.isSingleClickArea) ? "Inactive" : "Active";
 	}
 }
 

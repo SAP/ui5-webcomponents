@@ -1,38 +1,40 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
-const openPickerById = (id, options) => {
+const openPickerById = async (id, options) => {
+	await browser.$(`#${id}`).scrollIntoView();
+
 	return browser.executeAsync((id, options, done) => {
 		done(document.querySelector(`#${id}`).openPicker(options));
 	}, id, options);
-}
+};
 
 const closePickerById = id => {
 	return browser.executeAsync((id, done) => {
 		done(document.querySelector(`#${id}`).closePicker());
 	}, id);
-}
+};
 
 const isPickerOpen = id => {
 	return browser.executeAsync((id, done) => {
 		done(document.querySelector(`#${id}`).isOpen());
 	}, id);
-}
+};
 
 const getPicker = async id => {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${id}`);
 	return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-}
+};
 
 const getSubmitButton = async id => {
 	const picker = await getPicker(id);
 	return picker.$("#ok");
-}
+};
 
 const getCancelButton = async id => {
 	const picker = await getPicker(id);
 	return picker.$("#cancel");
-}
+};
 
 const getTimeSlidersCount = async id => {
 	const picker = await getPicker(id);
@@ -40,7 +42,7 @@ const getTimeSlidersCount = async id => {
 	return await browser.executeAsync( (picker, done) => {
 		done(picker.querySelector("ui5-time-selection").shadowRoot.querySelectorAll("ui5-wheelslider").length);
 	}, picker);
-}
+};
 
 describe("DateTimePicker general interaction", () => {
 	before(async () => {

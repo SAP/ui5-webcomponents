@@ -14,6 +14,7 @@ import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
+	BREADCRUMB_ITEM_POS,
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
@@ -452,8 +453,32 @@ class Breadcrumbs extends UI5Element {
 		});
 	}
 
+	_getItemPositionText(position, size) {
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
+	}
+
+	_getItemAccessibleName(item, position, size) {
+		const positionText = this._getItemPositionText(position, size);
+
+		// innerText is needed as it is no longer read out when label is set
+		let text = "";
+		if (item.accessibleName) {
+			text = `${item.textContent.trim()} ${item.accessibleName} ${positionText}`;
+		} else {
+			text = `${item.textContent.trim()} ${positionText}`;
+		}
+
+		return text;
+	}
+
 	getCurrentLocationLabelWrapper() {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
+	}
+
+	get _visibleItems() {
+		return this.getSlottedNodes("items")
+			.slice(this._overflowSize)
+			.filter(i => this._isItemVisible(i));
 	}
 
 	get _endsWithCurrentLocationLabel() {
@@ -472,7 +497,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _currentLocationLabel() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location ui5-label");
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location [ui5-label]");
 	}
 
 	get _isDropdownArrowFocused() {
@@ -499,7 +524,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	get _dropdownArrowLink() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper ui5-link");
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link]");
 	}
 
 	/**
@@ -516,20 +541,45 @@ class Breadcrumbs extends UI5Element {
 	 * Getter for the list of abstract breadcrumb items to be rendered as links outside the overflow
 	 */
 	get _linksData() {
-		const items = this.getSlottedNodes("items").slice(this._overflowSize);
+		const items = this._visibleItems;
+		const itemsCount = items.length; // get size before removing of current location
 
 		if (this._endsWithCurrentLocationLabel) {
 			items.pop();
 		}
 
-		return items.filter(item => this._isItemVisible(item));
+		return items
+			.map((item, index) => {
+				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);
+				return item;
+			});
+	}
+
+	/**
+	 * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
+	 */
+	get _currentLocationAccName() {
+		const items = this._visibleItems;
+
+		const positionText = this._getItemPositionText(items.length, items.length);
+		const lastItem = items[items.length - 1];
+
+		if (!lastItem) {
+			return positionText;
+		}
+
+		if (lastItem.accessibleName) {
+			return `${lastItem.textContent.trim()} ${lastItem.accessibleName} ${positionText}`;
+		}
+
+		return `${lastItem.textContent.trim()} ${positionText}`;
 	}
 
 	/**
 	 * Getter for the list of links corresponding to the abstract breadcrumb items
 	 */
 	get _links() {
-		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper ui5-link"));
+		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper [ui5-link]"));
 	}
 
 	get _isOverflowEmpty() {

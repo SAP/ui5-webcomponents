@@ -215,19 +215,55 @@ describe("List Tests", () => {
 		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
 	});
 
-	it("keyboard handling on TAB", async () => {
+	it("keyboard handling on SHIFT + TAB", async () => {
+		const list = await browser.$("#keyboardTestList");
+		const growingBtn = await list.shadow$('[id$="growing-btn"]');
 		const headerBtn = await browser.$("#headerBtn");
 		const firstItem = await browser.$("ui5-li.firstItem");
+		const afterBtn = await browser.$("#afterBtn");
+		const beforeBtn = await browser.$("#beforeBtn");
+
+		await afterBtn.click();
+		assert.ok(await afterBtn.isFocused(), "after btn is focused");
+
+		// act: Shift + Tab from element outside of the list -> tab should go to growing button if exist
+		await afterBtn.keys(["Shift", "Tab"]);
+		assert.ok(await growingBtn.isFocusedDeep(), "growing buton is focused");
+
+		// act: Shift + Tab from growing button -> should focus previously focused item or first item
+		await growingBtn.keys(["Shift", "Tab"]);
+		assert.ok(await firstItem.isFocused(), "first item is focused");
+
+		// act: Shift + Tab from first item -> focus should go to the header content (if there is tabbable element)
+		await firstItem.keys(["Shift", "Tab"]);
+		assert.ok(await headerBtn.isFocused(), "header button item is focused");
+
+		// act: Shift + Tab from the growing button - the focus should leave the ui5-list
+		// and before button should be focused
+		await headerBtn.keys(["Shift", "Tab"]);
+		assert.ok(await beforeBtn.isFocused(), "first item is focused");
+	});
+
+	it("keyboard handling on TAB", async () => {
+		const list = await browser.$("#keyboardTestList");
+		const growingBtn = await list.shadow$('[id$="growing-btn"]');
+		const headerBtn = await browser.$("#headerBtn");
+		const firstItem = await browser.$("ui5-li.firstItem");
+		const afterBtn = await browser.$("#afterBtn");
+		const beforeBtn = await browser.$("#beforeBtn");
 		const item = await browser.$("ui5-li-custom.item");
 		const itemBtn = await browser.$("ui5-button.itemBtn");
 		const itemLink = await browser.$("ui5-link.itemLink");
 		const itemRadioBtn = await browser.$("ui5-radio-button.itemRadio");
-		const randomBtn = await browser.$("#randomBtn");
 
-		await headerBtn.click();
-		assert.ok(await headerBtn.isFocused(), "header btn is focused");
+		await beforeBtn.click();
+		assert.ok(await beforeBtn.isFocused(), "before button is focused");
 
-		// act: TAB from headerButton -> the focus should go to the 1st selected item
+		// act: Tab from element outside of the list -> focus should go to the header content (if there is tabbable element)
+		await beforeBtn.keys("Tab");
+		assert.ok(await headerBtn.isFocused(), "header button is focused");
+
+		// act: TAB from headerButton -> the focus should go to the 1st item
 		await headerBtn.keys("Tab");
 		assert.ok(await firstItem.isFocused(), "first item is focused");
 
@@ -247,10 +283,13 @@ describe("List Tests", () => {
 		await itemLink.keys("Tab");
 		assert.ok(await itemRadioBtn.isFocused(), "the last tabbable element (radio) is focused");
 
-		// act: TAB from the "Option B" radio button - the focus should leave  the ui5-list
-		// and Random button should be focused
-		await itemLink.keys("Tab");
-		assert.ok(await randomBtn.isFocused(), "element outside of the list is focused");
+		await firstItem.keys("Tab");
+		assert.ok(await growingBtn.isFocusedDeep(), "growing buton is focused");
+
+		// act: TAB from the growing button - the focus should leave the ui5-list
+		// and after button should be focused
+		await growingBtn.keys("Tab");
+		assert.ok(await afterBtn.isFocused(), "element outside of the list is focused");
 	});
 
 	it("does not focus next / prev item when right / left arrow is pressed", async () => {
@@ -420,16 +459,6 @@ describe("List Tests", () => {
 		await item1.keys("ArrowDown");
 
 		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
-	});
-
-	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', async () => {
-		const growingListButton = await browser.$('#growingListButton').shadow$("div[growing-button-inner]");
-		const nextInteractiveElement = await browser.$('#nextInteractiveElement');
-
-		await growingListButton.click() // focus growing button
-		await growingListButton.keys("Tab") // focus next list
-
-		assert.ok(await nextInteractiveElement.isFocused(), "Focus is moved to next interactive element.");
 	});
 
 	it('should include selected state text', async () => {

@@ -40,3 +40,7 @@ body {
 ui5-media-gallery-item:not(:defined) {
     visibility: hidden;
 }
+
+.narrowContainer {
+    width: 80px;
+}

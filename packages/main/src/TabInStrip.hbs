@@ -4,12 +4,13 @@
 	role="tab"
 	aria-posinset="{{this._posinset}}"
 	aria-setsize="{{this._setsize}}"
-	aria-controls="ui5-tc-contentItem-{{this._posinset}}"
+	aria-controls="ui5-tc-content"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-disabled="{{this.effectiveDisabled}}"
 	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	data-ui5-stable="{{this.stableDomRef}}"
+	._realTab="{{this}}"
 >
 	{{#if this.icon}}
 		<div class="ui5-tab-strip-item-icon-outer">
@@ -26,10 +27,26 @@
 			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
 				<span class="{{this.headerSemanticIconClasses}}"></span>
 				{{this.displayText}}
+			{{#if this.isSingleClickArea}}
+			<span class="ui5-tab-single-click-icon">
+				<ui5-icon name="slim-arrow-down"></ui5-icon>
+			</span>
+			{{/if}}
 			</span>
 		{{/if}}
+
 	</div>
-</div>
+	{{#if this.requiresExpandButton}}
+		<div class="ui5-tab-expand-button" @click="{{_onTabExpandButtonClick}}">
+			<ui5-button
+				.tab={{this}}
+				icon="slim-arrow-down"
+				design="Transparent"
+				tabindex="-1"
+				aria-haspopup="true">
+			</ui5-button>
+		</div>
+	{{/if}}
 
 {{#*inline additionalText}}
 	{{#if this.additionalText}}
