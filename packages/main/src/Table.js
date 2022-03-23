@@ -608,21 +608,17 @@ class Table extends UI5Element {
 			return;
 		}
 
-		if (isNext) {
-			switch (targetType) {
-			case "tableGroupRow":
-				return this._focusNextElement(event);
-			case "moreButton":
-				return this._focusForwardElement(event, true);
-			}
-		} else {
-			switch (targetType) {
-			case "tableGroupRow":
-			case "columnHeader":
-				return this._focusForwardElement(event, false);
-			case "moreButton":
+		switch (targetType) {
+		case "tableGroupRow":
+			return isNext ? this._focusNextElement(event) : this._focusForwardElement(event, false);
+		case "columnHeader":
+			return !isNext && this._focusForwardElement(event, false);
+		case "moreButton":
+			if (isNext) {
+				this._focusForwardElement(event, true);
+			} else {
 				event.preventDefault();
-				return this.currentElement.focus();
+				this.currentElement.focus();
 			}
 		}
 	}
