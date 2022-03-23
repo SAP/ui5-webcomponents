@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:** remove aria-expanded attribute ([#4866](https://github.com/SAP/ui5-webcomponents/issues/4866)) ([b62a0e9](https://github.com/SAP/ui5-webcomponents/commit/b62a0e9)), closes [#4865](https://github.com/SAP/ui5-webcomponents/issues/4865)
+
+
+
+
+
 ## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
 
 
