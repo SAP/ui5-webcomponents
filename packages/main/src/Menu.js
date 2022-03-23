@@ -7,6 +7,7 @@ import {
 import {
 	isPhone,
 	isTablet,
+	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	getI18nBundle,
@@ -321,7 +322,7 @@ class Menu extends UI5Element {
 		const parentMenuItem = this._parentItemsStack.pop();
 		this.focus();
 		if (parentMenuItem) {
-			this._currentItems = this._prepareCurrentItems(parentMenuItem.parentElement.items);
+			this._prepareCurrentItems(parentMenuItem.parentElement.items);
 			this._parentMenuItem = this._parentItemsStack.length ? this._parentItemsStack[this._parentItemsStack.length - 1] : undefined;
 		}
 	}
@@ -401,25 +402,31 @@ class Menu extends UI5Element {
 	}
 
 	_prepareSubMenuPhone(item, opener, actionId) {
-		this._currentItems = this._prepareCurrentItems(item.items);
+		this._prepareCurrentItems(item.items);
 		this._parentMenuItem = item;
 		this._parentItemsStack.push(item);
 	}
 
 	_itemMouseOver(event) {
-		const opener = event.target;
-		const item = opener.associatedItem;
-		const hoverId = opener.getAttribute("id");
+		if (isDesktop()) {
+			// respect mouseover only on desktop
+			const opener = event.target;
+			const item = opener.associatedItem;
+			const hoverId = opener.getAttribute("id");
 
-		this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+		}
 	}
 
 	_itemMouseOut(event) {
-		const item = event.target.associatedItem;
-		if (item.hasChildren && item._subMenu) {
-			// try to close the sub-menu
-			item._preventSubMenuClose = false;
-			this._closeItemSubMenu(item);
+		if (isDesktop()) {
+			// respect mouseover only on desktop
+			const item = event.target.associatedItem;
+			if (item.hasChildren && item._subMenu) {
+				// try to close the sub-menu
+				item._preventSubMenuClose = false;
+				this._closeItemSubMenu(item);
+			}
 		}
 	}
 
