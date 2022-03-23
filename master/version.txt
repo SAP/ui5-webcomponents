@@ -1,13 +1,11 @@
-commit caceb7c3a882043b871de492c607eddb89f71fe7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 23 03:11:26 2022 -0700
+commit 359d1a33e5c93f515064414e755ec111ad1e9661
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Wed Mar 23 17:05:14 2022 +0200
 
-    chore: release v1.2.3 (#4944)
+    fix(ui5-multi-combobox): display placeholder consistently (#4920)
     
-    This is an intermediate patch release due to approaching DEV close on stakeholders' side.
-    The releases include only pre-selected set of fixes on important stakeholders' issues.
-    The change log can be seen here:
-    Changelog https://github.com/SAP/ui5-webcomponents/releases/tag/v1.2.2
-    Branch https://github.com/SAP/ui5-webcomponents/tree/release-1.2.2 branch.
-    Changelog https://github.com/SAP/ui5-webcomponents/releases/tag/v1.2.3
-    Branch https://github.com/SAP/ui5-webcomponents/tree/release-1.2.3 branch.
+    * fix(ui5-multi-combobox): display placeholder consistently
+    
+    There was inconsistency when using a placeholder and programatically changing selected items.
+    
+    Fixes #4897
