@@ -88,7 +88,7 @@ function toggleSettings() {
         newLocation += textDirection === "RTL";
 
         window.location = newLocation;
-      
+
       dialog.close();
     });
   }
@@ -115,11 +115,15 @@ function setRTL() {
   if (rtlIsEnabled) {
     setTimeout(() => {
       body.setAttribute("dir", "rtl");
-      window["sap-ui-webcomponents-bundle"].applyDirection();
+      if (window["sap-ui-webcomponents-bundle"]) {
+        window["sap-ui-webcomponents-bundle"].applyDirection();
+      }
     }, 0);
   } else {
     body.removeAttribute("dir");
-    window["sap-ui-webcomponents-bundle"].applyDirection();
+    if (window["sap-ui-webcomponents-bundle"]) {
+      window["sap-ui-webcomponents-bundle"].applyDirection();
+    }
   }
 }
 
@@ -144,32 +148,32 @@ function initSearch() {
       this.field("content", { boost: 10 });
       this.field("url");
     });
-  
+
     // Get the generated search_data.json file so lunr.js can search it locally.
-  
+
     var sc = document.getElementsByTagName("script"),
     source = "";
-  
+
     for(var idx = 0; idx < sc.length; idx++)
     {
       var s = sc.item(idx);
-  
+
       if(s.src && s.src.match(/playground\.js$/))
       { source = s.src; }
     }
 
     var jsPath = source.replace("playground.js", "");
-  
+
     var jsonPath = jsPath + "search-data.json";
-  
+
     var request = new XMLHttpRequest();
     request.open("GET", jsonPath, true);
-  
+
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         // Success!
         var data = JSON.parse(request.responseText);
-  
+
         for(var i in data) {
           index.add({
             id: data[i].id,
@@ -184,40 +188,40 @@ function initSearch() {
         console.log("Error loading ajax request. Request status:" + request.status);
       }
     };
-  
+
     request.onerror = function() {
       // There was a connection error of some sort
       console.log("There was a connection error");
     };
-  
+
     request.send();
-  
+
     function searchResults(dataStore) {
       var searchInput = document.querySelector(".js-search-input");
       var searchResults = document.querySelector(".js-search-results");
       var store = dataStore;
-  
+
       function hideResults() {
-        searchResults.innerHTML = "";
-        searchResults.classList.remove("active");
+        // searchResults.innerHTML = "";
+        // searchResults.classList.remove("active");
       }
-  
+
       searchInput.addEventListener("keyup", function(e){
         var query = this.value;
-  
+
         searchResults.innerHTML = "";
         searchResults.classList.remove("active");
-  
+
         if (query === "") {
           hideResults();
         } else {
           var results = index.search(query);
-  
+
           if (results.length > 0) {
             searchResults.classList.add("active");
             var resultsList = document.createElement("ul");
             searchResults.appendChild(resultsList);
-  
+
             for (var i in results) {
               if (store[results[i].ref].url.indexOf("pages") > -1) {
                 continue;
@@ -228,22 +232,22 @@ function initSearch() {
               var resultsUrl = store[results[i].ref].url;
               var resultsRelUrl = store[results[i].ref].relUrl;
               var resultsTitle = store[results[i].ref].title;
-  
+
               resultsLink.setAttribute("href", resultsUrl);
               resultsLink.innerText = resultsTitle;
               resultsUrlDesc.innerText = resultsRelUrl;
-  
+
               resultsList.classList.add("search-results-list");
               resultsListItem.classList.add("search-results-list-item");
               resultsLink.classList.add("search-results-link");
               resultsUrlDesc.classList.add("fs-2","text-grey-dk-000","d-block");
-  
+
               resultsList.appendChild(resultsListItem);
               resultsListItem.appendChild(resultsLink);
               resultsLink.appendChild(resultsUrlDesc);
             }
           }
-  
+
           // When esc key is pressed, hide the results and clear the field
           if (e.keyCode == 27) {
             hideResults();
@@ -276,7 +280,7 @@ function toggleNav() {
 
 function scrollSelectedMenuItemIntoView() {
   const selectedElement = document.querySelector(".navigation-list-link.active");
-  
+
   if (!selectedElement) {
     return;
   }
