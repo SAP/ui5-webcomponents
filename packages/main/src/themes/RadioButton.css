@@ -72,7 +72,7 @@
 }
 
 /* hovered and value-state */
-:host(:not([active]):not([value-state="Error"]):not([value-state="Warning"]):not([value-state="Success"]):not([value-state="Information"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
+:host(:not([value-state="Error"]):not([value-state="Warning"]):not([value-state="Success"]):not([value-state="Information"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
 	stroke: var(--_ui5_radio_button_outer_ring_hover_color);
 }
 
@@ -84,7 +84,7 @@
 	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
 }
 
-:host(:not([active])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer, 
+.ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer, 
 :host([checked]) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
 	fill: var(--_ui5_radio_button_hover_fill);
 }
