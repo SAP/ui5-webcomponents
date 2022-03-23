@@ -22,13 +22,13 @@ const executeTemplate = (template, component) => {
  */
 const getTagsToScope = component => {
 	const componentTag = component.constructor.getMetadata().getPureTag();
-	const deps = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+	const tagsToScope = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
 
 	if (shouldScopeCustomElement(componentTag)) {
-		deps.push(componentTag);
+		tagsToScope.push(componentTag);
 	}
 
-	return deps;
+	return tagsToScope;
 }
 
 export default executeTemplate;
