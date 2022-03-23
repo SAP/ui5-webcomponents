@@ -15,6 +15,11 @@
   }
 }
 
+.js-search-results {
+  height: 30rem;
+  overflow-y: auto;
+}
+
 .side-bar {
   z-index: 100;
   height: calc(100% - 3rem);
@@ -100,7 +105,8 @@
   background-color: #000;
   z-index: 150;
 
-  .main-content, .main-content-header {
+  .main-content,
+  .main-content-header {
     padding-top: 0;
 
     @include mq(md) {
@@ -139,15 +145,15 @@
 .wrapper-links {
   display: flex;
   align-items: center;
-	font-size: 16px;
-	font-family: "72-Regular", "72-Light";
-	color: #fff;
-	text-decoration: none;
-	margin-right: .5rem;
+  font-size: 16px;
+  font-family: "72-Regular", "72-Light";
+  color: #fff;
+  text-decoration: none;
+  margin-right: .5rem;
 }
 
 .wrapper-links:hover {
-	color: #A2A2A2;
+  color: #A2A2A2;
 }
 
 .heading {
@@ -170,9 +176,9 @@
 }
 
 .hcb .settings {
-  -webkit-box-shadow: -10px 0px 10px 0px rgba(255,255,255,0.75);
-  -moz-box-shadow: -10px 0px 10px 0px rgba(255,255,255,0.75);
-  box-shadow: -1px 1px 10px 0px rgba(255,255,255,0.75);
+  -webkit-box-shadow: -10px 0px 10px 0px rgba(255, 255, 255, 0.75);
+  -moz-box-shadow: -10px 0px 10px 0px rgba(255, 255, 255, 0.75);
+  box-shadow: -1px 1px 10px 0px rgba(255, 255, 255, 0.75);
 }
 
 .settings > svg {
