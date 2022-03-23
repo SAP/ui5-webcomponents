@@ -1,13 +1,5 @@
-commit 8299914b0585fb7015e469d914f3914e1c644688
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Mar 23 01:44:20 2022 -0700
+commit af4aac11476355ecf93a45ee0f1dcb482fd19932
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Mar 23 11:22:31 2022 +0200
 
-    Translation Delivery (#4947)
-    
-    * chore: translation delivery
-    
-    Change-Id: Ib512dcb6cac378805240e8d03418e729096c0913
-    
-    * chore: translation delivery
-    
-    Change-Id: Id71f1cc786b895ebe36de0ffb9a7ca750f9d13ed
+    fix(playground): fix search results (#4948)
