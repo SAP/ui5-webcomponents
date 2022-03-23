@@ -14,6 +14,7 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
