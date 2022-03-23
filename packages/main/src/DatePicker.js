@@ -481,8 +481,6 @@ class DatePicker extends DateComponentBase {
 		}
 
 		if (isEnter(event)) {
-			this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
-
 			if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}

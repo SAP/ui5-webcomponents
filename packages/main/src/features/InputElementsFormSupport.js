@@ -76,8 +76,6 @@ class FormSupport {
 			}));
 
 			currentElement.submit();
-		} else {
-			console.error(`${element} is not within a form. Please add it in a form.`); // eslint-disable-line
 		}
 	}
 }
