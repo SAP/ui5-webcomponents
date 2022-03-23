@@ -1,5 +1,13 @@
-commit af4aac11476355ecf93a45ee0f1dcb482fd19932
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Mar 23 11:22:31 2022 +0200
+commit caceb7c3a882043b871de492c607eddb89f71fe7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 23 03:11:26 2022 -0700
 
-    fix(playground): fix search results (#4948)
+    chore: release v1.2.3 (#4944)
+    
+    This is an intermediate patch release due to approaching DEV close on stakeholders' side.
+    The releases include only pre-selected set of fixes on important stakeholders' issues.
+    The change log can be seen here:
+    Changelog https://github.com/SAP/ui5-webcomponents/releases/tag/v1.2.2
+    Branch https://github.com/SAP/ui5-webcomponents/tree/release-1.2.2 branch.
+    Changelog https://github.com/SAP/ui5-webcomponents/releases/tag/v1.2.3
+    Branch https://github.com/SAP/ui5-webcomponents/tree/release-1.2.3 branch.
