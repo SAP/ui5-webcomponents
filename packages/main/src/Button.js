@@ -25,7 +25,6 @@ import buttonIECss from "./generated/themes/Button.ie11.css.js";
 let isGlobalHandlerAttached = false;
 let activeButton = null;
 
-
 /**
  * @public
  */
