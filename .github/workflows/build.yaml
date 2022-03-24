@@ -6,7 +6,7 @@ on:
     branches:
       - githhub-actions
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
 
     steps:
