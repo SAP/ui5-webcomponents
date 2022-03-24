@@ -1,0 +1,16 @@
+name: Lint Commit Messages 2
+on:
+  pull_request:
+  push:
+    branches:
+      - githhub-actions
+jobs:
+  commitlint2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2.1.0
+      - run: yarn add @commitlint/cli
+      - run: yarn run commitlint --from HEAD~1 --to HEAD

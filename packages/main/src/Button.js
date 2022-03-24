@@ -275,7 +275,7 @@ const metadata = {
 		 */
 		click: {},
 	},
-}
+};
 
 /**
  * @class
