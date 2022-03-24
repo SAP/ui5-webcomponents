@@ -12,5 +12,5 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v2.1.0
-      - run: yarn add @commitlint/cli -W
-      - run: yarn run commitlint --from HEAD~1 --to HEAD
+      - run: yarn add @commitlint/cli @commitlint/config-conventional -W
+      - run: yarn run commitlint --from HEAD~1
