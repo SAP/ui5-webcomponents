@@ -77,8 +77,6 @@
 	padding-left: var(--_ui5_vsd_content_li_padding);
 }
 
-
-
 [dir="rtl"] [ui5-li]::part(native-li) {
 	padding-right: var(--_ui5_vsd_content_li_padding);
 }
