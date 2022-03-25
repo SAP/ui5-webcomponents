@@ -33,14 +33,14 @@ const setSharedResourcePolicy = (type, policy) => {
 const shouldUpdateResource = (resourceType, resourceRuntimeIndex) => {
 	const policy = getSharedResourcePolicy(resourceType);
 
-	// Always update regardless of versions
+	// Always reuse (never update) regardless of versions
 	if (policy === SharedResourceReusePolicy.Always) {
-		return true;
+		return false;
 	}
 
-	// Never update regardless of versions
+	// Never reuse (always update) regardless of versions
 	if (policy === SharedResourceReusePolicy.Never) {
-		return false;
+		return true;
 	}
 
 	// Only update if the current runtime is newer
