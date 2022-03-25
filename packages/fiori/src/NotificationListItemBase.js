@@ -3,7 +3,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -158,16 +157,6 @@ class NotificationListItemBase extends ListItemBase {
 			"High": "message-error",
 			"Medium": "message-warning",
 			"Low": "message-success",
-		};
-	}
-
-	get classes() {
-		return {
-			actionsPopover: {
-				"ui5-notification-overflow-popover": true,
-				"ui5-notification-overflow-popover-mobile": isPhone() || isTablet(),
-				"ui5-notification-overflow-popover-desktop": isDesktop(),
-			},
 		};
 	}
 
