@@ -1,5 +1,11 @@
-commit c85ad950df0b122325018c1f28f3771943032cdb
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Thu Mar 24 12:41:43 2022 +0200
+commit 8d53e953d55a0f51e9dbe55be5f22bd5261a6e55
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 25 20:08:40 2022 +0200
 
-    feat(ui5-radio-button): implement new value states - Success and Information and implement Horizon theme (#4913)
+    fix(framework): fix scoping of self tag (#4952)
+    
+    However, there is one use-case when the Input web components uses `ui5-input` inside the InputPopoverTemplate.
+    The solution in this PR is to consider component's own tag and add it to the list of tags subject to scoping, unless the tag is not explicitly excluded via configuration. This seems to be an edge case, so if alternative solution comes to mind, feel free to share it with me.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/4945
+    Closes: https://github.com/SAP/ui5-webcomponents/issues/4945
