@@ -7,7 +7,7 @@ const policies = {};
 policies[SharedResourceType.ThemeProperties] = SharedResourceReusePolicy.OnlyNewer;
 
 /**
- * Sets the shared resource policy (f.e. OnlyNewer) for the given type of shared resources (such as SVGIcons)
+ * Sets the shared resource policy (f.e. OnlyNewer) for the given type of shared resources (such as ThemeProperties)
  *
  * @param type
  * @param policy
