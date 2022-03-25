@@ -1,6 +1,9 @@
 import createStyleInHead from "./util/createStyleInHead.js";
 import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
+import { shouldUpdateResource } from "./SharedResourcePolicy.js";
+import SharedResourceType from "./types/SharedResourceType.js";
+import { getCurrentRuntimeIndex } from "./Runtimes.js";
 
 const getStyleId = (name, value) => {
 	return value ? `${name}|${value}` : name;
@@ -8,33 +11,53 @@ const getStyleId = (name, value) => {
 
 const createStyle = (data, name, value = "") => {
 	const content = typeof data === "string" ? data : data.content;
+	const currentRuntimeIndex = getCurrentRuntimeIndex();
 
 	if (shouldUseLinks()) {
 		const attributes = {};
 		attributes[name] = value;
+		attributes["data-ui5-runtime-index"] = currentRuntimeIndex;
 		const href = getUrl(data.packageName, data.fileName);
 		createLinkInHead(href, attributes);
 	} else if (document.adoptedStyleSheets) {
 		const stylesheet = new CSSStyleSheet();
 		stylesheet.replaceSync(content);
 		stylesheet._ui5StyleId = getStyleId(name, value); // set an id so that we can find the style later
+		stylesheet._runtimeIndex = currentRuntimeIndex;
 		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 	} else {
 		const attributes = {};
 		attributes[name] = value;
+		attributes["data-ui5-runtime-index"] = currentRuntimeIndex;
 		createStyleInHead(content, attributes);
 	}
 };
 
 const updateStyle = (data, name, value = "") => {
 	const content = typeof data === "string" ? data : data.content;
+	const currentRuntimeIndex = getCurrentRuntimeIndex();
 
 	if (shouldUseLinks()) {
-		document.querySelector(`head>link[${name}="${value}"]`).href = getUrl(data.packageName, data.fileName);
+		const link = document.querySelector(`head>link[${name}="${value}"]`);
+		const runtimeIndex = link.getAttribute("data-ui5-runtime-index");
+		if (shouldUpdateResource(SharedResourceType.ThemeProperties, runtimeIndex)) {
+			link.href = getUrl(data.packageName, data.fileName);
+			link.setAttribute("data-ui5-runtime-index", currentRuntimeIndex);
+		}
 	} else if (document.adoptedStyleSheets) {
-		document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value)).replaceSync(content || "");
+		const stylesheet = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value));
+		const runtimeIndex = stylesheet._runtimeIndex;
+		if (shouldUpdateResource(SharedResourceType.ThemeProperties, runtimeIndex)) {
+			stylesheet.replaceSync(content || "");
+			stylesheet._runtimeIndex = currentRuntimeIndex;
+		}
 	} else {
-		document.querySelector(`head>style[${name}="${value}"]`).textContent = content || "";
+		const style = document.querySelector(`head>style[${name}="${value}"]`);
+		const runtimeIndex = style.getAttribute("data-ui5-runtime-index");
+		if (shouldUpdateResource(SharedResourceType.ThemeProperties, runtimeIndex)) {
+			style.textContent = content || "";
+			style.setAttribute("data-ui5-runtime-index", currentRuntimeIndex);
+		}
 	}
 };
 
