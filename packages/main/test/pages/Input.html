@@ -384,6 +384,14 @@
 		</span>
 	</div>
 
+	<h3>Input with showItems() on focus</h3>
+	<ui5-input id="showItemsInput" show-suggestions class="input3auto">
+		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Alex" description="Technical Support"></ui5-suggestion-item>
+	</ui5-input>
+
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
@@ -563,6 +571,9 @@
 		document.getElementById("clear-icon-readonly-toggle").addEventListener("click", event => {
 			compactClearIconInput.toggleAttribute("readonly");
 		});
+
+		const showItemsInput = document.getElementById("showItemsInput");
+		showItemsInput.addEventListener("click", () => showItemsInput.showItems());
 	</script>
 </body>
 </html>

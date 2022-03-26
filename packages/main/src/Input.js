@@ -631,6 +631,8 @@ class Input extends UI5Element {
 
 		if (this._isPhone) {
 			this.open = this.openOnMobile;
+		} else if (this._forceOpen) {
+			this.open = hasItems && isFocused;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
 		}
@@ -987,6 +989,8 @@ class Input extends UI5Element {
 		if (isPhone()) {
 			(await this.getInputDOMRef()).focus();
 		}
+
+		this._forceOpen = false;
 	}
 
 	_afterClosePopover() {
@@ -1029,6 +1033,20 @@ class Input extends UI5Element {
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem && staticAreaItem.querySelector("[ui5-popover]");
+	}
+
+	/**
+	 * Manually opens the suggestions popover, assuming items have been preloaded. Otherwise, does nothing.
+	 * @public
+	 */
+	showItems() {
+		if (!this.Suggestions || this.disabled || this.readonly || !this.Suggestions._getItems().length) {
+			return;
+		}
+
+		this._forceOpen = true;
+
+		return this.Suggestions.open();
 	}
 
 	enableSuggestions() {

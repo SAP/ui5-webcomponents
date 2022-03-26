@@ -63,7 +63,6 @@ describe("Input general interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		// focus the input field which will display the suggestions
 		await input.click();
 
 		assert.ok(!(await popover.isDisplayedInViewport()), "The popover is not visible");
@@ -716,6 +715,17 @@ describe("Input general interaction", () => {
 
 		await disable.click();
 		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+	});
+
+	it("Should open suggestions popover if showItems() is called on focusin", async () => {
+		const input = await browser.$("#showItemsInput");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#showItemsInput");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// focus the input field which will display the suggestions
+		await input.click();
+
+		assert.ok((await popover.isDisplayedInViewport()), "The popover is visible");
 	});
 });
 
