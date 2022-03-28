@@ -1,7 +1,16 @@
-commit 547ce9e7df90320be9d1fb19ebc24d891f3acd7e
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Mar 28 13:21:40 2022 +0300
+commit 304e73b17c21ab6bd1980d071672858a276a30f7
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Mar 28 14:09:28 2022 +0300
 
-    fix(ui5-card-header): prevent events from action slot to trigger header's click event (#4965)
+    fix(ui5-date-picker): adjust initial value formatting (#4967)
     
-    Fixes: #4891
+    Problem description:
+    When a value string is provided initial with incorrect
+    format patter, then this value gets cleared in the on
+    before rendering hook.
+    Solution:
+    The initial value remains unchanged if the internal formatter
+    isn't able to parse it.
+    
+    Fixes: #4958
+    Closes: #4958
