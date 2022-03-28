@@ -1,9 +1,7 @@
-commit 994871d5bbe59879e511fa22637deddd9426a8a7
+commit 547ce9e7df90320be9d1fb19ebc24d891f3acd7e
 Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Mar 28 10:57:07 2022 +0300
+Date:   Mon Mar 28 13:21:40 2022 +0300
 
-    fix(ui5-popover): prevent arrow placement over popover's rounded corners (#4960)
+    fix(ui5-card-header): prevent events from action slot to trigger header's click event (#4965)
     
-    Improved logic from #4599 for clamping the arrow's placement.
-    
-    Fixes #4797
+    Fixes: #4891
