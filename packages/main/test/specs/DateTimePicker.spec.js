@@ -266,9 +266,10 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("Secondary calendar type", async () => {
-		const picker = await openPickerById("secondaryCalendar");
+		const picker = await browser.$("#secondaryCalendar");
 
 		// act
+		await openPickerById("secondaryCalendar");
 		await browser.keys("ArrowUp");
 		await browser.keys("Enter");
 		const submitBtn = await getSubmitButton("secondaryCalendar");
