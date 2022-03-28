@@ -1,9 +1,7 @@
-commit 6a096cbe7aee5fe7e0789664483f82de79e05629
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Mon Mar 28 15:32:41 2022 +0300
+commit 2e3f428550ebc51235ef3b17feb4720569df90ad
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon Mar 28 16:45:30 2022 +0300
 
-    fix(ui5-datetime-picker): enable secondary calendar type (#4970)
+    fix(ui5-time-picker): firing change event after input change submit (#4962)
     
-    Secondary calendar type value is propagated to the ui5-datetime-picker component trough it's popover view.
-    
-    Fixes: #4959
+    fixes: #4918
