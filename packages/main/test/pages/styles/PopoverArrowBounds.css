@@ -8,7 +8,7 @@
 }
 
 #myBtn2 {
-	top: 0;
+	top: 40px;
 	right: 0;
 }
 
@@ -40,6 +40,10 @@
 }
 
 .customSize {
-	height: 100px;
-	width: 100px;
+	height: 200px;
+	width: 200px;
+}
+
+#myPopover::part(content) {
+	padding: 0;
 }
