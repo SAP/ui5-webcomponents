@@ -53,6 +53,9 @@
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.75rem;
 
+	/* Notifications */
+	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
+
 	--_ui5_year_picker_item_height: 3rem;
 	--_ui5_tokenizer_root_padding: 0.1875rem;
 	--_ui5_token_height: 1.625rem;
@@ -190,6 +193,9 @@
 	--_ui5_input_icon_padding: .25rem .5rem;
 	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
 
+	/* Notifications */
+	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
+
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.5rem;
 
@@ -302,4 +308,10 @@
 	--_ui5_timeline_tli_indicator_before_right: -0.5rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -0.75rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -0.8125rem;
+
+	/* ViewSettingsDialog */
+	--_ui5_vsd_header_container: 2.5rem;
+	--_ui5_vsd_sub_header_container_height: 2rem;
+	--_ui5_vsd_header_height: 4rem;
+	--_ui5_vsd_expand_content_height: 25.4375rem;
 }
