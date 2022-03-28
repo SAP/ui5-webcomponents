@@ -63,6 +63,7 @@ describe("Input general interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
+		// focus the input field which will display the suggestions
 		await input.click();
 
 		assert.ok(!(await popover.isDisplayedInViewport()), "The popover is not visible");
@@ -722,10 +723,9 @@ describe("Input general interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#showItemsInput");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		// focus the input field which will display the suggestions
-		await input.click();
+		await input.focus();
 
-		assert.ok((await popover.isDisplayedInViewport()), "The popover is visible");
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
 	});
 });
 

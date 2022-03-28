@@ -593,6 +593,9 @@ class Input extends UI5Element {
 		// Indicates, if the user is typing. Gets reset once popup is closed
 		this.isTyping = false;
 
+		// Determines whether to manually show the suggestions popover
+		this._forceOpen = false;
+
 		// all sementic events
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
@@ -632,7 +635,7 @@ class Input extends UI5Element {
 		if (this._isPhone) {
 			this.open = this.openOnMobile;
 		} else if (this._forceOpen) {
-			this.open = hasItems && isFocused;
+			this.open = true;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
 		}
@@ -849,6 +852,7 @@ class Input extends UI5Element {
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
 		this.isTyping = false;
+		this._forceOpen = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -989,8 +993,6 @@ class Input extends UI5Element {
 		if (isPhone()) {
 			(await this.getInputDOMRef()).focus();
 		}
-
-		this._forceOpen = false;
 	}
 
 	_afterClosePopover() {
@@ -1005,6 +1007,7 @@ class Input extends UI5Element {
 		this.isTyping = false;
 		this.openOnMobile = false;
 		this.open = false;
+		this._forceOpen = false;
 	}
 
 	/**
@@ -1036,17 +1039,15 @@ class Input extends UI5Element {
 	}
 
 	/**
-	 * Manually opens the suggestions popover, assuming items have been preloaded. Otherwise, does nothing.
+	 * Manually opens the suggestions popover, assuming suggestions are enabled. Otherwise, does nothing.
 	 * @public
 	 */
 	showItems() {
-		if (!this.Suggestions || this.disabled || this.readonly || !this.Suggestions._getItems().length) {
+		if (!this.Suggestions || this.disabled || this.readonly) {
 			return;
 		}
 
 		this._forceOpen = true;
-
-		return this.Suggestions.open();
 	}
 
 	enableSuggestions() {
@@ -1089,6 +1090,7 @@ class Input extends UI5Element {
 
 		this.isTyping = false;
 		this.openOnMobile = false;
+		this._forceOpen = false;
 	}
 
 	previewSuggestion(item) {
