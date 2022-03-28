@@ -1,11 +1,9 @@
-commit 8d53e953d55a0f51e9dbe55be5f22bd5261a6e55
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 25 20:08:40 2022 +0200
+commit 994871d5bbe59879e511fa22637deddd9426a8a7
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Mon Mar 28 10:57:07 2022 +0300
 
-    fix(framework): fix scoping of self tag (#4952)
+    fix(ui5-popover): prevent arrow placement over popover's rounded corners (#4960)
     
-    However, there is one use-case when the Input web components uses `ui5-input` inside the InputPopoverTemplate.
-    The solution in this PR is to consider component's own tag and add it to the list of tags subject to scoping, unless the tag is not explicitly excluded via configuration. This seems to be an edge case, so if alternative solution comes to mind, feel free to share it with me.
+    Improved logic from #4599 for clamping the arrow's placement.
     
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/4945
-    Closes: https://github.com/SAP/ui5-webcomponents/issues/4945
+    Fixes #4797
