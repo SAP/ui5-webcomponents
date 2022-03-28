@@ -341,6 +341,7 @@ describe("Popover general interaction", () => {
 		await browser.keys("Enter");
 	
 		assert.ok(await browser.$("#chainedPopover2").isDisplayedInViewport(), "'Chained popover 2' opened with ENTER key should remain open")
+		assert.notOk(await browser.$("#chainedPopover1").isDisplayedInViewport(), "'Chained popover 1' should be successfully closed")
 		
 		await browser.keys("Escape");
 	});
