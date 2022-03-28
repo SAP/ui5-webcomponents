@@ -53,7 +53,6 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-
 	<ui5-popover header-text="My Heading" id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
@@ -428,6 +427,21 @@
 		<span>Hello world</span>
 	</ui5-popover>
 
+	<br>
+	<br>
+
+	<ui5-button id="openChainedPopover1">Open chained popover 1</ui5-button>
+	<ui5-popover id="chainedPopover1">
+		Chained Popover 1
+		<ui5-list id="openChainedPopover2List">
+			<ui5-li id="openChainedPopover2">Open chained popover 2</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+	<ui5-popover id="chainedPopover2" placement-type="Bottom">
+		Chained Popover 2
+		<ui5-button id="closeChainedPopover2">Close chained popover2</ui5-button>
+	</ui5-popover>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -573,6 +587,25 @@
 			popAccNameRef.showAt(btnAccNameRef);
 		});
 
+		openChainedPopover1.addEventListener("click", function () {
+			chainedPopover1.showAt(openChainedPopover1);
+		});
+
+		openChainedPopover2List.addEventListener("item-click", function () {
+			chainedPopover1.close();
+			chainedPopover2.showAt(openChainedPopover1);
+		});
+
+		closeChainedPopover2.addEventListener("click", function () {
+			chainedPopover2.close();
+		});
+
+		chainedPopover2.addEventListener("after-close", function () {
+			var toast = document.createElement("ui5-toast");
+			toast.appendChild(document.createTextNode("Closed chained popover 2"));
+			document.body.appendChild(toast);
+			toast.show();
+		});
 	</script>
 </body>
 
