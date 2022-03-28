@@ -242,7 +242,6 @@ class CardHeader extends UI5Element {
 
 	_headerClick(event) {
 		// prevents the native browser "click" event from firing
-		event.preventDefault();
 		event.stopImmediatePropagation();
 
 		if (this.interactive && event.target === event.currentTarget) {
