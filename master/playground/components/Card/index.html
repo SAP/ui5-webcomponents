@@ -5845,44 +5845,11 @@
 		</ui5-card>
 
 		<ui5-card class="small">
-			<ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3">
-			</ui5-card-header>
+			<ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3"></ui5-card-header>
 			<ui5-list separators="None">
-				<ui5-li-custom>
-					<div class="item">
-						<div class="item-content-begin">
-							<ui5-title level="H5" class="item-content-begin-title">Avantel</ui5-title>
-							<ui5-label>ID234522566-D44</ui5-label>
-						</div>
-						<div>
-							<span class="status-success">27.25K EUR</span>
-						</div>
-					</div>
-				</ui5-li-custom>
-
-				<ui5-li-custom>
-					<div class="item">
-						<div class="item-content-begin">
-							<ui5-title level="H5" class="item-content-begin-title">Telecomunicaciones Star</ui5-title>
-							<ui5-label>ID7125852785-A51</ui5-label>
-						</div>
-						<div>
-							<span class="status-warning">22.89K EUR</span>
-						</div>
-					</div>
-				</ui5-li-custom>
-
-				<ui5-li-custom>
-					<div class="item">
-						<div class="item-content-begin">
-							<ui5-title level="H5" class="item-content-begin-title">Talpa</ui5-title>
-							<ui5-label>ID123555587-I05</ui5-label>
-						</div>
-						<div>
-							<span class="status-error">7.85K EUR</span>
-						</div>
-					</div>
-				</ui5-li-custom>
+				<ui5-li description="ID234522566-D44" additional-text="27.25K EUR" additional-text-state="Success">Avantel</ui5-li>
+				<ui5-li description="ID7125852785-A51" additional-text="22.89K EUR" additional-text-state="Warning">Telecomunicaciones Star</ui5-li>
+				<ui5-li description="ID123555587-I05" additional-text="7.85K EUR" additional-text-state="Error">Talpa</ui5-li>
 			</ui5-list>
 		</ui5-card>
 
@@ -5924,43 +5891,23 @@
 	<span class="nt">&lt;/ui5-list&gt;</span>
 <span class="nt">&lt;/ui5-card&gt;</span>
 
-<span class="nt">&lt;style&gt;</span>
-<span class="nc">.content</span><span class="o">,</span>
-<span class="nc">.content-group</span> <span class="p">{</span>
-	<span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
-	<span class="nl">flex-direction</span><span class="p">:</span> <span class="n">column</span><span class="p">;</span>
-	<span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">1rem</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nt">&lt;/style&gt;</span>
-
-<span class="nt">&lt;style&gt;</span>
-<span class="nc">.item</span> <span class="p">{</span><span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span><span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span><span class="nl">justify-content</span><span class="p">:</span> <span class="n">space-between</span><span class="p">;}</span>
-<span class="nc">.item-content-begin</span> <span class="p">{</span><span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span><span class="nl">flex-direction</span><span class="p">:</span> <span class="n">column</span><span class="p">;}</span>
-<span class="nc">.item-content-begin-title</span> <span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">0.25rem</span><span class="p">;}</span>
-
-<span class="nc">.status-error</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="m">#b00</span><span class="p">;}</span>
-<span class="nc">.status-warning</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="m">#e9730c</span><span class="p">;}</span>
-<span class="nc">.status-success</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="m">#107e3e</span><span class="p">;}</span>
-<span class="nt">&lt;/style&gt;</span>
-
 <span class="nt">&lt;ui5-card</span> <span class="na">class=</span><span class="s">"small"</span><span class="nt">&gt;</span>
-	   <span class="nt">&lt;ui5-card-header</span> <span class="na">slot=</span><span class="s">"header"</span> <span class="na">title-text=</span><span class="s">"Project Cloud Transformation"</span> <span class="na">subtitle-text=</span><span class="s">"Revenue per Product | EUR"</span> <span class="na">status=</span><span class="s">"3 of 3"</span><span class="nt">&gt;</span>
-	   <span class="nt">&lt;/ui5-card-header&gt;</span>
+	<span class="nt">&lt;ui5-card-header</span> <span class="na">slot=</span><span class="s">"header"</span> <span class="na">title-text=</span><span class="s">"Project Cloud Transformation"</span> <span class="na">subtitle-text=</span><span class="s">"Revenue per Product | EUR"</span> <span class="na">status=</span><span class="s">"3 of 3"</span><span class="nt">&gt;&lt;/ui5-card-header&gt;</span>
 	<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-li-custom&gt;</span>
-			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item"</span><span class="nt">&gt;</span>
-				<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item-content-begin"</span><span class="nt">&gt;</span>
-					<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H5"</span> <span class="na">class=</span><span class="s">"item-content-begin-title"</span><span class="nt">&gt;</span>Avantel<span class="nt">&lt;/ui5-title&gt;</span>
-					<span class="nt">&lt;ui5-label&gt;</span>ID234522566-D44<span class="nt">&lt;/ui5-label&gt;</span>
-				<span class="nt">&lt;/div&gt;</span>
-				<span class="nt">&lt;div&gt;</span>
-					<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"status-success"</span><span class="nt">&gt;</span>27.25K EUR<span class="nt">&lt;/span&gt;</span>
-				<span class="nt">&lt;/div&gt;</span>
-			<span class="nt">&lt;/div&gt;</span>
-		<span class="nt">&lt;/ui5-li-custom&gt;</span>
-		...
+		<span class="nt">&lt;ui5-li</span> <span class="na">description=</span><span class="s">"ID234522566-D44"</span> <span class="na">additional-text=</span><span class="s">"27.25K EUR"</span> <span class="na">additional-text-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Avantel<span class="nt">&lt;/ui5-li&gt;</span>
+		<span class="nt">&lt;ui5-li</span> <span class="na">description=</span><span class="s">"ID7125852785-A51"</span> <span class="na">additional-text=</span><span class="s">"22.89K EUR"</span> <span class="na">additional-text-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Telecomunicaciones Star<span class="nt">&lt;/ui5-li&gt;</span>
+		<span class="nt">&lt;ui5-li</span> <span class="na">description=</span><span class="s">"ID123555587-I05"</span> <span class="na">additional-text=</span><span class="s">"7.85K EUR"</span> <span class="na">additional-text-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Talpa<span class="nt">&lt;/ui5-li&gt;</span>
 	<span class="nt">&lt;/ui5-list&gt;</span>
 <span class="nt">&lt;/ui5-card&gt;</span>
+
+<span class="nt">&lt;style&gt;</span>
+	<span class="nc">.content</span><span class="o">,</span>
+	<span class="nc">.content-group</span> <span class="p">{</span>
+		<span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+		<span class="nl">flex-direction</span><span class="p">:</span> <span class="n">column</span><span class="p">;</span>
+		<span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">1rem</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
 
 <span class="nt">&lt;ui5-card</span> <span class="na">class=</span><span class="s">"small"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-card-header</span> <span class="na">slot=</span><span class="s">"header"</span> <span class="na">title-text=</span><span class="s">"Dona Maria Moore"</span> <span class="na">subtitle-text=</span><span class="s">"Senior Sales Executive"</span><span class="nt">&gt;</span>

@@ -1,16 +1,7 @@
-commit 304e73b17c21ab6bd1980d071672858a276a30f7
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Mon Mar 28 14:09:28 2022 +0300
+commit a85fd1e0978d388a4cf5d4e55073b94532fdd0fe
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Mon Mar 28 14:43:40 2022 +0300
 
-    fix(ui5-date-picker): adjust initial value formatting (#4967)
+    docs(ui5-card): Use standard list items in sample (#4973)
     
-    Problem description:
-    When a value string is provided initial with incorrect
-    format patter, then this value gets cleared in the on
-    before rendering hook.
-    Solution:
-    The initial value remains unchanged if the internal formatter
-    isn't able to parse it.
-    
-    Fixes: #4958
-    Closes: #4958
+    Fixes #4955
