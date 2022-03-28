@@ -23,6 +23,10 @@
 	box-shadow: var(--_ui5_card_hover_box_shadow);
 }
 
+.ui5-card-root:active {
+	box-shadow: var(--_ui5_card_box_shadow);
+}
+
 /* Card with no content */
 .ui5-card-root.ui5-card--nocontent {
 	height: auto;
@@ -36,7 +40,7 @@
 	--_ui5_card_header_focus_bottom_radius: var(--_ui5_card_header_focus_radius);
 }
 
-.ui5-card-root .ui5-card-header-root  {
-    display: block;
-    border-bottom: 1px solid var(--_ui5_card_header_border_color);
+.ui5-card-root .ui5-card-header-root {
+	display: block;
+	border-bottom: var(--_ui5_card_header_border);
 }
