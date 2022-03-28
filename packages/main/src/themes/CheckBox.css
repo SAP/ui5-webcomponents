@@ -21,6 +21,7 @@
 
 :host([disabled]) .ui5-checkbox-root {
 	opacity: .5;
+	opacity: var(--_ui5_checkbox_disabled_opacity);
 }
 
 :host([disabled]) .ui5-checkbox-inner {
@@ -78,7 +79,7 @@
 :host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
-	color: var(--sapField_WarningColor);
+	color: var(--_ui5_checkbox_inner_warning_color);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
@@ -90,6 +91,7 @@
 :host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
 	background: var(--sapField_InformationBackground);
 	border: var(--_ui5_checkbox_inner_information_border);
+	color: var(--_ui5_checkbox_inner_information_color);
 }
 
 :host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
@@ -121,7 +123,7 @@
 }
 
 :host([text]) .ui5-checkbox-root {
-	padding-right: 0;
+	padding-right: var(--_ui5_checkbox_right_focus_distance);
 }
 
 :host([text]) .ui5-checkbox-root:focus::before {
@@ -274,7 +276,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 
 /* RTL */
 :host([text]) [dir="rtl"].ui5-checkbox-root {
-	padding-left: 0;
+	padding-left: var(--_ui5_checkbox_right_focus_distance);
 	padding-right: var(--_ui5_checkbox_wrapper_padding);
 }
 
