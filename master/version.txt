@@ -1,17 +1,5 @@
-commit b501153d6ba780e7127d4bdcbb02c987890fbb44
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Mar 28 14:50:43 2022 +0300
+commit 8919965cacc17d6ec2cd17d99da83c9ae1eb6487
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Mon Mar 28 14:58:03 2022 +0300
 
-    fix: correct responsive padding in some consumers of popups (#4926)
-    
-    Affected components:
-    
-    NotificationListItem
-    NotificationListGroupItem
-    SideNavigation
-    Wizard
-    Consumers of ResponsivePopover - footer padding is corrected
-    Added left/center aligned titles to the Popover and Dialogs for the SAP Quartz (centered in Belize) themes when the property headerText is provided.
-    Improved some samples.
-    
-    Part of #4870
+    feat(ui5-message-strip): apply SAP Horizon parameters (#4941)
