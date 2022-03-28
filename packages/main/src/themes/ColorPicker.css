@@ -82,7 +82,7 @@
 
 [ui5-slider].ui5-color-picker-hue-slider::part(progress-container) {
     background-size: 100%;
-    background-image: -webkit-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: -webkit-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
     background-image: -moz-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
     background-image: -ms-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
     background-image: linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
