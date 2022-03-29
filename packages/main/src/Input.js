@@ -375,6 +375,14 @@ const metadata = {
 		},
 
 		/**
+		 * Determines whether to manually show the suggestions popover
+		 * @private
+		 */
+		_forceOpen: {
+			type: Boolean,
+		},
+
+		/**
 		 * Indicates whether the visual focus is on the value state header
 		 * @private
 		 */
@@ -593,9 +601,6 @@ class Input extends UI5Element {
 		// Indicates, if the user is typing. Gets reset once popup is closed
 		this.isTyping = false;
 
-		// Determines whether to manually show the suggestions popover
-		this._forceOpen = false;
-
 		// all sementic events
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
@@ -635,7 +640,7 @@ class Input extends UI5Element {
 		if (this._isPhone) {
 			this.open = this.openOnMobile;
 		} else if (this._forceOpen) {
-			this.open = true;
+			this.open = isFocused;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
 		}
@@ -1042,7 +1047,7 @@ class Input extends UI5Element {
 	 * Manually opens the suggestions popover, assuming suggestions are enabled. Otherwise, does nothing.
 	 * @public
 	 */
-	showItems() {
+	openPicker() {
 		if (!this.Suggestions || this.disabled || this.readonly) {
 			return;
 		}
