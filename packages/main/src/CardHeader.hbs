@@ -23,15 +23,9 @@
 				<div id="{{_id}}-title" class="ui5-card-header-title" part="title">{{titleText}}</div>
 			{{/if}}
 
-
 			{{#if status}}
-			<div class="ui5-card-header-status"></div>
-					<span
-						id="{{_id}}-status"
-						part="status"
-						class="ui5-card-header-status"
-						dir="auto"
-					>{{status}}</span>
+				<div class="ui5-card-header-status">
+					<span id="{{_id}}-status" part="status" dir="auto">{{status}}</span>
 				</div>
 			{{/if}}
 
