@@ -1,7 +1,5 @@
-commit 2e3f428550ebc51235ef3b17feb4720569df90ad
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Mar 28 16:45:30 2022 +0300
+commit b165315d172cd6b24e48e0160275648f63629e1a
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Tue Mar 29 08:56:55 2022 +0300
 
-    fix(ui5-time-picker): firing change event after input change submit (#4962)
-    
-    fixes: #4918
+    refactor(ui5-table): refactor Tab and F7 handling (#4698)
