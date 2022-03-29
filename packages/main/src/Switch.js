@@ -95,6 +95,9 @@ const metadata = {
 		/**
 		 * Sets the accessible aria name of the component.
 		 *
+		 * <b>Note</b>: An accessible name reference needs to be set to an external label in all cases when <code>textOn</code> and <code>textOff</code> properties aren't set,
+		 * in order for the ui5-switch control DOM to be valid according to the accessibility anlyzing tools.
+		 *
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
