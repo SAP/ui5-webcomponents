@@ -604,68 +604,67 @@ describe("Table keyboard interaction", () => {
 	it("Alt + Up/Down", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
 
-		setTimeout(async () => {
-			const table = await browser.$("#tbl");
-			const tableHeader = await table.shadow$(".ui5-table-header-row");
-			const firstRow = await table.$("ui5-table-row");
-			const secondRow = await table.$$("ui5-table-row")[1];
-			const moreButton = await table.shadow$('[id$="growingButton"]');
+		const table = await browser.$("#tbl");
+		const tableHeader = await table.shadow$(".ui5-table-header-row");
+		const firstRow = await table.$("ui5-table-row");
+		const secondRow = await table.$$("ui5-table-row")[1];
+		const moreButton = await table.shadow$('[id$="growingButton"]');
 
-			const firstCellFirstRowLabel = await firstRow.$("ui5-label");
+		const firstCellFirstRowLabel = await firstRow.$("ui5-label");
 
-			// Act
-			await firstCellFirstRowLabel.click();
+		// Act
+		await firstCellFirstRowLabel.waitForClickable({ timeout: 1600 });
+		await firstCellFirstRowLabel.click();
 
-			// Assert
-			assert.ok(await firstRow.isFocused(), "The first row is initially focused");
+		// Assert
+		assert.ok(await firstRow.isFocused(), "The first row is initially focused");
 
-			// [Alt] + [Up]
-			await browser.keys(["Alt", "Up"]);
+		// [Alt] + [Up]
+		await browser.keys(["Alt", "ArrowUp"]);
 
-			// Assert
-			assert.ok(await tableHeader.isFocused(), "Focus should move from first row to header");
-			assert.notOk(await firstRow.isFocused(), "The first row should not be focused");
+		// Assert
+		assert.ok(await tableHeader.isFocusedDeep(), "Focus should move from first row to header");
+		assert.notOk(await firstRow.isFocused(), "The first row should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Up"]);
+		// Act
+		await browser.keys(["Alt", "ArrowUp"]);
 
-			// Assert
-			assert.ok(await moreButton.isFocused(), "Focus should move from header to More button");
-			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
+		// Assert
+		assert.ok(await moreButton.isFocusedDeep(), "Focus should move from header to More button");
+		assert.notOk(await tableHeader.isFocusedDeep(), "The header should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Up"]);
+		// Act
+		await browser.keys(["Alt", "ArrowUp"]);
 
-			// Assert
-			assert.ok(await firstRow.isFocused(), "Focus should move from More button to last focused row");
-			assert.notOk(await moreButton.isFocused(), "The More button should not be focused");
+		// Assert
+		assert.ok(await firstRow.isFocused(), "Focus should move from More button to last focused row");
+		assert.notOk(await moreButton.isFocusedDeep(), "The More button should not be focused");
 
-			// [Alt] + [Down]
-			await browser.keys("ArrowDown");
+		// [Alt] + [Down]
+		await browser.keys("ArrowDown");
 
-			// Assert
-			assert.ok(await secondRow.isFocused(), "The second row is initially focused");
+		// Assert
+		assert.ok(await secondRow.isFocused(), "The second row is initially focused");
 
-			await browser.keys(["Alt", "Down"]);
+		await browser.keys(["Alt", "ArrowDown"]);
 
-			// Assert
-			assert.ok(await moreButton.isFocused(), "Focus should move from second row to More button");
-			assert.notOk(await secondRow.isFocused(), "The second row should not be focused");
+		// Assert
+		assert.ok(await moreButton.isFocusedDeep(), "Focus should move from second row to More button");
+		assert.notOk(await secondRow.isFocused(), "The second row should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Down"]);
+		// Act
+		await browser.keys(["Alt", "ArrowDown"]);
 
-			// Assert
-			assert.ok(await tableHeader.isFocused(), "Focus should move More button to header");
-			assert.notOk(await moreButton.isFocused(), "The More button should not be focused");
+		// Assert
+		assert.ok(await tableHeader.isFocusedDeep(), "Focus should move More button to header");
+		assert.notOk(await moreButton.isFocusedDeep(), "The More button should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Down"]);
+		// Act
+		await browser.keys(["Alt", "ArrowDown"]);
 
-			// Assert
-			assert.ok(await secondRow.isFocused(), "Focus should move from header to last focused row");
-			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
-		}, 1600);
+		// Assert
+		assert.ok(await secondRow.isFocused(), "Focus should move from header to last focused row");
+		assert.notOk(await tableHeader.isFocusedDeep(), "The header should not be focused");
 	});
 
 	it("SHIFT + UP/DOWN", async () => {

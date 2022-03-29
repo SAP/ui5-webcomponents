@@ -69,6 +69,9 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
+	events: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
+		_focused: {},
+	},
 };
 
 /**
@@ -151,7 +154,7 @@ class TableGroupRow extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		this.parentElement._itemNavigation.setCurrentItem(this);
+		this.fireEvent("_focused", event);
 	}
 
 	static async onDefine() {
