@@ -241,15 +241,16 @@ class CardHeader extends UI5Element {
 	}
 
 	_headerClick(event) {
-		event.stopImmediatePropagation(); // prevents the native browser "click" event from firing
+		// prevents the native browser "click" event from firing
+		event.stopImmediatePropagation();
 
-		if (this.interactive) {
+		if (this.interactive && event.target === event.currentTarget) {
 			this.fireEvent("click");
 		}
 	}
 
 	_headerKeydown(event) {
-		if (!this.interactive) {
+		if (!this.interactive || event.target !== event.currentTarget) {
 			return;
 		}
 
@@ -269,7 +270,7 @@ class CardHeader extends UI5Element {
 	}
 
 	_headerKeyup(event) {
-		if (!this.interactive) {
+		if (!this.interactive || event.target !== event.currentTarget) {
 			return;
 		}
 
