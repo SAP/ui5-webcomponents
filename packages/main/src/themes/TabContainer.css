@@ -48,7 +48,7 @@
 }
 
 .ui5-tc__separator:focus {
-    outline: none;
+	outline: none;
 }
 
 .ui5-tc__overflow {
@@ -64,6 +64,10 @@
 	margin-top: 0.25rem;
 	border-radius: 0.75rem;
 	height: 1.5rem;
+}
+
+.ui5-tc__overflow > [ui5-button][focused] {
+	outline-offset: 0.125rem;
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
@@ -108,15 +112,15 @@
 	min-width: 1.5rem;
 	margin-top: 0.25rem;
 	margin-left: 0.625rem;
-    color: var(--_ui5_tc_headerItem_color);
+	color: var(--_ui5_tc_headerItem_color);
 }
 
 .ui5-tab-strip-item--selected .ui5-tab-expand-button > [ui5-button] {
-    color: var(--_ui5_tc_headeritem_text_selected_color);
+	color: var(--_ui5_tc_headeritem_text_selected_color);
 }
 
 .ui5-tab-expand-button > [ui5-button]:hover {
-    color: var(--_ui5_tc_headeritem_text_selected_hover_color);
+	color: var(--_ui5_tc_headeritem_text_selected_hover_color);
 }
 
 .ui5-tab-single-click-icon {
