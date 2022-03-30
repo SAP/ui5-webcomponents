@@ -22,9 +22,9 @@ const effectiveSvg = (...args) => {
 
 const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
 	if (typeof styleStrOrHrefsArr === "string") {
-		templateResult = html`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
+		templateResult = effectiveHtml`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
-		templateResult = html`${styleStrOrHrefsArr.map(href => html`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
+		templateResult = effectiveHtml`${styleStrOrHrefsArr.map(href => effectiveHtml`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
 	}
 	render(templateResult, domNode, { host });
 };
