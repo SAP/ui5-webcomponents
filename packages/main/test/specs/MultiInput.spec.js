@@ -337,7 +337,6 @@ describe("Keyboard handling", () => {
 		assert.ok(await firstToken.getProperty("focused"), "The first token is focused on Backspace, as the second was deleted");
 		assert.notOk(await input.getProperty("focused"), "The input is not focused");
 
-		// Cannot be checked through wdio, even when using waitFor*
-		// assert.strictEqual(tokens.length, 1, "The tokenizer has one token");
+		assert.strictEqual(tokens.length, 1, "The tokenizer has one token");
 	});
 });
