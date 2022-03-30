@@ -12,20 +12,6 @@ const removeWhiteSpaces = (source) => {
 		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
-if (!String.prototype.replaceAll) {
-	String.prototype.replaceAll = function(str, newStr){
-
-		// If a regex pattern
-		if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
-			return this.replace(str, newStr);
-		}
-
-		// If a string
-		return this.replace(new RegExp(str, 'g'), newStr);
-
-	};
-}
-
 const hbs2lit = (file) => {
 	let sPreprocessed = includesReplacer.replace(file);
 
@@ -48,7 +34,7 @@ const hbs2lit = (file) => {
 
 		if (block.match(/scopeTag/)) {
 			const blockScoped = block.replace(/^const block/, "const scoped_block");
-			const blockNormal = block.replace(/^const block/, "const normal_block").replaceAll('${scopeTag("', "").replaceAll('", tags, suffix)}', "");
+			const blockNormal = block.replace(/^const block/, "const normal_block").replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
 			const blockBranching = `const ${key} = (context, tags, suffix) => suffix ? scoped_${key}(context, tags, suffix): normal_${key}(context);`;
 			result += blockNormal + "\n" + blockScoped + "\n" + blockBranching + "\n";
 		} else {
