@@ -41,6 +41,21 @@ describe("Card general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 
+	it("tests clicking on an action does not fire header's click event", async () => {
+		const action = await browser.$("#cardHeader3 [slot='action']");
+		
+		const field = await browser.$("#field");
+		const fieldBefore = await field.getProperty("value");
+
+		await action.click();
+		await action.keys("Space");
+		await action.keys("Enter");
+
+		const fieldAfter = await field.getProperty("value");
+
+		assert.strictEqual(fieldAfter, fieldBefore, "The events count should remain unchanged as the action did not cause the header to fire click.");
+	});
+
 	it("tests aria-label", async () => {
 		const card = await browser.$("#textAreaAriaLabel").shadow$(".ui5-card-root");
 

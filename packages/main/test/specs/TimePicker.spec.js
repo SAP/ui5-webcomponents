@@ -90,7 +90,8 @@ describe("TimePicker general interaction", () => {
 	it("tests change event", async () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepickerChange");
 		const timepicker = await browser.$("#timepickerChange");
-		const icon = await timepicker.shadow$("ui5-input").$("ui5-icon");
+		const input = await timepicker.shadow$("ui5-input");
+		const icon = await input.$("ui5-icon");
 		const changeResult = await browser.$("#changeResult");
 
 		// act - submit the same time
@@ -128,6 +129,15 @@ describe("TimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(await changeResult.getProperty("value"), "2", "Change fired as expected");
+
+		//act
+		await input.click();
+		await browser.keys("Backspace");
+		await browser.keys("7");
+		await browser.keys("Enter");
+
+		// assert
+		assert.strictEqual(await changeResult.getProperty("value"), "3", "Change fired as expected");
 	});
 
 	it("tests value state", async () => {
