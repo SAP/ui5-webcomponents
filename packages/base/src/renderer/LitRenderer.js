@@ -1,9 +1,24 @@
-import { render } from "lit-html";
 import {
+	render,
 	html,
 	svg,
+} from "lit-html";
+import {
+	html as staticHtml,
+	svg as staticSvg,
 	unsafeStatic,
 } from "lit-html/static.js";
+import { getCustomElementsScopingSuffix } from "../CustomElementsScope.js";
+
+const effectiveHtml = (...args) => {
+	const fn = getCustomElementsScopingSuffix() ? staticHtml : html;
+	return fn(...args);
+};
+
+const effectiveSvg = (...args) => {
+	const fn = getCustomElementsScopingSuffix() ? staticSvg : svg;
+	return fn(...args);
+};
 
 const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
 	if (typeof styleStrOrHrefsArr === "string") {
@@ -15,13 +30,17 @@ const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) =
 };
 
 const scopeTag = (tag, tags, suffix) => {
-	const resultTag = suffix && (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
+	if (!suffix) {
+		return tag;
+	}
+
+	const resultTag = (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
 	return unsafeStatic(resultTag);
 };
 
 export {
-	html,
-	svg,
+	effectiveHtml as html,
+	effectiveSvg as svg,
 	unsafeStatic,
 };
 export { scopeTag };
