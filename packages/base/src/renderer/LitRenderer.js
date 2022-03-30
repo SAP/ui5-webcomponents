@@ -3,20 +3,17 @@ import {
 	html,
 	svg,
 } from "lit-html";
-import {
-	html as staticHtml,
-	svg as staticSvg,
-	unsafeStatic,
-} from "lit-html/static.js";
-import { getCustomElementsScopingSuffix } from "../CustomElementsScope.js";
+import { getFeature } from "../FeaturesRegistry.js";
 
 const effectiveHtml = (...args) => {
-	const fn = getCustomElementsScopingSuffix() ? staticHtml : html;
+	const LitStatic = getFeature("LitStatic");
+	const fn = LitStatic ? LitStatic.html : html;
 	return fn(...args);
 };
 
 const effectiveSvg = (...args) => {
-	const fn = getCustomElementsScopingSuffix() ? staticSvg : svg;
+	const LitStatic = getFeature("LitStatic");
+	const fn = LitStatic ? LitStatic.svg : svg;
 	return fn(...args);
 };
 
@@ -30,14 +27,15 @@ const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) =
 };
 
 const scopeTag = (tag, tags, suffix) => {
-	const resultTag = (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
-	return unsafeStatic(resultTag);
+	const LitStatic = getFeature("LitStatic");
+	if (LitStatic) {
+		return LitStatic.unsafeStatic((tags || []).includes(tag) ? `${tag}-${suffix}` : tag);
+	}
 };
 
 export {
 	effectiveHtml as html,
 	effectiveSvg as svg,
-	unsafeStatic,
 };
 export { scopeTag };
 export { repeat } from "lit-html/directives/repeat.js";
