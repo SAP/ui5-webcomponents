@@ -53,7 +53,7 @@
 
 .ui5-tc__overflow {
 	flex: 0 0 0;
-	margin: 0 0.25rem;
+	padding-left: 0.188rem;
 }
 
 .ui5-tc__overflow[hidden] {
@@ -108,14 +108,19 @@
 	min-width: 1.5rem;
 	margin-top: 0.25rem;
 	margin-left: 0.625rem;
-}
-.ui5-tab-single-click-icon {
-	margin-left: 0.625rem;
-	float: right;
+    color: var(--_ui5_tc_headerItem_color);
 }
 
-.ui5-tab-strip-item--singleClickArea {
-	margin-top: 2px;
+.ui5-tab-strip-item--selected .ui5-tab-expand-button > [ui5-button] {
+    color: var(--_ui5_tc_headeritem_text_selected_color);
+}
+
+.ui5-tab-expand-button > [ui5-button]:hover {
+    color: var(--_ui5_tc_headeritem_text_selected_hover_color);
+}
+
+.ui5-tab-single-click-icon {
+	margin-left: 0.875rem;
 }
 
 .ui5-tab-expand-button>[ui5-button]:hover {

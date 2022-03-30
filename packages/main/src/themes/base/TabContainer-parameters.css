@@ -43,12 +43,25 @@
 	--_ui5_tc_headerItemContent_offset: 1rem;
 	--_ui5_tc_headerItemContent_focus_offset: 1rem;
 	--_ui5_tc_headerItem_focus_border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    --_ui5_tc_headerItem_text_focus_border_offset_left: 0.875rem;
+    --_ui5_tc_headerItem_text_focus_border_offset_right: 0.875rem;
+    --_ui5_tc_headerItem_text_focus_border_offset_top: 0.6875rem;
+    --_ui5_tc_headerItem_text_focus_border_offset_bottom: 0.6875rem;
+    --_ui5_tc_headerItem_text_inline_focus_border_offset_right: 0.75rem;
+    --_ui5_tc_headerItem_text_inline_focus_border_offset_left: 0.6875rem;
+    --_ui5_tc_headerItem_text_additional_text_focus_border_offset_top: 1.75rem;
+    --_ui5_tc_headerItem_text_additional_text_focus_border_offset_bottom: 0.75rem;
+    --_ui5_tc_headerItem_text_additional_text_focus_border_offset_left: 0.75rem;
 	--_ui5_tc_headerItemContent_padding: 0;
 	--_ui5_tc_headerItemContent_focus_border: none;
 	--_ui5_tc_headerItemContent_default_focus_border: none;
 	--_ui5_tc_headerItemContent_focus_border_radius: 0;
 	--_ui5_tc_headerItemSemanticIcon_display: none;
 	--_ui5_tc_headerItem_focus_border_radius: 0px;
+    --_ui5_tc_mixedMode_itemText_color: var(--sapContent_LabelColor);
+    --_ui5_tc_mixedMode_itemText_font_family: var(--sapFontFamily);
+    --_ui5_tc_mixedMode_itemText_font_size:  var(--sapFontSmallSize);
+    --_ui5_tc_mixedMode_itemText_font_weight: normal;
 
 	/* Overflow Item */
 
@@ -68,6 +81,7 @@
 	--_ui5_tc_headerItemIcon_critical_selected_background: var(--sapCriticalColor);
 	--_ui5_tc_headerItemIcon_neutral_selected_background: var(--sapNeutralColor);
 	--_ui5_tc_headerItemIcon_semantic_selected_color: var(--sapGroup_ContentBackground);
+    --_ui5_tc_headerItemIcon_background_color: transperant;
 
 	--_ui5_tc_overflowItem_default_color: var(--sapNeutralTextColor);
 	--_ui5_tc_overflowItem_current_color: CurrentColor;
