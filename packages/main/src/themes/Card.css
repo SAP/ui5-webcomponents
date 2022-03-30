@@ -41,6 +41,5 @@
 }
 
 .ui5-card-root .ui5-card-header-root {
-	display: block;
 	border-bottom: var(--_ui5_card_header_border);
 }
