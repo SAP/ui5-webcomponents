@@ -43,6 +43,7 @@
 	flex-flow: wrap;
 	max-height: var(--_ui5_color-palette-row-height);
 	overflow: hidden;
+	padding: var(--_ui5_color-palette-swatch-container-padding);
 }
 
 .ui5-cp-separator {
