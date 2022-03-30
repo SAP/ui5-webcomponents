@@ -30,10 +30,6 @@ const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) =
 };
 
 const scopeTag = (tag, tags, suffix) => {
-	if (!suffix) {
-		return tag;
-	}
-
 	const resultTag = (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
 	return unsafeStatic(resultTag);
 };
