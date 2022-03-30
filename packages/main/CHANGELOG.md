@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
+
+
+### Bug Fixes
+
+* **ui5-card-header:** prevent events from action slot to trigger header's click event ([#4965](https://github.com/SAP/ui5-webcomponents/issues/4965)) ([f87d898](https://github.com/SAP/ui5-webcomponents/commit/f87d898)), closes [#4891](https://github.com/SAP/ui5-webcomponents/issues/4891)
+* **ui5-date-picker:** adjust initial value formatting ([#4967](https://github.com/SAP/ui5-webcomponents/issues/4967)) ([3648b01](https://github.com/SAP/ui5-webcomponents/commit/3648b01)), closes [#4958](https://github.com/SAP/ui5-webcomponents/issues/4958) [#4958](https://github.com/SAP/ui5-webcomponents/issues/4958)
+* **ui5-datetime-picker:** enable secondary calendar type ([#4970](https://github.com/SAP/ui5-webcomponents/issues/4970)) ([6bc84f7](https://github.com/SAP/ui5-webcomponents/commit/6bc84f7)), closes [#4959](https://github.com/SAP/ui5-webcomponents/issues/4959)
+* **ui5-popover:** prevent arrow placement over popover's rounded corners ([#4960](https://github.com/SAP/ui5-webcomponents/issues/4960)) ([66604c3](https://github.com/SAP/ui5-webcomponents/commit/66604c3)), closes [#4599](https://github.com/SAP/ui5-webcomponents/issues/4599) [#4797](https://github.com/SAP/ui5-webcomponents/issues/4797)
+
+
+
+
+
 ## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
 
 
