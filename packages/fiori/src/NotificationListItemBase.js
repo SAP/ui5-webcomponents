@@ -12,10 +12,10 @@ import "@ui5/webcomponents-icons/dist/message-warning.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 
 // Templates
-import NotifactionOverflowActionsPopoverTemplate from "./generated/templates/NotifactionOverflowActionsPopoverTemplate.lit.js";
+import NotificationOverflowActionsPopoverTemplate from "./generated/templates/NotificationOverflowActionsPopoverTemplate.lit.js";
 
 // Styles
-import NotifactionOverflowActionsPopoverCss from "./generated/themes/NotifactionOverflowActionsPopover.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 /**
  * @public
@@ -145,11 +145,11 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	static get staticAreaTemplate() {
-		return NotifactionOverflowActionsPopoverTemplate;
+		return NotificationOverflowActionsPopoverTemplate;
 	}
 
 	static get staticAreaStyles() {
-		return NotifactionOverflowActionsPopoverCss;
+		return NotificationOverflowActionsPopoverCss;
 	}
 
 	static priorityIconsMappings() {

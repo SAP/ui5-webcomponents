@@ -1154,4 +1154,11 @@ describe("Date Picker Tests", () => {
 		await browser.keys("Backspace");
 		await browser.keys("Enter");
 	});
+
+	it("Invalid initial value isn't cleared due to formatting", async () => {
+		datepicker.id = "#dp20";
+		const input = await datepicker.getInput();
+
+		assert.equal(await input.getProperty("value"), "Invalid value", "the value isn't changed");
+	});
 });

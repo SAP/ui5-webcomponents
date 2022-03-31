@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:** remove aria-expanded attribute ([#4866](https://github.com/SAP/ui5-webcomponents/issues/4866)) ([b62a0e9](https://github.com/SAP/ui5-webcomponents/commit/b62a0e9)), closes [#4865](https://github.com/SAP/ui5-webcomponents/issues/4865)
+
+
+
+
+
+## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
+
+### Bug Fixes
+
+* **framework:** add 72-* font as system styles ([#4934](https://github.com/SAP/ui5-webcomponents/issues/4934)) ([8f9b0d2](https://github.com/SAP/ui5-webcomponents/commit/8f9b0d2)), closes  [#4931](https://github.com/SAP/ui5-webcomponents/issues/4931)
+* **localization:** fix js error if "sh" locale set ([#4905](https://github.com/SAP/ui5-webcomponents/issues/4905)) ([9ace82c](https://github.com/SAP/ui5-webcomponents/commit/9ace82c)), closes [#4904](https://github.com/SAP/ui5-webcomponents/issues/4904)
+* **ui5-flexible-column-layout:** correct column border styles for RTL ([#4919](https://github.com/SAP/ui5-webcomponents/issues/4919)) ([2f40bd7](https://github.com/SAP/ui5-webcomponents/commit/2f40bd7)), closes [#4906](https://github.com/SAP/ui5-webcomponents/issues/4906)
+* **ui5-li:** correct focus handling ([#4935](https://github.com/SAP/ui5-webcomponents/issues/4935)) ([1fdf415](https://github.com/SAP/ui5-webcomponents/commit/1fdf415)), closes [#4916](https://github.com/SAP/ui5-webcomponents/issues/4916)
+* **ui5-view-settings-dialog:** adjust scrollbar behavior  ([#4795](https://github.com/SAP/ui5-webcomponents/issues/4795)) ([ddcb01e](https://github.com/SAP/ui5-webcomponents/commit/ddcb01e)), closes [#4724](https://github.com/SAP/ui5-webcomponents/issues/4724) [#4725](https://github.com/SAP/ui5-webcomponents/issues/4725) [#4860](https://github.com/SAP/ui5-webcomponents/issues/4860)
+
+
+### Features
+
+* **ui5-select:** add aria-roledescription attribute ([#4921](https://github.com/SAP/ui5-webcomponents/issues/4921)) ([e4fa811](https://github.com/SAP/ui5-webcomponents/commit/e4fa811)), closes [#2910](https://github.com/SAP/ui5-webcomponents/issues/2910)
+
+
+
+
+
 ## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
 
 

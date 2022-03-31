@@ -12,7 +12,7 @@
 @import "../base/ColorPicker-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
-@import "./Dialog-parameters.css";
+@import "../base/Dialog-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
@@ -22,7 +22,7 @@
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
-@import "../base/PopupsCommon-parameters.css";
+@import "./PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";

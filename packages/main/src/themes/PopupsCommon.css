@@ -3,7 +3,7 @@
     position: fixed;
     background: var(--sapGroup_ContentBackground);
     box-shadow: var(--sapContent_Shadow2);
-    border-radius: var(--_ui5-popup-border-radius);
+    border-radius: var(--sapElement_BorderCornerRadius);
     min-height: 2rem;
     box-sizing: border-box;
 }
@@ -27,13 +27,18 @@
 }
 
 .ui5-popup-root .ui5-popup-header-root {
-    box-shadow: var(--_ui5_popup_header_shadow);
+    color: var(--sapPageHeader_TextColor);
+    box-shadow: var(--sapContent_HeaderShadow);
     margin-bottom: 0.125rem;
+}
+
+.ui5-popup-content {
+    color: var(--sapTextColor);
 }
 
 .ui5-popup-footer-root {
     background: var(--sapPageFooter_Background);
-    border-top: var(--_ui5_popup_footer_border_top);
+    border-top: 1px solid var(--sapPageFooter_BorderColor);
     color: var(--sapPageFooter_TextColor);
 }
 
@@ -41,7 +46,6 @@
 .ui5-popup-footer-root,
 :host([header-text]) .ui5-popup-header-text {
     margin: 0;
-    color: var(--sapPageHeader_TextColor);
     font-size: 1rem;
     font-family: "72override", var(--sapFontFamily);
     display: flex;
@@ -60,9 +64,7 @@
     box-sizing: border-box;
 }
 
-
 :host([header-text]) .ui5-popup-header-text {
-    padding: 0 0.25rem;
     text-align: center;
     min-height: var(--_ui5_popup_default_header_height);
     max-height: var(--_ui5_popup_default_header_height);
@@ -72,6 +74,10 @@
     white-space: nowrap;
     max-width: 100%;
     display: inline-block;
+}
+
+:host([header-text]) .ui5-popup-header-root {
+	justify-content: var(--_ui5_popup_header_prop_header_text_alignment);
 }
 
 :host(:not([header-text])) .ui5-popup-header-text {
@@ -96,13 +102,8 @@
 	padding: 1rem var(--_ui5_popup_content_padding_xl);
 }
 
-.ui5-popup-footer-root {
-	justify-content: end;
-}
-
 .ui5-popup-header-root {
 	background: var(--sapPageHeader_Background);
-	justify-content: start;
 }
 
 /*** Responsive paddings for the Header and Footer ***/
