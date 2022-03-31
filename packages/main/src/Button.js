@@ -273,7 +273,7 @@ const metadata = {
 		 * @public
 		 * @native
 		 */
-		click: {},
+		click: {}
 	},
 };
 
