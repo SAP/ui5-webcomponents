@@ -53,6 +53,9 @@
 
 .ui5-tc__overflow {
 	flex: 0 0 0;
+}
+
+.ui5-tc__overflow.ui5-tc__overflow--end {
 	padding-left: 0.188rem;
 }
 
