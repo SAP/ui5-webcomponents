@@ -68,7 +68,8 @@
     "prerelease": "node ./.github/actions/pre-release.js",
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
-    "husky:pre-commit": "yarn lint"
+    "husky:lint": "yarn lint",
+    "husky:pre-push": "npm-run-all --sequential husky:commit-msg husky:lint"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
