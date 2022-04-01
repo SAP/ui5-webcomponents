@@ -95,7 +95,7 @@ const metadata = {
 		/**
 		 * Sets the accessible aria name of the component.
 		 *
-		 * <b>Note</b>: We recommend that you set an accessibleNameRef to an external label or at least an <code>accessibleName</code>.
+		 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 		 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -109,7 +109,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * <b>Note</b>: We recommend that you set an accessibleNameRef to an external label or at least an <code>accessibleName</code>.
+		 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 		 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
 		 * @type {string}
 		 * @defaultvalue ""
