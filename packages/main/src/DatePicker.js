@@ -423,7 +423,7 @@ class DatePicker extends DateComponentBase {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.value = this.normalizeValue(this.value);
+		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
 	}
 
