@@ -1178,6 +1178,34 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await mcb2.getAttribute("placeholder"), "", "Shouldn't have placeholder when there are tokens");
 		});
 
+		it("placeholder tests for programatically selected items", async () => {
+			const innerInputSel = "#ui5-multi-combobox-input";
+
+			const mcb1 = await browser.$("#mcb-init-selected-item");
+			let innerInput1 = await mcb1.shadow$(innerInputSel);
+			const toggleItemBtn1 = await browser.$("#sel");
+
+			const mcb2 = await browser.$("#mcb-init-nonselected-item");
+			let innerInput2 = await mcb2.shadow$(innerInputSel);
+			const toggleItemBtn2 = await browser.$("#sel2");
+
+			// Preselected item
+			assert.strictEqual(await innerInput1.getAttribute("placeholder"), "", "Shouldn't have placeholder as there is a preselected item");
+
+			toggleItemBtn1.click();
+
+			innerInput1 = await mcb1.shadow$(innerInputSel);
+			assert.strictEqual(await innerInput1.getAttribute("placeholder"), "Placeholder", "Should have placeholder as the item is programatically deselected");
+
+			// No preselected item
+			assert.strictEqual(await innerInput2.getAttribute("placeholder"), "Placeholder", "Should have placeholder as no item is selected");
+
+			toggleItemBtn2.click();
+
+			innerInput2 = await mcb2.shadow$(innerInputSel);
+			assert.strictEqual(await innerInput2.getAttribute("placeholder"), "", "Shouldn't have placeholder as an item is programatically selected");
+		});
+
 		it ("Should not open value state message when component is in readonly state", async () => {
 			const mcb = await browser.$("#readonly-value-state-mcb");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-mcb");

@@ -851,6 +851,7 @@ describe("Date Picker Tests", () => {
 
 		const root = await datepicker.getRoot();
 		await root.keys("Escape");
+		await browser.$("#dp33").scrollIntoView();
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);
@@ -1152,5 +1153,12 @@ describe("Date Picker Tests", () => {
 		await innerInput.doubleClick();
 		await browser.keys("Backspace");
 		await browser.keys("Enter");
+	});
+
+	it("Invalid initial value isn't cleared due to formatting", async () => {
+		datepicker.id = "#dp20";
+		const input = await datepicker.getInput();
+
+		assert.equal(await input.getProperty("value"), "Invalid value", "the value isn't changed");
 	});
 });

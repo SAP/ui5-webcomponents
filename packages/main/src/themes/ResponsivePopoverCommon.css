@@ -197,7 +197,7 @@
 .ui5-responsive-popover-footer {
 	display: flex;
 	justify-content: flex-end;
-	padding: 0.25rem;
+	padding: 0.25rem 0;
 	width: 100%;
 }
 

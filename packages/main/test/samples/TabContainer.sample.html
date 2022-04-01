@@ -305,4 +305,90 @@
 	</xmp></pre>
 </section>
 
+<!-- Nested tabs -->
+
+<section>
+	<h3>TabContainer with nested tabs</h3>
+	<div class="snippet">
+		<ui5-tabcontainer collapsed>
+			<ui5-tab text="Notes">
+				Notes go here ...
+			</ui5-tab>
+			<ui5-tab text="Products">
+				Products go here ...
+				<ui5-tab slot="subTabs" text="Computers">
+					Computers go here ...
+					<ui5-tab slot="subTabs" text="Laptops">
+						Laptops go here ...
+					</ui5-tab>
+					<ui5-tab slot="subTabs" text="Desktops">
+						<ui5-tab slot="subTabs" text="Work Stations">
+							Work Stations go here ...
+						</ui5-tab>
+						<ui5-tab slot="subTabs" text="Game Stations">
+							Game Stations go here ...
+						</ui5-tab>
+						Desktops go here ...
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab text="Phones" slot="subTabs">
+					<ui5-tab text="Smartphones" slot="subTabs">
+						Smartphones go here ...
+					</ui5-tab>
+					<ui5-tab text="Tablets" slot="subTabs">
+						Tablets go here ...
+					</ui5-tab>
+					Phones go here ...
+				</ui5-tab>
+			</ui5-tab>
+			<ui5-tab text="Orders">
+				Orders go here ...
+				<ui5-tab slot="subTabs" text="Attachments">
+					Order attachments go here ...
+				</ui5-tab>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer collapsed>
+	<ui5-tab text="Notes">
+		Notes go here ...
+	</ui5-tab>
+	<ui5-tab text="Products">
+		Products go here ...
+		<ui5-tab slot="subTabs" text="Computers">
+			Computers go here ...
+			<ui5-tab slot="subTabs" text="Laptops">
+				Laptops go here ...
+			</ui5-tab>
+			<ui5-tab slot="subTabs" text="Desktops">
+				<ui5-tab slot="subTabs" text="Work Stations">
+					Work Stations go here ...
+				</ui5-tab>
+				<ui5-tab slot="subTabs" text="Game Stations">
+					Game Stations go here ...
+				</ui5-tab>
+				Desktops go here ...
+			</ui5-tab>
+		</ui5-tab>
+		<ui5-tab text="Phones" slot="subTabs">
+			<ui5-tab text="Smartphones" slot="subTabs">
+				Smartphones go here ...
+			</ui5-tab>
+			<ui5-tab text="Tablets" slot="subTabs">
+				Tablets go here ...
+			</ui5-tab>
+			Phones go here ...
+		</ui5-tab>
+	</ui5-tab>
+	<ui5-tab text="Orders">
+		Orders go here ...
+		<ui5-tab slot="subTabs" text="Attachments">
+			Order attachments go here ...
+		</ui5-tab>
+	</ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
 <!-- JSDoc marker -->
