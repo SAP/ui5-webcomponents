@@ -405,7 +405,7 @@ describe("Select general interaction", () => {
 		const select2 = await browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
 		const EXPECTED_ARIA_LABEL2 = "info text";
-		const EXPECTER_ARIA_ROLEDESCRIPTION = "Select ComboBox";
+		const EXPECTER_ARIA_ROLEDESCRIPTION = "SelectComboBox";
 
 		assert.strictEqual(await select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
@@ -417,7 +417,8 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await select2.getAttribute("aria-expanded"), "false",
 			"The aria-expanded is false by default.");
 			
-		assert.strictEqual(await select2.getAttribute("aria-roledescription"), EXPECTER_ARIA_ROLEDESCRIPTION,
+		const actualRoleDescription = await select2.getAttribute("aria-roledescription");
+		assert.strictEqual(actualRoleDescription.replaceAll(" ", ""), EXPECTER_ARIA_ROLEDESCRIPTION,
 			"The aria-roledescription is correct.");
 	});
 });
