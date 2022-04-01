@@ -4,7 +4,7 @@
 	position: relative;
 	display: flex;
 	align-items: center;
-	padding: var(--_ui5_card_content_padding);
+	padding: var(--_ui5_card_header_padding);
 	outline: none;
 }
 
