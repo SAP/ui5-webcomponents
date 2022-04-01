@@ -121,6 +121,10 @@
 
 	/* SegmentedButton */
 	--_ui5_segmented_btn_border_radius: 0.375rem;
+
+	/* SplitButton */
+	--_ui5_split_button_middle_separator_top: 0;
+	--_ui5_split_button_middle_separator_height: 2.25rem;
 }
 
 [data-ui5-compact-size],
@@ -281,6 +285,10 @@
 	--_ui5_slider_tooltip_bottom: 1.825rem;
 	--_ui5_slider_progress_outline_offset: -0.625rem;
 	--_ui5_slider_outer_height: 1.3125rem;
+
+	/* SplitButton */
+	--_ui5_split_button_middle_separator_top: 0;
+	--_ui5_split_button_middle_separator_height: 1.625rem;
 
 	/* Table */
 	--_ui5_load_more_text_height: 2.625rem;

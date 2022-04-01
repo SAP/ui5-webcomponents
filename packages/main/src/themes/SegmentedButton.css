@@ -9,7 +9,7 @@
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
-	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
+	border-radius: var(--_ui5_segmented_btn_outer_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item]) {
@@ -21,8 +21,11 @@
 	text-overflow: ellipsis;
 }
 
-::slotted([ui5-segmented-button-item][pressed]) {
-	border: 0.0625rem solid var(--sapButton_Selected_BorderColor)
+::slotted([ui5-segmented-button-item][pressed]),
+::slotted([ui5-segmented-button-item][active]) {
+	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	background-color: var(--sapButton_Selected_Background);
+	color: var(--sapButton_Selected_TextColor);
 }
 
 ::slotted([ui5-segmented-button-item]:nth-child(odd)) {
@@ -30,7 +33,8 @@
 	border-left: var(--_ui5_segmented_btn_inner_border_odd_child);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)) {
+::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)),
+::slotted([ui5-segmented-button-item][active]:nth-child(odd)) {
 	border-right: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
 	border-left: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
 }
@@ -41,7 +45,8 @@
 	border-right: var(--_ui5_segmented_btn_inner_border);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:last-child) {
+::slotted([ui5-segmented-button-item][pressed]:last-child),
+::slotted([ui5-segmented-button-item][active]:last-child) {
 	border-right: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
 
@@ -51,7 +56,8 @@
 	border-left: var(--_ui5_segmented_btn_inner_border);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:first-child) {
+::slotted([ui5-segmented-button-item][pressed]:first-child),
+::slotted([ui5-segmented-button-item][active]:first-child) {
 	border-left: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
 
@@ -63,7 +69,8 @@
 	border-right: var(--_ui5_segmented_btn_inner_border);
 }
 
-[dir="rtl"] ::slotted([ui5-segmented-button-item][pressed]:first-child) {
+[dir="rtl"] ::slotted([ui5-segmented-button-item][pressed]:first-child),
+[dir="rtl"] ::slotted([ui5-segmented-button-item][active]:first-child) {
 	border-right: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
 
@@ -75,7 +82,8 @@
 	border-left: var(--_ui5_segmented_btn_inner_border);
 }
 
-[dir="rtl"] ::slotted([ui5-segmented-button-item][pressed]:last-child) {
+[dir="rtl"] ::slotted([ui5-segmented-button-item][pressed]:last-child),
+[dir="rtl"] ::slotted([ui5-segmented-button-item][active]:last-child) {
 	border-left: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
 

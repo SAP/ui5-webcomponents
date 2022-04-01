@@ -28,11 +28,12 @@
 @import "./ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
-@import "./SegmentedButton-parameters.css";
+@import "./SegmentedButtton-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "./Switch-parameters.css";
 @import "./Select-parameters.css";
 @import "./SelectPopover-parameters.css";
+@import "./SplitButton-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";

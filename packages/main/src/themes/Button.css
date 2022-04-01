@@ -125,6 +125,10 @@
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
+:host([design="Emphasized"][focused]) .ui5-button-root:after {
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
+}
+
 .ui5-button-root::-moz-focus-inner {
 	border: 0;
 }
@@ -255,3 +259,11 @@ bdi {
 	border-color: var(--sapButton_Lite_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 }
+
+/* SegmentedButton and ToggleButton */
+:host([ui5-segmented-button-item][active][focused]) .ui5-button-root:after,
+:host([pressed][focused]) .ui5-button-root:after {
+	border-color: var(--_ui5_button_pressed_focused_border_color);
+	outline: none;
+}
+
