@@ -1,11 +1,5 @@
-commit 5c2a0561267978ba206eba60e3643cfd9f2c29b4
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Mon Apr 4 16:05:25 2022 +0300
+commit 3c45c96e8cb5a244506674207f982f4feca9a7fd
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Mon Apr 4 16:46:20 2022 +0300
 
-    feat(ui5-table): implement SAP Horizon themes (#4992)
-    
-    * feat(ui5-table): implement SAP Horizon themes
-    
-    * group header styles adjustments
-    
-    FIXES: #4938
+    style(ui5-message-strip): adapt close button to SAP Horizon spec (#4988)
