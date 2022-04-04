@@ -1,5 +1,7 @@
-commit 0a82d2d1415ae2da1fe81a1ac669c1e810ca50ab
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Apr 4 12:52:09 2022 +0300
+commit bc30cd7c560058b45723c39ebbeb948794d2168e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Apr 4 14:37:19 2022 +0300
 
-    chore: fix failing build (#5004)
+    build: add husky to lint code & cmt msg  (#4993)
+    
+    Use husky to automatically lint code and commit messages locally upon git push (pre-push hook).
