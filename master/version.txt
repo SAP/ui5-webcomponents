@@ -1,34 +1,11 @@
-commit 013722517f31912435dcd239a7a2286dd3c2e66c
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Mon Apr 4 15:28:15 2022 +0300
+commit 5c2a0561267978ba206eba60e3643cfd9f2c29b4
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Mon Apr 4 16:05:25 2022 +0300
 
-    feat(ui5-card): implement SAP Horizon theme family (#4974)
+    feat(ui5-table): implement SAP Horizon themes (#4992)
     
-    related to: #5006
+    * feat(ui5-table): implement SAP Horizon themes
     
-    * feat(ui5-card): implement Horizon
+    * group header styles adjustments
     
-    * merge fixed
-    
-    * hash files fixed
-    
-    * sample fixed
-    
-    * - ststus div creation edited
-    - tags cahnged from ui5-text to span
-    
-    * casing fixed
-    
-    * test page formatted
-    unused css variable deleted
-    and other
-    
-    * header padding for Horizon fixed
-    
-    * header focus is now 1px closer to the border (gap is removed)
-    
-    * space around focus reverted for Contrast themes
-    
-    * Update hash.txt
-    
-    * Update hash.txt
+    FIXES: #4938
