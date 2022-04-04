@@ -20,7 +20,6 @@
 }
 
 :host([disabled]) .ui5-checkbox-root {
-	opacity: .5;
 	opacity: var(--_ui5_checkbox_disabled_opacity);
 }
 
