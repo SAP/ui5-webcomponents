@@ -1,5 +1,5 @@
-commit c9e4dd39dbde64996f486b62a0d1d6c9877bc422
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 30 13:33:40 2022 +0300
+commit 0a82d2d1415ae2da1fe81a1ac669c1e810ca50ab
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Apr 4 12:52:09 2022 +0300
 
-    chore: update theming-base-content (#4982)
+    chore: fix failing build (#5004)
