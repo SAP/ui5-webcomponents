@@ -11,7 +11,7 @@
 	height: var(--ui5_table_group_row_height);
 	border-style: solid;
 	border-color: var(--sapList_TableGroupHeaderBorderColor);
-	border-width: var(--ui5-table_border_width);
+	border-width: var(--ui5_table_border_width);
 	background-color: var(--sapList_TableGroupHeaderBackground);
 	color: var(--sapList_TableGroupHeaderTextColor);
 	font-family: "72override", var(--sapFontFamily);

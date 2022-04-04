@@ -111,6 +111,7 @@
 	--ui5_table_header_row_height: 2.75rem;
 	--ui5_table_row_height: 2.75rem;
 	--ui5_table_focus_outline_offset: -0.125rem;
+	--ui5_table_group_row_height: 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
