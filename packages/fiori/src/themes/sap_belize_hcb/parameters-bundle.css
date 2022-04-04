@@ -8,4 +8,5 @@
 @import "../base/ShellBar-parameters.css";
 @import "./TimelineItem-parameters.css";
 @import "./UploadCollection-parameters.css";
+@import "../base/ViewSettingsDialog-parameters.css";
 @import "./WizardTab-parameters.css";
