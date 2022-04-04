@@ -302,6 +302,19 @@ class SplitButton extends UI5Element {
 		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	constructor() {
+		super();
+
+		this._textButtonPress = {
+			handleEvent(event) {
+				this._textButtonActive = true;
+				this.focused = false;
+				this._setTabIndexValue();
+			},
+			passive: true,
+		};
+	}
+
 	onBeforeRendering() {
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		if (this.disabled) {
@@ -380,12 +393,6 @@ class SplitButton extends UI5Element {
 	_textButtonRelease() {
 		this._textButtonActive = false;
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
-		this._setTabIndexValue();
-	}
-
-	_textButtonPress() {
-		this._textButtonActive = true;
-		this.focused = false;
 		this._setTabIndexValue();
 	}
 
