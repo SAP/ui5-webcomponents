@@ -47,7 +47,8 @@
 		</div>
 
 		{{#if hasValueStateText}}
-			<div class="row {{classes.popoverValueState}}">
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
