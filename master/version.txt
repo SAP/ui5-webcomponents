@@ -1,7 +1,34 @@
-commit bc30cd7c560058b45723c39ebbeb948794d2168e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 4 14:37:19 2022 +0300
+commit 013722517f31912435dcd239a7a2286dd3c2e66c
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Mon Apr 4 15:28:15 2022 +0300
 
-    build: add husky to lint code & cmt msg  (#4993)
+    feat(ui5-card): implement SAP Horizon theme family (#4974)
     
-    Use husky to automatically lint code and commit messages locally upon git push (pre-push hook).
+    related to: #5006
+    
+    * feat(ui5-card): implement Horizon
+    
+    * merge fixed
+    
+    * hash files fixed
+    
+    * sample fixed
+    
+    * - ststus div creation edited
+    - tags cahnged from ui5-text to span
+    
+    * casing fixed
+    
+    * test page formatted
+    unused css variable deleted
+    and other
+    
+    * header padding for Horizon fixed
+    
+    * header focus is now 1px closer to the border (gap is removed)
+    
+    * space around focus reverted for Contrast themes
+    
+    * Update hash.txt
+    
+    * Update hash.txt
