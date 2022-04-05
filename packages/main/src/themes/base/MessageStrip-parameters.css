@@ -9,9 +9,9 @@
 	--_ui5_message_strip_button_height: 1.625rem;
 	--_ui5_message_strip_border_width: 1px;
 	--_ui5_message_strip_close_button_border: none;
-	--_ui5_message_strip_close_button_size: 1.625rem;
 	--_ui5_message_strip_icon_top: 0.4375rem;
 	--_ui5_message_strip_focus_width: 1px;
 	--_ui5_message_strip_focus_offset: -2px;
 	--_ui5_message_strip_close_button_top: 0.125rem;
+	--_ui5_message_strip_close_button_right: 0.125rem;
 }
