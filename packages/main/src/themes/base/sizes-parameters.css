@@ -69,10 +69,36 @@
 	--_ui5_tl_li_margin_bottom: 1.625rem;
 
 	/*switch*/
+	--_ui5_switch_height: var(--_ui5_switch_height);
+	--_ui5_switch_width: var(--_ui5_switch_width);
+	--_ui5_switch_semantic_width: var(--_ui5_switch_semantic_width);
+	--_ui5_switch_no_label_width: var(--_ui5_switch_no_label_width);
+
+	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
+	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
+	--_ui5_switch_track_semantic_width: var(--_ui5_switch_track_semantic_width);
+	--_ui5_switch_track_no_label_width: var(--_ui5_switch_track_no_label_width);
+	--_ui5_switch_track_semantic_height: var(--_ui5_switch_track_semantic_height);
+	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_no_label_height);
+	--_ui5_switch_track_top_margin:  var(--_ui5_switch_track_top_margin);
+	--_ui5_switch_track_bottom_margin: var(--_ui5_switch_track_bottom_margin);
+
+	--_ui5_switch_handle_height: var(--_ui5_switch_handle_height);
+	--_ui5_switch_handle_semantic_width: var(--_ui5_switch_handle_semantic_width);
+	--_ui5_switch_handle_no_label_width: var(--_ui5_switch_handle_no_label_width);
+	--_ui5_switch_handle_width: var(--_ui5_switch_handle_width);
+
+	--_ui5_switch_text_semantic_font_size: var(--_ui5_switch_text_semantic_font_size);
+
+	--_ui5_switch_text_on_left_padding: var(--_ui5_switch_text_on_left_padding);
+	--_ui5_switch_text_off_right_padding: var(--_ui5_switch_text_off_right_padding);
+	--_ui5_switch_text_semantic_on_left_padding: var(--_ui5_switch_text_semantic_on_left_padding);
+	--_ui5_switch_text_semantic_off_right_padding: var(--_ui5_switch_text_semantic_off_right_padding);
+
 	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_text_on_left: calc(-100% + 1.9125rem);
-	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.875rem);
+	--_ui5_switch_slider_transform: var(--_ui5_switch_slider_transform);
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
 	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
 
@@ -240,16 +266,33 @@
 	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
-	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
-	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
-	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
-	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
+	--_ui5_switch_semantic_width: var(--_ui5_switch_compact_semantic_width);
 	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
+
+	--_ui5_switch_track_width: var(--_ui5_switch_track_compact_width);
+	--_ui5_switch_track_height: var(--_ui5_switch_track_compact_height);
+	--_ui5_switch_track_semantic_width: var(--_ui5_switch_track_semantic_compact_width);
+	--_ui5_switch_track_no_label_width: var(--_ui5_switch_track_no_label_compact_width);
+	--_ui5_switch_track_semantic_height: var(--_ui5_switch_track_semantic_compact_height);
+	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_no_label_compact_height);
+	--_ui5_switch_track_top_margin:  var(--_ui5_switch_track_compact_top_margin);
+	--_ui5_switch_track_bottom_margin: var(--_ui5_switch_track_compact_bottom_margin);
+
+	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
+	--_ui5_switch_handle_semantic_width: var(--_ui5_switch_handle_semantic_compact_width);
+	--_ui5_switch_handle_no_label_width: var(--_ui5_switch_handle_no_label_compact_width);
+	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
+	--_ui5_switch_text_semantic_font_size: var(--_ui5_switch_text_semantic_compact_font_size);
+
+	--_ui5_switch_text_on_left_padding: var(--_ui5_switch_text_on_compact_left_padding);
+	--_ui5_switch_text_off_right_padding: var(--_ui5_switch_text_off_compact_right_padding);
+	--_ui5_switch_text_semantic_on_left_padding: var(--_ui5_switch_text_semantic_on_compact_left_padding);
+	--_ui5_switch_text_semantic_off_right_padding: var(--_ui5_switch_text_semantic_off_compact_right_padding);
+
+	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
+	--_ui5_switch_slider_transform: var(--_ui5_switch_slider_compact_transform);
 	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
 	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
-
-	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom);
-	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
