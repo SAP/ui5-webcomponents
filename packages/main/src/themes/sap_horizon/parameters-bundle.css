@@ -49,7 +49,8 @@
 @import "./ValueStateMessage-parameters.css";
 @import "./Suggestions-parameters.css";
 @import "./Table-parameters.css";
-@import "./TableRow-parameters.css";
 @import "./TableColumn-parameters.css";
+@import "./TableRow-parameters.css";
+@import "./TableGroupRow-parameters.css";
 @import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";
