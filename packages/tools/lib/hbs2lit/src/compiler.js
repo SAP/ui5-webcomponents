@@ -30,17 +30,16 @@ const hbs2lit = (file) => {
 	lv.accept(ast);
 
 	for (let key in lv.blocks) {
-		const block = lv.blocks[key];
+		let block = lv.blocks[key];
 
 		if (block.match(/scopeTag/)) {
-			const blockScoped = block.replace(/^const block/, "const scoped_block");
-			const blockNormal = block.replace(/^const block/, "const normal_block").replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
-			const blockParams = block.match(/\(.*?\)/)[0];
-			const blockBranching = `const ${key} = ${blockParams} => suffix ? scoped_${key}${blockParams}: normal_${key}${blockParams};`;
-			result += blockNormal + "\n" + blockScoped + "\n" + blockBranching + "\n";
-		} else {
-			result += block + "\n";
+			const matches = block.match(/^(.*?)( => )(.*?);$/);
+			const scopedCode = matches[3];
+			const normalCode = scopedCode.replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
+			block = `${matches[1]}${matches[2]}suffix ? ${scopedCode} : ${normalCode};`;
 		}
+
+		result += block + "\n";
 	}
 
 	result = svgProcessor.process(result);
