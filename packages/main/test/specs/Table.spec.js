@@ -79,6 +79,27 @@ describe("Table general interaction", () => {
 			"The aria-label value is correct.");
 	});
 
+	describe("Accessibility", () => {
+		before(async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+		});
+	
+		it("Should apply aria-label from the accessibleName property", async () => {
+			const table = await browser.$("#tblLessColumns");
+			const innerTable = await table.shadow$("table");
+
+			assert.strictEqual(await innerTable.getAttribute("aria-label"), "Table label", "Table aria-label attribute is correct.");
+		});
+
+		it("Should apply aria-label from the accessibleNameRef property", async () => {
+			const table = await browser.$("#tbl");
+			const innerTable = await table.shadow$("table");
+			const tableLabel = await browser.$("#tableLabel");
+
+			assert.strictEqual(await innerTable.getAttribute("aria-label"), await tableLabel.getHTML(false), "Table aria-label attribute is correct.");
+		});
+	});
+
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);

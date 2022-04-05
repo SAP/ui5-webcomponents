@@ -36,9 +36,6 @@ const metadata = {
 
 		/**
 		 * Defines an action, displayed in the right most part of the header.
-		 * <br><br>
-		 * <b>Note:</b> If set, the <code>status</code> text will not be displayed,
-		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -71,9 +68,6 @@ const metadata = {
 
 		/**
 		 * Defines the status text.
-		 * <br><br>
-		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
-		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
