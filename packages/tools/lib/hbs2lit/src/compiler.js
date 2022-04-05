@@ -36,7 +36,7 @@ const hbs2lit = (file) => {
 			const blockScoped = block.replace(/^const block/, "const scoped_block");
 			const blockNormal = block.replace(/^const block/, "const normal_block").replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
 			const blockParams = block.match(/\(.*?\)/)[0];
-			const blockBranching = `const ${key} = ${blockParams} => suffix ? scoped_${key}${blockParams}: normal_${key}${blockParams};`;
+			const blockBranching = `const ${key} = ${blockParams} => { return (suffix ? scoped_${key}${blockParams}: normal_${key}${blockParams}); }`;
 			result += blockNormal + "\n" + blockBranching + "\n";
 		} else {
 			result += block + "\n";
