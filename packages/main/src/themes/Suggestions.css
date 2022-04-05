@@ -1,3 +1,7 @@
+.ui5-suggestions-popover {
+	box-shadow: var(--sapContent_Shadow1);
+}
+
 .ui5-suggestions-popover:not(.ui5-suggestions-popover-with-value-state-header) [ui5-li][focused]:first-child::part(native-li)::after,
 .ui5-suggestions-popover:not(.ui5-suggestions-popover-with-value-state-header) [ui5-li-groupheader][focused]:first-child::part(native-li)::after,
 .ui5-suggestions-popover:not(.ui5-suggestions-popover-with-value-state-header) [ui5-li-suggestion-item][focused]:first-child::part(native-li)::after,

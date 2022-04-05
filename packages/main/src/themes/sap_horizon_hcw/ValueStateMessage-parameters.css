@@ -8,4 +8,6 @@
 	--_ui5_value_state_header_padding: .5rem .5rem .5rem 1.875rem;
 	--_ui5_value_state_message_padding: .5rem .5rem .5rem 1.875rem;
 	--_ui5_input_value_state_icon_offset: .625rem;
+	--_ui5_value_state_header_offset: -0.1875rem;
+	--_ui5_value_state_header_border_bottom: 2px solid var(--sapField_BorderColor);
 }

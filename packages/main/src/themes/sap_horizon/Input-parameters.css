@@ -2,7 +2,6 @@
 
 :root {
 	--_ui5-input-border: none;
-	--_ui5-input-background-image: linear-gradient(0deg, var(--sapField_BorderColor) 0, var(--sapField_BorderColor) 100%);
 	--_ui5_input_hover_border: none;
 	--_ui5_input_hover_box_shadow: var(--sapContent_Interaction_Shadow);
 	--_ui5_input_value_state_warning_hover_box_shadow: var(--sapContent_Critical_Shadow);
@@ -24,6 +23,7 @@
 	--_ui5_input_error_warning_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_input_custom_icon_padding: .625rem .625rem .5625rem .625rem;
 	--_ui5_input_error_warning_custom_icon_padding: .625rem .625rem .5rem .625rem;
+	--_ui5_input_focus_outline_color: var(--sapField_Active_BorderColor);
 }
 
 [data-ui5-compact-size],

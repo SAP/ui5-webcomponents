@@ -39,13 +39,12 @@
 	position: absolute;
 	pointer-events: none;
 	z-index: 2;
-	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--_ui5_input_focus_outline_color);
 	border-radius: var(--_ui5_input_focus_border_radius);
 	top: var(--_ui5_input_focus_offset);
 	bottom: var(--_ui5_input_focus_offset);
 	left: var(--_ui5_input_focus_offset);
 	right: var(--_ui5_input_focus_offset);
-
 }
 
 .ui5-input-root::before {
@@ -72,6 +71,7 @@
 	color: inherit;
 	transition: border-color .2s ease-in-out;
 	border-radius: var(--_ui5_input_border_radius);
+	overflow: hidden;
 }
 
 :host([disabled]) {
@@ -183,14 +183,6 @@
 :host([value-state="Error"]) [inner-input]::-moz-placeholder {
 	color: var(--_ui5-input_error_placeholder_color);
 	font-weight: var(--_ui5_input_value_state_error_placeholder_font_weight);
-}
-
-:host([value-state="Warning"]) [inner-input]::-webkit-input-placeholder {
-	color: var(--_ui5_input_value_state_warning_border_botom_color);
-}
-
-:host([value-state="Warning"]) [inner-input]::-moz-placeholder {
-	color: var(--_ui5_input_value_state_warning_border_botom_color);
 }
 
 :host([value-state="Success"]) [inner-input]::-webkit-input-placeholder {

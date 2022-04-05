@@ -59,4 +59,5 @@
 	--_ui5_input_focus_offset: 1px;
 	--ui5_input_focus_pseudo_element_content: '';
 	--_ui5_input_value_state_error_placeholder_font_weight: normal;
+	--_ui5_input_focus_outline_color: var(--sapContent_FocusColor);
 }
