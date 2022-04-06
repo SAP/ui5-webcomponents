@@ -17,7 +17,7 @@ const effectiveSvg = (...args) => {
 	return fn(...args);
 };
 
-const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
+const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, { host } = {}) => {
 	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
 	if (OpenUI5Enablement && !forStaticArea) {
 		templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, host, templateResult);
