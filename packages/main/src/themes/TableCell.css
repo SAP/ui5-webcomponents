@@ -14,13 +14,9 @@ td {
 	display: contents;
 }
 
-.ui5-table-popin-row td {
-	padding-left: 1rem;
-
-}
-
-:host([popined]) td {
+:host([popined]) {
 	padding-left: 0;
+	padding-top: .25rem;
 }
 
 ::slotted([ui5-label]) {

@@ -21,7 +21,7 @@
 @import "./List-parameters.css";
 @import "./ListItemBase-parameters.css";
 @import "./MonthPicker-parameters.css";
-@import "../base/MessageStrip-parameters.css";
+@import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters.css";
@@ -49,7 +49,8 @@
 @import "./ValueStateMessage-parameters.css";
 @import "./Suggestions-parameters.css";
 @import "./Table-parameters.css";
-@import "./TableRow-parameters.css";
 @import "./TableColumn-parameters.css";
+@import "./TableRow-parameters.css";
+@import "./TableGroupRow-parameters.css";
 @import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";

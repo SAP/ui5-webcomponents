@@ -11,11 +11,12 @@
 	background-color: var(--sapList_Background);
 	color: var(--sapList_TextColor);
 	border-top: 1px solid var(--sapList_BorderColor);
+	height: var(--ui5_table_row_height);
 }
 
 .ui5-table-row-root:focus {
 	outline: var(--ui5_table_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	outline-offset: -0.0625rem;
+	outline-offset: var(--ui5_table_focus_outline_offset);
 }
 
 .ui5-table-popin-row {
@@ -27,8 +28,12 @@
 }
 
 .ui5-table-popin-row td {
-	padding: .25rem;
+	padding-top: .5rem;
 	padding-left: 1rem;
+}
+
+.ui5-table-popin-row:last-child td {
+	padding-bottom: .5rem;
 }
 
 .ui5-table-row-popin-title {
@@ -51,35 +56,38 @@
 	cursor: pointer;
 }
 
+:host ::slotted([ui5-table-cell]:not([popined])) {
+	padding: .25rem .5rem;
+}
+
+:host(:not([mode="MultiSelect"])) ::slotted([ui5-table-cell]:not([popined]):first-child) {
+	padding-left: 1rem;
+}
+
+/** Hover **/
 :host([type="Active"]) .ui5-table-row-root:hover,
-:host([mode="SingleSelect"]) .ui5-table-row-root:hover,
-:host([mode="SingleSelect"]) .ui5-table-row-root:active {
+:host([mode="SingleSelect"]) .ui5-table-row-root:hover:not(:active) {
 	background-color: var(--sapList_Hover_Background);
 }
 
-:host([type="Active"][active]) .ui5-table-row-root,
-:host([selected][type="Active"][active]) .ui5-table-row-root:hover {
+/** Down/Active **/
+:host([type="Active"]) .ui5-table-row-root:active,
+:host([selected][type="Active"]) .ui5-table-row-root:active {
 	background-color: var(--sapList_Active_Background);
 }
 
-:host([selected]) .ui5-table-row-root {
-	background: var(--sapList_SelectionBackgroundColor);
-	border-bottom: 1px solid var(--sapList_SelectionBorderColor);
-}
-
-:host([selected][type="Active"]) .ui5-table-row-root:hover,
-:host([selected][mode="SingleSelect"]) .ui5-table-row-root:hover {
-	background: var(--sapList_Hover_SelectionBackground);
-}
-
-:host([type="Active"][active]) .ui5-table-row-root ::slotted([ui5-table-cell]) {
+:host([type="Active"]) .ui5-table-row-root:active ::slotted([ui5-table-cell]) {
 	color: var(--sapList_Active_TextColor);
 }
 
-:host ::slotted([ui5-table-cell]) {
-	padding: .5rem .25rem;
+/** Selected **/
+:host([selected]) .ui5-table-row-root:not(:active) {
+	background-color: var(--sapList_SelectionBackgroundColor);
+	border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 }
 
-:host ::slotted([ui5-table-cell]:first-child) {
-	padding-left: 1rem;
+/** Hover on Selected **/
+:host([selected][type="Active"]) .ui5-table-row-root:hover:not(:active),
+:host([selected][mode="SingleSelect"]) .ui5-table-row-root:hover:not(:active) {
+	background-color: var(--sapList_Hover_SelectionBackground);
 }

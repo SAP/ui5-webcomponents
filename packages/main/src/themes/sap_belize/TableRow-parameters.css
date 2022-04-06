@@ -1,0 +1,5 @@
+@import "../base/TableRow-parameters.css";
+
+:root {
+	--ui5_table_row_height: 3rem;
+}

@@ -416,7 +416,6 @@ describe("Select general interaction", () => {
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(await select2.getAttribute("aria-expanded"), "false",
 			"The aria-expanded is false by default.");
-
 		assert.strictEqual(await select2.getAttribute("aria-roledescription"), EXPECTER_ARIA_ROLEDESCRIPTION,
 			"The aria-roledescription is correct.");
 	});
