@@ -676,7 +676,6 @@ class DatePicker extends DateComponentBase {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": HasPopup.Grid,
 			"ariaAutoComplete": "none",
-			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
