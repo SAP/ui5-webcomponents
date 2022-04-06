@@ -1,5 +1,5 @@
-commit d286f01244358f2a5883ec22aa6717d6329b0b3d
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Wed Apr 6 11:29:38 2022 +0300
+commit c49c97f55b8017df8c83ef17c943bd0d47603f36
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Apr 6 16:24:03 2022 +0300
 
-    refactor(ui5-input): prevent opening an empty picker and update docu (#5020)
+    feat: busy indicator enablement (#4832)
