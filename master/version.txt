@@ -1,9 +1,7 @@
-commit f5d56e2b9385bab185836c87a5853ab8e02dc17b
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Apr 5 21:22:04 2022 +0300
+commit 6c5e51613df6bd15a984646a33920728e9c1ada2
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Wed Apr 6 09:49:16 2022 +0300
 
-    feat(ui5-textarea): Horizon themes implementation (#5018)
+    fix(ui5-datetime-picker): Adapt components with responsive paddings (#4977)
     
-    * feat(ui5-textarea): Horizon themes implementation
-    
-    * warning placeholder adjusted
+    Related to: #4869
