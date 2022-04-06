@@ -32,6 +32,7 @@ import {
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
+	SELECT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -635,6 +636,7 @@ class Select extends UI5Element {
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this.focused = false;
 	}
 
 	_afterOpen() {
@@ -643,6 +645,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this.opened = false;
+		this.focused = true;
 		this._iconPressed = false;
 		this._listWidth = 0;
 
@@ -766,6 +769,10 @@ class Select extends UI5Element {
 	get shouldOpenValueStateMessagePopover() {
 		return this.focused && this.hasValueStateText && !this._iconPressed
 			&& !this._isPickerOpen && !this._isPhone;
+	}
+
+	get _ariaRoleDescription() {
+		return Select.i18nBundle.getText(SELECT_ROLE_DESCRIPTION);
 	}
 
 	get _isPhone() {

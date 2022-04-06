@@ -112,6 +112,7 @@ const metadata = {
 		 */
 		_filterStepTwo: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
@@ -312,8 +313,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _dialogTitle() {
-		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
-		return ViewSettingsDialog.i18nBundle.getText(currentModeText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
 	}
 
 	get _okButtonLabel() {
@@ -354,6 +354,12 @@ class ViewSettingsDialog extends UI5Element {
 
 	get _sortAscending() {
 		return !this.sortDescending;
+	}
+
+	get _title() {
+		return this.showBackButton
+			? this._filterByTitle
+			: this._dialogTitle;
 	}
 
 	/**
@@ -432,6 +438,10 @@ class ViewSettingsDialog extends UI5Element {
 				selected: this.sortDescending,
 			},
 		];
+	}
+
+	get expandContent() {
+		return this._filterStepTwo || !this.hasPagination;
 	}
 
 	get isModeSort() {

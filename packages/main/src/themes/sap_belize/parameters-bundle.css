@@ -9,7 +9,7 @@
 @import "./Dialog-parameters.css";
 @import "../base/CalendarHeader-parameters.css";
 @import "./Carousel-parameters.css";
-@import "../base/Card-parameters.css";
+@import "./Card-parameters.css";
 @import "../base/CheckBox-parameters.css";
 @import "../base/ColorPalette-parameters.css";
 @import "../base/ColorPicker-parameters.css";
@@ -22,7 +22,7 @@
 @import "../base/MessageStrip-parameters.css";
 @import "../base/MonthPicker-parameters.css";
 @import "../base/Panel-parameters.css";
-@import "../base/PopupsCommon-parameters.css";
+@import "./PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
@@ -30,7 +30,9 @@
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "./Table-parameters.css";
-@import "../base/TableRow-parameters.css";
+@import "../base/TableColumn-parameters.css";
+@import "./TableRow-parameters.css";
+@import "../base/TableGroupRow-parameters.css";
 @import "../base/GrowingButton-parameters.css";
 @import "../base/TextArea-parameters.css";
 @import "./TimePicker-parameters.css";

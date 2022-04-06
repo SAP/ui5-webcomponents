@@ -103,6 +103,27 @@
 	display: none;
 }
 
+.ui5-tab-expand-button > [ui5-button] {
+	height: 1.5rem;
+	min-width: 1.5rem;
+	margin-top: 0.25rem;
+	margin-left: 0.625rem;
+}
+.ui5-tab-single-click-icon {
+	margin-left: 0.625rem;
+	float: right;
+}
+
+.ui5-tab-strip-item--singleClickArea {
+	margin-top: 2px;
+}
+
+.ui5-tab-expand-button>[ui5-button]:hover {
+	background-color: var(--sapButton_Hover_Background);
+}
+.ui5-tab-expand-button>[ui5-button]:active {
+	background-color: var(--sapButton_Active_Background);
+}
 /*** Responsive paddings ***/
 
 :host([media-range="S"]) .ui5-tc__header {

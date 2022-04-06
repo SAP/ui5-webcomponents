@@ -117,8 +117,8 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = await browser.$("#vsdFilter");
 		await btnOpenDialog.click();
 
-		const vsdTitle = await viewSettingsDialog.shadow$("ui5-bar").$(".ui5-vsd-title").getText();
-		assert.strictEqual(vsdTitle, "Filter By", "Only filters are presented, when there are no sort items");
+		const vsdTitle = await viewSettingsDialog.shadow$(".ui5-vsd-header-start").$(".ui5-vsd-title").getText();
+		assert.strictEqual(vsdTitle, "View Settings", "Only filters are presented, when there are no sort items");
 
 		await browser.keys("Escape");
 	});
@@ -128,7 +128,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = await browser.$("#vsdSort");
 		await btnOpenDialog.click();
 
-		const vsdTitle = await viewSettingsDialog.shadow$("ui5-bar").$(".ui5-vsd-title").getText();
+		const vsdTitle = await viewSettingsDialog.shadow$(".ui5-vsd-header-start").$(".ui5-vsd-title").getText();
 		assert.strictEqual(vsdTitle, "View Settings", "Only sort options are presented, when there are no filters");
 
 		await browser.keys("Escape");
@@ -139,7 +139,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		const viewSettingsDialog = await browser.$("#vsdSort");
 		await btnOpenDialog.click();
 
-		const vsdSegmentedButton = await viewSettingsDialog.shadow$("ui5-bar").$("ui5-segmented-button");
+		const vsdSegmentedButton = await viewSettingsDialog.shadow$(".ui5-vsd-header-start").$("ui5-segmented-button");
 		assert.strictEqual(await vsdSegmentedButton.isDisplayed(), false, "Segmented button is not built when there is only set of items");
 
 		await browser.keys("Escape");

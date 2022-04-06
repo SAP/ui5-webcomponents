@@ -2,4 +2,6 @@
 
 :root {
 	--_ui5_value_state_message_border: 2px solid var(--sapField_BorderColor);
+	--_ui5_value_state_header_offset: -0.1875rem;
+	--_ui5_value_state_header_border_bottom: 2px solid var(--sapField_BorderColor);
 }

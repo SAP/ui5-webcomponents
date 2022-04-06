@@ -21,7 +21,12 @@ import WrappingType from "./types/WrappingType.js";
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
 // i18n
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
+import {
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
@@ -100,6 +105,8 @@ const metadata = {
 		 * <li><code>None</code></li>
 		 * <li><code>Error</code></li>
 		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
 		 * @type {ValueState}
@@ -446,6 +453,8 @@ class RadioButton extends UI5Element {
 		return {
 			"Error": RadioButton.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": RadioButton.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 

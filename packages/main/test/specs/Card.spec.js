@@ -12,10 +12,10 @@ describe("Card general interaction", () => {
 		assert.ok(await card.isExisting(), "The component has shadow root.");
 	});
 
-	it("tests status not rendered, when action is set", async () => {
+	it("tests status is rendered, when action is set", async () => {
 		const status = await browser.$("#actionCardHeader").shadow$(".ui5-card-header-status");
 
-		assert.notOk(await status.isExisting(), "The status DOM is not rendered.");
+		assert.ok(await status.isExisting(), "The status DOM is rendered.");
 	});
 
 	it("tests header's click event with mouse click, Enter and Space", async () => {
@@ -39,6 +39,21 @@ describe("Card general interaction", () => {
 		await cardHeader2.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
+	});
+
+	it("tests clicking on an action does not fire header's click event", async () => {
+		const action = await browser.$("#cardHeader3 [slot='action']");
+		
+		const field = await browser.$("#field");
+		const fieldBefore = await field.getProperty("value");
+
+		await action.click();
+		await action.keys("Space");
+		await action.keys("Enter");
+
+		const fieldAfter = await field.getProperty("value");
+
+		assert.strictEqual(fieldAfter, fieldBefore, "The events count should remain unchanged as the action did not cause the header to fire click.");
 	});
 
 	it("tests aria-label", async () => {

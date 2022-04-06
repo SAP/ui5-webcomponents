@@ -10,7 +10,7 @@
 	width: 100%;
 	height: 100%;
 	display: flex;
-	border-radius: var(--_ui5_message_strip_border_radius);
+	border-radius: var(--sapPopover_BorderCornerRadius);
 	padding: var(--_ui5_message_strip_padding);
 	border-width: var(--_ui5_message_strip_border_width);
 	border-style: solid;
@@ -28,7 +28,7 @@
 
 .ui5-message-strip-root--info {
 	background-color: var(--sapInformationBackground);
-	border-color: var(--_ui5_message_strip_information_border_color);
+	border-color: var(--sapMessage_InformationBorderColor);
 	color: var(--sapTextColor);
 }
 
@@ -38,7 +38,7 @@
 
 .ui5-message-strip-root--positive {
 	background-color: var(--sapSuccessBackground);
-	border-color: var(--_ui5_message_strip_success_border_color);
+	border-color: var(--sapMessage_SuccessBorderColor);
 }
 
 .ui5-message-strip-root--positive .ui5-message-strip-icon {
@@ -47,7 +47,7 @@
 
 .ui5-message-strip-root--negative {
 	background-color: var(--sapErrorBackground);
-	border-color: var(--_ui5_message_strip_error_border_color);
+	border-color: var(--sapMessage_ErrorBorderColor);
 }
 
 .ui5-message-strip-root--negative .ui5-message-strip-icon {
@@ -56,7 +56,7 @@
 
 .ui5-message-strip-root--warning {
 	background-color: var(--sapWarningBackground);
-	border-color: var(--_ui5_message_strip_warning_border_color);
+	border-color: var(--sapMessage_WarningBorderColor);
 }
 
 .ui5-message-strip-root--warning .ui5-message-strip-icon {
@@ -80,20 +80,15 @@
 	font-size: var(--sapFontSize);
 }
 
-/** Close button **/
+/** Close button - always in compact mode **/
 .ui5-message-strip-close-button {
-	width: var(--_ui5_message_strip_close_button_size);
-	min-width: var(--_ui5_message_strip_close_button_size);
-	height: var(--_ui5_message_strip_close_button_size);
-	min-height: var(--_ui5_message_strip_close_button_size);
+	width: 2rem;
+	min-width: 2rem;
+	height: 1.65rem;
+	min-height: 1.65rem;
 	position: absolute;
-	right: 0.125rem;
-	top: 0.125rem;
-}
-
-.ui5-message-strip-close-button::part(icon) {
-	width: .75rem;
-	height: .75rem;
+	top: var(--_ui5_message_strip_close_button_top);
+	right: var(--_ui5_message_strip_close_button_right);
 }
 
 /* RTL */

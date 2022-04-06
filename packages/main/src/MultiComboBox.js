@@ -544,7 +544,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _getPlaceholder() {
-		if (this._tokenizer && this._tokenizer.tokens.length) {
+		if (this._getSelectedItems().length) {
 			return "";
 		}
 
@@ -1286,10 +1286,6 @@ class MultiComboBox extends UI5Element {
 				this.value = "";
 			}
 		}
-	}
-
-	_readonlyIconClick() {
-		this._inputDom.focus();
 	}
 
 	get editable() {

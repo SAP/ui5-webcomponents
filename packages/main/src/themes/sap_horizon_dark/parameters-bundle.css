@@ -24,7 +24,6 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
-@import "./PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
@@ -50,7 +49,8 @@
 @import "./ValueStateMessage-parameters.css";
 @import "./Suggestions-parameters.css";
 @import "./Table-parameters.css";
-@import "./TableRow-parameters.css";
 @import "./TableColumn-parameters.css";
+@import "./TableRow-parameters.css";
+@import "./TableGroupRow-parameters.css";
 @import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";
