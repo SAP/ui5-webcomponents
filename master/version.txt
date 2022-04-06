@@ -1,8 +1,5 @@
-commit 839ddf89fcbb97bc55d0b63b7919b6002c97a788
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Wed Apr 6 17:10:20 2022 +0300
+commit be9e6bc0d21424441f4c3b9966214d544708eb57
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Apr 6 17:48:41 2022 +0300
 
-    fix(ui5-view-settings-dialog): replacement of the slot with ui5 li element (#5013)
-    
-    The error that occurs during navigation from the invalidation when removing the elements in the slot is fixed
-    FIXES: ViewSettingsDialog: when selecting a filter, an error is thrown in the console #4888
+    fix(ui5-checkbox): align to latest sap_horizon specification (#4972)
