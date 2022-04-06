@@ -1,7 +1,5 @@
-commit 6c5e51613df6bd15a984646a33920728e9c1ada2
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Wed Apr 6 09:49:16 2022 +0300
+commit d286f01244358f2a5883ec22aa6717d6329b0b3d
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Wed Apr 6 11:29:38 2022 +0300
 
-    fix(ui5-datetime-picker): Adapt components with responsive paddings (#4977)
-    
-    Related to: #4869
+    refactor(ui5-input): prevent opening an empty picker and update docu (#5020)

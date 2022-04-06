@@ -385,7 +385,10 @@
 	</div>
 
 	<h3>Input with openPicker() on focusin</h3>
-	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values..."></ui5-input>
+	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
+		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
+		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+	</ui5-input>
 
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
