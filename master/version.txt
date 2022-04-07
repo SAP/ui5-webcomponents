@@ -1,5 +1,9 @@
-commit be9e6bc0d21424441f4c3b9966214d544708eb57
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Apr 6 17:48:41 2022 +0300
+commit fa2a7008fb2b8a6d03ee35c28d12c9befe841414
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Thu Apr 7 09:38:07 2022 +0300
 
-    fix(ui5-checkbox): align to latest sap_horizon specification (#4972)
+    fix(ui5-multi-input): improve backspace and home handling (#4646)
+    
+    The focus on `backspace` now moves to the last token if the cursor is at the beginning of the input.
+    When `home` is pressed and the cursor is at the beginning, focus now moves to the first token.
+    Also fixes the _itemNavigation error log.
