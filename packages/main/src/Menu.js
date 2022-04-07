@@ -288,7 +288,7 @@ class Menu extends UI5Element {
 		}
 		await this._getPopover();
 		this._popover.initialFocus = "";
-		for(let index = 0; index < this._currentItems.length; index++){
+		for (let index = 0; index < this._currentItems.length; index++) {
 			if (!this._currentItems[index].item.disabled) {
 				this._popover.initialFocus = `${this._id}-menu-item-${index}`;
 				break;
