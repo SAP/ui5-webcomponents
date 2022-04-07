@@ -17,7 +17,12 @@ const effectiveSvg = (...args) => {
 	return fn(...args);
 };
 
-const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
+const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, { host } = {}) => {
+	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
+	if (OpenUI5Enablement && !forStaticArea) {
+		templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, host, templateResult);
+	}
+
 	if (typeof styleStrOrHrefsArr === "string") {
 		templateResult = effectiveHtml`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {

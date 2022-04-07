@@ -98,7 +98,11 @@
 				{{else}}
 					<ui5-list @ui5-item-click="{{_changeCurrentFilter}}" accessible-name-ref="{{_id}}-label">
 						<ui5-li-groupheader>{{_filterByLabel}}</ui5-li-groupheader>
-						<slot name="filterItems"></slot>
+						{{#each filterItems}}
+							<ui5-li class="ui5-vsd-filterItemList" ?selected={{this.selected}} additional-text={{this.additionalText}}>
+								{{this.text}}
+							</ui5-li>
+						{{/each}}
 					</ui5-list>
 				{{/if}}
 			{{/if}}
