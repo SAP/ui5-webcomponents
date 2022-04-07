@@ -3,4 +3,7 @@
 :root {
 	--_ui5_textarea_focus_after_width: 2px;
 	--_ui5_textarea_warning_border_style: dashed;
+	--_ui5_textarea_error_hover_background_color: var(--sapField_InvalidBackground);
+	--_ui5_textarea_error_focused_background_color: var(--sapField_InvalidBackground);
+	--_ui5_textarea_information_border_width: var(--sapField_BorderWidth);
 }

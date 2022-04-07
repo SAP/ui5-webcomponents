@@ -7,4 +7,7 @@
 	--_ui5_textarea_information_border_width: 0.0625rem;
 	--_ui5_textarea_placeholder_font_style: normal;
 	--_ui5_input_warning_font_weight: bold;
+	--_ui5_textarea_error_hover_background_color: var(--sapField_InvalidBackground);
+	--_ui5_textarea_error_focused_background_color: var(--sapField_InvalidBackground);
+	--_ui5_textarea_information_border_width: var(--sapField_BorderWidth);
 }

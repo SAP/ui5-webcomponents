@@ -24,6 +24,7 @@
 	width: 18.5rem;
 	max-width: 19.5rem;
 	max-height: 13rem;
+	padding: 0.375rem 0.625rem;
 }
 
 .ui5-cp-recent-colors-wrapper {
@@ -43,6 +44,7 @@
 	flex-flow: wrap;
 	max-height: var(--_ui5_color-palette-row-height);
 	overflow: hidden;
+	padding: var(--_ui5_color-palette-swatch-container-padding);
 }
 
 .ui5-cp-separator {
