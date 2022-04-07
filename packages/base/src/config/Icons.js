@@ -32,7 +32,7 @@ const setDefaultIconCollection = (theme, collectionName) => {
  * @param {String} theme
  * @returns {String}
  */
-const getDefaultIconCollection = (theme) => {
+const getDefaultIconCollection = theme => {
 	return getConfig(theme);
 };
 
@@ -49,7 +49,7 @@ const getActualEffectiveDefaulIconCollection = () => {
 	if (getConfig(currentTheme)) {
 		return getConfig(currentTheme);
 	}
-	
+
 	return isThemeFamily("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
 };
 
