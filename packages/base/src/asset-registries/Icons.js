@@ -1,6 +1,6 @@
 import getSharedResource from "../getSharedResource.js";
 import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
-import { getDefaultIconCollection } from "../config/Icons.js";
+import { getActualEffectiveDefaulIconCollection } from "../config/Icons.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
@@ -48,7 +48,7 @@ const _fillRegistry = bundleData => {
 // set
 const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
 	if (!collection) {
-		collection = getDefaultIconCollection();
+		collection = getActualEffectiveDefaulIconCollection();
 	}
 
 	const key = `${collection}/${name}`;
@@ -68,7 +68,7 @@ const _parseName = name => {
 
 	let collection;
 	[name, collection] = name.split("/").reverse();
-	collection = collection || getDefaultIconCollection();
+	collection = collection || getActualEffectiveDefaulIconCollection();
 
 	// Normalize collection name.
 	// - resolve `SAP-icons-TNT` to `tnt`.

@@ -1,8 +1,13 @@
 import { getTheme, isThemeFamily } from "./Theme.js";
 
-const IconCollectionConfiguration = {
-	defualtCollection: null,
-	theme: null,
+const IconCollectionConfiguration = new Map();
+
+const registerConfig = (theme, collectionName) => {
+	IconCollectionConfiguration.set(theme, collectionName);
+};
+
+const getConfig = theme => {
+	return IconCollectionConfiguration.get(theme);
 };
 
 /**
@@ -10,27 +15,46 @@ const IconCollectionConfiguration = {
  * which will be applied in case icon collection is not specified.
  *
  * Note: by default SAP-icons-v5 is used in SAP Horizon and  SAP-icons-v4 for all the rest.
- * @param {String} collectionName the icon collection
  * @param {String} theme
+ * @param {String} collectionName
  */
-const setDefaultIconCollection = (collectionName, theme) => {
+const setDefaultIconCollection = (theme, collectionName) => {
 	if (collectionName === "horizon") {
 		collectionName = "SAP-icons-v5";
 	}
-
-	IconCollectionConfiguration.defualtCollection = collectionName;
-	IconCollectionConfiguration.theme = theme;
+	registerConfig(theme, collectionName);
 };
 
-const getDefaultIconCollection = () => {
-	if (getTheme() === IconCollectionConfiguration.theme) {
-		return IconCollectionConfiguration.defualtCollection;
-	}
+/**
+ * Returns the default icon collection (v4 or v5) for given theme,
+ * that is configured.
+ *
+ * @param {String} theme
+ * @returns {String}
+ */
+const getDefaultIconCollection = (theme) => {
+	return getConfig(theme);
+};
 
+/**
+ * Returns the effective icon collection that will be applied for icon web components
+ * whenever namespace is not specified.
+ *
+ * @returns {String}
+ */
+
+const getActualEffectiveDefaulIconCollection = () => {
+	const currentTheme = getTheme();
+
+	if (getConfig(currentTheme)) {
+		return getConfig(currentTheme);
+	}
+	
 	return isThemeFamily("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
 };
 
 export {
 	setDefaultIconCollection,
 	getDefaultIconCollection,
+	getActualEffectiveDefaulIconCollection,
 };

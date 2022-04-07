@@ -108,7 +108,6 @@ import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -142,7 +141,14 @@ const testAssets = {
 	defaultTexts,
 };
 
-setDefaultIconCollection("SAP-icons-v5", "sap_fiori_3");
+// The SAP Icons V4 icon collection is set by default in sap_fiori_3,
+// but it's configurable:
+// import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
+// setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
+// or 
+// setDefaultIconCollection("sap_fiori_3", "horizon");
+// or for custom theme
+// setDefaultIconCollection("my_custom_theme", "SAP-icons-v5");
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
 
