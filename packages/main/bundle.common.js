@@ -108,6 +108,7 @@ import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -140,6 +141,8 @@ const testAssets = {
 	renderFinished,
 	defaultTexts,
 };
+
+setDefaultIconCollection("SAP-icons-v5", "sap_fiori_3");
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
 
