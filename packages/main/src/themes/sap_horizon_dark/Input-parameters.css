@@ -1,35 +1,34 @@
 @import "../base/Input-parameters.css";
 
 :root {
-	--_ui5_input_height: 2.25rem;
 	--_ui5-input-border: none;
-	--_ui5_input_disabled_opacity: 0.4;
-	--_ui5-input-placeholder-style: normal;
-	--_ui5-input-background-image: linear-gradient(0deg, var(--sapField_BorderColor) 0, var(--sapField_BorderColor) 100%);
-	--_ui5-input-information-background-image: linear-gradient(0deg, var(--sapField_InformationColor) 0, var(--sapField_InformationColor) 100%);
-	--_ui5-input-success-background-image: linear-gradient(0deg, var(--sapField_SuccessColor) 0, var(--sapField_SuccessColor) 100%);
-	--_ui5-input-error-background-image: linear-gradient(0deg, var(--sapField_InvalidColor) 0, var(--sapField_InvalidColor) 100%);
-	--_ui5-input-warning-background-image: linear-gradient(0deg, var(--sapField_WarningColor) 0, var(--sapField_WarningColor) 100%);
-	--_ui5-input-hover-border: none;
-	--_ui5-input-hover-box-shadow: var(--sapContent_Interaction_Shadow);
-	--_ui5-input-focus-box-shadow: inset 0px 0px 0px 0.125rem var(--sapField_Focus_BorderColor);
-	--_ui5-input-value-state-warning-hover-box-shadow: var(--sapContent_Critical_Shadow);
-	--_ui5-input-value-state-success-hover-box-shadow: var(--sapContent_Positive_Shadow);
-	--_ui5-input-value-state-information-hover-box-shadow: var(--sapContent_Informative_Shadow);
-	--_ui5-input-value-state-error-hover-box-shadow: var(--sapContent_Negative_Shadow);
-	--_ui5-input-value-state-error-focus-box-shadow: inset 0px 0px 0px 2px var(--sapField_InvalidColor);
-	--_ui5-input-value-state-warning-focus-box-shadow: inset 0px 0px 0px 2px var(--sapField_WarningColor);
-	--_ui5-input-value-state-success-focus-box-shadow: inset 0px 0px 0px 2px var(--sapField_SuccessColor);
-	--_ui5-input-focus-outline: none;
-	--_ui5-input-focus-outline-offset: 0px;
+	--_ui5_input_hover_border: none;
+	--_ui5_input_hover_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_input_value_state_warning_hover_box_shadow: var(--sapContent_Critical_Shadow);
+	--_ui5_input_value_state_success_hover_box_shadow: var(--sapContent_Positive_Shadow);
+	--_ui5_input_value_state_information_hover_box_shadow: var(--sapContent_Informative_Shadow);
+	--_ui5_input_value_state_error_hover_box_shadow: var(--sapContent_Negative_Shadow);
+	--_ui5_input_focus_border_radius: 0.25rem;
 	--_ui5_input_error_warning_border_style: none;
-	--_ui5-input-focused-value-state-error-background: var(--sapField_Hover_Background);
-	--_ui5-input-focused-value-state-warning-background: var(--sapField_Hover_Background);
-	--_ui5-input-focused-value-state-success-background: var(--sapField_Hover_Background);
-	--_ui5-input-focused-value-state-information-background: var(--sapField_Hover_Background);
-	--_ui5-input-value-state-outline: none;
-	--_ui5-input-value-state-outline-offset: 0px;
-	--_ui5_input_readonly_icon_display: inline-block;
+	--_ui5_input_focused_value_state_error_background: var(--sapField_Hover_Background);
+	--_ui5_input_focused_value_state_warning_background: var(--sapField_Hover_Background);
+	--_ui5_input_focused_value_state_success_background: var(--sapField_Hover_Background);
+	--_ui5_input_focused_value_state_information_background: var(--sapField_Hover_Background);
+	--_ui5_input_focused_value_state_error_focus_outline_color: var(--sapField_InvalidColor);
+	--_ui5_input_focused_value_state_warning_focus_outline_color: var(--sapField_WarningColor);
+	--_ui5_input_focused_value_state_success_focus_outline_color: var(--sapField_SuccessColor);
 	--_ui5_input_icon_min_width: 2.125rem;
-	--_ui5_input_compact_min_width: 1.875rem;
+	--_ui5_input_focus_offset: 0;
+	--_ui5_input_information_icon_padding: .625rem .625rem .5rem .625rem;
+	--_ui5_input_error_warning_icon_padding: .625rem .625rem .5rem .625rem;
+	--_ui5_input_custom_icon_padding: .625rem .625rem .5625rem .625rem;
+	--_ui5_input_focus_outline_color: var(--sapField_Active_BorderColor);
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_input_information_icon_padding: .3125rem .5rem .1875rem .5rem;
+	--_ui5_input_error_warning_icon_padding: .3125rem .5rem .1875rem .5rem;
+	--_ui5_input_custom_icon_padding: .3125rem .5rem .25rem .5rem;
 }

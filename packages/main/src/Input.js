@@ -640,7 +640,7 @@ class Input extends UI5Element {
 		if (this._isPhone) {
 			this.open = this.openOnMobile;
 		} else if (this._forceOpen) {
-			this.open = isFocused;
+			this.open = true;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
 		}
@@ -1049,11 +1049,12 @@ class Input extends UI5Element {
 	}
 
 	/**
-	 * Manually opens the suggestions popover, assuming suggestions are enabled. Otherwise, does nothing.
+	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
+	 * @since 1.3.0
 	 * @public
 	 */
 	openPicker() {
-		if (!this.Suggestions || this.disabled || this.readonly) {
+		if (!this.suggestionItems.length || this.disabled || this.readonly) {
 			return;
 		}
 

@@ -2,7 +2,7 @@ import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedElements } from "./util/SlotsHelper.js";
-import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
+import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 
 /**
  *

@@ -1,8 +1,10 @@
 @import "../base/Input-parameters.css";
 
 :root {
+	--_ui5_input_height: 2.5rem;
 	--_ui5_input_focus_border_width: 0.125rem;
 	--_ui5_input_state_border_width: 1px;
+	--_ui5_input_information_border_width: var(--sapField_BorderWidth);
 	--_ui5-input-border: 1px solid var(--sapField_BorderColor);
 	--_ui5_input_error_warning_border_style: dashed;
 	--_ui5_input_error_warning_font_style: italic;
@@ -11,4 +13,21 @@
 	--_ui5_input_disabled_color: var(--sapContent_DisabledTextColor);
 	--_ui5_input_disabled_font_weight: normal;
 	--_ui5_input_icon_padding: 0.65rem 0.75rem;
+	--_ui5_input_disabled_opacity: 0.5;
+	--_ui5_input_custom_icon_padding: .6875rem .625rem;
+	--_ui5_input_error_warning_icon_padding: .6875rem .5625rem;
+	--_ui5_input_information_icon_padding: .6875rem .5625rem;
+	--_ui5_input_error_warning_custom_icon_padding: .6875rem .625rem;
+	--_ui5_input_information_custom_icon_padding: .6875rem .625rem;
+	--_ui5-input_disabled_background: var(--sapField_ReadOnly_Background);
+	--_ui5_input_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
+	--_ui5_input_value_state_error_hover_background: var(--sapField_InvalidBackground);
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_input_error_warning_custom_icon_padding: .25rem .5rem;
+	--_ui5_input_information_custom_icon_padding: .25rem .5rem;
+	--_ui5_input_error_warning_icon_padding: .25rem .4375rem .25rem .4375rem;
 }

@@ -553,10 +553,6 @@ class ComboBox extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	_readonlyIconClick() {
-		this.inner.focus();
-	}
-
 	_input(event) {
 		const { value } = event.target;
 

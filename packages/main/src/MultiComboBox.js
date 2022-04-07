@@ -1295,10 +1295,6 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_readonlyIconClick() {
-		this._inputDom.focus();
-	}
-
 	get editable() {
 		return !this.readonly;
 	}
