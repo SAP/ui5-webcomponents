@@ -12,15 +12,14 @@ import {
 import {
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
-
 import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
-
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
@@ -36,12 +35,12 @@ const metadata = {
 	tag: "ui5-menu",
 	properties: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
 		/**
-		 * Defines the title of the menu (displayed on mobile).
+		 * Defines the header text of the menu (displayed on mobile).
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		 title: {
+		 headerText: {
 			type: String,
 		},
 
@@ -132,14 +131,14 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
 		/**
-		 * Fired when an item is being selected.
+		 * Fired when an item is being clicked.
 		 *
-		 * @event sap.ui.webcomponents.main.Menu#item-selected
-		 * @param {object} item The currently selected menu item.
-		 * @param {string} text The text of the currently selected menu item.
+		 * @event sap.ui.webcomponents.main.Menu#item-click
+		 * @param {object} item The currently clicked menu item.
+		 * @param {string} text The text of the currently clicked menu item.
 		 * @public
 		 */
-		 "item-selected": {
+		 "item-click": {
 			detail: {
 				item: {
 					type: Object,
@@ -171,7 +170,7 @@ const metadata = {
  * <ul>
  * <li><code>Arrow Up</code> / <code>Arrow Down</code> - Navigates up and down the menu items that are currently visible.</li>
  * <li><code>Arrow Right</code>, <code>Space</code> or <code>Enter</code> - Opens a sub-menu if there are menu items nested
- * in the currently selected menu item.</li>
+ * in the currently clicked menu item.</li>
  * <li><code>Arrow Left</code> or <code>Escape</code> - Closes the currently opened sub-menu.</li>
  * </ul>
  * Note: if the text ditrection is set to Right-to-left (RTL), <code>Arrow Right</code> and <code>Arrow Left</code> functionality is swapped.
@@ -187,7 +186,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-menu
  * @appenddocs MenuItem
- * @since 1.2.2
+ * @since 1.3.0
  * @public
  */
 class Menu extends UI5Element {
@@ -258,8 +257,8 @@ class Menu extends UI5Element {
 		return !!this._parentMenuItem;
 	}
 
-	get menuTitlePhone() {
-		return this.isSubMenuOpened ? this._parentMenuItem.text : this.title;
+	get menuHeaderTextPhone() {
+		return this.isSubMenuOpened ? this._parentMenuItem.text : this.headerText;
 	}
 
 	onBeforeRendering() {
@@ -287,7 +286,15 @@ class Menu extends UI5Element {
 		if (!this._isSubMenu) {
 			this._parentMenuItem = undefined;
 		}
-		(await this._getPopover()).showAt(opener);
+		await this._getPopover();
+		this._popover.initialFocus = "";
+		for(let index = 0; index < this._currentItems.length; index++){
+			if (!this._currentItems[index].item.disabled) {
+				this._popover.initialFocus = `${this._id}-menu-item-${index}`;
+				break;
+			}
+		}
+		this._popover.showAt(opener);
 	}
 
 	/**
@@ -305,9 +312,7 @@ class Menu extends UI5Element {
 	}
 
 	async _getPopover() {
-		const id = this._id;
 		this._popover = (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
-		this._popover.initialFocus = `${id}-menu-item-0`;
 		return this._popover;
 	}
 
@@ -339,6 +344,7 @@ class Menu extends UI5Element {
 
 	_createSubMenu(item, openerId) {
 		const subMenu = document.createElement(this.constructor.getMetadata().getTag());
+		const fragment = document.createDocumentFragment();
 
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
@@ -348,8 +354,9 @@ class Menu extends UI5Element {
 			idx;
 		for (idx = 0; idx < subItems.length; idx++) {
 			clonedItem = subItems[idx].cloneNode(true);
-			subMenu.appendChild(clonedItem);
+			fragment.appendChild(clonedItem);
 		}
+		subMenu.appendChild(fragment);
 		this.staticAreaItem.shadowRoot.querySelector(".ui5-menu-submenus").appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
@@ -454,13 +461,13 @@ class Menu extends UI5Element {
 		const actionId = opener.getAttribute("id");
 
 		if (!item.hasChildren) {
-			// click on an item that doesn't have sub-items fires an "item-selected" event
+			// click on an item that doesn't have sub-items fires an "item-click" event
 			if (!this._isSubMenu) {
 				if (isPhone()) {
 					this._parentMenuItem = undefined;
 				}
 				// fire event if the click is on top-level menu item
-				this.fireEvent("item-selected", {
+				this.fireEvent("item-click", {
 					"item": item,
 					"text": item.text,
 				});

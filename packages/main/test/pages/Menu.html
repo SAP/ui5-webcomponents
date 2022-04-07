@@ -15,7 +15,7 @@
 
 <body class="responsivepopover2auto">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
-	<ui5-menu id="menu" title="My ui5-menu">
+	<ui5-menu id="menu" header-text="My ui5-menu">
 		<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section>
@@ -40,7 +40,7 @@
 	</ui5-menu>
 
 	<header class="header">
-		<h3 class="header-title">Selected menu item text</h3>
+		<h3 class="header-title">Clicked menu item text</h3>
 	</header>
 
 	<div class="samples-margin">
@@ -66,7 +66,7 @@
 			menu.showAt(btnOpen);
 		});
 
-		menu.addEventListener("ui5-item-selected", function(event){
+		menu.addEventListener("ui5-item-click", function(event){
 			var item = event.detail.item;
 			var path = [];
 
@@ -76,7 +76,7 @@
 				path.unshift(item.text);
 				item = item.parent();
 			}
-			toastMessage.textContent = "[ " + path.join(" > ") + " ] is selected";
+			toastMessage.textContent = "[ " + path.join(" > ") + " ] is clicked";
 			toastMessage.show();
 		});
 

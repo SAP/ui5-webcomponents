@@ -135,7 +135,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MenuItem
  * @extends UI5Element
  * @tagname ui5-menu-item
- * @since 1.2.2
+ * @since 1.3.0
  * @public
  */
 class MenuItem extends UI5Element {
