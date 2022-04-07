@@ -92,6 +92,10 @@ import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
+import Grid from "./dist/Grid.js";
+import GridColumn from "./dist/GridColumn.js";
+import GridCell from "./dist/GridCell.js";
+
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
