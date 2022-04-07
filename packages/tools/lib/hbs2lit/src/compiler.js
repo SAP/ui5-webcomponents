@@ -30,7 +30,16 @@ const hbs2lit = (file) => {
 	lv.accept(ast);
 
 	for (let key in lv.blocks) {
-		result += lv.blocks[key] + "\n";
+		let block = lv.blocks[key];
+
+		if (block.match(/scopeTag/)) {
+			const matches = block.match(/^(.*?)( => )(.*?);$/);
+			const scopedCode = matches[3];
+			const normalCode = scopedCode.replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
+			block = `${matches[1]}${matches[2]}suffix ? ${scopedCode} : ${normalCode};`;
+		}
+
+		result += block + "\n";
 	}
 
 	result = svgProcessor.process(result);
