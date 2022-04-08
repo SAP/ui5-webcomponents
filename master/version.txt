@@ -1,9 +1,5 @@
-commit fa2a7008fb2b8a6d03ee35c28d12c9befe841414
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Thu Apr 7 09:38:07 2022 +0300
+commit 883809f17688a3ab22e8c5a04abc23e28fd7b613
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Apr 8 10:32:20 2022 +0300
 
-    fix(ui5-multi-input): improve backspace and home handling (#4646)
-    
-    The focus on `backspace` now moves to the last token if the cursor is at the beginning of the input.
-    When `home` is pressed and the cursor is at the beginning, focus now moves to the first token.
-    Also fixes the _itemNavigation error log.
+    fix(form support): fix submit event handling (#4942)
