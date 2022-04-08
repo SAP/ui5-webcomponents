@@ -390,7 +390,7 @@ class Button extends UI5Element {
 		}
 		event.isMarked = "button";
 		const FormSupport = getFeature("FormSupport");
-		if (FormSupport) {
+		if (FormSupport && this.submits) {
 			FormSupport.triggerFormSubmit(this);
 		}
 
