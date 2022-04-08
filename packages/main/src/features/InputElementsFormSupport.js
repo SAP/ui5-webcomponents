@@ -62,17 +62,20 @@ class FormSupport {
 	}
 
 	static triggerFormSubmit(element) {
-		if (!element.submits) {
-			return;
-		}
 		let currentElement = element.parentElement;
 		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
 			currentElement = currentElement.parentElement;
 		}
+
 		if (currentElement) {
+			// eslint-disable-next-line no-undef
+			currentElement.dispatchEvent(new SubmitEvent("submit", {
+				bubbles: true,
+				cancelable: true,
+				submitter: element,
+			}));
+
 			currentElement.submit();
-		} else {
-			console.error(`${element} is not within a form. Please add it in a form.`); // eslint-disable-line
 		}
 	}
 }

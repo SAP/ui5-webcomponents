@@ -39,6 +39,7 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -433,6 +434,7 @@ class MultiComboBox extends UI5Element {
 		this._validationTimeout = null;
 		this._handleResizeBound = this._handleResize.bind(this);
 		this.currentItemIdx = -1;
+		this.FormSupport = undefined;
 	}
 
 	onEnterDOM() {
@@ -970,6 +972,10 @@ class MultiComboBox extends UI5Element {
 		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
 		const oldValueState = this.valueState;
 
+		if (this.FormSupport) {
+			this.FormSupport.triggerFormSubmit(this);
+		}
+
 		if (matchingItem) {
 			if (matchingItem.selected) {
 				if (this._validationTimeout) {
@@ -1162,6 +1168,7 @@ class MultiComboBox extends UI5Element {
 
 	onBeforeRendering() {
 		const input = this.shadowRoot.querySelector("input");
+		this.FormSupport = getFeature("FormSupport");
 		this._inputLastValue = this.value;
 
 		if (input && !input.value) {
