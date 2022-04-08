@@ -191,6 +191,17 @@ class TableRow extends UI5Element {
 		return [CheckBox];
 	}
 
+	constructor() {
+		super();
+
+		this._ontouchstart = {
+			handleEvent(event) {
+				this.activate();
+			},
+			passive: true,
+		};
+	}
+
 	_onmouseup() {
 		this.deactivate();
 	}
@@ -238,10 +249,6 @@ class TableRow extends UI5Element {
 		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
-	}
-
-	_ontouchstart(event) {
-		this.activate();
 	}
 
 	_ontouchend() {

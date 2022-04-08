@@ -442,6 +442,13 @@ class TimePickerBase extends UI5Element {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
+	/**
+	 *
+	 * @param {event} e Wheel Event
+	 * @private
+	 *
+	 * The listener for this event can't be passive as it calls preventDefault()
+	 */
 	_handleWheel(e) {
 		e.preventDefault();
 	}
