@@ -148,6 +148,13 @@ class ListItem extends ListItemBase {
 				this.active = false;
 			}
 		};
+
+		this._ontouchstart = {
+			handleEvent(event) {
+				this._onmousedown(event);
+			},
+			passive: true,
+		};
 	}
 
 	onBeforeRendering(...params) {
@@ -210,10 +217,6 @@ class ListItem extends ListItemBase {
 			return;
 		}
 		this.deactivate();
-	}
-
-	_ontouchstart(event) {
-		this._onmousedown(event);
 	}
 
 	_ontouchend(event) {

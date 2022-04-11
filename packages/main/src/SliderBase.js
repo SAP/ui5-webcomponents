@@ -159,6 +159,13 @@ class SliderBase extends UI5Element {
 			max: null,
 			labelInterval: null,
 		};
+
+		this._ontouchstart = {
+			handleEvent(event) {
+				this._onmousedown(event);
+			},
+			passive: true,
+		};
 	}
 
 	static get metadata() {
@@ -253,10 +260,6 @@ class SliderBase extends UI5Element {
 		if (this.notResized) {
 			this._resizeHandler();
 		}
-	}
-
-	_ontouchstart(event) {
-		this._onmousedown(event);
 	}
 
 	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
