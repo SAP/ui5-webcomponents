@@ -632,7 +632,7 @@ class Input extends UI5Element {
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
-		const FormSupport = getFeature("FormSupport");
+		this.FormSupport = getFeature("FormSupport");
 		const hasItems = this.suggestionItems.length;
 		const hasValue = !!this.value;
 		const isFocused = this === document.activeElement;
@@ -645,8 +645,8 @@ class Input extends UI5Element {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
 		}
 
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+		if (this.FormSupport) {
+			this.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
@@ -762,6 +762,11 @@ class Input extends UI5Element {
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
 			this.lastConfirmedValue = this.value;
+
+			if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
+
 			return;
 		}
 
