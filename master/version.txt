@@ -1,5 +1,5 @@
-commit c530453d14fcee4dd5e57c9ba86024af87d3060c
+commit 1b45c67382d84f389e38e468c9a07ccedee59bcd
 Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Apr 11 10:54:31 2022 +0300
+Date:   Mon Apr 11 13:41:36 2022 +0300
 
-    chore: update lockfile (#5033)
+    docs: update commit convention description (#4961)
