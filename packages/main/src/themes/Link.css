@@ -57,7 +57,7 @@
 	text-decoration: inherit;
 }
 
-.ui5-link-root:active {
+:host(:active) .ui5-link-root {
 	color: var(--sapLink_Active_Color);
 	text-decoration: var(--_ui5_link_active_text_decoration);
 }
@@ -85,4 +85,10 @@
 :host(:hover) .ui5-link-root {
 	color: var(--sapLink_Hover_Color);
 	text-decoration: var(--_ui5_link_hover_text_decoration);
+}
+
+:host([focused]:hover),
+:host([focused]:hover) .ui5-link-root {
+	color: var(--_ui5_link_focused_hover_text_color);
+	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }
