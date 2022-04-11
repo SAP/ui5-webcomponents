@@ -80,6 +80,10 @@
 	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
 }
 
+.ui5-split-text-button[active] {
+	outline: 0;
+}
+
 .ui5-split-arrow-button-wrapper {
 	position: absolute;
 	top: 0;

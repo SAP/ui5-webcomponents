@@ -267,3 +267,12 @@ bdi {
 	outline: none;
 }
 
+:host([ui5-segmented-button-item][focused]:not(:last-child)) .ui5-button-root:after {
+	border-top-right-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-bottom-right-radius: var(--_ui5_button_focused_inner_border_radius);
+}
+
+:host([ui5-segmented-button-item][focused]:not(:first-child)) .ui5-button-root:after {
+	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
+}

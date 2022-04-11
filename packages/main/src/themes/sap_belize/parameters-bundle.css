@@ -1,4 +1,4 @@
-@import "../base/sizes-parameters.css";
+@import "./sizes-parameters.css";
 @import "../base/Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
 @import "./BrowserScrollbar-parameters.css";
@@ -27,7 +27,7 @@
 @import "../base/RadioButton-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
 @import "../base/Select-parameters.css";
-@import "../base/SplitButton-parameters.css";
+@import "./SplitButton-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "./Table-parameters.css";

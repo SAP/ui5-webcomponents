@@ -19,12 +19,23 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	z-index: initial;
+}
+
+::slotted([ui5-segmented-button-item]:hover) {
+	z-index: 2;
 }
 
 ::slotted([ui5-segmented-button-item][pressed]),
 ::slotted([ui5-segmented-button-item][active]) {
 	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 	background-color: var(--sapButton_Selected_Background);
+	color: var(--sapButton_Selected_TextColor);
+}
+
+::slotted([ui5-segmented-button-item][pressed]:hover) {
+	border: 0.0625rem solid var(--sapButton_Selected_Hover_BorderColor);
+	background-color: var(--sapButton_Selected_Hover_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
 
@@ -92,4 +103,12 @@
 	border-bottom-right-radius: var(--_ui5_segmented_btn_border_radius);
 	border-top-left-radius: var(--_ui5_segmented_btn_border_radius);
 	border-bottom-left-radius: var(--_ui5_segmented_btn_border_radius);
+}
+
+::slotted([ui5-segmented-button-item][active]:not([active]):hover) {
+	border-color: var(--sapButton_BorderColor);
+}
+
+::slotted([ui5-segmented-button-item][active]:hover) {
+	border-color: var(--sapButton_Selected_BorderColor);
 }
