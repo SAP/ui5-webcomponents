@@ -275,6 +275,10 @@ class Slider extends SliderBase {
 				"transform": `scaleX(${this._progressPercentage})`,
 				"transform-origin": `${this.directionStart} top`,
 			},
+			overlay: {
+				"background": `${this._tickmarksProgress}`,
+				"width": `${this._progressPercentage * 100}%`,
+			},
 			handle: {
 				[this.directionStart]: `${this._handlePositionFromStart}%`,
 			},

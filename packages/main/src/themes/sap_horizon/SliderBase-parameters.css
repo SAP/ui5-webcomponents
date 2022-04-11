@@ -1,7 +1,7 @@
 @import "../base/SliderBase-parameters.css";
 
 :root {
-	--_ui5_slider_progress_container_background: var(--sapButton_Track_Background);
+	--_ui5_slider_progress_container_background: var(--sapSlider_Background);
 	--_ui5_slider_progress_container_dot_display: block;
 	--_ui5_slider_inner_min_width: 4rem;
 	--_ui5_slider_progress_background: var(--sapContent_Selected_ForegroundColor);
@@ -28,6 +28,9 @@
 	--_ui5_slider_tooltip_box_shadow: var(--sapContent_Shadow1);
 	--_ui5_range_slider_legacy_progress_focus_display: none;
 	--_ui5_range_slider_progress_focus_display: block;
+	--_ui5_slider_tickmark_top: -0.125rem;
+	--_ui5_slider_tickmark_height: 0.5rem;
+	--_ui5_slider_tickmark_z_index: 1;
 }
 
 [data-ui5-compact-size],

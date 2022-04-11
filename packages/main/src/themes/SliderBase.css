@@ -37,8 +37,10 @@
 .ui5-slider-progress-container {
 	width: 100%;
 	background: var(--_ui5_slider_progress_container_background);
-	border: var(--_ui5_slider_progress_border);
+	border-width: var(--_ui5_slider_progress_border_width);
+	border-style: var(--_ui5_slider_progress_border_style);
 	border-radius: var(--_ui5_slider_progress_border_radius);
+	border-color: var(--_ui5_slider_progress_border_color);
 	height: var(--_ui5_slider_inner_height);
 	position: relative;
 }
@@ -115,8 +117,16 @@
 .ui5-slider-tickmarks {
 	position: absolute;
 	width: 100%;
-	height: 1rem;
+	height: var(--_ui5_slider_tickmark_height);
 	top: var(--_ui5_slider_tickmark_top);
+	z-index: var(--_ui5_slider_tickmark_z_index);
+}
+
+.ui5-slider-tickmarks-overlay {
+	height: var(--_ui5_slider_tickmark_height);
+	top: var(--_ui5_slider_tickmark_top);
+	position: absolute;
+	z-index: 2;
 }
 
 .ui5-slider-handle {
@@ -130,6 +140,7 @@
 	outline: none;
 	height: var(--_ui5_slider_handle_height);
 	width: var(--_ui5_slider_handle_width);
+	z-index: 3;
 }
 
 [slider-icon] {

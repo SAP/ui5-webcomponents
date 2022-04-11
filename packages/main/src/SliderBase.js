@@ -190,6 +190,8 @@ class SliderBase extends UI5Element {
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
 			sap_horizon: "#89919a",
+			sap_horizon_hcw: "#000000",
+			sap_horizon_hcb: "#ffffff",
 		};
 	}
 
@@ -698,6 +700,12 @@ class SliderBase extends UI5Element {
 
 		// Draw the tickmarks as a patern over the gradient background
 		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${this._tickmarksAmount})) 100% repeat-x`;
+
+		const tickmarksAmountProgressOverlay = `(${maxStr - minStr} / ${stepStr}) * ${this._progressPercentage}`;
+		const tickmarksGradientBaseProgressOverlay = `linear-gradient(to right, #0070f2 ${tickmarkWidth}, transparent 0) `;
+		const tickmarksPatternProgressOverlay = `0 center / calc((100% - ${tickmarkWidth}) / (${tickmarksAmountProgressOverlay})) 100% repeat-x`;
+
+		this._tickmarksProgress = `${tickmarksGradientBaseProgressOverlay + tickmarksPatternProgressOverlay}`;
 
 		// Combine to get the complete CSS background gradient property value
 		return `${tickmarksGradientBase + tickmarksGradientdPattern}`;
