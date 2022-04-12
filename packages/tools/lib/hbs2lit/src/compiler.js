@@ -31,7 +31,6 @@ const hbs2lit = (file) => {
 
 	for (let key in lv.blocks) {
 		let block = lv.blocks[key];
-
 		if (block.match(/scopeTag/)) {
 			const blockScoped = block.replace(/^const block/, "const scoped_block");
 			const blockNormal = block.replace(/^const block/, "const normal_block").replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
