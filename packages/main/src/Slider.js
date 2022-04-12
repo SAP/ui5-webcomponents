@@ -284,6 +284,7 @@ class Slider extends SliderBase {
 			},
 			tickmarks: {
 				"background": `${this._tickmarks}`,
+				"clip": `rect(0, ${this._tickmarksTotalWidth}px, 8px, ${this._tickmarksProgressWidth}px)`,
 			},
 			label: {
 				"width": `${this._labelWidth}%`,

@@ -262,6 +262,8 @@ class SliderBase extends UI5Element {
 		if (this.notResized) {
 			this._resizeHandler();
 		}
+		this._tickmarksProgressWidth = this.shadowRoot.querySelector(".ui5-slider-tickmarks-overlay") ? this.shadowRoot.querySelector(".ui5-slider-tickmarks-overlay").getBoundingClientRect().width : 0;
+		this._tickmarksTotalWidth = this.shadowRoot.querySelector(".ui5-slider-tickmarks") ? this.shadowRoot.querySelector(".ui5-slider-tickmarks").getBoundingClientRect().width : 0;
 	}
 
 	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
@@ -700,13 +702,12 @@ class SliderBase extends UI5Element {
 
 		// Draw the tickmarks as a patern over the gradient background
 		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${this._tickmarksAmount})) 100% repeat-x`;
-
 		const tickmarksAmountProgressOverlay = `(${maxStr - minStr} / ${stepStr}) * ${this._progressPercentage}`;
 		const tickmarksGradientBaseProgressOverlay = `linear-gradient(to right, #0070f2 ${tickmarkWidth}, transparent 0) `;
 		const tickmarksPatternProgressOverlay = `0 center / calc((100% - ${tickmarkWidth}) / (${tickmarksAmountProgressOverlay})) 100% repeat-x`;
 
 		this._tickmarksProgress = `${tickmarksGradientBaseProgressOverlay + tickmarksPatternProgressOverlay}`;
-
+		
 		// Combine to get the complete CSS background gradient property value
 		return `${tickmarksGradientBase + tickmarksGradientdPattern}`;
 	}
