@@ -323,8 +323,9 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_navigateBack(event) {
+	_navigateBack() {
 		const parentMenuItem = this._parentItemsStack.pop();
+
 		this.focus();
 		if (parentMenuItem) {
 			this._prepareCurrentItems(parentMenuItem.parentElement.items);
@@ -408,7 +409,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_prepareSubMenuPhone(item, opener, actionId) {
+	_prepareSubMenuPhone(item) {
 		this._prepareCurrentItems(item.items);
 		this._parentMenuItem = item;
 		this._parentItemsStack.push(item);
@@ -421,6 +422,7 @@ class Menu extends UI5Element {
 			const item = opener.associatedItem;
 			const hoverId = opener.getAttribute("id");
 
+			opener.focus();
 			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		}
 	}
@@ -429,6 +431,7 @@ class Menu extends UI5Element {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
 			const item = event.target.associatedItem;
+
 			if (item.hasChildren && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
@@ -484,7 +487,7 @@ class Menu extends UI5Element {
 			}
 		} else if (isPhone()) {
 			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item, opener, actionId);
+			this._prepareSubMenuPhone(item);
 		} else if (isTablet()) {
 			// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);

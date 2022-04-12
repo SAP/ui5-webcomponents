@@ -54,9 +54,6 @@
 		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-input>
 	</div>
 
-
-	<ui5-toast id="toastMessage" duration="5000"></ui5-toast>
-
 	<script>
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "Menu",
@@ -67,17 +64,7 @@
 		});
 
 		menu.addEventListener("ui5-item-click", function(event){
-			var item = event.detail.item;
-			var path = [];
-
-			selectionInput.value = item.text;
-
-			while (item) {
-				path.unshift(item.text);
-				item = item.parent();
-			}
-			toastMessage.textContent = "[ " + path.join(" > ") + " ] is clicked";
-			toastMessage.show();
+			selectionInput.value = event.detail.text;
 		});
 
 		direction.addEventListener("change", function() {

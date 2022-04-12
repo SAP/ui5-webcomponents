@@ -154,18 +154,6 @@ class MenuItem extends UI5Element {
 	get subMenuOpened() {
 		return !!Object.keys(this._subMenu).length;
 	}
-
-	/**
-	 * Returns the parent item of the current item.
-	 * @public
-	 * @returns {object} the item that opened the sub menu containing the current item.
-	 */
-	parent() {
-		if (this.parentElement) {
-			return this.parentElement._openedSubMenuItem ? this.parentElement._parentMenuItem : this.parentElement;
-		}
-		return undefined;
-	}
 }
 
 MenuItem.define();
