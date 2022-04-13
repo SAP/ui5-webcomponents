@@ -15,4 +15,5 @@
 	--_ui5_button_emphasized_border_width: .0625rem;
 	--_ui5_button_fontFamily:  "72override", var(--sapFontBoldFamily);
 	--_ui5_button_pressed_focused_border_color: var(--sapContent_FocusColor);
+	--_ui5_button_emphasized_focused_border_color: var(--sapContent_ContrastFocusColor);
 }

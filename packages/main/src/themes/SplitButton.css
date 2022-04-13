@@ -27,15 +27,16 @@
 	background-color: transparent;
 }
 
-:host([design="Transparent"]:not([hidden]):hover) {
+:host([design="Transparent"][disabled]:not([hidden])) {
+	background-color: var(--_ui5_split_button_transparent_disabled_background);
+}
+
+:host([design="Transparent"]:not([hidden]):not([disabled]):hover) {
 	background-color: var(--_ui5_split_button_transparent_hover_background);
 }
 
-:host([design="Transparent"]:not([hidden]):hover) .ui5-split-text-button:not(:hover) {
-	color: var(--_ui5_split_button_transparent_hover_color);
-}
-
-:host([design="Transparent"]:not([hidden]):hover) .ui5-split-arrow-button:not(:hover) {
+:host([design="Transparent"]:not([hidden]):not([disabled]):hover) .ui5-split-arrow-button:not(:hover),
+:host([design="Transparent"]:not([hidden]):not([disabled]):hover) .ui5-split-text-button:not(:hover) {
 	color: var(--_ui5_split_button_transparent_hover_color);
 }
 

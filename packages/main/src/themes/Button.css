@@ -129,6 +129,19 @@
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 }
 
+:host([design="Emphasized"][focused]) .ui5-button-root:before {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	border: var(--_ui5_button_emphasized_focused_border_before);
+	pointer-events: none;
+	border-radius: var(--_ui5_button_focused_border_radius);
+}
+
 .ui5-button-root::-moz-focus-inner {
 	border: 0;
 }
