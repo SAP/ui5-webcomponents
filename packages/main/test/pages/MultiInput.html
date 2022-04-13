@@ -195,6 +195,14 @@
 		<br>
 		<br>
 
+		<h1 class="sample-container-title">Multi Input with 2 tokens</h1>
+		<ui5-multi-input id="two-tokens" value="abc">
+			<ui5-token slot="tokens" id="firstToken" text="a"></ui5-token>
+			<ui5-token slot="tokens" id="secondToken" text="b"></ui5-token>
+		</ui5-multi-input>
+		<br>
+		<br>
+
 		<h1 class="sample-container-title">Multi Input with 5 tokens</h1>
 		<ui5-multi-input id="multiple-token">
 			<ui5-token slot="tokens" text="ea"></ui5-token>
@@ -331,14 +339,13 @@
 			document.getElementById("value-help-trigger-counter").value = ++valueHelpTriggerCounter;
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
+		const handleTokenDelete = (event) => {
 			var mi = event.target;
-
 			mi.removeChild(event.detail.token);
+		}
 
-			// discuss ?!
-			// mi.focus();
-		});
+		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
+		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
 	</script>
 </body>
 

@@ -5,7 +5,7 @@
 		{{> busyRow}}
 	{{/if}}
 
-	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
+	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table" aria-label="{{tableAriaLabelText}}">
 		<thead>
 			<tr
 				id="{{_columnHeader.id}}"

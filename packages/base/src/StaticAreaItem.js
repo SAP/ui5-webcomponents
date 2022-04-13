@@ -2,7 +2,7 @@ import "./StaticArea.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
-import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
+import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 
 /**

@@ -22,6 +22,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -632,21 +633,21 @@ class Input extends UI5Element {
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
-		const FormSupport = getFeature("FormSupport");
+		this.FormSupport = getFeature("FormSupport");
 		const hasItems = this.suggestionItems.length;
 		const hasValue = !!this.value;
-		const isFocused = this === document.activeElement;
+		const isFocused = this.shadowRoot.querySelector("input") === getActiveElement();
 
 		if (this._isPhone) {
 			this.open = this.openOnMobile;
 		} else if (this._forceOpen) {
-			this.open = isFocused;
+			this.open = true;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
 		}
 
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+		if (this.FormSupport) {
+			this.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
@@ -762,6 +763,11 @@ class Input extends UI5Element {
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
 			this.lastConfirmedValue = this.value;
+
+			if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
+
 			return;
 		}
 
@@ -1044,11 +1050,12 @@ class Input extends UI5Element {
 	}
 
 	/**
-	 * Manually opens the suggestions popover, assuming suggestions are enabled. Otherwise, does nothing.
+	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
+	 * @since 1.3.0
 	 * @public
 	 */
 	openPicker() {
-		if (!this.Suggestions || this.disabled || this.readonly) {
+		if (!this.suggestionItems.length || this.disabled || this.readonly) {
 			return;
 		}
 

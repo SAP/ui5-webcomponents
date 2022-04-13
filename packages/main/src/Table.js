@@ -23,6 +23,7 @@ import {
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -250,6 +251,32 @@ const metadata = {
 		mode: {
 			type: TableMode,
 			defaultValue: TableMode.None,
+		},
+
+		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.3.0
+		 */
+		accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.3.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_hiddenColumns: {
@@ -1115,6 +1142,10 @@ class Table extends UI5Element {
 		}).join(" ");
 
 		return `${headerRowText} ${columnsTitle}`;
+	}
+
+	get tableAriaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get ariaLabelSelectAllText() {

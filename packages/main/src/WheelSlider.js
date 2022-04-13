@@ -342,6 +342,13 @@ class WheelSlider extends UI5Element {
 		return index;
 	}
 
+	/**
+	 *
+	 * @param {event} e Wheel Event
+	 * @private
+	 *
+	 * The listener for this event can't be passive as it calls preventDefault()
+	 */
 	_handleWheel(e) {
 		if (!e) {
 			return;

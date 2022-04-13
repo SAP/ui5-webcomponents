@@ -12,10 +12,10 @@ describe("Card general interaction", () => {
 		assert.ok(await card.isExisting(), "The component has shadow root.");
 	});
 
-	it("tests status not rendered, when action is set", async () => {
+	it("tests status is rendered, when action is set", async () => {
 		const status = await browser.$("#actionCardHeader").shadow$(".ui5-card-header-status");
 
-		assert.notOk(await status.isExisting(), "The status DOM is not rendered.");
+		assert.ok(await status.isExisting(), "The status DOM is rendered.");
 	});
 
 	it("tests header's click event with mouse click, Enter and Space", async () => {
