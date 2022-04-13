@@ -420,3 +420,19 @@ describe("Select general interaction", () => {
 			"The aria-roledescription is correct.");
 	});
 });
+
+describe("Attributes propagation", () => {
+	before(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+	});
+
+	it("additional-text attribute is propagated properly", async () => {
+		const EXPECTED_ADDITIONAL_TEXT = "DZ",
+			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect6"),
+			firstOption = await browser.$("#mySelect6 ui5-option:first-child"),
+			firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+
+		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
+		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
+	});
+});

@@ -69,6 +69,16 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the <code>additionalText</code>, displayed at the end of the option element.
+		 * @type {string}
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		 additionalText: {
+			type: String,
+		},
+
+		/**
 		 * Defines the focused state of the component.
 		 * @type {boolean}
 		 * @defaultvalue false
