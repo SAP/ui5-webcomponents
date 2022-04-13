@@ -71,36 +71,44 @@
 	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_height);
 	--_ui5_switch_width: var(--_ui5_switch_width);
-	--_ui5_switch_semantic_width: var(--_ui5_switch_semantic_width);
-	--_ui5_switch_no_label_width: var(--_ui5_switch_no_label_width);
+	--_ui5_switch_with_label_width: var(--_ui5_switch_with_label_width);
+
+	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_outline_top);
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);	
 
 	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
 	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
-	--_ui5_switch_track_semantic_width: var(--_ui5_switch_track_semantic_width);
-	--_ui5_switch_track_no_label_width: var(--_ui5_switch_track_no_label_width);
-	--_ui5_switch_track_semantic_height: var(--_ui5_switch_track_semantic_height);
-	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_no_label_height);
-	--_ui5_switch_track_top_margin:  var(--_ui5_switch_track_top_margin);
-	--_ui5_switch_track_bottom_margin: var(--_ui5_switch_track_bottom_margin);
+	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_width);
+	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_height);
+	/* --_ui5_switch_track_top_margin:  var(--_ui5_switch_track_top_margin);
+	--_ui5_switch_track_bottom_margin: var(--_ui5_switch_track_bottom_margin); */
+	--_ui5_switch_min_width: var(--_ui5_switch_min_width);
 
 	--_ui5_switch_handle_height: var(--_ui5_switch_handle_height);
-	--_ui5_switch_handle_semantic_width: var(--_ui5_switch_handle_semantic_width);
-	--_ui5_switch_handle_no_label_width: var(--_ui5_switch_handle_no_label_width);
+	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_width);
 	--_ui5_switch_handle_width: var(--_ui5_switch_handle_width);
+	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_height);
 
-	--_ui5_switch_text_semantic_font_size: var(--_ui5_switch_text_semantic_font_size);
+	--_ui5_switch_text_with_label_font_size: var(--_ui5_switch_text_with_label_font_size);
 
-	--_ui5_switch_text_on_left_padding: var(--_ui5_switch_text_on_left_padding);
+	/* --_ui5_switch_text_on_left_padding: var(--_ui5_switch_text_on_left_padding);
 	--_ui5_switch_text_off_right_padding: var(--_ui5_switch_text_off_right_padding);
-	--_ui5_switch_text_semantic_on_left_padding: var(--_ui5_switch_text_semantic_on_left_padding);
-	--_ui5_switch_text_semantic_off_right_padding: var(--_ui5_switch_text_semantic_off_right_padding);
+	--_ui5_switch_text_with_label_on_left_padding: var(--_ui5_switch_text_with_label_on_left_padding);
+	--_ui5_switch_text_with_label_off_right_padding: var(--_ui5_switch_text_with_label_off_right_padding); */
+
+	--_ui5_switch_text_font_size: var(--_ui5_switch_text_font_size);
+	--_ui5_switch_text_width: var(--_ui5_switch_text_width);
 
 	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
-	--_ui5_switch_text_on_left: calc(-100% + 1.9125rem);
-	--_ui5_switch_slider_transform: var(--_ui5_switch_slider_transform);
-	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
-	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
+
+
+	--_ui5_switch_transform: var(--_ui5_switch_transform);
+	--_ui5_switch_transform_with_label: var(--_ui5_switch_transform_with_label);
+	--_ui5_switch_rtl_transform: var(--_ui5_switch_rtl_transform);
+	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_rtl_transform_with_label);
+
+	--_ui5_switch_text_right: var(--_ui5_switch_text_right);
 
 	--_ui5_tc_item_text: 3rem;
 	--_ui5_tc_item_height: 4.75rem;
@@ -266,33 +274,38 @@
 	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
-	--_ui5_switch_semantic_width: var(--_ui5_switch_compact_semantic_width);
-	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
+	--_ui5_switch_with_label_width: var(--_ui5_switch_compact_with_label_width);
+
+	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_compact_outline_top);
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_compact_outline_bottom);
 
 	--_ui5_switch_track_width: var(--_ui5_switch_track_compact_width);
 	--_ui5_switch_track_height: var(--_ui5_switch_track_compact_height);
-	--_ui5_switch_track_semantic_width: var(--_ui5_switch_track_semantic_compact_width);
-	--_ui5_switch_track_no_label_width: var(--_ui5_switch_track_no_label_compact_width);
-	--_ui5_switch_track_semantic_height: var(--_ui5_switch_track_semantic_compact_height);
-	--_ui5_switch_track_no_label_height: var(--_ui5_switch_track_no_label_compact_height);
-	--_ui5_switch_track_top_margin:  var(--_ui5_switch_track_compact_top_margin);
-	--_ui5_switch_track_bottom_margin: var(--_ui5_switch_track_compact_bottom_margin);
+	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_compact_width);
+	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_compact_height);
+	/* --_ui5_switch_track_top_margin:  var(--_ui5_switch_track_compact_top_margin);
+	--_ui5_switch_track_bottom_margin: var(--_ui5_switch_track_compact_bottom_margin); */
+	--_ui5_switch_min_width: var(--_ui5_switch_compact_min_width);
 
 	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
-	--_ui5_switch_handle_semantic_width: var(--_ui5_switch_handle_semantic_compact_width);
-	--_ui5_switch_handle_no_label_width: var(--_ui5_switch_handle_no_label_compact_width);
+	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_compact_width);
 	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
-	--_ui5_switch_text_semantic_font_size: var(--_ui5_switch_text_semantic_compact_font_size);
+	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_compact_height);
 
-	--_ui5_switch_text_on_left_padding: var(--_ui5_switch_text_on_compact_left_padding);
+	/* --_ui5_switch_text_on_left_padding: var(--_ui5_switch_text_on_compact_left_padding);
 	--_ui5_switch_text_off_right_padding: var(--_ui5_switch_text_off_compact_right_padding);
-	--_ui5_switch_text_semantic_on_left_padding: var(--_ui5_switch_text_semantic_on_compact_left_padding);
-	--_ui5_switch_text_semantic_off_right_padding: var(--_ui5_switch_text_semantic_off_compact_right_padding);
+	--_ui5_switch_text_with_label_on_left_padding: var(--_ui5_switch_text_with_label_on_compact_left_padding);
+	--_ui5_switch_text_with_label_off_right_padding: var(--_ui5_switch_text_with_label_off_compact_right_padding); */
 
-	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
-	--_ui5_switch_slider_transform: var(--_ui5_switch_slider_compact_transform);
-	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
-	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
+	--_ui5_switch_text_font_size: var(--_ui5_switch_text_compact_font_size);
+	--_ui5_switch_text_width: var(--_ui5_switch_text_compact_width);
+
+	--_ui5_switch_transform: var(--_ui5_switch_compact_transform);
+	--_ui5_switch_transform_with_label: var(--_ui5_switch_compact_transform_with_label);
+	--_ui5_switch_rtl_transform: var(--_ui5_switch_compact_rtl_transform);
+	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_compact_rtl_transform_with_label);
+
+	--_ui5_switch_text_right: var(--_ui5_switch_text_compact_right);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
