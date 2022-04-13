@@ -1,5 +1,7 @@
-commit 199d9741dce8987f5df476f6bf667fbf8213cf4f
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Apr 12 13:34:27 2022 +0300
+commit d6a56cb34e2616371d3095a3c2b34290e30eda50
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Apr 13 19:20:50 2022 +0300
 
-    fix(ui5-input): activeElement is now correct in case of nested components (#5005)
+    feat(ui5-checkbox): implement required property (#5055)
+    
+    Fixes: #4895
