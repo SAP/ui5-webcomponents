@@ -31,7 +31,7 @@
 	--_ui5_switch_disabled_opacity: .4;
 
 	--_ui5_switch_transform: translateX(100%) translateX(-1.875rem);
-	--_ui5_switch_compact_transfrom: translateX(100%) translateX(-1.5rem);
+	--_ui5_switch_compact_transform: translateX(100%) translateX(-1.5rem);
 	--_ui5_switch_transform_with_label: translateX(100%) translateX(-1.875rem);
 	--_ui5_switch_compact_transform_with_label: translateX(100%) translateX( -1.5rem);
 
@@ -52,15 +52,6 @@
 	--_ui5_switch_track_compact_width: 100%;
 	--_ui5_switch_track_height: 1.375rem;
 	--_ui5_switch_track_compact_height: 1.375rem;
-
-	/* --_ui5_switch_track_top_margin: 0;
-	--_ui5_switch_track_compact_top_margin: 0rem;
-
-	--_ui5_switch_track_bottom_margin: 0;
-	--_ui5_switch_track_compact_bottom_margin: 0rem;
-
-	--_ui5_switch_track_left_margin: 0;
-	--_ui5_switch_track_right_margin: 0; */
 
 	--_ui5_switch_track_border_radius: 0.75rem;
 	--_ui5-switch-track-border: 1px solid;
@@ -141,41 +132,16 @@
 
 	--_ui5_switch_text_with_label_font_family: "72override", var(--sapFontFamily);
 	--_ui5_switch_text_with_label_font_size: var(--sapFontSmallSize);
-	/* --_ui5_switch_text_with_label_width: 1.625rem;
-
-	--_ui5_switch_text_width: 2rem;
-	--_ui5_switch_text_compact_width: 1.625rem; */
 
 	--_ui5_switch_text_with_label_width: none;
 
 	--_ui5_switch_text_width: none;
 	--_ui5_switch_text_compact_width: none;
 
-	/* --_ui5_switch_text_on_top_padding: 0;
-	--_ui5_switch_text_on_bottom_padding: 0;
-	--_ui5_switch_text_off_top_padding: 0;
-	--_ui5_switch_text_off_bottom_padding: 0;
-
-	--_ui5_switch_text_on_left_padding: 0.125rem;
-	--_ui5_switch_text_on_right_padding: 0.125rem;
-	--_ui5_switch_text_on_compact_left_padding: 0.125rem;
-
-	--_ui5_switch_text_off_left_padding: 0.125rem;
-	--_ui5_switch_text_off_right_padding: 0.125rem;
-	--_ui5_switch_text_off_compact_right_padding: 0.125rem;
-
-	--_ui5_switch_text_with_label_on_left_padding: 0.125rem;
-	--_ui5_switch_text_with_label_on_right_padding: 0.125rem;
-	--_ui5_switch_text_with_label_on_compact_left_padding: 0.125rem;
-
-	--_ui5_switch_text_with_label_off_left_padding: 0.125rem;
-	--_ui5_switch_text_with_label_off_right_padding: 0.125rem;
-	--_ui5_switch_text_with_label_off_compact_right_padding: 0.125rem; */
-
 	--_ui5_switch_text_inactive_left: auto;
 	--_ui5_switch_text_inactive_right: 0.125rem;
-	--_ui5_switch_text_active_left: calc(-100% + var(--_ui5_switch_handle_width));
-	--_ui5_switch_text_right: calc(-100% + var(--_ui5_switch_handle_width));
+	--_ui5_switch_text_active_left: calc(-100% + var(--_ui5_switch_handle_with_label_width));
+	--_ui5_switch_text_right: calc(-100% + var(--_ui5_switch_handle_with_label_width));
 	--_ui5_switch_text_compact_right: calc(-100% + 1.5625rem);
 
 	--_ui5_switch_text_active_color: var(--sapButton_Track_Selected_TextColor);
