@@ -76,8 +76,7 @@
 	font-size: var(--sapGroup_TitleFontSize);
 	font-weight: normal;
 	color: var(--sapGroup_TitleTextColor);
-	font-weight: var(--_ui5_panel_title_font_weight);
-}
+	font-weight: normal;
 
 .ui5-panel-content {
 	padding: 0.625rem 1rem 1.375rem 1rem;
