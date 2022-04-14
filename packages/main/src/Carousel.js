@@ -611,7 +611,7 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = true;// this._visibleNavigationArrows && this.hasManyPages && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
 
 		return {
 			content: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
