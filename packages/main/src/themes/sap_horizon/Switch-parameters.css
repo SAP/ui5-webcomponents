@@ -83,7 +83,8 @@
 	--_ui5_switch_handle_with_label_height: 1.25rem;
 	--_ui5_switch_handle_with_label_compact_height: 1rem;
 
-	--_ui5-switch-handle-border: none;
+	--_ui5_switch_handle_border: var(--_ui5_switch_handle_border_width) solid var(--sapButton_Handle_BorderColor);
+	--_ui5_switch_handle_border_width: 0.125rem;
 
 	--_ui5_switch_handle_active_background_color: var(--sapButton_Handle_Selected_Background);
 	--_ui5_switch_handle_inactive_background_color: var(--sapButton_Handle_Background);
@@ -105,27 +106,22 @@
 	--_ui5_switch_handle_semantic_hover_accept_border_color: var(--sapButton_Handle_Positive_BorderColor);
 	--_ui5_switch_handle_semantic_hover_reject_border_color: var(--sapButton_Handle_Negative_BorderColor);
 
-	--_ui5_switch_handle_on-hover_box_shadow: 0 0 0 0.125rem var(--sapButton_Handle_Selected_Hover_BorderColor);
-	--_ui5_switch_handle_off_hover_box_shadow: 0 0 0 0.125rem var(--sapButton_Handle_Hover_BorderColor);
-	--_ui5_switch_handle_semantic_on-hover_box_shadow: 0 0 0 0.125rem var(--sapButton_Handle_Positive_Hover_BorderColor);
-	--_ui5_switch_handle_semantic_off_hover_box_shadow: 0 0 0 0.125rem var(--sapButton_Handle_Negative_Hover_BorderColor);
-
 	--_ui5_switch_handle_left: 0.0625rem;
 
 	/* switch text */
 	--_ui5_switch_text_font_family: var(--sapContent_IconFontFamily);
 	--_ui5_switch_text_font_size: var(--sapFontLargeSize);
 	--_ui5_switch_text_compact_font_size: var(--sapFontSize);
-	--_ui5_switch_text_width: 1.5rem;
-	--_ui5_switch_text_compact_width: 1.25rem;
+	--_ui5_switch_text_width: 1.25rem;
+	--_ui5_switch_text_compact_width: 1rem;
 
 	--_ui5_switch_text_with_label_font_family: "72-Condensed-Bold" , "72" , "72full" , Arial, Helvetica, sans-serif;
 	--_ui5_switch_text_with_label_font_size: var(--sapFontSmallSize);
-	--_ui5_switch_text_with_label_width: 1.75rem;
+	--_ui5_switch_text_with_label_width: 1.5rem;
 
-	--_ui5_switch_text_inactive_left: none;
+	--_ui5_switch_text_inactive_left: 0.125rem;
 	--_ui5_switch_text_inactive_right: none;
-	--_ui5_switch_text_active_left: none;
+	--_ui5_switch_text_active_left: 0.125rem;
 	--_ui5_switch_text_right: none;
 	--_ui5_switch_text_compact_right: none;
 
