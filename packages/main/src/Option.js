@@ -69,7 +69,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>additionalText</code>, displayed at the end of the option element.
+		 * Defines the additional text displayed at the end of the option element.
 		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.16
