@@ -4,12 +4,10 @@
 
 th {
 	background: var(--sapList_HeaderBackground);
-	border: none;
-	border-bottom: 1px solid var(--sapList_BorderColor);
 	width: inherit;
 	font-weight: var(--ui5_table_header_row_font_weight);
 	font-size: var(--sapFontMediumSize);
-	padding: 0.25rem;
+	padding: 0.5rem;
 	box-sizing: border-box;
 	text-align: left;
 	vertical-align: middle;

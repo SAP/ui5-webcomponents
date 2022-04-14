@@ -24,7 +24,7 @@ const updateShadowRoot = (element, forStaticArea = false) => {
 		styleStrOrHrefsArr = getEffectiveStyle(element.constructor, forStaticArea);
 	}
 
-	element.constructor.render(renderResult, shadowRoot, styleStrOrHrefsArr, { host: element });
+	element.constructor.render(renderResult, shadowRoot, styleStrOrHrefsArr, forStaticArea, { host: element });
 };
 
 export default updateShadowRoot;

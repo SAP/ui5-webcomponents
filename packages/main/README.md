@@ -148,7 +148,12 @@ However, if you need to submit forms, you can import the module above, and it wi
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.
 
-In addition, the `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+#### How to submit a form
+
+There are two ways of submitting a form:
+1. The `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+2. Pressing Enter while a form control is focused.
+(Note: ```ui5-textarea``` is the only exception. If Enter is pressed while ```ui5-textarea``` is focused, it will result in a new line).
 
 
 ## Resources

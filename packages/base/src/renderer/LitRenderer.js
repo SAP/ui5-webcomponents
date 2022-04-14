@@ -1,28 +1,46 @@
-import { render } from "lit-html";
 import {
+	render,
 	html,
 	svg,
-	unsafeStatic,
-} from "lit-html/static.js";
+} from "lit-html";
+import { getFeature } from "../FeaturesRegistry.js";
 
-const litRender = (templateResult, domNode, styleStrOrHrefsArr, { host } = {}) => {
+const effectiveHtml = (...args) => {
+	const LitStatic = getFeature("LitStatic");
+	const fn = LitStatic ? LitStatic.html : html;
+	return fn(...args);
+};
+
+const effectiveSvg = (...args) => {
+	const LitStatic = getFeature("LitStatic");
+	const fn = LitStatic ? LitStatic.svg : svg;
+	return fn(...args);
+};
+
+const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, { host } = {}) => {
+	const OpenUI5Enablement = getFeature("OpenUI5Enablement");
+	if (OpenUI5Enablement && !forStaticArea) {
+		templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, host, templateResult);
+	}
+
 	if (typeof styleStrOrHrefsArr === "string") {
-		templateResult = html`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
+		templateResult = effectiveHtml`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
-		templateResult = html`${styleStrOrHrefsArr.map(href => html`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
+		templateResult = effectiveHtml`${styleStrOrHrefsArr.map(href => effectiveHtml`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
 	}
 	render(templateResult, domNode, { host });
 };
 
 const scopeTag = (tag, tags, suffix) => {
-	const resultTag = suffix && (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
-	return unsafeStatic(resultTag);
+	const LitStatic = getFeature("LitStatic");
+	if (LitStatic) {
+		return LitStatic.unsafeStatic((tags || []).includes(tag) ? `${tag}-${suffix}` : tag);
+	}
 };
 
 export {
-	html,
-	svg,
-	unsafeStatic,
+	effectiveHtml as html,
+	effectiveSvg as svg,
 };
 export { scopeTag };
 export { repeat } from "lit-html/directives/repeat.js";

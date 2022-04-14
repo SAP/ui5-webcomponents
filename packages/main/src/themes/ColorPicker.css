@@ -188,3 +188,19 @@
 .ui5-color-picker-hue-slider::part(handle):focus {
     margin-top: var(--_ui5_color_picker_slider_handle_focus_margin_top);
 }
+
+[dir=rtl] [ui5-slider].ui5-color-picker-hue-slider::part(progress-container) {
+    background-image: -webkit-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: -moz-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: -ms-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+[dir="rtl"] .ui5-color-picker-alpha-slider::part(handle),
+[dir="rtl"] .ui5-color-picker-hue-slider::part(handle){
+	--_ui5_slider_handle_margin_left: 0;
+}
+
+[dir="rtl"] .ui5-color-picker-sliders-wrapper {
+	margin-left: 10px;
+}
