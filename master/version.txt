@@ -1,7 +1,7 @@
-commit d6a56cb34e2616371d3095a3c2b34290e30eda50
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Apr 13 19:20:50 2022 +0300
+commit deac3098a9586e8e428ec25a2833691f2c58c545
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Thu Apr 14 11:09:51 2022 +0300
 
-    feat(ui5-checkbox): implement required property (#5055)
+    feat(ui5-menu): Initial implementation (#4742)
     
-    Fixes: #4895
+    This is the initial implementation of and web components that allow creating of a hierarchical menu structure.
