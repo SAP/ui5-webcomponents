@@ -72,7 +72,7 @@ const metadata = {
 		 * Defines the additional text displayed at the end of the option element.
 		 * @type {string}
 		 * @public
-		 * @since 1.0.0-rc.16
+		 * @since 1.3.0
 		 */
 		 additionalText: {
 			type: String,
