@@ -319,7 +319,7 @@
 }
 .ui5-switch-root .ui5-switch-text--off {
 	color: var(--_ui5_switch_text_inactive_color);
-	overflow: var(--_ui5_switch_text_overflow);;
+	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
 }
 
