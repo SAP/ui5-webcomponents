@@ -87,10 +87,29 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @private
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @since 1.3.0
+		 *
+		 */
+		accessibleRole: {
+			type: String,
+		},
+
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
+
+		_ariaHasPopup: {
+			type: String,
+			noAttribute: true,
+		},
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -357,12 +376,13 @@ class ListItem extends ListItemBase {
 
 	get _accInfo() {
 		return {
-			role: this.role,
+			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
+			ariaHaspopup: this._ariaHasPopup || undefined,
 		};
 	}
 
