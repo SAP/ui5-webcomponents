@@ -1099,8 +1099,8 @@ class ShellBar extends UI5Element {
 		return !!this.logo.length;
 	}
 
-	get showArrowDown() {
-		return this.primaryTitle || this.hasInteractvieLogo;
+	get showMenuButton() {
+		return (this.primaryTitle || this.hasInteractvieLogo) && this.hasMenuItems;
 	}
 
 	get popoverHorizontalAlign() {

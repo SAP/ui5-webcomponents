@@ -53,6 +53,14 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
 		});
+
+		it("tests close on content click", async () => {
+			const shellBarWithoutMenuItems = await browser.$("#test-invalidation");
+			const shellBarWithMenuItems = await browser.$("#menuItemsSB")
+
+			assert.equal(await shellBarWithoutMenuItems.getProperty("showMenuButton"), false, "Title element is rendered");
+			assert.equal(await shellBarWithMenuItems.getProperty("showMenuButton"), true, "Menu button element is rendered");
+		});
 	});
 
 

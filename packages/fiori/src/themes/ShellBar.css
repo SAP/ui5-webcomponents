@@ -14,9 +14,11 @@
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	box-sizing: border-box;
+	color: var(--sapShell_TextColor);
 }
 
 .ui5-shellbar-menu-button,
+.ui5-shellbar-primary-title,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
 ::slotted([ui5-button][slot="startButton"]) {
@@ -36,6 +38,15 @@
 	white-space: initial;
 	overflow: initial;
 	text-overflow: initial;
+}
+
+.ui5-shellbar-primary-title {
+	vertical-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: auto;
+	cursor: initial;
 }
 
 ::slotted([ui5-button][slot="startButton"]:hover),
