@@ -1,9 +1,7 @@
-commit ee44117ea11e6c0eec36ac9079fc90aa6356143d
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Fri Apr 15 15:51:51 2022 +0300
+commit 241a1128aff7c04650fda3587c5adfef69095451
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Fri Apr 15 18:28:33 2022 +0300
 
-    feat(ui5-link): Implement SAP Horizon theme parameters (#5011)
+    fix(ui5-responsive-popover): allow opening a popover from component (#5070)
     
-    * CSS parameters have been applied in the component's CSS files for Horizon/Horizon Dark/Horizon HCB/Horizon HCW themes
-    
-    * add more parameters for hover states
+    Fixes: #5028
