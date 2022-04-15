@@ -14,9 +14,11 @@
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	box-sizing: border-box;
+	color: var(--sapShell_TextColor);
 }
 
 .ui5-shellbar-menu-button,
+.ui5-shellbar-primary-title,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
 ::slotted([ui5-button][slot="startButton"]) {
@@ -36,6 +38,19 @@
 	white-space: initial;
 	overflow: initial;
 	text-overflow: initial;
+}
+
+.ui5-shellbar-primary-title {
+	vertical-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: auto;
+	cursor: initial;
+}
+
+.ui5-shellbar-primary-title:first-child {
+	margin: 0
 }
 
 ::slotted([ui5-button][slot="startButton"]:hover),
@@ -100,10 +115,6 @@ slot[name="profile"] {
 
 :host(:not([primary-title])) .ui5-shellbar-menu-button span {
 	margin-left: 0;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button span {
-	margin-left: .5rem;
 }
 
 .ui5-shellbar-secondary-title {
@@ -251,6 +262,11 @@ slot[name="profile"] {
   -moz-user-select: text;
   -ms-user-select: text;
 	user-select: text;
+}
+
+
+.ui5-shellbar-menu-button:first-child {
+	margin: 0;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive {

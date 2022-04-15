@@ -26,9 +26,9 @@
 			</span>
 		{{/if}}
 
-		{{#if showArrowDown}}
+		{{#if showMenuButton}}
 			<button tabindex="{{menuBtnTabindex}}"
-				class="{{classes.button}}"
+				class="ui5-shellbar-menu-button ui5-shellbar-menu-button--interactive"
 				@click="{{_header.press}}"
 				aria-haspopup="{{menuBtnHasPopup}}"
 				aria-expanded="{{menuPopoverExpanded}}"
@@ -53,6 +53,13 @@
 				<span class="ui5-shellbar-menu-button-arrow"></span>
 			</button>
 		{{/if}}
+		{{#unless showMenuButton}}
+			{{#if primaryTitle}}
+				<h1 class="ui5-shellbar-primary-title">
+					<bdi>{{primaryTitle}}</bdi>
+				</h1>
+			{{/if}}
+		{{/unless}}
 
 		{{#if secondaryTitle}}
 			<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>

@@ -1024,10 +1024,6 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-root": true,
 				"ui5-shellbar-with-searchfield": this.searchField.length,
 			},
-			button: {
-				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
-				"ui5-shellbar-menu-button": true,
-			},
 			items: {
 				notification: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("bell"),
@@ -1099,8 +1095,8 @@ class ShellBar extends UI5Element {
 		return !!this.logo.length;
 	}
 
-	get showArrowDown() {
-		return this.primaryTitle || this.hasInteractvieLogo;
+	get showMenuButton() {
+		return (this.primaryTitle || this.hasNonFocusableLogo) && this.hasMenuItems;
 	}
 
 	get popoverHorizontalAlign() {
