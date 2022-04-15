@@ -1,7 +1,7 @@
-commit deac3098a9586e8e428ec25a2833691f2c58c545
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Thu Apr 14 11:09:51 2022 +0300
+commit 4ef2c65763856e62cd41cb71ab3a5f342ea9262f
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Apr 15 02:58:32 2022 -0700
 
-    feat(ui5-menu): Initial implementation (#4742)
+    chore: translation delivery (#5062)
     
-    This is the initial implementation of and web components that allow creating of a hierarchical menu structure.
+    Change-Id: Ieb141fd2629f73ea95aefee2c950b175a21419e2
