@@ -1,0 +1,4 @@
+:root {
+    --_ui5_breadcrumbs_current_location_focus: 0.125rem solid var(--sapContent_FocusColor);
+	--_ui5_breadcrumbs_current_location_focus_border_radius: 0.25rem;
+}
