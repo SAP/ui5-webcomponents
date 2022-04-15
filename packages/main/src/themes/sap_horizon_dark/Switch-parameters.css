@@ -48,11 +48,6 @@
 	--_ui5_switch_track_with_label_height: 1.5rem;
 	--_ui5_switch_track_with_label_compact_height: 1.25rem;
 
-	--_ui5_switch_track_disabled_active_background_color: auto;
-	--_ui5_switch_track_disabled_active_border_color: auto;
-	--_ui5_switch_track_disabled_inactive_background_color: auto;
-	--_ui5_switch_track_disabled_inactive_border_color: auto;
-
 	--_ui5_switch_track_active_background_color: var(--sapButton_Track_Selected_Background);
 	--_ui5_switch_track_inactive_background_color: var(--sapButton_Track_Background);
 	--_ui5_switch_track_hover_active_background_color: var(--sapButton_Track_Selected_Hover_Background);
@@ -73,6 +68,16 @@
 	--_ui5_switch_track_semantic_hover_accept_border_color: var(--sapButton_Track_Positive_Hover_BorderColor);
 	--_ui5_switch_track_semantic_hover_reject_border_color: var(--sapButton_Track_Negative_Hover_BorderColor);
 
+	--_ui5_switch_track_disabled_active_background_color: var(--sapButton_Track_Selected_Background);
+	--_ui5_switch_track_disabled_active_border_color: var(--sapButton_Track_Selected_BorderColor);
+	--_ui5_switch_track_disabled_inactive_background_color: var(--sapButton_Track_Background);
+	--_ui5_switch_track_disabled_inactive_border_color: var(--sapButton_Track_BorderColor);
+
+	--_ui5_switch_track_disabled_semantic_accept_background_color: var(--sapButton_Track_Positive_Background);
+	--_ui5_switch_track_disabled_semantic_accept_border_color: var(--sapButton_Track_Positive_BorderColor);
+	--_ui5_switch_track_disabled_semantic_reject_background_color: var(--sapButton_Track_Negative_Background);
+	--_ui5_switch_track_disabled_semantic_reject_border_color: var(--sapButton_Track_Negative_BorderColor);
+
 	--_ui5_switch_track_icon_display: inline-block;
 
 	/* handle */
@@ -90,11 +95,6 @@
 
 	--_ui5_switch_handle_border: var(--_ui5_switch_handle_border_width) solid var(--sapButton_Handle_BorderColor);
 	--_ui5_switch_handle_border_width: 0.125rem;
-
-	--_ui5_switch_handle_disabled_active_background_color: auto;
-	--_ui5_switch_handle_disabled_active_border_color: auto;
-	--_ui5_switch_handle_disabled_inactive_background_color: auto;
-	--_ui5_switch_handle_disabled_inactive_border_color: auto;
 
 	--_ui5_switch_handle_active_background_color: var(--sapButton_Handle_Selected_Background);
 	--_ui5_switch_handle_inactive_background_color: var(--sapButton_Handle_Background);
@@ -121,6 +121,16 @@
 	--_ui5_switch_handle_semantic_on_hover_box_shadow: 0 0 0 0.125rem var(--sapButton_Handle_Positive_Hover_BorderColor);
 	--_ui5_switch_handle_semantic_off_hover_box_shadow: 0 0 0 0.125rem var(--sapButton_Handle_Negative_Hover_BorderColor);
 
+	--_ui5_switch_handle_disabled_active_background_color: var(--sapButton_Handle_Selected_Background);
+	--_ui5_switch_handle_disabled_active_border_color: var(--sapButton_Handle_Selected_BorderColor);
+	--_ui5_switch_handle_disabled_inactive_background_color: var(--sapButton_Handle_Background);
+	--_ui5_switch_handle_disabled_inactive_border_color: var(--sapButton_Handle_BorderColor);
+
+	--_ui5_switch_handle_disabled_semantic_accept_background_color: var(--sapButton_Handle_Positive_Background);
+	--_ui5_switch_handle_disabled_semantic_accept_border_color: var(--sapButton_Handle_Positive_BorderColor);
+	--_ui5_switch_handle_disabled_semantic_reject_background_color: var(--sapButton_Handle_Negative_Background);
+	--_ui5_switch_handle_disabled_semantic_reject_border_color: var(--sapButton_Handle_Negative_BorderColor);
+
 	--_ui5_switch_handle_left: 0.0625rem;
 
 	/* switch text */
@@ -146,7 +156,11 @@
 	--_ui5_switch_text_semantic_accept_color: var(--sapButton_Handle_Positive_TextColor);
 	--_ui5_switch_text_semantic_reject_color: var(--sapButton_Handle_Negative_TextColor);
 
-	--_ui5_switch_text_disabled_color: auto;
+	--_ui5_switch_text_disabled_active_color: var(--sapButton_Handle_Selected_TextColor);
+	--_ui5_switch_text_disabled_inactive_color: var(--sapButton_Handle_TextColor);
+
+	--_ui5_switch_text_disabled_semantic_accept_color: var(--sapButton_Handle_Positive_TextColor);
+	--_ui5_switch_text_disabled_semantic_reject_color: var(--sapButton_Handle_Negative_TextColor);
 
 	--_ui5_switch_text_overflow: hidden;
 	--_ui5_switch_text_z_index: 1;
