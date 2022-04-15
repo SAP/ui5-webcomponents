@@ -128,14 +128,7 @@
 .ui5-nli-footer-divider {
 	position: relative;
 	align-items: center;
-	margin-left: 0.5rem;
-	margin-right: 0.625rem;
-}
-
-.ui5-nli-footer-divider::after {
-	position: absolute;
-	content: ".";
-	top: -20%;
+	margin: 0 0.5rem;
 }
 
 .ui5-nli-footer-showMore {
