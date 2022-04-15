@@ -124,6 +124,12 @@
 		Content
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnRpWithPopover">Open RP that opens a Popover</ui5-button>
+	<ui5-responsive-popover id="btnRpWithPopoverRP">
+		<ui5-button id="btnRpWithPopoverOpener">Open Popover</ui5-button>
+	</ui5-responsive-popover>
+	<ui5-popover id="btnRpWithPopoverInnerPopover">Test popover</ui5-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -171,6 +177,14 @@
 
 		btnInitialFocusPrevented.addEventListener("click", function(event) {
 			simpleRPInitialFocusPrevented.showAt(event.target, true);
+		});
+
+		btnRpWithPopover.addEventListener("click", function () {
+			btnRpWithPopoverRP.showAt(btnRpWithPopover)
+		});
+
+		btnRpWithPopoverOpener.addEventListener("click", function () {
+			btnRpWithPopoverInnerPopover.showAt(btnRpWithPopoverOpener);
 		});
 
 		btnOpenWithAttr.addEventListener("click", function () {
