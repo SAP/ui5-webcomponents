@@ -1,7 +1,7 @@
 .ui5-prio-icon {
 	min-width: 1rem;
 	min-height: 1rem;
-	padding-right: 0.5rem;
+	padding-right: 0.625rem;
 }
 
 .ui5-prio-icon--message-error {
@@ -17,6 +17,6 @@
 }
 
 [dir=rtl] .ui5-prio-icon {
-	padding-left: .5rem;
-	padding-right: 0rem;
+	padding-left: 0.625rem;
+	padding-right: 0;
 }
