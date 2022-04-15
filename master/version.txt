@@ -1,7 +1,7 @@
-commit 241a1128aff7c04650fda3587c5adfef69095451
+commit b5d5a3fa93cbb602a3f6858458c86e4a9282da71
 Author: gmkv <georgi.minkov@sap.com>
-Date:   Fri Apr 15 18:28:33 2022 +0300
+Date:   Fri Apr 15 19:13:16 2022 +0300
 
-    fix(ui5-responsive-popover): allow opening a popover from component (#5070)
+    fix(ui5-label): prevent screenreader announcement of colon and asterisk (#5072)
     
-    Fixes: #5028
+    Fixes: #4830
