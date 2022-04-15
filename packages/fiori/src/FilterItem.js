@@ -1,8 +1,4 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ListItem from "@ui5/webcomponents/dist/ListItem.js";
-import FilterItemTemplate from "./generated/templates/FilterItemTemplate.lit.js";
-
-import FilterItemCSS from "./generated/themes/FilterItem.css.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 /**
  * @public
@@ -65,27 +61,15 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.FilterItem
- * @extends ListItem
+ * @extends UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item
  * @implements sap.ui.webcomponents.fiori.IFilterItem
  * @public
  */
-class FilterItem extends ListItem {
+class FilterItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return [ListItem.styles, FilterItemCSS];
-	}
-
-	static get template() {
-		return FilterItemTemplate;
 	}
 }
 

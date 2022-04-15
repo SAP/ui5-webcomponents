@@ -85,6 +85,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the component is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.3.0
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		* Defines whether the component is displayed as partially checked.
 		* <br><br>
 		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user

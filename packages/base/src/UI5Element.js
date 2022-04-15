@@ -46,6 +46,8 @@ function _invalidate(changeInfo) {
 	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
 
+let metadata = {};
+
 /**
  * Base class for all UI5 Web Components
  *
@@ -896,7 +898,15 @@ class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	static get metadata() {
-		return {};
+		return metadata;
+	}
+
+	/**
+	 * Sets a new metadata object for this UI5 Web Component Class
+	 * @protected
+	 */
+	static set metadata(newMetadata) {
+		metadata = newMetadata;
 	}
 
 	/**

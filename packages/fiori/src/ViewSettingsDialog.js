@@ -519,8 +519,7 @@ class ViewSettingsDialog extends UI5Element {
 	_changeCurrentFilter(event) {
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
-			filter.selected = filter.text === event.detail.item.text;
-
+			filter.selected = filter.text === event.detail.item.innerText;
 			return filter;
 		});
 	}

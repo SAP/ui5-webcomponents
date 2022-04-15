@@ -13,6 +13,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isBackSpace,
 	isDelete,
@@ -408,9 +409,12 @@ class ComboBox extends UI5Element {
 		this._initialRendering = true;
 		this._itemFocused = false;
 		this._selectionChanged = false;
+		this.FormSupport = undefined;
 	}
 
 	onBeforeRendering() {
+		this.FormSupport = getFeature("FormSupport");
+
 		if (this._initialRendering) {
 			this._filteredItems = this.items;
 		}
@@ -547,10 +551,6 @@ class ComboBox extends UI5Element {
 		this._resetFilter();
 
 		this._toggleRespPopover();
-	}
-
-	_readonlyIconClick() {
-		this.inner.focus();
 	}
 
 	_input(event) {
@@ -779,9 +779,13 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._fireChangeEvent();
-			this._closeRespPopover();
-			this.focused = true;
+			if (this.responsivePopover.opened) {
+				this._fireChangeEvent();
+				this._closeRespPopover();
+				this.focused = true;
+			} else if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
 		}
 
 		if (isEscape(event)) {
