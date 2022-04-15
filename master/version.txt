@@ -1,7 +1,9 @@
-commit 4ef2c65763856e62cd41cb71ab3a5f342ea9262f
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri Apr 15 02:58:32 2022 -0700
+commit ee44117ea11e6c0eec36ac9079fc90aa6356143d
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Fri Apr 15 15:51:51 2022 +0300
 
-    chore: translation delivery (#5062)
+    feat(ui5-link): Implement SAP Horizon theme parameters (#5011)
     
-    Change-Id: Ieb141fd2629f73ea95aefee2c950b175a21419e2
+    * CSS parameters have been applied in the component's CSS files for Horizon/Horizon Dark/Horizon HCB/Horizon HCW themes
+    
+    * add more parameters for hover states
