@@ -1281,10 +1281,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.37":
-  version "11.1.37"
-  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.37.tgz#4e0d68905884481229e24f448d61c1b7567089cb"
-  integrity sha512-NcFRLvaC5IVCGMEEIdapGPyBm4neSuxFaryxqB1IvsMU3xbHD90qjiXNaRVm3v7S9cn5FooZNRPFKJQUKgNDJQ==
+"@sap-theming/theming-base-content@11.1.38":
+  version "11.1.38"
+  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.38.tgz#d0a3c86f41602e4ec74544763931363f145d5649"
+  integrity sha512-ZecV/NzAkqdYs0IMKKtZ9yhjv2DQdJBuwha/cL466R48KPZnvlYW7/v6Q9toJ+p1bxMIY134+UK3i8Z5HWDV4Q==
 
 "@sindresorhus/is@^4.0.0":
   version "4.4.0"
