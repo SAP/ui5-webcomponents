@@ -128,8 +128,8 @@
 .ui5-nli-footer-divider {
 	position: relative;
 	align-items: center;
-	margin-left: 0.5rem;
-	margin-right: 0.625rem;
+	margin-inline-start: 0.5rem;
+	margin-inline-end: 0.625rem;
 }
 
 .ui5-nli-footer-divider::after {
@@ -139,7 +139,7 @@
 }
 
 .ui5-nli-footer-showMore {
-	margin-left: 1rem;
+	margin-inline-start: 1rem;
 }
 
 ::slotted([slot^="footnotes"]) {
@@ -154,15 +154,4 @@
 .ui5-nli-actions {
 	display: flex;
 	box-sizing: border-box;
-}
-
-/* RTL */
-
-[dir="rtl"] .ui5-nli-footer-divider {
-	margin-right: 0.5rem;
-	margin-left: 0.625rem;
-}
-
-[dir="rtl"] .ui5-nli-footer-showMore {
-	margin-right: 1rem;
 }
