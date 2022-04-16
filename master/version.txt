@@ -1,7 +1,5 @@
-commit b5d5a3fa93cbb602a3f6858458c86e4a9282da71
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Fri Apr 15 19:13:16 2022 +0300
+commit 58b2c75b79bb2105fe9f1048292f54e019ed051a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat Apr 16 19:42:03 2022 +0300
 
-    fix(ui5-label): prevent screenreader announcement of colon and asterisk (#5072)
-    
-    Fixes: #4830
+    chore(deps): bump theming-base-content from 11.1.37 to 11.38 (#5075)
