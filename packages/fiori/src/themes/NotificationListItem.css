@@ -69,13 +69,10 @@
 	flex-direction: row-reverse;
 	position: relative;
 	width: 100%;
-	padding: 1rem 0.5rem 1rem 1rem;
+	padding-inline: 1rem 0.5rem;
+	padding-block: 1rem;
 	box-sizing: border-box;
 	cursor: pointer;
-}
-
-[dir="rtl"].ui5-nli-root {
-	padding: 1rem 1rem 1rem 0.5rem;
 }
 
 .ui5-nli-content {
@@ -84,7 +81,7 @@
 	flex: 1;
 	min-width: 0; /* fixes Chrome flex issue */
 	width: 100%;
-	padding: 0 1rem 0 0.75rem;
+	padding-inline: 0.75rem 1rem;
 	font-family: "72override", var(--sapFontFamily);
 	box-sizing: border-box;
 }
