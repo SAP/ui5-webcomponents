@@ -67,13 +67,7 @@
 }
 
 :host([_has-icon]) .ui5-badge-text {
-	padding-left: 0.125em;
-}
-
-/* RTL */
-:host([_has-icon]) .ui5-badge-root[dir="rtl"] .ui5-badge-text {
-	padding-left: 0;
-	padding-right: 0.125em;
+	padding-inline-start: 0.125rem;
 }
 
 /* Scheme 1 */
