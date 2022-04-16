@@ -27,16 +27,6 @@
 	pointer-events: none;
 }
 
-:host([has-icon]) button[dir="rtl"].ui5-button-root .ui5-button-text {
-	margin-right: var(--_ui5_button_base_icon_margin);
-	margin-left: 0;
-}
-
-:host([has-icon][icon-end]) button[dir="rtl"].ui5-button-root .ui5-button-icon {
-	margin-right: var(--_ui5_button_base_icon_margin);
-	margin-left: 0;
-}
-
 .ui5-button-root {
 	min-width: inherit;
 	cursor: inherit;
@@ -82,7 +72,7 @@
 }
 
 :host([icon-end]) .ui5-button-icon {
-	margin-left: var(--_ui5_button_base_icon_margin);
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
 :host([icon-only]) .ui5-button-root {
@@ -103,11 +93,11 @@
 }
 
 :host([has-icon]:not([icon-end])) .ui5-button-text {
-	margin-left: var(--_ui5_button_base_icon_margin);
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
 :host([has-icon][icon-end]) .ui5-button-text {
-	margin-left: 0;
+	margin-inline-start: 0;
 }
 
 :host([disabled]) {
