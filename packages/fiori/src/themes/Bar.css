@@ -35,7 +35,7 @@
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
-	padding-right: 0.5rem;
+	padding-inline-end: 0.5rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
