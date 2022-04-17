@@ -1,5 +1,8 @@
-commit 58b2c75b79bb2105fe9f1048292f54e019ed051a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Apr 16 19:42:03 2022 +0300
+commit 4b95bc8e4a4d65e468c7686b0a39827908103caf
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Sun Apr 17 09:04:14 2022 +0300
 
-    chore(deps): bump theming-base-content from 11.1.37 to 11.38 (#5075)
+    fix(ui5-link): remove double click event (#5038)
+    
+    Fixes: #4963
+    Closes: #4963
