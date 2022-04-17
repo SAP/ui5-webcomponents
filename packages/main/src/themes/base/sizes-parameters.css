@@ -236,6 +236,7 @@
 	--_ui5_token_left_padding: 0.25rem;
 	--_ui5_token_readonly_right_padding: 0.25rem;
 	--_ui5_token_readonly_left_padding: 0.25rem;
+	--_ui5_token_focus_offset: -0.125rem;
 	--_ui5_token_icon_size: .75rem;
 	--_ui5_token_icon_padding: 0.125rem 0.25rem;
 	--_ui5_token_wrapper_right_padding: 0.25rem;
