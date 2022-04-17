@@ -1,8 +1,5 @@
-commit 4b95bc8e4a4d65e468c7686b0a39827908103caf
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Sun Apr 17 09:04:14 2022 +0300
+commit bc4ff3a60a085c65c935711fd4ccdbc149d88eef
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Sun Apr 17 08:38:09 2022 +0200
 
-    fix(ui5-link): remove double click event (#5038)
-    
-    Fixes: #4963
-    Closes: #4963
+    chore(ui5-menu): use IMenuItem interface for menu slot (#5064)
