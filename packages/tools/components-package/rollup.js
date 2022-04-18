@@ -195,44 +195,11 @@ const getES6Config = (input = "bundle.esm.js") => {
 	}];
 };
 
-const getES5Config = (input = "bundle.es5.js") => {
-	return [{
-		input,
-		output: {
-			dir: "dist/resources",
-			format: "iife",
-			inlineDynamicImports: true,
-			name: "sap-ui-webcomponents-bundle",
-			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
-			sourcemap: true,
-		},
-		moduleContext: id => {
-			if (id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-		},
-		watch: {
-			clearScreen: false,
-		},
-		plugins: getPlugins({ transpile: true }),
-		onwarn: onwarn,
-	}];
-};
-
 let config = getES6Config();
-
-if (process.env.ES5_BUILD && fs.existsSync("bundle.es5.js")) {
-	config = config.concat(getES5Config());
-}
 
 if (process.env.SCOPE) {
 	if (fs.existsSync("bundle.scoped.esm.js")) {
 		config = config.concat(getES6Config("bundle.scoped.esm.js"));
-
-		if (fs.existsSync("bundle.scoped.es5.js") && process.env.ES5_BUILD) {
-			config = config.concat(getES5Config("bundle.scoped.es5.js"));
-		}
 	}
 }
 

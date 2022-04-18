@@ -1,6 +1,0 @@
-# Note: Changes to this file also must be applied to the top level .eslintignore file.
-lib
-dist
-src/thirdparty
-.eslintrc.js
-package-scripts.js
