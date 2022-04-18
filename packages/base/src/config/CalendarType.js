@@ -1,5 +1,6 @@
 import CalendarType from "../types/CalendarType.js";
 import { getCalendarType as getConfiguredCalendarType } from "../InitialConfiguration.js";
+import "./FormatSettings.js";
 
 let calendarType;
 

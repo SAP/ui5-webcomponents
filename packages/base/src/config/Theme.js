@@ -42,7 +42,7 @@ const setTheme = async theme => {
 /**
  * Returns if the given theme name is the one currently applied.
  * @private
- * @param {String}
+ * @param {String} _theme
  * @returns {boolean}
  */
 const isTheme = _theme => {
@@ -53,7 +53,7 @@ const isTheme = _theme => {
 /**
  * Returns if the current theme is part of given theme family
  * @private
- * @param {String} the theme family
+ * @param {String} _theme the theme family
  * @returns {boolean}
  */
 const isThemeFamily = _theme => {
