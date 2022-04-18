@@ -75,11 +75,5 @@ bdi {
 }
 
 :host([required][show-colon]) .ui5-label-required-colon:after {
-	margin-right: 0;
-	margin-left: .125rem;
-}
-
-:host([required][show-colon]) [dir="rtl"] .ui5-label-required-colon:after {
-	margin-right: .125rem;
-	margin-left: 0;
+	margin-inline-start: .125rem;
 }
