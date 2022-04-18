@@ -79,7 +79,7 @@
 }
 
 :host([icon-end]) .ui5-button-icon {
-	margin-left: var(--_ui5_button_base_icon_margin);
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
 :host([icon-only]) .ui5-button-root {
@@ -100,11 +100,11 @@
 }
 
 :host([has-icon]:not([icon-end])) .ui5-button-text {
-	margin-left: var(--_ui5_button_base_icon_margin);
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
 :host([has-icon][icon-end]) .ui5-button-text {
-	margin-left: 0;
+	margin-inline-start: 0;
 }
 
 :host([disabled]) {

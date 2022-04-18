@@ -1,7 +1,7 @@
 .ui5-prio-icon {
 	min-width: 1rem;
 	min-height: 1rem;
-	padding-right: 0.5rem;
+	padding-inline-end: 0.5rem;
 }
 
 .ui5-prio-icon--message-error {
@@ -14,9 +14,4 @@
 
 .ui5-prio-icon--message-success {
 	color: var(--sapPositiveElementColor);
-}
-
-[dir=rtl] .ui5-prio-icon {
-	padding-left: .5rem;
-	padding-right: 0rem;
 }
