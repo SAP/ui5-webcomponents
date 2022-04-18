@@ -1,0 +1,4 @@
+:root {
+	--ui5-icon-focus-outline: 0.125rem solid var(--sapContent_FocusColor);
+	--ui5-icon-focus-border-radius: 0.25rem;
+}
