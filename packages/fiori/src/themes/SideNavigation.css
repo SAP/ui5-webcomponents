@@ -2,7 +2,6 @@
     display: inline-block;
     width: 15rem;
     height: 100%;
-    border-right: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
     transition: width .25s;
     --_ui5-tree-toggle-box-width: 1rem;
 }
@@ -12,29 +11,46 @@
     min-width: 3rem;
 }
 
+.ui5-sn-root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var( --sapList_Background);
+    border-right: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+}
+
+.ui5-sn-items-tree {
+    overflow: auto;
+}
+
 .ui5-sn-bottom-content-border {
     width: 100%;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
     margin: 0.25rem 0;
     display: flex;
     justify-content: center;
     box-sizing: border-box;
 }
 
-.ui5-sn-bottom-content-border > span {
-    width: 90%;
-    height: .125rem;
-    background: var(--sapList_GroupHeaderBorderColor);
+:host([collapsed]) .ui5-sn-bottom-content-border {
+    padding: 0 0.5rem;
 }
 
-.ui5-sn-root {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: var( --sapList_Background);
+.ui5-sn-bottom-content-border > span {
+    width: 100%;
+    height: .125rem;
+    background: var(--_ui5_side_navigation_separator_backgound);
 }
 
 .ui5-sn-spacer {
-    flex: auto;
-    min-height: 3rem;
+    flex: 1;
+    min-height: 0;
+}
+
+[ui5-tree]::part(toggle-icon) {
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
+[ui5-tree]::part(icon) {
+	color: var(--_ui5_side_navigation_icon_color);
 }
