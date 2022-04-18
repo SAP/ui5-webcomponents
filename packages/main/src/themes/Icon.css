@@ -23,7 +23,7 @@
 }
 
 :host([interactive][focused]) .ui5-icon-root {
-	outline: var(--ui5-icon-focus-outline);
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--ui5-icon-focus-border-radius);
 }
 
