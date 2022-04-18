@@ -7,15 +7,12 @@
 :host {
 	max-width: 100%;
 	color: var(--sapLinkColor);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
 	text-decoration: var(--_ui5_link_text_decoration);
-}
-
-:host(:hover) {
-	text-decoration: var(--_ui5_link_hover_text_decoration);
+	text-shadow: var(--sapContent_TextShadow);
 }
 
 :host([disabled]) {
@@ -27,16 +24,16 @@
 	outline: none;
 	cursor: default;
 	pointer-events: none;
-	opacity: var(--_ui5_link_opacity);
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 :host([design="Emphasized"]) .ui5-link-root {
-	font-weight: bold;
+	font-family: var(--sapFontBoldFamily);
 }
 
-:host([design="Subtle"]) .ui5-link-root,
-:host([design="Subtle"]) .ui5-link-root:visited {
+:host([design="Subtle"]) .ui5-link-root {
 	color: var(--sapLink_SubtleColor);
+	text-decoration: var(--_ui5_link_subtle_text_decoration);
 }
 
 :host([design="Subtle"]) .ui5-link-root:focus {
@@ -60,10 +57,13 @@
 	text-decoration: inherit;
 }
 
-.ui5-link-root,
-.ui5-link-root:visited,
-.ui5-link-root:active {
-	color: currentColor;
+:host(:active) .ui5-link-root {
+	color: var(--sapLink_Active_Color);
+	text-decoration: var(--_ui5_link_active_text_decoration);
+}
+
+.ui5-link-root:visited {
+	color: var(--sapLink_Visited_Color);
 }
 
 :host .ui5-link-root {
@@ -71,7 +71,24 @@
 	border-radius: var(--_ui5_link_focus_border-radius);
 }
 
-:host([focused]) .ui5-link-root {
+:host([focused]) .ui5-link-root,
+:host([design="Subtle"][focused]) .ui5-link-root {
+	background-color: var(--_ui5_link_focus_background_color);
+	color:  var(--_ui5_link_focus_color);
 	border: var(--_ui5_link_border_focus);
-	text-decoration: underline;
+	border-radius: var(--_ui5_link_focus_border-radius);
+	text-decoration: var(--_ui5_link_focus_text_decoration);
+	text-shadow: none;
+}
+
+:host(:hover),
+:host(:hover) .ui5-link-root {
+	color: var(--sapLink_Hover_Color);
+	text-decoration: var(--_ui5_link_hover_text_decoration);
+}
+
+:host([focused]:hover),
+:host([focused]:hover) .ui5-link-root {
+	color: var(--_ui5_link_focused_hover_text_color);
+	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }

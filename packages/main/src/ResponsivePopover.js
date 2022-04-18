@@ -167,6 +167,10 @@ class ResponsivePopover extends Popover {
 		return this.shadowRoot.querySelector("[ui5-dialog]");
 	}
 
+	get contentDOM() {
+		return this._isPhone ? this._dialog.contentDOM : super.contentDOM;
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}

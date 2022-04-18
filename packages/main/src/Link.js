@@ -345,10 +345,10 @@ class Link extends UI5Element {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
+			event.preventDefault();
 			const executeEvent = this.fireEvent("click", null, true);
 
 			if (executeEvent) {
-				event.preventDefault();
 				this.href && window.open(this.href, this.target);
 			}
 		} else if (isSpace(event)) {

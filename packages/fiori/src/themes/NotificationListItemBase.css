@@ -41,17 +41,9 @@
 
 .ui5-nli-action {
 	flex-shrink: 0;
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 }
 
 .ui5-nli-overflow-btn {
-	margin-right: 0.5rem;
-}
-
-[dir="rtl"] .ui5-nli-group-action {
-	margin-left: 0.5rem;
-}
-
-[dir="rtl"] .ui5-nli-overflow-btn {
-	margin-left: 0.5rem;
+	margin-inline-end: 0.5rem;
 }
