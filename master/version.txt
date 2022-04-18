@@ -1,5 +1,21 @@
-commit 0fa2d55a57e226a721f4e5b0a9a88e345b227dc6
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Apr 18 12:09:22 2022 +0300
+commit 43761ad3e8aa185a093e2997f04386426e6c01ed
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Mon Apr 18 13:53:57 2022 +0300
 
-    chore: remove IE11-related build assets (#5077)
+    feat(ui5-button): Implement SAP Horizon theme parameters (#4912)
+    
+    * Set Horizon Parameters
+    
+    * fix comments and tuneup
+    
+    * add ui5-toggle-button, ui5-segmented-button styles
+    
+    * all buttons fixed
+    
+    * fix comments
+    
+    * fix(ui5-button): fix new comments
+    
+    * fix(ui5-button): fix husky issue on Windows
+    
+    * fix(ui5-button): fix HC themes buttons height (Quartz and Horizon)
