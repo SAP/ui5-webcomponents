@@ -1,0 +1,8 @@
+@import "../base/sizes-parameters.css";
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	/* SplitButton */
+	--_ui5_split_button_text_button_width: 2.25rem;
+}
