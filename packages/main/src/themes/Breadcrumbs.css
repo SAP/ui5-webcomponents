@@ -41,6 +41,10 @@
     color: var(--sapLinkColor);
 }
 
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link][focused] [ui5-icon] {
+    color: var(--_ui5_link_focus_color);
+}
+
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-icon]::before {
     content: "...";
     vertical-align: middle;
