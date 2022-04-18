@@ -6,4 +6,5 @@
 	--_ui5_button_focused_border_radius: 0.375rem;
 	--_ui5_button_text_shadow: none;
 	--_ui5_button_emphasized_focused_border_color: var(--sapContent_ContrastFocusColor);
+	--_ui5_button_base_height: 2.25rem;
 }
