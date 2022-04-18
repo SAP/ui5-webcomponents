@@ -30,10 +30,8 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
-    "./bundle.es5.js": "./bundle.es5.js",
     "./bundle.common.js": "./bundle.common.js",
     "./bundle.scoped.esm.js": "./bundle.scoped.esm.js",
-    "./bundle.scoped.es5.js": "./bundle.scoped.es5.js",
     "./*": "./dist/*"
   },
   "repository": {
@@ -44,7 +42,6 @@
   "dependencies": {
     "@ui5/webcomponents-base": "1.2.3",
     "@ui5/webcomponents-icons": "1.2.3",
-    "@ui5/webcomponents-ie11": "1.2.3",
     "@ui5/webcomponents-localization": "1.2.3",
     "@ui5/webcomponents-theming": "1.2.3"
   },
