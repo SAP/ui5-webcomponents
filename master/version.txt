@@ -1,19 +1,5 @@
-commit 0b90287a3f7c82395b7cf0b544682f9994e923e4
-Author: GerganaKremenska <gergana.georgieva01@sap.com>
-Date:   Mon Apr 18 10:26:27 2022 +0300
+commit 0fa2d55a57e226a721f4e5b0a9a88e345b227dc6
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Apr 18 12:09:22 2022 +0300
 
-    feat(ui5-tabcontainer): implement SAP Horizon theme family (#4981)
-    
-    * Horizon theme implemented
-    
-    * fixed coments
-    
-    * fix colors and px to rems
-    
-    * single click are hover icon and neutral tab selected are fixed
-    
-    * focus is fixed
-    
-    * fix(ui5-tab-container): hover in quartz
-    
-    Co-authored-by: ilhan orhan <ilhan.myumyun@sap.com>
+    chore: remove IE11-related build assets (#5077)
