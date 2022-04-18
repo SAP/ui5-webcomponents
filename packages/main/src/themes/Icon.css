@@ -30,13 +30,6 @@
 	display:flex;
 	outline: none;
 	vertical-align: top;
-}
-
-/*
- * LTR can be enforced (no matter if the page is in LTR or RTL mode)
- * as some icons should not be mirrored in RTL (f.e. the checkmark, the search, )
-*/
-.ui5-icon-root:not([dir="ltr"]) {
 	transform: var(--_ui5_icon_transform_scale);
 	transform-origin: center;
 }

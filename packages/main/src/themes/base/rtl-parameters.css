@@ -1,4 +1,4 @@
-:root {
+:root, [dir="ltr"]  {
 	--_ui5_rotation_90deg: rotate(90deg);
 	--_ui5_rotation_minus_90deg: rotate(-90deg);
 
