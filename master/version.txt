@@ -1,21 +1,7 @@
-commit 43761ad3e8aa185a093e2997f04386426e6c01ed
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Mon Apr 18 13:53:57 2022 +0300
+commit 152b9fd25a84cb03eab2037fdf393ef8e3ddc3f2
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Apr 18 18:35:10 2022 +0300
 
-    feat(ui5-button): Implement SAP Horizon theme parameters (#4912)
+    chore: refactor RTL styles (#5078)
     
-    * Set Horizon Parameters
-    
-    * fix comments and tuneup
-    
-    * add ui5-toggle-button, ui5-segmented-button styles
-    
-    * all buttons fixed
-    
-    * fix comments
-    
-    * fix(ui5-button): fix new comments
-    
-    * fix(ui5-button): fix husky issue on Windows
-    
-    * fix(ui5-button): fix HC themes buttons height (Quartz and Horizon)
+    RTL styles that can't be implemented via CSS logical properties can be extracted as CSS Variables.
