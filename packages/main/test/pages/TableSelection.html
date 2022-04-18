@@ -12,9 +12,9 @@
 				}
 		</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 <link rel="stylesheet" type="text/css" href="styles/TableSelection.css">
 </head>
@@ -392,7 +392,7 @@
 			selectionChangeSSCountField.value = selectionChangeCounter;
 
 			selectionChangeSSSelectedValueField.value = event.detail.selectedRows[0].id;
-			
+
 			if (event.detail.previouslySelectedRows.length) {
 				selectionChangeSSPreviousRowField.value = event.detail.previouslySelectedRows[0].id;
 			}
@@ -408,7 +408,7 @@
 			selectionChangeMSCountField.value = selectionChangeCounter1;
 			const lastSelectedRow = event.detail.selectedRows.length - 1;
 			const previousSelectedRow = event.detail.previouslySelectedRows.length - 1;
-			
+
 			if (event.detail.selectedRows.length) {
 				selectionChangeMSSelectedValueField.value = event.detail.selectedRows[lastSelectedRow].id;
 			}
