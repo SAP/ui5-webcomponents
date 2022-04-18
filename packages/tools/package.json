@@ -21,15 +21,10 @@
     "directory": "packages/tools"
   },
   "dependencies": {
-    "@babel/core": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
     "@openui5/sap.ui.core": "1.95.0",
-    "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-replace": "^3.0.0",
-    "@rollup/plugin-url": "^6.0.0",
     "@wdio/cli": "^7.12.2",
     "@wdio/dot-reporter": "^7.10.1",
     "@wdio/local-runner": "^7.12.2",

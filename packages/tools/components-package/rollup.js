@@ -1,13 +1,10 @@
 const process = require("process");
 const fs = require("fs");
 const os = require("os");
-const { babel } = require("@rollup/plugin-babel");
 const { nodeResolve } = require("@rollup/plugin-node-resolve");
-const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
 const replace = require("@rollup/plugin-replace");
-const commonjs = require("@rollup/plugin-commonjs");
 const colors = require("cli-color");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
@@ -72,7 +69,7 @@ function ui5DevReadyMessagePlugin() {
 	};
 }
 
-const getPlugins = ({ transpile }) => {
+const getPlugins = () => {
 	const plugins = [];
 
 	if (process.env.DEV) {
@@ -116,36 +113,12 @@ const getPlugins = ({ transpile }) => {
 
 	plugins.push(ui5DevImportCheckerPlugin());
 
-	if (!transpile) {
-		plugins.push(json({
-			include: [
-				/.*assets\/.*\.json/,
-			],
-			namedExports: false,
-		}));
-	}
-
-	if (transpile) {
-		plugins.push(url({
-			limit: 0,
-			include: [
-				/.*assets\/.*\.json/,
-			],
-			emitFiles: true,
-			fileName: "[name].[hash][extname]",
-			publicPath,
-		}));
-	}
-
-	if (transpile) {
-		plugins.push(commonjs());
-		plugins.push(babel({
-			presets: ["@babel/preset-env"],
-			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, // exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
-			sourcemap: false,
-			babelHelpers: "bundled",
-		}));
-	}
+	plugins.push(json({
+		include: [
+			/.*assets\/.*\.json/,
+		],
+		namedExports: false,
+	}));
 
 	plugins.push(nodeResolve());
 
@@ -155,7 +128,7 @@ const getPlugins = ({ transpile }) => {
 		}));
 	}
 
-	const es6DevMain = process.env.DEV && !transpile && packageName === "@ui5/webcomponents";
+	const es6DevMain = process.env.DEV && packageName === "@ui5/webcomponents";
 	if (es6DevMain && os.platform() !== "win32") {
 		plugins.push(livereload({
 			watch: [
@@ -190,7 +163,7 @@ const getES6Config = (input = "bundle.esm.js") => {
 		watch: {
 			clearScreen: false,
 		},
-		plugins: getPlugins({ transpile: false }),
+		plugins: getPlugins(),
 		onwarn: onwarn,
 	}];
 };
