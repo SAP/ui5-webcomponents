@@ -6,11 +6,7 @@
 }
 
 :host(:not([collapsed])) .ui5-nli-group-toggle-btn {
-	transform: rotate(90deg);
-}
-
-:host(:not([collapsed])) [dir="rtl"] .ui5-nli-group-toggle-btn {
-	transform: rotate(270deg);
+	transform: var(--_ui5_li_notification_group_toggle_btn_degree);
 }
 
 :host([collapsed]) .ui5-nli-group-items {
