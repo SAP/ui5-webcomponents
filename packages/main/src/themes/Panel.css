@@ -58,10 +58,6 @@
 	transform: var(--_ui5_panel_toggl_btn_rotation_degree);
 }
 
-:host(:not([collapsed])) [dir="rtl"] .ui5-panel-header-button {
-	transform: var(--_ui5_panel_toggl_btn_rotation_degree);
-}
-
 :host([fixed]) .ui5-panel-header-title {
 	width: 100%;
 }
