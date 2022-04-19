@@ -6,7 +6,6 @@ const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
 const replace = require("@rollup/plugin-replace");
 const colors = require("cli-color");
-const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
 const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
@@ -87,25 +86,6 @@ const getPlugins = () => {
 				"localization/dist/Assets.js",
 			],
 		}));
-	}
-
-	if (!process.env.DEV) {
-		plugins.push(filesize(
-			{
-				reporter(options, bundle, {
-					minSize, gzipSize, brotliSize, bundleSize,
-					fileName,
-					// "showBeforeSizes: release"
-					lastVersion,
-					// "showBeforeSizes: "release" or "showBeforeSizes": "build"
-					bundleSizeBefore, brotliSizeBefore, minSizeBefore, gzipSizeBefore,
-				}) {
-				// If a promise is returned, it will be awaited before rendering.
-					return `${fileName.padEnd(35)} ${minSize} / gzipped: ${gzipSize}`;
-				},
-			},
-
-		));
 	}
 
 	plugins.push(ui5DevImportCheckerPlugin());
