@@ -12,3 +12,7 @@
 [ui5-multi-input] [ui5-tokenizer] {
 	flex: 3;
 }
+
+:host([readonly]) .ui5-multi-input-tokenizer::part(n-more-text) {
+	color: var(--sapLinkColor);
+}

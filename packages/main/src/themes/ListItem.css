@@ -167,6 +167,7 @@
 .ui5-li-deletebtn {
 	display: flex;
 	align-items: center;
+	margin-left: var(--_ui5_list_buttons_left_space);
 }
 
 .ui5-li-multisel-cb,

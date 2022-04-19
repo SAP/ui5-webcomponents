@@ -1,0 +1,5 @@
+@import "../base/Tokenizer-parameters.css";
+
+:root {
+	--_ui5_tokenizer_padding: 0.375rem;
+}
