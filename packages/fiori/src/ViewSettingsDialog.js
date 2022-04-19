@@ -214,6 +214,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
+ * @appenddocs SortItem FilterItem FilterItemOption
  * @since 1.0.0-rc.16
  * @public
  */
