@@ -1,16 +1,5 @@
-commit 67565d56434dd436ff099606568cbd0d5901ead9
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Tue Apr 19 11:37:57 2022 +0300
+commit c29e91fc0137639b729f6c66a78bbb51068ed0b7
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Apr 19 11:52:43 2022 +0300
 
-    feat(ui5-panel): implement SAP Horizon themes (#5058)
-    
-    * feat(ui5-panel): implement SAP Horizon themes
-    
-    - existing themes adjustments
-    - implementation of Horizon themes
-    
-    Related to: #5007
-    
-    * remove font-weight
-    
-    * additional fixes
+    refactor: optimize postcss task (#5085)
