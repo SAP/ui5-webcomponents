@@ -25,7 +25,7 @@
 }
 
 .ui5-breadcrumbs-current-location > span:focus {
-    outline: var(--_ui5_breadcrumbs_current_location_focus);
+    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     border-radius: var(--_ui5_breadcrumbs_current_location_focus_border_radius);
 }
 
