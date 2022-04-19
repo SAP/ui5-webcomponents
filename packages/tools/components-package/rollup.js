@@ -151,12 +151,6 @@ const getES6Config = (input = "bundle.esm.js") => {
 			format: "esm",
 			sourcemap: true,
 		},
-		moduleContext: id => {
-			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-		},
 		watch: {
 			clearScreen: false,
 		},
