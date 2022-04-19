@@ -1,11 +1,11 @@
 :root {
 	--_ui5_panel_focus_border:   var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	--_ui5_panel_header_height: 3rem;
 	--_ui5_panel_button_root_width: 3rem;
-	--_ui5_panel_background_color: var(--sapGroup_TitleBackground);
 	--_ui5_panel_border_radius: 0px;
 	--_ui5_panel_border_radius_expanded: 0;
-	--_ui5_panel_border_bottom: 1px solid var(--sapGroup_TitleBorderColor);
+	--_ui5_panel_default_header_border: none;
+	--_ui5_panel_border_bottom: 0.0625rem solid var(--sapGroup_TitleBorderColor);
 	--_ui5_panel_outline_offset: -3px;
-	--_ui5_panel_title_font_weight: normal;
+	--_ui5_panel_icon_color: var(--sapContent_IconColor);
+	--_ui5_panel_header_padding_right: 0.5rem;
 }
