@@ -1,5 +1,9 @@
-commit c29e91fc0137639b729f6c66a78bbb51068ed0b7
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Apr 19 11:52:43 2022 +0300
+commit 801069dc2507ed3d78353326d3bdd8205ceadbae
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue Apr 19 13:13:01 2022 +0300
 
-    refactor: optimize postcss task (#5085)
+    feat(ui5-wizard): implement SAP Horizon theme (#5076)
+    
+    * feat(ui5-wizard): implement SAP Hotizon theme
+    
+    * feat(ui5-wizard): implement SAP Hotizon theme
