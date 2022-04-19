@@ -1,15 +1,15 @@
 :host {
 	display: inline-block;
 	background: var(--_ui5_token_background);
-	border-width: 1px;
-	border-style: solid;
-	border-color: var(--sapButton_TokenBorderColor);
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_TokenBorderColor);
 	border-radius: var(--_ui5_token_border_radius);
 	color: var(--_ui5_token_text_color);
 	height: var(--_ui5_token_height);
 	box-sizing: border-box;
 	margin-top: var(--_ui5_token_top_margin);
 	margin-bottom: var(--_ui5_token_bottom_margin);
+	margin-right: var(--_ui5_token_right_margin);
+	position: relative;
 }
 
 :host([overflows]) {
@@ -25,37 +25,23 @@
 :host([selected]:not([readonly]):not([focused])) {
 	color: var(--sapButton_Selected_TextColor);
 	background: var(--sapButton_Selected_Background);
-	border: 1px solid var(--sapButton_Selected_BorderColor);
-	box-shadow: var(--_ui5_token_selected_box_shadow);
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_Selected_BorderColor);
 }
 
 :host([selected]:not([readonly]):hover) {
 	background: var(--_ui5_token_selected_hover_background);
 	border-color: var(--_ui5_token_selected_hover_border_color);
-	box-shadow: var(--sapContent_Selected_Shadow);
+	box-shadow: var(--sapContent_Interaction_Shadow);
 }
 
 :host([readonly]) {
 	background: var(--_ui5_token_readonly_background);
-	color: var(--sapContent_ForegroundTextColor);
+	color: var(--_ui5_token_readonly_color);
 }
 
 :host([readonly]) .ui5-token--wrapper {
-	padding-right: 0.3125rem;
-}
-
-:host([focused]:not([selected]):not([readonly]):not(:hover)) {
-	border: var(--_ui5_token_focused_border);
-}
-
-:host([focused][selected]:not([readonly]):hover) {
-	box-shadow: var(--sapContent_Selected_Shadow);
-	border: var(--_ui5_token_focused_selected_border);
-}
-
-:host([focused]:not([selected]):not([readonly]):hover) {
-	box-shadow: var(--sapContent_Interaction_Shadow);
-	border: var(--_ui5_token_focused_selected_border);
+	padding-right: var(--_ui5_token_readonly_right_padding);
+	padding-left: var(--_ui5_token_readonly_left_padding);
 }
 
 :host([selected]) .ui5-token--wrapper:focus {
@@ -74,8 +60,7 @@
 	height: 100%;
 	width: 100%;
 	cursor: default;
-	padding: 0.25rem 0;
-	padding-left: 0.3125rem;
+	padding-left: var(--_ui5_token_left_padding);
 	box-sizing: border-box;
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
@@ -83,8 +68,21 @@
 }
 
 .ui5-token--wrapper:focus {
-	outline-offset: -2px;
+	outline-offset: var(--_ui5_token_outline_offset);
 	outline: var(--_ui5_token_focus_outline);
+}
+
+.ui5-token--wrapper:focus::after {
+	content: var(--ui5_token_focus_pseudo_element_content);
+	position: absolute;
+	pointer-events: none;
+	z-index: 2;
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--_ui5_input_focus_outline_color);
+	border-radius: var(--_ui5_token_focus_outline_border_radius);
+	top: var(--_ui5_token_focus_offset);
+	bottom: var(--_ui5_token_focus_offset);
+	left: var(--_ui5_token_focus_offset);
+	right: var(--_ui5_token_focus_offset);
 }
 
 .ui5-token--text {
@@ -107,11 +105,10 @@
 	width: var(--_ui5_token_icon_size);
 	height: var(--_ui5_token_icon_size);
 	padding: var(--_ui5_token_icon_padding);
-	color: var(--_ui5_token_icon_color);
+	color: var(--sapContent_IconColor);
 }
 
-/* RTL */
-:host(:not([readonly])) .ui5-token--wrapper[dir="rtl"] {
-	padding-right: var(--_ui5_token_wrapper_right_padding);
-	padding-left: var(--_ui5_token_wrapper_left_padding);
+.ui5-token--wrapper[dir="rtl"] {
+	padding-left: 0;
+	padding-right: var(--_ui5_token_left_padding);
 }
