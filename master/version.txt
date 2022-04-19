@@ -1,5 +1,5 @@
-commit 7353188b065058aa9943626870ab2edea778d430
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Tue Apr 19 15:02:42 2022 +0300
+commit 3a318ae6c91a3231b6ba8e489ab264b3e95a9a46
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Apr 19 15:54:33 2022 +0300
 
-    fix(ui5-combobox): disable autocomplete on Android (#5088)
+    chore: remove rollup filesize plugin (#5090)
