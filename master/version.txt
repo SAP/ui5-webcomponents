@@ -1,5 +1,8 @@
-commit 3a318ae6c91a3231b6ba8e489ab264b3e95a9a46
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Apr 19 15:54:33 2022 +0300
+commit 0a1247fa526d61309b00b80fa16962ff07f1b56c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 19 16:41:52 2022 +0300
 
-    chore: remove rollup filesize plugin (#5090)
+    refactor(ui5-vsd, ui5-timeline, ui5-card-header, ui5-calendar-header): make use of CSS Logical props (#5091)
+    
+    Where possible CSS Logical properties are replacing RTL specific stlyes
+    Where not possible to use CSS Logical properties - we extract the values as CSS vars to rtl-parameters.css
