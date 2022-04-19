@@ -43,7 +43,6 @@
     "@ui5/webcomponents": "1.3.0",
     "@ui5/webcomponents-base": "1.3.0",
     "@ui5/webcomponents-icons": "1.3.0",
-    "@ui5/webcomponents-ie11": "1.2.4",
     "@ui5/webcomponents-theming": "1.3.0",
     "@zxing/library": "^0.18.3"
   },
