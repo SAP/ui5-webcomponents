@@ -6,8 +6,8 @@
     --_ui5-tree-toggle-box-width: 1rem;
     --_ui5_list_item_icon_size: 1.125rem;
     --_ui5_list_item_title_size: var(--sapFontLargeSize);
-	--_ui5_list_item_icon_padding-inline-end: 1rem;
-	--_ui5-tree-indent-step: 2.25rem;
+    --_ui5_list_item_icon_padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
+    --_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step);
 }
 
 :host([collapsed]) {
