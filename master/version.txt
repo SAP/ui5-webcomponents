@@ -1,7 +1,5 @@
-commit 152b9fd25a84cb03eab2037fdf393ef8e3ddc3f2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 18 18:35:10 2022 +0300
+commit b09dd35b4273077a92255bb61d5ac0780fda6f1c
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue Apr 19 09:44:29 2022 +0300
 
-    chore: refactor RTL styles (#5078)
-    
-    RTL styles that can't be implemented via CSS logical properties can be extracted as CSS Variables.
+    fix(ui5-page): Allow developers to be able to overwrite responsive paddings (#5056)
