@@ -17,6 +17,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
 		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
+		assert.notOk(await innerInput.getAttribute("aria-controls"), "aria-controls attribute isn't rendered.");
 		assert.notOk(await innerInput.getAttribute("aria-expanded"), "aria-expanded attribute isn't rendered.");
 	});
 
@@ -216,27 +217,6 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click();
 	});
 
-	// it("Calendar selection works on different timezones", async () => {
-	// 	datepicker.id = "#dp7";
-
-	// 	await browser.$("#inputTimezone").setValue(-6); //CST
-	// 	await browser.$("#btnApplyTimezone").click();
-
-	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
-	// 	await valueHelpIcon.click();
-
-	// 	let calendarDate_4_Jan_2019 = await datepicker.getPickerDate(1546560000); //Jan 4, 2019
-	// 	await calendarDate_4_Jan_2019.click();
-
-	// 	const innerInput = await datepicker.getInnerInput();
-	// 	assert.strictEqual(await innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
-	// 	//restore timezone
-	// 	await browser.$('#btnRestoreTimezone').click();
-
-	// 	// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
-	// 	assert.equal(await browser.$("#inputTimezone").getValue(), "", "timezone is reset");
-	// });
-
 	it("respect first day of the week - monday", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp7_1";
@@ -324,6 +304,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("Enter");
 		tomorrowDate = await lblTomorrowDate.getHTML(false);
 		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		await innerInput.keys("Enter");
 
 		// Type tomorrow and press Enter for the second time.
 		await innerInput.keys("tomorrow");
@@ -871,6 +852,7 @@ describe("Date Picker Tests", () => {
 
 		const root = await datepicker.getRoot();
 		await root.keys("Escape");
+		await browser.$("#dp33").scrollIntoView();
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);

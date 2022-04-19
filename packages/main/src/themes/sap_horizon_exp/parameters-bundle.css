@@ -1,4 +1,5 @@
 @import "../base/sizes-parameters.css";
+@import "../base/rtl-parameters.css";
 @import "../base/Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
@@ -38,7 +39,6 @@
 @import "../base/Table-parameters.css";
 @import "../base/TableRow-parameters.css";
 @import "../base/GrowingButton-parameters.css";
-@import "../base/Title-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/Tokenizer-parameters.css";
 @import "../base/ValueStateMessage-parameters.css";

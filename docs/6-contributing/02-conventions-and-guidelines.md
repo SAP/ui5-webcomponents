@@ -25,7 +25,7 @@ The commit header is the first line of the commit message. It consists of three 
     + `fix` - a bug fix (note: this will indicate a release). If possible, include a test in your change.
     + `feat` - a new feature (note: this will indicate a release)
     + `docs` - documentation only changes
-    + `style` - changes that do not affect the meaning of the code
+    + `style` - changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
     + `refactor` - a code change that neither fixes a bug nor adds a feature
     + `perf` - a code change that improves performance
     + `test` - adding missing tests

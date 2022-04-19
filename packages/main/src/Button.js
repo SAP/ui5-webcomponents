@@ -356,6 +356,18 @@ class Button extends UI5Element {
 
 			isGlobalHandlerAttached = true;
 		}
+
+		this._ontouchstart = {
+			handleEvent(event) {
+				event.isMarked = "button";
+				if (this.nonInteractive) {
+					return;
+				}
+
+				this.active = true;
+			},
+			passive: true,
+		};
 	}
 
 	onEnterDOM() {
@@ -378,7 +390,7 @@ class Button extends UI5Element {
 		}
 		event.isMarked = "button";
 		const FormSupport = getFeature("FormSupport");
-		if (FormSupport) {
+		if (FormSupport && this.submits) {
 			FormSupport.triggerFormSubmit(this);
 		}
 
@@ -395,15 +407,6 @@ class Button extends UI5Element {
 		event.isMarked = "button";
 		this.active = true;
 		activeButton = this; // eslint-disable-line
-	}
-
-	_ontouchstart(event) {
-		event.isMarked = "button";
-		if (this.nonInteractive) {
-			return;
-		}
-
-		this.active = true;
 	}
 
 	_ontouchend(event) {

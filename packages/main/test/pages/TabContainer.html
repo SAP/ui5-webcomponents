@@ -14,9 +14,9 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="styles/TabContainer.css">
 </head>
@@ -26,14 +26,116 @@
 	<header class="header">
 		<h1 class="header-title">ui5-tabcontainer</h1>
 	</header>
+	<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>
+	<section>
+		<h2>Nested Tabs</h2>
+		<ui5-tabcontainer id="tabContainerNestedTabs" collapsed>
+			<ui5-tab text="One">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+				<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Two">
+					<ui5-button id="button2">Button 2</ui5-button>
+				<ui5-tab slot="subTabs" text="2.1">
+					<ui5-button id="button21">Button 21</ui5-button>
+
+					<ui5-tab slot="subTabs" text="2.1.1" selected>
+						<ui5-button id="button211">Button 211</ui5-button>
+				<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+					</ui5-tab>
+
+					<ui5-tab slot="subTabs" text="2.1.2">
+						<ui5-tab slot="subTabs" text="2.1.2.1">
+							<ui5-button id="button2121">Button 2121</ui5-button>
+						</ui5-tab>
+						<ui5-button id="button212">Button 212</ui5-button>
+					</ui5-tab>
+				</ui5-tab>
+
+				<ui5-tab text="2.2" slot="subTabs">
+					Text for 2.2
+				</ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab text="Three">
+				<ui5-tab slot="subTabs" icon="sap-icon://menu2" text="3.1">
+					<ui5-button>Button 31</ui5-button>
+				</ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab text="Four"><ui5-button>Button 4</ui5-button>
+							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+
+				<ui5-tab slot="subTabs" text="Four 1"><ui5-button>Button 41</ui5-button>
+							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+
+					<ui5-tab slot="subTabs" text="Four 1.1"><ui5-button>Button 411</ui5-button>
+							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+						<ui5-tab slot="subTabs" text="Four 1.1.1"><ui5-button>Button 4111</ui5-button>
+							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+							<ui5-tab slot="subTabs" text="Four 1.1.1.1"><ui5-button>Button 41111</ui5-button></ui5-tab>
+							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+
+						</ui5-tab>
+					</ui5-tab>
+				</ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab text="Five">Tab Content</ui5-tab>
+			<ui5-tab text="Six">Tab Content</ui5-tab>
+			<ui5-tab text="Seven"></ui5-tab>
+			<ui5-tab-separator>Tab Content</ui5-tab-separator>
+			<ui5-tab text="Eight">Tab Content</ui5-tab>
+			<ui5-tab text="Nine">Tab Content</ui5-tab>
+			<ui5-tab text="Ten">Tab Content
+				<ui5-tab slot="subTabs" text="Ten 1">Tab 10.1 Content
+					<ui5-tab slot="subTabs" text="Ten 1.1">Tab 10.1.1 Content
+						<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+						<ui5-tab slot="subTabs" text="Ten 1.1.1">Tab Content
+							<ui5-tab slot="subTabs" text="Ten 1.1.1.1"></ui5-tab>
+						</ui5-tab>
+					</ui5-tab>
+				</ui5-tab>
+			</ui5-tab>
+			<ui5-tab text="Eleven"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Twelve"></ui5-tab>
+			<ui5-tab text="Thirteen"></ui5-tab>
+			<ui5-tab text="Fourteen">
+				<ui5-tab slot="subTabs" text="Fourteen 1">1
+					<ui5-tab slot="subTabs" text="Fourteen 1.1">1.1</ui5-tab>
+				</ui5-tab>
+				<ui5-tab slot="subTabs" text="Fourteen 2">2
+					<ui5-tab  slot="subTabs" text="Fourteen 2.1">2.1
+						<ui5-tab slot="subTabs" text="Fourteen 2.1.1">2.1.1</ui5-tab>
+					</ui5-tab>
+					<ui5-tab slot="subTabs" text="Fourteen 2.2">2.2</ui5-tab>
+				</ui5-tab>
+			</ui5-tab>
+			<ui5-tab text="Fifteen"></ui5-tab>
+			<ui5-tab text="Sixteen"></ui5-tab>
+			<ui5-tab text="Seventeen"></ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab text="Eighteen"></ui5-tab>
+
+		</ui5-tabcontainer>
+	</section>
 
 	<section>
-		<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>
 		<h2>Text only End Overflow</h2>
 		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed fixed>
 			<ui5-tab text="One"></ui5-tab>
-			<ui5-tab text="Two"></ui5-tab>
-			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Two">
+				<ui5-tab text="2.1"><ui5-button>Button 2.1</ui5-button>
+					<ui5-tab text="2.1.1"><ui5-button>Button 2.2</ui5-button>
+						<ui5-tab text="2.1.2"></ui5-tab><ui5-button>Button 2.3</ui5-button>
+				</ui5-tab></ui5-tab>
+			</ui5-tab>
+			<ui5-tab text="Three">
+				<ui5-tab text="3.1">
+					<ui5-button>Button 3</ui5-button>
+				</ui5-tab>
+			</ui5-tab>
 			<ui5-tab text="Four"></ui5-tab>
 			<ui5-tab text="Five"></ui5-tab>
 			<ui5-tab text="Six"></ui5-tab>
@@ -223,6 +325,7 @@
 	</section>
 
 	<section class="tabcontainer2auto">
+		<h2>Scrollable child</h2>
 		<ui5-tabcontainer fixed class="tabcontainer3auto" id="tc-scrollable-child">
 			<ui5-tab text="Tab 1" selected id="scrollable-tab">
 				<ui5-button>Toggle style</ui5-button>
@@ -549,8 +652,8 @@
 	<section>
 		<h2>Text only Start And End Overflow Custom Overflow Buttons</h2>
 		<ui5-tabcontainer id="tabContainerCustomOverflowButtons" tabs-overflow-mode="StartAndEnd" collapsed fixed>
-						<ui5-button slot="startOverflowButton" id="startOverflowButton">Start</ui5-button>
-						<ui5-button slot="overflowButton" id="endOverflowButton">End</ui5-button>
+				<ui5-button slot="startOverflowButton" id="startOverflowButton">Start</ui5-button>
+				<ui5-button slot="overflowButton" id="endOverflowButton">End</ui5-button>
 			<ui5-tab text="One"></ui5-tab>
 			<ui5-tab text="Two"></ui5-tab>
 			<ui5-tab text="Three"></ui5-tab>
@@ -582,8 +685,22 @@
 			<ui5-tab text="Twenty Nine"></ui5-tab>
 			<ui5-tab text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
-	</section>
 
+		<ui5-tabcontainer>
+			<ui5-tab text="First tab" design="Positive" additional-text="1">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Second tab" design="Critical" additional-text="2">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Third tab" design="Negative" additional-text="3">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Fourth tab" design="Neutral" additional-text="4">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
 
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {

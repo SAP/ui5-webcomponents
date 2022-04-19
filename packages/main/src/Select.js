@@ -408,6 +408,7 @@ class Select extends UI5Element {
 				value: opt.value,
 				textContent: opt.textContent,
 				title: opt.title,
+				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
@@ -636,6 +637,7 @@ class Select extends UI5Element {
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this.focused = false;
 	}
 
 	_afterOpen() {
@@ -644,6 +646,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this.opened = false;
+		this.focused = true;
 		this._iconPressed = false;
 		this._listWidth = 0;
 

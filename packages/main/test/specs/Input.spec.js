@@ -717,6 +717,16 @@ describe("Input general interaction", () => {
 		await disable.click();
 		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
 	});
+
+	it("Should open suggestions popover if openPicker() is called on focusin", async () => {
+		const input = await browser.$("#openPickerInput");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#openPickerInput");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await input.click();
+
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+	});
 });
 
 describe("Input arrow navigation", () => {

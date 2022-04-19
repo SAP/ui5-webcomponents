@@ -56,7 +56,7 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
-  DEPLOY_PUBLIC_PATH=https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/ yarn build:playground
+  yarn build:playground
 
   # Move master build folder to gh-pages folder
   cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages
@@ -80,12 +80,12 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Clean gh-pages existing contents
   rm -rf gh-pages/master|| exit 0
-  
+
   mkdir gh-pages/master
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
-  DEPLOY_PUBLIC_PATH=https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/ yarn build:playground:master
+  yarn build:playground:master
 
   # Move master build folder to gh-pages folder
   cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/master

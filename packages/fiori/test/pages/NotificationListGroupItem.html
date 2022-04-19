@@ -6,11 +6,10 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>NotificationListGroupItem</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
 <link rel="stylesheet" type="text/css" href="styles/NotificationListGroupItem.css">
 </head>
 
@@ -18,36 +17,6 @@
 
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
-
-	<br/><br/>
-
-	<h3>Properties</h3>
-	<ul>
-		<li>titleText</li>
-		<li>priority (default: "None")</li>
-		<li>collapsed (default: "false")</li>
-		<li>show-close (default: "false")</li>
-		<li>show-counter (default: "false")</li>
-		<li>read (default: "false")</li>
-	</ul>
-
-	<h3>Slots</h3>
-	<ul>
-		<li>items (default)</li>
-		<li>actions</li>
-	</ul>
-
-	<h3>Events</h3>
-	<ul>
-		<li>close</li>
-		<li>toggle</li>
-	</ul>
-
-	<h3>Events on ui5-list level</h3>
-	<ul>
-		<li>itemClose</li>
-		<li>itemToggle</li>
-	</ul>
 
 	<ui5-list id="notificationList" header-text="Notifications grouped">
 		<ui5-li-notification-group
@@ -330,8 +299,6 @@
 				busyGroup.busy = false;
 			}, 2000);
 		});
-
-
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();

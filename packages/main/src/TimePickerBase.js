@@ -256,8 +256,10 @@ class TimePickerBase extends UI5Element {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
-		this.value = value;
+		if (!events.includes("input")) {
+			this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
+			this.value = value;
+		}
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		events.forEach(event => {
@@ -440,6 +442,13 @@ class TimePickerBase extends UI5Element {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
+	/**
+	 *
+	 * @param {event} e Wheel Event
+	 * @private
+	 *
+	 * The listener for this event can't be passive as it calls preventDefault()
+	 */
 	_handleWheel(e) {
 		e.preventDefault();
 	}

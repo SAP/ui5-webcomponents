@@ -1,21 +1,18 @@
 :root{
 	--_ui5_message_strip_icon_width: 2.5rem;
-	--_ui5_message_strip_border_radius: 0.1875rem;
-	--_ui5_message_strip_success_border_color: var(--sapSuccessBorderColor);
-	--_ui5_message_strip_error_border_color: var(--sapErrorBorderColor);
-	--_ui5_message_strip_warning_border_color: var(--sapWarningBorderColor);
-	--_ui5_message_strip_information_border_color: var(--sapInformationBorderColor);
 	--_ui5_message_strip_button_border_width: 0;
 	--_ui5_message_strip_button_border_style: none;
 	--_ui5_message_strip_button_border_color: transparent;
 	--_ui5_message_strip_button_border_radius: 0;
 	--_ui5_message_strip_padding: 0.4375rem 2.5rem 0.4375rem 2.5rem;
-	--_ui5_message_strip_padding_no_icon: 0.4375rem 2.5rem 0.4375rem 1rem;
+	--_ui5_message_strip_padding_block_no_icon: 0.4375rem 0.4375rem;
+	--_ui5_message_strip_padding_inline_no_icon: 1rem 2.5rem;
 	--_ui5_message_strip_button_height: 1.625rem;
 	--_ui5_message_strip_border_width: 1px;
 	--_ui5_message_strip_close_button_border: none;
-	--_ui5_message_strip_close_button_size: 1.625rem;
 	--_ui5_message_strip_icon_top: 0.4375rem;
 	--_ui5_message_strip_focus_width: 1px;
 	--_ui5_message_strip_focus_offset: -2px;
+	--_ui5_message_strip_close_button_top: 0.125rem;
+	--_ui5_message_strip_close_button_right: 0.125rem;
 }

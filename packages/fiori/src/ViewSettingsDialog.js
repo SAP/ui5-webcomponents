@@ -112,6 +112,7 @@ const metadata = {
 		 */
 		_filterStepTwo: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
@@ -213,6 +214,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
+ * @appenddocs SortItem FilterItem FilterItemOption
  * @since 1.0.0-rc.16
  * @public
  */
@@ -312,8 +314,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _dialogTitle() {
-		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
-		return ViewSettingsDialog.i18nBundle.getText(currentModeText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
 	}
 
 	get _okButtonLabel() {
@@ -354,6 +355,12 @@ class ViewSettingsDialog extends UI5Element {
 
 	get _sortAscending() {
 		return !this.sortDescending;
+	}
+
+	get _title() {
+		return this.showBackButton
+			? this._filterByTitle
+			: this._dialogTitle;
 	}
 
 	/**
@@ -434,6 +441,10 @@ class ViewSettingsDialog extends UI5Element {
 		];
 	}
 
+	get expandContent() {
+		return this._filterStepTwo || !this.hasPagination;
+	}
+
 	get isModeSort() {
 		return this._currentMode === ViewSettingsDialogMode.Sort;
 	}
@@ -476,7 +487,10 @@ class ViewSettingsDialog extends UI5Element {
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
-		this._dialog.show();
+
+		this._dialog.show(true);
+
+		this._dialog.querySelector("[ui5-list]").focusFirstItem();
 	}
 
 	_handleModeChange(event) {
@@ -506,8 +520,7 @@ class ViewSettingsDialog extends UI5Element {
 	_changeCurrentFilter(event) {
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
-			filter.selected = filter.text === event.detail.item.text;
-
+			filter.selected = filter.text === event.detail.item.innerText;
 			return filter;
 		});
 	}

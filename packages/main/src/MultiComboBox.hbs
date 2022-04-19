@@ -1,4 +1,4 @@
-<div class="ui5-multi-combobox-root"
+<div class="ui5-multi-combobox-root ui5-input-focusable-element"
 >
 	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 
@@ -54,10 +54,6 @@
 		aria-required="{{required}}"
 	/>
 
-	{{#if readonly}}
-		<ui5-icon class="ui5-input-readonly-icon" name="not-editable" @click="{{_readonlyIconClick}}"></ui5-icon>
-	{{/if}}
-
 	{{#if icon}}
 		<slot name="icon"></slot>
 	{{/if}}
@@ -67,7 +63,7 @@
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click="{{togglePopover}}"
+			@click="{{togglePopoverByDropdownIcon}}"
 			@mousedown="{{_onIconMousedown}}"
 			@focusin="{{_forwardFocusToInner}}"
 			?pressed="{{open}}"

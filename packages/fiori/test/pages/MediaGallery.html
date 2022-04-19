@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-media-gallery</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="styles/MediaGallery.css">
 
@@ -31,7 +31,7 @@
 
 		<div class="controls layout">
 			<ui5-title level="H1">Layout preferences:</ui5-title>
-	
+
 			<div>
 				<ui5-label>Layout: </ui5-label>
 				<ui5-select id="layout">
@@ -200,6 +200,20 @@
 			</ui5-media-gallery>
 		</div>
 
+		<div class="controls">
+			<ui5-title level="H2">Narrow container</ui5-title>
+		</div>
+		<div class="narrowContainer">
+			<ui5-media-gallery id="galleryInNarrowContainer">
+				<ui5-media-gallery-item>
+					 <img src="./img/HT-1000.jpg">
+				</ui5-media-gallery-item>
+				<ui5-media-gallery-item>
+					<img src="./img/HT-1010.jpg">
+				</ui5-media-gallery-item>
+			</ui5-media-gallery>
+		</div>
+
 	<script>
 
 		let selectionChangeCallCount = 0,
@@ -256,7 +270,7 @@
 			var Conf = window["sap-ui-webcomponents-bundle"].configuration;
 			Conf.setTheme(theme);
 		});
-		
+
 	</script>
 </body>
 

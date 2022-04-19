@@ -48,12 +48,15 @@
 }
 
 .ui5-tc__separator:focus {
-    outline: none;
+	outline: none;
 }
 
 .ui5-tc__overflow {
 	flex: 0 0 0;
-	margin: 0 0.25rem;
+}
+
+.ui5-tc__overflow.ui5-tc__overflow--end {
+	padding-left: 0.188rem;
 }
 
 .ui5-tc__overflow[hidden] {
@@ -64,6 +67,10 @@
 	margin-top: 0.25rem;
 	border-radius: 0.75rem;
 	height: 1.5rem;
+}
+
+.ui5-tc__overflow > [ui5-button][focused] {
+	outline-offset: 0.125rem;
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
@@ -103,6 +110,32 @@
 	display: none;
 }
 
+.ui5-tab-expand-button > [ui5-button] {
+	height: 1.5rem;
+	min-width: 1.5rem;
+	margin-top: 0.25rem;
+	margin-left: 0.625rem;
+	color: var(--_ui5_tc_headerItem_color);
+}
+
+.ui5-tab-strip-item--selected .ui5-tab-expand-button > [ui5-button] {
+	color: var(--_ui5_tc_headeritem_text_selected_color);
+}
+
+.ui5-tab-expand-button > [ui5-button]:hover {
+	color: var(--_ui5_tc_headeritem_text_selected_hover_color);
+}
+
+.ui5-tab-single-click-icon {
+	margin-left: 0.875rem;
+}
+
+.ui5-tab-expand-button>[ui5-button]:hover {
+	background-color: var(--sapButton_Hover_Background);
+}
+.ui5-tab-expand-button>[ui5-button]:active {
+	background-color: var(--sapButton_Active_Background);
+}
 /*** Responsive paddings ***/
 
 :host([media-range="S"]) .ui5-tc__header {

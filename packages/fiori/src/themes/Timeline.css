@@ -31,22 +31,11 @@
 
 :host([layout="Horizontal"]) .ui5-timeline-list-item {
 	display: inline-block;
-	margin-left: var(--_ui5_tl_li_margin_bottom);
+	margin-inline-start: var(--_ui5_tl_li_margin_bottom);
 }
 
 :host([layout="Horizontal"]) .ui5-timeline-scroll-container {
 	overflow: auto;
 	/* The padding values of the parent container are added to the size of scroll container */
-	width: calc(100% + 0.5rem);
-}
-
-:host([layout="Horizontal"]) [dir=rtl] .ui5-timeline-list-item {
-	display: inline-block;
-	margin-left: inherit;
-	margin-right: var(--_ui5_tl_li_margin_bottom);
-}
-
-:host([layout="Horizontal"]) [dir=rtl] .ui5-timeline-scroll-container {
-	/* The padding values of the parent container are added to the size of scroll container */
-	width: calc(100% - 0.5rem);
+	width: calc(100% + var(--_ui5_timeline_scroll_container_offset));
 }

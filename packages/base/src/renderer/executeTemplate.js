@@ -1,4 +1,4 @@
-import { getCustomElementsScopingSuffix, shouldScopeCustomElement } from "../CustomElementsScope.js";
+import { getCustomElementsScopingSuffix, shouldScopeCustomElement } from "../CustomElementsScopeUtils.js";
 
 /**
  * Runs a component's template with the component's current state, while also scoping HTML

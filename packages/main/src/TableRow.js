@@ -8,6 +8,8 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -113,13 +115,6 @@ const metadata = {
 			defaultValue: "",
 			noAttribute: true,
 		},
-		_tabbableElements: {
-			type: Object,
-			multiple: true,
-		},
-		_tabMarked: {
-			type: Boolean,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -139,6 +134,14 @@ const metadata = {
 		 * @private
 		 */
 		"selection-requested": {},
+		/**
+		 * Fired when F7 is pressed.
+		 *
+		 * @event sap.ui.webcomponents.main.TableRow#f7-pressed
+		 * @since 1.2.0
+		 * @private
+		 */
+		"f7-pressed": {},
 	},
 };
 
@@ -188,23 +191,35 @@ class TableRow extends UI5Element {
 		return [CheckBox];
 	}
 
+	constructor() {
+		super();
+
+		this._ontouchstart = {
+			handleEvent(event) {
+				this.activate();
+			},
+			passive: true,
+		};
+	}
+
 	_onmouseup() {
 		this.deactivate();
 	}
 
 	_onkeydown(event) {
+		const activeElement = getActiveElement();
 		const itemActive = this.type === TableRowType.Active;
 		const isSingleSelect = this.isSingleSelect;
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 
-		if (isTabNext(event) || isTabPrevious(event)) {
-			this._tabMarked = true;
+		if (isTabNext(event) && activeElement === (getLastTabbableElement(this) || this.root)) {
+			this.fireEvent("_forward-after", { target: activeElement });
 		}
 
-		if (isTabNext(event) || isTabPrevious(event)) {
-			this._tabMarked = true;
+		if (isTabPrevious(event) && activeElement === this.root) {
+			this.fireEvent("_forward-before", { target: activeElement });
 		}
 
 		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
@@ -226,7 +241,7 @@ class TableRow extends UI5Element {
 
 		if (isF7(event)) {
 			event.preventDefault();
-			this._handleF7(event.target);
+			this.fireEvent("f7-pressed", { row: this });
 		}
 	}
 
@@ -236,33 +251,19 @@ class TableRow extends UI5Element {
 		}
 	}
 
-	_ontouchstart(event) {
-		this.activate();
-	}
-
 	_ontouchend() {
 		this.deactivate();
 	}
 
-	_onfocusout(event) {
+	_onfocusout() {
 		this.deactivate();
-
-		if (!this._tabMarked) {
-			this._tabbableElements.forEach(el => el.setAttribute("tabindex", -1));
-		} else {
-			this._tabMarked = false;
-		}
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
-		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
-
 		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
-			tableRowRoot.focus();
+			this.root.focus();
 			this.activate();
 		}
-
-		this._tabbableElements.forEach(el => el.setAttribute("tabindex", 0));
 
 		this.fireEvent("_focused", event);
 	}
@@ -298,44 +299,6 @@ class TableRow extends UI5Element {
 
 	_handleSelection() {
 		this.fireEvent("selection-requested", { row: this });
-	}
-
-	/**
-	 * Toggles focus between the table row's root and the last focused nested element.
-	 * @private
-	 * @param {Object} activeElement The currently focused element
-	 */
-	_handleF7(activeElement) {
-		const elements = this._tabbableElements;
-
-		if (!elements.length) {
-			return;
-		}
-
-		const table = this.parentElement;
-		const tableRowRoot = this.shadowRoot.querySelector(".ui5-table-row-root");
-		const prevFocusedIdx = table._prevNestedElementIndex;
-
-		if (activeElement === tableRowRoot) {
-			const lastFocusedElement = elements[prevFocusedIdx];
-
-			if (lastFocusedElement) {
-				lastFocusedElement.focus();
-			} else {
-				elements[0].focus();
-			}
-
-			return;
-		}
-
-		const shadowRoot = activeElement.shadowRoot;
-		const target = shadowRoot ? shadowRoot.activeElement : activeElement;
-		const targetIndex = elements.indexOf(target);
-
-		if (targetIndex > -1) {
-			table._prevNestedElementIndex = targetIndex;
-			tableRowRoot.focus();
-		}
 	}
 
 	_activeElementHasAttribute(attr) {
@@ -437,6 +400,10 @@ class TableRow extends UI5Element {
 
 	get isMultiSelect() {
 		return this.mode === "MultiSelect";
+	}
+
+	get root() {
+		return this.shadowRoot.querySelector(".ui5-table-row-root");
 	}
 
 	getCellText(cell) {

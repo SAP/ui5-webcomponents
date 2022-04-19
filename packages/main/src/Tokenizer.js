@@ -7,8 +7,14 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
+	isSpaceCtrl,
+	isSpaceShift,
 	isLeftCtrl,
 	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
+	isUpShift,
+	isDownShift,
 	isLeftShift,
 	isRightShift,
 	isLeftShiftCtrl,
@@ -271,7 +277,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isSpace(event)) {
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+		}
+
+		if (isSpace(event) || isSpaceCtrl(event)) {
 			event.preventDefault();
 
 			return this._handleTokenSelection(event, false);
@@ -285,24 +295,19 @@ class Tokenizer extends UI5Element {
 			this._handleEndShift(event);
 		}
 
-		this._handleItemNavigation(event, this.tokens);
+		this._handleItemNavigation(event, this._tokens);
 	}
 
 	_handleItemNavigation(event, tokens) {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
-		if (isLeftCtrl(event) || isRightCtrl(event)) {
-			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, isRightCtrl(event));
+
+		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
+			return this._handleArrowCtrl(event, event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
 		}
 
-		if (isLeftCtrl(event)) {
+		if (isLeftShift(event) || isRightShift(event) || isUpShift(event) || isDownShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
 			event.preventDefault();
-			return this._handleArrowCtrl(event.target, tokens, false);
-		}
-
-		if (isLeftShift(event) || isRightShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
-			event.preventDefault();
-			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event)));
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event) || isDownShift(event)));
 		}
 
 		if (isHome(event) || isEnd(event) || isHomeCtrl(event) || isEndCtrl(event)) {
@@ -369,25 +374,30 @@ class Tokenizer extends UI5Element {
 		return nextIndex;
 	}
 
-	_handleArrowCtrl(focusedToken, tokens, backwards) {
+	_handleArrowCtrl(event, focusedToken, tokens, backwards) {
 		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+
+		event.preventDefault();
+
 		if (nextIndex === -1) {
 			return;
 		}
 
-		tokens[nextIndex].focus();
+		setTimeout(() => tokens[nextIndex].focus(), 0);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_handleArrowShift(focusedToken, tokens, backwards) {
-		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
-		if (nextIndex === -1) {
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		const nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex === -1 || nextIndex === tokens.length) {
 			return;
 		}
 
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
-		tokens[nextIndex].focus();
+		setTimeout(() => tokens[nextIndex].focus(), 0);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 

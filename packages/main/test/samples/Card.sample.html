@@ -73,7 +73,7 @@
 		<ui5-card class="medium">
 			<ui5-card-header slot="header" title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10">
 				<ui5-icon name="group" slot="avatar"></ui5-icon>
-				<ui5-button design="Emphasized" slot="action">View All</ui5-button>
+				<ui5-button design="Transparent" slot="action">View All</ui5-button>
 			</ui5-card-header>
 
 			<div class="card-content">
@@ -112,7 +112,7 @@
 <ui5-card class="medium">
 	<ui5-card-header slot="header" title-text="Team Space" subtitle-text="Direct Reports" status="3 of 10">
 				<ui5-icon name="group" slot="avatar"></ui5-icon>
-				<ui5-button design="Emphasized" slot="action">View All</ui5-button>
+				<ui5-button design="Transparent" slot="action">View All</ui5-button>
 	</ui5-card-header>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%; margin-bottom: 0.75rem;">
@@ -297,7 +297,7 @@
 	<h3>More Cards</h3>
 	<div class="snippet card-container">
 		<ui5-card class="small">
-			<ui5-card-header slot="header" title-text="David Willams" subtitle-text="Sales Manager">
+			<ui5-card-header slot="header" title-text="David Williams" subtitle-text="Sales Manager">
 				<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
 			</ui5-card-header>
 
@@ -309,44 +309,11 @@
 		</ui5-card>
 
 		<ui5-card class="small">
-			<ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3">
-			</ui5-card-header>
+			<ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3"></ui5-card-header>
 			<ui5-list separators="None">
-				<ui5-li-custom>
-					<div class="item">
-						<div class="item-content-begin">
-							<ui5-title level="H5" class="item-content-begin-title">Avantel</ui5-title>
-							<ui5-label>ID234522566-D44</ui5-label>
-						</div>
-						<div>
-							<span class="status-success">27.25K EUR</span>
-						</div>
-					</div>
-				</ui5-li-custom>
-
-				<ui5-li-custom>
-					<div class="item">
-						<div class="item-content-begin">
-							<ui5-title level="H5" class="item-content-begin-title">Telecomunicaciones Star</ui5-title>
-							<ui5-label>ID7125852785-A51</ui5-label>
-						</div>
-						<div>
-							<span class="status-warning">22.89K EUR</span>
-						</div>
-					</div>
-				</ui5-li-custom>
-
-				<ui5-li-custom>
-					<div class="item">
-						<div class="item-content-begin">
-							<ui5-title level="H5" class="item-content-begin-title">Talpa</ui5-title>
-							<ui5-label>ID123555587-I05</ui5-label>
-						</div>
-						<div>
-							<span class="status-error">7.85K EUR</span>
-						</div>
-					</div>
-				</ui5-li-custom>
+				<ui5-li description="ID234522566-D44" additional-text="27.25K EUR" additional-text-state="Success">Avantel</ui5-li>
+				<ui5-li description="ID7125852785-A51" additional-text="22.89K EUR" additional-text-state="Warning">Telecomunicaciones Star</ui5-li>
+				<ui5-li description="ID123555587-I05" additional-text="7.85K EUR" additional-text-state="Error">Talpa</ui5-li>
 			</ui5-list>
 		</ui5-card>
 
@@ -389,43 +356,23 @@
 	</ui5-list>
 </ui5-card>
 
-<style>
-.content,
-.content-group {
-	display: flex;
-	flex-direction: column;
-	padding-bottom: 1rem;
-}
-</style>
-
-<style>
-.item {display: flex;width: 100%;justify-content: space-between;}
-.item-content-begin {display: flex;flex-direction: column;}
-.item-content-begin-title {padding-bottom: 0.25rem;}
-
-.status-error {color: #b00;}
-.status-warning {color: #e9730c;}
-.status-success {color: #107e3e;}
-</style>
-
 <ui5-card class="small">
-	   <ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3">
-	   </ui5-card-header>
+	<ui5-card-header slot="header" title-text="Project Cloud Transformation" subtitle-text="Revenue per Product | EUR" status="3 of 3"></ui5-card-header>
 	<ui5-list separators="None">
-		<ui5-li-custom>
-			<div class="item">
-				<div class="item-content-begin">
-					<ui5-title level="H5" class="item-content-begin-title">Avantel</ui5-title>
-					<ui5-label>ID234522566-D44</ui5-label>
-				</div>
-				<div>
-					<span class="status-success">27.25K EUR</span>
-				</div>
-			</div>
-		</ui5-li-custom>
-		...
+		<ui5-li description="ID234522566-D44" additional-text="27.25K EUR" additional-text-state="Success">Avantel</ui5-li>
+		<ui5-li description="ID7125852785-A51" additional-text="22.89K EUR" additional-text-state="Warning">Telecomunicaciones Star</ui5-li>
+		<ui5-li description="ID123555587-I05" additional-text="7.85K EUR" additional-text-state="Error">Talpa</ui5-li>
 	</ui5-list>
 </ui5-card>
+
+<style>
+	.content,
+	.content-group {
+		display: flex;
+		flex-direction: column;
+		padding-bottom: 1rem;
+	}
+</style>
 
 <ui5-card class="small">
 	<ui5-card-header slot="header" title-text="Dona Maria Moore" subtitle-text="Senior Sales Executive">

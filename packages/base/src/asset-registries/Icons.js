@@ -1,6 +1,6 @@
 import getSharedResource from "../getSharedResource.js";
 import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
-import { isThemeFamily } from "../config/Theme.js";
+import { getEffectiveDefaultIconCollection } from "../config/Icons.js";
 
 const loaders = new Map();
 const registry = getSharedResource("SVGIcons.registry", new Map());
@@ -48,7 +48,7 @@ const _fillRegistry = bundleData => {
 // set
 const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
 	if (!collection) {
-		collection = _getDefaultCollection();
+		collection = getEffectiveDefaultIconCollection();
 	}
 
 	const key = `${collection}/${name}`;
@@ -68,7 +68,7 @@ const _parseName = name => {
 
 	let collection;
 	[name, collection] = name.split("/").reverse();
-	collection = collection || _getDefaultCollection();
+	collection = collection || getEffectiveDefaultIconCollection();
 
 	// Normalize collection name.
 	// - resolve `SAP-icons-TNT` to `tnt`.
@@ -115,10 +115,6 @@ const _getRegisteredNames = async () => {
 	await getIconData("tnt/arrow");
 	await getIconData("business-suite/3d");
 	return Array.from(registry.keys());
-};
-
-const _getDefaultCollection = () => {
-	return isThemeFamily("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
 };
 
 const _normalizeCollection = collectionName => {

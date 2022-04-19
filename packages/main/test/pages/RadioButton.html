@@ -7,9 +7,9 @@
 
 	<title>ui5-radio-button</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
@@ -54,12 +54,14 @@
 	</div>
 
 	<div aria-labelledby="radioGroupTitle5" role="radiogroup" id="radioGroup" class="radio-section">
-		<ui5-title id="radioGroupTitle5">Group 4 - Value states</ui5-title>
+		<ui5-title id="radioGroupTitle5">Group 5 - Value states</ui5-title>
 		<ui5-label id="lblRadioGroup">N/A</ui5-label>
 		<ui5-label id="lblEventCounter">0</ui5-label>
 		<ui5-radio-button id="groupRb7" text="None selected" value-state="None" name="GroupB"></ui5-radio-button>
 		<ui5-radio-button id="groupRb8" text="Warning" value-state="Warning" checked name="GroupB"></ui5-radio-button>
 		<ui5-radio-button id="groupRb9"text="Error" value-state="Error" checked name="GroupB"></ui5-radio-button>
+		<ui5-radio-button text="Success" value-state="Success" checked name="GroupB"></ui5-radio-button>
+		<ui5-radio-button text="Information" value-state="Information" checked name="GroupB"></ui5-radio-button>
 		<ui5-radio-button id="groupRb10" text="Default selected" value-state="None" checked name="GroupB"></ui5-radio-button>
 		<ui5-radio-button id="groupRb11" text="Radio From Another Group" value-state="None" checked name="GroupBB"></ui5-radio-button>
 	</div>
@@ -73,8 +75,12 @@
 		<ui5-radio-button id="myRb10" disabled text="disabled" checked></ui5-radio-button>
 		<ui5-radio-button id="myRb11" value-state="Warning" text="warning"></ui5-radio-button>
 		<ui5-radio-button id="myRb12" value-state="Error" text="error"></ui5-radio-button>
+		<ui5-radio-button id="myRb11" value-state="Success" text="success"></ui5-radio-button>
+		<ui5-radio-button id="myRb12" value-state="Information" text="information"></ui5-radio-button>
 		<ui5-radio-button id="myRb13" value-state="Warning" checked text="warning"></ui5-radio-button>
 		<ui5-radio-button id="myRb14" value-state="Error" checked text="error"></ui5-radio-button>
+		<ui5-radio-button id="myRb13" value-state="Success" checked text="success"></ui5-radio-button>
+		<ui5-radio-button id="myRb14" value-state="Information" checked text="information"></ui5-radio-button>
 	</div>
 
 
@@ -83,7 +89,7 @@
 		<ui5-radio-button id="rb2" text="Option B"></ui5-radio-button>
 		<ui5-radio-button id="rb3" wrapping-type="Normal" text="Option C"></ui5-radio-button>
 		<ui5-radio-button id="rb4" disabled text="Option D"></ui5-radio-button>
-		<ui5-radio-button id="truncatingRb" text="Long long long text that should truncate at some point"></ui5-radio-button>
+		<ui5-radio-button id="truncatingRb" text="Long long long long long long long long long long text that should truncate at some point"></ui5-radio-button>
 		<br/>
 		<ui5-radio-button id="wrappingRb" wrapping-type="Normal" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." class="radiobutton2auto"></ui5-radio-button>
 		<ui5-input id="field"></ui5-input>

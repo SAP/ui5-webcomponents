@@ -6,9 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ResponsivePopover</title>
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="styles/ResponsivePopover.css">
 </head>
@@ -124,6 +124,12 @@
 		Content
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnRpWithPopover">Open RP that opens a Popover</ui5-button>
+	<ui5-responsive-popover id="btnRpWithPopoverRP">
+		<ui5-button id="btnRpWithPopoverOpener">Open Popover</ui5-button>
+	</ui5-responsive-popover>
+	<ui5-popover id="btnRpWithPopoverInnerPopover">Test popover</ui5-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -171,6 +177,14 @@
 
 		btnInitialFocusPrevented.addEventListener("click", function(event) {
 			simpleRPInitialFocusPrevented.showAt(event.target, true);
+		});
+
+		btnRpWithPopover.addEventListener("click", function () {
+			btnRpWithPopoverRP.showAt(btnRpWithPopover)
+		});
+
+		btnRpWithPopoverOpener.addEventListener("click", function () {
+			btnRpWithPopoverInnerPopover.showAt(btnRpWithPopoverOpener);
 		});
 
 		btnOpenWithAttr.addEventListener("click", function () {

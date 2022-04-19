@@ -6,9 +6,9 @@
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 <link rel="stylesheet" type="text/css" href="styles/List_test_page.css">
 </head>
@@ -40,15 +40,6 @@
 
 	<br><br><br>
 
-	<ui5-list id="growingListButton" growing="Button" class="list_test_page4auto">
-		<ui5-li>Javascript</ui5-li>
-		<ui5-li>PHP</ui5-li>
-	</ui5-list>
-
-	<button id="nextInteractiveElement">Next Interactive element</button>
-
-	<br><br><br>
-	
 	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -61,7 +52,7 @@
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
 
 	<br><br><br>
-	
+
 	<br/>
 	<ui5-list id="listPreventClickEvent" mode="SingleSelect">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -132,7 +123,8 @@
 
 	<ui5-input id="fieldMultiSelResult"></ui5-input>
 
-	<ui5-list id="keyboardTestList">
+	<ui5-button id="beforeBtn">Before button</ui5-button>
+	<ui5-list id="keyboardTestList" growing="Button">
 		<div slot="header" class="header"><ui5-button id="headerBtn" design="Accept">Export</ui5-button></div>
 
 		<ui5-li class="firstItem">Argentina</ui5-li>
@@ -147,7 +139,7 @@
 				<ui5-radio-button text="Option C" disabled="disabled"></ui5-radio-button>
 		</ui5-li-custom>
 	</ui5-list>
-	<ui5-button id="randomBtn">Random button</ui5-button>
+	<ui5-button id="afterBtn">After button</ui5-button>
 
 	<ui5-list id="no-data-list" header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 

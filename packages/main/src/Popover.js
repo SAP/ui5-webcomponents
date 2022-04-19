@@ -386,6 +386,13 @@ class Popover extends Popup {
 			&& openerRect.right === 0;
 	}
 
+	isOpenerOutsideViewport(openerRect) {
+		return openerRect.bottom < 0
+			|| openerRect.top > window.innerHeight
+			|| openerRect.right < 0
+			|| openerRect.left > window.innerWidth;
+	}
+
 	/**
 	 * @override
 	 */
@@ -425,7 +432,7 @@ class Popover extends Popup {
 
 		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
-		if (this._preventRepositionAndClose) {
+		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect)) {
 			return this.close();
 		}
 
@@ -499,10 +506,6 @@ class Popover extends Popup {
 			height = rect.height;
 
 		return { width, height };
-	}
-
-	get contentDOM() {
-		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
 
 	get arrowDOM() {

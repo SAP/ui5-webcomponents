@@ -6,11 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>NotificationListItem</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="styles/NotificationListItem.css">
 </head>
@@ -19,37 +17,6 @@
 
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
-
-	<br/><br/>
-
-	<h3>Properties</h3>
-	<ul>
-		<li>titleText</li>
-		<li>wrappingType (default: "None")</li>
-		<li>priority (default: "None")</li>
-		<li>read (default: "false")</li>
-		<li>show-close (default: "false")</li>
-	</ul>
-
-	<h3>Slots</h3>
-	<ul>
-		<li>default (description)</li>
-		<li>avatar</li>
-		<li>actions</li>
-		<li>footnotes</li>
-	</ul>
-
-	<h3>Events</h3>
-	<ul>
-		<li>click</li>
-		<li>close</li>
-	</ul>
-
-	<h3>Events on ui5-list level</h3>
-	<ul>
-		<li>itemClick</li>
-		<li>itemClose</li>
-	</ul>
 
 	<ui5-list id="notificationList" header-text="Notifications titleText and content 'truncates'">
 

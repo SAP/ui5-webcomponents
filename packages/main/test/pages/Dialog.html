@@ -19,9 +19,9 @@
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 <link rel="stylesheet" type="text/css" href="styles/Dialog.css">
 </head>
 
@@ -125,7 +125,7 @@
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -230,17 +230,12 @@
 		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
 		</ui5-textarea>
 
-		<div slot="footer" class="dialog4auto">
-			<div class="dialog5auto"></div>
+		<div slot="footer" class="dialogFooter">
 			<ui5-button id="btnCloseDialog">Close</ui5-button>
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="dialogNoPaddings" stretch class="noContentPaddingsDialog">
-		<div slot="header">
-			<ui5-title level="H2">No content paddings</ui5-title>
-		</div>
-
+	<ui5-dialog id="dialogNoPaddings" header-text="No content paddings" stretch class="noContentPaddingsDialog">
 		<div class="dialog3auto">
 			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
@@ -290,8 +285,7 @@
 		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
 		</ui5-textarea>
 
-		<div slot="footer" class="dialog4auto">
-			<div class="dialog5auto"></div>
+		<div slot="footer" class="dialogFooter">
 			<ui5-button id="btnCloseDialogNoPaddings">Close</ui5-button>
 		</div>
 
@@ -301,7 +295,7 @@
 	<ui5-dialog id="prevent-dialog" header-text="Message dialog">
 		<p>Prevent closing the dialog.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -329,7 +323,7 @@
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -349,7 +343,7 @@
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -360,7 +354,7 @@
 		<p>Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button id="draggable-close" design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -369,7 +363,7 @@
 		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button id="resizable-close" design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
@@ -379,7 +373,7 @@
 		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
-		<div slot="footer" class="dialog2auto">
+		<div slot="footer" class="dialogFooter">
 			<ui5-button id="draggable-and-resizable-close" design="Emphasized">Close</ui5-button>
 		</div>
 	</ui5-dialog>

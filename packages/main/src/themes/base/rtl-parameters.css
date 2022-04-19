@@ -1,0 +1,16 @@
+:root, [dir="ltr"] {
+	--_ui5_rotation_90deg: rotate(90deg);
+	--_ui5_rotation_minus_90deg: rotate(-90deg);
+
+	--_ui5_icon_transform_scale: none;
+	--_ui5_panel_toggle_btn_rotation: var(--_ui5_rotation_90deg);
+	--_ui5_li_notification_group_toggle_btn_rotation: var(--_ui5_rotation_90deg);
+	--_ui5_timeline_scroll_container_offset: 0.5rem;
+}
+
+[dir="rtl"] {
+	--_ui5_icon_transform_scale: scale(-1, 1);
+	--_ui5_panel_toggle_btn_rotation: var(--_ui5_rotation_minus_90deg);
+	--_ui5_li_notification_group_toggle_btn_rotation: var(--_ui5_rotation_minus_90deg);
+	--_ui5_timeline_scroll_container_offset: -0.5rem;
+}

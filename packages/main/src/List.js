@@ -5,7 +5,12 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isTabNext,
+	isSpace,
+	isEnter,
+	isTabPrevious,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -759,8 +764,16 @@ class List extends UI5Element {
 		}
 
 		if (isTabNext(event)) {
-			this.setPreviouslyFocusedItem(event.target);
 			this.focusAfterElement();
+		}
+
+		if (isTabPrevious(event)) {
+			if (this.getPreviouslyFocusedItem()) {
+				this.focusPreviouslyFocusedItem();
+			} else {
+				this.focusFirstItem();
+			}
+			event.preventDefault();
 		}
 	}
 
@@ -824,8 +837,9 @@ class List extends UI5Element {
 	}
 
 	_onfocusin(event) {
+		const target = this.getNormalizedTarget(event.target);
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
-		if (!this.isForwardElement(this.getNormalizedTarget(event.target))) {
+		if (!this.isForwardElement(target)) {
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -833,7 +847,11 @@ class List extends UI5Element {
 		// The focus arrives in the List for the first time.
 		// If there is selected item - focus it or focus the first item.
 		if (!this.getPreviouslyFocusedItem()) {
-			this.focusFirstItem();
+			if (this.growsWithButton && this.isForwardAfterElement(target)) {
+				this.focusGrowingButton();
+			} else {
+				this.focusFirstItem();
+			}
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -841,6 +859,12 @@ class List extends UI5Element {
 		// The focus returns to the List,
 		// focus the first selected item or the previously focused element.
 		if (!this.getForwardingFocus()) {
+			if (this.growsWithButton && this.isForwardAfterElement(target)) {
+				this.focusGrowingButton();
+				event.stopImmediatePropagation();
+				return;
+			}
+
 			this.focusPreviouslyFocusedItem();
 			event.stopImmediatePropagation();
 		}
@@ -850,12 +874,18 @@ class List extends UI5Element {
 
 	isForwardElement(node) {
 		const nodeId = node.id;
-		const afterElement = this.getAfterElement();
 		const beforeElement = this.getBeforeElement();
 
 		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
 			return true;
 		}
+
+		return this.isForwardAfterElement(node);
+	}
+
+	isForwardAfterElement(node) {
+		const nodeId = node.id;
+		const afterElement = this.getAfterElement();
 
 		return afterElement && afterElement.id === nodeId;
 	}
@@ -920,6 +950,9 @@ class List extends UI5Element {
 
 		if (!this.growsWithButton) {
 			this.focusAfterElement();
+		} else {
+			this.focusGrowingButton();
+			event.preventDefault();
 		}
 	}
 
@@ -933,6 +966,22 @@ class List extends UI5Element {
 		this.getAfterElement().focus();
 	}
 
+	focusGrowingButton() {
+		const growingBtn = this.getGrowingButton();
+
+		if (growingBtn) {
+			growingBtn.focus();
+		}
+	}
+
+	getGrowingButton() {
+		return this.shadowRoot.querySelector(`#${this._id}-growing-btn`);
+	}
+
+	/**
+	 * Focuses the first list item and sets its tabindex to "0" via the ItemNavigation
+	 * @protected
+	 */
 	focusFirstItem() {
 		// only enabled items are focusable
 		const firstItem = this.getFirstItem(x => !x.disabled);

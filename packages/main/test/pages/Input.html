@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-input</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
@@ -384,6 +384,12 @@
 		</span>
 	</div>
 
+	<h3>Input with openPicker() on focusin</h3>
+	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
+		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
+		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+	</ui5-input>
+
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
@@ -563,6 +569,77 @@
 		document.getElementById("clear-icon-readonly-toggle").addEventListener("click", event => {
 			compactClearIconInput.toggleAttribute("readonly");
 		});
+
+		const openPickerInput = document.getElementById("openPickerInput");
+		let recentItems = [];
+		openPickerInput.addEventListener("input", handleSuggestions);
+		openPickerInput.addEventListener("suggestion-item-select", handleSelection);
+		openPickerInput.addEventListener("click", handleHistory);
+		openPickerInput.addEventListener("focus", handleHistory);
+
+		function handleSuggestions() {
+			fetch('https://dummyjson.com/users?select=firstName,lastName&limit=100')
+				.then(res => res.json())
+				.then(({users}) => {
+					var value = openPickerInput.value;
+					var suggestionItems = [];
+
+					[].slice.call(openPickerInput.children).forEach(child => {
+						openPickerInput.removeChild(child);
+					});
+
+					const recentItemsGroup = document.createElement("ui5-suggestion-group-item");
+					recentItemsGroup.text = "Recent items";
+					openPickerInput.appendChild(recentItemsGroup);
+
+					if (recentItems.length) {
+						recentItems.forEach(name => {
+							const item = document.createElement("ui5-suggestion-item");
+							item.icon = "employee";
+							item.text = name;
+							openPickerInput.appendChild(item);
+						})
+					} else {
+						const noRecentItem = document.createElement("ui5-suggestion-item");
+						noRecentItem.text = "No recent users";
+						noRecentItem.type = "Inactive";
+						openPickerInput.appendChild(noRecentItem);
+					}
+
+					if (value) {
+						let currentItems = Array.from(openPickerInput.children).map(({text}) => text);
+						suggestionItems = users
+							.map(({ firstName, lastName }) => `${firstName} ${lastName}`)
+							.filter(item => item.toUpperCase().indexOf(value.toUpperCase()) === 0 && !currentItems.includes(item));
+					}
+
+					if (suggestionItems.length) {
+						const suggestionsGroup = document.createElement("ui5-suggestion-group-item");
+						suggestionsGroup.text = "Suggestions";
+						openPickerInput.appendChild(suggestionsGroup);
+
+						suggestionItems.forEach(item => {
+							var li = document.createElement("ui5-suggestion-item");
+							li.icon = "employee";
+							li.text = item;
+							openPickerInput.appendChild(li);
+						});
+					}
+				});
+		}
+
+		function handleSelection(event) {
+			const name = event.detail.item.text;
+			const idx = recentItems.indexOf(name);
+			idx > -1 && recentItems.splice(idx, 1);
+			recentItems.unshift(name);
+			recentItems.length > 5 && recentItems.pop();
+		}
+
+		function handleHistory() {
+			handleSuggestions();
+			openPickerInput.openPicker();
+		}
 	</script>
 </body>
 </html>

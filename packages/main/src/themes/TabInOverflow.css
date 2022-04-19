@@ -34,9 +34,18 @@
 .ui5-tab-overflow-itemContent {
 	display: flex;
 	align-items: center;
-	padding: 0 0.5rem;
+	padding-right: 0.5rem;
 	height: var(--_ui5_tc_item_text);
 	pointer-events: none;
+	font-size: 0.875rem;
+}
+
+.ui5-tab-overflow-itemContent-wrapper {
+	padding-left: calc(var(--_ui5-indentation-level, 0) * 1rem);
+}
+
+.ui5-tab-overflow-item--selectedSubTab {
+	background-color: var(--sapList_SelectionBackgroundColor);
 }
 
 .ui5-tab-overflow-item [ui5-icon] {
@@ -50,14 +59,11 @@
 	display: none;
 }
 
-.ui5-tab-container-responsive-popover [ui5-li-custom][focused]:first-child::part(native-li)::after {
-	border-top-left-radius: var(--_ui5_tc_overflowItem_focus_border);
-	border-top-right-radius: var(--_ui5_tc_overflowItem_focus_border);
-}
-
-.ui5-tab-container-responsive-popover [ui5-li-custom][focused]:last-child::part(native-li)::after {
-	border-bottom-left-radius: var(--_ui5_tc_overflowItem_focus_border);
-	border-bottom-right-radius: var(--_ui5_tc_overflowItem_focus_border);
+.ui5-tab-container-responsive-popover [ui5-li-custom][focused]::part(native-li)::after {
+	top: var(--_ui5_tc_overflowItem_focus_offset);
+	right: var(--_ui5_tc_overflowItem_focus_offset);
+	bottom: var(--_ui5_tc_overflowItem_focus_offset);
+	left: var(--_ui5_tc_overflowItem_focus_offset);
 }
 
 .ui5-tab-container-responsive-popover::part(content) {

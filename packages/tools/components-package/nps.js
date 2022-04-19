@@ -2,8 +2,6 @@ const path = require("path");
 const fs = require("fs");
 
 const LIB = path.join(__dirname, `../lib/`);
-const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
-const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
 const getScripts = (options) => {
@@ -20,16 +18,13 @@ const getScripts = (options) => {
 		clean: "rimraf dist && rimraf .port",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
-		prepare: {
-			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples build.illustrations",
-			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples build.illustrations"
-		},
+		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples build.illustrations",
 		build: {
-			default: "nps lint prepare.es5 build.bundle",
+			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
-				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
+				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
 			i18n: {
@@ -42,7 +37,7 @@ const getScripts = (options) => {
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
-			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
+			bundle: "rollup --config config/rollup.config.js",
 			samples: {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
@@ -51,24 +46,17 @@ const getScripts = (options) => {
 			illustrations: illustrationsScript
 		},
 		copy: {
-			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill-placeholder",
-			es5: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
+			default: "nps copy.src copy.props copy.test",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
-			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" dist/webcomponentsjs/`,
-			"webcomponents-polyfill-placeholder": `node "${LIB}/polyfill-placeholder/index.js"`
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.i18n"',
-			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles" "nps watch.i18n"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
-			bundle: {
-				default: 'rollup --config config/rollup.config.js -w --environment DEV,DEPLOY_PUBLIC_PATH:/resources/',
-				es5: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/'
-			},
+			bundle: 'rollup --config config/rollup.config.js -w --environment DEV',
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -82,10 +70,7 @@ const getScripts = (options) => {
 			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
-		dev: {
-			default: 'concurrently "nps serve" "nps watch"',
-			es5: 'concurrently "nps serve" "nps watch.es5"'
-		},
+		dev: 'concurrently "nps serve" "nps watch"',
 		start: "nps prepare dev",
 		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
 		test: {
@@ -106,7 +91,7 @@ const getScripts = (options) => {
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',
 			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',
-			bundle: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE'
+			bundle: 'rollup --config config/rollup.config.js -w --environment DEV,SCOPE'
 		}
 	};
 
