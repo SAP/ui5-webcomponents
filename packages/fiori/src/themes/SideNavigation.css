@@ -4,19 +4,23 @@
     height: 100%;
     transition: width .25s;
     --_ui5-tree-toggle-box-width: 1rem;
+    --_ui5_list_item_icon_size: 1.125rem;
+    --_ui5_list_item_title_size: var(--sapFontLargeSize);
+	--_ui5_list_item_icon_padding-inline-end: 1rem;
 }
 
 :host([collapsed]) {
-    width: 3rem;
-    min-width: 3rem;
+    width: var(--_ui5_side_navigation_collapsed_state_width);
 }
 
 .ui5-sn-root {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: var( --sapList_Background);
+    box-sizing: border-box;
+    background: var(--sapList_Background);
     border-right: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+    box-shadow: var(--sapContent_Shadow0);
 }
 
 .ui5-sn-items-tree {
