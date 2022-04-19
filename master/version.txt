@@ -1,7 +1,5 @@
-commit 27f8ea620748ec0afefd1902930578c15a70f36b
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Tue Apr 19 17:03:13 2022 +0300
+commit 788402231d2eacdd02ff245d1cae43413a1d4866
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Apr 19 17:59:17 2022 +0300
 
-    feat(ui5-list): implement Horizon theme (#5057)
-    
-    Related to: #5008
+    feat(inputs): adjust dropdowns according to Horizon themes specification (#5054)
