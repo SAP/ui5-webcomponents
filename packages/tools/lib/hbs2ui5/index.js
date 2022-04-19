@@ -72,6 +72,9 @@ const writeRenderers = (outputDir, controlName, fileContent) => {
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");
 		fileContentUnix = fileContentUnix.replace(/\r/g, "\n");
+
+		// Only write to the file system actual changes - each updated file, no matter if the same or not, triggers an expensive operation for rollup
+		// Note: .hbs files that include a changed .hbs file will also be recompiled as their content will be updated too
 		if (!fs.existsSync(compiledFilePath) || `${fs.readFileSync(compiledFilePath)}` !== fileContentUnix) {
 			fs.writeFileSync(compiledFilePath, fileContentUnix);
 		}
