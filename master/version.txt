@@ -1,5 +1,16 @@
-commit b09dd35b4273077a92255bb61d5ac0780fda6f1c
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Apr 19 09:44:29 2022 +0300
+commit 67565d56434dd436ff099606568cbd0d5901ead9
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Tue Apr 19 11:37:57 2022 +0300
 
-    fix(ui5-page): Allow developers to be able to overwrite responsive paddings (#5056)
+    feat(ui5-panel): implement SAP Horizon themes (#5058)
+    
+    * feat(ui5-panel): implement SAP Horizon themes
+    
+    - existing themes adjustments
+    - implementation of Horizon themes
+    
+    Related to: #5007
+    
+    * remove font-weight
+    
+    * additional fixes
