@@ -12,7 +12,6 @@ const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
-const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 const warningsToSkip = [{
 	warningCode: "THIS_IS_UNDEFINED",
@@ -109,8 +108,6 @@ const getPlugins = () => {
 		));
 	}
 
-	const publicPath = DEPLOY_PUBLIC_PATH;
-
 	plugins.push(ui5DevImportCheckerPlugin());
 
 	plugins.push(json({
@@ -153,12 +150,6 @@ const getES6Config = (input = "bundle.esm.js") => {
 			dir: "dist/resources",
 			format: "esm",
 			sourcemap: true,
-		},
-		moduleContext: id => {
-			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
 		},
 		watch: {
 			clearScreen: false,
