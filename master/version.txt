@@ -1,8 +1,7 @@
-commit 0a1247fa526d61309b00b80fa16962ff07f1b56c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 19 16:41:52 2022 +0300
+commit 27f8ea620748ec0afefd1902930578c15a70f36b
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue Apr 19 17:03:13 2022 +0300
 
-    refactor(ui5-vsd, ui5-timeline, ui5-card-header, ui5-calendar-header): make use of CSS Logical props (#5091)
+    feat(ui5-list): implement Horizon theme (#5057)
     
-    Where possible CSS Logical properties are replacing RTL specific stlyes
-    Where not possible to use CSS Logical properties - we extract the values as CSS vars to rtl-parameters.css
+    Related to: #5008
