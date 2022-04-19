@@ -215,6 +215,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
  * @since 1.0.0-rc.16
+ * @appenddocs SortItem FilterItem FilterItemOption
  * @public
  */
 class ViewSettingsDialog extends UI5Element {

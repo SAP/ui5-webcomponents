@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 
 /**
  * @public
@@ -32,7 +32,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
 		/**
 		 * Defines the <code>values</code> list.
-         * @type {sap.ui.webcomponents.fiori.IFilterItemOption[]}
+		 * @type {sap.ui.webcomponents.fiori.IFilterItemOption[]}
 		 * @slot values
 		 * @public
 		 */
@@ -61,13 +61,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.FilterItem
- * @extends UI5Element
+ * @extends ListItem
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item
  * @implements sap.ui.webcomponents.fiori.IFilterItem
  * @public
  */
-class FilterItem extends UI5Element {
+class FilterItem extends ListItem {
 	static get metadata() {
 		return metadata;
 	}
