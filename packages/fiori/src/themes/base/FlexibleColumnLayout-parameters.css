@@ -1,6 +1,6 @@
 :root {
 	--_ui5_fcl_solid_bg: var(--sapShell_Background);
 	--_ui5_fcl_column_border: none;
-	--_ui5_fcl_decoration_top: linear-gradient(to top, var(--sapHighlightColor), #f3f4f5);
-	--_ui5_fcl_decoration_bottom: linear-gradient(to bottom, var(--sapHighlightColor), #f3f4f5);
+	--_ui5_fcl_decoration_top: linear-gradient(to top, var(--sapHighlightColor), transparent);
+	--_ui5_fcl_decoration_bottom: linear-gradient(to bottom, var(--sapHighlightColor), transparent);
 }
