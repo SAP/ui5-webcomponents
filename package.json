@@ -46,7 +46,7 @@
     "start:base": "cd packages/base && yarn start",
     "start:main": "cd packages/main && yarn start",
     "start:fiori": "cd packages/fiori && yarn start",
-    "start:playground": "yarn build:theming && cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:main && cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:fiori && yarn copy-css && cd packages/playground && yarn start",
+    "start:playground": "yarn build:theming && yarn build:main && yarn build:fiori && yarn copy-css && cd packages/playground && yarn start",
     "test:base": "cd packages/base && yarn test",
     "test:main": "cd packages/main && yarn test",
     "test:fiori": "cd packages/fiori && yarn test",

@@ -12,7 +12,6 @@ const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
-const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 const warningsToSkip = [{
 	warningCode: "THIS_IS_UNDEFINED",
@@ -108,8 +107,6 @@ const getPlugins = () => {
 
 		));
 	}
-
-	const publicPath = DEPLOY_PUBLIC_PATH;
 
 	plugins.push(ui5DevImportCheckerPlugin());
 
