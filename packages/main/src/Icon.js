@@ -256,16 +256,11 @@ class Icon extends UI5Element {
 		this.fireEvent("click");
 	}
 
+	/**
+	* Enforce "ltr" direction, based on the icons collection metadata.
+	*/
 	get _dir() {
-		if (!this.effectiveDir) {
-			return;
-		}
-
-		if (this.ltr) {
-			return "ltr";
-		}
-
-		return this.effectiveDir;
+		return this.ltr ? "ltr" : undefined;
 	}
 
 	get effectiveAriaHidden() {

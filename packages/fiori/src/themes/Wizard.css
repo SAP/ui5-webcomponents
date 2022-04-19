@@ -27,6 +27,13 @@
 	padding: 1rem 2rem;
 }
 
+.ui5-wiz-content-item-wrapper {
+	display: block;
+	padding: var(--_ui5_wiz_content_item_wrapper_padding);
+	background-color: var(--_ui5_wiz_content_item_wrapper_bg);
+	border-radius: var(--sapElement_BorderCornerRadius);
+}
+
 .ui5-wiz-content-item[hidden] {
 	display: none;
 }
@@ -65,7 +72,7 @@
 .ui5-wiz-nav {
 	box-sizing: border-box;
 	height: 4rem;
-	padding: 0.875rem 2rem;
+	padding: 1rem 2rem;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
