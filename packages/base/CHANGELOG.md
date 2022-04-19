@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **framework:** make listeners passive ([#5012](https://github.com/SAP/ui5-webcomponents/issues/5012)) ([30f2dc7](https://github.com/SAP/ui5-webcomponents/commit/30f2dc7))
+* **framework:** fix F6 navigation on windows browsers ([#4886](https://github.com/SAP/ui5-webcomponents/issues/4886)) ([36fd3d1](https://github.com/SAP/ui5-webcomponents/commit/36fd3d1))
+* **framework:** fix submit event handling in forms ([#4942](https://github.com/SAP/ui5-webcomponents/issues/4942)) ([883809f](https://github.com/SAP/ui5-webcomponents/commit/883809f))
+* **framework:** add 72-* font as system styles ([#4934](https://github.com/SAP/ui5-webcomponents/issues/4934)) ([4b45d32](https://github.com/SAP/ui5-webcomponents/commit/4b45d32))
+* **framework:** fix scoping of self tag ([#4952](https://github.com/SAP/ui5-webcomponents/issues/4952)) ([8d53e95](https://github.com/SAP/ui5-webcomponents/commit/8d53e95))
+
+
+### Features
+
+* **framework:** configure default icon collection per theme ([#5031](https://github.com/SAP/ui5-webcomponents/issues/5031)) ([7f84b83](https://github.com/SAP/ui5-webcomponents/commit/7f84b83))
+
+
+
+
+
 ## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
 
 
