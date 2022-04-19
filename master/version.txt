@@ -1,7 +1,5 @@
-commit 6db8956cc03f8b275d719fff54dab47180f80614
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Tue Apr 19 14:10:35 2022 +0300
+commit 3eed2d30608cf78d594784698c6e1e83f6b174e6
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Apr 19 14:48:41 2022 +0300
 
-    feat(ui5-icon): implement Horizon theme (#5080)
-    
-    Related to: #5008
+    chore: remove DEPLOY_PUBLIC_PATH (#5089)
