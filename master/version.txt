@@ -1,5 +1,7 @@
-commit b93c2a3219e046fbe4cc91aba7fdc7ab6c14b6b5
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 19 13:28:30 2022 +0300
+commit 6db8956cc03f8b275d719fff54dab47180f80614
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue Apr 19 14:10:35 2022 +0300
 
-    docs: add Sort/FilterItem API Refs (#5087)
+    feat(ui5-icon): implement Horizon theme (#5080)
+    
+    Related to: #5008
