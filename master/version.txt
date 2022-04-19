@@ -1,9 +1,5 @@
-commit 801069dc2507ed3d78353326d3bdd8205ceadbae
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Apr 19 13:13:01 2022 +0300
+commit b93c2a3219e046fbe4cc91aba7fdc7ab6c14b6b5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 19 13:28:30 2022 +0300
 
-    feat(ui5-wizard): implement SAP Horizon theme (#5076)
-    
-    * feat(ui5-wizard): implement SAP Hotizon theme
-    
-    * feat(ui5-wizard): implement SAP Hotizon theme
+    docs: add Sort/FilterItem API Refs (#5087)
