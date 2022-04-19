@@ -1,4 +1,4 @@
-const combineSelectors = require('postcss-combine-duplicated-selectors');
+const combineSelectors = require('@ui5/webcomponents-tools/lib/postcss-combine-duplicated-selectors/index.js');
 const postcssImport = require('postcss-import');
 const cssnano = require('cssnano');
 const postcssCSStoJSON = require('@ui5/webcomponents-tools/lib/postcss-css-to-json/index.js');

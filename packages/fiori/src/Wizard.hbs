@@ -36,7 +36,9 @@
 				aria-label="{{stepContentAriaLabel}}"
 				role="region"
 				data-ui5-content-item-ref-id="{{_id}}">
+				<div class="ui5-wiz-content-item-wrapper">
 					<slot name="{{this._individualSlot}}"></slot>
+				</div>
 			</div>
 		{{/each}}
 	</div>

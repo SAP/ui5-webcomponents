@@ -30,10 +30,6 @@ Copyright: 2020 SAP SE or an SAP affiliate company and OpenUI5 contributors
 License: Apache-2.0
 
 
-Files: packages/playground/assets/js/webcomponentsjs/* packages/ie11/src/thirdparty/Array.from.js packages/ie11/src/thirdparty/events-polyfills.js packages/ie11/src/thirdparty/Object.assign.js packages/ie11/src/thirdparty/template.js packages/ie11/src/thirdparty/webcomponents-sd-ce-pf.js
-Copyright: 2018 The Polymer Project Authors
-License: BSD-3-Clause-Clear
-
 Files: packages/base/dist/sap/ui/thirdparty/caja-html-sanitizer.js
 Copyright: Google Inc.
 License: Apache-2.0
@@ -45,4 +41,12 @@ License: MIT
 
 Files: packages/playground/assets/js/vendor/lunr.min.js
 Copyright: 2017 Oliver Nightingale
+License: MIT
+
+Files: packages/tools/lib/copy-and-watch/index.js
+Copyright: 2017 Aleksandr Zonov
+License: MIT
+
+Files: packages/tools/lib/postcss-combine-duplicated-selectors/index.js
+Copyright: 2016 Christian Murphy
 License: MIT
