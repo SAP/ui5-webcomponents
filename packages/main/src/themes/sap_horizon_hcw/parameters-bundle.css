@@ -26,7 +26,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
-@import "./ProgressIndicator-parameters";
+@import "../sap_horizon_hcb/ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
 @import "./SegmentedButtton-parameters.css";
 @import "./Select-parameters.css";
