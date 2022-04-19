@@ -10,6 +10,10 @@
 	background: var(--_ui5_wiz_tab_selected_bg);
 }
 
+:host([selected]:not([disabled])) .ui5-wiz-step-title-text {
+	color: var(--sapContent_Selected_ForegroundColor);
+}
+
 :host([selected]:not([disabled])) .ui5-wiz-step-icon-circle::after {
 	content: "";
 	position: absolute;
@@ -33,6 +37,10 @@
 :host([disabled]) .ui5-wiz-step-icon-circle {
 	border-color: var(--sapList_BorderColor);
 	background: var(--sapObjectHeader_Background);
+}
+
+:host([disabled]) .ui5-wiz-step-title-text {
+	color: var(--sapContent_LabelColor);
 }
 
 :host([disabled]) .ui5-wiz-step-icon {
@@ -117,7 +125,7 @@
 }
 
 .ui5-wiz-step-title-text {
-	font-weight: var(--_ui5_wiz_tab_title_font_weight);
+	font-family: var(--_ui5_wiz_tab_title_font_family);
 }
 
 :host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-title-text,
@@ -129,6 +137,9 @@
 }
 
 .ui5-wiz-step-subtitle-text {
+	margin-top: 0.125rem;
+	font-family: var(--sapFontFamily);
+	color: var(--sapContent_LabelColor);
 	font-size: var(--sapFontSmallSize);
 }
 
