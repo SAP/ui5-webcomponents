@@ -19,11 +19,12 @@
 }
 
 .ui5-message-strip-root-hide-icon {
-	padding: var(--_ui5_message_strip_padding_no_icon);
+	padding-inline: var(--_ui5_message_strip_padding_inline_no_icon);
+	padding-block: var(--_ui5_message_strip_padding_block_no_icon);
 }
 
 .ui5-message-strip-root-hide-close-button {
-	padding-right: 1rem;
+	padding-inline-end: 1rem;
 }
 
 .ui5-message-strip-root--info {
@@ -67,7 +68,7 @@
 .ui5-message-strip-icon-wrapper {
 	position: absolute;
 	top: var(--_ui5_message_strip_icon_top);
-	left: 0.75rem;
+	inset-inline-start: 0.75rem;
 	box-sizing: border-box;
 }
 
@@ -88,31 +89,5 @@
 	min-height: 1.65rem;
 	position: absolute;
 	top: var(--_ui5_message_strip_close_button_top);
-	right: var(--_ui5_message_strip_close_button_right);
-}
-
-/* RTL */
-.ui5-message-strip-root[dir="rtl"] {
-	padding-right: 2.5rem;
-	padding-left: 2rem;
-}
-
-[dir="rtl"] .ui5-message-strip-root-hide-icon {
-	padding-right: 1rem;
-	padding-left: 2rem;
-}
-
-[dir="rtl"] .ui5-message-strip-root-hide-close-button {
-	padding-left: 1rem;
-	padding-right: 0;
-}
-
-[dir="rtl"] .ui5-message-strip-icon-wrapper {
-	right: 0.75rem;
-	left: 0;
-}
-
-[dir="rtl"] .ui5-message-strip-close-button {
-	left: 0.125rem;
-	right: auto;
+	inset-inline-end: var(--_ui5_message_strip_close_button_right);
 }

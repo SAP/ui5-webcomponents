@@ -508,10 +508,6 @@ class Popover extends Popup {
 		return { width, height };
 	}
 
-	get contentDOM() {
-		return this.shadowRoot.querySelector(".ui5-popup-content");
-	}
-
 	get arrowDOM() {
 		return this.shadowRoot.querySelector(".ui5-popover-arrow");
 	}

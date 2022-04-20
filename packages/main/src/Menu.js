@@ -119,7 +119,7 @@ const metadata = {
 		/**
 		 * Defines the items of this component.
 		 *
-		 * @type {sap.ui.webcomponents.main.MenuItem[]}
+		 * @type {sap.ui.webcomponents.main.IMenuItem[]}
 		 * @slot items
 		 * @public
 		 */

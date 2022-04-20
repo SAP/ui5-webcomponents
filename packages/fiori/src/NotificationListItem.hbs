@@ -7,7 +7,6 @@
 	@click="{{_onclick}}"
 	role="listitem"
 	tabindex="{{_tabIndex}}"
-	dir="{{effectiveDir}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 >
 	<div class="ui5-nli-actions">
@@ -71,7 +70,7 @@
 			{{#each footerItems}}
 				<slot name="{{slotName}}"></slot>
 				{{#if showDivider}}
-					<div class="ui5-nli-footer-divider"></div>
+					<div class="ui5-nli-footer-divider" aria-hidden="true">·</div>
 				{{/if}}
 			{{/each}}
 
