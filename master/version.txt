@@ -1,5 +1,13 @@
-commit 4c6ee8cf4123ae0127b0cba51b3b96e4e7670580
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Apr 20 09:31:39 2022 +0300
+commit 3f562681220bbb1e9c45e52b1775e360917665b2
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Apr 20 02:13:24 2022 -0700
 
-    refactor: optimize templates disk writes (#5092)
+    Translation Delivery (#5098)
+    
+    * chore: translation delivery
+    
+    Change-Id: I055dc3f6b8c176d36d55312dcdab168697912459
+    
+    * chore: translation delivery
+    
+    Change-Id: Ibf4f0e6c3b9a00219609e608bceb23de68f7e955
