@@ -21,7 +21,8 @@
 	display: flex;
 	width: calc(33.333% - 0.125rem);
 	height: var(--_ui5_month_picker_item_height);
-	color: var(--sapTextColor);
+	color: var(--sapButton_Lite_TextColor);
+	/* color: var(--sapTextColor); */
 	background-color: var(--sapLegend_WorkingBackground);
 	align-items: center;
 	justify-content: center;
@@ -67,7 +68,7 @@
 }
 
 .ui5-mp-item:focus::after {
-	content: "";
+	/* content: "";
 	position: absolute;
 	width: var(--_ui5_monthpicker_item_focus_after_width);
 	height: var(--_ui5_monthpicker_item_focus_after_height);
@@ -75,7 +76,18 @@
 	top: var(--_ui5_monthpicker_item_focus_after_offset);
 	left: var(--_ui5_monthpicker_item_focus_after_offset);
 	border-radius: var(--_ui5_monthpicker_item_focus_after_border_radius);
-	outline: var(--_ui5_monthpicker_item_focus_after_outline);
+	outline: var(--_ui5_monthpicker_item_focus_after_outline); */
+	content: "";
+	position: absolute;
+	/* width: 0;
+	height: 0; */
+	border: var(--_ui5_button_focused_border);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: var(--_ui5_monthpicker_item_focus_after_border_radius);
+	/* outline: var(--_ui5_monthpicker_item_focus_after_outline); */
 }
 
 .ui5-mp-quarter {
