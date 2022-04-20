@@ -16,10 +16,6 @@
 	width:100%;
 }
 
-:host [dir="rtl"] .ui5-responsive-popover-header {
-	padding: 0 1rem 0 0;
-}
-
 .ui5-responsive-popover-header-text {
 	width: calc(100% - var(--_ui5_button_base_min_width));
 }
