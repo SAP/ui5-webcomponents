@@ -455,6 +455,10 @@ hr:not(.style-scope) {
     overflow-x: hidden;
     overflow-y: hidden; } }
 
+.js-search-results {
+  height: 30rem;
+  overflow-y: auto; }
+
 .side-bar {
   z-index: 100;
   height: calc(100% - 3rem);
@@ -529,10 +533,12 @@ hr:not(.style-scope) {
   align-items: center;
   background-color: #000;
   z-index: 150; }
-  .page-header .main-content, .page-header .main-content-header {
+  .page-header .main-content,
+  .page-header .main-content-header {
     padding-top: 0; }
     @media (min-width: 46.25rem) {
-      .page-header .main-content, .page-header .main-content-header {
+      .page-header .main-content,
+      .page-header .main-content-header {
         display: flex;
         justify-content: flex-end; } }
 
@@ -892,6 +898,10 @@ body {
 .search-results-list-item {
   padding: 0;
   margin: 0; }
+  .search-results-list-item * {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 
 .search-results-link {
   display: flex;

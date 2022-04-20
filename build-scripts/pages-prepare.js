@@ -34,7 +34,6 @@ packages.forEach(package => {
             results = await replace({
                 files: `./docs/pages/content/${package}/${file}`,
                 from: [
-                    /\.\.\/\.\.\/webcomponentsjs/g, // polyfill
                     /\.\.\/\.\.\/resources/g, // js bundles
 					/\.\/img\//g, // images
 					/styles\//g, // css
@@ -42,7 +41,6 @@ packages.forEach(package => {
 					`./kitchen-scripts.js`, // the kitchen has an extra js
 				],
                 to: [
-                    `/assets/js/webcomponentsjs`,
                     `/assets/js/ui5-webcomponents`,
 					`/assets/js/ui5-webcomponents/${package}/img/`,
 					`/assets/js/ui5-webcomponents/${package}/styles/`,
