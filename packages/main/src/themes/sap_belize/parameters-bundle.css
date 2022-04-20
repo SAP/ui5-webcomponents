@@ -40,12 +40,11 @@
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "../base/ToggleButton-parameters.css";
-@import "../base/Tokenizer-parameters.css";
+@import "./Tokenizer-parameters.css";
 @import "./WheelSlider-parameters.css";
 @import "../base/YearPicker-parameters.css";
-@import "../base/Token-parameters.css";
+@import "./Token-parameters.css";
 @import "../base/ValueStateMessage-parameters.css";
 @import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
-@import "../base/Suggestions-parameters.css";
 @import "../base/StepInput-parameters.css";
