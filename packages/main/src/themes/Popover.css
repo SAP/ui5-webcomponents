@@ -37,7 +37,7 @@
 
 }
 :host([actual-placement-type="Bottom"]) .ui5-popover-arrow:after {
-	margin: var(--_ui5-popover_upward_arrow_margin);
+	margin: var(--_ui5_popover_upward_arrow_margin);
 }
 
 /* pointing right arrow */
@@ -48,7 +48,7 @@
 }
 
 :host([actual-placement-type="Left"]) .ui5-popover-arrow:after {
-	margin: var(--_ui5-popover_right_arrow_margin);
+	margin: var(--_ui5_popover_right_arrow_margin);
 }
 
 /* pointing downward arrow */
@@ -59,7 +59,7 @@
 }
 
 :host([actual-placement-type="Top"]) .ui5-popover-arrow:after {
-	margin: var(--_ui5-popover_downward_arrow_margin);
+	margin: var(--_ui5_popover_downward_arrow_margin);
 }
 
 /* pointing left arrow */
@@ -73,7 +73,7 @@
 
 :host(:not([actual-placement-type])) .ui5-popover-arrow:after,
 :host([actual-placement-type="Right"]) .ui5-popover-arrow:after {
-	margin: var(--_ui5-popover_left_arrow_margin);
+	margin: var(--_ui5_popover_left_arrow_margin);
 }
 
 :host([hide-arrow]) .ui5-popover-arrow {

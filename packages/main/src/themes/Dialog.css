@@ -69,6 +69,6 @@
 	position: absolute;
 	bottom: var(--_ui5_dialog_resize_handle_bottom);
 	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
-	cursor: se-resize;
+	cursor: var(--_ui5_dialog_resize_cursor);
 	color: var(--_ui5_dialog_resize_handle_color);
 }
