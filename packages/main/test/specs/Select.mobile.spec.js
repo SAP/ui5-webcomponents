@@ -8,15 +8,27 @@ describe("Select mobile general interaction", () => {
 	});
 
 	it("Changes selection in Dialog", async () => {
+		// assert default
 		const select = await browser.$("#mySelect");
-		select.click();
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const firstListItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
-		firstListItem.click();
-
 		const selectText = await select.shadow$(".ui5-select-label-root");
 		const selectTextHtml = await selectText.getHTML(false);
-		assert.include(selectTextHtml, "Cozy", "The first item selected via the dialog on mobile");
+		assert.include(selectTextHtml, "Condensed", "The current selection is 'Condensed'");
+		
+		// act - open as dialog
+		select.click();
+
+		// act - move the focus to the first item
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
+		const selectedItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:last-child");
+		selectedItem.keys("ArrowUp");
+		selectedItem.keys("ArrowUp");
+
+		// act - press the first item
+		selectedItem.keys("Enter");
+
+		// assert - selection changed from "Condensed" to "Cozy"
+		const selectTextAfter = await select.shadow$(".ui5-select-label-root");
+		const selectTextHtmlAfter = await selectTextAfter.getHTML(false);
+		assert.include(selectTextHtmlAfter, "Cozy", "The 'Cozy' item has been selected");
 	});
 });
