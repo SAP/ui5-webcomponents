@@ -6,8 +6,8 @@
 	/* Header Item */
 	--_ui5_tc_headerItemContent_border_bottom: 0.25rem solid var(--sapPageHeader_BorderColor);
 	--_ui5_tc_headerItem_focus_border: 0.125rem dotted var(--sapContent_FocusColor);
-	--_ui5_tc_headeritem_text_selected_color: var(--sapPageHeader_BorderColor);
-	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapPageHeader_BorderColor);
+	--_ui5_tc_headerItem_text_selected_color: var(--sapPageHeader_BorderColor);
+	--_ui5_tc_headerItem_text_selected_hover_color: var(--sapPageHeader_BorderColor);
 	--_ui5_tc_headerItem_neutral_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_headerItem_positive_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_headerItem_negative_color: var(--sapGroup_TitleTextColor);
@@ -41,4 +41,5 @@
 	--_ui5_tc_overflowItem_critical_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_default_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_current_color: var(--_ui5_tc_overflowItem_default_color);
+	--_ui5_tc_overflowItem_extraIndent: 1rem;
 }
