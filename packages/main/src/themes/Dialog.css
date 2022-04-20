@@ -5,6 +5,7 @@
 	max-width: 90%;
 	flex-direction: column;
 	box-shadow: var(--sapContent_Shadow3);
+	border-radius: var(--sapElement_BorderCornerRadius);
 }
 
 :host([stretch]) {
