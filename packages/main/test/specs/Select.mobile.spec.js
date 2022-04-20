@@ -3,8 +3,8 @@ const PORT = require("./_port.js");
 
 describe("Select mobile general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
 		await browser.emulateDevice('iPhone X');
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
 	});
 
 	it("Changes selection in Dialog", async () => {
