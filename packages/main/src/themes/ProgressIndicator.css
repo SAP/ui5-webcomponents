@@ -22,11 +22,11 @@
 
 .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_none);
-	justify-content: var(--_ui5_progress_indicator_bar_justify_content);
+	justify-content: flex-end;
 	height: 100%;
 	display: flex;
 	align-items: center;
-	flex-direction: var(--_ui5_progress_indicator_bar_flex_direction);
+	flex-direction: row;
 	color: var(--_ui5_progress_indicator_bar_color);
 	transition-property: width;
 	transition-timing-function: linear;
@@ -50,11 +50,11 @@
 }
 
 .ui5-progress-indicator-remaining-bar {
-	justify-content: var(--_ui5_progress_indicator_remaining_bar_justify_content);
+	justify-content: flex-start;
 	height: 100%;
 	display: flex;
 	align-items: center;
-	flex-direction: var(--_ui5_progress_indicator_bar_flex_direction);
+	flex-direction: row;
 	flex-grow: 1;
 	flex-basis: 0;
 	border: var(--_ui5_progress_indicator_border);

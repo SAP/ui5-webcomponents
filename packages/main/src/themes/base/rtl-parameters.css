@@ -9,9 +9,6 @@
 	--_ui5_shellbar_overflow_container_float: none;
 
 	--_ui5_progress_indicator_bar_border_radius: 0.5rem 0 0 0.5rem;
-	--_ui5_progress_indicator_bar_flex_direction: row;
-	--_ui5_progress_indicator_bar_justify_content: flex-end;
-	--_ui5_progress_indicator_remaining_bar_justify_content: flex-start;
 	--_ui5_progress_indicator_remaining_bar_border_radius: 0 0.5rem 0.5rem 0;
 }
 
@@ -23,8 +20,5 @@
 	--_ui5_shellbar_overflow_container_float: left;
 
 	--_ui5_progress_indicator_bar_border_radius: 0 0.5rem 0.5rem 0;
-	--_ui5_progress_indicator_bar_flex_direction: row-reverse;
-	--_ui5_progress_indicator_bar_justify_content: flex-start;
-	--_ui5_progress_indicator_remaining_bar_justify_content: flex-end;
 	--_ui5_progress_indicator_remaining_bar_border_radius: 0.5rem 0 0 0.5rem;
 }
