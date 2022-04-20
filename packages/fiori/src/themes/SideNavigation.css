@@ -53,9 +53,9 @@
 }
 
 [ui5-tree]::part(toggle-icon) {
-	color: var(--sapContent_NonInteractiveIconColor);
+    color: var(--sapContent_NonInteractiveIconColor);
 }
 
 [ui5-tree]::part(icon) {
-	color: var(--_ui5_side_navigation_icon_color);
+    color: var(--_ui5_side_navigation_icon_color);
 }
