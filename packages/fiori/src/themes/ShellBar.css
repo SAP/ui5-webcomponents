@@ -3,6 +3,10 @@
 	width: 100%;
 }
 
+:host {
+	--_ui5_input_placeholder_color: var(--sapShell_InteractiveTextColor);
+}
+
 .ui5-shellbar-root {
 	position: relative;
 	display: flex;

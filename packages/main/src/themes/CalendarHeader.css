@@ -87,7 +87,7 @@
 }
 
 .ui5-calheader-midcontainer .ui5-calheader-middlebtn:first-child {
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 }
 
 .ui5-calheader-middlebtn {
@@ -129,9 +129,4 @@
 
 .ui5-calheader-middlebtn:focus:active::after {
 	border-color: var(--sapContent_ContrastFocusColor);
-}
-
-[dir=rtl] .ui5-calheader-root-midcontainer .ui5-calheader-middlebtn:first-child {
-	margin-left: 0.5rem;
-	margin-right: 0;
 }

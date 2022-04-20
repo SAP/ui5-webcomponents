@@ -22,16 +22,6 @@
 	text-overflow: ellipsis;
 }
 
-:host([has-icon]) button[dir="rtl"].ui5-button-root .ui5-button-text {
-	margin-right: var(--_ui5_button_base_icon_margin);
-	margin-left: 0;
-}
-
-:host([has-icon][icon-end]) button[dir="rtl"].ui5-button-root .ui5-button-icon {
-	margin-right: var(--_ui5_button_base_icon_margin);
-	margin-left: 0;
-}
-
 .ui5-button-root {
 	min-width: inherit;
 	cursor: inherit;

@@ -6,13 +6,11 @@ const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
 const replace = require("@rollup/plugin-replace");
 const colors = require("cli-color");
-const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
 const emptyModulePlugin = require("./rollup-plugins/empty-module.js");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
-const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 const warningsToSkip = [{
 	warningCode: "THIS_IS_UNDEFINED",
@@ -90,27 +88,6 @@ const getPlugins = () => {
 		}));
 	}
 
-	if (!process.env.DEV) {
-		plugins.push(filesize(
-			{
-				reporter(options, bundle, {
-					minSize, gzipSize, brotliSize, bundleSize,
-					fileName,
-					// "showBeforeSizes: release"
-					lastVersion,
-					// "showBeforeSizes: "release" or "showBeforeSizes": "build"
-					bundleSizeBefore, brotliSizeBefore, minSizeBefore, gzipSizeBefore,
-				}) {
-				// If a promise is returned, it will be awaited before rendering.
-					return `${fileName.padEnd(35)} ${minSize} / gzipped: ${gzipSize}`;
-				},
-			},
-
-		));
-	}
-
-	const publicPath = DEPLOY_PUBLIC_PATH;
-
 	plugins.push(ui5DevImportCheckerPlugin());
 
 	plugins.push(json({
@@ -153,12 +130,6 @@ const getES6Config = (input = "bundle.esm.js") => {
 			dir: "dist/resources",
 			format: "esm",
 			sourcemap: true,
-		},
-		moduleContext: id => {
-			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
 		},
 		watch: {
 			clearScreen: false,

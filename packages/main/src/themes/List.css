@@ -106,7 +106,8 @@
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
 	height: var(--_ui5_list_no_data_height);
-	font-size: var(--sapFontSize);
+	font-size: var(--_ui5_list_no_data_font_size);
+	font-family: "72override", var(--sapFontFamily);
 }
 
 .ui5-list-nodata-text {

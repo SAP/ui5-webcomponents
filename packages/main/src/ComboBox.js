@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isAndroid, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -571,7 +571,7 @@ class ComboBox extends UI5Element {
 		this._clearFocus();
 
 		// autocomplete
-		if (this._autocomplete) {
+		if (this._autocomplete && !isAndroid()) {
 			const item = this._getFirstMatchingItem(value);
 			this._applyAtomicValueAndSelection(item, value, true);
 
