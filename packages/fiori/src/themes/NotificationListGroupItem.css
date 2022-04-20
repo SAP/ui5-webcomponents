@@ -26,6 +26,7 @@
 }
 
 .ui5-nli-group-header {
+	background: var(--sapList_GroupHeaderBackground);
 	display: flex;
 	align-items: center;
 	padding-block: 0.75rem 0.25rem;
@@ -64,6 +65,6 @@
 }
 
 /* fix for blue background color on tap (touchscreen devices) */
-:host([ui5-li-notification-group]) { 
+:host([ui5-li-notification-group]) {
 	-webkit-tap-highlight-color: transparent;
 }
