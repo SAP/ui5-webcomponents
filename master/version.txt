@@ -1,13 +1,19 @@
-commit 3f562681220bbb1e9c45e52b1775e360917665b2
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Apr 20 02:13:24 2022 -0700
+commit ccdfe4c06436128339ca9fb0f427e9471ee7ae7f
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Wed Apr 20 15:00:25 2022 +0300
 
-    Translation Delivery (#5098)
+    feat(ui5-notifications): implement SAP Horizon theme (#5067)
     
-    * chore: translation delivery
+    * feat(ui5-notifications): implement SAP Horizon theme
     
-    Change-Id: I055dc3f6b8c176d36d55312dcdab168697912459
+    * design adjustments
     
-    * chore: translation delivery
+    * feat(ui5-notifications): design adjustments
     
-    Change-Id: Ibf4f0e6c3b9a00219609e608bceb23de68f7e955
+    * feat(ui5-notifications): update hash files
+    
+    * feat(ui5-side-navigation): update hash.txt file
+    
+    * feat(ui5-side-navigation): update hash.txt file
+    
+    * feat(ui5-side-navigation): update hash.txt
