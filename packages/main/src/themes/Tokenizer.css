@@ -15,7 +15,6 @@
 	height: 100%;
 	display: flex;
 	align-items: center;
-	padding: var(--_ui5_tokenizer_root_padding);
 	overflow-x: scroll;
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
@@ -26,7 +25,7 @@
 }
 
 .ui5-tokenizer-root.ui5-tokenizer-nmore--wrapper {
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 .ui5-tokenizer--token--wrapper {
@@ -46,6 +45,7 @@
 	flex-wrap: nowrap;
 	align-items: center;
 	overflow: auto;
+	padding-left: var(--_ui5_tokenizer_padding);
 }
 
 .ui5-tokenizer--content.ui5-tokenizer-nmore--content {
@@ -58,17 +58,13 @@
 	cursor: pointer;
 	white-space: nowrap;
 	font-size: var(--sapFontSize);
-	font-weight: var(--_ui5_tokenizer_n_more_indicator_font_weight);
-	color: var(--_ui5_tokenizer_n_more_indicator_color);
+	font-weight: normal;
+	color: var(--sapField_TextColor);
 }
 
 :host([expanded]) .ui5-tokenizer--content {
 	overflow: hidden;
 	justify-content: flex-end;
-}
-
-::slotted([ui5-token]) {
-	margin-left: .25rem;
 }
 
 /* RTL */
@@ -78,8 +74,13 @@
 	margin-left: 0;
 }
 
+[dir="rtl"] .ui5-tokenizer--content {
+	padding-right: var(--_ui5_tokenizer_padding);
+	padding-left: 0;
+}
+
 [dir=rtl] ::slotted([ui5-token]) {
-	margin-right: .25rem;
-	margin-left: 0;
+	margin-left: var(--_ui5_token_right_margin);
+	margin-right: 0;
 }
 

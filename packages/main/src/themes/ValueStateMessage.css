@@ -70,7 +70,6 @@
 .ui5-responsive-popover-header[focused], .ui5-responsive-popover-header:focus {
 	outline-offset: var(--_ui5_value_state_header_offset);
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	border-radius: var(--_ui5_value_state_message_focus_border_radius);
 }
 
 .ui5-valuestatemessage-popover::part(header),

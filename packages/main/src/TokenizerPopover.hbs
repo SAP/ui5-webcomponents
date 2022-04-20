@@ -21,6 +21,7 @@
 		{{/if}}
 		{{#unless hasValueState}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{#each valueStateMessageText}}
 					{{this}}
 				{{/each}}
