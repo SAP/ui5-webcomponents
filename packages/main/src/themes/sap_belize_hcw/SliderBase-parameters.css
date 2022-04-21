@@ -11,7 +11,6 @@
 	--_ui5_slider_handle_height: 1.375rem;
 	--_ui5_slider_handle_width: 1.375rem;
 	--_ui5_slider_handle_top: -0.6rem;
-	--_ui5_slider_handle_margin_left: -0.775rem;
 	--_ui5_slider_progress_background: var(--sapField_Background);
 	--_ui5_slider_tickmark_top: -0.2525rem;
 }

@@ -16,6 +16,9 @@ import {
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
+// Styles
+import rangeSliderStyles from "./generated/themes/RangeSlider.css.js";
+
 /**
  * @public
  */
@@ -47,6 +50,10 @@ const metadata = {
 		endValue: {
 			type: Float,
 			defaultValue: 100,
+		},
+
+		rangePressed: {
+			type: Boolean,
 		},
 	},
 };
@@ -127,6 +134,10 @@ class RangeSlider extends SliderBase {
 
 	static get dependencies() {
 		return [Icon];
+	}
+
+	static get styles() {
+		return [SliderBase.styles, rangeSliderStyles];
 	}
 
 	constructor() {
@@ -356,6 +367,8 @@ class RangeSlider extends SliderBase {
 		// Determine the rest of the needed details from the start of the interaction.
 		this._saveInteractionStartData(event, newValue);
 
+		this.rangePressed = this._isPressInCurrentRange;
+
 		// Do not yet update the RangeSlider if press is in range or over a handle.
 		if (this._isPressInCurrentRange || this._handeIsPressed) {
 			this._handeIsPressed = false;
@@ -455,6 +468,8 @@ class RangeSlider extends SliderBase {
 		this._setIsPressInCurrentRange(false);
 
 		this.handleUpBase();
+
+		this.rangePressed = false;
 	}
 
 	/**
@@ -721,6 +736,24 @@ class RangeSlider extends SliderBase {
 
 	 _areValuesReversed() {
 		return this._reversedValues;
+	}
+
+	get tickmarksObject() {
+		const count = this._tickmarksCount;
+		const arr = [];
+
+		if (this._hiddenTickmarks) {
+			return [false, false];
+		}
+
+		for (let i = 0; i <= count; i++) {
+			const isBiggerThanStartValue = this._effectiveMin + (i * this.step) >= this.startValue;
+			const isBiggerThanEndValue = this._effectiveMin + (i * this.step) <= this.endValue;
+
+			arr.push(isBiggerThanStartValue && isBiggerThanEndValue);
+		}
+
+		return arr;
 	}
 
 	get _startHandle() {
