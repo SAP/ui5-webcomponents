@@ -1,5 +1,5 @@
-commit aff0af9139d1106b4af79be81bb7832f212a1554
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Thu Apr 21 17:20:10 2022 +0300
+commit b093168342e0812dbc07702be3e0a9ce9f432f37
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Thu Apr 21 21:47:15 2022 +0200
 
-    feat(ui5-file-uploader): implement SAP Horizon theme parameters (#5086)
+    docs(MenuItem): correct type for `slot` (#5112)
