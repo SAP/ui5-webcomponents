@@ -1,5 +1,5 @@
-commit 3dd72d9d9a996bbca4456ea80ec42dbad96d8c95
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 20 16:33:41 2022 +0300
+commit aff0af9139d1106b4af79be81bb7832f212a1554
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Thu Apr 21 17:20:10 2022 +0300
 
-    docs: add release changelog to Playground (#5108)
+    feat(ui5-file-uploader): implement SAP Horizon theme parameters (#5086)
