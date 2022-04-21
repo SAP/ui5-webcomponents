@@ -60,7 +60,8 @@
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
     "husky:lint": "yarn lint",
-    "husky:pre-push": "npm-run-all --sequential husky:commit-msg husky:lint"
+    "husky:pre-push": "npm-run-all --sequential husky:commit-msg husky:lint",
+    "testsuite": "cd packages/testsuite && yarn start"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
@@ -86,6 +87,7 @@
     "packages/icons-tnt",
     "packages/tools",
     "packages/playground",
+    "packages/testsuite",
     "packages/create-package"
   ]
 }

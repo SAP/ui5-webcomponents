@@ -28,18 +28,20 @@ const scripts = {
 	},
 	build: {
 		default: `${UP_TO_DATE} || nps lint prepare build.bundle hash`,
+		nobundle: `${UP_TO_DATE} || nps prepare hash`,
 		bundle: "rollup --config config/rollup.config.js",
 	},
 	copy: {
 		default: "nps copy.src copy.test",
 		src: `copy-and-watch "src/**/*.{js,css}" dist/`,
-		test: `copy-and-watch "test/**/*.*" dist/test-resources`,
+		test: `copy-and-watch "test/**/*.*" ../testsuite/dist/test-resources/base/`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
+		nobundle: 'concurrently "nps watch.test" "nps watch.src" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
 		test: 'nps "copy.test --watch --skip-initial-copy"',
 		bundle: "rollup --config config/rollup.config.js -w --environment DEV",
