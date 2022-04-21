@@ -17,6 +17,10 @@
 	height: 90vh;
 }
 
+:host(.ui5-dt-time.ui5-dt-cal--hidden) .ui5-time-selection-root.ui5-phone {
+	height: 80vh;
+}
+
 [ui5-wheelslider] {
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;

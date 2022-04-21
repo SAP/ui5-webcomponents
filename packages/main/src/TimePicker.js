@@ -150,14 +150,12 @@ class TimePicker extends TimePickerBase {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
 			"ariaAutoComplete": "none",
-			"role": "combobox",
 			"ariaControls": `${this._id}-responsive-popover`,
-			"ariaExpanded": this.isOpen(),
 		};
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 }
 

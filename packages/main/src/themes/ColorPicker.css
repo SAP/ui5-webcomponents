@@ -60,7 +60,7 @@
     height: 1.25rem;
     background: transparent;
     margin-left: -2px;
-    margin-top: 1px;
+    margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
 }
 
 [ui5-slider]::part(handle)::after {
@@ -156,4 +156,51 @@
     width: 2.5rem;
     min-width: 2.5rem;
     text-align: center;
+}
+
+.ui5-color-picker-hue-slider::part(progress-container)::before,
+.ui5-color-picker-alpha-slider::part(progress-container)::before,
+.ui5-color-picker-hue-slider::part(progress-container)::after,
+.ui5-color-picker-alpha-slider::part(progress-container)::after,
+[ui5-slider].ui5-color-picker-hue-slider::part(icon-slider),
+[ui5-slider].ui5-color-picker-alpha-slider::part(icon-slider) {
+     display: none;
+}
+
+.ui5-color-picker-alpha-slider::part(handle),
+.ui5-color-picker-hue-slider::part(handle) {
+    box-shadow: var(--_ui5_color_picker_slider_handle_box_shadow);
+    border: var(--_ui5_color_picker_slider_handle_border);
+}
+
+.ui5-color-picker-alpha-slider::part(handle):hover,
+.ui5-color-picker-hue-slider::part(handle):hover {
+    border: var(--_ui5_color_picker_slider_handle_outline_hover);
+}
+
+.ui5-color-picker-alpha-slider::part(handle):focus,
+.ui5-color-picker-hue-slider::part(handle):focus {
+    outline: var(--_ui5_color_picker_slider_handle_outline_focus);
+    outline-offset: 0.0625rem;
+}
+
+.ui5-color-picker-alpha-slider::part(handle):focus,
+.ui5-color-picker-hue-slider::part(handle):focus {
+    margin-top: var(--_ui5_color_picker_slider_handle_focus_margin_top);
+}
+
+[dir=rtl] [ui5-slider].ui5-color-picker-hue-slider::part(progress-container) {
+    background-image: -webkit-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: -moz-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: -ms-linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    background-image: linear-gradient(right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+[dir="rtl"] .ui5-color-picker-alpha-slider::part(handle),
+[dir="rtl"] .ui5-color-picker-hue-slider::part(handle){
+	--_ui5_slider_handle_margin_left: 0;
+}
+
+[dir="rtl"] .ui5-color-picker-sliders-wrapper {
+	margin-left: 10px;
 }

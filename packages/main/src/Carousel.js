@@ -8,10 +8,7 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import {
-	fetchI18nBundle,
-	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -41,6 +38,7 @@ import CarouselCss from "./generated/themes/Carousel.css.js";
 const metadata = {
 	tag: "ui5-carousel",
 	languageAware: true,
+	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
@@ -234,9 +232,17 @@ const metadata = {
  * </ul>
  *
  * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Basic Navigation</h4>
  * When the <code>ui5-carousel</code> is focused the user can navigate between the items
  * with the following keyboard shortcuts:
  * <br>
+ *
+ * * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <ul>
  * <li>[UP/DOWN] - Navigates to previous and next item</li>
@@ -283,8 +289,6 @@ class Carousel extends UI5Element {
 		this._scrollEnablement.attachEvent("touchend", event => {
 			this._updateScrolling(event);
 		});
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._onResizeBound = this._onResize.bind(this);
 		this._resizing = false; // indicates if the carousel is in process of resizing
 
@@ -499,7 +503,9 @@ class Carousel extends UI5Element {
 				tabIndex: visible ? "0" : "-1",
 				posinset: idx + 1,
 				setsize: this.content.length,
-				width: this._itemWidth,
+				styles: {
+					width: `${this._itemWidth}px`,
+				},
 				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
 		});
@@ -597,7 +603,7 @@ class Carousel extends UI5Element {
 		for (let index = 0; index < pages; index++) {
 			dots.push({
 				active: index === this._selectedIndex,
-				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
+				ariaLabel: Carousel.i18nBundle.getText(CAROUSEL_DOT_TEXT, index + 1, pages),
 			});
 		}
 
@@ -634,7 +640,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ofText() {
-		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
 	get ariaActiveDescendant() {
@@ -642,11 +648,11 @@ class Carousel extends UI5Element {
 	}
 
 	get nextPageText() {
-		return this.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
 	}
 
 	get previousPageText() {
-		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
 	}
 
 	/**
@@ -675,7 +681,7 @@ class Carousel extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Carousel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

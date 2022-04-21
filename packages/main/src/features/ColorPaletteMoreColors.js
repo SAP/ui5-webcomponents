@@ -12,10 +12,6 @@ import {
 } from "../generated/i18n/i18n-defaults.js";
 
 class ColorPaletteMoreColors {
-	constructor() {
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get dependencies() {
 		return [
 			Dialog,
@@ -24,16 +20,20 @@ class ColorPaletteMoreColors {
 		];
 	}
 
+	static async init() {
+		ColorPaletteMoreColors.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
 	get colorPaletteDialogTitle() {
-		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_TITLE);
+		return ColorPaletteMoreColors.i18nBundle.getText(COLOR_PALETTE_DIALOG_TITLE);
 	}
 
 	get colorPaletteDialogOKButton() {
-		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_OK_BUTTON);
+		return ColorPaletteMoreColors.i18nBundle.getText(COLOR_PALETTE_DIALOG_OK_BUTTON);
 	}
 
 	get colorPaletteCancelButton() {
-		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
+		return ColorPaletteMoreColors.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 }
 

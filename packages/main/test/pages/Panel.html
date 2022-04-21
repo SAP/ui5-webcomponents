@@ -14,12 +14,12 @@
 		}
 	</script>
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -47,16 +47,9 @@
 	</script>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="panel1auto">
 
-<style>
-
-	.header {
-		display: flex;
-		align-items: center;
-		width: 100%;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="styles/Panel.css">
 
 	<ui5-panel id="p1" collapsed accessible-role="Complementary" no-animation>
 

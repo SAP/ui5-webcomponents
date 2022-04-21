@@ -1,5 +1,5 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
@@ -18,15 +18,6 @@ import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-
-		/**
-		 * Defines if padding would be added around the content.
-		 * @private
-		 */
-		withPadding: {
-			type: Boolean,
-		},
-
 		/**
 		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
 		 * By default both the header and footer would be displayed.
@@ -49,7 +40,7 @@ const metadata = {
 		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
 		 *
 		 * @private
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.16
 		 */
@@ -69,6 +60,17 @@ const metadata = {
  * <h3>Usage</h3>
  * Use it when you want to make sure that all the content is visible on any device.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-responsive-popover</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>header - Used to style the header of the component</li>
+ * <li>content - Used to style the content of the component</li>
+ * <li>footer - Used to style the footer of the component</li>
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ResponsivePopover
@@ -80,7 +82,6 @@ const metadata = {
 class ResponsivePopover extends Popover {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -108,6 +109,7 @@ class ResponsivePopover extends Popover {
 
 	static get dependencies() {
 		return [
+			...Popover.dependencies,
 			Button,
 			Dialog,
 			Title,
@@ -165,6 +167,10 @@ class ResponsivePopover extends Popover {
 		return this.shadowRoot.querySelector("[ui5-dialog]");
 	}
 
+	get contentDOM() {
+		return this._isPhone ? this._dialog.contentDOM : super.contentDOM;
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}
@@ -178,15 +184,17 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _closeDialogAriaLabel() {
-		return this.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
+		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
 	}
 
-	_afterDialogOpen(event) {
+	_beforeDialogOpen(event) {
+		this.open = true;
 		this.opened = true;
 		this._propagateDialogEvent(event);
 	}
 
 	_afterDialogClose(event) {
+		this.open = false;
 		this.opened = false;
 		this._propagateDialogEvent(event);
 	}
@@ -198,7 +206,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ResponsivePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

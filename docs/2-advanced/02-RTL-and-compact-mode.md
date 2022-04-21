@@ -1,10 +1,10 @@
-# Right-to-left (RTL) and compact mode
+# Right-To-Left (RTL) and Compact Mode
 
 *This section explains how to make UI5 Web Components render in **RTL** and **compact mode**.*
 
-**Note:** both of these settings are not properties of the components per se, but rather markers you set on some part the HTML page that affect all components inside.
+**Note:** Both of these settings are not properties of the components per se, but rather markers you set on some part of the HTML page that affect all components inside.
 
-## 1. RTL support
+## RTL Support
 
 Some UI5 Web Components are RTL-aware, meaning they render differently when placed in an RTL-designated part of the DOM tree.
 
@@ -18,7 +18,7 @@ Example 1:
     ...
 </body>
 ```
-(RTL will be set for all UI5 Web Components on the page)
+(RTL will be set for all UI5 Web Components on the page.)
 
 Example 2:
 ```html
@@ -31,9 +31,9 @@ Example 2:
     <ui5-button dir="rtl">Button 3</ui5-button>
 </body>
 ```
-(RTL will be set for Button 2 and Button 3)
+(RTL will be set for Button 2 and Button 3.)
 
-### Changing RTL dynamically
+### Changing RTL Dynamically
 
 The first time UI5 Web Components are rendered, they will take into account the `dir` attribute  of the respective part of the DOM tree they are placed in.
 
@@ -47,11 +47,11 @@ document.body.dir = "rtl";
 applyDirection();
 ```
 
-*Technical note:* whenever you change the `dir` attribute, the browser will automatically re-render that part of the DOM tree (including any web components) by default.
+*Technical Note:* Whenever you change the `dir` attribute, the browser will automatically re-render that part of the DOM tree (including any Web Components) by default.
 The `applyDirection` call is only needed to adjust paddings, margins and other CSS selectors that are not affected by `dir`. As more advanced CSS
 features become available in the near future, `applyDirection` will not be needed and will eventually be deprecated.
 
-## 2. Compact mode
+## Compact Mode
 
 Some UI5 Web Components support compact mode, meaning they can be rendered with smaller sizes, margins and paddings in order to preserve as much space as possible.
 
@@ -66,7 +66,7 @@ Example 1:
 ...
 </body>
 ```
-(compact mode is set for all UI5 Web Components on the page)
+(Compact mode is set for all UI5 Web Components on the page.)
 
 Example 2:
 ```html
@@ -79,6 +79,8 @@ Example 2:
     <ui5-button class="ui5-content-density-compact">Button 3</ui5-button>
 </body>
 ```
-(compact mode will be set for Button 2 and Button 3)
+(Compact mode will be set for Button 2 and Button 3.)
 
 Unlike RTL, compact mode does not require additional APIs when its markers are changed dynamically.
+
+Next: [Micro-Frontends and Custom Elements Scoping](../scoping)

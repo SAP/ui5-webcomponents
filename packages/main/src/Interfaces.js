@@ -44,7 +44,7 @@ const ICalendarDate = "sap.ui.webcomponents.main.ICalendarDate";
 const IComboBoxItem = "sap.ui.webcomponents.main.IComboBoxItem";
 
 /**
- * Interface for components that may be used inside a <code>ui5-color-palette</code>
+ * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
  *
  * @name sap.ui.webcomponents.main.IColorPaletteItem
  * @interface
@@ -87,6 +87,15 @@ const IInputSuggestionItem = "sap.ui.webcomponents.main.IInputSuggestionItem";
  * @public
  */
 const IListItem = "sap.ui.webcomponents.main.IListItem";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-menu</code> as items
+ *
+ * @name sap.ui.webcomponents.main.IMenuItem
+ * @interface
+ * @public
+ */
+const IMenuItem = "sap.ui.webcomponents.main.IMenuItem";
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
@@ -180,6 +189,7 @@ export {
 	IInput,
 	IInputSuggestionItem,
 	IListItem,
+	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	ISelectOption,

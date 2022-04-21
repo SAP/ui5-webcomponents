@@ -1,7 +1,7 @@
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -77,7 +77,7 @@ const metadata = {
 		 * Used to define the role of the list item.
 		 *
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "listitem"
 		 * @since 1.0.0-rc.9
 		 *
@@ -87,10 +87,29 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @private
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @since 1.3.0
+		 *
+		 */
+		accessibleRole: {
+			type: String,
+		},
+
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
+
+		_ariaHasPopup: {
+			type: String,
+			noAttribute: true,
+		},
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -149,7 +168,12 @@ class ListItem extends ListItemBase {
 			}
 		};
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._ontouchstart = {
+			handleEvent(event) {
+				this._onmousedown(event);
+			},
+			passive: true,
+		};
 	}
 
 	onBeforeRendering(...params) {
@@ -212,10 +236,6 @@ class ListItem extends ListItemBase {
 			return;
 		}
 		this.deactivate();
-	}
-
-	_ontouchstart(event) {
-		this._onmousedown(event);
 	}
 
 	_ontouchend(event) {
@@ -344,31 +364,30 @@ class ListItem extends ListItemBase {
 		// The text is added to aria-describedby because as part of the aria-labelledby
 		// the whole content of the item is readout when the aria-labelledby value is changed.
 		if (this.ariaSelected !== undefined) {
-			ariaSelectedText = this.ariaSelected ? this.i18nBundle.getText(LIST_ITEM_SELECTED) : this.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
+			ariaSelectedText = this.ariaSelected ? ListItem.i18nBundle.getText(LIST_ITEM_SELECTED) : ListItem.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
 		}
 
 		return ariaSelectedText;
 	}
 
 	get deleteText() {
-		return this.i18nBundle.getText(DELETE);
+		return ListItem.i18nBundle.getText(DELETE);
 	}
 
 	get _accInfo() {
 		return {
-			role: this.role,
+			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
-			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
-			ariaLabelRadioButton: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
+			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
+			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
+			ariaHaspopup: this._ariaHasPopup || undefined,
 		};
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		ListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

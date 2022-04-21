@@ -1,3 +1,7 @@
+.ui5-barcode-scanner-dialog-root::part(content) {
+    padding: .4375rem;
+}
+
 /* video */
 .ui5-barcode-scanner-dialog-video-wrapper,
 .ui5-barcode-scanner-dialog-video {
@@ -14,11 +18,6 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    padding: 0 0.5rem 0 0;
-}
-
-[dir="rtl"] .ui5-barcode-scanner-dialog-footer {
-    padding: 0 0 0 0.5rem;
 }
 
 /* busy indicator */

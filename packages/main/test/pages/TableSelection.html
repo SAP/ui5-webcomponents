@@ -12,15 +12,16 @@
 				}
 		</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+<link rel="stylesheet" type="text/css" href="styles/TableSelection.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="tableselection1auto">
 	<!-- Header -->
-	<div style="display:flex; align-items: center;">
+	<div class="tableselection2auto">
 		<ui5-button id="size-btn-500">Lower tables size to 500px</ui5-button>
 		<ui5-label>Resize your browser to make some columns pop-in</ui5-label>
 	</div>
@@ -205,7 +206,7 @@
 				<ui5-label>1249 EUR</ui5-label>
 			</ui5-table-cell>
 			<ui5-table-cell>
-				<ui5-button>Active</ui5-button>
+				<ui5-button id="button3">Active</ui5-button>
 			</ui5-table-cell>
 		</ui5-table-row>
 
@@ -391,7 +392,7 @@
 			selectionChangeSSCountField.value = selectionChangeCounter;
 
 			selectionChangeSSSelectedValueField.value = event.detail.selectedRows[0].id;
-			
+
 			if (event.detail.previouslySelectedRows.length) {
 				selectionChangeSSPreviousRowField.value = event.detail.previouslySelectedRows[0].id;
 			}
@@ -407,7 +408,7 @@
 			selectionChangeMSCountField.value = selectionChangeCounter1;
 			const lastSelectedRow = event.detail.selectedRows.length - 1;
 			const previousSelectedRow = event.detail.previouslySelectedRows.length - 1;
-			
+
 			if (event.detail.selectedRows.length) {
 				selectionChangeMSSelectedValueField.value = event.detail.selectedRows[lastSelectedRow].id;
 			}

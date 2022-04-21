@@ -24,7 +24,14 @@
 .ui5-wiz-content-item {
 	display: block;
 	box-sizing: border-box;
-	padding-bottom: 2rem;
+	padding: 1rem 2rem;
+}
+
+.ui5-wiz-content-item-wrapper {
+	display: block;
+	padding: var(--_ui5_wiz_content_item_wrapper_padding);
+	background-color: var(--_ui5_wiz_content_item_wrapper_bg);
+	border-radius: var(--sapElement_BorderCornerRadius);
 }
 
 .ui5-wiz-content-item[hidden] {
@@ -33,7 +40,7 @@
 
 .ui5-wiz-content-item[stretch] {
 	/* Add 2rem to ensure there is enough scroll height to reach the last step */
-	min-height: calc(100% + 2rem);
+	min-height: 100%;
 }
 
 [ui5-wizard-tab][data-ui5-wizard-expanded-tab="true"] + [ui5-wizard-tab][data-ui5-wizard-expanded-tab="false"] {
@@ -65,7 +72,7 @@
 .ui5-wiz-nav {
 	box-sizing: border-box;
 	height: 4rem;
-	padding: 0.875rem 1rem;
+	padding: 1rem 2rem;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;

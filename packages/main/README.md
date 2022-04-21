@@ -45,7 +45,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader`        | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
-| Message Strip            | `ui5-messagestrip`          | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
+| Message Strip            | `ui5-message-strip`          | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
 | Multi Input              | `ui5-multi-input`           | `import "@ui5/webcomponents/dist/MultiInput.js";`          |
@@ -61,6 +61,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Select                   | `ui5-select`                | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`                | comes with `ui5-select `                                   |
 | Slider                   | `ui5-slider`                | `import "@ui5/webcomponents/dist/Slider.js";`              |
+| Split Button             | `ui5-split-button`          | `import "@ui5/webcomponents/dist/SplitButton.js";`         |
 | Step Input               | `ui5-step-input`            | `import "@ui5/webcomponents/dist/StepInput.js";`           |
 | Suggestion Item          | `ui5-suggestion-item`       | comes with `InputSuggestions.js` feature - see below       |
 | Switch                   | `ui5-switch`                | `import "@ui5/webcomponents/dist/Switch.js";`              |
@@ -86,7 +87,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 
 | Assets | Module | Notes
 |------------|-----------|----------- 
-| `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br><br> *Automatically imports also:<br> `@ui5/webcomponents-localization/dist/Assets.js` <br> and <br> `@ui5/webcomponents-theme-base/dist/Assets.js`*
+| `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br><br> *Automatically imports also:<br> `@ui5/webcomponents-localization/dist/Assets.js` <br> and <br> `@ui5/webcomponents-theming/dist/Assets.js`*
 
 ## Provided features
 
@@ -147,7 +148,12 @@ However, if you need to submit forms, you can import the module above, and it wi
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.
 
-In addition, the `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+#### How to submit a form
+
+There are two ways of submitting a form:
+1. The `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+2. Pressing Enter while a form control is focused.
+(Note: ```ui5-textarea``` is the only exception. If Enter is pressed while ```ui5-textarea``` is focused, it will result in a new line).
 
 
 ## Resources
@@ -159,7 +165,7 @@ In addition, the `ui5-button` element will be able to submit the closest ```form
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/docs/6-contributing/02-conventions-and-guidelines.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.

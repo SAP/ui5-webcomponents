@@ -1,13 +1,15 @@
 /* styles for input in dialog */
 .input-root-phone {
 	flex: 1;
+	position: relative;
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
-	background-color: var(--sapField_Background);
-	border: 1px solid var(--sapField_BorderColor);
-	border-radius: var(--sapField_BorderCornerRadius);
+	background: var(--sapField_BackgroundStyle);
+	background-color: var(--_ui5_input_background_color);
+	border: var(--_ui5-input-border);
+	border-radius: var(--_ui5_input_border_radius);
 	box-sizing: border-box;
 }
 
@@ -17,9 +19,22 @@
 	height: 100%;
 }
 
-.input-root-phone[value-state]:not([value-state="None"])[focused] {
-	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
-	outline-offset: -4px;
+.input-root-phone [inner-input]:focus {
+	background-color: var(--sapField_Focus_Background);
+}
+
+.input-root-phone:focus-within:before {
+	content: '';
+	position: absolute;
+	pointer-events: none;
+	z-index: 2;
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	border-radius: var(--_ui5_input_focus_border_radius);
+	top: var(--_ui5_input_focus_offset);
+	bottom: var(--_ui5_input_focus_offset);
+	left: var(--_ui5_input_focus_offset);
+	right: var(--_ui5_input_focus_offset);
+
 }
 
 .input-root-phone [value-state="Error"] [input-icon][data-ui5-compact-size],
@@ -44,6 +59,7 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+	border-radius: var(--_ui5_input_border_radius);
 }
 
 [inner-input]::selection,
@@ -82,23 +98,67 @@
 }
 
 .input-root-phone[value-state="Error"]:not([readonly]) {
+	background: var(--sapField_InvalidBackgroundStyle);
 	background-color: var(--sapField_InvalidBackground);
-	border-color: var(--sapField_InvalidColor);
+	border-color: var(--_ui5_input_value_state_error_border_color);
+}
+
+.input-root-phone[value-state="Error"]:not([readonly]) [inner-input]:focus {
+	background-color: var(--_ui5_input_focused_value_state_error_background);
+	border-color: var(--_ui5_input_focused_value_state_error_border_color);
+}
+
+.input-root-phone[value-state="Error"]:not([readonly]):focus-within:before {
+	border-color: var(--_ui5_input_focused_value_state_error_focus_outline_color);
 }
 
 .input-root-phone[value-state="Error"]:not([readonly]):not([disabled]),
-.input-root-phone[value-state="Warning"]:not([readonly]):not([disabled]) {
+.input-root-phone[value-state="Warning"]:not([readonly]):not([disabled]),
+.input-root-phone[value-state="Information"]:not([readonly]):not([disabled]) {
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
 .input-root-phone[value-state="Warning"]:not([readonly]) {
+	background: var(--sapField_WarningBackgroundStyle);
 	background-color: var(--sapField_WarningBackground);
-	border-color: var(--sapField_WarningColor);
+	border-color: var(--_ui5_input_value_state_warning_border_color);
+}
+
+.input-root-phone[value-state="Warning"]:not([readonly]) [inner-input]:focus {
+	background-color: var(--_ui5_input_focused_value_state_warning_background);
+	border-color: var(--_ui5_input_focused_value_state_warning_border_color);
+}
+
+.input-root-phone[value-state="Warning"]:not([readonly]):focus-within:before {
+	border-color: var(--_ui5_input_focused_value_state_warning_focus_outline_color);
 }
 
 .input-root-phone[value-state="Success"]:not([readonly]) {
+	background: var(--sapField_SuccessBackgroundStyle);
 	background-color: var(--sapField_SuccessBackground);
-	border-color: var(--sapField_SuccessColor);
+	border-color: var(--_ui5_input_value_state_success_border_color);
+	border-width: var(--_ui5_input_value_state_success_border_width);
+}
+
+.input-root-phone[value-state="Success"]:not([readonly]) [inner-input]:focus {
+	background-color: var(--_ui5_input_focused_value_state_success_background);
+	border-color: var(--_ui5_input_focused_value_state_success_border_color);
+}
+
+.input-root-phone[value-state="Success"]:not([readonly]):focus-within:before {
+	border-color: var(--_ui5_input_focused_value_state_success_focus_outline_color);
+}
+
+.input-root-phone[value-state="Information"]:not([readonly]) {
+	background: var(--sapField_InformationBackgroundStyle);
+	background-color: var(--sapField_InformationBackground);
+	border-color: var(--_ui5_input_value_state_information_border_color);
+	border-width: var(--_ui5_input_information_border_width);
+}
+
+.input-root-phone[value-state="Information"]:not([readonly]) [inner-input]:focus {
+	background-color: var(--_ui5_input_focused_value_state_information_background);
+	border-color: var(--_ui5_input_focused_value_state_information_border_color);
 }
 
 /* Remove IE's defaut clear button */
@@ -137,7 +197,7 @@
 .ui5-responsive-popover-footer {
 	display: flex;
 	justify-content: flex-end;
-	padding: 0.25rem;
+	padding: 0.25rem 0;
 	width: 100%;
 }
 
@@ -145,3 +205,4 @@
 	position: absolute;
 	right: 1rem;
 }
+

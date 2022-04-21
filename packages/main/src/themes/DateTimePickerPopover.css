@@ -7,9 +7,12 @@
 	justify-content: center;
 }
 
+.ui5-dt-picker-toggle-button {
+    width: 8rem;
+}
+
 .ui5-dt-cal {
 	width: auto;
-	padding: 0.5rem 0.25rem 0 0.25rem; /* both cozy and compact */
 	box-sizing: border-box;
 }
 
@@ -50,12 +53,17 @@
 	padding: 0 0.5rem 0 0.25rem;
 }
 
+
+.ui5-dt-picker-footer.ui5-dt-picker-footer-time-hidden {
+	padding: 0;
+}
+
 .ui5-dt-picker-action {
 	margin: 0.25rem;
 }
 
 #ok.ui5-dt-picker-action {
-	padding: 0 0.5625rem;
+	width: 4rem;
 }
 
 /* Phone mode */

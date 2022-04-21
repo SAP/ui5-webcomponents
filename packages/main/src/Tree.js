@@ -159,9 +159,36 @@ const metadata = {
 		},
 
 		/**
+		 * Fired when the mouse cursor enters the tree item borders.
+		 * @event sap.ui.webcomponents.main.Tree#item-mouseover
+		 * @param {HTMLElement} item the hovered item.
+		 * @since 1.0.0-rc.16
+		 * @public
+		 */
+		"item-mouseover": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the mouse cursor leaves the tree item borders.
+		 * @event sap.ui.webcomponents.main.Tree#item-mouseout
+		 * @param {HTMLElement} item the hovered item.
+		 * @since 1.0.0-rc.16
+		 * @public
+		 */
+		"item-mouseout": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
 		 * Fired when a tree item is activated.
 		 *
 		 * @event sap.ui.webcomponents.main.Tree#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -328,13 +355,28 @@ class Tree extends UI5Element {
 	_onListItemClick(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("item-click", { item: treeItem });
+
+		if (!this.fireEvent("item-click", { item: treeItem }, true)) {
+			event.preventDefault();
+		}
 	}
 
 	_onListItemDelete(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		this.fireEvent("item-delete", { item: treeItem });
+	}
+
+	_onListItemMouseOver(event) {
+		const treeItem = event.target.treeItem;
+
+		this.fireEvent("item-mouseover", { item: treeItem });
+	}
+
+	_onListItemMouseOut(event) {
+		const treeItem = event.target.treeItem;
+
+		this.fireEvent("item-mouseout", { item: treeItem });
 	}
 
 	_onListSelectionChange(event) {

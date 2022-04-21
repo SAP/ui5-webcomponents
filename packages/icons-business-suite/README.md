@@ -1,6 +1,6 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
-# UI5 Web Components - SAP Bbusiness Suite Icons
+# UI5 Web Components - SAP Business Suite Icons
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
@@ -9,7 +9,7 @@ Provides assets for the rich `business-suite` icon collection.
 
 | Icon asset               | Module import                                                               |
 |--------------------------|-----------------------------------------------------------------------------|
-| All icons (~33KB zipped) | `import "@ui5/webcomponents-icons-business-suite/dist/AllIcons.js";`        |
+| All icons (~73KB zipped) | `import "@ui5/webcomponents-icons-business-suite/dist/AllIcons.js";`        |
 | 1x2 grid layout icon     | `import "@ui5/webcomponents-icons-business-suite/dist/1x2-grid-layout.js";` |
 | 2x1 grid layout icon     | `import "@ui5/webcomponents-icons-business-suite/dist/2x1-grid-layout.js";` |
 | ...                      | ...                                                                         |
@@ -40,7 +40,7 @@ For a full list of the icons in the `business-suite` collection, click [here](ht
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/docs/6-contributing/02-conventions-and-guidelines.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.

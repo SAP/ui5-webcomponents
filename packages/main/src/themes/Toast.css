@@ -1,6 +1,6 @@
 :host {
 	font-family: "72override", var(--sapFontFamily);
-	color: var(--sapTextColor);
+	color: var(--sapList_TextColor);
 	font-size: var(--sapFontSize);
 }
 
@@ -17,7 +17,7 @@
 	padding: 1rem;
 	background: var(--_ui5_toast_background);
 	box-shadow: var(--_ui5_toast_shadow);
-	border-radius: .25rem;
+	border-radius: var(--sapElement_BorderCornerRadius);
 	transition-property: opacity;
 	opacity: 1;
 	font-family: inherit;

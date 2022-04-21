@@ -6,8 +6,8 @@
 >
 
 	<div slot="header" class="ui5-vsd-header">
-		<ui5-bar>
-			<div slot="startContent" class="ui5-vsd-start">
+		<div class="ui5-vsd-header-container">
+			<div class="ui5-vsd-header-start">
 				{{#if showBackButton}}
 					<ui5-button
 						design="Transparent"
@@ -15,81 +15,95 @@
 						class="ui5-vsd-back-button"
 						@click="{{_navigateToFilters}}"
 					></ui5-button>
-					<ui5-label>{{_filterByTitle}}</ui5-label>
-				{{else}}
-					<div class="ui5-vsd-bar-title">
-						<ui5-label class="ui5-vsd-title">{{_dialogTitle}}</ui5-label>
+				{{/if}}
+				<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_title}}</ui5-title>
+			</div>
+			<div class="ui5-vsd-header-end">
+				<ui5-button
+					design="Transparent"
+					@click="{{_resetSettings}}"
+					?disabled={{_disableResetButton}}
+					>
+						{{_resetButtonLabel}}
+				</ui5-button>
+			</div>
+		</div>
+		{{#unless showBackButton}}
+			{{#if hasPagination}}
+				<div class="ui5-vsd-sub-header-container">
+					<div class="ui5-vsd-sub-header">
 						<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
-							<ui5-segmented-button-item
-								?pressed="{{isModeSort}}"
-								?focused="{{isModeSort}}"
-								icon="sort"
-								mode="Sort"
-							></ui5-segmented-button-item>
-							<ui5-segmented-button-item
-								?pressed="{{isModeFilter}}"
-								?focused="{{isModeFilter}}"
-								icon="filter"
-								mode="Filter"
-							></ui5-segmented-button-item>
+								<ui5-segmented-button-item
+									?pressed="{{isModeSort}}"
+									icon="sort"
+									mode="Sort"
+								></ui5-segmented-button-item>
+								<ui5-segmented-button-item
+									?pressed="{{isModeFilter}}"
+									icon="filter"
+									mode="Filter"
+								></ui5-segmented-button-item>
 						</ui5-segmented-button>
 					</div>
-				{{/if}}
-			</div>
-			<ui5-button
-				slot="endContent"
-				design="Transparent"
-				@click="{{_resetSettings}}"
-				?disabled={{_disableResetButton}}
-				reset-button>{{_resetButtonLabel}}</ui5-button>
-		</ui5-bar>
+				</div>
+			{{/if}}
+		{{/unless}}
 	</div>
-
-	<div class="ui5-vsd-content">
-		{{#if isModeSort}}
-		<div class="ui5-vsd-sort">
-			<ui5-list
-				mode="SingleSelectBegin"
-				@ui5-item-click="{{_onSortOrderChange}}"
-				sort-order>
-				<ui5-li-groupheader>{{_sortOrderLabel}}</ui5-li-groupheader>
-				{{#each _currentSettings.sortOrder}}
-					<ui5-li
-						?selected="{{this.selected}}"
-					>{{this.text}}</ui5-li>
-				{{/each}}
-			</ui5-list>
-			<ui5-list
-				mode="SingleSelectBegin"
-				@ui5-item-click={{_onSortByChange}}
-				sort-by>
-				<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
-				{{#each _currentSettings.sortBy}}
-					<ui5-li ?selected="{{this.selected}}">{{this.text}}</ui5-li>
-				{{/each}}
-			</ui5-list>
-		</div>
+	<div class="ui5-vsd-content" ?expand-content="{{expandContent}}">
+		{{#if shouldBuildSort}}
+			{{#if isModeSort}}
+				<div class="ui5-vsd-sort">
+					<ui5-list
+						mode="SingleSelectBegin"
+						@ui5-item-click="{{_onSortOrderChange}}"
+						sort-order
+						accessible-name-ref="{{_id}}-label">
+						<ui5-li-groupheader>{{_sortOrderLabel}}</ui5-li-groupheader>
+						{{#each _currentSettings.sortOrder}}
+							<ui5-li
+								?selected="{{this.selected}}"
+							>{{this.text}}</ui5-li>
+						{{/each}}
+					</ui5-list>
+					<ui5-list
+						mode="SingleSelectBegin"
+						@ui5-item-click={{_onSortByChange}}
+						sort-by>
+						<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
+						{{#each _currentSettings.sortBy}}
+							<ui5-li data-ui5-external-action-item-index="{{@index}}" ?selected="{{this.selected}}">{{this.text}}</ui5-li>
+						{{/each}}
+					</ui5-list>
+				</div>
+			{{/if}}
 		{{/if}}
 
-		{{#if isModeFilter}}
-			{{#if _filterStepTwo}}
-				<ui5-list
-					mode="MultiSelect"
-					@ui5-item-click="{{_handleFilterValueItemClick}}"
-				>
-					{{#each _currentSettings.filters}}
-						{{#if this.selected}}
-							{{#each this.filterOptions}}
-								<ui5-li ?selected={{this.selected}}>{{this.text}}</ui5-li>
-							{{/each}}
-						{{/if}}
-					{{/each}}
-				</ui5-list>
-			{{else}}
-				<ui5-list @ui5-item-click="{{_changeCurrentFilter}}">
-					<ui5-li-groupheader>{{_filterByLabel}}</ui5-li-groupheader>
-					<slot name="filterItems"></slot>
-				</ui5-list>
+		{{#if shouldBuildFilter}}
+			{{#if isModeFilter}}
+				{{#if _filterStepTwo}}
+					<ui5-list
+						accessible-name-ref="{{_id}}-label"
+						mode="MultiSelect"
+						@ui5-item-click="{{_handleFilterValueItemClick}}"
+					>
+						{{#each _currentSettings.filters}}
+							{{#if this.selected}}
+								{{#each this.filterOptions}}
+									<ui5-li ?selected={{this.selected}}>{{this.text}}</ui5-li>
+								{{/each}}
+							{{/if}}
+						{{/each}}
+					</ui5-list>
+				{{else}}
+					<ui5-list @ui5-item-click="{{_changeCurrentFilter}}" accessible-name-ref="{{_id}}-label">
+						<ui5-li-groupheader>{{_filterByLabel}}</ui5-li-groupheader>
+						{{#each filterItems}}
+							<ui5-li class="ui5-vsd-filterItemList" ?selected={{this.selected}} additional-text={{this.additionalText}}>
+								{{this.text}}
+							</ui5-li>
+						{{/each}}
+					</ui5-list>
+				{{/if}}
 			{{/if}}
 		{{/if}}
 	</div>

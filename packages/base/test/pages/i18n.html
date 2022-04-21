@@ -17,9 +17,7 @@
 		const demo = async () => {
 			["de", "es", "fr", "en"].forEach(localeId => registerI18nLoader("myApp", localeId, () => `./assets/messagebundle_${localeId}.properties`));
 
-			await fetchI18nBundle("myApp");
-
-			const bundle = getI18nBundle("myApp");
+			const bundle = await getI18nBundle("myApp");
 
 			const pleaseWait = bundle.getText("PLEASE_WAIT");
 			console.log("Please wait in the current language is: ", pleaseWait);

@@ -1,0 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    height: 100%;
+    display: flex;
+}
+
+ui5-shellbar::part(root) {
+    padding-left: .5rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.sidenavigation1auto {
+    background-color: var(--sapBackgroundColor);
+}

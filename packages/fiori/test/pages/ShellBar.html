@@ -12,33 +12,14 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		body, html {
-			width: 100%;
-			height: 100%;
-			padding: 0;
-			margin: 0;
-		}
 
-		.popover-content {
-			margin-top: 1rem;
-		}
-
-		.shellbar-example {
-			margin-top: 1px;
-		}
-
-		ui5-avatar:not(:defined) {
-			visibility: hidden;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/ShellBar.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="shellbar1auto">
 
 	<ui5-shellbar
 		class="shellbar-example"
@@ -73,9 +54,9 @@
 			secondary-title="Second Title"
 			id="shellbarwithitems"
 	>
-		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="accept" text="Hello World!" title="Approve"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule" stable-dom-ref="schedule"></ui5-shellbar-item>
+		<ui5-shellbar-item id="accept" icon="accept" text="Hello World!" title="Approve" stable-dom-ref="accept"></ui5-shellbar-item>
+		<ui5-shellbar-item id="warning" icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="discussion" text="Hello World!" count="42" title="42 Messages"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="error" text="Hello World!" title="Attention"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="hello-world" text="UI5 Webcomponents" title="hello world"></ui5-shellbar-item>
@@ -83,6 +64,8 @@
 		<ui5-shellbar-item icon="nutrition-activity" text="UI5 Webcomponents" title="Apple"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="sound-loud" text="UI5 Webcomponents" title="Sound"></ui5-shellbar-item>
 	</ui5-shellbar>
+
+	<ui5-input id="press-input3" class="shellbar3auto"></ui5-input>
 
 	<ui5-shellbar
 			class="shellbar-example"
@@ -92,6 +75,7 @@
 	<ui5-shellbar
 		id="shellbarWithLogoClick"
 		class="shellbar-example"
+		data-ui5-static-stable="shellbarWithLogoClickStatic"
 		primary-title="SAP Labs Bulgaria"
 		show-notifications
 		show-product-switch
@@ -157,7 +141,7 @@
 
 	<ui5-popover id="popover" placement-type="Bottom">
 		<div class="popover-header">
-			<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">John Doe</ui5-title>
+			<ui5-title class="shellbar2auto">John Doe</ui5-title>
 		</div>
 
 		<div class="popover-content">
@@ -188,9 +172,9 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-input id="press-input" style="margin-top: 2rem;"></ui5-input>
-	<ui5-input id="press-data" style="margin-top: 2rem;"></ui5-input>
-	<ui5-input id="press-input2" style="margin-top: 2rem;"></ui5-input>
+	<ui5-input id="press-input" class="shellbar3auto"></ui5-input>
+	<ui5-input id="press-data" class="shellbar3auto"></ui5-input>
+	<ui5-input id="press-input2" class="shellbar3auto"></ui5-input>
 
 
 	<ui5-shellbar>
@@ -230,6 +214,13 @@
 
 	<ui5-shellbar primary-title="UI5 Web Components" id="test-invalidation">
 		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"/>
+	</ui5-shellbar>
+
+	<ui5-toast id="wcToastTC">Custom Action Fired</ui5-toast>
+
+	<ui5-shellbar id="sbAcc">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
 	</ui5-shellbar>
 
 	<script>
@@ -287,14 +278,33 @@
 			window["result-key"].value = item.getAttribute("data-key");
 		});
 
+		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
+			item.addEventListener("ui5-click", function(event) {
+				wcToastTC.show();
+			});
+		});
+
 		["disc", "call"].forEach(function(id) {
 			var currenItem = window[id][0] || window[id];
-			currenItem.addEventListener("ui5-itemClick", function(event) {
+			currenItem.addEventListener("ui5-click", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
 				window["custom-item-popover"].showAt(event.detail.targetRef);
 			});
 		});
+
+		["accept", "warning"].forEach(function(id) {
+			var currenItem = window[id][0] || window[id];
+			currenItem.addEventListener("ui5-click", function(event) {
+				event.preventDefault();
+				window["press-input3"].value = event.target.id;
+			});
+		});
+
+		sbAcc.accessibilityTexts = {
+			profileButtonTitle: "John Dow",
+			logoTitle: "Custom logo title",
+		};
 	</script>
 </body>
 </html>

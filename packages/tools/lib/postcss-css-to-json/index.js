@@ -23,7 +23,12 @@ module.exports = function (opts) {
 			mkdirp.sync(path.dirname(targetFile));
 
 			const filePath = `${targetFile}.json`;
-			fs.writeFileSync(filePath, JSON.stringify({_: css}));
+			const data = {
+				packageName: opts.packageName,
+				fileName: targetFile.substr(targetFile.lastIndexOf("themes")),
+				content: css
+			};
+			fs.writeFileSync(filePath, JSON.stringify({_: data}));
 		}
 	};
 };

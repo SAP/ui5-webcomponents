@@ -50,6 +50,34 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests popover toggling with 'open' attribute", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenWithAttr");
+		const btnCloseWithAttr = await browser.$("#btnCloseWithAttr");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#popoverAttr");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await btnCloseWithAttr.click();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
+	it("tests if popover auto closes when opener goes out of the viewport", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenWithAttr");
+		const btnAccNameRef = await browser.$("#btnAccNameRef");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#popoverAttr");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await btnAccNameRef.scrollIntoView();
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+
+		await browser.$("#btn").scrollIntoView();
+	});
+
 	it("tests popover does not close with opener", async () => {
 		const popover = await browser.$("#quickViewCard");
 		const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
@@ -65,7 +93,7 @@ describe("Popover general interaction", () => {
 		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(await popover.getAttribute("opened"), "",
+		assert.strictEqual(await popover.getProperty("opened"), true,
 			"Popover remains open.");
 		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -89,16 +117,25 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
 
-	it("tests if overflown content can be reached by scrolling", async () => {
+	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
-		const items = await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li");
+		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+		const items = await staticAreaItem.shadow$$("ui5-li");
 
 		await manyItemsSelect.click();
 
 		const itemBeforeLastItem = items[items.length - 2];
 
 		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
+	});
+
+	it("tests if overflown content can be reached by scrolling 2", async () => {
+		const manyItemsSelect = await browser.$("#many-items");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
+		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+		const items = await staticAreaItem.shadow$$("ui5-li");
+		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
 
@@ -107,7 +144,7 @@ describe("Popover general interaction", () => {
 		await manyItemsSelect.click();
 	});
 
-	it("tests if overflown content can be reached by scrolling (with header and arrow)", async () => {
+	it("tests if overflown content can be reached by scrolling (with header and arrow) 1", async () => {
 		const bigPopover = await browser.$("#big-popover");
 		const items = await bigPopover.$$("ui5-li");
 		const openBigPopoverButton = await browser.$("#big-popover-button");
@@ -117,6 +154,13 @@ describe("Popover general interaction", () => {
 		const itemBeforeLastItem = items[items.length - 2];
 
 		assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
+	});
+
+	it("tests if overflown content can be reached by scrolling (with header and arrow) 2", async () => {
+		const bigPopover = await browser.$("#big-popover");
+		const items = await bigPopover.$$("ui5-li");
+
+		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
 
@@ -129,7 +173,7 @@ describe("Popover general interaction", () => {
 		const popover = await browser.$("#modalPopover");
 
 		await btnOpenPopover.click();
-		assert.ok(await popover.getProperty("opened"), "Popover is opened.");
+		assert.ok(await popover.getProperty("open"), "Popover is opened.");
 
 		try {
 			await browser.$("#btn").click();
@@ -137,7 +181,7 @@ describe("Popover general interaction", () => {
 			assert.ok(true, "The click was intercepted.");
 		}
 
-		assert.ok(await popover.getProperty("opened"), "Popover is still opened.");
+		assert.ok(await popover.getProperty("open"), "Popover is still opened.");
 
 		await popoverClose.click();
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
@@ -149,7 +193,7 @@ describe("Popover general interaction", () => {
 		const popoverId = await popover.getProperty("_id");
 
 		await btnOpenPopover.click();
-		assert.ok(await popover.getProperty("opened"), "Popover is opened.");
+		assert.ok(await popover.getProperty("open"), "Popover is opened.");
 
 		const blockLayerIsCreated = await browser.executeAsync((popoverId, done) => {
 			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");
@@ -302,5 +346,12 @@ describe("Acc", () => {
 		await popover.setAttribute("accessible-name", "text");
 		assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
 		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover has aria-label.");
+	});
+
+	it("tests accessible-name-ref", async () => {
+		const popover = await browser.$("#popAccNameRef");
+		const expectedText = await browser.$("#lblAccNameRef").getText();
+
+		assert.strictEqual(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), expectedText, "aria-label should be the text of the label.");
 	});
 });

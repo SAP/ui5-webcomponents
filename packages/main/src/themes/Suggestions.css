@@ -1,0 +1,17 @@
+.ui5-suggestions-popover {
+	box-shadow: var(--sapContent_Shadow1);
+}
+
+.ui5-suggestions-popover::part(header),
+.ui5-suggestions-popover::part(content) {
+	padding: 0;
+}
+
+.ui5-suggestions-popover::part(footer) {
+	padding: 0 1rem;
+}
+
+.ui5-suggestions-popover [ui5-li],
+.ui5-suggestions-popover [ui5-li-suggestion-item] {
+	height: var(--_ui5_list_item_dropdown_base_height);
+}

@@ -1,10 +1,10 @@
-# How to Use UI5 Web Components
+# Understanding UI5 Web Components APIs
 
 *UI5 Web Components are just HTML.* Therefore, their usage is identical
 to the usage of standard HTML elements. Usually, Web Components creation and manipulation
 will be done internally by your framework of choice.
 
-*This section explains UI5 Web Components APIs and usage in general terms*
+*This section explains UI5 Web Components APIs and usage in general terms.*
 
 UI5 Web Components provide the following kinds of APIs:
 
@@ -33,13 +33,13 @@ const myButton = document.createElement("ui5-button");
 document.body.appendChild(myButton);
 ```
 
-In most real-world scenarios the above will be done by your framework of choice.
+In most real-world scenarios, the above will be done by your framework of choice.
 
 ## 2. How do I set the properties/attributes of UI5 Web Components?
 <a name="properties"></a>
 
 You can use attributes and properties to the same effect. Keep in mind that attribute
-names are "kebab-case" (e.g. `value-state`) while property names are "camelCase" (f.e. `valueState`).
+names are "kebab-case" (e.g. `value-state`) while property names are "camelCase" (e.g. `valueState`).
 
 Attributes can be set directly on the web component in HTML.
 
@@ -149,7 +149,7 @@ Now, let's have a look at a Web Component that is intended to have only certain 
 
 The `<ui5-tabcontainer>` should only contain `<ui5-tab>` and `<ui5-tab-separator>`.
 
-The manipulation is exactly the same as with the other Web Components. For example to add a new tab:
+The manipulation is exactly the same as with the other Web Components. For example, to add a new tab:
 
 ```js
 const tc = document.getElementById("tc1");
@@ -191,10 +191,10 @@ has at least a default slot.
 
 Here's a summary of `slot` types:
 
- |           Slot type            |               Allowed children                |                                    Example                                     |
+ |           Slot Type            |               Allowed Children                |                                    Example                                     |
  | ------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------------ |
- | `Node`                         | All HTML Elements and text                    | `ui5-button` default slot                                                      |
- | `HTMLElement`                  | HTML Elements only (no text)                  | `ui5-popover` `header` slot                                                    |
+ | `Node`                         | All HTML elements and text                    | `ui5-button` default slot                                                      |
+ | `HTMLElement`                  | HTML elements only (no text)                  | `ui5-popover` `header` slot                                                    |
 
 ## 4. How do I listen for events?
 <a name="events"></a>
@@ -202,7 +202,7 @@ Here's a summary of `slot` types:
 For this task, you can again use standard DOM methods:
 
 ```js
-const myMessage = document.getElementsByTagName("ui5-messagestrip")[0];
+const myMessage = document.getElementsByTagName("ui5-message-strip")[0];
 myMessage.addEventListener("close", () => {
 	console.log("The user dismissed the message");
 });
@@ -242,3 +242,5 @@ Consult the documentation for the available public methods for each UI5 Web Comp
 As you can see from this article, UI5 Web Components, being HTML elements in the first place,
 comply with the same rules. There are some novelties that come with the Web Components standard,
 such as `slot`, but otherwise everything else is what you already know and use from HTML.
+
+Next: [Using Icons](../using-icons)

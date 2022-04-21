@@ -1,16 +1,16 @@
-# Custom Theming with `SAP Theme Designer`
+# Custom Theming with `UI Theme Designer`
 
-UI5 Web Components are fully compatible with `SAP Theme Designer`, a tool for building a custom theme. You can create your own theme and effortlessly integrate it in your UI5 Web Components project on HTML level! On top, this does not prevent you from switching to and from officially supported themes, while having your own.
+UI5 Web Components are fully compatible with `UI Theme Designer`, a tool for building a custom theme. You can create your own theme and effortlessly integrate it in your UI5 Web Components project on HTML level. On top, this does not prevent you from switching to and from officially supported themes, while having your own.
 
-<b>*Note:*</b> The `SAP Theme Designer` is available for SAP customers only. We are currently working on a new tool, that will be publicly available.
+<b>Note:</b> `UI Theme Designer` is available for SAP customers only. We are currently working on a new tool, that will be publicly available.
 
 Follow this simple tutorial to build a custom theme running with UI5 Web Components in 5 minutes:
 
-1. Open **SAP Theme Designer**.
+1. Open **UI Theme Designer**.
 
-   Go to the [official docs](https://help.sap.com/viewer/09f6818d8e064537973102d6289e2aca/Cloud/en-US/935325fb130d41449362181fb6020dd0.html) and set up the Theme Designer, or just open the [Demo Theme Designer](https://themedesigner-themedesignerdemo.dispatcher.eu2.hana.ondemand.com/index.html).
+   Go to the [official docs](https://help.sap.com/viewer/09f6818d8e064537973102d6289e2aca/Cloud/en-US/935325fb130d41449362181fb6020dd0.html) and set up the Theme Designer.
 
-2. Create your **custom theme** in `SAP Theme Designer`.
+2. Create your **custom theme** in `UI Theme Designer`.
 
     - Click the **Create a New Theme** button.
 
@@ -21,7 +21,7 @@ Follow this simple tutorial to build a custom theme running with UI5 Web Compone
     - Once you are done customizing, choose **Theme** -> **Export** from the main menu on top. A dialog will appear,
       asking for **Theme ID** (technical name of your new theme) and a title.
 
-      The Theme ID you chose at this point will be the one you'll use in order to switch to your custom theme, for example if you chose `mytheme`:
+      The Theme ID you choose at this point will be the one you'll use in order to switch to your custom theme, for example if you choose `mytheme`:
 
       `index.html?sap-ui-theme=mytheme`
 
@@ -41,7 +41,7 @@ Follow this simple tutorial to build a custom theme running with UI5 Web Compone
 
    Just copy this file to a directory in your project where it can be statically served.
 
-5. Include the file in your project's `.html` page:
+5. Include the file in your project `.html` page:
 
    The simplest option would be to use a `<link>` tag and point to where you copied the file:
 
@@ -73,7 +73,7 @@ or
 </script>
 ```
 
-*Note:* Using a custom theme does not prevent you from using the official themes. You can freely switch to and from them.
+**Note:** Using a custom theme does not prevent you from using the official themes. You can freely switch to and from them.
 
 ```js
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
@@ -84,5 +84,6 @@ setTheme("mytheme");
 setTheme("sap_fiori_3_dark");
 ```
 
-For more on configuring themes, see [Configuration](Configuration.md).
- 	
+For more on configuring themes, see [Configuration](../../advanced/configuration/).
+
+Next: [Custom Fonts](../fonts)

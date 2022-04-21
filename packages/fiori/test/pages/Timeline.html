@@ -17,54 +17,14 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
 
-		.header {
-			display: flex;
-			justify-content: center;
-			height: 3rem;
-			background: #3f5161;
-		}
-
-		.header-title {
-			color: #fafafa;
-			margin: 0;
-			padding: 0;
-			line-height: 3rem;
-			font-size: 1.375rem;
-			font-weight: normal;
-			text-shadow: 0 0 0.125rem #ffffff;
-			font-family: "72", Arial, Helvetica, sans-serif;
-		}
-
-		.main {
-			display: flex;
-		}
-
-		.samples,
-		.result {
-			flex: 1;
-		}
-
-		.samples {
-			flex-grow: 4;
-		}
-
-		ui5-card {
-			width: 300px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/Timeline.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="timeline1auto">
 
 <header class="header">
 	<h1 class="header-title">ui5-timeline</h1>
@@ -77,7 +37,7 @@
 			<ui5-card>
 				<ui5-card-header slot="header" title-text="Upcoming Activities" subtitle-text="For Today">
 				</ui5-card-header>
-				<ui5-timeline layout="Vertical">
+				<ui5-timeline layout="Vertical" accessible-name="vertical" id="timelineAccName">
 					<ui5-timeline-item id="test-item" title-text="called" subtitle-text="20.02.2017 11:30" icon="phone" name="Stanislava Baltova" name-clickable></ui5-timeline-item>
 					<ui5-timeline-item id="test-item" title-text="called" subtitle-text="20.02.2017 11:30" icon="phone" name="Stanislava Baltova"></ui5-timeline-item>
 					<ui5-timeline-item title-text="Weekly Sync - CP Design" subtitle-text="27.08.2017 (11:00 - 12:00)" icon="calendar">

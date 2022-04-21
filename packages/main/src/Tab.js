@@ -4,6 +4,7 @@ import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTempla
 import SemanticColor from "./types/SemanticColor.js";
 import TabContainer from "./TabContainer.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 
 // Templates
@@ -21,16 +22,42 @@ import overflowCss from "./generated/themes/TabInOverflow.css.js";
  */
 const metadata = {
 	tag: "ui5-tab",
+	managedSlots: true,
+	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
-		 * Defines the tab content.
+		 * Holds the content associated with this tab.
+		 *
 		 * @type {Node[]}
-		 * @slot
 		 * @public
+		 * @slot
 		 */
 		"default": {
 			type: Node,
+			propertyName: "content",
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
+		},
+
+		/**
+		 * Defines hierarchies with nested sub tabs.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 *
+		 * @type {sap.ui.webcomponents.main.ITab[]}
+		 * @public
+		 * @slot subTabs
+		 */
+		subTabs: {
+			type: HTMLElement,
+			individualSlots: true,
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -56,7 +83,7 @@ const metadata = {
 		},
 
 		/**
-		 * Represents the "additionalText" text, which is displayed in the tab filter.
+		 * Represents the "additionalText" text, which is displayed in the tab.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -103,16 +130,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the stable selector that you can use via getStableDomRef method.
-		 * @public
-		 * @type {string}
-		 * @since 1.0.0-rc.8
-		 */
-		stableDomRef: {
-			type: String,
-		},
-
-		/**
 		 * Specifies if the component is selected.
 		 *
 		 * @type {boolean}
@@ -127,6 +144,18 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
+		},
+
+		_selected: {
+			type: Boolean,
+		},
+
+		_realTab: {
+			type: Object,
+		},
+
+		_isTopLevelTab: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -175,8 +204,19 @@ class Tab extends UI5Element {
 	static get dependencies() {
 		return [
 			Icon,
+			Button,
 			CustomListItem,
 		];
+	}
+
+	get displayText() {
+		let text = this.text;
+
+		if (this._isInline && this.additionalText) {
+			text += ` (${this.additionalText})`;
+		}
+
+		return text;
 	}
 
 	get isSeparator() {
@@ -189,6 +229,47 @@ class Tab extends UI5Element {
 
 	get overflowPresentation() {
 		return executeTemplate(this.constructor.overflowTemplate, this);
+	}
+
+	get stableDomRef() {
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	}
+
+	get requiresExpandButton() {
+		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+	}
+
+	get isSingleClickArea() {
+		return this.subTabs.length > 0 && this._isTopLevelTab && !this._hasOwnContent;
+	}
+
+	get isOnSelectedTabPath() {
+		return this._realTab === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+	}
+
+	get _effectiveSlotName() {
+		return this.isOnSelectedTabPath ? this._individualSlot : "disabled-slot";
+	}
+
+	get _defaultSlotName() {
+		return this._realTab === this ? "" : "disabled-slot";
+	}
+
+	get _hasOwnContent() {
+		return this.content.some(node => (node.nodeType !== Node.COMMENT_NODE
+				&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)));
+	}
+
+	/**
+	 * Returns the DOM reference of the tab that is placed in the header.
+	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
+	 *
+	 * @function
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	getTabInStripDomRef() {
+		return this._getTabInStripDomRef;
 	}
 
 	getFocusDomRef() {
@@ -218,11 +299,16 @@ class Tab extends UI5Element {
 	}
 
 	get effectiveSelected() {
-		return this.selected || false;
+		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
+		return this.selected || this._selected || subItemSelected;
 	}
 
 	get effectiveHidden() {
-		return !this.selected;
+		return !this.effectiveSelected;
+	}
+
+	get tabs() {
+		return this.subTabs.filter(tab => !tab.isSeparator);
 	}
 
 	get ariaLabelledBy() {
@@ -243,10 +329,10 @@ class Tab extends UI5Element {
 		return labels.join(" ");
 	}
 
-	get headerClasses() {
+	get stripClasses() {
 		const classes = ["ui5-tab-strip-item"];
 
-		if (this.selected) {
+		if (this.effectiveSelected) {
 			classes.push("ui5-tab-strip-item--selected");
 		}
 
@@ -256,8 +342,6 @@ class Tab extends UI5Element {
 
 		if (this._isInline) {
 			classes.push("ui5-tab-strip-item--inline");
-		} else {
-			classes.push("ui5-tab-strip-item--standard");
 		}
 
 		if (this.additionalText) {
@@ -278,6 +362,10 @@ class Tab extends UI5Element {
 
 		if (this.design !== SemanticColor.Default) {
 			classes.push(`ui5-tab-strip-item--${this.design.toLowerCase()}`);
+		}
+
+		if (this.isSingleClickArea) {
+			classes.push(`ui5-tab-strip-item--singleClickArea`);
 		}
 
 		return classes.join(" ");
@@ -304,11 +392,15 @@ class Tab extends UI5Element {
 			classes.push("ui5-tab-overflow-item--disabled");
 		}
 
+		if (this.selected) {
+			classes.push("ui5-tab-overflow-item--selectedSubTab");
+		}
+
 		return classes.join(" ");
 	}
 
 	get overflowState() {
-		return this.disabled ? "Inactive" : "Active";
+		return (this.disabled || this.isSingleClickArea) ? "Inactive" : "Active";
 	}
 }
 

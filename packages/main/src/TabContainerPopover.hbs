@@ -3,21 +3,19 @@
 	horizontal-align="Right"
 	placement-type="Bottom"
 	content-only-on-desktop
-	with-padding
 	hide-arrow
 	_hide-header
+	class="ui5-tab-container-responsive-popover"
 >
-	<ui5-list @ui5-item-press="{{_onOverflowListItemSelect}}">
-		{{#each items}}
-			{{#unless this.isSeparator}}
-				{{this.overflowPresentation}}
-			{{/unless}}
+	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
+		{{#each _overflowItems}}
+			{{overflowPresentation}}
 		{{/each}}
 	</ui5-list>
 	<div slot="footer" class="ui5-responsive-popover-footer">
 		<ui5-button
 			design="Transparent"
 			@click="{{_closeRespPopover}}"
-		>Cancel</ui5-button>
+		>{{popoverCancelButtonText}}</ui5-button>
 	</div>
 </ui5-responsive-popover>

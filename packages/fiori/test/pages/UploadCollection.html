@@ -5,36 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>UploadCollection</title>
     <script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
     </script>
 
 
-    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		.header {
-			display: flex;
-			align-items: center;
-			overflow: hidden;
-		}
 
-		.header > * {
-			margin: 4px;
-		}
-
-		.spacer {
-			flex: 1 1 auto;
-		}
-
-		ui5-upload-collection {
-			margin: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/UploadCollection.css">
 	<script src="./uploadCollectionScript.js" defer></script>
 </head>
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="uploadcollection1auto">
 	<div class="header">
 		<ui5-label>UC Mode:</ui5-label>
 		<ui5-select id="changeMode">

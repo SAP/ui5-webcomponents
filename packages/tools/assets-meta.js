@@ -9,7 +9,11 @@ const assetsMeta = {
       "sap_belize_hcw",
       "sap_fiori_3_hcb",
       "sap_fiori_3_hcw",
-	  "sap_horizon"
+	  "sap_horizon",
+	  "sap_horizon_dark",
+	  "sap_horizon_hcb",
+	  "sap_horizon_hcw",
+	  "sap_horizon_exp"
     ]
   },
   "languages": {
@@ -132,6 +136,7 @@ const assetsMeta = {
       "sk",
       "sl",
       "sr",
+      "sr_Latn",
       "sv",
       "th",
       "tr",

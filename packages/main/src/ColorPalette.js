@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
@@ -16,6 +16,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
 import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
+import Button from "./Button.js";
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
@@ -115,7 +116,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.ColorPalette#item-click
 		 * @public
 		 * @since 1.0.0-rc.15
-		 * @param {String} color the selected color
+		 * @param {string} color the selected color
 		 */
 		"item-click": {
 			details: {
@@ -178,16 +179,20 @@ class ColorPalette extends UI5Element {
 
 	static get dependencies() {
 		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
-		return [ColorPaletteItem].concat(ColorPaletteMoreColors ? ColorPaletteMoreColors.dependencies : []);
+		return [ColorPaletteItem, Button].concat(ColorPaletteMoreColors ? ColorPaletteMoreColors.dependencies : []);
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
+
+		[ColorPalette.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			ColorPaletteMoreColors ? ColorPaletteMoreColors.init() : Promise.resolve(),
+		]);
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.displayedColors,
 			rowSize: this.rowSize,
@@ -248,20 +253,20 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (event.target.localName === "ui5-color-palette-item") {
+		if (event.target.hasAttribute("ui5-color-palette-item")) {
 			this.selectColor(event.target);
 		}
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event) && event.target.localName === "ui5-color-palette-item") {
+		if (isSpace(event) && event.target.hasAttribute("ui5-color-palette-item")) {
 			event.preventDefault();
 			this.selectColor(event.target);
 		}
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event) && event.target.localName === "ui5-color-palette-item") {
+		if (isEnter(event) && event.target.hasAttribute("ui5-color-palette-item")) {
 			this.selectColor(event.target);
 		}
 	}
@@ -404,11 +409,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorContainerLabel() {
-		return this.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
+		return ColorPalette.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
 	}
 
 	get colorPaleteMoreColorsText() {
-		return this.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
 	}
 
 	get _showMoreColors() {

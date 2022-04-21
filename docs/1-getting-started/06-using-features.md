@@ -1,8 +1,8 @@
-# Using additional features
+# Using Additional Features
 
 *Several UI5 Web Components packages offer **additional features**. This section explains what these are and how to use them.*
 
-## What are additional features
+## What Are Additional Features
 
 These are features that **logically belong** to a component, but are not needed for the component's most common use cases, thus not part of the component's code by default.
 
@@ -10,7 +10,7 @@ The goal of features is to keep the components' code base minimal and allow user
 
 If you intend to use a component's additional feature, your app must import it explicitly.
 
-## Importing additional features
+## Importing Additional Features
 
 Import the feature file from the respective NPM package:
 
@@ -25,6 +25,7 @@ Currently, only a few components offer additional features:
 | `main`         | Multiple (`ui5-input`, `ui5-date-picker`, etc...) | `@ui5/webcomponents/dist/features/InputElementsFormSupport.js`       | Support for using input components in forms                                                             |
 | `fiori`        | `ui5-shellbar`                                    | `@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js`         | Support for a better (but bigger in size) animation for the "co-pilot" button in the shellbar component |
 | `base`         | Framework                                         | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js`            | Integration with the OpenUI5 framework, allowing synchronization and resources re-use                   |
+| `base`         | Multiple components within all libraries          | `@ui5/webcomponents-base/dist/features/F6Navigation.js`              | Support for F6 fast groups navigation                                                                   |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js` | Buddhist calendar support                                                                               |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Islamic.js`  | Islamic calendar support                                                                                |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Japanese.js` | Japanese calendar support                                                                               |
@@ -35,3 +36,5 @@ For example:
 ```js
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
 ```
+
+Next: [Wrapping Up](../wrapping-up)

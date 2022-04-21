@@ -6,7 +6,7 @@
 
 	<div
 		class="{{classes.content}}"
-		@ui5-delete="{{_tokenDelete}}"
+		@ui5-delete="{{_delete}}"
 		@click="{{_click}}"
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
@@ -22,6 +22,8 @@
 		<span
 			@click="{{_openOverflowPopover}}"
 			class="ui5-tokenizer-more-text"
+			part="n-more-text"
 		>{{_nMoreText}}</span>
 	{{/if}}
 </div>
+	

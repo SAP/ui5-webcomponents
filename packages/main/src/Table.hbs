@@ -1,17 +1,29 @@
-<div class="ui5-table-root">
+<div class="ui5-table-root" @focusin="{{_onfocusin}}">
+	<div id="{{_id}}-before" tabindex="0" class="ui5-table-focusarea"></div>
+
 	{{#if busy}}
 		{{> busyRow}}
 	{{/if}}
 
-	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
+	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table" aria-label="{{tableAriaLabelText}}">
 		<thead>
-			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" aria-label="{{ariaLabelText}}" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+			<tr
+				id="{{_columnHeader.id}}"
+				role="row"
+				class="ui5-table-header-row"
+				aria-label="{{ariaLabelText}}"
+				tabindex="{{_columnHeader._tabIndex}}"
+				@click="{{_onColumnHeaderClick}}"
+				@focusin="{{_onColumnHeaderFocused}}"
+				@keydown="{{_onColumnHeaderKeydown}}"
+			>
 				{{#if isMultiSelect}}
 					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
 						<ui5-checkbox class="ui5-table-select-all-checkbox"
 							?checked="{{_allRowsSelected}}"
 							@ui5-change="{{_selectAll}}"
 							aria-label="{{ariaLabelSelectAllText}}"
+							tabindex="-1"
 						>
 						</ui5-checkbox>
 					</th>
@@ -50,13 +62,16 @@
 			{{/if}}
 		</tbody>
 	</table>
+
+	<div id="{{_id}}-after" tabindex="0" class="ui5-table-focusarea"></div>
 </div>
 
 {{#*inline "moreRow"}}
 <tr>
 	<td colspan="{{visibleColumnsCount}}">
 		<div growing-button>
-			<div 
+			<div
+				id="{{_id}}-growingButton"
 				tabindex="0"
 				role="button"
 				aria-labelledby="{{loadMoreAriaLabelledBy}}"

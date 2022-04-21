@@ -153,7 +153,7 @@ describe("ARIA attributes", () => {
 
 		resourceBundleText = await browser.executeAsync(done => {
 			const mi = document.getElementById("no-tokens");
-			done(mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
+			done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
 		});
 
 		let allTokens = await mi.$$("ui5-token");
@@ -166,7 +166,7 @@ describe("ARIA attributes", () => {
 
 		resourceBundleText = await browser.executeAsync(done => {
 			const mi = document.getElementById("no-tokens");
-			done(mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
+			done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
 		});
 
 		allTokens = await mi.$$("ui5-token");
@@ -203,3 +203,140 @@ describe("ARIA attributes", () => {
 	});
 });
 
+describe("Keyboard handling", () => {
+	beforeEach(async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+	});
+
+	it("left/right arrow navigation", async () => {
+		const input =  await browser.$("#basic-overflow");
+		const innerInput =  await input.shadow$("input");
+		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
+		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
+
+		await innerInput.click();
+		await innerInput.keys("ArrowLeft");
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused");
+		assert.notOk(await input.getProperty("focused"), "The input loses focus");
+
+		await innerInput.keys("ArrowRight");
+		assert.notOk(await lastToken.getProperty("focused"), "The last token is not focused anymore");
+	});
+
+	it("home/end navigation", async () => {
+		const input =  await browser.$("#basic-overflow");
+		const innerInput =  await input.shadow$("input");
+		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
+		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
+		let caretPosition;
+
+		await innerInput.click();
+		await innerInput.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
+
+		await innerInput.keys("End");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
+
+		await innerInput.keys("End");
+		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
+
+		caretPosition = await browser.execute(() =>{
+			const multiInputShadowRoot = document.getElementById("basic-overflow").shadowRoot;
+			return multiInputShadowRoot.querySelector("input").selectionStart;
+		});
+
+		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at 0 index");
+
+		await innerInput.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused on Home press, if the cursor is at 0 index");
+	});
+
+	it("should select tokens with key modifiers (Shift + [Ctrl])", async () => {
+		const input = await browser.$("#basic-overflow");
+		const innerInput = await input.shadow$("input");
+		const firstToken = await browser.$("#basic-overflow ui5-token:last-child");
+		const secondToken = await browser.$("#basic-overflow ui5-token:nth-child(10)");
+		const thirdToken = await browser.$("#basic-overflow ui5-token:nth-child(9)");
+
+		await innerInput.click();
+		await innerInput.keys("ArrowLeft");
+		await browser.keys(["Shift", "ArrowLeft"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
+
+		await browser.keys(["Control", "Shift", "ArrowLeft"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), true, "The third token should be selected");
+
+		await secondToken.click();
+
+		assert.strictEqual(await firstToken.getProperty("selected"), false, "The first token should NOT be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), false, "The second token should NOT be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
+	});
+
+	it("should move caret to start of input, when a value is present and home is pressed", async () => {
+		const input =  await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const firstToken = await browser.$("#two-tokens ui5-token:first-child");
+		let caretPosition;
+		
+		await browser.$("#two-tokens").scrollIntoView();
+
+		await innerInput.click();
+		await innerInput.keys("End");
+
+		caretPosition = await browser.execute(() => {
+			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
+			return multiInputShadowRoot.querySelector("input").selectionStart;
+		});
+		
+		assert.strictEqual(caretPosition, 3, "The inner input's cursor is at the end");
+
+		await innerInput.keys("Home");
+
+		caretPosition = await browser.execute(() => {
+			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
+			return multiInputShadowRoot.querySelector("input").selectionStart;
+		});
+
+		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at the beginning");
+		assert.strictEqual(await firstToken.getProperty("focused"), false, "The first token is not focused, as text was present");
+
+		await innerInput.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
+	});
+
+	it("should delete token on backspace", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const firstToken = await browser.$("#two-tokens ui5-token#firstToken");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+		let tokens;
+
+		// Act
+		await input.setProperty("value", "");
+		await innerInput.click();
+		await browser.keys("Backspace");
+		tokens = await input.$$("ui5-token");
+
+		// Assert
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+		assert.strictEqual(tokens.length, 2, "The tokenizer has two tokens");
+
+		// Act
+		await browser.keys("Backspace");
+		tokens = await input.$$("ui5-token");
+
+		// Assert
+		assert.ok(await firstToken.getProperty("focused"), "The first token is focused on Backspace, as the second was deleted");
+		assert.notOk(await input.getProperty("focused"), "The input is not focused");
+
+		assert.strictEqual(tokens.length, 1, "The tokenizer has one token");
+	});
+});

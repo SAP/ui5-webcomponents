@@ -2,8 +2,9 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isSpace,
 	isEnter,
@@ -20,7 +21,12 @@ import WrappingType from "./types/WrappingType.js";
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
 // i18n
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
+import {
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
@@ -99,6 +105,8 @@ const metadata = {
 		 * <li><code>None</code></li>
 		 * <li><code>Error</code></li>
 		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
 		 * @type {ValueState}
@@ -174,8 +182,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text alternative of the component.
-		 * If not provided a default text alternative will be set, if present.
+		 * Defines the accessible name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -183,6 +190,18 @@ const metadata = {
 		 * @since 1.0.0-rc.16
 		 */
 		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
 			type: String,
 		},
 
@@ -262,8 +281,6 @@ class RadioButton extends UI5Element {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
 		this._deactivate = () => {
 			if (activeRadio) {
 				activeRadio.active = false;
@@ -297,7 +314,7 @@ class RadioButton extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		RadioButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -433,11 +450,11 @@ class RadioButton extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Error": RadioButton.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": RadioButton.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
@@ -459,7 +476,7 @@ class RadioButton extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return [this.text, this.accessibleName].filter(Boolean).join(" ");
+		return [getEffectiveAriaLabelText(this), this.text].filter(Boolean).join(" ");
 	}
 
 	get ariaDescribedBy() {

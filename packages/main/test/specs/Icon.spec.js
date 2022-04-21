@@ -60,9 +60,33 @@ describe("Icon general interaction", () => {
 
 	it("Tests the accessibility attributes", async () => {
 		const iconRoot = await browser.$("#myIcon").shadow$(".ui5-icon-root");
+		const accRoleIconRoot = await browser.$("#accRoleIcon").shadow$(".ui5-icon-root");
 		const ariaHiddenIconRoot = await browser.$("#araHiddenIcon").shadow$(".ui5-icon-root");
 
 		assert.strictEqual(await iconRoot.getAttribute("aria-hidden"), null, "The aria-hidden attribute is not set");
+		assert.strictEqual(await accRoleIconRoot.getAttribute("role"), "link", "The accessibleRole property works");
 		assert.strictEqual(await ariaHiddenIconRoot.getAttribute("aria-hidden"), "true", "The ariaHidden property works");
+	});
+
+	it("Tests switch to sap_horizon", async () => {
+		const V4_PATH_START = "M288";
+		const V5_PATH_START = "M79.844";
+
+		// assert - initial SVG path
+		const iconPath = await browser.$("#myIcon").shadow$(".ui5-icon-root path");
+		const pathValue = await iconPath.getAttribute("d");
+		assert.ok(pathValue.startsWith(V4_PATH_START), "Icon's path in sap_fiori_3");
+
+		// act - switch theme
+		await browser.executeAsync( async (newTheme, done) => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			await config.setTheme(newTheme);
+			done();
+		}, "sap_horizon");
+
+		// assert - SVG path changed
+		const iconPathAfter = await browser.$("#myIcon").shadow$(".ui5-icon-root path");
+		const iconPathValueAfter = await iconPathAfter.getAttribute("d");
+		assert.ok(iconPathValueAfter.startsWith(V5_PATH_START), "Icon's path changed in sap_horizon.");
 	});
 });

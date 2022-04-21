@@ -4,12 +4,34 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	isSpace,
+	isSpaceCtrl,
+	isSpaceShift,
+	isLeftCtrl,
+	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
+	isUpShift,
+	isDownShift,
+	isLeftShift,
+	isRightShift,
+	isLeftShiftCtrl,
+	isRightShiftCtrl,
+	isEnd,
+	isHome,
+	isHomeShift,
+	isEndShift,
+	isHomeCtrl,
+	isEndCtrl,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import Title from "./Title.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -24,8 +46,12 @@ import {
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
+import TokenizerPopoverCss from "./generated/themes/TokenizerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+
+// reuse suggestions focus styling for NMore popup
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
  * @public
@@ -125,7 +151,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, TokenizerPopoverCss];
 	}
 
 	static get staticAreaTemplate() {
@@ -147,7 +173,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	async onBeforeRendering() {
@@ -203,16 +228,36 @@ class Tokenizer extends UI5Element {
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
-	_tokenDelete(event) {
+	_delete(event) {
+		if (this._selectedTokens.length) {
+			this._selectedTokens.forEach(token => this._tokenDelete(event, token));
+		} else {
+			this._tokenDelete(event);
+		}
+	}
+
+	_tokenDelete(event, token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
-		const deletedTokenIndex = this._getVisibleTokens().indexOf(event.target); // The index of the token that just got deleted
+
+		const tokens = this._getVisibleTokens();
+		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(event.target); // The index of the token that just got deleted
+		const notSelectedTokens = tokens.filter(t => !t.selected);
 
 		if (event.detail && event.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
 			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
 		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
-			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
+			nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
-		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		let nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		if (notSelectedTokens.length > 1) {
+			while (nextToken && nextToken.selected) {
+				nextToken = event.detail.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+			}
+		} else {
+			nextToken = notSelectedTokens[0];
+		}
 
 		if (nextToken && !isPhone()) {
 			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
@@ -222,7 +267,7 @@ class Tokenizer extends UI5Element {
 			}, 0);
 		}
 
-		this.fireEvent("token-delete", { ref: event.target });
+		this.fireEvent("token-delete", { ref: token || event.target });
 	}
 
 	itemDelete(event) {
@@ -232,11 +277,128 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isSpace(event)) {
+		if (isSpaceShift(event)) {
+			event.preventDefault();
+		}
+
+		if (isSpace(event) || isSpaceCtrl(event)) {
 			event.preventDefault();
 
-			this._handleTokenSelection(event);
+			return this._handleTokenSelection(event, false);
 		}
+
+		if (isHomeShift(event)) {
+			this._handleHomeShift(event);
+		}
+
+		if (isEndShift(event)) {
+			this._handleEndShift(event);
+		}
+
+		this._handleItemNavigation(event, this._tokens);
+	}
+
+	_handleItemNavigation(event, tokens) {
+		const isCtrl = !!(event.metaKey || event.ctrlKey);
+
+		if (isLeftCtrl(event) || isRightCtrl(event) || isDownCtrl(event) || isUpCtrl(event)) {
+			return this._handleArrowCtrl(event, event.target, tokens, isRightCtrl(event) || isDownCtrl(event));
+		}
+
+		if (isLeftShift(event) || isRightShift(event) || isUpShift(event) || isDownShift(event) || isLeftShiftCtrl(event) || isRightShiftCtrl(event)) {
+			event.preventDefault();
+			return this._handleArrowShift(event.target, tokens, (isRightShift(event) || isRightShiftCtrl(event) || isDownShift(event)));
+		}
+
+		if (isHome(event) || isEnd(event) || isHomeCtrl(event) || isEndCtrl(event)) {
+			event.preventDefault();
+			return this._handleHome(tokens, isEnd(event) || isEndCtrl(event));
+		}
+
+		if (isCtrl && event.key.toLowerCase() === "a") {
+			event.preventDefault();
+
+			return this._toggleTokenSelection(tokens);
+		}
+	}
+
+	_handleHome(tokens, endKeyPressed) {
+		if (!tokens || !tokens.length) {
+			return -1;
+		}
+
+		const index = endKeyPressed ? tokens.length - 1 : 0;
+
+		tokens[index].focus();
+		this._itemNav.setCurrentItem(tokens[index]);
+	}
+
+	_handleHomeShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index <= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[0].focus();
+		this._itemNav.setCurrentItem(tokens[0]);
+	}
+
+	_handleEndShift(event) {
+		const tokens = this.tokens;
+		const currentTokenIdx = tokens.indexOf(event.target);
+
+		tokens.filter((token, index) => index >= currentTokenIdx).forEach(token => {
+			token.selected = true;
+		});
+
+		tokens[tokens.length - 1].focus();
+		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
+	}
+
+	_calcNextTokenIndex(focusedToken, tokens, backwards) {
+		if (!tokens.length) {
+			return -1;
+		}
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		let nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex >= tokens.length) {
+			nextIndex = tokens.length - 1;
+		}
+		if (nextIndex < 0) {
+			nextIndex = 0;
+		}
+
+		return nextIndex;
+	}
+
+	_handleArrowCtrl(event, focusedToken, tokens, backwards) {
+		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
+
+		event.preventDefault();
+
+		if (nextIndex === -1) {
+			return;
+		}
+
+		setTimeout(() => tokens[nextIndex].focus(), 0);
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
+	}
+
+	_handleArrowShift(focusedToken, tokens, backwards) {
+		const focusedTokenIndex = tokens.indexOf(focusedToken);
+		const nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+
+		if (nextIndex === -1 || nextIndex === tokens.length) {
+			return;
+		}
+
+		focusedToken.selected = true;
+		tokens[nextIndex].selected = true;
+		setTimeout(() => tokens[nextIndex].focus(), 0);
+		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_click(event) {
@@ -247,14 +409,44 @@ class Tokenizer extends UI5Element {
 		this._itemNav.setCurrentItem(event.target);
 	}
 
-	_handleTokenSelection(event) {
-		if (event.target.localName === "ui5-token") {
-			this._tokens.forEach(token => {
+	_toggleTokenSelection(tokens) {
+		if (!tokens || !tokens.length) {
+			return;
+		}
+
+		const tokensAreSelected = tokens.every(token => token.selected);
+		tokens.forEach(token => { token.selected = !tokensAreSelected; });
+	}
+
+	_handleTokenSelection(event, deselectAll = true) {
+		if (event.target.hasAttribute("ui5-token")) {
+			const deselectTokens = deselectAll ? this._tokens : [event.target];
+
+			deselectTokens.forEach(token => {
 				if (token !== event.target) {
 					token.selected = false;
 				}
 			});
 		}
+	}
+
+	_fillClipboard(shortcutName, tokens) {
+		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
+
+		/* fill clipboard with tokens' texts so parent can handle creation */
+		const cutToClipboard = event => {
+			if (event.clipboardData) {
+				event.clipboardData.setData("text/plain", tokensTexts);
+			} else {
+				event.originalEvent.clipboardData.setData("text/plain", tokensTexts);
+			}
+
+			event.preventDefault();
+		};
+
+		document.addEventListener(shortcutName, cutToClipboard);
+		document.execCommand(shortcutName);
+		document.removeEventListener(shortcutName, cutToClipboard);
 	}
 
 	/**
@@ -273,7 +465,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
-		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
+		return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
 	}
 
 	get showNMore() {
@@ -285,11 +477,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get tokenizerLabel() {
-		return this.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
 	}
 
 	get morePopoverTitle() {
-		return this.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
 	}
 
 	get overflownTokens() {
@@ -297,13 +489,20 @@ class Tokenizer extends UI5Element {
 			return [];
 		}
 
+		// Reset the overflow prop of the tokens first in order
+		// to use their dimensions for calculation because already
+		// hidden tokens are set to 'display: none'
+		this._getTokens().forEach(token => {
+			token.overflows = false;
+		});
+
 		return this._getTokens().filter(token => {
 			const isRTL = this.effectiveDir === "rtl";
 			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = tokenRect[elementEnd];
-			const parentEnd = parentRect[elementEnd];
+			const tokenEnd = parseInt(tokenRect[elementEnd]);
+			const parentEnd = parseInt(parentRect[elementEnd]);
 
 			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 
@@ -319,8 +518,26 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	 get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _selectedTokens() {
+		return this._getTokens().filter(token => token.selected);
 	}
 
 	get classes() {
@@ -367,14 +584,14 @@ class Tokenizer extends UI5Element {
 		const iTokenCount = this._getTokens().length;
 
 		if (iTokenCount === 0) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
 		}
 
 		if (iTokenCount === 1) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
 		}
 
-		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
 	/**
@@ -395,11 +612,13 @@ class Tokenizer extends UI5Element {
 			ResponsivePopover,
 			List,
 			StandardListItem,
+			Title,
+			Button,
 		];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Tokenizer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	async getPopover() {

@@ -6,47 +6,17 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>NotificationListGroupItem</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+<link rel="stylesheet" type="text/css" href="styles/NotificationListGroupItem.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="notificationlistgroupitem1auto">
 
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
-
-	<br/><br/>
-
-	<h3>Properties</h3>
-	<ul>
-		<li>titleText</li>
-		<li>priority (default: "None")</li>
-		<li>collapsed (default: "false")</li>
-		<li>show-close (default: "false")</li>
-		<li>show-counter (default: "false")</li>
-		<li>read (default: "false")</li>
-	</ul>
-
-	<h3>Slots</h3>
-	<ul>
-		<li>items (default)</li>
-		<li>actions</li>
-	</ul>
-
-	<h3>Events</h3>
-	<ul>
-		<li>close</li>
-		<li>toggle</li>
-	</ul>
-
-	<h3>Events on ui5-list level</h3>
-	<ul>
-		<li>itemClose</li>
-		<li>itemToggle</li>
-	</ul>
 
 	<ui5-list id="notificationList" header-text="Notifications grouped">
 		<ui5-li-notification-group
@@ -208,7 +178,7 @@
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
-	<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
+	<ui5-popover id="notificationsPopover" class="notificationlistgroupitem2auto" placement-type="Bottom" horizontal-align="Right">
 		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'">
 			<ui5-li-notification-group
 				show-close
@@ -287,22 +257,22 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<div style="display: flex; justify-content: flex-end; padding: 0.25rem; border-bottom: 1px solid grey;">
+	<div class="notificationlistgroupitem3auto">
 		<ui5-button id="openNotifications" design="Transparent" icon="bell"></ui5-button>
 	</div>
 
 	<script>
-		notificationList.addEventListener("itemClick", function(event) {
+		notificationList.addEventListener("item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("itemClose", function(event) {
+		notificationList.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("itemToggle", function(event) {
+		notificationList.addEventListener("item-toggle", function(event) {
 			var item = event.detail.item;
 			wcToastBS.textContent = item.titleText + " has been " + (item.collapsed ? "collapsed" : "expanded");
 			wcToastBS.show();
@@ -330,11 +300,14 @@
 			}, 2000);
 		});
 
-
-
-		shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
 			notificationsPopover.showAt(event.detail.targetRef);
+		});
+
+		notificationListTop.addEventListener("item-close", function (event) {
+				wcToastBS.textContent = event.detail.item.titleText;
+				wcToastBS.show();
 		});
 	</script>
 </body>

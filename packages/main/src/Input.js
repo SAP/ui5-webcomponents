@@ -10,16 +10,28 @@ import {
 	isSpace,
 	isEnter,
 	isBackSpace,
+	isDelete,
 	isEscape,
 	isTabNext,
+	isPageUp,
+	isPageDown,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/not-editable.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -40,6 +52,7 @@ import {
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
 
@@ -300,9 +313,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -313,7 +326,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the input.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -324,13 +337,57 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the clear icon of the input will be shown.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.2.0
+		 */
+		showClearIcon: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the clear icon is visible.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 * @since 1.2.0
+		 */
+		effectiveShowClearIcon: {
+			type: Boolean,
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
 			type: Boolean,
 		},
 
+		openOnMobile: {
+			type: Boolean,
+		},
+
 		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Determines whether to manually show the suggestions popover
+		 * @private
+		 */
+		_forceOpen: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates whether the visual focus is on the value state header
+		 * @private
+		 */
+		_isValueStateFocused: {
 			type: Boolean,
 		},
 
@@ -418,7 +475,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
 		 * @param {Integer} scrollTop The current scroll position.
 		 * @param {HTMLElement} scrollContainer The scroll container.
-		 * @public
+		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
 		"suggestion-scroll": {
@@ -449,6 +506,21 @@ const metadata = {
  * don't forget to import the <code>InputSuggestions</code> module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
+ *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-input</code> provides the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
+ * <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li>
+ * <li>[DOWN] - Focuses the next matching item in the suggestion list.</li>
+ * <li>[UP] - Focuses the previous matching item in the suggestion list.</li>
+ * <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li>
+ * <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li>
+ * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -487,7 +559,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
 	}
 
 	constructor() {
@@ -510,7 +582,7 @@ class Input extends UI5Element {
 		this.suggestionSelectionCanceled = false;
 
 		// Indicates if the change event has already been fired
-		this._changeFired = false;
+		this._changeFiredValue = null;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
@@ -527,6 +599,9 @@ class Input extends UI5Element {
 		// Indicates, if the user pressed the BACKSPACE key.
 		this._backspaceKeyDown = false;
 
+		// Indicates, if the user is typing. Gets reset once popup is closed
+		this.isTyping = false;
+
 		// all sementic events
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
@@ -538,8 +613,6 @@ class Input extends UI5Element {
 
 		// Suggestions array initialization
 		this.suggestionsTexts = [];
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._handleResizeBound = this._handleResize.bind(this);
 	}
@@ -558,12 +631,23 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
-		this.open = this.open && (!!this.suggestionItems.length || this._isPhone);
+		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
-		const FormSupport = getFeature("FormSupport");
+		this.FormSupport = getFeature("FormSupport");
+		const hasItems = this.suggestionItems.length;
+		const hasValue = !!this.value;
+		const isFocused = this.shadowRoot.querySelector("input") === getActiveElement();
 
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+		if (this._isPhone) {
+			this.open = this.openOnMobile;
+		} else if (this._forceOpen) {
+			this.open = true;
+		} else {
+			this.open = hasValue && hasItems && isFocused && this.isTyping;
+		}
+
+		if (this.FormSupport) {
+			this.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
@@ -606,6 +690,22 @@ class Input extends UI5Element {
 			return this._handleEnter(event);
 		}
 
+		if (isPageUp(event)) {
+			return this._handlePageUp(event);
+		}
+
+		if (isPageDown(event)) {
+			return this._handlePageDown(event);
+		}
+
+		if (isHome(event)) {
+			return this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			return this._handleEnd(event);
+		}
+
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}
@@ -616,13 +716,18 @@ class Input extends UI5Element {
 		}
 
 		if (this.showSuggestions) {
-			this.Suggestions._deselectItems();
+			this._clearPopoverFocusAndSelection();
 		}
 
 		this._keyDown = true;
 	}
 
 	_onkeyup(event) {
+		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
+		if (isDelete(event)) {
+			this.value = event.target.value;
+		}
+
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -654,25 +759,71 @@ class Input extends UI5Element {
 
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
+
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
 			this.lastConfirmedValue = this.value;
+
+			if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
+
+			return;
+		}
+
+		this.focused = true;
+	}
+
+	_handlePageUp(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onPageUp(event);
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	_handlePageDown(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onPageDown(event);
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	_handleHome(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onHome(event);
+		}
+	}
+
+	_handleEnd(event) {
+		if (this._isSuggestionsFocused) {
+			this.Suggestions.onEnd(event);
 		}
 	}
 
 	_handleEscape() {
-		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
+		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
+		const isOpen = hasSuggestions && this.open;
+
+		if (!isOpen) {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			return;
+		}
+
+		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
-			this.open = false;
-		} else if (this.Suggestions && this.Suggestions.isOpened()) {
-			this.closePopover();
-		} else {
-			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			this.focused = true;
+		}
+
+		if (this._isValueStateFocused) {
+			this._isValueStateFocused = false;
+			this.focused = true;
 		}
 	}
 
@@ -690,9 +841,11 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
+		this._preventNextChange = this.effectiveShowClearIcon && this.shadowRoot.contains(event.relatedTarget);
+
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
 			event.stopImmediatePropagation();
 			return;
 		}
@@ -703,28 +856,62 @@ class Input extends UI5Element {
 			return;
 		}
 
-		this.closePopover();
+		this.open = false;
+		this._clearPopoverFocusAndSelection();
 
 		this.previousValue = "";
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
-		this.open = false;
+		this.isTyping = false;
+		this._forceOpen = false;
+	}
+
+	_clearPopoverFocusAndSelection() {
+		if (!this.showSuggestions || !this.Suggestions) {
+			return;
+		}
+
+		this._isValueStateFocused = false;
+		this.hasSuggestionItemSelected = false;
+
+		this.Suggestions._deselectItems();
+		this.Suggestions._clearItemFocus();
 	}
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this.open = true;
+			this.openOnMobile = true;
 		}
 	}
 
-	_handleChange(event) {
-		if (!this._changeFired) {
-			this.fireEvent(this.EVENT_CHANGE);
+	_handleNativeInputChange() {
+		// The native change sometimes fires too early and getting input's value in the listener would return
+		// the previous value instead of the most recent one. This would make things consistent.
+		clearTimeout(this._nativeChangeDebounce);
+		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
+	}
+
+	_handleChange() {
+		if (this._preventNextChange) {
+			this._preventNextChange = false;
+			return;
 		}
 
-		// Set event as no longer marked
-		this._changeFired = false;
+		if (this._changeFiredValue !== this.value) {
+			this._changeFiredValue = this.value;
+			this.fireEvent(this.EVENT_CHANGE);
+		}
+	}
+
+	_clear() {
+		this.value = "";
+		this.fireEvent(this.EVENT_INPUT);
+		this._handleChange();
+
+		if (!this._isPhone) {
+			this.focus();
+		}
 	}
 
 	_scroll(event) {
@@ -735,8 +922,8 @@ class Input extends UI5Element {
 		});
 	}
 
-	async _handleInput(event) {
-		const inputDomRef = await this.getInputDOMRef();
+	_handleInput(event) {
+		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
@@ -760,6 +947,10 @@ class Input extends UI5Element {
 
 			// Perform manual handling in case of floating number
 			// and if the user did not select the entire input value
+			if (this._selectedText.indexOf(",") > -1) {
+				this._selectedText = this._selectedText.replace(",", ".");
+			}
+
 			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
 				const newValue = this.removeFractionalPart(this.value);
 
@@ -776,6 +967,8 @@ class Input extends UI5Element {
 		}
 
 		if (event.target === inputDomRef) {
+			this.focused = true;
+
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -789,14 +982,13 @@ class Input extends UI5Element {
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
 		this.hasSuggestionItemSelected = false;
+		this._isValueStateFocused = false;
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
-
-			if (!this._isPhone) {
-				this.open = !!inputDomRef.value;
-			}
 		}
+
+		this.isTyping = true;
 	}
 
 	_handleResize() {
@@ -822,6 +1014,11 @@ class Input extends UI5Element {
 			this.blur();
 			this.focused = false;
 		}
+
+		this.isTyping = false;
+		this.openOnMobile = false;
+		this.open = false;
+		this._forceOpen = false;
 	}
 
 	/**
@@ -852,6 +1049,19 @@ class Input extends UI5Element {
 		return staticAreaItem && staticAreaItem.querySelector("[ui5-popover]");
 	}
 
+	/**
+	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
+	 * @since 1.3.0
+	 * @public
+	 */
+	openPicker() {
+		if (!this.suggestionItems.length || this.disabled || this.readonly) {
+			return;
+		}
+
+		this._forceOpen = true;
+	}
+
 	enableSuggestions() {
 		if (this.Suggestions) {
 			return;
@@ -864,14 +1074,6 @@ class Input extends UI5Element {
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
-	}
-
-	shouldOpenSuggestions() {
-		return !!(this.suggestionItems.length
-			&& this.focused
-			&& this.showSuggestions
-			&& !this.hasSuggestionItemSelected
-			&& !this.suggestionSelectionCanceled);
 	}
 
 	selectSuggestion(item, keyboardUsed) {
@@ -890,16 +1092,17 @@ class Input extends UI5Element {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			this.fireEvent(this.EVENT_INPUT);
-			this.fireEvent(this.EVENT_CHANGE);
-
-			// Mark the change event to avoid double firing
-			this._changeFired = true;
+			this._handleChange();
 		}
 
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
+
+		this.isTyping = false;
+		this.openOnMobile = false;
+		this._forceOpen = false;
 	}
 
 	previewSuggestion(item) {
@@ -915,13 +1118,13 @@ class Input extends UI5Element {
 	 */
 	updateValueOnPreview(item) {
 		const noPreview = item.type === "Inactive" || item.group;
-		const itemValue = noPreview ? "" : (item.effectiveTitle || item.textContent);
+		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent);
 		this.value = itemValue;
 	}
 
 	/**
 	 * The suggestion item on preview.
-	 * @type { ui5-suggestion-item }
+	 * @type { sap.ui.webcomponents.main.IInputSuggestionItem }
 	 * @readonly
 	 * @public
 	 */
@@ -968,7 +1171,7 @@ class Input extends UI5Element {
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
-			this.fireEvent(this.EVENT_CHANGE);
+			this._handleChange();
 		}
 	}
 
@@ -984,6 +1187,14 @@ class Input extends UI5Element {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
+			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		}
+
+		return this.nativeInput;
+	}
+
+	getInputDOMRefSync() {
+		if (isPhone() && this.Suggestions) {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
@@ -1050,6 +1261,10 @@ class Input extends UI5Element {
 		});
 	}
 
+	onItemMouseDown(event) {
+		event.preventDefault();
+	}
+
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
 	}
@@ -1067,13 +1282,11 @@ class Input extends UI5Element {
 	onClose() {}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1092,7 +1305,7 @@ class Input extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get inputType() {
@@ -1158,10 +1371,13 @@ class Input extends UI5Element {
 
 	get classes() {
 		return {
+			popover: {
+				"ui5-suggestions-popover": !this.isPhone && this.showSuggestions,
+				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.showSuggestions && this.hasValueStateMessage,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
-				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -1204,7 +1420,7 @@ class Input extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.open && this.focused;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
@@ -1226,20 +1442,20 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
 			case 1:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
 			default:
-				return this.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
 			}
 		}
 
@@ -1252,6 +1468,10 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _isSuggestionsFocused() {
+		return !this.focused && this.Suggestions && this.Suggestions.isOpened();
 	}
 
 	/**
@@ -1282,6 +1502,24 @@ class Input extends UI5Element {
 		return this.valueState !== ValueState.None ? result : "";
 	}
 
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	/**
 	 * Returns the caret position inside the native input
 	 * @protected
@@ -1301,7 +1539,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Removes the fractional part of floating-point number.
-	 * @param {String} value the numeric value of Input of type "Number"
+	 * @param {string} value the numeric value of Input of type "Number"
 	 */
 	removeFractionalPart(value) {
 		if (value.includes(".")) {
@@ -1317,11 +1555,16 @@ class Input extends UI5Element {
 	static get dependencies() {
 		const Suggestions = getFeature("InputSuggestions");
 
-		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
+		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		const Suggestions = getFeature("InputSuggestions");
+
+		[Input.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			Suggestions ? Suggestions.init() : Promise.resolve(),
+		]);
 	}
 }
 

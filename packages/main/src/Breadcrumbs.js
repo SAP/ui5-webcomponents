@@ -14,6 +14,7 @@ import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
+	BREADCRUMB_ITEM_POS,
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
@@ -24,6 +25,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
@@ -117,8 +119,10 @@ const metadata = {
 
 		/**
 		 * Fires when a <code>BreadcrumbsItem</code> is clicked.
+		 * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.Breadcrumbs#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
@@ -193,7 +197,6 @@ class Breadcrumbs extends UI5Element {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._initItemNavigation();
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
@@ -228,6 +231,10 @@ class Breadcrumbs extends UI5Element {
 				this._overflowSize = itemIndex;
 			}
 		}
+	}
+
+	onBeforeRendering() {
+		this._preprocessItems();
 	}
 
 	onAfterRendering() {
@@ -311,17 +318,19 @@ class Breadcrumbs extends UI5Element {
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot.querySelector(`.ui5-breadcrumbs-link-wrapper #${item._id}-link`);
+				link = this.shadowRoot.querySelector(`#${item._id}-link-wrapper`);
 			map.set(item, this._getElementWidth(link) || 0);
 		}
 
-		if (this._endsWithCurrentLocationLabel && label) {
+		if (items.length && this._endsWithCurrentLocationLabel && label) {
 			const item = items[items.length - 1];
 			map.set(item, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._dropdownArrowLinkWidth = this._getElementWidth(this._dropdownArrowLink);
+			this._dropdownArrowLinkWidth = this._getElementWidth(
+				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper"),
+			);
 		}
 	}
 
@@ -382,7 +391,9 @@ class Breadcrumbs extends UI5Element {
 		const link = event.target,
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-link` === link.id);
-		this.fireEvent("item-click", { item });
+		if (!this.fireEvent("item-click", { item }, true)) {
+			event.preventDefault();
+		}
 	}
 
 	_onLabelPress() {
@@ -392,13 +403,14 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
-		const listItem = event.detail.item,
+		const listItem = event.detail.selectedItems[0],
 			items = this.getSlottedNodes("items"),
 			item = items.find(x => `${x._id}-li` === listItem.id);
 
-		window.open(item.href, item.target || "_self", "noopener,noreferrer");
-		this.responsivePopover.close();
-		this.fireEvent("item-click", { item });
+		if (this.fireEvent("item-click", { item }, true)) {
+			window.open(item.href, item.target || "_self", "noopener,noreferrer");
+			this.responsivePopover.close();
+		}
 	}
 
 	async _respPopover() {
@@ -431,12 +443,42 @@ class Breadcrumbs extends UI5Element {
 
 	_hasVisibleContent(item) {
 		// the check is not complete but may be extended in the future if needed to cover
-		// cases becides the standard (UX-recommended) ones
+		// cases besides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !child.hidden);
+	}
+
+	_preprocessItems() {
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.getDomRef().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
+		});
+	}
+
+	_getItemPositionText(position, size) {
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
+	}
+
+	_getItemAccessibleName(item, position, size) {
+		const positionText = this._getItemPositionText(position, size);
+
+		// innerText is needed as it is no longer read out when label is set
+		let text = "";
+		if (item.accessibleName) {
+			text = `${item.textContent.trim()} ${item.accessibleName} ${positionText}`;
+		} else {
+			text = `${item.textContent.trim()} ${positionText}`;
+		}
+
+		return text;
 	}
 
 	getCurrentLocationLabelWrapper() {
 		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
+	}
+
+	get _visibleItems() {
+		return this.getSlottedNodes("items")
+			.slice(this._overflowSize)
+			.filter(i => this._isItemVisible(i));
 	}
 
 	get _endsWithCurrentLocationLabel() {
@@ -445,7 +487,7 @@ class Breadcrumbs extends UI5Element {
 
 	get _currentLocationText() {
 		const items = this.getSlottedNodes("items");
-		if (this._endsWithCurrentLocationLabel && items.length > 1) {
+		if (this._endsWithCurrentLocationLabel && items.length) {
 			const item = items[items.length - 1];
 			if (this._isItemVisible(item)) {
 				return item.innerText;
@@ -455,7 +497,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _currentLocationLabel() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location ui5-label");
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location [ui5-label]");
 	}
 
 	get _isDropdownArrowFocused() {
@@ -482,7 +524,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	get _dropdownArrowLink() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper ui5-link");
+		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link]");
 	}
 
 	/**
@@ -499,20 +541,45 @@ class Breadcrumbs extends UI5Element {
 	 * Getter for the list of abstract breadcrumb items to be rendered as links outside the overflow
 	 */
 	get _linksData() {
-		const items = this.getSlottedNodes("items").slice(this._overflowSize);
+		const items = this._visibleItems;
+		const itemsCount = items.length; // get size before removing of current location
 
 		if (this._endsWithCurrentLocationLabel) {
 			items.pop();
 		}
 
-		return items.filter(item => this._isItemVisible(item));
+		return items
+			.map((item, index) => {
+				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);
+				return item;
+			});
+	}
+
+	/**
+	 * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
+	 */
+	get _currentLocationAccName() {
+		const items = this._visibleItems;
+
+		const positionText = this._getItemPositionText(items.length, items.length);
+		const lastItem = items[items.length - 1];
+
+		if (!lastItem) {
+			return positionText;
+		}
+
+		if (lastItem.accessibleName) {
+			return `${lastItem.textContent.trim()} ${lastItem.accessibleName} ${positionText}`;
+		}
+
+		return `${lastItem.textContent.trim()} ${positionText}`;
 	}
 
 	/**
 	 * Getter for the list of links corresponding to the abstract breadcrumb items
 	 */
 	get _links() {
-		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper ui5-link"));
+		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper [ui5-link]"));
 	}
 
 	get _isOverflowEmpty() {
@@ -531,15 +598,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _accessibleNameText() {
-		return this.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
 	}
 
 	get _dropdownArrowAccessibleNameText() {
-		return this.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
 	}
 
 	get _cancelButtonText() {
-		return this.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
 	}
 
 	static get dependencies() {
@@ -551,7 +618,12 @@ class Breadcrumbs extends UI5Element {
 			List,
 			StandardListItem,
 			Icon,
+			Button,
 		];
+	}
+
+	static async onDefine() {
+		Breadcrumbs.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

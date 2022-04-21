@@ -1,0 +1,19 @@
+@import "../base/Token-parameters.css";
+
+:root {
+	--_ui5_token_border_radius: 0.25rem;
+	--_ui5_token_focus_outline_width: 0.125rem;
+	--_ui5_token_readonly_background: var(--sapField_ReadOnly_Background);
+	--_ui5_token_selected_hover_background: var(--sapButton_Hover_Background);
+	--ui5_token_focus_pseudo_element_content: '';
+	--_ui5_token_selected_focus_outline: none;
+	--_ui5_token_focus_outline: none;
+	--_ui5_token_focus_offset: 0.0625rem;
+	--_ui5_token_focus_outline_border_radius: 0.25rem;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_token_focus_offset: 0.0625rem;
+}

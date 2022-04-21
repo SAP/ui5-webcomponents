@@ -1,0 +1,22 @@
+<div class="ui5-media-gallery-item-root"
+    tabindex="{{tabIndex}}"
+    data-sap-focus-ref
+    @focusout="{{_onfocusout}}"
+    @focusin="{{_onfocusin}}"
+    @keydown="{{_onkeydown}}"
+    @keyup="{{_onkeyup}}"
+    role="{{_role}}">
+    <div class="ui5-media-gallery-item-mask-layer"></div>
+    <div class="ui5-media-gallery-item-wrapper" style="{{styles.wrapper}}">
+        {{#if _showBackgroundIcon}}
+            <ui5-icon name="background"></ui5-icon>
+        {{/if}}
+        {{#if _useContent}}
+            <slot></slot>
+        {{/if}}
+        {{#if _useThumbnail}}
+            <slot name="thumbnail"></slot>
+        {{/if}}
+    </div>
+</div>
+

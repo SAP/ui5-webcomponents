@@ -2,10 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import {
-	fetchI18nBundle,
-	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
@@ -18,6 +15,7 @@ import {
 
 import Input from "./Input.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 
 // Template
 import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
@@ -266,11 +264,7 @@ class FileUploader extends UI5Element {
 
 	constructor() {
 		super();
-		if (this._canUseNativeFormSupport) {
-			this._internals = this.attachInternals();
-		}
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._internals = this.attachInternals && this.attachInternals();
 	}
 
 	_onmouseover() {
@@ -424,15 +418,15 @@ class FileUploader extends UI5Element {
 	}
 
 	get browseText() {
-		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
+		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}
 
 	get titleText() {
-		return this.i18nBundle.getText(FILEUPLOADER_TITLE);
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
 	get _canUseNativeFormSupport() {
-		return !!this.attachInternals;
+		return this._internals && this._internals.setFormValue;
 	}
 
 	get _keepInputInShadowDOM() {
@@ -453,13 +447,11 @@ class FileUploader extends UI5Element {
 	}
 
 	get valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -487,6 +479,20 @@ class FileUploader extends UI5Element {
 		return this.focused && this.hasValueStateText && !this.hideInput;
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get classes() {
 		return {
 			popoverValueState: {
@@ -512,11 +518,11 @@ class FileUploader extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Input, Popover];
+		return [Input, Popover, Icon];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

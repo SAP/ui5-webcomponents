@@ -5,13 +5,32 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	isTabNext,
+	isTabPrevious,
+	isSpace,
+	isEnter,
+	isCtrlA,
+	isUpAlt,
+	isDownAlt,
+	isUpShift,
+	isDownShift,
+	isHomeCtrl,
+	isEndCtrl,
+	isHomeShift,
+	isEndShift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
+import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
 import {
@@ -29,12 +48,15 @@ import styles from "./generated/themes/Table.css.js";
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
+const PAGE_UP_DOWN_SIZE = 20;
+
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table",
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
@@ -50,6 +72,7 @@ const metadata = {
 			propertyName: "rows",
 			type: HTMLElement,
 			individualSlots: true,
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -142,7 +165,7 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
@@ -185,7 +208,7 @@ const metadata = {
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
 		 * <br><br>
-		 * <b>Limitations:</b>
+		 * <b>Restrictions:</b>
 		 * <ul>
 		 * <li>Browsers that do not support this feature:
 		 * <ul>
@@ -230,6 +253,32 @@ const metadata = {
 			defaultValue: TableMode.None,
 		},
 
+		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.3.0
+		 */
+		accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.3.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
@@ -265,7 +314,7 @@ const metadata = {
 
 		/**
 		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.15
 		 * @private
@@ -363,6 +412,27 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
+ * <br>
+ *
+ * <ul>
+ * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
+ * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
+ * <li>[HOME]/[END] - Focuses the first/last item.</li>
+ * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
+ * <li>[ALT]+[DOWN]/[UP] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
+ * <li>[SHIFT]+[DOWN]/[UP] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).</li>
+ * <li>[SHIFT]+[HOME]/[END] - Range selection to the first/last item of the List.</li>
+ * <li>[CTRL]+[HOME]/[END] - Same behavior as HOME & END.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Table.js";</code>
@@ -399,11 +469,11 @@ class Table extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [BusyIndicator];
+		return [BusyIndicator, CheckBox];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -419,22 +489,36 @@ class Table extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			affectedPropertiesNames: ["_columnHeader"],
 			getItemsCallback: () => [this._columnHeader, ...this.rows],
+			skipItemsSize: PAGE_UP_DOWN_SIZE,
 		});
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
 
 		this._handleResize = this.popinContent.bind(this);
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.fnHandleF7 = this._handleF7.bind(this);
 
 		this.tableEndObserved = false;
+
 		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
+		this.addEventListener("ui5-_forward-after", this._onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forward-before", this._onForwardBefore.bind(this));
+
+		// Stores the last focused element within the table.
+		this.lastFocusedElement = null;
+
+		// Indicates whether the table is forwarding focus before or after the current table row.
+		this._forwardingFocus = false;
+
+		// Stores the last focused nested element index (within a table row) for F7 navigation.
+		this._prevNestedElementIndex = 0;
 	}
 
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
 		const rowsCount = this.rows.length;
+		const selectedRows = this.selectedRows;
 
 		this.rows.forEach((row, index) => {
 			if (row._columnsInfoString !== columnSettingsString) {
@@ -442,20 +526,25 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = this.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
+			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7);
+			row.addEventListener("ui5-f7-pressed", this.fnHandleF7);
 			row.mode = this.mode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
-			column.sticky = this.stickyColumnHeader;
 			return !this._hiddenColumns[index];
 		});
 
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
+
+		this._allRowsSelected = selectedRows.length === this.rows.length;
+
+		this._prevFocusedRow = this._prevFocusedRow || this.rows[0];
 	}
 
 	onAfterRendering() {
@@ -472,6 +561,8 @@ class Table extends UI5Element {
 		}
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
+
+		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
 	}
 
 	onExitDOM() {
@@ -484,13 +575,341 @@ class Table extends UI5Element {
 		}
 	}
 
+	_onkeydown(event) {
+		if (isTabNext(event) || isTabPrevious(event)) {
+			this._handleTab(event);
+		}
+
+		if (isCtrlA(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll(event);
+		}
+
+		if (isUpAlt(event) || isDownAlt(event)) {
+			this._handleArrowAlt(event);
+		}
+
+		if ((isUpShift(event) || isDownShift(event)) && this.isMultiSelect) {
+			this._handleArrowNav(event);
+		}
+
+		if (isHomeCtrl(event)) {
+			event.preventDefault();
+
+			this._itemNavigation._handleHome(event);
+			this._itemNavigation._applyTabIndex();
+			this._itemNavigation._focusCurrentItem();
+		}
+
+		if (isEndCtrl(event)) {
+			event.preventDefault();
+
+			this._itemNavigation._handleEnd(event);
+			this._itemNavigation._applyTabIndex();
+			this._itemNavigation._focusCurrentItem();
+		}
+
+		if ((isHomeShift(event) || isEndShift(event)) && this.isMultiSelect) {
+			this._handleHomeEndSelection(event);
+		}
+	}
+
+	_handleTab(event) {
+		const isNext = isTabNext(event);
+		const target = getNormalizedTarget(event.target);
+		const targetType = this.getFocusedElementType(event.target);
+
+		if (this.columnHeaderTabbables.includes(target)) {
+			if (isNext && this.columnHeaderLastElement === target) {
+				return this._focusNextElement(event);
+			}
+
+			return;
+		}
+
+		if (isNext && targetType === "columnHeader" && !this.columnHeaderTabbables.length) {
+			return this._focusNextElement(event);
+		}
+
+		if (targetType === "tableRow" || !targetType) {
+			return;
+		}
+
+		switch (targetType) {
+		case "tableGroupRow":
+			return isNext ? this._focusNextElement(event) : this._focusForwardElement(event, false);
+		case "columnHeader":
+			return !isNext && this._focusForwardElement(event, false);
+		case "moreButton":
+			if (isNext) {
+				this._focusForwardElement(event, true);
+			} else {
+				event.preventDefault();
+				this.currentElement.focus();
+			}
+		}
+	}
+
+	_focusNextElement(event) {
+		if (!this.growsWithButton) {
+			this._focusForwardElement(event, true);
+		} else {
+			this.morеBtn.focus();
+		}
+	}
+
+	_handleArrowNav(event) {
+		const isRowFocused = this.currentElement.localName === "tr";
+
+		if (!isRowFocused) {
+			return;
+		}
+
+		const previouslySelectedRows = this.selectedRows;
+		const currentItem = this.currentItem;
+		const currentItemIdx = this.currentItemIdx;
+
+		const prevItemIdx = currentItemIdx - 1;
+		const nextItemIdx = currentItemIdx + 1;
+
+		const prevItem = this.rows[prevItemIdx];
+		const nextItem = this.rows[nextItemIdx];
+		const wasSelected = currentItem.selected;
+
+		if ((isUpShift(event) && !prevItem) || (isDownShift(event) && !nextItem)) {
+			return;
+		}
+
+		if (isUpShift(event)) {
+			currentItem.selected = currentItem.selected && !prevItem.selected;
+			prevItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
+
+			prevItem.focus();
+		}
+
+		if (isDownShift(event)) {
+			currentItem.selected = currentItem.selected && !nextItem.selected;
+			nextItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
+
+			nextItem.focus();
+		}
+
+		const selectedRows = this.selectedRows;
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_handleHomeEndSelection(event) {
+		const isRowFocused = this.currentElement.localName === "tr";
+
+		if (!isRowFocused) {
+			return;
+		}
+		const rows = this.rows;
+		const previouslySelectedRows = this.selectedRows;
+		const currentItemIdx = this.currentItemIdx;
+
+		if (isHomeShift(event)) {
+			rows.slice(0, currentItemIdx + 1).forEach(item => {
+				item.selected = true;
+			});
+			rows[0].focus();
+		}
+
+		if (isEndShift(event)) {
+			rows.slice(currentItemIdx).forEach(item => {
+				item.selected = true;
+			});
+			rows[rows.length - 1].focus();
+		}
+
+		const selectedRows = this.selectedRows;
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	/**
+	 * Handles Alt + Up/Down.
+	 * Switches focus between column header, last focused item, and "More" button (if applicable).
+	 * @private
+	 * @param {CustomEvent} event
+	 */
+	_handleArrowAlt(event) {
+		const shouldMoveUp = isUpAlt(event);
+		const focusedElementType = this.getFocusedElementType(event.target);
+
+		if (shouldMoveUp) {
+			switch (focusedElementType) {
+			case "tableRow":
+			case "tableGroupRow":
+				this._prevFocusedRow = event.target;
+				return this._onColumnHeaderClick(event);
+			case "columnHeader":
+				return this.morеBtn ? this.morеBtn.focus() : this._prevFocusedRow.focus();
+			case "moreButton":
+				return this._prevFocusedRow ? this._prevFocusedRow.focus() : this._onColumnHeaderClick(event);
+			}
+		} else {
+			switch (focusedElementType) {
+			case "tableRow":
+			case "tableGroupRow":
+				this._prevFocusedRow = event.target;
+				return this.morеBtn ? this.morеBtn.focus() : this._onColumnHeaderClick(event);
+			case "columnHeader":
+				if (this._prevFocusedRow) {
+					this._prevFocusedRow.focus();
+				} else if (this.morеBtn) {
+					this.morеBtn.focus();
+				}
+
+				return;
+			case "moreButton":
+				return this._onColumnHeaderClick(event);
+			}
+		}
+	}
+
+	/**
+	 * Determines the type of the currently focused element.
+	 * @private
+	 * @param {object} element The DOM element
+	 * @returns {("columnHeader"|"tableRow"|"tableGroupRow"|"moreButton")} A string identifier
+	 */
+	getFocusedElementType(element) {
+		if (element === this.columnHeader) {
+			return "columnHeader";
+		}
+
+		if (element === this.morеBtn) {
+			return "moreButton";
+		}
+
+		if (this.rows.includes(element)) {
+			const isGroupRow = element.hasAttribute("ui5-table-group-row");
+			return isGroupRow ? "tableGroupRow" : "tableRow";
+		}
+	}
+
+	/**
+	 * Toggles focus between the table row's root and the last focused nested element.
+	 * @private
+	 * @param {CustomEvent} event "ui5-f7-pressed"
+	 */
+	_handleF7(event) {
+		const row = event.detail.row;
+		row._tabbables = getTabbableElements(row);
+		const activeElement = getActiveElement();
+		const lastFocusedElement = row._tabbables[this._prevNestedElementIndex] || row._tabbables[0];
+		const targetIndex = row._tabbables.indexOf(activeElement);
+
+		if (!row._tabbables.length) {
+			return;
+		}
+
+		if (activeElement === row.root) {
+			lastFocusedElement.focus();
+		} else if (targetIndex > -1) {
+			this._prevNestedElementIndex = targetIndex;
+			row.root.focus();
+		}
+	}
+
+	_onfocusin(event) {
+		const target = getNormalizedTarget(event.target);
+
+		if (!this._isForwardElement(target)) {
+			this.lastFocusedElement = target;
+			return;
+		}
+
+		if (!this._forwardingFocus) {
+			if (this.lastFocusedElement) {
+				this.lastFocusedElement.focus();
+			} else {
+				this.currentElement.focus();
+			}
+
+			event.stopImmediatePropagation();
+		}
+
+		this._forwardingFocus = false;
+	}
+
+	_onForwardBefore(event) {
+		this.lastFocusedElement = event.detail.target;
+		this._focusForwardElement(event, false);
+		event.stopImmediatePropagation();
+	}
+
+	_onForwardAfter(event) {
+		this.lastFocusedElement = event.detail.target;
+
+		if (!this.growsWithButton) {
+			this._focusForwardElement(event, true);
+		} else {
+			this.morеBtn.focus();
+		}
+	}
+
+	_focusForwardElement(event, isAfter) {
+		this._forwardingFocus = true;
+		this.shadowRoot.querySelector(`#${this._id}-${isAfter ? "after" : "before"}`).focus();
+	}
+
+	_isForwardElement(node) {
+		const nodeId = node.id;
+		const afterElement = this._getForwardElement(true);
+		const beforeElement = this._getForwardElement(false);
+
+		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
+			return true;
+		}
+
+		return afterElement && afterElement.id === nodeId;
+	}
+
+	_getForwardElement(isAfter) {
+		const dir = isAfter ? "after" : "before";
+
+		if (!this[`_${dir}Element`]) {
+			this[`_${dir}Element`] = this.shadowRoot.querySelector(`#${this._id}-${dir}`);
+		}
+
+		return this[`_${dir}Element`];
+	}
+
 	onRowFocused(event) {
 		this._itemNavigation.setCurrentItem(event.target);
 	}
 
-	_onColumnHeaderClick(event) {
-		this.getColumnHeader().focus();
+	_onColumnHeaderFocused(event) {
 		this._itemNavigation.setCurrentItem(this._columnHeader);
+	}
+
+	_onColumnHeaderClick(event) {
+		if (!event.target) {
+			this.columnHeader.focus();
+		}
+
+		const target = getNormalizedTarget(event.target);
+		const isNestedElement = this.columnHeaderTabbables.includes(target);
+
+		if (!isNestedElement) {
+			this.columnHeader.focus();
+		}
+	}
+
+	_onColumnHeaderKeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+			this.isMultiSelect && this._selectAll();
+		}
 	}
 
 	_onLoadMoreKeydown(event) {
@@ -575,7 +994,7 @@ class Table extends UI5Element {
 	}
 
 	_selectAll(event) {
-		const bAllSelected = event.target.checked;
+		const bAllSelected = !this._allRowsSelected;
 		const previouslySelectedRows = this.rows.filter(row => row.selected);
 
 		this._allRowsSelected = bAllSelected;
@@ -606,8 +1025,12 @@ class Table extends UI5Element {
 		this.getRowParent(parent);
 	}
 
-	getColumnHeader() {
+	get columnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
+	}
+
+	get morеBtn() {
+		return this.growsWithButton && this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-growingButton`);
 	}
 
 	handleResize(event) {
@@ -709,11 +1132,11 @@ class Table extends UI5Element {
 	}
 
 	get _growingButtonText() {
-		return this.growingButtonText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText() {
-		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");
@@ -721,8 +1144,12 @@ class Table extends UI5Element {
 		return `${headerRowText} ${columnsTitle}`;
 	}
 
+	get tableAriaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get ariaLabelSelectAllText() {
-		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
+		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {
@@ -751,6 +1178,26 @@ class Table extends UI5Element {
 
 	get selectedRows() {
 		return this.rows.filter(row => row.selected);
+	}
+
+	get currentItemIdx() {
+		return this.rows.indexOf(this.currentItem);
+	}
+
+	get currentItem() {
+		return this.getRootNode().activeElement;
+	}
+
+	get currentElement() {
+		return this._itemNavigation._getCurrentItem();
+	}
+
+	get columnHeaderTabbables() {
+		return getTabbableElements(this.columnHeader);
+	}
+
+	get columnHeaderLastElement() {
+		return getLastTabbableElement(this.columnHeader);
 	}
 }
 

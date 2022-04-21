@@ -1,12 +1,10 @@
 <ui5-responsive-popover
 	id="{{_id}}-responsive-popover"
 	allow-target-overlap
-	stay-open-on-scroll
 	placement-type="Bottom"
 	horizontal-align="Left"
 	?disable-scrolling="{{_isIE}}"
 	hide-arrow
-	with-padding
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
 	@ui5-after-close="{{onResponsivePopoverAfterClose}}"

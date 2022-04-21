@@ -5,9 +5,10 @@ import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
@@ -24,6 +25,7 @@ const metadata = {
 	tag: "ui5-panel",
 	languageAware: true,
 	managedSlots: true,
+	fastNavigation: true,
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -131,7 +133,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -173,10 +175,6 @@ const metadata = {
 		_animationRunning: {
 			type: Boolean,
 			noAttribute: true,
-		},
-
-		_buttonAccInfo: {
-			type: Object,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -240,6 +238,14 @@ const metadata = {
  * <li>content - Used to style the wrapper of the content</li>
  * </ul>
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <h4>Fast Navigation</h4>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Panel";</code>
@@ -272,7 +278,6 @@ class Panel extends UI5Element {
 		super();
 
 		this._header = {};
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -383,7 +388,7 @@ class Panel extends UI5Element {
 	}
 
 	get toggleButtonTitle() {
-		return this.i18nBundle.getText(PANEL_ICON);
+		return Panel.i18nBundle.getText(PANEL_ICON);
 	}
 
 	get expanded() {
@@ -401,8 +406,10 @@ class Panel extends UI5Element {
 	get accInfo() {
 		return {
 			"button": {
-				"ariaExpanded": this.expanded,
-				"ariaControls": `${this._id}-content`,
+				"accessibilityAttributes": {
+					"expanded": this.expanded,
+					"controls": `${this._id}-content`,
+				},
 				"title": this.toggleButtonTitle,
 				"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.effectiveAccessibleName : undefined,
 			},
@@ -450,11 +457,11 @@ class Panel extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Button];
+		return [Button, Icon];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Panel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

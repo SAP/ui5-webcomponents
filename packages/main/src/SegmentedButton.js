@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
@@ -25,7 +25,20 @@ const metadata = {
 	tag: "ui5-segmented-button",
 	altTag: "ui5-segmentedbutton",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {},
+	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {
+		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.0.3
+		 */
+		 accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
@@ -107,7 +120,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -122,7 +135,6 @@ class SegmentedButton extends UI5Element {
 		this.hasPreviouslyFocusedItem = false;
 
 		this._handleResizeBound = this._doLayout.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -270,7 +282,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected item.
 	 *
 	 * @readonly
-	 * @type { ui5-segmented-button-item }
+	 * @type { sap.ui.webcomponents.main.ISegmentedButtonItem }
 	 * @public
 	 */
 	get selectedItem() {
@@ -278,11 +290,11 @@ class SegmentedButton extends UI5Element {
 	}
 
 	get ariaDescribedBy() {
-		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
+		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
 	}
 
 	get ariaDescription() {
-		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
+		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
 	}
 }
 

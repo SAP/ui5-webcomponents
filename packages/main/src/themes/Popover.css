@@ -96,3 +96,7 @@
 :host([hide-arrow]) .ui5-popover-arrow {
 	display: none;
 }
+
+.ui5-popover-root {
+	min-width: 6.25rem;
+}

@@ -11,12 +11,20 @@
 	color: var(--sapGroup_TitleTextColor);
 	background: var(--sapTile_Background);
 	box-shadow: var(--_ui5_card_box_shadow);
-	border-radius: .25rem;
-	border: 1px solid var(--_ui5_card_border_color);
+	border-radius: var(--_ui5_card_border-radius);
+	border: var(--_ui5_card_border);
 	overflow: hidden;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	box-sizing: border-box;
+}
+
+.ui5-card-root:hover {
+	box-shadow: var(--_ui5_card_hover_box_shadow);
+}
+
+.ui5-card-root:active {
+	box-shadow: var(--_ui5_card_box_shadow);
 }
 
 /* Card with no content */
@@ -28,8 +36,10 @@
     border-bottom: none;
 }
 
-.ui5-card-root .ui5-card-header-root  {
-    display: block;
-    border-bottom: 1px solid var(--_ui5_card_header_border_color);
+.ui5-card--nocontent ::slotted([ui5-card-header]) {
+	--_ui5_card_header_focus_bottom_radius: var(--_ui5_card_header_focus_radius);
 }
 
+.ui5-card-root .ui5-card-header-root {
+	border-bottom: var(--_ui5_card_header_border);
+}

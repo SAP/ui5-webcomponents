@@ -27,7 +27,7 @@ This tutorial will show you how to use the UI5 Web Components `i18n` functionali
 
 ```js
 import parseProperties from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
-import { registerI18nLoader, fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { registerI18nLoader, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 ```
 
 The first one provides support for `.properties` files, as used in the example, and the second one - the functions
@@ -51,18 +51,10 @@ The first argument to `registerI18nLoader` is an ID that will be used to referen
 
 *Note:* This step takes care of registering assets only, no data will be fetched at this point.
 
-### 4. Tell the framework to fetch the texts for the current language:
+### 4. Get and use the bundle:
 
 ```js
-await fetchI18nBundle("myApp");
-```
-
-This will fetch the appropriate texts for the currently configured language and store them internally.
-
-### 5. Get and use the bundle:
-
-```js
-const bundle = getI18nBundle("myApp");
+const bundle = await getI18nBundle("myApp");
 const pleaseWait = bundle.getText("PLEASE_WAIT");
 console.log("Please wait in the current language is: ", pleaseWait);
 ```
@@ -81,7 +73,7 @@ which will finally result in
 
 `Item 5 of 20 displayed`.
 
-### 6. Test your page using different languages, e.g. set `?sap-ui-language=de` in the URL or change the configuration.
+### 5. Test your page using different languages, e.g. set `?sap-ui-language=de` in the URL or change the configuration.
 
 ## Summary
 
@@ -89,7 +81,7 @@ The whole code would look like this:
 
 ```js
 import parseProperties from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
-import { registerI18nLoader, fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { registerI18nLoader, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 const supportedLocales = ["en", "fr", "de", "es"];
 supportedLocales.forEach(localeToRegister => {
@@ -99,9 +91,7 @@ supportedLocales.forEach(localeToRegister => {
 	});
 });
 
-await fetchI18nBundle("myApp");
-
-const bundle = getI18nBundle("myApp");
+const bundle = await getI18nBundle("myApp");
 
 const pleaseWait = bundle.getText("PLEASE_WAIT");
 console.log("Please wait in the current language is: ", pleaseWait);
@@ -125,3 +115,6 @@ and return the data directly in `.json` format if you want to load a little bit 
 | `assets/messagebundle_fr.json` | `{"PLEASE_WAIT": "Patientez."}`   |
 | `assets/messagebundle_es.json` | `{"PLEASE_WAIT": "Espere"}`       |
 | `assets/messagebundle_en.json` | `{"PLEASE_WAIT": "Please wait"}`  |
+
+
+Next: [Accessibility](../accessibility)

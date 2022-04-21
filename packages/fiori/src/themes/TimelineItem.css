@@ -65,7 +65,7 @@
 }
 
 :host([layout="Vertical"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
-	bottom: var(--_ui5_timeline_tli_indicator_before_bottom); 
+	bottom: var(--_ui5_timeline_tli_indicator_before_bottom);
 }
 
 :host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
@@ -151,12 +151,13 @@
 
 .ui5-tli-bubble:focus::after {
 	content: "";
-	border: var(--_ui5_TimelineItem_bubble_outline_width) dotted var(--sapContent_FocusColor);
+    border: var(--_ui5_TimelineItem_bubble_border_width) var(--_ui5_TimelineItem_bubble_border_style) var(--sapContent_FocusColor);
+    border-radius: var(--_ui5_TimelineItem_bubble_border_radius);
 	position: absolute;
-	top: var(--_ui5_TimelineItem_bubble_outline_top);
-	right: var(--_ui5_TimelineItem_bubble_outline_right);
-	bottom: var(--_ui5_TimelineItem_bubble_outline_bottom);
-	left: var(--_ui5_TimelineItem_bubble_outline_left);
+	top: var(--_ui5_TimelineItem_bubble_border_top);
+	right: var(--_ui5_TimelineItem_bubble_border_right);
+	bottom: var(--_ui5_TimelineItem_bubble_border_bottom);
+	left: var(--_ui5_TimelineItem_bubble_border_left);
 	pointer-events: none;
 }
 

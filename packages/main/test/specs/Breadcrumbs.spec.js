@@ -6,6 +6,22 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 	});
 
+	it("tests getDomRef", async () => {
+		const res = await browser.executeAsync(async (done) => {
+			const breadCrumbsItemOutOfOverflow = document.getElementById("lastItemWithACCName");
+
+			// act
+			done({
+				item: breadCrumbsItemOutOfOverflow,
+				realDomRef: breadCrumbsItemOutOfOverflow.getDomRef(),
+			});
+		});
+
+		// assert
+		assert.strictEqual(res.item["_id"], res.realDomRef["_id"],
+			"getDomRef corrcetly returns the matching ui5-link outside the overflow.");
+	});
+
 	it("fires link-click event", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbs1"),
 			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
@@ -15,13 +31,13 @@ describe("Breadcrumbs general interaction", () => {
 
 		// Check
 		const eventResult = await browser.$("#result");
-		assert.strictEqual(eventResult.innerText, link.innerText, "label for pressed link is correct");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
 	});
 
 	it("fires link-click event when link in overflow", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbs1"),
-			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0],
-			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+			overflowArrowLink = (await breadcrumbs.shadow$$("ui5-link"))[0];
 
 
 		// Act
@@ -34,7 +50,8 @@ describe("Breadcrumbs general interaction", () => {
 
 		// Check
 		const eventResult = await browser.$("#result");
-		assert.strictEqual(eventResult.innerText, link.innerText, "label for pressed link is correct");
+		assert.isNotEmpty(await eventResult.getText(), 'label should have a value');
+		assert.strictEqual(await eventResult.getText(), await firstItem.getProperty('innerText'), "label for pressed link is correct");
 	});
 
 	it("updates layout on container resize", async () => {
@@ -124,6 +141,14 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), expectedCountItemsInOverflowAfter, "a link is added to the overflow");
 	});
 
+	it("standard breadcrumb with single item shows location", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsWithSingleItem"),
+			label = (await breadcrumbs.shadow$("ui5-label"));
+
+		// Check
+		assert.strictEqual(await label.getText(), "Location", "label is displayed");
+	});
+
 	it("opens upon space", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
 
@@ -185,10 +210,27 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("renders accessible names of non-overflowing link items", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsWithAccName"),
-			link = (await breadcrumbs.shadow$$("ui5-link"))[3],
-			expectedAriaLabel = "last link acc name";
+			link = (await breadcrumbs.shadow$$("ui5-link"))[3], // we take the last link, because the first overflow
+			expectedAccessibleName = 'Link5 last link acc name 3 of 3';
 
 		// Check
-		assert.strictEqual(await link.getProperty("ariaLabel"), expectedAriaLabel, "label for last link is correct");
+		assert.strictEqual(await link.getProperty("accessibleName"), expectedAccessibleName, "label for last link is correct");
 	});
+
+	it("cancels default if item-click event listener calls preventDefault", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		const initialUrl = await browser.getUrl();
+
+		// Act
+		await link.click();
+
+		// Check
+		const eventResult = await browser.$("#result");
+		const url = await browser.getUrl();
+		assert.strictEqual(url, initialUrl, "url should not have changed");
+		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+	});
+
 });

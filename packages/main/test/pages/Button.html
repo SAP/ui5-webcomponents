@@ -7,28 +7,18 @@
 
 	<title>Button</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../testsuite/dist/resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-    <style>
-        .long-button {
-            width: 1000px;
-        }
-        .long-button-begin::part(button) {
-            justify-content: flex-start;
-        }
-        .long-button-end::part(button) {
-            justify-content: flex-end;
-        }
-    </style>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="styles/Button.css">
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="button1auto">
 	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
 	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
 	<ui5-button>
@@ -39,9 +29,9 @@
 	<ui5-icon name="invalid_name"></ui5-icon>
 	<ui5-button design="Emphasized" icon="invalid_name">Press</ui5-button>
 
-	<ui5-button id="button1" design="Emphasized" aria-expanded="true">Action Bar Button</ui5-button>
-	<ui5-button style="height: auto">Primary <br> button</ui5-button>
-	<ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
+	<ui5-button id="button1" design="Emphasized">Action Bar Button</ui5-button>
+	<ui5-button class="button2auto">Primary <br> button</ui5-button>
+	<ui5-button class="button2auto button3auto" design="Transparent">Secondary <span >button</span></ui5-button>
 	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
 	<ui5-button design="Positive">Accept</ui5-button>
 	<ui5-button design="Negative">Decline</ui5-button>
@@ -59,7 +49,7 @@
 
 	<ui5-input id="click-counter"></ui5-input>
 
-	<ui5-button style="height: auto" design="Emphasized">Action<br> <i>Bar</i><br> Button</ui5-button>
+	<ui5-button class="button2auto" design="Emphasized">Action<br> <i>Bar</i><br> Button</ui5-button>
 	<ui5-button>Primary button</ui5-button>
 	<ui5-button design="Transparent">Secondary button</ui5-button>
 	<ui5-button disabled>Inactive</ui5-button>
@@ -76,8 +66,8 @@
 	<ui5-button icon="employee" accessible-name="Download book">Action Bar Button</ui5-button>
 	<ui5-button icon="download"></ui5-button>
 
-	<ui5-button icon="employee" accessible-name="Download book" style="width: 6rem;">Action Bar Button</ui5-button>
-	<ui5-button icon="employee" icon-end accessible-name="Download book" style="width: 6rem;">Action Bar Button</ui5-button>
+	<ui5-button icon="employee" accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
+	<ui5-button icon="employee" icon-end accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
 
 	<br />
 	<br />
@@ -86,7 +76,7 @@
 	<ui5-label id="download-text2">From This Button</ui5-label>
 
 	<ui5-button icon="employee" accessible-name="Help me">Action Bar Button</ui5-button>
-	<ui5-button icon="download" accessible-name="Help me" accessible-name-ref="1download-text"></ui5-button>
+	<ui5-button id="buttonAccNameRef" icon="download" accessible-name="Help me" accessible-name-ref="1download-text"></ui5-button>
 
 	<ui5-button icon="employee" accessible-name-ref="1download-text download-text2">Action Bar Button</ui5-button>
 	<ui5-button icon="download" accessible-name-ref="1download-text"></ui5-button>
@@ -193,12 +183,45 @@
 	<br/>
 	<ui5-title>Buttons with tooltip</ui5-title>
 	<br/>
-	<ui5-button icon="message-information" title="Go home"></ui5-button>
-	<ui5-button icon="accept" title="Accept terms & conditions"></ui5-button>
-	<ui5-button icon="action-settings" title="Go to settings"></ui5-button>
-	<ui5-button icon="alert" title="Fire an alert"></ui5-button>
-	<ui5-button icon="arrow-down" title="Go down"></ui5-button>
+	<ui5-button id="customTooltip" icon="message-information" tooltip="Go home"></ui5-button>
+	<ui5-button icon="accept" tooltip="Accept terms & conditions"></ui5-button>
+	<ui5-button icon="action-settings" tooltip="Go to settings"></ui5-button>
+	<ui5-button icon="alert" tooltip="Fire an alert"></ui5-button>
+	<ui5-button icon="arrow-down" tooltip="Go down"></ui5-button>
 
+	<br/>
+	<br/>
+
+	<ui5-button id="openDialogButton" design="Emphasized">Show Registration Dialog</ui5-button>
+
+		<ui5-dialog id="registration-dialog" header-text="Register Form">
+			<section class="login-form">
+				<div>
+					<ui5-label for="username" required>Username: </ui5-label>
+					<ui5-input id="username"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="password" required>Password: </ui5-label>
+					<ui5-input id="password" type="Password" value-state="Error"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="email" type="Email" required>Email: </ui5-label>
+					<ui5-input id="email"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="address">Address: </ui5-label>
+					<ui5-input id="address"></ui5-input>
+				</div>
+			</section>
+
+			<div slot="footer">
+				<div style="flex: 1;"></div>
+				<ui5-button id="closeDialogButton" design="Emphasized">Register</ui5-button>
+			</div>
+		</ui5-dialog>
     <script>
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
@@ -210,6 +233,33 @@
 				clickCount += 1;
 				clickCounter.value = clickCount;
 			});
+		});
+
+		button.accessibilityAttributes = {
+			expanded: "true"
+		};
+
+		button.addEventListener("click", function(event) {
+			button.accessibilityAttributes = {
+				expanded: button.accessibilityAttributes.expanded === "true" ? "false" : "true"
+			};
+		});
+
+		var dialogOpener = document.getElementById("openDialogButton");
+		var dialog = document.getElementById("registration-dialog");
+		var dialogCloser = document.getElementById("closeDialogButton");
+
+		dialogOpener.accessibilityAttributes = {
+			hasPopup: "dialog",
+			controls: dialog.id,
+		}
+
+		dialogOpener.addEventListener("click", function() {
+			dialog.show();
+		});
+
+		dialogCloser.addEventListener("click", function() {
+			dialog.close();
 		});
 	</script>
 </body>

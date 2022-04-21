@@ -1,0 +1,13 @@
+@import "../base/InputIcon-parameters.css";
+
+:root {
+	--_ui5_input_icon_color: var(--sapNeutralColor); /*#5B738B */
+	--_ui5_input_icon_pressed_color: var(--sapNeutralColor); /*#5B738B */
+	--_ui5_input_icon_pressed_bg: transparent;
+	--_ui5_input_icon_hover_bg: transparent;
+	--_ui5_input_icon_border_radius: 0.5rem;
+	--_ui5_input_icon_error_pressed_color: var(--sapNeutralColor);
+	--_ui5_input_icon_warning_pressed_color: var(--sapNeutralColor);
+	--_ui5_input_icon_information_pressed_color: var(--sapNeutralColor);
+	--_ui5_input_icon_success_pressed_color: var(--sapNeutralColor);
+}

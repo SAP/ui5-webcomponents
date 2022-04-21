@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
@@ -36,9 +36,6 @@ const metadata = {
 
 		/**
 		 * Defines an action, displayed in the right most part of the header.
-		 * <br><br>
-		 * <b>Note:</b> If set, the <code>status</code> text will not be displayed,
-		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -71,9 +68,6 @@ const metadata = {
 
 		/**
 		 * Defines the status text.
-		 * <br><br>
-		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
-		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -158,12 +152,6 @@ const metadata = {
  * @since 1.0.0-rc.15
  */
 class CardHeader extends UI5Element {
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -201,11 +189,11 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaCardHeaderRoleDescription() {
-		return this.interactive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
+		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaCardAvatarLabel() {
-		return this.i18nBundle.getText(AVATAR_TOOLTIP);
+		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaLabelledByHeader() {
@@ -243,19 +231,20 @@ class CardHeader extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		CardHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_headerClick(event) {
-		event.stopImmediatePropagation(); // prevents the native browser "click" event from firing
+		// prevents the native browser "click" event from firing
+		event.stopImmediatePropagation();
 
-		if (this.interactive) {
+		if (this.interactive && event.target === event.currentTarget) {
 			this.fireEvent("click");
 		}
 	}
 
 	_headerKeydown(event) {
-		if (!this.interactive) {
+		if (!this.interactive || event.target !== event.currentTarget) {
 			return;
 		}
 
@@ -275,7 +264,7 @@ class CardHeader extends UI5Element {
 	}
 
 	_headerKeyup(event) {
-		if (!this.interactive) {
+		if (!this.interactive || event.target !== event.currentTarget) {
 			return;
 		}
 

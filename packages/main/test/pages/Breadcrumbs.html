@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -18,51 +18,47 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		h2 {
-			margin-top: 2rem;
-		}
-	</style>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="styles/Breadcrumbs.css">
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="breadcrumbs1auto">
 
 	<ui5-toggle-button id="myBtn">turn lights</ui5-toggle-button>
-	<div style="display:inline-block;margin-left:0.5rem"><label for="size">Resize last container: </label>
-		<div style="width:2rem;display:inline-block">
+	<div class="breadcrumbs2auto"><label for="size">Resize last container: </label>
+		<div class="breadcrumbs3auto">
 
 			<ui5-button id="extendSizeBtn"
-			style="width:1rem;height:1rem"
+			class="breadcrumbs4auto"
 			icon="slim-arrow-up" ></ui5-button>
 
 			<ui5-button id="shrinkSizeBtn"
-			style="width:1rem;height:1rem"
+			class="breadcrumbs4auto"
 			icon="slim-arrow-down"></ui5-button>
 		</div>
 
 	</div>
-	<div style="display:inline-block;margin-left:0.5rem">
+	<div class="breadcrumbs2auto">
 		<label for="size">Resize last link: </label>
-		<div style="width:1rem;display:inline-block">
+		<div class="breadcrumbs5auto">
 
 			<ui5-button id="extendLinkTextBtn"
-			style="width:1rem;height:1rem"
+			class="breadcrumbs4auto"
 			icon="slim-arrow-up"></ui5-button>
 
 			<ui5-button id="shortenLinkTextBtn"
-			style="width:1rem;height:1rem"
+			class="breadcrumbs4auto"
 			icon="slim-arrow-down"></ui5-button>
 		</div>
 	</div>
 
 	<h2>Breadcrumbs with current location</h2>
 
-	<ui5-breadcrumbs id="breadcrumbs2" separator-style="Slash">
+	<ui5-breadcrumbs id="breadcrumbs2">
 		<ui5-breadcrumbs-item href="https://www.sap.com">Link1 </ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link2</ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -75,7 +71,7 @@
 
 	<h2>Breadcrumbs with no current location</h2>
 
-	<ui5-breadcrumbs id="breadcrumbs3" design="NoCurrentPage" separator-style="Slash">
+	<ui5-breadcrumbs id="breadcrumbs3" design="NoCurrentPage">
 		<ui5-breadcrumbs-item href="https://www.sap.com">Link1 </ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link2</ui5-breadcrumbs-item>
 		<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -94,8 +90,8 @@
 		<ui5-option>DoubleSlash</ui5-option>
 		<ui5-option>GreaterThan</ui5-option>
 	</ui5-select>
-	<div style="margin-top:0.5rem">
-		<ui5-breadcrumbs id="breadcrumbs4" separator-style="Slash">
+	<div class="breadcrumbs7auto">
+		<ui5-breadcrumbs id="breadcrumbs4">
 			<ui5-breadcrumbs-item href="#">Link1 </ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link2</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -103,7 +99,7 @@
 		</ui5-breadcrumbs>
 	</div>
 
-	<div style="width: 200px;border: 1px solid lightgray;padding-top: 0.5rem;margin-top: 0.5rem">
+	<div class="breadcrumbs8auto">
 
 		<h2>Breadcrumb items with accessible name</h2>
 
@@ -120,11 +116,11 @@
 		</ui5-breadcrumbs>
 	</div>
 
-	<div id="wrapper" style="width: 200px;border: 1px solid lightgray;padding-top: 0.5rem;;margin-top: 0.5rem">
+	<div id="wrapper" class="breadcrumbs9auto">
 
 		<h2>Breadcrumbs with overflowing links</h2>
 
-		<ui5-breadcrumbs id="breadcrumbs1" separator-style="Slash">
+		<ui5-breadcrumbs id="breadcrumbs1">
 			<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link1 </ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Link2</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
@@ -132,6 +128,31 @@
 			<ui5-breadcrumbs-item href="#">Link5</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item href="#">Link6</ui5-breadcrumbs-item>
 			<ui5-breadcrumbs-item id="item7" href="#">aaaaa</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
+		</ui5-breadcrumbs>
+	</div>
+
+	<div class="breadcrumbs9auto">
+
+		<h2>Breadcrumbs with links and preventDefault</h2>
+
+		<ui5-breadcrumbs id="breadcrumbsPreventDefault" separator-class="Slash">
+			<ui5-breadcrumbs-item href="#shouldnotbehere">Link1 </ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="..">Link2</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#shouldnotbehere">Link3</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item href="#shouldnotbehere">Link4</ui5-breadcrumbs-item>
+			<ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
+		</ui5-breadcrumbs>
+	</div>
+
+	<div class="breadcrumbs9auto">
+		<h2>Empty Breadcrumbs</h2>
+		<ui5-breadcrumbs></ui5-breadcrumbs>
+	</div>
+
+	<div class="breadcrumbs9auto">
+		<h2>Empty Breadcrumbs with Location only</h2>
+		<ui5-breadcrumbs id="breadcrumbsWithSingleItem">
 			<ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
 		</ui5-breadcrumbs>
 	</div>
@@ -153,7 +174,13 @@
 		});
 
 		// log events
-		breadcrumbs1.addEventListener("item-click", (event) => {result.innerText = event.detail.item.innerText});
+		breadcrumbs1.addEventListener("ui5-item-click", (event) => {result.innerText = event.detail.item.innerText});
+
+		var breadcrumbsPreventDefault = document.querySelector("#breadcrumbsPreventDefault");
+		breadcrumbsPreventDefault.addEventListener("ui5-item-click", (event) => {
+			event.preventDefault();
+			result.innerText = event.detail.item.innerText;
+		});
 
 		extendSizeBtn.addEventListener("click", () => resizeContainer(true));
 		shrinkSizeBtn.addEventListener("click", () => resizeContainer());

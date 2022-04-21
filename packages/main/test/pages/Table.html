@@ -13,77 +13,28 @@
 	</script>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 
 </head>
 
-<style>
-	.demo-table {
-		width: 100%;
-		display: inline-block;
-	}
+<link rel="stylesheet" type="text/css" href="styles/Table.css">
 
-	body,
-	html {
-		margin: 0;
-		height: 100%;
-	}
-
-	.double-line-content {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.middle {
-		height: 100%;
-		vertical-align: middle;
-		line-height: 3;
-	}
-
-	.right-align {
-		display: inline-block;
-		text-align: right;
-		width: 100%;
-	}
-
-	.center-align {
-		display: inline-block;
-		text-align: center;
-		width: 100%;
-	}
-
-	.headerToolbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 48px;
-		padding: 0 16px;
-	}
-
-	.column-content {
-		height: 100%;
-		width: 100%;
-		align-items: center;
-		display: flex;
-	}
-</style>
-
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="table1auto">
 
 	<!-- Header -->
-	<div style="display:flex; align-items: center;">
+	<div class="table2auto">
 		<ui5-button id="size-btn-650">Lower table size to 650px</ui5-button>
 		<ui5-button id="size-btn-500">Lower table size to 500px</ui5-button>
 		<ui5-label>Products table - resize your browser to make some columns pop-in</ui5-label>
-		<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
+		<button id="toggleSticky" class="table3auto">Toggle Sticky Column Header</button>
 	</div>
 
-	<ui5-table class="demo-table" id="tbl">
+	<ui5-table class="demo-table" accessible-name-ref="tableLabel" id="tbl">
 		<!-- Columns -->
 		<ui5-table-column id="column-1" slot="columns" width="350px">
 			<ui5-label>Product</ui5-label>
@@ -111,7 +62,7 @@
 
 	<br><br>
 
-	<table border="1" style="width: 100%">
+	<table border="1" class="table4auto">
 
 		<thead>
 			<tr>
@@ -182,7 +133,7 @@
 
 	<!-- 1 column, but 3 cells -->
 	<ui5-title>1 column, but 3 cells</ui5-title>
-	<ui5-table class="demo-table" id="tblLessColumns">
+	<ui5-table class="demo-table" id="tblLessColumns" accessible-name="Table label">
 		<ui5-table-column id="column-1" slot="columns">
 			<ui5-label>City</ui5-label>
 		</ui5-table-column>

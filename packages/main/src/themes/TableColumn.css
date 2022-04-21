@@ -4,13 +4,11 @@
 
 th {
 	background: var(--sapList_HeaderBackground);
-	border: none;
-	border-bottom: 1px solid var(--sapList_BorderColor);
 	width: inherit;
-	font-weight: normal;
-	padding: 0.25rem;
+	font-weight: var(--ui5_table_header_row_font_weight);
+	font-size: var(--sapFontMediumSize);
+	padding: 0.5rem;
 	box-sizing: border-box;
-	height: 3rem;
 	text-align: left;
 	vertical-align: middle;
 }
@@ -23,8 +21,7 @@ th[dir="rtl"] {
 	padding-left: 1rem;
 }
 
-:host([sticky]) th {
-	position: sticky;
-	top: 0;
-	z-index: 99;
+th ::slotted([ui5-label]) {
+	font-weight: var(--ui5_table_header_row_font_weight);
+	font-size: var(--sapFontMediumSize);
 }

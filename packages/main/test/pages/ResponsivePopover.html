@@ -1,32 +1,24 @@
 <!DOCTYPE html>
-<html style="height: 100%">
+<html class="responsivepopover1auto">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ResponsivePopover</title>
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-	
-	.popover-footer,
-	.popover-header {
-		margin: 0.25rem 0.25rem;
-	}
-	
-	.popover-content {
-		padding: 1rem;
-	}
-	</style>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="styles/ResponsivePopover.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="responsivepopover2auto">
 	<ui5-button id="btnOpen" design="Positive">Open me</ui5-button> <br/>
 	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
-	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button>
+	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
+	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
+	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
 
 	<!-- with header and footer slots -->
 	<ui5-responsive-popover id="respPopover">
@@ -36,7 +28,7 @@
 
 		<div class="popover-content">
 			<ui5-label for="emailInput" required>Email: </ui5-label>
-			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+			<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
 		</div>
 
 		<div slot="footer" class="popover-footer">
@@ -48,7 +40,7 @@
 	<ui5-responsive-popover id="respPopover2" header-text="Newsletter subscription for very long period of time">
 		<div class="popover-content">
 			<ui5-label for="emailInput" required>Email: </ui5-label>
-			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+			<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
 		</div>
 
 		<div slot="footer" class="popover-footer">
@@ -64,12 +56,30 @@
 
 		<div class="popover-content">
 			<ui5-label for="emailInput" required>Email: </ui5-label>
-			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+			<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
 		</div>
 
 		<div slot="footer" class="popover-footer">
 			<ui5-button id="btnClose3" design="Emphasized">Subscribe</ui5-button>
 		</div>
+	</ui5-responsive-popover>
+
+
+	<ui5-responsive-popover id="respPopover4" accessible-name="Some label">
+		<div slot="header">
+			<ui5-title>Header</ui5-title>
+		</div>
+		<div class="popover-content">
+			<span>Hello World</span>
+		</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose4" design="Emphasized">Close</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<ui5-responsive-popover id="popoverAttr" opener="btnOpenWithAttr">
+		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
+		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-responsive-popover>
 
 	<h2> Inputs based component that opens popover/dialog within dialog</h2>
@@ -114,6 +124,12 @@
 		Content
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnRpWithPopover">Open RP that opens a Popover</ui5-button>
+	<ui5-responsive-popover id="btnRpWithPopoverRP">
+		<ui5-button id="btnRpWithPopoverOpener">Open Popover</ui5-button>
+	</ui5-responsive-popover>
+	<ui5-popover id="btnRpWithPopoverInnerPopover">Test popover</ui5-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -135,6 +151,14 @@
 		btnClose3.addEventListener("click", function(event) {
 			respPopover3.close();
 		});
+
+		btnOpen4.addEventListener("click", function(event) {
+			respPopover4.showAt(btnOpen4);
+		});
+		btnClose4.addEventListener("click", function(event) {
+			respPopover4.close();
+		});
+
 		btnOpenDialog.addEventListener('click', function (event) {
 			dialog.show();
 		});
@@ -153,6 +177,26 @@
 
 		btnInitialFocusPrevented.addEventListener("click", function(event) {
 			simpleRPInitialFocusPrevented.showAt(event.target, true);
+		});
+
+		btnRpWithPopover.addEventListener("click", function () {
+			btnRpWithPopoverRP.showAt(btnRpWithPopover)
+		});
+
+		btnRpWithPopoverOpener.addEventListener("click", function () {
+			btnRpWithPopoverInnerPopover.showAt(btnRpWithPopoverOpener);
+		});
+
+		btnOpenWithAttr.addEventListener("click", function () {
+			popoverAttr.setAttribute("open", "");
+		});
+
+		btnCloseWithMethod.addEventListener("click", function () {
+			popoverAttr.close();
+		});
+
+		btnCloseWithAttr.addEventListener("click", function () {
+			popoverAttr.removeAttribute("open");
 		});
 	</script>
 </body>

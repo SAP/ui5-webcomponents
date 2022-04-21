@@ -18,6 +18,10 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -28,6 +32,7 @@ import {
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
+	SELECT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -174,9 +179,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @since 1.0.0-rc.9
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -188,7 +193,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the select.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -264,18 +269,10 @@ const metadata = {
  * </ul>
  * <br>
  *
- * <h3>Stable DOM Refs</h3>
- *
- * In the context of <code>ui5-select</code>, you can provide a custom stable DOM ref for:
- * <ul>
- * <li>Every <code>ui5-option</code> that you provide.
- * Example: <code><ui5-option stable-dom-ref="option1"></ui5-option></code></li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/Option";</code>
+ * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
@@ -320,7 +317,6 @@ class Select extends UI5Element {
 		this._lastSelectedOption = null;
 		this._typedChars = "";
 		this._typingTimeoutID = -1;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -336,6 +332,8 @@ class Select extends UI5Element {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
 		}
+
+		this._attachRealDomRefs();
 	}
 
 	_onfocusin() {
@@ -358,7 +356,7 @@ class Select extends UI5Element {
 	/**
 	 * Currently selected option.
 	 * @readonly
-	 * @type { ui5-option }
+	 * @type { sap.ui.webcomponents.main.ISelectOption }
 	 * @public
 	 */
 	get selectedOption() {
@@ -377,6 +375,14 @@ class Select extends UI5Element {
 		} else {
 			this.responsivePopover.showAt(this);
 		}
+	}
+
+	async _attachRealDomRefs() {
+		this.responsivePopover = await this._respPopover();
+
+		this.options.forEach(option => {
+			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`);
+		});
 	}
 
 	_syncSelection() {
@@ -401,6 +407,8 @@ class Select extends UI5Element {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
+				title: opt.title,
+				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
@@ -553,7 +561,7 @@ class Select extends UI5Element {
 	 * @private
 	 */
 	_handleItemPress(event) {
-		const item = event.detail.item;
+		const item = event.detail.selectedItems[0];
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
@@ -629,6 +637,7 @@ class Select extends UI5Element {
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this.focused = false;
 	}
 
 	_afterOpen() {
@@ -637,6 +646,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this.opened = false;
+		this.focused = true;
 		this._iconPressed = false;
 		this._listWidth = 0;
 
@@ -658,13 +668,11 @@ class Select extends UI5Element {
 	}
 
 	get valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": Select.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -685,7 +693,7 @@ class Select extends UI5Element {
 	}
 
 	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return Select.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _currentSelectedItem() {
@@ -702,6 +710,20 @@ class Select extends UI5Element {
 		&& this.responsivePopover.opened) ? "-1" : "0";
 	}
 
+	 /**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageInputIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get classes() {
 		return {
 			popoverValueState: {
@@ -710,6 +732,9 @@ class Select extends UI5Element {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+			popover: {
+				"ui5-select-popover-valuestate": this.hasValueState,
 			},
 		};
 	}
@@ -747,6 +772,10 @@ class Select extends UI5Element {
 			&& !this._isPickerOpen && !this._isPhone;
 	}
 
+	get _ariaRoleDescription() {
+		return Select.i18nBundle.getText(SELECT_ROLE_DESCRIPTION);
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}
@@ -758,7 +787,7 @@ class Select extends UI5Element {
 	itemSelectionAnnounce() {
 		let text;
 		const optionsCount = this._filteredItems.length;
-		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [this._selectedIndex + 1], [optionsCount]);
+		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
 			text = `${this._currentlySelectedOption.textContent} ${this._isPickerOpen ? itemPositionText : ""}`;
@@ -806,6 +835,10 @@ class Select extends UI5Element {
 			Icon,
 			Button,
 		];
+	}
+
+	static async onDefine() {
+		Select.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

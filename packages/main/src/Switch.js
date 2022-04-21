@@ -2,9 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/less.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
@@ -94,6 +96,31 @@ const metadata = {
 		textOff: {
 			type: String,
 		},
+
+		/**
+		 * Sets the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.2.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		 accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
@@ -164,12 +191,6 @@ class Switch extends UI5Element {
 		return SwitchTemplate;
 	}
 
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	get sapNextIcon() {
 		return this.checked ? "accept" : "less";
 	}
@@ -207,6 +228,10 @@ class Switch extends UI5Element {
 		return this.design === SwitchDesign.Graphical;
 	}
 
+	get hasNoLabel() {
+		return !(this.graphical || this.textOn || this.textOff);
+	}
+
 	get _textOn() {
 		return this.graphical ? "" : this.textOn;
 	}
@@ -238,15 +263,19 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || this.i18nBundle.getText(SWITCH_ON);
+		return this._textOn || Switch.i18nBundle.getText(SWITCH_ON);
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || this.i18nBundle.getText(SWITCH_OFF);
+		return this._textOff || Switch.i18nBundle.getText(SWITCH_OFF);
 	}
 
 	get hiddenText() {
 		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static get dependencies() {
@@ -254,7 +283,7 @@ class Switch extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Switch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

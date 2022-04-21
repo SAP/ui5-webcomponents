@@ -7,9 +7,7 @@
 	@click="{{_onclick}}"
 	role="listitem"
 	tabindex="{{_tabIndex}}"
-	dir="{{effectiveDir}}"
 	aria-labelledby="{{ariaLabelledBy}}"
-	style="list-style-type: none;"
 >
 	<div class="ui5-nli-actions">
 		{{#if showOverflow}}
@@ -18,7 +16,7 @@
 				design="Transparent"
 				@click="{{_onBtnOverflowClick}}"
 				class="ui5-nli-overflow-btn"
-				title="{{overflowBtnAccessibleName}}"
+				tooltip="{{overflowBtnAccessibleName}}"
 				aria-label="{{overflowBtnAccessibleName}}"
 			></ui5-button>
 		{{else}}
@@ -41,7 +39,7 @@
 				icon="decline"
 				design="Transparent"
 				@click="{{_onBtnCloseClick}}"
-				title="{{closeBtnAccessibleName}}"
+				tooltip="{{closeBtnAccessibleName}}"
 				aria-label="{{closeBtnAccessibleName}}"
 				close-btn
 			></ui5-button>
@@ -72,7 +70,7 @@
 			{{#each footerItems}}
 				<slot name="{{slotName}}"></slot>
 				{{#if showDivider}}
-					<div class="ui5-nli-footer-divider"></div>
+					<div class="ui5-nli-footer-divider" aria-hidden="true">·</div>
 				{{/if}}
 			{{/each}}
 

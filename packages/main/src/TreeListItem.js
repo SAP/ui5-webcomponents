@@ -1,7 +1,8 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -42,7 +43,7 @@ const metadata = {
 		 * If set, an icon will be displayed before the text of the tree list item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 */
 		icon: {
@@ -68,6 +69,14 @@ const metadata = {
 		 * @public
 		 */
 		expanded: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.1.0
+		 */
+		indeterminate: {
 			type: Boolean,
 		},
 
@@ -238,12 +247,6 @@ class TreeListItem extends ListItem {
 		];
 	}
 
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	onBeforeRendering() {
 		this.actionable = false;
 	}
@@ -252,6 +255,14 @@ class TreeListItem extends ListItem {
 		const allClasses = super.classes;
 		allClasses.main["ui5-li-root-tree"] = true;
 		return allClasses;
+	}
+
+	get styles() {
+		return {
+			preContent: {
+				"padding-left": isIE() ? `${this.effectiveLevel}rem` : `calc(var(--_ui5-tree-indent-step) * ${this.effectiveLevel})`,
+			},
+		};
 	}
 
 	get effectiveLevel() {
@@ -286,7 +297,7 @@ class TreeListItem extends ListItem {
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
-			listItemAriaLabel: this.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
+			listItemAriaLabel: TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
 		};
 	}
 
@@ -316,11 +327,14 @@ class TreeListItem extends ListItem {
 	}
 
 	get iconAccessibleName() {
-		return this.expanded ? this.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : this.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
+		return this.expanded ? TreeListItem.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeListItem.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		[TreeListItem.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 }
 

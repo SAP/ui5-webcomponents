@@ -1,7 +1,7 @@
 <ui5-responsive-popover
 	placement-type="Bottom"
 	horizontal-align="Stretch"
-	class="ui5-multi-combobox-all-items-responsive-popover"
+	class="{{classes.popover}}"
 	hide-arrow
 	_disable-initial-focus
 	@ui5-selection-change={{_listSelectionChange}}
@@ -50,6 +50,7 @@
 				</div>
 			{{#if hasValueStateMessage}}
 				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 					{{> valueStateMessage}}
 				</div>
 			{{/if}}
@@ -60,6 +61,7 @@
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
 			<div slot="header" @keydown="{{_onValueStateKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
@@ -94,13 +96,13 @@
 		skip-registry-update
 		_disable-initial-focus
 		prevent-focus-restore
-		no-padding
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		placement-type="Bottom"
-		horizontal-align="Left"
+		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 			{{> valueStateMessage}}
 		</div>
 	</ui5-popover>

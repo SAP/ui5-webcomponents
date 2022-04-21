@@ -12,7 +12,7 @@ const metadata = {
 		 * Defines the text of the tree item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 */
 		text: {
@@ -27,6 +27,27 @@ const metadata = {
 		 * @public
 		 */
 		expanded: {
+			type: Boolean,
+		},
+		/**
+		* Defines whether the selection of a tree node is displayed as partially selected.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>selected</code> properties:
+		* <ul>
+		* <li> If a tree node has both <code>selected</code> and <code>indeterminate</code> set to <code>true</code>, it is displayed as partially selected.
+		* <li> If a tree node has <code>selected</code> set to <code>true</code> and <code>indeterminate</code> set to <code>false</code>, it is displayed as selected.
+		* <li> If a tree node has <code>selected</code> set to <code>false</code>, it is displayed as not selected regardless of the value of the <code>indeterminate</code> property.
+		* </ul>
+		* <br>
+		* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.1.0
+		*/
+		indeterminate: {
 			type: Boolean,
 		},
 
@@ -61,7 +82,7 @@ const metadata = {
 		 * If set, an icon will be displayed before the text, representing the tree item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 */
 		icon: {

@@ -3,12 +3,17 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
@@ -24,6 +29,7 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 /**
  * @public
@@ -212,9 +218,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -225,7 +231,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the textarea.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -360,7 +366,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get styles() {
-		return styles;
+		return [browserScrollbarCSS, styles];
 	}
 
 	static get render() {
@@ -385,7 +391,6 @@ class TextArea extends UI5Element {
 		this._firstRendering = true;
 		this._openValueStateMsgPopover = false;
 		this._fnOnResize = this._onResize.bind(this);
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -545,9 +550,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
+					exceededText = TextArea.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, leftCharactersCount);
 				} else {
-					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
+					exceededText = TextArea.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, Math.abs(leftCharactersCount));
 				}
 			}
 		} else {
@@ -571,6 +576,7 @@ class TextArea extends UI5Element {
 
 	get styles() {
 		const lineHeight = 1.4 * 16;
+		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
 
 		return {
 			mirror: {
@@ -578,7 +584,7 @@ class TextArea extends UI5Element {
 			},
 			main: {
 				width: "100%",
-				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+				height: (this.rows && !this.growing) ? `${mainHeight}px` : "100%",
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
@@ -633,7 +639,7 @@ class TextArea extends UI5Element {
 	}
 
 	get displayValueStateMessagePopover() {
-		return this.hasCustomValueState || this.hasValueState || this.exceeding;
+		return !this.readonly && (this.hasCustomValueState || this.hasValueState || this.exceeding);
 	}
 
 	get hasCustomValueState() {
@@ -656,22 +662,38 @@ class TextArea extends UI5Element {
 		return this.valueStateTextMappings()[this.valueState];
 	}
 
-	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
+	get _valueStatePopoverHorizontalAlign() {
+		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	valueStateTextMappings() {
 		return {
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	static get dependencies() {
-		return [Popover];
+		return [Popover, Icon];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

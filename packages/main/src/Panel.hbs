@@ -1,10 +1,9 @@
 <div
-	data-sap-ui-fastnavgroup="true"
 	class="ui5-panel-root"
 	role="{{accRole}}"
 	aria-label="{{effectiveAccessibleName}}"
 >
-	<!-- header: either header or h1 with header text -->
+	{{! header: either header or h1 with header text}}
 	<div
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeyDown}}"
@@ -24,7 +23,8 @@
 						class="ui5-panel-header-button {{classes.headerBtn}}"
 						icon="slim-arrow-right"
 						@click="{{_toggleButtonClick}}"
-						._buttonAccInfo="{{accInfo.button}}"
+						.accessibilityAttributes={{accInfo.button.accessibilityAttributes}}
+						tooltip="{{accInfo.button.title}}"
 						accessible-name="{{accInfo.button.ariaLabelButton}}"
 					></ui5-button>
 				{{else}}
@@ -50,7 +50,7 @@
 		{{/if}}
 	</div>
 
-	<!-- content area -->
+	{{! content area}}
 	<div
 		class="ui5-panel-content"
 		id="{{_id}}-content"

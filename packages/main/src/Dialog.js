@@ -67,17 +67,6 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
 		 * Determines whether the component should be stretched to fullscreen.
 		 * <br><br>
 		 * <b>Note:</b> The component will be stretched to approximately
@@ -162,6 +151,17 @@ const metadata = {
  * The <code>stretch</code> property can be used to stretch the
  * <code>ui5-dialog</code> on full screen.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-dialog</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>header - Used to style the header of the component</li>
+ * <li>content - Used to style the content of the component</li>
+ * <li>footer - Used to style the footer of the component</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Dialog";</code>
@@ -237,21 +237,11 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.accessibleName) {
+		if (this.headerText !== "" && !this._ariaLabel) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
 		return ariaLabelledById;
-	}
-
-	get _ariaLabel() {
-		let ariaLabel;
-
-		if (this.header.length > 0 && !!this.accessibleName) {
-			ariaLabel = this.accessibleName;
-		}
-
-		return this.accessibleName ? this.accessibleName : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -277,6 +267,10 @@ class Dialog extends Popup {
 		return this._movable ? "0" : undefined;
 	}
 
+	get _showResizeHandle() {
+		return this.resizable && this.onDesktop;
+	}
+
 	_show() {
 		super._show();
 		this._center();
@@ -286,10 +280,18 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-		this._detachResizeHandlers();
 	}
 
 	onAfterRendering() {
+		if (!this.isOpen() && this.open) {
+			this.show();
+		} else if (this.isOpen() && !this.open) {
+			this.close();
+		}
+	}
+
+	onEnterDOM() {
+		super.onEnterDOM();
 		this._attachResizeHandlers();
 	}
 
@@ -298,14 +300,29 @@ class Dialog extends Popup {
 		this._detachResizeHandlers();
 	}
 
+	/**
+	 * @override
+	 */
+	_resize() {
+		super._resize();
+
+		if (this._resizeHandlersAttached) {
+			this._center();
+		}
+	}
+
 	_attachResizeHandlers() {
-		ResizeHandler.register(this, this._screenResizeHandler);
-		ResizeHandler.register(document.body, this._screenResizeHandler);
+		if (!this._resizeHandlersAttached) {
+			ResizeHandler.register(document.body, this._screenResizeHandler);
+			this._resizeHandlersAttached = true;
+		}
 	}
 
 	_detachResizeHandlers() {
-		ResizeHandler.deregister(this, this._screenResizeHandler);
-		ResizeHandler.deregister(document.body, this._screenResizeHandler);
+		if (this._resizeHandlersAttached) {
+			ResizeHandler.deregister(document.body, this._screenResizeHandler);
+			this._resizeHandlersAttached = false;
+		}
 	}
 
 	_center() {

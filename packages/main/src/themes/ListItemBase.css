@@ -22,8 +22,13 @@
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([selected][has-border]) {
+:host(:not([focused])[selected][has-border]) {
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
+}
+
+/* focused & selected */
+:host([focused][selected]) {
+	border-bottom: var(--ui5-listitem-focused-selected-border-bottom);
 }
 
 .ui5-li-root {
@@ -36,24 +41,25 @@
 	box-sizing: border-box;
 }
 
+/* focused */
 :host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;
 }
 
 :host([focused]) .ui5-li-root.ui5-li--focusable:after {
 	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	top: 0.125rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
+	left: 0.125rem;
 	pointer-events: none;
 }
 
 :host([focused]) .ui5-li-content:focus:after {
 	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -63,7 +69,7 @@
 }
 
 :host([active][focused]) .ui5-li-root.ui5-li--focusable:after {
-	border-color: var(--sapContent_ContrastFocusColor);
+	border-color: var(--ui5-listitem-active-border-color);
 }
 
 :host([disabled]) {
@@ -75,5 +81,6 @@
 	max-width: 100%;
 	min-height: 1px; /* IE specific: fixes vertical centering with flex  */
 	font-family: "72override", var(--sapFontFamily);
+	color: var(--sapList_TextColor);
 	pointer-events: none;  /* IE specific: fixes focus crrectly applied*/
 }

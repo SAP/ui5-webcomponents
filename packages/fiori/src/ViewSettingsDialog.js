@@ -1,4 +1,4 @@
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -8,6 +8,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 import Bar from "./Bar.js";
@@ -111,6 +112,7 @@ const metadata = {
 		 */
 		_filterStepTwo: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
@@ -146,12 +148,17 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+		 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+		 * @param {Array} filterItems The selected filters items.
 		 * @public
 		 */
 		confirm: {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
+				sortByItem: { type: HTMLElement },
+				sortDescending: { type: Boolean },
 				filters: { type: Array },
 			},
 		},
@@ -162,12 +169,17 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+		 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+		 * @param {Array} filterItems The selected filters items.
 		 * @public
 		 */
 		cancel: {
 			detail: {
 				sortOrder: { type: String },
 				sortBy: { type: String },
+				sortByItem: { type: HTMLElement },
+				sortDescending: { type: Boolean },
 				filters: { type: Array },
 			},
 		},
@@ -195,20 +207,20 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ViewSettingsDialog";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
+ * @appenddocs SortItem FilterItem FilterItemOption
  * @since 1.0.0-rc.16
  * @public
  */
 class ViewSettingsDialog extends UI5Element {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._currentSettings = {
 			sortOrder: [],
 			sortBy: [],
@@ -219,6 +231,10 @@ class ViewSettingsDialog extends UI5Element {
 	onBeforeRendering() {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {
 			this._setAdditionalTexts();
+		}
+
+		if (!this.shouldBuildSort && this.shouldBuildFilter) {
+			this._currentMode = ViewSettingsDialogMode.Filter;
 		}
 	}
 
@@ -248,6 +264,7 @@ class ViewSettingsDialog extends UI5Element {
 		return [
 			Bar,
 			Button,
+			Title,
 			Dialog,
 			Label,
 			List,
@@ -267,7 +284,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		ViewSettingsDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get _selectedFilter() {
@@ -280,45 +297,56 @@ class ViewSettingsDialog extends UI5Element {
 		return "";
 	}
 
+	get shouldBuildSort() {
+		return !!this.sortItems.length;
+	}
+
+	get shouldBuildFilter() {
+		return !!this.filterItems.length;
+	}
+
+	get hasPagination() {
+		return this.shouldBuildSort && this.shouldBuildFilter;
+	}
+
 	get _filterByTitle() {
-		return `${this.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
+		return `${ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
 	}
 
 	get _dialogTitle() {
-		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
-		return this.i18nBundle.getText(currentModeText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
 	}
 
 	get _okButtonLabel() {
-		return this.i18nBundle.getText(VSD_SUBMIT_BUTTON);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SUBMIT_BUTTON);
 	}
 
 	get _cancelButtonLabel() {
-		return this.i18nBundle.getText(VSD_CANCEL_BUTTON);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_CANCEL_BUTTON);
 	}
 
 	get _resetButtonLabel() {
-		return this.i18nBundle.getText(VSD_RESET_BUTTON);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON);
 	}
 
 	get _ascendingLabel() {
-		return this.i18nBundle.getText(VSD_ORDER_ASCENDING);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_ASCENDING);
 	}
 
 	get _descendingLabel() {
-		return this.i18nBundle.getText(VSD_ORDER_DESCENDING);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_DESCENDING);
 	}
 
 	get _sortOrderLabel() {
-		return this.i18nBundle.getText(VSD_SORT_ORDER);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_ORDER);
 	}
 
 	get _filterByLabel() {
-		return this.i18nBundle.getText(VSD_FILTER_BY);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY);
 	}
 
 	get _sortByLabel() {
-		return this.i18nBundle.getText(VSD_SORT_BY);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY);
 	}
 
 	get _isPhone() {
@@ -327,6 +355,12 @@ class ViewSettingsDialog extends UI5Element {
 
 	get _sortAscending() {
 		return !this.sortDescending;
+	}
+
+	get _title() {
+		return this.showBackButton
+			? this._filterByTitle
+			: this._dialogTitle;
 	}
 
 	/**
@@ -385,10 +419,11 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get initSortByItems() {
-		return this.sortItems.map(item => {
+		return this.sortItems.map((item, index) => {
 			return {
 				text: item.text,
 				selected: item.selected,
+				index,
 			};
 		});
 	}
@@ -397,13 +432,17 @@ class ViewSettingsDialog extends UI5Element {
 		return [
 			{
 				text: this._ascendingLabel,
-				selected: true,
+				selected: !this.sortDescending,
 			},
 			{
 				text: this._descendingLabel,
-				selected: false,
+				selected: this.sortDescending,
 			},
 		];
+	}
+
+	get expandContent() {
+		return this._filterStepTwo || !this.hasPagination;
 	}
 
 	get isModeSort() {
@@ -448,7 +487,10 @@ class ViewSettingsDialog extends UI5Element {
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
-		this._dialog.show();
+
+		this._dialog.show(true);
+
+		this._dialog.querySelector("[ui5-list]").focusFirstItem();
 	}
 
 	_handleModeChange(event) {
@@ -478,8 +520,7 @@ class ViewSettingsDialog extends UI5Element {
 	_changeCurrentFilter(event) {
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
-			filter.selected = filter.text === event.detail.item.text;
-
+			filter.selected = filter.text === event.detail.item.innerText;
 			return filter;
 		});
 	}
@@ -495,7 +536,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
-		if (!Object.keys(this._recentlyFocused).length) {
+		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
 		}
 		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),
@@ -533,11 +574,15 @@ class ViewSettingsDialog extends UI5Element {
 		const _currentSortOrderSelected = this._currentSettings.sortOrder.filter(item => item.selected)[0],
 			_currentSortBySelected = this._currentSettings.sortBy.filter(item => item.selected)[0],
 			sortOrder = _currentSortOrderSelected && _currentSortOrderSelected.text,
-			sortBy = _currentSortBySelected && _currentSortBySelected.text;
-
+			sortDescending = !this._currentSettings.sortOrder[0].selected,
+			sortBy = _currentSortBySelected && _currentSortBySelected.text,
+			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
+			sortByItem = this.sortItems[sortByElementIndex];
 		return {
 			sortOrder,
+			sortDescending,
 			sortBy,
+			sortByItem,
 			filters: this.selectedFilters,
 		};
 	}
@@ -613,12 +658,12 @@ class ViewSettingsDialog extends UI5Element {
 	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
 	 */
 	 _onSortByChange(event) {
+		const selectedItemIndex = Number(event.detail.item.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy;
-		this._currentSettings.sortBy = this.initSortByItems.map(item => {
-			item.selected = item.text === event.detail.item.innerText;
+		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
+			item.selected = index === selectedItemIndex;
 			return item;
 		});
-
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}

@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>MultiComboBox test page</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -16,34 +16,17 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-multi-combobox {
-			max-width: 560px;
-			width: 100%;
-		}
-	</style>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="styles/MultiComboBox.css">
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="multicombobox1auto">
 
-	<style>
-		.demo-section {
-			margin-top: 30px;
-		}
-
-		.demo-section ui5-multi-combobox {
-			margin-top: 10px;
-		}
-
-		ui5-multi-combobox:not(:defined) {
-			display: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/MultiComboBox.css">
 	<!-- <ui5-token>UI5 WebComponents</ui5-token> -->
 
 	<!-- <ui5-token selected>UI5 WebComponents</ui5-token> -->
@@ -51,7 +34,7 @@
 	<!-- <br />
 	<br />
 
-	<ui5-tokenizer style="width: 100%">
+	<ui5-tokenizer class="multicombobox2auto">
 		<ui5-token>Hello</ui5-token>
 		<ui5-token>UI5</ui5-token>
 		<ui5-token>webcomponents</ui5-token>
@@ -59,7 +42,7 @@
 
 	<span>value </span>
 
-	<ui5-tokenizer show-more style="width: 100%">
+	<ui5-tokenizer show-more class="multicombobox2auto">
 		<ui5-token>World!</ui5-token>
 		<ui5-token>Martin</ui5-token>
 		<ui5-token>Hristovthelong</ui5-token>
@@ -67,7 +50,7 @@
 
 	<span>value </span>
 
-	<ui5-tokenizer show-more style="width: 100%">
+	<ui5-tokenizer show-more class="multicombobox2auto">
 		<ui5-token>B</ui5-token>
 		<ui5-token>A</ui5-token>
 		<ui5-token>A</ui5-token>
@@ -100,6 +83,17 @@
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
+		<span>allow-custom-values and predefined value</span>
+
+		<br>
+		<ui5-multi-combobox id="multi-acv" allow-custom-values value="com">
+			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
+			<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 
@@ -158,7 +152,7 @@
 		<span>value state warning </span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text"
+		<ui5-multi-combobox id="mcb-warning" allow-custom-values placeholder="Some initial text"
 			value-state="Warning">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
@@ -193,6 +187,18 @@
 	</div>
 
 	<div class="demo-section">
+		<span>Readonly with value state </span>
+
+		<br>
+		<ui5-multi-combobox id="readonly-value-state-mcb" value-state="Error" readonly>
+			<ui5-mcb-item text="Cosy"></ui5-mcb-item>
+			<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
+			<ui5-mcb-item text="Longest word in the world"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
 		<span>MultiComboBox with items</span>
 
 		<br>
@@ -203,6 +209,26 @@
 			<ui5-mcb-item text="Longest word in the world"></ui5-mcb-item>
 			<ui5-mcb-item text="Longest word in the world 1"></ui5-mcb-item>
 			<ui5-mcb-item text="Longest word in the world 2"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
+		<span>MultiComboBox with more items</span>
+
+		<br>
+		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" id="mcb-items">
+			<ui5-mcb-item text="Item 0" id="first-item"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 1"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 2"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 3"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 4"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Item 5"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 0" ></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 1"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 2"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 3"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 4"></ui5-mcb-item>
+			<ui5-mcb-item text="Another Item 5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 
@@ -221,7 +247,7 @@
 	<div class="demo-section">
 		<span>MultiComboBox n more</span> </br>
 
-		<ui5-multi-combobox style="width: 320px" placeholder="Some initial text" id="more-mcb">
+		<ui5-multi-combobox class="multicombobox3auto" placeholder="Some initial text" id="more-mcb">
 			<ui5-mcb-item text="Cosy" selected></ui5-mcb-item>
 			<ui5-mcb-item text="Compact" selected></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -282,7 +308,7 @@
 	<div class="demo-section">
 		<ui5-label>Two-column items </ui5-label>
 		<br/>
-		<ui5-multi-combobox id="mcb-two-column-layout" style="width: 360px;">
+		<ui5-multi-combobox id="mcb-two-column-layout" class="multicombobox4auto">
 			<ui5-mcb-item text="Algeria" additional-text="DZ"></ui5-mcb-item>
 			<ui5-mcb-item text="Argentina" additional-text="AR"></ui5-mcb-item>
 			<ui5-mcb-item text="Australia" additional-text="AU"></ui5-mcb-item>
@@ -294,6 +320,25 @@
 			<ui5-mcb-item text="Canada" additional-text="CA"></ui5-mcb-item>
 			<ui5-mcb-item text="Chile" additional-text="CL"></ui5-mcb-item>
 		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
+		<span>Placeholder test</span>
+
+		<br>
+		<ui5-button id="sel">Toggle Item</ui5-button>
+		<ui5-multi-combobox id="mcb-init-selected-item" placeholder="Placeholder" style="width: 300px;">
+			<ui5-mcb-item text="Item1"></ui5-mcb-item>
+			<ui5-mcb-item selected id="mcb1" text="Initially selected"></ui5-mcb-item>
+		</ui5-multi-combobox>
+		<br />
+		<br />
+		<ui5-button id="sel2">Toggle Item</ui5-button>
+		<ui5-multi-combobox id="mcb-init-nonselected-item" placeholder="Placeholder" style="width: 300px;">
+			<ui5-mcb-item text="Item1"></ui5-mcb-item>
+			<ui5-mcb-item id="mcb1_2" text="Initially not selected"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
 
 	<script>
 		var eventNameInput = document.getElementById("events-input");
@@ -322,6 +367,32 @@
 			callCountInput.value = "";
 			selectionChangeCounter = 0;
 			openChangeCounter = 0;
+		});
+
+		// Placeholders test
+		const btn = document.getElementById("sel");
+		const mcb1 = document.getElementById("mcb1");
+		const btn2 = document.getElementById("sel2");
+		const mcb1_2 = document.getElementById("mcb1_2");
+
+		let selected = mcb1.hasAttribute("selected");
+		btn.addEventListener("click", () => {
+			if (!selected) {
+				mcb1.setAttribute("selected", selected);
+			} else {
+				mcb1.removeAttribute("selected");
+			}
+			selected = !selected;
+		});
+
+		let selected2 = mcb1_2.hasAttribute("selected");
+		btn2.addEventListener("click", () => {
+			if (!selected2) {
+				mcb1_2.setAttribute("selected", selected2);
+			} else {
+				mcb1_2.removeAttribute("selected");
+			}
+			selected2 = !selected2;
 		});
 	</script>
 

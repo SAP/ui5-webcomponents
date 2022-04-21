@@ -9,7 +9,7 @@ const metadata = {
 		/**
 		 * Defines the text of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
@@ -19,7 +19,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component is selected.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -54,6 +54,7 @@ const metadata = {
  * @extends UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-sort-item
+ * @implements sap.ui.webcomponents.fiori.ISortItem
  * @public
  */
 class SortItem extends UI5Element {

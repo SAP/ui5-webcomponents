@@ -1,7 +1,6 @@
 # Note: Changes to this file also must be applied to the top level .eslintignore file.
 test
 lib
-overlay
 dist
 src/thirdparty
 bundle.esm.js
@@ -11,3 +10,5 @@ wdio.conf.js
 postcss.config.js
 package-scripts.js
 .eslintrc.js
+src/renderer/directives/style-map.js
+src/util/metaUrl.js

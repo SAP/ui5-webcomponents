@@ -2,7 +2,7 @@ import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedElements } from "./util/SlotsHelper.js";
-import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
+import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 
 /**
  *
@@ -189,6 +189,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this control supports F6 fast navigation
+	 * @public
+	 */
+	supportsF6FastNavigation() {
+		return !!this.metadata.fastNavigation;
+	}
+
+	/**
 	 * Returns an object with key-value pairs of properties and their metadata definitions
 	 * @public
 	 */
@@ -210,6 +218,14 @@ class UI5ElementMetadata {
 	 */
 	isLanguageAware() {
 		return !!this.metadata.languageAware;
+	}
+
+	/**
+	 * Determines whether this UI5 Element has any theme dependant carachteristics.
+	 * @returns {boolean}
+	 */
+	 isThemeAware() {
+		return !!this.metadata.themeAware;
 	}
 
 	/**

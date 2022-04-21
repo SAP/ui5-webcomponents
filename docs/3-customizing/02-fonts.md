@@ -21,14 +21,14 @@ For example:
 </style>
 ```
 
-*Important: * Notice the `data-ui5-font-face` attribute. It is unique and recognized by UI5 Web Components.
+**Important:** Notice the `data-ui5-font-face` attribute. It is unique and recognized by UI5 Web Components.
 
 ## Customizing Fonts
 
 You might need to customize fonts for several reasons: 
  - To provide different paths for the fonts (e.g. no public internet connection on the server).
  - To provide additional declarations inside `@font-face`.
- - To download additional fonts, such as f.e. `72-Light`.
+ - To download additional fonts, such as e.g. `72-Light`.
  - Not to download any of the default fonts.
 
 To do that, just create a `<style type="text/css" data-ui5-font-face="">` tag in the `head` of your HTML page and 

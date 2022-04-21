@@ -4,7 +4,6 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	--_ui5_popup_content_padding: 0;
 }
 
 .ui5-multi-combobox-root {
@@ -12,6 +11,7 @@
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
+	border-radius: var(--_ui5_input_border_radius);
 }
 
 .ui5-multi-combobox-tokenizer {
@@ -34,4 +34,8 @@
 [ui5-icon] {
 	border-top-right-radius: var(--ui5-multi_bombobox_icon_border_top_right_radius);
     border-bottom-right-radius: var(--ui5-multi_bombobox_icon_border_bottom_right_radius);
+}
+
+:host([readonly]) .ui5-multi-combobox-tokenizer::part(n-more-text) {
+	color: var(--sapLinkColor);
 }

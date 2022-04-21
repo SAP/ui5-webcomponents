@@ -9,10 +9,10 @@
 	--_ui5_slider_handle_width: 1.75rem;
 	--_ui5_slider_handle_border: solid 0.125rem #999;
 	--_ui5_slider_handle_background: rgba(var(--sapField_Background), 0.1);
+	--_ui5_slider_handle_hover_background: rgba(217,217,217,0.6);
+	--_ui5_range_slider_handle_hover_background: rgba(217,217,217,0.6);
 	--_ui5_slider_handle_top: -0.8725rem;
 	--_ui5_slider_handle_margin_left: -1rem;
-	--_ui5_slider_handle_hover_background: rgba(217,217,217,0.6);
-	--_ui5_slider_handle_hover_border: #999;
 	--_ui5_slider_tickmark_color: #bfbfbf;
 	--_ui5_slider_disabled_opacity: 0.5;
 	--_ui5_slider_tooltip_padding: 0.50rem;

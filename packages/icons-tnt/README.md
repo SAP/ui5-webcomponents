@@ -9,7 +9,7 @@ Provides assets for the rich `tnt` icon collection.
 
 | Icon asset               | Module import                                                    |
 |--------------------------|------------------------------------------------------------------|
-| All icons (~33KB zipped) | `import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`        |
+| All icons (~31KB zipped) | `import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`        |
 | Actor icon               | `import "@ui5/webcomponents-icons-tnt/dist/actor.js";`           |
 | Ad hoc actor icon        | `import "@ui5/webcomponents-icons-tnt/dist/ad-hoc-actor.js";`    |
 | ...                      | ...                                                              |
@@ -40,7 +40,7 @@ For a full list of the icons in the `tnt` collection, click [here](https://openu
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/docs/6-contributing/02-conventions-and-guidelines.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
@@ -43,7 +43,7 @@ const metadata = {
 		/**
 		 * Defines the index of the item inside of the ColorPalette.
 		 * @private
-		 * @type {String}
+		 * @type {string}
 		 */
 		index: {
 			type: String,
@@ -52,7 +52,7 @@ const metadata = {
 		/**
 		 * Defines if the ColorPalette is on phone mode.
 		 * @private
-		 * @type {Boolean}
+		 * @type {boolean}
 		 */
 		phone: {
 			type: Boolean,
@@ -107,12 +107,11 @@ class ColorPaletteItem extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ColorPaletteItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -121,7 +120,15 @@ class ColorPaletteItem extends UI5Element {
 	}
 
 	get colorLabel() {
-		return this.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
+		return ColorPaletteItem.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
+	}
+
+	get styles() {
+		return {
+			root: {
+				"background-color": this.value,
+			},
+		};
 	}
 }
 

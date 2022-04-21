@@ -4,38 +4,38 @@ In this tutorial, you will learn how to add UI5 Web Components to your applicati
 
 In order to have a better development experience, we would recommend you take a look at our dedicated wrapper for UI5 Web Components in React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and check out [their tutorial](https://developers.sap.com/mission.react-spa.html) as well.
 
-### Step 1. Create a new application. For example, with `create-react-app`
+### Step 1. Create a new application. For example, with `create-react-app`.
 
 ```bash
 npx create-react-app ui5-web-components-application
 cd ui5-web-components-application
 ```
 
-### Step 2. Add UI5 Web Components
+### Step 2. Add UI5 Web Components.
 
 ```bash
 npm install @ui5/webcomponents --save
 ```
 
-### Step 3. Import the components that you are going to use
+### Step 3. Import the components that you are going to use.
 
 ```js
 import "@ui5/webcomponents/dist/Button.js";
 ```
 
-### Step 4. Use the imported elements in your application
+### Step 4. Use the imported elements in your application.
 
 ```html
 <ui5-button>Hello world!</ui5-button>
 ```
 
-### Step 5. Launch the application
+### Step 5. Launch the application.
 
 ```bash
 yarn start
 ```
 
-## Additional
+## Additional Info
 
 When developing with React, there are two slight React limitations you should know about. These are not related to UI5 Web Components per se, but with using custom elements in React in general.
 

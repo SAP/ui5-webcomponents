@@ -7,47 +7,16 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-multi-input</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
-	<style>
-		ui5-multi-input {
-			/* width: 100%; */
-		}
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-		.footer {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			padding: .25rem .5rem;
-			box-sizing: border-box;
-			width: 100%;
-		}
-
-		.footer ui5-button:not(:last-child) {
-			margin-right: 1rem;
-		}
-
-		.sample-container {
-			width: 100%;
-			padding: 2rem;
-			box-sizing: border-box;
-		}
-
-		.sample-container-title {
-			padding: 0;
-			margin: 0;
-			box-sizing: border-box;
-			font-size: 1rem;
-			margin-bottom: 1rem;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/MultiInput.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);" class="ui5-content-density-compact">
+<body class="multiinput1auto ui5-content-density-compact" >
 
 	<div class="sample-container">
 
@@ -226,6 +195,14 @@
 		<br>
 		<br>
 
+		<h1 class="sample-container-title">Multi Input with 2 tokens</h1>
+		<ui5-multi-input id="two-tokens" value="abc">
+			<ui5-token slot="tokens" id="firstToken" text="a"></ui5-token>
+			<ui5-token slot="tokens" id="secondToken" text="b"></ui5-token>
+		</ui5-multi-input>
+		<br>
+		<br>
+
 		<h1 class="sample-container-title">Multi Input with 5 tokens</h1>
 		<ui5-multi-input id="multiple-token">
 			<ui5-token slot="tokens" text="ea"></ui5-token>
@@ -279,7 +256,7 @@
 
 	<div>
 		<ui5-title>MultiInput with tokens with custom icon</ui5-title>
-		<ui5-multi-input id="mi-with-tokens-customicon" placeholder="Placeholder" style="width: 500px;">
+		<ui5-multi-input id="mi-with-tokens-customicon" placeholder="Placeholder" class="multiinput2auto">
 			<ui5-token slot="tokens" text="Menu">
 				<ui5-icon name="menu" accessible-name="Menu here" slot="closeIcon"></ui5-icon>
 			</ui5-token>
@@ -362,14 +339,13 @@
 			document.getElementById("value-help-trigger-counter").value = ++valueHelpTriggerCounter;
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
+		const handleTokenDelete = (event) => {
 			var mi = event.target;
-
 			mi.removeChild(event.detail.token);
+		}
 
-			// discuss ?!
-			// mi.focus();
-		});
+		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
+		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
 	</script>
 </body>
 

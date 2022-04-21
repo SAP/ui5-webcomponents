@@ -84,6 +84,33 @@ class DateRangePicker extends DatePicker {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
+	constructor() {
+		super();
+		this._prevDelimiter = null;
+	}
+
+	/**
+	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValue() {
+		return null;
+	}
+
+	/**
+	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValueUTC() {
+		return null;
+	}
+
 	get _startDateTimestamp() {
 		return this._extractFirstTimestamp(this.value);
 	}
@@ -156,7 +183,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATERANGE_DESCRIPTION);
+		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
 	}
 
 	/**
@@ -265,7 +292,7 @@ class DateRangePicker extends DatePicker {
 
 	_splitValueByDelimiter(value) {
 		const valuesArray = [];
-		const partsArray = value.split(this._effectiveDelimiter);
+		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
 		valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(this._effectiveDelimiter);
 		valuesArray[1] = partsArray.slice(partsArray.length / 2).join(this._effectiveDelimiter);
@@ -308,6 +335,7 @@ class DateRangePicker extends DatePicker {
 	 * @private
 	 */
 	_buildValue(firstDateTimestamp, lastDateTimestamp) {
+		this._prevDelimiter = this._effectiveDelimiter;
 		if (firstDateTimestamp) {
 			const firstDateString = this._getStringFromTimestamp(firstDateTimestamp * 1000);
 

@@ -12,11 +12,7 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"BarcodeScannerDialog",
-	"Breadcrumbs",
-	"IllustratedMessage",
-	"ViewSettingsDialog",
-	"ColorPalettePopover"
+	"Menu",
 ];
 
 packages.forEach(package => {

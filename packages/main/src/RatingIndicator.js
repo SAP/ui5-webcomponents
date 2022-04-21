@@ -7,8 +7,10 @@ import {
 	isRight,
 	isSpace,
 	isEnter,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
@@ -86,9 +88,9 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue: undefined
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -143,6 +145,20 @@ const metadata = {
  * <br>
  * Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
  *
+ * <h3>Keyboard Handling</h3>
+ * When the <code>ui5-rating-indicator</code> is focused, the user can change the rating
+ * with the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[RIGHT/UP] - Increases the value of the rating by one step. If the highest value is reached, does nothing</li>
+ * <li>[LEFT/DOWN] - Decreases the value of the rating by one step. If the lowest value is reached, does nothing.</li>
+ * <li>[HOME] - Sets the lowest value.</li>
+ * <li>[END] - Sets the highest value.</li>
+ * <li>[SPACE/ENTER/RETURN] - Increases the value of the rating by one step. If the highest value is reached, sets the rating to the lowest value.</li>
+ * <li>Any number - Changes value to the corresponding number. If typed number is larger than the number of values, sets the highest value.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/RatingIndicator.js";</code>
@@ -173,14 +189,13 @@ class RatingIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		RatingIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
 
 		this._liveValue = null; // stores the value to determine when to fire change
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -233,19 +248,33 @@ class RatingIndicator extends UI5Element {
 			return;
 		}
 
-		const down = isDown(event) || isLeft(event);
-		const up = isRight(event) || isUp(event) || isSpace(event) || isEnter(event);
+		const isDecrease = isDown(event) || isLeft(event);
+		const isIncrease = isRight(event) || isUp(event);
+		const isIncreaseWithReset = isSpace(event) || isEnter(event);
+		const isMin = isHome(event);
+		const isMax = isEnd(event);
+		const isNumber = (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105);
 
-		if (down || up) {
+		if (isDecrease || isIncrease || isIncreaseWithReset || isMin || isMax || isNumber) {
 			event.preventDefault();
 
-			if (down && this.value > 0) {
+			if (isDecrease && this.value > 0) {
 				this.value = Math.round(this.value - 1);
-				this.fireEvent("change");
-			} else if (up && this.value < this.max) {
+			} else if (isIncrease && this.value < this.max) {
 				this.value = Math.round(this.value + 1);
-				this.fireEvent("change");
+			} else if (isIncreaseWithReset) {
+				const proposedValue = Math.round(this.value + 1);
+				this.value = proposedValue > this.max ? 0 : proposedValue;
+			} else if (isMin) {
+				this.value = 0;
+			} else if (isMax) {
+				this.value = this.max;
+			} else if (isNumber) {
+				const pressedNumber = parseInt(event.key);
+				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
+
+			this.fireEvent("change");
 		}
 	}
 
@@ -271,11 +300,11 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get defaultTooltip() {
-		return this.i18nBundle.getText(RATING_INDICATOR_TOOLTIP_TEXT);
+		return RatingIndicator.i18nBundle.getText(RATING_INDICATOR_TOOLTIP_TEXT);
 	}
 
 	get _ariaRoleDescription() {
-		return this.i18nBundle.getText(RATING_INDICATOR_TEXT);
+		return RatingIndicator.i18nBundle.getText(RATING_INDICATOR_TEXT);
 	}
 
 	get _ariaDisabled() {

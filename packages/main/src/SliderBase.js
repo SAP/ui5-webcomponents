@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import "@ui5/webcomponents-icons/dist/source-code.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -157,6 +159,13 @@ class SliderBase extends UI5Element {
 			max: null,
 			labelInterval: null,
 		};
+
+		this._ontouchstart = {
+			handleEvent(event) {
+				this._onmousedown(event);
+			},
+			passive: true,
+		};
 	}
 
 	static get metadata() {
@@ -180,6 +189,7 @@ class SliderBase extends UI5Element {
 			sap_belize: "#bfbfbf",
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
+			sap_horizon: "#89919a",
 		};
 	}
 
@@ -227,6 +237,9 @@ class SliderBase extends UI5Element {
 
 	get classes() {
 		return {
+			root: {
+				"ui5-slider-root-phone": isPhone(),
+			},
 			labelContainer: {
 				"ui5-slider-hidden-labels": this._labelsOverlapping,
 			},
@@ -247,10 +260,6 @@ class SliderBase extends UI5Element {
 		if (this.notResized) {
 			this._resizeHandler();
 		}
-	}
-
-	_ontouchstart(event) {
-		this._onmousedown(event);
 	}
 
 	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
@@ -660,12 +669,15 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	get _tickmarks() {
+		const currentTheme = getTheme();
+		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
+
 		if (!this.showTickmarks || !this._effectiveStep) {
 			return;
 		}
 
 		if (this._hiddenTickmarks) {
-			return `linear-gradient(to right, currentColor 1px, transparent 0) 0 center / calc(100% - 1px) 100% repeat-x`;
+			return `linear-gradient(to right, ${currentColor} 1px, transparent 0) 0 center / calc(100% - 1px) 100% repeat-x`;
 		}
 
 		// Convert number values to strings to let the CSS do calculations better
@@ -673,12 +685,10 @@ class SliderBase extends UI5Element {
 		const maxStr = String(this._effectiveMax);
 		const minStr = String(this._effectiveMin);
 		const stepStr = String(this._effectiveStep);
-		const tickmarkWidth = "1px";
 
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
-		const currentTheme = getTheme();
-		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
+		const tickmarkWidth = "1px";
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
 		this._hiddenTickmarks = false;

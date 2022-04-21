@@ -20,31 +20,31 @@
 }
 
 .ui5-fcl-column-animation {
-    transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
+	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
 }
 
 :host([_visible-columns="2"]) .ui5-fcl-column--start {
-	border-right: var(--_ui5_fcl_column_border);
+	border-inline-end: var(--_ui5_fcl_column_border);
 }
 
 :host([_visible-columns="3"]) .ui5-fcl-column--start {
-	border-right: var(--_ui5_fcl_column_border);
+	border-inline-end: var(--_ui5_fcl_column_border);
 }
 
 :host([_visible-columns="2"]) .ui5-fcl-column--middle {
-	border-left: var(--_ui5_fcl_column_border)
+	border-inline-start: var(--_ui5_fcl_column_border)
 }
 
 :host([_visible-columns="3"]) .ui5-fcl-column--middle {
-	border-left: var(--_ui5_fcl_column_border)
+	border-inline-start: var(--_ui5_fcl_column_border)
 }
 
 :host([_visible-columns="3"]) .ui5-fcl-column--middle {
-	border-right: var(--_ui5_fcl_column_border)
+	border-inline-end: var(--_ui5_fcl_column_border)
 }
 
 :host([_visible-columns="3"]) .ui5-fcl-column--end {
-	border-left: var(--_ui5_fcl_column_border);
+	border-inline-start: var(--_ui5_fcl_column_border);
 }
 
 .ui5-fcl-column--hidden {

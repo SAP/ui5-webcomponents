@@ -1,11 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
+import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
 
 // Styles
@@ -42,6 +42,18 @@ const metadata = {
 		layout: {
 			type: TimelineLayout,
 			defaultValue: TimelineLayout.Vertical,
+		},
+
+		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.2.0
+		 */
+		accessibleName: {
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
@@ -104,7 +116,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.items,
 		});
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get dependencies() {
@@ -112,11 +123,13 @@ class Timeline extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents-fiori");
+		Timeline.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get ariaLabel() {
-		return this.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+		return this.accessibleName
+			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL)} ${this.accessibleName}`
+			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
 	}
 
 	_onfocusin(event) {

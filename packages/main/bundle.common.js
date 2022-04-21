@@ -1,5 +1,8 @@
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
+// import "./customI18n.js";
 
+import "./bundle.common.bootstrap.js"; // code that needs to be executed before other modules
 
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
@@ -48,11 +51,12 @@ import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
-import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
+import Menu from "./dist/Menu.js";
+import MenuItem from "./dist/MenuItem.js";
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
@@ -61,6 +65,7 @@ import SegmentedButton from "./dist/SegmentedButton.js";
 import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
+import SplitButton from "./dist/SplitButton.js";
 import StepInput from "./dist/StepInput.js";
 import RangeSlider from "./dist/RangeSlider.js";
 import Switch from "./dist/Switch.js";
@@ -137,6 +142,15 @@ const testAssets = {
 	renderFinished,
 	defaultTexts,
 };
+
+// The SAP Icons V4 icon collection is set by default in sap_fiori_3,
+// but it's configurable:
+// import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
+// setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
+// or 
+// setDefaultIconCollection("sap_fiori_3", "horizon");
+// or for custom theme
+// setDefaultIconCollection("my_custom_theme", "SAP-icons-v5");
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
 

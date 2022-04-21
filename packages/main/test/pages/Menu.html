@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="height100percent">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Menu</title>
+
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="styles/Menu.css">
+</head>
+
+<body class="responsivepopover2auto">
+	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
+	<ui5-menu id="menu" header-text="My ui5-menu">
+		<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
+		<ui5-menu-item text="New Folder" icon="add-folder" disabled></ui5-menu-item>
+		<ui5-menu-item text="Open" icon="open-folder" starts-section>
+			<ui5-menu-item text="Open Locally" icon="open-folder">
+				<ui5-menu-item text="Open from C"></ui5-menu-item>
+				<ui5-menu-item text="Open from D"></ui5-menu-item>
+				<ui5-menu-item text="Open from E"></ui5-menu-item>
+			</ui5-menu-item>
+			<ui5-menu-item text="Open from Cloud"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Save" icon="save">
+			<ui5-menu-item text="Save Locally" icon="save">
+				<ui5-menu-item text="Save on C" icon="save"></ui5-menu-item>
+				<ui5-menu-item text="Save on D" icon="save"></ui5-menu-item>
+				<ui5-menu-item text="Save on E" icon="save"></ui5-menu-item>
+			</ui5-menu-item>
+			<ui5-menu-item text="Save on Cloud" icon="upload-to-cloud"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Close"></ui5-menu-item>
+		<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
+	</ui5-menu>
+
+	<header class="header">
+		<h3 class="header-title">Clicked menu item text</h3>
+	</header>
+
+	<div class="samples-margin">
+		<ui5-input id="selectionInput"></ui5-input>
+	</div>
+
+	<header class="header">
+		<h3 class="header-title">Text Direction</h3>
+	</header>
+	<div class="samples-margin">
+		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-input>
+	</div>
+
+	<script>
+		btnOpen.accessibilityAttributes = {
+			hasPopup: "Menu",
+		};
+
+		btnOpen.addEventListener("click", function(event) {
+			menu.showAt(btnOpen);
+		});
+
+		menu.addEventListener("ui5-item-click", function(event){
+			selectionInput.value = event.detail.text;
+		});
+
+		direction.addEventListener("change", function() {
+			document.body.setAttribute("dir", direction.checked ? "rtl" : "ltr");
+			window["sap-ui-webcomponents-bundle"].applyDirection();
+		});
+
+	</script>
+</body>
+</html>

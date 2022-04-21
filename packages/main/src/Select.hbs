@@ -1,5 +1,5 @@
 <div
-	class="ui5-select-root"
+	class="ui5-select-root ui5-input-focusable-element"
 	dir="{{effectiveDir}}"
 	id="{{_id}}-select"
 	@click="{{_onclick}}"
@@ -22,6 +22,7 @@
 		aria-disabled="{{isDisabled}}"
 		aria-required="{{required}}"
 		aria-expanded="{{_isPickerOpen}}"
+		aria-roledescription="{{_ariaRoleDescription}}"
 		@keydown="{{_onkeydown}}"
 		@keypress="{{_handleKeyboardNavigation}}"
 		@keyup="{{_onkeyup}}"

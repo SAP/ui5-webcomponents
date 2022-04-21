@@ -1,0 +1,17 @@
+@import "../base/TextArea-parameters.css";
+
+:root {
+	--_ui5_textarea_inner_border_width: 0px;
+	--_ui5_textarea_state_border_width: 0px;
+	--_ui5_textarea_success_border_width: 0px;
+	--_ui5_textarea_hover_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_textarea_focus_box_shadow: 0px 0px 0px 0.125rem var(--sapField_Focus_BorderColor);
+	--_ui5_textarea_value_state_warning_focus_box_shadow: 0px 0px 0px 2px var(--sapField_WarningColor);
+	--_ui5_textarea_value_state_error_focus_box_shadow: 0px 0px 0px 2px var(--sapField_InvalidColor);
+	--_ui5_textarea_value_state_success_focus_box_shadow: 0px 0px 0px 2px var(--sapField_SuccessColor);
+	--_ui5_textarea_focus_outline: none;
+	--_ui5_textarea_value_state_focus_outline: none;
+	--_ui5_textarea_after_element_display: inline-block;
+	--_ui5_textarea_value_state_warning_hover_box_shadow: none;
+	--_ui5_textarea_disabled_background_color: var(--sapField_Background);
+}

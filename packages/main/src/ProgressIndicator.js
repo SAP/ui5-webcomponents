@@ -4,7 +4,8 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Icon from "./Icon.js";
 import ProgressIndicatorTemplate from "./generated/templates/ProgressIndicatorTemplate.lit.js";
 import {
 	VALUE_STATE_ERROR,
@@ -138,13 +139,15 @@ class ProgressIndicator extends UI5Element {
 		return ProgressIndicatorTemplate;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	constructor() {
 		super();
 
 		this._previousValue = 0;
 		this._transitionDuration = 0;
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -153,13 +156,11 @@ class ProgressIndicator extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
@@ -230,7 +231,7 @@ class ProgressIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ProgressIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

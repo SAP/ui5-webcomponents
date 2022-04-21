@@ -1,0 +1,10 @@
+@import "../base/Link-parameters.css";
+
+:root {
+	--_ui5_link_text_decoration: underline;
+	--_ui5_link_hover_text_decoration: none;
+	--_ui5_link_active_text_decoration: none;
+	--_ui5_link_subtle_text_decoration: underline;
+	--_ui5_link_border: 0.125rem dotted transparent;
+	--_ui5_link_border_focus: 0.125rem dotted var(--sapContent_FocusColor);
+}

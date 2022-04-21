@@ -106,6 +106,14 @@ const parseURLParameters = () => {
 	});
 };
 
+const normalizeParamValue = (param, value) => {
+	if (param === "theme" && value.includes("@")) { // the theme parameter might have @<URL-TO-THEME> in the value - strip this
+		return value.split("@")[0];
+	}
+
+	return value;
+};
+
 const applyURLParam = (key, value, paramType) => {
 	const lowerCaseValue = value.toLowerCase();
 	const param = key.split(`${paramType}-`)[1];
@@ -113,6 +121,9 @@ const applyURLParam = (key, value, paramType) => {
 	if (booleanMapping.has(value)) {
 		value = booleanMapping.get(lowerCaseValue);
 	}
+
+	value = normalizeParamValue(param, value);
+
 	initialConfig[param] = value;
 };
 

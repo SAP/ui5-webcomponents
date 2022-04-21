@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-fiori",
-  "version": "1.0.0-rc.15",
+  "version": "1.3.0",
   "description": "UI5 Web Components: webcomponents.fiori",
   "ui5": {
     "webComponentsPackage": true
@@ -19,8 +19,8 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
-    "./bundle.es5.js": "./bundle.es5.js",
     "./bundle.common.js": "./bundle.common.js",
+    "./bundle.scoped.esm.js": "./bundle.scoped.esm.js",
     "./*": "./dist/*"
   },
   "scripts": {
@@ -40,15 +40,14 @@
     "directory": "packages/fiori"
   },
   "dependencies": {
-    "@ui5/webcomponents": "1.0.0-rc.15",
-    "@ui5/webcomponents-base": "1.0.0-rc.15",
-    "@ui5/webcomponents-icons": "1.0.0-rc.15",
-    "@ui5/webcomponents-ie11": "1.0.0-rc.15",
-    "@ui5/webcomponents-theme-base": "1.0.0-rc.15",
+    "@ui5/webcomponents": "1.3.0",
+    "@ui5/webcomponents-base": "1.3.0",
+    "@ui5/webcomponents-icons": "1.3.0",
+    "@ui5/webcomponents-theming": "1.3.0",
     "@zxing/library": "^0.18.3"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.15",
-    "chromedriver": "94.0.0"
+    "@ui5/webcomponents-tools": "1.3.0",
+    "chromedriver": "100.0.0"
   }
 }

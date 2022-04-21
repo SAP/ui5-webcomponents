@@ -4,7 +4,6 @@
 	?disabled="{{disabled}}"
 	data-sap-focus-ref
 	{{> ariaPressed}}
-	dir="{{effectiveDir}}"
 	@focusout={{_onfocusout}}
 	@focusin={{_onfocusin}}
 	@click={{_onclick}}
@@ -15,11 +14,11 @@
 	@touchstart="{{_ontouchstart}}"
 	@touchend="{{_ontouchend}}"
 	tabindex={{tabIndexValue}}
-	aria-expanded="{{accInfo.ariaExpanded}}"
-	aria-controls="{{accInfo.ariaControls}}"
-	aria-haspopup="{{accInfo.ariaHaspopup}}"
-	aria-label="{{accessibleName}}"
-	title="{{accInfo.title}}"
+	aria-expanded="{{accessibilityAttributes.expanded}}"
+	aria-controls="{{accessibilityAttributes.controls}}"
+	aria-haspopup="{{accessibilityAttributes.hasPopup}}"
+	aria-label="{{ariaLabelText}}"
+	title="{{tooltip}}"
 	part="button"
 >
 	{{#if icon}}

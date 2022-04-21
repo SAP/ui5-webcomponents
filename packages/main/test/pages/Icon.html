@@ -7,7 +7,7 @@
 
 	<title>Icon</title>
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 	<script data-id="sap-ui-config" type="application/json">
 		{
@@ -16,20 +16,17 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		section {
-			border: dashed 2px red;
-		}
-	</style>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="styles/Icon.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
-
-	<ui5-icon title="add equipment" style="width: 50px; height: 50px; border: 1px solid red;" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
+<body class="icon1auto">
+	<ui5-toggle-button id="myBtn">Fiori 3/Next</ui5-toggle-button>
+	<br>
+	<ui5-icon title="add equipment" class="icon2auto" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
 	<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
 	<ui5-icon name="add-employee" class="icon-red"></ui5-icon>
@@ -41,11 +38,12 @@
 	<ui5-icon id="araHiddenIcon" name="add-employee" aria-hidden="true" class="icon-red icon-small"></ui5-icon>
 
 	<h3>Interactive Icon</h3>
+	<ui5-icon id="accRoleIcon" accessible-role="link" interactive class="samples-margin" accessible-name="Hello World" name="horizon/accept"></ui5-icon>
 	<ui5-icon
 		id="myInteractiveIcon"
 		interactive
 		name="add-equipment"
-		style="width: 50px; height: 50px">
+		class="icon3auto">
 	</ui5-icon>
 	<br>
 	<ui5-input id="click-event-2"></ui5-input>
@@ -53,8 +51,8 @@
 	<br>
 	<ui5-icon name="add-employee"></ui5-icon>
 	<br>
-	<ui5-icon style="width: 1rem; height: 1rem;" name="add-employee"></ui5-icon>
-	<ui5-icon style="width: 2rem; height: 2rem;" name="factory"></ui5-icon>
+	<ui5-icon class="icon4auto" name="add-employee"></ui5-icon>
+	<ui5-icon class="icon5auto" name="factory"></ui5-icon>
 	<br>
 
 	<ui5-button icon="add-equipment"></ui5-button>
@@ -66,16 +64,16 @@
 
 	<br />
 
-	<ui5-date-picker style="margin-top: 10px" placeholder="test" value="Value State None">
+	<ui5-date-picker class="icon6auto" placeholder="test" value="Value State None">
 	</ui5-date-picker>
 
-	<ui5-date-picker style="margin-top: 10px" value-state="Success" value="Value State Success">
+	<ui5-date-picker class="icon6auto" value-state="Success" value="Value State Success">
 	</ui5-date-picker>
 
-	<ui5-date-picker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
+	<ui5-date-picker class="icon6auto" value-state="Warning" value="Value State Warning">
 	</ui5-date-picker>
 
-	<ui5-date-picker style="margin-top: 10px" value-state="Error" value="Value State Error">
+	<ui5-date-picker class="icon6auto" value-state="Error" value="Value State Error">
 	</ui5-date-picker>
 
 	<br/><br/>
@@ -88,7 +86,7 @@
 	<br/>
 
 	<ui5-button icon="overflow"></ui5-button>
-	<ui5-icon name="overflow" style="border:1px solid red;"></ui5-icon>
+	<ui5-icon name="overflow" class="icon7auto"></ui5-icon>
 	<br>
 	<br>
 
@@ -97,6 +95,48 @@
 	<ui5-icon id="iconWithTooltip" name="save" show-tooltip></ui5-icon>
 	<ui5-icon name="overflow" show-tooltip></ui5-icon>
 	<ui5-icon name="settings" show-tooltip></ui5-icon>
+
+	<h3>Auto, SAP-icons, horizon</h3>
+	<ui5-icon name="company-view" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-icon name="SAP-icons/company-view" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-icon name="horizon/company-view" class="icon-blue icon-medium"></ui5-icon>
+
+	<h3>SAP Icons</h3>
+	<ui5-icon name="SAP-icons/appointment-2"></ui5-icon>
+	<ui5-icon name="SAP-icons/slim-arrow-down"></ui5-icon>
+	<ui5-icon name="SAP-icons/accept"></ui5-icon>
+	<ui5-icon name="SAP-icons/resize-corner"></ui5-icon>
+	<ui5-icon show-tooltip name="SAP-icons/error"></ui5-icon>
+	<ui5-icon show-tooltip name="SAP-icons/bookmark"></ui5-icon>
+	<ui5-icon show-tooltip name="SAP-icons/bookmark-2"></ui5-icon>
+
+
+	<h3>SAP Fiori Next Icons</h3>
+	<ui5-icon name="horizon/appointment-2"></ui5-icon>
+	<ui5-icon name="horizon/slim-arrow-down"></ui5-icon>
+	<ui5-icon name="horizon/accept"></ui5-icon>
+	<ui5-icon name="horizon/resize-corner"></ui5-icon>
+	<ui5-icon show-tooltip name="horizon/error"></ui5-icon>
+	<ui5-icon show-tooltip name="horizon/bookmark"></ui5-icon>
+	<ui5-icon show-tooltip name="horizon/bookmark-2"></ui5-icon>
+
+	<h3>SAP Fiori Tools Icons</h3>
+	<div class="snippet">
+		<ui5-icon class="samples-margin" name="tnt/actor"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/aggregator"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/association"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/network"></ui5-icon>
+		<ui5-icon class="samples-margin" name="tnt/repeater"></ui5-icon>
+	</div>
+
+	<h3>SAP business-suite Icons</h3>
+	<div class="snippet">
+		<ui5-icon class="samples-margin" name="business-suite/add-polygone"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/2x1-grid-layout"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/activate"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/3d"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/ab-testing"></ui5-icon>
+	</div>
 
 	<script>
 		var icon = document.getElementById("interactive-icon"),
@@ -212,5 +252,13 @@
 		<ui5-icon name="undo"></ui5-icon>
 		<ui5-icon name="step"></ui5-icon>
 	</section>
+
+	<script>
+		myBtn.addEventListener("click", function(event) {
+			var theme = event.target.pressed ? "sap_horizon" : "sap_fiori_3";
+			var Conf = window["sap-ui-webcomponents-bundle"].configuration;
+			Conf.setTheme(theme);
+		});
+	</script>
 </body>
 </html>

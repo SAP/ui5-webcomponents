@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -50,14 +50,27 @@ const metadata = {
 
 		/**
 		 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
-		 * <b>Note:</b> <code>accessibleName</code> should be always set.
+		 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
 		 *
-		 * @type {String}
+		 *
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.16
 		 */
 		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.16
+		 */
+		accessibleNameRef: {
 			type: String,
 		},
 	},
@@ -96,12 +109,6 @@ const metadata = {
  * @appenddocs CardHeader
  */
 class Card extends UI5Element {
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -132,11 +139,11 @@ class Card extends UI5Element {
 	get _getAriaLabel() {
 		const effectiveAriaLabelText = getEffectiveAriaLabelText(this),
 			effectiveAriaLabel = effectiveAriaLabelText ? ` ${effectiveAriaLabelText}` : "";
-		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
+		return Card.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
 	}
 
 	get _ariaCardContentLabel() {
-		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
+		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
 	static get dependencies() {
@@ -144,7 +151,7 @@ class Card extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Card.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

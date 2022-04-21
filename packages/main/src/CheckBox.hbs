@@ -4,8 +4,10 @@
 	aria-checked="{{ariaChecked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
+	aria-label="{{ariaLabelText}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-describedby="{{ariaDescribedBy}}"
+	aria-required="{{required}}"
 	tabindex="{{tabIndex}}"
 	@mousedown="{{_onmousedown}}"
 	@mouseup="{{_onmouseup}}"
@@ -13,7 +15,6 @@
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
 	@focusout="{{_onfocusout}}"
-	dir="{{effectiveDir}}"
 >
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
 			{{#if isCompletelyChecked}}

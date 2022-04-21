@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
@@ -183,9 +183,9 @@ class TimePickerBase extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
+		[TimePickerBase.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
 
@@ -195,7 +195,6 @@ class TimePickerBase extends UI5Element {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -257,8 +256,10 @@ class TimePickerBase extends UI5Element {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
-		this.value = value;
+		if (!events.includes("input")) {
+			this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
+			this.value = value;
+		}
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		events.forEach(event => {
@@ -441,16 +442,23 @@ class TimePickerBase extends UI5Element {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
+	/**
+	 *
+	 * @param {event} e Wheel Event
+	 * @private
+	 *
+	 * The listener for this event can't be passive as it calls preventDefault()
+	 */
 	_handleWheel(e) {
 		e.preventDefault();
 	}
 
 	get submitButtonLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+		return TimePickerBase.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get cancelButtonLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+		return TimePickerBase.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	/**

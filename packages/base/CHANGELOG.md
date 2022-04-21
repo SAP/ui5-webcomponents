@@ -3,6 +3,197 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **framework:** make listeners passive ([#5012](https://github.com/SAP/ui5-webcomponents/issues/5012)) ([30f2dc7](https://github.com/SAP/ui5-webcomponents/commit/30f2dc7))
+* **framework:** fix F6 navigation on windows browsers ([#4886](https://github.com/SAP/ui5-webcomponents/issues/4886)) ([36fd3d1](https://github.com/SAP/ui5-webcomponents/commit/36fd3d1))
+* **framework:** fix submit event handling in forms ([#4942](https://github.com/SAP/ui5-webcomponents/issues/4942)) ([883809f](https://github.com/SAP/ui5-webcomponents/commit/883809f))
+* **framework:** add 72-* font as system styles ([#4934](https://github.com/SAP/ui5-webcomponents/issues/4934)) ([4b45d32](https://github.com/SAP/ui5-webcomponents/commit/4b45d32))
+* **framework:** fix scoping of self tag ([#4952](https://github.com/SAP/ui5-webcomponents/issues/4952)) ([8d53e95](https://github.com/SAP/ui5-webcomponents/commit/8d53e95))
+
+
+### Features
+
+* **framework:** configure default icon collection per theme ([#5031](https://github.com/SAP/ui5-webcomponents/issues/5031)) ([7f84b83](https://github.com/SAP/ui5-webcomponents/commit/7f84b83))
+
+
+
+
+
+## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
+
+
+### Bug Fixes
+
+* **framework:** fix scoping of self tag ([#4952](https://github.com/SAP/ui5-webcomponents/issues/4952)) ([cdb9e2a](https://github.com/SAP/ui5-webcomponents/commit/cdb9e2a))
+* **ui5-card-header:** prevent events from action slot to trigger header's click event ([#4965](https://github.com/SAP/ui5-webcomponents/issues/4965)) ([f87d898](https://github.com/SAP/ui5-webcomponents/commit/f87d898)), closes [#4891](https://github.com/SAP/ui5-webcomponents/issues/4891)
+* **ui5-popover:** prevent arrow placement over popover's rounded corners ([#4960](https://github.com/SAP/ui5-webcomponents/issues/4960)) ([66604c3](https://github.com/SAP/ui5-webcomponents/commit/66604c3)), closes [#4599](https://github.com/SAP/ui5-webcomponents/issues/4599) [#4797](https://github.com/SAP/ui5-webcomponents/issues/4797)
+
+
+
+
+
+## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
+
+
+### Bug Fixes
+
+* **framework:** add 72-* font as system styles ([#4934](https://github.com/SAP/ui5-webcomponents/issues/4934)) ([8f9b0d2](https://github.com/SAP/ui5-webcomponents/commit/8f9b0d2))
+* **localization:** fix js error if "sh" locale set ([#4905](https://github.com/SAP/ui5-webcomponents/issues/4905)) ([9ace82c](https://github.com/SAP/ui5-webcomponents/commit/9ace82c)), closes [#4904](https://github.com/SAP/ui5-webcomponents/issues/4904)
+
+
+### Features
+
+* add ` sap_horizon_dark` and `sap_horizon_hcb(hcw)` theme params ([#4722](https://github.com/SAP/ui5-webcomponents/issues/4722)) ([dc070a1](https://github.com/SAP/ui5-webcomponents/commit/dc070a1))
+
+
+
+
+
+## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** improve lazy loading behaviour ([#4763](https://github.com/SAP/ui5-webcomponents/issues/4763)) ([35342be](https://github.com/SAP/ui5-webcomponents/commit/35342be))
+* **ui5-list:** initial focus target ([#4809](https://github.com/SAP/ui5-webcomponents/issues/4809)) ([cf6dd1a](https://github.com/SAP/ui5-webcomponents/commit/cf6dd1a))
+* attached boot tasks always run ([#4777](https://github.com/SAP/ui5-webcomponents/issues/4777)) ([ad4608c](https://github.com/SAP/ui5-webcomponents/commit/ad4608c))
+* **framework:** Tabbable elements error ([#4704](https://github.com/SAP/ui5-webcomponents/issues/4704)) ([650473f](https://github.com/SAP/ui5-webcomponents/commit/650473f))
+* **ui5-badge:** update color-scheme parameters ([#4678](https://github.com/SAP/ui5-webcomponents/issues/4678)) ([c7d75ef](https://github.com/SAP/ui5-webcomponents/commit/c7d75ef)), closes [#3940](https://github.com/SAP/ui5-webcomponents/issues/3940)
+* **ui5-label:** allow focusing elements linked with for attribute inside a shadow root ([#4754](https://github.com/SAP/ui5-webcomponents/issues/4754)) ([bd7a8a1](https://github.com/SAP/ui5-webcomponents/commit/bd7a8a1)), closes [#4751](https://github.com/SAP/ui5-webcomponents/issues/4751)
+* **ui5-li-tree:** correct usage of i18nBudnle ([#4668](https://github.com/SAP/ui5-webcomponents/issues/4668)) ([67848d7](https://github.com/SAP/ui5-webcomponents/commit/67848d7))
+* **ui5-select:** incorrect popover styles when value state is used ([#4651](https://github.com/SAP/ui5-webcomponents/issues/4651)) ([2d8ce46](https://github.com/SAP/ui5-webcomponents/commit/2d8ce46))
+* **ui5-tabcontainer:** await for renderFinished in resize handler ([#4675](https://github.com/SAP/ui5-webcomponents/issues/4675)) ([cd8dc26](https://github.com/SAP/ui5-webcomponents/commit/cd8dc26)), closes [#4628](https://github.com/SAP/ui5-webcomponents/issues/4628)
+
+
+### Features
+
+* add and update icons from 4.13 and 5.01 icon fonts  ([#4790](https://github.com/SAP/ui5-webcomponents/issues/4790)) ([a9e88f0](https://github.com/SAP/ui5-webcomponents/commit/a9e88f0))
+* **ui5-input:** implement showClearIcon property ([#4641](https://github.com/SAP/ui5-webcomponents/issues/4641)) ([b1c1620](https://github.com/SAP/ui5-webcomponents/commit/b1c1620))
+* **ui5-table:** extend keyboard handling ([#4550](https://github.com/SAP/ui5-webcomponents/issues/4550)) ([8daa764](https://github.com/SAP/ui5-webcomponents/commit/8daa764)), closes [#3090](https://github.com/SAP/ui5-webcomponents/issues/3090)
+* **ui5-table:** improve keyboard handling ([#4631](https://github.com/SAP/ui5-webcomponents/issues/4631)) ([f1f2b1b](https://github.com/SAP/ui5-webcomponents/commit/f1f2b1b))
+* **ui5-tree:** make `item-click` event preventable ([#4708](https://github.com/SAP/ui5-webcomponents/issues/4708)) ([29967f0](https://github.com/SAP/ui5-webcomponents/commit/29967f0)), closes [#4502](https://github.com/SAP/ui5-webcomponents/issues/4502)
+
+
+
+
+
+## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+
+### Bug Fixes
+
+* fix ipad recognition ([#4632](https://github.com/SAP/ui5-webcomponents/issues/4632)) ([c0cc73d](https://github.com/SAP/ui5-webcomponents/commit/c0cc73d))
+* remove import.meta.url ([#4630](https://github.com/SAP/ui5-webcomponents/issues/4630)) ([604ce63](https://github.com/SAP/ui5-webcomponents/commit/604ce63))
+
+
+### Features
+
+* **ui5-multi-input:** Keyboard handling ([#4495](https://github.com/SAP/ui5-webcomponents/issues/4495)) ([b978f4a](https://github.com/SAP/ui5-webcomponents/commit/b978f4a))
+
+
+
+
+
+## [1.1.1](https://github.com/SAP/ui5-webcomponents/compare/v1.1.0...v1.1.1) (2022-01-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.1.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.2...v1.1.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* **framework:** correct scoping issues ([#4573](https://github.com/SAP/ui5-webcomponents/issues/4573)) ([4e430d3](https://github.com/SAP/ui5-webcomponents/commit/4e430d3))
+* **framework:** prevent runtime error on malformed custom theme object ([#4375](https://github.com/SAP/ui5-webcomponents/issues/4375)) ([3215c7d](https://github.com/SAP/ui5-webcomponents/commit/3215c7d))
+
+
+### Features
+
+* **framework:** implement F6 Navigation Helper ([#4490](https://github.com/SAP/ui5-webcomponents/issues/4490)) ([60d0dc1](https://github.com/SAP/ui5-webcomponents/commit/60d0dc1))
+* **framework:** add support for `stable-dom-ref` for abstract items ([#4604](https://github.com/SAP/ui5-webcomponents/issues/4604)) ([5526dea](https://github.com/SAP/ui5-webcomponents/commit/5526dea))
+* **framework:** introduce runtime and version info ([#4491](https://github.com/SAP/ui5-webcomponents/issues/4491)) ([757577f](https://github.com/SAP/ui5-webcomponents/commit/757577f))
+
+
+
+
+
+## [1.0.2](https://github.com/SAP/ui5-webcomponents/compare/v1.0.1...v1.0.2) (2021-11-29)
+
+
+### Bug Fixes
+
+* prevent runtime error on malformed custom theme object ([#4375](https://github.com/SAP/ui5-webcomponents/issues/4375)) ([dd10d7c](https://github.com/SAP/ui5-webcomponents/commit/dd10d7c))
+
+
+
+
+
+## [1.0.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0...v1.0.1) (2021-11-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.0.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.16...v1.0.0) (2021-11-10)
+
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.0.0-rc.16](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.15...v1.0.0-rc.16) (2021-11-09)
+
+
+### Bug Fixes
+
+* **framework:** apply RTL for components with popovers ([#3657](https://github.com/SAP/ui5-webcomponents/issues/3657)) ([28e868b](https://github.com/SAP/ui5-webcomponents/commit/28e868b))
+* **framework:** Multiple properties have no attribute ([#3725](https://github.com/SAP/ui5-webcomponents/issues/3725)) ([2548935](https://github.com/SAP/ui5-webcomponents/commit/2548935))
+* **framework:** removing the base theme works with adopted stylesheets ([#4158](https://github.com/SAP/ui5-webcomponents/issues/4158)) ([aa1f594](https://github.com/SAP/ui5-webcomponents/commit/aa1f594))
+* **framework:**  detach events correctly to prevent memory leaks ([#3941](https://github.com/SAP/ui5-webcomponents/issues/3941)) ([6c877ee](https://github.com/SAP/ui5-webcomponents/commit/6c877ee))
+
+
+### Features
+
+* **framework:**  add SAP-icons5.0 ([#4244](https://github.com/SAP/ui5-webcomponents/issues/4244)) ([c0a226e](https://github.com/SAP/ui5-webcomponents/commit/c0a226e))
+* rework stableDomRef concept ([#4210](https://github.com/SAP/ui5-webcomponents/issues/4210)) ([d1ebea3](https://github.com/SAP/ui5-webcomponents/commit/d1ebea3))
+* **framework:** allow using a custom i18n library ([#4119](https://github.com/SAP/ui5-webcomponents/issues/4119)) ([56f366f](https://github.com/SAP/ui5-webcomponents/commit/56f366f))
+* **framework:** Implement better custom theme support ([#4121](https://github.com/SAP/ui5-webcomponents/issues/4121)) ([31e30f8](https://github.com/SAP/ui5-webcomponents/commit/31e30f8))
+* **framework:**  handle Page UP/DOWN ([#3727](https://github.com/SAP/ui5-webcomponents/issues/3727)) ([91a974f](https://github.com/SAP/ui5-webcomponents/commit/91a974f))
+* **framework:** introduce sap_horizon theme initial draft ([#3991](https://github.com/SAP/ui5-webcomponents/issues/3991)) ([b1afaf0](https://github.com/SAP/ui5-webcomponents/commit/b1afaf0)), closes [#3988](https://github.com/SAP/ui5-webcomponents/issues/3988)
+* **framework:** load "72Black" font face ([#4139](https://github.com/SAP/ui5-webcomponents/issues/4139)) ([2be7869](https://github.com/SAP/ui5-webcomponents/commit/2be7869))
+
+
+
+
+
 # [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
 
 

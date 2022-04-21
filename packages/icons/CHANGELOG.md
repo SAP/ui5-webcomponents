@@ -3,6 +3,137 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
+
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.2.2](https://github.com/SAP/ui5-webcomponents/compare/v1.2.1...v1.2.2) (2022-03-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+
+## [1.2.1](https://github.com/SAP/ui5-webcomponents/compare/v1.2.0...v1.2.1) (2022-03-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+# [1.2.0](https://github.com/SAP/ui5-webcomponents/compare/v1.1.2...v1.2.0) (2022-02-28)
+
+
+### Features
+
+* add and update icons from 4.13 and 5.01 icon fonts  ([#4790](https://github.com/SAP/ui5-webcomponents/issues/4790)) ([a9e88f0](https://github.com/SAP/ui5-webcomponents/commit/a9e88f0))
+* **icons:** add `qr-code` icon ([#4645](https://github.com/SAP/ui5-webcomponents/issues/4645)) ([0208103](https://github.com/SAP/ui5-webcomponents/commit/0208103)), closes [#4643](https://github.com/SAP/ui5-webcomponents/issues/4643)
+
+
+
+
+
+## [1.1.2](https://github.com/SAP/ui5-webcomponents/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.1.1](https://github.com/SAP/ui5-webcomponents/compare/v1.1.0...v1.1.1) (2022-01-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+# [1.1.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.2...v1.1.0) (2022-01-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.0.2](https://github.com/SAP/ui5-webcomponents/compare/v1.0.1...v1.0.2) (2021-11-29)
+
+
+### Bug Fixes
+
+* prevent runtime error on malformed custom theme object ([#4375](https://github.com/SAP/ui5-webcomponents/issues/4375)) ([dd10d7c](https://github.com/SAP/ui5-webcomponents/commit/dd10d7c))
+
+
+
+
+
+## [1.0.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0...v1.0.1) (2021-11-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+# [1.0.0](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.16...v1.0.0) (2021-11-10)
+
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+```
+
+
+
+
+
+# [1.0.0-rc.16](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.15...v1.0.0-rc.16) (2021-11-09)
+
+
+### Features
+
+* **icons:** introduce SAP-icons5.0 ([#4244](https://github.com/SAP/ui5-webcomponents/issues/4244)) ([c0a226e](https://github.com/SAP/ui5-webcomponents/commit/c0a226e))
+
+
+### BREAKING CHANGES
+
+* The icons SVG imports are changed. If you previously had
+```js
+import "@ui5/webcomponents-icons/dist/accept.svg";
+```
+ you have to import the SVGs from the **v4/**  or the **v5/** directory:
+```js
+import "@ui5/webcomponents-icons/dist/v4/accept.svg"; //  for SAPIcons4.0
+import "@ui5/webcomponents-icons/dist/v5/accept.svg"; // for SAPIcons5.0
+```
+
+
+
+
+
 # [1.0.0-rc.15](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.14...v1.0.0-rc.15) (2021-07-23)
 
 

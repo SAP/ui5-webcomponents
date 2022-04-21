@@ -1,7 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import {
+	isSpace,
+	isEnter,
+	isF7,
+	isTabNext,
+	isTabPrevious,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
@@ -125,6 +134,14 @@ const metadata = {
 		 * @private
 		 */
 		"selection-requested": {},
+		/**
+		 * Fired when F7 is pressed.
+		 *
+		 * @event sap.ui.webcomponents.main.TableRow#f7-pressed
+		 * @since 1.2.0
+		 * @private
+		 */
+		"f7-pressed": {},
 	},
 };
 
@@ -170,10 +187,19 @@ class TableRow extends UI5Element {
 		return TableRowTemplate;
 	}
 
+	static get dependencies() {
+		return [CheckBox];
+	}
+
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._ontouchstart = {
+			handleEvent(event) {
+				this.activate();
+			},
+			passive: true,
+		};
 	}
 
 	_onmouseup() {
@@ -181,11 +207,20 @@ class TableRow extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		const activeElement = getActiveElement();
 		const itemActive = this.type === TableRowType.Active;
 		const isSingleSelect = this.isSingleSelect;
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
-		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
+
+		if (isTabNext(event) && activeElement === (getLastTabbableElement(this) || this.root)) {
+			this.fireEvent("_forward-after", { target: activeElement });
+		}
+
+		if (isTabPrevious(event) && activeElement === this.root) {
+			this.fireEvent("_forward-before", { target: activeElement });
+		}
 
 		if (isSpace(event) && event.target.tagName.toLowerCase() === "tr") {
 			event.preventDefault();
@@ -203,16 +238,17 @@ class TableRow extends UI5Element {
 				}
 			}
 		}
+
+		if (isF7(event)) {
+			event.preventDefault();
+			this.fireEvent("f7-pressed", { row: this });
+		}
 	}
 
 	_onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
-	}
-
-	_ontouchstart(event) {
-		this.activate();
 	}
 
 	_ontouchend() {
@@ -224,8 +260,8 @@ class TableRow extends UI5Element {
 	}
 
 	_onfocusin(event, forceSelfFocus = false) {
-		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
-			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
+		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
+			this.root.focus();
 			this.activate();
 		}
 
@@ -250,7 +286,7 @@ class TableRow extends UI5Element {
 			this.deactivate();
 		}
 
-		if (this._getActiveElementTagName() === "ui5-table-row") {
+		if (this._activeElementHasAttribute("ui5-table-row")) {
 			if (this.isSingleSelect) {
 				this._handleSelection();
 			}
@@ -265,8 +301,8 @@ class TableRow extends UI5Element {
 		this.fireEvent("selection-requested", { row: this });
 	}
 
-	_getActiveElementTagName() {
-		return this.getRootNode().activeElement.localName.toLocaleLowerCase();
+	_activeElementHasAttribute(attr) {
+		return this.getRootNode().activeElement.hasAttribute(attr);
 	}
 
 	activate() {
@@ -283,7 +319,7 @@ class TableRow extends UI5Element {
 
 	get shouldPopin() {
 		return this._columnsInfo.filter(el => {
-			return el.demandPopin;
+			return el.demandPopin || !el.visible;
 		}).length;
 	}
 
@@ -355,7 +391,7 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelRowSelection() {
-		return this.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
+		return TableRow.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
 	}
 
 	get isSingleSelect() {
@@ -364,6 +400,10 @@ class TableRow extends UI5Element {
 
 	get isMultiSelect() {
 		return this.mode === "MultiSelect";
+	}
+
+	get root() {
+		return this.shadowRoot.querySelector(".ui5-table-row-root");
 	}
 
 	getCellText(cell) {
@@ -385,7 +425,7 @@ class TableRow extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -1,5 +1,6 @@
 {{#if showSuggestions}}
 	<ui5-responsive-popover
+		class="{{classes.popover}}"
 		hide-arrow
 		_disable-initial-focus
 		placement-type="Bottom"
@@ -23,19 +24,20 @@
 			</div>
 			<div class="row">
 				<div class="input-root-phone">
-					<input
+					<ui5-input
 						class="ui5-input-inner-phone"
 						type="{{inputType}}"
 						.value="{{value}}"
-						inner-input
+						?show-clear-icon={{showClearIcon}}
 						placeholder="{{placeholder}}"
 						@input="{{_handleInput}}"
 						@change="{{_handleChange}}"
-					/>
+					></ui5-input>
 				</div>
 			</div>
 			{{#if hasValueStateMessage}}
-				<div class="row {{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+				<div class="{{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 					{{> valueStateMessage}}
 				</div>
 			{{/if}}
@@ -44,7 +46,8 @@
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
+			<div slot="header" ?focused={{_isValueStateFocused}} class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
@@ -67,13 +70,13 @@
 			skip-registry-update
 			_disable-initial-focus
 			prevent-focus-restore
-			no-padding
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
 			placement-type="Bottom"
-			horizontal-align="Left"
+			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		</ui5-popover>
@@ -90,7 +93,7 @@
 {{/inline}}
 
 {{#*inline "suggestionsList"}}
-	<ui5-list separators="{{suggestionSeparators}}">
+	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" mode="SingleSelect">
 		{{#each suggestionsTexts}}
 			{{#if groupItem}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
@@ -101,7 +104,6 @@
 					additional-text="{{this.additionalText}}"
 					type="{{this.type}}"
 					additional-text-state="{{this.additionalTextState}}"
-					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
 				>
 					{{{ this.text }}}

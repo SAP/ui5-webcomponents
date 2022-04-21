@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CheckBox from "./CheckBox.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
 import TableMode from "./types/TableMode.js";
@@ -69,6 +69,9 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
+	events: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
+		_focused: {},
+	},
 };
 
 /**
@@ -121,7 +124,6 @@ class TableGroupRow extends UI5Element {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	get colSpan() {
@@ -129,7 +131,7 @@ class TableGroupRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return `${this.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this._ariaPosition}`;
+		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this._ariaPosition}`;
 	}
 
 	visibleColCount() {
@@ -151,8 +153,12 @@ class TableGroupRow extends UI5Element {
 		this._colSpan = this.visibleColCount();
 	}
 
+	_onfocusin(event) {
+		this.fireEvent("_focused", event);
+	}
+
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		TableGroupRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

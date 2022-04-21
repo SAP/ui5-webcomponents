@@ -17,47 +17,26 @@
 	</script>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		html,
-		body {
-			margin: 0;
-		}
 
-		.group {
-			padding: 1rem;
-		}
-
-		.group-title {
-			color: #333;
-		}
-
-		.small-margin {
-			margin: 2px;
-		}
-
-		.fixed-width {
-			display: inline-block;
-			width: 280px;
-		}
-
-		.fixed-height {
-			height: 160px;
-		}
-
-		.customTextArea::part(textarea) {
-			background: bisque;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles/TextArea.css">
 	</head>
 
-	<body style="background-color: var(--sapBackgroundColor);">
+	<body class="textarea1auto">
+
+	<section class="group">
+		<ui5-title>Single Row TextArea with Exceeded Characters</ui5-title>
+		<br>
+		<ui5-textarea id="textarea-single-row"
+					  show-exceeded-text="true"
+					  maxlength="100"
+					  rows="1"></ui5-textarea>
+	</section>
 
 	<section class="group">
 		<ui5-title>Value State Message</ui5-title>
@@ -204,6 +183,10 @@
 		<ui5-textarea id="textAreaAriaLabel" accessible-name="Hello World"></ui5-textarea>
 		<ui5-textarea id="textAreaAriaLabelledBy" maxlength="20" show-exceeded-text accessible-name-ref="infoText" class="fixed-width fixed-height"></ui5-textarea>
 	</section>
+
+	<ui5-title>Readonly textarea with value state</ui5-title>
+	<br>
+	<ui5-textarea id="readonly-value-state-textarea" readonly value-state="Error"></ui5-textarea>
 
 	<script>
 		var changeCounter = 0;

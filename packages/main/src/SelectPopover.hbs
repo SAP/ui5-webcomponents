@@ -3,6 +3,7 @@
 		hide-arrow
 		_disable-initial-focus
 		placement-type="Bottom"
+		class="ui5-select-popover {{classes.popover}}"
 		horizontal-align="Stretch"
 		@ui5-after-open="{{_afterOpen}}"
 		@ui5-before-open="{{_beforeOpen}}"
@@ -30,7 +31,8 @@
 		{{/if}}
 		{{#unless _isPhone}}
 			{{#if hasValueStateText}}
-				<div slot="header" class="ui5-select-value-state-popover-padding {{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
+				<div slot="header" class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 					{{> valueStateMessage}}
 				</div>
 			{{/if}}
@@ -40,7 +42,7 @@
 			mode="SingleSelectAuto"
 			separators="None"
 			@mousedown="{{_itemMousedown}}"
-			@ui5-item-press="{{_handleItemPress}}"
+			@ui5-selection-change="{{_handleItemPress}}"
 		>
 			{{#each _syncedOptions}}
 				<ui5-li
@@ -48,6 +50,8 @@
 					icon="{{this.icon}}"
 					?selected="{{this.selected}}"
 					?focused="{{this._focused}}"
+					title="{{this.title}}"
+					additional-text="{{this.additionalText}}"
 					?aria-selected="{{this.selected}}"
 					data-ui5-stable="{{this.stableDomRef}}"
 				>
@@ -63,13 +67,13 @@
 		skip-registry-update
 		_disable-initial-focus
 		prevent-focus-restore
-		no-padding
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		placement-type="Bottom"
 		horizontal-align="Left"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 			{{> valueStateMessage}}
 		</div>
 	</ui5-popover>

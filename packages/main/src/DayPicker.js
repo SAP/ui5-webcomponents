@@ -187,8 +187,8 @@ class DayPicker extends CalendarPart {
 		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 		const secondaryMonthsNames = this.hasSecondaryCalendarType && localeData.getMonths("wide", this.secondaryCalendarType);
-		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
-		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
+		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
+		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
 		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
@@ -259,8 +259,13 @@ class DayPicker extends CalendarPart {
 			if (isWeekend) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
+
 			if (isDisabled) {
 				day.classes += " ui5-dp-item--disabled";
+			}
+
+			if (this.hasSecondaryCalendarType) {
+				day.classes += " ui5-dp-item--withsecondtype";
 			}
 
 			week.push(day);
@@ -303,7 +308,7 @@ class DayPicker extends CalendarPart {
 		this._dayNames = [];
 		this._dayNames.push({
 			classes: "ui5-dp-dayname",
-			name: this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
+			name: DayPicker.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
 		});
 		for (let i = 0; i < DAYS_IN_WEEK; i++) {
 			dayOfTheWeek = i + this._getFirstDayOfWeek();

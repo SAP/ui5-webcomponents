@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
@@ -13,6 +13,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 import Button from "./Button.js";
+import Title from "./Title.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 
@@ -58,7 +59,6 @@ const metadata = {
 		 * Defines the default color of the component.
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
 		 * @type {CSSColor}
-		 * @defaultValue ""
 		 * @public
 		 */
 		defaultColor: {
@@ -68,8 +68,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Defines the content of the component.
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
+		 * @slot colors
 		 * @public
 		 */
 		"default": {
@@ -84,7 +84,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.ColorPalettePopover#item-click
 		 * @public
-		 * @param {String} color the selected color
+		 * @param {string} color the selected color
 		 */
 		"item-click": {
 			details: {
@@ -146,17 +146,17 @@ class ColorPalettePopover extends UI5Element {
 		return [
 			ResponsivePopover,
 			Button,
+			Title,
 			ColorPalette,
 		];
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		ColorPalettePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_respPopover() {
@@ -169,11 +169,30 @@ class ColorPalettePopover extends UI5Element {
 		return this.responsivePopover.content[0].querySelector("[ui5-color-palette]");
 	}
 
-	closePopover() {
-		this.responsivePopover.close();
+	/**
+	 * Shows the ColorPalettePopover.
+	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @public
+	 * @since 1.1.1
+	 */
+	showAt(opener) {
+		this._openPopover(opener);
 	}
 
+	/**
+	 * Shows the ColorPalettePopover.
+	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
+	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @public
+	 * @since 1.0.0-rc.16
+	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
+	 */
 	openPopover(opener) {
+		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead."); // eslint-disable-line
+		this._openPopover(opener);
+	}
+
+	_openPopover(opener) {
 		this._respPopover();
 
 		this.responsivePopover.showAt(opener, true);
@@ -183,6 +202,10 @@ class ColorPalettePopover extends UI5Element {
 		} else {
 			this._colorPalette().focusColorElement(this._colorPalette().colorPaletteNavigationElements[0], this._colorPalette()._itemNavigation);
 		}
+	}
+
+	closePopover() {
+		this.responsivePopover.close();
 	}
 
 	onSelectedColor(event) {
@@ -208,11 +231,11 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	get _colorPaletteTitle() {
-		return this.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE);
+		return ColorPalettePopover.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE);
 	}
 
 	get _cancelButtonLabel() {
-		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
+		return ColorPalettePopover.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 }
 

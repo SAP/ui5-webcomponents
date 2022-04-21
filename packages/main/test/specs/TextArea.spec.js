@@ -47,6 +47,16 @@ describe("Attributes propagation", () => {
 		assert.strictEqual(await textArea2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
 	});
+
+	it("Checks if aria-invalid is set correctly", async () => {
+		const textAreaError = await browser.$("#basic-textarea-error");
+		const textAreaWarning = await browser.$("#basic-textarea-warning"); 
+		const innertextAreaError = await textAreaError.shadow$("textarea");
+		const innertextAreaWarning = await textAreaWarning.shadow$("textarea");
+
+		assert.notOk(await innertextAreaWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
+		assert.strictEqual(await innertextAreaError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
+	});
 });
 
 describe("disabled and readonly textarea", () => {
@@ -99,6 +109,18 @@ describe("when enabled", () => {
 
 		// assert
 		assert.notOk(await popover.isDisplayedInViewport(), "The value state message popover is not displayed");
+	});
+
+	it("Should not open value state message when textarea is in readonly state", async () => {
+		const textarea = await browser.$("#readonly-value-state-textarea");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-textarea");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+
+		// act
+		await textarea.click();
+
+		// assert
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover with valueStateMessage should not be opened.");
 	});
 
 	it("can type inside", async () => {

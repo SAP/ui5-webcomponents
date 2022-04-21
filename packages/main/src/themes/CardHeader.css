@@ -4,7 +4,7 @@
 	position: relative;
 	display: flex;
 	align-items: center;
-	padding: var(--_ui5_card_content_padding);
+	padding: var(--_ui5_card_header_padding);
 	outline: none;
 }
 
@@ -18,10 +18,14 @@
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
 	pointer-events: none;
-	top: 1px;
-	left: 1px;
-	right: 1px;
-	bottom: 1px;
+	top: var(--_ui5_card_header_focus_offset);
+	left: var(--_ui5_card_header_focus_offset);
+	right: var(--_ui5_card_header_focus_offset);
+	bottom: var(--_ui5_card_header_focus_offset);
+	border-top-left-radius: var(--_ui5_card_header_focus_radius);
+	border-top-right-radius: var(--_ui5_card_header_focus_radius);
+	border-bottom-left-radius: var(--_ui5_card_header_focus_bottom_radius);
+	border-bottom-right-radius: var(--_ui5_card_header_focus_bottom_radius);
 }
 
 .ui5-card-header.ui5-card-header--interactive:hover {
@@ -39,14 +43,25 @@
 	pointer-events: none;
 }
 
+.ui5-card-header-first-line {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+}
+
+.ui5-card-header-status {
+	flex: none;
+}
+
 .ui5-card-header .ui5-card-header-avatar {
 	height: 3rem;
 	width: 3rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: .75rem;
+	margin-inline-end: .75rem;
 	pointer-events: none;
+	align-self: flex-start;
 }
 
 ::slotted([ui5-icon]) {
@@ -67,20 +82,20 @@
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapTile_TextColor);
 	text-align: left;
-	line-height: 1.125rem;
-	padding-left: 1rem;
-	margin-left: auto;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	vertical-align: middle;
+	margin-left: 1rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-header-title {
-	font-family: "72override", var(--sapFontFamily);
-	font-size: var(--sapFontHeader5Size);
-	font-weight: normal;
+	font-family: var(--_ui5_card_header_title_font_family);
+	font-size: var(--_ui5_card_header_title_font_size);
+	font-weight: var(--_ui5_card_header_title_font_weight);
 	color: var(--sapTile_TitleTextColor);
 	max-height: 3.5rem;
+	align-self: flex-end;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-header-subtitle {
@@ -88,13 +103,13 @@
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	color: var(--sapTile_TextColor);
-	margin-top: .5rem;
+	margin-top: var(--_ui5_card_header_subtitle_margin_top);
 	max-height: 2.1rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-header-title,
 .ui5-card-header .ui5-card-header-text .ui5-card-header-subtitle {
-	text-align: left;
+	text-align: start;
 	text-overflow: ellipsis;
 	white-space: normal;
 	word-wrap: break-word;
@@ -105,21 +120,12 @@
 	max-width: 100%;
 }
 
-[dir="rtl"].ui5-card-header .ui5-card-header-avatar {
-	margin-left: .75rem;
-	margin-right: 0;
+.ui5-card-header .ui5-card-header-text .ui5-card-header-title {
+	-webkit-line-clamp: 3;
 }
 
-[dir="rtl"].ui5-card-header .ui5-card-header-status {
-	padding-right: 1rem;
-	padding-left: 0rem;
-	margin-right: auto;
-}
-
-[dir="rtl"].ui5-card-header .ui5-card-header-text .ui5-card-header-title {
-	text-align: right;
-}
-
-[dir="rtl"].ui5-card-header .ui5-card-header-text .ui5-card-header-subtitle {
-	text-align: right;
+.ui5-card-header-action {
+	display: flex;
+	padding-inline-start: 1rem;
+	align-self: flex-start;
 }

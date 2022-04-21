@@ -18,7 +18,7 @@ import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import getClassCopy from "./util/getClassCopy.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
+import preloadLinks from "./theming/preloadLinks.js";
 
 let autoId = 0;
 
@@ -45,6 +45,8 @@ function _invalidate(changeInfo) {
 	renderDeferred(this);
 	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
+
+let metadata = {};
 
 /**
  * Base class for all UI5 Web Components
@@ -101,6 +103,9 @@ class UI5Element extends HTMLElement {
 	 */
 	async connectedCallback() {
 		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
+		if (this.constructor.getMetadata().supportsF6FastNavigation()) {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
+		}
 
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
@@ -251,7 +256,8 @@ class UI5Element extends HTMLElement {
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (child.isUI5Element && slotData.invalidateOnChildChange) {
-				child.attachInvalidate(this._getChildChangeListener(slotName));
+				const method = (child.attachInvalidate || child._attachChange).bind(child);
+				method(this._getChildChangeListener(slotName));
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
@@ -311,7 +317,8 @@ class UI5Element extends HTMLElement {
 
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
-				child.detachInvalidate(this._getChildChangeListener(slotName));
+				const method = (child.detachInvalidate || child._detachChange).bind(child);
+				method(this._getChildChangeListener(slotName));
 			}
 
 			if (isSlot(child)) {
@@ -607,25 +614,27 @@ class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns the DOM Element inside the Shadow Root that corresponds to the opening tag in the UI5 Web Component's template
+	 * *Note:* For logical (abstract) elements (items, options, etc...), returns the part of the parent's DOM that represents this option
 	 * Use this method instead of "this.shadowRoot" to read the Shadow DOM, if ever necessary
+	 *
 	 * @public
 	 */
 	getDomRef() {
+		// If a component set _getRealDomRef to its children, use the return value of this function
+		if (typeof this._getRealDomRef === "function") {
+			return this._getRealDomRef();
+		}
+
 		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
 			return;
 		}
 
-		this._assertShadowRootStructure();
-
-		return this.shadowRoot.children.length === 1
-			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
-	}
-
-	_assertShadowRootStructure() {
-		const expectedChildrenCount = document.adoptedStyleSheets || isLegacyBrowser() ? 1 : 2;
-		if (this.shadowRoot.children.length !== expectedChildrenCount) {
+		const children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
+		if (children.length !== 1) {
 			console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
 		}
+
+		return children[0];
 	}
 
 	/**
@@ -649,17 +658,6 @@ class UI5Element extends HTMLElement {
 	async getFocusDomRefAsync() {
 		await this._waitForDomRef();
 		return this.getFocusDomRef();
-	}
-
-	/**
-	 * Use this method in order to get a reference to an element in the shadow root of the web component or the static area item of the component
-	 * @public
-	 * @method
-	 * @param {String} refName Defines the name of the stable DOM ref
-	 */
-	getStableDomRef(refName) {
-		const staticAreaResult = this.staticAreaItem && this.staticAreaItem.getStableDomRef(refName);
-		return staticAreaResult || this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
 	}
 
 	/**
@@ -900,7 +898,15 @@ class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	static get metadata() {
-		return {};
+		return metadata;
+	}
+
+	/**
+	 * Sets a new metadata object for this UI5 Web Component Class
+	 * @protected
+	 */
+	static set metadata(newMetadata) {
+		metadata = newMetadata;
 	}
 
 	/**
@@ -988,6 +994,7 @@ class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			window.customElements.define(tag, this);
+			preloadLinks(this);
 
 			if (altTag && !customElements.get(altTag)) {
 				registerTag(altTag);

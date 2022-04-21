@@ -11,17 +11,13 @@
 		}
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<style>
-		ui5-date-picker {
-			width: 100%;
-		}
-	</style>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="styles/DatePicker_test_page.css">
 </head>
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="datepicker_test_page1auto">
 	<ui5-date-picker id="dp12"></ui5-date-picker>
 	<ui5-date-picker id="dp"></ui5-date-picker>
 	<ui5-date-picker id="dp1" value="11/11/11"></ui5-date-picker>
@@ -40,15 +36,12 @@
 	<ui5-date-picker id="dp11"></ui5-date-picker>
 	<ui5-date-picker id="dp13"></ui5-date-picker>
 	<ui5-date-picker id="dp16" format-pattern="long"></ui5-date-picker>
+	<ui5-date-picker value="Invalid value" id="dp20"></ui5-date-picker>
 	<ui5-button id="b1" design="Default">Set date</ui5-button>
-	
+
 
 	<label id='lbl'>0</label>
-	<label for="inputTimezone">Timezone:</label>
-	<input id="inputTimezone" type="number"/>
-	<button id="btnApplyTimezone" onclick="stubTimezone();">Apply</button>
-	<button id="btnRestoreTimezone" onclick="restore();">Restore</button>
-	<button id="downThere" style="position:absolute; top:3000px;"></button>
+	<button id="downThere" class="datepicker_test_page2auto"></button>
 	<label id='lblTomorrow'>0</label>
 	<label id='lblTomorrowDate'></label>
 
@@ -80,21 +73,6 @@
 	</section>
 
 	<script>
-		var originalGetDate = Date.prototype.getDate;
-
-		function stubTimezone() {
-			var timezone = parseInt(document.querySelector("#inputTimezone").value, 10);
-			Date.prototype.getDate = function() {
-				var stubedDate = new Date(this.getTime() + timezone * 60 * 60 * 1000);
-				return stubedDate.getUTCDate();
-			};
-		}
-
-		function restore() {
-			Date.prototype.getDate = originalGetDate;
-			document.querySelector("#inputTimezone").value = "";
-		};
-
 		var counter = 0;
 		var counterTomorrow = 0;
 		function increaseCounter() {

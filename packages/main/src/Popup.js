@@ -3,9 +3,12 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -13,6 +16,7 @@ import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsReg
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 /**
  * @public
@@ -24,7 +28,7 @@ const metadata = {
 		/**
 		 * Defines the content of the Popup.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {
@@ -58,18 +62,30 @@ const metadata = {
 
 		/**
 		 * Indicates if the element is open
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.2.0
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is already open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
 		 */
 		opened: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		/**
-		 * Sets the accessible aria name of the component.
+		 * Defines the accessible name of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -77,6 +93,29 @@ const metadata = {
 		accessibleName: {
 			type: String,
 			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		 mediaRange: {
+			type: String,
 		},
 
 		/**
@@ -141,28 +180,15 @@ const metadata = {
 	},
 };
 
-let customBlockingStyleInserted = false;
-
 const createBlockingStyle = () => {
-	if (customBlockingStyleInserted) {
-		return;
+	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
+		createStyle(globalStyles, "data-ui5-popup-scroll-blocker");
 	}
-
-	createStyleInHead(`
-		.ui5-popup-scroll-blocker {
-			width: 100%;
-			height: 100%;
-			position: fixed;
-			overflow: hidden;
-		}
-	`, { "data-ui5-popup-scroll-blocker": "" });
-
-	customBlockingStyleInserted = true;
 };
 
 createBlockingStyle();
 
-const bodyScrollingBlockers = new Set();
+const pageScrollingBlockers = new Set();
 
 /**
  * @class
@@ -174,7 +200,7 @@ const bodyScrollingBlockers = new Set();
  *
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
- *  - Derivatives may call the "blockBodyScrolling" and "unblockBodyScrolling" static methods to temporarily remove scrollbars on the body
+ *  - Derivatives may call the "blockPageScrolling" and "unblockPageScrolling" static methods to temporarily remove scrollbars on the html element
  *  - Derivatives may call the "open" and "close" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
@@ -198,6 +224,12 @@ const bodyScrollingBlockers = new Set();
  * @public
  */
 class Popup extends UI5Element {
+	constructor() {
+		super();
+
+		this._resizeHandler = this._resize.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -226,17 +258,25 @@ class Popup extends UI5Element {
 		if (!this.isOpen()) {
 			this._blockLayerHidden = true;
 		}
+
+		ResizeHandler.register(this, this._resizeHandler);
 	}
 
 	onExitDOM() {
 		if (this.isOpen()) {
-			Popup.unblockBodyScrolling(this);
+			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
+
+		ResizeHandler.deregister(this, this._resizeHandler);
 	}
 
 	get _displayProp() {
 		return "block";
+	}
+
+	_resize() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	/**
@@ -247,36 +287,31 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Temporarily removes scrollbars from the body
+	 * Temporarily removes scrollbars from the html element
 	 * @protected
 	 */
-	static blockBodyScrolling(popup) {
-		bodyScrollingBlockers.add(popup);
+	static blockPageScrolling(popup) {
+		pageScrollingBlockers.add(popup);
 
-		if (bodyScrollingBlockers.size !== 1) {
+		if (pageScrollingBlockers.size !== 1) {
 			return;
 		}
 
-		if (window.pageYOffset > 0) {
-			document.body.style.top = `-${window.pageYOffset}px`;
-		}
-		document.body.classList.add("ui5-popup-scroll-blocker");
+		document.documentElement.classList.add("ui5-popup-scroll-blocker");
 	}
 
 	/**
-	 * Restores scrollbars on the body, if needed
+	 * Restores scrollbars on the html element, if needed
 	 * @protected
 	 */
-	static unblockBodyScrolling(popup) {
-		bodyScrollingBlockers.delete(popup);
+	static unblockPageScrolling(popup) {
+		pageScrollingBlockers.delete(popup);
 
-		if (bodyScrollingBlockers.size !== 0) {
+		if (pageScrollingBlockers.size !== 0) {
 			return;
 		}
 
-		document.body.classList.remove("ui5-popup-scroll-blocker");
-		window.scrollTo(0, -parseFloat(document.body.style.top));
-		document.body.style.top = "";
+		document.documentElement.classList.remove("ui5-popup-scroll-blocker");
 	}
 
 	_scroll(e) {
@@ -406,7 +441,7 @@ class Popup extends UI5Element {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
-			Popup.blockBodyScrolling(this);
+			Popup.blockPageScrolling(this);
 		}
 
 		this._zIndex = getNextZIndex();
@@ -422,6 +457,7 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
+		this.open = true;
 
 		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
@@ -451,11 +487,12 @@ class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			Popup.unblockBodyScrolling(this);
+			Popup.unblockPageScrolling(this);
 		}
 
 		this.hide();
 		this.opened = false;
+		this.open = false;
 
 		if (!preventRegistryUpdate) {
 			this._removeOpenedPopup();
@@ -528,7 +565,7 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaLabelledBy() {} // eslint-disable-line
 
@@ -537,21 +574,25 @@ class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get _ariaModal() {} // eslint-disable-line
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {String|undefined}
+	 * @returns {string|undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
-		return this.accessibleName || undefined;
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get _root() {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
+	}
+
+	get contentDOM() {
+		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
 
 	get styles() {

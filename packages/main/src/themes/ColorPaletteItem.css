@@ -31,7 +31,7 @@
 
 .ui5-cp-item:hover {
 	border: 1px solid var(--sapGroup_ContentBackground);
-	border-radius: 0.25rem; 
+	border-radius: 0.25rem;
 	box-sizing: border-box;
 }
 
@@ -47,11 +47,12 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: 0.0625rem;
-	top: 0.0625rem;
-	right: 0.0625rem;
-	bottom: 0.0625rem;
-	border: 0.0625rem solid white;
+	left: var(--_ui5_color-palette-item-before-focus-offset);
+	top: var(--_ui5_color-palette-item-before-focus-offset);
+	right: var(--_ui5_color-palette-item-before-focus-offset);
+	bottom: var(--_ui5_color-palette-item-before-focus-offset);
+	border: var(--_ui5_color-palette-item-before-focus-color);
+	border-radius: var(--_ui5_color-palette-item-border-radius);
 	pointer-events: none;
 }
 
@@ -59,10 +60,11 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: 0.0625rem;
-	top: 0.0625rem;
-	right: 0.0625rem;
-	bottom: 0.0625rem;
-	border: 0.0625rem dotted black;
+	left: var(--_ui5_color-palette-item-after-focus-offset);
+	top: var(--_ui5_color-palette-item-after-focus-offset);
+	right: var(--_ui5_color-palette-item-after-focus-offset);
+	bottom: var(--_ui5_color-palette-item-after-focus-offset);
+	border: var(--_ui5_color-palette-item-after-focus-color);
+	border-radius: var(--_ui5_color-palette-item-border-radius);
 	pointer-events: none;
 }

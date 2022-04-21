@@ -1,0 +1,7 @@
+@import "../base/BusyIndicator-parameters.css";
+
+:root {
+	--_ui5_busy_indicator_color: var(--sapContent_BusyColor);
+	--_ui5_busy_indicator_focus_border_radius: 0.75rem;
+	--_ui5_busy_indicator_focus_outline:  var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+}

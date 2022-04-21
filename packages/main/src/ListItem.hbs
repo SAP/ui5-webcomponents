@@ -1,7 +1,7 @@
 <li
+	part="native-li"
 	tabindex="{{tabIndex}}"
 	class="{{classes.main}}"
-	dir="{{effectiveDir}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	@keyup="{{_onkeyup}}"
@@ -15,12 +15,12 @@
 	aria-expanded="{{_accInfo.ariaExpanded}}"
 	title="{{title}}"
 	aria-level="{{_accInfo.ariaLevel}}"
+	aria-haspopup="{{_accInfo.ariaHaspopup}}"
 	aria-posinset="{{_accInfo.posinset}}"
 	aria-setsize="{{_accInfo.setsize}}"
 	aria-describedby="{{_id}}-invisibleText-describedby"
 	aria-labelledby="{{_id}}-invisibleText {{_id}}-content"
 	aria-disabled="{{ariaDisabled}}"
-	style="list-style-type: none;"
 >
 		{{> listItemPreContent}}
 
@@ -75,6 +75,7 @@
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
 				?disabled="{{isInactive}}"
+				?indeterminate={{indeterminate}}
 				tabindex="-1"
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
@@ -94,7 +95,7 @@
 				icon="decline"
 				?disabled="{{disableDeleteButton}}"
 				@click="{{onDelete}}"
-				title="{{deleteText}}"
+				tooltip="{{deleteText}}"
 			></ui5-button>
 		</div>
 	{{/if}}

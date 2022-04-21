@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getAriaLabelledByTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -103,39 +103,68 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.2.0
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Receives id(or many ids) of the elements that label the input
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
 		accessibleNameRef: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * Defines the aria-haspopup value of the component.
-		 *
-		 * @type String
-		 * @defaultvalue undefined
-		 * @private
-		 * @since 1.0.0-rc.15
-		 */
-		 ariaHaspopup: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Defines the accessibility role of the component.
+		 * Defines the ARIA role of the component.
 		 * @defaultvalue ""
 		 * @private
 		 * @since 1.0.0-rc.15
 		 */
 		 accessibleRole: {
 			type: String,
+		},
+
+		/**
+		 * An object of strings that defines several additional accessibility attribute values
+		 * for customization depending on the use case.
+		 *
+		 * It supports the following fields:
+		 *
+		 * <ul>
+		 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+		 *			<ul>
+		 *				<li><code>true</code></li>
+		 *				<li><code>false</code></li>
+		 *			</ul>
+		 * 		</li>
+		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+		 * 			<ul>
+		 *				<li><code>Dialog</code></li>
+		 *				<li><code>Grid</code></li>
+		 *				<li><code>ListBox</code></li>
+		 *				<li><code>Menu</code></li>
+		 *				<li><code>Tree</code></li>
+		 * 			</ul>
+		 * 		</li>
+		 * </ul>
+		 * @type {object}
+		 * @public
+		 * @since 1.1.0
+		 */
+		 accessibilityAttributes: {
+			type: Object,
 		},
 
 		_rel: {
@@ -227,7 +256,6 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -247,11 +275,11 @@ class Link extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const needsNoReferrer = this.target === "_blank"
+		const needsNoReferrer = this.target !== "_self"
 			&& this.href
 			&& this._isCrossOrigin();
 
-		this._rel = needsNoReferrer ? "noreferrer" : undefined;
+		this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
 	}
 
 	_isCrossOrigin() {
@@ -272,7 +300,7 @@ class Link extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getAriaLabelledByTexts(this);
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get hasLinkType() {
@@ -287,7 +315,7 @@ class Link extends UI5Element {
 	}
 
 	get linkTypeText() {
-		return this.i18nBundle.getText(Link.typeTextMappings()[this.design]);
+		return Link.i18nBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {
@@ -299,7 +327,7 @@ class Link extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		Link.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onclick(event) {
@@ -317,10 +345,10 @@ class Link extends UI5Element {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
+			event.preventDefault();
 			const executeEvent = this.fireEvent("click", null, true);
 
 			if (executeEvent) {
-				event.preventDefault();
 				this.href && window.open(this.href, this.target);
 			}
 		} else if (isSpace(event)) {

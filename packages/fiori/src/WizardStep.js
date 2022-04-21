@@ -12,7 +12,7 @@ const metadata = {
 		 *
 		 * <b>Note:</b> The text is displayed in the <code>ui5-wizard</code> navigation header.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -27,7 +27,7 @@ const metadata = {
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -45,7 +45,7 @@ const metadata = {
 		 *
 		 * The SAP-icons font provides numerous options.
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
@@ -98,29 +98,6 @@ const metadata = {
 		 */
 		branching: {
 			type: Boolean,
-		},
-
-		/**
-		 * Sets the accessible aria name of the component.
-		 *
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines the aria-labelledby of the step.
-		 * @type {String}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
