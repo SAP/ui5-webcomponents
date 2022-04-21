@@ -59,7 +59,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: .75rem;
+	margin-inline-end: .75rem;
 	pointer-events: none;
 	align-self: flex-start;
 }
@@ -109,7 +109,7 @@
 
 .ui5-card-header .ui5-card-header-text .ui5-card-header-title,
 .ui5-card-header .ui5-card-header-text .ui5-card-header-subtitle {
-	text-align: left;
+	text-align: start;
 	text-overflow: ellipsis;
 	white-space: normal;
 	word-wrap: break-word;
@@ -126,24 +126,6 @@
 
 .ui5-card-header-action {
 	display: flex;
-	padding-left: 1rem;
+	padding-inline-start: 1rem;
 	align-self: flex-start;
-}
-
-[dir="rtl"].ui5-card-header .ui5-card-header-avatar {
-	margin-left: .75rem;
-	margin-right: 0;
-}
-
-[dir="rtl"].ui5-card-header .ui5-card-header-action {
-	padding-right: 1rem;
-	padding-left: 0rem;
-}
-
-[dir="rtl"].ui5-card-header .ui5-card-header-text .ui5-card-header-title {
-	text-align: right;
-}
-
-[dir="rtl"].ui5-card-header .ui5-card-header-text .ui5-card-header-subtitle {
-	text-align: right;
 }

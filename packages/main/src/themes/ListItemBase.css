@@ -50,10 +50,10 @@
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
-	top: 0.0625rem;
-	right: 0.0625rem;
-	bottom: 0.0625rem;
-	left: 0.0625rem;
+	top: 0.125rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
+	left: 0.125rem;
 	pointer-events: none;
 }
 
@@ -81,5 +81,6 @@
 	max-width: 100%;
 	min-height: 1px; /* IE specific: fixes vertical centering with flex  */
 	font-family: "72override", var(--sapFontFamily);
+	color: var(--sapList_TextColor);
 	pointer-events: none;  /* IE specific: fixes focus crrectly applied*/
 }

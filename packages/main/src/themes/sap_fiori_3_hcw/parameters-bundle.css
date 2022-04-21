@@ -19,6 +19,7 @@
 @import "../base/InputIcon-parameters.css";
 @import "./Link-parameters.css";
 @import "../base/List-parameters.css";
+@import "./ListItem-parameters.css";
 @import "../base/ListItemBase-parameters.css";
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
@@ -47,5 +48,4 @@
 @import "./ValueStateMessage-parameters.css";
 @import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
-@import "../base/Suggestions-parameters.css";
 @import "../base/StepInput-parameters.css";

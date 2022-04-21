@@ -109,7 +109,6 @@
 	color: var(--sapTextColor);
 	font-size: var(--sapFontSize);
 	box-sizing: border-box;
-	box-sizing: border-box;
 }
 
 /*  Footer */
@@ -120,19 +119,13 @@
 	padding-top: 0.5rem;
 	box-sizing: border-box;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 .ui5-nli-footer-divider {
 	position: relative;
 	align-items: center;
-	margin-inline-start: 0.5rem;
-	margin-inline-end: 0.625rem;
-}
-
-.ui5-nli-footer-divider::after {
-	position: absolute;
-	content: ".";
-	top: -20%;
+	margin-inline: 0.5rem;
 }
 
 .ui5-nli-footer-showMore {
