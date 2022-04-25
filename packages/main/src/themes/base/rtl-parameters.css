@@ -11,8 +11,12 @@
 	--_ui5_popover_right_arrow_margin: 0.1875rem 0 0 -0.375rem;
 	--_ui5_popover_downward_arrow_margin: -0.375rem 0 0 0.125rem;
 	--_ui5_popover_left_arrow_margin: 0.125rem 0 0 0.25rem;
-
 	--_ui5_dialog_resize_cursor: se-resize;
+
+	--_ui5_shellbar_overflow_container_float: none;
+
+	--_ui5_progress_indicator_bar_border_radius: 0.5rem 0 0 0.5rem;
+	--_ui5_progress_indicator_remaining_bar_border_radius: 0 0.5rem 0.5rem 0;
 }
 
 [dir="rtl"] {
@@ -25,6 +29,10 @@
 	--_ui5_popover_right_arrow_margin: .1875rem .25rem 0 0;
 	--_ui5_popover_downward_arrow_margin: -0.4375rem .125rem 0 0;
 	--_ui5_popover_left_arrow_margin: .1875rem -.375rem 0 0;
-
 	--_ui5_dialog_resize_cursor:sw-resize;
+
+	--_ui5_shellbar_overflow_container_float: left;
+
+	--_ui5_progress_indicator_bar_border_radius: 0 0.5rem 0.5rem 0;
+	--_ui5_progress_indicator_remaining_bar_border_radius: 0.5rem 0 0 0.5rem;
 }

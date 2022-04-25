@@ -15,6 +15,7 @@
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
 @import "./Dialog-parameters.css";
+@import "./FileUploader-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Icon-parameters.css";
 @import "./Input-parameters.css";
@@ -46,11 +47,10 @@
 @import "../base/Table-parameters.css";
 @import "../base/TableRow-parameters.css";
 @import "./Token-parameters.css";
-@import "./Tokenizer-parameters.css";
+@import "../base/Tokenizer-parameters.css";
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "./ValueStateMessage-parameters.css";
-@import "./Suggestions-parameters.css";
 @import "./Table-parameters.css";
 @import "./TableColumn-parameters.css";
 @import "./TableRow-parameters.css";

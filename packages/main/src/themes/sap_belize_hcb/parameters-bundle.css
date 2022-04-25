@@ -14,6 +14,7 @@
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
+@import "./FileUploader-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
@@ -46,5 +47,4 @@
 @import "./ValueStateMessage-parameters.css";
 @import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
-@import "../base/Suggestions-parameters.css";
 @import "../base/StepInput-parameters.css";

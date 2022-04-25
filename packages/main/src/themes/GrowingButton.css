@@ -3,6 +3,7 @@
 	align-items: center;
 	padding: var(--_ui5_load_more_padding);
 	border-top: 1px solid var(--sapList_BorderColor);
+	border-bottom: var(--_ui5_load_more_border-bottom);
 	box-sizing: border-box;
 	cursor: pointer;
 	outline: none;
