@@ -20,4 +20,5 @@
 	--_ui5_daypicker_item_selected_background: var(--sapContent_Selected_Background);
 	--_ui5_daypicker_item_border: 1px solid #fff;
 	--_ui5_daypicker_item_selected_box_shadow: none;
+	--_ui5_daypicker_item_selected_text_outline: 0.125rem solid var(--sapContent_FocusColor);
 }

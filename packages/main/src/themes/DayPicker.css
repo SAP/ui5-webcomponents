@@ -86,7 +86,7 @@
 	background: var(--sapLegend_WorkingBackground);
 	font-size: var(--sapFontSize);
 	border: var(--_ui5_daypicker_item_border);
-	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
+	border-radius: var(--_ui5_daypicker_item_border_radius);
 }
 
 .ui5-dp-item:hover {
@@ -144,13 +144,10 @@
 
 .ui5-dp-item.ui5-dp-item--now::before {
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	inset: 0;
 	border: 0.125rem solid var(--sapLegend_CurrentDateTime);
 	content: "";
-	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
+	border-radius: var(--_ui5_daypicker_item_border_radius);
 }
 
 .ui5-dp-item.ui5-dp-item--now.ui5-dp-item--selected {
@@ -167,13 +164,12 @@
 	padding-top: 0;
 	padding-bottom: .187rem;
 }
-
+.ui5-dp-item.ui5-dp-item--selected {
+	background: var(--sapContent_Selected_Background)
+}
 .ui5-dp-item.ui5-dp-item--selected:not(.ui5-dp-item.ui5-dp-item--now) .ui5-dp-daytext::after{
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	inset: 0;
 	border: var(--_ui5_daypicker_item_selected_border);
 	content: "";
 	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
@@ -184,13 +180,15 @@
 	outline: var(--_ui5_daypicker_item_selected_text_outline);
 	outline-offset: -0.3125rem;
 	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
-	font-weight: var(--_ui5_daypicker_item_selected_between_text_font);
+	font-family: var(--_ui5_daypicker_item_selected_text_font);
 }
 
 .ui5-dp-item.ui5-dp-item--selected .ui5-dp-daytext {
 	background: var(--_ui5_daypicker_item_selected_background);
 	color: var(--sapContent_Selected_TextColor);
-	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
+	border-radius: var(--_ui5_daypicker_item_border_radius);
+	border: var(--_ui5_daypicker_item_selected_text_border);
+	font-family: var(--_ui5_daypicker_item_selected_text_font);
 }
 
 .ui5-dp-item.ui5-dp-item--selected:hover .ui5-dp-daytext {
@@ -209,10 +207,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now:focus::after {
-	top: 0.1875rem;
-	left: 0.1875rem;
-	right: 0.1875rem;
-	bottom: 0.1875rem;
+	inset: 0.1875;
 	border-radius: var(--_ui5_day_picker_item_selected_now_border_radios_foucs);
 	border: var(--_ui5_day_picker_item_selected_now_border_foucs);
 	position: absolute;
@@ -237,17 +232,25 @@
 
 .ui5-dp-item.ui5-dp-item--selected-between .ui5-dp-daytext,
 .ui5-dp-item[hovered] .ui5-dp-daytext {
+	border: 1px solid  var(--sapContent_Selected_ForegroundColor);
+	border-radius: var(--_ui5_daypicker_item_border_radius);
 	background-color: var(--_ui5_daypicker_item_selected_between_text_background);
 	color: var(--sapTextColor);
 	font-weight: var(--_ui5_daypicker_item_selected_between_text_font);
 }
 
+.ui5-dp-item.ui5-dp-item--selected-between.ui5-dp-item--now:not(.ui5-dp-item--selected) .ui5-dp-daytext::after {
+	content: "";
+	position: absolute;
+	inset: var(--_ui5_daypicker_item_now_selected_between_inset);
+	border: var(--_ui5_daypicker_item_now_selected_between_border);
+	border-radius: var(--_ui5_daypicker_item_now_selected_between_border_radius);
+}
+
 .ui5-dp-item.ui5-dp-item--selected-between,
 .ui5-dp-item[hovered] {
-	border: 1px solid var(--sapContent_Selected_Background);
 	border-radius: var(--_ui5_daypicker_item_selected_between_border);
 	background: var(--_ui5_daypicker_item_selected_between_background);
-	box-shadow: var(--_ui5_daypicker_item_selected_box_shadow);
 }
 
 .ui5-dp-item.ui5-dp-item--selected-between:hover {
@@ -268,7 +271,7 @@
 
 .ui5-dp-item.ui5-dp-item--now.ui5-dp-item--selected.ui5-dp-item--withsecondtype:focus::after{
 	outline-offset: -0.1875rem;
-	border-radius: var(--ui5-dp-item_withsecondtype_border);
+	border-radius: var(--_ui5-dp-item_withsecondtype_border);
 }
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now.ui5-dp-item--withsecondtype .ui5-dp-daysectext,
 .ui5-dp-item.ui5-dp-item--now.ui5-dp-item--selected.ui5-dp-item--withsecondtype .ui5-dp-daytext {
