@@ -27,9 +27,31 @@
 	margin-right: 0.25rem;
 }
 
+:host([value-state="None"]:not([disabled]):hover) [ui5-input],
 :host(:not([value-state]):not([disabled]):hover) [ui5-input] {
+	border: var(--_ui5_file_uploader_hover_border);
 	background-color: var(--sapField_Hover_Background);
-	border: 1px solid var(--sapField_Hover_BorderColor);
+	box-shadow: var(--_ui5_input_hover_box_shadow);
+}
+
+:host([value-state="Error"]:not([disabled]):hover) [ui5-input] {
+	background-color: var(--_ui5_file_uploader_value_state_error_hover_background_color);
+	box-shadow: var(--_ui5_input_value_state_error_hover_box_shadow);
+}
+
+:host([value-state="Warning"]:not([disabled]):hover) [ui5-input] {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5_input_value_state_warning_hover_box_shadow);
+}
+
+:host([value-state="Success"]:not([disabled]):hover) [ui5-input] {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5_input_value_state_success_hover_box_shadow);
+}
+
+:host([value-state="Information"]:not([disabled]):hover) [ui5-input] {
+	background-color: var(--sapField_Hover_Background);
+	box-shadow: var(--_ui5_input_value_state_information_hover_box_shadow);
 }
 
 :host(:not([disabled]):active) [ui5-button] {
