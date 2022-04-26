@@ -3,10 +3,11 @@
     width: 15rem;
     height: 100%;
     transition: width .25s;
-    --_ui5-tree-toggle-box-width: 1rem;
+    --_ui5-tree-toggle-box-width: var(--_ui5_side_navigation_icon_padding);
     --_ui5_list_item_icon_size: 1.125rem;
+    --_ui5-tree-toggle-icon-size: 0.875rem;
     --_ui5_list_item_title_size: var(--sapFontLargeSize);
-    --_ui5_list_item_icon_padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
+    --_ui5_list_item_icon_padding-inline-end: var(--_ui5_side_navigation_icon_padding);
     --_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step);
 }
 

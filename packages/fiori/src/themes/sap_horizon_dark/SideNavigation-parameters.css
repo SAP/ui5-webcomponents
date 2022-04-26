@@ -4,6 +4,6 @@
 	--_ui5_side_navigation_separator_backgound: var(--sapAccentColor6);
 	--_ui5_side_navigation_icon_color: var(--sapHighlightColor);
 	--_ui5_side_navigation_collapsed_state_width: 3.5rem;
-	--_ui5_side_navigation_indent_step: 2.375rem;
-	--_ui5_side_navigation_icon_padding_inline_end: 1.125rem;
+	--_ui5_side_navigation_indent_step: 2.3125rem;
+	--_ui5_side_navigation_icon_padding: 1.1875rem;
 }
