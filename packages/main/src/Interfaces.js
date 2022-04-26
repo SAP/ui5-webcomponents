@@ -89,6 +89,15 @@ const IInputSuggestionItem = "sap.ui.webcomponents.main.IInputSuggestionItem";
 const IListItem = "sap.ui.webcomponents.main.IListItem";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-menu</code> as items
+ *
+ * @name sap.ui.webcomponents.main.IMenuItem
+ * @interface
+ * @public
+ */
+const IMenuItem = "sap.ui.webcomponents.main.IMenuItem";
+
+/**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
  *
  * @name sap.ui.webcomponents.main.IMultiComboBoxItem
@@ -180,6 +189,7 @@ export {
 	IInput,
 	IInputSuggestionItem,
 	IListItem,
+	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	ISelectOption,

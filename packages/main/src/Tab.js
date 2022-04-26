@@ -4,6 +4,7 @@ import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTempla
 import SemanticColor from "./types/SemanticColor.js";
 import TabContainer from "./TabContainer.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 
 // Templates
@@ -203,6 +204,7 @@ class Tab extends UI5Element {
 	static get dependencies() {
 		return [
 			Icon,
+			Button,
 			CustomListItem,
 		];
 	}

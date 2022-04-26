@@ -6,8 +6,11 @@
 
 :host {
 	font-family: "72override", var(--sapFontFamily);
-	background-color: var(--_ui5_panel_background_color);
+	background-color: var(--sapGroup_TitleBackground);
 	border-radius: var(--_ui5_panel_border_radius);
+}
+
+:host(:not([collapsed])) {
 	border-bottom: var(--_ui5_panel_border_bottom);
 }
 
@@ -16,20 +19,18 @@
 }
 
 .ui5-panel-header {
-	height: var(--_ui5_panel_header_height);
+	min-height: var(--_ui5_panel_header_height);
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	outline: none;
 	box-sizing: border-box;
-	padding-right: 1rem;
-	padding-left: .25rem;
-	border-bottom: 1px solid transparent;
+	padding-right: var(--_ui5_panel_header_padding_right);
 }
 
 .ui5-panel-header-icon {
-	color: var(--sapContent_IconColor);
+	color: var(--_ui5_panel_icon_color);
 }
 
 .ui5-panel-header-button-animated {
@@ -55,11 +56,7 @@
 }
 
 :host(:not([collapsed])) .ui5-panel-header-button {
-	transform: rotate(90deg);
-}
-
-:host(:not([collapsed])) [dir="rtl"] .ui5-panel-header-button {
-	transform: rotate(-90deg);
+	transform: var(--_ui5_panel_toggle_btn_rotation);
 }
 
 :host([fixed]) .ui5-panel-header-title {
@@ -72,10 +69,10 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-family: "72override", var(--sapFontHeaderFamily);
-	font-size: var(--sapFontHeader5Size);
+	font-size: var(--sapGroup_TitleFontSize);
 	font-weight: normal;
 	color: var(--sapGroup_TitleTextColor);
-	font-weight: var(--_ui5_panel_title_font_weight);
+	font-weight: normal;
 }
 
 .ui5-panel-content {
@@ -95,6 +92,16 @@
 	margin-right: .25rem;
 }
 
-:host([fixed]:not([collapsed]):not([_has-header])) .ui5-panel-header {
+:host([fixed]:not([collapsed]):not([_has-header])) .ui5-panel-header,
+:host([collapsed]) .ui5-panel-header {
 	border-bottom: 0.0625rem solid var(--sapGroup_TitleBorderColor);
+}
+
+:host([collapsed]) .ui5-panel-header {
+	border-bottom-left-radius: var(--_ui5_panel_border_radius);
+	border-bottom-right-radius: var(--_ui5_panel_border_radius);
+}
+
+:host(:not([fixed]):not([collapsed])) .ui5-panel-header {
+	border-bottom: var(--_ui5_panel_default_header_border);
 }

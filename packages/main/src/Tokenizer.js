@@ -518,6 +518,20 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	 get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}

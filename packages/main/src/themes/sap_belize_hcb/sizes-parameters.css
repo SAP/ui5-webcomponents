@@ -1,0 +1,15 @@
+@import "../base/sizes-parameters.css";
+
+:root {
+	/* SplitButton */
+	--_ui5_split_button_middle_separator_height: 2.5rem;
+	--_ui5_split_button_text_button_width: 2.5rem;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	/* SplitButton */
+	--_ui5_split_button_middle_separator_height: 1.625rem;
+	--_ui5_split_button_text_button_width: 2.25rem;
+}

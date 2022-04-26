@@ -32,7 +32,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
 		/**
 		 * Defines the <code>values</code> list.
-         * @type {sap.ui.webcomponents.fiori.IFilterItemOption[]}
+		 * @type {sap.ui.webcomponents.fiori.IFilterItemOption[]}
 		 * @slot values
 		 * @public
 		 */
