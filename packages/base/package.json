@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "lit-html": "2.0.1"
+    "lit-html": "^2.0.1"
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "0.16.1",
