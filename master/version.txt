@@ -1,5 +1,5 @@
-commit b093168342e0812dbc07702be3e0a9ce9f432f37
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Thu Apr 21 21:47:15 2022 +0200
+commit 532d676c367832542ba469c45643f686a03a0168
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Apr 26 16:40:38 2022 +0300
 
-    docs(MenuItem): correct type for `slot` (#5112)
+    chore: upgrade lit-html to 2.2.2 (#5123)
