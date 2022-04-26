@@ -41,4 +41,11 @@ describe("Switch general interaction", async () => {
 		assert.strictEqual(await switchEl.getAttribute("role"), "switch", "Proper role attribute is set");
 		assert.strictEqual(await switchEl.getAttribute("aria-label"), "Use GPS location No", "Attribute is reflected");
 	});
+
+	it("aria-label attribute is properly set when text-on and text-off attributes aren't set", async () => {
+		const switchEl = await browser.$("#noLabel").shadow$("div");
+
+		assert.notOk(await switchEl.getAttribute("aria-label"), "Attribute is reflected");
+	});
+
 });
