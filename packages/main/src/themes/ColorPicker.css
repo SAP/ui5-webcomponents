@@ -56,8 +56,8 @@
 }
 
 [ui5-slider]::part(handle) {
-    width: 11px;
-    height: 1.25rem;
+    width: 0.9375rem;
+    height: 1.5rem;
     background: transparent;
     margin-left: -2px;
     margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
@@ -67,8 +67,9 @@
     content: "";
     border: 1px solid #fff;
     display: block;
-    height: 18px;
+    height: 1.125rem;
     border-radius: 1rem;
+    width: 100%;
 }
 
 [ui5-slider]::part(progress-container) {
