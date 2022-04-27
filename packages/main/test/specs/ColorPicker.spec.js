@@ -46,9 +46,10 @@ describe("Color Picker general interaction", () => {
 		await colorPicker.setAttribute("color", "rgba(100, 100, 100, 1)");
 
 		await alphaInput.click();
-		await browser.keys(["Control", "A"]);
+		await browser.keys('Delete');
 		await browser.keys("0");
 		await browser.keys("Tab");
+
 
 		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
 	});
