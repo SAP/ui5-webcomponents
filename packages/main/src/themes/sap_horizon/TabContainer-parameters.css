@@ -26,9 +26,6 @@
 	--_ui5_tc_headerItemIcon_background_color: var(--sapContent_Selected_Background);
 	--_ui5_tc_headerItemIcon_selected_color: var(--sapContent_ContrastIconColor);
 
-	/* Overflow Item */
-	--_ui5_tc_overflowItem_focus_border: 0.75rem;
-
 	/* Mixed Mode */
 	--_ui5_tc_mixedMode_itemText_color: var(--sapTextColor);
 }
