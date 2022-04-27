@@ -72,7 +72,7 @@
     width: 100%;
     padding:0 0.5rem;
     position: absolute;
-    top: calc(50% - 2.5rem);
+    top: calc(50% - var(--ui5_carousel_button_size));
     left: 0;
     display: flex;
     justify-content: space-between;

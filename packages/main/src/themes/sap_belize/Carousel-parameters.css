@@ -5,6 +5,6 @@
     --ui5_carousel_inactive_dot_margin: 0 0.375rem;
     --ui5_carousel_inactive_dot_border: none;
     --ui5_carousel_inactive_dot_background: var(--sapContent_NonInteractiveIconColor);
-	--ui5_carousel_active_dot_border: var(--ui5_carousel_inactive_dot_border);
-	--ui5_carousel_active_dot_background: var(--sapSelectedColor);
+    --ui5_carousel_active_dot_border: var(--ui5_carousel_inactive_dot_border);
+    --ui5_carousel_active_dot_background: var(--sapSelectedColor);
 }
