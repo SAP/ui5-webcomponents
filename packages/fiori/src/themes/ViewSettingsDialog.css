@@ -44,7 +44,7 @@
 }
 
 .ui5-vsd-back-button {
-	margin-right: .5rem;
+	margin-inline-end: .5rem;
 }
 
 .ui5-vsd-footer {
@@ -75,23 +75,9 @@
 }
 
 :host [ui5-li]::part(native-li) {
-	padding-left: var(--_ui5_vsd_content_li_padding);
+	padding-inline-start: var(--_ui5_vsd_content_li_padding);
 }
 
 :host [ui5-li].ui5-vsd-filterItemList::part(native-li) {
-	padding-left: 1rem;
-}
-
-[dir="rtl"] .ui5-vsd-back-button {
-	margin-left: .5rem;
-}
-
-:host [dir="rtl"] [ui5-li ]::part(native-li) {
-	padding-right: var(--_ui5_vsd_content_li_padding);
-}
-:host [dir="rtl"] [ui5-li][_mode="MultiSelect"]::part(native-li) {
-	padding-right: 1rem;
-}
-:host [dir="rtl"] [ui5-li].ui5-vsd-filterItemList::part(native-li) {
-	padding-right: 1rem;
+	padding-inline-start: 1rem;
 }

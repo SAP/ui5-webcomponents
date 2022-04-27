@@ -1,6 +1,5 @@
 @import "../base/ListItemBase-parameters.css";
 
 :root {
-	--ui5-listitem-focused-selected-border-bottom: 1px solid transparent;
 	--ui5-listitem-active-border-color: var(--sapContent_FocusColor);
 }

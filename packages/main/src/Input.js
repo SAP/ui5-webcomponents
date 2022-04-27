@@ -22,6 +22,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -635,7 +636,7 @@ class Input extends UI5Element {
 		this.FormSupport = getFeature("FormSupport");
 		const hasItems = this.suggestionItems.length;
 		const hasValue = !!this.value;
-		const isFocused = this === document.activeElement;
+		const isFocused = this.shadowRoot.querySelector("input") === getActiveElement();
 
 		if (this._isPhone) {
 			this.open = this.openOnMobile;
