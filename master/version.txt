@@ -1,5 +1,7 @@
-commit 3440191e701edec07d91866b5d0200f6d5df8823
-Author: Ajinkya Patil <ajinkyarangnathpatil@gmail.com>
-Date:   Wed Apr 27 15:34:17 2022 +0200
+commit 5880bbf3a99cb2fd0176a1973a486c319f824234
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Apr 27 06:35:45 2022 -0700
 
-    chore: solve reuse compliance issue (#5105)
+    chore: translation delivery (#5111)
+    
+    Change-Id: I3de283ea8b6f2fadeebd27f9476391169aad989c
