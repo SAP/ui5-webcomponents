@@ -23,7 +23,8 @@
 }
 
 :host([interactive][focused]) .ui5-icon-root {
-	outline: 1px dotted var(--sapContent_FocusColor);
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	border-radius: var(--ui5-icon-focus-border-radius);
 }
 
 .ui5-icon-root {
@@ -32,7 +33,18 @@
 	vertical-align: top;
 }
 
-:host(:not([dir="ltr"])) .ui5-icon-root[dir=rtl] {
-	transform: scale(-1, 1);
+/*
+ * The Icon is currently the only component that enforces "LTR" direction inside its ShadowDOM
+ * as some icons should not be mirrored in RTL (f.e. checkmark, search, etc.).
+ * That means, we can have "RTL" set globally and "LTR" set internally for the Icon ShadowDom
+  * html dir=rtl
+ * 		ui5-icon
+ * 			#shadowroot
+ * 				svg dir=ltr
+ * In this case, we need to explicitly check for it as the global CSS definitions (rtl-parameters.css)
+ * is placed in the "head" and won't consider it.
+ */
+.ui5-icon-root:not([dir="ltr"]) {
+	transform: var(--_ui5_icon_transform_scale);
 	transform-origin: center;
 }

@@ -99,7 +99,7 @@ const metadata = {
 		/**
 		 * Defines the items of this component.
 		 *
-		 * @type {sap.ui.webcomponents.main.MenuItem[]}
+		 * @type {sap.ui.webcomponents.main.IMenuItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -135,6 +135,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MenuItem
  * @extends UI5Element
  * @tagname ui5-menu-item
+ * @implements sap.ui.webcomponents.main.IMenuItem
  * @since 1.3.0
  * @public
  */

@@ -10,5 +10,6 @@
 @import "./SideNavigation-parameters.css";
 @import "../base/UploadCollection-parameters.css";
 @import "../base/ViewSettingsDialog-parameters.css";
+@import "./Wizard-parameters.css";
 @import "./WizardTab-parameters.css";
 @import "./NotificationListItem-parameters.css";

@@ -1,0 +1,10 @@
+@import "../base/SplitButton-parameters.css";
+
+:root {
+	--_ui5_split_button_focused_border: 0.125rem dotted var(--sapContent_FocusColor);
+	--_ui5_split_button_focused_border_radius: 0.375rem;
+	--_ui5_split_button_hover_border_radius: 0;
+	--_ui5_split_button_text_button_width: 2.5rem;
+	--_ui5_split_button_text_button_right_border_width: 0;
+	--_ui5_split_button_transparent_disabled_background: var(--sapButton_Background);
+}

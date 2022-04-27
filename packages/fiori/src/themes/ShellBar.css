@@ -3,6 +3,10 @@
 	width: 100%;
 }
 
+:host {
+	--_ui5_input_placeholder_color: var(--sapShell_InteractiveTextColor);
+}
+
 .ui5-shellbar-root {
 	position: relative;
 	display: flex;
@@ -22,7 +26,7 @@
 ::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
-	margin-left: 0.5rem;
+	margin-inline-start: 0.5rem;
 	border: none;
 	background: transparent;
 	outline-color: var(--_ui5_shellbar_logo_outline_color);
@@ -99,11 +103,11 @@ slot[name="profile"] {
 }
 
 :host(:not([primary-title])) .ui5-shellbar-menu-button span {
-	margin-left: 0;
+	margin-inline-start: 0;
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-menu-button span {
-	margin-left: .5rem;
+	margin-inline-start: .5rem;
 }
 
 .ui5-shellbar-secondary-title {
@@ -120,7 +124,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
 	display: inline-block;
-	margin-left: 0.375rem;
+	margin-inline-start: 0.375rem;
 	width: 10px;
 	height: 10px;
 	width: 0px;
@@ -171,7 +175,7 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="S"]) ::slotted([ui5-button][slot="startButton"]) {
-	margin-right: 0;
+	margin-inline-end: 0;
 }
 
 :host([breakpoint-size="M"]) .ui5-shellbar-root {
@@ -228,7 +232,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-overflow-container-left {
 	justify-content: flex-start;
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 	max-width: 75%;
 	flex-shrink: 0;
 	flex-grow: 0;
@@ -248,21 +252,21 @@ slot[name="profile"] {
 	padding: 0.25rem 0.5rem;
 	cursor: text;
 	-webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
 	user-select: text;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive {
 	-webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
 	cursor: pointer;
 }
 
 :host(:not([with-logo])) .ui5-shellbar-menu-button {
-	margin-left: 0;
+	margin-inline-start: 0;
 }
 
 .ui5-shellbar-overflow-container-right {
@@ -279,12 +283,13 @@ slot[name="profile"] {
 }
 
 :host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
-	margin-left: 8rem;
+	margin-inline-start: 8rem;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
 	justify-content: flex-end;
+	float: var(--_ui5_shellbar_overflow_container_float);
 }
 
 .ui5-shellbar-overflow-button {
@@ -305,7 +310,7 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-right {
-	margin-left: 0;
+	margin-inline-start: 0;
 }
 
 .ui5-shellbar-overflow-button-shown {
@@ -323,11 +328,11 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	margin-left: 1rem;
+	margin-inline-start: 1rem;
 }
 
 :host([breakpoint-size="XL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	margin-left: 1rem;
+	margin-inline-start: 1rem;
 }
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {
@@ -364,13 +369,13 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-menu-button {
-	margin-left: 0.5rem;
+	margin-inline-start: 0.5rem;
 }
 
 .ui5-shellbar-search-field {
 	flex-grow: 1;
 	min-width: 240px;
-	margin-left: 0.5rem;
+	margin-inline-start: 0.5rem;
 	max-width: 25rem;
 }
 
@@ -490,41 +495,8 @@ slot[name="profile"] {
 	stop-opacity: 0.2;
 }
 
-:host [dir="rtl"] ::slotted([ui5-button][slot="startButton"]) {
-	margin-left: 0.5rem;
-	margin-right: 0;
-}
-
-:host [dir="rtl"] .ui5-shellbar-menu-button {
-	margin-right: 0.5rem;
-	margin-left: 0;
-}
-
-[dir="rtl"] .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
-	margin-right: 0.375rem;
-	margin-left: 0;
-}
-
-:host(:not([show-search-field])) [dir="rtl"] .ui5-shellbar-overflow-container-right {
-	margin-right: 8rem;
-	margin-left: 0;
-}
-
-[dir="rtl"] .ui5-shellbar-overflow-container-right {
-	margin-left: 0;
-}
-
-[dir="rtl"] .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
-	float: left;
-}
-
-:host([breakpoint-size="S"]) [dir="rtl"] .ui5-shellbar-overflow-container-right {
-	margin-right: 0;
-}
-
 ::slotted([ui5-button][slot="startButton"]) {
-	margin-right: 0.5rem;
-	margin-left: 0;
+	margin-inline: 0 0.5rem;
 	justify-content: center;
 	align-items: center;
 }

@@ -1,0 +1,6 @@
+@import "../base/SplitButton-parameters.css";
+
+:root {
+	--_ui5_split_button_hover_border_radius: 0;
+	--_ui5_split_button_text_button_width: 2.5rem;
+}

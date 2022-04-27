@@ -1,0 +1,8 @@
+@import "../base/Token-parameters.css";
+
+:root {
+	--_ui5_token_border_radius: 0.125rem;
+	--_ui5_token_left_padding: 0.375rem;
+	--_ui5_token_right_margin: 0.375rem;
+	--_ui5_token_readonly_color: var(--sapContent_ForegroundTextColor);
+}

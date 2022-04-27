@@ -18,7 +18,7 @@
 }
 
 .ui5-bar-root .ui5-bar-startcontent-container {
-	padding-left: 0.5rem;
+	padding-inline-start: 0.5rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -35,7 +35,7 @@
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
-	padding-right: 0.5rem;
+	padding-inline-end: 0.5rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -75,14 +75,4 @@
 /*Specific selector added for support in IE11*/
 ::slotted(.ui5-bar-content) {
 	margin: 0 0.25rem;
-}
-
-[dir="rtl"] .ui5-bar-startcontent-container {
-	padding-right: 0.5rem;
-	padding-left: 0;
-}
-
-[dir="rtl"] .ui5-bar-endcontent-container {
-	padding-left: 0.5rem;
-	padding-right: 0;
 }
