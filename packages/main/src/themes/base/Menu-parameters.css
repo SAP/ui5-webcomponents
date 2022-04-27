@@ -1,0 +1,3 @@
+:root {
+	--_ui5_menu_popover_border_radius: var(--sapElement_BorderCornerRadius);
+}
