@@ -40,7 +40,7 @@ const composeAbsoluteOutputDir = (file, outputDir) => {
 	const fileDir = file.split(path.sep).slice(1, -1).join(path.sep);
 
 	// (2) Compose full output dir - "dist/generated/templates/lvl1/lvl2"
-	return `${outputDir}${path.sep}${fileDir}`; 
+	return `${outputDir}${path.sep}${fileDir}`;
 };
 
 const wrapDirectory = (directory, outputDir) => {
@@ -72,7 +72,12 @@ const writeRenderers = (outputDir, controlName, fileContent) => {
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");
 		fileContentUnix = fileContentUnix.replace(/\r/g, "\n");
-		fs.writeFileSync(compiledFilePath, fileContentUnix);
+
+		// Only write to the file system actual changes - each updated file, no matter if the same or not, triggers an expensive operation for rollup
+		// Note: .hbs files that include a changed .hbs file will also be recompiled as their content will be updated too
+		if (!fs.existsSync(compiledFilePath) || `${fs.readFileSync(compiledFilePath)}` !== fileContentUnix) {
+			fs.writeFileSync(compiledFilePath, fileContentUnix);
+		}
 
 	} catch (e) {
 		console.log(e);
