@@ -1,10 +1,9 @@
-commit 3a13acfee59076f971c5d76732f0090a0b268040
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Wed Apr 27 13:55:20 2022 +0300
+commit 34c9d915e9c07cf7fc0eb3ddca6f58bfe93c456f
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed Apr 27 15:42:33 2022 +0300
 
-    feat(ui5-tabcontainer): enable semantic icons in high contrast themes (#5124)
+    feat(ui5-breadcrumbs): implement Horizon theme (#5066)
     
-    - Semantic icons are now displayed using Icon components.
-    - The design property is no longer visualised when the tab is disabled.
+    * feat(ui5-breadcrumbs): implement Horizon theme
     
-    Fixes: #2540
+    Related to: #5008
