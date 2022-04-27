@@ -1,9 +1,5 @@
-commit 34c9d915e9c07cf7fc0eb3ddca6f58bfe93c456f
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed Apr 27 15:42:33 2022 +0300
+commit 3440191e701edec07d91866b5d0200f6d5df8823
+Author: Ajinkya Patil <ajinkyarangnathpatil@gmail.com>
+Date:   Wed Apr 27 15:34:17 2022 +0200
 
-    feat(ui5-breadcrumbs): implement Horizon theme (#5066)
-    
-    * feat(ui5-breadcrumbs): implement Horizon theme
-    
-    Related to: #5008
+    chore: solve reuse compliance issue (#5105)
