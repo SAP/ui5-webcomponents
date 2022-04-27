@@ -33,23 +33,29 @@
 			<ui5-tab text="One">
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
-				<ui5-tab-separator></ui5-tab-separator>
+
+			<ui5-tab-separator></ui5-tab-separator>
+
 			<ui5-tab text="Two">
-					<ui5-button id="button2">Button 2</ui5-button>
+				<ui5-button id="button2">Button 2</ui5-button>
+
 				<ui5-tab slot="subTabs" text="2.1">
 					<ui5-button id="button21">Button 21</ui5-button>
 
 					<ui5-tab slot="subTabs" text="2.1.1" selected>
 						<ui5-button id="button211">Button 211</ui5-button>
-				<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
 					</ui5-tab>
+
+					<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
 
 					<ui5-tab slot="subTabs" text="2.1.2">
 						<ui5-tab slot="subTabs" text="2.1.2.1">
 							<ui5-button id="button2121">Button 2121</ui5-button>
 						</ui5-tab>
+
 						<ui5-button id="button212">Button 212</ui5-button>
 					</ui5-tab>
+
 				</ui5-tab>
 
 				<ui5-tab text="2.2" slot="subTabs">
@@ -59,23 +65,39 @@
 
 			<ui5-tab text="Three">
 				<ui5-tab slot="subTabs" icon="sap-icon://menu2" text="3.1">
-					<ui5-button>Button 31</ui5-button>
+					<ui5-button>Button 3.1</ui5-button>
+
+					<ui5-tab slot="subTabs" icon="sap-icon://menu2" text="3.1.1">
+						<ui5-button>Button 3.1.1</ui5-button>
+					</ui5-tab>
+					<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+					<ui5-tab slot="subTabs" icon="sap-icon://menu2" text="3.1.2">
+						<ui5-button>Button 3.1.2</ui5-button>
+					</ui5-tab>
 				</ui5-tab>
 			</ui5-tab>
 
-			<ui5-tab text="Four"><ui5-button>Button 4</ui5-button>
-							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+			<ui5-tab text="Four">
+				<ui5-button>Button 4</ui5-button>
 
-				<ui5-tab slot="subTabs" text="Four 1"><ui5-button>Button 41</ui5-button>
-							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+				<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+				<ui5-tab slot="subTabs" text="Four 1">
+					<ui5-button>Button 41</ui5-button>
 
-					<ui5-tab slot="subTabs" text="Four 1.1"><ui5-button>Button 411</ui5-button>
-							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
-						<ui5-tab slot="subTabs" text="Four 1.1.1"><ui5-button>Button 4111</ui5-button>
-							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
-							<ui5-tab slot="subTabs" text="Four 1.1.1.1"><ui5-button>Button 41111</ui5-button></ui5-tab>
-							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+					<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+					<ui5-tab design="Positive" slot="subTabs" text="Four 1.1">
+						<ui5-button>Button 411</ui5-button>
 
+						<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+						<ui5-tab slot="subTabs" text="Four 1.1.1">
+							<ui5-button>Button 4111</ui5-button>
+
+							<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+							<ui5-tab slot="subTabs" text="Four 1.1.1.1">
+								<ui5-button>Button 41111</ui5-button>
+
+								<ui5-tab-separator slot="subTabs"></ui5-tab-separator>
+							</ui5-tab>
 						</ui5-tab>
 					</ui5-tab>
 				</ui5-tab>
@@ -124,26 +146,30 @@
 	<section>
 		<h2>Text only End Overflow</h2>
 		<ui5-tabcontainer id="tabContainerEndOverflow" collapsed fixed>
-			<ui5-tab text="One"></ui5-tab>
-			<ui5-tab text="Two">
-				<ui5-tab text="2.1"><ui5-button>Button 2.1</ui5-button>
-					<ui5-tab text="2.1.1"><ui5-button>Button 2.2</ui5-button>
-						<ui5-tab text="2.1.2"></ui5-tab><ui5-button>Button 2.3</ui5-button>
-				</ui5-tab></ui5-tab>
+			<ui5-tab design="Positive" text="One"></ui5-tab>
+			<ui5-tab design="Negative" text="Two" disabled>
+				<ui5-tab slot="subTabs" text="2.1"></ui5-tab>
 			</ui5-tab>
-			<ui5-tab text="Three">
-				<ui5-tab text="3.1">
+			<ui5-tab design="Critical" text="Three">
+				<ui5-tab slot="subTabs" design="Positive" text="3.1">
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
 			</ui5-tab>
 			<ui5-tab text="Four"></ui5-tab>
-			<ui5-tab text="Five"></ui5-tab>
+
+			<ui5-tab text="Five">
+				<ui5-tab slot="subTabs" text="nested in Five">
+					<ui5-tab slot="subTabs" text="nested deeper in Five">text</ui5-tab>
+					text
+				</ui5-tab>
+			</ui5-tab>
+
 			<ui5-tab text="Six"></ui5-tab>
 			<ui5-tab text="Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab text="Eight"></ui5-tab>
-			<ui5-tab text="Nine"></ui5-tab>
-			<ui5-tab text="Ten"></ui5-tab>
+			<ui5-tab design="Positive" text="Eight"></ui5-tab>
+			<ui5-tab design="Negative" text="Nine"></ui5-tab>
+			<ui5-tab design="Critical" text="Ten"></ui5-tab>
 			<ui5-tab text="Eleven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
 			<ui5-tab text="Twelve"></ui5-tab>
@@ -189,9 +215,9 @@
 			<ui5-tab text="Thirteen"></ui5-tab>
 			<ui5-tab text="Fourteen"></ui5-tab>
 			<ui5-tab text="Fifteen"></ui5-tab>
-			<ui5-tab text="Sixteen"></ui5-tab>
-			<ui5-tab text="Seventeen"></ui5-tab>
-			<ui5-tab text="Eighteen"></ui5-tab>
+			<ui5-tab text="Sixteen" design="Positive"></ui5-tab>
+			<ui5-tab text="Seventeen" design="Negative"></ui5-tab>
+			<ui5-tab text="Eighteen" design="Critical"></ui5-tab>
 			<ui5-tab text="Nineteen"></ui5-tab>
 			<ui5-tab text="Twenty" selected></ui5-tab>
 			<ui5-tab text="Twenty One"></ui5-tab>
@@ -223,7 +249,7 @@
 
 	<section>
 		<h2>Tab Container Start And End Overflow</h2>
-		<ui5-tabcontainer id="tabContainer1" fixed collapsed tabs-overflow-mode="StartAndEnd">
+		<ui5-tabcontainer id="tabContainer2" fixed collapsed tabs-overflow-mode="StartAndEnd">
 			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
 			<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></ui5-tab>
@@ -288,7 +314,7 @@
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Avaialability">
+			<ui5-tab text="Availability">
 				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Date of Expire">
@@ -488,7 +514,7 @@
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Avaialability">
+			<ui5-tab text="Availability">
 				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Date of Expire">
@@ -709,7 +735,6 @@
 		});
 
 		document.getElementById("densityToggle").addEventListener("click", function (event) {
-			console.log(event);
 			document.body.classList.toggle("sapUiSizeCompact")
 		})
 	</script>
