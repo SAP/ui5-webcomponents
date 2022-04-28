@@ -2,18 +2,17 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	height: var(--_ui5-badge-height);
+	height: 1rem;
 	min-width: 1.125em;
 	max-width: 100%;
 	padding: 0 0.3125em;
 	color: var(--sapAccentColor1);
 	background: var(--sapLegendBackgroundColor1);
-	border: var(--_ui5-badge-border);
-	border-inline-start: var(--_ui5-badge-left-border);
-	border-radius: var(--_ui5-badge-border-radius);
+	border: 0.0625em solid;
+	border-radius: 0.5rem;
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
-	font-weight: var(--_ui5-badge-font-weight);
+	font-weight: bold;
 	text-align: center;
 	letter-spacing: 0.0125em;
 	transition: all .2s ease-in-out;
@@ -30,7 +29,7 @@
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
-	pointer-events: var(--_ui5_badge_pointer_events);
+	pointer-events: none;
 }
 
 .ui5-badge-text {
@@ -40,9 +39,9 @@
 	font-weight: inherit;
 	text-overflow: ellipsis;
 	line-height: 1;
-	text-transform: var(--_ui5-badge-text-transform);
+	text-transform: uppercase;
 	letter-spacing: inherit;
-	font-size: var(--ui5-badge-font-size); /* origin from --sapFontSmallSize (0.75rem) */
+	font-size: 0.75em; /* origin from --sapFontSmallSize (0.75rem) */
 }
 
 :host(:hover) .ui5-badge-text {
