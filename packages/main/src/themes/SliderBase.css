@@ -107,8 +107,7 @@
 
 .ui5-slider-tickmarks li {
 	height: var(--_ui5_slider_tickmark_height);
-	width: 1px;
-	background: var(--_ui5_slider_tickmark_bg);
+	border-left: 1px solid var(--_ui5_slider_tickmark_bg);
 }
 
 .ui5-slider-handle {
@@ -242,7 +241,7 @@
 }
 
 .ui5-slider-tickmarks li.ui5-slider-tickmark-in-range {
-	background: var(--_ui5_slider_tickmark_in_range_bg);
+	border-left: 1px solid var(--_ui5_slider_tickmark_in_range_bg);
 }
 
 :host([show-tickmarks]) .ui5-slider-progress {

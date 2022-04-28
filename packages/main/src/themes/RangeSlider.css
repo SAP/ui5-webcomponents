@@ -20,6 +20,12 @@
 
 :host([range-pressed]) .ui5-slider-root:active .ui5-slider-handle:not(:focus) {
 	background: var(--_ui5_range_slider_handle_active_background);
+	border: var(--_ui5_slider_handle_focus_border);
+	box-shadow: none;
+}
+
+:host([range-pressed]) .ui5-slider-progress:focus::after {
+	border: none;
 }
 
 :host([range-pressed]) .ui5-slider-handle [slider-icon] {
