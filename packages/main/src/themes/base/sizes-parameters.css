@@ -106,8 +106,6 @@
 	--_ui5_switch_rtl_transform: var(--_ui5_switch_rtl_transform);
 	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_rtl_transform_with_label);
 
-	--_ui5_switch_text_right: var(--_ui5_switch_text_right);
-
 	--_ui5_tc_item_text: 3rem;
 	--_ui5_tc_item_height: 4.75rem;
 	--_ui5_tc_item_text_only_height: 2.75rem;
@@ -321,8 +319,6 @@
 	--_ui5_switch_transform_with_label: var(--_ui5_switch_compact_transform_with_label);
 	--_ui5_switch_rtl_transform: var(--_ui5_switch_compact_rtl_transform);
 	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_compact_rtl_transform_with_label);
-
-	--_ui5_switch_text_right: var(--_ui5_switch_text_compact_right);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;

@@ -35,8 +35,6 @@
 	--_ui5_switch_rtl_transform_with_label: translateX(-100%) translateX(1.875rem);
 	--_ui5_switch_compact_rtl_transform_with_label: translateX(1.875rem) translateX(-100%);
 
-	--_ui5_switch_rtl_text_left: none;
-
 	/* track */
 	--_ui5_switch_track_width: 2.5rem;
 	--_ui5_switch_track_compact_width: 2rem;
@@ -125,10 +123,9 @@
 	--_ui5_switch_text_with_label_width: 1.5rem;
 
 	--_ui5_switch_text_inactive_left: 0.1875rem;
-	--_ui5_switch_text_inactive_right: none;
+	--_ui5_switch_text_inactive_right: auto;
 	--_ui5_switch_text_active_left: 0.1875rem;
-	--_ui5_switch_text_right: none;
-	--_ui5_switch_text_compact_right: none;
+	--_ui5_switch_text_active_right: auto;
 
 	--_ui5_switch_text_active_color: var(--sapButton_Handle_Selected_TextColor);
 	--_ui5_switch_text_inactive_color: var(--sapButton_Handle_TextColor);
