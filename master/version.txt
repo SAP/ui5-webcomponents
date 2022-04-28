@@ -1,29 +1,5 @@
-commit d8d9315640b80162a6060bf340954277822276f3
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Apr 28 11:45:03 2022 +0300
+commit 311ba99f354654f34b1e792f1cec8ef054e7cebc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Apr 28 14:35:42 2022 +0300
 
-    feat(ui5-side-navigation): implement SAP Horizon theme family (#5081)
-    
-    * feat(ui5-side-navigation): implement SAP Horizon theme
-    
-    Related to #5006
-    
-    * feat(ui5-side-navigation): visual adjustments
-    
-    * feat(ui5-side-navigation): visual adjustments
-    
-    * feat(ui5-side-navigation): visual adjustments
-    
-    * feat(ui5-side-navigation): visual adjustments
-    
-    * feat(ui5-side-navigation): visual adjustments
-    
-    * feat(ui5-side-navigation): return tree mode to None
-    
-    * feat(ui5-side-navigation): resolve merge conflics
-    
-    * feat(ui5-side-navigation): fix code review
-    
-    * feat(ui5-side-navigation): fix icon sizes in fiori 3 theme
-    
-    * feat(ui5-side-navigation): update hashes
+    chore: package.json and README.md maintenance (#5129)
