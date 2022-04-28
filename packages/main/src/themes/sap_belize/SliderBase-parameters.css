@@ -21,4 +21,5 @@
 	--_ui5_slider_tooltip_border_radius: 0;
 	--_ui5_slider_tickmark_top: -.375rem;
 	--_ui5_slider_tickmark_in_range_bg: var(--sapField_BorderColor);
+	--_ui5_range_slider_root_hover_handle_icon_display: none;
 }

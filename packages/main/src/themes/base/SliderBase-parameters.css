@@ -90,6 +90,7 @@
 	--_ui5_slider_no_tickmarks_active_progress_border: var(--_ui5_slider_active_progress_border);
 	--_ui5_slider_no_tickmarks_active_progress_left: var(--_ui5_slider_active_progress_left);
 	--_ui5_slider_no_tickmarks_active_progress_top: var(--_ui5_slider_active_progress_top);
+	--_ui5_slider_handle_focus_visibility: none;
 }
 
 [data-ui5-compact-size],

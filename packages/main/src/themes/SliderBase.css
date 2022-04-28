@@ -255,3 +255,14 @@
 :host([show-tickmarks]) .ui5-slider-progress-container {
 	top: var(--_ui5_slider_no_tickmarks_progress_container_top);
 }
+
+.ui5-slider-handle:focus:after {
+	content: "";
+	display: var(--_ui5_slider_handle_focus_visibility);
+	width: calc(100% + (var(--sapContent_FocusWidth) * 2) + 2px);
+	height: calc(100% + (var(--sapContent_FocusWidth) * 2) + 2px);
+	border: var(--sapContent_FocusWidth) dotted var(--sapContent_FocusColor);
+	position: absolute;
+	border-radius: var(--_ui5_slider_handle_border_radius);
+	pointer-events: none;
+}

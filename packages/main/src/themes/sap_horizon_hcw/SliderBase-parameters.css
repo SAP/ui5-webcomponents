@@ -65,6 +65,7 @@
 	--_ui5_slider_tooltip_bottom: 2rem;
 	--_ui5_slider_handle_focused_tooltip_distance: calc(var(--_ui5_slider_tooltip_bottom) - 1px);
 	--_ui5_slider_tooltip_border_box: border-box;
+	--_ui5_slider_handle_focus_visibility: block;
 }
 
 [data-ui5-compact-size],
