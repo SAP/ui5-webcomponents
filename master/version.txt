@@ -1,21 +1,7 @@
-commit ad1ea9f52f374c509fecd1eb8f0d915f5bbe8316
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Apr 28 15:57:47 2022 +0300
+commit 6bdc292ac6082559a0fc631a8ca85c098086de37
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Apr 28 09:04:10 2022 -0700
 
-    feat(ui5-carousel): implement SAP Horizon theme family (#5061)
+    chore: translation delivery (#5142)
     
-    * feat(ui5-carousel): implement SAP Horizon theme
-    
-    * remove temp code
-    
-    * feat(ui5-carousel): implement SAP Horizon theme
-    
-    * feat(ui5-carousel): resolve merge conflicts
-    
-    * feat(ui5-carousel): fix hcb/w themes active dot color
-    
-    * feat(ui5-carousel): code styling
-    
-    * feat(ui5-carousel): update hashes
-    
-    * feat(ui5-carousel): code refactoring
+    Change-Id: Ie9137b8a14497c21d2adf1f6d4266b8356453229
