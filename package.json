@@ -9,7 +9,8 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt build:main build:fiori",
+    "build": "npm-run-all --sequential build:non-component-packages build:main build:fiori",
+    "build:non-component-packages": "npm-run-all --parallel build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt",
     "build:localization": "yarn workspace @ui5/webcomponents-localization build",
     "build:base": "yarn workspace @ui5/webcomponents-base build",
     "build:theming": "yarn workspace @ui5/webcomponents-theming build",
@@ -31,8 +32,8 @@
     "dev:fiori": "yarn workspace @ui5/webcomponents-fiori nps dev",
     "scopeDev:main": "yarn workspace @ui5/webcomponents nps scope.dev",
     "scopeDev:fiori": "yarn workspace @ui5/webcomponents-fiori nps scope.dev",
-    "start": "npm-run-all --sequential build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori copy-css start:all",
-    "startWithScope": "npm-run-all --sequential build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt scopePrepare:main scopePrepare:fiori copy-css scopeStart:all",
+    "start": "npm-run-all --sequential build:non-component-packages prepare:main prepare:fiori copy-css start:all",
+    "startWithScope": "npm-run-all --sequential build:non-component-packages scopePrepare:main scopePrepare:fiori copy-css scopeStart:all",
     "start:all": "npm-run-all --parallel dev:base dev:localization dev:main dev:fiori",
     "scopeStart:all": "npm-run-all --parallel dev:base dev:localization scopeDev:main scopeDev:fiori",
     "start:base": "yarn workspace @ui5/webcomponents-base start",
