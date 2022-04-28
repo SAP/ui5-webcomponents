@@ -9,12 +9,12 @@
 	/* Header Item */
 	--_ui5_tc_headeritem_padding: 0 1rem;
 	--_ui5_tc_headerItem_color: var(--sapContent_LabelColor);
-	--_ui5_tc_headeritem_additional_text_color: var(--sapContent_LabelColor);
+	--_ui5_tc_headerItem_additional_text_color: var(--sapContent_LabelColor);
 	--_ui5_tc_headerItem_text_hover_color: var(--_ui5_tc_headerItem_color);
-	--_ui5_tc_headeritem_text_selected_color: var(--sapSelectedColor);
-	--_ui5_tc_headeritem_text_selected_hover_color: var(--sapSelectedColor);
+	--_ui5_tc_headerItem_text_selected_color: var(--sapSelectedColor);
+	--_ui5_tc_headerItem_text_selected_hover_color: var(--sapSelectedColor);
 	--_ui5_tc_headeritem_text_font_weight: normal;
-	--_ui5_tc_headeritem_additional_text_font_weight: normal;
+	--_ui5_tc_headerItem_additional_text_font_weight: normal;
 	--_ui5_tc_headerItem_neutral_color: var(--sapNeutralColor);
 	--_ui5_tc_headerItem_positive_color: var(--sapPositiveColor);
 	--_ui5_tc_headerItem_negative_color: var(--sapNegativeColor);
@@ -57,6 +57,7 @@
 	--_ui5_tc_headerItemContent_default_focus_border: none;
 	--_ui5_tc_headerItemContent_focus_border_radius: 0;
 	--_ui5_tc_headerItemSemanticIcon_display: none;
+	--_ui5_tc_headerItemSemanticIcon_size: 0.75rem;
 	--_ui5_tc_headerItem_focus_border_radius: 0px;
 	--_ui5_tc_mixedMode_itemText_color: var(--sapContent_LabelColor);
 	--_ui5_tc_mixedMode_itemText_font_family: var(--sapFontFamily);
@@ -69,8 +70,8 @@
 	--_ui5_tc_overflowItem_positive_color: var(--sapPositiveColor);
 	--_ui5_tc_overflowItem_negative_color: var(--sapNegativeColor);
 	--_ui5_tc_overflowItem_critical_color: var(--sapCriticalColor);
-	--_ui5_tc_overflowItem_focus_border: 0px;
 	--_ui5_tc_overflowItem_focus_offset: 0.125rem;
+	--_ui5_tc_overflowItem_extraIndent: 0rem;
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapHighlightColor);
