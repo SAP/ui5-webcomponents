@@ -1,5 +1,20 @@
-commit 311ba99f354654f34b1e792f1cec8ef054e7cebc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 28 14:35:42 2022 +0300
+commit 4fb44e8e41714db41d85fd43791876d00d7ffaa4
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Thu Apr 28 15:01:33 2022 +0300
 
-    chore: package.json and README.md maintenance (#5129)
+    fix(ui5-switch): adjust additional description announcements (#4927)
+    
+    * fix(ui5-switch): adjust additional description announcements
+    
+    Problem description:
+    An additional description provided trough the
+    "accessible-name-ref" attribute wasn't announced by
+    the screen reader.
+    
+    Solution:
+    The text for "on" or "off" state is now moved
+    from aria-labelledby attribute to the "aria-label"
+    attribute along with the additional description
+    provided by the user.
+    
+    Fixes: #4887
