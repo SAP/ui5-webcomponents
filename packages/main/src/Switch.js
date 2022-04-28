@@ -10,11 +10,6 @@ import "@ui5/webcomponents-icons/dist/less.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
-import {
-	SWITCH_ON,
-	SWITCH_OFF,
-} from "./generated/i18n/i18n-defaults.js";
-
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
 
@@ -100,6 +95,8 @@ const metadata = {
 		/**
 		 * Sets the accessible aria name of the component.
 		 *
+		 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
+		 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
@@ -112,6 +109,8 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
+		 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
+		 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -263,11 +262,11 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || Switch.i18nBundle.getText(SWITCH_ON);
+		return this._textOn;
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || Switch.i18nBundle.getText(SWITCH_OFF);
+		return this._textOff;
 	}
 
 	get hiddenText() {
@@ -275,7 +274,7 @@ class Switch extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ").trim();
 	}
 
 	static get dependencies() {
