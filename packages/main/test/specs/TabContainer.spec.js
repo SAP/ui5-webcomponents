@@ -129,7 +129,7 @@ describe("TabContainer general interaction", () => {
 
 		const newlySelectedItem = await tabcontainer.$("[selected]");
 
-		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Twelve", "The first item in the overflow is 12");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Eleven", "The first item in the overflow is 11");
 
 	});
 
