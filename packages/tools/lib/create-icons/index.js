@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 const mkdirp = require("mkdirp");
 
@@ -49,9 +49,10 @@ const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewB
 	<path d="${pathData}"/>
 </svg>`;
 
-const createIcons = (file) => {
-	const json = JSON.parse(fs.readFileSync(file));
+const createIcons = async (file) => {
+	const json = JSON.parse(await fs.readFile(file));
 
+	const promises = [];
 	for (let name in json.data) {
 		const iconData = json.data[name];
 		const pathData = iconData.path;
@@ -60,13 +61,17 @@ const createIcons = (file) => {
 
 		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, json.collection, json.packageName) : iconTemplate(name, pathData, ltr, json.collection, json.packageName);
 
-		fs.writeFileSync(path.join(destDir, `${name}.js`), content);
-		fs.writeFileSync(path.join(destDir, `${name}.svg`), svgTemplate(pathData));
+		promises.push(fs.writeFile(path.join(destDir, `${name}.js`), content));
+		promises.push(fs.writeFile(path.join(destDir, `${name}.svg`), svgTemplate(pathData)));
 
 		if (json.version) {
-			fs.writeFileSync(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name));
+			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name)));
 		}
 	}
+
+	return Promise.all(promises);
 };
 
-createIcons(srcFile);
+createIcons(srcFile).then(() => {
+	console.log("Icons created.");
+});
