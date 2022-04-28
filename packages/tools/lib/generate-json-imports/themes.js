@@ -70,8 +70,10 @@ ${availableThemesArray}
 `;
 
 	await mkdirp(path.dirname(outputFile));
-	await fs.writeFile(outputFile, contentStatic);
-	await fs.writeFile(outputFileDynamic, contentDynamic);
+	return Promise.all([
+		fs.writeFile(outputFile, contentStatic),
+		fs.writeFile(outputFileDynamic, contentDynamic)
+	]);
 };
 
 generate().then(() => {
