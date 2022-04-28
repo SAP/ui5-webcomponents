@@ -1,8 +1,6 @@
 @import "../base/SideNavigation-parameters.css";
 
 :root {
-	--_ui5_side_navigation_separator_backgound: var(--sapAccentColor6);
-	--_ui5_side_navigation_icon_color: var(--sapHighlightColor);
 	--_ui5_side_navigation_icon_size: 1.125rem;
 	--_ui5_side_navigation_toggle_icon_size: 0.875rem;
 	--_ui5_side_navigation_collapsed_state_width: 3.5rem;

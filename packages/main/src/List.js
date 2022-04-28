@@ -27,6 +27,7 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -441,7 +442,7 @@ class List extends UI5Element {
 	}
 
 	static get styles() {
-		return listCss;
+		return [browserScrollbarCSS, listCss];
 	}
 
 	static async onDefine() {
