@@ -215,6 +215,9 @@
 	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
 	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
 
+	/* Menu */
+	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;
+
 	/* Notifications */
 	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
 

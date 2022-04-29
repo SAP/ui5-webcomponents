@@ -8,6 +8,7 @@
 .ui5-menu-rp[ui5-responsive-popover] {
 	box-shadow: var(--sapContent_Shadow1);
 	border-radius: var(--_ui5_menu_popover_border_radius);
+	max-width: 20rem;
 }
 
 .ui5-menu-item-icon-end {
@@ -63,6 +64,10 @@
 
 .ui5-menu-back-button {
 	margin-right: 1rem;
+}
+
+.ui5-menu-item:not([is-phone])::part(native-li) {
+	padding: var(--_ui5_menu_item_padding);
 }
 
 .ui5-menu-item[starts-section] {
