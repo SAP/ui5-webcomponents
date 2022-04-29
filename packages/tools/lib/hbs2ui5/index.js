@@ -4,8 +4,6 @@ const hbs2lit = require('../hbs2lit');
 const path = require('path');
 const litRenderer = require('./RenderTemplates/LitRenderer');
 const recursiveReadDir = require("recursive-readdir");
-const mkdirp = require('mkdirp');
-const fsExists = require("fs.promises.exists");
 
 const args = getopts(process.argv.slice(2), {
 	alias: {
@@ -44,31 +42,33 @@ const composeAbsoluteOutputDir = (file, outputDir) => {
 	return `${outputDir}${path.sep}${fileDir}`;
 };
 
-const wrapDirectory = (directory, outputDir, callback) => {
+const wrapDirectory = (directory, outputDir) => {
 	directory = path.normalize(directory);
 	outputDir = path.normalize(outputDir);
 
-	recursiveReadDir(directory, (err, files) => {
+	return new Promise((resolve, reject) => {
+		recursiveReadDir(directory, (err, files) => {
 
-		if (err) {
-			onError('directory');
-		}
-
-		const promises = files.map(fileName => {
-			if (isHandlebars(fileName)) {
-				return processFile(fileName, outputDir);
+			if (err) {
+				onError('directory');
+				reject();
 			}
-		}).filter(x => !!x);
 
-		callback(Promise.all(promises));
+			const promises = files.map(fileName => {
+				if (isHandlebars(fileName)) {
+					return processFile(fileName, outputDir);
+				}
+			}).filter(x => !!x);
+
+			resolve(Promise.all(promises));
+		});
 	});
 };
 
 const writeRenderers = async (outputDir, controlName, fileContent) => {
 	try {
-		if (!(await fsExists(outputDir))) {
-			await mkdirp(outputDir);
-		}
+
+		await fs.mkdir(outputDir, { recursive: true });
 
 		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.js`;
 
@@ -78,7 +78,13 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 
 		// Only write to the file system actual changes - each updated file, no matter if the same or not, triggers an expensive operation for rollup
 		// Note: .hbs files that include a changed .hbs file will also be recompiled as their content will be updated too
-		if (!(await fsExists(compiledFilePath)) || `${await fs.readFile(compiledFilePath)}` !== fileContentUnix) {
+
+		let existingFileContent = "";
+		try {
+			existingFileContent = await fs.readFile(compiledFilePath);
+		} catch (e) {}
+
+		if (existingFileContent !== fileContentUnix) {
 			return fs.writeFile(compiledFilePath, fileContentUnix);
 		}
 
@@ -90,9 +96,7 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 if (!args['d'] || !args['o']) {
 	console.log('Please provide an input and output directory (-d and -o)');
 } else {
-	wrapDirectory(args['d'], args['o'], promise => {
-		promise.then(() => {
-			console.log("Templates generated");
-		});
+	wrapDirectory(args['d'], args['o']).then(() => {
+		console.log("Templates generated");
 	});
 }
