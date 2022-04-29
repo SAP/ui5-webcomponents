@@ -8,18 +8,17 @@
  * The 2nd param './../dist/generated/assets/i18n' is where the JSON files would be written to.
  */
 const path = require("path");
-const glob = require("glob");
+const glob = require("glob-promise");
 const PropertiesReader = require('properties-reader');
-const fs = require('fs');
+const fs = require('fs').promises;
 const assets = require('../../assets-meta.js');
-const mkdirp = require("mkdirp");
 
 const allLanguages = assets.languages.all;
 
 const messagesBundles = path.normalize(`${process.argv[2]}/messagebundle_*.properties`);
 const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 
- const convertToJSON = (file) => {
+const convertToJSON = async (file) => {
 	const properties = PropertiesReader(file)._properties;
 	const filename = path.basename(file, path.extname(file));
 	const language = filename.match(/^messagebundle_(.*?)$/)[1];
@@ -29,14 +28,16 @@ const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 	}
 	const outputFile = path.normalize(`${messagesJSONDist}/${filename}.json`);
 
-	fs.writeFileSync(outputFile, JSON.stringify(properties));
+	return fs.writeFile(outputFile, JSON.stringify(properties));
 	// console.log(`[i18n]: "${filename}.json" has been generated!`);
 };
 
-mkdirp.sync(messagesJSONDist);
- glob(messagesBundles, {}, (err, files) => {
-	if (err) {
-		return console.log("No messagebundle files found!");
-	}
-	files.forEach(convertToJSON);
+const generate = async () => {
+	await fs.mkdir(messagesJSONDist, { recursive: true });
+	const files = await glob(messagesBundles);
+	return Promise.all(files.map(convertToJSON));
+};
+
+generate().then(() => {
+	console.log("Message bundle JSON files generated.");
 });
