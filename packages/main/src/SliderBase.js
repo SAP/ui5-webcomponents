@@ -160,10 +160,12 @@ class SliderBase extends UI5Element {
 			labelInterval: null,
 		};
 
+		const handleTouchStartEvent = event => {
+			this._onmousedown(event);
+		};
+
 		this._ontouchstart = {
-			handleEvent(event) {
-				this._onmousedown(event);
-			},
+			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
 	}
