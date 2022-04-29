@@ -1,15 +1,15 @@
 const esprima = require("esprima");
 const escodegen = require("escodegen");
 
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
-const glob = require("glob");
+const glob = require("glob-promise");
 const basePath = process.argv[2];
 
-const convertImports = (srcPath) => {
+const convertImports = async (srcPath) => {
 	let changed = false;
 	// console.log("scanning imports of", srcPath);
-	let code = fs.readFileSync(srcPath).toString();
+	let code = (await fs.readFile(srcPath)).toString();
 	const tree = esprima.parseModule(code);
 	const importer = srcPath.replace(basePath, "");
 	const importerDir = path.dirname(importer);
@@ -44,11 +44,15 @@ const convertImports = (srcPath) => {
 	});
 
 	if (changed) {
-		fs.writeFileSync(srcPath, escodegen.generate(tree));
+		return fs.writeFile(srcPath, escodegen.generate(tree));
 	}
 }
 
-const fileNames = glob.sync(basePath + "**/*.js");
-// console.log(fileNames);
-fileNames.forEach(convertImports);
-console.log("Success: Converted absolute imports to relative for files in:", basePath)
+const generate = async () => {
+	const fileNames = await glob(basePath + "**/*.js");
+	return Promise.all(fileNames.map(convertImports).filter(x => !!x));
+};
+
+generate().then(() => {
+	console.log("Success: Converted absolute imports to relative for files in:", basePath);
+});
