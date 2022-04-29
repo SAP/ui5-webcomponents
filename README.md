@@ -122,7 +122,6 @@ The UI5 Web Components project contains several packages:
 | `icons-tnt`                 | [UI5 Web Components - Icons TNT](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt)                       | A rich icons collection (`SAP-icons-TNT`), suitable for more technical apps                                                |
 | `icons-business-suite`      | [UI5 Web Components - Icons Business Suite](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) | A rich icons collection (`BusinessSuiteInAppSymbols`), suitable for SAP Fiori apps                                         |
 | `base`                      | [UI5 Web Components - Base](https://www.npmjs.com/package/@ui5/webcomponents-base)                                 | The UI5 Web Components framework itself                                                                                    |
-| `theme-base` **deprecated** | [UI5 Web Components - Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)                     | *Up to 1.0.0-rc.15 inclusive* Theming assets (the default theme and additional accessibility themes)                       |
 | `theming`                   | [UI5 Web Components - Theming](https://www.npmjs.com/package/@ui5/webcomponents-theming)                           | Theming assets (the default theme and additional accessibility themes)                                                     |
 | `localization`              | [UI5 Web Components - Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization)                 | `i18n` functionality and `CLDR` assets                                                                                     |
 | `create-package`            | [Create Webcomponents Package](https://www.npmjs.com/package/@ui5/create-webcomponents-package)                    | An `npm init` script for creating new UI5 Webcomponents Packages                                                           |
@@ -168,7 +167,7 @@ Afterwards, you can find the build output in the `dist` folder of the correspond
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## Limitations
-None as of 1.0.0-rc.15.
+None as of 1.3.0
 
 ## Known Issues
 No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/SAP/ui5-webcomponents/issues).

@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "lit-html": "2.0.1"
+    "lit-html": "^2.0.1"
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "0.16.1",
@@ -41,6 +41,7 @@
     "chromedriver": "100.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
+    "cross-env": "^7.0.3",
     "eslint": "^7.22.0",
     "mkdirp": "^1.0.4",
     "resolve": "^1.20.0"
