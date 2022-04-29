@@ -1,13 +1,10 @@
 const fs = require("fs").promises;
 const path = require("path");
-const mkdirp = require("mkdirp");
 
 const collectionName = process.argv[2] || "SAP-icons";
 const collectionVersion = process.argv[3];
 const srcFile = collectionVersion ? path.normalize(`src/${collectionVersion}/${collectionName}.json`) : path.normalize(`src/${collectionName}.json`);
 const destDir = collectionVersion ? path.normalize(`dist/${collectionVersion}/`) : path.normalize("dist/");
-
-mkdirp.sync(destDir);
 
 const iconTemplate = (name, pathData, ltr, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
@@ -50,6 +47,8 @@ const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewB
 </svg>`;
 
 const createIcons = async (file) => {
+	await fs.mkdir(destDir, { recursive: true });
+
 	const json = JSON.parse(await fs.readFile(file));
 
 	const promises = [];

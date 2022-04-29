@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const path = require("path");
-const mkdirp = require("mkdirp");
 
 if (process.argv.length < 7) {
 	throw new Error("Not enough arguments");
@@ -135,7 +134,7 @@ export {
 };`
 	};
 
-	await mkdirp(destPath);
+	await fs.mkdir(destPath, { recursive: true });
 
 	const illustrationFileNames = await fs.readdir(path.normalize(srcPath));
 

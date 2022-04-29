@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const path = require('path');
-const mkdirp = require("mkdirp");
 const assets = require("../../assets-meta.js");
 
 const generate = async () => {
@@ -69,7 +68,7 @@ ${availableThemesArray}
   .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadAndCheck));
 `;
 
-	await mkdirp(path.dirname(outputFile));
+	await fs.mkdir(path.dirname(outputFile), { recursive: true });
 	return Promise.all([
 		fs.writeFile(outputFile, contentStatic),
 		fs.writeFile(outputFileDynamic, contentDynamic)

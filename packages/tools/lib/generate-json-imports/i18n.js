@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const path = require('path');
-const mkdirp = require("mkdirp");
 
 const generate = async () => {
 
@@ -87,7 +86,7 @@ localeIds.forEach(localeId => {
 
 	}
 
-	await mkdirp(path.dirname(outputFile));
+	await fs.mkdir(path.dirname(outputFile), { recursive: true });
 	return Promise.all([
 		fs.writeFile(outputFile, contentStatic),
 		fs.writeFile(outputFileDynamic, contentDynamic),
