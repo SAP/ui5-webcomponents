@@ -24,7 +24,7 @@ const onError = (place) => {
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 
 const processFile = async (file, outputDir) => {
-	const litCode = hbs2lit(file);
+	const litCode = await hbs2lit(file);
 	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];

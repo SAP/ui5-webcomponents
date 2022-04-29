@@ -1,9 +1,9 @@
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs").promises;
 
-function replaceIncludes(file) {
+const replaceIncludes = async (file) => {
 	const filePath = path.dirname(file);
-	let fileContent = fs.readFileSync(file, "utf-8");
+	let fileContent = await fs.readFile(file, "utf-8");
 
 	const inclRegex = /{{>\s*include\s*["'](.+?)["']}}/g;
 	let match;
@@ -20,11 +20,11 @@ function replaceIncludes(file) {
 			targetFile = require.resolve(targetFile);
 		}
 
-		fileContent = fileContent.replace(match[0], replaceIncludes(targetFile));
+		fileContent = fileContent.replace(match[0], await replaceIncludes(targetFile));
 	}
 
 	return fileContent;
-}
+};
 
 module.exports = {
 	replace: replaceIncludes
