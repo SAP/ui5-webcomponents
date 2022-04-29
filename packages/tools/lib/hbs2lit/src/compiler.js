@@ -12,8 +12,8 @@ const removeWhiteSpaces = (source) => {
 		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
-const hbs2lit = (file) => {
-	let sPreprocessed = includesReplacer.replace(file);
+const hbs2lit = async (file) => {
+	let sPreprocessed = await includesReplacer.replace(file);
 
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
