@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 const process = require("process");
 const { hashElement } = require("folder-hash");
@@ -8,15 +8,19 @@ const inputDir = path.normalize(process.argv[2]);
 const hashFileName = path.normalize(process.argv[3]);
 
 const isUpToDate = async (inputDir, hashFileName) => {
-	// No dist/ directory or no hash file
-	if (!fs.existsSync(inputDir) || !fs.existsSync(hashFileName)) {
-		return false;
+	try {
+		await fs.readdir(inputDir);
+	} catch (e) {
+		return false; // No dist/ directory
 	}
 
-	// Empty hash file
-	const existingHash = `${fs.readFileSync(hashFileName)}`;
+	let existingHash = "";
+	try {
+		existingHash = `${await fs.readFile(hashFileName)}`;
+	} catch (e) {}
+
 	if (!existingHash) {
-		return false;
+		return false; // Empty hash file or hash file does not exist
 	}
 
 	// Calculate the hash of the dist/ directory
