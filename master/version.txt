@@ -1,5 +1,5 @@
-commit 4c561fab6f9f1d2bc9d275536503b656a9c99c3b
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Apr 29 15:30:52 2022 +0300
+commit e9df3663f89702e08ff101e63f9d0e2c5884fc43
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Apr 29 15:46:26 2022 +0300
 
-    feat(ui5-color-picker): implement horizon themes (#5139)
+    refactor: parallelize main/fiori build (#5152)
