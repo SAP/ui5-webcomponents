@@ -25,8 +25,8 @@
 }
 
 .ui5-breadcrumbs-current-location > span:focus {
-	outline-offset: -1px;
-	outline: 1px dotted var(--sapContent_FocusColor);
+    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    border-radius: var(--_ui5_breadcrumbs_current_location_focus_border_radius);
 }
 
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper[hidden] {
@@ -39,6 +39,10 @@
     padding-left: .675rem;
     vertical-align: text-top;
     color: var(--sapLinkColor);
+}
+
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link][focused] [ui5-icon] {
+    color: var(--_ui5_link_focus_color);
 }
 
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-icon]::before {

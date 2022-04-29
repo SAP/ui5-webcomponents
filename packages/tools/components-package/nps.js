@@ -18,7 +18,11 @@ const getScripts = (options) => {
 		clean: "rimraf dist && rimraf .port",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
-		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples build.illustrations",
+		prepare: {
+			default: "nps clean prepare.all",
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.samples" "nps build.illustrations"',
+			styleRelated: "nps build.styles build.jsonImports",
+		},
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,

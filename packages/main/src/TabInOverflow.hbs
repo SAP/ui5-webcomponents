@@ -11,10 +11,13 @@
 >
 	<div class="ui5-tab-overflow-itemContent-wrapper">
 		<div class="ui5-tab-overflow-itemContent">
+			{{#if this.semanticIconName}}
+				<ui5-icon class="{{this.semanticIconClasses}}" name="{{this.semanticIconName}}"></ui5-icon>
+			{{/if}}
+
 			{{#if this.icon}}
 				<ui5-icon name="{{this.icon}}"></ui5-icon>
 			{{/if}}
-
 			{{this.text}}
 
 			{{#if this.additionalText}}
