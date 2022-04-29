@@ -1,37 +1,9 @@
-commit d98ba41cc265fbfdd39de0b2b3152e70362c961b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Apr 29 14:18:21 2022 +0300
+commit 26075fe4a6eabee3f3fe802e7247b310101e48cb
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Fri Apr 29 14:44:46 2022 +0300
 
-    chore: make build tasks async (#5147)
+    feat(ui5-menu): implement Horizon theme (#5132)
     
-    * chore: make build tasks async
+    * feat(ui5-menu): implement Horizon theme
     
-    * chore: illustrations
-    
-    * chore: hbs
-    
-    * chore: rework hbs
-    
-    * chore: docs
-    
-    * chore: esm-abs-to-rel
-    
-    * chore: hash utils
-    
-    * chore: i18n tasks
-    
-    * chore: copy-list
-    
-    * chore: hbs includes replacer
-    
-    * chore: remove usages of mkdirp
-    
-    * chore: use globby instead of glob and glob-promise
-    
-    * chore: prerelease
-    
-    * chore: base and localization lib
-    
-    * chore: fix and simplify glob pattern for packages release
-    
-    Co-authored-by: Peter Skelin <petar.skelin@sap.com>
+    * feat(ui5-menu): fix comments
