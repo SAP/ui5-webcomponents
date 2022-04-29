@@ -133,6 +133,7 @@
   "--sapContent_BusyColor",
   "--sapContent_ContrastFocusColor",
   "--sapContent_ContrastIconColor",
+  "--sapContent_ContrastShadowColor",
   "--sapContent_ContrastTextColor",
   "--sapContent_Critical_Shadow",
   "--sapContent_DisabledOpacity",
