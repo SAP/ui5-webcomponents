@@ -1,9 +1,11 @@
-commit 357e0d552c84d27a596f92abf6627fd49f929157
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Fri Apr 29 15:57:09 2022 +0300
+commit 73994e10fad7b62c06b7117b7787471263de87f6
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Fri Apr 29 16:56:09 2022 +0300
 
-    feat(ui5-color-palette): implement Horizon theme (#5149)
+    feat(ui5-switch): embed new horizon theme changes (#5017)
     
-    * feat(ui5-color-palette): implement Horizon theme
+    * Fixing belize regressions
     
-    * feat(ui5-color-palette): fix comments
+    * removing commented selectors
+    
+    * enable HC themes
