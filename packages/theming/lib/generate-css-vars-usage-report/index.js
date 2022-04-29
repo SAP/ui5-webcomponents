@@ -1,12 +1,11 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require("path");
-const glob = require("glob");
 const beautify = require("json-beautify");
 
 const vars = new Set();
 
-const processFile = file => {
-	const content = fs.readFileSync(file);
+const processFile = async file => {
+	const content = await fs.readFile(file);
 	const matches = `${content}`.match(/var\(--sap[\-_A-Za-z0-9]+\)/g);
 	matches && matches.forEach(match => {
 		const cssVar = match.match(/--sap[\-_A-Za-z0-9]+/)[0];
@@ -14,14 +13,19 @@ const processFile = file => {
 	});
 };
 
-// Main
-glob.sync(path.join(__dirname, "../../../main/src/themes/**/*.css")).forEach(file => processFile(file));
+const generate = async () => {
+	const { globby } = await import("globby");
 
-// Fiori
-glob.sync(path.join(__dirname, "../../../fiori/src/themes/**/*.css")).forEach(file => processFile(file));
+	const mainFiles = await globby(path.join(__dirname, "../../../main/src/themes/**/*.css"));
+	const fioriFiles = await globby(path.join(__dirname, "../../../fiori/src/themes/**/*.css"));
+	await Promise.all([...mainFiles.map(processFile), ...fioriFiles.map(processFile)]);
 
-const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-const result = Array.from(vars).sort(collator.compare); // natural sort
+	const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+	const result = Array.from(vars).sort(collator.compare); // natural sort
 
-fs.writeFileSync(path.join(__dirname, "../../css-vars-usage.json"), beautify(result, null, 2, 100));
-console.log("CSS Vars usage report generated.");
+	return fs.writeFile(path.join(__dirname, "../../css-vars-usage.json"), beautify(result, null, 2, 100));
+}
+
+generate().then(() => {
+	console.log("CSS Vars usage report generated.");
+});

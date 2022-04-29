@@ -4,7 +4,6 @@ const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
 const child_process = require("child_process");
 const commandLineArgs = require('command-line-args');
-const glob = require("glob-promise");
 const execSync = child_process.execSync;
 const gitRev = execSync("git rev-parse HEAD").toString();
 
@@ -23,8 +22,9 @@ const NEW_VERSION = options.version;
 const OTP = options.otp;
 
 const run = async () => {
-	const FILES = await glob("**/packages/**/package.json", { 
-		"ignore": ["**/node_modules/**/*.*", "**/dist/**/*.*", "**/playground/**/*.*"],
+	const { globby } = await import("globby");
+	const FILES = await globby("**/packages/**/package.json", {
+		"ignoreFiles": ["**/node_modules/**/*.*", "**/dist/**/*.*", "**/playground/**/*.*"],
 	});
 
 	// Step 1: process package.json files

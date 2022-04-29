@@ -48,7 +48,7 @@
     "getopts": "^2.3.0",
     "glob": "^7.1.6",
     "glob-parent": "^6.0.2",
-    "glob-promise": "^4.2.2",
+    "globby": "^13.1.1",
     "handlebars": "^4.7.7",
     "is-port-reachable": "^3.1.0",
     "jsdoc": "^3.6.6",

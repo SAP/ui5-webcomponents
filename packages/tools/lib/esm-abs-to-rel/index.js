@@ -3,7 +3,6 @@ const escodegen = require("escodegen");
 
 const fs = require("fs").promises;
 const path = require("path");
-const glob = require("glob-promise");
 const basePath = process.argv[2];
 
 const convertImports = async (srcPath) => {
@@ -49,7 +48,8 @@ const convertImports = async (srcPath) => {
 }
 
 const generate = async () => {
-	const fileNames = await glob(basePath + "**/*.js");
+	const { globby } = await import("globby");
+	const fileNames = await globby(basePath + "**/*.js");
 	return Promise.all(fileNames.map(convertImports).filter(x => !!x));
 };
 

@@ -8,7 +8,6 @@
  * The 2nd param './../dist/generated/assets/i18n' is where the JSON files would be written to.
  */
 const path = require("path");
-const glob = require("glob-promise");
 const PropertiesReader = require('properties-reader');
 const fs = require('fs').promises;
 const assets = require('../../assets-meta.js');
@@ -33,8 +32,9 @@ const convertToJSON = async (file) => {
 };
 
 const generate = async () => {
+	const { globby } = await import("globby");
 	await fs.mkdir(messagesJSONDist, { recursive: true });
-	const files = await glob(messagesBundles);
+	const files = await globby(messagesBundles);
 	return Promise.all(files.map(convertToJSON));
 };
 
