@@ -1,9 +1,5 @@
-commit 26075fe4a6eabee3f3fe802e7247b310101e48cb
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Fri Apr 29 14:44:46 2022 +0300
+commit 4c561fab6f9f1d2bc9d275536503b656a9c99c3b
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Apr 29 15:30:52 2022 +0300
 
-    feat(ui5-menu): implement Horizon theme (#5132)
-    
-    * feat(ui5-menu): implement Horizon theme
-    
-    * feat(ui5-menu): fix comments
+    feat(ui5-color-picker): implement horizon themes (#5139)
