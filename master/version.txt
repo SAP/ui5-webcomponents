@@ -1,5 +1,9 @@
-commit e9df3663f89702e08ff101e63f9d0e2c5884fc43
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Apr 29 15:46:26 2022 +0300
+commit 357e0d552c84d27a596f92abf6627fd49f929157
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Fri Apr 29 15:57:09 2022 +0300
 
-    refactor: parallelize main/fiori build (#5152)
+    feat(ui5-color-palette): implement Horizon theme (#5149)
+    
+    * feat(ui5-color-palette): implement Horizon theme
+    
+    * feat(ui5-color-palette): fix comments
