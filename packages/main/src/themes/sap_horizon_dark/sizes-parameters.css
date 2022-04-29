@@ -28,10 +28,12 @@
 	--_ui5_color-palette-item-container-sides-padding: 0.1875rem;
 	--_ui5_color-palette-item-container-rows-padding: 0.8125rem;
 	--_ui5_color-palette-item-hover-height: 1.625rem;
-	--_ui5_color-palette-item-margin: calc((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2);
-	--_ui5_color-palette-row-width: 8.125rem;
-	--_ui5_color-palette-swatch-container-padding: 0.1875rem 0.8125rem;
-	--_ui5_color-palette-item-hover-margin: 0;
+	--_ui5_color-palette-item-margin: calc(((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2) + 0.0625rem);
+	--_ui5_color-palette-row-width: 8.75rem;
+	--_ui5_color-palette-swatch-container-padding: 0.1875rem 0.5rem;
+	--_ui5_color-palette-item-hover-margin: 0.0625rem;
 	--_ui5_color-palette-row-height: 7.5rem;
 	--_ui5_color-palette-button-height: 2rem;
+	--_ui5_color-palette-item-before-focus-offset: -0.25rem;
+	--_ui5_color-palette-item-after-focus-offset: -0.125rem;
 }
