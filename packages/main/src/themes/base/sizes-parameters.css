@@ -92,7 +92,7 @@
 	--_ui5_switch_handle_width: var(--_ui5_switch_handle_width);
 	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_height);
 
-	--_ui5_switch_text_with_label_font_size: var(--_ui5_switch_text_with_label_font_size);
+	--_ui5_switch_text_active_left: var(--_ui5_switch_text_active_left);
 
 	--_ui5_switch_text_font_size: var(--_ui5_switch_text_font_size);
 	--_ui5_switch_text_width: var(--_ui5_switch_text_width);
@@ -311,6 +311,8 @@
 	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_compact_width);
 	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
 	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_compact_height);
+
+	--_ui5_switch_text_active_left: var(--_ui5_switch_text_compact_active_left);
 
 	--_ui5_switch_text_font_size: var(--_ui5_switch_text_compact_font_size);
 	--_ui5_switch_text_width: var(--_ui5_switch_text_compact_width);
