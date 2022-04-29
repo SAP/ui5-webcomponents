@@ -84,6 +84,12 @@
 }
 
 /* Edit mode */
+
+.ui5-uci-edit-container {
+	display: flex;
+	align-items: center;
+}
+
 .ui5-uci-edit-container [ui5-input] {
 	width: 60%;
 	pointer-events: all;
