@@ -20,8 +20,8 @@ const OTP = options.otp;
 
 const run = async () => {
 	const { globby } = await import("globby");
-	const FILES = await globby("**/packages/**/package.json", {
-		"ignoreFiles": ["**/node_modules/**/*.*", "**/dist/**/*.*", "**/playground/**/*.*"],
+	let FILES = await globby("packages/*/package.json", {
+		"ignoreFiles": ["*/playground/*"],
 	});
 
 	// Step 1: process package.json files
