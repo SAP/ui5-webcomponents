@@ -1,7 +1,4 @@
-const fs = require("fs");
-const { promisify } = require("util");
-const readFileAsync = promisify(fs.readFile);
-const writeFileAsync = promisify(fs.writeFile);
+const fs = require("fs").promises;
 const child_process = require("child_process");
 const commandLineArgs = require('command-line-args');
 const execSync = child_process.execSync;
@@ -39,7 +36,7 @@ const run = async () => {
 
 const processPackageJSON = async file => {
 	const folder = file.split("package.json")[0];
-	const fileRead = await readFileAsync(file);
+	const fileRead = await fs.readFile(file);
 	const fileContent = JSON.parse(fileRead.toString());
 	const name = fileContent.name;
 
@@ -63,7 +60,7 @@ const updatePackageJSON = async pkg => {
 		fileContent.devDependencies[dep] = PACKAGES[dep].version;
 	});
 
-	return writeFileAsync(file, JSON.stringify(fileContent, null, "  "));
+	return fs.writeFile(file, JSON.stringify(fileContent, null, "  "));
 };
 
 const getDependencies = (dependencies) => {
