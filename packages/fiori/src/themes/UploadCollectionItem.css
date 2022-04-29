@@ -59,6 +59,7 @@
 }
 
 .ui5-uci-file-name {
+	display: block;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontLargeSize);
 	margin-bottom: 0.25rem;
@@ -81,6 +82,8 @@
 	font-size: var(--sapFontMediumSize);
 	color: var(--sapContent_LabelColor);
 	white-space: initial;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* Edit mode */
