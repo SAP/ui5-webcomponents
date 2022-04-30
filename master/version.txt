@@ -1,11 +1,5 @@
-commit 73994e10fad7b62c06b7117b7787471263de87f6
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Fri Apr 29 16:56:09 2022 +0300
+commit c491e309306a98a9fa961cca54b5b0fe21feb669
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat Apr 30 16:35:28 2022 +0300
 
-    feat(ui5-switch): embed new horizon theme changes (#5017)
-    
-    * Fixing belize regressions
-    
-    * removing commented selectors
-    
-    * enable HC themes
+    chore: release v1.3.1 (#5134)
