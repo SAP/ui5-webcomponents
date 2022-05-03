@@ -1,0 +1,7 @@
+@import "../base/ColorPicker-parameters.css";
+
+:root {
+    --_ui5_color_picker_circle_outer_border: 0.125rem solid var(--sapContent_ContrastShadowColor);
+    --_ui5_color_picker_circle_inner_border: 0.125rem solid var(--sapContent_ForegroundColor); 
+    --_ui5_color_picker_circle_inner_circle_size: 0.3125rem;
+}

@@ -21,6 +21,7 @@
 @import "./Link-parameters.css";
 @import "../base/List-parameters.css";
 @import "../base/ListItemBase-parameters.css";
+@import "../base/Menu-parameters.css";
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";

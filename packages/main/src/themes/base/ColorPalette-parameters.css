@@ -8,7 +8,14 @@
 	--_ui5_color-palette-button-height: 3rem;
 	--_ui5_color-palette-item-before-focus-color: 0.0625rem solid white;
 	--_ui5_color-palette-item-before-focus-offset: 0.0625rem;
+	--_ui5_color-palette-item-before-focus-hover-offset: 0.0625rem;
 	--_ui5_color-palette-item-after-focus-color: 0.0625rem dotted black;
 	--_ui5_color-palette-item-after-focus-offset: 0.0625rem;
-	--_ui5_color-palette-item-border-radius: 0;
+	--_ui5_color-palette-item-after-focus-hover-offset: 0.0625rem;
+	--_ui5_color-palette-item-before-focus-border-radius: 0;
+	--_ui5_color-palette-item-before-focus-border-radius: 0;
+	--_ui5_color-palette-item-outer-border-radius: 0.25rem;
+	--_ui5_color-palette-item-inner-border-radius: 0.1875rem;
+	--_ui5_color-palette-item-hover-outer-border-radius: 0.25rem;
+	--_ui5_color-palette-item-hover-inner-border-radius: 0.1875rem;
 }
