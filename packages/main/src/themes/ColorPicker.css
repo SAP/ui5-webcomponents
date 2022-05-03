@@ -55,6 +55,11 @@
     margin-left: -10px;
 }
 
+[ui5-slider] {
+    --_ui5_slider_active_progress_border: none;
+    --_ui5_slider_progress_box_sizing: content-box;
+}
+
 [ui5-slider]::part(handle) {
     width: 0.9375rem;
     height: 1.5rem;
@@ -78,7 +83,7 @@
     width: calc(100% + 11px);
     height: 18px;
     position: absolute;
-    margin-top: -10px;
+    margin-top: var(--_ui5_color_picker_slider_container_margin_top);
     border-radius: 0;
     border: 1px solid var(--sapField_BorderColor);
 }

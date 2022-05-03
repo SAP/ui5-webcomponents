@@ -2,7 +2,7 @@
 
 :root {
 	--_ui5_slider_inner_min_width: 4rem;
-	--_ui5_slider_handle_background_focus: var(--sapButton_Active_Background);
+	--_ui5_slider_handle_background_focus: var(--sapButton_Background);
 	--_ui5_range_slider_handle_background_focus: transparent;
 	--_ui5_slider_handle_top: -.875rem;
 	--_ui5_range_slider_handle_background: transparent;
