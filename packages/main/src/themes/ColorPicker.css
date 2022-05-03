@@ -61,15 +61,17 @@
     background: transparent;
     margin-left: -2px;
     margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
+    box-sizing: border-box;
 }
 
 [ui5-slider]::part(handle)::after {
     content: "";
     border: 1px solid #fff;
     display: block;
-    height: 1.125rem;
+    height: 1.25rem;
     border-radius: 1rem;
     width: 100%;
+    box-sizing: border-box;
 }
 
 [ui5-slider]::part(progress-container) {
