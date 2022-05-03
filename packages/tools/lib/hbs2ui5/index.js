@@ -1,10 +1,9 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const getopts = require('getopts');
 const hbs2lit = require('../hbs2lit');
 const path = require('path');
 const litRenderer = require('./RenderTemplates/LitRenderer');
 const recursiveReadDir = require("recursive-readdir");
-const mkdirp = require('mkdirp');
 
 const args = getopts(process.argv.slice(2), {
 	alias: {
@@ -24,13 +23,13 @@ const onError = (place) => {
 
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 
-const processFile = (file, outputDir) => {
-	const litCode = hbs2lit(file);
+const processFile = async (file, outputDir) => {
+	const litCode = await hbs2lit(file);
 	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];
 
-	writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
+	return writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
 };
 
 const composeAbsoluteOutputDir = (file, outputDir) => {
@@ -47,25 +46,29 @@ const wrapDirectory = (directory, outputDir) => {
 	directory = path.normalize(directory);
 	outputDir = path.normalize(outputDir);
 
-	recursiveReadDir(directory, (err, files) => {
+	return new Promise((resolve, reject) => {
+		recursiveReadDir(directory, (err, files) => {
 
-		if (err) {
-			onError('directory');
-		}
-
-		files.forEach(fileName => {
-			if (isHandlebars(fileName)) {
-				processFile(fileName, outputDir);
+			if (err) {
+				onError('directory');
+				reject();
 			}
+
+			const promises = files.map(fileName => {
+				if (isHandlebars(fileName)) {
+					return processFile(fileName, outputDir);
+				}
+			}).filter(x => !!x);
+
+			resolve(Promise.all(promises));
 		});
-	})
+	});
 };
 
-const writeRenderers = (outputDir, controlName, fileContent) => {
+const writeRenderers = async (outputDir, controlName, fileContent) => {
 	try {
-		if (!fs.existsSync(outputDir)) {
-			mkdirp.sync(outputDir);
-		}
+
+		await fs.mkdir(outputDir, { recursive: true });
 
 		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.js`;
 
@@ -75,8 +78,14 @@ const writeRenderers = (outputDir, controlName, fileContent) => {
 
 		// Only write to the file system actual changes - each updated file, no matter if the same or not, triggers an expensive operation for rollup
 		// Note: .hbs files that include a changed .hbs file will also be recompiled as their content will be updated too
-		if (!fs.existsSync(compiledFilePath) || `${fs.readFileSync(compiledFilePath)}` !== fileContentUnix) {
-			fs.writeFileSync(compiledFilePath, fileContentUnix);
+
+		let existingFileContent = "";
+		try {
+			existingFileContent = await fs.readFile(compiledFilePath);
+		} catch (e) {}
+
+		if (existingFileContent !== fileContentUnix) {
+			return fs.writeFile(compiledFilePath, fileContentUnix);
 		}
 
 	} catch (e) {
@@ -87,5 +96,7 @@ const writeRenderers = (outputDir, controlName, fileContent) => {
 if (!args['d'] || !args['o']) {
 	console.log('Please provide an input and output directory (-d and -o)');
 } else {
-	wrapDirectory(args['d'], args['o']);
+	wrapDirectory(args['d'], args['o']).then(() => {
+		console.log("Templates generated");
+	});
 }

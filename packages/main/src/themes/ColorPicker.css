@@ -35,18 +35,18 @@
     box-sizing: border-box;
     width: 13px;
     height: 13px;
-    border: 1px solid #fff;
-    border-radius: 6px;
+    border: var(--_ui5_color_picker_circle_outer_border);
+    border-radius: 0.6875rem;
     pointer-events: none;
 }
 
 .ui5-color-picker-circle:after {
     content: "";
     position: absolute;
-    width: 9px;
-    height: 9px;
-    border: 1px solid #6a6d70;
-    border-radius: 6px;
+    width: var(--_ui5_color_picker_circle_inner_circle_size);
+    height: var(--_ui5_color_picker_circle_inner_circle_size);;
+    border: var(--_ui5_color_picker_circle_inner_border);
+    border-radius: 0.9375rem;
     pointer-events: none;
 }
 
