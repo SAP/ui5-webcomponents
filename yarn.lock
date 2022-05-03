@@ -280,15 +280,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openui5/sap.ui.core@1.94.0":
-  version "1.94.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.94.0.tgz#1f679dc2d60e0e0494904bf0ca353ed29cd13843"
-  integrity sha512-NZKuqxvXL63oLk9F/6/tUC0awg3B0UCdT1kh3bL1fxmAwT0CTsHfSldkayFYEJkTiRwNz69XDAau4d1JRwYF9A==
-
-"@openui5/sap.ui.core@1.95.0":
-  version "1.95.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.95.0.tgz#f6917796dc4495307f03d53bf027bdaad3f98533"
-  integrity sha512-5OQ72QjJvRcdCykSVSnZHqzLNzmBVxNgHaJ83ypI/smxV4WIKSQI5AhScwbtWLhzAGlxkFDmsHR62Q30SwE2Ug==
+"@openui5/sap.ui.core@1.101.0":
+  version "1.101.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.101.0.tgz#02a834f1f395df60fdbd64ab78e8d2fa82222dfd"
+  integrity sha512-cwOBvs4ZuOM6h5yo64vqdHSi1DcNDVDqyb9PserwnQILh6c/CfOWxeihv5HyW/c1de9/9GdRKJu3dv/lR9B5BQ==
 
 "@rollup/plugin-json@^4.1.0":
   version "4.1.0"
