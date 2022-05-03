@@ -1,9 +1,5 @@
-commit e1655c489958e1d9ac19959fdc0278f2d116d730
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Tue May 3 11:27:26 2022 +0300
+commit 0a938424586c3730f14ff35c51612f274044c896
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue May 3 12:07:13 2022 +0300
 
-    feat(ui5-progress-indicator): implement Horizon theme (#5140)
-    
-    * feat(ui5-progress-indicator): implement Horizon theme
-    
-    Related to: #5008
+    chore: remove hashing during build (#5156)
