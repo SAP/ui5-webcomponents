@@ -10,7 +10,7 @@
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
 @import "../base/ColorPalette-parameters.css";
-@import "../base/ColorPicker-parameters.css";
+@import "./ColorPicker-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
@@ -27,7 +27,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
-@import "./ProgressIndicator-parameters";
+@import "../sap_horizon_hcb/ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
 @import "./SegmentedButtton-parameters.css";
 @import "./Select-parameters.css";

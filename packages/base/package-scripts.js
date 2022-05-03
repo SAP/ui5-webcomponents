@@ -4,11 +4,8 @@ const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate
 const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/index.js");
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const serve = resolve.sync("@ui5/webcomponents-tools/lib/serve/index.js");
-const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
-const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
-const UP_TO_DATE = `node "${hashIsUpToDate}" dist/ hash.txt && echo "Up to date."`;
 
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
@@ -27,7 +24,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `${UP_TO_DATE} || nps lint prepare build.bundle hash`,
+		default: `nps lint prepare build.bundle`,
 		bundle: "rollup --config config/rollup.config.js",
 	},
 	copy: {
@@ -53,7 +50,6 @@ const scripts = {
 		default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
 		run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 	},
-	hash: `node "${generateHash}" dist/ hash.txt`,
 };
 
 
