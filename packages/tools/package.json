@@ -21,7 +21,6 @@
     "directory": "packages/tools"
   },
   "dependencies": {
-    "@openui5/sap.ui.core": "1.95.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-replace": "^3.0.0",
@@ -44,7 +43,6 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "esprima": "^4.0.1",
-    "folder-hash": "^4.0.1",
     "getopts": "^2.3.0",
     "glob": "^7.1.6",
     "glob-parent": "^6.0.2",
