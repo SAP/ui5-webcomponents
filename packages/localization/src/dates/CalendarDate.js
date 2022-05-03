@@ -177,7 +177,13 @@ class CalendarDate {
 
 	static fromTimestamp(iTimestamp, sCalendarType) {
 		const oCalDate = new CalendarDate(0, 0, 1);
-		oCalDate._oUDate = UniversalDate.getInstance(new Date(iTimestamp), sCalendarType);
+		let oUDate;
+		try {
+			oUDate = UniversalDate.getInstance(new Date(iTimestamp), sCalendarType);
+		} catch (e) {
+			oUDate = new Date(NaN); // UniversalDate.getInstance may now throw an Exception - keep the old behavior
+		}
+		oCalDate._oUDate = oUDate;
 		return oCalDate;
 	}
 }
