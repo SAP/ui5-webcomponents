@@ -54,7 +54,6 @@
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
-    "hash": "wsrun --exclude-missing hash",
     "copy-css": "copy-and-watch \"packages/base/dist/css/**/*\" packages/main/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/main/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/main/dist/resources/css/main/ && copy-and-watch \"packages/base/dist/css/**/*\" packages/fiori/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/fiori/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/fiori/dist/resources/css/main/",
     "prerelease": "node ./.github/actions/pre-release.js",
     "prepare": "husky install",
