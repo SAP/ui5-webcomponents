@@ -1,96 +1,158 @@
 :root {
 	/* switch */
 	--_ui5_switch_height: 2.75rem;
-	--_ui5_switch_width: 3.875rem;
-	--_ui5_switch_no_label_width: 3.25rem;
-
-	--_ui5_switch_root_outline_top_bottom: 0.25rem;
-	--_ui5_switch_root_outline_left_right: 0;
-
+	--_ui5_switch_width: 3.25rem;
 	--_ui5_switch_compact_height: 2rem;
-	--_ui5_switch_compact_width: 3.5rem;
-	--_ui5_switch_compact_no_label_width: 2.5rem;
+	--_ui5_switch_compact_width: 2.5rem;
 
-	--_ui5_switch_compact_root_outline_top_bottom: 0.0625rem;
-	--_ui5_switch_compact_root_outline_left_right: 0;
-	
-	--_ui5_switch_foucs_border_size: 1px;
+	--_ui5_switch_min_width: 3.875rem;
+	--_ui5_switch_compact_min_width: 3.5rem;
+
+	--_ui5_switch_with_label_width: 100%;
+	--_ui5_switch_compact_with_label_width: 100%;
+
 	--_ui5_switch_focus_outline: var(--_ui5_switch_foucs_border_size) dotted var(--sapContent_FocusColor);
-	--_ui5_switch_root_after_boreder: var(--_ui5_switch_outline) dotted var(--sapContent_FocusColor);
+
+	--_ui5_switch_root_outline_top: 0.25rem;
+	--_ui5_switch_root_outline_bottom: 0.25rem;
+	--_ui5_switch_root_outline_left: 0;
+	--_ui5_switch_root_outline_right: 0;
+
+	--_ui5_switch_root_compact_outline_top: 0;
+	--_ui5_switch_root_compact_outline_bottom: 0;
+
+	--_ui5_switch_foucs_border_size: 1px;
+
 	--_ui5-switch-root-border-radius: 0;
 	--_ui5-switch-root-box-shadow: none;
 	--_ui5_switch_root_after_outline: none;
 
 	--_ui5-switch-focus: "";
-	--_ui5_switch_semantic_button_background:var(--sapButton_Background);
-	/* switch track */
-	--_ui5_switch_track_height: 1.375rem;
-	--_ui5_switch_track_no_label_height: 1.25rem;
-	--_ui5-switch-track-border: 1px solid;
-	--_ui5-switch-track-border_color: var(--sapContent_ForegroundBorderColor);
-	--_ui5-switch_handle-off-hover_box_shadow: none;
-	--_ui5-switch_handle-on-hover_box_shadow: none;
-	--_ui5_switch_track_semantic_success_backgroud_color: var(--sapSuccessBackground);
-	--_ui5_switch_track_semantic_error_backgroud_color: var(----sapErrorBackground);
-	--_ui5_switch_track_semantic_border_color: var(--sapSuccessBorderColor);
-	--_ui5_switch_track_semantic_not_checked_border_color: var(--sapErrorBorderColor);
-	--_ui5_switch_track_semantic_checked_hover_border_color: var(--sapSuccessBorderColor);
-	--_ui5_switch_track_semantic_hover_border_color: var(--sapErrorBorderColor);
-	--_ui5_switch_handle_hover_border_color: var(--sapButton_Hover_BorderColor);
-
-	--_ui5_switch_track_hover_border_color: var(--_ui5_switch_track_checked_border_color);
-	--_ui5_switch_track_hover_background_color: var(--sapButton_Track_Background);
-	--_ui5_switch_track_hover_checked_background_color: var(--sapButton_Track_Selected_Background);
-	--_ui5-switch_track-on-hover-background: var(--_ui5-switch_track-on-background);
-	--_ui5_switch_track_border_radius: 0.75rem;
-	
-
-	--_ui5-switch_track-off-background: var(--sapButton_Track_Background);
-	--_ui5-switch_track-on-background: var(--sapButton_Track_Selected_Background);
-
-	--_ui5-switch_track-off-hover-color: var(--_ui5-switch_track-off-background);
-
-	--_ui5-switch-track-transition: none;
-
 	--_ui5_switch_disabled_opacity: .4;
-	--_ui5_switch_track_disabled_checked_bg: var(--_ui5_switch_track_checked_bg);
-	--_ui5_switch_track_disabled_border_color: var(--sapContent_ForegroundBorderColor);
-	--_ui5_switch_track_disabled_semantic_checked_bg: var(--sapSuccessBackground);
-	--_ui5_switch_track_disabled_semantic_checked_border_color: var(--sapSuccessBorderColor);
-	--_ui5_switch_track_disabled_semantic_bg: var(--sapErrorBackground);
-	--_ui5_switch_track_disabled_semantic_border_color: var(--sapErrorBorderColor);
 
-	--_ui5-switch-track-icon-display: none;
+	--_ui5_switch_transform: translateX(100%) translateX(-1.875rem);
+	--_ui5_switch_compact_transform: translateX(100%) translateX(-1.5rem);
+	--_ui5_switch_transform_with_label: translateX(100%) translateX(-1.875rem);
+	--_ui5_switch_compact_transform_with_label: translateX(100%) translateX( -1.5rem);
+
+	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.875rem);
+	--_ui5_switch_compact_rtl_transform: translateX(1.5rem) translateX(-100%);
+	--_ui5_switch_rtl_transform_with_label: translateX(-100%) translateX(1.875rem);
+	--_ui5_switch_compact_rtl_transform_with_label: translateX(1.5rem) translateX(-100%);
+
+	/* switch track */
+	--_ui5_switch_track_with_label_width: 100%;
+	--_ui5_switch_track_with_label_compact_width: 100%;
+	--_ui5_switch_track_with_label_height: 1.375rem;
+	--_ui5_switch_track_with_label_compact_height: 1.375rem;
+
+	--_ui5_switch_track_width: 100%;
+	--_ui5_switch_track_compact_width: 100%;
+	--_ui5_switch_track_height: 1.375rem;
+	--_ui5_switch_track_compact_height: 1.375rem;
+
+	--_ui5_switch_track_border_radius: 0.75rem;
+	--_ui5-switch-track-border: 1px solid;
+
+	--_ui5_switch_track_active_background_color: var(--sapButton_Track_Selected_Background);
+	--_ui5_switch_track_inactive_background_color: var(--sapButton_Track_Background);
+	--_ui5_switch_track_hover_active_background_color: var(--sapButton_Track_Selected_Background);
+	--_ui5_switch_track_hover_inactive_background_color: var(--sapButton_Track_Background);
+
+	--_ui5_switch_track_active_border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5_switch_track_inactive_border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5_switch_track_hover_active_border_color: var(--sapButton_Hover_BorderColor);
+	--_ui5_switch_track_hover_inactive_border_color: var(--sapButton_Hover_BorderColor);
+
+	--_ui5_switch_track_semantic_accept_background_color: var(--sapSuccessBackground);
+	--_ui5_switch_track_semantic_reject_background_color: var(--sapErrorBackground);
+	--_ui5_switch_track_semantic_hover_accept_background_color: var(--sapSuccessBackground);
+	--_ui5_switch_track_semantic_hover_reject_background_color: var(--sapErrorBackground);
+
+	--_ui5_switch_track_semantic_accept_border_color: var(--sapSuccessBorderColor);
+	--_ui5_switch_track_semantic_reject_border_color: var(--sapErrorBorderColor);
+	--_ui5_switch_track_semantic_hover_accept_border_color: var(--sapSuccessBorderColor);
+	--_ui5_switch_track_semantic_hover_reject_border_color: var(--sapErrorBorderColor);
+	
+	--_ui5_switch_track_transition: none;
+	--_ui5_switch_track_icon_display: none;
 
 	/* switch handle */
 	--_ui5_switch_handle_width: 2rem;
-	--_ui5_switch_handle_height: 2rem;
-	--_ui5_switch_handle_border_width: 1px;
-	--_ui5_switch_handle_border_radius: 1rem;
-	--_ui5_switch_handle_bg: var(--sapButton_TokenBackground);
-	--_ui5_switch_handle_checked_bg: var(--sapButton_Selected_Background);
-	--_ui5_switch_handle_checked_border_color: var(--sapButton_Selected_BorderColor);
-	--_ui5_switch_handle_semantic_hover_bg: var(--sapErrorBackground);
-	--_ui5_switch_handle_semantic_checked_hover_bg: var(--sapSuccessBackground);
-	--_ui5_switch_handle_semantic_hover_border_color: var(--sapErrorBorderColor);
-	--_ui5_switch_handle_semantic_checked_hover_border_color: var(--sapSuccessBorderColor);
 	--_ui5_switch_handle_compact_width: 1.625rem;
-	--_ui5_switch_handle_compact_height: 1.625rem;
-	--_ui5-switch-handle-border: var(--_ui5_switch_handle_border_width) solid var(--sapContent_ForegroundBorderColor);
-	--_ui5-switch-handle-left: -1px;
 
-	--_ui5_switch_handle_disabled_bg: var(--_ui5_switch_handle_bg);
-	--_ui5_switch_handle_disabled_checked_bg: var(--_ui5_switch_handle_checked_bg);
-	--_ui5_switch_handle_disabled_border_color: var(--sapContent_ForegroundBorderColor);
-	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapButton_Background);
-	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapSuccessBorderColor);
-	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapErrorBorderColor);
+	--_ui5_switch_handle_height: 2rem;
+	--_ui5_switch_handle_compact_height: 1.625rem;
+
+	--_ui5_switch_handle_with_label_width: 2rem;
+	--_ui5_switch_handle_with_label_compact_width: 1.625rem;
+
+	--_ui5_switch_handle_with_label_height: 2rem;
+	--_ui5_switch_handle_with_label_compact_height: 1.625rem;
+
+	--_ui5_switch_handle_border: var(--_ui5_switch_handle_border_width) solid var(--sapButton_Handle_BorderColor);
+	--_ui5_switch_handle_border_width: 0.0625rem;
+	--_ui5_switch_handle_border_radius: 1rem;
+
+	--_ui5_switch_handle_active_background_color: var(--sapButton_Selected_Background);
+	--_ui5_switch_handle_inactive_background_color: var(--sapButton_TokenBackground);
+	--_ui5_switch_handle_hover_active_background_color: var(--sapButton_Selected_Hover_Background);
+	--_ui5_switch_handle_hover_inactive_background_color: var(--sapButton_Handle_Hover_Background);
+
+	--_ui5_switch_handle_active_border_color: var(--sapButton_Selected_BorderColor);
+	--_ui5_switch_handle_inactive_border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5_switch_handle_hover_active_border_color: var(--sapButton_Selected_BorderColor);
+	--_ui5_switch_handle_hover_inactive_border_color: var(--sapButton_Hover_BorderColor);
+
+	--_ui5_switch_handle_semantic_accept_background_color: var(--sapButton_Background);
+	--_ui5_switch_handle_semantic_reject_background_color: var(--sapButton_Background);
+	--_ui5_switch_handle_semantic_hover_accept_background_color: var(--sapSuccessBackground);
+	--_ui5_switch_handle_semantic_hover_reject_background_color: var(--sapErrorBackground);
+
+	--_ui5_switch_handle_semantic_accept_border_color: var(--sapSuccessBorderColor);
+	--_ui5_switch_handle_semantic_reject_border_color: var(--sapErrorBorderColor);
+	--_ui5_switch_handle_semantic_hover_accept_border_color: var(--sapSuccessBorderColor);
+	--_ui5_switch_handle_semantic_hover_reject_border_color: var(--sapErrorBorderColor);
+
+	--_ui5_switch_handle_on_hover_box_shadow: none;
+	--_ui5_switch_handle_off_hover_box_shadow: none;
+	--_ui5_switch_handle_semantic_on_hover_box_shadow: var(--sapContent_Informative_Shadow);
+	--_ui5_switch_handle_semantic_off_hover_box_shadow: var(--sapContent_Negative_Shadow);
 
 	--_ui5-switch-handle-icon-display: none;
+	--_ui5_switch_handle_left: -0.0625rem;
 	--_ui5-switch-slider-texts-display: inline;
 
 	/* switch text */
-	--_ui5_switch_text_on_semantic_color: var(--sapPositiveElementColor);
-	--_ui5_switch_text_off_semantic_color: var(--sapNegativeElementColor);
-	--_ui5_switch_text_disabled_color: var(--sapTextColor);
+	--_ui5_switch_text_font_family: "72override", var(--sapFontFamily);
+	--_ui5_switch_text_font_size: var(--sapFontSmallSize);
+	--_ui5_switch_text_compact_font_size: var(--sapFontSmallSize);
+
+	--_ui5_switch_text_with_label_font_family: "72override", var(--sapFontFamily);
+	--_ui5_switch_text_with_label_font_size: var(--sapFontSmallSize);
+
+	--_ui5_switch_text_with_label_width: none;
+
+	--_ui5_switch_text_width: none;
+	--_ui5_switch_text_compact_width: none;
+
+	--_ui5_switch_text_inactive_left: auto;
+	--_ui5_switch_text_inactive_right: 0.125rem;
+	--_ui5_switch_text_active_left: calc(-100% + 2rem);
+	--_ui5_switch_text_compact_active_left: calc(-100% + 1.625rem);
+	--_ui5_switch_text_active_right: auto;
+
+	--_ui5_switch_text_active_color: var(--sapButton_Track_Selected_TextColor);
+	--_ui5_switch_text_inactive_color: var(--sapTextColor);
+
+	--_ui5_switch_text_semantic_accept_color: var(--sapPositiveElementColor);
+	--_ui5_switch_text_semantic_reject_color: var(--sapNegativeElementColor);
+
+	--_ui5_switch_text_overflow: none;
+	--_ui5_switch_text_z_index: inherit;
+	--_ui5_switch_text_hidden: hidden;
+	--_ui5_switch_text_min_width: 1.625rem;
+
+	--_ui5_switch_icon_width: 0.75rem;
+	--_ui5_switch_icon_height: 0.75rem;
 }
