@@ -320,6 +320,8 @@
   "--sapPositiveColor",
   "--sapPositiveElementColor",
   "--sapPositiveTextColor",
+  "--sapProgress_FontSize",
+  "--sapProgress_InformationBackground",
   "--sapScrollBar_Dimension",
   "--sapScrollBar_FaceColor",
   "--sapScrollBar_Hover_FaceColor",

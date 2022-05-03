@@ -2,43 +2,15 @@
 
 :root {
 	/* Switch */
-	--_ui5_switch_root_outline_top_bottom: 0.1875rem;
-	--_ui5_switch_compact_root_outline_top_bottom: 0;
-	--_ui5_switch_foucs_size: 0.125rem;
 	--_ui5_switch_root_after_outline: none;
 	--_ui5_switch_focus_outline: 0.125rem dotted var(--sapContent_FocusColor);
 
 	/* Switch Track */
-	--_ui5_switch_track_hover_border_color: var(--sapTextColor);
-	--_ui5_switch_track_border_color: var(--sapButton_Background);
-	--_ui5_switch_track_hover_background_color: var(--sapButton_Background);
-	--_ui5_switch_track_hover_checked_background_color: var(--sapButton_Background);
-
-
-	--_ui5_switch_track_disabled_checked_bg: var(--sapHC_ReducedBackground);
-	--_ui5_switch_track_disabled_border_color: var(--sapHC_ReducedForeground);
-	--_ui5_switch_track_disabled_semantic_checked_bg: var(--sapHC_ReducedBackground);
-	--_ui5_switch_track_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
-	--_ui5_switch_track_disabled_semantic_bg: var(--sapButton_Background);
-	--_ui5_switch_track_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
 
 	/* Switch Handle */
-	--_ui5_switch_handle_bg: var(--sapButton_Background);
-	--_ui5_switch_handle_semantic_hover_bg: var(--sapButton_Hover_Background);
-	--_ui5_switch_handle_semantic_checked_hover_bg: var(--sapButton_Hover_Background);
-	--_ui5_switch_handle_semantic_hover_border_color: var(--sapContent_ForegroundBorderColor);
-	--_ui5_switch_handle_semantic_checked_hover_border_color: var(--sapContent_ForegroundBorderColor);
 	--_ui5_switch_handle_border_width: 0.125rem;
-
-	--_ui5_switch_handle_disabled_bg: var(--sapButton_Background);
-	--_ui5_switch_handle_disabled_checked_bg: var(--_ui5_switch_handle_disabled_bg);
-	--_ui5_switch_handle_disabled_border_color: var(--sapHC_ReducedForeground);
-	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--_ui5_switch_handle_disabled_bg);
-	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
-	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_handle_semantic_hover_accept_background_color: var(--sapButton_Selected_Hover_Background);
+	--_ui5_switch_handle_semantic_hover_reject_background_color: var(--sapButton_Handle_Hover_Background);
 
 	/* Switch sementic text */
-	--_ui5_switch_text_on_semantic_color: var(--sapTextColor);
-	--_ui5_switch_text_off_semantic_color: var(--sapTextColor);
-	--_ui5_switch_text_disabled_color: var(--sapHC_ReducedAltForeground);
 }
