@@ -1,5 +1,9 @@
-commit c491e309306a98a9fa961cca54b5b0fe21feb669
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Apr 30 16:35:28 2022 +0300
+commit e1655c489958e1d9ac19959fdc0278f2d116d730
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue May 3 11:27:26 2022 +0300
 
-    chore: release v1.3.1 (#5134)
+    feat(ui5-progress-indicator): implement Horizon theme (#5140)
+    
+    * feat(ui5-progress-indicator): implement Horizon theme
+    
+    Related to: #5008
