@@ -22,4 +22,5 @@ sap/ui/core/date/Islamic.js
 sap/ui/core/date/Japanese.js
 sap/ui/core/date/Persian.js
 sap/ui/core/date/UniversalDate.js
+sap/ui/core/format/TimezoneUtil.js
 sap/ui/core/format/DateFormat.js

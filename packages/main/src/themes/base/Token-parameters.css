@@ -13,8 +13,7 @@
 	--_ui5_token_right_margin: 0.3125rem;
 	--_ui5_token_padding: 0.25rem 0;
 	--_ui5_token_left_padding: 0.3125rem;
-	--_ui5_token_readonly_right_padding: 0.375rem;
-	--_ui5_token_readonly_left_padding: 0.375rem;
+	--_ui5_token_readonly_padding: 0.375rem;
 	--_ui5_token_selected_focus_outline: var(--_ui5_token_focus_outline_width) dotted var(--sapContent_ContrastFocusColor);
 	--_ui5_token_focus_outline: var(--_ui5_token_focus_outline_width) dotted var(--sapContent_FocusColor);
 	--_ui5_token_selected_hover_background: var(--sapButton_Selected_Hover_Background);

@@ -1,7 +1,7 @@
 @import "./sizes-parameters.css";
 @import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
-@import "../base/Badge-parameters.css";
+@import "./Badge-parameters.css";
 @import "./Breadcrumbs-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
@@ -29,7 +29,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
-@import "./ProgressIndicator-parameters.css";
+@import "../sap_horizon/ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
 @import "./SegmentedButtton-parameters.css";

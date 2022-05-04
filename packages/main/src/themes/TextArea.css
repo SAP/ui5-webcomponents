@@ -35,7 +35,7 @@
 
 :host([focused]) .ui5-textarea-inner {
 	outline: var(--_ui5_textarea_focus_outline);
-	outline-offset: -3px;
+	outline-offset: var(--_ui5_textarea_focus_outline_offset);
 }
 
 :host([focused]:not([exceeding])) .ui5-textarea-inner {
@@ -53,7 +53,7 @@
 :host([value-state]:not([value-state="None"])[focused]) .ui5-textarea-inner,
 :host([exceeding]) .ui5-textarea-inner {
 	outline: var(--_ui5_textarea_value_state_focus_outline);
-	outline-offset: -4px;
+	outline-offset: var(--_ui5_textarea_value_state_focus_outline_offset);
 }
 
 .ui5-textarea-root {

@@ -280,15 +280,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openui5/sap.ui.core@1.94.0":
-  version "1.94.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.94.0.tgz#1f679dc2d60e0e0494904bf0ca353ed29cd13843"
-  integrity sha512-NZKuqxvXL63oLk9F/6/tUC0awg3B0UCdT1kh3bL1fxmAwT0CTsHfSldkayFYEJkTiRwNz69XDAau4d1JRwYF9A==
-
-"@openui5/sap.ui.core@1.95.0":
-  version "1.95.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.95.0.tgz#f6917796dc4495307f03d53bf027bdaad3f98533"
-  integrity sha512-5OQ72QjJvRcdCykSVSnZHqzLNzmBVxNgHaJ83ypI/smxV4WIKSQI5AhScwbtWLhzAGlxkFDmsHR62Q30SwE2Ug==
+"@openui5/sap.ui.core@1.101.0":
+  version "1.101.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.101.0.tgz#02a834f1f395df60fdbd64ab78e8d2fa82222dfd"
+  integrity sha512-cwOBvs4ZuOM6h5yo64vqdHSi1DcNDVDqyb9PserwnQILh6c/CfOWxeihv5HyW/c1de9/9GdRKJu3dv/lR9B5BQ==
 
 "@rollup/plugin-json@^4.1.0":
   version "4.1.0"
@@ -2866,15 +2861,6 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
   integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
 
-folder-hash@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/folder-hash/-/folder-hash-4.0.1.tgz#1603c46bdb899843e292ecdfca9e540dd22e1236"
-  integrity sha512-oF1MGtGAPezYJJRMRPzTwtDYwZdQ16UTnthsVAxjVZnlrQ36WuF6YxSgyZxnoUEK6JNPX+04FCFAkw5CzE5OMw==
-  dependencies:
-    debug "^4.1.1"
-    graceful-fs "~4.2.0"
-    minimatch "~3.0.4"
-
 follow-redirects@^1.14.4:
   version "1.14.8"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
@@ -3135,7 +3121,7 @@ got@^11.0.2, got@^11.8.1:
     p-cancelable "^2.0.0"
     responselike "^2.0.0"
 
-graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@~4.2.0:
+graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
   integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
@@ -4291,7 +4277,7 @@ min-indent@^1.0.0:
   resolved "https://registry.npmjs.org/min-indent/-/min-indent-1.0.1.tgz#a63f681673b30571fbe8bc25686ae746eefa9869"
   integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
 
-minimatch@3.0.4, minimatch@~3.0.2, minimatch@~3.0.4:
+minimatch@3.0.4, minimatch@~3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==

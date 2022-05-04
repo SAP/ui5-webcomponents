@@ -14,8 +14,8 @@
 .ui5-menu-item-icon-end {
 	display: inline-block;
 	vertical-align: middle;
-	padding-left: 0.5rem;
-	float: right;
+	padding-inline-start: 0.5rem;
+	float: var(--_ui5-menu_item_icon_float); /* TODO: float and inline-block are incompatible */
 }
 
 .ui5-menu-item-no-icon-end {
@@ -23,8 +23,8 @@
 	min-height: var(--_ui5_list_item_icon_size);
 	display: inline-block;
 	vertical-align: middle;
-	padding-left: 0.5rem;
-	float: right;
+	padding-inline-start: 0.5rem;
+	float: var(--_ui5-menu_item_icon_float); /* TODO: float and inline-block are incompatible */
 }
 
 .ui5-menu-item-dummy-icon {
@@ -32,7 +32,7 @@
 	min-height: var(--_ui5_list_item_icon_size);
 	display: inline-block;
 	vertical-align: middle;
-	padding-right: 0.5rem;
+	padding-inline-end: 0.5rem;
 }
 
 .ui5-menu-dialog-header {
@@ -84,29 +84,5 @@
 
 .ui5-menu-rp[sub-menu] {
 	margin-top: 0.25rem;
-	margin-inline-start: -0.25rem;
+	margin-inline: var(--_ui5_menu_submenu_margin_offset);
 }
-
-.ui5-menu-rp[dir="rtl"][sub-menu] {
-	margin-top: 0.25rem;
-	margin-inline-start: 0;
-	margin-inline-end: 0.25rem;
-}
-
-[dir="rtl"] .ui5-menu-item-icon-end {
-	padding-left: 0;
-	padding-right: 0.5rem;
-	float: left;
-}
-
-[dir="rtl"] .ui5-menu-item-no-icon-end {
-	padding-left: 0;
-	padding-right: 0.5rem;
-	float: left;
-}
-
-[dir="rtl"] .ui5-menu-item-dummy-icon {
-	padding-right: 0;
-	padding-left: 0.5rem;
-}
-
