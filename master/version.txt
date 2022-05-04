@@ -1,13 +1,5 @@
-commit 795686454185aaf3f1675ae2309f61afd4adad01
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Wed May 4 09:36:45 2022 +0300
+commit 5b6502bc84df75e7a9d3c8d57cd56cc5623bf622
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Wed May 4 09:14:00 2022 +0200
 
-    feat(ui5-upload-collection): implement SAP Horizon theme family (#5148)
-    
-    * feat(ui5-upload-collection): visual adjustments
-    
-    * feat(ui5-upload-collection): visual adjustments
-    
-    * feat(ui5-upload-collection): fixed tests
-    
-    * feat(ui5-upload-collection): fixed text ellipsis
+    fix(ui5-illustrated-message): make component language aware (#5158)
