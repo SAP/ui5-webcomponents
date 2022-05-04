@@ -1,10 +1,13 @@
-commit 74470fecc92a6d572ab5311fede633175a144bf3
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Tue May 3 18:08:59 2022 +0300
+commit 795686454185aaf3f1675ae2309f61afd4adad01
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Wed May 4 09:36:45 2022 +0300
 
-    feat(u5-badge): implement SAP Horizon theme family (#5143)
+    feat(ui5-upload-collection): implement SAP Horizon theme family (#5148)
     
-    - Added new colors
-    - Deleted logic for active badge
+    * feat(ui5-upload-collection): visual adjustments
     
-    Related to #5006
+    * feat(ui5-upload-collection): visual adjustments
+    
+    * feat(ui5-upload-collection): fixed tests
+    
+    * feat(ui5-upload-collection): fixed text ellipsis
