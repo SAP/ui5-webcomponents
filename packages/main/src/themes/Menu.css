@@ -15,7 +15,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	padding-inline-start: 0.5rem;
-	float: var(--_ui5-menu_item_icon_float); /* TODO: float and inline-block are incompatible */
+	float: var(--_ui5-menu_item_icon_float); /* TODO: refactor icon positioning as float and inline-block are incompatible */
 }
 
 .ui5-menu-item-no-icon-end {
@@ -24,7 +24,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	padding-inline-start: 0.5rem;
-	float: var(--_ui5-menu_item_icon_float); /* TODO: float and inline-block are incompatible */
+	float: var(--_ui5-menu_item_icon_float); /* TODO: refactor icon positioning a float and inline-block are incompatible */
 }
 
 .ui5-menu-item-dummy-icon {

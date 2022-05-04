@@ -66,21 +66,3 @@
 	overflow: hidden;
 	justify-content: flex-end;
 }
-
-/* RTL */
-
-/* [dir="rtl"] .ui5-tokenizer-more-text {
-	margin-right: .25rem;
-	margin-left: 0;
-} */
-
-/* [dir="rtl"] .ui5-tokenizer--content {
-	padding-right: var(--_ui5_tokenizer_padding);
-	padding-left: 0;
-} */
-
-/* [dir=rtl] ::slotted([ui5-token]) {
-	margin-left: var(--_ui5_token_right_margin);
-	margin-right: 0;
-} */
-
