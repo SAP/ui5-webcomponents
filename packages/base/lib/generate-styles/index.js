@@ -1,18 +1,26 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
-const mkdirp = require('mkdirp');
 const CleanCSS = require('clean-css');
 
-mkdirp.sync("dist/generated/css/");
-fs.readdirSync("src/css/").filter(file => file.endsWith(".css")).forEach(file => {
-	let content = fs.readFileSync(path.join("src/css/", file));
-	const res = new CleanCSS().minify(`${content}`);
-	content = `export default {
+const generate = async () => {
+	await fs.mkdir("dist/generated/css/");
+
+	const files = (await fs.readdir("src/css/")).filter(file => file.endsWith(".css"));
+	const filesPromises = files.map(async file => {
+		let content = await fs.readFile(path.join("src/css/", file));
+		const res = new CleanCSS().minify(`${content}`);
+		content = `export default {
 	packageName: "@ui5/webcomponents-base",
 	fileName: "${file}",
 	content: \`${res.styles}\`
 };`;
 
-	fs.writeFileSync(path.join("dist/generated/css/", `${file}.js`), content);
-});
+		return fs.writeFile(path.join("dist/generated/css/", `${file}.js`), content);
+	});
 
+	return Promise.all(filesPromises);
+};
+
+generate().then(() => {
+	console.log("Styles files generated.");
+});

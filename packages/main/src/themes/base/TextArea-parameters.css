@@ -11,7 +11,9 @@
 	--_ui5_textarea_inner_border_width: var(--sapField_BorderWidth);
 	--_ui5_textarea_success_border_width: 1px;
 	--_ui5_textarea_focus_outline: var(--_ui5_textarea_focus_after_width) dotted var(--sapContent_FocusColor);
+	--_ui5_textarea_focus_outline_offset: -3px;
 	--_ui5_textarea_value_state_focus_outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
+	--_ui5_textarea_value_state_focus_outline_offset: -4px;
 	--_ui5_textarea_after_element_display: none;
 	--_ui5_textarea_placeholder_font_style: italic;
 	--_ui5_input_warning_font_weight: normal;
