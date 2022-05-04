@@ -1069,11 +1069,7 @@ class ShellBar extends UI5Element {
 
 	get correctSearchFieldStyles() {
 		if (this.showSearchField) {
-			if (this._fullWidthSearch) {
-				return "flex";
-			}
-
-			return "block";
+			return "flex";
 		}
 
 		return "none";
