@@ -1,5 +1,5 @@
-commit 5b6502bc84df75e7a9d3c8d57cd56cc5623bf622
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Wed May 4 09:14:00 2022 +0200
+commit 9b2c7052404b944a45de538c6c891e491015e7b6
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed May 4 15:12:17 2022 +0300
 
-    fix(ui5-illustrated-message): make component language aware (#5158)
+    feat(ui5-sliderbase): implements Horizon theme (#5114)
