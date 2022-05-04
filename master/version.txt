@@ -1,5 +1,24 @@
-commit 9b2c7052404b944a45de538c6c891e491015e7b6
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed May 4 15:12:17 2022 +0300
+commit 3236d56bee43eb8d1e31bb3a59499226889e95bf
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 4 17:55:46 2022 +0300
 
-    feat(ui5-sliderbase): implements Horizon theme (#5114)
+    refactor(ui5-input): refactor RTL in DatePicker, Menu, (Multi)ComboBox,  RadioButton, Select, SegBtn, TabContainer and Token(izer) components - part 5 (#5162)
+    
+    Reactor RTL styles with CSS Logical props. The change affects:
+    
+    Topic B
+    DatePicker
+    Menu
+    SegmentedButton
+    Topic P
+    Select
+    BarcodeScannerDialog
+    Topic RD
+    TabContainer
+    RadioButton
+    Topic RL
+    MessageStrip
+    (Multi)ComboBox, Token, Tokenizer,
+    TableColumn, TableGroup
+    the BarcodeScannerDialog does not need to set dir anymore as it depends on the Dialog and the DIalog haw been refactored already.
+    the MessageStrip has been refactored previously, but the dir has not been removed from the template.
