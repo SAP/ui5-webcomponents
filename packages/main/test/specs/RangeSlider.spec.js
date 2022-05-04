@@ -938,7 +938,7 @@ describe("Testing resize handling and RTL support", () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
-
+		
 		await rangeSlider.setAttribute("dir", "rtl");
 		await rangeSlider.setProperty("min", 0);
 		await rangeSlider.setProperty("max", 10);
@@ -946,11 +946,13 @@ describe("Testing resize handling and RTL support", () => {
 		await rangeSlider.setProperty("startValue", 3);
 		await rangeSlider.setProperty("endValue", 7);
 
+		const secondActiveTickmark = await rangeSlider.shadow$$(".ui5-slider-tickmark.ui5-slider-tickmark-in-range")[1];
+
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 30%;", "Initially if no value is set, the start-handle is 30% from the right side of the Range Slider");
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 70%;", "End-handle should be 70% from the right side of the Range Slider");
 
 		// Selection Range
-		await rangeSliderSelection.click();
+		await secondActiveTickmark.click();
 		await rangeSliderSelection.keys("ArrowLeft");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 40%;", "Start-handle is 40% from the right side of the Range Slider");

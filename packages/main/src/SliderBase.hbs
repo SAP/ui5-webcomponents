@@ -13,7 +13,15 @@
 	<div class="ui5-slider-inner">
 		{{#if step}}
 			{{#if showTickmarks}}
-				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
+				<ul class="ui5-slider-tickmarks">
+					{{#each tickmarksObject}}
+						{{#if this}}
+							<li class="ui5-slider-tickmark ui5-slider-tickmark-in-range"></li>
+						{{else}}
+							<li class="ui5-slider-tickmark"></li>
+						{{/if}}
+					{{/each}}
+				</ul>
 				{{#if labelInterval}}
 					<ul class="ui5-slider-labels {{classes.labelContainer}}" style="{{styles.labelContainer}}">
 						{{#each _labels}}
