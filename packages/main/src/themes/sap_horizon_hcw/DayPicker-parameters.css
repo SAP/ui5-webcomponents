@@ -21,4 +21,5 @@
 	--_ui5_daypicker_item_border: 1px solid #fff;
 	--_ui5_daypicker_item_selected_box_shadow: none;
 	--_ui5_daypicker_item_selected_text_outline: 0.125rem solid var(--sapContent_FocusColor);
+	--_ui5_daypicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
 }

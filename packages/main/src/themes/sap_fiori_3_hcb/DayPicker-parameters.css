@@ -19,5 +19,6 @@
 	--_ui5_day_picker_item_selected_now_border_foucs: 0.125rem dotted var(--sapContent_ContrastFocusColor);
 	--_ui5_day_picker_item_selected_now_border_radios_foucs: 0.0625rem;
 	--_ui5_daypicker_item_border_radius: 0.25rem;
-	--_ui5_daypicker_item_selected_text_border: 0.0625rem solid var(--sapList_SelectionBorderColor)
+	--_ui5_daypicker_item_selected_text_border: 0.0625rem solid var(--sapList_SelectionBorderColor);
+	--_ui5_daypicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
 }
