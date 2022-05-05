@@ -30,7 +30,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
@@ -492,18 +492,6 @@ class MultiComboBox extends UI5Element {
 
 		if (this.filterSelected) {
 			this.filterSelected = false;
-		}
-
-		/* skip calling change event when an input with a placeholder is focused on IE
-			- value of the host and the internal input should be differnt in case of actual input
-			- input is called when a key is pressed => keyup should not be called yet
-		*/
-		const skipFiring = (this._inputDom.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
-
-		if (skipFiring) {
-			event.preventDefault();
-
-			return;
 		}
 
 		if (this._validationTimeout) {
