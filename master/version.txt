@@ -1,21 +1,9 @@
-commit 69dc6ba3727d035e8e9d1f7c7f0a2ded4e2eaf7f
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Sun May 8 23:08:12 2022 -0700
+commit 1524202785511c6886d1f4f03a9c39966913be10
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon May 9 11:15:31 2022 +0300
 
-    Translation Delivery (#5150)
+    chore: ignore playground package (#5174)
     
-    * chore: translation delivery
-    
-    Change-Id: I33e754a373e5a93d02e1937f91aa87b4fad0c697
-    
-    * chore: translation delivery
-    
-    Change-Id: I2d709403d2d29781ecf95dd11ffba261141032c8
-    
-    * chore: translation delivery
-    
-    Change-Id: I5fe1225b137db8506a91a1212588f6c3979740b8
-    
-    * chore: translation delivery
-    
-    Change-Id: Ic25d14c83dc5fdcab779070fbfd093c9c0d71bcf
+    The playground's package.json has not been ignored, now it is excluded.
+    I could not make the "ignoredFiles" option work
+    "ignoredFIles: Glob patterns to look for ignore files, which are then used to ignore globbed files."
