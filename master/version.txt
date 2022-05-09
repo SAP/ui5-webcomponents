@@ -1,9 +1,7 @@
-commit 1524202785511c6886d1f4f03a9c39966913be10
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 9 11:15:31 2022 +0300
+commit 78298af009adb6a6b93a33fef5fb0ab85c54ad6f
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon May 9 14:12:09 2022 +0300
 
-    chore: ignore playground package (#5174)
+    feat(ui5-avatar-group): implement Horizon theme (#5171)
     
-    The playground's package.json has not been ignored, now it is excluded.
-    I could not make the "ignoredFiles" option work
-    "ignoredFIles: Glob patterns to look for ignore files, which are then used to ignore globbed files."
+    Related to: #5008
