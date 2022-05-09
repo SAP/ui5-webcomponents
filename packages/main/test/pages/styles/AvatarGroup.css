@@ -24,7 +24,9 @@ code {
 }
 
 .avatargroup1auto {
-    width: 400px
+    width: 400px;
+    background-color: var(--sapBackgroundColor);
+    color: var(--sapTextColor);
 }
 
 .avatargroup2auto {
