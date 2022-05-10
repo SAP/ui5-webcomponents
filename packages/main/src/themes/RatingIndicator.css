@@ -15,8 +15,8 @@
 	cursor: initial;
 }
 
-:host([readonly]) .ui5-rating-indicator-path{
-	fill: var(--sapContent_UnratedColor);
+:host([readonly]) .ui5-rating-indicator-readonly-item-unsel {
+	color: var(--sapContent_UnratedColor);
 }
 
 :host(:not([readonly]):not([disabled])) .ui5-rating-indicator-root:hover {
@@ -59,22 +59,16 @@
 	user-select: none;
 }
 
-.ui5-rating-indicator-path-fiori {
-	stroke: var(--sapContent_UnratedColor);
-	stroke-width: 4rem;
-	fill: transparent;
-	clip-path: url(#ui5-rating-indicator-clip-path-fiori);
-}
-
-.ui5-rating-indicator-path-horizon {
-	stroke: var(--sapContent_UnratedColor);
-	stroke-width: 6rem;
-	fill: transparent;
-	clip-path: url(#ui5-rating-indicator-clip-path-horizon);
-}
-
 .ui5-rating-indicator-item.ui5-rating-indicator-item-sel {
 	color: var(--sapContent_RatedColor);
+}
+
+.ui5-rating-indicator-item.ui5-rating-indicator-item-unsel {
+	color: var(--sapContent_UnratedColor);
+}
+
+.ui5-rating-indicator-item.ui5-rating-indicator-item-half {
+	color: var(--sapContent_UnratedColor);
 }
 
 .ui5-rating-indicator-item [ui5-icon].ui5-rating-indicator-half-icon {

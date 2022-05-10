@@ -11,7 +11,6 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
@@ -223,7 +222,6 @@ class RatingIndicator extends UI5Element {
 				selected: i <= tempValue,
 				index: i,
 				halfStar,
-				isFiori: getTheme().startsWith("sap_fiori"),
 			});
 		}
 	}
@@ -233,7 +231,7 @@ class RatingIndicator extends UI5Element {
 			return;
 		}
 
-		this.value = parseInt(event.currentTarget.getAttribute("data-ui5-value"));
+		this.value = parseInt(event.target.getAttribute("data-ui5-value"));
 
 		if (this.value === 1 && this._liveValue === 1) {
 			this.value = 0;
