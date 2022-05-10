@@ -38,10 +38,14 @@ const getThemeProperties = async (packageName, themeName) => {
 
 	if (!registeredThemes.has(themeName)) {
 		const regThemesStr = [...registeredThemes.values()].join(", ");
-		console.warn(`You have requested a non-registered theme - falling back to ${DEFAULT_THEME}. Registered themes are: ${regThemesStr}`); /* eslint-disable-line */
-		return themeStyles.get(`${packageName}_${DEFAULT_THEME}`);
+		console.warn(`You have requested a non-registered theme ${themeName} - falling back to ${DEFAULT_THEME}. Registered themes are: ${regThemesStr}`); /* eslint-disable-line */
+		return _getThemeProperties(packageName, DEFAULT_THEME);
 	}
 
+	return _getThemeProperties(packageName, themeName);
+};
+
+const _getThemeProperties = async (packageName, themeName) => {
 	const loader = loaders.get(`${packageName}/${themeName}`);
 	if (!loader) {
 		// no themes for package
