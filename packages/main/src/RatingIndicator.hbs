@@ -1,3 +1,29 @@
+{{#*inline "fioriSvg"}}
+	<svg  class="ui5-rating-indicator-svg" viewBox="0 0 512 512" focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+		<defs>
+			<clipPath id="ui5-rating-indicator-clip-path-fiori">
+				<path d="M378.261 297.42q-3.992 2.993-3.992 5.987 0 .998.998 2.995l71.86 193.621q.998 1.996.998 2.995 0 2.994-2.994 5.489t-5.989 2.495q-1.996 0-3.992-.998L260.491 386.246q-1.996-1.996-4.99-1.996-1.996 0-3.992 1.996L76.849 510.004q-1.995.998-3.991.998-2.994 0-5.989-2.495t-2.994-5.49q0-.998.998-2.994l71.86-193.621q.998-1.997.998-2.995 0-3.992-3.992-5.988L3.992 205.6Q0 203.601 0 199.61q0-.998 1.497-4.491t6.487-3.493h165.677q4.99 0 7.984-4.99L248.515 4.99Q250.51 0 256 0t7.485 4.99l66.87 181.645q1.996 4.99 7.984 4.99h164.679q5.988 0 7.485 3.494T512 199.61q0 3.992-3.992 5.988z"></path>
+			</clipPath>
+		</defs>
+		<g role="presentation">
+			<path class="ui5-rating-indicator-path ui5-rating-indicator-path-fiori" d="M378.261 297.42q-3.992 2.993-3.992 5.987 0 .998.998 2.995l71.86 193.621q.998 1.996.998 2.995 0 2.994-2.994 5.489t-5.989 2.495q-1.996 0-3.992-.998L260.491 386.246q-1.996-1.996-4.99-1.996-1.996 0-3.992 1.996L76.849 510.004q-1.995.998-3.991.998-2.994 0-5.989-2.495t-2.994-5.49q0-.998.998-2.994l71.86-193.621q.998-1.997.998-2.995 0-3.992-3.992-5.988L3.992 205.6Q0 203.601 0 199.61q0-.998 1.497-4.491t6.487-3.493h165.677q4.99 0 7.984-4.99L248.515 4.99Q250.51 0 256 0t7.485 4.99l66.87 181.645q1.996 4.99 7.984 4.99h164.679q5.988 0 7.485 3.494T512 199.61q0 3.992-3.992 5.988z"></path>
+		</g>
+	</svg>
+{{/inline}}
+
+{{#*inline "horizonSvg"}}
+	<svg class="ui5-icon-root" viewBox="0 0 512 512" focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+		<defs>
+			<clipPath id="ui5-rating-indicator-clip-path-horizon">
+				<path d="M1 210q4-15 21-18l146-21 65-131q6-14 23-14t23 14l65 131 146 21q17 3 21 18 1 2 1 7 0 11-8 19L399 338l25 144v3q0 15-11 22-7 5-15 5-6 0-11-3l-131-68-131 68q-4 3-11 3-8 0-16-5-10-7-10-22v-3l25-144L8 236q-8-8-8-19 0-5 1-7z"></path>
+			</clipPath>
+		</defs>
+		<g role="presentation">
+			<path class="ui5-rating-indicator-path ui5-rating-indicator-path-horizon" d="M1 210q4-15 21-18l146-21 65-131q6-14 23-14t23 14l65 131 146 21q17 3 21 18 1 2 1 7 0 11-8 19L399 338l25 144v3q0 15-11 22-7 5-15 5-6 0-11-3l-131-68-131 68q-4 3-11 3-8 0-16-5-10-7-10-22v-3l25-144L8 236q-8-8-8-19 0-5 1-7z"></path>
+		</g>
+	</svg>
+{{/inline}}
+
 <div class="ui5-rating-indicator-root"
 	role="slider"
 	aria-roledescription="{{_ariaRoleDescription}}"
@@ -11,25 +37,46 @@
 	tabindex="{{tabIndex}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
-	@click="{{_onclick}}"
 	@keydown="{{_onkeydown}}"
 	title="{{tooltip}}"
 	aria-label="{{accessibleName}}"
 >
-	<div
-		class="ui5-rating-indicator-stars-wrapper"
+	<ul class="ui5-rating-indicator-list"
 		aria-hidden="true"
-	>
+		>
 		{{#each _stars}}
 			{{#if this.selected}}
-				<div class="ui5-rating-indicator-icon ui5-rating-indicator-active-icon" data-value="{{this.index}}">&#9733;</div>
+				<li @click="{{../_onclick}}" data-ui5-value="{{this.index}}" class="ui5-rating-indicator-item ui5-rating-indicator-item-sel">
+					<ui5-icon name="favorite"></ui5-icon>
+				</li>
 			{{else if this.halfStar}}
-				<div class="ui5-rating-indicator-icon ui5-rating-indicator-half-icon" data-value="{{this.index}}">&#9734;</div>
+				<li @click="{{../_onclick}}" data-ui5-value="{{this.index}}" class="ui5-rating-indicator-item ui5-rating-indicator-item-half">
+					{{#if this.isFiori}}
+						{{> fioriSvg}}
+					{{else}}
+						{{> horizonSvg}}
+					{{/if}}
+					<div class="ui5-rating-indicator-half-icon-wrapper">
+						<ui5-icon name="favorite" class="ui5-rating-indicator-half-icon"></ui5-icon>
+					</div>
+				</li>
 			{{else if ../readonly}}
-				<div class="ui5-rating-indicator-icon ui5-rating-indicator-readonly-unselected-icon" data-value="{{this.index}}">&#9733;</div>
+				<li @click="{{../_onclick}}" data-ui5-value="{{this.index}}" class="ui5-rating-indicator-item ui5-rating-indicator-readonly-item-unsel">
+					{{#if this.isFiori}}
+						{{> fioriSvg}}
+					{{else}}
+						{{> horizonSvg}}
+					{{/if}}
+				</li>
 			{{else}}
-				<div class="ui5-rating-indicator-icon" data-value="{{this.index}}">&#9734;</div>
+				<li @click="{{../_onclick}}" data-ui5-value="{{this.index}}" class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
+					{{#if this.isFiori}}
+						{{> fioriSvg}}
+					{{else}}
+						{{> horizonSvg}}
+					{{/if}}
+				</li>
 			{{/if}}
 		{{/each}}
-	</div>
+	</ul>
 </div>
