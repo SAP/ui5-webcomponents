@@ -1,7 +1,10 @@
-commit 78298af009adb6a6b93a33fef5fb0ab85c54ad6f
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon May 9 14:12:09 2022 +0300
+commit 0fc2f0dd51a691e480047588d0cf774bec6e40ee
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue May 10 12:43:21 2022 +0300
 
-    feat(ui5-avatar-group): implement Horizon theme (#5171)
+    fix(theming): fix fallback to default theme (#5185)
     
-    Related to: #5008
+    When the user sets unknown theme, the fallback does not quite work. The framework correctly displays a warning, but the theme parameters are not returned (as the theme parameters map ends up empty at that point), and the page is left in broken state. Now we use the same flow to fallback to the default theme, as if the user set it.
+    
+    FIXES: #5136
+    Closes: #5136
