@@ -253,7 +253,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
-		 * @since 1.3.2
+		 * @since 1.4.0
 		 */
 		accessibleName: {
 			type: String,
@@ -266,7 +266,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.3.2
+		 * @since 1.4.0
 		 */
 		accessibleNameRef: {
 			type: String,
