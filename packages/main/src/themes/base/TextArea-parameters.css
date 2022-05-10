@@ -23,4 +23,18 @@
 	--_ui5_textarea_disabled_background_color: var(--sapField_ReadOnly_Background);
 	--_ui5_textarea_error_hover_background_color: var(--sapField_Hover_Background);
 	--_ui5_textarea_error_focused_background_color: var(--sapField_Focus_Background);
+	--_ui5_textarea_host_border: var(--sapField_BorderColor);
+	--_ui5_textarea_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
+	--_ui5_textarea_focus_border: var(--sapField_BorderWidth) var(--sapField_BorderStyle) var(--_ui5_textarea_host_border);
+	--_ui5_textarea_readonly_border_color: var(--sapField_ReadOnly_BorderColor);
+	--_ui5_textarea_regular_hover_border_color: var(--sapField_Hover_BorderColor);
+	--_ui5_textarea_warning_focused_border_color: var(--_ui5_textarea_warning_border_color);
+	--_ui5_textarea_error_focused_border: var(--_ui5_textarea_state_border_width) var(--_ui5_input_error_warning_border_style) var(--_ui5_textarea_error_border_color);
+	--_ui5_textarea_info_focused_border_color: var(--_ui5_textarea_information_border_color);
+	--_ui5_textarea_success_focused_border_color: var(--_ui5_textarea_success_border_color);
+	--_ui5_input_information_border_style: solid;
+	--_ui5_textarea_error_border_color: var(--sapField_InvalidColor);
+	--_ui5_textarea_warning_border_color: var(--sapField_WarningColor);
+	--_ui5_textarea_success_border_color: var(--sapField_SuccessColor);
+	--_ui5_textarea_information_border_color: var(--sapField_InformationColor);
 }

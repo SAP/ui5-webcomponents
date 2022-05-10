@@ -10,7 +10,7 @@
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
-	border-color: var(--sapField_BorderColor);
+	border-color: var(--_ui5_textarea_host_border);
 	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
 	line-height: 1.4;
@@ -23,7 +23,7 @@
 	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
-	border-color: var(--sapField_ReadOnly_BorderColor);
+	border-color: var(--_ui5_textarea_disabled_border_color);
 	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
 	color: var(--sapContent_DisabledTextColor);
 }
@@ -36,6 +36,7 @@
 :host([focused]) .ui5-textarea-inner {
 	outline: var(--_ui5_textarea_focus_outline);
 	outline-offset: var(--_ui5_textarea_focus_outline_offset);
+	border: var(--_ui5_textarea_focus_border);
 }
 
 :host([focused]:not([exceeding])) .ui5-textarea-inner {
@@ -91,6 +92,7 @@
 	word-spacing: inherit;
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapField_Background);
+	box-sizing: border-box;
 }
 
 :host([growing]) .ui5-textarea-root {
@@ -113,10 +115,11 @@
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
 	box-sizing: border-box;
+	border: var(--_ui5_textarea_inner_border_width) solid var(--_ui5_textarea_focus_border);
 }
 
 :host([readonly]) {
-	border-color: var(--sapField_ReadOnly_BorderColor);
+	border-color: var(--_ui5_textarea_readonly_border_color);
 }
 
 :host([readonly][focused]) .ui5-textarea-root .ui5-textarea-inner {
@@ -189,7 +192,7 @@
 }
 
 :host(:not([value-state]):not([exceeding]):not([readonly]):hover) {
-	border-color: var(--sapField_Hover_BorderColor);
+	border-color: var(--_ui5_textarea_regular_hover_border_color);
 }
 
 :host(:not([value-state]):not([exceeding]):not([readonly]):hover) .ui5-textarea-inner {
@@ -227,6 +230,7 @@
 	background-image: none;
 	box-shadow: var(--_ui5_textarea_value_state_warning_focus_box_shadow);
 	background-color: var(--sapField_Focus_Background);
+	border-color: var(--_ui5_textarea_warning_focused_border_color);
 }
 
 :host([value-state="Error"]:not([readonly])) .ui5-textarea-inner {
@@ -244,6 +248,8 @@
 	background-image: none;
 	box-shadow: var(--_ui5_textarea_value_state_error_focus_box_shadow);
 	background-color: var(--_ui5_textarea_error_focused_background_color);
+	border: var(--_ui5_textarea_error_focused_border);
+	box-sizing: border-box;
 }
 
 :host([value-state="Information"]:not([readonly])) .ui5-textarea-inner {
@@ -260,6 +266,7 @@
 	background-image: none;
 	box-shadow: var(--_ui5_textarea_focus_box_shadow);
 	background-color: var(--sapField_Focus_Background);
+	border-color: var(--_ui5_textarea_info_focused_border_color);
 }
 
 :host([value-state="Success"]:not([readonly])) .ui5-textarea-inner {
@@ -276,10 +283,11 @@
 	background-image: none;
 	box-shadow: var(--_ui5_textarea_value_state_success_focus_box_shadow);
 	background-color: var(--sapField_Focus_Background);
+	border-color: var(--_ui5_textarea_success_focused_border_color);
 }
 
 :host([value-state="Error"]:not([readonly])) {
-	border-color: var(--sapField_InvalidColor);
+	border-color: var(--_ui5_textarea_error_border_color);
 }
 
 :host([value-state="Error"]:not([readonly])) .ui5-textarea-inner {
@@ -294,7 +302,7 @@
 
 :host([value-state="Warning"]:not([readonly])),
 :host([exceeding]) {
-	border-color: var(--sapField_WarningColor);
+	border-color: var(--_ui5_textarea_warning_border_color);
 }
 
 :host([value-state="Warning"]:not([readonly])) .ui5-textarea-inner,
@@ -303,7 +311,7 @@
 }
 
 :host([value-state="Success"]:not([readonly]):not([exceeding])) {
-	border-color: var(--sapField_SuccessColor);
+	border-color: var(--_ui5_textarea_success_border_color);
 }
 
 :host([value-state="Success"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
@@ -312,7 +320,7 @@
 }
 
 :host([value-state="Information"]:not([readonly]):not([exceeding])) {
-	border-color: var(--sapField_InformationColor);
+	border-color: var(--_ui5_textarea_information_border_color);
 }
 
 :host([value-state="Information"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {

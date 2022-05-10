@@ -578,13 +578,21 @@ class TextArea extends UI5Element {
 		const lineHeight = 1.4 * 16;
 		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
 
+		const getRootHeight = () => {
+			if (this.rows && !this.growing) {
+				return `calc(2 * var(--_ui5_textarea_inner_border_width) + ${mainHeight}px)`;
+			}
+
+			return `100%`;
+		};
+
 		return {
 			mirror: {
 				"max-height": this._maxHeight,
 			},
 			main: {
 				width: "100%",
-				height: (this.rows && !this.growing) ? `${mainHeight}px` : "100%",
+				height: getRootHeight(),
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),

@@ -1,17 +1,32 @@
 @import "../base/TextArea-parameters.css";
 
 :root {
-	--_ui5_textarea_inner_border_width: 0px;
-	--_ui5_textarea_state_border_width: 0px;
-	--_ui5_textarea_success_border_width: 0px;
+	--_ui5_textarea_inner_border_width: .125px;
+	--_ui5_textarea_success_border_width: .125px;
 	--_ui5_textarea_hover_box_shadow: var(--sapContent_Interaction_Shadow);
-	--_ui5_textarea_focus_box_shadow: 0px 0px 0px 0.125rem var(--sapField_Focus_BorderColor);
-	--_ui5_textarea_value_state_warning_focus_box_shadow: 0px 0px 0px 2px var(--sapField_WarningColor);
-	--_ui5_textarea_value_state_error_focus_box_shadow: 0px 0px 0px 2px var(--sapField_InvalidColor);
-	--_ui5_textarea_value_state_success_focus_box_shadow: 0px 0px 0px 2px var(--sapField_SuccessColor);
+	--_ui5_textarea_focus_box_shadow: none;
+	--_ui5_textarea_value_state_warning_focus_box_shadow: none;
+	--_ui5_textarea_value_state_error_focus_box_shadow: none;
+	--_ui5_textarea_value_state_success_focus_box_shadow: none;
 	--_ui5_textarea_focus_outline: none;
 	--_ui5_textarea_value_state_focus_outline: none;
 	--_ui5_textarea_after_element_display: inline-block;
 	--_ui5_textarea_value_state_warning_hover_box_shadow: none;
 	--_ui5_textarea_disabled_background_color: var(--sapField_Background);
+	--_ui5_input_error_warning_border_style: solid;
+	--_ui5_textarea_focus_border: 2px solid var(--sapField_Focus_BorderColor);
+	--_ui5_textarea_error_focused_border: 2px solid var(--sapField_InvalidColor);
+	--sapField_BorderStyle: solid;
+	--_ui5_textarea_host_border: transparent;
+	--_ui5_textarea_regular_hover_border_color: transparent;
+	--_ui5_textarea_error_border_color: transparent;
+	--_ui5_textarea_warning_border_color: transparent;
+	--_ui5_textarea_success_border_color: transparent;
+	--_ui5_textarea_information_border_color: transparent;
+	--_ui5_textarea_state_border_width: .125rem;
+	--_ui5_textarea_warning_focused_border_color: var(--sapField_WarningColor);
+	--_ui5_textarea_success_focused_border_color: var(--sapField_SuccessColor);
+	--_ui5_textarea_info_focused_border_color: var(--sapField_InformationColor);
+	--_ui5_textarea_disabled_border_color: transparent;
+	--_ui5_textarea_readonly_border_color: transparent;
 }
