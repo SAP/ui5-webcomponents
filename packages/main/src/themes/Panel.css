@@ -69,7 +69,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-family: "72override", var(--sapFontHeaderFamily);
-	font-size: var(--sapGroup_TitleFontSize);
+	font-size: var(--sapGroup_Title_FontSize);
 	font-weight: normal;
 	color: var(--sapGroup_TitleTextColor);
 	font-weight: normal;
