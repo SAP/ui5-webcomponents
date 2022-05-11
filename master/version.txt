@@ -1,11 +1,5 @@
-commit b6f02e4b3ef80535ce624ca120355c4c3723149f
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Tue May 10 14:33:50 2022 +0300
+commit 11dfe944af652070a2e65466bdb9b502d0c82089
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 11 14:49:14 2022 +0300
 
-    feat(ui5-calendar): embed new horizon theme changes (#5099)
-    
-    * init
-    
-    * commented code has removed
-    
-    * fixed border in belize
+    fix(f6navigation): fix keydown events for all inputs (#5188)
