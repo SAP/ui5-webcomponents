@@ -18,6 +18,8 @@ import {
 	RATING_INDICATOR_TOOLTIP_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
+import "@ui5/webcomponents-icons/dist/favorite.js";
+import "@ui5/webcomponents-icons/dist/unfavorite.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";

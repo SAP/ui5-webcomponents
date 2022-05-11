@@ -49,7 +49,7 @@
 }
 
 .ui5-rating-indicator-item:not(:last-child) {
-	margin-right: 0.1875rem;
+	margin-inline-end: 0.1875rem;
 }
 
 .ui5-rating-indicator-item [ui5-icon] {
