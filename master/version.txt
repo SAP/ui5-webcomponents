@@ -1,5 +1,5 @@
-commit 11dfe944af652070a2e65466bdb9b502d0c82089
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 11 14:49:14 2022 +0300
+commit f55be6d6eda082446ac353fedf30500edd768c29
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 12 10:36:38 2022 +0300
 
-    fix(f6navigation): fix keydown events for all inputs (#5188)
+    docs: do not use names from @ui5/webcomponents-fiori (#5200)
