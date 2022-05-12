@@ -667,6 +667,17 @@ class ViewSettingsDialog extends UI5Element {
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
+
+	/**
+	 * Checks if a date is between the minimum and maximum date.
+	 * @param {string} settings A value to be checked
+	 * @public
+	 */
+	setCurrentSettings(settings) {
+		if (settings && this._dialog && !this._dialog.isOpen()) {
+			this._confirmedSettings = JSON.parse(JSON.stringify(settings));
+		}
+	}
 }
 
 ViewSettingsDialog.define();
