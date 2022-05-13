@@ -1,7 +1,11 @@
-commit 046058c3fa3575bf1234fb3a170dddf2d119885d
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu May 12 01:33:32 2022 -0700
+commit 0d80a2cc7ca22be215fcddcfa8a88267d33a0750
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri May 13 09:21:12 2022 +0300
 
-    chore: translation delivery (#5205)
+    feat(ui5-multi-combobox): add "accessibleName" and "accessibleNameRef" properties (#5187)
     
-    Change-Id: I77121bf7b13b1349f04a2fd45fda67d1d942d43c
+    * feat(ui5-mult-combobox): add "accessibleName" and "accessibleNameRef" properties
+    
+    * feat(ui5-multi-combobox): correct since version
+    
+    * feat(ui5-multi-combobox): improve sample
