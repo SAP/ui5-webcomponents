@@ -1,11 +1,12 @@
-commit 0d80a2cc7ca22be215fcddcfa8a88267d33a0750
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri May 13 09:21:12 2022 +0300
+commit c03d769b392673784a489b29570310b76025516f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri May 13 13:26:32 2022 +0300
 
-    feat(ui5-multi-combobox): add "accessibleName" and "accessibleNameRef" properties (#5187)
+    feat(icons): use icon name as default module export (#5207)
     
-    * feat(ui5-mult-combobox): add "accessibleName" and "accessibleNameRef" properties
+    We now use the icon name string as default export. This will allow developers to directly set the imported icon name string
+    to the Icon component (as shown below) improving the DEV experience:
+    easier to determine (within the IDE) if imported icons are still used in the module
+    immediate feedback (within the IDE) when import is missing for an icon that is actually used
     
-    * feat(ui5-multi-combobox): correct since version
-    
-    * feat(ui5-multi-combobox): improve sample
+    FIXES: #5122
