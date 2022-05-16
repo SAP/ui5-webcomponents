@@ -272,7 +272,7 @@
   "--sapGroup_ContentBorderColor",
   "--sapGroup_TitleBackground",
   "--sapGroup_TitleBorderColor",
-  "--sapGroup_TitleFontSize",
+  "--sapGroup_Title_FontSize",
   "--sapGroup_TitleTextColor",
   "--sapHC_ReducedBackground",
   "--sapHC_ReducedForeground",
