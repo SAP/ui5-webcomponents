@@ -811,7 +811,7 @@ class SliderBase extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get _ariaLabelledByStartHandleReffs() {
+	get _ariaLabelledByStartHandleRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
 	}
 }
