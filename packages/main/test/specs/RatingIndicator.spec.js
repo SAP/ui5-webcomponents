@@ -10,18 +10,18 @@ describe("Rating Indicator general interaction", () => {
 	it("Tests basic rating indicator rendering", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator1");
 
-		assert.strictEqual(await ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 5, "Basic rating indicator renders 5 stars");
+		assert.strictEqual(await ratingIndicator.shadow$$(".ui5-rating-indicator-item").length, 5, "Basic rating indicator renders 5 stars");
 	});
 
 	it("Tests max property", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator2");
 
-		assert.strictEqual(await ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 10, "Basic rating indicator renders 10 stars");
+		assert.strictEqual(await ratingIndicator.shadow$$(".ui5-rating-indicator-item").length, 10, "Basic rating indicator renders 10 stars");
 	});
 
 	it("Tests clicking on star", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator3");
-		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
+		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-item")[2];
 
 		assert.strictEqual(await ratingIndicator.getProperty("value"), 6, "Initial value is applied");
 
@@ -32,7 +32,7 @@ describe("Rating Indicator general interaction", () => {
 
 	it("Tests change event", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator4");
-		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
+		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-item")[2];
 		const input = await browser.$("#change-event");
 
 		assert.strictEqual(await ratingIndicator.getProperty("value"), 6, "Initial value is applied");
@@ -90,8 +90,8 @@ describe("Rating Indicator general interaction", () => {
 	it("Tests ACC attrs", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator1");
 		const ratingIndicatorRoot = ratingIndicator.shadow$(".ui5-rating-indicator-root");
-		const ratingIndicatorWrapper = ratingIndicator.shadow$(".ui5-rating-indicator-stars-wrapper");
-		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
+		const ratingIndicatorList = ratingIndicator.shadow$(".ui5-rating-indicator-list");
+		const thirdStar = await ratingIndicator.shadow$$(".ui5-rating-indicator-item")[2];
 		const ratingIndicatorReadOnly = await browser.$("#rating-indicator-readonly").shadow$(".ui5-rating-indicator-root");
 
 		const TOOLTIP = "Rating";
@@ -105,7 +105,7 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.notOk(await ratingIndicatorRoot.getAttribute("aria-readonly"), "The aria-readonly attribute is not presented");
 		assert.strictEqual(await ratingIndicatorReadOnly.getAttribute("aria-readonly"), 'true', "The aria-readonly attribute is presented");
-		
+
 		assert.strictEqual(await ratingIndicatorRoot.getAttribute("aria-valuetext"),
 			`${await ratingIndicator.getProperty("value")} of ${await ratingIndicator.getProperty("max")}`, "aria-valuetext is set correctly");
 
@@ -114,7 +114,7 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(await ratingIndicatorRoot.getAttribute("aria-valuetext"),
 			"3 of 5", "aria-valuetext is updated correctly");
 
-		assert.strictEqual(await ratingIndicatorWrapper.getAttribute("aria-hidden"), "true", "aria-hidden is set");
+		assert.strictEqual(await ratingIndicatorList.getAttribute("aria-hidden"), "true", "aria-hidden is set");
 	});
 
 	it("Tests ACC attrs - title attribute provided", async () => {

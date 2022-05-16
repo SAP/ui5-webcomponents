@@ -30,6 +30,7 @@
 @import "../base/PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
+@import "../base/RatingIndicator-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
 @import "./Select-parameters.css";
 @import "./SplitButton-parameters.css";
