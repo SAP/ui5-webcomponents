@@ -1,12 +1,15 @@
-commit c03d769b392673784a489b29570310b76025516f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 13 13:26:32 2022 +0300
+commit 0782cf7972b04dc5646fcd8e755afc6e40e9024b
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Mon May 16 12:46:38 2022 +0300
 
-    feat(icons): use icon name as default module export (#5207)
+    fix(ui5-rating-indicator): refactor rating-indicator to use SVG icons (#5191)
     
-    We now use the icon name string as default export. This will allow developers to directly set the imported icon name string
-    to the Icon component (as shown below) improving the DEV experience:
-    easier to determine (within the IDE) if imported icons are still used in the module
-    immediate feedback (within the IDE) when import is missing for an icon that is actually used
+    * fix(ui5-rating-indicator): refactor rating-indicator to use SVG icons
     
-    FIXES: #5122
+    * replace custom svg with ui5-icon
+    
+    * import icons and fix rtl styles
+    
+    * fix half star in RTL
+    
+    * apply comments in compact
