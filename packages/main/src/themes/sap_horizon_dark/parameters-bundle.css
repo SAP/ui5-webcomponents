@@ -1,7 +1,8 @@
 @import "./sizes-parameters.css";
 @import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
-@import "./Badge-parameters.css";
+@import "../sap_horizon/AvatarGroup-parameters.css";
+@import "../base/Badge-parameters.css";
 @import "./Breadcrumbs-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
@@ -52,6 +53,7 @@
 @import "../base/Tokenizer-parameters.css";
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
+
 @import "./ValueStateMessage-parameters.css";
 @import "./Table-parameters.css";
 @import "./TableColumn-parameters.css";

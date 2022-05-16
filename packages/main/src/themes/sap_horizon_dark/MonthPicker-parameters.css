@@ -1,10 +1,9 @@
 @import "../base/MonthPicker-parameters.css";
 
 :root {
-	--_ui5_monthpicker_item_border_radius: 0.25rem;
 	--_ui5_monthpicker_item_border_radius: 0.5rem;
 	--_ui5_monthpicker_item_focus_after_border: none;
-	--_ui5_monthpicker_item_focus_after_border_radius: 0.25rem;
+	--_ui5_monthpicker_item_focus_after_border_radius: 0.5rem;
 	--_ui5_monthpicker_item_focus_after_width: calc(100% - 0.5rem);
 	--_ui5_monthpicker_item_focus_after_height: calc(100% - 0.5rem);
 	--_ui5_monthpicker_item_focus_after_offset: 0.25rem;

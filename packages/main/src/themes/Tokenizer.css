@@ -45,7 +45,7 @@
 	flex-wrap: nowrap;
 	align-items: center;
 	overflow: auto;
-	padding-left: var(--_ui5_tokenizer_padding);
+	padding-inline-start: var(--_ui5_tokenizer_padding);
 }
 
 .ui5-tokenizer--content.ui5-tokenizer-nmore--content {
@@ -54,7 +54,7 @@
 
 .ui5-tokenizer-more-text {
 	display: inline-block;
-	margin-left: .25rem;
+	margin-inline-start: .25rem;
 	cursor: pointer;
 	white-space: nowrap;
 	font-size: var(--sapFontSize);
@@ -66,21 +66,3 @@
 	overflow: hidden;
 	justify-content: flex-end;
 }
-
-/* RTL */
-
-[dir="rtl"] .ui5-tokenizer-more-text {
-	margin-right: .25rem;
-	margin-left: 0;
-}
-
-[dir="rtl"] .ui5-tokenizer--content {
-	padding-right: var(--_ui5_tokenizer_padding);
-	padding-left: 0;
-}
-
-[dir=rtl] ::slotted([ui5-token]) {
-	margin-left: var(--_ui5_token_right_margin);
-	margin-right: 0;
-}
-

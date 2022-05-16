@@ -1,7 +1,8 @@
 @import "./sizes-parameters.css";
 @import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
-@import "./Badge-parameters.css";
+@import "./AvatarGroup-parameters.css";
+@import "../base/Badge-parameters.css";
 @import "./Breadcrumbs-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";

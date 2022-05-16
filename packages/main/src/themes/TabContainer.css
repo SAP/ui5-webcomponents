@@ -56,7 +56,7 @@
 }
 
 .ui5-tc__overflow.ui5-tc__overflow--end {
-	padding-left: 0.188rem;
+	padding-inline-start: 0.188rem;
 }
 
 .ui5-tc__overflow[hidden] {
@@ -126,10 +126,4 @@
 
 :host([media-range="XL"]) .ui5-tc__content {
 	padding: 1rem 3rem;
-}
-
-/*** RTL ***/
-[dir=rtl] .ui5-tc__overflow {
-	margin-right: auto;
-	margin-left: 0.25rem;
 }

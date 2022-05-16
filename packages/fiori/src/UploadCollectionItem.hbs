@@ -1,5 +1,7 @@
 {{>include "../../main/src/ListItem.hbs"}}
 
+{{#*inline "selectionElement"}}{{/inline}}
+
 {{#*inline "listItemContent"}}
 	<div class="ui5-uci-thumbnail">
 		<slot name="thumbnail"></slot>
@@ -22,7 +24,7 @@
 					{{#if fileNameClickable}}
 						<ui5-link class="ui5-uci-file-name" @click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
 					{{else}}
-						<span class="ui5-uci-file-name">{{fileName}}</span>
+						<span class="ui5-uci-file-name ui5-uci-file-name-text">{{fileName}}</span>
 					{{/if}}
 				{{/if}}
 				<div class="ui5-uci-description">
@@ -89,6 +91,20 @@
 						class="ui5-li-detailbtn ui5-uci-edit"
 					>
 					</ui5-button>
+				{{/if}}
+
+				{{#if renderDeleteButton}}
+					<ui5-button
+							class="ui5-li-deletebtn"
+							tabindex="-1"
+							data-sap-no-tab-ref
+							id="{{_id}}-deleteSelectionElement"
+							design="Transparent"
+							icon="decline"
+							?disabled="{{disableDeleteButton}}"
+							@click="{{onDelete}}"
+							tooltip="{{deleteText}}"
+					></ui5-button>
 				{{/if}}
 			{{/if}}
 		</div>
