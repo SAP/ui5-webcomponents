@@ -1,5 +1,5 @@
-commit 87bea32e6fff13153c1b64849f941923934bd1b2
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon May 16 18:20:17 2022 +0300
+commit 2fc0898ba2b53752a08a5954f237920946e9c30b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon May 16 19:06:51 2022 +0300
 
-    fix(ui5-input): correct value-state styles in readonly and disabled (#5208)
+    docs: update changelog in Playground (#5223)
