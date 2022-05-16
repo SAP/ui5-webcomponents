@@ -331,7 +331,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await startHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemax"),
@@ -346,7 +346,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await endHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemax"),

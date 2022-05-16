@@ -20,6 +20,7 @@
             min="0"
             max="1530"
             value="{{_hue}}"
+            accessible-name="{{hueSliderLabel}}"
             @ui5-input="{{_handleHueInput}}"
         ></ui5-slider>
         <ui5-slider
@@ -29,6 +30,7 @@
             max="1"
             step="0.01"
             value="{{_alpha}}"
+            accessible-name="{{alphaSliderLabel}}"
             @ui5-input="{{_handleAlphaInput}}"
         ></ui5-slider>
     </div>
@@ -47,6 +49,7 @@
                 class="ui5-color-picker-hex-input"
                 value="{{hex}}"
                 @keydown="{{_onkeydown}}"
+                accessible-name="{{hexInputLabel}}"
                 @ui5-change="{{_handleHEXChange}}"
                 value-state="{{hexInputErrorState}}"
             ></ui5-input>
@@ -62,6 +65,7 @@
                 id="red"
                 class="ui5-color-picker-rgb-input"
                 disabled="{{inputsDisabled}}"
+                accessible-name="{{redInputLabel}}"
                 value="{{_color.r}}"
             ></ui5-input>
             <ui5-label>R</ui5-label>
@@ -71,6 +75,7 @@
                 id="green"
                 class="ui5-color-picker-rgb-input"
                 disabled="{{inputsDisabled}}"
+                accessible-name="{{greenInputLabel}}"
                 value="{{_color.g}}"
             ></ui5-input>
             <ui5-label>G</ui5-label>
@@ -80,6 +85,7 @@
                 id="blue"
                 class="ui5-color-picker-rgb-input"
                 disabled="{{inputsDisabled}}"
+                accessible-name="{{blueInputLabel}}"
                 value="{{_color.b}}"
             ></ui5-input>
             <ui5-label>B</ui5-label>
@@ -90,6 +96,7 @@
                 disabled="{{inputsDisabled}}"
                 class="ui5-color-picker-rgb-input"
                 value="{{_alpha}}"
+                accessible-name="{{alphaInputLabel}}"
                 @ui5-input="{{_handleAlphaInput}}"
                 @ui5-change="{{_handleAlphaChange}}"
             ></ui5-input>

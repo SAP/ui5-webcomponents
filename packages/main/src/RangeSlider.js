@@ -768,6 +768,14 @@ class RangeSlider extends SliderBase {
 		return this.shadowRoot.querySelector(".ui5-slider-progress");
 	}
 
+	get _ariaLabelledByStartHandleReffs() {
+		return [`${this._id}-accName`, `${this._id}-startHandleDesc`].join(" ").trim();
+	}
+
+	get _ariaLabelledByEndHandleReffs() {
+		return [`${this._id}-accName`, `${this._id}-endHandleDesc`].join(" ").trim();
+	}
+
 	get styles() {
 		return {
 			progress: {
