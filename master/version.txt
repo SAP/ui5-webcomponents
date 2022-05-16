@@ -1,15 +1,5 @@
-commit 0782cf7972b04dc5646fcd8e755afc6e40e9024b
+commit 87bea32e6fff13153c1b64849f941923934bd1b2
 Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon May 16 12:46:38 2022 +0300
+Date:   Mon May 16 18:20:17 2022 +0300
 
-    fix(ui5-rating-indicator): refactor rating-indicator to use SVG icons (#5191)
-    
-    * fix(ui5-rating-indicator): refactor rating-indicator to use SVG icons
-    
-    * replace custom svg with ui5-icon
-    
-    * import icons and fix rtl styles
-    
-    * fix half star in RTL
-    
-    * apply comments in compact
+    fix(ui5-input): correct value-state styles in readonly and disabled (#5208)
