@@ -332,17 +332,9 @@ class DayPicker extends CalendarPart {
 	}
 
 	onAfterRendering() {
-		if (this._autoFocus && !this._hidden) {
+		if (!this._hidden) {
 			this.focus();
 		}
-	}
-
-	_onfocusin() {
-		this._autoFocus = true;
-	}
-
-	_onfocusout() {
-		this._autoFocus = false;
 	}
 
 	/**
