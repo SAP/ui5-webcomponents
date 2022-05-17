@@ -1,9 +1,9 @@
-commit 87f6b3682093ca469e7214e3acb52867bd3e2402
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue May 17 17:00:21 2022 +0300
+commit e680194f7cf59e8fb943652a845f8336a5b6456f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue May 17 17:45:12 2022 +0300
 
-    fix(ui5-calendar): adjust previous and next button styles (#5226)
+    docs: improve docs based on user feedback (#5225)
     
-    User selection is disabled for the ui5-calendar arrow buttons
+    * docs: improve docs based on user feedback
     
-    Fixes: #5117
+    * Update 01-React.md
