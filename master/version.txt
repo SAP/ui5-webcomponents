@@ -1,9 +1,7 @@
-commit fd97a42234909e1f555675a6e779e97edd95bcc3
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue May 17 13:46:42 2022 +0300
+commit fe4ce067bd652851096146aba389301528902c3f
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue May 17 14:29:10 2022 +0300
 
-    fix(ui5-color-picker): align the slider to horizon spec (#5209)
+    fix(ui5-panel): animate just icon without button (#5164)
     
-    * fix(ui5-color-picker): align the slider to horizon spec
-    
-    * fix(ui5-color-picker): include of size params in high contrast topics
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3754
