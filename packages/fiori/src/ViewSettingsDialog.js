@@ -669,8 +669,47 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Checks if a date is between the minimum and maximum date.
-	 * @param {string} settings A value to be checked
+	 * Sets a JavaScript object, as settings to the ui5-view-settings-dialog.
+	 * This method can be used after the dialog is initially open, as the dialog need to set it's initial settings.
+	 * The dialog throws an event called "after-open", this can be used as trigger point.
+	 * The object should have the following format:
+	 * <code>{
+	 *	"sortOrder": [
+	 *		{
+	 *		"text": "Ascending",
+	 *		"selected": true
+	 *		},
+	 *		{
+	 *		"text": "Descending",
+	 *		"selected": false
+	 *		}
+	 *	],
+	 *	"sortBy": [
+	 *		{
+	 *		"text": "Name",
+	 *		"selected": true,
+	 *		"index": 0
+	 *		},
+	 *		{
+	 *		"text": "Position",
+	 *		"selected": false,
+	 *		"index": 1
+	 *		}
+	 *	],
+	 *	"filters": [
+	 *		{
+	 *		"text": "Filter 1",
+	 *		"selected": false,
+	 *		"filterOptions": [
+	 *			{
+	 *			"text": "Some filter 1",
+	 *			"selected": false
+	 *			}
+	 *		]
+	 *		}
+	 *	]
+	 * }</code>
+	 * @param {string} settings A value to be set as confirmedSettings
 	 * @public
 	 */
 	setCurrentSettings(settings) {
