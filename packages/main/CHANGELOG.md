@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.2.5) (2022-05-17)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** adjust previous and next button styles ([#5226](https://github.com/SAP/ui5-webcomponents/issues/5226)) ([9bcfb21](https://github.com/SAP/ui5-webcomponents/commit/9bcfb21)), closes [#5117](https://github.com/SAP/ui5-webcomponents/issues/5117)
+* **ui5-calendar:** fix displayed month name ([#5212](https://github.com/SAP/ui5-webcomponents/issues/5212)) ([06c7515](https://github.com/SAP/ui5-webcomponents/commit/06c7515))
+
+
+
+
+
 ## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
 
 
