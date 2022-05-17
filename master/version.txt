@@ -1,5 +1,9 @@
-commit 2fc0898ba2b53752a08a5954f237920946e9c30b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 16 19:06:51 2022 +0300
+commit fd97a42234909e1f555675a6e779e97edd95bcc3
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue May 17 13:46:42 2022 +0300
 
-    docs: update changelog in Playground (#5223)
+    fix(ui5-color-picker): align the slider to horizon spec (#5209)
+    
+    * fix(ui5-color-picker): align the slider to horizon spec
+    
+    * fix(ui5-color-picker): include of size params in high contrast topics
