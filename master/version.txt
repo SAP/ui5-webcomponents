@@ -1,7 +1,10 @@
-commit fe4ce067bd652851096146aba389301528902c3f
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue May 17 14:29:10 2022 +0300
+commit b03c3ea0d253d842011abac8618ac548e1b8330a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue May 17 14:37:07 2022 +0300
 
-    fix(ui5-panel): animate just icon without button (#5164)
+    fix(ui5-calendar): fix displayed month name (#5212)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3754
+    The core handling of the CLDR data and CLDR data itsef is correct.
+    The root cause seems to be the usage of getMonths in the MonthPicker. Exchanging it with getMonthsStandAlone resolves the issue. This is the method used in the OpenUI5 equivalent.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/5120
