@@ -308,6 +308,7 @@ class Calendar extends CalendarPart {
 	 * The user clicked the "month" button in the header
 	 */
 	onHeaderShowMonthPress(event) {
+		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
 		this.fireEvent("show-month-press", event);
 	}
@@ -316,6 +317,7 @@ class Calendar extends CalendarPart {
 	 * The user clicked the "year" button in the header
 	 */
 	onHeaderShowYearPress(event) {
+		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
 		this.fireEvent("show-year-press", event);
 	}
@@ -436,11 +438,13 @@ class Calendar extends CalendarPart {
 	onSelectedMonthChange(event) {
 		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
+		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onSelectedYearChange(event) {
 		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
+		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onNavigate(event) {
