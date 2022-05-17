@@ -14,5 +14,5 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_panel_header_button_wrapper_padding: .375rem;
+	--_ui5_panel_header_button_wrapper_padding: .5625rem .375rem;
 }
