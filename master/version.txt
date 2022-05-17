@@ -1,10 +1,9 @@
-commit b03c3ea0d253d842011abac8618ac548e1b8330a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue May 17 14:37:07 2022 +0300
+commit 87f6b3682093ca469e7214e3acb52867bd3e2402
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue May 17 17:00:21 2022 +0300
 
-    fix(ui5-calendar): fix displayed month name (#5212)
+    fix(ui5-calendar): adjust previous and next button styles (#5226)
     
-    The core handling of the CLDR data and CLDR data itsef is correct.
-    The root cause seems to be the usage of getMonths in the MonthPicker. Exchanging it with getMonthsStandAlone resolves the issue. This is the method used in the OpenUI5 equivalent.
+    User selection is disabled for the ui5-calendar arrow buttons
     
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/5120
+    Fixes: #5117
