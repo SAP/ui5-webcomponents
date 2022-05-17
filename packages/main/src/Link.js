@@ -206,9 +206,20 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
-		 * @native
+		 * @allowPreventDefault
+		 * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+		 * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+		 * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+		 * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
 		 */
-		click: {},
+		click: {
+			detail: {
+				altKey: { type: Boolean	},
+				ctrlKey: { type: Boolean },
+				metaKey: { type: Boolean },
+				shiftKey: { type: Boolean },
+			},
+		},
 	},
 };
 
@@ -331,7 +342,15 @@ class Link extends UI5Element {
 	}
 
 	_onclick(event) {
+		const {altKey, ctrlKey, metaKey, shiftKey} = event;
+
 		event.isMarked = "link";
+		event.preventDefault();
+
+		const executeEvent = this.fireEvent("click", {altKey, ctrlKey, metaKey, shiftKey}, true);
+		if (executeEvent) {
+			this.href && window.open(this.href, this.target);
+		}
 	}
 
 	_onfocusin(event) {
@@ -344,9 +363,12 @@ class Link extends UI5Element {
 	}
 
 	_onkeydown(event) {
+
 		if (isEnter(event)) {
+			const {altKey, ctrlKey, metaKey, shiftKey} = event;
+
 			event.preventDefault();
-			const executeEvent = this.fireEvent("click", null, true);
+			const executeEvent = this.fireEvent("click", {altKey, ctrlKey, metaKey, shiftKey}, true);
 
 			if (executeEvent) {
 				this.href && window.open(this.href, this.target);
@@ -364,9 +386,11 @@ class Link extends UI5Element {
 			return;
 		}
 
+		const {altKey, ctrlKey, metaKey, shiftKey} = event;
+
 		event.preventDefault();
 
-		const executeEvent = this.fireEvent("click", null, true);
+		const executeEvent = this.fireEvent("click", {altKey, ctrlKey, metaKey, shiftKey}, true);
 		if (executeEvent) {
 			this.href && window.open(this.href, this.target);
 		}

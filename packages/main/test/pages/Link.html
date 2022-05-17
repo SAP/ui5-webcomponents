@@ -116,6 +116,12 @@
 		</ui5-dialog>
 	</section>
 
+	<section class="group">
+		<h2>Link with prevent default and modifiers</h2>
+		<ui5-link id="modifierLink">Link 1</ui5-link>
+		<span id="modifierResult"></span>
+	</section>
+
 	<script>
 		var disLink = document.querySelector("#disabled-link");
 		var link = document.querySelector("#link");
@@ -126,6 +132,8 @@
 		var signInLink = document.getElementById("signInLink");
 		var singInDialog = document.getElementById("signInDialog");
 		var closeSignInDialogButton = document.getElementById("closeDialogButton");
+		var modifierLink = document.getElementById("modifierLink");
+		var modifierResult = document.getElementById("modifierResult");
 
 		[link, disLink].forEach(function(element) {
 			element.addEventListener("click", function(event) {
@@ -162,6 +170,25 @@
 			collapsibleText.style["-webkit-line-clamp"] = collapsibleText.style["-webkit-line-clamp"] === "2" ? "" : "2";
 			collapsibleText.style["-webkit-box-orient"] = collapsibleText.style["-webkit-box-orient"] === "vertical" ? "" : "vertical";
 			collapsibleText.style["overflow"] = collapsibleText.style["overflow"] === "hidden" ? "" : "hidden";
+		});
+
+		modifierLink.addEventListener("ui5-click", (event) => {
+			let keyText ='';
+
+			if(event.detail.ctrlKey) {
+				keyText += 'CTRL:';
+			}
+			if(event.detail.altKey) {
+				keyText += 'ALT:';
+			}
+			if(event.detail.shiftKey) {
+				keyText += 'SHIFT:';
+			}
+			if(event.detail.metaKey) {
+				keyText += 'META:';
+			}
+			event.preventDefault();
+			modifierResult.innerText = keyText + event.target.innerText;
 		});
 	</script>
 </body>
