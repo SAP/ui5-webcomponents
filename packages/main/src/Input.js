@@ -654,7 +654,7 @@ class Input extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.showSuggestions) {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
 			});
