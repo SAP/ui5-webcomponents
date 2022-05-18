@@ -357,15 +357,17 @@ class Button extends UI5Element {
 			isGlobalHandlerAttached = true;
 		}
 
-		this._ontouchstart = {
-			handleEvent(event) {
-				event.isMarked = "button";
-				if (this.nonInteractive) {
-					return;
-				}
+		const handleTouchStartEvent = event => {
+			event.isMarked = "button";
+			if (this.nonInteractive) {
+				return;
+			}
 
-				this.active = true;
-			},
+			this.active = true;
+		};
+
+		this._ontouchstart = {
+			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
 	}

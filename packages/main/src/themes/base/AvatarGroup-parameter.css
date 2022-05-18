@@ -1,6 +1,0 @@
-:root {
-	--_ui5_avatar_outline: 1px dotted var(--sapContent_FocusColor);
-	--_ui5_avatar_group_overflow_button_focus_offset: 1px;
-	--_ui5_avatar_focus_width: 1px;
-	--_ui5_avatar_focus_color: var(--sapContent_FocusColor);
-}

@@ -9,12 +9,8 @@ th {
 	font-size: var(--sapFontMediumSize);
 	padding: 0.5rem;
 	box-sizing: border-box;
-	text-align: left;
+	text-align: start;
 	vertical-align: middle;
-}
-
-th[dir="rtl"] {
-	text-align: right;
 }
 
 :host([first]) th {

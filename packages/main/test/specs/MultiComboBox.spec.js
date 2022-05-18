@@ -1277,5 +1277,24 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 0, "should not have tokens");
 			// assert.strictEqual(await invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
 		});
+
+		it ("Should apply aria-label from the accessibleName property", async () => {
+			const mcb = await browser.$("#multi1");
+			const innerInput = await mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+
+			assert.strictEqual(await innerInput.getAttribute("aria-label"), "MultiComboBox with predefined values", "aria-label attribute is correct.");
+		});
+
+		it ("Should apply aria-label from the accessibleNameRef property", async () => {
+			const mcb = await browser.$("#mcb-predefined-value");
+			const innerInput = await mcb.shadow$("input");
+			const mcbLabel = await browser.$("#mcbLabel");
+
+			await mcb.scrollIntoView();
+
+			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
+		});
 	});
 });

@@ -19,6 +19,7 @@ const ILLUSTRATION_NOT_FOUND = "ILLUSTRATION_NOT_FOUND";
  */
 const metadata = {
 	tag: "ui5-illustrated-message",
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**

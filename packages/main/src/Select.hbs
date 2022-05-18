@@ -1,6 +1,5 @@
 <div
 	class="ui5-select-root ui5-input-focusable-element"
-	dir="{{effectiveDir}}"
 	id="{{_id}}-select"
 	@click="{{_onclick}}"
 >
@@ -9,7 +8,6 @@
 			aria-hidden="true"
 			class="ui5-select-option-icon"
 			name="{{selectedOptionIcon}}"
-			dir="{{effectiveDir}}"
 		></ui5-icon>
 	{{/if}}
 	<div class="ui5-select-label-root"
@@ -36,7 +34,6 @@
 		name="slim-arrow-down"
 		input-icon
 		?pressed="{{_iconPressed}}"
-		dir="{{effectiveDir}}"
 	></ui5-icon>
 
 	{{#if hasValueState}}

@@ -1,9 +1,10 @@
 :root {
+    --ui5_carousel_background_color: var(--sapBackgroundColor);
     --ui5_carousel_button_size: 2.5rem;
-    --ui5_carousel_height: 0.25rem;
-    --ui5_carousel_width: 0.25rem;
-    --ui5_carousel_margin: 0 0.375rem;
-    --ui5_carousel_border: 1px solid var(--sapContent_ForegroundBorderColor);
-    --ui5_carousel_dot_border: none;
-    --ui5_carousel_dot_background: var(--sapContent_NonInteractiveIconColor);
+    --ui5_carousel_inactive_dot_size: 0.25rem;
+    --ui5_carousel_inactive_dot_margin: 0 0.375rem;
+    --ui5_carousel_inactive_dot_border: none;
+    --ui5_carousel_inactive_dot_background: var(--sapContent_NonInteractiveIconColor);
+    --ui5_carousel_active_dot_border: var(--ui5_carousel_inactive_dot_border);
+    --ui5_carousel_active_dot_background: var(--sapSelectedColor);
 }

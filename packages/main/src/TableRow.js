@@ -194,10 +194,12 @@ class TableRow extends UI5Element {
 	constructor() {
 		super();
 
+		const handleToushStartEvent = event => {
+			this.activate();
+		};
+
 		this._ontouchstart = {
-			handleEvent(event) {
-				this.activate();
-			},
+			handleEvent: handleToushStartEvent,
 			passive: true,
 		};
 	}

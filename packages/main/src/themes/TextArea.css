@@ -35,7 +35,7 @@
 
 :host([focused]) .ui5-textarea-inner {
 	outline: var(--_ui5_textarea_focus_outline);
-	outline-offset: -3px;
+	outline-offset: var(--_ui5_textarea_focus_outline_offset);
 }
 
 :host([focused]:not([exceeding])) .ui5-textarea-inner {
@@ -53,7 +53,7 @@
 :host([value-state]:not([value-state="None"])[focused]) .ui5-textarea-inner,
 :host([exceeding]) .ui5-textarea-inner {
 	outline: var(--_ui5_textarea_value_state_focus_outline);
-	outline-offset: -4px;
+	outline-offset: var(--_ui5_textarea_value_state_focus_outline_offset);
 }
 
 .ui5-textarea-root {
@@ -162,30 +162,40 @@
 
 :host([value-state="Error"]) .ui5-textarea-inner::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
-	font-weight: var(--_ui5_textarea_value_state_error_placeholder_font_weight);
+	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
 	color: var(--_ui5_textarea_error_placeholder_color);
 }
 
 :host([value-state="Error"]) .ui5-textarea-inner::-moz-placeholder {
 	/* Firefox 19+ */
-	font-weight: var(--_ui5_textarea_value_state_error_placeholder_font_weight);
+	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
 	color: var(--_ui5_textarea_error_placeholder_color);
 }
 
 :host([value-state="Error"]) .ui5-textarea-inner:-ms-input-placeholder {
 	/* IE 10+ */
-	font-weight: var(--_ui5_textarea_value_state_error_placeholder_font_weight);
+	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
 	color: var(--_ui5_textarea_error_placeholder_color);
 }
 
 :host([value-state="Error"]) .ui5-textarea-inner:-moz-placeholder {
 	/* Firefox 18- */
-	font-weight: var(--_ui5_textarea_value_state_error_placeholder_font_weight);
+	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
 	color: var(--_ui5_textarea_error_placeholder_color);
+}
+
+:host([value-state="Warning"]) .ui5-textarea-inner::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
+}
+
+:host([value-state="Warning"]) .ui5-textarea-inner::-moz-placeholder {
+	/* Firefox 19+ */
+	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 }
 
 :host(:not([value-state]):not([exceeding]):not([readonly]):hover) {
