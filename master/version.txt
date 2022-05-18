@@ -1,9 +1,10 @@
-commit e680194f7cf59e8fb943652a845f8336a5b6456f
+commit 3f471c1f704cef0ed2d8f74ca7406d585a75689e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue May 17 17:45:12 2022 +0300
+Date:   Wed May 18 10:59:03 2022 +0300
 
-    docs: improve docs based on user feedback (#5225)
+    test: run mobile tests on DEV tools emulator (#5107)
     
-    * docs: improve docs based on user feedback
+    Currently, we test on headless, desktop Chrome and now with this small changes in the set up we can run tests on mobile emulators.
     
-    * Update 01-React.md
+    Fixes: #2437
+    Closes: #2437
