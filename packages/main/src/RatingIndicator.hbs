@@ -35,6 +35,10 @@
 				<li class="ui5-rating-indicator-item ui5-rating-indicator-readonly-item-unsel">
 					<ui5-icon data-ui5-value="{{this.index}}" name="favorite"></ui5-icon>
 				</li>
+			{{else if ../disabled}}
+				<li class="ui5-rating-indicator-item ui5-rating-indicator-readonly-item-unsel">
+					<ui5-icon data-ui5-value="{{this.index}}" name="favorite"></ui5-icon>
+				</li>
 			{{else}}
 				<li data-ui5-value="{{this.index}}" class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
 					<ui5-icon data-ui5-value="{{this.index}}" name="unfavorite"></ui5-icon>
