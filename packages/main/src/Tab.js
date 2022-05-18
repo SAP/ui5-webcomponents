@@ -252,7 +252,7 @@ class Tab extends UI5Element {
 	}
 
 	get _effectiveSlotName() {
-		return this.isOnSelectedTabPath ? this._individualSlot : "disabled-slot";
+		return this.isOnSelectedTabPath ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
 	get _defaultSlotName() {
