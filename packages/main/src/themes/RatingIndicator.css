@@ -15,13 +15,8 @@
 	cursor: initial;
 }
 
+:host([disabled]) .ui5-rating-indicator-readonly-item-unsel,
 :host([readonly]) .ui5-rating-indicator-readonly-item-unsel {
-	color: var(--sapContent_UnratedColor);
-	width: var(--_ui5_rating_indicator_readonly_item_width);
-	height: var(--_ui5_rating_indicator_readonly_item_height);
-}
-
-:host([disabled]) .ui5-rating-indicator-readonly-item-unsel {
 	color: var(--sapContent_UnratedColor);
 	width: var(--_ui5_rating_indicator_readonly_item_width);
 	height: var(--_ui5_rating_indicator_readonly_item_height);
