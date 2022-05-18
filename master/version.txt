@@ -1,10 +1,5 @@
-commit 3f471c1f704cef0ed2d8f74ca7406d585a75689e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 18 10:59:03 2022 +0300
+commit eb57cefdc58a980a5ee2268eaa92d19af252e0f1
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed May 18 15:31:35 2022 +0300
 
-    test: run mobile tests on DEV tools emulator (#5107)
-    
-    Currently, we test on headless, desktop Chrome and now with this small changes in the set up we can run tests on mobile emulators.
-    
-    Fixes: #2437
-    Closes: #2437
+    fix(ui5-input): prevent exception if there are suggestion but property is false (#5219)
