@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6](https://github.com/SAP/ui5-webcomponents/compare/v1.2.5...v1.2.6) (2022-05-18)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** fix header month button text localization ([715818a](https://github.com/SAP/ui5-webcomponents/commit/715818a))
+
+
+
+
+
 ## [1.2.5](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.2.5) (2022-05-17)
 
 
