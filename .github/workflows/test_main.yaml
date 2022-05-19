@@ -15,9 +15,9 @@ jobs:
         node-version: 16
         cache: 'npm'
     - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
     - name: Install Dependencies
       run: yarn
     - name: Build
@@ -32,10 +32,9 @@ jobs:
       with:
         chrome-version: stable
     - uses: actions/cache@v3
-        id: cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
     - name: Test
       run: yarn test:main:suite-1
 
@@ -48,9 +47,8 @@ jobs:
       with:
         chrome-version: stable
     - uses: actions/cache@v3
-        id: cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
     - name: Test
       run: yarn test:main:suite-2
