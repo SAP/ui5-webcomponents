@@ -776,6 +776,10 @@ class RangeSlider extends SliderBase {
 		return [`${this._id}-accName`, `${this._id}-endHandleDesc`].join(" ").trim();
 	}
 
+	get _ariaLabelledByProgressBarRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	}
+
 	get styles() {
 		return {
 			progress: {

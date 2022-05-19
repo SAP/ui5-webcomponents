@@ -8,7 +8,6 @@ import "@ui5/webcomponents-icons/dist/source-code.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";
@@ -806,10 +805,6 @@ class SliderBase extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
-	}
-
-	get ariaLabelStartHandleText() {
-		return getEffectiveAriaLabelText(this);
 	}
 
 	get _ariaLabelledByStartHandleRefs() {
