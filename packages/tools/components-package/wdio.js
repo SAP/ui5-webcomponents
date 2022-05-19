@@ -250,7 +250,8 @@ exports.config = {
 			"shadow$$",
 		];
 		if (waitFor.includes(commandName)) {
-			await browser.executeAsync(function (done) {
+			await browser.executeAsync(async function (done) {
+				await Promise.resolve();
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
@@ -328,7 +329,8 @@ exports.config = {
 			"url",
 		];
 		if (waitFor.includes(commandName)) {
-			await browser.executeAsync(function (done) {
+			await browser.executeAsync(async function (done) {
+				await Promise.resolve();
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
