@@ -11,6 +11,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: browser-actions/setup-chrome@latest
+      with:
+        chrome-version: stable
     - uses: actions/setup-node@v1
       with:
         node-version: 14.16.1
