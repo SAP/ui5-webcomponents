@@ -15,7 +15,6 @@ jobs:
         node-version: 16
         cache: 'npm'
     - uses: actions/cache@v3
-        id: cache
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
