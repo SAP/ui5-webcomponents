@@ -807,7 +807,7 @@ class SliderBase extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get _ariaLabelledByStartHandleRefs() {
+	get _ariaLabelledByHandleRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
 	}
 }
