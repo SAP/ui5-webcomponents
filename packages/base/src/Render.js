@@ -2,6 +2,7 @@ import EventProvider from "./EventProvider.js";
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
+import { timeoutsReady } from "./util/ManagedTimeout.js";
 
 const registeredElements = new Set();
 const eventProvider = new EventProvider();
@@ -112,6 +113,7 @@ const whenAllCustomElementsAreDefined = () => {
 const renderFinished = async () => {
 	await whenAllCustomElementsAreDefined();
 	await whenDOMUpdated();
+	await timeoutsReady();
 };
 
 const _resolveTaskPromise = () => {

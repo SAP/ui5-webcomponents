@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { setTimeout } from "@ui5/webcomponents-base/dist/util/ManagedTimeout.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
