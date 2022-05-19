@@ -113,7 +113,8 @@ const whenAllCustomElementsAreDefined = () => {
 const renderFinished = async () => {
 	await whenAllCustomElementsAreDefined();
 	do {
-		await Promise.all([whenTimeoutsReady(), whenDOMUpdated()]); // eslint-disable-line
+		await whenTimeoutsReady(); // eslint-disable-line
+		await whenDOMUpdated(); // eslint-disable-line
 	} while (hasPendingTimeouts() || !invalidatedWebComponents.isEmpty());
 };
 
