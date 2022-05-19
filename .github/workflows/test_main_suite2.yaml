@@ -1,0 +1,28 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - githhub-actions
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: browser-actions/setup-chrome@latest
+      with:
+        chrome-version: stable
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14.16.1
+
+    - name: Install Dependencies
+      run: yarn
+
+    - name: Build
+      run: yarn build
+
+    - name: Test
+      run: yarn test:main:suite-2
