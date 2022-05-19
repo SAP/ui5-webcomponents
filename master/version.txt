@@ -1,15 +1,5 @@
-commit 3582127da6b4eaa7906119375a2eeca5b96f30d2
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu May 19 00:43:59 2022 +0300
+commit 20d8b83702355d67e47060f8dab73cd55a5a82ea
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Thu May 19 10:03:34 2022 +0300
 
-    fix(ui5-tabcontainer): provide unique names for each disabled slot (#5241)
-    
-    In Firefox, using two or more slots with the same name (i.e. "disabled-slot")
-    in a shadow root will prevent the other slots from being shown.
-    Further clicking on the Tab strip after the slots are broken will cause
-    the tab to crash.
-    
-    This change fixes the ui5-tabcontainer to work correctly in Firefox by
-    ensuring each slot that should be hidden to have a unique name.
-    
-    Fixes #5178
+    fix(ui5-breadcrumbs): set aria-current to the focused element (#5214)
