@@ -1,5 +1,5 @@
-commit d048265ae7cce75a3c0d7475990c10a132173fa3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 19 13:18:56 2022 +0300
+commit 7a2e180eb2b6b51c396639c7d9a82418abb3dbfa
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Thu May 19 15:43:01 2022 +0200
 
-    chore: upgrade chromedriver to 101 (#5249)
+    chore(ui5-panel): add `header` part (#5227)
