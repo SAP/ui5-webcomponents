@@ -31,6 +31,6 @@ jobs:
 
   test-suite-2:
     needs: build
-      steps:
+    steps:
     - name: Test
       run: yarn test:main:suite-2
