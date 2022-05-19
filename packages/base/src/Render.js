@@ -111,9 +111,9 @@ const whenAllCustomElementsAreDefined = () => {
 };
 
 const renderFinished = async () => {
+	await timeoutsReady();
 	await whenAllCustomElementsAreDefined();
 	await whenDOMUpdated();
-	await timeoutsReady();
 };
 
 const _resolveTaskPromise = () => {
