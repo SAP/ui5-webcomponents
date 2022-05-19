@@ -27,15 +27,15 @@ const clearTimeout = timeoutId => {
 	}
 };
 
-const timeoutsReady = () => {
+const whenTimeoutsReady = () => {
 	return Promise.all([...promises.values()]);
 };
 
-const getTimeoutsCount = () => promises.size;
+const hasPendingTimeouts = () => !!promises.size;
 
 export {
 	setTimeout,
 	clearTimeout,
-	timeoutsReady,
-	getTimeoutsCount,
+	whenTimeoutsReady,
+	hasPendingTimeouts,
 };

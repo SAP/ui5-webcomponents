@@ -2,7 +2,7 @@ import EventProvider from "./EventProvider.js";
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
-import { timeoutsReady } from "./util/ManagedTimeout.js";
+import { whenTimeoutsReady, hasPendingTimeouts } from "./util/ManagedTimeout.js";
 
 const registeredElements = new Set();
 const eventProvider = new EventProvider();
@@ -112,8 +112,9 @@ const whenAllCustomElementsAreDefined = () => {
 
 const renderFinished = async () => {
 	await whenAllCustomElementsAreDefined();
-	await timeoutsReady();
-	await whenDOMUpdated();
+	do {
+		await Promise.all([whenTimeoutsReady(), whenDOMUpdated()]); // eslint-disable-line
+	} while (hasPendingTimeouts() || !invalidatedWebComponents.isEmpty());
 };
 
 const _resolveTaskPromise = () => {
