@@ -16,7 +16,7 @@ jobs:
         chrome-version: stable
     - uses: actions/setup-node@v1
       with:
-        node-version: 14.16.1
+        node-version: 16
 
     - name: Install Dependencies
       run: yarn
