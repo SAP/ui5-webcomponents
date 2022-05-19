@@ -21,12 +21,21 @@ const setTimeout = (callback, ...params) => {
 const clearTimeout = timeoutId => {
 	window.clearTimeout(timeoutId);
 	const promise = promises.get(timeoutId);
-	promise._deferredResolve();
-	promises.delete(timeoutId);
+	if (promise) { // it's possible to call clearTimeout without having called setTimeout first
+		promise._deferredResolve();
+		promises.delete(timeoutId);
+	}
 };
 
 const timeoutsReady = () => {
 	return Promise.all([...promises.values()]);
 };
 
-export { setTimeout, clearTimeout, timeoutsReady };
+const getTimeoutsCount = () => promises.size;
+
+export {
+	setTimeout,
+	clearTimeout,
+	timeoutsReady,
+	getTimeoutsCount,
+};
