@@ -253,7 +253,7 @@ exports.config = {
 			await browser.executeAsync(function (done) {
 				setTimeout(function() {
 					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
-				}, 0);
+				}, 1);
 			});
 		}
 	},
@@ -333,7 +333,7 @@ exports.config = {
 			await browser.executeAsync( function (done) {
 				setTimeout(function() {
 					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
-				}, 0);
+				}, 1);
 			});
 		}
 	},
