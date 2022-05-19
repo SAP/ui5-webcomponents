@@ -1,5 +1,5 @@
-commit 7a2e180eb2b6b51c396639c7d9a82418abb3dbfa
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Thu May 19 15:43:01 2022 +0200
+commit 52e92c93cc9f5c0a4439cf03c2d1a607ac3eec85
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Thu May 19 17:57:05 2022 +0300
 
-    chore(ui5-panel): add `header` part (#5227)
+    chore(ui5-responsive-popover): add mobile test spec (#5238)
