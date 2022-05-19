@@ -64,6 +64,9 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active .ui5-shellbar-menu-button-arrow {
+	border-top-color: var(--_ui5_shellbar_button_active_color);
+}
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
@@ -206,7 +209,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
-	outline-offset: var(--_ui5_shellbar_outline_offset);
+	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
 
@@ -425,7 +428,7 @@ slot[name="profile"] {
 	background: var(--_ui5_shellbar_search_field_background);
 	border: var(--_ui5_shellbar_search_field_border);
 	color: var(--_ui5_shellbar_search_field_color);
-	height: var(--_ui5_shellbar_search_field_height);
+	height: 2.25rem;
 	width: 100%;
 }
 
