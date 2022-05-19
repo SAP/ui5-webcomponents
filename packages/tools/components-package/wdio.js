@@ -250,9 +250,10 @@ exports.config = {
 			"shadow$$",
 		];
 		if (waitFor.includes(commandName)) {
-			await browser.executeAsync(async function (done) {
-				await Promise.resolve();
-				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+			await browser.executeAsync(function (done) {
+				setTimeout(function() {
+					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				}, 0);
 			});
 		}
 	},
@@ -329,9 +330,10 @@ exports.config = {
 			"url",
 		];
 		if (waitFor.includes(commandName)) {
-			await browser.executeAsync(async function (done) {
-				await Promise.resolve();
-				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+			await browser.executeAsync( function (done) {
+				setTimeout(function() {
+					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				}, 0);
 			});
 		}
 	},
