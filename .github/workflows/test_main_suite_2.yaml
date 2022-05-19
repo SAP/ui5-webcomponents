@@ -1,4 +1,4 @@
-name: Test Main: Suite 2
+name: Test Main-Suite 2
 
 on:
   pull_request:
