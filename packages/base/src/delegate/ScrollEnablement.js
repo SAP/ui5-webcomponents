@@ -1,6 +1,7 @@
 import { supportsTouch } from "../Device.js";
 import EventProvider from "../EventProvider.js";
 import scroll from "../animations/scroll.js";
+import { setTimeout } from "../util/ManagedTimeout.js";
 
 const scrollEventName = "scroll";
 const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
