@@ -25,6 +25,8 @@ jobs:
     - uses: browser-actions/setup-chrome@latest
       with:
         chrome-version: stable
+    - name: Install Dependencies
+      run: yarn
     - name: Test
       run: yarn test:main:suite-1
   test-suite-2:
@@ -35,5 +37,7 @@ jobs:
     - uses: browser-actions/setup-chrome@latest
       with:
         chrome-version: stable
+    - name: Install Dependencies
+      run: yarn
     - name: Test
       run: yarn test:main:suite-2
