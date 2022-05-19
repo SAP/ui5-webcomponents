@@ -1,7 +1,5 @@
-commit 04f2b083551450487e5dca02d7597149f3e9a576
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 19 10:32:49 2022 +0300
+commit d048265ae7cce75a3c0d7475990c10a132173fa3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 19 13:18:56 2022 +0300
 
-    fix(ui5-calendar): correct month button text localization (#5246)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5242
+    chore: upgrade chromedriver to 101 (#5249)
