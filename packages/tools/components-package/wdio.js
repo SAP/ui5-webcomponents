@@ -329,6 +329,7 @@ exports.config = {
 			"touchAction",
 			"url",
 		];
+		
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync( function (done) {
 				setTimeout(function() {
