@@ -303,7 +303,8 @@ const metadata = {
 
 		/**
 		 * Sets the maximum number of characters available in the input field.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number.
 		 * @type {Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
