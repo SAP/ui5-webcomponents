@@ -690,9 +690,9 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	setConfirmedSettings(settings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {
-			let tempSettings =  JSON.parse(JSON.stringify(this._confirmedSettings));
+			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
-				for(let i = 0; i < tempSettings.sortOrder.length; i++) {
+				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
 					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
 						tempSettings.sortOrder[i].selected = true;
 					} else {
@@ -702,7 +702,7 @@ class ViewSettingsDialog extends UI5Element {
 			}
 
 			if (settings.sortBy) {
-				for(let i = 0; i < tempSettings.sortBy.length; i++) {
+				for (let i = 0; i < tempSettings.sortBy.length; i++) {
 					if (tempSettings.sortBy[i].text === settings.sortBy) {
 						tempSettings.sortBy[i].selected = true;
 					} else {
@@ -731,7 +731,7 @@ class ViewSettingsDialog extends UI5Element {
 				}
 			}
 
-			this._confirmedSettings =  JSON.parse(JSON.stringify(tempSettings));
+			this._confirmedSettings = JSON.parse(JSON.stringify(tempSettings));
 		}
 	}
 }
