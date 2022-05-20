@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { setTimeout, clearTimeout } from "@ui5/webcomponents-base/dist/util/ManagedTimeout.js";
 import {
 	isUp,
 	isDown,

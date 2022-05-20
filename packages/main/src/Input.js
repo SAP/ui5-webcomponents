@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { setTimeout, clearTimeout } from "@ui5/webcomponents-base/dist/util/ManagedTimeout.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";

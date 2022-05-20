@@ -1,4 +1,3 @@
-import { setTimeout } from "@ui5/webcomponents-base/dist/util/ManagedTimeout.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isShow,

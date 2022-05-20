@@ -111,9 +111,7 @@ const whenAllCustomElementsAreDefined = () => {
 
 const renderFinished = async () => {
 	await whenAllCustomElementsAreDefined();
-	do {
-		await whenDOMUpdated(); // eslint-disable-line
-	} while (!invalidatedWebComponents.isEmpty());
+	await whenDOMUpdated();
 };
 
 const _resolveTaskPromise = () => {

@@ -1,5 +1,3 @@
-import { setTimeout, clearTimeout } from "./ManagedTimeout.js";
-
 /**
  * Delays function execution by given threshold.
  * @param fn {Function}
