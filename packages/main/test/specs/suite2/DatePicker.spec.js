@@ -794,13 +794,13 @@ describe("Date Picker Tests", () => {
 		const root = await datepicker.getRoot();
 		await root.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (1)");
 
 		await input.click();
 		await root.setProperty("value", "Jan 1, 2000");
 		await root.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
 
 		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");

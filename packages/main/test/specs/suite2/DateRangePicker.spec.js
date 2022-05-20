@@ -60,7 +60,7 @@ describe("DateRangePicker general interaction", () => {
 		await browser.keys("27/09/2019 - 10/10/2019");
 		await browser.keys("Enter");
 
-		await daterangepicker.waitForClickable();
+		await daterangepicker.waitForClickable({ timeout: 1000 });
 		const res = await browser.executeAsync(done => {
 			const myDRP = document.getElementById("daterange-picker4");
 			const startDateValue = myDRP.startDateValue;
