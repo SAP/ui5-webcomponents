@@ -251,9 +251,7 @@ exports.config = {
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
-				setTimeout(function() {
-					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
-				}, 0);
+				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
 	},
@@ -331,9 +329,7 @@ exports.config = {
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
-				setTimeout(function() {
-					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
-				}, 0);
+				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
 	},
