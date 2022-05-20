@@ -1,5 +1,9 @@
-commit 52e92c93cc9f5c0a4439cf03c2d1a607ac3eec85
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu May 19 17:57:05 2022 +0300
+commit 0c01d9f01d66e67c2a61de7a859a3240f84c2cf6
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri May 20 15:48:43 2022 +0300
 
-    chore(ui5-responsive-popover): add mobile test spec (#5238)
+    fix(ui5-input): adjust maxLength property documentation (#5253)
+    
+    * fix(ui5-input): adjust maxLength property documentation
+    
+    * fix(ui5-input): adjust documentation
