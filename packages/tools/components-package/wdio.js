@@ -331,6 +331,7 @@ exports.config = {
 			"keys",
 		];
 
+		
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
@@ -339,7 +340,7 @@ exports.config = {
 			await browser.executeAsync(function (done) {
 				setTimeout(() => {
 					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
-				}, 0);
+				}, 1);
 			});
 		}
 	},
