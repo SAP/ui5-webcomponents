@@ -1,4 +1,4 @@
-const daypicker = require("../pageobjects/DayPickerTestPage");
+const daypicker = require("../../pageobjects/DayPickerTestPage");
 const assert = require("chai").assert;
 const PORT = require("../_port.js");
 
