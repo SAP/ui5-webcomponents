@@ -183,6 +183,14 @@ const metadata = {
 				filters: { type: Array },
 			},
 		},
+
+		/**
+		 * Fired after the component is opened. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.main.Popup#after-open
+		 */
+		"before-open": {},
 	},
 };
 
@@ -488,6 +496,7 @@ class ViewSettingsDialog extends UI5Element {
 			this._restoreSettings(this._confirmedSettings);
 		}
 
+		this.fireEvent("before-open", {}, true, false);
 		this._dialog.show(true);
 
 		this._dialog.querySelector("[ui5-list]").focusFirstItem();
@@ -671,50 +680,58 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Sets a JavaScript object, as settings to the ui5-view-settings-dialog.
 	 * This method can be used after the dialog is initially open, as the dialog need to set its initial settings.
-	 * The dialog throws an event called "after-open", this can be used as trigger point.
+	 * The view settings dialog throws an event called "before-open", this can be used as trigger point.
 	 * The object should have the following format:
 	 * <code>{
-	 *	"sortOrder": [
-	 *		{
-	 *		"text": "Ascending",
-	 *		"selected": true
-	 *		},
-	 *		{
-	 *		"text": "Descending",
-	 *		"selected": false
-	 *		}
-	 *	],
-	 *	"sortBy": [
-	 *		{
-	 *		"text": "Name",
-	 *		"selected": true,
-	 *		"index": 0
-	 *		},
-	 *		{
-	 *		"text": "Position",
-	 *		"selected": false,
-	 *		"index": 1
-	 *		}
-	 *	],
-	 *	"filters": [
-	 *		{
-	 *		"text": "Filter 1",
-	 *		"selected": false,
-	 *		"filterOptions": [
-	 *			{
-	 *			"text": "Some filter 1",
-	 *			"selected": false
-	 *			}
-	 *		]
-	 *		}
-	 *	]
+	 *	{ "sortOrder" : "Ascending", "sortBy" : "Name", "filters" : [{ "filter" : "Filter 1", "filterOptions" : ["Some filter 1", "Some filter 2"]}]}
 	 * }</code>
 	 * @param {string} settings A value to be set as confirmedSettings
 	 * @public
 	 */
-	setCurrentSettings(settings) {
+	setConfirmedSettings(settings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {
-			this._confirmedSettings = JSON.parse(JSON.stringify(settings));
+			let tempSettings =  JSON.parse(JSON.stringify(this._confirmedSettings));
+			if (settings.sortOrder) {
+				for(let i = 0; i < tempSettings.sortOrder.length; i++) {
+					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
+						tempSettings.sortOrder[i].selected = true;
+					} else {
+						tempSettings.sortOrder[i].selected = false;
+					}
+				}
+			}
+
+			if (settings.sortBy) {
+				for(let i = 0; i < tempSettings.sortBy.length; i++) {
+					if (tempSettings.sortBy[i].text === settings.sortBy) {
+						tempSettings.sortBy[i].selected = true;
+					} else {
+						tempSettings.sortBy[i].selected = false;
+					}
+				}
+			}
+
+			if (settings.filters) {
+				for (let i = 0; i < tempSettings.filters.length; i++) {
+					for (let j = 0; j < settings.filters.length; j++) {
+						if (tempSettings.filters[i].text === settings.filters[j].filter) {
+							for (let k = 0; k < tempSettings.filters[i].filterOptions.length; k++) {
+								if (settings.filters[j].filterOptions.indexOf(tempSettings.filters[i].filterOptions[k].text) >= 0) {
+									tempSettings.filters[i].filterOptions[k].selected = true;
+								} else {
+									tempSettings.filters[i].filterOptions[k].selected = false;
+								}
+							}
+						} else {
+							for (let k = 0; k < tempSettings.filters[i].filterOptions.length; k++) {
+								tempSettings.filters[i].filterOptions[k].selected = false;
+							}
+						}
+					}
+				}
+			}
+
+			this._confirmedSettings =  JSON.parse(JSON.stringify(tempSettings));
 		}
 	}
 }
