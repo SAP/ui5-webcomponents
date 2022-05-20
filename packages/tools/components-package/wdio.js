@@ -331,6 +331,7 @@ exports.config = {
 			"keys",
 		];
 
+		
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
