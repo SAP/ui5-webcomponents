@@ -310,7 +310,6 @@ exports.config = {
 			});
 		}
 
-
 		const waitFor = [
 			"addValue",
 			"clearValue",
@@ -330,7 +329,13 @@ exports.config = {
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
-				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				if (commandName === "keys") {
+					setTimeout(() => {
+						window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+					}, 0);
+				} else {
+					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				}
 			});
 		}
 	},
