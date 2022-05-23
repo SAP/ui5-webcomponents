@@ -1,5 +1,5 @@
-commit 8ef628906bcd9ddf54618d969cd08b00ef308faa
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon May 23 08:17:44 2022 +0300
+commit e152c451d33b163bb6732fd522f7bd0c7d4e94dc
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon May 23 12:03:53 2022 +0300
 
-    fix(ui5-page): remove unnecessary scrollbar (#5258)
+    fix(retrofit): hide busy indicator if owned by the component (#5251)
