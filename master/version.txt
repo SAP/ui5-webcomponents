@@ -1,9 +1,5 @@
-commit 0c01d9f01d66e67c2a61de7a859a3240f84c2cf6
+commit 8ef628906bcd9ddf54618d969cd08b00ef308faa
 Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri May 20 15:48:43 2022 +0300
+Date:   Mon May 23 08:17:44 2022 +0300
 
-    fix(ui5-input): adjust maxLength property documentation (#5253)
-    
-    * fix(ui5-input): adjust maxLength property documentation
-    
-    * fix(ui5-input): adjust documentation
+    fix(ui5-page): remove unnecessary scrollbar (#5258)
