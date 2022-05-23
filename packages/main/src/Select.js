@@ -504,7 +504,7 @@ class Select extends UI5Element {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this._getSelectedItemIndex(itemToSelect);
+			const nextIndex = this._filteredItems.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -547,7 +547,7 @@ class Select extends UI5Element {
 	}
 
 	_getSelectedItemIndex(item) {
-		return [].indexOf.call(item.parentElement.children, item);
+		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
 	}
 
 	_select(index) {
