@@ -28,6 +28,7 @@
 
 :host([_focused]) {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: var(--_ui5_rating_indicator_outline_offset);
 	border-radius: var(--_ui5_rating_indicator_border_radius);
 }
 

@@ -1,5 +1,6 @@
 :root {
 	--_ui5_rating_indicator_border_radius: 0px;
+	--_ui5_rating_indicator_outline_offset: 0px;
 	--_ui5_rating_indicator_item_height: 1em;
 	--_ui5_rating_indicator_item_width: 1em;
 	--_ui5_rating_indicator_readonly_item_height: 1em;
