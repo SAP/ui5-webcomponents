@@ -525,6 +525,17 @@ describe("Input general interaction", () => {
 		assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
 	});
 
+	it("Tests disabled autocomplete(type-ahead)", async () => {
+		let hasSelection;
+
+		const input = await browser.$("#input-disabled-autocomplete").shadow$("input");
+
+		await input.click();
+		await input.keys("c");
+
+		assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
+	});
+
 	it("Tests suggestions highlighting", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 

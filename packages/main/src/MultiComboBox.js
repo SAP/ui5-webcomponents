@@ -49,7 +49,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 import Button from "./Button.js";
 
 import {

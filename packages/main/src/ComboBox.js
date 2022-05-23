@@ -29,7 +29,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 
 import {
 	VALUE_STATE_SUCCESS,

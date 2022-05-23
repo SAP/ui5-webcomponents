@@ -40,7 +40,7 @@ import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
-import * as Filters from "./InputFilters.js";
+import * as Filters from "./Filters.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -215,6 +215,18 @@ const metadata = {
 		 * @since 1.0.0-rc.3
 		 */
 		required: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the value will be autcompleted to match an item
+		 *
+		 * @type {boolean}
+		 * @defaultvalue true
+		 * @public
+		 * @since 1.4.0
+		 */
+		disableAutocomplete: {
 			type: Boolean,
 		},
 
@@ -699,7 +711,7 @@ class Input extends UI5Element {
 
 	_onkeydown(event) {
 		this._isKeyNavigation = true;
-		this._shouldAutocomplete = !(isBackSpace(event) || isDelete(event) || isEscape(event));
+		this._shouldAutocomplete = !this.disableAutocomplete && !(isBackSpace(event) || isDelete(event) || isEscape(event));
 
 		if (isUp(event)) {
 			return this._handleUp(event);
