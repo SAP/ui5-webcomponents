@@ -1,5 +1,5 @@
-commit e152c451d33b163bb6732fd522f7bd0c7d4e94dc
+commit 24401b2ace87010811ef60e255a0d18bdce5cd6b
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon May 23 12:03:53 2022 +0300
+Date:   Mon May 23 12:44:01 2022 +0300
 
-    fix(retrofit): hide busy indicator if owned by the component (#5251)
+    fix(ui5-select): select correct item by typing text (#5252)
