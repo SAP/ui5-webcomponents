@@ -341,7 +341,6 @@ exports.config = {
 					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 				}, 20);
 			});
-			
 		}
 	},
 	/**
