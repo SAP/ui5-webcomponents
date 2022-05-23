@@ -339,7 +339,7 @@ exports.config = {
 			await browser.executeAsync(function (done) {
 				setTimeout(() => {
 					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
-				}, 10);
+				}, 20);
 			});
 		}
 	},
