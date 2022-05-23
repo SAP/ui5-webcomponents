@@ -54,7 +54,7 @@
 }
 
 .ui5-popup-header-root .ui5-popup-header-text {
-	font-weight: var(--_ui5_popup_header_footer_font_weight);
+	font-weight: var(--_ui5_popup_header_font_weight);
 }
 
 .ui5-popup-content {
