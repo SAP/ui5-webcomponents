@@ -91,6 +91,7 @@
 	--_ui5_slider_no_tickmarks_active_progress_left: var(--_ui5_slider_active_progress_left);
 	--_ui5_slider_no_tickmarks_active_progress_top: var(--_ui5_slider_active_progress_top);
 	--_ui5_slider_handle_focus_visibility: none;
+	--_ui5_slider_handle_icon_size: 1rem;
 }
 
 [data-ui5-compact-size],
@@ -98,4 +99,5 @@
 .sapUiSizeCompact {
 	--_ui5_slider_handle_focused_top: -0.625rem;
 	--_ui5_slider_handle_focused_margin_left: -0.75rem;
+	--_ui5_slider_handle_icon_size: .875rem;
 }
