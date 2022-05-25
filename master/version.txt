@@ -1,11 +1,7 @@
-commit 4afbbcfa7ae24b16d0e869ce5928a1f43500c32e
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed May 25 19:11:00 2022 +0300
+commit 069f0aa98856c93740b24550b13bbc81dfc70526
+Author: GerganaKremenska <gergana.georgieva01@sap.com>
+Date:   Wed May 25 21:13:14 2022 +0300
 
-    fix(ui5-slider): improve horizon focus implementation (#5276)
+    fix(ui5-popover): border radius in horizon is correct (#5063)
     
-    * fix(ui5-slider): improve horizon focus implementation
-    
-    * fix(ui5-slider): revert parameter deletion
-    
-    * fix(ui5-slider): adjust high constrast themes
+    Specification was updated for border radius of popups, from 12px to 8px
