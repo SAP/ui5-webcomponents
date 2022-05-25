@@ -1061,10 +1061,15 @@ class Input extends UI5Element {
 	}
 
 	_startsWithMatchingItems(str) {
-		return Filters.StartsWith(str, this.suggestionItems);
+		const textProp = this.suggestionItems[0].text ? "text" : "textContent";
+		return Filters.StartsWith(str, this.suggestionItems, textProp);
 	}
 
 	_getFirstMatchingItem(current) {
+		if (!this.suggestionItems.length) {
+			return;
+		}
+
 		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.groupItem);
 
 		if (matchingItems.length) {

@@ -1055,7 +1055,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items, "text");
 	}
 
 	_afterOpenPicker() {
