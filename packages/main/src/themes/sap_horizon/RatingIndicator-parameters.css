@@ -5,7 +5,7 @@
 	--_ui5_rating_indicator_outline_offset: 0.125rem;
 	--_ui5_rating_indicator_readonly_item_height: 0.75em;
 	--_ui5_rating_indicator_readonly_item_width: 0.75em;
-	--_ui5_rating_indicator_readonly_item_spacing: 3px 3px;
+	--_ui5_rating_indicator_readonly_item_spacing: 0.1875rem 0.1875rem;
 }
 
 [data-ui5-compact-size],
@@ -13,5 +13,5 @@
 .sapUiSizeCompact {
 	--_ui5_rating_indicator_readonly_item_height: 0.5em;
 	--_ui5_rating_indicator_readonly_item_width: 0.5em;
-	--_ui5_rating_indicator_readonly_item_spacing: 2px 2px;
+	--_ui5_rating_indicator_readonly_item_spacing: 0.125rem 0.125rem;
 }
