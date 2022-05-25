@@ -80,8 +80,8 @@
 	border: 1px solid var(--sapContent_NonInteractiveIconColor);
 	background-color: var(--sapContent_NonInteractiveIconColor);
 	border-radius: 50%;
-	width: .4375rem;
-	height: .4375rem;
+	width: 0.375rem;
+	height: 0.375rem;
 	position: absolute;
 	top: 0.9375rem;
 	left: 50%;
@@ -131,13 +131,13 @@
 
 .ui5-tli-bubble {
 	background: var(--sapGroup_ContentBackground);
-	border: 1px solid var(--sapList_BorderColor);
+	border: 1px solid var(--_ui5_TimelineItem_bubble_border_color);
 	box-sizing: border-box;
-	border-radius: 0.25rem;
+	border-radius: var(--_ui5_TimelineItem_bubble_border_radius);
 	flex: 1;
 	position: relative;
 	margin-left: .5rem;
-	padding: var(--_ui5_tl_bubble_padding);
+	padding: var(--_ui5_TimelineItem_bubble_content_padding);
 }
 
 :host([layout="Horizontal"]) .ui5-tli-bubble {
@@ -152,7 +152,7 @@
 .ui5-tli-bubble:focus::after {
 	content: "";
     border: var(--_ui5_TimelineItem_bubble_border_width) var(--_ui5_TimelineItem_bubble_border_style) var(--sapContent_FocusColor);
-    border-radius: var(--_ui5_TimelineItem_bubble_border_radius);
+    border-radius: var(--_ui5_TimelineItem_bubble_focus_border_radius);
 	position: absolute;
 	top: var(--_ui5_TimelineItem_bubble_border_top);
 	right: var(--_ui5_TimelineItem_bubble_border_right);
@@ -162,8 +162,8 @@
 }
 
 :host([layout="Horizontal"]) .ui5-tli-bubble:focus::after {
-	top: -0.625rem;
-	left: -0.125rem;
+	top: var(--_ui5_TimelineItem_horizontal_bubble_focus_top_offset);
+	left: var(--_ui5_TimelineItem_horizontal_bubble_focus_left_offset);
 }
 
 .ui5-tli-bubble-arrow {
@@ -179,7 +179,7 @@
 .ui5-tli-bubble-arrow::before {
 	content: "";
 	background: var(--sapGroup_ContentBackground);
-	border: 1px solid var(--sapList_BorderColor);
+	border: 1px solid var(--_ui5_TimelineItem_bubble_border_color);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -216,7 +216,7 @@
 .ui5-tli-title,
 .ui5-tli-desc {
 	color: var(--sapTextColor);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapFontSize);
 }
@@ -228,17 +228,17 @@
 
 .ui5-tli-subtitle {
 	color: var(--sapContent_LabelColor);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapFontSmallSize);
-	padding-top: .375rem;
+	padding-top: var(--_ui5_TimelineItem_bubble_content_subtitle_padding_top);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .ui5-tli-desc {
-	padding-top: .75rem;
+	padding-top: var(--_ui5_TimelineItem_bubble_content_description_padding_top);
 }
 
 [dir=rtl] .ui5-tli-bubble-arrow--left {

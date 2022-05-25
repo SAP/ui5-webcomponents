@@ -27,12 +27,12 @@
 		aria-valuemin="{{min}}"
 		aria-valuemax="{{max}}"
 		aria-valuenow="{{value}}"
-		aria-labelledby="{{_id}}-sliderDesc"
+		aria-labelledby="{{_ariaLabelledByHandleRefs}}"
 		aria-disabled="{{_ariaDisabled}}"
 		data-sap-focus-ref
 		part="handle"
 	>
-	<ui5-icon name="source-code" part="icon-slider" slider-icon></ui5-icon>
+			<ui5-icon name="source-code" part="icon-slider" slider-icon></ui5-icon>
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>

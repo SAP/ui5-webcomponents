@@ -1,10 +1,6 @@
-const fs = require("fs");
-const { promisify } = require("util");
-const readFileAsync = promisify(fs.readFile);
-const writeFileAsync = promisify(fs.writeFile);
+const fs = require("fs").promises;
 const child_process = require("child_process");
 const commandLineArgs = require('command-line-args');
-const glob = require("glob-promise");
 const execSync = child_process.execSync;
 const gitRev = execSync("git rev-parse HEAD").toString();
 
@@ -23,9 +19,8 @@ const NEW_VERSION = options.version;
 const OTP = options.otp;
 
 const run = async () => {
-	const FILES = await glob("**/packages/**/package.json", { 
-		"ignore": ["**/node_modules/**/*.*", "**/dist/**/*.*", "**/playground/**/*.*"],
-	});
+	const { globby } = await import("globby");
+	let FILES = await globby(["packages/*/package.json", "!packages/playground/package.json"]);
 
 	// Step 1: process package.json files
 	const pkgs = await Promise.all(FILES.map(processPackageJSON));
@@ -39,7 +34,7 @@ const run = async () => {
 
 const processPackageJSON = async file => {
 	const folder = file.split("package.json")[0];
-	const fileRead = await readFileAsync(file);
+	const fileRead = await fs.readFile(file);
 	const fileContent = JSON.parse(fileRead.toString());
 	const name = fileContent.name;
 
@@ -63,7 +58,7 @@ const updatePackageJSON = async pkg => {
 		fileContent.devDependencies[dep] = PACKAGES[dep].version;
 	});
 
-	return writeFileAsync(file, JSON.stringify(fileContent, null, "  "));
+	return fs.writeFile(file, JSON.stringify(fileContent, null, "  "));
 };
 
 const getDependencies = (dependencies) => {

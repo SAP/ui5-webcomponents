@@ -40,6 +40,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -49,9 +50,8 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 import Button from "./Button.js";
-
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -72,6 +72,7 @@ import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
+import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
 
 /**
  * @public
@@ -247,6 +248,32 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.4.0
+		 */
+		accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.4.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_filteredItems: {
 			type: Object,
 		},
@@ -405,7 +432,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover];
 	}
 
 	static get dependencies() {
@@ -1055,7 +1082,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items, "text");
 	}
 
 	_afterOpenPicker() {
@@ -1335,6 +1362,10 @@ class MultiComboBox extends UI5Element {
 
 	get valueStateMessageText() {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	/**

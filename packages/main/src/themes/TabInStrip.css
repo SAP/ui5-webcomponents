@@ -47,7 +47,7 @@
 	height: 1.5rem;
 	min-width: 1.5rem;
 	margin-top: 0.25rem;
-	margin-left: 0.625rem;
+	margin-inline-start: 0.625rem;
 }
 
 .ui5-tab-expand-button > [ui5-button]:not([active]) {
@@ -63,7 +63,7 @@
 }
 
 .ui5-tab-single-click-icon {
-	margin-left: 0.875rem;
+	margin-inline-start: 0.875rem;
 }
 
 .ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly {

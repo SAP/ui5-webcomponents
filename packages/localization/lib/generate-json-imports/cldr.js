@@ -1,5 +1,4 @@
-const fs = require("fs");
-const mkdirp = require("mkdirp");
+const fs = require("fs").promises;
 const assets = require("@ui5/webcomponents-tools/assets-meta.js");
 
 const allLocales = assets.locales.all;
@@ -50,6 +49,14 @@ const importAndCheck = async (localeId) => {
 availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importAndCheck));
 `;
 
-mkdirp.sync("dist/generated/json-imports/");
-fs.writeFileSync("dist/generated/json-imports/LocaleData-static.js", contentStatic);
-fs.writeFileSync("dist/generated/json-imports/LocaleData.js", contentDynamic);
+const generate = async () => {
+	await fs.mkdir("dist/generated/json-imports/", { recursive: true });
+	return Promise.all([
+		fs.writeFile("dist/generated/json-imports/LocaleData-static.js", contentStatic),
+		fs.writeFile("dist/generated/json-imports/LocaleData.js", contentDynamic)
+	]);
+}
+
+generate().then(() => {
+	console.log("CLDR files generated.");
+});

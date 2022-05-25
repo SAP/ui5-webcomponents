@@ -1,7 +1,6 @@
 <ui5-responsive-popover
 	id="{{_id}}-menu-rp"
 	class="ui5-menu-rp"
-	dir={{effectiveDir}}
 	horizontal-align="Left"
 	placement-type={{placementType}}
 	vertical-align={{verticalAlign}}
@@ -63,6 +62,7 @@
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
 				?selected={{this.item.subMenuOpened}}
+				?is-phone={{../isPhone}}
 				@mouseover={{../_itemMouseOver}}
 				@mouseout={{../_itemMouseOut}}
 				@keydown={{../_itemKeyDown}}

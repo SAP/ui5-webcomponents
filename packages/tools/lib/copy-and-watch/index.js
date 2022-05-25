@@ -27,7 +27,6 @@ const path = require('path');
 const chokidar = require('chokidar');
 const glob = require('glob');
 const globParent = require('glob-parent');
-require('colors');
 
 /* CODE */
 

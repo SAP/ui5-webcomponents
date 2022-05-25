@@ -103,7 +103,7 @@ class MonthPicker extends CalendarPart {
 		}
 
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const monthsNames = localeData.getMonthsStandAlone("wide", this._primaryCalendarType);
 
 		const months = [];
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
