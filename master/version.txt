@@ -1,5 +1,19 @@
-commit 24401b2ace87010811ef60e255a0d18bdce5cd6b
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon May 23 12:44:01 2022 +0300
+commit 405a5985bd9cafa2e105e6d59aceb476d01390b6
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed May 25 10:26:48 2022 +0300
 
-    fix(ui5-select): select correct item by typing text (#5252)
+    feat(ui5-rating-indicator): implement small icons for readonly and disabled (#5233)
+    
+    * fix(ui5-rating-indicator): implement small icons when readonly or disabled
+    
+    * fix(ui5-rating-indicator): implement small icons when readonly or disabled
+    
+    * fix selector
+    
+    * fix(ui5-rating-indicator): apply correct spacings
+    
+    * fix(ui5-rating-indicator): revert sample changes in order to test
+    
+    * fix(ui5-rating-indicator): apply outline offset
+    
+    * fix(ui5-rating-indicator): replace px with rems
