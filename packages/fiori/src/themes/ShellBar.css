@@ -249,6 +249,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
+	padding: 0 0.125rem;
 	justify-content: flex-start;
 	margin-inline-end: 0.5rem;
 	max-width: 75%;
@@ -289,6 +290,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-right {
+	padding: 0 0.125rem;
 	display: block;
 	overflow: hidden;
 	box-sizing: border-box;
