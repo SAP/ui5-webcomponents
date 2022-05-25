@@ -1,5 +1,17 @@
-commit 9bd9d2412e7634eeebed884dad84a1ec6f911532
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed May 25 13:14:48 2022 +0300
+commit a7de0cd32d38c14c9b1b1768d7c06996bca19d70
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Wed May 25 14:19:07 2022 +0300
 
-    fix(ui5-select): correct picker width (#5240)
+    fix(ui5-color-picker): provide meaningful labels for the inner input components (#5217)
+    
+    Issue description:
+    The screen reader should announce meaningful messages
+    in relation to the inner input controls of the "ui5-color-picker".
+    Solution:
+    The "accessibleName" property is enabled for the "ui5-slider"
+    and "ui5-range-slider" components.
+    The missing label references for the "ui5-color-picker" inner input
+    components are added as per specification.
+    
+    Related to: #5015
+    Related to: #5023
