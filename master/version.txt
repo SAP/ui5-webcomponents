@@ -1,18 +1,5 @@
-commit ec448881d3df1df859efb025f313978bc11cde4b
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed May 25 17:18:03 2022 +0300
+commit f954ce6394e36ba259d7c717d4fa4e977659e113
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed May 25 17:48:47 2022 +0300
 
-    feat(ui5-input): implement type ahead (autocomplete) (#5211)
-    
-    * feat(ui5-input): implement type ahead (autocomplete)
-    
-    * feat(ui5-input): typeahead
-    
-    add property, refactor filters
-    
-    * feat(ui5-input): typeahead
-    refactor filters to be used by all input components
-    
-    * feat(ui5-input): typeahead
-    
-    retrigger tests
+    fix(ui5-shellbar): avoid cut-off on left and right containers (#5277)
