@@ -683,7 +683,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * The view settings dialog throws an event called "before-open", this can be used as trigger point.
 	 * The object should have the following format:
 	 * <code>{
-	 *	{ "sortOrder" : "Ascending", "sortBy" : "Name", "filters" : [{ "filter" : "Filter 1", "filterOptions" : ["Some filter 1", "Some filter 2"]}]}
+	 *	{ "sortOrder" : "Ascending", "sortBy" : "Name", "filters" : [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
 	 * }</code>
 	 * @param {string} settings A value to be set as confirmedSettings
 	 * @public
@@ -712,20 +712,17 @@ class ViewSettingsDialog extends UI5Element {
 			}
 
 			if (settings.filters) {
+				const inputFilters = {};
+				for(let i = 0; i < settings.filters.length; i++) {
+					inputFilters[Object.keys(settings.filters[i])[0]] = settings.filters[i][Object.keys(settings.filters[i])[0]]; 
+				}
+
 				for (let i = 0; i < tempSettings.filters.length; i++) {
-					for (let j = 0; j < settings.filters.length; j++) {
-						if (tempSettings.filters[i].text === settings.filters[j].filter) {
-							for (let k = 0; k < tempSettings.filters[i].filterOptions.length; k++) {
-								if (settings.filters[j].filterOptions.indexOf(tempSettings.filters[i].filterOptions[k].text) >= 0) {
-									tempSettings.filters[i].filterOptions[k].selected = true;
-								} else {
-									tempSettings.filters[i].filterOptions[k].selected = false;
-								}
-							}
+					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
+						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
+							tempSettings.filters[i].filterOptions[j].selected = true;
 						} else {
-							for (let k = 0; k < tempSettings.filters[i].filterOptions.length; k++) {
-								tempSettings.filters[i].filterOptions[k].selected = false;
-							}
+							tempSettings.filters[i].filterOptions[j].selected = false;
 						}
 					}
 				}
