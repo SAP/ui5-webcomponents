@@ -4,11 +4,12 @@
 		_disable-initial-focus
 		placement-type="Bottom"
 		class="ui5-select-popover {{classes.popover}}"
-		horizontal-align="Stretch"
+		horizontal-align="Left"
 		@ui5-after-open="{{_afterOpen}}"
 		@ui5-before-open="{{_beforeOpen}}"
 		@ui5-after-close="{{_afterClose}}"
 		@keydown="{{_onkeydown}}"
+		style={{styles.responsivePopover}}
 	>
 		{{#if _isPhone}}
 			<div slot="header" class="ui5-responsive-popover-header">
