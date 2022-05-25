@@ -598,7 +598,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_startsWithMatchingItems(str) {
-		return Filters.StartsWith(str, this._filteredItems);
+		return Filters.StartsWith(str, this._filteredItems, "text");
 	}
 
 	_clearFocus() {

@@ -222,11 +222,11 @@ const metadata = {
 		 * Defines whether the value will be autcompleted to match an item
 		 *
 		 * @type {boolean}
-		 * @defaultvalue true
+		 * @defaultvalue false
 		 * @public
 		 * @since 1.4.0
 		 */
-		disableAutocomplete: {
+		noTypeahead: {
 			type: Boolean,
 		},
 
@@ -321,7 +321,8 @@ const metadata = {
 
 		/**
 		 * Sets the maximum number of characters available in the input field.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
 		 * @type {Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
@@ -689,12 +690,12 @@ class Input extends UI5Element {
 
 			// Keep the original typed in text intact
 			this.valueBeforeAutoComplete += value.slice(this.valueBeforeAutoComplete.length, value.length);
-			this._autocomplete(item, value);
+			this._handleTypeAhead(item, value);
 		}
 	}
 
 	async onAfterRendering() {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.showSuggestions) {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
 			});
@@ -711,7 +712,7 @@ class Input extends UI5Element {
 
 	_onkeydown(event) {
 		this._isKeyNavigation = true;
-		this._shouldAutocomplete = !this.disableAutocomplete && !(isBackSpace(event) || isDelete(event) || isEscape(event));
+		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(event) || isDelete(event) || isEscape(event));
 
 		if (isUp(event)) {
 			return this._handleUp(event);
@@ -1077,7 +1078,7 @@ class Input extends UI5Element {
 		}
 	}
 
-	_autocomplete(item, filterValue) {
+	_handleTypeAhead(item, filterValue) {
 		if (!item) {
 			return;
 		}
@@ -1219,8 +1220,12 @@ class Input extends UI5Element {
 	 */
 	updateValueOnPreview(item) {
 		const noPreview = item.type === "Inactive" || item.group;
+		const innerInput = this.getInputDOMRefSync();
 		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent);
+
 		this.value = itemValue;
+		innerInput.value = itemValue;
+		innerInput.setSelectionRange(this.valueBeforeAutoComplete.length, this.value.length);
 	}
 
 	/**

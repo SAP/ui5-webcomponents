@@ -57,27 +57,15 @@
 }
 
 .ui5-slider-progress-container::before {
-	left: var(--_ui5_slider_start_end_point_left);
+	inset-inline-start: var(--_ui5_slider_start_end_point_left);
 	background-color: var(--_ui5_slider_progress_before_background);
 	border: var(--_ui5_slider_progress_before_border);
 }
 
 .ui5-slider-progress-container::after {
-	right: var(--_ui5_slider_start_end_point_left);
+	inset-inline-end: var(--_ui5_slider_start_end_point_left);
 	background-color: var(--_ui5_slider_progress_after_background);
 	border: var(--_ui5_slider_progress_after_border);
-}
-
-[dir="rtl"] .ui5-slider-progress-container::before {
-	background-color: var(--_ui5_slider_progress_after_background);
-	left: var(--_ui5_slider_start_end_point_left);
-	border: var(--_ui5_slider_progress_after_border);
-}
-
-[dir="rtl"] .ui5-slider-progress-container::after {
-	background-color: var(--_ui5_slider_progress_before_background);
-	right: var(--_ui5_slider_start_end_point_left);
-	border: var(--_ui5_slider_progress_before_border);
 }
 
 .ui5-slider-progress {
@@ -107,7 +95,7 @@
 
 .ui5-slider-tickmarks li {
 	height: var(--_ui5_slider_tickmark_height);
-	border-left: 1px solid var(--_ui5_slider_tickmark_bg);
+	border-inline-start: 1px solid var(--_ui5_slider_tickmark_bg);
 }
 
 .ui5-slider-handle {
@@ -115,7 +103,7 @@
 	border: var(--_ui5_slider_handle_border);
 	border-radius: var(--_ui5_slider_handle_border_radius);
 	box-shadow: var(--_ui5_slider_handle_box_shadow);
-	margin-left: var(--_ui5_slider_handle_margin_left);
+	margin-inline-start: var(--_ui5_slider_handle_margin_left);
 	top: var(--_ui5_slider_handle_top);
 	position: absolute;
 	outline: none;
@@ -131,15 +119,6 @@
 [slider-icon] {
 	display: var(--_ui5_slider_handle_icon_display);
 	color: var(--sapContent_Selected_ForegroundColor);
-}
-
-[dir="rtl"] .ui5-slider-handle {
-	margin-right: var(--_ui5_slider_handle_margin_left);
-}
-
-[dir="rtl"] .ui5-slider-handle [slider-icon] {
-	right: var(--_ui5_slider_icon_left);
-	left: 0;
 }
 
 .ui5-slider-root:hover .ui5-slider-handle:not(:focus),
@@ -241,7 +220,7 @@
 }
 
 .ui5-slider-tickmarks li.ui5-slider-tickmark-in-range {
-	border-left: 1px solid var(--_ui5_slider_tickmark_in_range_bg);
+	border-inline-start: 1px solid var(--_ui5_slider_tickmark_in_range_bg);
 }
 
 :host([show-tickmarks]) .ui5-slider-progress {
