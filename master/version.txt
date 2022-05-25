@@ -1,7 +1,18 @@
-commit 0946207446ef039e99afa5548cc7f24f94319f1a
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed May 25 16:57:22 2022 +0300
+commit ec448881d3df1df859efb025f313978bc11cde4b
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Wed May 25 17:18:03 2022 +0300
 
-    fix(ui5-multi-combobox): set correct height to items checkboxes (#5216)
+    feat(ui5-input): implement type ahead (autocomplete) (#5211)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5126
+    * feat(ui5-input): implement type ahead (autocomplete)
+    
+    * feat(ui5-input): typeahead
+    
+    add property, refactor filters
+    
+    * feat(ui5-input): typeahead
+    refactor filters to be used by all input components
+    
+    * feat(ui5-input): typeahead
+    
+    retrigger tests
