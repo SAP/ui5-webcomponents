@@ -1,19 +1,10 @@
-commit 405a5985bd9cafa2e105e6d59aceb476d01390b6
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed May 25 10:26:48 2022 +0300
+commit d278c098495584d386ba398aebc6434063fe2423
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed May 25 13:07:40 2022 +0300
 
-    feat(ui5-rating-indicator): implement small icons for readonly and disabled (#5233)
+    feat(ui5-shellbar): implement Horizon theme (#5197)
     
-    * fix(ui5-rating-indicator): implement small icons when readonly or disabled
+    * feat(ui5-shellbar): implement Horizon theme
     
-    * fix(ui5-rating-indicator): implement small icons when readonly or disabled
-    
-    * fix selector
-    
-    * fix(ui5-rating-indicator): apply correct spacings
-    
-    * fix(ui5-rating-indicator): revert sample changes in order to test
-    
-    * fix(ui5-rating-indicator): apply outline offset
-    
-    * fix(ui5-rating-indicator): replace px with rems
+    Related to #5008
+    Co-authored-by: Stanislav Bodurov <stbodurov@icloud.com>
