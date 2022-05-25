@@ -41,6 +41,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
+import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -49,7 +50,6 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
-import * as Filters from "./ComboBoxFilters.js";
 import Button from "./Button.js";
 
 import {
@@ -380,7 +380,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-multi-combobox
  * @public
- * @appenddocs MultiComboBoxItem
+ * @appenddocs MultiComboBoxItem MultiComboBoxGroupItem
  * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {
@@ -411,6 +411,7 @@ class MultiComboBox extends UI5Element {
 	static get dependencies() {
 		return [
 			MultiComboBoxItem,
+			MultiComboBoxGroupItem,
 			Tokenizer,
 			Token,
 			Icon,
@@ -471,7 +472,7 @@ class MultiComboBox extends UI5Element {
 
 	filterSelectedItems(event) {
 		this.filterSelected = event.target.pressed;
-		this.selectedItems = this._filteredItems.filter(item => item.selected);
+		this.selectedItems = this._filterItems(this.value, true);
 	}
 
 	get _showAllItemsButtonPressed() {
@@ -916,11 +917,11 @@ class MultiComboBox extends UI5Element {
 
 		let currentItem = this.items[++this.currentItemIdx];
 
-		while (this.currentItemIdx < itemsCount - 1 && currentItem.selected) {
+		while ((this.currentItemIdx < itemsCount - 1 && currentItem.selected) || currentItem.isGroupItem) {
 			currentItem = this.items[++this.currentItemIdx];
 		}
 
-		if (currentItem.selected === true) {
+		if (currentItem.selected === true || currentItem.isGroupItem) {
 			this.currentItemIdx = previousItemIdx;
 			return;
 		}
@@ -949,7 +950,7 @@ class MultiComboBox extends UI5Element {
 
 		let currentItem = this.items[--this.currentItemIdx];
 
-		while (currentItem && currentItem.selected && this.currentItemIdx > 0) {
+		while ((currentItem && this.currentItemIdx > 0) && (currentItem.selected || currentItem.isGroupItem)) {
 			currentItem = this.items[--this.currentItemIdx];
 		}
 
@@ -957,7 +958,7 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (currentItem.selected) {
+		if (currentItem.selected || currentItem.isGroupItem) {
 			this.currentItemIdx = previousItemIdx;
 			return;
 		}
@@ -1054,8 +1055,56 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+	_filterItems(str, onlySelected = false) {
+		const escapeReg = /[[\]{}()*+?.\\^$|]/g;
+		const escapeRegExp = strValue => {
+			return strValue.replace(escapeReg, "\\$&");
+		};
+		const reg = new RegExp(`(^|\\s)${escapeRegExp(this.value.toLowerCase())}.*`, "g");
+
+		const items = [];
+		let isGroupAssigned = false;
+		let lastGroupItem = null;
+
+		this.items.forEach(item => {
+			reg.lastIndex = 0;
+
+			if (onlySelected && !item.isGroupItem && !item.selected) {
+				return;
+			}
+
+			if (!item.isGroupItem && reg.test(item.text.toLowerCase())) {
+				if (lastGroupItem && !isGroupAssigned) {
+					isGroupAssigned = true;
+					items.push(lastGroupItem);
+				}
+
+				items.push(item);
+			} else if (item.isGroupItem) {
+				lastGroupItem = item;
+				isGroupAssigned = false;
+			}
+		});
+
+		return items;
+	}
+
+	/**
+	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
+	 *
+	 * @private
+	 */
+	 static _groupItemFilter(item, idx, allItems, filteredItems) {
+		if (item.isGroupItem) {
+			let groupHasFilteredItems;
+
+			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
+				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
+				idx++;
+			}
+
+			return groupHasFilteredItems;
+		}
 	}
 
 	_afterOpenPicker() {
@@ -1162,7 +1211,7 @@ class MultiComboBox extends UI5Element {
 		this._valueBeforeOpen = this.value;
 
 		if (this.filterSelected) {
-			this.selectedItems = this._filteredItems.filter(item => item.selected);
+			this.selectedItems = this._filterItems(this.value, true);
 		}
 	}
 
