@@ -542,6 +542,11 @@ class Table extends UI5Element {
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
 
+		if (this.isMultiSelect) {
+			// we have to count the selection column as well
+			this.visibleColumnsCount += 1;
+		}
+
 		this._allRowsSelected = selectedRows.length === this.rows.length;
 
 		this._prevFocusedRow = this._prevFocusedRow || this.rows[0];

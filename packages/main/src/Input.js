@@ -303,7 +303,8 @@ const metadata = {
 
 		/**
 		 * Sets the maximum number of characters available in the input field.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
 		 * @type {Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
@@ -654,7 +655,7 @@ class Input extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.showSuggestions) {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
 			});
