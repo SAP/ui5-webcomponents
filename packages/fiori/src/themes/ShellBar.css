@@ -368,6 +368,7 @@ slot[name="profile"] {
 	height: 1rem;
 	min-width: 1rem;
 	background: var(--sapContent_BadgeBackground);
+	border: var(--_ui5_shellbar_button_badge_border);
 	color: var(--sapContent_BadgeTextColor);
 	top: 0.125rem;
 	left: 1.5rem;
