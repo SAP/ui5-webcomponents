@@ -188,7 +188,7 @@ const metadata = {
 		 * Fired before the component is opened. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Popup#before-open
+		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#before-open
 		 */
 		"before-open": {},
 	},
