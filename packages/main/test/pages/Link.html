@@ -136,12 +136,12 @@
 		var modifierResult = document.getElementById("modifierResult");
 
 		[link, disLink].forEach(function(element) {
-			element.addEventListener("click", function(event) {
+			element.addEventListener("ui5-click", function(event) {
 				input.value = parseInt(input.value) + 1;
 			});
 		});
 
-		signInLink.addEventListener("click", function(event) {
+		signInLink.addEventListener("ui5-click", function(event) {
 			singInDialog.show();
 		});
 
@@ -149,11 +149,11 @@
 			hasPopup: "Dialog"
 		};
 
-		closeSignInDialogButton.addEventListener("click", function(event) {
+		closeSignInDialogButton.addEventListener("ui5-click", function(event) {
 			singInDialog.close();
 		});
 
-		linkClickPreventDefault.addEventListener("click", function(event) {
+		linkClickPreventDefault.addEventListener("ui5-click", function(event) {
 			event.preventDefault();
 		});
 
@@ -161,7 +161,7 @@
 			expanded: "true"
 		};
 
-		collapseExpandLink.addEventListener("click", function(event) {
+		collapseExpandLink.addEventListener("ui5-click", function(event) {
 			collapseExpandLink.accessibilityAttributes = {
 				expanded: collapseExpandLink.accessibilityAttributes["expanded"] === "true" ? "false" : "true"
 			};
