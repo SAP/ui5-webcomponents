@@ -362,16 +362,9 @@ class DateTimePicker extends DatePicker {
 		const selectedDate = this.getSelectedDateTime();
 
 		const value = this.getFormat().format(selectedDate);
+
 		this._updateValueAndFireEvents(value, true, ["change", "value-changed"])
-		// const valid = this.isValid(value);
 
-		// if (this.value !== value) {
-		// 	this.value = value;
-		// 	this.fireEvent("change", { value: this.value, valid });
-		// 	this.fireEvent("value-changed", { value: this.value, valid });
-		// }
-
-		// this._updateValueState();
 		this.closePicker();
 	}
 

@@ -157,6 +157,22 @@ describe("DateTimePicker general interaction", () => {
 		assert.notOk(await isPickerOpen("dt1"), "The picker closes after pressing 'Submit'.");
 	});
 
+	it("tests change event is prevented on submit when prevent default is called", async () => {
+		// test submit from empty value to current date/time value
+		await openPickerById("dtPreventDefault");
+
+		const picker = await getPicker("dtPreventDefault");
+		const pickerInput = await browser.$("#dtPreventDefault");
+		const submitBtn = await getSubmitButton("dtPreventDefault");
+
+		// act
+		await picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$("[data-sap-focus-ref]").click(); // select a date to enable the OK button
+		await submitBtn.click();
+
+		// assert
+		assert.strictEqual(await pickerInput.getProperty("value"), "", "Value should not be set");
+	});
+
 	it("tests change event not fired on cancel", async () => {
 		await openPickerById("dt2");
 
