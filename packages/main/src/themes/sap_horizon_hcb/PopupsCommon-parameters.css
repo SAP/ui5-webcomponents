@@ -1,5 +1,5 @@
 @import "../base/PopupsCommon-parameters.css";
 
 :root {
-	--_ui5_popup_header_font_weight: var(--sapFontHeaderFamily);
+	--_ui5_popup_header_font_family: var(--sapFontHeaderFamily);
 }
