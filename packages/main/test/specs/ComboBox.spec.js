@@ -274,6 +274,8 @@ describe("General interaction", () => {
 		await input.keys("Enter");
 		await input.keys("Enter");
 
+		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
+
 		await input.keys("b");
 
 		await input.keys("Enter");
