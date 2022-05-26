@@ -1,6 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
@@ -253,7 +252,7 @@ class Dialog extends Popup {
 	}
 
 	/**
-	 * Determines if the header of the dialog should be shown.
+	 * Determines if the header should be shown.
 	 */
 	get _displayHeader() {
 		return this.header.length || this.headerText || this.draggable || this.resizable;
@@ -292,12 +291,12 @@ class Dialog extends Popup {
 
 	onEnterDOM() {
 		super.onEnterDOM();
-		this._attachResizeHandlers();
+		this._attachScreenResizeHandlers();
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandlers();
 	}
 
 	/**
@@ -306,22 +305,22 @@ class Dialog extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this._resizeHandlersAttached) {
+		if (this._screenResizeHandlersAttached) {
 			this._center();
 		}
 	}
 
-	_attachResizeHandlers() {
-		if (!this._resizeHandlersAttached) {
-			ResizeHandler.register(document.body, this._screenResizeHandler);
-			this._resizeHandlersAttached = true;
+	_attachScreenResizeHandlers() {
+		if (!this._screenResizeHandlersAttached) {
+			window.addEventListener("resize", this._screenResizeHandler);
+			this._screenResizeHandlersAttached = true;
 		}
 	}
 
-	_detachResizeHandlers() {
-		if (this._resizeHandlersAttached) {
-			ResizeHandler.deregister(document.body, this._screenResizeHandler);
-			this._resizeHandlersAttached = false;
+	_detachScreenResizeHandlers() {
+		if (this._screenResizeHandlersAttached) {
+			window.removeEventListener("resize", this._screenResizeHandler);
+			this._screenResizeHandlersAttached = false;
 		}
 	}
 
@@ -459,7 +458,7 @@ class Dialog extends Popup {
 	}
 
 	_resizeWithEvent(event) {
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandlers();
 		this.addEventListener("ui5-before-close", this._revertSize);
 
 		const { top, left } = this.getBoundingClientRect(),
@@ -497,7 +496,7 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseDragHandlers() {
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandlers();
 
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
@@ -596,7 +595,7 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseResizeHandlers() {
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandlers();
 
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
