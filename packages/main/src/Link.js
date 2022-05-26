@@ -342,12 +342,23 @@ class Link extends UI5Element {
 	}
 
 	_onclick(event) {
-		const {altKey, ctrlKey, metaKey, shiftKey} = event;
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = event;
 
 		event.isMarked = "link";
 		event.preventDefault();
 
-		const executeEvent = this.fireEvent("click", {altKey, ctrlKey, metaKey, shiftKey}, true);
+		const executeEvent = this.fireEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		}, true);
+
 		if (executeEvent) {
 			this.href && window.open(this.href, this.target);
 		}
@@ -363,12 +374,21 @@ class Link extends UI5Element {
 	}
 
 	_onkeydown(event) {
-
 		if (isEnter(event)) {
-			const {altKey, ctrlKey, metaKey, shiftKey} = event;
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = event;
 
 			event.preventDefault();
-			const executeEvent = this.fireEvent("click", {altKey, ctrlKey, metaKey, shiftKey}, true);
+			const executeEvent = this.fireEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			}, true);
 
 			if (executeEvent) {
 				this.href && window.open(this.href, this.target);
@@ -386,11 +406,22 @@ class Link extends UI5Element {
 			return;
 		}
 
-		const {altKey, ctrlKey, metaKey, shiftKey} = event;
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = event;
 
 		event.preventDefault();
 
-		const executeEvent = this.fireEvent("click", {altKey, ctrlKey, metaKey, shiftKey}, true);
+		const executeEvent = this.fireEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		}, true);
+
 		if (executeEvent) {
 			this.href && window.open(this.href, this.target);
 		}
