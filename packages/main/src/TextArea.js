@@ -568,7 +568,7 @@ class TextArea extends UI5Element {
 		return {
 			valueStateMsg: {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning || this.exceeding,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
@@ -639,7 +639,7 @@ class TextArea extends UI5Element {
 	}
 
 	get displayValueStateMessagePopover() {
-		return !this.readonly && (this.hasCustomValueState || this.hasValueState || this.exceeding);
+		return !this.readonly && (this.hasCustomValueState || this.hasValueState);
 	}
 
 	get hasCustomValueState() {
@@ -655,7 +655,7 @@ class TextArea extends UI5Element {
 	}
 
 	get valueStateText() {
-		if (this.valueState !== ValueState.Error && this.exceeding) {
+		if (this.valueState !== ValueState.Error) {
 			return this.valueStateTextMappings()[ValueState.Warning];
 		}
 
