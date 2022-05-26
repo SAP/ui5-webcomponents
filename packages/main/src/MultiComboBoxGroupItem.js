@@ -36,7 +36,7 @@ const metadata = {
  * @tagname ui5-mcb-group-item
  * @public
  * @implements sap.ui.webcomponents.main.IMultiComboBoxItem
- * @since 1.0.0-rc.15
+ * @since 1.4.0
  */
 class MultiComboBoxGroupItem extends UI5Element {
 	static get metadata() {

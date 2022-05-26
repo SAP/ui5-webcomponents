@@ -473,7 +473,8 @@ class MultiComboBox extends UI5Element {
 
 	filterSelectedItems(event) {
 		this.filterSelected = event.target.pressed;
-		this.selectedItems = this._filteredItems.filter(item => item.selected);
+		const selectedItems = this._filteredItems.filter(item => item.selected);
+		this.selectedItems = this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
 	}
 
 	get _showAllItemsButtonPressed() {
@@ -1058,7 +1059,7 @@ class MultiComboBox extends UI5Element {
 
 	_filterItems(str) {
 		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
-		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
 
 		// Return the filtered items and their group items
 		return this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
@@ -1186,7 +1187,8 @@ class MultiComboBox extends UI5Element {
 		this._valueBeforeOpen = this.value;
 
 		if (this.filterSelected) {
-			this.selectedItems = this._filteredItems.filter(item => item.selected);
+			const selectedItems = this._filteredItems.filter(item => item.selected);
+			this.selectedItems = this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
 		}
 	}
 
