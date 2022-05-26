@@ -1,5 +1,9 @@
-commit 59a6a6e87f3eba2a57f271b080ec05f0f749c5f5
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 26 15:55:19 2022 +0300
+commit 597a6f2685f1ad179d60889713aecb58a02adbe6
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu May 26 16:03:00 2022 +0300
 
-    docs: add the new themes to playground switch (#5282)
+    feat(ui5-multi-combobox): introduce grouping functionality (#5250)
+    
+    * feat(ui5-multi-combobox): introduce grouping functionality
+    
+    * feat(ui5-multi-combobox): resolve merge conflicts

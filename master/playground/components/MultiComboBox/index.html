@@ -5820,6 +5820,48 @@
 	</code></pre></figure></pre>
 </section>
 
+<section>
+	<h3>MultiComboBox with Grouping of Items</h3>
+	<div class="snippet responsive-snippet">
+		<ui5-multi-combobox placeholder="Select a country">
+			<ui5-mcb-group-item text="Asia"></ui5-mcb-group-item>
+			<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+			<ui5-mcb-item text="China"></ui5-mcb-item>
+			<ui5-mcb-item text="India"></ui5-mcb-item>
+			<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
+			<ui5-mcb-group-item text="Europe"></ui5-mcb-group-item>
+			<ui5-mcb-item text="Austria"></ui5-mcb-item>
+			<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+			<ui5-mcb-item text="Germany"></ui5-mcb-item>
+			<ui5-mcb-item text="Italy"></ui5-mcb-item>
+			<ui5-mcb-group-item text="North America"></ui5-mcb-group-item>
+			<ui5-mcb-item text="Canada"></ui5-mcb-item>
+			<ui5-mcb-item text="Granada"></ui5-mcb-item>
+			<ui5-mcb-item text="Haiti"></ui5-mcb-item>
+			<ui5-mcb-item text="United States"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Select a country"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-mcb-group-item</span> <span class="na">text=</span><span class="s">"Asia"</span><span class="nt">&gt;&lt;/ui5-mcb-group-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Afghanistan"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"China"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"India"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Indonesia"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-group-item</span> <span class="na">text=</span><span class="s">"Europe"</span><span class="nt">&gt;&lt;/ui5-mcb-group-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Austria"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Bulgaria"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Germany"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Italy"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-group-item</span> <span class="na">text=</span><span class="s">"North America"</span><span class="nt">&gt;&lt;/ui5-cb-group-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Canada"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Granada"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Haiti"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"United States"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span></code></pre></figure></pre>
+
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -6115,6 +6157,43 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          text
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the text of the component.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+            
+            
+          </section>
+        </section>
+      </div>
+      <div class="api-container appended-doc">
+        <h1>MultiComboBoxGroupItem</h1>
+        <section class="component-description">
+          The <code>ui5-multi-combobox-group-item</code> is type of suggestion item, that can be used to split the <code>ui5-multi-combobox</code> suggestions into groups.
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
