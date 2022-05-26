@@ -291,12 +291,12 @@ class Dialog extends Popup {
 
 	onEnterDOM() {
 		super.onEnterDOM();
-		this._attachScreenResizeHandlers();
+		this._attachScreenResizeHandler();
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
-		this._detachScreenResizeHandlers();
+		this._detachScreenResizeHandler();
 	}
 
 	/**
@@ -305,22 +305,22 @@ class Dialog extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this._screenResizeHandlersAttached) {
+		if (this._screenResizeHandlerAttached) {
 			this._center();
 		}
 	}
 
-	_attachScreenResizeHandlers() {
-		if (!this._screenResizeHandlersAttached) {
+	_attachScreenResizeHandler() {
+		if (!this._screenResizeHandlerAttached) {
 			window.addEventListener("resize", this._screenResizeHandler);
-			this._screenResizeHandlersAttached = true;
+			this._screenResizeHandlerAttached = true;
 		}
 	}
 
-	_detachScreenResizeHandlers() {
-		if (this._screenResizeHandlersAttached) {
+	_detachScreenResizeHandler() {
+		if (this._screenResizeHandlerAttached) {
 			window.removeEventListener("resize", this._screenResizeHandler);
-			this._screenResizeHandlersAttached = false;
+			this._screenResizeHandlerAttached = false; // prevent dialog from repositioning during resizing
 		}
 	}
 
@@ -458,7 +458,7 @@ class Dialog extends Popup {
 	}
 
 	_resizeWithEvent(event) {
-		this._detachScreenResizeHandlers();
+		this._detachScreenResizeHandler();
 		this.addEventListener("ui5-before-close", this._revertSize);
 
 		const { top, left } = this.getBoundingClientRect(),
@@ -496,7 +496,7 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseDragHandlers() {
-		this._detachScreenResizeHandlers();
+		this._detachScreenResizeHandler();
 
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
@@ -595,7 +595,7 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseResizeHandlers() {
-		this._detachScreenResizeHandlers();
+		this._detachScreenResizeHandler();
 
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
