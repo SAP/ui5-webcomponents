@@ -182,6 +182,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._nMoreCount = this.overflownTokens.length;
+		// this._showNMore = !this.expanded && this.showMore && this._nMoreCount > 0;
 	}
 
 	onEnterDOM() {
@@ -225,7 +226,15 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
+		this._scrollEnablement.scrollContainer = this.expanded ? this.expandedContentDom : this.narrowContentDom;
+		if (this.expanded && this.expandedContentDom) {
+			this._expandedScrollWidth = this.expandedContentDom.scrollWidth;
+			this.scrollToEnd();
+		}
+
+		if (this.narrowContentDom) {
+			this.scrollToStart();
+		}
 	}
 
 	_delete(event) {
@@ -455,7 +464,11 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	scrollToStart() {
-		this.contentDom.scrollLeft = 0;
+		this._scrollEnablement.scrollTo(0, 0);
+	}
+
+	scrollToEnd() {
+		this._scrollEnablement.scrollTo(this.expandedContentDom && this.expandedContentDom.scrollWidth, 0, 5, 10);
 	}
 
 	async closeMorePopover() {
@@ -474,6 +487,14 @@ class Tokenizer extends UI5Element {
 
 	get contentDom() {
 		return this.shadowRoot.querySelector(".ui5-tokenizer--content");
+	}
+
+	get expandedContentDom() {
+		return this.shadowRoot.querySelector(".ui5-tokenizer-expanded--content");
+	}
+
+	get narrowContentDom() {
+		return this.shadowRoot.querySelector(".ui5-tokenizer-nmore--content");
 	}
 
 	get tokenizerLabel() {
@@ -549,7 +570,8 @@ class Tokenizer extends UI5Element {
 			},
 			content: {
 				"ui5-tokenizer--content": true,
-				"ui5-tokenizer-nmore--content": this.showMore,
+				"ui5-tokenizer-expanded--content": !this.showNMore,
+				"ui5-tokenizer-nmore--content": this.showNMore,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
