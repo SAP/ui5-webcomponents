@@ -350,7 +350,6 @@ class Link extends UI5Element {
 		} = event;
 
 		event.isMarked = "link";
-		event.preventDefault();
 
 		const executeEvent = this.fireEvent("click", {
 			altKey,
@@ -359,8 +358,8 @@ class Link extends UI5Element {
 			shiftKey,
 		}, true);
 
-		if (executeEvent) {
-			this.href && window.open(this.href, this.target);
+		if (!executeEvent) {
+			event.preventDefault();
 		}
 	}
 
@@ -375,24 +374,7 @@ class Link extends UI5Element {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
-			const {
-				altKey,
-				ctrlKey,
-				metaKey,
-				shiftKey,
-			} = event;
-
-			event.preventDefault();
-			const executeEvent = this.fireEvent("click", {
-				altKey,
-				ctrlKey,
-				metaKey,
-				shiftKey,
-			}, true);
-
-			if (executeEvent) {
-				this.href && window.open(this.href, this.target);
-			}
+			this._onclick(event);
 		} else if (isSpace(event)) {
 			event.preventDefault();
 		}
@@ -406,24 +388,12 @@ class Link extends UI5Element {
 			return;
 		}
 
-		const {
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
-		} = event;
+		this._onclick(event);
 
-		event.preventDefault();
+		if (this.href && !event.defaultPrevented) {
+			const fakeEvent = new MouseEvent("click");
 
-		const executeEvent = this.fireEvent("click", {
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
-		}, true);
-
-		if (executeEvent) {
-			this.href && window.open(this.href, this.target);
+			this.getDomRef().dispatchEvent(fakeEvent);
 		}
 	}
 }
