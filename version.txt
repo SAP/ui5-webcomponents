@@ -1,6 +1,5 @@
-commit e8a687b298df6496cc10c7e5ec74d0a5fccd2b62
-Merge: fce7135 fb625f9
+commit da3b4e2cf3a6284933ab53d7ac72d5cb2f3db140
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Thu May 26 12:55:47 2022 +0300
+Date:   Thu May 26 14:12:14 2022 +0300
 
-    Merge branch 'master' into latest-release-website
+    docs: add the new themes to playground switch
