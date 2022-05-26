@@ -32,7 +32,11 @@
 					</div>
 				</li>
 			{{else if ../readonly}}
-				<li class="ui5-rating-indicator-item ui5-rating-indicator-readonly-item-unsel">
+				<li class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
+					<ui5-icon data-ui5-value="{{this.index}}" name="favorite"></ui5-icon>
+				</li>
+			{{else if ../disabled}}
+				<li class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
 					<ui5-icon data-ui5-value="{{this.index}}" name="favorite"></ui5-icon>
 				</li>
 			{{else}}

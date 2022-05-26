@@ -14,19 +14,23 @@
 		aria-expanded="{{accInfo.ariaExpanded}}"
 		aria-controls="{{accInfo.ariaControls}}"
 		aria-labelledby="{{accInfo.ariaLabelledby}}"
+                part="header"
 	>
 		{{#unless fixed}}
 			<div class="ui5-panel-header-button-root">
 				{{#if _hasHeader}}
 					<ui5-button
 						design="Transparent"
-						class="ui5-panel-header-button {{classes.headerBtn}}"
-						icon="slim-arrow-right"
+						class="ui5-panel-header-button ui5-panel-header-button-with-icon"
 						@click="{{_toggleButtonClick}}"
 						.accessibilityAttributes={{accInfo.button.accessibilityAttributes}}
 						tooltip="{{accInfo.button.title}}"
 						accessible-name="{{accInfo.button.ariaLabelButton}}"
-					></ui5-button>
+					>
+						<div class="ui5-panel-header-icon-wrapper">
+							<ui5-icon class="ui5-panel-header-icon {{classes.headerBtn}}" name="slim-arrow-right"></ui5-icon>
+						</div>
+					</ui5-button>
 				{{else}}
 					<ui5-icon
 						class="ui5-panel-header-button ui5-panel-header-icon {{classes.headerBtn}}"
