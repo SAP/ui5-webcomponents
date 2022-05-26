@@ -1,7 +1,5 @@
-commit 069f0aa98856c93740b24550b13bbc81dfc70526
-Author: GerganaKremenska <gergana.georgieva01@sap.com>
-Date:   Wed May 25 21:13:14 2022 +0300
+commit 04c23b9772599d12f89949e23b062ea78e36c830
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu May 26 07:43:26 2022 +0300
 
-    fix(ui5-popover): border radius in horizon is correct (#5063)
-    
-    Specification was updated for border radius of popups, from 12px to 8px
+    fix(ui5-panel): set pointer cursor only over the header (#5275)
