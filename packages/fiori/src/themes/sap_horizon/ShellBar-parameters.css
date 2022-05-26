@@ -1,10 +1,33 @@
 :root {
+	--_ui5_shellbar_root_height: 3.25rem;
 	--_ui5_shellbar_logo_outline_color: var(--sapContent_FocusColor);
 	--_ui5_shellbar_logo_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--_ui5_shellbar_logo_outline_color);
-	--_ui5_shellbar_outline_offset: -0.125rem;
-	--_ui5_shellbar_button_box_shadow: inset var(--sapContent_Interaction_Shadow);
-	--_ui5_shellbar_button_active_color: var(--sapShell_TextColor);
+	--_ui5_shellbar_logo_outline_offset: -0.125rem;
+	--_ui5_shellbar_outline_offset: -0.1875rem;
+
+	--_ui5_shellbar_button_border: none;
+	--_ui5_shellbar_button_border_radius: var(--sapButton_BorderCornerRadius);
+	--_ui5_shellbar_logo_border_radius: 0.5rem;
+	--_ui5_shellbar_button_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_shellbar_button_active_color: var(--sapShell_Active_TextColor);
 	--_ui5_shellbar_logo_outline_border_radius: var(--sapField_BorderCornerRadius);
 	--_ui5_shellbar_copilot_stop_color1: #0070F2;
 	--_ui5_shellbar_copilot_stop_color2: #EBF8FF;
+	--_ui5_shellbar_copilot_focus_offset: 3px;
+	--_ui5_shellbar_search_button_border_radius: 50%;
+	--_ui5_shellbar_search_button_size: 1.75rem;
+	--_ui5_shellbar_search_field_height: 2.25rem;
+	--_ui5_shellbar_search_field_background: var(--sapShell_InteractiveBackground);
+	--_ui5_shellbar_search_field_border: none;
+	--_ui5_shellbar_search_field_color: var(--sapShell_InteractiveTextColor);
+	--_ui5_shellbar_search_field_background_hover: var(--sapShell_Hover_Background);
+	--_ui5_shellbar_search_field_box_shadow_hover: var(--sapContent_Interaction_Shadow);
+	--_ui5_shellbar_overflow_container_middle_height: 3rem;
+	--_ui5_shellbar_menu_button_title_font_size: var(--sapFontHeader5Size);
+}
+
+[ui5-shellbar] {
+	--_ui5_input_border_radius: 1.125rem;
+	--_ui5_input_focus_border_radius: 1.125rem;
+	--_ui5_input_background_color: var(--sapShell_InteractiveBackground);
 }

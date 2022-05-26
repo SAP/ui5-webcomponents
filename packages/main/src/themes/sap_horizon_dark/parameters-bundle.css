@@ -30,6 +30,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
+@import "./PopupsCommon-parameters.css";
 @import "../sap_horizon/ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
