@@ -1,5 +1,5 @@
-commit 04c23b9772599d12f89949e23b062ea78e36c830
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu May 26 07:43:26 2022 +0300
+commit 1fceb39b9e19b15911c85b3be994596948621c54
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu May 26 01:36:42 2022 -0700
 
-    fix(ui5-panel): set pointer cursor only over the header (#5275)
+    Translation Delivery (#5278)
