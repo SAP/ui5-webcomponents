@@ -904,6 +904,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -1503,6 +1505,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -1848,6 +1852,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -2586,6 +2592,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -2965,6 +2973,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -3671,6 +3681,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -3700,6 +3712,10 @@
             <a href="https://sap.github.io/ui5-webcomponents/playground/faq" class="navigation-list-link">FAQ</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -4053,14 +4069,39 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.3.1.md/" class="navigation-list-link">
-                        <div class="component-name">1.3.1</div>
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.4.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.4.0</div>
                         
                       </a>
                       
                     </li>
                   
                 
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.3.1.md/" class="navigation-list-link">
+                        <div class="component-name">1.3.1</div>
+                        
+                      </a>
+                      
+                    </li>
                   
                 
                   
@@ -4099,10 +4140,6 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.2.1.md/" class="navigation-list-link">
@@ -4111,8 +4148,6 @@
                       </a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -4177,6 +4212,15 @@
                   
                 
                   
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/rc16/" class="navigation-list-link">
+                        <div class="component-name">1.0.0-rc.16</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
                 
                   
                 
@@ -4194,18 +4238,14 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/rc16/" class="navigation-list-link">
-                        <div class="component-name">1.0.0-rc.16</div>
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/rc15/" class="navigation-list-link">
+                        <div class="component-name">1.0.0-rc.15</div>
                         
                       </a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -4213,19 +4253,6 @@
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.0.0.md/" class="navigation-list-link">
                         <div class="component-name">1.0.0</div>
-                        
-                      </a>
-                      
-                    </li>
-                  
-                
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
-                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/rc15/" class="navigation-list-link">
-                        <div class="component-name">1.0.0-rc.15</div>
                         
                       </a>
                       
@@ -4799,6 +4826,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -5922,7 +5951,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                         <div class="cell api-table-content-cell">Integer</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Sets the maximum number of characters available in the input field.
+                            Sets the maximum number of characters available in the input field. <br><br> <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.5</div>
                         </div>
                       </div>
@@ -5943,6 +5972,19 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          noTypeahead
+                            <br>
+                                 <code>no-typeahead</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the value will be autcompleted to match an item
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.4.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placeholder
                             <br>
                         </div>
@@ -5952,7 +5994,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                             Defines a short hint intended to aid the user with data entry when the component has no value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           previewItem
                             (readonly)
@@ -5965,7 +6007,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                             The suggestion item on preview.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -5976,7 +6018,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                             Defines whether the component is read-only. <br><br> <b>Note:</b> A read-only component is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           required
                             <br>
@@ -5988,7 +6030,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.3</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showClearIcon
                             <br>
@@ -6001,7 +6043,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showSuggestions
                             <br>
@@ -6013,7 +6055,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                             Defines whether the component should show suggestions, if such are present. <br><br> <b>Note:</b> You need to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           type
                             <br>
@@ -6024,7 +6066,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                             Defines the HTML type of the component. Available options are: <code>Text</code>, <code>Email</code>, <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>. <br><br> <b>Notes:</b> <ul> <li>The particular effect of this property differs depending on the browser and the current language settings, especially for type <code>Number</code>.</li> <li>The property is mostly intended to be used with touch devices that use different soft keyboard layouts depending on the given input type.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -6035,7 +6077,7 @@ User can choose interaction for creating tokens. Fiori Guidelines say that user 
                             Defines the value of the component. <br><br> <b>Note:</b> The property is updated upon typing.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>

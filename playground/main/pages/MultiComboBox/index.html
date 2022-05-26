@@ -66,7 +66,7 @@
 		<span>Predefined value</span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values id="multi1" >
+		<ui5-multi-combobox allow-custom-values id="multi1" accessible-name="MultiComboBox with predefined values">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -75,10 +75,10 @@
 	</div>
 
 	<div class="demo-section">
-		<span>Validating input and predefined value</span> -->
+		<ui5-label id="mcbLabel">Validating input and predefined</ui5-label>
 
 		<br>
-		<ui5-multi-combobox value="com">
+		<ui5-multi-combobox id="mcb-predefined-value" value="com" accessible-name-ref="mcbLabel">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
