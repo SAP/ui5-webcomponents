@@ -50,7 +50,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 import Button from "./Button.js";
 import {
 	VALUE_STATE_SUCCESS,
@@ -72,6 +72,7 @@ import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
+import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
 
 /**
  * @public
@@ -431,7 +432,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover];
 	}
 
 	static get dependencies() {
@@ -1081,7 +1082,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items, "text");
 	}
 
 	_afterOpenPicker() {

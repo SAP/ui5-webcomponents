@@ -748,6 +748,9 @@ class Select extends UI5Element {
 				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
 			},
+			responsivePopover: {
+				"min-width": `${this.offsetWidth}px`,
+			},
 		};
 	}
 
