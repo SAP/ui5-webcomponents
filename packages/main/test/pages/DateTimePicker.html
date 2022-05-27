@@ -167,7 +167,7 @@
 		var counter = 0;
 		dt1.addEventListener("ui5-change", function(event) {
 			input1.value = ++counter;
-			input2.value = "{ value: " + dt1.value + " , valid: " + event.detail.valid + " }";
+			input2.value = "{ value: " + event.detail.value + " , valid: " + event.detail.valid + " }";
 		});
 
 		dtPreventDefault.addEventListener("ui5-change", function(event) {
