@@ -5,6 +5,7 @@ html,
 }
 
 h2 {
+    color: var(--sapTextColor);
     margin: 50px 0 25px;
 }
 

@@ -1,3 +1,7 @@
+h3 {
+    color: var(--sapTextColor);
+}
+
 .ratingindicator1auto {
     background-color: var(--sapBackgroundColor);
 }

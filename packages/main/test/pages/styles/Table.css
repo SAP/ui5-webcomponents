@@ -9,6 +9,10 @@ body,
     height: 100%;
 }
 
+label {
+    color: var(--sapTextColor);
+}
+
 .double-line-content {
     display: flex;
     flex-direction: column;
