@@ -1,13 +1,9 @@
-commit 42c0cbeb2bc4ebea016ed9fc2d8abcfaad72d720
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Fri May 27 12:03:59 2022 +0300
+commit 453158269af0ca7df4cf68532504634c67bff332
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri May 27 15:49:39 2022 +0300
 
-    fix(ui5-dialog): make header text bold (#5266)
+    fix(ui5-rating-indicator): apply correct styles for focus in HC themes (#5289)
     
-    * fix(ui5-dialog): header text is bold
+    * fix(ui5-rating-indicator): apply correct styles for focus in HC themes
     
-    Fixes: #5230
-    
-    * - font familiy for Horizon changed
-    
-    * - font-weight 400 reverted
+    * fix(ui5-rating-indicator): correct offset
