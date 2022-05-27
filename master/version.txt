@@ -1,9 +1,13 @@
-commit 597a6f2685f1ad179d60889713aecb58a02adbe6
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu May 26 16:03:00 2022 +0300
+commit 42c0cbeb2bc4ebea016ed9fc2d8abcfaad72d720
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Fri May 27 12:03:59 2022 +0300
 
-    feat(ui5-multi-combobox): introduce grouping functionality (#5250)
+    fix(ui5-dialog): make header text bold (#5266)
     
-    * feat(ui5-multi-combobox): introduce grouping functionality
+    * fix(ui5-dialog): header text is bold
     
-    * feat(ui5-multi-combobox): resolve merge conflicts
+    Fixes: #5230
+    
+    * - font familiy for Horizon changed
+    
+    * - font-weight 400 reverted
