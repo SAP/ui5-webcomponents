@@ -1,3 +1,7 @@
+h3, span {
+    color: var(--sapGroup_TitleTextColor);
+}
+
 ui5-multi-combobox {
     max-width: 560px;
     width: 100%;

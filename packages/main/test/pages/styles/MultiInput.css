@@ -1,3 +1,7 @@
+h1 {
+    color: var(--sapGroup_TitleTextColor);
+}
+
 ui5-multi-input {
 			/* width: 100%; */
 }

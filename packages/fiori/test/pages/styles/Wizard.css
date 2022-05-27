@@ -4,6 +4,10 @@ html, body {
     height: 100%;
 }
 
+h2 {
+    color: var(--sapGroup_TitleTextColor);
+}
+
 .wizard1auto {
     background-color: var(--sapBackgroundColor);
 }
