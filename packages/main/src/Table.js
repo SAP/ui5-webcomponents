@@ -547,7 +547,7 @@ class Table extends UI5Element {
 			this.visibleColumnsCount += 1;
 		}
 
-		this._allRowsSelected = selectedRows.length === this.rows.length;
+		this._allRowsSelected = selectedRows.length === this.rows.length && this.rows.length > 0;
 
 		this._prevFocusedRow = this._prevFocusedRow || this.rows[0];
 	}
