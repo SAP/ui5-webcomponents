@@ -343,6 +343,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("handles suggestions selection cancel with ESC", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
 		const suggestionsInput = await browser.$("#myInputEsc").shadow$("input");
 
 		// act
@@ -504,7 +506,39 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
 	});
 
+	it("Tests autocomplete(type-ahead)", async () => {
+		let hasSelection;
+
+		const input = await browser.$("#myInputHighlighted").shadow$("input");
+		const EXPTECTED_VALUE = "Adam D";
+
+		await input.click();
+		await input.keys("a");
+
+		hasSelection = await browser.execute(() =>{
+			const input = document.getElementById("myInputHighlighted").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart > 0;
+		});
+
+
+		assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+		assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
+	});
+
+	it("Tests disabled autocomplete(type-ahead)", async () => {
+		let hasSelection;
+
+		const input = await browser.$("#input-disabled-autocomplete").shadow$("input");
+
+		await input.click();
+		await input.keys("c");
+
+		assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
+	});
+
 	it("Tests suggestions highlighting", async () => {
+		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
 		const input = await browser.$("#myInputHighlighted").shadow$("input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputHighlighted");
 		const EXPTECTED_TEXT = "<b>Ad</b>am";
@@ -603,7 +637,7 @@ describe("Input general interaction", () => {
 		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
 
 		//act
-		await dynamicSuggestionsInnerInput.click();
+		await inputDynamicSuggestions.click();
 
 		//assert
 		assert.strictEqual(await dynamicSuggestionsCount.getText(), "", "Suggestions count is not available");
@@ -614,6 +648,9 @@ describe("Input general interaction", () => {
 		//assert
 		assert.strictEqual(await dynamicSuggestionsCount.getText(), "4 results are available", "Suggestions count is available since value is entered");
 		await dynamicSuggestionsInnerInput.keys("Backspace");
+
+		// Close suggestions to not intercept the click in the input below for the last test
+		await dynamicSuggestionsInnerInput.keys("Escape");
 
 		//act
 		await inputSuggestions.click();
@@ -976,7 +1013,7 @@ describe("Input END navigation", () => {
 			return document.getElementById("myInput2").getCaretPosition();
 		});
 
-		assert.strictEqual(caretPosition, 1, "Caret has been moved to end of Input");
+		assert.strictEqual(caretPosition, 4, "Caret has been moved to end of Input");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 	});
@@ -1020,7 +1057,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 			return document.getElementById("myInput2").getCaretPosition();
 		});
 
-		assert.strictEqual(caretPosition, 1, "Caret is at end of Input");
+		assert.strictEqual(caretPosition, 4, "Caret is at end of Input");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "Responsive popover is open and first list item is not focused");
 
@@ -1030,7 +1067,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 			return document.getElementById("myInput2").getCaretPosition();
 		});
 
-		assert.strictEqual(caretPosition, 1, "Caret is still at end of Input");
+		assert.strictEqual(caretPosition, 4, "Caret is still at end of Input");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "Responsive popover remains open and first list item is not focused");
 
@@ -1040,7 +1077,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 			return document.getElementById("myInput2").getCaretPosition();
 		});
 
-		assert.strictEqual(caretPosition, 1, "Caret is still at end of Input");
+		assert.strictEqual(caretPosition, 4, "Caret is still at end of Input");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "Responsive popover remains open and first list item is not focused");
 
