@@ -11,8 +11,7 @@ describe("Attributes propagation", () => {
 		const input = await browser.$("#myInput2");
 		const sExpected = "Cozy";
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2")
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover ui5-input.ui5-input-inner-phone");
-		const innerDialogInput = dialogInput.shadow$("input.ui5-input-inner")
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-input-inner-phone");
 
 		await input.click();
 		await dialogInput.keys("c");
@@ -25,8 +24,7 @@ describe("Attributes propagation", () => {
 
 		const input = await browser.$("#input-disabled-autocomplete");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#input-disabled-autocomplete")
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover ui5-input.ui5-input-inner-phone");
-		const innerDialogInput = dialogInput.shadow$("input.ui5-input-inner")
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-input-inner-phone");
 
 		await input.click();
 		await dialogInput.keys("c");
