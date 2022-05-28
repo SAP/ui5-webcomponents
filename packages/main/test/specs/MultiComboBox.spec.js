@@ -277,7 +277,7 @@ describe("MultiComboBox general interaction", () => {
 			let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
 			let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").clientWidth);
 		
-			assert.strictEqual(tokenizerScrollContainerScrollLeft, tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth - 1, "tokenizer is scrolled to end");
+			assert.strictEqual(tokenizerScrollContainerScrollLeft, tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth, "tokenizer is scrolled to end");
 		});
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
