@@ -182,7 +182,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._nMoreCount = this.overflownTokens.length;
-		// this._showNMore = !this.expanded && this.showMore && this._nMoreCount > 0;
+		this._showNMore = !this.expanded && this.showMore && this._nMoreCount > 0;
 	}
 
 	onEnterDOM() {
@@ -226,13 +226,14 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this.expanded ? this.expandedContentDom : this.narrowContentDom;
-		if (this.expanded && this.expandedContentDom) {
+		this._scrollEnablement.scrollContainer = this.expanded || !this.narrowContentDom ? this.expandedContentDom : this.narrowContentDom;
+
+		if (this.expanded) {
 			this._expandedScrollWidth = this.expandedContentDom.scrollWidth;
 			this.scrollToEnd();
 		}
 
-		if (this.narrowContentDom) {
+		if (!this.expanded) {
 			this.scrollToStart();
 		}
 	}
@@ -464,11 +465,15 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	scrollToStart() {
-		this._scrollEnablement.scrollTo(0, 0);
+		if (this._scrollEnablement.scrollContainer) {
+			this._scrollEnablement.scrollTo(0, 0);
+		}
 	}
 
 	scrollToEnd() {
-		this._scrollEnablement.scrollTo(this.expandedContentDom && this.expandedContentDom.scrollWidth, 0, 5, 10);
+		if (this._scrollEnablement.scrollContainer) {
+			this._scrollEnablement.scrollTo(this.expandedContentDom && this.expandedContentDom.scrollWidth, 0, 5, 10);
+		}
 	}
 
 	async closeMorePopover() {
@@ -518,14 +523,14 @@ class Tokenizer extends UI5Element {
 		});
 
 		return this._getTokens().filter(token => {
-			const isRTL = this.effectiveDir === "rtl";
-			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = parseInt(tokenRect[elementEnd]);
-			const parentEnd = parseInt(parentRect[elementEnd]);
+			const tokenEnd = parseInt(tokenRect.right);
+			const parentEnd = parseInt(parentRect.right);
+			const tokenStart = parseInt(tokenRect.left);
+			const parentStart = parseInt(parentRect.left);
 
-			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
+			token.overflows = !this.expanded && ((tokenStart < parentStart) || (tokenEnd > parentEnd));
 
 			return token.overflows;
 		});

@@ -68,10 +68,12 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			await browser.setWindowSize(400, 1250);
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1")
-			const showMore = await browser.$("#multi1").shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+			const mcb = await browser.$("#multi1");
+			const showMore = mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
 			const allPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
+			await mcb.scrollIntoView();
 			await showMore.click();
 
 			assert.ok(await allPopover.getProperty("opened"), "All popover should not be displayed");
@@ -260,6 +262,22 @@ describe("MultiComboBox general interaction", () => {
 			});
 
 			assert.strictEqual((await list.getProperty("items")).length, 4, "4 items should be shown");
+		});
+
+		it("tests if tokenizer is scrolled to the end when expanded", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await $("#more-mcb");
+			const input = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await input.click();
+
+			let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+			let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
+			let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").clientWidth);
+		
+			assert.strictEqual(tokenizerScrollContainerScrollLeft, tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth - 1, "tokenizer is scrolled to end");
 		});
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
