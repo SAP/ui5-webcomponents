@@ -29,7 +29,7 @@
 	margin: var(--_ui5_yearpicker_item_margin);
 	width: calc(25% - 0.125rem);
 	height: var(--_ui5_year_picker_item_height);
-	color: var(--sapTextColor);
+	color: var(--sapButton_Lite_TextColor);
 	background-color: var(--sapLegend_WorkingBackground);
 	align-items: center;
 	justify-content: center;
@@ -76,11 +76,8 @@
 .ui5-yp-item:focus::after {
 	content: "";
 	position: absolute;
-	width: var(--_ui5_yearpicker_item_focus_after_width);
-	height: var(--_ui5_yearpicker_item_focus_after_height);
 	border: var(--_ui5_yearpicker_item_focus_after_border);
-	top: var(--_ui5_yearpicker_item_focus_after_offset);
-	left: var(--_ui5_yearpicker_item_focus_after_offset);
+	inset: 0;
 	border-radius: var(--_ui5_yearpicker_item_focus_after_border_radius);
 	outline: var(--_ui5_yearpicker_item_focus_after_outline);
 }

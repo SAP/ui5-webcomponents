@@ -1,6 +1,7 @@
-@import "../base/sizes-parameters.css";
+@import "./sizes-parameters.css";
 @import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
+@import "../base/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
@@ -26,9 +27,10 @@
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
-@import "../base/PopupsCommon-parameters.css";
+@import "./PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
+@import "./RatingIndicator-parameters.css";
 @import "./SegmentedButtton-parameters.css";
 @import "./Select-parameters.css";
 @import "./SplitButton-parameters.css";

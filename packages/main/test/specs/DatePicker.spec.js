@@ -1089,24 +1089,24 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
-		datepicker.id = "#dp33";
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.doubleClick();
-		await browser.keys("Jan 1, 2000");
+	// it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
+	// 	datepicker.id = "#dp33";
+	// 	const innerInput = await datepicker.getInnerInput();
+	// 	await innerInput.doubleClick();
+	// 	await browser.keys("Jan 1, 2000");
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
+	// 	await valueHelpIcon.click();
 
-		await browser.keys("ArrowDown");
+	// 	await browser.keys("ArrowDown");
 
-		const displayedDay = await datepicker.getDisplayedDay(13);
-		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
+	// 	const displayedDay = await datepicker.getDisplayedDay(13);
+	// 	assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
-		await browser.keys("Escape");
-		await innerInput.doubleClick();
-		await browser.keys("Backspace");
-	});
+	// 	await browser.keys("Escape");
+	// 	await innerInput.doubleClick();
+	// 	await browser.keys("Backspace");
+	// });
 
 	it("Value state changes only on submit", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html?sap-ui-language=en`);

@@ -11,12 +11,14 @@ const iconTemplate = (name, pathData, ltr, collection, packageName) => `import {
 const name = "${name}";
 const pathData = "${pathData}";
 const ltr = ${ltr};
+const accData = null;
 const collection = "${collection}";
 const packageName = "${packageName}";
 
 registerIcon(name, { pathData, ltr, collection, packageName });
 
-export default { pathData };`;
+export default "${name}";
+export { pathData, ltr, accData };`;
 
 
 const iconAccTemplate = (name, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
@@ -31,15 +33,19 @@ const packageName = "${packageName}";
 
 registerIcon(name, { pathData, ltr, accData, collection, packageName });
 
-export default { pathData, accData };`;
+export default "${name}";
+export { pathData, ltr, accData };`;
 
 
 
 const collectionTemplate = (name) => `import { isThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import pathDataV4 from "./v5/${name}.js";
-import pathDataV5 from "./v4/${name}.js";
+import {pathData as pathDataV5, ltr, accData} from "./v5/${name}.js";
+import {pathData as pathDataV4} from "./v4/${name}.js";
+
 const pathData = isThemeFamily("sap_horizon") ? pathDataV5 : pathDataV4;
-export default { pathData };`;
+
+export default "${name}";
+export { pathData, ltr, accData };`;
 
 
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

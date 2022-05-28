@@ -70,13 +70,21 @@
 	{{#if filterSelected}}
 		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 			{{#each selectedItems}}
-				{{> listItem}}
+				{{#if isGroupItem}}
+					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
+				{{else}}
+					{{> listItem}}
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 	{{else}}
 		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 			{{#each _filteredItems}}
-				{{> listItem}}
+				{{#if isGroupItem}}
+					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
+				{{else}}
+					{{> listItem}}
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 	{{/if}}
