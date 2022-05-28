@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
 
-describe("Attributes propagation", () => {
+describe("Typeahead", () => {
 	before(async () => {
 		await browser.emulateDevice('iPhone X');
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
@@ -11,9 +11,11 @@ describe("Attributes propagation", () => {
 		const input = await browser.$("#myInput2");
 		const sExpected = "Cozy";
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2")
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-input-inner-phone");
 
+		await input.scrollIntoView();
 		await input.click();
+
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("c");
 
 		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
@@ -24,12 +26,13 @@ describe("Attributes propagation", () => {
 
 		const input = await browser.$("#input-disabled-autocomplete");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#input-disabled-autocomplete")
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-input-inner-phone");
 
+		await input.scrollIntoView();
 		await input.click();
+
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("c");
 
 		assert.strictEqual(await dialogInput.getProperty("value"), "c", "Value is not autocompleted");
 	});
-
 });
