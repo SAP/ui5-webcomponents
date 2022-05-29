@@ -955,8 +955,7 @@ class Input extends UI5Element {
 			this._preventNextChange = false;
 			return;
 		}
-console.log(this._changeFiredValue)
-console.log(this.getInputDOMRefSync().value)
+
 		if (this._changeFiredValue !== this.getInputDOMRefSync().value) {
 			this._changeFiredValue = this.getInputDOMRefSync().value;
 			this.fireEvent(this.EVENT_CHANGE);
