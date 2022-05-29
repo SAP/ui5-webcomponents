@@ -768,11 +768,6 @@ class Input extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
-		if (isDelete(event)) {
-			this.value = event.target.value;
-		}
-
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -955,21 +950,15 @@ class Input extends UI5Element {
 		}
 	}
 
-	_handleNativeInputChange() {
-		// The native change sometimes fires too early and getting input's value in the listener would return
-		// the previous value instead of the most recent one. This would make things consistent.
-		clearTimeout(this._nativeChangeDebounce);
-		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
-	}
-
 	_handleChange() {
 		if (this._preventNextChange) {
 			this._preventNextChange = false;
 			return;
 		}
-
-		if (this._changeFiredValue !== this.value) {
-			this._changeFiredValue = this.value;
+console.log(this._changeFiredValue)
+console.log(this.getInputDOMRefSync().value)
+		if (this._changeFiredValue !== this.getInputDOMRefSync().value) {
+			this._changeFiredValue = this.getInputDOMRefSync().value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -1193,6 +1182,7 @@ class Input extends UI5Element {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
+			this.getInputDOMRefSync().value = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this._handleChange();
 		}
