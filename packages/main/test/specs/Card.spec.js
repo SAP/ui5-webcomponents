@@ -88,8 +88,8 @@ describe("CardHeader", () => {
 	});
 
 	it("tests header aria-labelledby", async () => {
-		const header = await browser.$("#header").shadow$(".ui5-card-header");
-		const header2 = await browser.$("#header2").shadow$(".ui5-card-header");
+		const header = await browser.$("#header").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
+		const header2 = await browser.$("#header2").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
 		const headerId = await browser.$("#header").getProperty("_id");
 		const headerId2 = await browser.$("#header2").getProperty("_id");
 		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${headerId}-title ${headerId}-subtitle ${headerId}-status`;
