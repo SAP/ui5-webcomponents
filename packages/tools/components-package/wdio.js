@@ -340,7 +340,6 @@ exports.config = {
 				setTimeout(() => {
 					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 				}, 10);
-				
 			});
 		}
 	},
