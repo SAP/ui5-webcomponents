@@ -1,9 +1,7 @@
-commit 453158269af0ca7df4cf68532504634c67bff332
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Fri May 27 15:49:39 2022 +0300
+commit 7fbb235f07e0b97c7ef108beba7405c50f6fe8ce
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon May 30 09:15:50 2022 +0300
 
-    fix(ui5-rating-indicator): apply correct styles for focus in HC themes (#5289)
+    feat(ui5-view-settings-dialog): Implement behaviour for external setting of confirmed settings (#5222)
     
-    * fix(ui5-rating-indicator): apply correct styles for focus in HC themes
-    
-    * fix(ui5-rating-indicator): correct offset
+    fixes: https://github.com/SAP/ui5-webcomponents/issues/4896
