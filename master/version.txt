@@ -1,5 +1,7 @@
-commit 21ed1ee00fadb8dae190406659a80e0031677b7d
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon May 30 14:05:01 2022 +0300
+commit 51954b74dea861542fd3521e64d9d79ba73e3f9e
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon May 30 15:32:15 2022 +0300
 
-    fix(ui5-li): correct accessible-name mappings (#5280)
+    fix(ui5-timeline-item): align text in title link
+    
+    FIXES: #5163
