@@ -42,6 +42,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
+import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -50,7 +51,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 import Button from "./Button.js";
 import {
 	VALUE_STATE_SUCCESS,
@@ -72,6 +73,7 @@ import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
+import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
 
 /**
  * @public
@@ -406,7 +408,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-multi-combobox
  * @public
- * @appenddocs MultiComboBoxItem
+ * @appenddocs MultiComboBoxItem MultiComboBoxGroupItem
  * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {
@@ -431,12 +433,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover];
 	}
 
 	static get dependencies() {
 		return [
 			MultiComboBoxItem,
+			MultiComboBoxGroupItem,
 			Tokenizer,
 			Token,
 			Icon,
@@ -497,7 +500,8 @@ class MultiComboBox extends UI5Element {
 
 	filterSelectedItems(event) {
 		this.filterSelected = event.target.pressed;
-		this.selectedItems = this._filteredItems.filter(item => item.selected);
+		const selectedItems = this._filteredItems.filter(item => item.selected);
+		this.selectedItems = this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
 	}
 
 	get _showAllItemsButtonPressed() {
@@ -942,11 +946,11 @@ class MultiComboBox extends UI5Element {
 
 		let currentItem = this.items[++this.currentItemIdx];
 
-		while (this.currentItemIdx < itemsCount - 1 && currentItem.selected) {
+		while ((this.currentItemIdx < itemsCount - 1 && currentItem.selected) || currentItem.isGroupItem) {
 			currentItem = this.items[++this.currentItemIdx];
 		}
 
-		if (currentItem.selected === true) {
+		if (currentItem.selected === true || currentItem.isGroupItem) {
 			this.currentItemIdx = previousItemIdx;
 			return;
 		}
@@ -975,7 +979,7 @@ class MultiComboBox extends UI5Element {
 
 		let currentItem = this.items[--this.currentItemIdx];
 
-		while (currentItem && currentItem.selected && this.currentItemIdx > 0) {
+		while ((currentItem && this.currentItemIdx > 0) && (currentItem.selected || currentItem.isGroupItem)) {
 			currentItem = this.items[--this.currentItemIdx];
 		}
 
@@ -983,7 +987,7 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (currentItem.selected) {
+		if (currentItem.selected || currentItem.isGroupItem) {
 			this.currentItemIdx = previousItemIdx;
 			return;
 		}
@@ -1081,7 +1085,29 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
+		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
+
+		// Return the filtered items and their group items
+		return this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
+	}
+
+	/**
+	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
+	 *
+	 * @private
+	 */
+	 static _groupItemFilter(item, idx, allItems, filteredItems) {
+		if (item.isGroupItem) {
+			let groupHasFilteredItems;
+
+			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
+				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
+				idx++;
+			}
+
+			return groupHasFilteredItems;
+		}
 	}
 
 	_afterOpenPicker() {
@@ -1188,7 +1214,8 @@ class MultiComboBox extends UI5Element {
 		this._valueBeforeOpen = this.value;
 
 		if (this.filterSelected) {
-			this.selectedItems = this._filteredItems.filter(item => item.selected);
+			const selectedItems = this._filteredItems.filter(item => item.selected);
+			this.selectedItems = this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
 		}
 	}
 

@@ -183,6 +183,14 @@ const metadata = {
 				filters: { type: Array },
 			},
 		},
+
+		/**
+		 * Fired before the component is opened. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#before-open
+		 */
+		"before-open": {},
 	},
 };
 
@@ -488,6 +496,7 @@ class ViewSettingsDialog extends UI5Element {
 			this._restoreSettings(this._confirmedSettings);
 		}
 
+		this.fireEvent("before-open", {}, true, false);
 		this._dialog.show(true);
 
 		this._dialog.querySelector("[ui5-list]").focusFirstItem();
@@ -666,6 +675,61 @@ class ViewSettingsDialog extends UI5Element {
 		});
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+	}
+
+	/**
+	 * Sets a JavaScript object, as settings to the ui5-view-settings-dialog.
+	 * This method can be used after the dialog is initially open, as the dialog need to set its initial settings.
+	 * The <code>ui5-view-settings-dialog</code> throws an event called "before-open", this can be used as trigger point.
+	 * The object should have the following format:
+	 * <code>{
+	 *	{ "sortOrder" : "Ascending", "sortBy" : "Name", "filters" : [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
+	 * }</code>
+	 * @param {string} settings A value to be set as predefined settings.
+	 * @public
+	 */
+	setConfirmedSettings(settings) {
+		if (settings && this._dialog && !this._dialog.isOpen()) {
+			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
+			if (settings.sortOrder) {
+				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
+					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
+						tempSettings.sortOrder[i].selected = true;
+					} else {
+						tempSettings.sortOrder[i].selected = false;
+					}
+				}
+			}
+
+			if (settings.sortBy) {
+				for (let i = 0; i < tempSettings.sortBy.length; i++) {
+					if (tempSettings.sortBy[i].text === settings.sortBy) {
+						tempSettings.sortBy[i].selected = true;
+					} else {
+						tempSettings.sortBy[i].selected = false;
+					}
+				}
+			}
+
+			if (settings.filters) {
+				const inputFilters = {};
+				for (let i = 0; i < settings.filters.length; i++) {
+					inputFilters[Object.keys(settings.filters[i])[0]] = settings.filters[i][Object.keys(settings.filters[i])[0]];
+				}
+
+				for (let i = 0; i < tempSettings.filters.length; i++) {
+					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
+						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
+							tempSettings.filters[i].filterOptions[j].selected = true;
+						} else {
+							tempSettings.filters[i].filterOptions[j].selected = false;
+						}
+					}
+				}
+			}
+
+			this._confirmedSettings = JSON.parse(JSON.stringify(tempSettings));
+		}
 	}
 }
 

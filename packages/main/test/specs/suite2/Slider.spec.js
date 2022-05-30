@@ -246,7 +246,7 @@ describe("Accessibility", async () => {
 		const sliderId = await slider.getProperty("_id");
 
 		assert.strictEqual(await sliderHandle.getAttribute("aria-labelledby"),
-			`${sliderId}-sliderDesc`, "aria-labelledby is set correctly");
+			`${sliderId}-accName ${sliderId}-sliderDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemin"),
 			`${await slider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemax"),

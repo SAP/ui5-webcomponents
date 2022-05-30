@@ -385,6 +385,7 @@
   "--sapShell_Active_TextColor",
   "--sapShell_Background",
   "--sapShell_Hover_Background",
+  "--sapShell_InteractiveBackground",
   "--sapShell_InteractiveBorderColor",
   "--sapShell_InteractiveTextColor",
   "--sapShell_TextColor",
