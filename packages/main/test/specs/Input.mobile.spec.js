@@ -3,8 +3,8 @@ const PORT = require("./_port.js");
 
 describe("Typeahead", () => {
 	before(async () => {
-		await browser.emulateDevice('iPhone X');
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		await browser.emulateDevice('iPhone X');
 	});
 
 	it("Should autocomplete the first matched suggestion item", async () => {
@@ -14,7 +14,6 @@ describe("Typeahead", () => {
 
 		await input.scrollIntoView();
 		await input.click();
-		await browser.pause(1000);
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("c");
@@ -29,7 +28,6 @@ describe("Typeahead", () => {
 
 		await input.scrollIntoView();
 		await input.click();
-		await browser.pause(1000);
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("c");
