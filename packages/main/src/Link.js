@@ -391,9 +391,9 @@ class Link extends UI5Element {
 		this._onclick(event);
 
 		if (this.href && !event.defaultPrevented) {
-			const fakeEvent = new MouseEvent("click");
+			const customEvent = new MouseEvent("click");
 
-			this.getDomRef().dispatchEvent(fakeEvent);
+			this.getDomRef().dispatchEvent(customEvent);
 		}
 	}
 }
