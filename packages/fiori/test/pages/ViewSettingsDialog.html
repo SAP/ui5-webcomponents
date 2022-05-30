@@ -26,6 +26,9 @@
 	<ui5-button id="btnOpenDialog">Show ViewSettingsDialog</ui5-button>
 	<ui5-button id="btnOpenDialogSort">Show Sort Only ViewSettingsDialog</ui5-button>
 	<ui5-button id="btnOpenDialogFilter">Show Filter Only ViewSettingsDialog</ui5-button>
+	<ui5-button id="btnChangeSettings">Set Settings to the first VSD</ui5-button>
+	<ui5-textarea id="vsdSettings" placeholder="Basic text area" value='{"sortOrder":"Ascending","sortBy":"Name","filters":[{"Filter 3":["Some filter 7"]}, {"Filter 1":["Some filter 1", "Some filter 2"]}]}'>
+	</ui5-textarea>
 	<br>
 	<br>
 	<ui5-view-settings-dialog id="vsd">
@@ -96,6 +99,9 @@
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.show();
+		});
+		btnChangeSettings.addEventListener("click", function () {
+			vsd.setConfirmedSettings(JSON.parse(vsdSettings.value));
 		});
 		vsd.addEventListener("ui5-confirm", function(evt) {
 			var sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
