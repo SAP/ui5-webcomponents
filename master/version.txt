@@ -1,7 +1,5 @@
-commit 7fbb235f07e0b97c7ef108beba7405c50f6fe8ce
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon May 30 09:15:50 2022 +0300
+commit 21ed1ee00fadb8dae190406659a80e0031677b7d
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon May 30 14:05:01 2022 +0300
 
-    feat(ui5-view-settings-dialog): Implement behaviour for external setting of confirmed settings (#5222)
-    
-    fixes: https://github.com/SAP/ui5-webcomponents/issues/4896
+    fix(ui5-li): correct accessible-name mappings (#5280)
