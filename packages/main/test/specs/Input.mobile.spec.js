@@ -14,10 +14,10 @@ describe("Typeahead", () => {
 
 		await input.scrollIntoView();
 		await input.click();
+		await browser.pause(1000);
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("c");
-
 		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
 	});
 
@@ -29,6 +29,7 @@ describe("Typeahead", () => {
 
 		await input.scrollIntoView();
 		await input.click();
+		await browser.pause(1000);
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("c");
