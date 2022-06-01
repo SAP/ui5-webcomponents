@@ -1,5 +1,0 @@
-commit 7246b5fe03dbd86a9551adfa28b9414263fbc97e
-Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Wed Jun 1 11:49:20 2022 +0300
-
-    test: deploy latest playground
