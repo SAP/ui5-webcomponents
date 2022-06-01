@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 jobs:
   deploy-next-docs:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
 
     steps:
