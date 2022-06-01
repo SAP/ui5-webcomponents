@@ -1342,7 +1342,6 @@ class MultiComboBox extends UI5Element {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
 			this._tokenizer.expanded = this.open;
-
 			// remove the value if user focus out the input and focus is not going in the popover
 			if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== event.relatedTarget)) {
 				this.value = "";
@@ -1470,7 +1469,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		return !isPhone() && !this.readonly && (this.focused || this.open);
+		const expanded = !!this._tokenizer && this._tokenizer.expanded;
+		return !isPhone() && !this.readonly && (this.focused || this.open || expanded);
 	}
 
 	get _valueStatePopoverHorizontalAlign() {

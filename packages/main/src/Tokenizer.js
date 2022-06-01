@@ -25,6 +25,8 @@ import {
 	isEndShift,
 	isHomeCtrl,
 	isEndCtrl,
+	isRight,
+	isLeft,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -330,6 +332,11 @@ class Tokenizer extends UI5Element {
 
 			return this._toggleTokenSelection(tokens);
 		}
+
+		if (isLeft(event) || isRight(event)) {
+			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused), tokens, isRight(event));
+			this._scrollToToken(tokens[nextTokenIdx]);
+		}
 	}
 
 	_handleHome(tokens, endKeyPressed) {
@@ -394,6 +401,8 @@ class Tokenizer extends UI5Element {
 		}
 
 		setTimeout(() => tokens[nextIndex].focus(), 0);
+
+		this._scrollToToken(tokens[nextIndex]);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
@@ -408,6 +417,8 @@ class Tokenizer extends UI5Element {
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
 		setTimeout(() => tokens[nextIndex].focus(), 0);
+
+		this._scrollToToken(tokens[nextIndex]);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
@@ -417,6 +428,7 @@ class Tokenizer extends UI5Element {
 
 	_onmousedown(event) {
 		this._itemNav.setCurrentItem(event.target);
+		this._scrollToToken(event.target);
 	}
 
 	_toggleTokenSelection(tokens) {
@@ -473,6 +485,26 @@ class Tokenizer extends UI5Element {
 	scrollToEnd() {
 		if (this._scrollEnablement.scrollContainer) {
 			this._scrollEnablement.scrollTo(this.expandedContentDom && this.expandedContentDom.scrollWidth, 0, 5, 10);
+		}
+	}
+
+	/**
+	 * Scrolls token to the visible area of the container.
+	 * Adds 2 pixels to the scroll position to ensure padding
+	 * @private
+	 */
+	_scrollToToken(token) {
+		if (!this.expandedContentDom) {
+			return;
+		}
+
+		const tokenRect = token.getBoundingClientRect();
+		const tokenContainerRect = this.expandedContentDom.getBoundingClientRect();
+
+		if (tokenRect.left < tokenContainerRect.left) {
+			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 2), 0);
+		} else if (tokenRect.right > tokenContainerRect.right) {
+			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 2), 0);
 		}
 	}
 
