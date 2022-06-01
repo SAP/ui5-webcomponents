@@ -8,9 +8,6 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    concurrency: 
-      group: ${{ github.ref }}
-      cancel-in-progress: true
 
     steps:
     - uses: actions/checkout@v3

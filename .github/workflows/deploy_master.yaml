@@ -1,7 +1,7 @@
 name: Master Playground
 
 on:
-  pull_request: #change to push if it works
+  push:
     branches: [ master ]
 jobs:
     steps:
