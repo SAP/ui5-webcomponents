@@ -71,12 +71,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed as graphical element within the component.
+		 * Defines the icon, displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 * Example:
 		 *
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * See all the available icons within the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -99,7 +99,7 @@ const metadata = {
 
 		/**
 		 * When set to <code>true</code>, the component will
-		 * automatically submit the nearest form element upon <code>press</code>.
+		 * automatically submit the nearest HTML form element on <code>press</code>.
 		 * <br><br>
 		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
