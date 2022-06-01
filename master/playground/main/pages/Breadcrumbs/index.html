@@ -19,10 +19,10 @@
 	</script>
 
 
-	<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	<script src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
 
 
-	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/main/styles/Breadcrumbs.css">
+	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/main/styles/Breadcrumbs.css">
 
 </head>
 
@@ -178,22 +178,8 @@
 
 		var breadcrumbsPreventDefault = document.querySelector("#breadcrumbsPreventDefault");
 		breadcrumbsPreventDefault.addEventListener("ui5-item-click", (event) => {
-			let keyText ='';
-
-			if(event.detail.ctrlKey) {
-				keyText += 'CTRL:';
-			}
-			if(event.detail.altKey) {
-				keyText += 'ALT:';
-			}
-			if(event.detail.shiftKey) {
-				keyText += 'SHIFT:';
-			}
-			if(event.detail.metaKey) {
-				keyText += 'META:';
-			}
 			event.preventDefault();
-			result.innerText = keyText + event.detail.item.innerText;
+			result.innerText = event.detail.item.innerText;
 		});
 
 		extendSizeBtn.addEventListener("click", () => resizeContainer(true));
