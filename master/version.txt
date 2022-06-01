@@ -1,7 +1,5 @@
-commit 51954b74dea861542fd3521e64d9d79ba73e3f9e
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon May 30 15:32:15 2022 +0300
+commit 31a86e2fcc621674060c19e81d2d564a4fe731d3
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Jun 1 10:16:33 2022 +0300
 
-    fix(ui5-timeline-item): align text in title link
-    
-    FIXES: #5163
+    refactor(ui5-shellbar): menu button logic (#5299)
