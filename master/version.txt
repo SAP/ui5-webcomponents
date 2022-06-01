@@ -1,5 +1,7 @@
-commit 31a86e2fcc621674060c19e81d2d564a4fe731d3
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jun 1 10:16:33 2022 +0300
+commit ff044b01074ffd709e95a9e235844daa8d39930b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 1 10:54:03 2022 +0300
 
-    refactor(ui5-shellbar): menu button logic (#5299)
+    fix(formEnablement): enable required attribute (#5133)
+    
+    Fixes #3498
