@@ -1,0 +1,9 @@
+.dialoglifecycle1auto {
+    background-color: var(--sapBackgroundColor);
+}
+
+.dialoglifecycle2auto {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
