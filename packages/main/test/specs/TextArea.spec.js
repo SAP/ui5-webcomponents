@@ -50,7 +50,7 @@ describe("Attributes propagation", () => {
 
 	it("Checks if aria-invalid is set correctly", async () => {
 		const textAreaError = await browser.$("#basic-textarea-error");
-		const textAreaWarning = await browser.$("#basic-textarea-warning"); 
+		const textAreaWarning = await browser.$("#basic-textarea-warning");
 		const innertextAreaError = await textAreaError.shadow$("textarea");
 		const innertextAreaWarning = await textAreaWarning.shadow$("textarea");
 

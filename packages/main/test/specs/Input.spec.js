@@ -188,6 +188,7 @@ describe("Input general interaction", () => {
 		// Act
 		await input.click();
 		await input.keys("f");
+		await browser.pause(1000); // GH Actions
 		await focusoutInput.click();
 
 		// Assert
@@ -499,7 +500,7 @@ describe("Input general interaction", () => {
 
 	it("Checks if aria-invalid is set correctly", async () => {
 		const inputError = await browser.$("#inputError");
-		const inputWarning = await browser.$("#input1"); 
+		const inputWarning = await browser.$("#input1");
 		const innerInputError = await inputError.shadow$("input");
 		const innerInputWarning = await inputWarning.shadow$("input");
 
@@ -1204,7 +1205,7 @@ describe("Lazy loading", () => {
 		await browser.keys("Tab");
 
 		await browser.pause(3000);
-		
+
 		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
 	});
 });

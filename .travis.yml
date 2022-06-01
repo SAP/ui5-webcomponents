@@ -16,7 +16,6 @@ before_install:
 
 script:
 - ENABLE_CLDR=1 yarn build
-- yarn test
 
 deploy:
   provider: script

@@ -49,6 +49,8 @@
     "start:playground": "yarn build:theming && yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
     "test:base": "yarn workspace @ui5/webcomponents-base test",
     "test:main": "yarn workspace @ui5/webcomponents test",
+    "test:main:suite-1": "yarn workspace @ui5/webcomponents test:suite-1",
+    "test:main:suite-2": "yarn workspace @ui5/webcomponents test:suite-2",
     "test:fiori": "yarn workspace @ui5/webcomponents-fiori test",
     "test": "npm-run-all --sequential test:base test:main test:fiori",
     "lint": "wsrun --exclude-missing lint",
