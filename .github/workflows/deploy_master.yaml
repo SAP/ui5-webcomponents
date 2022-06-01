@@ -4,10 +4,6 @@ on:
   pull_request: #change to push if it works
     branches: [ master ]
 jobs:
-  deploy-next-docs:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
 
