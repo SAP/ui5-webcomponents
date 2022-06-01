@@ -1,30 +1,7 @@
-commit edcdd24c8e95047559b49cef4eea938f20e21d97
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed Jun 1 11:12:32 2022 +0300
+commit c39917f064acf8cebff8ae2406aad39d4ee3bdd2
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Wed Jun 1 14:45:10 2022 +0300
 
-    fix(ui5-input): fix typeahead on mobile devices (#5292)
+    fix(ui5-tabcontainer): make disabled tabs focusable in overflow (#5300)
     
-    * fix(ui5-input): fix typeahead on mobile devices
-    
-    The component no longer throws an exception when the input has suggestions
-    and the typeahead functionality is adjusted.
-    
-    * fix(ui5-input): fix typeahead on mobile devices
-    
-    add tests
-    
-    * fix(ui5-input): fix typeahead on mobile devices
-    
-    try different DOM selectors in the mobile tests
-    
-    * fix(ui5-input): fix typeahead on mobile devices
-    
-    adjust mobile tests
-    
-    * fix(ui5-input): fix typeahead on mobile devices
-    
-    adjust tests
-    
-    * fix(ui5-input): fix typeahead on mobile devices
-    
-    adjust mobile tests
+    Fixes: 5131
