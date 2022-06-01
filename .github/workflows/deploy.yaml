@@ -2,7 +2,7 @@ name: Master Playground
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test-deploy-on-master ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
