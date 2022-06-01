@@ -1,7 +1,5 @@
-commit c39917f064acf8cebff8ae2406aad39d4ee3bdd2
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Wed Jun 1 14:45:10 2022 +0300
+commit 1a3d6aba0f46cba2feffdc95026face61d3a0716
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jun 1 16:17:12 2022 +0300
 
-    fix(ui5-tabcontainer): make disabled tabs focusable in overflow (#5300)
-    
-    Fixes: 5131
+    test: run tests on guthub actions (#5247)
