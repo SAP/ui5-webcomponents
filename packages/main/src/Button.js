@@ -71,7 +71,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed as graphical element within the component.
+		 * Defines the icon, displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 * Example:
@@ -99,7 +99,7 @@ const metadata = {
 
 		/**
 		 * When set to <code>true</code>, the component will
-		 * automatically submit the nearest form HTML element on <code>press</code>.
+		 * automatically submit the nearest HTML form element on <code>press</code>.
 		 * <br><br>
 		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
