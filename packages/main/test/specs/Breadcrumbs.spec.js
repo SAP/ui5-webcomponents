@@ -1,5 +1,12 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
+const KEYS = {
+	SHIFT: '\uE008',
+	CTRL: '\uE009',
+	ALT: '\uE00A',
+	META: '\uE03D',
+	ENTER: '\uE007',
+}
 
 describe("Breadcrumbs general interaction", () => {
 	before(async () => {
@@ -231,6 +238,121 @@ describe("Breadcrumbs general interaction", () => {
 		const url = await browser.getUrl();
 		assert.strictEqual(url, initialUrl, "url should not have changed");
 		assert.strictEqual(await eventResult.getText(), await link.getText(), "label for pressed link is correct");
+	});
+
+	it("passes special keys pressed while item clicked", async () => {
+		// CTRL key is skipped since there is default browser behavior where popover is opened.
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+		let eventResult;
+
+		// Setup for META Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard1',
+			actions: [{ type: 'keyDown', value: KEYS.META }],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'META:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for ALT Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard2',
+			actions: [{ type: 'keyDown', value: KEYS.ALT }],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'ALT:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for SHIFT Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.SHIFT }],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'SHIFT:' + await link.getText(), "label for pressed link is correct");
+	});
+
+	it("passes special keys pressed while item pressed with keyboard", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+
+		// Setup for META Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard1',
+			actions: [
+				{ type: 'keyDown', value: KEYS.META },
+				{ type: 'keyDown', value: KEYS.ENTER }
+			],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'META:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for ALT Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard2',
+			actions: [
+				{ type: 'keyDown', value: KEYS.ALT },
+				{ type: 'keyDown', value: KEYS.ENTER }
+			],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'ALT:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for SHIFT Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [
+				{ type: 'keyDown', value: KEYS.SHIFT },
+				{ type: 'keyDown', value: KEYS.ENTER }
+			],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'SHIFT:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for CTRL Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [
+				{ type: 'keyDown', value: KEYS.CTRL },
+				{ type: 'keyDown', value: KEYS.ENTER }
+			],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		eventResult = await browser.$("#result");
+		assert.strictEqual(await eventResult.getText(), 'CTRL:' + await link.getText(), "label for pressed link is correct");
 	});
 
 });
