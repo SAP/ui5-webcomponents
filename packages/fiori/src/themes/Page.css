@@ -2,7 +2,7 @@
 :host(:not([hidden])) {
     width: 100%;
     height: 100%;
-    display: inline-block;
+    display: block;
 }
 
 .ui5-page-root {

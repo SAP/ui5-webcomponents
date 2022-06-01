@@ -8,4 +8,11 @@
 	--_ui5_panel_outline_offset: -3px;
 	--_ui5_panel_icon_color: var(--sapContent_IconColor);
 	--_ui5_panel_header_padding_right: 0.5rem;
+	--_ui5_panel_header_button_wrapper_padding: .25rem;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_panel_header_button_wrapper_padding: .5625rem .375rem;
 }

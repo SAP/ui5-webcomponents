@@ -27,6 +27,7 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -284,7 +285,7 @@ const metadata = {
 		/**
 		 * Fired when the <code>Close</code> button of any item is clicked
 		 * <br><br>
-		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only,
+		 * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
 		 * not to be confused with <code>item-delete</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-close
@@ -301,7 +302,7 @@ const metadata = {
 		/**
 		 * Fired when the <code>Toggle</code> button of any item is clicked.
 		 * <br><br>
-		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
+		 * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-toggle
 		 * @param {HTMLElement} item the toggled item.
@@ -441,7 +442,7 @@ class List extends UI5Element {
 	}
 
 	static get styles() {
-		return listCss;
+		return [browserScrollbarCSS, listCss];
 	}
 
 	static async onDefine() {

@@ -8,7 +8,7 @@
 	box-sizing: border-box;
 	margin-top: var(--_ui5_token_top_margin);
 	margin-bottom: var(--_ui5_token_bottom_margin);
-	margin-right: var(--_ui5_token_right_margin);
+	margin-inline-end: var(--_ui5_token_right_margin);
 	position: relative;
 }
 
@@ -40,8 +40,7 @@
 }
 
 :host([readonly]) .ui5-token--wrapper {
-	padding-right: var(--_ui5_token_readonly_right_padding);
-	padding-left: var(--_ui5_token_readonly_left_padding);
+	padding: 0 var(--_ui5_token_readonly_padding);
 }
 
 :host([selected]) .ui5-token--wrapper:focus {
@@ -60,7 +59,7 @@
 	height: 100%;
 	width: 100%;
 	cursor: default;
-	padding-left: var(--_ui5_token_left_padding);
+	padding-inline-start: var(--_ui5_token_left_padding);
 	box-sizing: border-box;
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
@@ -106,9 +105,4 @@
 	height: var(--_ui5_token_icon_size);
 	padding: var(--_ui5_token_icon_padding);
 	color: var(--sapContent_IconColor);
-}
-
-.ui5-token--wrapper[dir="rtl"] {
-	padding-left: 0;
-	padding-right: var(--_ui5_token_left_padding);
 }

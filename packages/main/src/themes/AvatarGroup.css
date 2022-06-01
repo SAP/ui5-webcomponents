@@ -10,6 +10,7 @@
 :host([type="Group"]) .ui5-avatar-group-items:focus {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
+	border-radius: var(--_ui5_avatar_group_focus_border_radius);
 }
 
 .ui5-avatar-group-root {
@@ -41,8 +42,8 @@
 
 ::slotted([ui5-button][focused]),
 .ui5-avatar-group-overflow-btn[focused] {
-	outline: var(--_ui5_button_outline);
-	outline-offset: var(--_ui5_avatar_group_overflow_button_focus_offset);
+	outline: var(--_ui5_avatar_outline);
+	outline-offset: var(--_ui5_avatar_focus_offset);
 }
 
 .ui5-avatar-group-overflow-btn.ui5-avatar-group-overflow-btn-xs {

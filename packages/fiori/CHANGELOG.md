@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/SAP/ui5-webcomponents/compare/v1.3.1...v1.4.0) (2022-05-25)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** make component language aware ([#5158](https://github.com/SAP/ui5-webcomponents/issues/5158)) ([5b6502b](https://github.com/SAP/ui5-webcomponents/commit/5b6502b))
+* **ui5-page:** remove unnecessary scrollbar ([#5258](https://github.com/SAP/ui5-webcomponents/issues/5258)) ([8ef6289](https://github.com/SAP/ui5-webcomponents/commit/8ef6289))
+
+
+### Features
+
+* **ui5-notifications:** implement SAP Horizon theme ([#5067](https://github.com/SAP/ui5-webcomponents/issues/5067)) ([ccdfe4c](https://github.com/SAP/ui5-webcomponents/commit/ccdfe4c))
+* **ui5-shellbar:** implement Horizon theme ([#5197](https://github.com/SAP/ui5-webcomponents/issues/5197)) ([d278c09](https://github.com/SAP/ui5-webcomponents/commit/d278c09)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-side-navigation:** implement SAP Horizon theme family ([#5081](https://github.com/SAP/ui5-webcomponents/issues/5081)) ([d8d9315](https://github.com/SAP/ui5-webcomponents/commit/d8d9315)), closes [#5006](https://github.com/SAP/ui5-webcomponents/issues/5006)
+* **ui5-timeline:** implement Horizon theme ([#5155](https://github.com/SAP/ui5-webcomponents/issues/5155)) ([e557f71](https://github.com/SAP/ui5-webcomponents/commit/e557f71))
+* **ui5-upload-collection:** implement SAP Horizon theme family ([#5148](https://github.com/SAP/ui5-webcomponents/issues/5148)) ([7956864](https://github.com/SAP/ui5-webcomponents/commit/7956864))
+
+
+
+
+
+## [1.3.1](https://github.com/SAP/ui5-webcomponents/compare/v1.3.0...v1.3.1) (2022-04-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
 
 

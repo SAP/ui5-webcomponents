@@ -1,3 +1,5 @@
+@import "./TabSemanticIcon.css";
+
 .ui5-tab-strip-item {
 	height: var(--_ui5_tc_header_height);
 	color: var(--_ui5_tc_headerItem_color);
@@ -41,12 +43,35 @@
 	pointer-events: none;
 	transition: var(--_ui5_tc_headerItem_transition);
 }
+.ui5-tab-expand-button > [ui5-button] {
+	height: 1.5rem;
+	min-width: 1.5rem;
+	margin-top: 0.25rem;
+	margin-inline-start: 0.625rem;
+}
+
+.ui5-tab-expand-button > [ui5-button]:not([active]) {
+	color: var(--_ui5_tc_headerItem_color);
+}
+
+.ui5-tab-strip-item--selected .ui5-tab-expand-button > [ui5-button]:not([active]) {
+	color: var(--_ui5_tc_headerItem_text_selected_color);
+}
+
+.ui5-tab-expand-button > [ui5-button]:hover:not([active]) {
+	color: var(--_ui5_tc_headerItem_text_selected_hover_color);
+}
+
+.ui5-tab-single-click-icon {
+	margin-inline-start: 0.875rem;
+}
 
 .ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly {
-	color: var(--_ui5_tc_headeritem_text_selected_color);
+	color: var(--_ui5_tc_headerItem_text_selected_color);
 }
-.ui5-tab-strip-item--selected.ui5-tab-strip-item--singleClickArea .ui5-tab-strip-itemText .ui5-tab-single-click-icon>[ui5-icon] {
-	color: var(--_ui5_tc_headeritem_text_selected_color);
+
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--singleClickArea .ui5-tab-strip-itemText .ui5-tab-single-click-icon > [ui5-icon] {
+	color: var(--_ui5_tc_headerItem_text_selected_color);
 }
 
 .ui5-tab-strip-item--singleClickArea .ui5-tab-strip-itemText {
@@ -58,11 +83,11 @@
 	display: flex;
 }
 
-.ui5-tab-strip-item--singleClickArea .ui5-tab-strip-itemText .ui5-tab-single-click-icon>[ui5-icon] {
+.ui5-tab-strip-item--singleClickArea .ui5-tab-strip-itemText .ui5-tab-single-click-icon > [ui5-icon] {
 	color: var(--_ui5_tc_headerItem_color);
 }
-.ui5-tab-strip-item:hover:not(.ui5-tab-strip-item--selected):not(ui5-tab-strip-item--negative).ui5-tab-strip-item--textOnly,
-.ui5-tab-strip-item--singleClickArea.ui5-tab-strip-item:hover:not(.ui5-tab-strip-item--selected) .ui5-tab-single-click-icon>[ui5-icon] {
+.ui5-tab-strip-item:hover:not(.ui5-tab-strip-item--selected):not(.ui5-tab-strip-item--negative).ui5-tab-strip-item--textOnly,
+.ui5-tab-strip-item--singleClickArea.ui5-tab-strip-item:hover:not(.ui5-tab-strip-item--selected):not(.ui5-tab-strip-item--disabled) .ui5-tab-single-click-icon > [ui5-icon] {
 	color: var(--_ui5_tc_headerItem_text_hover_color);
 }
 
@@ -122,7 +147,7 @@
 
 .ui5-tab-strip-item--disabled {
 	cursor: default;
-	opacity: 0.5;
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 .ui5-tab-strip-item:focus {
@@ -166,27 +191,6 @@
 	border-radius: var(--_ui5_tc_headerItemIcon_focus_border_radius);
 }
 
-.ui5-tab-strip-item-semanticIcon::before {
-	display: var(--_ui5_tc_headerItemSemanticIcon_display);
-	font-family: "SAP-icons";
-	font-size: 0.75rem;
-	margin-right: 0.25rem;
-	speak: none;
-	-webkit-font-smoothing: antialiased;
-}
-
-.ui5-tab-strip-item-semanticIcon--positive::before {
-	content: "\e1ab";
-}
-
-.ui5-tab-strip-item-semanticIcon--negative::before {
-	content: "\e1ac";
-}
-
-.ui5-tab-strip-item-semanticIcon--critical::before {
-	content: "\e1ae";
-}
-
 /*** Icon and text Tab styles ***/
 
 .ui5-tab-strip-item-icon-outer {
@@ -196,7 +200,7 @@
 	position: relative;
 	border: var(--_ui5_tc_headerItemIcon_border);
 	border-radius: 50%;
-	margin-right: 0.25rem;
+	margin-inline-end: 0.25rem;
 	height: var(--_ui5_tc_item_icon_circle_size);
 	width: var(--_ui5_tc_item_icon_circle_size);
 	pointer-events: none;
@@ -221,7 +225,7 @@
 }
 
 .ui5-tab-strip-itemAdditionalText + .ui5-tab-strip-itemText {
-	display: block;
+	display: flex;
 }
 
 .ui5-tab-strip-item--inline .ui5-tab-strip-itemAdditionalText + .ui5-tab-strip-itemText {
@@ -229,7 +233,7 @@
 }
 
 .ui5-tab-strip-item--withIcon .ui5-tab-strip-itemAdditionalText + .ui5-tab-strip-itemText {
-	margin-top: var(--_ui5_tc_item_add_text_margin_top);
+	margin-block-start: var(--_ui5_tc_item_add_text_margin_top);
 }
 
 /*** END Icon and text Tab styles ***/
@@ -269,7 +273,7 @@
 
 .ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemAdditionalText {
 	font-size: 1.5rem;
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 }
 
 .ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemText {
@@ -281,8 +285,7 @@
 
 /*** Semantic states ***/
 .ui5-tab-strip-item--positive.ui5-tab-strip-item--textOnly .ui5-tab-strip-itemText,
-.ui5-tab-strip-item--positive .ui5-tab-strip-item-icon-outer,
-.ui5-tab-strip-item-semanticIcon--positive::before {
+.ui5-tab-strip-item--positive .ui5-tab-strip-item-icon-outer {
 	color: var(--sapPositiveColor);
 	border-color: var(--_ui5_tc_headerItem_positive_selected_border_color);
 }
@@ -313,8 +316,7 @@
 }
 
 .ui5-tab-strip-item--negative.ui5-tab-strip-item--textOnly .ui5-tab-strip-itemText,
-.ui5-tab-strip-item--negative .ui5-tab-strip-item-icon-outer,
-.ui5-tab-strip-item-semanticIcon--negative::before {
+.ui5-tab-strip-item--negative .ui5-tab-strip-item-icon-outer {
 	color: var(--sapNegativeColor);
 	border-color: var(--_ui5_tc_headerItem_negative_selected_border_color);
 }
@@ -338,8 +340,7 @@
 }
 
 .ui5-tab-strip-item--critical.ui5-tab-strip-item--textOnly .ui5-tab-strip-itemText,
-.ui5-tab-strip-item--critical .ui5-tab-strip-item-icon-outer,
-.ui5-tab-strip-item-semanticIcon--critical::before {
+.ui5-tab-strip-item--critical .ui5-tab-strip-item-icon-outer {
 	color: var(--sapCriticalColor);
 	border-color: var(--_ui5_tc_headerItem_critical_selected_border_color);
 }
@@ -387,27 +388,11 @@
 }
 
 .ui5-tab-strip-item--withIcon .ui5-tab-strip-itemContent .ui5-tab-strip-itemAdditionalText {
-	padding: 0px;
+	padding: 0;
 }
 
 .ui5-tab-strip-item .ui5-tab-strip-itemAdditionalText {
-	padding: 0px 0.188rem;
-	color: var(--_ui5_tc_headeritem_additional_text_color);
-	font-weight: var(--_ui5_tc_headeritem_additional_text_font_weight);
-}
-/*** RTL ***/
-
-[dir=rtl] .ui5-tab-strip-item-semanticIcon::before {
-	margin-left: 0.25rem;
-	margin-right: 0;
-}
-
-[dir=rtl] .ui5-tab-strip-item-icon-outer {
-	margin-left: 0.25rem;
-	margin-right: 0;
-}
-
-[dir=rtl] .ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemAdditionalText {
-	margin-right: 0;
-	margin-left: 0.5rem;
+	padding: 0 0.188rem;
+	color: var(--_ui5_tc_headerItem_additional_text_color);
+	font-weight: var(--_ui5_tc_headerItem_additional_text_font_weight);
 }

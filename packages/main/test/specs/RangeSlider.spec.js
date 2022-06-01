@@ -316,7 +316,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemax"),
@@ -331,7 +331,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await startHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemax"),
@@ -346,7 +346,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await endHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemax"),
@@ -938,7 +938,7 @@ describe("Testing resize handling and RTL support", () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
-
+		
 		await rangeSlider.setAttribute("dir", "rtl");
 		await rangeSlider.setProperty("min", 0);
 		await rangeSlider.setProperty("max", 10);
@@ -946,11 +946,13 @@ describe("Testing resize handling and RTL support", () => {
 		await rangeSlider.setProperty("startValue", 3);
 		await rangeSlider.setProperty("endValue", 7);
 
+		const secondActiveTickmark = await rangeSlider.shadow$$(".ui5-slider-tickmark.ui5-slider-tickmark-in-range")[1];
+
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 30%;", "Initially if no value is set, the start-handle is 30% from the right side of the Range Slider");
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 70%;", "End-handle should be 70% from the right side of the Range Slider");
 
 		// Selection Range
-		await rangeSliderSelection.click();
+		await secondActiveTickmark.click();
 		await rangeSliderSelection.keys("ArrowLeft");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 40%;", "Start-handle is 40% from the right side of the Range Slider");

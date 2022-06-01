@@ -8,7 +8,6 @@ import "@ui5/webcomponents-icons/dist/source-code.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";
@@ -102,6 +101,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.4.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		_tooltipVisibility: {
@@ -160,10 +171,12 @@ class SliderBase extends UI5Element {
 			labelInterval: null,
 		};
 
+		const handleTouchStartEvent = event => {
+			this._onmousedown(event);
+		};
+
 		this._ontouchstart = {
-			handleEvent(event) {
-				this._onmousedown(event);
-			},
+			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
 	}
@@ -178,19 +191,6 @@ class SliderBase extends UI5Element {
 
 	static get styles() {
 		return styles;
-	}
-
-	static get TICKMARK_COLOR_MAP() {
-		return {
-			sap_fiori_3: "#89919a",
-			sap_fiori_3_dark: "#89919a",
-			sap_fiori_3_hcw: "#000000",
-			sap_fiori_3_hcb: "#ffffff",
-			sap_belize: "#bfbfbf",
-			sap_belize_hcw: "#000000",
-			sap_belize_hcb: "#ffffff",
-			sap_horizon: "#89919a",
-		};
 	}
 
 	static get UP_EVENTS() {
@@ -664,46 +664,6 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Calculates and draws the tickmarks with a CSS gradient style
-	 *
-	 * @private
-	 */
-	get _tickmarks() {
-		const currentTheme = getTheme();
-		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
-
-		if (!this.showTickmarks || !this._effectiveStep) {
-			return;
-		}
-
-		if (this._hiddenTickmarks) {
-			return `linear-gradient(to right, ${currentColor} 1px, transparent 0) 0 center / calc(100% - 1px) 100% repeat-x`;
-		}
-
-		// Convert number values to strings to let the CSS do calculations better
-		// rounding/subpixel behavior" and the most precise tickmarks distribution
-		const maxStr = String(this._effectiveMax);
-		const minStr = String(this._effectiveMin);
-		const stepStr = String(this._effectiveStep);
-
-		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
-		// respect the variable for more than one theme. It has to be set here for now.
-		const tickmarkWidth = "1px";
-
-		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
-		this._hiddenTickmarks = false;
-
-		// Transparent CSS gradient background
-		const tickmarksGradientBase = `linear-gradient(to right, ${currentColor} ${tickmarkWidth}, transparent 0) `;
-
-		// Draw the tickmarks as a patern over the gradient background
-		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${this._tickmarksAmount})) 100% repeat-x`;
-
-		// Combine to get the complete CSS background gradient property value
-		return `${tickmarksGradientBase + tickmarksGradientdPattern}`;
-	}
-
-	/**
 	 * Calculates the labels amout, width and text and creates them
 	 *
 	 * @private
@@ -779,16 +739,17 @@ class SliderBase extends UI5Element {
 		return isDownCtrl(event) || isUpCtrl(event) || isLeftCtrl(event) || isRightCtrl(event) || isPageUp(event) || isPageDown(event);
 	}
 
+	get _tickmarksCount() {
+		return (this._effectiveMax - this._effectiveMin) / this._effectiveStep;
+	}
+
 	/**
 	 * Calculates space between tickmarks
 	 *
 	 * @private
 	 */
 	_spaceBetweenTickmarks() {
-		const tickmarksAmountStrCalc = this._tickmarksAmount.split("/");
-		const tickmarksAmount = tickmarksAmountStrCalc[0] / tickmarksAmountStrCalc[1];
-
-		return this.getBoundingClientRect().width / tickmarksAmount;
+		return this.getBoundingClientRect().width / this._tickmarksCount;
 	}
 
 	/**
@@ -844,6 +805,10 @@ class SliderBase extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	get _ariaLabelledByHandleRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
 	}
 }
 

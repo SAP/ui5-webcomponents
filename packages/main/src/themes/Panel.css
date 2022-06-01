@@ -41,7 +41,7 @@
 	pointer-events: none;
 }
 
-:host(:not([_has-header]):not([fixed])) {
+:host(:not([_has-header]):not([fixed])) .ui5-panel-header {
 	cursor: pointer;
 }
 
@@ -55,7 +55,8 @@
 	border-radius: var(--_ui5_panel_border_radius_expanded);
 }
 
-:host(:not([collapsed])) .ui5-panel-header-button {
+:host(:not([collapsed])) .ui5-panel-header-button:not(.ui5-panel-header-button-with-icon),
+:host(:not([collapsed])) .ui5-panel-header-icon-wrapper [ui5-icon] {
 	transform: var(--_ui5_panel_toggle_btn_rotation);
 }
 
@@ -69,7 +70,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-family: "72override", var(--sapFontHeaderFamily);
-	font-size: var(--sapGroup_TitleFontSize);
+	font-size: var(--sapGroup_Title_FontSize);
 	font-weight: normal;
 	color: var(--sapGroup_TitleTextColor);
 	font-weight: normal;
@@ -89,7 +90,9 @@
 	align-items: center;
 	flex-shrink: 0;
 	width: var(--_ui5_panel_button_root_width);
-	margin-right: .25rem;
+	height: var(--_ui5_panel_button_root_width);
+	padding: var(--_ui5_panel_header_button_wrapper_padding);
+	box-sizing: border-box;
 }
 
 :host([fixed]:not([collapsed]):not([_has-header])) .ui5-panel-header,
@@ -104,4 +107,29 @@
 
 :host(:not([fixed]):not([collapsed])) .ui5-panel-header {
 	border-bottom: var(--_ui5_panel_default_header_border);
+}
+
+[ui5-button].ui5-panel-header-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: initial;
+	height: 100%;
+	width: 100%;
+}
+
+.ui5-panel-header-icon-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui5-panel-header-icon-wrapper,
+.ui5-panel-header-icon-wrapper .ui5-panel-header-icon {
+	color: inherit;
+}
+
+.ui5-panel-header-icon-wrapper,
+[ui5-button].ui5-panel-header-button-with-icon [ui5-icon] {
+	pointer-events: none;
 }

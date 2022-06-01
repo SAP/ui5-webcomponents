@@ -18,7 +18,9 @@
 	--_ui5_slider_handle_background: var(--sapButton_Background);
 	--_ui5_range_slider_handle_background: #FFF;
 	--_ui5_slider_handle_top: -0.825rem;
-	--_ui5_slider_handle_margin_left: -0.9725rem;
+	--_ui5_slider_tickmark_bg: var(--sapField_BorderColor);
+	--_ui5_slider_tickmark_in_range_bg: var(--sapButton_Active_Background);
+	--_ui5_slider_handle_margin_left: calc(-1 * (var(--_ui5_slider_handle_width) / 2));
 	--_ui5_slider_handle_hover_background: var(--sapButton_Hover_Background);
 	--_ui5_slider_handle_hover_border: 0.125rem solid var(--sapButton_Hover_BorderColor);
 	--_ui5_slider_handle_outline: 0.0625rem dotted var(--sapContent_FocusColor);
@@ -54,6 +56,42 @@
 	--_ui5_range_slider_progress_focus_padding: 0 1.375rem 0 1.438rem;
 	--_ui5_range_slider_progress_focus_height: 2rem;
 	--_ui5_range_slider_legacy_progress_focus_display: block;
+	--_ui5_slider_handle_focus_width: 0;
+	--_ui5_slider_start_end_point_size: .375rem;
+	--_ui5_slider_start_end_point_left: -0.875rem;
+	--_ui5_slider_start_end_point_top: -.1875rem;
+	--_ui5_slider_handle_hover_box_shadow: none;
+	--_ui5_slider_handle_background_focus: var(--_ui5_slider_handle_background);
+	--_ui5_slider_handle_active_box_shadow: none;
+	--_ui5_slider_handle_focused_tooltip_distance: var(--_ui5_slider_tooltip_bottom);
+	--_ui5_slider_handle_box_sizing: content-box;
+	--_ui5_slider_tooltip_border_box: content-box;
+	--_ui5_range_slider_handle_active_background: var(--_ui5_range_slider_handle_background);
+	--_ui5_range_slider_active_handle_icon_display: none;
+	--_ui5_range_slider_handle_background_focus: transparent;
+	--_ui5_range_slider_progress_focus_width: 100%;
+	--_ui5_range_slider_root_active_handle_icon_display: none;
+	--_ui5_slider_tickmark_height: 1rem;
+	--_ui5_slider_tickmark_top: -.3125rem;
+	--_ui5_slider_progress_box_sizing: content-box;
+	--_ui5_slider_tickmark_in_range_bg: var(--sapField_BorderColor);
+	--_ui5_range_slider_focus_outline_width: 100%;
+	--_ui5_slider_progress_outline_offset_left: 0;
+	--_ui5_range_slider_focus_outline_radius: 0;
+
+	--_ui5_slider_progress_container_top: 0;
+	--_ui5_slider_progress_height: 100%;
+	--_ui5_slider_active_progress_border: none;
+	--_ui5_slider_active_progress_left: 0;
+	--_ui5_slider_active_progress_top: 0;
+
+	--_ui5_slider_no_tickmarks_progress_container_top: var(--_ui5_slider_progress_container_top);
+	--_ui5_slider_no_tickmarks_progress_height: var(--_ui5_slider_progress_height);
+	--_ui5_slider_no_tickmarks_active_progress_border: var(--_ui5_slider_active_progress_border);
+	--_ui5_slider_no_tickmarks_active_progress_left: var(--_ui5_slider_active_progress_left);
+	--_ui5_slider_no_tickmarks_active_progress_top: var(--_ui5_slider_active_progress_top);
+	--_ui5_slider_handle_focus_visibility: none;
+	--_ui5_slider_handle_icon_size: 1rem;
 }
 
 [data-ui5-compact-size],
@@ -61,4 +99,5 @@
 .sapUiSizeCompact {
 	--_ui5_slider_handle_focused_top: -0.625rem;
 	--_ui5_slider_handle_focused_margin_left: -0.75rem;
+	--_ui5_slider_handle_icon_size: .875rem;
 }

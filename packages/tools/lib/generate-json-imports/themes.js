@@ -1,32 +1,32 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require('path');
-const mkdirp = require("mkdirp");
 const assets = require("../../assets-meta.js");
 
-const inputFolder = path.normalize(process.argv[2]);
-const outputFile = path.normalize(`${process.argv[3]}/Themes-static.js`);
-const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.js`);
+const generate = async () => {
+	const inputFolder = path.normalize(process.argv[2]);
+	const outputFile = path.normalize(`${process.argv[3]}/Themes-static.js`);
+	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.js`);
 
 // All supported optional themes
-const allThemes = assets.themes.all;
+	const allThemes = assets.themes.all;
 
 // All themes present in the file system
-const dirs = fs.readdirSync(inputFolder);
-const themesOnFileSystem = dirs.map(dir => {
-	const matches = dir.match(/sap_.*$/);
-	return matches ? dir : undefined;
-}).filter(key => !!key && allThemes.includes(key));
+	const dirs = await fs.readdir(inputFolder);
+	const themesOnFileSystem = dirs.map(dir => {
+		const matches = dir.match(/sap_.*$/);
+		return matches ? dir : undefined;
+	}).filter(key => !!key && allThemes.includes(key));
 
-const packageName = JSON.parse(fs.readFileSync("package.json")).name;
+	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
-const importLines = themesOnFileSystem.map(theme => `import ${theme} from "../assets/themes/${theme}/parameters-bundle.css.json";`).join("\n");
-const themeUrlsByName = "{\n" + themesOnFileSystem.join(",\n") + "\n}";
-const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
-const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import("../assets/themes/${theme}/parameters-bundle.css.json")).default;`).join("\n");
+	const importLines = themesOnFileSystem.map(theme => `import ${theme} from "../assets/themes/${theme}/parameters-bundle.css.json";`).join("\n");
+	const themeUrlsByName = "{\n" + themesOnFileSystem.join(",\n") + "\n}";
+	const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
+	const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import("../assets/themes/${theme}/parameters-bundle.css.json")).default;`).join("\n");
 
 
 // static imports file content
-const contentStatic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	const contentStatic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 ${importLines}
 
@@ -47,7 +47,7 @@ ${availableThemesArray}
 
 
 // dynamic imports file content
-const contentDynamic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	const contentDynamic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 const loadThemeProperties = async (themeName) => {
 	switch (themeName) {
@@ -68,6 +68,13 @@ ${availableThemesArray}
   .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadAndCheck));
 `;
 
-mkdirp.sync(path.dirname(outputFile));
-fs.writeFileSync(outputFile, contentStatic);
-fs.writeFileSync(outputFileDynamic, contentDynamic);
+	await fs.mkdir(path.dirname(outputFile), { recursive: true });
+	return Promise.all([
+		fs.writeFile(outputFile, contentStatic),
+		fs.writeFile(outputFileDynamic, contentDynamic)
+	]);
+};
+
+generate().then(() => {
+	console.log("Generated themes JSON imports.");
+});

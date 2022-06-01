@@ -49,6 +49,7 @@
 	--_ui5_list_item_dropdown_base_height: 2.5rem;
 	--_ui5_list_item_base_height: 2.75rem;
 	--_ui5_list_item_icon_size: 1.125rem;
+	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
 	--_ui5_group_header_list_item_height: 2.75rem;
 	--_ui5_list_busy_row_height: 3rem;
@@ -74,12 +75,37 @@
 	--_ui5_tl_li_margin_bottom: 1.625rem;
 
 	/*switch*/
+	--_ui5_switch_height: var(--_ui5_switch_height);
+	--_ui5_switch_width: var(--_ui5_switch_width);
+	--_ui5_switch_with_label_width: var(--_ui5_switch_with_label_width);
+
+	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_outline_top);
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);	
+
+	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
+	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
+	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_width);
+	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_height);
+	--_ui5_switch_min_width: var(--_ui5_switch_min_width);
+
+	--_ui5_switch_handle_height: var(--_ui5_switch_handle_height);
+	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_width);
+	--_ui5_switch_handle_width: var(--_ui5_switch_handle_width);
+	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_height);
+
+	--_ui5_switch_text_active_left: var(--_ui5_switch_text_active_left);
+
+	--_ui5_switch_text_font_size: var(--_ui5_switch_text_font_size);
+	--_ui5_switch_text_width: var(--_ui5_switch_text_width);
+
 	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
-	--_ui5_switch_text_on_left: calc(-100% + 1.9125rem);
-	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.875rem);
-	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
-	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
+
+
+	--_ui5_switch_transform: var(--_ui5_switch_transform);
+	--_ui5_switch_transform_with_label: var(--_ui5_switch_transform_with_label);
+	--_ui5_switch_rtl_transform: var(--_ui5_switch_rtl_transform);
+	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_rtl_transform_with_label);
 
 	--_ui5_tc_item_text: 3rem;
 	--_ui5_tc_item_height: 4.75rem;
@@ -104,7 +130,7 @@
 	--_ui5_radio_button_inner_size: 2.75rem;
 	--_ui5_radio_button_svg_size: 1.375rem;
 	--_ui5_radio_button_label_width: calc(100% - 2.75rem);
-	--_ui5_radio_button_rtl_focus_right: 0.5rem;
+	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.6875rem;
 
 	/* Responsive Popover */
 	--_ui5-responsive_popover_header_height: 2.75rem;
@@ -182,6 +208,7 @@
 	--_ui5_color-palette-item-hover-margin: 0;
 	--_ui5_color-palette-row-height: 7.5rem;
 	--_ui5_color-palette-button-height: 2rem;
+	--_ui5_color_picker_slider_container_margin_top: -4px;
 
 	/* Custom List Item */
 	--_ui5_custom_list_item_rb_min_width: 2rem;
@@ -215,6 +242,9 @@
 	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
 	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
 
+	/* Menu */
+	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;
+
 	/* Notifications */
 	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
 
@@ -247,8 +277,7 @@
 	--_ui5_token_bottom_margin: 0.125rem;
 	--_ui5_token_right_margin: 0.25rem;
 	--_ui5_token_left_padding: 0.25rem;
-	--_ui5_token_readonly_right_padding: 0.25rem;
-	--_ui5_token_readonly_left_padding: 0.25rem;
+	--_ui5_token_readonly_padding: 0.25rem;
 	--_ui5_token_focus_offset: -0.125rem;
 	--_ui5_token_icon_size: .75rem;
 	--_ui5_token_icon_padding: 0.125rem 0.25rem;
@@ -271,16 +300,31 @@
 	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
-	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
-	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
-	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
-	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
-	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
-	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
-	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
+	--_ui5_switch_with_label_width: var(--_ui5_switch_compact_with_label_width);
 
-	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom);
-	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right);
+	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_compact_outline_top);
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_compact_outline_bottom);
+
+	--_ui5_switch_track_width: var(--_ui5_switch_track_compact_width);
+	--_ui5_switch_track_height: var(--_ui5_switch_track_compact_height);
+	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_compact_width);
+	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_compact_height);
+	--_ui5_switch_min_width: var(--_ui5_switch_compact_min_width);
+
+	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
+	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_compact_width);
+	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
+	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_compact_height);
+
+	--_ui5_switch_text_active_left: var(--_ui5_switch_text_compact_active_left);
+
+	--_ui5_switch_text_font_size: var(--_ui5_switch_text_compact_font_size);
+	--_ui5_switch_text_width: var(--_ui5_switch_text_compact_width);
+
+	--_ui5_switch_transform: var(--_ui5_switch_compact_transform);
+	--_ui5_switch_transform_with_label: var(--_ui5_switch_compact_transform_with_label);
+	--_ui5_switch_rtl_transform: var(--_ui5_switch_compact_rtl_transform);
+	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_compact_rtl_transform_with_label);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
@@ -299,8 +343,7 @@
 	--_ui5_radio_button_inner_size: 2rem;
 	--_ui5_radio_button_svg_size: 1rem;
 	--_ui5_radio_button_label_width: calc(100% - 2rem + 1px);
-	--_ui5_radio_button_rtl_focus_right: 0.375rem;
-
+	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.5rem;
 
 	/* Responsive Popover */
 	--_ui5-responsive_popover_header_height: 2.5rem;
@@ -311,11 +354,10 @@
 	/* Slider */
 	--_ui5_slider_handle_height: 1.25rem;
 	--_ui5_slider_handle_width: 1.25rem;
-	--_ui5_slider_handle_top: -0.6425rem;
-	--_ui5_slider_handle_margin_left: -0.7825rem;
+	--_ui5_slider_handle_top: -.5rem;
 	--_ui5_slider_tooltip_height: 1rem;
 	--_ui5_slider_tooltip_padding: 0.25rem;
-	--_ui5_slider_tooltip_bottom: 1.825rem;
+	/* --_ui5_slider_tooltip_bottom: 1.875rem; */
 	--_ui5_slider_progress_outline_offset: -0.625rem;
 	--_ui5_slider_outer_height: 1.3125rem;
 

@@ -40,7 +40,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    background: var(--sapBackgroundColor);
+    background: var(--ui5_carousel_background_color);
     transition: transform 0.5s cubic-bezier(.46, 0, .44, 1);
     will-change: transform;
 }
@@ -72,7 +72,7 @@
     width: 100%;
     padding:0 0.5rem;
     position: absolute;
-    top: calc(50% - 2.5rem);
+    top: calc(50% - var(--ui5_carousel_button_size));
     left: 0;
     display: flex;
     justify-content: space-between;
@@ -108,6 +108,10 @@
     outline-offset: .1rem;
 }
 
+.ui5-carousel-navigation-arrows .ui5-carousel-navigation-button {
+    box-shadow: var(--sapContent_Shadow1);
+}
+
 .ui5-carousel-navigation-button--hidden {
     visibility: hidden;
     padding: 0;
@@ -122,12 +126,12 @@
 }
 
 .ui5-carousel-navigation-dot {
-    width: var(--ui5_carousel_width);
-    height: var(--ui5_carousel_height);
-    margin: var(--ui5_carousel_margin);
+    width: var(--ui5_carousel_inactive_dot_size);
+    height: var(--ui5_carousel_inactive_dot_size);
+    margin: var(--ui5_carousel_inactive_dot_margin);
     border-radius: 50%;
-    background-color: var(--ui5_carousel_dot_background);
-    border: var(--ui5_carousel_dot_border);
+    background-color: var(--ui5_carousel_inactive_dot_background);
+    border: var(--ui5_carousel_inactive_dot_border);
     transition: background-color .1s ease-in;
 }
 
@@ -135,6 +139,6 @@
     width: .5rem;
     height: .5rem;
     margin: 0 .25rem;
-    background-color: var(--sapSelectedColor);
-    border: var(--ui5_carousel_dot_border);
+    background-color: var(--ui5_carousel_active_dot_background);
+    border: var(--ui5_carousel_active_dot_border);
 }

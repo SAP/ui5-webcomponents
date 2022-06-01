@@ -168,10 +168,12 @@ class ListItem extends ListItemBase {
 			}
 		};
 
+		const handleTouchStartEvent = event => {
+			this._onmousedown(event);
+		};
+
 		this._ontouchstart = {
-			handleEvent(event) {
-				this._onmousedown(event);
-			},
+			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
 	}
@@ -372,6 +374,16 @@ class ListItem extends ListItemBase {
 
 	get deleteText() {
 		return ListItem.i18nBundle.getText(DELETE);
+	}
+
+	get _accessibleNameRef() {
+		if (this.accessibleName) {
+			// accessibleName is set - return labels excluding content
+			return `${this._id}-invisibleText`;
+		}
+
+		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
+		return `${this._id}-content ${this._id}-invisibleText`;
 	}
 
 	get _accInfo() {

@@ -5,6 +5,7 @@
 	max-width: 90%;
 	flex-direction: column;
 	box-shadow: var(--sapContent_Shadow3);
+	border-radius: var(--sapElement_BorderCornerRadius);
 }
 
 :host([stretch]) {
@@ -68,13 +69,7 @@
 .ui5-popup-resize-handle {
 	position: absolute;
 	bottom: var(--_ui5_dialog_resize_handle_bottom);
-	right: var(--_ui5_dialog_resize_handle_right);
-	cursor: se-resize;
+	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
+	cursor: var(--_ui5_dialog_resize_cursor);
 	color: var(--_ui5_dialog_resize_handle_color);
-}
-
-.ui5-popup-resize-handle[dir=rtl] {
-	left: -0.25rem;
-	right: unset;
-	cursor: sw-resize;
 }
