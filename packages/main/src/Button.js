@@ -99,7 +99,7 @@ const metadata = {
 
 		/**
 		 * When set to <code>true</code>, the component will
-		 * automatically submit the nearest form element upon <code>press</code>.
+		 * automatically submit the nearest form element on <code>press</code>.
 		 * <br><br>
 		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>

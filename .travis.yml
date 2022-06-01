@@ -17,10 +17,10 @@ before_install:
 script:
 - ENABLE_CLDR=1 yarn build
 
-deploy:
-  provider: script
-  skip-cleanup: true
-  script: bash deploy/deploy.sh
-  on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^(master|latest-release-website)$
+# deploy:
+#   provider: script
+#   skip-cleanup: true
+#   script: bash deploy/deploy.sh
+#   on:
+#     all_branches: true
+#     condition: $TRAVIS_BRANCH =~ ^(master|latest-release-website)$
