@@ -376,6 +376,16 @@ class ListItem extends ListItemBase {
 		return ListItem.i18nBundle.getText(DELETE);
 	}
 
+	get _accessibleNameRef() {
+		if (this.accessibleName) {
+			// accessibleName is set - return labels excluding content
+			return `${this._id}-invisibleText`;
+		}
+
+		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
+		return `${this._id}-content ${this._id}-invisibleText`;
+	}
+
 	get _accInfo() {
 		return {
 			role: this.accessibleRole || this.role,
