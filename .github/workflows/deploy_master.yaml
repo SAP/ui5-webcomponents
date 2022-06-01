@@ -6,9 +6,7 @@ on:
 jobs:
     steps:
     - uses: actions/checkout@v3
-
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3.2.0
+    - uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'yarn'
