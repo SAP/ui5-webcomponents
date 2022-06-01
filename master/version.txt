@@ -1,7 +1,30 @@
-commit ff044b01074ffd709e95a9e235844daa8d39930b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 1 10:54:03 2022 +0300
+commit edcdd24c8e95047559b49cef4eea938f20e21d97
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Wed Jun 1 11:12:32 2022 +0300
 
-    fix(formEnablement): enable required attribute (#5133)
+    fix(ui5-input): fix typeahead on mobile devices (#5292)
     
-    Fixes #3498
+    * fix(ui5-input): fix typeahead on mobile devices
+    
+    The component no longer throws an exception when the input has suggestions
+    and the typeahead functionality is adjusted.
+    
+    * fix(ui5-input): fix typeahead on mobile devices
+    
+    add tests
+    
+    * fix(ui5-input): fix typeahead on mobile devices
+    
+    try different DOM selectors in the mobile tests
+    
+    * fix(ui5-input): fix typeahead on mobile devices
+    
+    adjust mobile tests
+    
+    * fix(ui5-input): fix typeahead on mobile devices
+    
+    adjust tests
+    
+    * fix(ui5-input): fix typeahead on mobile devices
+    
+    adjust mobile tests
