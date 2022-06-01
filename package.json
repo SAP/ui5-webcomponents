@@ -28,6 +28,7 @@
     "build:playground": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
     "build:playground_as_admin": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build_as_admin",
     "build:playground:master": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build:master",
+    "build:playground:master_as_admin": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build:master_as_admin",
     "clean": "wsrun --exclude-missing clean",
     "prepare:main": "yarn workspace @ui5/webcomponents nps prepare",
     "prepare:fiori": "yarn workspace @ui5/webcomponents-fiori nps prepare",
