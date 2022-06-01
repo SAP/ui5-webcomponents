@@ -26,7 +26,7 @@ var THEMES = {
   "sap_belize_hcw": "hcw",
   "sap_horizon": "horizon",
   "sap_horizon_dark": "horizon--dark",
-  "sap_horizon_hcb": "horizon--hcw",
+  "sap_horizon_hcb": "horizon--hcb",
   "sap_horizon_hcw": "horizon--hcw",
 }
 

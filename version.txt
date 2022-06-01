@@ -1,5 +1,5 @@
-commit da3b4e2cf3a6284933ab53d7ac72d5cb2f3db140
+commit 7246b5fe03dbd86a9551adfa28b9414263fbc97e
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Thu May 26 14:12:14 2022 +0300
+Date:   Wed Jun 1 11:49:20 2022 +0300
 
-    docs: add the new themes to playground switch
+    test: deploy latest playground
