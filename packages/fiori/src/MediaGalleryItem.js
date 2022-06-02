@@ -119,7 +119,7 @@ const metadata = {
 			defaultValue: "",
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.fiori.MediaGalleryItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.MediaGalleryItem.prototype */ {
 		/**
 		 * Defines the content of the component.
 		 *

@@ -15,7 +15,7 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  */
 const metadata = {
 	languageAware: true,
-	properties: /** @lends  sap.ui.webcomponents.main.DateComponentBase.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.DateComponentBase.prototype */ {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.

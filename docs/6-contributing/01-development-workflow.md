@@ -81,7 +81,7 @@ Just follow the link posted in the PR by the CLA assistant.
 
 **5.4.** Immediately after the PR is created, a central build process starts to verify the change,
 building the project and running all tests.
-In case you are interested in the build output, you can follow the link at the bottom of the PR page, called "continuous-integration/travis-ci/pr".
+In case you are interested in the build output, you can follow the link at the bottom of the PR page.
 
 **5.5.** Wait for our code review and approval. 
 After the PR is approved, the UI5 Web Components team will merge the change into the main branch.

@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Breadcrumbs.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Breadcrumbs.prototype */ {
 
 		/**
 		 * Defines the visual indication and behavior of the breadcrumbs.
@@ -115,7 +115,7 @@ const metadata = {
 		},
 
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Breadcrumbs.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Breadcrumbs.prototype */ {
 
 		/**
 		 * Fires when a <code>BreadcrumbsItem</code> is clicked.

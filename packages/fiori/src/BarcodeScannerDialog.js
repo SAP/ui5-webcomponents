@@ -37,9 +37,9 @@ const defaultMediaConstraints = {
 const metadata = {
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
-	slots: /** @lends  sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
 	},
-	properties: /** @lends  sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
 		/**
 		 * Indicates whether a loading indicator should be displayed in the dialog.
 		 *
@@ -51,7 +51,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
 		/**
 		 * Fires when the scan is completed successfuuly.
 		 *

@@ -26,7 +26,7 @@ const STEP_SIZE = 16;
  */
 const metadata = {
 	tag: "ui5-dialog",
-	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 * <br><br>
@@ -52,7 +52,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header text.
 		 * <br><br>
