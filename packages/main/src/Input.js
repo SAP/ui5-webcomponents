@@ -804,7 +804,7 @@ class Input extends UI5Element {
 
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
-
+		const innerInput = this.getInputDOMRefSync();
 		// Check for autocompleted item
 		const matchingItem = this.suggestionItems.find(item => {
 			return (item.text && item.text === this.value) || (item.textContent === this.value);
@@ -820,8 +820,12 @@ class Input extends UI5Element {
 			}
 		}
 
+		if (this._isPhone && !this.suggestionItems.length) {
+			innerInput.setSelectionRange(this.value.length, this.value.length);
+		}
+
 		if (!itemPressed) {
-			this.fireEventByAction(this.ACTION_ENTER);
+			this.fireEventByAction(this.ACTION_ENTER, event);
 			this.lastConfirmedValue = this.value;
 
 			if (this.FormSupport) {
@@ -902,7 +906,6 @@ class Input extends UI5Element {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 		this.valueBeforeItemPreview = this.value;
-		this._shouldAutocomplete = false;
 
 		this._inputIconFocused = event.target && event.target === this.querySelector("[ui5-icon]");
 	}
@@ -995,7 +998,9 @@ class Input extends UI5Element {
 	_handleInput(event) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
+		const eventType = event.inputType || event.detail.inputType;
 
+		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
 		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
@@ -1030,7 +1035,7 @@ class Input extends UI5Element {
 				this.valueBeforeItemPreview = newValue;
 
 				// fire events
-				this.fireEvent(this.EVENT_INPUT);
+				this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
 				this.fireEvent("value-changed");
 				return;
 			}
@@ -1049,7 +1054,7 @@ class Input extends UI5Element {
 		*/
 		const skipFiring = (inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 
-		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
+		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT, event);
 
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
@@ -1090,7 +1095,11 @@ class Input extends UI5Element {
 		this.value = value;
 
 		innerInput.value = value;
-		innerInput.setSelectionRange(filterValue.length, value.length);
+		setTimeout(() => {
+			innerInput.setSelectionRange(filterValue.length, value.length);
+		}, 0);
+
+		this._shouldAutocomplete = false;
 	}
 
 	_handleResize() {
@@ -1242,7 +1251,7 @@ class Input extends UI5Element {
 		return this.getSuggestionByListItem(this._previewItem);
 	}
 
-	async fireEventByAction(action) {
+	async fireEventByAction(action, event) {
 		await this.getInputDOMRef();
 
 		if (this.disabled || this.readonly) {
@@ -1268,7 +1277,7 @@ class Input extends UI5Element {
 		}
 
 		if (isUserInput) { // input
-			this.fireEvent(this.EVENT_INPUT);
+			this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 			return;
@@ -1300,8 +1309,8 @@ class Input extends UI5Element {
 	}
 
 	getInputDOMRefSync() {
-		if (isPhone() && this.Suggestions) {
-			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		if (isPhone() && this.Suggestions && this.Suggestions.responsivePopover) {
+			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone").shadowRoot.querySelector("input");
 		}
 
 		return this.nativeInput;

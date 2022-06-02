@@ -26,7 +26,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
-		 * Defines if the avatar is interactive (focusable and pressable)
+		 * Defines if the avatar is interactive (focusable and pressable).
 		 * @type {boolean}
 		 * @defaultValue false
 		 * @public
@@ -44,9 +44,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the name of the UI5 Icon, that would be displayed.
+		 * Defines the name of the UI5 Icon, that will be displayed.
 		 * <br>
-		 * <b>Note:</b> If <code>image</code> slot is provided, the property would be ignored.
+		 * <b>Note:</b> If <code>image</code> slot is provided, the property will be ignored.
 		 * <br>
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
@@ -226,7 +226,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * An image-like control that has different display options for representing images and icons
+ * An image-like component that has different display options for representing images and icons
  * in different shapes and sizes, depending on the use case.
  *
  * The shape can be circular or square. There are several predefined sizes, as well as an option to

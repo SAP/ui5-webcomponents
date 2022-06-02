@@ -13,7 +13,7 @@ describe("Select mobile general interaction", () => {
 		const selectText = await select.shadow$(".ui5-select-label-root");
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, "Condensed", "The current selection is 'Condensed'");
-		
+
 		// act - open as dialog
 		select.click();
 
