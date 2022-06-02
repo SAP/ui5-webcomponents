@@ -131,7 +131,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-page</code> is a container control that holds one whole screen of an application.
+ * The <code>ui5-page</code> is a container component that holds one whole screen of an application.
  * The page has three distinct areas that can hold content - a header, content area and a footer.
  * <h3>Structure</h3>
  * <h4>Header</h4>
