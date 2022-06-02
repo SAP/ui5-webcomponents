@@ -75,10 +75,11 @@ describe("Card general interaction", () => {
 		const cardHeader = await $("#card2").$("ui5-card-header");
 
 		// Default value
-		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "3");
+		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "3");
 
-		await cardHeader.setAttribute("aria-level", 4);
-		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "4");
+		const cardHeaderTitle = await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title");
+		await cardHeaderTitle.setAttribute("aria-level", 4);
+		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "4");
 	});
 });
 
