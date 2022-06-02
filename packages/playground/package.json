@@ -24,8 +24,8 @@
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist",
     "build_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist",
-    "build:master": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_master.yml",
-    "build:master_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_master.yml",
+    "build:main": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
+    "build:main_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "clean:pages": "rimraf ./docs/pages/content/main && rimraf ./docs/pages/content/fiori",

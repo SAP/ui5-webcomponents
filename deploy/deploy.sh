@@ -25,7 +25,7 @@
 set -e # Exit with nonzero exit code if anything fails
 
 # Determine if the current commit is release
-TRAVIS_MASTER_BRANCH="master"
+TRAVIS_MAIN_BRANCH="main"
 TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH="latest-release-website"
 
 # Config variables
@@ -49,16 +49,16 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   # Enable use of extended pattern matching operators(*, ?, @, !)
   shopt -s extglob
 
-  # Remove all folders and files from gh-pages, but folder master
+  # Remove all folders and files from gh-pages, but folder main
   cd gh-pages
-  find . -maxdepth 1 ! -name master ! -name .git -exec rm -rv "{}" \; || exit 0
+  find . -maxdepth 1 ! -name main ! -name .git -exec rm -rv "{}" \; || exit 0
   cd ..
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
   yarn build:playground
 
-  # Move master build folder to gh-pages folder
+  # Move main build folder to gh-pages folder
   cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages
 
   # put the commit id as version
@@ -71,33 +71,33 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   ### End of publish docs on commit in latest-release-website branch
   ###
 
-  elif [ "$TRAVIS_BRANCH" == "$TRAVIS_MASTER_BRANCH" ]; then
+  elif [ "$TRAVIS_BRANCH" == "$TRAVIS_MAIN_BRANCH" ]; then
   ###
-  ### Publish master on every commit in master branch
+  ### Publish main on every commit in main branch
   ###
 
-  echo "Before update master version on gh-pages"
+  echo "Before update main version on gh-pages"
 
   # Clean gh-pages existing contents
-  rm -rf gh-pages/master|| exit 0
+  rm -rf gh-pages/main|| exit 0
 
-  mkdir gh-pages/master
+  mkdir gh-pages/main
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
-  yarn build:playground:master
+  yarn build:playground:main
 
-  # Move master build folder to gh-pages folder
-  cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/master
+  # Move main build folder to gh-pages folder
+  cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/main
 
   # put the commit id as version
-  echo "$(git log -1 HEAD)" > gh-pages/master/version.txt
+  echo "$(git log -1 HEAD)" > gh-pages/main/version.txt
 
-  echo "After update master version on gh-pages"
+  echo "After update main version on gh-pages"
   ls -a gh-pages
 
   ###
-  ### End of publish master on every commit in master branch
+  ### End of publish main on every commit in main branch
   ###
 fi
 

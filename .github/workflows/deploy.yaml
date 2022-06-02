@@ -1,8 +1,8 @@
-name: Master Playground
+name: Deploy Main Playground
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,11 +17,12 @@ jobs:
     - name: Install and Build
       run: |
         yarn install
-        yarn build:playground:master_as_admin
+        yarn build
+        yarn build:playground:main_as_admin
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/playground/dist # The folder the action should deploy.
-        target-folder: master
+        target-folder: main
         clean: true

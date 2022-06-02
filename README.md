@@ -2,7 +2,6 @@
 
 # UI5 Web Components
 
-[![Travis CI Build Status](https://travis-ci.com/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.com/github/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui5-webcomponents)](https://api.reuse.software/info/github.com/SAP/ui5-webcomponents)
 
