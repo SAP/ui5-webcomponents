@@ -188,6 +188,7 @@ describe("Input general interaction", () => {
 		// Act
 		await input.click();
 		await input.keys("f");
+		await browser.pause(1000); // GH Actions
 		await focusoutInput.click();
 
 		// Assert
@@ -345,11 +346,11 @@ describe("Input general interaction", () => {
 	it("handles suggestions selection cancel with ESC", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
-		const suggestionsInput = await browser.$("#myInputEsc").shadow$("input");
+		const suggestionsInput = await browser.$("#myInputEsc");
 
 		// act
 		await suggestionsInput.click();
-		await suggestionsInput.keys("ch");
+		await suggestionsInput.keys("c");
 		await suggestionsInput.keys("ArrowDown");
 
 		// assert
@@ -360,7 +361,7 @@ describe("Input general interaction", () => {
 		await suggestionsInput.keys("Escape");
 
 		// assert
-		assert.strictEqual(await suggestionsInput.getValue(), "ch",
+		assert.strictEqual(await suggestionsInput.getProperty("value"), "c",
 			"The value is restored as ESC has been pressed.");
 	});
 
@@ -379,19 +380,20 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await suggestionsInput.getValue(), "", "The value is restored as ESC has been pressed.");
 
-		await suggestionsInput.keys("Some value");
+		await suggestionsInput.keys(["a", "b", "c"]);
 		await suggestionsInput.keys("Enter");
-		await suggestionsInput.keys("Another value");
+		await suggestionsInput.keys(["c", "b", "a"]);
 
 		// Close sugggestions
 		await suggestionsInput.keys("Escape");
 		// Clear value
 		await suggestionsInput.keys("Escape");
 
-		assert.strictEqual(await suggestionsInput.getValue(), "Some value", "The value is restored to the last confirmed by 'ENTER' press one.");
+		assert.strictEqual(await suggestionsInput.getValue(), "abc", "The value is restored to the last confirmed by 'ENTER' press one.");
 	});
 
 	it("handles group suggestion item via keyboard", async () => {
+
 		const suggestionsInput = await browser.$("#myInputGrouping").shadow$("input");
 		const inputResult = await browser.$("#inputResultGrouping").shadow$("input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
@@ -498,7 +500,7 @@ describe("Input general interaction", () => {
 
 	it("Checks if aria-invalid is set correctly", async () => {
 		const inputError = await browser.$("#inputError");
-		const inputWarning = await browser.$("#input1"); 
+		const inputWarning = await browser.$("#input1");
 		const innerInputError = await inputError.shadow$("input");
 		const innerInputWarning = await inputWarning.shadow$("input");
 
@@ -539,19 +541,19 @@ describe("Input general interaction", () => {
 	it("Tests suggestions highlighting", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
-		const input = await browser.$("#myInputHighlighted").shadow$("input");
+		const input = await browser.$("#myInputHighlighted");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputHighlighted");
 		const EXPTECTED_TEXT = "<b>Ad</b>am";
 
 		await input.click();
-		await input.keys("ad");
+		await input.keys(["a", "d"]);
 
 		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(await respPopover.isDisplayedInViewport(), "The popover is visible");
 		const firstItemHtml = await firstListItem.getHTML();
-		assert.include(firstItemHtml, EXPTECTED_TEXT, "The suggestions is highlighted.");
+		assert.include(firstItemHtml, "<b>Ad</b>am", "The suggestions is highlighted.");
 	});
 
 	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", async () => {
@@ -1203,7 +1205,7 @@ describe("Lazy loading", () => {
 		await browser.keys("Tab");
 
 		await browser.pause(3000);
-		
+
 		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
 	});
 });

@@ -39,7 +39,7 @@ const loadThemeProperties = async (themeName) => {
 		throw new Error("[themes] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
 	}
 	return (await fetch(themeUrlsByName[themeName])).json();
-}
+};
 
 ${availableThemesArray}
   .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadThemeProperties));
@@ -54,7 +54,7 @@ const loadThemeProperties = async (themeName) => {
 ${dynamicImportLines}
 		default: throw "unknown theme"
 	}
-}
+};
 
 const loadAndCheck = async (themeName) => {
 	const data = await loadThemeProperties(themeName);
@@ -62,7 +62,7 @@ const loadAndCheck = async (themeName) => {
 		throw new Error(\`[themes] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
 	}
 	return data;
-}
+};
 
 ${availableThemesArray}
   .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadAndCheck));

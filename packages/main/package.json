@@ -21,6 +21,8 @@
     "serve": "wc-dev serve",
     "build": "wc-dev build",
     "test": "wc-dev test",
+    "test:suite-1": "wc-dev test-suite-1",
+    "test:suite-2": "wc-dev test-suite-2",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
   },

@@ -42,6 +42,10 @@
 	text-overflow: initial;
 }
 
+::slotted([ui5-button][slot="startButton"]) {
+	margin-inline-start: 0;
+}
+
 ::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
@@ -89,7 +93,8 @@ slot[name="profile"] {
 	border: none;
 }
 
-.ui5-shellbar-menu-button-title {
+.ui5-shellbar-menu-button-title,
+.ui5-shellbar-title {
 	display: inline-block;
 	font-family: "72override", var(--sapFontFamily);
 	margin: 0;
@@ -97,6 +102,7 @@ slot[name="profile"] {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	color: var(--sapShell_TextColor);
 	flex: auto;
 }
 
@@ -105,17 +111,8 @@ slot[name="profile"] {
 	justify-content: center;
 }
 
-:host(:not([primary-title])) .ui5-shellbar-menu-button span {
-	margin-inline-start: 0;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button span {
-	margin-inline-start: .5rem;
-}
-
 .ui5-shellbar-secondary-title {
 	display: inline-block;
-	margin: 0 0.5rem;
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapShell_TextColor);
 	line-height: 1rem;
@@ -157,16 +154,8 @@ slot[name="profile"] {
 	width: 3rem;
 }
 
-@keyframes Behind_layer {
-	0% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes Top_layer {
-	0% {
-		transform: rotate(-360deg);
-	}
+:host([breakpoint-size="S"]) .ui5-shellbar-menu-button {
+	margin-inline-start: 0;
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-root {
@@ -175,10 +164,6 @@ slot[name="profile"] {
 
 :host([breakpoint-size="S"]) .ui5-shellbar-search-full-width-wrapper {
 	padding: 0 1rem;
-}
-
-:host([breakpoint-size="S"]) ::slotted([ui5-button][slot="startButton"]) {
-	margin-inline-end: 0;
 }
 
 :host([breakpoint-size="M"]) .ui5-shellbar-root {
@@ -257,6 +242,10 @@ slot[name="profile"] {
 	flex-grow: 0;
 }
 
+.ui5-shellbar-overflow-container-left > :nth-child(n) {
+	margin-inline-end: 0.5rem;
+}
+
 :host([show-co-pilot]) .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
@@ -324,11 +313,6 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-secondary-title {
-	display: none;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-logo + .ui5-shellbar-menu-button-title,
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button + .ui5-shellbar-menu-button-title {
 	display: none;
 }
 
@@ -502,7 +486,6 @@ slot[name="profile"] {
 .ui5-shellbar-copilot-wrapper:hover::after {
 	background: transparent;
 	box-shadow: var(--sapContent_Interaction_Shadow);
-	
 }
 
 .ui5-shellbar-copilot-wrapper:focus::after {

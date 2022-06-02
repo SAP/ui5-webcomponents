@@ -316,7 +316,6 @@ exports.config = {
 			"click",
 			"doubleClick",
 			"dragAndDrop",
-			"keys",
 			"pause",
 			"removeAttribute", // custom
 			"scrollIntoView",
@@ -327,9 +326,20 @@ exports.config = {
 			"touchAction",
 			"url",
 		];
+
+		const waitForWithDelay = [
+			"keys",
+		];
+
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+			});
+		} else if (waitForWithDelay.includes(commandName)) {
+			await browser.executeAsync(function (done) {
+				setTimeout(() => {
+					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				}, 10);
 			});
 		}
 	},

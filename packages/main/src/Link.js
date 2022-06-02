@@ -206,9 +206,20 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
-		 * @native
+		 * @allowPreventDefault
+		 * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+		 * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+		 * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+		 * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
 		 */
-		click: {},
+		click: {
+			detail: {
+				altKey: { type: Boolean	},
+				ctrlKey: { type: Boolean },
+				metaKey: { type: Boolean },
+				shiftKey: { type: Boolean },
+			},
+		},
 	},
 };
 
@@ -331,7 +342,25 @@ class Link extends UI5Element {
 	}
 
 	_onclick(event) {
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = event;
+
 		event.isMarked = "link";
+
+		const executeEvent = this.fireEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		}, true);
+
+		if (!executeEvent) {
+			event.preventDefault();
+		}
 	}
 
 	_onfocusin(event) {
@@ -345,12 +374,7 @@ class Link extends UI5Element {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
-			event.preventDefault();
-			const executeEvent = this.fireEvent("click", null, true);
-
-			if (executeEvent) {
-				this.href && window.open(this.href, this.target);
-			}
+			this._onclick(event);
 		} else if (isSpace(event)) {
 			event.preventDefault();
 		}
@@ -364,11 +388,12 @@ class Link extends UI5Element {
 			return;
 		}
 
-		event.preventDefault();
+		this._onclick(event);
 
-		const executeEvent = this.fireEvent("click", null, true);
-		if (executeEvent) {
-			this.href && window.open(this.href, this.target);
+		if (this.href && !event.defaultPrevented) {
+			const customEvent = new MouseEvent("click");
+
+			this.getDomRef().dispatchEvent(customEvent);
 		}
 	}
 }
