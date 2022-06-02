@@ -17,7 +17,6 @@ jobs:
     - name: Install and Build
       run: |
         yarn install
-        yarn build
         yarn build:playground_as_admin
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
