@@ -5731,13 +5731,13 @@ on:</p>
 <h2 id="5-open-pull-request-pr-from-fork">5. Open pull request (PR) from fork.</h2>
 
 <p>You can open a pull request to the upstream repository from any branch or commit in your fork.
-We recommend that you make changes in a topic branch (not in your local master), so that you can push followup commits if you receive feedback on your pull request.</p>
+We recommend that you make changes in a topic branch (not in your local main branch), so that you can push followup commits if you receive feedback on your pull request.</p>
 
 <p>You can open a pull request from the Github UI.</p>
 
 <p><strong>5.1.</strong> Find the “Pull requests” tab and then press the “New pull request” button.</p>
 
-<p><strong>5.2.</strong> Compare the master branch of the upstream with a branch from your fork.</p>
+<p><strong>5.2.</strong> Compare the main branch of the upstream with a branch from your fork.</p>
 
 <p><strong>Note:</strong> The full guide on how to open PR from fork can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork">here</a>.</p>
 
@@ -5751,7 +5751,7 @@ building the project and running all tests.
 In case you are interested in the build output, you can follow the link at the bottom of the PR page, called “continuous-integration/travis-ci/pr”.</p>
 
 <p><strong>5.5.</strong> Wait for our code review and approval. 
-After the PR is approved, the UI5 Web Components team will merge the change into the master.</p>
+After the PR is approved, the UI5 Web Components team will merge the change into the main branch.</p>
 
 <h2 id="6-update-pull-request-created-from-a-fork">6. Update pull request, created from a fork.</h2>
 
@@ -5774,20 +5774,20 @@ and you would need to update it.</p>
 </code></pre></div></div>
 
 <p><strong>7.2.</strong> Fetch the branches and their respective commits from the upstream repository.
-Commits to master will be stored in a local branch, upstream/master.</p>
+Commits to main will be stored in a local branch, upstream/main.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git fetch upstream
 </code></pre></div></div>
 
-<p><strong>7.3.</strong> Check out your fork’s local master branch.</p>
+<p><strong>7.3.</strong> Check out your fork’s local main branch.</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout main
 </code></pre></div></div>
 
-<p><strong>7.4.</strong> Merge the changes from upstream/master into your local master branch.
-This brings your fork’s master branch into sync with the upstream repository, without losing your local changes.</p>
+<p><strong>7.4.</strong> Merge the changes from upstream/main into your local main branch.
+This brings your fork’s main branch into sync with the upstream repository, without losing your local changes.</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git merge upstream/master
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git merge upstream/main
 </code></pre></div></div>
 
 <p><strong>Note:</strong> The full guide on how to sync a fork can be found <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork">here</a>.</p>
