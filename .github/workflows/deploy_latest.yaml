@@ -24,4 +24,4 @@ jobs:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/playground/dist # The folder the action should deploy.
         clean: true
-        clean-exclude: master
+        clean-exclude: main
