@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Dialog</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webcomponents.main"
+		}
+	</script>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<style>
+		ui5-dialog .semantic-header {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			padding: 0.5rem;
+		}
+
+		ui5-dialog .semantic-header ui5-icon {
+			margin: 0 1rem;
+		}
+
+		ui5-dialog .semantic-footer {
+			display: flex;
+			justify-content: flex-end;
+			width: 100%;
+			padding: .25rem 1rem;
+		}
+
+		.txt {
+			margin: 1rem;
+			color: var(--sapTextColor);
+			font-family: var(--sapFontFamily);
+		}
+
+		/* WARNING DIALOG */
+		ui5-dialog.warning-dialog .semantic-header {
+			border-bottom: 1px solid var(--sapCriticalColor);
+		}
+		ui5-dialog.warning-dialog .semantic-header ui5-icon {
+			color: var(--sapCriticalColor);
+		}
+
+
+
+
+	</style>
+</head>
+
+<body>
+	<ui5-button id="btnWarning">Open Warning Dialog</ui5-button>
+
+	<ui5-dialog class="warning-dialog" id="dialogWarning">
+
+		<div slot="header" class="semantic-header">
+			<ui5-icon name="message-warning"></ui5-icon>
+			<ui5-title>Warning!</ui5-title>
+		</div>
+
+		<div class="txt">The project schedule was last updated over a year ago.</div>
+
+		<div slot="footer" class="semantic-footer">
+			<ui5-button id="btnWarningClose" design="Emphasized" style="width: 5rem;">Dismiss</ui5-button>
+		</div>
+	</ui5-dialog>
+
+
+
+	<script>
+		btnWarning.addEventListener("click", function () {
+			dialogWarning.open();
+		});
+		btnWarningClose.addEventListener("click", function () {
+			dialogWarning.close();
+		});
+	</script>
+</body>
+
+</html>

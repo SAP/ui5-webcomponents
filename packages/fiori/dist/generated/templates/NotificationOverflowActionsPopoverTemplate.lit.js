@@ -1,0 +1,8 @@
+/* eslint no-unused-vars: 0 */
+import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
+const block0 = (context, tags, suffix) => suffix ? html`<${scopeTag("ui5-popover", tags, suffix)} class="ui5-notification-overflow-popover" placement-type="Bottom" horizontal-align="Right" hide-arrow><div class="ui5-notification-overflow-list">${ repeat(context.overflowActions, (item, index) => item._id || index, (item, index) => block1(item, index, context, tags, suffix)) }</div></${scopeTag("ui5-popover", tags, suffix)}>` : html`<ui5-popover class="ui5-notification-overflow-popover" placement-type="Bottom" horizontal-align="Right" hide-arrow><div class="ui5-notification-overflow-list">${ repeat(context.overflowActions, (item, index) => item._id || index, (item, index) => block1(item, index, context, tags, suffix)) }</div></ui5-popover>`;
+const block1 = (item, index, context, tags, suffix) => suffix ? html`<${scopeTag("ui5-button", tags, suffix)} icon="${ifDefined(item.icon)}" design="Transparent" @click="${item.press}" ?disabled="${item.disabled}" design="${ifDefined(item.design)}" data-ui5-external-action-item-id="${ifDefined(item.refItemid)}">${ifDefined(item.text)}</${scopeTag("ui5-button", tags, suffix)}>` : html`<ui5-button icon="${ifDefined(item.icon)}" design="Transparent" @click="${item.press}" ?disabled="${item.disabled}" design="${ifDefined(item.design)}" data-ui5-external-action-item-id="${ifDefined(item.refItemid)}">${ifDefined(item.text)}</ui5-button>`;
+
+
+export default block0;

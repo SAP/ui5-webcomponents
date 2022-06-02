@@ -1,0 +1,197 @@
+<header class="component-heading">
+	<h2 class="control-header">Tree</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-tree&gt;</div>
+
+<!--Basic -->
+<section>
+	<h3>Basic Tree</h3>
+	<div class="snippet">
+		<ui5-tree id="myTree" class="full-width">
+			<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+				<ui5-tree-item expanded text="Tree 1.1" selected>
+					<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+				</ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item text="Tree 2" icon="copy">
+				<ui5-tree-item text="Tree 2.1">
+					<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2">
+						<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+						<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+						<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+						<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+					</ui5-tree-item>
+				</ui5-tree-item>
+				<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+			</ui5-tree-item>
+
+			<ui5-tree-item expanded text="Tree 3 (no icon)">
+			</ui5-tree-item>
+		</ui5-tree>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tree id="myTree" class="full-width">
+	<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+		<ui5-tree-item expanded text="Tree 1.1" selected>
+			<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+			<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree-item>
+	<ui5-tree-item text="Tree 2" icon="copy">
+		<ui5-tree-item text="Tree 2.1">
+			<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+			<ui5-tree-item text="Tree 2.1.2">
+				<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
+		<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+	</ui5-tree-item>
+
+	<ui5-tree-item expanded text="Tree 3 (no icon)">
+	</ui5-tree-item>
+</ui5-tree>
+	</xmp></pre>
+</section>
+
+<!--Multi -->
+<section>
+	<h3>Tree with multiple selection</h3>
+	<div class="snippet">
+		<ui5-tree id="myTree" class="full-width" mode="MultiSelect">
+			<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+				<ui5-tree-item expanded text="Tree 1.1" selected>
+					<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+				</ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item text="Tree 2" icon="copy">
+				<ui5-tree-item text="Tree 2.1">
+					<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2">
+						<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+						<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+						<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+						<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+					</ui5-tree-item>
+				</ui5-tree-item>
+				<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+			</ui5-tree-item>
+
+			<ui5-tree-item expanded text="Tree 3 (no icon)">
+			</ui5-tree-item>
+		</ui5-tree>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tree id="myTree" class="full-width">
+	<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+		<ui5-tree-item expanded text="Tree 1.1" selected>
+			<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+			<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree-item>
+	<ui5-tree-item text="Tree 2" icon="copy">
+		<ui5-tree-item text="Tree 2.1">
+			<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+			<ui5-tree-item text="Tree 2.1.2">
+				<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
+		<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+	</ui5-tree-item>
+
+	<ui5-tree-item expanded text="Tree 3 (no icon)">
+	</ui5-tree-item>
+</ui5-tree>
+	</xmp></pre>
+</section>
+
+<!-- dynamic -->
+<section>
+	<h3>Tree with dynamic content</h3>
+	<div class="snippet">
+		<ui5-busy-indicator id="busy" class="full-width">
+			<ui5-tree id="treeDynamic" mode="None" class="full-width">
+				<ui5-tree-item text="Has pre-loaded children">
+					<ui5-tree-item text="Child 1"></ui5-tree-item>
+					<ui5-tree-item text="Child 2"></ui5-tree-item>
+				</ui5-tree-item>
+
+				<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+
+				<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+			</ui5-tree>
+		</ui5-busy-indicator>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-busy-indicator id="busy" class="full-width">
+	<ui5-tree id="treeDynamic" mode="None" class="full-width">
+		<ui5-tree-item text="Has pre-loaded children">
+			<ui5-tree-item text="Child 1"></ui5-tree-item>
+			<ui5-tree-item text="Child 2"></ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+
+		<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+	</ui5-tree>
+</ui5-busy-indicator>
+
+<script>
+	var busyIndicator = document.getElementById("busy");
+	var dynamicTree = document.getElementById("treeDynamic");
+	dynamicTree.addEventListener("item-toggle", function(event) {
+		var item = event.detail.item; // get the node that is toggled
+
+		// Only for the dynamic node, and only when it's empty
+		if (item.id === "dynamicNode" && item.children.length === 0) {
+			busyIndicator.active = true; // block the tree from the user
+			event.preventDefault(); // do not let the toggle button switch yet
+			setTimeout(function() {
+				var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+				newItem.text = "Node fetched from DB after 2 sec";
+				item.appendChild(newItem); // add the newly fetched node to the tree
+				item.toggle(); // now manually switch the toggle button
+				busyIndicator.active = false; // unblock the tree
+			}, 2000);
+		}
+	});
+</script>
+	</xmp></pre>
+
+	<script>
+		var busyIndicator = document.getElementById("busy");
+		var dynamicTree = document.getElementById("treeDynamic");
+		dynamicTree.addEventListener("item-toggle", function(event) {
+			var item = event.detail.item; // get the node that is toggled
+
+			// Only for the dynamic node, and only when it's empty
+			if (item.id === "dynamicNode" && item.children.length === 0) {
+				busyIndicator.active = true; // block the tree from the user
+				event.preventDefault(); // do not let the toggle button switch yet
+				setTimeout(function() {
+					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					newItem.text = "Node fetched from DB after 2 sec";
+					item.appendChild(newItem); // add the newly fetched node to the tree
+					item.toggle(); // now manually switch the toggle button
+					busyIndicator.active = false; // unblock the tree
+				}, 2000);
+			}
+		});
+	</script>
+</section>
+
+<!-- JSDoc marker -->

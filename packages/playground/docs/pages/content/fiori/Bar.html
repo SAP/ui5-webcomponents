@@ -1,0 +1,70 @@
+---
+title: Bar
+permalink: /playground/fiori/pages/Bar/
+nav_exclude: true
+---
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Bar test page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+
+	<script src="{{ "/assets/js/ui5-webcomponents/bundle.esm.js" | absolute_url }}" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="{{ "/assets/js/ui5-webcomponents/fiori/styles/Bar.css" | absolute_url }}">
+</head>
+
+<body class="bar1auto">
+	<section>
+		<ui5-title level="3">Header design</ui5-title>
+		<ui5-bar design="Header">
+			<ui5-button icon="home" tooltip="Go home" slot="startContent"></ui5-button>
+			<ui5-label>Title</ui5-label>
+			<ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+		</ui5-bar>
+		<br>
+
+		<ui5-title level="3">Subheader design</ui5-title>
+		<br>
+		<ui5-bar design="Subheader">
+			<div slot="startContent" class="bar2auto">
+				<ui5-button>Start Button</ui5-button>
+				<ui5-label>Basic Label</ui5-label>
+			</div>
+
+			<ui5-button>Middle1 Button</ui5-button>
+			<ui5-button>Middle2 Button</ui5-button>
+
+			<ui5-label slot="endContent">Basic Label</ui5-label>
+			<ui5-button slot="endContent">End Button</ui5-button>
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+
+		<br>
+		<ui5-title level="3">Footer design</ui5-title>
+		<ui5-bar design="Footer">
+			<ui5-icon name="home" slot="startContent"></ui5-icon>
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+
+		<br>
+		<ui5-title level="3">FloatingFooter design</ui5-title>
+		<ui5-bar design="FloatingFooter">
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+	</section>
+</body>
+</html>

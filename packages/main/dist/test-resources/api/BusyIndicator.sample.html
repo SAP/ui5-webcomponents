@@ -1,0 +1,222 @@
+<style>
+	.center {
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.flex {
+		display: flex;
+		flex-direction: column;
+	}
+
+	#busy-container {
+		margin-top: 2rem;
+	}
+
+	#fetch-list {
+		width: 100%;
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">BusyIndicator</h2>
+	<div class="component-heading-since">
+		<span>v0.12.0</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-busy-indicator&gt;</div>
+
+<section>
+		<h3>Busy Indicator with different size</h3>
+		<div class="snippet flex center">
+			<ui5-busy-indicator active size="Small"></ui5-busy-indicator>
+			<ui5-busy-indicator active size="Medium"></ui5-busy-indicator>
+			<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
+		</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-busy-indicator active size="Small"></ui5-busy-indicator>
+<ui5-busy-indicator active size="Medium"></ui5-busy-indicator>
+<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
+	</xmp></pre>
+</section>
+
+
+<section>
+	<h3>Busy Indicator wrapping other elements</h3>
+	<div class="snippet flex">
+		<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
+
+		<ui5-busy-indicator id="busy-container" size="Medium">
+			<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
+		</ui5-busy-indicator>
+
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
+
+<ui5-busy-indicator id="busy-container" size="Medium">
+	<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
+</ui5-busy-indicator>
+
+<script>
+	const busyIndicator = document.getElementById("busy-container");
+	const list = document.getElementById("fetch-list");
+	const fetchBtn = document.getElementById("fetch-btn");
+
+	fetchBtn.addEventListener("click", event => {
+		busyIndicator.active = true;
+
+		setTimeout(() => {
+			const elements = ["UI5", "Web", "Components"].forEach(title => {
+				const el = document.createElement("ui5-li");
+				el.textContent = title;
+				list.appendChild(el);
+			});
+
+			busyIndicator.active = false;
+		}, 2000);
+	});
+</script>
+	</xmp></pre>
+</section>
+
+	<script>
+		var busyIndicator = document.getElementById("busy-container");
+		var list = document.getElementById("fetch-list");
+
+		document.getElementById("fetch-btn").addEventListener("click", function(event) {
+			busyIndicator.active = true;
+
+			setTimeout(function() {
+				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
+					var el = document.createElement("ui5-li");
+					el.textContent = title;
+					list.appendChild(el);
+				});
+
+				busyIndicator.active = false;
+			}, 2000);
+		});
+	</script>
+</body>
+
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-busy-indicator</code> signals that some operation is going on and that the user must wait. It does not block the current UI screen so other operations could be triggered in parallel. It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
+
+<h3>Usage</h3> For the <code>ui5-busy-indicator</code> you can define the size, the text and whether it is shown or hidden. In order to hide it, use the "active" property. <br><br> In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busy-indicator</code> instance. <br> <b>Note:</b> Since <code>ui5-busy-indicator</code> has <code>display: inline-block;</code> by default and no width of its own, whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
+
+<h4>When to use:</h4> <ul> <li>The user needs to be able to cancel the operation.</li> <li>Only part of the application or a particular control is affected.</li> </ul>
+
+<h4>When not to use:</h4> <ul> <li>The operation takes less than one second.</li> <li>You need to block the screen and prevent the user from starting another activity.</li> <li>Do not show multiple busy indicators at once.</li> </ul>
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/BusyIndicator";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          active
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if the busy indicator is visible on the screen. By default it is not.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          delay
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">1000</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          size
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">BusyIndicatorSize</div>
+                        <div class="cell api-table-content-cell">&quot;Medium&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the size of the component.
+            
+            <br><br> <b>Note:</b>
+            
+            <ul> <li><code>Small</code></li> <li><code>Medium</code></li> <li><code>Large</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          text
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines text to be displayed below the component. It can be used to inform the user of the current operation.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.7</div>
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Determines the content over which the component will appear.</div>
+                    </div>
+            
+                </div>
+            
+            
+            
+          </section>
+        </section>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>

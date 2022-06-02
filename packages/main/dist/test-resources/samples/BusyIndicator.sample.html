@@ -1,0 +1,106 @@
+<style>
+	.center {
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.flex {
+		display: flex;
+		flex-direction: column;
+	}
+
+	#busy-container {
+		margin-top: 2rem;
+	}
+
+	#fetch-list {
+		width: 100%;
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">BusyIndicator</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-busy-indicator&gt;</div>
+
+<section>
+		<h3>Busy Indicator with different size</h3>
+		<div class="snippet flex center">
+			<ui5-busy-indicator active size="Small"></ui5-busy-indicator>
+			<ui5-busy-indicator active size="Medium"></ui5-busy-indicator>
+			<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
+		</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-busy-indicator active size="Small"></ui5-busy-indicator>
+<ui5-busy-indicator active size="Medium"></ui5-busy-indicator>
+<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
+	</xmp></pre>
+</section>
+
+
+<section>
+	<h3>Busy Indicator wrapping other elements</h3>
+	<div class="snippet flex">
+		<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
+
+		<ui5-busy-indicator id="busy-container" size="Medium">
+			<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
+		</ui5-busy-indicator>
+
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
+
+<ui5-busy-indicator id="busy-container" size="Medium">
+	<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
+</ui5-busy-indicator>
+
+<script>
+	const busyIndicator = document.getElementById("busy-container");
+	const list = document.getElementById("fetch-list");
+	const fetchBtn = document.getElementById("fetch-btn");
+
+	fetchBtn.addEventListener("click", event => {
+		busyIndicator.active = true;
+
+		setTimeout(() => {
+			const elements = ["UI5", "Web", "Components"].forEach(title => {
+				const el = document.createElement("ui5-li");
+				el.textContent = title;
+				list.appendChild(el);
+			});
+
+			busyIndicator.active = false;
+		}, 2000);
+	});
+</script>
+	</xmp></pre>
+</section>
+
+	<script>
+		var busyIndicator = document.getElementById("busy-container");
+		var list = document.getElementById("fetch-list");
+
+		document.getElementById("fetch-btn").addEventListener("click", function(event) {
+			busyIndicator.active = true;
+
+			setTimeout(function() {
+				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
+					var el = document.createElement("ui5-li");
+					el.textContent = title;
+					list.appendChild(el);
+				});
+
+				busyIndicator.active = false;
+			}, 2000);
+		});
+	</script>
+</body>
+
+<!-- JSDoc marker -->

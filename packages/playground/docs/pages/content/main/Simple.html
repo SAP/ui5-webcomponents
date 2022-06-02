@@ -1,0 +1,38 @@
+---
+title: Simple
+permalink: /playground/main/pages/Simple/
+nav_exclude: true
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <title>Button</title>
+
+
+
+
+	<script src="{{ "/assets/js/ui5-webcomponents/bundle.esm.js" | absolute_url }}" type="module"></script>
+
+
+<link rel="stylesheet" type="text/css" href="{{ "/assets/js/ui5-webcomponents/main/styles/Simple.css" | absolute_url }}">
+</head>
+
+<body class="simple1auto">
+
+<ui5-datepicker></ui5-datepicker>
+
+<ui5-button id="b">test</ui5-button>
+
+<ui5-select id="mySelect">
+	<ui5-option selected id="o1">Cozy</ui5-option>
+	<ui5-option selected id="o2">Compact</ui5-option>
+</ui5-select>
+
+<ui5-busy-indicator delay="2000"></ui5-busy-indicator>
+
+</body>
+</html>

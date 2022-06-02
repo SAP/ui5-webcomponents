@@ -1,0 +1,11 @@
+/* eslint no-unused-vars: 0 */
+import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
+const block0 = (context, tags, suffix) => suffix ? html`<${scopeTag("ui5-popover", tags, suffix)} skip-registry-update _disable-initial-focus prevent-focus-restore hide-arrow class="ui5-valuestatemessage-popover" placement-type="Bottom" horizontal-align="Left"><div slot="header" class="${classMap(context.classes.popoverValueState)}" style="${styleMap(context.styles.popoverHeader)}">${ context._valueStateMessageInputIcon ? block1(context, tags, suffix) : undefined }${ context.shouldDisplayDefaultValueStateMessage ? block2(context, tags, suffix) : block3(context, tags, suffix) }</div></${scopeTag("ui5-popover", tags, suffix)}>` : html`<ui5-popover skip-registry-update _disable-initial-focus prevent-focus-restore hide-arrow class="ui5-valuestatemessage-popover" placement-type="Bottom" horizontal-align="Left"><div slot="header" class="${classMap(context.classes.popoverValueState)}" style="${styleMap(context.styles.popoverHeader)}">${ context._valueStateMessageInputIcon ? block1(context, tags, suffix) : undefined }${ context.shouldDisplayDefaultValueStateMessage ? block2(context, tags, suffix) : block3(context, tags, suffix) }</div></ui5-popover>`;
+const block1 = (context, tags, suffix) => suffix ? html`<${scopeTag("ui5-icon", tags, suffix)} class="ui5-input-value-state-message-icon" name="${ifDefined(context._valueStateMessageInputIcon)}"></${scopeTag("ui5-icon", tags, suffix)}>` : html`<ui5-icon class="ui5-input-value-state-message-icon" name="${ifDefined(context._valueStateMessageInputIcon)}"></ui5-icon>`;
+const block2 = (context, tags, suffix) => html`${ifDefined(context.valueStateText)}`;
+const block3 = (context, tags, suffix) => html`${ repeat(context.valueStateMessageText, (item, index) => item._id || index, (item, index) => block4(item, index, context, tags, suffix)) }`;
+const block4 = (item, index, context, tags, suffix) => html`${ifDefined(item)}`;
+
+
+export default block0;

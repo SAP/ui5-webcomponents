@@ -1,0 +1,159 @@
+---
+layout: sample
+title: Barcode Scanner Dialog
+parent: Components
+permalink: /playground/components/BarcodeScannerDialog/
+newComponent: false
+nav_order: 5
+---
+<header class="component-heading">
+	<h2 class="control-header">BarcodeScannerDialog</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.15</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents-fiori</div>
+
+<div class="control-tag">&lt;ui5-barcode-scanner-dialog&gt;</div>
+
+<section>
+	<h3>Usage</h3>
+	<div class="snippet">
+		<ui5-barcode-scanner-dialog id="dlgScan"></ui5-barcode-scanner-dialog>
+
+		<ui5-button id="btnScan" icon="camera" tooltip="Start Camera">Scan</ui5-button>
+		<div>
+			<ui5-label id="scanResult"></ui5-label>
+			<ui5-label id="scanError"></ui5-label>
+		</div>
+
+		<script>
+			btnScan.addEventListener("click", function(event) {
+				dlgScan.show();
+			});
+
+			dlgScan.addEventListener("scan-success", function(event) {
+				scanResult.innerHTML = event.detail.text;
+				dlgScan.close();
+			});
+
+			dlgScan.addEventListener("scan-error", function(event) {
+				scanError.innerHTML = event.detail.message;
+				dlgScan.close();
+			});
+		</script>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-barcode-scanner-dialog id="dlgScan"></ui5-barcode-scanner-dialog>
+
+<ui5-button id="btnScan" icon="camera" tooltip="Start Camera">Scan</ui5-button>
+<ui5-label id="scanResult"></ui5-label>
+<ui5-label id="scanError"></ui5-label>
+
+<script>
+	btnScan.addEventListener("click", function(event) {
+		dlgScan.show();
+	});
+
+	dlgScan.addEventListener("scan-success", function(event) {
+		scanResult.innerHTML = event.detail.text;
+		dlgScan.close();
+	});
+
+	dlgScan.addEventListener("scan-error", function(event) {
+		scanError.innerHTML = event.detail.message;
+		dlgScan.close();
+	});
+</script>
+	{% endhighlight %}</pre>
+</section>
+
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>BarcodeScannerDialog</code> component provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API. Opening the dialog launches the device camera and scans for known barcode formats. <br> <br> A <code>scanSuccess</code> event fires whenever a barcode is identified and a <code>scanError</code> event fires when the scan failed (for example, due to missing permisions). <br> <br> Internally, the component uses the zxing-js/library third party OSS.
+
+For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.
+          <section class="component-api space-top">
+            
+            
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">scan-error</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fires when the scan fails with error.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">message</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> string <br/> <strong class="api-table-event-description bold">description:</strong> the error message</div>
+                          </div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">scan-success</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fires when the scan is completed successfuuly.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">text</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> string <br/> <strong class="api-table-event-description bold">description:</strong> the scan result as string</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">rawBytes</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Object <br/> <strong class="api-table-event-description bold">description:</strong> the scan result as a Uint8Array</div>
+                          </div>
+                        </tr>
+                  </div>
+            
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">close</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Closes the dialog and the scan session.</div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">show</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Shows a dialog with the camera videostream. Starts a scan session.</div>
+                      </div>
+            
+                  </div>
+            
+          </section>
+        </section>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>

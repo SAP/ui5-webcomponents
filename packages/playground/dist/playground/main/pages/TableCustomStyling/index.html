@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Web components Table</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+</head>
+
+<style>
+	.demo-table {
+		width: 100%;
+	}
+
+	body,
+	html {
+		margin: 0;
+		height: 100%;
+	}
+
+	/* All rows - height */
+	#tbl ui5-table-row::part(row) {
+		height: 4rem;
+	}
+	/* One row - higher than the rest */
+	#tbl ui5-table-row#row3::part(row) {
+		height: 6rem;
+	}
+
+	/* All columns - center both vertically and horizontally */
+	#tbl ui5-table-column::part(column) {
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	/* All cells - center both vertically and horizontally */
+	#tbl ui5-table-cell::part(cell) {
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	/* Title column & cells - left aligned */
+	#tbl ui5-table-cell.title-cell::part(cell),
+	#tbl ui5-table-column.title-column::part(column) {
+		text-align: left;
+	}
+
+	/* Price column & cells - right aligned with some padding */
+	#tbl ui5-table-cell.price-cell::part(cell),
+	#tbl ui5-table-column.price-column::part(column) {
+		text-align: right;
+		padding-right: 0.75rem;
+	}
+</style>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-table class="demo-table" id="tbl">
+		<!-- Columns -->
+		<ui5-table-column class="title-column" slot="columns">
+			<ui5-label>Product</ui5-label>
+		</ui5-table-column>
+
+		<ui5-table-column class="supplier-column" slot="columns" min-width="1024" popin-text="Supplier">
+			<ui5-label>Supplier</ui5-label>
+		</ui5-table-column>
+
+		<ui5-table-column class="dim-column" slot="columns" min-width="800" popin-text="Dimensions" demand-popin>
+			<div class="column-content">
+				<ui5-label>Dimensions</ui5-label>
+			</div>
+		</ui5-table-column>
+
+		<ui5-table-column class="weight-column" slot="columns" min-width="640" popin-text="Weight" demand-popin>
+			<ui5-label>Weight</ui5-label>
+		</ui5-table-column>
+
+		<ui5-table-column class="price-column" slot="columns">
+			<ui5-label>Price</ui5-label>
+		</ui5-table-column>
+
+
+		<ui5-table-row id="row1">
+			<ui5-table-cell class="title-cell">Notebook Basic 15</ui5-table-cell>
+			<ui5-table-cell>Very Best Screens</ui5-table-cell>
+			<ui5-table-cell>30 x 18 x 3 cm</ui5-table-cell>
+			<ui5-table-cell>4.2 KG</ui5-table-cell>
+			<ui5-table-cell class="price-cell">956 EUR</ui5-table-cell>
+		</ui5-table-row>
+
+		<ui5-table-row id="row2">
+			<ui5-table-cell class="title-cell">Notebook Basic 17</ui5-table-cell>
+			<ui5-table-cell>Very Best Screens</ui5-table-cell>
+			<ui5-table-cell>40 x 18 x 3 cm</ui5-table-cell>
+			<ui5-table-cell>4.6 KG</ui5-table-cell>
+			<ui5-table-cell class="price-cell">1956 EUR</ui5-table-cell>
+		</ui5-table-row>
+
+		<ui5-table-row id="row3">
+			<ui5-table-cell class="title-cell">Notebook Basic 19</ui5-table-cell>
+			<ui5-table-cell>Very Best Screens</ui5-table-cell>
+			<ui5-table-cell>50 x 18 x 3 cm</ui5-table-cell>
+			<ui5-table-cell>4.9 KG</ui5-table-cell>
+			<ui5-table-cell class="price-cell">2956 EUR</ui5-table-cell>
+		</ui5-table-row>
+
+	</ui5-table>
+
+	<script>
+		document.getElementById("tbl").addEventListener("rowClick", function(event) {
+			console.log("Row click: ", event.detail.row);
+		});
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<style>
+	.select {
+		max-width: 100%;
+		margin: 0.5rem;
+	}
+
+	@media (max-width:599px) {
+		.select {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">Select</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-select&gt;</div>
+
+<section>
+	<h3>Basic Select</h3>
+	<div class="snippet">
+		<ui5-select class="select">
+			<ui5-option icon="iphone">Phone</ui5-option>
+			<ui5-option icon="ipad">Tablet</ui5-option>
+			<ui5-option icon="laptop" selected>Desktop</ui5-option>
+		</ui5-select>
+		<ui5-select disabled class="select">
+				<ui5-option icon="iphone" selected>Phone</ui5-option>
+				<ui5-option icon="ipad">Tablet</ui5-option>
+				<ui5-option icon="laptop">Desktop</ui5-option>
+		</ui5-select>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-select class="select">
+	<ui5-option icon="iphone">Phone</ui5-option>
+	<ui5-option icon="ipad">Tablet</ui5-option>
+	<ui5-option icon="laptop" selected>Desktop</ui5-option>
+</ui5-select>
+<ui5-select disabled class="select">
+	<ui5-option icon="iphone" selected>Phone</ui5-option>
+	<ui5-option icon="ipad">Tablet</ui5-option>
+	<ui5-option icon="laptop">Desktop</ui5-option>
+</ui5-select>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Select with Value State and Value State Message</h3>
+	<div class="snippet">
+		<ui5-select value-state="Success" class="select">
+				<ui5-option icon="meal" selected>Apple</ui5-option>
+				<ui5-option icon="meal">Avocado</ui5-option>
+				<ui5-option icon="meal">Mango</ui5-option>
+		</ui5-select>
+		<ui5-select value-state="Warning" class="select">
+				<ui5-option icon="meal">Orange</ui5-option>
+				<ui5-option icon="meal" selected>Pumpkin</ui5-option>
+				<ui5-option icon="meal">Carrot</ui5-option>
+				<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+				<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-select>
+		<ui5-select value-state="Error" class="select">
+				<ui5-option icon="meal">Strawberry</ui5-option>
+				<ui5-option icon="meal">Tomato</ui5-option>
+				<ui5-option icon="meal" selected>Red Chili Pepper</ui5-option>
+				<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+				<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-select>
+		<ui5-select value-state="Information" class="select">
+			<ui5-option icon="meal">Blueberry</ui5-option>
+			<ui5-option icon="meal">Grape</ui5-option>
+			<ui5-option icon="meal" selected>Plum</ui5-option>
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+			<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-select>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-select value-state="Success" class="select">
+	<ui5-option icon="meal" selected>Apple</ui5-option>
+	<ui5-option icon="meal">Avocado</ui5-option>
+	<ui5-option icon="meal">Mango</ui5-option>
+</ui5-select>
+<ui5-select value-state="Warning" class="select">
+	<ui5-option icon="meal">Orange</ui5-option>
+	<ui5-option icon="meal" selected>Pumpkin</ui5-option>
+	<ui5-option icon="meal">Carrot</ui5-option>
+	<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+	<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+</ui5-select>
+<ui5-select value-state="Error" class="select">
+	<ui5-option icon="meal">Strawberry</ui5-option>
+	<ui5-option icon="meal">Tomato</ui5-option>
+	<ui5-option icon="meal" selected>Red Chili Pepper</ui5-option>
+	<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+	<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+</ui5-select>
+<ui5-select value-state="Information" class="select">
+	<ui5-option icon="meal">Blueberry</ui5-option>
+	<ui5-option icon="meal">Grape</ui5-option>
+	<ui5-option icon="meal" selected>Plum</ui5-option>
+	<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+</ui5-select>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Select with Two-Column Layout Items</h3>
+	<div class="snippet">
+		<ui5-select class="select">
+			<ui5-option additional-text="AT">Austria</ui5-option>
+			<ui5-option additional-text="BE">Belgium</ui5-option>
+			<ui5-option additional-text="BR">Brazil</ui5-option>
+			<ui5-option additional-text="BG">Bulgaria</ui5-option>
+			<ui5-option additional-text="CA">Canada</ui5-option>
+		</ui5-select>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-select class="select">
+	<ui5-option additional-text="AT">Austria</ui5-option>
+	<ui5-option additional-text="BE">Belgium</ui5-option>
+	<ui5-option additional-text="BR">Brazil</ui5-option>
+	<ui5-option additional-text="BG">Bulgaria</ui5-option>
+	<ui5-option additional-text="CA">Canada</ui5-option>
+</ui5-select>
+	</xmp></pre>
+</section>
+
+<!-- JSDoc marker -->

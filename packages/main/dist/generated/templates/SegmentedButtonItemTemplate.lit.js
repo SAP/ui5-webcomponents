@@ -1,0 +1,8 @@
+/* eslint no-unused-vars: 0 */
+import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
+const block0 = (context, tags, suffix) => html`<li role="option" aria-roledescription="${ifDefined(context.ariaDescription)}" aria-posinset="${ifDefined(context.posInSet)}" aria-setsize="${ifDefined(context.sizeOfSet)}" aria-selected="${ifDefined(context.pressed)}" class="ui5-button-root" aria-disabled="${ifDefined(context.disabled)}" data-sap-focus-ref  @focusout=${context._onfocusout} @focusin=${context._onfocusin} @click=${context._onclick} @mousedown=${context._onmousedown} @mouseup=${context._onmouseup} @keydown=${context._onkeydown} @keyup=${context._onkeyup} @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" tabindex=${ifDefined(context.tabIndexValue)} aria-label="${ifDefined(context.ariaLabelText)}" title="${ifDefined(context.tooltip)}">${ context.icon ? block1(context, tags, suffix) : undefined }<span id="${ifDefined(context._id)}-content" class="ui5-button-text"><bdi><slot></slot></bdi></span></li> `;
+const block1 = (context, tags, suffix) => suffix ? html`<${scopeTag("ui5-icon", tags, suffix)} class="ui5-button-icon" name="${ifDefined(context.icon)}" part="icon" ?show-tooltip=${context.showIconTooltip}></${scopeTag("ui5-icon", tags, suffix)}>` : html`<ui5-icon class="ui5-button-icon" name="${ifDefined(context.icon)}" part="icon" ?show-tooltip=${context.showIconTooltip}></ui5-icon>`;
+
+
+export default block0;

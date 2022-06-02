@@ -1,0 +1,400 @@
+---
+layout: sample
+title: Responsive Popover
+parent: Components
+permalink: /playground/components/ResponsivePopover/
+newComponent: false
+nav_order: 45
+---
+<header class="component-heading">
+	<h2 class="control-header">ResponsivePopover</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.6</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-responsive-popover&gt;</div>
+
+<section>
+	<h3>Basic ResponsivePopover</h3>
+	<div class="snippet">
+		<ui5-button id="openBtn" design="Emphasized">Open ResponsivePopover</ui5-button>
+
+		<ui5-responsive-popover id="hello-popover" header-text="Newsletter subscription">
+			<div style="width: auto;padding: 2rem;display: flex;flex-direction: column;justify-content: center;">
+				<ui5-label for="emailInput" required>Email: </ui5-label>
+				<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+				<ui5-label>Note: If you open the page in mobile, dialog would be displayed.</ui5-label>
+			</div>
+			<div slot="footer" class="popover-footer">
+				<ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
+			</div>
+		</ui5-responsive-popover>
+
+		<script>
+			var popover = document.getElementById("hello-popover");
+			var popoverOpener = document.getElementById("openBtn");
+			var popoverCloser = document.getElementById("closePopoverButton");
+
+			popoverOpener.addEventListener("click", function() {
+				popover.showAt(popoverOpener);
+			});
+			popoverCloser.addEventListener("click", function() {
+				popover.close();
+			});
+		</script>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-button id="openBtn" design="Emphasized">Open Popover</ui5-button>
+
+<ui5-responsive-popover id="hello-popover" header-text="Newsletter subscription">
+	<div class="flex-column">
+		<ui5-label for="emailInput" required>Email: </ui5-label>
+		<ui5-input id="emailInput" class="samples-margin-top" placeholder="Enter Email"></ui5-input>
+		<ui5-label>Note: If you open the page in mobile, dialog would be displayed.</ui5-label>
+	</div>
+	<div slot="footer" class="popover-footer">
+		<div style="flex: 1;"></div>
+		<ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
+	</div>
+</ui5-responsive-popover>
+
+<script>
+	var popover = document.getElementById("hello-popover");
+	var popoverOpener = document.getElementById("openBtn");
+	var popoverCloser = document.getElementById("closePopoverButton");
+
+	popoverOpener.addEventListener("click", function() {
+		popover.showAt(popoverOpener);
+	});
+	popoverCloser.addEventListener("click", function() {
+		popover.close();
+	});
+</script>
+	{% endhighlight %}</pre>
+</section>
+
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3> The <code>ui5-responsive-popover</code> acts as a Popover on desktop and tablet, while on phone it acts as a Dialog. The component improves tremendously the user experience on mobile.
+
+<h3>Usage</h3> Use it when you want to make sure that all the content is visible on any device.
+
+<h3>CSS Shadow Parts</h3>
+
+<ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM. <br> The <code>ui5-responsive-popover</code> exposes the following CSS Shadow Parts: <ul> <li>header - Used to style the header of the component</li> <li>content - Used to style the content of the component</li> <li>footer - Used to style the footer of the component</li> </ul>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          allowTargetOverlap
+                            <br>
+                                 <code>allow-target-overlap</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines if there is no enough space, the component can be placed over the target.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          headerText
+                            <br>
+                                 <code>header-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          hideArrow
+                            <br>
+                                 <code>hide-arrow</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines whether the component arrow is hidden.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          hideBackdrop
+                            <br>
+                                 <code>hide-backdrop</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the block layer will be shown if modal property is set to true.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.10</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          horizontalAlign
+                            <br>
+                                 <code>horizontal-align</code>
+                        </div>
+                        <div class="cell api-table-content-cell">PopoverHorizontalAlign</div>
+                        <div class="cell api-table-content-cell">&quot;Center&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the horizontal alignment of the component. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Stretch</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          modal
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the component should close when clicking/tapping outside of the popover. If enabled, it blocks any interaction with the background.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          opener
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the opener id of the element that the popover is shown at
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          placementType
+                            <br>
+                                 <code>placement-type</code>
+                        </div>
+                        <div class="cell api-table-content-cell">PopoverPlacementType</div>
+                        <div class="cell api-table-content-cell">&quot;Right&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines on which side the component is placed at. <br><br> Available options are: <ul> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          verticalAlign
+                            <br>
+                                 <code>vertical-align</code>
+                        </div>
+                        <div class="cell api-table-content-cell">PopoverVerticalAlign</div>
+                        <div class="cell api-table-content-cell">&quot;Center&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the vertical alignment of the component. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> <li><code>Stretch</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                                 <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessible name of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleNameRef
+                            <br>
+                                 <code>accessible-name-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the IDs of the elements that label the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.1.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          initialFocus
+                            <br>
+                                 <code>initial-focus</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the ID of the HTML Element, which will get the initial focus.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          open
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Indicates if the element is open
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          preventFocusRestore
+                            <br>
+                                 <code>prevent-focus-restore</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if the focus should be returned to the previously focused element, when the popup closes.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">footer</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the footer HTML Element.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element.</div>
+                    </div>
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the Popup.</div>
+                    </div>
+            
+                </div>
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">after-close</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired after the component is closed. <b>This event does not bubble.</b>
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">after-open</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired after the component is opened. <b>This event does not bubble.</b>
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">before-close</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">escPressed</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> Indicates that <code>ESC</code> key has triggered the event.</div>
+                          </div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">before-open</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">close</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Closes the popover/dialog.</div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">isOpen</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Tells if the responsive popover is open</div>
+                      </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">showAt</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Shows popover on desktop and dialog on mobile.</div>
+                      </div>
+            
+                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">opener</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the element that the popover is shown at</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">preventInitialFocus</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> Prevents applying the focus inside the popup</div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">applyFocus</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Focuses the element denoted by <code>initialFocus</code>, if provided, or the first focusable element otherwise.</div>
+                      </div>
+            
+                  </div>
+            
+          </section>
+        </section>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>

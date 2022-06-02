@@ -1,0 +1,177 @@
+<header class="component-heading">
+	<h2 class="control-header">Badge</h2>
+	<div class="component-heading-since">
+		<span>v0.12.0</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-badge&gt;</div>
+
+<section>
+	<h3>Basic Badge</h3>
+	<div class="snippet">
+		<ui5-badge color-scheme="1">available 1</ui5-badge>
+		<ui5-badge color-scheme="2">required 2</ui5-badge>
+		<ui5-badge color-scheme="3">3K</ui5-badge>
+		<ui5-badge color-scheme="4">bug 4</ui5-badge>
+		<ui5-badge color-scheme="5">in process 5</ui5-badge>
+		<ui5-badge color-scheme="6">in warehouse 6</ui5-badge>
+		<ui5-badge color-scheme="7">7$</ui5-badge>
+		<ui5-badge color-scheme="8">solution provided 8</ui5-badge>
+		<ui5-badge color-scheme="9">pending release 9</ui5-badge>
+		<ui5-badge color-scheme="10">customer action 10</ui5-badge>
+		<ui5-badge style="width:200px;">This would truncate as it is too long</ui5-badge>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-badge color-scheme="1">available 1</ui5-badge>
+<ui5-badge color-scheme="2">required 2</ui5-badge>
+<ui5-badge color-scheme="3">3</ui5-badge>
+<ui5-badge color-scheme="4">bug 4</ui5-badge>
+<ui5-badge color-scheme="5">in process 5</ui5-badge>
+<ui5-badge color-scheme="6">in warehouse 6</ui5-badge>
+<ui5-badge color-scheme="7">7</ui5-badge>
+<ui5-badge color-scheme="8">solution provided 8</ui5-badge>
+<ui5-badge color-scheme="9">pending release 9</ui5-badge>
+<ui5-badge color-scheme="10">customer action 10</ui5-badge>
+<ui5-badge style="width:200px;">This would truncate as it is too long</ui5-badge>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Badge with Icon</h3>
+	<div class="snippet">
+		<ui5-badge color-scheme="1">
+				<ui5-icon name="accept" slot="icon"></ui5-icon>done
+		</ui5-badge>
+		<ui5-badge color-scheme="2">
+				<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="3">
+				<ui5-icon name="add-equipment" slot="icon"></ui5-icon>in process
+		</ui5-badge>
+		<ui5-badge color-scheme="4">
+				<ui5-icon name="lab" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="5">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="6">
+				<ui5-icon name="pending" slot="icon"></ui5-icon>pending
+		</ui5-badge>
+		<ui5-badge color-scheme="7">
+				<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="8">
+				<ui5-icon name="locked" slot="icon"></ui5-icon>
+		</ui5-badge>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-badge color-scheme="1">
+	<ui5-icon name="accept" slot="icon"></ui5-icon>done
+</ui5-badge>
+<ui5-badge color-scheme="2">
+	<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
+</ui5-badge>
+<ui5-badge color-scheme="3">
+	<ui5-icon name="add-equipment" slot="icon"></ui5-icon>in process
+</ui5-badge>
+<ui5-badge color-scheme="4">
+	<ui5-icon name="lab" slot="icon"></ui5-icon>
+</ui5-badge>
+<ui5-badge color-scheme="5">
+	<ui5-icon name="email-read" slot="icon"></ui5-icon>
+</ui5-badge>
+<ui5-badge color-scheme="6">
+	<ui5-icon name="pending" slot="icon"></ui5-icon>pending
+</ui5-badge>
+<ui5-badge color-scheme="7">
+	<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
+</ui5-badge>
+<ui5-badge color-scheme="8">
+	<ui5-icon name="locked" slot="icon"></ui5-icon>
+</ui5-badge>
+	</xmp></pre>
+</section>
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-badge</code> is a small non-interactive component which contains text information and color chosen from a list of predefined color schemes. It serves the purpose to attract the user attention to some piece of information (state, quantity, condition, etc.).
+
+<h3>Usage Guidelines</h3> <ul> <li>If the text is longer than the width of the component, it doesn’t wrap, it shows ellipsis.</li> <li>When truncated, the full text is not visible, therefore, it’s recommended to make more space for longer texts to be fully displayed.</li> <li>Colors are not semantic and have no visual representation in High Contrast Black (sap_belize_hcb) theme.</li> </ul>
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/Badge";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          colorScheme
+                            <br>
+                                 <code>color-scheme</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;1&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the color scheme of the component. There are 10 predefined schemes. Each scheme applies different values for the <code>background-color</code> and <code>border-color</code>. To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default. <br><br> <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the component. <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">icon</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the icon to be displayed in the component.</div>
+                    </div>
+            
+                </div>
+            
+            
+            
+          </section>
+        </section>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>

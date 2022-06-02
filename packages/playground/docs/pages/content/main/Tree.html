@@ -1,0 +1,225 @@
+---
+title: Tree
+permalink: /playground/main/pages/Tree/
+nav_exclude: true
+---
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>ui5-tree</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+
+	<script src="{{ "/assets/js/ui5-webcomponents/bundle.esm.js" | absolute_url }}" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="{{ "/assets/js/ui5-webcomponents/main/styles/Tree.css" | absolute_url }}">
+</head>
+
+<body class="tree1auto">
+
+	<ui5-segmented-button id="density">
+		<ui5-toggle-button pressed>Cozy</ui5-toggle-button>
+		<ui5-toggle-button>Compact</ui5-toggle-button>
+	</ui5-segmented-button>
+
+	<br><br>
+	<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect">
+		<div slot="header" class="hdr">
+			<ui5-title>My tree</ui5-title>
+			<div class="spacer"></div>
+			<ui5-select id="modeSelect">
+				<ui5-option>None</ui5-option>
+				<ui5-option>SingleSelect</ui5-option>
+				<ui5-option>SingleSelectBegin</ui5-option>
+				<ui5-option>SingleSelectEnd</ui5-option>
+				<ui5-option selected>MultiSelect</ui5-option>
+
+				<ui5-option>Delete</ui5-option>
+			</ui5-select>
+			<ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
+			<ui5-button id="expandLevel2" icon="expand">Expand Level 2</ui5-button>
+			<ui5-button id="expandAll" icon="expand-all">Expand All</ui5-button>
+			<ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
+		</div>
+
+		<ui5-tree-item expanded text="Tree 1" icon="paste" additional-text="Available" indeterminate selected additional-text-state="Information">
+			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Error" indeterminate selected>
+				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Warning" selected></ui5-tree-item>
+				<ui5-tree-item text="Tree 1.1.2" additional-text="Available" additional-text-state="Success"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item text="Tree 2" icon="copy">
+			<ui5-tree-item text="Tree 2.1">
+				<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2">
+					<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+				</ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item expanded text="Tree 3 (no icon)">
+		</ui5-tree-item>
+
+	</ui5-tree>
+	Mouseover counter
+	<ui5-input id="mouseover-counter" value="0"></ui5-input>
+	Mouseout counter
+	<ui5-input id="mouseout-counter" value="0"></ui5-input>
+
+	<br><br>
+
+	<ui5-busy-indicator id="busy" class="full-width">
+		<ui5-tree id="treeDynamic" class="full-width">
+			<div slot="header" class="hdr">
+				<ui5-title>Dynamic tree</ui5-title>
+			</div>
+
+			<ui5-tree-item text="Has preloaded children">
+				<ui5-tree-item text="Child 1"></ui5-tree-item>
+				<ui5-tree-item text="Child 2"></ui5-tree-item>
+			</ui5-tree-item>
+
+			<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+
+			<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+		</ui5-tree>
+	</ui5-busy-indicator>
+
+	<br><br>
+
+	<ui5-tree id="preventable-click-event" class="full-width" mode="MultiSelect">
+		<div slot="header" class="hdr">
+			<ui5-title>Prevent item-click Events</ui5-title>
+		</div>
+		<ui5-tree-item expanded text="Tree 1" >
+			<ui5-tree-item text="Tree 1.1" ></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
+	Prevented events counter
+	<ui5-input id="prevented-counter" value="0"></ui5-input>
+
+	<script>
+		const mouseOverInput = document.getElementById("mouseover-counter");
+		const mouseOutInput = document.getElementById("mouseout-counter");
+
+		document.getElementById("density").addEventListener("selectionChange", function(event) {
+			var selectedButton = event.detail.selectedButton;
+			if (selectedButton.textContent === "Compact") {
+				document.body.classList.add("sapUiSizeCompact");
+			} else {
+				document.body.classList.remove("sapUiSizeCompact");
+			}
+		});
+
+		document.getElementById("tree").addEventListener("ui5-itemMouseover", function(event) {
+			console.log("Item mouseover: ", event.detail.item);
+			mouseOverInput.value++;
+		});
+		document.getElementById("tree").addEventListener("ui5-itemMouseout", function(event) {
+			console.log("Item mouseout: ", event.detail.item);
+			mouseOutInput.value++;
+		});
+
+		document.getElementById("tree").addEventListener("itemClick", function(event) {
+			console.log("Item clicked: ", event.detail.item);
+		});
+
+		document.getElementById("tree").addEventListener("itemToggle", function(event) {
+			console.log("Item toggled: ", event.detail.item);
+		});
+
+		document.getElementById("tree").addEventListener("itemDelete", function(event) {
+			console.log("Item delete button pressed: ", event.detail.item);
+			var node = event.detail.item;
+			node.parentElement.removeChild(node);
+		});
+
+		document.getElementById("tree").addEventListener("selectionChange", function(event) {
+			console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
+		});
+
+		document.getElementById("modeSelect").addEventListener("change", function(event) {
+			var newMode = event.detail.selectedOption.textContent;
+			var tree = document.getElementById("tree");
+			tree.mode = newMode;
+		});
+
+		document.getElementById("expandAll").addEventListener("click", function(event) {
+			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+			var tree = document.getElementById("tree");
+			tree.walk(function(node) {
+				node.expanded = true;
+			});
+		});
+
+		document.getElementById("collapseAll").addEventListener("click", function(event) {
+			var tree = document.getElementById("tree");
+			tree.walk(function(node) {
+				node.expanded = false;
+			});
+		});
+
+		document.getElementById("expandLevel1").addEventListener("click", function(event) {
+			var tree = document.getElementById("tree");
+			tree.walk(function(node, level) {
+				node.expanded = (level === 1);
+			});
+		});
+
+		document.getElementById("expandLevel2").addEventListener("click", function(event) {
+			var tree = document.getElementById("tree");
+			tree.walk(function(node, level) {
+				node.expanded = (level <= 2);
+			});
+		});
+
+		var dynamicTree = document.getElementById("treeDynamic");
+		var busyIndicator = document.getElementById("busy");
+		dynamicTree.addEventListener("itemToggle", function(event) {
+			var item = event.detail.item; // get the node that is toggled
+
+			// Only for the dynamic node, only when it's empty
+			if (item.id === "dynamicNode" && item.children.length === 0) {
+				busyIndicator.active = true;
+				event.preventDefault(); // do not let the toggle button switch yet
+				setTimeout(function() {
+					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					newItem.text = "Node fetched from DB after 2 sec";
+					item.appendChild(newItem);
+					item.toggle(); // now manually switch
+					busyIndicator.active = false;
+				}, 2000);
+			}
+		});
+
+		var preventableClickTree = document.getElementById("preventable-click-event");
+		var preventedCounter = document.getElementById("prevented-counter");
+		preventableClickTree.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			preventedCounter.value++;
+		});
+	</script>
+
+</body>
+
+</html>

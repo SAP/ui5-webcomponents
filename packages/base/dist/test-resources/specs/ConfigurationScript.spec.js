@@ -1,0 +1,63 @@
+const assert = require("chai").assert;
+
+describe("Configuration script has effect", () => {
+	before(async () => {
+		await browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html?do-not-change-configuration");
+	});
+
+	it("Tests that RTL is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getRTL());
+		});
+		assert.strictEqual(res, true, "RTL is true");
+	});
+
+	it("Tests that language is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getLanguage());
+		});
+		assert.strictEqual(res, 'ja', "language is japanese");
+	});
+
+	it("Tests that calendarType is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getCalendarType());
+		});
+		assert.strictEqual(res, 'Japanese', "calendarType is japanese");
+	});
+
+	it("Tests that formatSettings are applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getFirstDayOfWeek());
+		});
+		assert.strictEqual(res, 0, "First day of week is applied");
+	});
+
+	it("Tests that theme is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getTheme());
+		});
+		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
+	});
+
+	it("Tests that noConflict is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getNoConflict());
+		});
+		assert.include(res.events, "selection-change", "selectionChange was successfully registered as a no conflict event");
+	});
+
+	it("Tests that animationMode is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getAnimationMode());
+		});
+		assert.strictEqual(res, 'basic', "animationMode is basic");
+	});
+});

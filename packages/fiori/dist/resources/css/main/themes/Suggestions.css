@@ -1,0 +1,1 @@
+.ui5-suggestions-popover{box-shadow:var(--sapContent_Shadow1)}.ui5-suggestions-popover::part(content),.ui5-suggestions-popover::part(header){padding:0}.ui5-suggestions-popover::part(footer){padding:0 1rem}.ui5-suggestions-popover [ui5-li-suggestion-item],.ui5-suggestions-popover [ui5-li]{height:var(--_ui5_list_item_dropdown_base_height)}

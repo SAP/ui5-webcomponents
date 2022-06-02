@@ -1,0 +1,284 @@
+---
+layout: sample
+title: Product Switch
+parent: Components
+permalink: /playground/components/ProductSwitch/
+newComponent: false
+nav_order: 40
+---
+<header class="component-heading">
+	<h2 class="control-header">ProductSwitch</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.5</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents-fiori</div>
+
+<div class="control-tag">&lt;ui5-product-switch&gt;</div>
+
+<section>
+	<h3>Basic sample</h3>
+	<div class="snippet">
+		<ui5-product-switch style="display:flex;">
+			<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Catalog" subtitle-text="Ariba" icon="contacts"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Travel & Expense" subtitle-text="Concur" icon="flight"></ui5-product-switch-item>
+		</ui5-product-switch>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-product-switch>
+	<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+	<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+	<ui5-product-switch-item title-text="Catalog" subtitle-text="Ariba" icon="contacts"></ui5-product-switch-item>
+	<ui5-product-switch-item title-text="Travel & Expense" subtitle-text="Concur" icon="flight"></ui5-product-switch-item>
+</ui5-product-switch>
+	{% endhighlight %}</pre>
+</section>
+
+<section>
+	<h3>ProductSwitch within ShellBar</h3>
+	<div class="snippet">
+		<ui5-shellbar
+			id="shellbar"
+			primary-title="Corporate Portal"
+			secondary-title="home"
+			logo="../../../assets/images/sap-logo-svg.svg"
+			show-product-switch
+			show-co-pilot>
+		</ui5-shellbar>
+		<ui5-popover id="productswitch-popover" placement-type="Bottom">
+			<ui5-product-switch>
+				<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Catalog" subtitle-text="Ariba" icon="contacts"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Guided Buying" icon="credit-card"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Strategic Procurement" icon="cart-3"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Travel & Expense" subtitle-text="Concur" icon="flight"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Vendor Management" subtitle-text="Fieldglass" icon="shipping-status"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Human Capital Management" icon="customer"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Sales Cloud" subtitle-text="Sales Cloud" icon="sales-notification"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Commerce Cloud" subtitle-text="Commerce Cloud" icon="retail-store"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Marketing Cloud" subtitle-text="Marketing Cloud" icon="marketing-campaign"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Service Cloud" icon="family-care"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Customer Data Cloud" icon="customer-briefing"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="S/4HANA" icon="batch-payments"></ui5-product-switch-item>
+			</ui5-product-switch>
+		</ui5-popover>
+
+		<script>
+			var shellBar = document.getElementById("shellbar");
+			var popover = document.getElementById("productswitch-popover");
+
+			shellbar.addEventListener("product-switch-click", function(event) {
+				if (popover.opened) {
+					popover.close();
+				} else {
+					event.preventDefault();
+					popover.showAt(event.detail.targetRef);
+				}
+			});
+		</script>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-shellbar
+	id="shellbar"
+	title-text="Corporate Portal"
+	secondary-title="secondary title"
+	logo="../../../assets/images/sap-logo-svg.svg"
+	show-product-switch
+	show-co-pilot>
+</ui5-shellbar>
+<ui5-popover id="productswitch-popover" placement-type="Bottom">
+	<ui5-product-switch>
+		<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Catalog" subtitle-text="Ariba" icon="contacts"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Guided Buying" icon="credit-card"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Strategic Procurement" icon="cart-3"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Travel & Expense" subtitle-text="Concur" icon="flight"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Vendor Management" subtitle-text="Fieldglass" icon="shipping-status"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Human Capital Management" icon="customer"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Sales Cloud" subtitle-text="Sales Cloud" icon="sales-notification"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Commerce Cloud" subtitle-text="Commerce Cloud" icon="retail-store"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Marketing Cloud" subtitle-text="Marketing Cloud" icon="marketing-campaign"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Service Cloud" icon="family-care"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Customer Data Cloud" icon="customer-briefing"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="S/4HANA" icon="batch-payments"></ui5-product-switch-item>
+	</ui5-product-switch>
+</ui5-popover>
+
+<script>
+	var shellBar = document.getElementById("shellbar");
+	var popover = document.getElementById("productswitch-popover");
+
+	shellbar.addEventListener("product-switch-click", event => {
+		if (popover.opened) {
+			popover.close();
+		} else {
+			popover.showAt(event.detail.targetRef);
+		}
+	});
+</script>
+	{% endhighlight %}</pre>
+</section>
+
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-product-switch</code> is an SAP Fiori specific web component that is used in <code>ui5-shellbar</code> and allows the user to easily switch between products. <br><br>
+
+<h3>Keyboard Handling</h3> The <code>ui5-product-switch</code> provides advanced keyboard handling. When focused, the user can use the following keyboard shortcuts in order to perform a navigation: <br> <ul> <li>[TAB] - Move focus to the next interactive element after the <code>ui5-product-switch</code></li> <li>[UP/DOWN] - Navigates up and down the items </li> <li>[LEFT/RIGHT] - Navigates left and right the items</li> </ul> <br> <br>
+
+<h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code> <br> <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
+          <section class="component-api space-top">
+            
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the items of the <code>ui5-product-switch</code>.</div>
+                    </div>
+            
+                </div>
+            
+            
+            
+          </section>
+        </section>
+      </div>
+    </div>
+      <div class="api-container appended-doc">
+        <h1>ProductSwitchItem</h1>
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3> The <code>ui5-product-switch-item</code> web component represents the items displayed in the <code>ui5-product-switch</code> web component. <br><br> <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>. <br><br>
+
+<h3>Keyboard Handling</h3> The <code>ui5-product-switch</code> provides advanced keyboard handling. When focused, the user can use the following keyboard shortcuts in order to perform a navigation: <br> <ul> <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li> </ul>
+
+<h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          icon
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the icon to be displayed as a graphical element within the component. <br><br> Example: <br> <pre>ui5-product-switch-item icon="palette"</pre>
+            
+            See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          subtitleText
+                            <br>
+                                 <code>subtitle-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the subtitle of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          target
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;_self&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines a target where the <code>targetSrc</code> content must be open. <br><br> Available options are: <ul> <li><code>_self</code></li> <li><code>_top</code></li> <li><code>_blank</code></li> <li><code>_parent</code></li> <li><code>_search</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          targetSrc
+                            <br>
+                                 <code>target-src</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the component target URI. Supports standard hyperlink behavior.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          titleText
+                            <br>
+                                 <code>title-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the title of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the <code>ui5-product-switch-item</code> is activated either with a click/tap or by using the Enter or Space key.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+          </section>
+        </section>
+      </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>

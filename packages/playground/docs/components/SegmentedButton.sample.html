@@ -1,0 +1,381 @@
+---
+layout: sample
+title: Segmented Button
+parent: Components
+permalink: /playground/components/SegmentedButton/
+newComponent: false
+nav_order: 46
+---
+<header class="component-heading">
+	<h2 class="control-header">SegmentedButton</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.6</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-segmented-button&gt;</div>
+
+<section>
+	<h3>Basic SegmentedButton</h3>
+	<div class="snippet">
+        <ui5-segmented-button accessible-name="Geographic location">
+            <ui5-segmented-button-item>Map</ui5-segmented-button-item>
+            <ui5-segmented-button-item pressed>Satellite</ui5-segmented-button-item>
+            <ui5-segmented-button-item>Terrain</ui5-segmented-button-item>
+        </ui5-segmented-button>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-segmented-button accessible-name="Geographic location">
+    <ui5-segmented-button-item>Map</ui5-segmented-button-item>
+    <ui5-segmented-button-item pressed>Satellite</ui5-segmented-button-item>
+    <ui5-segmented-button-item>Terrain</ui5-segmented-button-item>
+</ui5-segmented-button>
+	{% endhighlight %}</pre>
+</section>
+
+<section>
+	<h3>SegmentedButton with Icons</h3>
+	<div class="snippet">
+		<ui5-segmented-button>
+			<ui5-segmented-button-item icon="employee" pressed></ui5-segmented-button-item>
+			<ui5-segmented-button-item icon="menu"></ui5-segmented-button-item>
+			<ui5-segmented-button-item icon="factory"></ui5-segmented-button-item>
+		</ui5-segmented-button>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-segmented-button>
+    <ui5-segmented-button-item icon="employee" pressed></ui5-segmented-button-item>
+    <ui5-segmented-button-item icon="menu"></ui5-segmented-button-item>
+    <ui5-segmented-button-item icon="factory"></ui5-segmented-button-item>
+</ui5-segmented-button>
+	{% endhighlight %}</pre>
+</section>
+
+<section>
+	<h3>SegmentedButton with 5 SegmentedButtonItems</h3>
+	<div class="snippet">
+		<ui5-segmented-button>
+			<ui5-segmented-button-item>Item</ui5-segmented-button-item>
+			<ui5-segmented-button-item pressed>Pressed SegmentedButtonItem With Bigger Text</ui5-segmented-button-item>
+			<ui5-segmented-button-item>Item</ui5-segmented-button-item>
+			<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
+			<ui5-segmented-button-item>Press me</ui5-segmented-button-item>
+		</ui5-segmented-button>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-segmented-button>
+    <ui5-segmented-button-item>Item</ui5-segmented-button-item>
+    <ui5-segmented-button-item pressed>Pressed SegmentedButtonItem With Bigger Text</ui5-segmented-button-item>
+    <ui5-segmented-button-item>Item</ui5-segmented-button-item>
+    <ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
+    <ui5-segmented-button-item>Press me</ui5-segmented-button-item>
+</ui5-segmented-button>
+	{% endhighlight %}</pre>
+</section>
+
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-segmented-button</code> shows a group of items. When the user clicks or taps one of the items, it stays in a pressed state. It automatically resizes the items to fit proportionally within the component. When no width is set, the component uses the available width. <br><br> <b>Note:</b> There can be just one selected <code>item</code> at a time.
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/SegmentedButton";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                                 <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessible aria name of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.3</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selectedItem
+                            (readonly)
+                            <br>
+                                 <code>selected-item</code>
+                        </div>
+                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.ISegmentedButtonItem</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Currently selected item.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the items of <code>ui5-segmented-button</code>. <br><br> <b>Note:</b> Multiple items are allowed. <br><br> <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.</div>
+                    </div>
+            
+                </div>
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selection-change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the selected item changes.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">selectedItem</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the pressed item.</div>
+                          </div>
+                        </tr>
+                  </div>
+            
+            
+          </section>
+        </section>
+      </div>
+    </div>
+      <div class="api-container appended-doc">
+        <h1>SegmentedButtonItem</h1>
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+Users can use the <code>ui5-segmented-button-item</code> as part of a <code>ui5-segmented-button</code>. <br><br> Clicking or tapping on a <code>ui5-segmented-button-item</code> changes its state to <code>pressed</code>. The item returns to its initial state when the user clicks or taps on it again. By applying additional custom CSS-styling classes, apps can give a different style to any <code>ui5-segmented-button-item</code>.
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/SegmentedButtonItem";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          design
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">ButtonDesign</div>
+                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          iconEnd
+                            <br>
+                                 <code>icon-end</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          submits
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          pressed
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines whether the component is displayed as pressed.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibilityAttributes
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">object</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            An object of strings that defines several additional accessibility attribute values for customization depending on the use case.
+            
+            It supports the following fields:
+            
+            <ul> <li><code>expanded</code>: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values: <ul> <li><code>true</code></li> <li><code>false</code></li> </ul> </li> <li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values: <ul> <li><code>Dialog</code></li> <li><code>Grid</code></li> <li><code>ListBox</code></li> <li><code>Menu</code></li> <li><code>Tree</code></li> </ul> </li> <li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li> </ul>
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                                 <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessible aria name of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleNameRef
+                            <br>
+                                 <code>accessible-name-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Receives id(or many ids) of the elements that label the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.1.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          disabled
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the component is disabled. A disabled component can't be pressed or focused, and it is not in the tab chain.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          icon
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the icon, displayed as graphical element within the component. The SAP-icons font provides numerous options. <br><br> Example:
+            
+            See all the available icons within the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          tooltip
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the tooltip of the component. <br> <b>Note:</b> We recommend setting tooltip to icon-only components.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the component. <br><br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                    </div>
+            
+                </div>
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the component is activated either with a mouse/tap or by using the Enter or Space key. <br><br> <b>Note:</b> The event will not be fired if the <code>disabled</code> property is set to <code>true</code>.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+          </section>
+        </section>
+      </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>

@@ -1,0 +1,9 @@
+/* eslint no-unused-vars: 0 */
+import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
+const block0 = (context, tags, suffix) => html`<div class="ui5-avatar-group-root"><div class="ui5-avatar-group-items" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @focusin="${context._onfocusin}" tabindex="${ifDefined(context._groupTabIndex)}" @click="${context._onClick}" @ui5-click="${ifDefined(context._onUI5Click)}" aria-label="${ifDefined(context._ariaLabelText)}" role="${ifDefined(context._role)}" aria-haspopup="${ifDefined(context._containerAriaHasPopup)}"><slot></slot>${ context._customOverflowButton ? block1(context, tags, suffix) : block2(context, tags, suffix) }</div></div>`;
+const block1 = (context, tags, suffix) => html`<slot name="overflowButton"></slot>`;
+const block2 = (context, tags, suffix) => suffix ? html`<${scopeTag("ui5-button", tags, suffix)} .accessibilityAttributes="${ifDefined(context._overflowButtonAccAttributes)}" aria-label="${ifDefined(context._overflowButtonAriaLabelText)}" ?hidden="${context._overflowBtnHidden}" ?non-interactive=${context._isGroup} class="${classMap(context.classes.overflowButton)}">${ifDefined(context._overflowButtonText)}</${scopeTag("ui5-button", tags, suffix)}>` : html`<ui5-button .accessibilityAttributes="${ifDefined(context._overflowButtonAccAttributes)}" aria-label="${ifDefined(context._overflowButtonAriaLabelText)}" ?hidden="${context._overflowBtnHidden}" ?non-interactive=${context._isGroup} class="${classMap(context.classes.overflowButton)}">${ifDefined(context._overflowButtonText)}</ui5-button>`;
+
+
+export default block0;

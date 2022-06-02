@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "text-align-left";
+const pathData = "M29 121q-13 0-20.5-8T1 92q0-28 28-28h454q13 0 21 7.5t8 20.5-8 21-21 8H29zm454 170q13 0 21 7.5t8 20.5q0 14-8 21.5t-21 7.5H29q-28 0-28-29 0-28 28-28h454zM29 234q-28 0-28-28t28-28h227q13 0 21 7.5t8 20.5-8 20.5-21 7.5H29zm227 171q13 0 21 7.5t8 20.5-8 20.5-21 7.5H29q-28 0-28-28t28-28h227z";
+const ltr = true;
+const accData = null;
+const collection = "SAP-icons-v5";
+const packageName = "@ui5/webcomponents-icons";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "text-align-left";
+export { pathData, ltr, accData };
