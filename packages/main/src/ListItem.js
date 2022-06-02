@@ -24,7 +24,7 @@ import styles from "./generated/themes/ListItem.css.js";
  */
 const metadata = {
 	languageAware: true,
-	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.

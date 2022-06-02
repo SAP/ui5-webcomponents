@@ -14,7 +14,7 @@ import toggleBtnIECss from "./generated/themes/ToggleButton.ie11.css.js";
 const metadata = {
 	tag: "ui5-toggle-button",
 	altTag: "ui5-togglebutton",
-	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the component is displayed as pressed.
 		 *
@@ -31,7 +31,7 @@ const metadata = {
 /**
  * @class
  *
- *<h3 class="comment-api-title">Overview</h3>
+ * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-toggle-button</code> component is an enhanced <code>ui5-button</code>
  * that can be toggled between pressed and normal states.

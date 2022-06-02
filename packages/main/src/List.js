@@ -77,7 +77,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
 		 * Defines the component header text.
@@ -265,7 +265,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
 		 * Fired when an item is activated, unless the item's <code>type</code> property

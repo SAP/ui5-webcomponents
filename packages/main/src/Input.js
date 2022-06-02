@@ -151,7 +151,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.Input.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -440,7 +440,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *

@@ -47,7 +47,7 @@ const metadata = {
 	tag: "ui5-date-picker",
 	altTag: "ui5-datepicker",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
 		 *
@@ -206,7 +206,7 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
@@ -236,7 +236,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
