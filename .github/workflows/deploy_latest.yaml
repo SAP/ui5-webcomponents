@@ -1,4 +1,4 @@
-name: Latest Playground
+name: Deploy Latest Playground
 
 on:
   push:

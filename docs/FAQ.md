@@ -23,12 +23,12 @@
 
 **Q: Can I create my own UI5 Web Components?**
 
-**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](https://github.com/SAP/ui5-webcomponents/blob/master/docs/5-development/01-custom-UI5-Web-Components-Packages.md)
+**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](https://github.com/SAP/ui5-webcomponents/blob/main/docs/5-development/01-custom-UI5-Web-Components-Packages.md)
 
 
 **Q: How big is the runtime?**
 
-**A:** Currently on master, a simple working Web Component (```ui5-label```) and its dependencies equals to around 22K gzipped. 
+**A:** Currently on main, a simple working Web Component (```ui5-label```) and its dependencies equals to around 22K gzipped. 
 Two simple web components (```ui5-label``` and ```ui5-icon```) and their dependencies equal to around 25K gzipped.
 
 **Note:** The quoted numbers include only a ```<ui5-label>``` (respectively ```ui5-label``` and ```ui5-icon```) working on Chrome/FF/Safari with the default settings (theme/language).
