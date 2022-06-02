@@ -12,6 +12,7 @@ import {
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import isDefaultSlotProvided from "@ui5/webcomponents-base/dist/util/isDefaultSlotProvided.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -463,10 +464,7 @@ class Button extends UI5Element {
 	}
 
 	get isIconOnly() {
-		return !Array.from(this.childNodes).filter(node => {
-			return node.nodeType !== Node.COMMENT_NODE
-			&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0);
-		}).length;
+		return !isDefaultSlotProvided(this);
 	}
 
 	static typeTextMappings() {

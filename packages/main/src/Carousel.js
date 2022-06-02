@@ -479,6 +479,16 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	_navButtonClick(event) {
+		if (event.target.hasAttribute("arrow-forward")) {
+			this.navigateRight();
+		} else {
+			this.navigateLeft();
+		}
+
+		this.focus();
+	}
+
 	/**
 	 * Changes the currently displayed page.
 	 * @param {Integer} itemIndex The index of the target page
