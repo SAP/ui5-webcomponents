@@ -18,6 +18,10 @@ jobs:
       run: |
         yarn install
         yarn build:playground_as_admin
+
+    - name: Write version.md
+      run: git log -1 &> packages/playground/dist/version.md
+
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
