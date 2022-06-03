@@ -271,6 +271,22 @@ class Dialog extends Popup {
 		return this.resizable && this.onDesktop;
 	}
 
+	get _minHeight() {
+		let minHeight = Number.parseInt(window.getComputedStyle(this.contentDOM).minHeight);
+
+		const header = this._root.querySelector(".ui5-popup-header-root");
+		if (header) {
+			minHeight += header.offsetHeight;
+		}
+
+		const footer = this._root.querySelector(".ui5-popup-footer-root");
+		if (footer) {
+			minHeight += footer.offsetHeight;
+		}
+
+		return minHeight;
+	}
+
 	_show() {
 		super._show();
 		this._center();
@@ -465,7 +481,6 @@ class Dialog extends Popup {
 		const { top, left } = this.getBoundingClientRect(),
 			style = window.getComputedStyle(this),
 			minWidth = Number.parseFloat(style.minWidth),
-			minHeight = Number.parseFloat(style.minHeight),
 			maxWidth = window.innerWidth - left,
 			maxHeight = window.innerHeight - top;
 
@@ -488,7 +503,7 @@ class Dialog extends Popup {
 		}
 
 		width = clamp(width, minWidth, maxWidth);
-		height = clamp(height, minHeight, maxHeight);
+		height = clamp(height, this._minHeight, maxHeight);
 
 		Object.assign(this.style, {
 			width: `${width}px`,
@@ -523,7 +538,6 @@ class Dialog extends Popup {
 			width,
 			height,
 			minWidth,
-			minHeight,
 		} = window.getComputedStyle(this);
 
 		this._initialX = event.clientX;
@@ -533,7 +547,7 @@ class Dialog extends Popup {
 		this._initialTop = top;
 		this._initialLeft = left;
 		this._minWidth = Number.parseFloat(minWidth);
-		this._minHeight = Number.parseFloat(minHeight);
+		this._cachedMinHeight = this._minHeight;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -571,7 +585,7 @@ class Dialog extends Popup {
 
 		const newHeight = clamp(
 			this._initialHeight + (clientY - this._initialY),
-			this._minHeight,
+			this._cachedMinHeight,
 			window.innerHeight - this._initialTop,
 		);
 
@@ -583,14 +597,14 @@ class Dialog extends Popup {
 	}
 
 	_onResizeMouseUp() {
-		this._initialX = null;
-		this._initialY = null;
-		this._initialWidth = null;
-		this._initialHeight = null;
-		this._initialTop = null;
-		this._initialLeft = null;
-		this._minWidth = null;
-		this._minHeight = null;
+		delete this._initialX;
+		delete this._initialY;
+		delete this._initialWidth;
+		delete this._initialHeight;
+		delete this._initialTop;
+		delete this._initialLeft;
+		delete this._minWidth;
+		delete this._cachedMinHeight;
 
 		this._detachMouseResizeHandlers();
 	}
