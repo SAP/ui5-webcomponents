@@ -1,1 +1,1 @@
-
+echo github.event.head_commit.message
