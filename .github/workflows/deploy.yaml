@@ -20,7 +20,7 @@ jobs:
         yarn build:playground:main_as_admin
 
     - name: Write version.md
-      run: git log -1 &> packages/playground/dist/main/version.md
+      run: git log -1 &>> packages/playground/dist/main/version.md
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
