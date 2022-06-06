@@ -100,12 +100,3 @@
 .ui5-fcl-arrow:hover:after {
 	height: 7rem;
 }
-
-/*
- * IE FIX:
- * The column separator, that is also the arrow container, is 1rem,
- * whereas the arrow button is 1.5rem and the arrows just doesnt center within the 
-*/
-.ui5-fcl--ie .ui5-fcl-arrow {
-	margin: 0 -0.75rem;
-}
