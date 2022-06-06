@@ -466,6 +466,11 @@ class TextArea extends UI5Element {
 	_oninput(event) {
 		const nativeTextArea = this.getInputDomRef();
 
+		if (event.target === nativeTextArea) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
+
 		this.value = nativeTextArea.value;
 		this.fireEvent("input", {});
 

@@ -1047,6 +1047,8 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
+		this.fireEventByAction(this.ACTION_USER_INPUT, event);
+
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
 
