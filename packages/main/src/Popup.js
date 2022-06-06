@@ -123,12 +123,10 @@ const metadata = {
 		 */
 		_disableInitialFocus: {
 			type: Boolean,
-			noAttribute: true,
 		},
 
 		_blockLayerHidden: {
 			type: Boolean,
-			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
