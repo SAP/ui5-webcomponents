@@ -1,10 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -275,10 +273,6 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
-	static async onDefine() {
-		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
-	}
-
 	_onFocusInHandler(event) {
 		if (this.interactive) {
 			this.focused = true;
@@ -354,24 +348,6 @@ class Icon extends UI5Element {
 		return this.effectiveAccessibleName ? "img" : PRESENTATION_ROLE;
 	}
 
-	static createGlobalStyle() {
-		if (isLegacyBrowser()) {
-			const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
-			if (!styleElement) {
-				createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
-			}
-		}
-	}
-
-	static removeGlobalStyle() {
-		if (isLegacyBrowser()) {
-			const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
-			if (styleElement) {
-				document.head.removeChild(styleElement);
-			}
-		}
-	}
-
 	async onBeforeRendering() {
 		const name = this.name;
 		if (!name) {
@@ -416,12 +392,6 @@ class Icon extends UI5Element {
 
 	get hasIconTooltip() {
 		return this.showTooltip && this.effectiveAccessibleName;
-	}
-
-	async onEnterDOM() {
-		setTimeout(() => {
-			this.constructor.removeGlobalStyle(); // remove the global style as Icon.css is already in place
-		}, 0);
 	}
 }
 
