@@ -16,7 +16,7 @@ import {
 	isF4,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
@@ -673,10 +673,6 @@ class DatePicker extends DateComponentBase {
 
 	get showFooter() {
 		return this.phone;
-	}
-
-	get _isIE() {
-		return isIE();
 	}
 
 	get accInfo() {
