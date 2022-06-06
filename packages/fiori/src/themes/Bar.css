@@ -66,13 +66,7 @@
 	box-shadow: var(--sapContent_Shadow1);
 	border: none;
 }
-  /* This selector works well for all browsers except IE11.
-  After support for IE11 is stopped, the specific selectors added for it can be removed and this selector can be uncommented*/
-/* ::slotted(*) {
-	margin: 0 0.25rem;
-} */
 
-/*Specific selector added for support in IE11*/
-::slotted(.ui5-bar-content) {
+::slotted(*) {
 	margin: 0 0.25rem;
 }

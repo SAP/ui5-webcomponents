@@ -162,11 +162,6 @@
 	border-bottom-style: dashed;
 }
 
-/* Workaround for IE to make the focus outline visible */
-[ui5-wizard-tab] .ui5-wiz-step-main {
-	pointer-events: none;
-}
-
 :host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-root {
 	display: inline;
 	position: absolute;

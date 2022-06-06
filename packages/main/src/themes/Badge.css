@@ -59,11 +59,6 @@
 	color: inherit;
 }
 
-/* IE 11 specific selector */
-[ui5-badge] [ui5-icon][slot="icon"] {
-	display: flex;
-}
-
 :host([_has-icon]) .ui5-badge-text {
 	padding-inline-start: 0.125rem;
 }
