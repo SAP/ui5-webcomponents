@@ -20,12 +20,6 @@
     outline: none;
 }
 
-@media screen and (-ms-high-contrast: active) {
-    .ui5-popup-root {
-        border: 1px solid var(--sapPageFooter_BorderColor);
-    }
-}
-
 .ui5-popup-root .ui5-popup-header-root {
     color: var(--sapPageHeader_TextColor);
     box-shadow: var(--sapContent_HeaderShadow);

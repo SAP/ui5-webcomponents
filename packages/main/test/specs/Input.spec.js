@@ -552,7 +552,7 @@ describe("Input general interaction", () => {
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(await respPopover.isDisplayedInViewport(), "The popover is visible");
-		await browser.pause(500);
+		await browser.pause(1000);
 		const firstItemHtml = await firstListItem.getHTML(false);
 		assert.include(firstItemHtml, "<b>Ad</b>am", "The suggestions is highlighted.");
 	});

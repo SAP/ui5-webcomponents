@@ -24,7 +24,6 @@
 	padding: 1rem 0;
 	outline: none;
 	touch-action: none;
-	-ms-touch-action: pan-y;
 }
 
 .ui5-slider-inner {
@@ -147,7 +146,7 @@
 	outline: var(--_ui5_slider_handle_active_focused_outline);
 }
 
-.ui5-slider-handle.ui5-slider-handle--start:focus, 
+.ui5-slider-handle.ui5-slider-handle--start:focus,
 .ui5-slider-handle--end:focus {
 	border: var(--_ui5_slider_handle_focus_border);
 }
