@@ -184,6 +184,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines additional description for the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.4.0
+		 */
+		accessibleDescription: {
+			type: String,
+		},
+
+		/**
 		 * An object of strings that defines several additional accessibility attribute values
 		 * for customization depending on the use case.
 		 *
