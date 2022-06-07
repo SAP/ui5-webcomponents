@@ -34,6 +34,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.75rem;
+    --_ui5_dialog_footer_height: 2.75rem;
 
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
@@ -80,7 +81,7 @@
 	--_ui5_switch_with_label_width: var(--_ui5_switch_with_label_width);
 
 	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_outline_top);
-	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);	
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);
 
 	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
 	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
@@ -229,6 +230,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.5rem;
+    --_ui5_dialog_footer_height: 2.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
