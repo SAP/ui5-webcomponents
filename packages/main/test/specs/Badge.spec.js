@@ -6,10 +6,15 @@ describe("Badge rendering", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Badge.html`);
 	});
 
-	it("tests label not rendered if not text content", async () => {
+	it("tests that label is rendered if there is text content", async () => {
+		const badgeLabel = await browser.$("#badgeWithTextAndIcon").shadow$(".ui5-badge-text");
 
+		assert.ok(await badgeLabel.isExisting(), "badge label tag should be rendered.");
+	});
+
+	it("tests that label is NOT rendered if there is only icon", async () => {
 		const badgeLabel = await browser.$("#badgeIconOnly").shadow$(".ui5-badge-text");
 
-		assert.ok(badgeLabel, "bagde label tag not rendered.");
+		assert.notOk(await badgeLabel.isExisting(), "badge label tag shouldn't be rendered.");
 	});
 });
