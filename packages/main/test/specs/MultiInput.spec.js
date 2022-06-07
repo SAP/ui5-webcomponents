@@ -284,7 +284,7 @@ describe("Keyboard handling", () => {
 		const innerInput = await input.shadow$("input");
 		const firstToken = await browser.$("#two-tokens ui5-token:first-child");
 		let caretPosition;
-		
+
 		await browser.$("#two-tokens").scrollIntoView();
 
 		await innerInput.click();
@@ -294,7 +294,7 @@ describe("Keyboard handling", () => {
 			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
 			return multiInputShadowRoot.querySelector("input").selectionStart;
 		});
-		
+
 		assert.strictEqual(caretPosition, 3, "The inner input's cursor is at the end");
 
 		await innerInput.keys("Home");

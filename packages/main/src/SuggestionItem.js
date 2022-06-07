@@ -9,7 +9,7 @@ import ListItemType from "./types/ListItemType.js";
  */
 const metadata = {
 	tag: "ui5-suggestion-item",
-	properties: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -111,9 +111,9 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
-	events: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
 };
 

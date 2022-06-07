@@ -235,7 +235,7 @@ describe("Select general interaction", () => {
 
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
-		const selectTextHtml = await selectText.getHTML(false);
+		const selectTextHtml = await selectText.getText();
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Typing text should change selection");
 	});
 

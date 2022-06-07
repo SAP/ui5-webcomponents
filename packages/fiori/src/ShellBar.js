@@ -1079,24 +1079,20 @@ class ShellBar extends UI5Element {
 		return this._itemsInfo.filter(itemInfo => !!itemInfo.custom);
 	}
 
-	get nonFocusableLogo() {
-		return this.breakpointSize === "S" && this.hasMenuItems;
-	}
-
-	get hasFocusableLogo() {
-		return this.hasLogo && !this.nonFocusableLogo;
-	}
-
-	get hasNonFocusableLogo() {
-		return this.hasLogo && this.nonFocusableLogo;
-	}
-
 	get hasLogo() {
 		return !!this.logo.length;
 	}
 
-	get showArrowDown() {
-		return this.primaryTitle || this.hasInteractvieLogo;
+	get showLogoInMenuButton() {
+		return this.hasLogo && this.breakpointSize === "S";
+	}
+
+	get showTitleInMenuButton() {
+		return this.primaryTitle && !(this.showLogoInMenuButton);
+	}
+
+	get showMenuButton() {
+		return this.primaryTitle || this.showLogoInMenuButton;
 	}
 
 	get popoverHorizontalAlign() {
@@ -1113,18 +1109,6 @@ class ShellBar extends UI5Element {
 
 	get hasMenuItems() {
 		return this.menuItems.length > 0;
-	}
-
-	get menuBtnHasPopup() {
-		return this.hasMenuItems ? HasPopup.Menu : undefined;
-	}
-
-	get menuBtnTabindex() {
-		return this.hasMenuItems ? "0" : "-1";
-	}
-
-	get menuPopoverExpanded() {
-		return this.hasMenuItems ? this._menuPopoverExpanded : undefined;
 	}
 
 	get _shellbarText() {

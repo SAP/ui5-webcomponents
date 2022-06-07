@@ -6,7 +6,7 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
  */
 const metadata = {
 	tag: "ui5-notification-action",
-	properties: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-notification-action</code>.
 		 *
@@ -68,9 +68,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 	},
-	events: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 		click: {},
 	},
 };

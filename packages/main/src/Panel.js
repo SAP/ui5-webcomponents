@@ -42,7 +42,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the content of the component.
+		 * Defines the content of the component.
 		 * The content is visible only when the component is expanded.
 		 *
 		 * @type {Node[]}

@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -123,7 +122,7 @@ const metadata = {
  * <h4>When to use:</h4>
  * <ul>
  * <li>The user needs to be able to cancel the operation.</li>
- * <li>Only part of the application or a particular control is affected.</li>
+ * <li>Only part of the application or a particular component is affected.</li>
  * </ul>
  *
  * <h4>When not to use:</h4>
@@ -207,7 +206,6 @@ class BusyIndicator extends UI5Element {
 		return {
 			root: {
 				"ui5-busy-indicator-root": true,
-				"ui5-busy-indicator-root--ie": isIE(),
 			},
 		};
 	}

@@ -938,7 +938,7 @@ describe("Testing resize handling and RTL support", () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
-		
+
 		await rangeSlider.setAttribute("dir", "rtl");
 		await rangeSlider.setProperty("min", 0);
 		await rangeSlider.setProperty("max", 10);

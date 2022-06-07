@@ -17,7 +17,7 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 const metadata = {
 	tag: "ui5-color-palette-item",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
 		/**
 		 * Defines the colour of the component.
 		 * <br><br>

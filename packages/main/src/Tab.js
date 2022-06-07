@@ -405,7 +405,7 @@ class Tab extends UI5Element {
 			classes.push(`ui5-tab-overflow-item--${this.design.toLowerCase()}`);
 		}
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-tab-overflow-item--disabled");
 		}
 

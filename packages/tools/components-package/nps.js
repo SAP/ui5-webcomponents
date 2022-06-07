@@ -83,6 +83,14 @@ const getScripts = (options) => {
 			run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js",
 			spec: "wdio run config/wdio.conf.js",
 		},
+		"test-suite-1": {
+			default: 'concurrently "nps serve" "nps test-suite-1.run" --kill-others --success first',
+			run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js --suite suite1",
+		},
+		"test-suite-2": {
+			default: 'concurrently "nps serve" "nps test-suite-2.run" --kill-others --success first',
+			run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js --suite suite2",
+		},
 		startWithScope: "nps scope.prepare scope.dev",
 		scope: {
 			prepare: "nps scope.lint prepare scope.testPages",

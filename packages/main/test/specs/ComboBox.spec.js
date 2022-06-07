@@ -774,7 +774,7 @@ describe("Keyboard navigation", async () => {
 		await pickerIcon.click();
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
-		
+
 		await input.keys("Home");
 		listItem = await respPopover.$("ui5-list").$("ui5-li");
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first item should be focused on HOME");
@@ -800,7 +800,7 @@ describe("Keyboard navigation", async () => {
 
 		await input.keys("Home");
 		assert.strictEqual(await input.getProperty("value"), "Algeria", "The first item should be selected on HOME");
-		
+
 		// Clearing typed in value to prevent default behavior of END
 		await comboBox.setProperty("value", "");
 

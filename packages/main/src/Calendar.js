@@ -30,7 +30,7 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
 const metadata = {
 	tag: "ui5-calendar",
 	fastNavigation: true,
-	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.
 		 * Accepted property values are:<br>
@@ -88,7 +88,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
 		 *
@@ -102,7 +102,7 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates change.
 		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not

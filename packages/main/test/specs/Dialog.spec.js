@@ -68,8 +68,38 @@ describe("Dialog general interaction", () => {
 		 */
 	});
 
-	it("draggable - mouse support", async () => {
+	it("dialog repositions after screen resize", async () => {
 		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+
+		// Setup
+		const openDialogButton = await browser.$("#btnOpenDialogWithAttr");
+		await openDialogButton.click();
+
+		const dialog = await browser.$("#dlgAttr");
+		const topBeforeScreenResize = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftBeforeScreenResize = parseInt((await dialog.getCSSProperty("left")).value);
+
+		const {
+			height: oldScreenHeight,
+			width: oldScreenWidth
+		} = await browser.getWindowSize();
+
+		// Act
+		await browser.setWindowSize(2000, 2000);
+
+		// Assert
+		const topAfterScreenResize = parseInt((await dialog.getCSSProperty("top")).value);
+		const leftAfterScreenResize = parseInt((await dialog.getCSSProperty("left")).value);
+
+		assert.notStrictEqual(topBeforeScreenResize, topAfterScreenResize, "dialog's top has changed after screen resize")
+		assert.notStrictEqual(leftBeforeScreenResize, leftAfterScreenResize, "dialog's left has changed after screen resize")
+
+		// Clean-up
+		await browser.keys("Escape");
+		await browser.setWindowSize(oldScreenWidth, oldScreenHeight);
+	});
+
+	it("draggable - mouse support", async () => {
 
 		// Setup
 		const openDraggableDialogButton = await browser.$("#draggable-open");
