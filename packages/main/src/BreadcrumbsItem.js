@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-breadcrumbs-item",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
 
 		/**
 		 * Defines the link href.

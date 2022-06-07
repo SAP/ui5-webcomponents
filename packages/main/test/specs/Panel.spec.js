@@ -66,7 +66,7 @@ describe("Panel general interaction", () => {
 		await header.click();
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -95,7 +95,7 @@ describe("Panel general interaction", () => {
 		await icon.click();
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});

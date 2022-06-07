@@ -75,7 +75,6 @@
 	padding: 1rem 2rem;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	background-color: var(--sapObjectHeader_Background);
 	font-size: .875rem;

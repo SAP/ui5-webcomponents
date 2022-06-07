@@ -24,7 +24,7 @@ import styles from "./generated/themes/ListItem.css.js";
  */
 const metadata = {
 	languageAware: true,
-	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
@@ -374,6 +374,16 @@ class ListItem extends ListItemBase {
 
 	get deleteText() {
 		return ListItem.i18nBundle.getText(DELETE);
+	}
+
+	get _accessibleNameRef() {
+		if (this.accessibleName) {
+			// accessibleName is set - return labels excluding content
+			return `${this._id}-invisibleText`;
+		}
+
+		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
+		return `${this._id}-content ${this._id}-invisibleText`;
 	}
 
 	get _accInfo() {

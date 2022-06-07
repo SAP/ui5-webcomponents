@@ -116,6 +116,12 @@
 		</ui5-dialog>
 	</section>
 
+	<section class="group">
+		<h2>Link with prevent default and modifiers</h2>
+		<ui5-link id="modifierLink">Link 1</ui5-link>
+		<span id="modifierResult"></span>
+	</section>
+
 	<script>
 		var disLink = document.querySelector("#disabled-link");
 		var link = document.querySelector("#link");
@@ -126,14 +132,16 @@
 		var signInLink = document.getElementById("signInLink");
 		var singInDialog = document.getElementById("signInDialog");
 		var closeSignInDialogButton = document.getElementById("closeDialogButton");
+		var modifierLink = document.getElementById("modifierLink");
+		var modifierResult = document.getElementById("modifierResult");
 
 		[link, disLink].forEach(function(element) {
-			element.addEventListener("click", function(event) {
+			element.addEventListener("ui5-click", function(event) {
 				input.value = parseInt(input.value) + 1;
 			});
 		});
 
-		signInLink.addEventListener("click", function(event) {
+		signInLink.addEventListener("ui5-click", function(event) {
 			singInDialog.show();
 		});
 
@@ -141,11 +149,11 @@
 			hasPopup: "Dialog"
 		};
 
-		closeSignInDialogButton.addEventListener("click", function(event) {
+		closeSignInDialogButton.addEventListener("ui5-click", function(event) {
 			singInDialog.close();
 		});
 
-		linkClickPreventDefault.addEventListener("click", function(event) {
+		linkClickPreventDefault.addEventListener("ui5-click", function(event) {
 			event.preventDefault();
 		});
 
@@ -153,7 +161,7 @@
 			expanded: "true"
 		};
 
-		collapseExpandLink.addEventListener("click", function(event) {
+		collapseExpandLink.addEventListener("ui5-click", function(event) {
 			collapseExpandLink.accessibilityAttributes = {
 				expanded: collapseExpandLink.accessibilityAttributes["expanded"] === "true" ? "false" : "true"
 			};
@@ -162,6 +170,25 @@
 			collapsibleText.style["-webkit-line-clamp"] = collapsibleText.style["-webkit-line-clamp"] === "2" ? "" : "2";
 			collapsibleText.style["-webkit-box-orient"] = collapsibleText.style["-webkit-box-orient"] === "vertical" ? "" : "vertical";
 			collapsibleText.style["overflow"] = collapsibleText.style["overflow"] === "hidden" ? "" : "hidden";
+		});
+
+		modifierLink.addEventListener("ui5-click", (event) => {
+			let keyText ='';
+
+			if(event.detail.ctrlKey) {
+				keyText += 'CTRL:';
+			}
+			if(event.detail.altKey) {
+				keyText += 'ALT:';
+			}
+			if(event.detail.shiftKey) {
+				keyText += 'SHIFT:';
+			}
+			if(event.detail.metaKey) {
+				keyText += 'META:';
+			}
+			event.preventDefault();
+			modifierResult.innerText = keyText + event.target.innerText;
 		});
 	</script>
 </body>

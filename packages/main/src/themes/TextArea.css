@@ -145,13 +145,6 @@
 	color: var(--sapField_PlaceholderTextColor);
 }
 
-.ui5-textarea-inner:-ms-input-placeholder {
-	/* IE 10+ */
-	font-weight: normal;
-	font-style: var(--_ui5_textarea_placeholder_font_style);
-	color: var(--sapField_PlaceholderTextColor);
-}
-
 .ui5-textarea-inner:-moz-placeholder {
 	/* Firefox 18- */
 	font-weight: normal;
@@ -168,13 +161,6 @@
 
 :host([value-state="Error"]) .ui5-textarea-inner::-moz-placeholder {
 	/* Firefox 19+ */
-	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
-	font-style: var(--_ui5_textarea_error_placeholder_font_style);
-	color: var(--_ui5_textarea_error_placeholder_color);
-}
-
-:host([value-state="Error"]) .ui5-textarea-inner:-ms-input-placeholder {
-	/* IE 10+ */
 	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
 	color: var(--_ui5_textarea_error_placeholder_color);

@@ -16,7 +16,7 @@
 				@click="{{selectSlider}}"
 				@focusin="{{selectSlider}}"
 				data-sap-slider="hours"
-				?cyclic="{{_isCyclic}}"
+				cyclic
 		></ui5-wheelslider>
 	{{/if}}
 	{{#if _hasMinutesSlider}}
@@ -29,7 +29,7 @@
 				@click="{{selectSlider}}"
 				@focusin="{{selectSlider}}"
 				data-sap-slider="minutes"
-				?cyclic="{{_isCyclic}}"
+				cyclic
 		></ui5-wheelslider>
 	{{/if}}
 	{{#if _hasSecondsSlider}}
@@ -42,7 +42,7 @@
 				@click="{{selectSlider}}"
 				@focusin="{{selectSlider}}"
 				data-sap-slider="seconds"
-				?cyclic="{{_isCyclic}}"
+				cyclic
 		></ui5-wheelslider>
 	{{/if}}
 	{{#if _hasPeriodsSlider}}

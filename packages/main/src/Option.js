@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-option",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**
 		 * Defines the selected state of the component.
