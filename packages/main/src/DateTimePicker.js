@@ -218,6 +218,7 @@ class DateTimePicker extends DatePicker {
 	async openPicker() {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
+		debugger;
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
 	}
 
@@ -318,7 +319,6 @@ class DateTimePicker extends DatePicker {
 	onSelectedDatesChange(event) {
 		event.preventDefault();
 		const dateTimePickerContent = event.path ? event.path[1] : event.composedPath()[1];
-
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
@@ -415,9 +415,11 @@ class DateTimePicker extends DatePicker {
 	getSelectedDateTime() {
 		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]);
 		const selectedTime = this.getFormat().parse(this._timeSelectionValue);
-		selectedDate.setHours(selectedTime.getHours());
-		selectedDate.setMinutes(selectedTime.getMinutes());
-		selectedDate.setSeconds(selectedTime.getSeconds());
+		if (selectedTime) {
+			selectedDate.setHours(selectedTime.getHours());
+			selectedDate.setMinutes(selectedTime.getMinutes());
+			selectedDate.setSeconds(selectedTime.getSeconds());
+		}
 
 		return selectedDate;
 	}
