@@ -218,7 +218,6 @@ class DateTimePicker extends DatePicker {
 	async openPicker() {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
-		debugger;
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
 	}
 
