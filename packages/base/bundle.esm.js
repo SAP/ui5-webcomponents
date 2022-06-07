@@ -17,8 +17,6 @@ import "./dist/test-resources/assets/Themes.js";
 
 // used in test pages
 import { renderFinished } from "./dist/Render.js";
-import { isIE } from "./dist/Device.js";
-window.isIE = isIE; // attached to the window object for testing purposes
 
 // used for tests - to register a custom theme
 window.registerThemePropertiesLoader = registerThemePropertiesLoader;

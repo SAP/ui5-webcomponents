@@ -109,7 +109,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.Select.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.

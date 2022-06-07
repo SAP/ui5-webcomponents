@@ -79,11 +79,6 @@
 	color: var(--sapField_PlaceholderTextColor);
 }
 
-[inner-input]:-ms-input-placeholder {
-	font-style: italic;
-	color: var(--sapField_PlaceholderTextColor);
-}
-
 .input-root-phone[value-state]:not([value-state="None"]) {
 	border-width: var(--_ui5_input_state_border_width);
 }
@@ -159,12 +154,6 @@
 .input-root-phone[value-state="Information"]:not([readonly]) [inner-input]:focus {
 	background-color: var(--_ui5_input_focused_value_state_information_background);
 	border-color: var(--_ui5_input_focused_value_state_information_border_color);
-}
-
-/* Remove IE's defaut clear button */
-[inner-input]::-ms-clear {
-	height: 0;
-	width: 0;
 }
 
 /* MultiComboBox & MultiInput specific */

@@ -53,7 +53,7 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	fastNavigation: true,
-	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
 		 * <br><br>
@@ -99,7 +99,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
@@ -254,7 +254,7 @@ const metadata = {
 			multiple: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
 
 		/**
 		 * Fired when a tab is selected.

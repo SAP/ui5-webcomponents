@@ -41,7 +41,7 @@ import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js"
 const metadata = {
 	tag: "ui5-view-settings-dialog",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the initial sort order.
 		 *
@@ -115,7 +115,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the list of items against which the user could sort data.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
@@ -140,7 +140,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 
 		/**
 		 * Fired when confirmation button is activated.

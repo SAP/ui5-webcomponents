@@ -35,7 +35,7 @@ const COLUMNS_COUNT = {
 const metadata = {
 	tag: "ui5-media-gallery",
 	managedSlots: true,
-	slots: /** @lends  sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
 		/**
 		 * Defines the component items.
 		 *
@@ -56,7 +56,7 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
 		/**
 		 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
 		 * If <code>false</code>, only up to five thumbnails are rendered, followed by
@@ -182,7 +182,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.MediaGallery.prototype */ {
 		/**
 		 * Fired when selection is changed by user interaction.
 		 *
