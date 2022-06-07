@@ -1,13 +1,7 @@
-commit c2341e8523a379811028d29ee3ae0509beea781a
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Tue Jun 7 15:04:01 2022 +0300
+commit 0dceaf54fc56ecefaaa5b832b605924d6a8f095b
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Tue Jun 7 16:09:29 2022 +0300
 
-    fix(ui5-dialog): reposition on screen resize (#5283)
+    fix(ui5-badge): correctly detect if default slot is provided (#5334)
     
-    A recent change in scroll blocking for the block layer added
-    `overflow: hidden` on the body element,
-    and resizing the browser window in height would not trigger a resize
-    event on the body, and the dialog will not be repositioned.
-    
-    To solve this case, the dialog has been changed to listen to the resize
-    event on the window.
+    Fixes: #5328
