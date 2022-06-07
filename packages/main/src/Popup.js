@@ -114,7 +114,7 @@ const metadata = {
 		 * @type {string}
 		 * @private
 		 */
-		 mediaRange: {
+		mediaRange: {
 			type: String,
 		},
 
