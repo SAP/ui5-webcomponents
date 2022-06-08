@@ -602,7 +602,7 @@ class MultiComboBox extends UI5Element {
 
 		if (!event.relatedTarget || !event.relatedTarget.hasAttribute("ui5-token")) {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
-			this._tokenizer.expanded = false;
+			this._tokenizer.expanded = this._preventTokenizerToggle ? this._tokenizer.expanded : false;
 		}
 
 		if (allTokensAreBeingDeleted || lastTokenBeingDeleted) {
@@ -1040,7 +1040,7 @@ class MultiComboBox extends UI5Element {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
 
 		if (isRight(event)) {
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+			const lastTokenIndex = this._tokenizer.tokens.length - this._tokenizer.overflownTokens.length - 1;
 
 			if (event.target === this._tokenizer.tokens[lastTokenIndex]) {
 				setTimeout(() => {
@@ -1080,6 +1080,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
+			this._preventTokenizerToggle = true;
 			this._handleShow(event);
 		}
 	}
@@ -1247,6 +1248,7 @@ class MultiComboBox extends UI5Element {
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
+		this._preventTokenizerToggle = false;
 	}
 
 	get _isPhone() {
@@ -1469,6 +1471,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
+		if (this._preventTokenizerToggle) {
+			return this._tokenizer.expanded;
+		}
+
 		const expanded = !!this._tokenizer && this._tokenizer.expanded;
 		return !isPhone() && !this.readonly && (this.focused || this.open || expanded);
 	}

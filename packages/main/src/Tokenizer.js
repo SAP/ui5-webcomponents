@@ -27,6 +27,8 @@ import {
 	isEndCtrl,
 	isRight,
 	isLeft,
+	isUp,
+	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -333,7 +335,7 @@ class Tokenizer extends UI5Element {
 			return this._toggleTokenSelection(tokens);
 		}
 
-		if (isLeft(event) || isRight(event)) {
+		if (isLeft(event) || isRight(event) || isUp(event) || isDown(event)) {
 			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused), tokens, isRight(event));
 			this._scrollToToken(tokens[nextTokenIdx]);
 		}
