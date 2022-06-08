@@ -145,15 +145,6 @@
 	box-sizing: border-box;
 }
 
-/* Fixes IE11 bug for flex + min-height
-https://github.com/philipwalton/flexbugs/issues/231
-*/
-.ui5-checkbox-root::after {
-	content: "";
-	min-height: inherit;
-	font-size: 0;
-}
-
 /* focused */
 .ui5-checkbox-root:focus::before {
 	display: var(--_ui5_checkbox_focus_outline_display);
@@ -254,7 +245,6 @@ https://github.com/philipwalton/flexbugs/issues/231
 	overflow: hidden;
 	pointer-events: none;
 	user-select: none;
-	-ms-user-select: none;
 	-webkit-user-select: none;
 	color: var(--_ui5_checkbox_label_color);
 }

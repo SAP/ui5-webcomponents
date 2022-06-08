@@ -10,7 +10,7 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  */
 const metadata = {
 	tag: "ui5-segmented-button-item",
-	properties: /** @lends  sap.ui.webcomponents.main.SegmentedButtonItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.SegmentedButtonItem.prototype */ {
 		/**
 		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
@@ -70,7 +70,7 @@ const metadata = {
 /**
  * @class
  *
- *<h3 class="comment-api-title">Overview</h3>
+ * <h3 class="comment-api-title">Overview</h3>
  *
  * Users can use the <code>ui5-segmented-button-item</code> as part of a <code>ui5-segmented-button</code>.
  * <br><br>

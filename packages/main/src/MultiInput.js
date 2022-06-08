@@ -42,7 +42,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Defines the component tokens.
 		 *
@@ -54,7 +54,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Fired when the value help icon is pressed
 		 * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.

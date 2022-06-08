@@ -1,5 +1,10 @@
 const assert = require("chai").assert;
 const PORT = require("./_port.js");
+const KEYS = {
+	SHIFT: '\uE008',
+	ALT: '\uE00A',
+	META: '\uE03D',
+}
 
 describe("General API", () => {
 	before(async () => {
@@ -85,6 +90,52 @@ describe("General API", () => {
 		const link = await browser.$("#linkAccName");
 
 		assert.strictEqual(await link.shadow$("a").getAttribute("aria-label"), "more info", "Attribute is reflected");
+	});
+
+
+	it("passes special keys pressed while item clicked", async () => {
+		// CTRL key is skipped since there is default browser behavior where popover is opened.
+		const link = await browser.$("#modifierLink");
+		let result;
+
+		// Setup for META Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard1',
+			actions: [{ type: 'keyDown', value: KEYS.META }],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		result = await browser.$("#modifierResult");
+		assert.strictEqual(await result.getText(), 'META:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for ALT Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard2',
+			actions: [{ type: 'keyDown', value: KEYS.ALT }],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		result = await browser.$("#modifierResult");
+		assert.strictEqual(await result.getText(), 'ALT:' + await link.getText(), "label for pressed link is correct");
+
+		// Setup for SHIFT Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.SHIFT }],
+		  }]);
+		// Action
+		await link.click();
+		await browser.releaseActions();
+		// Check
+		result = await browser.$("#modifierResult");
+		assert.strictEqual(await result.getText(), 'SHIFT:' + await link.getText(), "label for pressed link is correct");
 	});
 
 });

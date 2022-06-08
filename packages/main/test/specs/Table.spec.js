@@ -83,7 +83,7 @@ describe("Table general interaction", () => {
 		before(async () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
 		});
-	
+
 		it("Should apply aria-label from the accessibleName property", async () => {
 			const table = await browser.$("#tblLessColumns");
 			const innerTable = await table.shadow$("table");

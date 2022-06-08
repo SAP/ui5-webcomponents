@@ -50,7 +50,7 @@ exports.config = {
 		// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 		// grid with only 5 firefox instances available you can make sure that not more than
 		// 5 instances get started at a time.
-		maxInstances: process.env.TRAVIS ? 1 : 5,
+		maxInstances: 5,
 		//
 		browserName: 'chrome',
 		'goog:chromeOptions': {
@@ -316,7 +316,6 @@ exports.config = {
 			"click",
 			"doubleClick",
 			"dragAndDrop",
-			"keys",
 			"pause",
 			"removeAttribute", // custom
 			"scrollIntoView",
@@ -327,9 +326,20 @@ exports.config = {
 			"touchAction",
 			"url",
 		];
+
+		const waitForWithDelay = [
+			"keys",
+		];
+
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+			});
+		} else if (waitForWithDelay.includes(commandName)) {
+			await browser.executeAsync(function (done) {
+				setTimeout(() => {
+					window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				}, 10);
 			});
 		}
 	},

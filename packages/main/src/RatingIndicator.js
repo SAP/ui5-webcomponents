@@ -18,6 +18,7 @@ import {
 	RATING_INDICATOR_TOOLTIP_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
+import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/favorite.js";
 import "@ui5/webcomponents-icons/dist/unfavorite.js";
 
@@ -192,6 +193,10 @@ class RatingIndicator extends UI5Element {
 
 	static async onDefine() {
 		RatingIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	static get dependencies() {
+		return [Icon];
 	}
 
 	constructor() {

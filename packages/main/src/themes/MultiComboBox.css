@@ -22,20 +22,6 @@
 	height: 100%;
 }
 
-/* Workaround for IE */
-[ui5-multi-combobox] {
-	width: 100%;
-}
-
-[ui5-multi-combobox] [ui5-tokenizer] {
-	flex: 3;
-}
-
-[ui5-icon] {
-	border-top-right-radius: var(--ui5-multi_bombobox_icon_border_top_right_radius);
-    border-bottom-right-radius: var(--ui5-multi_bombobox_icon_border_bottom_right_radius);
-}
-
 :host([readonly]) .ui5-multi-combobox-tokenizer::part(n-more-text) {
 	color: var(--sapLinkColor);
 }

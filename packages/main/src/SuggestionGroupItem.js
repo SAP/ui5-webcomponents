@@ -6,7 +6,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
  */
 const metadata = {
 	tag: "ui5-suggestion-group-item",
-	properties: /** @lends  sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-suggestion-group-item</code>.
 		 *
@@ -18,9 +18,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
 	},
-	events: /** @lends  sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
 	},
 };
 
