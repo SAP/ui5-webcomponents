@@ -12,6 +12,7 @@
 	vertical-align: top;
 	width: 100%;
 	height: 3.3125rem;
+	padding: var(--_ui5_slider_padding);
 }
 
 :host(:not([hidden])) {
@@ -21,7 +22,6 @@
 .ui5-slider-root {
 	box-sizing: border-box;
 	height: 3.3125rem;
-	padding: 1rem 0;
 	outline: none;
 	touch-action: none;
 }

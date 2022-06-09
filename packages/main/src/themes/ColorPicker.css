@@ -58,6 +58,10 @@
     --_ui5_slider_progress_box_sizing: content-box;
 }
 
+[ui5-slider]{
+	padding: 1rem 0;
+}
+
 [ui5-slider]::part(handle) {
     width: 0.9375rem;
     height: 1.5rem;
