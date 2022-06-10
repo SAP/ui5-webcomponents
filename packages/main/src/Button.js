@@ -462,6 +462,14 @@ class Button extends UI5Element {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
+	get iconRole() {
+		if (!this.icon) {
+			return "";
+		}
+
+		return this.isIconOnly ? "img" : "presentation";
+	}
+
 	get isIconOnly() {
 		return !Array.from(this.childNodes).filter(node => {
 			return node.nodeType !== Node.COMMENT_NODE
