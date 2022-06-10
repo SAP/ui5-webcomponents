@@ -1,7 +1,10 @@
-commit 0dceaf54fc56ecefaaa5b832b605924d6a8f095b
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Tue Jun 7 16:09:29 2022 +0300
+commit 7395dc36e09c48116224143917fc5ea606ed01cc
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Jun 10 14:19:11 2022 +0300
 
-    fix(ui5-badge): correctly detect if default slot is provided (#5334)
+    feat(ui5-datetime-picker): make change events preventable (#5286)
     
-    Fixes: #5328
+     feat(ui5-datetime-picker): make change event preventable
+    
+    fixes: #4684
+    fixes: #5121

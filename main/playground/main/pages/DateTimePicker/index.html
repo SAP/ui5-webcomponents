@@ -56,8 +56,8 @@
 
 		<br><ui5-label>yyyy-MM-dd-hh:mm:ss aa</ui5-label><br>
 		<ui5-datetime-picker
+			id="dtPreventDefault"
 			format-pattern="yyyy-MM-dd-hh:mm:ss aa"
-			value="2020-04-13-04:16:16 AM"
 		></ui5-datetime-picker>
 
 		<br>
@@ -167,7 +167,11 @@
 		var counter = 0;
 		dt1.addEventListener("ui5-change", function(event) {
 			input1.value = ++counter;
-			input2.value = "{ value: " + dt1.value + " , valid: " + event.detail.valid + " }";
+			input2.value = "{ value: " + event.detail.value + " , valid: " + event.detail.valid + " }";
+		});
+
+		dtPreventDefault.addEventListener("ui5-change", function(event) {
+			event.preventDefault();
 		});
 
 		var counter2 = 0;
