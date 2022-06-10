@@ -1,10 +1,15 @@
-commit 7395dc36e09c48116224143917fc5ea606ed01cc
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Jun 10 14:19:11 2022 +0300
+commit 1aac3c50041dbd24cdcba6acb02d0134a2013ca6
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Fri Jun 10 21:50:45 2022 +0300
 
-    feat(ui5-datetime-picker): make change events preventable (#5286)
+    fix(ui5-button): adjust icon role (#5355)
     
-     feat(ui5-datetime-picker): make change event preventable
+    Issue:
+    The ui5-button icon was announced by the screen readers
+    when there is a text and a icon.
     
-    fixes: #4684
-    fixes: #5121
+    Solution:
+    The ui5-button icon has role "presentation" when we aren't
+    in an icon only scenario.
+    
+    Fixes: #5288
