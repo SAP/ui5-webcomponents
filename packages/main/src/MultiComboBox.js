@@ -37,7 +37,6 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
 	isPhone,
 	isAndroid,
-	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -485,7 +484,6 @@ class MultiComboBox extends UI5Element {
 		this.valueBeforeAutoComplete = "";
 		this.currentItemIdx = -1;
 		this.FormSupport = undefined;
-		
 	}
 
 	onEnterDOM() {
@@ -752,6 +750,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_handleEscape(event) {
+		const innerInput = this._innerInput;
+		const isAutoCompleted = innerInput.selectionEnd - innerInput.selectionStart > 0;
+
+		if (isAutoCompleted) {
+			this.value = this.valueBeforeAutoComplete;
+		}
+
 		if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
 			this.value = this._lastValue;
 		}
@@ -1247,9 +1252,7 @@ class MultiComboBox extends UI5Element {
 		this.value = value;
 
 		innerInput.value = value;
-		setTimeout(() => {
-			innerInput.setSelectionRange(filterValue.length, value.length);
-		}, 0);
+		innerInput.setSelectionRange(filterValue.length, value.length);
 
 		this._shouldAutocomplete = false;
 	}
@@ -1516,7 +1519,7 @@ class MultiComboBox extends UI5Element {
 
 	get _innerInput() {
 		if (isPhone()) {
-			if (this.allItemsPopover.opened) {
+			if (this.allItemsPopover && this.allItemsPopover.opened) {
 				return this.allItemsPopover.querySelector("input");
 			}
 		}
