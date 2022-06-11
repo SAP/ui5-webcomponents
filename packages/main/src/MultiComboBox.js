@@ -550,9 +550,10 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (!filteredItems.length && value && !this.allowCustomValues) {
-			input.value = this._inputLastValue;
+			input.value = this.valueBeforeAutoComplete || this._inputLastValue;
 			this.valueState = "Error";
 
+			this._shouldAutocomplete = false;
 			this._resetValueState(oldValueState);
 
 			return;
@@ -629,15 +630,10 @@ class MultiComboBox extends UI5Element {
 		this.focused = false;
 	}
 
-	_onkeyup() {
-		this._keyDown = false;
-	}
-
 	async _onkeydown(event) {
 		const isArrowDownCtrl = isDownCtrl(event);
 
 		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(event) || isDelete(event) || isEscape(event) || isEnter(event));
-		this._isKeyNavigation = true;
 
 		if (isShow(event) && !this.disabled) {
 			this._handleShow(event);
@@ -674,9 +670,7 @@ class MultiComboBox extends UI5Element {
 			event.preventDefault();
 		}
 
-		this._keyDown = true;
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
-		this._isKeyNavigation = false;
 	}
 
 	async _handlePaste(event) {
@@ -1176,6 +1170,8 @@ class MultiComboBox extends UI5Element {
 
 			this.fireEvent("input");
 		}
+
+		this.value = this.valueBeforeAutoComplete || "";
 	}
 
 	syncItems(listItems) {
@@ -1295,7 +1291,7 @@ class MultiComboBox extends UI5Element {
 
 		// Typehead causes issues on Android devices, so we disable it for now
 		// If there is already a selection the autocomplete has already been performed
-		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation) {
+		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars) {
 			const item = this._getFirstMatchingItem(value);
 
 			// Keep the original typed in text intact
@@ -1304,7 +1300,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (this._shouldFilterItems) {
-			this._filteredItems = this._filterItems(this.valueBeforeAutoComplete || value);
+			this._filteredItems = this._filterItems(this._shouldAutocomplete || !!autoCompletedChars ? this.valueBeforeAutoComplete : value);
 		} else {
 			this._filteredItems = this.items;
 		}

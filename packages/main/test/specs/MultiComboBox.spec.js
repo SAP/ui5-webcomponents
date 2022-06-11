@@ -153,6 +153,8 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual((await list.getProperty("items")).length, 1, "1 items should be shown");
 
+			// The first backspace deletes the autocompleted part
+			await input.keys("Backspace");
 			await input.keys("Backspace");
 
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown");
@@ -166,7 +168,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.click();
 			await innerInput.keys("c");
 
-			assert.strictEqual(await innerInput.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await innerInput.getValue(), "Cosy", "Value is correct");
 
 			await innerInput.keys("c");
 
@@ -188,12 +190,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("c");
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItem.click();
 
 			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
-			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be removed");
+			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.ok(await browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
 
@@ -205,14 +207,15 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.click();
 			await input.keys("c");
+			await browser.pause(500);
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItemCheckbox.click();
 
 			assert.ok(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
-			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be removed");
+			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be the typed-in value");
 		});
 
 		it("tests if n more is applied and corresponding popover", async () => {
@@ -335,7 +338,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("Escape");
 			await input.keys("Escape");
 
-			assert.strictEqual(await mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+			assert.strictEqual(await mCombo.getProperty("value"), "Cosy", "Value should be reset to the initial one");
 
 			await input2.click();
 			await input2.keys("C");
@@ -362,7 +365,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys(['c', 'o', 's', 'y']);
 			await input.keys("Enter");
 
-			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
+			assert.strictEqual(await input.getValue(), "Cosy", "value should remain cosy");
 			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
 			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected.", "Value state text should be set to already selected");
 
