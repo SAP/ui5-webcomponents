@@ -289,6 +289,61 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
 			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
 		})
+
+		it("Tests autocomplete(type-ahead)", async () => {
+			let hasSelection;
+	
+			const input = await browser.$("#mcb").shadow$("input");
+			const EXPTECTED_VALUE = "Compact";
+	
+			await input.click();
+			await input.keys("com");
+	
+			hasSelection = await browser.execute(() =>{
+				const input = document.getElementById("mcb").shadowRoot.querySelector("input");
+				return input.selectionEnd - input.selectionStart > 0;
+			});
+	
+	
+			assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+			assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
+		});
+	
+		it("Tests disabled autocomplete(type-ahead)", async () => {
+			let hasSelection;
+	
+			const input = await browser.$("#mcb-no-typeahead").shadow$("input");
+	
+			await input.click();
+			await input.keys("c");
+	
+			assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
+		});
+
+		it("Should make a selection on ENTER and discard on ESC", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+	
+			let tokens;
+	
+			const mcb = await browser.$("#mcb");
+			const sExpected = "Cosy";
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
+	
+			await mcb.click();
+			await mcb.keys("c");
+			await mcb.keys("Enter");
+	
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+	
+			assert.strictEqual(await mcb.getProperty("value"), "", "Value is autocompleted");
+			assert.strictEqual(tokens.length, 1, "should have one token");
+	
+			await mcb.click();
+			await mcb.keys("c");
+			await mcb.keys("Escape");
+	
+			assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
+		});
 	});
 
 	describe("keyboard handling", () => {
@@ -698,7 +753,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
-			const mcb2 = await browser.$("#mcb-items");
+			const mcb2 = await browser.$("#mcb-no-typeahead");
 
 			await mcb.click();
 			await mcb.keys("F4");
