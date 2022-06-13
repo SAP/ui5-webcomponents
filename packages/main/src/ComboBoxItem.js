@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-cb-item",
-	properties: /** @lends  sap.ui.webcomponents.main.ComboBoxItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ComboBoxItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *

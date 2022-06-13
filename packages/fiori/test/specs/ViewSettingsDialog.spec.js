@@ -112,6 +112,21 @@ describe("ViewSettingsDialog general interaction", () => {
 		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
 	});
 
+	it("test ViewSettingsDialog set settings", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialog");
+		const btnSetSettings = await browser.$("#btnChangeSettings");
+		const viewSettingsDialog = await browser.$("#vsd");
+		await btnSetSettings.click();
+		await btnOpenDialog.click();
+
+		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
+
+		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();
+		assert.include(sortByLiText, "Name", "sortBy should  have an option selected");
+
+		await browser.keys("Escape");
+	});
+
 	it("ViewSettingsDialog is in filter only mode", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialogFilter");
 		const viewSettingsDialog = await browser.$("#vsdFilter");

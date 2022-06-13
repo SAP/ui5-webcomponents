@@ -2,7 +2,6 @@ import executeTemplate from "./renderer/executeTemplate.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import getEffectiveLinksHrefs from "./theming/getEffectiveLinksHrefs.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
 import { shouldUseLinks } from "./CSP.js";
 
 /**
@@ -20,7 +19,7 @@ const updateShadowRoot = (element, forStaticArea = false) => {
 		styleStrOrHrefsArr = getEffectiveLinksHrefs(element.constructor, forStaticArea);
 	} else if (document.adoptedStyleSheets) { // Chrome
 		shadowRoot.adoptedStyleSheets = getConstructableStyle(element.constructor, forStaticArea);
-	} else if (!isLegacyBrowser()) { // FF, Safari
+	} else { // FF, Safari
 		styleStrOrHrefsArr = getEffectiveStyle(element.constructor, forStaticArea);
 	}
 

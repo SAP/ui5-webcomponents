@@ -30,12 +30,6 @@
 	white-space: pre-line;
 }
 
-@media screen and (-ms-high-contrast: active) {
-    .ui5-toast-root {
-        border: 1px solid var(--sapPageFooter_BorderColor);
-    }
-}
-
 :host(:not([placement])) .ui5-toast-root {
 	bottom: var(--_ui5_toast_vertical_offset);
 	left: 50%;

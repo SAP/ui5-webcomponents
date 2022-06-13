@@ -43,7 +43,7 @@ describe("Card general interaction", () => {
 
 	it("tests clicking on an action does not fire header's click event", async () => {
 		const action = await browser.$("#cardHeader3 [slot='action']");
-		
+
 		const field = await browser.$("#field");
 		const fieldBefore = await field.getProperty("value");
 

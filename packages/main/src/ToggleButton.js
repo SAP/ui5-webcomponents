@@ -1,4 +1,3 @@
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
@@ -6,7 +5,6 @@ import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
-import toggleBtnIECss from "./generated/themes/ToggleButton.ie11.css.js";
 
 /**
  * @public
@@ -14,7 +12,7 @@ import toggleBtnIECss from "./generated/themes/ToggleButton.ie11.css.js";
 const metadata = {
 	tag: "ui5-toggle-button",
 	altTag: "ui5-togglebutton",
-	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the component is displayed as pressed.
 		 *
@@ -31,7 +29,7 @@ const metadata = {
 /**
  * @class
  *
- *<h3 class="comment-api-title">Overview</h3>
+ * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-toggle-button</code> component is an enhanced <code>ui5-button</code>
  * that can be toggled between pressed and normal states.
@@ -63,7 +61,7 @@ class ToggleButton extends Button {
 	}
 
 	static get styles() {
-		return [Button.styles, toggleBtnCss, isLegacyBrowser() && toggleBtnIECss];
+		return [Button.styles, toggleBtnCss];
 	}
 
 	_onclick() {

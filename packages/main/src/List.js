@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import {
@@ -77,7 +76,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
 		 * Defines the component header text.
@@ -265,7 +264,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
 		 * Fired when an item is activated, unless the item's <code>type</code> property
@@ -598,15 +597,10 @@ class List extends UI5Element {
 	}
 
 	get growsOnScroll() {
-		return this.growing === ListGrowingMode.Scroll && !isIE();
+		return this.growing === ListGrowingMode.Scroll;
 	}
 
 	get growsWithButton() {
-		if (isIE()) {
-			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
-			return this.grows;
-		}
-
 		return this.growing === ListGrowingMode.Button;
 	}
 
@@ -615,7 +609,7 @@ class List extends UI5Element {
 	}
 
 	get busyIndPosition() {
-		if (isIE() || !this.grows) {
+		if (!this.grows) {
 			return "absolute";
 		}
 

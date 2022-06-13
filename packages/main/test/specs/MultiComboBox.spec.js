@@ -613,7 +613,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.keys("End");
 			assert.equal(await tokens[tokens.length - 1].getProperty("focused"), true, "The last token is focused");
-		
+
 			await input.keys("End");
 			assert.equal(await mcb.getProperty("focused"), true, "The input is focused");
 		});
@@ -1135,7 +1135,7 @@ describe("MultiComboBox general interaction", () => {
 		it ("tests text selection on focus", async () => {
 			const mcb = await browser.$("#multi-acv");
 			const mcb2 = await browser.$("#mcb-with-placeholder");
-			
+
 			await mcb.click();
 
 			const selectionStartIndex = await browser.execute(() => {
@@ -1314,9 +1314,9 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(groupItems.length, 3, "Group items should be 3");
 			assert.strictEqual(listItems.length, 12, "Items should be 12");
-	
+
 			await input.keys("B");
-	
+
 			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 			listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -1398,9 +1398,9 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(groupItems.length, 3, "Group items should be 3");
 			assert.strictEqual(listItems.length, 12, "Items should be 12");
-	
+
 			await input.keys("B");
-	
+
 			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 			listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -1482,9 +1482,9 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(groupItems.length, 3, "Group items should be 3");
 			assert.strictEqual(listItems.length, 12, "Items should be 12");
-	
+
 			await input.keys("B");
-	
+
 			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 			listItems = await popover.$("ui5-list").$$("ui5-li");

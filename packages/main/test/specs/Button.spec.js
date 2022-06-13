@@ -100,6 +100,13 @@ describe("Button general interaction", () => {
 		assert.strictEqual(await innerButton.getAttribute("aria-controls"), "registration-dialog", "Attribute is reflected");
 	});
 
+	it("tests button with text icon role", async () => {
+		const button = await browser.$("#attentionIconButton");
+		const icon = await button.shadow$("ui5-icon");
+
+		assert.ok(icon.getAttribute("accessible-role", "presentation"), "icon has proper role");
+	});
+
 	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {
 		const button = await browser.$("#buttonAccNameRef").shadow$("button");
 
