@@ -1,15 +1,9 @@
-commit 1aac3c50041dbd24cdcba6acb02d0134a2013ca6
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Fri Jun 10 21:50:45 2022 +0300
+commit d1768002379476d94ee8e43db4ff300f28aa2a3b
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Tue Jun 14 09:32:29 2022 +0100
 
-    fix(ui5-button): adjust icon role (#5355)
+    fix(ui5-avatar-group): adapt width calculations in composite layouts (#5357)
     
-    Issue:
-    The ui5-button icon was announced by the screen readers
-    when there is a text and a icon.
+    The calculations of the main container width have been adjusted to take into account sibling nodes.
     
-    Solution:
-    The ui5-button icon has role "presentation" when we aren't
-    in an icon only scenario.
-    
-    Fixes: #5288
+    Fixes #5333
