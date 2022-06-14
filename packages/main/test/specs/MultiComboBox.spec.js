@@ -344,6 +344,34 @@ describe("MultiComboBox general interaction", () => {
 	
 			assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
 		});
+
+		it ("should reset typeahead on item navigation and restore it on focus input", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const icon = await mcb.shadow$("[input-icon]");
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await icon.click();
+			await mcb.keys("c");
+
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
+
+			await mcb.keys("ArrowDown");
+			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
+			assert.equal(await mcb.getProperty("value"), "c", "The input typeahead is cleared");
+
+			await input.keys("ArrowUp");
+
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is not focused");
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
+		});
 	});
 
 	describe("keyboard handling", () => {

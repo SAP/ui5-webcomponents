@@ -633,8 +633,6 @@ class MultiComboBox extends UI5Element {
 	async _onkeydown(event) {
 		const isArrowDownCtrl = isDownCtrl(event);
 
-		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(event) || isDelete(event) || isEscape(event) || isEnter(event));
-
 		if (isShow(event) && !this.disabled) {
 			this._handleShow(event);
 			return;
@@ -671,6 +669,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this[`_handle${event.key}`] && this[`_handle${event.key}`](event);
+		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(event) || isDelete(event) || isEscape(event) || isEnter(event));
 	}
 
 	async _handlePaste(event) {
@@ -807,6 +806,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isArrowUp || isUpCtrl(event)) {
+			this._shouldAutocomplete = true;
 			this._inputDom.focus();
 		}
 	}
@@ -866,6 +866,7 @@ class MultiComboBox extends UI5Element {
 
 		if (!this.valueStateHeader && isFirstItem && isArrowUp) {
 			this._inputDom.focus();
+			this._shouldAutocomplete = true;
 		}
 	}
 
@@ -899,6 +900,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isArrowDown && isOpen && this.valueStateHeader) {
+			this.value = this.valueBeforeAutoComplete;
 			this.valueStateHeader.focus();
 			return;
 		}
@@ -918,6 +920,7 @@ class MultiComboBox extends UI5Element {
 
 		if (isOpen) {
 			this.list._itemNavigation.setCurrentItem(firstListItem);
+			this.value = this.valueBeforeAutoComplete;
 			firstListItem.focus();
 		} else if (!this.readonly) {
 			this._navigateToNextItem();
@@ -1278,6 +1281,7 @@ class MultiComboBox extends UI5Element {
 		this._inputLastValue = value;
 
 		if (input && !input.value) {
+			this.valueBeforeAutoComplete = "";
 			this._filteredItems = this.items;
 		}
 
@@ -1393,14 +1397,17 @@ class MultiComboBox extends UI5Element {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
-	inputFocusIn() {
+	inputFocusIn(event) {
 		if (!isPhone() || this.readonly) {
 			this.focused = true;
 		} else {
 			this._innerInput.blur();
 		}
 
-		!isPhone() && this._innerInput.setSelectionRange(0, this.value.length);
+		if (!isPhone() && ((event.relatedTarget && event.relatedTarget.tagName !== "UI5-STATIC-AREA-ITEM") || !event.relatedTarget)) {
+			this._innerInput.setSelectionRange(0, this.value.length);
+		}
+
 		this._lastValue = this.value;
 		this.valueBeforeAutoComplete = "";
 	}
