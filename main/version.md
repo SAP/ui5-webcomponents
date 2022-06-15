@@ -1,9 +1,9 @@
-commit d1768002379476d94ee8e43db4ff300f28aa2a3b
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Tue Jun 14 09:32:29 2022 +0100
+commit b8a4854cf90eb8f06641deb0784f51f62dda242f
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Jun 15 09:39:34 2022 +0300
 
-    fix(ui5-avatar-group): adapt width calculations in composite layouts (#5357)
+    fix(ui5-combobox): change event is now fired on Enter if value is cha… (#5284)
     
-    The calculations of the main container width have been adjusted to take into account sibling nodes.
+    * fix(ui5-combobox): change event is now fired on Enter if value is changed
     
-    Fixes #5333
+    * fix(ui5-combobox): change event is now fired on Enter if value is changed
