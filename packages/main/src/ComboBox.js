@@ -1084,6 +1084,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
 			popoverHeader: {
 				"width": `${this.offsetWidth}px`,
@@ -1091,6 +1092,10 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
+			},
+			suggestionsPopover: {
+				"min-width": `${this.offsetWidth}px`,
+				"max-width": (this.offsetWidth / remSizeIxPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
 		};
 	}

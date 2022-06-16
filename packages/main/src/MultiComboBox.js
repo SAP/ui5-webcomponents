@@ -1482,6 +1482,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
 			popoverValueStateMessage: {
 				"width": `${this._listWidth}px`,
@@ -1489,6 +1490,10 @@ class MultiComboBox extends UI5Element {
 			},
 			popoverHeader: {
 				"max-width": isPhone() ? "100%" : `${this._inputWidth}px`,
+			},
+			suggestionsPopover: {
+				"min-width": `${this._inputWidth}px`,
+				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 		};
 	}
