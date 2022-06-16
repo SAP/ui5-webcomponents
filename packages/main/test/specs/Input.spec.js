@@ -1209,4 +1209,24 @@ describe("Lazy loading", () => {
 
 		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
 	});
+
+	it("Should not close picker when items are updated", async () => {
+		const input = await $("#field1");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field1");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("S");
+
+		
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+			timeout: 2000,
+			timeoutMsg: "Popover should be displayed"
+		});
+
+		await inner.keys("b");
+
+		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
+	});
 });

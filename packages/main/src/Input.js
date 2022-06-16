@@ -871,6 +871,8 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 		const isAutoCompleted = innerInput.selectionEnd - innerInput.selectionStart > 0;
 
+		this.isTyping = false;
+
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 			return;
@@ -1119,7 +1121,6 @@ class Input extends UI5Element {
 			this.focused = false;
 		}
 
-		this.isTyping = false;
 		this.openOnMobile = false;
 		this.open = false;
 		this._forceOpen = false;
