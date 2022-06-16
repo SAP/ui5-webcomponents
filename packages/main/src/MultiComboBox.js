@@ -900,7 +900,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isArrowDown && isOpen && this.valueStateHeader) {
-			this.value = this.valueBeforeAutoComplete;
+			this.value = this.valueBeforeAutoComplete || this.value;
 			this.valueStateHeader.focus();
 			return;
 		}
@@ -920,7 +920,7 @@ class MultiComboBox extends UI5Element {
 
 		if (isOpen) {
 			this.list._itemNavigation.setCurrentItem(firstListItem);
-			this.value = this.valueBeforeAutoComplete;
+			this.value = this.valueBeforeAutoComplete || this.value;
 			firstListItem.focus();
 		} else if (!this.readonly) {
 			this._navigateToNextItem();
@@ -1261,7 +1261,7 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.groupItem);
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem && !item.selected);
 
 		if (matchingItems.length) {
 			return matchingItems[0];

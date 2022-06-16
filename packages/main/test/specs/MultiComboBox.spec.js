@@ -210,7 +210,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.pause(500);
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
+			assert.strictEqual(await input.getValue(), "Compact", "Value is correct");
 
 			await firstItemCheckbox.click();
 
@@ -448,7 +448,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys(['c', 'o', 's', 'y']);
 			await input.keys("Enter");
 
-			assert.strictEqual(await input.getValue(), "Cosy", "value should remain cosy");
+			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
 			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
 			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected.", "Value state text should be set to already selected");
 
