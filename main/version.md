@@ -1,9 +1,5 @@
-commit b8a4854cf90eb8f06641deb0784f51f62dda242f
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Jun 15 09:39:34 2022 +0300
+commit c8eb75b9d987521554784c4d9da40f6d24ec548d
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Fri Jun 17 11:50:31 2022 +0300
 
-    fix(ui5-combobox): change event is now fired on Enter if value is cha… (#5284)
-    
-    * fix(ui5-combobox): change event is now fired on Enter if value is changed
-    
-    * fix(ui5-combobox): change event is now fired on Enter if value is changed
+    chore: fix css-vars-usage-report on Windows (#5373)
