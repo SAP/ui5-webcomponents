@@ -77,6 +77,10 @@
     box-sizing: border-box;
 }
 
+[ui5-slider]::part(root-container) {
+	padding: 1rem 0;
+}
+
 [ui5-slider]::part(progress-container) {
     width: calc(100% + 11px);
     height: 18px;
