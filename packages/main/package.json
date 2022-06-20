@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.4.0",
-    "chromedriver": "102.0.0",
-    "vite": "^2.9.10"
+    "chromedriver": "102.0.0"
   }
 }

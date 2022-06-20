@@ -38,7 +38,6 @@ const rmPortFile = () => {
 	while (retries--) {
 		console.log(`taking port ${port}`);
 		fs.writeFileSync(".dev-server-port", `${port}`);
-		const command = `yarn vite --port=${port} --strictPort --open`;
 		try {
 			// execSync(command, {stdio: 'pipe'});
 			const server = await startVite(port);
