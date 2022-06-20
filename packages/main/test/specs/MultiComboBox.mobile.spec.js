@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Typeahead", () => {
 	before(async () => {
