@@ -320,7 +320,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should make a selection on ENTER and discard on ESC", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 	
 			let tokens;
 	
@@ -345,7 +345,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should reset typeahead on item navigation and restore it on focus input", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
