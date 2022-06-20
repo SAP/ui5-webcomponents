@@ -1,21 +1,7 @@
-commit b8e46f4418e2a5afe5c6173ad642a6f517059002
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Jun 17 14:53:42 2022 +0300
+commit 659cd7ff38f04cecc80d9f14bb5481976c49a390
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Mon Jun 20 09:20:26 2022 +0300
 
-    feat(ui5-multi-combobox): implement type ahead (autocomplete) (#5358)
+    fix(ui5-checkbox): correct label color in Horizon (#5375)
     
-    * feat(ui5-multi-combobox): implement type ahead (autocomplete)
-    
-    implement type ahead (autocomplete)
-    
-    * feat(ui5-multi-combobox): implement type ahead (autocomplete)
-    
-    add mobile support
-    
-    * feat(ui5-multi-combobox): implement type ahead - fix existing tests
-    
-    * feat(ui5-multi-combobox): implement type ahead - add tests
-    
-    * feat(ui5-multi-combobox): implement type ahead - fix navigation
-    
-    * feat(ui5-multi-combobox): implement type ahead - fix bugs
+    Fixes #5364
