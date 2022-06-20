@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles",
-    "build:bundles": "npm-run-all --parallel bundle:main bundle:fiori",
+    "build:bundles": "npm-run-all --parallel bundle:base bundle:main bundle:fiori",
     "build:prerequisitesWithLint": "npm-run-all --parallel build:prerequisites lint:main lint:fiori",
     "build:prerequisites": "npm-run-all --parallel prepare:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori",
     "build:localization": "yarn workspace @ui5/webcomponents-localization build",
@@ -23,6 +23,7 @@
     "build:fiori": "yarn workspace @ui5/webcomponents-fiori build",
     "lint:main": "yarn workspace @ui5/webcomponents lint",
     "lint:fiori": "yarn workspace @ui5/webcomponents-fiori lint",
+    "bundle:base": "yarn workspace @ui5/webcomponents-base nps build.bundle",
     "bundle:main": "yarn workspace @ui5/webcomponents nps build.bundle",
     "bundle:fiori": "yarn workspace @ui5/webcomponents-fiori nps build.bundle",
     "build:playground": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
