@@ -6,6 +6,8 @@ temp
 target
 dist
 .dev-server-port
+# TODO remove this as the tools no longer generate it, kept for clean up (in the clean task as well)
+.port
 
 # scoping feature generated entry points for vite consumption
 packages/main/test/pages/scoped
