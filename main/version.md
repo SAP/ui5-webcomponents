@@ -1,7 +1,5 @@
-commit 659cd7ff38f04cecc80d9f14bb5481976c49a390
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Mon Jun 20 09:20:26 2022 +0300
+commit a722f6783d841821f9707372733ca280894b2989
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 20 10:10:29 2022 +0300
 
-    fix(ui5-checkbox): correct label color in Horizon (#5375)
-    
-    Fixes #5364
+    docs: add Svelte reference app to Playground (#5376)
