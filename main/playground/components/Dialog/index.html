@@ -5812,17 +5812,55 @@
 			hasPopup: "dialog",
 			controls: dialog2.id,
 		}
-	
+
 		dialogOpener2.addEventListener("click", function() {
 			dialog2.show();
 		});
-	
+
 		dialogCloser2.addEventListener("click", function() {
 			dialog2.close();
 		});
 	</script>
 
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-dialog</span> <span class="na">draggable</span> <span class="na">resizable</span><span class="nt">&gt;&lt;/ui5-dialog&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>Dialog with SAP Fiori Styled Footer</h3>
+	<div class="snippet">
+		<ui5-button id="fiori-footer">Open dialog</ui5-button>
+
+		<ui5-dialog id="fiori-footer-dialog" header-text="SAP Fiori Styled Footer">
+			<p>Adding custom styles to achieve the look and feel of a SAP Fiori footer</p>
+			<div slot="footer" style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
+				<ui5-button design="Emphasized" style="min-width: 4rem;">OK</ui5-button>
+				<ui5-button id="fiori-close" style="margin: 0 0 0 0.5rem; min-width: 4rem;">Close</ui5-button>
+			</div>
+		</ui5-dialog>
+	</div>
+
+	<script>
+		var dialogOpener3 = document.getElementById("fiori-footer");
+		var dialog3 = document.getElementById("fiori-footer-dialog");
+		var dialogCloser3 = document.getElementById("fiori-close");
+
+		dialogOpener3.addEventListener("click", function() {
+			dialog3.show();
+		});
+
+		dialogCloser3.addEventListener("click", function() {
+			dialog3.close();
+		});
+	</script>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">		<span class="nt">&lt;ui5-dialog</span> <span class="na">id=</span><span class="s">"fiori-footer-dialog"</span> <span class="na">header-text=</span><span class="s">"SAP Fiori Styled Footer"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p&gt;</span>Adding custom styles to achieve the look and feel of a SAP Fiori footer<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"footer"</span> <span class="na">style=</span><span class="s">"display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;ui5-button</span>  <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">style=</span><span class="s">"min-width: 4rem;"</span><span class="nt">&gt;</span>OK<span class="nt">&lt;/ui5-button&gt;</span>
+				<span class="nt">&lt;ui5-button</span> <span class="na">style=</span><span class="s">"margin: 0 0 0 0.5rem; min-width: 4rem;"</span><span class="nt">&gt;</span>Close<span class="nt">&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/ui5-dialog&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
