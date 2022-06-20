@@ -144,11 +144,11 @@
 			hasPopup: "dialog",
 			controls: dialog2.id,
 		}
-	
+
 		dialogOpener2.addEventListener("click", function() {
 			dialog2.show();
 		});
-	
+
 		dialogCloser2.addEventListener("click", function() {
 			dialog2.close();
 		});
@@ -157,5 +157,44 @@
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-dialog draggable resizable></ui5-dialog>
 	</xmp></pre>
+</section>
+
+<section>
+	<h3>Dialog with SAP Fiori Styled Footer</h3>
+	<div class="snippet">
+		<ui5-button id="fiori-footer">Open dialog</ui5-button>
+
+		<ui5-dialog id="fiori-footer-dialog" header-text="SAP Fiori Styled Footer">
+			<p>Adding custom styles to achieve the look and feel of a SAP Fiori footer</p>
+			<div slot="footer" style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
+				<ui5-button design="Emphasized" style="min-width: 4rem;">OK</ui5-button>
+				<ui5-button id="fiori-close" style="margin: 0 0 0 0.5rem; min-width: 4rem;">Close</ui5-button>
+			</div>
+		</ui5-dialog>
+	</div>
+
+	<script>
+		var dialogOpener3 = document.getElementById("fiori-footer");
+		var dialog3 = document.getElementById("fiori-footer-dialog");
+		var dialogCloser3 = document.getElementById("fiori-close");
+
+		dialogOpener3.addEventListener("click", function() {
+			dialog3.show();
+		});
+
+		dialogCloser3.addEventListener("click", function() {
+			dialog3.close();
+		});
+	</script>
+
+	<pre class="highlight">{% highlight html %}
+		<ui5-dialog id="fiori-footer-dialog" header-text="SAP Fiori Styled Footer">
+			<p>Adding custom styles to achieve the look and feel of a SAP Fiori footer</p>
+			<div slot="footer" style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
+				<ui5-button  design="Emphasized" style="min-width: 4rem;">OK</ui5-button>
+				<ui5-button style="margin: 0 0 0 0.5rem; min-width: 4rem;">Close</ui5-button>
+			</div>
+		</ui5-dialog>
+	{% endhighlight %}</pre>
 </section>
 <!-- JSDoc marker -->
