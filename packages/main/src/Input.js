@@ -1182,7 +1182,7 @@ class Input extends UI5Element {
 			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
 
 		this.hasSuggestionItemSelected = true;
-debugger;
+
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;

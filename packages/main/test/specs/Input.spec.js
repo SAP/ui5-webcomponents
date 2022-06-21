@@ -538,25 +538,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
 	});
 
-	it("Tests suggestions highlighting", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
-
-		const input = await browser.$("#myInputHighlighted");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputHighlighted");
-		const EXPTECTED_TEXT = "<b>Ad</b>am";
-
-		await input.click();
-		await input.keys(["a", "d"]);
-
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-
-		assert.ok(await respPopover.isDisplayedInViewport(), "The popover is visible");
-		await browser.pause(1000);
-		const firstItemHtml = await firstListItem.getHTML(false);
-		assert.include(firstItemHtml, "<b>Ad</b>am", "The suggestions is highlighted.");
-	});
-
 	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", async () => {
 		const input = await browser.$("#input-number2");
 

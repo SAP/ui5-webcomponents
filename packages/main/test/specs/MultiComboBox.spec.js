@@ -153,6 +153,8 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual((await list.getProperty("items")).length, 1, "1 items should be shown");
 
+			// The first backspace deletes the autocompleted part
+			await input.keys("Backspace");
 			await input.keys("Backspace");
 
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown");
@@ -166,7 +168,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.click();
 			await innerInput.keys("c");
 
-			assert.strictEqual(await innerInput.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await innerInput.getValue(), "Cosy", "Value is correct");
 
 			await innerInput.keys("c");
 
@@ -188,12 +190,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("c");
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItem.click();
 
 			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
-			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be removed");
+			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.ok(await browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
 
@@ -205,14 +207,15 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.click();
 			await input.keys("c");
+			await browser.pause(500);
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await input.getValue(), "Compact", "Value is correct");
 
 			await firstItemCheckbox.click();
 
 			assert.ok(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
-			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be removed");
+			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be the typed-in value");
 		});
 
 		it("tests if n more is applied and corresponding popover", async () => {
@@ -286,6 +289,89 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
 			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
 		})
+
+		it("Tests autocomplete(type-ahead)", async () => {
+			let hasSelection;
+	
+			const input = await browser.$("#mcb").shadow$("input");
+			const EXPTECTED_VALUE = "Compact";
+	
+			await input.click();
+			await input.keys("com");
+	
+			hasSelection = await browser.execute(() =>{
+				const input = document.getElementById("mcb").shadowRoot.querySelector("input");
+				return input.selectionEnd - input.selectionStart > 0;
+			});
+	
+	
+			assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+			assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
+		});
+	
+		it("Tests disabled autocomplete(type-ahead)", async () => {
+			let hasSelection;
+	
+			const input = await browser.$("#mcb-no-typeahead").shadow$("input");
+	
+			await input.click();
+			await input.keys("c");
+	
+			assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
+		});
+
+		it("Should make a selection on ENTER and discard on ESC", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+	
+			let tokens;
+	
+			const mcb = await browser.$("#mcb");
+			const sExpected = "Cosy";
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
+	
+			await mcb.click();
+			await mcb.keys("c");
+			await mcb.keys("Enter");
+	
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+	
+			assert.strictEqual(await mcb.getProperty("value"), "", "Value is autocompleted");
+			assert.strictEqual(tokens.length, 1, "should have one token");
+	
+			await mcb.click();
+			await mcb.keys("c");
+			await mcb.keys("Escape");
+	
+			assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
+		});
+
+		it ("should reset typeahead on item navigation and restore it on focus input", async () => {
+			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const icon = await mcb.shadow$("[input-icon]");
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await icon.click();
+			await mcb.keys("c");
+
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
+
+			await mcb.keys("ArrowDown");
+			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
+			assert.equal(await mcb.getProperty("value"), "c", "The input typeahead is cleared");
+
+			await input.keys("ArrowUp");
+
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is not focused");
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
+		});
 	});
 
 	describe("keyboard handling", () => {
@@ -335,7 +421,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("Escape");
 			await input.keys("Escape");
 
-			assert.strictEqual(await mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+			assert.strictEqual(await mCombo.getProperty("value"), "Cosy", "Value should be reset to the initial one");
 
 			await input2.click();
 			await input2.keys("C");
@@ -695,7 +781,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
-			const mcb2 = await browser.$("#mcb-items");
+			const mcb2 = await browser.$("#mcb-no-typeahead");
 
 			await mcb.click();
 			await mcb.keys("F4");
