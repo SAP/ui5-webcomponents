@@ -908,7 +908,7 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
-		this._preventNextChange = this.effectiveShowClearIcon && this.shadowRoot.contains(event.relatedTarget);
+		this._clearIconClicked = false;
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
@@ -953,8 +953,8 @@ class Input extends UI5Element {
 	}
 
 	_handleChange() {
-		if (this._preventNextChange) {
-			this._preventNextChange = false;
+		if (this._clearIconClicked) {
+			this._clearIconClicked = false;
 			return;
 		}
 
@@ -967,11 +967,15 @@ class Input extends UI5Element {
 	_clear() {
 		this.value = "";
 		this.fireEvent(this.EVENT_INPUT);
-		this._handleChange();
+		this.fireEvent(this.EVENT_CHANGE);
 
 		if (!this._isPhone) {
 			this.focus();
 		}
+	}
+
+	_iconMouseDown() {
+		this._clearIconClicked = true;
 	}
 
 	_scroll(event) {
@@ -1175,10 +1179,10 @@ class Input extends UI5Element {
 
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
+			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
 
 		this.hasSuggestionItemSelected = true;
-
+debugger;
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
