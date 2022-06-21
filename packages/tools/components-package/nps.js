@@ -1,18 +1,42 @@
 const path = require("path");
+const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
+
 
 const getScripts = (options) => {
 
 	let illustrations = options.illustrationsData || [];
-
 	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
-
 	let illustrationsScript = illustrations.join(" && ");
 
+	let viteConfig;
+	if (fs.existsSync("config/vite.config.js")) {
+		// old project setup where config file is in separate folder
+		viteConfig = "-c config/vite.config.js";
+	} else if (fs.existsSync("vite.config.js")) {
+		// preferred way of custom configuration in root project folder
+		viteConfig = "";
+	} else {
+		// no custom configuration - use default from tools project
+		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
+	}
+
+	let eslintConfig;
+	if (fs.existsSync("config/.eslintrc.js")) {
+		// old project setup where config file is in separate folder
+		eslintConfig = "--config config/.eslintrc.js";
+	} else if (fs.existsSync(".eslintrc.js")) {
+		// preferred way of custom configuration in root project folder
+		eslintConfig = "";
+	} else {
+		// no custom configuration - use default from tools project
+		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
+	}
+		
 	const scripts = {
 		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
-		lint: "eslint . --config config/.eslintrc.js",
-		lintfix: "eslint . --config config/.eslintrc.js --fix",
+		lint: `eslint . ${eslintConfig}`,
+		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
 			default: "nps clean prepare.all",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.samples" "nps build.illustrations"',
@@ -36,7 +60,7 @@ const getScripts = (options) => {
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
-			bundle: "vite build -c config/vite.config.js",
+			bundle: `vite build ${viteConfig}`,
 			samples: {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
@@ -54,7 +78,7 @@ const getScripts = (options) => {
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
-			bundle: 'vite -c config/vite.config.js --open',
+			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -84,7 +108,7 @@ const getScripts = (options) => {
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
 			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps watch.styles"',
-			bundle: 'vite -c config/vite.config.js --open'
+			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		}
 	};
 

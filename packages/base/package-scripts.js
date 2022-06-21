@@ -9,9 +9,12 @@ const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/in
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
+const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
+const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
+
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
-	lint: "eslint . --config config/.eslintrc.js",
+	lint: `eslint . ${eslintConfig}`,
 	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
@@ -27,7 +30,7 @@ const scripts = {
 	},
 	build: {
 		default: `nps lint prepare build.bundle`,
-		bundle: "vite build -c config/vite.config.js",
+		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
 		default: "nps copy.src copy.test",
@@ -41,7 +44,7 @@ const scripts = {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',
 		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
-		bundle: "vite -c config/vite.config.js --open",
+		bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	start: "nps prepare watch.withBundle",

@@ -1,15 +1,20 @@
-const fs = require("fs");
+const fs = require("fs/promises");
 const { createServer } = require('vite');
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+
+const argv = yargs(hideBin(process.argv))
+	.alias("c", "config")
+	.argv;
 
 const startVite = async (port) => {
 	const server = await createServer({
-		// any valid user config options, plus `mode` and `configFile`
-		// configFile: false,
-		// root: __dirname,
+		configFile: argv.config,
 		server: {
 			port: port,
 			strictPort: true,
 			open: true,
+			host: true,
 		},
 		logLevel: 'info',
 		clearScreen: false,
@@ -19,11 +24,10 @@ const startVite = async (port) => {
 	return server;
 };
 
-const rmPortFile = () => {
-	console.log("rm");
+const rmPortFile = async () => {
 	// exit handler must be sync
 	try {
-		fs.rmSync(".dev-server-port");
+		await fs.rm(".dev-server-port");
 	} catch (e) {}
 	process.exit();
 }
@@ -37,7 +41,7 @@ const rmPortFile = () => {
 	let port = 8080;
 	while (retries--) {
 		console.log(`taking port ${port}`);
-		fs.writeFileSync(".dev-server-port", `${port}`);
+		await fs.writeFile(".dev-server-port", `${port}`);
 		try {
 			// execSync(command, {stdio: 'pipe'});
 			const server = await startVite(port);
