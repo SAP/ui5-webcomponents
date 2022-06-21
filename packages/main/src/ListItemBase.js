@@ -10,7 +10,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @public
  */
 const metadata = {
-	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
 		/**
 		 * Defines the selected state of the <code>ListItem</code>.
@@ -57,7 +57,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
+	events: /** @lends sap.ui.webcomponents.main.ListItemBase.prototype */  {
 		_focused: {},
 		"_forward-after": {},
 		"_forward-before": {},

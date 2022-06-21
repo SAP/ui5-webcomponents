@@ -318,7 +318,6 @@ class DateTimePicker extends DatePicker {
 	onSelectedDatesChange(event) {
 		event.preventDefault();
 		const dateTimePickerContent = event.path ? event.path[1] : event.composedPath()[1];
-
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
@@ -362,15 +361,10 @@ class DateTimePicker extends DatePicker {
 		const selectedDate = this.getSelectedDateTime();
 
 		const value = this.getFormat().format(selectedDate);
-		const valid = this.isValid(value);
-
 		if (this.value !== value) {
-			this.value = value;
-			this.fireEvent("change", { value: this.value, valid });
-			this.fireEvent("value-changed", { value: this.value, valid });
+			this._updateValueAndFireEvents(value, true, ["change", "value-changed"]);
 		}
 
-		this._updateValueState();
 		this.closePicker();
 	}
 
@@ -420,9 +414,11 @@ class DateTimePicker extends DatePicker {
 	getSelectedDateTime() {
 		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]);
 		const selectedTime = this.getFormat().parse(this._timeSelectionValue);
-		selectedDate.setHours(selectedTime.getHours());
-		selectedDate.setMinutes(selectedTime.getMinutes());
-		selectedDate.setSeconds(selectedTime.getSeconds());
+		if (selectedTime) {
+			selectedDate.setHours(selectedTime.getHours());
+			selectedDate.setMinutes(selectedTime.getMinutes());
+			selectedDate.setSeconds(selectedTime.getSeconds());
+		}
 
 		return selectedDate;
 	}

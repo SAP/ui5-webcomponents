@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
-	isIE,
 	isPhone,
 	isSafari,
 	isAndroid,
@@ -151,7 +150,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.Input.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -440,7 +439,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
@@ -1048,13 +1047,7 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		/* skip calling change event when an input with a placeholder is focused on IE
-			- value of the host and the internal input should be differnt in case of actual input
-			- input is called when a key is pressed => keyup should not be called yet
-		*/
-		const skipFiring = (inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
-
-		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT, event);
+		this.fireEventByAction(this.ACTION_USER_INPUT, event);
 
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
@@ -1280,13 +1273,6 @@ class Input extends UI5Element {
 			this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
-			return;
-		}
-
-		// In IE, pressing the ENTER does not fire change
-		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
-		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
-			this._handleChange();
 		}
 	}
 

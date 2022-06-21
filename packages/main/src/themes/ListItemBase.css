@@ -79,8 +79,6 @@
 
 .ui5-li-content {
 	max-width: 100%;
-	min-height: 1px; /* IE specific: fixes vertical centering with flex  */
 	font-family: "72override", var(--sapFontFamily);
 	color: var(--sapList_TextColor);
-	pointer-events: none;  /* IE specific: fixes focus crrectly applied*/
 }

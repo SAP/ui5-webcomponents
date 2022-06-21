@@ -23,7 +23,7 @@ import globalStyles from "./generated/themes/PopupGlobal.css.js";
  */
 const metadata = {
 	managedSlots: true,
-	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
 		 * Defines the content of the Popup.
@@ -36,7 +36,7 @@ const metadata = {
 			propertyName: "content",
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
 		/**
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
@@ -114,7 +114,7 @@ const metadata = {
 		 * @type {string}
 		 * @private
 		 */
-		 mediaRange: {
+		mediaRange: {
 			type: String,
 		},
 
@@ -129,7 +129,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
 		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>

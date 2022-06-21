@@ -5,7 +5,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
@@ -467,18 +466,9 @@ class TextArea extends UI5Element {
 	_oninput(event) {
 		const nativeTextArea = this.getInputDomRef();
 
-		/* skip calling change event when an textarea with a placeholder is focused on IE
-			- value of the host and the internal textarea should be different in case of actual input
-			- input is called when a key is pressed => keyup should not be called yet
-		*/
-		const skipFiring = (nativeTextArea.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 		if (event.target === nativeTextArea) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
-		}
-
-		if (skipFiring) {
-			return;
 		}
 
 		this.value = nativeTextArea.value;

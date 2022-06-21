@@ -113,7 +113,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 		/**

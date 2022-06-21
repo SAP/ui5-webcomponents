@@ -2,11 +2,6 @@
 	display: inline-block;
 }
 
-/* this line is also included from the Button.css, but keep it here in case we start using it for automatic IE11 compilation */
-:host([disabled]) {
-	pointer-events: none;
-}
-
 :host([pressed]),
 :host([design="Default"][pressed]),
 :host([design="Transparent"][pressed]),

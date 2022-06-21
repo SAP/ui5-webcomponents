@@ -18,9 +18,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
 	},
-	events: /** @lends  sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
 	},
 };
 

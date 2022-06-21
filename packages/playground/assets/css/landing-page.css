@@ -293,7 +293,8 @@ footer h2 {
 }
 
 .framework-wrapper:nth-child(1),
-.framework-wrapper:nth-child(2) {
+.framework-wrapper:nth-child(2),
+.framework-wrapper:nth-child(3) {
     margin-right: 8rem;
 }
 

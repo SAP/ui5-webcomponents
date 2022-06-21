@@ -276,6 +276,12 @@ describe("General interaction", () => {
 
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
+		await input.keys("b");
+
+		await input.keys("Enter");
+
+		assert.strictEqual(await counter.getText(), "2", "Call count should be 2");
+
 	});
 
 	it ("Value should be reset on ESC key", async () => {

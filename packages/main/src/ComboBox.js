@@ -779,8 +779,9 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(event)) {
+			this._fireChangeEvent();
+
 			if (this.responsivePopover.opened) {
-				this._fireChangeEvent();
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {

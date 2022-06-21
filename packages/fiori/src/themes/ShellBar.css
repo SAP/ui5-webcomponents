@@ -261,14 +261,12 @@ slot[name="profile"] {
 	cursor: text;
 	-webkit-user-select: text;
 	-moz-user-select: text;
-	-ms-user-select: text;
 	user-select: text;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive {
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	cursor: pointer;
 	border: var(--_ui5_shellbar_button_border);
@@ -432,26 +430,6 @@ slot[name="profile"] {
 	max-height: 2rem;
 	pointer-events: none;
 }
-
-
-/**
-* IE styles
-*/
-[ui5-input][value-state]:not([readonly]) {
-	background: var(--sapShellColor);
-	border: 1px solid var(--sapShell_InteractiveBorderColor);
-}
-
-[ui5-input][value-state]:not([readonly]):hover,
-[ui5-input]:not([value-state]):not([readonly]):hover {
-	background: var(--sapShell_Hover_Background);
-	border: 1px solid var(--sapShell_InteractiveBorderColor);
-}
-
-[ui5-input][value-state]:not([value-state="None"])[focused] {
-	outline: 1px dotted var(--sapContent_ContrastFocusColor);
-}
-/* IE styles end */
 
 .ui5-shellbar-copilot-wrapper {
 	position: relative;

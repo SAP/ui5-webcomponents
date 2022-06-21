@@ -73,3 +73,7 @@
 	cursor: var(--_ui5_dialog_resize_cursor);
 	color: var(--_ui5_dialog_resize_handle_color);
 }
+
+:host ::slotted([slot="footer"]) {
+    height: var(--_ui5_dialog_footer_height);
+}
