@@ -1,8 +1,8 @@
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import WrappingType from "@ui5/webcomponents-base/dist/types/WrappingType.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
+import WrappingType from "./types/WrappingType.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
