@@ -75,10 +75,11 @@ describe("Card general interaction", () => {
 		const cardHeader = await $("#card2").$("ui5-card-header");
 
 		// Default value
-		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "3");
+		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "3");
 
-		await cardHeader.setAttribute("aria-level", 4);
-		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "4");
+		const cardHeaderTitle = await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title");
+		await cardHeaderTitle.setAttribute("aria-level", 4);
+		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "4");
 	});
 });
 
@@ -88,8 +89,8 @@ describe("CardHeader", () => {
 	});
 
 	it("tests header aria-labelledby", async () => {
-		const header = await browser.$("#header").shadow$(".ui5-card-header");
-		const header2 = await browser.$("#header2").shadow$(".ui5-card-header");
+		const header = await browser.$("#header").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
+		const header2 = await browser.$("#header2").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
 		const headerId = await browser.$("#header").getProperty("_id");
 		const headerId2 = await browser.$("#header2").getProperty("_id");
 		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${headerId}-title ${headerId}-subtitle ${headerId}-status`;
