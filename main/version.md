@@ -1,17 +1,15 @@
-commit 03269f45859ae2d0c17686ebf21cb10ff9de35cb
-Author: GerganaKremenska <gergana.georgieva01@sap.com>
-Date:   Mon Jun 20 16:26:43 2022 +0300
+commit 9b33badec6b5fbbef525fb68366f9bf785e9efef
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Wed Jun 22 11:42:34 2022 +0300
 
-    fix(ui5-dialog): add height to footer and samples achieving fiori footer design (#5338)
+    fix(ui5-card): refactor header to avoid nesting interactive elements (#5301)
     
-    * fix(ui5-dialog): add height to footer and samples achieving fiori footer design
+    The header now always has role="group".
+    An inner element inside the header is now receiving the focus, while the
+    focus outline is still drawn on the header element.
+    This helps the case when the header is interactive,
+    to avoid nesting a button element within a role="button" div.
     
-    * fix(ui5-dialog): resolve comments
+    Adopted approach from https://github.com/SAP/openui5/commit/67a5f79c8ac65ea3b59139fd8479474580318957
     
-    * fix(ui5-dialog): samples text is updated
-    
-    * fix(ui5-dialog): section name
-    
-    * fix(ui5-dialog): samples are the same
-    
-    * fix(ui5-dialog): dialog header text  changed
+    Adjusted the status text style slightly to match the latest design spec.
