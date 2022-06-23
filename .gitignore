@@ -47,6 +47,7 @@ yarn-debug.log*
 icon-collection-bundler.cjs.js
 
 # Playground
+.jekyll-cache
 packages/playground/_site/
 packages/playground/.sass-cache/
 packages/playground/assets/js/ui5-webcomponents/
@@ -73,3 +74,12 @@ packages/playground/docs/FAQ.md
 
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js
+
+# coming from main and fiori bundles for the test pages
+packages/playground/assets/*.js
+packages/playground/assets/*.png
+packages/playground/assets/*.jpg
+packages/playground/assets/*.gif
+packages/playground/assets/*.css
+packages/playground/assets/test/pages/*.css
+packages/playground/assets/test/pages/*.js

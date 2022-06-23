@@ -39,7 +39,7 @@ const getScripts = (options) => {
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
 			default: "nps clean prepare.all",
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.samples" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports",
 		},
 		build: {
@@ -61,11 +61,7 @@ const getScripts = (options) => {
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,
-			samples: {
-				default: "nps build.samples.api build.samples.docs",
-				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
-			},
+			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 			illustrations: illustrationsScript
 		},
 		copy: {
@@ -74,7 +70,7 @@ const getScripts = (options) => {
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
+			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
@@ -89,7 +85,7 @@ const getScripts = (options) => {
 				},
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
-			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
+			api: 'chokidar "test/**/*.sample.html" -c "nps build.api"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",
@@ -107,7 +103,7 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
-			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps watch.styles"',
+			watch: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.test" "nps watch.src" "nps watch.props" "nps watch.styles"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		}
 	};
