@@ -33,9 +33,8 @@ const scripts = {
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
-		default: "nps copy.src copy.test",
+		default: "nps copy.src",
 		src: `copy-and-watch "src/**/*.{js,css}" dist/`,
-		test: `copy-and-watch "test/**/*.*" dist/test-resources`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,
