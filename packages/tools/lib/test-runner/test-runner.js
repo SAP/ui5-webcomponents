@@ -8,7 +8,6 @@ const path = require("path");
 let devServerFolder = process.cwd();
 let devServerPort;
 while (true) {
-    // console.log({devServerFolder});
     try {
         devServerPort = readFileSync(path.join(devServerFolder, ".dev-server-port")).toString();
         break; // found
@@ -44,21 +43,18 @@ if (devServerPort) {
 if (!baseUrl) {
     console.log("No dev server running, running tests served from `dist`, make sure it is up to date");
 }
-console.log({baseUrl});
 
 // add single spec parameter if passed
 let spec = "";
 if (process.argv.length === 3) {
     const specFile = process.argv[2];
     spec = `--spec ${specFile}`;
-    console.log({spec})
 }
 
 // more parameters - pass them to wdio
 let restParams = "";
 if (process.argv.length > 3) {
     restParams = process.argv.slice(2).join(" ");
-    console.log({restParams});
 }
 
 // run wdio with calculated parameters
