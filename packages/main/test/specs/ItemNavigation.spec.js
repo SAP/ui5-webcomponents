@@ -110,5 +110,6 @@ describe("Item Navigation Tests", () => {
 		assert.strictEqual(await third.isFocused(), true, "third item is focused");
 
 		// Clean-up
+		await switchEl.click();
 	});
 });
