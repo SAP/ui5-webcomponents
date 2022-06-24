@@ -10,9 +10,7 @@
 		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-
-	<script src="https://sap.github.io/ui5-webcomponents/main/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
-
+	
 
 	<script
 	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -34,7 +32,9 @@
 		}
 	</script>
 
-	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/main/assets/js/ui5-webcomponents/main/styles/DatePicker.css">
+	
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.3ce39a9c.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/DatePicker.html.e667d0b8.css'>
 </head>
 <body class="datepicker1auto">
 	<div style='width:500px;'>
@@ -73,7 +73,7 @@
 		<ui5-date-picker id='dp8' format-pattern='QQQ yyyy, MMM dd'></ui5-date-picker>
 
 		<h3>format-pattern - 'EEE, M/d/yyyy'</h3>
-		<ui5-date-picker id='dp9'format-pattern='EEE, M/d/yyyy'></ui5-date-picker>
+		<ui5-date-picker id='dp9' format-pattern='EEE, M/d/yyyy'></ui5-date-picker>
 
 		<h3>Try the value - 'today'</h3>
 		<ui5-date-picker id='dp10'></ui5-date-picker>

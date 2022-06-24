@@ -1,5 +1,5 @@
-commit a4df0bdbb55782aaa436a2af164a486aa102ad8c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jun 23 09:58:53 2022 +0300
+commit 72b0c9fa306be9817650dc78597a7fb7633f8041
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Jun 24 11:54:19 2022 +0300
 
-    fix: cldr url (#5397)
+    refactor(infra): switch from rollup to vite for faster development (#5380)

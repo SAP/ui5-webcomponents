@@ -8,13 +8,15 @@
 	<title>ui5-switch</title>
 
 
-	<script src="https://sap.github.io/ui5-webcomponents/main/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	
 
 
 	<script>// delete Document.prototype.adoptedStyleSheets</script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.3ce39a9c.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Switch.html.a4f3262f.css'>
 </head>
 
-<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/main/assets/js/ui5-webcomponents/main/styles/Switch.css">
+
 <body class="switch1auto">
 	<h3>Default Switch</h3>
 	<div class="switch2auto">
@@ -28,7 +30,7 @@
 	</div>
 
 	<h3>No Label</h3>
-	<div class="switch2auto"></div>
+	<div class="switch2auto">
 		<ui5-switch id="noLabel"></ui5-switch>
 		<ui5-switch checked></ui5-switch>
 	</div>

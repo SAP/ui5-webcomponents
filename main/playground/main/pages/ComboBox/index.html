@@ -17,14 +17,17 @@
 	</script>
 
 
-	<script src="https://sap.github.io/ui5-webcomponents/main/assets/js/ui5-webcomponents/bundle.esm.js" type="module"></script>
+	
 
 
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/ComboBox.html.98770162.js'></script>
+  <link rel="modulepreload" href='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.3ce39a9c.js'>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/ComboBox.html.14fbc3aa.css'>
 </head>
 
 <body class="combobox1auto">
 
-	<link rel="stylesheet" type="text/css" href="https://sap.github.io/ui5-webcomponents/main/assets/js/ui5-webcomponents/main/styles/ComboBox.css">
+	
 
 	<div class="demo-section">
 		<ui5-label id="countryLabel">Select country: </ui5-label>
@@ -241,33 +244,7 @@
 		</ui5-combobox>
 	</div>
 
-    <script type="module">
-		document.getElementById("lazy").addEventListener("ui5-input", async event => {
-			const { value } = event.target;
-
-			// set busy state
-			event.target.loading = true;
-
-			// load data
-			const items = (await(await fetch("https://restcountries.eu/rest/v2/?fields=name")).json());
-
-			// cleanup old items
-			while (document.getElementById("lazy").firstChild) {
-				document.getElementById("lazy").removeChild(document.getElementById("lazy").firstChild);
-			}
-
-			// fill new items
-			items.map(data => {
-				const element = document.createElement("ui5-cb-item");
-				element.setAttribute("text", data.name);
-
-				document.getElementById("lazy").appendChild(element);
-			});
-
-			// remove busy state
-			event.target.loading = false;
-		});
-    </script>
+    
 
 	<script>
 		document.getElementById("combo").addEventListener("ui5-change", function(event) {
