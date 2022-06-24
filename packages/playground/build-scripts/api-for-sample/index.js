@@ -11,7 +11,6 @@ const fs = require('fs').promises;
 
 const compiledHandlebars = Handlebars.compile(template);
 const compiledSinceTemplate = Handlebars.compile(sinceTemplate);
-const linkMatcher = /{@link(\s)(\w+)\s*}/gi;
 const sinceMarker = "<!--since_tag_marker-->";
 
 const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
@@ -119,15 +118,6 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 
 		result = result.replace("<!-- JSDoc marker -->", APIReference);
 		result = result.replace(sinceMarker, EntitySince);
-
-		result = result.replace(linkMatcher, match => {
-			const component = linkMatcher.exec(match)[2];
-
-			// reset the regex
-			linkMatcher.lastIndex = 0;
-
-			return `<a href="#" onclick="redirect(event, '${component}')">${component}</a>`;
-		});
 
 		return result;
 	}
