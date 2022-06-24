@@ -5,6 +5,37 @@ describe("Item Navigation Tests", () => {
 		await browser.url(`test/pages/ItemNavigation.html`);
 	});
 
+	it("tests left and right arrow keys in LTR", async () => {
+		// Setup
+		const items = await browser.$$("#horizontalNavigation ui5-breadcrumbs-item");
+		await items[0].focus();
+
+		// Act
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+
+		// Assert
+		assert.strictEqual(await items[2].isFocused(), true, "third item is focused");
+	});
+
+	it("tests left and right arrow keys in RTL", async () => {
+		// Setup
+		const switchEl = await browser.$("#sw");
+		await switchEl.click();
+		const items = await browser.$$("#horizontalNavigation ui5-breadcrumbs-item");
+		await items[0].focus();
+
+		// Act
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+
+		// Assert
+		assert.strictEqual(await items[2].isFocused(), true, "third item is focused");
+
+		// Clean-up
+		await switchEl.click();
+	});
+
 	it("focus does not cycle", async () => {
 		const firstItem = await browser.$("#item1");
 		const secondItem = await browser.$("#item2");
