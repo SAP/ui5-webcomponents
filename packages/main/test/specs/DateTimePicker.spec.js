@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 const openPickerById = async (id, options) => {
 	await browser.$(`#${id}`).scrollIntoView();
@@ -46,7 +45,7 @@ const getTimeSlidersCount = async id => {
 
 describe("DateTimePicker general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DateTimePicker.html?sap-ui-language=en`);
 	});
 
 	it("tests picker opens/closes programmatically", async () => {

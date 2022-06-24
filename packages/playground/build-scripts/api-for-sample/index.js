@@ -8,21 +8,14 @@ const methodsTemplate = require('./templates/api-methods-section').template;
 const cssVariablesTemplate = require('./templates/api-css-variables-section').template;
 const Handlebars = require('handlebars/dist/handlebars.min.js');
 const fs = require('fs').promises;
-const path = require('path');
-const beautify = require("json-beautify");
 
-const generate = async () => {
+const compiledHandlebars = Handlebars.compile(template);
+const compiledSinceTemplate = Handlebars.compile(sinceTemplate);
+const sinceMarker = "<!--since_tag_marker-->";
 
-	const apiJSONPath = path.normalize(process.argv[2]);
-	const api = JSON.parse(await fs.readFile(apiJSONPath));
-
-	await fs.writeFile(apiJSONPath, beautify(api, null, 2, 100));
+const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 
 	const entries = api['symbols'];
-	const compiledHandlebars = Handlebars.compile(template);
-	const compiledSinceTemplate = Handlebars.compile(sinceTemplate);
-	const linkMatcher = /{@link(\s)(\w+)\s*}/gi;
-	const sinceMarker = "<!--since_tag_marker-->";
 
 	const getComponentByName = name => {
 		return entries.find(element => {
@@ -32,10 +25,6 @@ const generate = async () => {
 
 	const getCSSVarsByName = name => {
 		return cssVariables[name] || [];
-	};
-
-	const capitalize = str => {
-		return str.replace(/^./, str => str.toUpperCase());
 	};
 
 	Handlebars.registerHelper('toLowerCase', function (str) {
@@ -57,7 +46,7 @@ const generate = async () => {
 	Handlebars.registerPartial('methods', methodsTemplate);
 	Handlebars.registerPartial('cssVariables', cssVariablesTemplate);
 
-	await fs.mkdir(`dist/test-resources/api`, { recursive: true });
+	await fs.mkdir(`dist/api-samples`, { recursive: true });
 
 	let entriesAPI = [];
 
@@ -116,53 +105,33 @@ const generate = async () => {
 		return entry;
 	}
 
-	const generateSamplePage = async entry => {
-		let content = "";
+	const generateSamplePage = async (entry, rawSampleContent) => {
+		let result = rawSampleContent;
 
-		try {
-			content = await fs.readFile(`dist/test-resources/samples/${capitalize(entry.basename)}.sample.html`, 'utf8');
-		} catch (err) {
-		}
+		entry.slots.forEach(slotData => {
+			if (!slotData.type.startsWith("Node") && !slotData.type.startsWith("HTMLElement")) { // interface -> don't show in documentation
+				slotData.type = "HTMLElement" + (slotData.type.endsWith("[]") ? "[]" : "");
+			}
+		});
+		const APIReference = compiledHandlebars(entry).replace(/\[\]/g, " [0..n]");
+		const EntitySince = compiledSinceTemplate(entry).replace(/\[\]/g, " [0..n]");
 
-		if (content) {
-			entry.slots.forEach(slotData => {
-				if (!slotData.type.startsWith("Node") && !slotData.type.startsWith("HTMLElement")) { // interface -> don't show in documentation
-					slotData.type = "HTMLElement" + (slotData.type.endsWith("[]") ? "[]" : "");
-				}
-			});
-			const APIReference = compiledHandlebars(entry).replace(/\[\]/g, " [0..n]");
-			const EntitySince = compiledSinceTemplate(entry).replace(/\[\]/g, " [0..n]");
+		result = result.replace("<!-- JSDoc marker -->", APIReference);
+		result = result.replace(sinceMarker, EntitySince);
 
-			content = content.replace('<!-- JSDoc marker -->', APIReference);
-			content = content.replace(sinceMarker, EntitySince);
-
-			content = content.replace(linkMatcher, match => {
-				const component = linkMatcher.exec(match)[2];
-
-				// reset the regex
-				linkMatcher.lastIndex = 0;
-
-				return `<a href="#" onclick="redirect(event, '${component}')">${component}</a>`;
-			});
-
-			return fs.writeFile(`dist/test-resources/api/${entry.basename}.sample.html`, content);
-		}
+		return result;
 	}
 
-	const generateComponentAPI = entry => {
-		// (1) calculate the API
-		entry = calculateAPI(entry);
 
-		// (2) append additional API for composition components - List -> ListIems, TabContainer -> Tabs, Table -> TableRow/Column/Cell
-		entry = appendAdditionalEntriesAPI(entry);
+	// (1) calculate the API
+	let entry = getComponentByName(name);
+	entry = calculateAPI(entry);
 
-		// (3) generate sample page
-		return generateSamplePage(entry);
-	}
+	// (2) append additional API for composition components - List -> ListIems, TabContainer -> Tabs, Table -> TableRow/Column/Cell
+	entry = appendAdditionalEntriesAPI(entry);
 
-	return Promise.all(entries.map(generateComponentAPI));
+	// (3) generate sample page
+	return generateSamplePage(entry, rawSampleContent);
 };
 
-generate().then(() => {
-	console.log("Documentation generated.");
-});
+module.exports = enrichSampleWihAPI;

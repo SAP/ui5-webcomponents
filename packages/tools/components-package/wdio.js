@@ -82,7 +82,7 @@ exports.config = {
 	// with `/`, the base url gets prepended, not including the path portion of your baseUrl.
 	// If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
 	// gets prepended directly.
-	baseUrl: undefined, // This is important since WDIO 7+ does not accept an empty string for baseUrl
+	baseUrl: 'http://localhost:4567', // This is important since WDIO 7+ does not accept an empty string for baseUrl
 	path: '',
 	//
 	// Default timeout for all waitFor* commands.
@@ -99,7 +99,14 @@ exports.config = {
 	// Services take over a specific job you don't want to take care of. They enhance
 	// your test setup with almost no effort. Unlike plugins, they don't add new
 	// commands. Instead, they hook themselves up into the test process.
-	services: ['chromedriver', 'devtools'],
+	services: ['chromedriver', 'devtools',
+		['static-server', {
+			folders: [
+				{ mount: '/', path: './dist' },
+			],
+			port: '4567',
+		}],
+	],
 	// options
 	chromeDriverArgs: ['--port=9515'], // default
 	// Framework you want to run your specs with.

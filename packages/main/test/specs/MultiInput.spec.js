@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 const getTokenizerPopoverId = async (inputId) => {
 	return await browser.executeAsync(async (inputId, done) => {
@@ -12,7 +11,7 @@ const getTokenizerPopoverId = async (inputId) => {
 
 describe("MultiInput general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+		await browser.url(`test/pages/MultiInput.html`);
 	});
 
 	it("tests expanding of tokenizer", async () => {
@@ -205,7 +204,7 @@ describe("ARIA attributes", () => {
 
 describe("Keyboard handling", () => {
 	beforeEach(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+		await browser.url(`test/pages/MultiInput.html`);
 	});
 
 	it("left/right arrow navigation", async () => {

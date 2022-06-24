@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 	});
 
 	it("Header text attribute is propagated", async () => {
@@ -34,7 +33,7 @@ describe("Attributes propagation", () => {
 
 describe("Popover general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 	});
 
 	it("tests popover toggling", async () => {
@@ -223,7 +222,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus trapping using TAB", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 
 		const btn = await browser.$("#btn");
 		const ff = await browser.$("#first-focusable");
@@ -255,7 +254,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus trapping using SHIFT TAB", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 
 		const btn = await browser.$("#btn");
 		const ff = await browser.$("#first-focusable");
@@ -283,7 +282,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus when there is no focusable content", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 
 		const firstBtn = await browser.$("#firstBtn");
 		const popoverId = "popNoFocusableContent";
@@ -302,7 +301,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus when content, which can't be focused is clicked", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 
 		await browser.$("#btnOpenPopoverWithDiv").click();
 		await browser.$("#divContent").click();
@@ -314,7 +313,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests that dynamically created popover is opened", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 
 		const btnOpenDynamic = await browser.$("#btnOpenDynamic");
 		await btnOpenDynamic.click();
@@ -334,7 +333,7 @@ describe("Popover general interaction", () => {
 
 describe("Acc", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+		await browser.url(`test/pages/Popover.html`);
 	});
 
 	it("tests aria-labelledby and aria-label", async () => {

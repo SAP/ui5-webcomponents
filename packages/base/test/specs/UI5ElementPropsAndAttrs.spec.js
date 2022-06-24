@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Properties and attributes convert to each other", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("Tests that properties with default values are initialized with the default value", async () => {

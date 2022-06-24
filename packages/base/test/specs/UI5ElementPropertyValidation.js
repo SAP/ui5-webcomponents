@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Properties can only have values, restricted to their types", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("String property enforced to string", async () => {

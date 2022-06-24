@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Some configuration options can be changed at runtime", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("Tests control with no static area item", async () => {

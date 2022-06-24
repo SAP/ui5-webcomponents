@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
-
+// 
 
 describe("Button general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Button.html`);
+		await browser.url(`test/pages/Button.html`);
 	});
 
 	it("tests button's text rendering", async () => {

@@ -6,18 +6,18 @@
 
 	<title>i18n</title>
 
-	<script src="../../resources/bundle.esm.js" ></script>
+	<script src="../../bundle.esm.js" type="module"></script>
 
 </head>
 
 <body>
 
-	<script>
+	<script type="module">
 
 		const demo = async () => {
-			["de", "es", "fr", "en"].forEach(localeId => registerI18nLoader("myApp", localeId, () => `./assets/messagebundle_${localeId}.properties`));
+			["de", "es", "fr", "en"].forEach(localeId => window["sap-ui-webcomponents-bundle"].registerI18nLoader("myApp", localeId, () => `./assets/messagebundle_${localeId}.properties`));
 
-			const bundle = await getI18nBundle("myApp");
+			const bundle = await window["sap-ui-webcomponents-bundle"].getI18nBundle("myApp");
 
 			const pleaseWait = bundle.getText("PLEASE_WAIT");
 			console.log("Please wait in the current language is: ", pleaseWait);

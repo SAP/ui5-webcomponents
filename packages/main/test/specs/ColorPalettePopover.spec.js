@@ -1,13 +1,12 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ColorPalette interactions", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 	});
 
 	it("Test if focusing first element works on initial open", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 		const colorPaletteButton = await browser.$("#colorPaletteBtn");
 		await colorPaletteButton.click();
 		const colorPalettePopover = await browser.$("[ui5-color-palette-popover]");
@@ -19,7 +18,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if default color functionality works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 
 		const colorPaletteButton = await browser.$("#colorPaletteBtn");
 		await colorPaletteButton.click();
@@ -33,7 +32,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 		const colorPaletteButton = await browser.$("#colorPaletteBtn");
 		await colorPaletteButton.click();
 		const colorPalettePopover = await browser.$("[ui5-color-palette-popover]");
@@ -49,7 +48,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 		const colorPaletteButton = await browser.$("#colorPaletteBtn");
 		await colorPaletteButton.click();
 		const colorPalettePopover = await browser.$("[ui5-color-palette-popover]");
@@ -63,7 +62,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Tests navigation with recent colors", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 
 		const colorPaletteButton = await browser.$("#colorPaletteBtn");
 		await colorPaletteButton.click();
@@ -84,7 +83,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test attribute propagation propagation", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalettePopover.html`);
+		await browser.url(`test/pages/ColorPalettePopover.html`);
 
 		const colorPaletteButton = await browser.$("#colorPaletteBtn");
 		await colorPaletteButton.click();

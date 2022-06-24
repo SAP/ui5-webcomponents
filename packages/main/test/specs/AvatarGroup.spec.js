@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 async function getResourceBundleTexts(keys) {
 	return browser.executeAsync((keys, done) => {
@@ -16,7 +15,7 @@ async function getResourceBundleTexts(keys) {
 
 describe("avatar-group rendering", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/AvatarGroup.html`);
+		await browser.url(`test/pages/AvatarGroup.html`);
 	});
 
 	it("tests if web component is correctly rendered", async () => {
@@ -100,7 +99,7 @@ describe("avatar-group rendering", () => {
 	});
 
 	it("tests if click event is firing only once", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/AvatarGroup.html`);
+		await browser.url(`test/pages/AvatarGroup.html`);
 		let eventCounter = 0;
 
 		const avatar = await browser.$("#avatar-1-test-events");
@@ -134,7 +133,7 @@ describe("avatar-group rendering", () => {
 
 describe("ARIA attributes", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/AvatarGroup.html`);
+		await browser.url(`test/pages/AvatarGroup.html`);
 	});
 
 	describe("Type Individual", () => {
