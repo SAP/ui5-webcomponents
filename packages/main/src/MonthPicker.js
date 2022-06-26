@@ -19,6 +19,8 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarPart from "./CalendarPart.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 import styles from "./generated/themes/MonthPicker.css.js";
+import transformDateToSecondaryType from "../../localization/src/dates/transformDateToSecondaryType.js";
+
 /**
  * @public
  */
@@ -117,6 +119,8 @@ class MonthPicker extends CalendarPart {
 			tempDate.setMonth(i);
 			timestamp = tempDate.valueOf() / 1000;
 
+			const monthInSecType = this.secondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp);
+
 			const isSelected = this.selectedDates.some(itemTimestamp => {
 				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
 				return date.getYear() === tempDate.getYear() && date.getMonth() === tempDate.getMonth();
@@ -131,6 +135,7 @@ class MonthPicker extends CalendarPart {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
+				nameInSecType: this.secondaryCalendarType && monthInSecType.text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};
@@ -153,6 +158,23 @@ class MonthPicker extends CalendarPart {
 		}
 
 		this._months = months;
+	}
+
+	_getDisplayedSecondaryMonthText(timestamp) {
+		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const pattern = localeData.getIntervalPattern();
+		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
+
+		if (dateInSecType.firstDate.getMonth() === dateInSecType.lastDate.getMonth()) {
+			return {
+				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()],
+			};
+		}
+
+		return {
+			text: pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()]),
+		};
 	}
 
 	onAfterRendering() {

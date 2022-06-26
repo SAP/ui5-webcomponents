@@ -19,6 +19,7 @@
 
 .ui5-mp-item {
 	display: flex;
+	flex-direction: column;
 	width: calc(33.333% - 0.125rem);
 	height: var(--_ui5_month_picker_item_height);
 	color: var(--sapButton_Lite_TextColor);
@@ -35,6 +36,10 @@
 	position: relative;
 	border: var(--_ui5_monthpicker_item_border);
 	border-radius: var(--_ui5_monthpicker_item_border_radius);
+}
+
+.ui5-dp-monthsectext {
+	font-size: 0.75rem;
 }
 
 .ui5-mp-item:hover {

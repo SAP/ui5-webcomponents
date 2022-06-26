@@ -14,6 +14,7 @@ import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import transformDateToSecondaryType from "../../localization/src/dates/transformDateToSecondaryType.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -84,6 +85,10 @@ const metadata = {
 		},
 
 		_headerYearButtonText: {
+			type: String,
+		},
+
+		_headerYearButtonTextSecType: {
 			type: String,
 		},
 	},
@@ -302,6 +307,8 @@ class Calendar extends CalendarPart {
 		} else {
 			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
 		}
+
+		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
 
 	/**
@@ -340,63 +347,43 @@ class Calendar extends CalendarPart {
 		this._currentPickerDOM._showNextPage();
 	}
 
-	get secondaryCalendarTypeButtonText() {
-		if (!this.secondaryCalendarType) {
-			return;
-		}
+	_setSecondaryCalendarTypeButtonText() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		this._headerMonthButtonTextInSexType = localeData.getMonthsStandAlone("wide", this.secondaryCalendarType)[this._calendarDate.getMonth()];
 
-		const localDate = new Date(this._timestamp * 1000);
-		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
-		const secondYearText = secondYearFormat.format(localDate, true);
-		return {
-			yearButtonText: secondYearText,
-			monthButtonText: secondMonthInfo.text,
-			monthButtonInfo: secondMonthInfo.info,
-		};
+		if (this._currentPicker === "year") {
+			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			rangeStart.setYear(this._currentPickerDOM._firstYear);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+
+			const rangeStartSecType = new CalendarDate(rangeStart, this.secondaryCalendarType);
+			const rangeEndSecType = new CalendarDate(rangeEnd, this.secondaryCalendarType);
+			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
+		} else {
+			this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
+		}
 	}
 
 	_getDisplayedSecondaryMonthText() {
-		const month = this._getDisplayedSecondaryMonths();
+		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, this._timestamp);
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const pattern = localeData.getIntervalPattern();
 		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
 		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
 
-		if (month.startMonth === month.endMonth) {
+		if (dateInSecType.firstDate.getMonth() === dateInSecType.lastDate.getMonth()) {
 			return {
-				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[month.startMonth],
-				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth],
+				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()],
+				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()],
 			};
 		}
 
 		return {
-			text: pattern.replace(/\{0\}/, secondaryMonthsNames[month.startMonth]).replace(/\{1\}/, secondaryMonthsNames[month.endMonth]),
-			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[month.startMonth]).replace(/\{1\}/, secondaryMonthsNamesWide[month.endMonth]),
+			text: pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()]),
+			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNamesWide[dateInSecType.lastDate.getMonth()]),
 		};
-	}
-
-	_getDisplayedSecondaryMonths() {
-		const localDate = new Date(this._timestamp * 1000);
-		let firstDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
-		firstDate.setDate(1);
-		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
-		const startMonth = firstDate.getMonth();
-
-		let lastDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
-		lastDate.setDate(this._getDaysInMonth(lastDate));
-		lastDate = new CalendarDate(lastDate, this.secondaryCalendarType);
-		const endMonth = lastDate.getMonth();
-
-		return { startMonth, endMonth };
-	}
-
-	_getDaysInMonth(date) {
-		const tempCalendarDate = new CalendarDate(date);
-		tempCalendarDate.setDate(1);
-		tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
-		tempCalendarDate.setDate(0);
-		return tempCalendarDate.getDate();
 	}
 
 	/**

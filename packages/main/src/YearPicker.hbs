@@ -19,7 +19,12 @@
 					role="gridcell"
 					aria-selected="{{this.ariaSelected}}"
 				>
-						{{this.year}}
+					{{this.year}}
+					{{#if this.yearInSecType}}
+						<span class="ui5-yp-item-sec-type">
+							{{this.yearInSecType}}
+						</span>
+					{{/if}}
 				</div>
 			{{/each}}
 		</div>

@@ -78,6 +78,10 @@ const metadata = {
 			type: String,
 		},
 
+		_yearButtonTextSecType: {
+			type: String,
+		},
+
 		isYearButtonHidden: {
 			type: Boolean,
 		},
