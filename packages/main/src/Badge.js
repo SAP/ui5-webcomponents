@@ -99,7 +99,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Badge
  * @extends sap.ui.webcomponents.base.UI5Element
- * @implements sap.ui.webcomponents.IBadge
  * @tagname ui5-badge
  * @since 0.12.0
  * @public
