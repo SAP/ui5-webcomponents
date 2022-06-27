@@ -1,5 +1,7 @@
-commit 72b0c9fa306be9817650dc78597a7fb7633f8041
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Jun 24 11:54:19 2022 +0300
+commit a359ebf401c0b7b359e58e9937f33395867f1853
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Mon Jun 27 09:52:20 2022 +0300
 
-    refactor(infra): switch from rollup to vite for faster development (#5380)
+    fix(ui5-link): enable overstyling (#5366)
+    
+    fixes: #5267 #5218
