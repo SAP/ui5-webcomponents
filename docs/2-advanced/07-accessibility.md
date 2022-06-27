@@ -93,6 +93,7 @@ The `accessible-name` property is currently supported in:
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
+* [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 
 ---
 
@@ -114,6 +115,7 @@ The `accessible-name-ref` property is currently supported in:
 * [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
+* [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 
 ---
 
@@ -170,6 +172,10 @@ Will result in the shadow DOM as:
 	...
 </button>
 ```
+
+The `accessibilityAttributes` property is currently supported in:
+* [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
+* [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 
 ---
 
