@@ -12,7 +12,7 @@
 	align-items: flex-start;
 }
 
-.ui5-card-header:focus:before {
+.ui5-card-header:not(.ui5-card-header-hide-focus):focus-within:before {
 	outline: none;
 	content: "";
 	position: absolute;
@@ -26,6 +26,16 @@
 	border-top-right-radius: var(--_ui5_card_header_focus_radius);
 	border-bottom-left-radius: var(--_ui5_card_header_focus_bottom_radius);
 	border-bottom-right-radius: var(--_ui5_card_header_focus_bottom_radius);
+}
+
+.ui5-card-header-focusable-element:focus {
+	outline: none;
+}
+
+.ui5-card-header-focusable-element {
+	display: inherit;
+	align-items: inherit;
+	flex: 1;
 }
 
 .ui5-card-header.ui5-card-header--interactive:hover {
@@ -86,7 +96,8 @@
 	overflow: hidden;
 	white-space: nowrap;
 	vertical-align: middle;
-	margin-left: 1rem;
+	margin-inline-start: 1rem;
+	margin-block-start: 0.125rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-header-title {

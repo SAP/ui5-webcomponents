@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ViewSettingsDialog general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ViewSettingsDialog.html`);
+		await browser.url(`test/pages/ViewSettingsDialog.html`);
 	});
 
 	it("test ViewSettingsDialog initial value", async () => {

@@ -1,5 +1,5 @@
-import UI5Element from "../../UI5Element.js";
-import litRender, { html } from "../../renderer/LitRenderer.js";
+import UI5Element from "../../dist/UI5Element.js";
+import litRender, { html } from "../../dist/renderer/LitRenderer.js";
 
 const metadata = {
 	tag: "ui5-with-static-area",

@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Testing Range Slider interactions", () => {
 
 	it("Changing the current startValue is reflected", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 		await browser.setWindowSize(1257, 2000);
 
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
@@ -126,7 +125,7 @@ describe("Testing Range Slider interactions", () => {
 
 describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 	it("Range Slider tooltips are displayed showing the current value", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
 		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
@@ -370,7 +369,7 @@ describe("Accessibility", async () => {
 	});
 
 	it("Click anywhere in the  Range Slider should focus the closest handle", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const rangeSliderStartHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
@@ -391,7 +390,7 @@ describe("Accessibility", async () => {
 	});
 
 	it("Click currently selected range should focus it", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
@@ -406,7 +405,7 @@ describe("Accessibility", async () => {
 
 
 	it("When not yet focused, 'Tab' should focus the Range Slider and move the focus to the progress bar", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
@@ -516,7 +515,7 @@ describe("Accessibility", async () => {
 
 describe("Accessibility: Testing keyboard handling", async () => {
 	it("When progress bar is focused 'Right Arrow' key should increase both values of the Range Slider with a small increment step", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 		const rangeSlider = await browser.$("#basic-range-slider");
 
 		await browser.keys("Tab");
@@ -668,7 +667,7 @@ describe("Accessibility: Testing keyboard handling", async () => {
 	});
 
 	it("When a handle is focused 'Right Arrow' key should increase its value with a small increment step", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 

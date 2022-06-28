@@ -1,26 +1,45 @@
 const path = require("path");
 const fs = require("fs");
-
 const LIB = path.join(__dirname, `../lib/`);
-const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
+
 
 const getScripts = (options) => {
 
-	const port = options.port || 8080; // preferred port
-	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
 	let illustrations = options.illustrationsData || [];
-
 	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
-
 	let illustrationsScript = illustrations.join(" && ");
 
+	let viteConfig;
+	if (fs.existsSync("config/vite.config.js")) {
+		// old project setup where config file is in separate folder
+		viteConfig = "-c config/vite.config.js";
+	} else if (fs.existsSync("vite.config.js")) {
+		// preferred way of custom configuration in root project folder
+		viteConfig = "";
+	} else {
+		// no custom configuration - use default from tools project
+		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
+	}
+
+	let eslintConfig;
+	if (fs.existsSync("config/.eslintrc.js")) {
+		// old project setup where config file is in separate folder
+		eslintConfig = "--config config/.eslintrc.js";
+	} else if (fs.existsSync(".eslintrc.js")) {
+		// preferred way of custom configuration in root project folder
+		eslintConfig = "";
+	} else {
+		// no custom configuration - use default from tools project
+		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
+	}
+		
 	const scripts = {
-		clean: "rimraf dist && rimraf .port",
-		lint: "eslint . --config config/.eslintrc.js",
-		lintfix: "eslint . --config config/.eslintrc.js --fix",
+		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		lint: `eslint . ${eslintConfig}`,
+		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
 			default: "nps clean prepare.all",
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.samples" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports",
 		},
 		build: {
@@ -41,26 +60,21 @@ const getScripts = (options) => {
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
-			bundle: "rollup --config config/rollup.config.js",
-			samples: {
-				default: "nps build.samples.api build.samples.docs",
-				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
-			},
+			bundle: `vite build ${viteConfig}`,
+			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 			illustrations: illustrationsScript
 		},
 		copy: {
-			default: "nps copy.src copy.props copy.test",
+			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
-			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.i18n"',
+			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
+			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
-			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
-			bundle: 'rollup --config config/rollup.config.js -w --environment DEV',
+			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -71,39 +85,26 @@ const getScripts = (options) => {
 				},
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
-			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
+			api: 'chokidar "test/**/*.sample.html" -c "nps build.api"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
-		dev: 'concurrently "nps serve" "nps watch"',
-		start: "nps prepare dev",
-		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
-		test: {
-			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
-			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
-			run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js",
-			spec: "wdio run config/wdio.conf.js",
-		},
-		"test-suite-1": {
-			default: 'concurrently "nps serve" "nps test-suite-1.run" --kill-others --success first',
-			run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js --suite suite1",
-		},
-		"test-suite-2": {
-			default: 'concurrently "nps serve" "nps test-suite-2.run" --kill-others --success first',
-			run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js --suite suite2",
-		},
-		startWithScope: "nps scope.prepare scope.dev",
+		start: "nps prepare watch.devServer",
+		test: `node "${LIB}/test-runner/test-runner.js"`,
+		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
+		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
+		startWithScope: "nps scope.prepare scope.watchWithBundle",
 		scope: {
 			prepare: "nps scope.lint prepare scope.testPages",
 			lint: `node "${LIB}/scoping/lint-src.js"`,
 			testPages: {
 				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
-				clean: "rimraf dist/test-resources/pages/scoped",
-				copy: `node "${LIB}/copy-and-watch/index.js" --silent "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
-				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
+				clean: "rimraf test/pages/scoped",
+				copy: `node "${LIB}/copy-and-watch/index.js" --silent "test/pages/**/*" test/pages/scoped`,
+				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
-			dev: 'concurrently "nps serve" "nps scope.watch"',
-			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',
-			bundle: 'rollup --config config/rollup.config.js -w --environment DEV,SCOPE'
+			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
+			watch: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.test" "nps watch.src" "nps watch.props" "nps watch.styles"',
+			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		}
 	};
 

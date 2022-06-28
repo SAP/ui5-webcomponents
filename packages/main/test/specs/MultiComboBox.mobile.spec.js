@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Typeahead", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+		await browser.url(`test/pages/MultiComboBox.html`);
 		await browser.emulateDevice('iPhone X');
 	});
 
@@ -23,7 +22,7 @@ describe("Typeahead", () => {
 	});
 
 	it("Should not perform typeahead when it is disabled", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+		await browser.url(`test/pages/MultiComboBox.html`);
 
 		const mcb = await browser.$("#mcb-no-typeahead");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-no-typeahead");
@@ -39,7 +38,7 @@ describe("Typeahead", () => {
 	});
 
 	it("Should make a selection on ENTER and discard on ESC", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+		await browser.url(`test/pages/MultiComboBox.html`);
 
 		let tokens;
 

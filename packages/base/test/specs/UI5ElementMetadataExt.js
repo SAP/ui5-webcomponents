@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Metadata can be extended", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("When extending metadata, both own and extended entities exist in the resulting metadata", async () => {

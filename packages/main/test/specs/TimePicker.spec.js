@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("TimePicker general interaction", () => {
 	it("input receives value in format pattern depending on the set language", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=bg`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=bg`);
 
 		const timepicker = await browser.$("#timepickerSetTime");
 		const setTimeButton = await browser.$("#setTimeButton");
@@ -14,7 +13,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests sliders value", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepicker");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
 		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -206,7 +205,7 @@ describe("TimePicker general interaction", () => {
 
 	it("test arrow navigation", async () => {
 		// arrange
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 
 		const timepicker = await browser.$("#timepicker3"); //picker with 4 sliders
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
@@ -227,7 +226,7 @@ describe("TimePicker general interaction", () => {
 
 	it("test closing the picker with the keyboard", async () => {
 		// arrange
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 
 		const timepicker = await browser.$("#timepicker3");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
