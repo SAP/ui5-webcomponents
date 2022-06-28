@@ -908,7 +908,10 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
-		this._clearIconClicked = false;
+		if (this.showClearIcon && !this.effectiveShowClearIcon) {
+			this._clearIconClicked = false;
+			this._handleChange();
+		}
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
@@ -967,8 +970,6 @@ class Input extends UI5Element {
 	_clear() {
 		this.value = "";
 		this.fireEvent(this.EVENT_INPUT);
-		this.fireEvent(this.EVENT_CHANGE);
-
 		if (!this._isPhone) {
 			this.focus();
 		}
