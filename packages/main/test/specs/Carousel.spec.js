@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("Carousel general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Carousel.html`);
+		await browser.url(`test/pages/Carousel.html`);
 	});
 
 	it("Carousel is rendered", async () => {

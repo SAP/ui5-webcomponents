@@ -1,5 +1,8 @@
 import 'zx/globals';
 
+// don't print executed commands and their output
+$.verbose = false;
+
 const inputFiles = await globby("src/**/parameters-bundle.css");
 
 const restArgs = process.argv.slice(2);

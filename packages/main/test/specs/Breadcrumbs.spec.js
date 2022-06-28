@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 const KEYS = {
 	SHIFT: '\uE008',
 	CTRL: '\uE009',
@@ -10,7 +9,7 @@ const KEYS = {
 
 describe("Breadcrumbs general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+		await browser.url(`test/pages/Breadcrumbs.html`);
 	});
 
 	it("tests getDomRef", async () => {
@@ -157,7 +156,7 @@ describe("Breadcrumbs general interaction", () => {
 	});
 
 	it("opens upon space", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
@@ -171,7 +170,7 @@ describe("Breadcrumbs general interaction", () => {
 	});
 
 	it("toggles upon F4", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
@@ -188,7 +187,7 @@ describe("Breadcrumbs general interaction", () => {
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
@@ -205,7 +204,7 @@ describe("Breadcrumbs general interaction", () => {
 	});
 
 	it("renders accessible names of overflowing link items", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Breadcrumbs.html`);
+		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsWithAccName"),
 			listItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[1],

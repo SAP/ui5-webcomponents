@@ -28,7 +28,18 @@ module.exports = function (opts) {
 				fileName: targetFile.substr(targetFile.lastIndexOf("themes")),
 				content: css
 			};
-			fs.writeFileSync(filePath, JSON.stringify({_: data}));
+			// it seems slower to read the old content, but writing the same content with no real changes
+			// (as in initial build and then watch mode) will cause an unnecessary dev server refresh
+			let oldContent = "";
+			try {
+				oldContent = fs.readFileSync(filePath).toString();
+			} catch (e) {
+				// file not found
+			}
+			const content = JSON.stringify({_: data});
+			if (content !== oldContent) {
+				fs.writeFileSync(filePath, content);
+			}
 		}
 	};
 };

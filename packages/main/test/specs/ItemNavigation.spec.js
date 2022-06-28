@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Item Navigation Tests", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ItemNavigation.html`);
+		await browser.url(`test/pages/ItemNavigation.html`);
 	});
 
 	it("focus does not cycle", async () => {

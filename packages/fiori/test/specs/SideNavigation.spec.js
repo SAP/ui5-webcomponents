@@ -1,10 +1,9 @@
 
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Component Behavior", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SideNavigation.html`);
+		await browser.url(`test/pages/SideNavigation.html`);
 	});
 
 	describe("Main functionality", async () => {

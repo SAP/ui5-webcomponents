@@ -1,4 +1,4 @@
-import { registerThemePropertiesLoader } from "../../asset-registries/Themes.js";
+import { registerThemePropertiesLoader } from "../../dist/asset-registries/Themes.js";
 
 const fiori3 = `:root{ --var1: red; }`;
 const fiori3Dark = `:root{ --var1: green; }`;
