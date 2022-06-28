@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Lifecycle works", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("Tests element creation callbacks", async () => {

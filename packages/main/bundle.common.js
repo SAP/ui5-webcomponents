@@ -51,6 +51,7 @@ import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
+import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
@@ -93,7 +94,6 @@ import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
-
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 

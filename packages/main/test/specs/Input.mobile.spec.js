@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Typeahead", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		await browser.url(`test/pages/Input.html`);
 		await browser.emulateDevice('iPhone X');
 	});
 
@@ -21,7 +20,7 @@ describe("Typeahead", () => {
 	});
 
 	it("Should not perform typeahead when it is disabled", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		await browser.url(`test/pages/Input.html`);
 
 		const input = await browser.$("#input-disabled-autocomplete");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#input-disabled-autocomplete")

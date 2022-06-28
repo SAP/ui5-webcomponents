@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("../_port.js");
 
 describe("InvisibleMessage", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/base/InvisibleMessage.html`);
+		await browser.url(`test/pages/base/InvisibleMessage.html`);
 	});
 
     it("Initial rendering", async () => {

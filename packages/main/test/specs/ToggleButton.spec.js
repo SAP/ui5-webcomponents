@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ToggleButton general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ToggleButton.html`);
+		await browser.url(`test/pages/ToggleButton.html`);
 	});
 
 	it("should fire click event on a normal togglebutton", async () => {

@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Select general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 	});
 
 	it("fires change on selection", async () => {
@@ -24,7 +23,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("does not fire change, when clicking on selected item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -39,7 +38,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("fires change on selection with keyboard handling", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect2").shadow$(".ui5-select-root");
 		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
@@ -66,7 +65,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection while closed with Arrow Up/Down", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const inputResult = await browser.$("#inputResult").shadow$("input");
 		const select = await browser.$("#mySelect2");
@@ -90,7 +89,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection sync with selection announcement", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -240,7 +239,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("opens upon space", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -254,7 +253,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("toggles upon F4", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -271,7 +270,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("toggles upon ALT + UP", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -288,7 +287,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -321,7 +320,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("reverts value before open after clicking on escape", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const selectText = await browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
@@ -340,7 +339,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("fires change event after selection is change and picker if focussed out", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -356,7 +355,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("fires change event after selecting a previewed item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -423,7 +422,7 @@ describe("Select general interaction", () => {
 
 describe("Attributes propagation", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 	});
 
 	it("propagates additional-text attribute", async () => {

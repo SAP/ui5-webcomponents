@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+		await browser.url(`test/pages/TextArea.html`);
 	});
 
 	it("Should change the placeholder of the inner textarea", async () => {
@@ -61,7 +60,7 @@ describe("Attributes propagation", () => {
 
 describe("disabled and readonly textarea", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+		await browser.url(`test/pages/TextArea.html`);
 	});
 
 	it("can not be edited when disabled", async () => {
@@ -84,7 +83,7 @@ describe("disabled and readonly textarea", () => {
 
 describe("when enabled", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+		await browser.url(`test/pages/TextArea.html`);
 	});
 
 	it("shows value state message", async () => {
@@ -244,7 +243,7 @@ describe("when enabled", () => {
 
 describe("Value update", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+		await browser.url(`test/pages/TextArea.html`);
 	});
 
 	it("Should revert the DOM value, when escape is pressed", async () => {

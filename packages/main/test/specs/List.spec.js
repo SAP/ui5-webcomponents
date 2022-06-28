@@ -1,6 +1,5 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 /**
  *
@@ -23,7 +22,7 @@ async function getResourceBundleTexts(options) {
 
 describe("List Tests", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		await browser.url(`test/pages/List_test_page.html`);
 	});
 
 	it("List is rendered", async () => {
@@ -158,7 +157,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: multiselect. clicking every item selects it independently from the other items", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
 		await root.setProperty("mode", "MultiSelect");
 
@@ -177,7 +176,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: delete. items have X buttons which delete them", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
 		await root.setProperty("mode", "Delete");
 
@@ -194,7 +193,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: delete. DELETE key press - deletes item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
 		await root.setProperty("mode", "Delete");
 

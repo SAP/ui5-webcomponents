@@ -26,6 +26,12 @@
 					</span>
 				{{/unless}}
 
+				{{#if showTitleInMenuButton}}
+					<h1 class="ui5-hidden-text">
+						{{primaryTitle}}
+					</h1>
+				{{/if}}
+
 				{{#if showMenuButton}}
 					<button class="{{classes.button}}"
 						@click="{{_header.press}}"
@@ -41,9 +47,9 @@
 
 
 						{{#if showTitleInMenuButton}}
-							<h1 class="ui5-shellbar-menu-button-title">
-								<bdi>{{primaryTitle}}</bdi>
-							</h1>
+							<div class="ui5-shellbar-menu-button-title">
+								{{primaryTitle}}
+							</div>
 						{{/if}}
 
 						<span class="ui5-shellbar-menu-button-arrow"></span>

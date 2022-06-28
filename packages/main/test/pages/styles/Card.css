@@ -1,23 +1,23 @@
 .myCard {
-    max-width: 300px;
+	max-width: 300px;
 }
 
 .card1auto {
-    background-color: var(--sapBackgroundColor);
+	background-color: var(--sapBackgroundColor);
 }
 
 .myInput {
-    margin: 0.5rem 1rem;
+	margin: 0.5rem 1rem;
 }
 
 .myContent {
-    margin: 0.5rem 1rem;
+	margin: 0.5rem 1rem;
 }
 
 .myHeader {
-    margin: 1rem;
+	margin: 1rem;
 }
 
 .myTextContent {
-    padding: 0 1rem 1rem 1rem;
+	padding: 0 1rem 1rem 1rem;
 }

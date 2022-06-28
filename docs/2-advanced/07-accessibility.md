@@ -60,7 +60,7 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | `accessibleName`                              | `aria-label`    | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
 | `accessibleNameRef`                           | `aria-label`    | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
 | `accessibleRole`                              | `role`          | Sets the accessible aria role of the component.                                                                                                                                                     |
-| `accessibilityTexts` (`FlexibleColumnLayout`) | `aria-label`    | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
+| `accessibilityTexts`                          | `aria-label`    | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
 | `accessibilityAttributes`                     | `aria-expanded`, `aria-haspopup`, `aria-controls`    | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. |
 | `accessibilityRoles` (`FlexibleColumnLayout`) | `role`          | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
 | `required`                                    | `aria-required` | Defines whether the component is required.                                                                                                                                                          |
@@ -69,7 +69,6 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | `checked`                                     | `aria-checked`  | Defines whether the component is checked.                                                                                                                                                           |
 | `level`, `headerLevel`                        | `aria-level`    | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
 | `interactive`                                 | `tabindex`      | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
-
 
 ### accessibleName
 
@@ -93,6 +92,7 @@ The `accessible-name` property is currently supported in:
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
+* [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 
 ---
 
@@ -114,6 +114,7 @@ The `accessible-name-ref` property is currently supported in:
 * [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
+* [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 
 ---
 
@@ -144,6 +145,10 @@ Will result in the shadow DOM as:
 </div>
 ```
 
+The `accessibilityTexts` property is currently supported in:
+* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout) 
+* [ShellBar](https://sap.github.io/ui5-webcomponents/playground/components/ShellBar)
+
 ---
 
 ### accessibilityAttributes
@@ -170,6 +175,10 @@ Will result in the shadow DOM as:
 	...
 </button>
 ```
+
+The `accessibilityAttributes` property is currently supported in:
+* [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
+* [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 
 ---
 
