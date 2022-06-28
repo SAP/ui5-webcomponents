@@ -779,7 +779,7 @@ class Popover extends Popup {
 
 	get _ariaLabelledBy() { // Required by Popup.js
 		if (!this._ariaLabel && this._displayHeader) {
-			return "ui5-popup-header"
+			return "ui5-popup-header";
 		}
 
 		return undefined;
