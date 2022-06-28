@@ -1,5 +1,11 @@
-commit a494f85667d986a9d3e803b74160d5ef5b0eb327
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jun 28 14:57:41 2022 +0300
+commit 17465e32d3fea27518a07e1c3838ce394e753c82
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue Jun 28 18:10:48 2022 +0300
 
-    fix(f6navigation): prevent default behavior on windows OS (#5424)
+    fix(ui5-input): refactor change event (#5296)
+    
+    * fix(ui5-input): refactor change event
+    
+    * fix(ui5-input): correct clearIcon change event behavior
+    
+    * fix(ui5-input): change event should not be fired on clear icon press
