@@ -386,6 +386,23 @@ class Calendar extends CalendarPart {
 		};
 	}
 
+	get secondaryCalendarTypeButtonText() {
+		if (!this.secondaryCalendarType) {
+			return;
+		}
+
+		const localDate = new Date(this._timestamp * 1000);
+		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
+		const secondYearText = secondYearFormat.format(localDate, true);
+
+		return {
+			yearButtonText: secondYearText,
+			monthButtonText: secondMonthInfo.text,
+			monthButtonInfo: secondMonthInfo.info,
+		};
+	}
+
 	/**
 	 * The month button is hidden when the month picker or year picker is shown
 	 * @returns {boolean}
