@@ -1,7 +1,7 @@
-commit 40e80e4d9f528cc73a4738e06d0ce98f27a1dee0
+commit 8d4db8b47a9ffa550ffccf5b18e8b1bc3ab64be3
 Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Jun 27 16:03:11 2022 +0300
+Date:   Tue Jun 28 14:53:17 2022 +0300
 
-    fix: document new accessibility properties (#5417)
+    fix(ui5-shellbar): document new accessibility property (#5425)
     
-    Related To: #4500, #3546
+    Related to: #4009
