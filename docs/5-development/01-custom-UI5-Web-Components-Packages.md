@@ -62,11 +62,7 @@ or
 
 `yarn start`
 
-and once the project is built for the first time, open in your browser:
-
-`http://localhost:8080/test-resources/pages/index.html`
-
-**Note:** If you've chosen a different `port` earlier, change `8080` to its value.
+and once the project is built for the first time, the browser will automatically open the dev server URL.
 
 You can also run the tests:
 

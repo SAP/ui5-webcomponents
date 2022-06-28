@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Card general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+		await browser.url(`test/pages/Card.html`);
 	});
 
 	it("tests initial rendering", async () => {
@@ -85,7 +84,7 @@ describe("Card general interaction", () => {
 
 describe("CardHeader", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+		await browser.url(`test/pages/Card.html`);
 	});
 
 	it("tests header aria-labelledby", async () => {
@@ -104,7 +103,7 @@ describe("CardHeader", () => {
 });
 describe("Card Accessibility", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+		await browser.url(`test/pages/Card.html`);
 	});
 
 	it("test accessibleName", async () => {

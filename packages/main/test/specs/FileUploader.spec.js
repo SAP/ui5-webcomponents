@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("API", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/FileUploader.html`);
+		await browser.url(`test/pages/FileUploader.html`);
 	});
 
 	it("Files property", async () => {

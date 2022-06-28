@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 const KEYS = {
 	SHIFT: '\uE008',
 	ALT: '\uE00A',
@@ -8,7 +7,7 @@ const KEYS = {
 
 describe("General API", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Link.html`);
+		await browser.url(`test/pages/Link.html`);
 	});
 
 	it("render initially", async () => {
