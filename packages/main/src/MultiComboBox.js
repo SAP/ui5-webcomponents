@@ -1189,6 +1189,7 @@ class MultiComboBox extends UI5Element {
 		this._toggle();
 
 		this._iconPressed = false;
+		this._preventTokenizerToggle = false;
 		this.filterSelected = false;
 	}
 
@@ -1236,7 +1237,6 @@ class MultiComboBox extends UI5Element {
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
-		this._preventTokenizerToggle = false;
 	}
 
 	get _isPhone() {
@@ -1459,12 +1459,18 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
+		if (isPhone() || this.readonly) {
+			return false;
+		}
+
 		if (this._preventTokenizerToggle) {
 			return this._tokenizer.expanded;
 		}
 
-		const expanded = !!this._tokenizer && this._tokenizer.expanded;
-		return !isPhone() && !this.readonly && (this.focused || this.open || expanded);
+		const isCurrentlyExpanded = !!this._tokenizer && this._tokenizer.expanded;
+		const shouldBeExpanded = this.focused || this.open || isCurrentlyExpanded;
+
+		return shouldBeExpanded;
 	}
 
 	get _valueStatePopoverHorizontalAlign() {

@@ -230,7 +230,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this.expanded || !this.narrowContentDom ? this.expandedContentDom : this.narrowContentDom;
+		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom : this.narrowContentDom;
 
 		if (this.expanded) {
 			this._expandedScrollWidth = this.expandedContentDom.scrollWidth;
@@ -336,7 +336,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (isLeft(event) || isRight(event) || isUp(event) || isDown(event)) {
-			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused), tokens, isRight(event));
+			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused), tokens, (isRight(event) || isDown(event)));
 			this._scrollToToken(tokens[nextTokenIdx]);
 		}
 	}
@@ -492,7 +492,7 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Scrolls token to the visible area of the container.
-	 * Adds 2 pixels to the scroll position to ensure padding
+	 * Adds 4 pixels to the scroll position to ensure padding and border visibility on both ends
 	 * @private
 	 */
 	_scrollToToken(token) {
@@ -504,9 +504,9 @@ class Tokenizer extends UI5Element {
 		const tokenContainerRect = this.expandedContentDom.getBoundingClientRect();
 
 		if (tokenRect.left < tokenContainerRect.left) {
-			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 2), 0);
+			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 5), 0);
 		} else if (tokenRect.right > tokenContainerRect.right) {
-			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 2), 0);
+			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
 		}
 	}
 
