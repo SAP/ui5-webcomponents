@@ -1182,7 +1182,7 @@ class Input extends UI5Element {
 		const value = this.valueBeforeAutoComplete || this.value;
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
+			? this.valueBeforeItemSelection !== itemText : value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 
