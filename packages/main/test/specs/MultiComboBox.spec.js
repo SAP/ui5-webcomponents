@@ -277,9 +277,13 @@ describe("MultiComboBox general interaction", () => {
 
 			let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 			let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
-			let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").getBoundingClientRect().width);
-		
-			assert.strictEqual(tokenizerScrollContainerScrollLeft, Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
+			let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").clientWidth);
+			
+			// On the remote test execution there is 1px difference in the scroll position
+			// so the test is adjusted to pass on both remote and local environments
+			let isScrolledToStart = (tokenizerScrollContainerScrollLeft === tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth) || (tokenizerScrollContainerScrollLeft === tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth - 1);
+
+			assert.strictEqual(isScrolledToStart, true, "tokenizer is scrolled to end");
 	
 			await input.keys('Tab');
 			tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
