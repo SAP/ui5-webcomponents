@@ -141,7 +141,7 @@ describe("MultiInput general interaction", () => {
 	});	
 
 	it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+		await browser.url(`test/pages/MultiInput.html`);
 
 		const minput = await $("#basic-overflow");
 		const input = minput.shadow$("input");
@@ -361,7 +361,7 @@ describe("Keyboard handling", () => {
 	});
 
 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+		await browser.url(`test/pages/MultiInput.html`);
 
 		const minput = await $("#basic-overflow");
 		const input = minput.shadow$("input");

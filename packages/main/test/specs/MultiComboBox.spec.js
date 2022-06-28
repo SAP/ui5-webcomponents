@@ -267,7 +267,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await $("#more-mcb");
 			const input = mcb.shadow$("input");
@@ -288,7 +288,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await $("#more-mcb");
 			const input = mcb.shadow$("input");
@@ -310,7 +310,7 @@ describe("MultiComboBox general interaction", () => {
 		})
 
 		it("tests if tokenizer is not expanded/collapsed when the suggestions are opened from a selected token", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await $("#more-mcb");
 			let tokenizer = await mcb.shadow$("ui5-tokenizer")
