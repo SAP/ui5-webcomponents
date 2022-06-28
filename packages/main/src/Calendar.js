@@ -358,8 +358,10 @@ class Calendar extends CalendarPart {
 			rangeStart.setYear(this._currentPickerDOM._firstYear);
 			rangeEnd.setYear(this._currentPickerDOM._lastYear);
 
-			const rangeStartSecType = new CalendarDate(rangeStart, this.secondaryCalendarType);
-			const rangeEndSecType = new CalendarDate(rangeEnd, this.secondaryCalendarType);
+			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true)
+				.firstDate;
+			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
+				.lastDate;
 			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
 		} else {
 			this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));

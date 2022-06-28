@@ -51,6 +51,7 @@
 
 .ui5-yp-item-sec-type{
 	font-size: 0.75rem;
+	color: var(--sapNeutralElementColor);
 }
 
 .ui5-yp-item:hover {
