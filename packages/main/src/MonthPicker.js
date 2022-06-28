@@ -119,7 +119,7 @@ class MonthPicker extends CalendarPart {
 			tempDate.setMonth(i);
 			timestamp = tempDate.valueOf() / 1000;
 
-			const monthInSecType = this.secondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp);
+			const monthInSecTypeText = this.secondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp);
 
 			const isSelected = this.selectedDates.some(itemTimestamp => {
 				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
@@ -135,7 +135,7 @@ class MonthPicker extends CalendarPart {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
-				nameInSecType: this.secondaryCalendarType && monthInSecType.text,
+				nameInSecType: this.secondaryCalendarType && monthInSecTypeText,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};
@@ -167,14 +167,10 @@ class MonthPicker extends CalendarPart {
 		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
 
 		if (dateInSecType.firstDate.getMonth() === dateInSecType.lastDate.getMonth()) {
-			return {
-				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()],
-			};
+			return  localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()]
 		}
 
-		return {
-			text: pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()]),
-		};
+		return pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()])
 	}
 
 	onAfterRendering() {

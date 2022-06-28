@@ -25,6 +25,11 @@
 	font-size: var(--sapFontSize);
 	user-select: none;
 }
+/*
+.ui5-calheader-arrowbtn.ui5-calheader-middlebtn.ui5-calheader-btn-sectext {
+	color: var(--sapNeutralElementColor);
+	font-size: var(--sapFontSmallSize);
+} */
 
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:hover,
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:active,
@@ -71,7 +76,7 @@
 	justify-content:center;
 }
 
-.ui5-calheader-btn-sectext {
+.ui5-calheader-arrowbtn:not(:active) .ui5-calheader-btn-sectext {
 	color: var(--sapNeutralElementColor);
 	font-size: var(--sapFontSmallSize);
 }

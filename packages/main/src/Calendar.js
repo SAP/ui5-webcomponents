@@ -401,7 +401,7 @@ class Calendar extends CalendarPart {
 		return {
 			yearButtonText: secondYearText,
 			monthButtonText: secondMonthInfo.text,
-			monthButtonInfo: secondMonthInfo.info,
+			monthButtonInfo: secondMonthInfo.textInfo,
 		};
 	}
 
