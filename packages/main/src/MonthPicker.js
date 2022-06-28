@@ -167,10 +167,10 @@ class MonthPicker extends CalendarPart {
 		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
 
 		if (dateInSecType.firstDate.getMonth() === dateInSecType.lastDate.getMonth()) {
-			return  localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()]
+			return localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()];
 		}
 
-		return pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()])
+		return pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()]);
 	}
 
 	onAfterRendering() {
