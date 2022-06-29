@@ -47,7 +47,8 @@
 	background-color: var(--sapList_Hover_Background);
 }
 
-.ui5-mp-item.ui5-mp-item--selected {
+.ui5-mp-item.ui5-mp-item--selected,
+.ui5-mp-item.ui5-mp-item--selected .ui5-dp-monthsectext {
 	box-shadow: var(--_ui5_monthpicker_item_selected_box_shadow);
 	font-weight: var(--_ui5_monthpicker_item_selected_font_wieght);
 	background-color: var(--_ui5_monthpicker_item_selected_background_color);

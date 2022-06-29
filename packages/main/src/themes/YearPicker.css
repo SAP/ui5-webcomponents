@@ -58,7 +58,8 @@
 	background-color: var(--sapList_Hover_Background);
 }
 
-.ui5-yp-item.ui5-yp-item--selected {
+.ui5-yp-item.ui5-yp-item--selected,
+.ui5-yp-item.ui5-yp-item--selected .ui5-yp-item-sec-type {
 	background-color: var(--_ui5_yearpicker_item_selected_background_color);
 	color: var(--_ui5_yearpicker_item_selected_text_color);
 	box-shadow: var(--_ui5_yearpicker_item_selected_box_shadow);
