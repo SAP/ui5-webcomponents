@@ -31,7 +31,7 @@ Navigation with the keyboard and screen reader should work properly together. In
 </ui5-combobox>
 ```
 
-By doing so, you receive an input element with `role="combobox"` with all aria attributes relevant for this role in the shadow DOM. Also, if you set the `disabled` property, this will automatically add `aria-disabled="true"` to the shadow `combobox` element. Attribute mapping is available for all relevant properties - `required`, `disabled`, `readonly`, and more.
+By doing so, you receive an input element with `role="combobox"` with all aria attributes relevant for this role in the shadow DOM. Also, if you set the `disabled` property, this will automatically add `disabled` to the shadow `combobox` element. Attribute mapping is available for all relevant properties - `required`, `disabled`, `readonly`, and more.
 
 In order to ease the setting of aria attributes, we have introduced properties that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility APIs section below.
 
@@ -47,7 +47,7 @@ Support for standard keystrokes, based on the role of the component element is a
 
 Theming is an important aspect when it comes to a UI5 Web Components application. The different colors shown on the UI need to have a good contrast to each other in order to be easily distinguishable. We ensure that the requirements for color contrast are fulfilled in all themes. High Contrast White and High Contrast Black themes are also available to support people with visual impairments.
 
-For more information regarding the available themes and how to use them, see the [Configuration](01-configuration.md) section.
+For more information regarding the available themes and how to use them, see the [Configuration](https://sap.github.io/ui5-webcomponents/playground/advanced/configuration) section.
 
 
 ## Accessibility APIs
@@ -93,6 +93,11 @@ The `accessible-name` property is currently supported in:
 * [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
+* [Rating Indicator](https://sap.github.io/ui5-webcomponents/playground/components/RatingIndicator)
+* [Slider](https://sap.github.io/ui5-webcomponents/playground/components/Slider), 
+[Range Slider](https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider)
+* [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+
 
 ---
 
@@ -115,6 +120,7 @@ The `accessible-name-ref` property is currently supported in:
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
+* [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
 
 ---
 
