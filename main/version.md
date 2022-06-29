@@ -1,11 +1,8 @@
-commit 17465e32d3fea27518a07e1c3838ce394e753c82
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Jun 28 18:10:48 2022 +0300
+commit 21d545731bdd157f228ff74cfab3709a915fd68c
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Wed Jun 29 09:38:44 2022 +0300
 
-    fix(ui5-input): refactor change event (#5296)
+    fix(ui5-popover): avoid dangling aria-labelledby attribute (#5428)
     
-    * fix(ui5-input): refactor change event
     
-    * fix(ui5-input): correct clearIcon change event behavior
-    
-    * fix(ui5-input): change event should not be fired on clear icon press
+    Part of #3956
