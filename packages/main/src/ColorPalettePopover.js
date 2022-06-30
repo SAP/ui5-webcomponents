@@ -87,7 +87,7 @@ const metadata = {
 		 * @param {string} color the selected color
 		 */
 		"item-click": {
-			details: {
+			detail: {
 				color: {
 					type: String,
 				},
