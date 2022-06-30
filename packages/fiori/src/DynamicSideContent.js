@@ -209,7 +209,7 @@ const metadata = {
 		 * @public
 		 */
 		"layout-change": {
-			details: {
+			detail: {
 				currentBreakpoint: {
 					type: String,
 				},
