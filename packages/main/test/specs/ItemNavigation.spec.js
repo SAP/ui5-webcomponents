@@ -66,4 +66,50 @@ describe("Item Navigation Tests", () => {
 		await itemOnFocus2.keys("PageUp");
 		assert.ok(await nextFocusedItem2.isFocused(), "The 6th is focused.");
 	});
+
+	it("tests left and right arrow keys in LTR", async () => {
+		// Setup
+		const items = await browser.$$("#horizontalNavigation ui5-avatar"),
+			first = items[0],
+			third = items[2];
+
+		await first.click();
+
+		// Assert
+		assert.strictEqual(await first.isFocused(), true, "first item is focused");
+
+		// Act
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+
+		// Assert
+		assert.strictEqual(await third.isFocused(), true, "third item is focused");
+		
+	});
+	
+
+	it("tests left and right arrow keys in RTL", async () => {
+		// Setup
+		const switchEl = await browser.$("#sw");
+		await switchEl.click();
+
+		const items = await browser.$$("#horizontalNavigation ui5-avatar"),
+			first = items[0],
+			third = items[2];
+
+		await first.click();
+
+		// Assert
+		assert.strictEqual(await first.isFocused(), true, "first item is focused");
+
+		// Act
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+
+		// Assert
+		assert.strictEqual(await third.isFocused(), true, "third item is focused");
+
+		// Clean-up
+		await switchEl.click();
+	});
 });
