@@ -726,6 +726,44 @@
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
 		</ui5-tabcontainer>
+
+		<section>
+			<ui5-title>Select tabs programatically</ui5-title>
+			<ui5-tabcontainer id="tcSmall" style="width: 200px;">
+				<ui5-tab id="firstTab" text="First tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Second tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Third tab" selected>
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Fourth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Fifth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Sixth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab id="nestedTabParent" text="Seventh tab">
+					<ui5-button>Button 1</ui5-button>
+
+					<ui5-tab id="nestedTab" slot="subTabs" text="Nested tab">
+						<ui5-button>Button 1</ui5-button>
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab id="lastTab" text="Eighth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+			</ui5-tabcontainer>
+		
+			<ui5-button id="selectFirst">Select first tab</ui5-button>
+			<ui5-button id="selectLast">Select last tab</ui5-button>
+			<ui5-button id="selectNested">Select a nested tab</ui5-button>
+		</section>
 	</section>
 
 	<script>
@@ -735,8 +773,45 @@
 		});
 
 		document.getElementById("densityToggle").addEventListener("click", function (event) {
-			document.body.classList.toggle("sapUiSizeCompact")
+			document.body.classList.toggle("sapUiSizeCompact");
 		})
+
+		const selectFirstTabBtn = document.getElementById("selectFirst");
+		const selectLastTabBtn = document.getElementById("selectLast");
+		const selectNestedTabBtn = document.getElementById("selectNested");
+		
+		function walk(tabs, callback) {
+			[...tabs].forEach(tab => {
+				callback(tab);
+				if (tab.subTabs) {
+					walk(tab.subTabs, callback);
+			}});
+		};
+		
+		function getTabSelectorCallback(target) {
+			return (tab) => tab.selected = tab === target;
+		}
+
+		selectFirstTabBtn.addEventListener("click", () => {
+			const tabContainer = document.getElementById("tcSmall");
+			const firstTab = tabContainer.querySelector("#firstTab");
+
+			walk(tabContainer.items, getTabSelectorCallback(firstTab));
+		})
+
+		selectLastTabBtn.addEventListener("click", () => {
+			const tabContainer = document.getElementById("tcSmall");
+			const lastTab = tabContainer.querySelector("#lastTab");
+
+			walk(tabContainer.items, getTabSelectorCallback(lastTab));
+		});
+
+		selectNestedTabBtn.addEventListener("click", () => {
+			const tabContainer = document.getElementById("tcSmall");
+			const nestedTab = tabContainer.querySelector("#nestedTab");
+
+			walk(tabContainer.items, getTabSelectorCallback(nestedTab));
+		});
 	</script>
 </body>
 
