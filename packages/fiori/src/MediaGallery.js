@@ -221,7 +221,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui-media-gallery</code> component allows the user to browse through multimedia items. Currently,
+ * The <code>ui5-media-gallery</code> component allows the user to browse through multimedia items. Currently,
  * the supported items are images and videos. The items should be defined using the <code>ui5-media-gallery-item</code>
  * component.
  *
