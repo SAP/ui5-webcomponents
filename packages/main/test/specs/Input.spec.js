@@ -692,7 +692,7 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await input.getProperty("value"), "", "Clear icon clear the value");
 		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
-		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
+		assert.strictEqual(await changeCounter.getText(), "0", "Change event should not be called on clearIcon click");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
 	});
 
@@ -714,7 +714,7 @@ describe("Input general interaction", () => {
 		// press clear icon
 		await clearIcon.click();
 
-		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, second - clear icon)");
+		assert.strictEqual(await changeCounter.getText(), "1", "Change event called once (typing)");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
