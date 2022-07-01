@@ -22,16 +22,24 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
  CSP compliance| `import { setUseLinks } from "@ui5/webcomponents-base/dist/CSP.js"`      | Enables or disables the usage of `<link>` tags instead of `<style>` tags             |
  CSP compliance| `import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"`  | Enables or disables the preloading of `<link>` tags                                  |
 
+### `applyDirection.js`
+- `applyDirection`
+
 ### `Boot.js`
 
  - `attachBoot`
 
 ### `CustomElementsScope.js`
 
- - `setCustomElementsScopingSuffix`
+ - `setCustomElementsScopingSuffix` | 
  - `getCustomElementsScopingSuffix`
  - `setCustomElementsScopingRules`
  - `getCustomElementsScopingRules`
+
+###  `CSP.js`
+ - `setPackageCSSRoot` 
+ - `setUseLinks` |Enables or disables the usage of `<link>` tags instead of `<style>` tags
+ - `setPreloadLinks`
 
 ### `i18nBundle.js`
 
