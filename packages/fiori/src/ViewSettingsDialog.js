@@ -678,7 +678,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Sets a JavaScript object, as settings to the ui5-view-settings-dialog.
+	 * Sets a JavaScript object, as settings to the <code>ui5-view-settings-dialog</code>.
 	 * This method can be used after the dialog is initially open, as the dialog need to set its initial settings.
 	 * The <code>ui5-view-settings-dialog</code> throws an event called "before-open", this can be used as trigger point.
 	 * The object should have the following format:
