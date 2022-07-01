@@ -44,9 +44,11 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader`        | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
-| Message Strip            | `ui5-message-strip`          | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
+| Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
+| Multi ComboBox Group Item| `ui5-mcb-group-item`        | comes with `ui5-multi-combobox`                            |
 | Multi Input              | `ui5-multi-input`           | `import "@ui5/webcomponents/dist/MultiInput.js";`          |
 | Panel                    | `ui5-panel`                 | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`               | `import "@ui5/webcomponents/dist/Popover.js";`             |
@@ -77,6 +79,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Title                    | `ui5-title`                 | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`                 | `import "@ui5/webcomponents/dist/Toast.js";`               |
 | Toggle Button            | `ui5-toggle-button`         | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Token                    | `ui5-token`                 | comes with `ui5-multi-input`                               |
 | Tree                     | `ui5-tree`                  | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`             | comes with `ui5-tree`                                      |
 
