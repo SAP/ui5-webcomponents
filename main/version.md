@@ -1,7 +1,5 @@
-commit a9aa8ada941ca5c4e746dd3a5a8e0eb507169bd0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jul 1 11:22:13 2022 +0300
+commit 66681149dcf2d33f81e39047179cb5f0b2e6101e
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Fri Jul 1 11:16:23 2022 +0200
 
-    docs: update public imports info (#5443)
-    
-    Related to: #5381
+    docs: improve code tags in JSDoc comments (#5442)
