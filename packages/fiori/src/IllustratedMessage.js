@@ -187,7 +187,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
-		 * elements of the control are displayed differently on the different breakpoints/illustration sizes.
+		 * elements of the component are displayed differently on the different breakpoints/illustration sizes.
 		 *
 		 * @type {IllustrationMessageSize}
 		 * @defaultvalue "Auto"
