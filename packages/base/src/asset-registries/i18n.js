@@ -14,10 +14,12 @@ const bundlePromises = new Map();
 const loaders = new Map();
 
 /**
+ * Registers i18n loader function for given package and locale.
  *
+ * @public
  * @param {string} packageName for which package this loader can fetch data
+ * @param {string} localeId locale that this loader can handle
  * @param {function} loader async function that will be passed a localeId and should return a JSON object
- * @param {Array} localeIds Array of locale IDs that this loader can handle
  */
 const registerI18nLoader = (packageName, localeId, loader) => {
 	// register loader by key
