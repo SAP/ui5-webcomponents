@@ -25,9 +25,17 @@ describe("InvisibleMessage", () => {
         await checkBox.click();
         await button.click();
 
-        const politeSpanHtml = await politeSpan.getHTML();
-        const assertiveSpanHtml = await assertiveSpan.getHTML();
+        let politeSpanHtml = await politeSpan.getHTML();
+        let assertiveSpanHtml = await assertiveSpan.getHTML();
         assert.include(politeSpanHtml, "announcement", "Value has been rendered.");
         assert.include(assertiveSpanHtml, "announcement", "Value has been rendered.");
+
+        await browser.pause(3000);
+
+        politeSpanHtml = await politeSpan.getHTML();
+        assertiveSpanHtml = await assertiveSpan.getHTML();
+
+        assert.notInclude(politeSpanHtml, "announcement", "Value should be cleared.");
+        assert.notInclude(assertiveSpanHtml, "announcement", "Value should be cleared.");
     });
 });
