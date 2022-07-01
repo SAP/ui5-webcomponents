@@ -1,10 +1,7 @@
-commit 99498eb66b9f2bb889237a552e183933552f430e
+commit a9aa8ada941ca5c4e746dd3a5a8e0eb507169bd0
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jun 30 17:00:49 2022 +0300
+Date:   Fri Jul 1 11:22:13 2022 +0300
 
-    chore: fix event metadata (#5441)
+    docs: update public imports info (#5443)
     
-    It should be event.detail by spec -> https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail.
-    
-    Luckily, it's not a breaking change as the framework properly fires the event and assigns the data on the "detail" object.
-    Also, the "details" does not show up in the API reference.
+    Related to: #5381
