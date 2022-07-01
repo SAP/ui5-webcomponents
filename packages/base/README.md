@@ -31,7 +31,7 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
 
 ### `CustomElementsScope.js`
 
- - `setCustomElementsScopingSuffix` | 
+ - `setCustomElementsScopingSuffix`
  - `getCustomElementsScopingSuffix`
  - `setCustomElementsScopingRules`
  - `getCustomElementsScopingRules`
