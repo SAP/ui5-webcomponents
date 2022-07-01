@@ -8,16 +8,19 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
 
 ## Provided APIs for applications
 
-| Affects      | Import                                                    | Description                                                    |
-|--------------|---------------------------------------------------------- |----------------------------------------------------------------|
- Configuration | `@ui5/webcomponents-base/dist/config/Theme.js`            | Theme Configuration                                            |
- Configuration | `@ui5/webcomponents-base/dist/config/Language.js`         | Language Configuration                                         |
- Configuration | `@ui5/webcomponents-base/dist/config/AnimationMode.js`    | Animation Mode Configuration                                   |
- Configuration | `@ui5/webcomponents-base/dist/config/NoConflict.js`       | "NoConflict" Mode Configuration - if enabled all custom events are fired with the `ui5-` prefix|
- Framework     | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js` | Integration with the OpenUI5 framework for resources re-use    |
- Components    | `@ui5/webcomponents-base/dist/features/F6Navigation.js`   | Support for F6 fast group navigation                           |
- Components    | `@ui5/webcomponents-base/dist/locale/applyDirection.js`   | Apply of Direction ("ltr" or "rtl") - re-renders all RTL-aware components|
-
+| Affects      | Import                                                    | Description                                                                                         |
+|--------------|---------------------------------------------------------- |-----------------------------------------------------------------------------------------------------|
+ Configuration | `@ui5/webcomponents-base/dist/config/Theme.js`            | Sets Theme Configuration                                                                            |
+ Configuration | `@ui5/webcomponents-base/dist/config/Language.js`         | Sets Language Configuration                                                                         |
+ Configuration | `@ui5/webcomponents-base/dist/config/AnimationMode.js`    | Sets Animation Mode Configuration                                                                   |
+ Configuration | `@ui5/webcomponents-base/dist/config/NoConflict.js`       | Sets "NoConflict" Mode Configuration - if enabled all custom events are fired with the `ui5-` prefix|
+ Framework     | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js` | Adds integration with the OpenUI5 framework for resources re-use                                    |
+ Components    | `@ui5/webcomponents-base/dist/features/F6Navigation.js`   | Adds support for F6 fast group navigation                                                           |
+ Components    | `import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js"`| Applies direction ("ltr"/"rtl") - re-renders all RTL-aware components     |
+ Components    | `import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js"`| Adds suffix to the tag names of all components          |
+ CSP compliance| `import { setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js"`| Sets directory path where the CSS resources for given package will be served from    |
+ CSP compliance| `import { setUseLinks } from "@ui5/webcomponents-base/dist/CSP.js"`      | Enables or disables the usage of `<link>` tags instead of `<style>` tags             |
+ CSP compliance| `import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"`  | Enables or disables the preloading of `<link>` tags                                  |
 
 ### `Boot.js`
 
