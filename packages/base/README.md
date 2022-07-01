@@ -38,7 +38,7 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
 
 ###  `CSP.js`
  - `setPackageCSSRoot` 
- - `setUseLinks` |Enables or disables the usage of `<link>` tags instead of `<style>` tags
+ - `setUseLinks`
  - `setPreloadLinks`
 
 ### `i18nBundle.js`
