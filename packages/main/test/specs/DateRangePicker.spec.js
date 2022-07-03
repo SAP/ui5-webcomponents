@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("DateRangePicker general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 	});
 
 	it("Custom Validation Error", async () => {
@@ -17,7 +16,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Custom Validation None", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 		const daterangepicker = await browser.$("#daterange-picker3");
 
 		await daterangepicker.click();
@@ -53,14 +52,14 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("startDateValue and endDateValue getter", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 		const daterangepicker = await browser.$("#daterange-picker4");
 
 		await daterangepicker.click();
 		await browser.keys("27/09/2019 - 10/10/2019");
 		await browser.keys("Enter");
 
-		await daterangepicker.waitForClickable();
+		await daterangepicker.waitForClickable({ timeout: 1000 });
 		const res = await browser.executeAsync(done => {
 			const myDRP = document.getElementById("daterange-picker4");
 			const startDateValue = myDRP.startDateValue;
@@ -164,7 +163,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Enter keyboard key confirms the date range in the input field", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 		const dateRangePicker = await browser.$("#daterange-picker5");
 		await dateRangePicker.click();
 
@@ -175,7 +174,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Focus out of the input field confirms the date range", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 		const dateRangePicker = await browser.$("#daterange-picker5");
 		await dateRangePicker.click();
 		await browser.keys("Jul 17, 2020 @ Jul 16, 2020");
@@ -185,7 +184,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Delimiter is part of the format pattern", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 		const daterangepicker = await browser.$("#daterange-picker6");
 
 		await daterangepicker.click();
@@ -196,7 +195,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Month is not changed in multiselect mode", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		await browser.url(`test/pages/DateRangePicker.html`);
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker1");
 		const daterangepicker = await browser.$("#daterange-picker1");
 		const calendarHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-calendar-header`);

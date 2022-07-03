@@ -1,6 +1,5 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -30,8 +29,6 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
-
-const MAX_WRAP_HEIGHT = 32; // px.
 
 /**
  * @public
@@ -273,10 +270,6 @@ class NotificationListItem extends NotificationListItemBase {
 			return false;
 		}
 
-		if (isIE()) {
-			return titleText.scrollHeight > MAX_WRAP_HEIGHT;
-		}
-
 		return titleText.offsetHeight < titleText.scrollHeight;
 	}
 
@@ -285,10 +278,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (!description) {
 			return false;
-		}
-
-		if (isIE()) {
-			return description.scrollHeight > MAX_WRAP_HEIGHT;
 		}
 
 		return description.offsetHeight < description.scrollHeight;
@@ -345,14 +334,6 @@ class NotificationListItem extends NotificationListItemBase {
 		const priorityText = this.priorityText;
 
 		return `${notificationText} ${readText} ${priorityText}`;
-	}
-
-	get classes() {
-		return {
-			content: {
-				"ui5-nli-content--ie": isIE(),
-			},
-		};
 	}
 
 	/**

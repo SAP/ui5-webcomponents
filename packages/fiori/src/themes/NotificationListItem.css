@@ -27,23 +27,6 @@
 	font-weight: normal;
 }
 
-/* IE */
-:host([wrapping-type="None"]) .ui5-nli-content--ie .ui5-nli-description {
-	max-height: 32px;
-}
-
-:host([wrapping-type="None"]) .ui5-nli-content--ie .ui5-nli-title-text {
-	max-height: 32px;
-}
-
-:host([_show-more-pressed]) .ui5-nli-content--ie .ui5-nli-title-text {
-	max-height: inherit;
-}
-
-:host([_show-more-pressed]) .ui5-nli-content--ie .ui5-nli-description  {
-	max-height: inherit;
-}
-
 :host(:first-of-type) {
 	border-top-left-radius: var(--_ui5-notification_item-border-raius);
 	border-top-right-radius: var(--_ui5-notification_item-border-raius);

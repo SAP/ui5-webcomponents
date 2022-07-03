@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Panel general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Panel.html`);
+		await browser.url(`test/pages/Panel.html`);
 	});
 
 	it("Changing the header text is reflected", async () => {
@@ -66,7 +65,7 @@ describe("Panel general interaction", () => {
 		await header.click();
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -95,7 +94,7 @@ describe("Panel general interaction", () => {
 		await icon.click();
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});

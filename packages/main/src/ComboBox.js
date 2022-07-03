@@ -779,8 +779,9 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(event)) {
+			this._fireChangeEvent();
+
 			if (this.responsivePopover.opened) {
-				this._fireChangeEvent();
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {
@@ -1083,6 +1084,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
 			popoverHeader: {
 				"width": `${this.offsetWidth}px`,
@@ -1090,6 +1092,10 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
+			},
+			suggestionsPopover: {
+				"min-width": `${this.offsetWidth}px`,
+				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
 		};
 	}

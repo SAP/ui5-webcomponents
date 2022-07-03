@@ -1,8 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -222,13 +220,6 @@ class ColorPicker extends UI5Element {
 		this._setHex();
 		this._setValues();
 		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", tempColor);
-	}
-
-	async onAfterRendering() {
-		if (isIE()) {
-			await renderFinished();
-			this._applySliderStyles();
-		}
 	}
 
 	_applySliderStyles() {

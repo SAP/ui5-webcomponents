@@ -6,17 +6,6 @@
 	color: var(--_ui5_busy_indicator_color);
 }
 
-:host([_is-busy]) :not(.ui5-busy-indicator-root--ie) ::slotted(:not([class^="ui5-busy-indicator-"])) {
-	opacity: 0.6;
-}
-
-/**
- * IE fix: 0.6 makes the content almost invisible, so we set it to 0.95 in IE
- */
-:host([_is-busy]) .ui5-busy-indicator-root--ie ::slotted(:not([class^="ui5-busy-indicator-"])) {
-	opacity: 0.95;
-}
-
 :host([size="Small"]) .ui5-busy-indicator-root {
 	min-width: 1.5rem;
 	min-height: .5rem;
@@ -131,13 +120,11 @@
 	0%, 50%, 100% {
 		-webkit-transform: scale(0.5);
 		-moz-transform: scale(0.5);
-		-ms-transform: scale(0.5);
 		transform: scale(0.5);
 	}
 	25% {
 		-webkit-transform: scale(1);
 		-moz-transform: scale(1);
-		-ms-transform: scale(1);
 		transform: scale(1);
 	}
 }

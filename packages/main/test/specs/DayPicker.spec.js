@@ -1,10 +1,9 @@
 const daypicker = require("../pageobjects/DayPickerTestPage");
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Day Picker Tests", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DayPicker.html`);
+		await browser.url(`test/pages/DayPicker.html`);
 	});
 
 	it("Day Picker Renders", async () => {

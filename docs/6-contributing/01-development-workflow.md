@@ -27,15 +27,10 @@ yarn
 ```sh
 yarn start
 ```
-Once the project is served, you can explore the components 
-on:
- - http://localhost:8080/test-resources/pages/ for the `main` package;
- - http://localhost:8081/test-resources/pages/ for the `fiori` package;
- - http://localhost:9191/test-resources/pages/ for the `base` package.
+Once the project is served, you can explore the components in the browser that will automaticall open the dev server URL, usually:
+ - http://localhost:8080/
 
 The server will reload the pages whenever you make changes in the code.
-
-**Note:** If these ports are unavailable to be opened, then the pages will be served on the next available ports. See the console output for the available URLs.
 
 ## 4. Develop. 
 
@@ -64,13 +59,13 @@ $ yarn test test/specs/Button.spec.js
 ## 5. Open pull request (PR) from fork.
 
 You can open a pull request to the upstream repository from any branch or commit in your fork.
-We recommend that you make changes in a topic branch (not in your local master), so that you can push followup commits if you receive feedback on your pull request. 
+We recommend that you make changes in a topic branch (not in your local main branch), so that you can push followup commits if you receive feedback on your pull request. 
 
 You can open a pull request from the Github UI. 
 
 **5.1.** Find the "Pull requests" tab and then press the "New pull request" button.
 
-**5.2.** Compare the master branch of the upstream with a branch from your fork.
+**5.2.** Compare the main branch of the upstream with a branch from your fork.
 
 **Note:** The full guide on how to open PR from fork can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
 
@@ -81,10 +76,10 @@ Just follow the link posted in the PR by the CLA assistant.
 
 **5.4.** Immediately after the PR is created, a central build process starts to verify the change,
 building the project and running all tests.
-In case you are interested in the build output, you can follow the link at the bottom of the PR page, called "continuous-integration/travis-ci/pr".
+In case you are interested in the build output, you can follow the link at the bottom of the PR page.
 
 **5.5.** Wait for our code review and approval. 
-After the PR is approved, the UI5 Web Components team will merge the change into the master.
+After the PR is approved, the UI5 Web Components team will merge the change into the main branch.
 
 
 ## 6. Update pull request, created from a fork.
@@ -109,23 +104,23 @@ $ git remote add upstream https://github.com/SAP/ui5-webcomponents.git
 ```
 
 **7.2.** Fetch the branches and their respective commits from the upstream repository.
-Commits to master will be stored in a local branch, upstream/master.
+Commits to main will be stored in a local branch, upstream/main.
 
 ```sh
 $ git fetch upstream
 ```
 
-**7.3.** Check out your fork's local master branch.
+**7.3.** Check out your fork's local main branch.
 
 ```sh
-$ git checkout master
+$ git checkout main
 ```
 
-**7.4.** Merge the changes from upstream/master into your local master branch.
-This brings your fork's master branch into sync with the upstream repository, without losing your local changes.
+**7.4.** Merge the changes from upstream/main into your local main branch.
+This brings your fork's main branch into sync with the upstream repository, without losing your local changes.
 
 ```sh
-$ git merge upstream/master
+$ git merge upstream/main
 ```
 
 **Note:** The full guide on how to sync a fork can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork).

@@ -44,7 +44,7 @@ import dayPickerCSS from "./generated/themes/DayPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-daypicker",
-	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {Array}
@@ -121,7 +121,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
 		 * Fired when the selected date(s) change
 		 * @public

@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("BarcodeScannerDialog Behavior", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/BarcodeScannerDialog.html`);
+		await browser.url(`test/pages/BarcodeScannerDialog.html`);
 	});
 
 	it("fires scan-error when no permissions granted", async () => {

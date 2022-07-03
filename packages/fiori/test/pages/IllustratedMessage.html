@@ -10,9 +10,9 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets</script>
 
-	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script src="../../bundle.esm.js" type="module"></script>
 
-	<link rel="stylesheet" type="text/css" href="styles/IllustratedMessage.css">
+	<link rel="stylesheet" type="text/css" href="./styles/IllustratedMessage.css">
 </head>
 
 <body class="illustratedmessage1auto">
@@ -114,7 +114,7 @@
 		<ui5-option>dialog</ui5-option>
 		<ui5-option selected>scene</ui5-option>
 	</ui5-select>
-	<ui5-illustrated-message class="border">
+	<ui5-illustrated-message id="illustratedMsg1" class="border">
 		<ui5-button>Action 1</ui5-button>
 	</ui5-illustrated-message>
 
@@ -127,7 +127,7 @@
 		</ui5-bar>
 	</ui5-dialog>
 
-	<ui5-illustrated-message name="UnableToUpload" title="Something went wrong...">
+	<ui5-illustrated-message id="illustratedMsg2" name="UnableToUpload" title="Something went wrong...">
 		<div slot="subtitle">Please try again or contact us at <ui5-link>example@example.com</ui5-link></div>
 		<ui5-button icon="refresh">Try again</ui5-button>
 	</ui5-illustrated-message>

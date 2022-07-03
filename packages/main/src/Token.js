@@ -78,7 +78,7 @@ const metadata = {
 		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
 	},
 
-	slots: /** @lends  sap.ui.webcomponents.main.Token.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 
 		/**
 		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.

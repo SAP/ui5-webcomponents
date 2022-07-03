@@ -1,15 +1,19 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Badge rendering", async () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Badge.html`);
+		await browser.url(`test/pages/Badge.html`);
 	});
 
-	it("tests label not rendered if not text content", async () => {
+	it("tests that label is rendered if there is text content", async () => {
+		const badgeLabel = await browser.$("#badgeWithTextAndIcon").shadow$(".ui5-badge-text");
 
+		assert.ok(await badgeLabel.isExisting(), "badge label tag should be rendered.");
+	});
+
+	it("tests that label is NOT rendered if there is only icon", async () => {
 		const badgeLabel = await browser.$("#badgeIconOnly").shadow$(".ui5-badge-text");
 
-		assert.ok(badgeLabel, "bagde label tag not rendered.");
+		assert.notOk(await badgeLabel.isExisting(), "badge label tag shouldn't be rendered.");
 	});
 });

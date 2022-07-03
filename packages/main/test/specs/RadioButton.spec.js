@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("RadioButton general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RadioButton.html`);
+		await browser.url(`test/pages/RadioButton.html`);
 	});
 
 	it("tests change event", async () => {
@@ -171,7 +170,7 @@ describe("RadioButton general interaction", () => {
 	it("tests accessibleNameRef", async () => {
 		const labelText = await browser.$("#lbl-rb-acc-name-ref").getText();
 		const rb = await browser.$("#rb-acc-name-ref");
-	
+
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText includes the accessibleNameRef text.");
 	});
 
@@ -179,7 +178,7 @@ describe("RadioButton general interaction", () => {
 		const labelText = await browser.$("#lbl-rb-acc-name-ref-with-text").getText();
 		const rb = await browser.$("#rb-acc-name-ref-with-text");
 		const rbText = await rb.getProperty("text");
-	
+
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), `${labelText} ${rbText}`, "The ariaLabelText includes both the accessibleNameRef text and the radio button text.");
 	});
 });

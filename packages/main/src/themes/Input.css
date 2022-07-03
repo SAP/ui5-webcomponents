@@ -146,14 +146,6 @@
 	visibility: hidden;
 }
 
-:host([disabled]) [inner-input]:-ms-input-placeholder {
-	visibility: hidden;
-}
-
-:host([readonly]) [inner-input]:-ms-input-placeholder {
-	visibility: hidden;
-}
-
 [inner-input]::-webkit-input-placeholder {
 	font-weight: normal;
 	font-style: var(--_ui5_input_placeholder_style);
@@ -164,13 +156,6 @@
 [inner-input]::-moz-placeholder {
 	font-weight: normal;
 	font-style: var(--_ui5_input_placeholder_style);
-	color: var(--_ui5_input_placeholder_color);
-	padding-right: 0.125rem;
-}
-
-[inner-input]:-ms-input-placeholder {
-	font-weight: normal;
-	font-style: italic;
 	color: var(--_ui5_input_placeholder_color);
 	padding-right: 0.125rem;
 }
@@ -353,12 +338,6 @@
 :host([value-state="Information"]:not([readonly]):not([focused]):hover) {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--_ui5_input_value_state_information_hover_box_shadow);
-}
-
-/* Remove IE's defaut clear button */
-[inner-input]::-ms-clear {
-	height: 0;
-	width: 0;
 }
 
 /* Input Icon */

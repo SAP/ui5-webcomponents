@@ -4,7 +4,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isSpace,
 	isEnter,
@@ -175,15 +174,7 @@ class SegmentedButton extends UI5Element {
 
 		this.widths = this.items.map(item => {
 			// +1 is added because for width 100.44px the offsetWidth property returns 100px and not 101px
-			let width = item.offsetWidth + 1;
-
-			if (isIE()) {
-				// in IE we are adding 1 one px beacause the width of the border on an item in the middle is not calculated and if the
-				// longest item is in the middle, it truncates
-				width += 1;
-			}
-
-			return width;
+			return item.offsetWidth + 1;
 		});
 	}
 

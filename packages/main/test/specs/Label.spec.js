@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("General API", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Label.html`);
+		await browser.url(`test/pages/Label.html`);
 	});
 
 	it("tests initial rendering", async () => {

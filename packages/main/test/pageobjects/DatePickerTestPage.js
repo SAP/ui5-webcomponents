@@ -1,6 +1,6 @@
 class DatePickerTestPage {
 	constructor() {
-		this.page = 'http://localhost:8080/test-resources/pages/DatePicker_test_page.html';
+		this.page = 'test/pages/DatePicker_test_page.html';
 	}
 
 	set id(id) {

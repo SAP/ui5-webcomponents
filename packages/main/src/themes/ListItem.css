@@ -106,11 +106,19 @@
 }
 
 .ui5-li-additional-text,
-.ui5-li-title,
+:host(:not([wrapping-type="Normal"])) .ui5-li-title,
 .ui5-li-desc {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+:host([wrapping-type="Normal"]) {
+	height: auto;
+}
+
+:host([wrapping-type="Normal"]) .ui5-li-content {
+	margin: var(--_ui5_list_item_content_vertical_offset) 0;
 }
 
 .ui5-li-desc {
@@ -157,10 +165,7 @@
 	display: flex;
 	align-items: center;
 	flex: auto;
-	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	pointer-events: none; /* IE specific */
 }
 
 .ui5-li-detailbtn,
