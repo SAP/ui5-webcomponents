@@ -1,4 +1,6 @@
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
+import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import {
 	isEnter,
@@ -19,7 +21,6 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarPart from "./CalendarPart.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 import styles from "./generated/themes/MonthPicker.css.js";
-import transformDateToSecondaryType from "../../localization/src/dates/transformDateToSecondaryType.js";
 
 /**
  * @public
@@ -135,7 +136,7 @@ class MonthPicker extends CalendarPart {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
-				nameInSecType: this.secondaryCalendarType && monthInSecTypeText,
+				nameInSecType: this.secondaryCalendarType && monthInSecTypeText.text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};
@@ -161,16 +162,8 @@ class MonthPicker extends CalendarPart {
 	}
 
 	_getDisplayedSecondaryMonthText(timestamp) {
-		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const pattern = localeData.getIntervalPattern();
-		const secondaryMonthsNames = localeData.getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
-
-		if (dateInSecType.firstDate.getMonth() === dateInSecType.lastDate.getMonth()) {
-			return localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()];
-		}
-
-		return pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()]);
+		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
+		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this.secondaryCalendarType);
 	}
 
 	onAfterRendering() {

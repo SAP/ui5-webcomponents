@@ -1,4 +1,4 @@
-import CalendarDate from "../../dist/dates/CalendarDate.js";
+import CalendarDate from "./CalendarDate.js";
 import getDaysInMonth from "./getDaysInMonth.js";
 
 const transformDateToSecondaryType = (primaryCalendarType, secondaryCalendarType, timeStamp, hasYearPicker) => {

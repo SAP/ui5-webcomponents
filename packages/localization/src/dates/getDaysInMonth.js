@@ -1,6 +1,6 @@
-import CalendarDate from "../../dist/dates/CalendarDate.js";
+import CalendarDate from "./CalendarDate.js";
 
-const getDayInMonth = date => {
+const getDaysInMonth = date => {
 	const tempCalendarDate = new CalendarDate(date);
 	tempCalendarDate.setDate(1);
 	tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
@@ -8,4 +8,4 @@ const getDayInMonth = date => {
 	return tempCalendarDate.getDate();
 };
 
-export default getDayInMonth;
+export default getDaysInMonth;

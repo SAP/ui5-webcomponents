@@ -1,3 +1,5 @@
+import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
+import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -14,7 +16,6 @@ import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import transformDateToSecondaryType from "../../localization/src/dates/transformDateToSecondaryType.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -368,26 +369,6 @@ class Calendar extends CalendarPart {
 		}
 	}
 
-	_getDisplayedSecondaryMonthText() {
-		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, this._timestamp);
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const pattern = localeData.getIntervalPattern();
-		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
-		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
-
-		if (dateInSecType.firstDate.getMonth() === dateInSecType.lastDate.getMonth()) {
-			return {
-				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()],
-				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[dateInSecType.firstDate.getMonth()],
-			};
-		}
-
-		return {
-			text: pattern.replace(/\{0\}/, secondaryMonthsNames[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNames[dateInSecType.lastDate.getMonth()]),
-			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[dateInSecType.firstDate.getMonth()]).replace(/\{1\}/, secondaryMonthsNamesWide[dateInSecType.lastDate.getMonth()]),
-		};
-	}
-
 	get secondaryCalendarTypeButtonText() {
 		if (!this.secondaryCalendarType) {
 			return;
@@ -395,7 +376,8 @@ class Calendar extends CalendarPart {
 
 		const localDate = new Date(this._timestamp * 1000);
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
+		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, this._timestamp);
+		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this.secondaryCalendarType);
 		const secondYearText = secondYearFormat.format(localDate, true);
 
 		return {
