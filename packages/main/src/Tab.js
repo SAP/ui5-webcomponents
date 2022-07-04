@@ -252,7 +252,7 @@ class Tab extends UI5Element {
 	}
 
 	get _effectiveSlotName() {
-		return this.isOnSelectedTabPath ? this._individualSlot : "disabled-slot";
+		return this.isOnSelectedTabPath ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
 	get _defaultSlotName() {
@@ -405,7 +405,7 @@ class Tab extends UI5Element {
 			classes.push(`ui5-tab-overflow-item--${this.design.toLowerCase()}`);
 		}
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-tab-overflow-item--disabled");
 		}
 

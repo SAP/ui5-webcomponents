@@ -5,6 +5,7 @@
 	max-width: 90%;
 	flex-direction: column;
 	box-shadow: var(--sapContent_Shadow3);
+	border-radius: var(--sapElement_BorderCornerRadius);
 }
 
 :host([stretch]) {
@@ -71,4 +72,8 @@
 	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
 	cursor: var(--_ui5_dialog_resize_cursor);
 	color: var(--_ui5_dialog_resize_handle_color);
+}
+
+:host ::slotted([slot="footer"]) {
+    height: var(--_ui5_dialog_footer_height);
 }

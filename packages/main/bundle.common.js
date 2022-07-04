@@ -51,6 +51,7 @@ import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
+import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
@@ -93,11 +94,8 @@ import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
-
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-window.isIE = isIE; // attached to the window object for testing purposes
 
 import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/util/HTMLSanitizer.js";
 window.sanitizeHTML = sanitizeHTML;
@@ -147,7 +145,7 @@ const testAssets = {
 // but it's configurable:
 // import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
 // setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
-// or 
+// or
 // setDefaultIconCollection("sap_fiori_3", "horizon");
 // or for custom theme
 // setDefaultIconCollection("my_custom_theme", "SAP-icons-v5");

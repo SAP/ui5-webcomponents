@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Split Button general interaction", () => {
 	it("tests inner buttons design", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const design = await sbDefault.getAttribute("design");
 		const textButton = await sbDefault.shadow$(".ui5-split-text-button");
@@ -14,7 +13,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests textContent on 'click'", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbEmpty = await browser.$("#emptySpBtn");
 		const textButton1 = await sbEmpty.shadow$(".ui5-split-text-button");
 		const sbDefault = await browser.$("#defaultSpBtn");
@@ -29,7 +28,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests text button 'click' event (mouse)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const textButton = await sbDefault.shadow$(".ui5-split-text-button");
 		const field = await browser.$("#displayEvent");
@@ -40,7 +39,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests text button 'click' event (Space)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const textButton = await sbDefault.shadow$(".ui5-split-text-button");
 		const field = await browser.$("#displayEvent");
@@ -54,7 +53,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests text button 'click' event (Enter)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const textButton = await sbDefault.shadow$(".ui5-split-text-button");
 		const field = await browser.$("#displayEvent");
@@ -68,7 +67,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests arrow button 'arrow-click' event (mouse)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const arrowButton = await sbDefault.shadow$(".ui5-split-arrow-button");
 		const field = await browser.$("#displayEvent");
@@ -79,7 +78,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests arrow button 'arrow-click' event (arrow down)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const arrowButton = await sbDefault.shadow$(".ui5-split-arrow-button");
 		const field = await browser.$("#displayEvent");
@@ -93,7 +92,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests arrow button 'arrow-click' event (arrow up)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const arrowButton = await sbDefault.shadow$(".ui5-split-arrow-button");
 		const field = await browser.$("#displayEvent");
@@ -107,7 +106,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests arrow button 'arrow-click' event (alt + arrow down)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const arrowButton = await sbDefault.shadow$(".ui5-split-arrow-button");
 		const field = await browser.$("#displayEvent");
@@ -121,7 +120,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests arrow button 'arrow-click' event (alt + arrow up)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const arrowButton = await sbDefault.shadow$(".ui5-split-arrow-button");
 		const field = await browser.$("#displayEvent");
@@ -135,7 +134,7 @@ describe("Split Button general interaction", () => {
 	});
 
 	it("tests arrow button 'arrow-click' event (F4)", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SplitButton.html`);
+		await browser.url(`test/pages/SplitButton.html`);
 		const sbDefault = await browser.$("#sbDefault");
 		const arrowButton = await sbDefault.shadow$(".ui5-split-arrow-button");
 		const field = await browser.$("#displayEvent");

@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("Color Picker general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPicker.html`);
+		await browser.url(`test/pages/ColorPicker.html`);
 	});
 
 	it("tests color picker rendering", async () => {
@@ -139,4 +138,22 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(await colorPicker.getAttribute("_hue"), hueValue, "Hue value remained unchanged");
 	});
 
+	it("Inner input components accessibility references", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const hueSlider = await colorPicker.shadow$(".ui5-color-picker-hue-slider");
+		const alphaSlider = await colorPicker.shadow$(".ui5-color-picker-alpha-slider");
+		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
+		const redInput = await colorPicker.shadow$("#red");
+		const greenInput = await colorPicker.shadow$("#green");
+		const blueInput = await colorPicker.shadow$("#blue");
+		const alphaInput = await colorPicker.shadow$("#alpha");
+
+		assert.strictEqual(await hueSlider.getAttribute("accessible-name"), "Hue control", "Hue slider accessible-name attribute properly set");
+		assert.strictEqual(await alphaSlider.getAttribute("accessible-name"), "Alpha control", "Alpha slider accessible-name attribute properly set");
+		assert.strictEqual(await hexInput.getAttribute("accessible-name"), "Hexadecimal", "Hex input accessible-name attribute properly set");
+		assert.strictEqual(await redInput.getAttribute("accessible-name"), "Red", "Red input accessible-name attribute properly set");
+		assert.strictEqual(await greenInput.getAttribute("accessible-name"), "Green", "Green input accessible-name attribute properly set");
+		assert.strictEqual(await blueInput.getAttribute("accessible-name"), "Blue", "Blue input accessible-name attribute properly set");
+		assert.strictEqual(await alphaInput.getAttribute("accessible-name"), "Alpha", "Alpha input accessible-name attribute properly set");
+	});
 });

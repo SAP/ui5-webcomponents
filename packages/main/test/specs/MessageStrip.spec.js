@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("MessageStrip general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MessageStrip.html`);
+		await browser.url(`test/pages/MessageStrip.html`);
 	});
 
 	it("tests close event", async () => {
@@ -21,7 +20,7 @@ describe("MessageStrip general interaction", () => {
 
 describe("ARIA Support", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MessageStrip.html`);
+		await browser.url(`test/pages/MessageStrip.html`);
 	});
 
 	it("Test close button title text", async () => {

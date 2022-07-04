@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Testing Range Slider interactions", () => {
 
 	it("Changing the current startValue is reflected", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 		await browser.setWindowSize(1257, 2000);
 
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
@@ -16,7 +15,7 @@ describe("Testing Range Slider interactions", () => {
 
 		assert.strictEqual((await startHandle.getAttribute("style")).replace(" ", ""), "left:12.5%;", "Start-handle should be 12.5% from the start");
 
-		await startHandle.dragAndDrop({ x: 100, y: 1 });
+		await startHandle.dragAndDrop({ x: 90, y: 1 });
 
 		assert.strictEqual((await startHandle.getAttribute("style")).replace(" ", ""), "left:20%;", "Start-handle should be 20% from the start of the Range Slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 8, "Range Slider startValue should be 8");
@@ -71,7 +70,7 @@ describe("Testing Range Slider interactions", () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
-		await rangeSlider.dragAndDrop({ x: 100, y: 1 });
+		await rangeSlider.dragAndDrop({ x: 90, y: 1 });
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 8, "startValue should be 8");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 33, "endValue should be 33");
@@ -84,7 +83,7 @@ describe("Testing Range Slider interactions", () => {
 
 		await rangeSlider.setProperty("endValue", 9);
 
-		await startHandle.dragAndDrop({ x: 100, y: 1 });
+		await startHandle.dragAndDrop({ x: 90, y: 1 });
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 9, "startValue should swapped with the endValue and should be 9");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 11, "endValue should swapped with the startValue and should be 11");
@@ -126,7 +125,7 @@ describe("Testing Range Slider interactions", () => {
 
 describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 	it("Range Slider tooltips are displayed showing the current value", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
 		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
@@ -316,7 +315,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemax"),
@@ -331,7 +330,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await startHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemax"),
@@ -346,7 +345,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await endHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
+			`${rangeSliderId}-accName ${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemax"),
@@ -370,7 +369,7 @@ describe("Accessibility", async () => {
 	});
 
 	it("Click anywhere in the  Range Slider should focus the closest handle", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const rangeSliderStartHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
@@ -391,7 +390,7 @@ describe("Accessibility", async () => {
 	});
 
 	it("Click currently selected range should focus it", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
@@ -406,7 +405,7 @@ describe("Accessibility", async () => {
 
 
 	it("When not yet focused, 'Tab' should focus the Range Slider and move the focus to the progress bar", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
@@ -516,7 +515,7 @@ describe("Accessibility", async () => {
 
 describe("Accessibility: Testing keyboard handling", async () => {
 	it("When progress bar is focused 'Right Arrow' key should increase both values of the Range Slider with a small increment step", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 		const rangeSlider = await browser.$("#basic-range-slider");
 
 		await browser.keys("Tab");
@@ -668,7 +667,7 @@ describe("Accessibility: Testing keyboard handling", async () => {
 	});
 
 	it("When a handle is focused 'Right Arrow' key should increase its value with a small increment step", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#basic-range-slider");
 
@@ -938,7 +937,7 @@ describe("Testing resize handling and RTL support", () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
-		
+
 		await rangeSlider.setAttribute("dir", "rtl");
 		await rangeSlider.setProperty("min", 0);
 		await rangeSlider.setProperty("max", 10);

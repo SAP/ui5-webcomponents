@@ -6,20 +6,7 @@ const getCaretPosition = field => {
 	// Initialize
 	let caretPos = 0;
 
-	// IE Support
-	if (document.selection) {
-		// Set focus on the element
-		field.focus();
-
-		// To get cursor position, get empty selection range
-		const selection = document.selection.createRange();
-
-		// Move selection start to 0 position
-		selection.moveStart("character", -field.value.length);
-
-		// The caret position is selection length
-		caretPos = selection.text.length;
-	} else if (field.selectionStart || field.selectionStart === "0") { // Firefox support
+	if (field.selectionStart || field.selectionStart === "0") { // Firefox support
 		caretPos = field.selectionDirection === "backward" ? field.selectionStart : field.selectionEnd;
 	}
 

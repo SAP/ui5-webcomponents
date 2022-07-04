@@ -16,7 +16,7 @@ import {
 	isF4,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
@@ -47,7 +47,7 @@ const metadata = {
 	tag: "ui5-date-picker",
 	altTag: "ui5-datepicker",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
 		 *
@@ -206,7 +206,7 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
@@ -236,7 +236,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
@@ -248,7 +248,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -268,7 +268,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -673,10 +673,6 @@ class DatePicker extends DateComponentBase {
 
 	get showFooter() {
 		return this.phone;
-	}
-
-	get _isIE() {
-		return isIE();
 	}
 
 	get accInfo() {

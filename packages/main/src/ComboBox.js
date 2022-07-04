@@ -29,7 +29,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -598,7 +598,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_startsWithMatchingItems(str) {
-		return Filters.StartsWith(str, this._filteredItems);
+		return Filters.StartsWith(str, this._filteredItems, "text");
 	}
 
 	_clearFocus() {
@@ -779,8 +779,9 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(event)) {
+			this._fireChangeEvent();
+
 			if (this.responsivePopover.opened) {
-				this._fireChangeEvent();
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {
@@ -845,7 +846,7 @@ class ComboBox extends UI5Element {
 
 	_filterItems(str) {
 		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
-		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
 
 		// Return the filtered items and their group items
 		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
@@ -933,6 +934,7 @@ class ComboBox extends UI5Element {
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
 
 		if (sameItemSelected && sameSelectionPerformed) {
+			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
 		}
 
@@ -1083,6 +1085,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
 			popoverHeader: {
 				"width": `${this.offsetWidth}px`,
@@ -1090,6 +1093,10 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
+			},
+			suggestionsPopover: {
+				"min-width": `${this.offsetWidth}px`,
+				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
 		};
 	}

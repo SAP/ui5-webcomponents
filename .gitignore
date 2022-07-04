@@ -5,7 +5,13 @@ tmp
 temp
 target
 dist
+.dev-server-port
+# TODO remove this as the tools no longer generate it, kept for clean up (in the clean task as well)
 .port
+
+# scoping feature generated entry points for vite consumption
+packages/main/test/pages/scoped
+packages/fiori/test/pages/scoped
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5
@@ -41,6 +47,7 @@ yarn-debug.log*
 icon-collection-bundler.cjs.js
 
 # Playground
+.jekyll-cache
 packages/playground/_site/
 packages/playground/.sass-cache/
 packages/playground/assets/js/ui5-webcomponents/
@@ -67,3 +74,12 @@ packages/playground/docs/FAQ.md
 
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js
+
+# coming from main and fiori bundles for the test pages
+packages/playground/assets/*.js
+packages/playground/assets/*.png
+packages/playground/assets/*.jpg
+packages/playground/assets/*.gif
+packages/playground/assets/*.css
+packages/playground/assets/test/pages/*.css
+packages/playground/assets/test/pages/*.js

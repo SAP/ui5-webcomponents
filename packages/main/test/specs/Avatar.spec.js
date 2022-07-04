@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("Avatar", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+		await browser.url(`test/pages/Avatar.html`);
 	});
 
 	it("tests rendering of image", async () => {
@@ -91,7 +90,7 @@ describe("Avatar", () => {
 
 describe("ARIA attributes", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+		await browser.url(`test/pages/Avatar.html`);
 	});
 
 	it ("role set correctly", async () => {

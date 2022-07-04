@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
@@ -13,7 +15,7 @@
 	justify-content: space-between;
 	align-items: center;
 	background: var(--sapShellColor);
-	height: 2.75rem;
+	height: var(--_ui5_shellbar_root_height);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
@@ -33,13 +35,17 @@
 	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
 	cursor: pointer;
-	border-radius: 0.25rem;
+	border-radius: var(--_ui5_shellbar_button_border_radius);
 	position: relative;
 	font-size: 0.75rem;
 	font-weight: bold;
 	white-space: initial;
 	overflow: initial;
 	text-overflow: initial;
+}
+
+::slotted([ui5-button][slot="startButton"]) {
+	margin-inline-start: 0;
 }
 
 ::slotted([ui5-button][slot="startButton"]:hover),
@@ -64,6 +70,9 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active .ui5-shellbar-menu-button-arrow {
+	border-top-color: var(--_ui5_shellbar_button_active_color);
+}
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
@@ -86,14 +95,16 @@ slot[name="profile"] {
 	border: none;
 }
 
-.ui5-shellbar-menu-button-title {
+.ui5-shellbar-menu-button-title,
+.ui5-shellbar-title {
 	display: inline-block;
 	font-family: "72override", var(--sapFontFamily);
 	margin: 0;
-	font-size: 0.75rem;
+	font-size: var(--_ui5_shellbar_menu_button_title_font_size);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	color: var(--sapShell_TextColor);
 	flex: auto;
 }
 
@@ -102,17 +113,8 @@ slot[name="profile"] {
 	justify-content: center;
 }
 
-:host(:not([primary-title])) .ui5-shellbar-menu-button span {
-	margin-inline-start: 0;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button span {
-	margin-inline-start: .5rem;
-}
-
 .ui5-shellbar-secondary-title {
 	display: inline-block;
-	margin: 0 0.5rem;
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapShell_TextColor);
 	line-height: 1rem;
@@ -145,7 +147,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-overflow-container-middle {
 	align-self: center;
-	height: 2.5rem;
+	height: var(--_ui5_shellbar_overflow_container_middle_height);
 	width: 0;
 	flex-shrink: 0;
 }
@@ -154,62 +156,65 @@ slot[name="profile"] {
 	width: 3rem;
 }
 
-@keyframes Behind_layer {
-	0% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes Top_layer {
-	0% {
-		transform: rotate(-360deg);
-	}
+:host([breakpoint-size="S"]) .ui5-shellbar-menu-button {
+	margin-inline-start: 0;
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-root {
-	padding: 0.25rem 1rem;
+	padding: 0 1rem;
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-search-full-width-wrapper {
-	padding: 0.25rem 1rem;
-}
-
-:host([breakpoint-size="S"]) ::slotted([ui5-button][slot="startButton"]) {
-	margin-inline-end: 0;
+	padding: 0 1rem;
 }
 
 :host([breakpoint-size="M"]) .ui5-shellbar-root {
-	padding: 0.25rem 2rem;
+	padding: 0 2rem;
 }
 
 :host([breakpoint-size="M"]) .ui5-shellbar-search-full-width-wrapper {
-	padding: 0.25rem 2rem;
+	padding: 0 2rem;
 }
 
 :host([breakpoint-size="L"]) .ui5-shellbar-root {
-	padding: 0.25rem 2rem;
+	padding: 0 2rem;
 }
 
 :host([breakpoint-size="XL"]) .ui5-shellbar-root {
-	padding: 0.25rem 3rem;
+	padding: 0 3rem;
 }
 
 :host([breakpoint-size="XXL"]) .ui5-shellbar-root {
-	padding: 0.25rem 3rem;
+	padding: 0 3rem;
 }
 
 .ui5-shellbar-logo {
 	cursor: pointer;
 	max-height: 2rem;
+	overflow: hidden;
 }
 
 .ui5-shellbar-logo:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
-	outline-offset: var(--_ui5_shellbar_outline_offset);
+	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
+	border-radius: var(--_ui5_shellbar_logo_border_radius);
+}
+
+.ui5-shellbar-logo:hover {
+	box-shadow: var(--_ui5_shellbar_button_box_shadow);
+	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
 
 .ui5-shellbar-button {
 	width: 2.5rem;
+}
+
+.ui5-shellbar-search-button {
+	--_ui5_button_focused_border_radius: var(--_ui5_shellbar_search_button_border_radius);
+	--_ui5_shellbar_button_border_radius: var(--_ui5_shellbar_search_button_border_radius);
+	height: var(--_ui5_shellbar_search_button_size);
+	width: var(--_ui5_shellbar_search_button_size);
+	min-width: var(--_ui5_shellbar_search_button_size);
 }
 
 .ui5-shellbar-image-buttonImage {
@@ -231,11 +236,16 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
+	padding: 0 0.125rem;
 	justify-content: flex-start;
 	margin-inline-end: 0.5rem;
 	max-width: 75%;
 	flex-shrink: 0;
 	flex-grow: 0;
+}
+
+.ui5-shellbar-overflow-container-left > :nth-child(n) {
+	margin-inline-end: 0.5rem;
 }
 
 :host([show-co-pilot]) .ui5-shellbar-overflow-container-left {
@@ -253,16 +263,15 @@ slot[name="profile"] {
 	cursor: text;
 	-webkit-user-select: text;
 	-moz-user-select: text;
-	-ms-user-select: text;
 	user-select: text;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive {
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	cursor: pointer;
+	border: var(--_ui5_shellbar_button_border);
 }
 
 :host(:not([with-logo])) .ui5-shellbar-menu-button {
@@ -270,6 +279,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-right {
+	padding: 0 0.125rem;
 	display: block;
 	overflow: hidden;
 	box-sizing: border-box;
@@ -289,6 +299,8 @@ slot[name="profile"] {
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
 	justify-content: flex-end;
+	height: inherit;
+	align-items: center;
 	float: var(--_ui5_shellbar_overflow_container_float);
 }
 
@@ -301,11 +313,6 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-secondary-title {
-	display: none;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-logo + .ui5-shellbar-menu-button-title,
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button + .ui5-shellbar-menu-button-title {
 	display: none;
 }
 
@@ -323,6 +330,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-coPilot {
+	height: 100%;
 	background-color: transparent;
 	cursor: pointer;
 }
@@ -346,6 +354,7 @@ slot[name="profile"] {
 	height: 1rem;
 	min-width: 1rem;
 	background: var(--sapContent_BadgeBackground);
+	border: var(--_ui5_shellbar_button_badge_border);
 	color: var(--sapContent_BadgeTextColor);
 	top: 0.125rem;
 	left: 1.5rem;
@@ -373,6 +382,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
+	align-items: center;
 	flex-grow: 1;
 	min-width: 240px;
 	margin-inline-start: 0.5rem;
@@ -402,15 +412,20 @@ slot[name="profile"] {
 }
 
 ::slotted([ui5-input]) {
-	background-color: var(--sapShellColor);
-	border: 1px solid var(--sapShell_InteractiveBorderColor);
-	color: var(--sapShell_TextColor);
-	height: 100%;
+	background: var(--_ui5_shellbar_search_field_background);
+	border: var(--_ui5_shellbar_search_field_border);
+	color: var(--_ui5_shellbar_search_field_color);
+	height: 2.25rem;
 	width: 100%;
 }
 
+::slotted([ui5-input]:hover) {
+	background: var(--_ui5_shellbar_search_field_background_hover);
+	box-shadow: var(--_ui5_shellbar_search_field_box_shadow_hover);
+}
+
 ::slotted([ui5-input][focused]) {
-	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+	outline: var(--_ui5_shellbar_search_field_outline_focused);
 }
 
 ::slotted([slot="logo"]) {
@@ -418,33 +433,15 @@ slot[name="profile"] {
 	pointer-events: none;
 }
 
-
-/**
-* IE styles
-*/
-[ui5-input][value-state]:not([readonly]) {
-	background: var(--sapShellColor);
-	border: 1px solid var(--sapShell_InteractiveBorderColor);
-}
-
-[ui5-input][value-state]:not([readonly]):hover,
-[ui5-input]:not([value-state]):not([readonly]):hover {
-	background: var(--sapShell_Hover_Background);
-	border: 1px solid var(--sapShell_InteractiveBorderColor);
-}
-
-[ui5-input][value-state]:not([value-state="None"])[focused] {
-	outline: 1px dotted var(--sapContent_ContrastFocusColor);
-}
-/* IE styles end */
-
 .ui5-shellbar-copilot-wrapper {
 	position: relative;
 	outline: none;
 	box-sizing: border-box;
+	height: 100%;
 }
 
 .ui5-shellbar-copilot-wrapper:hover {
+	border-radius: var(--sapButton_BorderCornerRadius);
 	background: var(--sapShell_Hover_Background);
 }
 
@@ -453,17 +450,26 @@ slot[name="profile"] {
 	background: var(--sapShell_Active_Background);
 }
 
+.ui5-shellbar-copilot-wrapper:hover::after,
 .ui5-shellbar-copilot-wrapper:focus::after {
 	content: "";
 	position: absolute;
-	height: calc(100% - 0.75rem);
-	border: var(--_ui5_shellbar_logo_outline);
-	border-radius: var(--_ui5_shellbar_logo_outline_border_radius);
+	left: var(--_ui5_shellbar_copilot_focus_offset);
+	right: var(--_ui5_shellbar_copilot_focus_offset);
+	top: var(--_ui5_shellbar_copilot_focus_offset);
+	bottom: var(--_ui5_shellbar_copilot_focus_offset);
+	outline: none;
 	pointer-events: none;
-	left: 0;
-	top: 0.25rem;
-	right: 0;
-	z-index: 1;
+	border-radius: var(--_ui5_shellbar_logo_outline_border_radius);
+}
+
+.ui5-shellbar-copilot-wrapper:hover::after {
+	background: transparent;
+	box-shadow: var(--sapContent_Interaction_Shadow);
+}
+
+.ui5-shellbar-copilot-wrapper:focus::after {
+	border: var(--_ui5_shellbar_logo_outline);
 }
 
 .ui5-shellbar-co-pilot-placeholder {

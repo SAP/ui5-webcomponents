@@ -1,8 +1,7 @@
 ![UI5 icon](/docs/images/UI5_logo_wide.png)
 
 # UI5 Web Components
-
-[![Travis CI Build Status](https://travis-ci.com/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.com/github/SAP/ui5-webcomponents)
+[![CI](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml/badge.svg)](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui5-webcomponents)](https://api.reuse.software/info/github.com/SAP/ui5-webcomponents)
 
@@ -135,9 +134,7 @@ yarn build # to build the project initially (this step needs to be performed onl
 yarn start # to serve the project
 ```
 
-You can then explore component test pages on:
- - http://localhost:8080/test-resources/pages/ for the `main` package
- - http://localhost:8081/test-resources/pages/ for the `fiori` package.
+A dev server will be started and the browser will open its index URL with a listing of all test pages.
 
 You can start the Playground app with the following commands:
 

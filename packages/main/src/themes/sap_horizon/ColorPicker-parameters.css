@@ -8,4 +8,5 @@
     --_ui5_color_picker_slider_handle_margin_top: -.1875rem;
     --_ui5_color_picker_slider_handle_focus_margin_top: var(--_ui5_color_picker_slider_handle_margin_top);
     --_ui5_color_picker_slider_container_margin_top: -11px;
+    --_ui5_color_picker_slider_handle_inline_focus: 1px solid var(--sapContent_ContrastFocusColor);
 }

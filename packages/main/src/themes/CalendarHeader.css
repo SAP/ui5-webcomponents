@@ -23,6 +23,7 @@
 	white-space: nowrap;
 	padding: 0;
 	font-size: var(--sapFontSize);
+	user-select: none;
 }
 
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:hover,
@@ -99,7 +100,6 @@
 	box-sizing: border-box;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 

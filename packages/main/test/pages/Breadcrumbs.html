@@ -19,10 +19,10 @@
 	</script>
 
 
-	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script src="../../bundle.esm.js" type="module"></script>
 
 
-	<link rel="stylesheet" type="text/css" href="styles/Breadcrumbs.css">
+	<link rel="stylesheet" type="text/css" href="./styles/Breadcrumbs.css">
 
 </head>
 
@@ -178,8 +178,22 @@
 
 		var breadcrumbsPreventDefault = document.querySelector("#breadcrumbsPreventDefault");
 		breadcrumbsPreventDefault.addEventListener("ui5-item-click", (event) => {
+			let keyText ='';
+
+			if(event.detail.ctrlKey) {
+				keyText += 'CTRL:';
+			}
+			if(event.detail.altKey) {
+				keyText += 'ALT:';
+			}
+			if(event.detail.shiftKey) {
+				keyText += 'SHIFT:';
+			}
+			if(event.detail.metaKey) {
+				keyText += 'META:';
+			}
 			event.preventDefault();
-			result.innerText = event.detail.item.innerText;
+			result.innerText = keyText + event.detail.item.innerText;
 		});
 
 		extendSizeBtn.addEventListener("click", () => resizeContainer(true));

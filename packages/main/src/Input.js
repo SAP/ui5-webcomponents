@@ -1,7 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isPhone,
+	isSafari,
+	isAndroid,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
@@ -35,6 +39,7 @@ import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
+import * as Filters from "./Filters.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -145,7 +150,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.Input.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -209,6 +214,18 @@ const metadata = {
 		 * @since 1.0.0-rc.3
 		 */
 		required: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the value will be autcompleted to match an item
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.4.0
+		 */
+		noTypeahead: {
 			type: Boolean,
 		},
 
@@ -303,7 +320,8 @@ const metadata = {
 
 		/**
 		 * Sets the maximum number of characters available in the input field.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
 		 * @type {Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
@@ -421,7 +439,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
@@ -596,6 +614,9 @@ class Input extends UI5Element {
 		// The last value confirmed by the user with "ENTER"
 		this.lastConfirmedValue = "";
 
+		// The value that the user is typed in the input
+		this.valueBeforeAutoComplete = "";
+
 		// Indicates, if the user pressed the BACKSPACE key.
 		this._backspaceKeyDown = false;
 
@@ -651,10 +672,29 @@ class Input extends UI5Element {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		const value = this.value;
+		const innerInput = this.getInputDOMRefSync();
+
+		if (!innerInput || !value) {
+			return;
+		}
+
+		const autoCompletedChars = innerInput.selectionEnd - innerInput.selectionStart;
+
+		// Typehead causes issues on Android devices, so we disable it for now
+		// If there is already a selection the autocomplete has already been performed
+		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation) {
+			const item = this._getFirstMatchingItem(value);
+
+			// Keep the original typed in text intact
+			this.valueBeforeAutoComplete += value.slice(this.valueBeforeAutoComplete.length, value.length);
+			this._handleTypeAhead(item, value);
+		}
 	}
 
 	async onAfterRendering() {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.showSuggestions) {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
 			});
@@ -670,6 +710,9 @@ class Input extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		this._isKeyNavigation = true;
+		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(event) || isDelete(event) || isEscape(event));
+
 		if (isUp(event)) {
 			return this._handleUp(event);
 		}
@@ -720,14 +763,10 @@ class Input extends UI5Element {
 		}
 
 		this._keyDown = true;
+		this._isKeyNavigation = false;
 	}
 
 	_onkeyup(event) {
-		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
-		if (isDelete(event)) {
-			this.value = event.target.value;
-		}
-
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -759,9 +798,28 @@ class Input extends UI5Element {
 
 	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
+		const innerInput = this.getInputDOMRefSync();
+		// Check for autocompleted item
+		const matchingItem = this.suggestionItems.find(item => {
+			return (item.text && item.text === this.value) || (item.textContent === this.value);
+		});
+
+		if (matchingItem) {
+			const itemText = matchingItem.text ? matchingItem.text : matchingItem.textContent;
+
+			this.getInputDOMRefSync().setSelectionRange(itemText.length, itemText.length);
+			if (!itemPressed) {
+				this.selectSuggestion(matchingItem, true);
+				this.open = false;
+			}
+		}
+
+		if (this._isPhone && !this.suggestionItems.length) {
+			innerInput.setSelectionRange(this.value.length, this.value.length);
+		}
 
 		if (!itemPressed) {
-			this.fireEventByAction(this.ACTION_ENTER);
+			this.fireEventByAction(this.ACTION_ENTER, event);
 			this.lastConfirmedValue = this.value;
 
 			if (this.FormSupport) {
@@ -805,6 +863,8 @@ class Input extends UI5Element {
 	_handleEscape() {
 		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
 		const isOpen = hasSuggestions && this.open;
+		const innerInput = this.getInputDOMRefSync();
+		const isAutoCompleted = innerInput.selectionEnd - innerInput.selectionStart > 0;
 
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
@@ -813,12 +873,18 @@ class Input extends UI5Element {
 
 		if (hasSuggestions && isOpen && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
-			this.value = this.valueBeforeItemPreview;
+			this.value = this.valueBeforeAutoComplete || this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
 			this.focused = true;
+
+			return;
+		}
+
+		if (isAutoCompleted) {
+			this.value = this.valueBeforeAutoComplete;
 		}
 
 		if (this._isValueStateFocused) {
@@ -830,6 +896,7 @@ class Input extends UI5Element {
 	async _onfocusin(event) {
 		await this.getInputDOMRef();
 
+		this.valueBeforeAutoComplete = "";
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 		this.valueBeforeItemPreview = this.value;
@@ -841,7 +908,10 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
-		this._preventNextChange = this.effectiveShowClearIcon && this.shadowRoot.contains(event.relatedTarget);
+		if (this.showClearIcon && !this.effectiveShowClearIcon) {
+			this._clearIconClicked = false;
+			this._handleChange();
+		}
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
@@ -885,21 +955,14 @@ class Input extends UI5Element {
 		}
 	}
 
-	_handleNativeInputChange() {
-		// The native change sometimes fires too early and getting input's value in the listener would return
-		// the previous value instead of the most recent one. This would make things consistent.
-		clearTimeout(this._nativeChangeDebounce);
-		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
-	}
-
 	_handleChange() {
-		if (this._preventNextChange) {
-			this._preventNextChange = false;
+		if (this._clearIconClicked) {
+			this._clearIconClicked = false;
 			return;
 		}
 
-		if (this._changeFiredValue !== this.value) {
-			this._changeFiredValue = this.value;
+		if (this._changeFiredValue !== this.getInputDOMRefSync().value) {
+			this._changeFiredValue = this.getInputDOMRefSync().value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -907,11 +970,13 @@ class Input extends UI5Element {
 	_clear() {
 		this.value = "";
 		this.fireEvent(this.EVENT_INPUT);
-		this._handleChange();
-
 		if (!this._isPhone) {
 			this.focus();
 		}
+	}
+
+	_iconMouseDown() {
+		this._clearIconClicked = true;
 	}
 
 	_scroll(event) {
@@ -925,7 +990,9 @@ class Input extends UI5Element {
 	_handleInput(event) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
+		const eventType = event.inputType || event.detail.inputType;
 
+		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
 		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
@@ -960,7 +1027,7 @@ class Input extends UI5Element {
 				this.valueBeforeItemPreview = newValue;
 
 				// fire events
-				this.fireEvent(this.EVENT_INPUT);
+				this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
 				this.fireEvent("value-changed");
 				return;
 			}
@@ -973,13 +1040,7 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		/* skip calling change event when an input with a placeholder is focused on IE
-			- value of the host and the internal input should be differnt in case of actual input
-			- input is called when a key is pressed => keyup should not be called yet
-		*/
-		const skipFiring = (inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
-
-		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
+		this.fireEventByAction(this.ACTION_USER_INPUT, event);
 
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
@@ -989,6 +1050,42 @@ class Input extends UI5Element {
 		}
 
 		this.isTyping = true;
+	}
+
+	_startsWithMatchingItems(str) {
+		const textProp = this.suggestionItems[0].text ? "text" : "textContent";
+		return Filters.StartsWith(str, this.suggestionItems, textProp);
+	}
+
+	_getFirstMatchingItem(current) {
+		if (!this.suggestionItems.length) {
+			return;
+		}
+
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.groupItem);
+
+		if (matchingItems.length) {
+			return matchingItems[0];
+		}
+	}
+
+	_handleTypeAhead(item, filterValue) {
+		if (!item) {
+			return;
+		}
+
+		const value = item.text ? item.text : item.textContent || "";
+		const innerInput = this.getInputDOMRefSync();
+
+		filterValue = filterValue || "";
+		this.value = value;
+
+		innerInput.value = value;
+		setTimeout(() => {
+			innerInput.setSelectionRange(filterValue.length, value.length);
+		}, 0);
+
+		this._shouldAutocomplete = false;
 	}
 
 	_handleResize() {
@@ -1083,7 +1180,7 @@ class Input extends UI5Element {
 
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
+			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 
@@ -1091,6 +1188,7 @@ class Input extends UI5Element {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
+			this.getInputDOMRefSync().value = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this._handleChange();
 		}
@@ -1118,8 +1216,12 @@ class Input extends UI5Element {
 	 */
 	updateValueOnPreview(item) {
 		const noPreview = item.type === "Inactive" || item.group;
+		const innerInput = this.getInputDOMRefSync();
 		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent);
+
 		this.value = itemValue;
+		innerInput.value = itemValue;
+		innerInput.setSelectionRange(this.valueBeforeAutoComplete.length, this.value.length);
 	}
 
 	/**
@@ -1136,7 +1238,7 @@ class Input extends UI5Element {
 		return this.getSuggestionByListItem(this._previewItem);
 	}
 
-	async fireEventByAction(action) {
+	async fireEventByAction(action, event) {
 		await this.getInputDOMRef();
 
 		if (this.disabled || this.readonly) {
@@ -1162,16 +1264,9 @@ class Input extends UI5Element {
 		}
 
 		if (isUserInput) { // input
-			this.fireEvent(this.EVENT_INPUT);
+			this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
-			return;
-		}
-
-		// In IE, pressing the ENTER does not fire change
-		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
-		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
-			this._handleChange();
 		}
 	}
 
@@ -1194,8 +1289,8 @@ class Input extends UI5Element {
 	}
 
 	getInputDOMRefSync() {
-		if (isPhone() && this.Suggestions) {
-			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+		if (isPhone() && this.Suggestions && this.Suggestions.responsivePopover) {
+			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone").shadowRoot.querySelector("input");
 		}
 
 		return this.nativeInput;

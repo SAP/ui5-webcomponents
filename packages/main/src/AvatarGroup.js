@@ -382,7 +382,7 @@ class AvatarGroup extends UI5Element {
 				item = button;
 			}
 
-			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : item.offsetLeft;
+			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : item.offsetLeft - this.offsetLeft;
 		}
 
 		return button.offsetWidth;
@@ -526,7 +526,7 @@ class AvatarGroup extends UI5Element {
 		}
 
 		// in LTR the width is equal to item.offsetLeft
-		return item.offsetLeft;
+		return item.offsetLeft - this.offsetLeft;
 	}
 
 	/**

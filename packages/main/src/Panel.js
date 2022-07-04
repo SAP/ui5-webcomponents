@@ -42,7 +42,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the content of the component.
+		 * Defines the content of the component.
 		 * The content is visible only when the component is expanded.
 		 *
 		 * @type {Node[]}
@@ -235,6 +235,7 @@ const metadata = {
  * <br>
  * The <code>ui5-panel</code> exposes the following CSS Shadow Parts:
  * <ul>
+ * <li>header - Used to style the wrapper of the header</li>
  * <li>content - Used to style the wrapper of the content</li>
  * </ul>
  *

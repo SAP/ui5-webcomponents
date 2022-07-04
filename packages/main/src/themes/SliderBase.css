@@ -11,7 +11,6 @@
 	cursor: pointer;
 	vertical-align: top;
 	width: 100%;
-	height: 3.3125rem;
 }
 
 :host(:not([hidden])) {
@@ -21,10 +20,9 @@
 .ui5-slider-root {
 	box-sizing: border-box;
 	height: 3.3125rem;
-	padding: 1rem 0;
 	outline: none;
+	padding: var(--_ui5_slider_padding);
 	touch-action: none;
-	-ms-touch-action: pan-y;
 }
 
 .ui5-slider-inner {
@@ -103,7 +101,7 @@
 	border: var(--_ui5_slider_handle_border);
 	border-radius: var(--_ui5_slider_handle_border_radius);
 	box-shadow: var(--_ui5_slider_handle_box_shadow);
-	margin-inline-start: var(--_ui5_slider_handle_margin_left);
+	margin-inline-start: calc(-1 * var(--_ui5_slider_handle_width) / 2);
 	top: var(--_ui5_slider_handle_top);
 	position: absolute;
 	outline: none;
@@ -119,6 +117,8 @@
 [slider-icon] {
 	display: var(--_ui5_slider_handle_icon_display);
 	color: var(--sapContent_Selected_ForegroundColor);
+	width: var(--_ui5_slider_handle_icon_size);
+	height: var(--_ui5_slider_handle_icon_size);
 }
 
 .ui5-slider-root:hover .ui5-slider-handle:not(:focus),
@@ -145,7 +145,7 @@
 	outline: var(--_ui5_slider_handle_active_focused_outline);
 }
 
-.ui5-slider-handle.ui5-slider-handle--start:focus, 
+.ui5-slider-handle.ui5-slider-handle--start:focus,
 .ui5-slider-handle--end:focus {
 	border: var(--_ui5_slider_handle_focus_border);
 }

@@ -106,6 +106,8 @@
     box-shadow: none;
     cursor: pointer;
     outline-offset: .1rem;
+
+    --_ui5_button_focused_border_radius: 50%;
 }
 
 .ui5-carousel-navigation-arrows .ui5-carousel-navigation-button {

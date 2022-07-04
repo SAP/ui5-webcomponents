@@ -101,6 +101,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible aria name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.4.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		_tooltipVisibility: {
@@ -793,6 +805,10 @@ class SliderBase extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	get _ariaLabelledByHandleRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
 	}
 }
 

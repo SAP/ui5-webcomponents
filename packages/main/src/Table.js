@@ -4,7 +4,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isTabNext,
 	isTabPrevious,
@@ -542,6 +541,11 @@ class Table extends UI5Element {
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
 
+		if (this.isMultiSelect) {
+			// we have to count the selection column as well
+			this.visibleColumnsCount += 1;
+		}
+
 		this._allRowsSelected = selectedRows.length === this.rows.length;
 
 		this._prevFocusedRow = this._prevFocusedRow || this.rows[0];
@@ -556,9 +560,7 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (!isIE()) {
-			this.growingIntersectionObserver = this.getIntersectionObserver();
-		}
+		this.growingIntersectionObserver = this.getIntersectionObserver();
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 
@@ -568,11 +570,9 @@ class Table extends UI5Element {
 	onExitDOM() {
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 
-		if (!isIE()) {
-			this.growingIntersectionObserver.disconnect();
-			this.growingIntersectionObserver = null;
-			this.tableEndObserved = false;
-		}
+		this.growingIntersectionObserver.disconnect();
+		this.growingIntersectionObserver = null;
+		this.tableEndObserved = false;
 	}
 
 	_onkeydown(event) {
@@ -1119,16 +1119,11 @@ class Table extends UI5Element {
 	}
 
 	get growsWithButton() {
-		if (isIE()) {
-			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
-			return this.growing === TableGrowingMode.Button || this.growing === TableGrowingMode.Scroll;
-		}
-
 		return this.growing === TableGrowingMode.Button;
 	}
 
 	get growsOnScroll() {
-		return !isIE() && this.growing === TableGrowingMode.Scroll;
+		return this.growing === TableGrowingMode.Scroll;
 	}
 
 	get _growingButtonText() {
@@ -1165,10 +1160,6 @@ class Table extends UI5Element {
 	}
 
 	get busyIndPosition() {
-		if (isIE()) {
-			return "absolute";
-		}
-
 		return this._inViewport ? "absolute" : "sticky";
 	}
 

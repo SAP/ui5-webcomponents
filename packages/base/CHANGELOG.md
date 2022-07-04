@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
+
+
+### Bug Fixes
+
+* **f6navigation:** prevent default behavior on windows OS ([#5424](https://github.com/SAP/ui5-webcomponents/issues/5424)) ([a494f85](https://github.com/SAP/ui5-webcomponents/commit/a494f85))
+* **framework:** correct use of arrow keys for ItemNavigation in RTL ([#5408](https://github.com/SAP/ui5-webcomponents/issues/5408)) ([cec8119](https://github.com/SAP/ui5-webcomponents/commit/cec8119)), closes [#5166](https://github.com/SAP/ui5-webcomponents/issues/5166)
+* cldr url ([#5397](https://github.com/SAP/ui5-webcomponents/issues/5397)) ([a4df0bd](https://github.com/SAP/ui5-webcomponents/commit/a4df0bd))
+* **ui5-badge:** correctly detect if default slot is provided ([#5334](https://github.com/SAP/ui5-webcomponents/issues/5334)) ([0dceaf5](https://github.com/SAP/ui5-webcomponents/commit/0dceaf5)), closes [#5328](https://github.com/SAP/ui5-webcomponents/issues/5328)
+
+
+
+
+
+# [1.4.0](https://github.com/SAP/ui5-webcomponents/compare/v1.3.1...v1.4.0) (2022-05-25)
+
+
+### Bug Fixes
+
+* **framework:** use fonts from proper SDK URL ([#5141](https://github.com/SAP/ui5-webcomponents/issues/5141)) ([2e49248](https://github.com/SAP/ui5-webcomponents/commit/2e49248))
+* **framework:** fix keydown events for all inputs ([#5188](https://github.com/SAP/ui5-webcomponents/issues/5188)) ([11dfe94](https://github.com/SAP/ui5-webcomponents/commit/11dfe94))
+* **framework:** fix fallback to default theme ([#5185](https://github.com/SAP/ui5-webcomponents/issues/5185)) ([0fc2f0d](https://github.com/SAP/ui5-webcomponents/commit/0fc2f0d)), closes [#5136](https://github.com/SAP/ui5-webcomponents/issues/5136) [#5136](https://github.com/SAP/ui5-webcomponents/issues/5136)
+
+
+
+
 ## [1.3.1](https://github.com/SAP/ui5-webcomponents/compare/v1.3.0...v1.3.1) (2022-04-27)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

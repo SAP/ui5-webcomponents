@@ -1,7 +1,6 @@
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
-const prependFile = require('prepend-file');
-const replace = require('replace-in-file');
+const enrichSampleWihAPI = require("./api-for-sample/index.js");
 
 const packages = [
 	"fiori",
@@ -10,51 +9,45 @@ const packages = [
 
 const components = [];
 
- // Add new components here
+// Add new components here
 const newComponents = [
 	"Menu",
 ];
 
-packages.forEach(package => {
-	const samplesPath = `../${package}/dist/test-resources/api/`;
+const main = async () => {
+	await Promise.all(packages.map(async (package) => {
+		const samplesPath = `../${package}/test/samples/`;
 
-	var files = fs.readdirSync(samplesPath);
+		var files = await fs.readdir(samplesPath);
 
-	//handling error
-	if (!files) {
-		return console.log('Unable to scan directory: ' + err);
-	}
+		files.forEach(file => {
+			components.push(file);
+		});
+	}));
 
-	files.forEach(file => {
-		components.push(file);
-	});
-});
+	components.sort();
 
-components.sort();
+	packages.forEach(async (package) => {
+		const samplesPath = `../${package}/test/samples/`;
+		const api = JSON.parse((await fs.readFile(`../${package}/dist/api.json`)).toString());
 
-packages.forEach(package => {
-	const samplesPath = `../${package}/dist/test-resources/api/`;
+		const files = await fs.readdir(samplesPath);
 
-	fs.readdir(samplesPath, (err, files) => {
-		//handling error
-		if (err) {
-			return console.log('Unable to scan directory: ' + err);
-		}
-		files.forEach((file, index) => {
-			//Copy samples
-			fs.copyFileSync(path.join(samplesPath, file), path.join(process.cwd(), `/docs/components/${file}`));
+		files.forEach(async (file) => {
+			const currentSampleName = file.slice(0, file.indexOf('.'));
 
-			var results = replace({
-				files: `./docs/components/${file}`,
-				from: [/<pre class="prettyprint lang-html"><xmp>/g, /<\/xmp><\/pre>/g],
-				to: ['<pre class="highlight">{% highlight html %}', '{% endhighlight %}</pre>']
-			})
-				.then( _ => {
-					//Get current component name
-					const currentSampleName = file.slice(0, file.indexOf('.'));
+			// read file
+			let result = (await fs.readFile(path.join(samplesPath, file))).toString();
+			
+			// replace pre
+			result = result.replaceAll(`<pre class="prettyprint lang-html"><xmp>`, '<pre class="highlight">{% highlight html %}');
+			result = result.replaceAll(`</xmp></pre>`, '{% endhighlight %}</pre>');
+			
+			// add api
+			result = await enrichSampleWihAPI(currentSampleName, api, result);
 
-					prependFile(path.join(process.cwd(), '/docs/components', file),
-`---
+			// prepend front matter
+			result = `---
 layout: sample
 title: ${currentSampleName.replace(/([A-Z])/g, " $1").trim()}
 parent: Components
@@ -62,14 +55,14 @@ permalink: /playground/components/${currentSampleName}/
 newComponent: ${newComponents.indexOf(currentSampleName) > -1}
 nav_order: ${components.indexOf(file) + 1}
 ---
-`,
-					err => {
-						if (err) {
-							// Error
-							console.log(`Error: Can't prepend to ${file}`);
-						}
-					})
-				})
+${result}`;
+
+			// write result
+			fs.writeFile(`docs/components/${file}`, result);
+
 		});
 	});
-});
+
+};
+
+main();

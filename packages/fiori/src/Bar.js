@@ -16,7 +16,7 @@ const metadata = {
 	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
-		 * Defines the <code>ui5-bar</code> design.
+		 * Defines the component's design.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>

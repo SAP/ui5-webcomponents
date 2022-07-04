@@ -24,7 +24,7 @@ import styles from "./generated/themes/MonthPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-monthpicker",
-	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {Array}
@@ -46,7 +46,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * Fired when the user selects a month (space/enter/click).
 		 * @public
@@ -103,7 +103,7 @@ class MonthPicker extends CalendarPart {
 		}
 
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const monthsNames = localeData.getMonthsStandAlone("wide", this._primaryCalendarType);
 
 		const months = [];
 		const calendarDate = this._calendarDate; // store the value of the expensive getter

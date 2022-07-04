@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "1.3.1",
+  "version": "1.5.0",
   "description": "UI5 Web Components: webcomponents.main",
   "ui5": {
     "webComponentsPackage": true
@@ -18,9 +18,10 @@
     "lint": "wc-dev lint",
     "start": "wc-dev start",
     "watch": "wc-dev watch",
-    "serve": "wc-dev serve",
     "build": "wc-dev build",
     "test": "wc-dev test",
+    "test:suite-1": "wc-dev test-suite-1",
+    "test:suite-2": "wc-dev test-suite-2",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
   },
@@ -40,13 +41,13 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.3.1",
-    "@ui5/webcomponents-icons": "1.3.1",
-    "@ui5/webcomponents-localization": "1.3.1",
-    "@ui5/webcomponents-theming": "1.3.1"
+    "@ui5/webcomponents-base": "1.5.0",
+    "@ui5/webcomponents-icons": "1.5.0",
+    "@ui5/webcomponents-localization": "1.5.0",
+    "@ui5/webcomponents-theming": "1.5.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.3.1",
-    "chromedriver": "100.0.0"
+    "@ui5/webcomponents-tools": "1.5.0",
+    "chromedriver": "102.0.0"
   }
 }
