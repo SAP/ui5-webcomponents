@@ -1,5 +1,5 @@
-commit 913c550a0dd0e60d6700aee350eac0789cd7c26e
+commit a97c46b9849d4ac40222dd9b04c26a68fab71ee2
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 3 22:51:55 2022 +0300
+Date:   Mon Jul 4 15:56:43 2022 +0300
 
-    chore: finilize workflows
+    chore: update changelog info

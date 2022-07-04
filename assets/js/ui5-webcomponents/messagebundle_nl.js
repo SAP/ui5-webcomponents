@@ -1,0 +1,119 @@
+const ICON_ACTION_SETTINGS = "Instellingen";
+const ICON_ACTIVATE = "Activeren";
+const ICON_ADD = "Toevoegen";
+const ICON_ADD_CONTACT = "Contactpersoon toevoegen";
+const ICON_ADD_FILTER = "Filter toevoegen";
+const ICON_ADD_PHOTO = "Foto toevoegen";
+const ICON_BACK_TO_TOP = "Naar begin";
+const ICON_COLLAPSE = "Verbergen";
+const ICON_COLLAPSE_GROUP = "Groep verbergen";
+const ICON_CROP = "Bijsnijden";
+const ICON_DECLINE = "Afwijzen";
+const ICON_DELETE = "Verwijderen";
+const ICON_DISPLAY = "Weergeven";
+const ICON_DOWN = "Omlaag";
+const ICON_DOWNLOAD = "Downloaden";
+const ICON_DRILL_DOWN = "Drill-downbewerking uitvoeren";
+const ICON_DRILL_UP = "Drill-upbewerking uitvoeren";
+const ICON_ERROR = "Fout";
+const ICON_EXIT_FULL_SCREEN = "Modus volledig scherm be\xEBindigen";
+const ICON_EXPAND = "Weergeven";
+const ICON_EXPAND_GROUP = "Groep weergeven";
+const ICON_FILTER = "Filter";
+const ICON_FLAG = "Markeren";
+const ICON_FORWARD = "Doorsturen";
+const ICON_FULL_SCREEN = "Modus volledig scherm activeren";
+const ICON_GENERATE_SHORTCUT = "Koppeling cre\xEBren";
+const ICON_GROUP_2 = "Groep";
+const ICON_HIDE = "Verbergen";
+const ICON_IPAD = "Tablet";
+const ICON_IPHONE = "Telefoon";
+const ICON_LAPTOP = "Laptop";
+const ICON_MESSAGE_ERROR = "Fout";
+const ICON_MESSAGE_INFORMATION = "Informatie";
+const ICON_MESSAGE_SUCCESS = "Succesvol";
+const ICON_MESSAGE_WARNING = "Waarschuwing";
+const ICON_MOVE = "Verplaatsen";
+const ICON_MULTI_SELECT = "Meervoudige selectie";
+const ICON_NAV_BACK = "Terug navigeren";
+const ICON_OVERFLOW = "Meer";
+const ICON_REDO = "Herhalen";
+const ICON_REFRESH = "Vernieuwen";
+const ICON_RESIZE = "Grootte wijzigen";
+const ICON_RESIZE_HORIZONTAL = "Grootte horizontaal wijzigen";
+const ICON_RESIZE_VERTICAL = "Grootte verticaal wijzigen";
+const ICON_RESPONSE = "Antwoorden";
+const ICON_SAVE = "Opslaan";
+const ICON_SEARCH = "Zoeken";
+const ICON_SETTINGS = "Instellingen";
+const ICON_SHOW = "Weergeven";
+const ICON_SORT = "Sorteren";
+const ICON_SORT_ASCENDING = "Oplopend sorteren";
+const ICON_SORT_DESCENDING = "Aflopend sorteren";
+const ICON_SYNCHRONIZE = "Synchroniseren";
+const ICON_UNDO = "Ongedaan maken";
+const ICON_UP = "Omhoog";
+const ICON_UPLOAD = "Uploaden";
+const ICON_ZOOM_IN = "Vergroten";
+const ICON_ZOOM_OUT = "Verkleinen";
+var messagebundle_nl = {
+  ICON_ACTION_SETTINGS,
+  ICON_ACTIVATE,
+  ICON_ADD,
+  ICON_ADD_CONTACT,
+  ICON_ADD_FILTER,
+  ICON_ADD_PHOTO,
+  ICON_BACK_TO_TOP,
+  ICON_COLLAPSE,
+  ICON_COLLAPSE_GROUP,
+  ICON_CROP,
+  ICON_DECLINE,
+  ICON_DELETE,
+  ICON_DISPLAY,
+  ICON_DOWN,
+  ICON_DOWNLOAD,
+  ICON_DRILL_DOWN,
+  ICON_DRILL_UP,
+  ICON_ERROR,
+  ICON_EXIT_FULL_SCREEN,
+  ICON_EXPAND,
+  ICON_EXPAND_GROUP,
+  ICON_FILTER,
+  ICON_FLAG,
+  ICON_FORWARD,
+  ICON_FULL_SCREEN,
+  ICON_GENERATE_SHORTCUT,
+  ICON_GROUP_2,
+  ICON_HIDE,
+  ICON_IPAD,
+  ICON_IPHONE,
+  ICON_LAPTOP,
+  ICON_MESSAGE_ERROR,
+  ICON_MESSAGE_INFORMATION,
+  ICON_MESSAGE_SUCCESS,
+  ICON_MESSAGE_WARNING,
+  ICON_MOVE,
+  ICON_MULTI_SELECT,
+  ICON_NAV_BACK,
+  ICON_OVERFLOW,
+  ICON_REDO,
+  ICON_REFRESH,
+  ICON_RESIZE,
+  ICON_RESIZE_HORIZONTAL,
+  ICON_RESIZE_VERTICAL,
+  ICON_RESPONSE,
+  ICON_SAVE,
+  ICON_SEARCH,
+  ICON_SETTINGS,
+  ICON_SHOW,
+  ICON_SORT,
+  ICON_SORT_ASCENDING,
+  ICON_SORT_DESCENDING,
+  ICON_SYNCHRONIZE,
+  ICON_UNDO,
+  ICON_UP,
+  ICON_UPLOAD,
+  ICON_ZOOM_IN,
+  ICON_ZOOM_OUT
+};
+export { ICON_ACTION_SETTINGS, ICON_ACTIVATE, ICON_ADD, ICON_ADD_CONTACT, ICON_ADD_FILTER, ICON_ADD_PHOTO, ICON_BACK_TO_TOP, ICON_COLLAPSE, ICON_COLLAPSE_GROUP, ICON_CROP, ICON_DECLINE, ICON_DELETE, ICON_DISPLAY, ICON_DOWN, ICON_DOWNLOAD, ICON_DRILL_DOWN, ICON_DRILL_UP, ICON_ERROR, ICON_EXIT_FULL_SCREEN, ICON_EXPAND, ICON_EXPAND_GROUP, ICON_FILTER, ICON_FLAG, ICON_FORWARD, ICON_FULL_SCREEN, ICON_GENERATE_SHORTCUT, ICON_GROUP_2, ICON_HIDE, ICON_IPAD, ICON_IPHONE, ICON_LAPTOP, ICON_MESSAGE_ERROR, ICON_MESSAGE_INFORMATION, ICON_MESSAGE_SUCCESS, ICON_MESSAGE_WARNING, ICON_MOVE, ICON_MULTI_SELECT, ICON_NAV_BACK, ICON_OVERFLOW, ICON_REDO, ICON_REFRESH, ICON_RESIZE, ICON_RESIZE_HORIZONTAL, ICON_RESIZE_VERTICAL, ICON_RESPONSE, ICON_SAVE, ICON_SEARCH, ICON_SETTINGS, ICON_SHOW, ICON_SORT, ICON_SORT_ASCENDING, ICON_SORT_DESCENDING, ICON_SYNCHRONIZE, ICON_UNDO, ICON_UP, ICON_UPLOAD, ICON_ZOOM_IN, ICON_ZOOM_OUT, messagebundle_nl as default };
