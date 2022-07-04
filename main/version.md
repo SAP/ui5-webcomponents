@@ -1,7 +1,5 @@
-commit 0218c19f32890797bcbac8e1e39ad2349603f783
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Mon Jul 4 15:03:02 2022 +0300
+commit ae9e6fcb55a03c4fb5dd61c9647734283f882a39
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 4 15:49:00 2022 +0300
 
-    fix(ui5-combobox): correctly fire change event on item press (#5447)
-    
-    Fixes #5432
+    chore: release v1.5.0 (#5453)
