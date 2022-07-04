@@ -1,5 +1,7 @@
-commit c58690dee8916e4023215903db261155518b7d17
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Fri Jul 1 19:23:16 2022 +0300
+commit 0218c19f32890797bcbac8e1e39ad2349603f783
+Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
+Date:   Mon Jul 4 15:03:02 2022 +0300
 
-    feat(ui5-illustrated-message): implement size property (#5405)
+    fix(ui5-combobox): correctly fire change event on item press (#5447)
+    
+    Fixes #5432
