@@ -97,6 +97,8 @@ The `accessible-name` property is currently supported in:
 * [Slider](https://sap.github.io/ui5-webcomponents/playground/components/Slider), 
 [Range Slider](https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
+
 
 
 ---
@@ -115,12 +117,14 @@ Will result in the shadow DOM as:
 ```
 
 The `accessible-name-ref` property is currently supported in:
+* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog), [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover)
 * User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
 * [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
 
 ---
 
