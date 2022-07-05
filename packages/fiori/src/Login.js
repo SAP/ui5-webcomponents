@@ -89,12 +89,12 @@ class Login extends UI5Element {
 		const username = this.shadowRoot.querySelector("#ui5-usernameID").value;
 		const password = this.shadowRoot.querySelector("#ui5-passwordID").value;
 
-		/** 
+		/*
 		Checks if email property is passed,
 		if so, then it checks if the username is an email address,
 		if it is an email, then it checks if it is a valid email with @isValidEmail method,
-		if it is not, then it sets error property to true, which displays the error message. 
-		**/
+		if it is not, then it sets error property to true, which displays the error message.
+		*/
 		if (this.email) {
 			if (isValidEmail(username) && password) {
 				this.error = false;
@@ -120,8 +120,7 @@ class Login extends UI5Element {
 		}
 
 		function isValidEmail(emailAddress) {
-			var re =
-				/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(String(emailAddress).toLowerCase());
 		}
 	}
