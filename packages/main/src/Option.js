@@ -21,7 +21,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled component is noninteractive.
+		 * <b>Note:</b> A disabled component is hidden.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
