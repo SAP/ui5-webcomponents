@@ -1,0 +1,139 @@
+<header class="component-heading">
+    <h2 class="control-header">Login Component</h2>
+    <div class="component-heading-since">
+        <span><!--since_tag_marker--></span>
+    </div>
+</header>
+
+<div class="component-package">@ui5/webcomponents-fiori</div>
+
+<div class="control-tag">&lt;ui5-li-notification-group&gt;</div>
+
+<style>
+    body {
+        margin: 20px;
+        background-color: var(--sapBackgroundColor);
+    }
+
+    .ui5-showcase {
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 25px;
+    }
+
+    .item {
+        /* was 375px */
+        flex: 1 1 275px;
+    }
+</style>
+
+<div class="ui5-showcase">
+    <!-- Example WITH Header and Subheader -->
+    <div class="item">
+        <ui5-login id="loginWithHeader" error>
+            <div slot="errorMessageTitle">
+                &#9888; Incorrect username or password
+            </div>
+            <div slot="errorMessage">
+                Please check your username and password
+            </div>
+            <div slot="header" id="header">SAP Fiori Login</div>
+            <div slot="subHeader" id="SubHeader">Made with love ♥</div>
+        </ui5-login>
+    </div>
+
+    <!-- Login component example with Error -->
+
+    <div class="item">
+        <ui5-login error>
+            <div slot="errorMessageTitle">
+                &#9888; Incorrect username or password
+            </div>
+            <div slot="errorMessage">
+                Please check your username and password
+            </div>
+        </ui5-login>
+    </div>
+
+    <!-- Basic Login component -->
+
+    <div class="item">
+        <ui5-login id="basicLogin">
+            <div slot="errorMessageTitle">
+                &#9888; Incorrect username or password
+            </div>
+            <div slot="errorMessage">
+                Please check your username and password
+            </div>
+        </ui5-login>
+    </div>
+
+    <!-- Login component with email input instead of Username -->
+    <div class="item">
+        <ui5-login email>
+            <div slot="errorMessageTitle">
+                &#9888; Incorrect username or password
+            </div>
+            <div slot="errorMessage">
+                Please check your username and password
+            </div>
+            <div slot="header" id="header"></div>
+            <div slot="subHeader" id="SubHeader"></div>
+        </ui5-login>
+    </div>
+
+    <!-- Disabled Login component -->
+
+    <div class="item">
+        <ui5-login id="loginDisabled" disabled>
+            <div slot="header">SAP Fiori disabled Login</div>
+            <div slot="subHeader">Made with love ♥</div>
+        </ui5-login>
+    </div>
+
+    <div class="item">
+        <ui5-button
+            id="openDialogButton"
+            design="Emphasized"
+            draggable
+            resizable
+            >Open Dialog</ui5-button
+        >
+
+        <ui5-dialog id="hello-dialog" header-text="Register Form">
+            <ui5-login
+                email
+                id="ui5-loginForm"
+                ForgottenPwdLink="www.google.com"
+            >
+                <div slot="errorMessageTitle">
+                    &#9888; Incorrect username or password
+                </div>
+                <div slot="errorMessage">
+                    Please check your username and password
+                </div>
+            </ui5-login>
+        </ui5-dialog>
+    </div>
+</div>
+
+<script>
+    var dialogOpener = document.getElementById("openDialogButton");
+    var dialog = document.getElementById("hello-dialog");
+    var dialogCloser = document.getElementById("closeDialogButton");
+
+    dialogOpener.accessibilityAttributes = {
+        hasPopup: "dialog",
+        controls: dialog.id,
+    };
+
+    dialogOpener.addEventListener("click", function () {
+        dialog.show();
+    });
+
+    dialogCloser.addEventListener("click", function () {
+        dialog.close();
+    });
+</script>

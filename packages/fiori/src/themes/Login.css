@@ -1,0 +1,103 @@
+* {
+    font-family: var(--sapFontFamily);
+}
+
+body {
+    margin: 0 auto;
+    background-color: var(--sapBackgroundColor);
+}
+
+:host {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    margin-bottom: 25px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.ui5-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--sapTile_Background);
+    width: 100%;
+    border-radius: 2%;
+    -webkit-box-shadow: -1px 4px 15px -10px rgba(0, 0, 0, 0.45);
+    box-shadow: -1px 4px 15px -10px rgba(0, 0, 0, 0.45);
+    padding: 1rem 0;
+}
+
+.ui5-header-display {
+    width: 100%;
+    background-color: var(--sapButton_Emphasized_BorderColor);
+    border-radius: 5px 5px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.ui5-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.975rem;
+    padding: 0 30px;
+}
+
+.ui5-form-group label {
+    font-size: 0.795rem;
+}
+
+.ui5-form-control {
+    width: 100%;
+    border-radius: 3px;
+}
+
+.ui5-label {
+    margin-bottom: 0.235rem;
+    font-size: 0.8965rem;
+}
+
+.ui5-title {
+    padding: 0 30px;
+    margin-bottom: 10px;
+}
+
+.ui5-link {
+    padding: 0px 30px 30px;
+}
+
+.white-text {
+    color: white;
+}
+
+.ui5-d-flex {
+    width: 335px;
+}
+
+#ui5-login-header {
+    margin-bottom: 0;
+    padding-top: 1rem;
+}
+
+#ui5-login-subHeader {
+    margin-top: 5px;
+}
+
+.ui5-error {
+    color: var(--sapErrorBorderColor);
+    background-color: var(--sapErrorBackground);
+    padding: 8px;
+    margin: 0px;
+    max-width: 256px;
+    text-align: center;
+    word-wrap: break-word;
+    font-size: 80%;
+}
+
+#errorTitle {
+    font-size: 0.875rem;
+}

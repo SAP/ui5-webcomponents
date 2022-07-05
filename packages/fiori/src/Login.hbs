@@ -1,0 +1,92 @@
+<div class="ui5-d-flex">
+  {{! If header title/text passed }}
+  {{#if _displayHeader}}
+    <div class="ui5-header-display" id="ui5-login-header" part="header">
+      {{#if header.length}}
+        <h2 class="ui5-title white-text" id="ui5-login-header"><slot
+            name="header"
+          ></slot></h2>
+        <h3 class="ui5-title white-text fw-400" id="ui5-login-subHeader"><slot
+            name="subHeader"
+          ></slot></h3>
+      {{/if}}
+    </div>
+  {{/if}}
+  <form class="ui5-login">
+
+    <ui5-title class="ui5-title">Log in</ui5-title>
+
+    {{! If a validation error occurs, displays the custom error box above the inputs }}
+    {{#if error}}
+      <div class="ui5-form-group">
+        {{#if errorMessage.length}}
+          <p class="ui5-form-control ui5-error">
+            <b><slot name="errorMessageTitle" id="errorTitle"></slot></b>
+            <slot name="errorMessage"></slot>
+          </p>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{! If the user input is desired to be an e-mail }}
+    {{#if email}}
+      <div class="ui5-form-group">
+        <ui5-label class="ui5-label" required>Email</ui5-label>
+        <ui5-input
+          type="email"
+          class="ui5-form-control"
+          id="ui5-usernameID"
+          placeholder="example@email.com"
+          ?disabled="{{disabled}}"
+        >
+        </ui5-input>
+      </div>
+    {{else}}
+
+      <div class="ui5-form-group">
+        <ui5-label class="ui5-label" required>Username</ui5-label>
+        <ui5-input
+          type="text"
+          class="ui5-form-control"
+          id="ui5-usernameID"
+          placeholder="Enter username"
+          ?disabled="{{disabled}}"
+        >
+        </ui5-input>
+      </div>
+    {{/if}}
+
+    <div class="ui5-form-group">
+      <ui5-label class="ui5-label" required>Password</ui5-label>
+      <ui5-input
+        id="ui5-passwordID"
+        type="Password"
+        class="ui5-form-control"
+        value-state="Error"
+        ?disabled="{{disabled}}"
+        placeholder="Enter your Secret Code"
+        required
+      ></ui5-input>
+    </div>
+
+    {{! *TEST* When validation succeed, it alerts the username of the user. }}
+    <div class="ui5-form-group">
+      <ui5-button
+        design="Emphasized"
+        class="ui5-form-control"
+        @click="{{displayUser}}"
+        ?disabled="{{disabled}}"
+        id="ui5-login-btn"
+      >Log in</ui5-button>
+    </div>
+
+    <div>
+      <ui5-link
+        class="ui5-link"
+        href="https://www.sap.com"
+        target="_blank"
+        ?disabled="{{disabled}}"
+      >Forgot your password ?</ui5-link>
+    </div>
+  </form>
+</div>
