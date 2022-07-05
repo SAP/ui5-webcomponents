@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
 
 const getOverflowPopover = async id => {
@@ -25,7 +24,7 @@ const getCustomActionProp = async (id, pos, prop) => {
 
 describe("Component Behavior", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
+		await browser.url(`test/pages/ShellBar.html`);
 	});
 
 	describe("Аccessibility", () => {

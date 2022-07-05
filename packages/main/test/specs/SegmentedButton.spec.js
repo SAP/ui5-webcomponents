@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("SegmentedButton general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/SegmentedButton.html`);
+		await browser.url(`test/pages/SegmentedButton.html`);
 	});
 
 	it("tests if pressed and tooltip attributes are applied", async () => {

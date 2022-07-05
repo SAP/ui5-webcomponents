@@ -69,7 +69,7 @@ The simplest test would look something like this:
 
 ```js
 describe("ui5-demo rendering", async () => {
-	await browser.url("http://localhost:8080/test-resources/pages/index.html");
+	await browser.url("test/pages/index.html");
 
 	it("tests if web component is correctly rendered", async () => {
 		const innerContent = await browser.$("#myFirstComponent").shadow$("div");

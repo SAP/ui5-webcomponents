@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ProductSwitchItem general interaction", async () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ProductSwitchItem.html`);
+		await browser.url(`test/pages/ProductSwitchItem.html`);
 	});
 
 	it("tests rendering", async () => {

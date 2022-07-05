@@ -33,7 +33,7 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-combobox-group-item</code> is type of suggestion item,
+ * The <code>ui5-cb-group-item</code> is type of suggestion item,
  * that can be used to split the <code>ui5-combobox</code> suggestions into groups.
  *
  * @constructor

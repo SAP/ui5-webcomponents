@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("General interaction", () => {
 
 	it ("Should open the popover when clicking on the arrow", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -32,7 +31,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Items filtration", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -58,7 +57,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should open the popover when typing a value", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const lazy = await browser.$("#lazy");
@@ -91,7 +90,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should filter items based on input", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -130,7 +129,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should close popover on item click / change event", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -190,7 +189,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests change event", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#change-cb");
@@ -216,7 +215,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests change event with value state and links", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#value-state-error");
@@ -252,7 +251,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests change event after pressing enter key", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#change-cb");
@@ -284,8 +283,32 @@ describe("General interaction", () => {
 
 	});
 
+	it("should fire change event after the user has typed in value, but also selects it from the popover", async () => {
+        await browser.url(`test/pages/ComboBox.html`);
+
+		// Setup
+		const changeValue = await browser.$("#change-placeholder");
+        const counter = await browser.$("#change-count");
+        const combo = await browser.$("#change-cb");
+		const input = await combo.shadow$("[inner-input]");
+
+
+		// Type something which is in the list
+		await input.click();
+		await input.keys("Bulgaria");
+
+		// Click on the item
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li")[0]).click();
+
+
+		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
+		assert.strictEqual(await changeValue.getText(), "Bulgaria", "The value should be changed accordingly");
+    });
+
 	it ("Value should be reset on ESC key", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
 		const input = await combo.shadow$("[inner-input]");
@@ -314,7 +337,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests change event after type and item select", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#change-cb");
@@ -334,7 +357,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests input event", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const counter = await browser.$("#input-count");
 		const combo = await browser.$("#input-cb");
@@ -433,7 +456,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests focused property when clicking on the arrow", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -446,7 +469,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests focused property when clicking on the input", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -470,7 +493,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should not open value state message when component is in readonly state", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const cb = await browser.$("#readonly-value-state-cb");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-cb");
@@ -484,7 +507,7 @@ describe("General interaction", () => {
 describe("Grouping", () => {
 
 	it ("Tests group filtering", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -509,7 +532,7 @@ describe("Grouping", () => {
 	});
 
 	it ("Tests group item focusability", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -553,7 +576,7 @@ describe("Grouping", () => {
 describe("Accessibility", async () => {
 
 	it ("Announce item on selection", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -576,7 +599,7 @@ describe("Accessibility", async () => {
 	});
 
 	it ("Tests setting value programatically", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const btn = await browser.$("#value-set-btn");
@@ -591,7 +614,7 @@ describe("Accessibility", async () => {
 	});
 
 	it ("Should focus the ComboBox with the API", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
 		const focusBtn = await browser.$("#combo-focus");
@@ -604,7 +627,7 @@ describe("Accessibility", async () => {
 
 describe("Keyboard navigation", async () => {
 	it ("Should focus the first item on arrow down and then the input on arrow up",  async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -636,7 +659,7 @@ describe("Keyboard navigation", async () => {
 	});
 
 	it ("Should focus the value state header and then the input", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -668,7 +691,7 @@ describe("Keyboard navigation", async () => {
 	});
 
 	it ("Previous focus should not remain on the item after reopening the picker and choosing another one", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -709,7 +732,7 @@ describe("Keyboard navigation", async () => {
 	});
 
 	it ("Navigates back and forward through the items when the suggestions are closed", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
@@ -747,7 +770,7 @@ describe("Keyboard navigation", async () => {
 	});
 
 	it ("Should focus the next/previous focusable element on TAB/SHIFT+TAB",  async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
 		const arrow = await combo.shadow$("[input-icon]");
@@ -767,7 +790,7 @@ describe("Keyboard navigation", async () => {
 	});
 
 	it ("Should select the corresponding item on home/pgup/pgdown/end",  async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		await browser.url(`test/pages/ComboBox.html`);
 
 		const comboBox = await browser.$("#combo2");
 		const input = await comboBox.shadow$("#ui5-combobox-input");

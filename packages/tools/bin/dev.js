@@ -10,11 +10,7 @@ if (command === "watch") {
 		command = `watch.${argument}`;
 	}
 } else if (command === "test") {
-	if (argument === "--no-server") { // yarn test --no-server
-		command = `test.run`;
-	} else if (argument) { // yarn test test/specs/Button.spec.js
-		command = `test.spec --spec ${argument}`;
-	}
+	command = `test ${process.argv.slice(3).join(" ")}`;
 }
 
 child_process.execSync(`npx nps "${command}"`, {stdio: 'inherit'});

@@ -4,6 +4,7 @@
 	--_ui5_slider_progress_container_dot_display: none;
 	--_ui5_slider_progress_container_dot_background: var(--sapField_BorderColor);
 	--_ui5_slider_progress_border: none;
+	--_ui5_slider_padding: 1.406rem 1.0625rem;
 	--_ui5_slider_inner_height: 0.25rem;
 	--_ui5_slider_outer_height: 1.6875rem;
 	--_ui5_slider_progress_border_radius: 0.25rem;
@@ -100,4 +101,5 @@
 	--_ui5_slider_handle_focused_top: -0.625rem;
 	--_ui5_slider_handle_focused_margin_left: -0.75rem;
 	--_ui5_slider_handle_icon_size: .875rem;
+	--_ui5_slider_padding: 1rem 1.0625rem;
 }

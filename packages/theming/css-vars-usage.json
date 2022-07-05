@@ -310,7 +310,6 @@
   "--sapLink_Active_Color",
   "--sapLink_Hover_Color",
   "--sapLink_SubtleColor",
-  "--sapLink_Visited_Color",
   "--sapLinkColor",
   "--sapList_Active_Background",
   "--sapList_Active_TextColor",

@@ -8,4 +8,3 @@ rollup.config*.js
 wdio.conf.js
 postcss.config.js
 package-scripts.js
-.eslintrc.js

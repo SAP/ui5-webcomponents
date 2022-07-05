@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Notification List Item Tests", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/NotificationList_test_page.html`);
+		await browser.url(`test/pages/NotificationList_test_page.html`);
 	});
 
 	it("tests itemClick fired", async () => {
