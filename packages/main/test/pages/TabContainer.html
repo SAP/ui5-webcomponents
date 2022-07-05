@@ -760,9 +760,9 @@
 				</ui5-tab>
 			</ui5-tabcontainer>
 		
-			<ui5-button id="selectFirst">Select first tab</ui5-button>
-			<ui5-button id="selectLast">Select last tab</ui5-button>
-			<ui5-button id="selectNested">Select a nested tab</ui5-button>
+			<ui5-button id="selectFirst">Select First Tab</ui5-button>
+			<ui5-button id="selectLast">Select Last Tab</ui5-button>
+			<ui5-button id="selectNested">Select a Nested Tab</ui5-button>
 		</section>
 	</section>
 
@@ -779,7 +779,7 @@
 		const selectFirstTabBtn = document.getElementById("selectFirst");
 		const selectLastTabBtn = document.getElementById("selectLast");
 		const selectNestedTabBtn = document.getElementById("selectNested");
-		
+
 		function walk(tabs, callback) {
 			[...tabs].forEach(tab => {
 				callback(tab);

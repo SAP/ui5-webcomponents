@@ -60,8 +60,7 @@ class TabSeparator extends UI5Element {
 
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
-	 * <b>Note:</b> Separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such separators will return <code>undefined</code>.
-	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>undefined</code>.
+	 * <b>Note:</b> Tabs and separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return <code>undefined</code>.
 	 *
 	 * @function
 	 * @public
