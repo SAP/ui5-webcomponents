@@ -1,5 +1,7 @@
-commit 23a4b56974d696f063924500d75a5cf1ff7eb7de
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Jul 5 12:37:57 2022 +0300
+commit be7b8e306a8fdea6a823809c65ad19639c455c94
+Author: GerganaKremenska <gergana.georgieva01@sap.com>
+Date:   Tue Jul 5 13:50:59 2022 +0300
 
-    chore: add yarnhooks for automatic updates (#5461)
+    docs: enhance accessibility documenation (#5463)
+    
+    fix: document accessibility properties
