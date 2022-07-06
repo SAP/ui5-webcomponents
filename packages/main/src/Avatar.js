@@ -3,6 +3,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -73,6 +76,33 @@ const metadata = {
 		 * @public
 		 */
 		initials: {
+			type: String,
+		},
+
+		/**
+		 * Defines whether the component should show a badge.
+		 * <br><br>
+		 * <b>Note:</b> You need to import the <code>BadgeEnablement</code> module
+		 * from <code>"@ui5/webcomponents/dist/features/BadgeEnablement.js"</code> to enable this functionality.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showBadge: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the unique identifier (icon name) of the icon, slotted in <code>ui5-badge</code>.
+		 * <br>
+		 * To view all supported names, see the documentation for <code>ui5-icon</code>'s <code>name</code> property.
+		 * <br>
+		 * <b>Note</b>: The <code>showBadge</code> property must be set to true
+		 * and <code>BadgeEnablement</code> must be imported.
+		 * @type {string}
+		 * @public
+		 */
+		badgeIconName: {
 			type: String,
 		},
 
@@ -218,6 +248,11 @@ const metadata = {
 		* @since 1.0.0-rc.11
 		*/
 		click: {},
+		"badge-enablement-icon-name-change": {
+			detail: {
+				iconName: { type: String },
+			},
+		},
 	},
 };
 
@@ -340,6 +375,25 @@ class Avatar extends UI5Element {
 
 	onBeforeRendering() {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+
+		if (this.showBadge) {
+			this.enableBadge();
+			this.fireEvent(EVENT_BADGE_ENABLEMENT_ICON_NAME_CHANGE, this.badgeIconName);
+		}
+	}
+
+	enableBadge() {
+		if (this.Badge) {
+			return;
+		}
+
+		const BadgeEnablement = getFeature("BadgeEnablement");
+
+		if (BadgeEnablement) {
+			this.Badge = new BadgeEnablement(this).Badge;
+		} else {
+			throw new Error(`You have to import the "@ui5/webcomponents/dist/features/BadgeEnablement.js" module to use a badge.`);
+		}
 	}
 
 	_onClickHandler(event) {
@@ -386,6 +440,8 @@ class Avatar extends UI5Element {
 		return this.ariaHaspopup;
 	}
 }
+
+const EVENT_BADGE_ENABLEMENT_ICON_NAME_CHANGE = "badge-enablement-icon-name-change";
 
 Avatar.define();
 

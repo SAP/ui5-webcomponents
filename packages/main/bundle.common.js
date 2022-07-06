@@ -28,6 +28,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
+import "./dist/features/BadgeEnablement.js";
 import "./dist/features/ColorPaletteMoreColors.js";
 
 import Avatar from "./dist/Avatar.js";

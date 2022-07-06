@@ -1,6 +1,7 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	box-sizing: border-box;
+	position: relative;
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
@@ -210,4 +211,53 @@
 
 .ui5-avatar-initials {
 	color: inherit;
+}
+
+/* Badge Enablement */
+[ui5-badge-enablement] {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 1.125rem;
+	height: 1.125rem;
+	background: var(--sapButton_Emphasized_Background);
+	border: var(--sapButton_Emphasized_Background);
+	border-radius: 1rem;
+	color: var(--sapContent_BadgeTextColor);
+	justify-content: center;
+	font-size: var(--sapFontSmallSize);
+}
+
+/* Avatar Badge */
+[ui5-badge-enablement] {
+	padding: 6%;
+}
+
+:host([_size="L"]) [ui5-badge-enablement],
+:host([size="L"]) [ui5-badge-enablement] {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+:host([_size="XL"]) [ui5-badge-enablement],
+:host([size="XL"]) [ui5-badge-enablement] {
+	width: 1.75rem;
+	height: 1.75rem;
+}
+
+:host([shape="Square"]) [ui5-badge-enablement] {
+	bottom: -0.125rem;
+	right: -0.125rem;
+}
+
+:host([_size="L"][shape="Square"]) [ui5-badge-enablement],
+:host([size="L"][shape="Square"]) [ui5-badge-enablement] {
+	bottom: -0.1875rem;
+	right: -0.1875rem;
+}
+
+:host([_size="XL"][shape="Square"]) [ui5-badge-enablement],
+:host([size="XL"][shape="Square"]) [ui5-badge-enablement] {
+	bottom: -0.25rem;
+	right: -0.25rem;
 }
