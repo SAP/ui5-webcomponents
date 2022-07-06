@@ -1,8 +1,5 @@
-commit 766d573c621d57ccf395d4362befab7d1ed2d635
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Tue Jul 5 15:23:45 2022 +0300
+commit af213f1538871d5f8218fcb887c8e8b0b3426457
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Jul 6 11:24:02 2022 +0300
 
-    docs(ui5-option): update disabled documentation (#5464)
-    
-    According to https://experience.sap.com/fiori-design-web/select/#option-list1, Select options are supposed to be completely hidden when disabled.
-    This is why `disabled` hides options instead of altering their appearance.
+    fix(InvisibleMessage): clear announcement after a while (#5446)
