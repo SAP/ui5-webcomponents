@@ -705,6 +705,14 @@ class DatePicker extends DateComponentBase {
 		return false;
 	}
 
+	/**
+	 * Defines whether the value help icon is hidden
+	 * @private
+	 */
+	get _ariaHidden() {
+		return (!this.phone).toString();
+	}
+
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
