@@ -37,12 +37,14 @@ In order to ease the setting of aria attributes, we have introduced properties t
 
 
 ### **Invisible Messaging**
-The Invisible Message provides a way to programmaticaly expose dynamic content changes in a way that can be announced by screen readers. It marks the dynamic content changes as ARIA live regions so that we are able to inform the users of assistive technologies for a change that has happened to the UI.
+The Invisible Message provides a way to programmaticaly expose dynamic content changes in a way that can be announced by screen readers. It marks the dynamic content changes as ARIA live regions so that you are able to inform the users of assistive technologies for a change that has happened to the UI.
 
-The Invisible Messaging service is designed to be used both internally in the components logic and from the applications. Using the service, you have to specify the message to be announced by the screen reader and the mode which will be inserted in the `aria-live` attribute via the `InvisibleMessage.announce(message, mode)` method. The possible modes to choose from are ` InvisibleMessageMode.Assertive` and  `InvisibleMessageMode.Polite`. `Assertive` indicates that updates to the region have the highest priority and should be presented to the user immediately. `Polite` indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
+The Invisible Messaging service is designed to be used both internally in the components logic and from the applications. Using the service, you have to specify the message to be announced by the screen reader and the mode which will be inserted in the `aria-live` attribute via the `InvisibleMessage.announce(message, mode)` method. The possible modes to choose from are:
+* ` InvisibleMessageMode.Assertive` - indicates that updates to the region have the highest priority and should be presented to the user immediately.
+* `InvisibleMessageMode.Polite` - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
 
 According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the `announce` method.
-Here is a sample that show an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/)
+Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/)
 
 
 ### **Keyboard Handling**
