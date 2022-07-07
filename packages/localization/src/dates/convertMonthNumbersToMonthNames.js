@@ -14,8 +14,8 @@ import getLocale from "../../../base/dist/locale/getLocale.js";
 const convertMonthNumbersToMonthNames = (firstMonth, lastMonth, calendarType) => {
 	const localeData = getCachedLocaleDataInstance(getLocale());
 	const pattern = localeData.getIntervalPattern();
-	const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", calendarType);
-	const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", calendarType);
+	const secondaryMonthsNames = localeData.getMonthsStandAlone("abbreviated", calendarType);
+	const secondaryMonthsNamesWide = localeData.getMonthsStandAlone("wide", calendarType);
 
 	if (firstMonth === lastMonth) {
 		return {
