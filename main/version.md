@@ -1,11 +1,5 @@
-commit 7ea3f49289db03071bf3e9f17b62e035461112d3
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Jul 6 16:54:36 2022 +0300
+commit 48ff0322bbd38394e4be0e787487636842fca4fb
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Thu Jul 7 16:12:09 2022 +0300
 
-    fix(ui5-date-picker): adjust background color (#5466)
-    
-    - The background color is now adjusted when the
-    component is disabled or readonly and the value
-    state is set to "Error".
-    
-    Fixes: #5396
+    fix(ui5-card): correct accessibility attribute (#5479)
