@@ -765,7 +765,7 @@
   "110": {
     "id": "110",
     "title": "Inputs Lazy Loading",
-    "content": "&lt;!DOCTYPE html&gt; Input Lazy Loading Lazy loading items oninput Lazy load items on first type in Preload items Hardcoded items Dryanovo Gabrovo Sofia Yablanitsa New York Lazy loading items oninput Lazy load items on first type in Preload items Hardcoded items",
+    "content": "&lt;!DOCTYPE html&gt; Input Lazy Loading Lazy loading items oninput Lazy load items on first type in Preload items Hardcoded items Dryanovo Gabrovo Sofia Yablanitsa New York Always show suggestions Lazy loading items oninput Lazy load items on first type in Preload items Hardcoded items",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/InputsLazyLoading/",
     "relUrl": "/playground/main/pages/InputsLazyLoading/"
   },
