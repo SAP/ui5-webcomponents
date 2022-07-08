@@ -20,9 +20,10 @@ const findNodeOwner = node => {
 		} else if (node.tagName && node.tagName.indexOf("-") > -1) {
 			if (currentCustomElementFlag) {
 				currentCustomElementFlag = false;
-			} else {
-				return node;
 			}
+			// } else {
+			// 	return node;
+			// }
 		} else if (ownerTypes.indexOf(node.constructor) > -1) {
 			// Document or Iframe reached
 			return node;
