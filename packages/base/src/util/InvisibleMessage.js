@@ -43,6 +43,7 @@ attachBoot(() => {
  *
  * @param {string} message String to be announced by the screen reader.
  * @param {sap.ui.core.InvisibleMessageMode} mode The mode to be inserted in the aria-live attribute.
+ * @public
  */
 const announce = (message, mode) => {
 	// If no type is presented, fallback to polite announcement.
