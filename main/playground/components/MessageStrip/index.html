@@ -5648,6 +5648,67 @@
 </section>
 
 <section>
+	<h3>Dynamic Message Strip Generator</h3>
+	<div class="snippet">
+		<div class="wrapper">
+			<ui5-button id="button1">Generate MessageStrip</ui5-button>
+		</div>
+		<script>
+			const container = document.querySelector(".wrapper");
+			const button =  document.querySelector("#button1");
+			button.addEventListener("click", function(event) {
+				let invisibleMessage =  window["sap-ui-webcomponents-bundle"].invisibleMessage;
+				const messageStrip = document.querySelector("#msgStrip");
+				const types = ["Information", "Warning", "Negative", "Positive"];
+				const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco.";
+				let type = types[Math.round(Math.random() * 3)];
+		
+				if (messageStrip) {
+					container.removeChild(messageStrip);
+				}
+		
+				let generatedMsgStrip = document.createElement("ui5-message-strip");
+				generatedMsgStrip.id = "msgStrip";
+				generatedMsgStrip.design = type;
+				generatedMsgStrip.textContent = text;
+
+				invisibleMessage.announce(`New Information Bar of type ${type} ${text}`, "Assertive");
+		
+				container.appendChild(generatedMsgStrip);
+			});
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"wrapper"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"button1"</span><span class="nt">&gt;</span>Generate MessageStrip<span class="nt">&lt;/ui5-button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;script&gt;</span>
+			<span class="kd">const</span> <span class="nx">container</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">.wrapper</span><span class="dl">"</span><span class="p">);</span>
+			<span class="kd">const</span> <span class="nx">button</span> <span class="o">=</span>  <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#button1</span><span class="dl">"</span><span class="p">);</span>
+			<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+				<span class="kd">let</span> <span class="nx">invisibleMessage</span> <span class="o">=</span>  <span class="nb">window</span><span class="p">[</span><span class="dl">"</span><span class="s2">sap-ui-webcomponents-bundle</span><span class="dl">"</span><span class="p">].</span><span class="nx">invisibleMessage</span><span class="p">;</span>
+				<span class="kd">const</span> <span class="nx">messageStrip</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#msgStrip</span><span class="dl">"</span><span class="p">);</span>
+				<span class="kd">const</span> <span class="nx">types</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Information</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Warning</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Negative</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Positive</span><span class="dl">"</span><span class="p">];</span>
+				<span class="kd">const</span> <span class="nx">text</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco.</span><span class="dl">"</span><span class="p">;</span>
+				<span class="kd">let</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">types</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)];</span>
+		
+				<span class="k">if</span> <span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
+					<span class="nx">container</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
+				<span class="p">}</span>
+		
+				<span class="kd">let</span> <span class="nx">generatedMsgStrip</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-message-strip</span><span class="dl">"</span><span class="p">);</span>
+				<span class="nx">generatedMsgStrip</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">msgStrip</span><span class="dl">"</span><span class="p">;</span>
+				<span class="nx">generatedMsgStrip</span><span class="p">.</span><span class="nx">design</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
+				<span class="nx">generatedMsgStrip</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">text</span><span class="p">;</span>
+
+				<span class="nx">invisibleMessage</span><span class="p">.</span><span class="nx">announce</span><span class="p">(</span><span class="s2">`New Information Bar of type </span><span class="p">${</span><span class="nx">type</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="nx">text</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Assertive</span><span class="dl">"</span><span class="p">);</span>
+		
+				<span class="nx">container</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">generatedMsgStrip</span><span class="p">);</span>
+			<span class="p">});</span>
+		<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
 	<h3>Custom MessageStrip</h3>
 	<div class="snippet">
 		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Information" hide-icon hide-close-button>You have new message.</ui5-message-strip>

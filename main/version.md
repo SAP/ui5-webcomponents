@@ -1,5 +1,9 @@
-commit 48ff0322bbd38394e4be0e787487636842fca4fb
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Jul 7 16:12:09 2022 +0300
+commit c6bcc021ef1f9cac3be6d0f1a960f1890700ee00
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Jul 8 12:05:47 2022 +0300
 
-    fix(ui5-card): correct accessibility attribute (#5479)
+    feat(InvisibleMessage): make it available for application usage (#5468)
+    
+    * feat(InvisibleMessage): make it available for application usage
+    
+    * feat(InvisibleMessage): adjust documentation
