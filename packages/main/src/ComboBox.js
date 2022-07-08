@@ -40,6 +40,7 @@ import {
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
 	LIST_ITEM_SELECTED,
+	LIST_ITEM_GROUP_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -661,11 +662,11 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 		this._selectionChanged = true;
 
+		this._announceSelectedItem(indexOfItem);
+
 		if (isGroupItem && isOpen) {
 			return;
 		}
-
-		this._announceSelectedItem(indexOfItem);
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
@@ -965,10 +966,13 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem) {
+		const currentItem = this._filteredItems[indexOfItem];
+		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		isGroupItem ? announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite") : announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {
