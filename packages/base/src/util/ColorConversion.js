@@ -319,6 +319,28 @@ const HEXToRGB = hex => {
 	return rgbValues;
 };
 
+const RGBtoHEX = color => {
+	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E"];
+	let hexValue = "#";
+
+	let divisionNumber = color.r / 16;
+	let remainder = color.r % 16;
+	hexValue += String(hexMap[Math.floor(divisionNumber)]);
+	hexValue += String(hexMap[remainder]);
+
+	divisionNumber = color.g / 16;
+	remainder = color.g % 16;
+	hexValue += String(hexMap[Math.floor(divisionNumber)]);
+	hexValue += String(hexMap[remainder]);
+
+	divisionNumber = color.b / 16;
+	remainder = color.b % 16;
+	hexValue += String(hexMap[Math.floor(divisionNumber)]);
+	hexValue += String(hexMap[remainder]);
+
+	return hexValue;
+};
+
 const RGBToHSL = (color = {
 	r: undefined,
 	g: undefined,
@@ -367,4 +389,6 @@ export {
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
+	RGBToRGB,
+	RGBtoHEX
 };
