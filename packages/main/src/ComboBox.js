@@ -835,6 +835,12 @@ class ComboBox extends UI5Element {
 			this.filterValue = this._selectedItemText;
 		}
 
+		if (isPhone() && this.value && this.value.length >= 1 && !this._selectedItemText) {
+			this.value = "";
+		} else {
+			this.value = this._selectedItemText;
+		}
+
 		this._isValueStateFocused = false;
 		this._clearFocus();
 
@@ -972,7 +978,11 @@ class ComboBox extends UI5Element {
 		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		isGroupItem ? announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite") : announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		if (isGroupItem) {
+			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
+		} else {
+			announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		}
 	}
 
 	get _headerTitleText() {
