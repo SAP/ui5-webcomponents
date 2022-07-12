@@ -274,14 +274,14 @@ class Tab extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef() {
-		return this._tabInStripDomRef;
+		return this._getRealDomRef();
 	}
 
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
-		if (this._getTabContainerHeaderItemCallback) {
-			focusedDomRef = this._getTabContainerHeaderItemCallback();
+		if (this._getRealDomRef) {
+			focusedDomRef = this._getRealDomRef();
 		}
 
 		return focusedDomRef;
