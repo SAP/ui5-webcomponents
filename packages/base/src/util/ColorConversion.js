@@ -390,5 +390,5 @@ export {
 	HEXToRGB,
 	RGBToHSL,
 	RGBToRGB,
-	RGBtoHEX
+	RGBtoHEX,
 };
