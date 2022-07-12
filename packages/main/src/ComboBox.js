@@ -839,6 +839,12 @@ class ComboBox extends UI5Element {
 			this.filterValue = this._selectedItemText;
 		}
 
+		if (isPhone() && this.value && this.value.length >= 1 && !this._selectedItemText) {
+			this.value = "";
+		} else {
+			this.value = this._selectedItemText;
+		}
+
 		this._isValueStateFocused = false;
 		this._clearFocus();
 
