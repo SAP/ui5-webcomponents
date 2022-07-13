@@ -409,7 +409,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
@@ -436,7 +436,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
