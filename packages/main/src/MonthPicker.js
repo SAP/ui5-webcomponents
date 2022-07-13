@@ -120,8 +120,6 @@ class MonthPicker extends CalendarPart {
 			tempDate.setMonth(i);
 			timestamp = tempDate.valueOf() / 1000;
 
-			const monthInSecTypeText = this.secondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp);
-
 			const isSelected = this.selectedDates.some(itemTimestamp => {
 				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
 				return date.getYear() === tempDate.getYear() && date.getMonth() === tempDate.getMonth();
@@ -136,7 +134,7 @@ class MonthPicker extends CalendarPart {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
-				nameInSecType: this.secondaryCalendarType && monthInSecTypeText.text,
+				nameInSecType: this.secondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};

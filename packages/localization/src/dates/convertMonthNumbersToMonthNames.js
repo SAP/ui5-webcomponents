@@ -1,5 +1,5 @@
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "../getCachedLocaleDataInstance.js";
-import getLocale from "../../../base/dist/locale/getLocale.js";
 
 /**
  * Convert month number to month name (text).
