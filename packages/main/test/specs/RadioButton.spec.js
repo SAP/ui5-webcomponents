@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("RadioButton general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RadioButton.html`);
+		await browser.url(`test/pages/RadioButton.html`);
 	});
 
 	it("tests change event", async () => {

@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("TabContainer general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TabContainer.html`);
+		await browser.url(`test/pages/TabContainer.html`);
 	});
 
 	it("tests initially selected tab", async () => {

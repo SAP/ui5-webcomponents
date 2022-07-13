@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Some settings can be set via SAP UI URL params", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb&sap-ui-animationMode=basic");
+		await browser.url("test/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb&sap-ui-animationMode=basic");
 	});
 
 	it("Tests that RTL is applied", async () => {
@@ -49,7 +49,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 
 describe("Some settings can be set via SAP URL params", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/Configuration.html?sap-language=bg&sap-theme=sap_fiori_3_dark");
+		await browser.url("test/pages/Configuration.html?sap-language=bg&sap-theme=sap_fiori_3_dark");
 	});
 
 	it("Tests that language is applied", async () => {
@@ -72,7 +72,7 @@ describe("Some settings can be set via SAP URL params", () => {
 
 describe("SAP UI params take precedence over the SAP params", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/Configuration.html?sap-language=bg&sap-ui-language=de&sap-theme=sap_fiori_3_dark&sap-theme=sap_fiori_3_hcb");
+		await browser.url("test/pages/Configuration.html?sap-language=bg&sap-ui-language=de&sap-theme=sap_fiori_3_dark&sap-theme=sap_fiori_3_hcb");
 	});
 
 	it("Tests that language is applied via sap-ui-language", async () => {

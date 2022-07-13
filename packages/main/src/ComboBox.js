@@ -40,6 +40,7 @@ import {
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
 	LIST_ITEM_SELECTED,
+	LIST_ITEM_GROUP_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -661,11 +662,11 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 		this._selectionChanged = true;
 
+		this._announceSelectedItem(indexOfItem);
+
 		if (isGroupItem && isOpen) {
 			return;
 		}
-
-		this._announceSelectedItem(indexOfItem);
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
@@ -779,8 +780,9 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(event)) {
+			this._fireChangeEvent();
+
 			if (this.responsivePopover.opened) {
-				this._fireChangeEvent();
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {
@@ -933,6 +935,7 @@ class ComboBox extends UI5Element {
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
 
 		if (sameItemSelected && sameSelectionPerformed) {
+			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
 		}
 
@@ -963,10 +966,13 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem) {
+		const currentItem = this._filteredItems[indexOfItem];
+		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		isGroupItem ? announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite") : announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {
@@ -1083,6 +1089,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
 			popoverHeader: {
 				"width": `${this.offsetWidth}px`,
@@ -1090,6 +1097,10 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
+			},
+			suggestionsPopover: {
+				"min-width": `${this.offsetWidth}px`,
+				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
 		};
 	}

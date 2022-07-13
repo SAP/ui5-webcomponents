@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ResponsivePopover mobile general interaction", () => {
 	before(async () => {
 		await browser.emulateDevice('iPhone X');
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ResponsivePopover.html`);
+		await browser.url(`test/pages/ResponsivePopover.html`);
 	});
 
 	it("tests opening a popover from a responsive popover", async () => {

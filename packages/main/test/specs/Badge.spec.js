@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Badge rendering", async () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Badge.html`);
+		await browser.url(`test/pages/Badge.html`);
 	});
 
 	it("tests that label is rendered if there is text content", async () => {

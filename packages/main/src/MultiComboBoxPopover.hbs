@@ -1,9 +1,10 @@
 <ui5-responsive-popover
 	placement-type="Bottom"
-	horizontal-align="Stretch"
+	horizontal-align="Left"
 	class="{{classes.popover}}"
 	hide-arrow
 	_disable-initial-focus
+	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
 	@ui5-after-close={{_afterClosePicker}}
 	@ui5-before-open={{_beforeOpen}}
@@ -34,6 +35,7 @@
 						value-state="{{valueState}}"
 						@input="{{_inputLiveChange}}"
 						@change={{_inputChange}}
+						@keydown={{_onkeydown}}
 						aria-autocomplete="both"
 						aria-labelledby="{{_id}}-hiddenText-nMore"
 						aria-describedby="{{_id}}-valueStateDesc"

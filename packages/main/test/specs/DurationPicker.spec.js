@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("Duration Picker general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DurationPicker.html`);
+		await browser.url(`test/pages/DurationPicker.html`);
 	});
 
 	it("Tests opening and closing of popover", async () => {

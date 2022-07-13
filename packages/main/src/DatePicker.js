@@ -248,7 +248,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -268,7 +268,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},

@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-icons-tnt",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "UI5 Web Components: SAP Fiori Tools icon set",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -26,10 +26,10 @@
     "directory": "packages/icons-tnt"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.4.0"
+    "@ui5/webcomponents-base": "1.5.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.4.0",
-    "chromedriver": "101.0.0"
+    "@ui5/webcomponents-tools": "1.5.0",
+    "chromedriver": "102.0.0"
   }
 }

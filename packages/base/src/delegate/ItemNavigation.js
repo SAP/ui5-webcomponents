@@ -133,15 +133,20 @@ class ItemNavigation {
 
 		const horizontalNavigationOn = this._navigationMode === NavigationMode.Horizontal || this._navigationMode === NavigationMode.Auto;
 		const verticalNavigationOn = this._navigationMode === NavigationMode.Vertical || this._navigationMode === NavigationMode.Auto;
+		const isRTL = this.rootWebComponent.effectiveDir === "rtl";
 
-		if (isUp(event) && verticalNavigationOn) {
-			this._handleUp();
-		} else if (isDown(event) && verticalNavigationOn) {
-			this._handleDown();
+		if (isRTL && isLeft(event) && horizontalNavigationOn) {
+			this._handleRight();
+		} else if (isRTL && isRight(event) && horizontalNavigationOn) {
+			this._handleLeft();
 		} else if (isLeft(event) && horizontalNavigationOn) {
 			this._handleLeft();
 		} else if (isRight(event) && horizontalNavigationOn) {
 			this._handleRight();
+		} else if (isUp(event) && verticalNavigationOn) {
+			this._handleUp();
+		} else if (isDown(event) && verticalNavigationOn) {
+			this._handleDown();
 		} else if (isHome(event)) {
 			this._handleHome();
 		} else if (isEnd(event)) {

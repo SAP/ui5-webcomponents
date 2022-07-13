@@ -34,6 +34,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.75rem;
+    --_ui5_dialog_footer_height: 2.75rem;
 
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
@@ -51,6 +52,7 @@
 	--_ui5_list_item_icon_size: 1.125rem;
 	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
+	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
 	--_ui5_group_header_list_item_height: 2.75rem;
 	--_ui5_list_busy_row_height: 3rem;
 	--_ui5_month_picker_item_height: 3rem;
@@ -80,7 +82,7 @@
 	--_ui5_switch_with_label_width: var(--_ui5_switch_with_label_width);
 
 	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_outline_top);
-	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);	
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);
 
 	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
 	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
@@ -229,6 +231,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.5rem;
+    --_ui5_dialog_footer_height: 2.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
@@ -265,6 +268,7 @@
 	--_ui5_list_item_base_height: 2rem;
 	--_ui5_list_item_icon_size: 1rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
+	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
 	--_ui5_list_busy_row_height: 2rem;
 	--_ui5_list_buttons_left_space: 0.125rem;
 

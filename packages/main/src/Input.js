@@ -767,11 +767,6 @@ class Input extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		// The native Delete event does not update the value property "on time". So, the (native) change event is always fired with the old value
-		if (isDelete(event)) {
-			this.value = event.target.value;
-		}
-
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -871,6 +866,8 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 		const isAutoCompleted = innerInput.selectionEnd - innerInput.selectionStart > 0;
 
+		this.isTyping = false;
+
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 			return;
@@ -913,7 +910,10 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
-		this._preventNextChange = this.effectiveShowClearIcon && this.shadowRoot.contains(event.relatedTarget);
+		if (this.showClearIcon && !this.effectiveShowClearIcon) {
+			this._clearIconClicked = false;
+			this._handleChange();
+		}
 
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
@@ -957,21 +957,14 @@ class Input extends UI5Element {
 		}
 	}
 
-	_handleNativeInputChange() {
-		// The native change sometimes fires too early and getting input's value in the listener would return
-		// the previous value instead of the most recent one. This would make things consistent.
-		clearTimeout(this._nativeChangeDebounce);
-		this._nativeChangeDebounce = setTimeout(() => this._handleChange(), 100);
-	}
-
 	_handleChange() {
-		if (this._preventNextChange) {
-			this._preventNextChange = false;
+		if (this._clearIconClicked) {
+			this._clearIconClicked = false;
 			return;
 		}
 
-		if (this._changeFiredValue !== this.value) {
-			this._changeFiredValue = this.value;
+		if (this._changeFiredValue !== this.getInputDOMRefSync().value) {
+			this._changeFiredValue = this.getInputDOMRefSync().value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -979,11 +972,13 @@ class Input extends UI5Element {
 	_clear() {
 		this.value = "";
 		this.fireEvent(this.EVENT_INPUT);
-		this._handleChange();
-
 		if (!this._isPhone) {
 			this.focus();
 		}
+	}
+
+	_iconMouseDown() {
+		this._clearIconClicked = true;
 	}
 
 	_scroll(event) {
@@ -1119,7 +1114,6 @@ class Input extends UI5Element {
 			this.focused = false;
 		}
 
-		this.isTyping = false;
 		this.openOnMobile = false;
 		this.open = false;
 		this._forceOpen = false;
@@ -1197,6 +1191,7 @@ class Input extends UI5Element {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
+			this.getInputDOMRefSync().value = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this._handleChange();
 			innerInput.setSelectionRange(this.value.length, this.value.length);

@@ -16,8 +16,9 @@ const processFile = async file => {
 const generate = async () => {
 	const { globby } = await import("globby");
 
-	const mainFiles = await globby(path.join(__dirname, "../../../main/src/themes/**/*.css"));
-	const fioriFiles = await globby(path.join(__dirname, "../../../fiori/src/themes/**/*.css"));
+	const mainFiles = await globby(path.join(__dirname, "../../../main/src/themes/**/*.css").replace(/\\/g, "/"));
+	const fioriFiles = await globby(path.join(__dirname, "../../../fiori/src/themes/**/*.css").replace(/\\/g, "/"));
+
 	await Promise.all([...mainFiles.map(processFile), ...fioriFiles.map(processFile)]);
 
 	const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});

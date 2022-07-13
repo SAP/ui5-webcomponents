@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("BusyIndicator general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/BusyIndicator.html`);
+		await browser.url(`test/pages/BusyIndicator.html`);
 	});
 
 	it("tests event propagation", async () => {

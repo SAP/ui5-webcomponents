@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Dialog general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		await browser.url(`test/pages/Dialog.html`);
 	});
 
 	it("tests dialog toggling", async () => {
@@ -48,7 +47,7 @@ describe("Dialog general interaction", () => {
 	});
 
 	it("tests dialog lifecycle", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DialogLifecycle.html`);
+		await browser.url(`test/pages/DialogLifecycle.html`);
 
 		let staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
 		assert.notOk(await staticAreaItem.isExisting(), "No static area item.");
@@ -69,7 +68,7 @@ describe("Dialog general interaction", () => {
 	});
 
 	it("dialog repositions after screen resize", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		await browser.url(`test/pages/Dialog.html`);
 
 		// Setup
 		const openDialogButton = await browser.$("#btnOpenDialogWithAttr");
@@ -325,7 +324,7 @@ describe("Dialog general interaction", () => {
 
 describe("Acc", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		await browser.url(`test/pages/Dialog.html`);
 	});
 
 	it("tests aria-labelledby and aria-label", async () => {
@@ -360,7 +359,7 @@ describe("Acc", () => {
 
 describe("Page scrolling", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		await browser.url(`test/pages/Dialog.html`);
 	});
 
 	it("tests that page scrolling is blocked and restored", async () => {
@@ -442,7 +441,7 @@ describe("Page scrolling", () => {
 
 describe("Responsive paddings", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+		await browser.url(`test/pages/Dialog.html`);
 	});
 
 	it("tests responsive paddings", async () => {

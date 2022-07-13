@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+		await browser.url(`test/pages/MultiComboBox.html`);
 	});
 
 	describe("toggling", () => {
@@ -65,7 +64,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens selected items Popover", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			await browser.setWindowSize(400, 1250);
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1")
@@ -80,7 +79,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("selection and filtering", () => {
 		before(async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 		});
 
@@ -153,6 +152,8 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual((await list.getProperty("items")).length, 1, "1 items should be shown");
 
+			// The first backspace deletes the autocompleted part
+			await input.keys("Backspace");
 			await input.keys("Backspace");
 
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown");
@@ -166,7 +167,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.click();
 			await innerInput.keys("c");
 
-			assert.strictEqual(await innerInput.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await innerInput.getValue(), "Cosy", "Value is correct");
 
 			await innerInput.keys("c");
 
@@ -188,12 +189,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("c");
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItem.click();
 
 			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
-			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be removed");
+			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.ok(await browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
 
@@ -205,14 +206,15 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.click();
 			await input.keys("c");
+			await browser.pause(500);
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "c", "Value is c (as typed)");
+			assert.strictEqual(await input.getValue(), "Compact", "Value is correct");
 
 			await firstItemCheckbox.click();
 
 			assert.ok(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
-			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be removed");
+			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be the typed-in value");
 		});
 
 		it("tests if n more is applied and corresponding popover", async () => {
@@ -224,7 +226,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if clicking n more will prefilter items before opening the popover", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
 			const mcb = await $("#more-mcb");
@@ -263,7 +265,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
 			const mcb = await $("#more-mcb");
@@ -286,11 +288,94 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
 			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
 		})
+
+		it("Tests autocomplete(type-ahead)", async () => {
+			let hasSelection;
+	
+			const input = await browser.$("#mcb").shadow$("input");
+			const EXPTECTED_VALUE = "Compact";
+	
+			await input.click();
+			await input.keys("com");
+	
+			hasSelection = await browser.execute(() =>{
+				const input = document.getElementById("mcb").shadowRoot.querySelector("input");
+				return input.selectionEnd - input.selectionStart > 0;
+			});
+	
+	
+			assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+			assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
+		});
+	
+		it("Tests disabled autocomplete(type-ahead)", async () => {
+			let hasSelection;
+	
+			const input = await browser.$("#mcb-no-typeahead").shadow$("input");
+	
+			await input.click();
+			await input.keys("c");
+	
+			assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
+		});
+
+		it("Should make a selection on ENTER and discard on ESC", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+	
+			let tokens;
+	
+			const mcb = await browser.$("#mcb");
+			const sExpected = "Cosy";
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
+	
+			await mcb.click();
+			await mcb.keys("c");
+			await mcb.keys("Enter");
+	
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+	
+			assert.strictEqual(await mcb.getProperty("value"), "", "Value is autocompleted");
+			assert.strictEqual(tokens.length, 1, "should have one token");
+	
+			await mcb.click();
+			await mcb.keys("c");
+			await mcb.keys("Escape");
+	
+			assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
+		});
+
+		it ("should reset typeahead on item navigation and restore it on focus input", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb");
+			const input = await mcb.shadow$("input");
+			const icon = await mcb.shadow$("[input-icon]");
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+
+			await icon.click();
+			await mcb.keys("c");
+
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
+
+			await mcb.keys("ArrowDown");
+			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+
+			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
+			assert.equal(await mcb.getProperty("value"), "c", "The input typeahead is cleared");
+
+			await input.keys("ArrowUp");
+
+			assert.equal(await listItem.getProperty("focused"), false, "The first item is not focused");
+			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
+		});
 	});
 
 	describe("keyboard handling", () => {
 		before(async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 		});
 
 		it("tests backspace when combobox has an empty value", async () => {
@@ -310,7 +395,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Value should be reset on ESC key", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mCombo = await browser.$("#another-mcb");
 			const mCombo2 = await browser.$("#more-mcb");
@@ -335,7 +420,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("Escape");
 			await input.keys("Escape");
 
-			assert.strictEqual(await mCombo.getProperty("value"), "C", "Value should be reset to the initial one");
+			assert.strictEqual(await mCombo.getProperty("value"), "Cosy", "Value should be reset to the initial one");
 
 			await input2.click();
 			await input2.keys("C");
@@ -345,7 +430,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("selects an item when enter is pressed and value matches a text of an item in the list", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-with-placeholder");
 			const input = await mcb.shadow$("input");
@@ -372,7 +457,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("focuses the value state header and item on arrow down then the value state and the input on arrow up", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
@@ -471,7 +556,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should reset current navigation state on user input", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 
@@ -497,7 +582,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("arrow up when no item is selected should go to the last item", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 
@@ -508,7 +593,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("BACKSPACE should delete token and place the focus on the previous one", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const input = await mcb.shadow$("input");
@@ -525,7 +610,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("DELETE should delete token and place the focus on the next one", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const input = await mcb.shadow$("input");
@@ -543,7 +628,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("BACKSPACE should delete token all selected tokens and place the focus on the first token before the deleted ones", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-items");
 			const input = await mcb.shadow$("input");
@@ -560,7 +645,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("DELETE should delete token all selected tokens and place the focus on the first token after the deleted ones", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-items");
 			const input = await mcb.shadow$("input");
@@ -578,7 +663,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should focus input after all tokens are deleted", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-compact");
 			const input = await mcb.shadow$("input");
@@ -592,7 +677,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("first HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
@@ -619,7 +704,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("CTRL + HOME focus the first token, CTRL + END should focus last token", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
@@ -635,7 +720,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("CTRL + HOME focus the first item, CTRL + END should focus last item", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
@@ -660,7 +745,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("SHIFT + HOME should select all tokens from the current one to the first one", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const input = await mcb.shadow$("input");
@@ -676,7 +761,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("SHIFT + END should select all tokens from the current one to the last one", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const input = await mcb.shadow$("input");
@@ -692,10 +777,10 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should close the picker and focus the next element on TAB", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
-			const mcb2 = await browser.$("#mcb-items");
+			const mcb2 = await browser.$("#mcb-no-typeahead");
 
 			await mcb.click();
 			await mcb.keys("F4");
@@ -720,7 +805,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should close the picker and focus the next element on TAB over an item or value state header", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-warning");
 			const input = await mcb.shadow$("input");
@@ -752,7 +837,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should select/unselect next/previous item on shift+arrow", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 
@@ -774,7 +859,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should move focus to the previous token with arrow left", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
@@ -794,7 +879,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should select multiple tokens and move focus with shift+arrow keys", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const mcb2 = await browser.$("#mcb-warning");
@@ -841,7 +926,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should navigate through the items with CTRL + arrow up/down keys when the picker is closed", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 
@@ -861,7 +946,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("focuses the value state header and item on CTRL + arrow down then the value state and the input on CTRL + arrow up", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
@@ -904,7 +989,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should select all filtered items on CTRL+A", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
@@ -939,7 +1024,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should copy a token with CTRL+C and paste it with CTRL+V", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
@@ -955,7 +1040,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should cut a token with CTRL+X and paste it with CTRL+V", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
@@ -975,7 +1060,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should cut a token with SHIFT+DELETE and paste it with SHIFT+INSERT", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
@@ -995,7 +1080,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should copy a token with CTRL+INSERT and paste it with SHIFT+INSERT", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
@@ -1011,7 +1096,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should select а token with CTRL+SPACE", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
@@ -1026,7 +1111,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("CTRL+SPACE should do nothing when pressed in the input field", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
@@ -1038,7 +1123,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("F4 should focus the selected item or the first one if there is no selected", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
@@ -1062,7 +1147,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Alt + Down should focus the corresponding item to the token from which the combination is pressed", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-items");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-items");
@@ -1078,7 +1163,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Alt + Down should focus the first item if no selected items are present", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi-acv");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi-acv");
@@ -1092,7 +1177,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Alt + Down should not filter items", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
@@ -1109,7 +1194,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Alt + Down should focus the item corresponding to the text value", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
@@ -1129,7 +1214,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("General", () => {
 		before(async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 		});
 
 		it ("tests text selection on focus", async () => {
@@ -1218,7 +1303,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("ARIA attributes", () => {
 		before(async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 		});
 
 		it ("aria-describedby value according to the tokens count and the value state", async () => {
@@ -1300,7 +1385,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("Grouping", () => {
 		it ("Tests group filtering", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1331,7 +1416,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Tests group item focusability", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1349,7 +1434,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Group header keyboard handling", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1384,7 +1469,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("Grouping", () => {
 		it ("Tests group filtering", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1415,7 +1500,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Tests group item focusability", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1433,7 +1518,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Group header keyboard handling", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1468,7 +1553,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("Grouping", () => {
 		it ("Tests group filtering", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1499,7 +1584,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Tests group item focusability", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
@@ -1517,7 +1602,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Group header keyboard handling", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/MultiComboBox.html`);
+			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
