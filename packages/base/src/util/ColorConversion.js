@@ -163,7 +163,7 @@ const getRGBColor = color => {
 	}
 
 	if (color.startsWith("rgb")) {
-		return RGBToRGB(color);
+		return RGBStringToRGBObject(color);
 	}
 
 	// HEX
@@ -209,7 +209,7 @@ const RGBAToRGB = color => {
  * Return an object with the properties for each of the main colors(red, green, blue)
  * @param {String} color Receives a color in the following format: "rgb(0, 0, 0)
  */
-const RGBToRGB = color => {
+const RGBStringToRGBObject = color => {
 	const openingBracketIndex = color.indexOf("("),
 		closingBraketIndex = color.indexOf(")"),
 		commasIndexes = [];
@@ -319,6 +319,10 @@ const HEXToRGB = hex => {
 	return rgbValues;
 };
 
+/**
+ * Returns the hex value of the color as string
+ * @param {Object} color Receives an object with the properties for each of the main colors(r, g, b)
+ */
 const RGBtoHEX = color => {
 	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E"];
 	let hexValue = "#";
@@ -389,6 +393,6 @@ export {
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
-	RGBToRGB,
+	RGBStringToRGBObject,
 	RGBtoHEX,
 };
