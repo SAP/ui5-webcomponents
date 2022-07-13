@@ -66,6 +66,12 @@
     </ui5-input>
   </div>
 
+  <div class="demo-container">
+    <h1>Always show suggestions</h1>
+
+    <ui5-input id="field1" show-suggestions></ui5-input>
+  </div>
+
   <div class="devider"></div>
 
   <div class="demo-container">
@@ -177,6 +183,39 @@
 
       fillItems(data, document.getElementById("preload"), "ui5-suggestion-item");
     };
+
+    const field = document.getElementById("field1");
+    const fetchSuggestions = (el) => {
+      let timeout;
+      return new Promise((resolve) => {
+        if (!timeout) {
+          timeout = setTimeout(() => {
+            Array.from(field.children).forEach((c) => {
+              field.removeChild(c);
+            });
+
+            setTimeout(() => {
+              resolve(Array(el.value.length).fill("Suggestion Item"));
+              timeout = undefined;
+            }, 0);
+          }, 0);
+        }
+      });
+    };
+
+    const addSuggestions = (arr) => {
+      arr.forEach((item, i) => {
+        const el = document.createElement("ui5-input-suggestion");
+        el.innerText = `${item} ${i}`;
+        field.appendChild(el);
+      });
+    };
+
+    field.addEventListener("ui5-input", (event) => {
+      fetchSuggestions(event.target).then((value) => {
+         addSuggestions(value);
+      });
+    });
 
     enableLazyLoadingOnInput();
     enableFirsTypein();

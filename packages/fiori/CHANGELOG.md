@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
+
+
+### Bug Fixes
+
+* **f6navigation:** prevent default behavior on windows OS ([#5424](https://github.com/SAP/ui5-webcomponents/issues/5424)) ([a494f85](https://github.com/SAP/ui5-webcomponents/commit/a494f85))
+* **ui5-shellbar:** correct accessibility DOM ([#5395](https://github.com/SAP/ui5-webcomponents/issues/5395)) ([aba5fb5](https://github.com/SAP/ui5-webcomponents/commit/aba5fb5))
+* **ui5-timeline-item:** align text in title link ([51954b7](https://github.com/SAP/ui5-webcomponents/commit/51954b7)), closes [#5163](https://github.com/SAP/ui5-webcomponents/issues/5163)
+
+
+### Features
+
+* **ui5-illustrated-message:** implement size property ([#5405](https://github.com/SAP/ui5-webcomponents/issues/5405)) ([c58690d](https://github.com/SAP/ui5-webcomponents/commit/c58690d))
+* **ui5-view-settings-dialog:** Implement behaviour for external setting of confirmed settings ([#5222](https://github.com/SAP/ui5-webcomponents/issues/5222)) ([7fbb235](https://github.com/SAP/ui5-webcomponents/commit/7fbb235))
+
+
+
+
+
 # [1.4.0](https://github.com/SAP/ui5-webcomponents/compare/v1.3.1...v1.4.0) (2022-05-25)
 
 

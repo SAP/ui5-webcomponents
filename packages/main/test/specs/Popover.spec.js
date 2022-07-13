@@ -353,4 +353,10 @@ describe("Acc", () => {
 
 		assert.strictEqual(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), expectedText, "aria-label should be the text of the label.");
 	});
+
+	it("tests that aria-labelledby is not set when there is no header and no accessible-name-ref", async () => {
+		const popoverWithoutHeader = await browser.$("#popoverAttr");
+
+		assert.isNull(await popoverWithoutHeader.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover should NOT have aria-labelledby set.");
+	});
 });

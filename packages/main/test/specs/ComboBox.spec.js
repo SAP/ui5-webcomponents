@@ -283,6 +283,30 @@ describe("General interaction", () => {
 
 	});
 
+	it("should fire change event after the user has typed in value, but also selects it from the popover", async () => {
+        await browser.url(`test/pages/ComboBox.html`);
+
+		// Setup
+		const changeValue = await browser.$("#change-placeholder");
+        const counter = await browser.$("#change-count");
+        const combo = await browser.$("#change-cb");
+		const input = await combo.shadow$("[inner-input]");
+
+
+		// Type something which is in the list
+		await input.click();
+		await input.keys("Bulgaria");
+
+		// Click on the item
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li")[0]).click();
+
+
+		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
+		assert.strictEqual(await changeValue.getText(), "Bulgaria", "The value should be changed accordingly");
+    });
+
 	it ("Value should be reset on ESC key", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -569,6 +593,33 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
 
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
+	});
+
+	it ("Announce group item when accessed via keyboard", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$("[input-icon]");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
+		const itemAnnouncement1 = "Group Header A List item 1 of 17";
+		const itemAnnouncement2 = "Group Header Donut List item 6 of 17";
+
+		await arrow.click();
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
+
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")

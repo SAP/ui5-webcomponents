@@ -692,7 +692,7 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await input.getProperty("value"), "", "Clear icon clear the value");
 		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
-		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
+		assert.strictEqual(await changeCounter.getText(), "0", "Change event should not be called on clearIcon click");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
 	});
 
@@ -714,7 +714,7 @@ describe("Input general interaction", () => {
 		// press clear icon
 		await clearIcon.click();
 
-		assert.strictEqual(await changeCounter.getText(), "2", "Change event called twice (first - typing, second - clear icon)");
+		assert.strictEqual(await changeCounter.getText(), "1", "Change event called once (typing)");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
@@ -1188,5 +1188,25 @@ describe("Lazy loading", () => {
 		await browser.pause(3000);
 
 		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
+	});
+
+	it("Should not close picker when items are updated", async () => {
+		const input = await $("#field1");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field1");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("S");
+
+		
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+			timeout: 2000,
+			timeoutMsg: "Popover should be displayed"
+		});
+
+		await inner.keys("b");
+
+		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
 	});
 });
