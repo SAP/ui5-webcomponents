@@ -182,15 +182,15 @@ class Bar extends UI5Element {
 		// Next row is specific for IE11. Please remove after stop support and edit css file
 		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
 
-		this.startContent.forEach(x => {ResizeHandler.deregister(x, this._handleResizeBound)}, this);
-		this.middleContent.forEach(x => {ResizeHandler.deregister(x, this._handleResizeBound)}, this);
-		this.endContent.forEach(x => {ResizeHandler.deregister(x, this._handleResizeBound)}, this);
+		this.startContent.forEach(x => { ResizeHandler.deregister(x, this._handleResizeBound); }, this);
+		this.middleContent.forEach(x => { ResizeHandler.deregister(x, this._handleResizeBound); }, this);
+		this.endContent.forEach(x => { ResizeHandler.deregister(x, this._handleResizeBound); }, this);
 	}
 
 	onAfterRendering() {
-		this.startContent.forEach(x => {ResizeHandler.register(x, this._handleResizeBound)}, this);
-		this.middleContent.forEach(x => {ResizeHandler.register(x, this._handleResizeBound)}, this);
-		this.endContent.forEach(x => {ResizeHandler.register(x, this._handleResizeBound)}, this);
+		this.startContent.forEach(x => { ResizeHandler.register(x, this._handleResizeBound); }, this);
+		this.middleContent.forEach(x => { ResizeHandler.register(x, this._handleResizeBound); }, this);
+		this.endContent.forEach(x => { ResizeHandler.register(x, this._handleResizeBound); }, this);
 	}
 
 	onEnterDOM() {
