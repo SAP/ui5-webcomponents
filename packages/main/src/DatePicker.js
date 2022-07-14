@@ -710,7 +710,7 @@ class DatePicker extends DateComponentBase {
 	 * @private
 	 */
 	get _ariaHidden() {
-		return (!this.phone).toString();
+		return !this.phone;
 	}
 
 	async _respPopover() {
