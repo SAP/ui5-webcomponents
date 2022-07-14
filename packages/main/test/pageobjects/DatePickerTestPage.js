@@ -53,7 +53,7 @@ class DatePickerTestPage {
 	}
 
 	async getValueHelpIcon() {
-		return browser.$(this._sut).shadow$("ui5-icon").shadow$("svg");
+		return browser.$(this._sut).shadow$("ui5-icon");
 	}
 
 	async getBtnPrev() {
