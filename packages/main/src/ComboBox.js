@@ -972,7 +972,11 @@ class ComboBox extends UI5Element {
 		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		isGroupItem ? announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite") : announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		if (isGroupItem) {
+			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
+		} else {
+			announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		}
 	}
 
 	get _headerTitleText() {
