@@ -335,4 +335,30 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(await yearButton[0].getText(), "1421 AH", "first year set in the header");
 		assert.strictEqual(await yearButton[1].getText(), "2000", "Second year set in the header");
 	});
+
+	it("Calendar render two type for Month when MonthPicker is opened", async () => {
+		await browser.url(`test/pages/Calendar.html`);
+		const calendar = await browser.$("#calendar5");
+		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000);
+		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
+		const months = await calendar.shadow$("ui5-monthpicker").shadow$$(`.ui5-mp-item`);
+		const montInfo = await months[0].$$('span');
+
+		assert.strictEqual(await montInfo.length, 2, "Month is rendered with two text")
+		assert.strictEqual(await montInfo[0].getText(), "Muharram", "First text of month set in the button")
+		assert.strictEqual(await montInfo[1].getText(), "Apr – May", "Second text of month set in the button")
+	});
+
+	it("Calendar render two type for Year when YaerPicker is opened", async () => {
+		await browser.url(`test/pages/Calendar.html`);
+		const calendar = await browser.$("#calendar5");
+		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000);
+		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
+		const years = await calendar.shadow$("ui5-yearpicker").shadow$$(`.ui5-yp-item`);
+		const yaerInfo = await years[0].$$("span");
+
+		assert.strictEqual(await years.length, 8, "YearPicker with two types only renders 8 years")
+		assert.strictEqual(await yaerInfo[0].getText(), "1416 AH", "First text of year set in the button")
+		assert.strictEqual(await yaerInfo[1].getText(), "1995 - 1996", "Second text of year set in the button")
+	});
 });

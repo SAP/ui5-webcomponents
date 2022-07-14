@@ -71,9 +71,9 @@
 	justify-content:center;
 }
 
-.ui5-calheader-btn-sectext {
+.ui5-calheader-arrowbtn:not(:active) .ui5-calheader-btn-sectext {
 	color: var(--sapNeutralElementColor);
-	font-size: 0.625rem;
+	font-size: var(--sapFontSmallSize);
 }
 
 .ui5-calheader-arrowicon {
