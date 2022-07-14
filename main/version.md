@@ -1,5 +1,5 @@
-commit d5dc7ec049bfe937067c26d956fcd0386e8f14e5
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Thu Jul 14 11:55:58 2022 +0300
+commit 88f278bc290ed5c9bfb0a08e5db0fa50fc7ae7ca
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jul 14 15:35:44 2022 +0300
 
-    feat(ui5-calendar): show months and years from both primary and secon… (#5412)
+    fix(ui5-li): correct accessibility attribute to checkbox (#5475)
