@@ -1,5 +1,5 @@
-commit 5d4ae79e659c3fd4ca2c64d2829425c83fa767a3
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jul 14 15:35:28 2022 +0300
+commit 16c3d61ba9247c929d79661c6715ee5edd5acc77
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Jul 14 15:59:09 2022 +0300
 
-    fix(ui5-list): focus handling on nested lists (#5502)
+    feat(ColorConversion): add a rgb to hex transformation method (#5493)
