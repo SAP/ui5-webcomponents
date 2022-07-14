@@ -1,5 +1,5 @@
-commit 88f278bc290ed5c9bfb0a08e5db0fa50fc7ae7ca
+commit 5d4ae79e659c3fd4ca2c64d2829425c83fa767a3
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jul 14 15:35:44 2022 +0300
+Date:   Thu Jul 14 15:35:28 2022 +0300
 
-    fix(ui5-li): correct accessibility attribute to checkbox (#5475)
+    fix(ui5-list): focus handling on nested lists (#5502)
