@@ -492,16 +492,16 @@
   "71": {
     "id": "71",
     "title": "Components",
-    "content": "&lt;!DOCTYPE html&gt; Default values test page",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/fiori/pages/Components/",
-    "relUrl": "/playground/fiori/pages/Components/"
+    "content": "&lt;!DOCTYPE html&gt; Default values test page Primary button Toggle button Press me Hello world Hello world Required Primary button Hello world Press me New Items Laptop HP Discounted Items Hello world I am a native heading! UI5 Hello world Toggle button Product Supplier Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Components/",
+    "relUrl": "/playground/main/pages/Components/"
   },
   "72": {
     "id": "72",
     "title": "Components",
-    "content": "&lt;!DOCTYPE html&gt; Default values test page Primary button Toggle button Press me Hello world Hello world Required Primary button Hello world Press me New Items Laptop HP Discounted Items Hello world I am a native heading! UI5 Hello world Toggle button Product Supplier Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Components/",
-    "relUrl": "/playground/main/pages/Components/"
+    "content": "&lt;!DOCTYPE html&gt; Default values test page",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/fiori/pages/Components/",
+    "relUrl": "/playground/fiori/pages/Components/"
   },
   "73": {
     "id": "73",
@@ -695,7 +695,7 @@
   "100": {
     "id": "100",
     "title": "Form Support",
-    "content": "&lt;!DOCTYPE html&gt; Form support Does not submit forms Submits forms",
+    "content": "&lt;!DOCTYPE html&gt; Form support Does not submit forms Submits forms Submits forms",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/FormSupport/",
     "relUrl": "/playground/main/pages/FormSupport/"
   },
@@ -1107,31 +1107,31 @@
   },
   "159": {
     "id": "159",
-    "title": "Getting started",
-    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
-    "relUrl": "/playground/getting-started"
-  },
-  "160": {
-    "id": "160",
     "title": "Frameworks",
     "content": "Usage with Frameworks In this section, you can find framework-specific tutorials on how to get started with UI5 Web Components. We have created a bunch of tutorials that cover the integration of UI5 Web Components with some of the most popular existing frameworks. In these tutorials, you will find some framework-specific features &amp; learn how to use them. You might want to check them before you start active development.",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/frameworks",
     "relUrl": "/playground/frameworks"
   },
+  "160": {
+    "id": "160",
+    "title": "Getting started",
+    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
+    "relUrl": "/playground/getting-started"
+  },
   "161": {
     "id": "161",
-    "title": "Customizing",
-    "content": "Providing Custom Resources This section shows ways (other than the public APIs) to customize UI5 Web Components. Start with: Custom Theming with UI Theme Designer",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/customizing",
-    "relUrl": "/playground/customizing"
-  },
-  "162": {
-    "id": "162",
     "title": "Advanced",
     "content": "Advanced Concepts This section outlines more advanced concepts, related to application development with UI5 Web Components.",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/advanced",
     "relUrl": "/playground/advanced"
+  },
+  "162": {
+    "id": "162",
+    "title": "Customizing",
+    "content": "Providing Custom Resources This section shows ways (other than the public APIs) to customize UI5 Web Components. Start with: Custom Theming with UI Theme Designer",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/customizing",
+    "relUrl": "/playground/customizing"
   },
   "163": {
     "id": "163",
