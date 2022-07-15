@@ -1,5 +1,5 @@
-commit 16c3d61ba9247c929d79661c6715ee5edd5acc77
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Jul 14 15:59:09 2022 +0300
+commit 514f632973c56a69043d3d46b79afee7cdd38674
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Jul 15 09:46:29 2022 +0300
 
-    feat(ColorConversion): add a rgb to hex transformation method (#5493)
+    fix(ui5-combobox): simplify condition (#5508)
