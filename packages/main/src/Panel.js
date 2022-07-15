@@ -441,6 +441,10 @@ class Panel extends UI5Element {
 		return !this._hasHeader && !this.fixed;
 	}
 
+	get hasHeaderOrHeaderText() {
+		return this._hasHeader || this.headerText;
+	}
+
 	get nonFocusableButton() {
 		return !this.header.length;
 	}
