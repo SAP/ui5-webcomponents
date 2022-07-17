@@ -46,6 +46,10 @@ import {
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS,
 	INPUT_SUGGESTIONS_TITLE,
 	INPUT_SUGGESTIONS_ONE_HIT,
@@ -1377,6 +1381,15 @@ class Input extends UI5Element {
 
 	onClose() {}
 
+	get valueStateTypeMappings() {
+		return {
+			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+		};
+	}
+
 	valueStateTextMappings() {
 		return {
 			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
@@ -1450,15 +1463,15 @@ class Input extends UI5Element {
 	}
 
 	get ariaValueStateHiddenText() {
-		if (!this.hasValueStateMessage) {
+		if (!this.hasValueState) {
 			return;
 		}
 
 		if (this.shouldDisplayDefaultValueStateMessage) {
-			return this.valueStateText;
+			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateText}`;
 		}
 
-		return this.valueStateMessageText.map(el => el.textContent).join(" ");
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 	}
 
 	get itemSelectionAnnounce() {
