@@ -183,7 +183,7 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests accessibleNameRef when the radio button is wrapped by another custom element", async () => {
-		const labelText = await browser.$("#lbl-rb-acc-name-ref-with-text").getText();
+		const labelText = await browser.$("#lbl-rb-acc-name-ref").getText();
 		const rb = await browser.$("#rb-acc-name-ref-wrapped");
 
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText of the wrapped radio button includes the accessibleNameRef text.");
