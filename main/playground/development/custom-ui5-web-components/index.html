@@ -5631,6 +5631,10 @@ For more information on creating a new package with a demo Web Component inside,
 		<span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-ui5-web-components</span><span class="dl">"</span><span class="p">);</span>
 	<span class="p">}</span>
 
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">dependencies</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="p">[];</span> <span class="c1">// array of components used internally</span>
+	<span class="p">}</span>
+
 	<span class="kd">get</span> <span class="nx">pleaseWaitText</span><span class="p">()</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="nx">Demo</span><span class="p">.</span><span class="nx">i18nBundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">PLEASE_WAIT</span><span class="p">);</span>
 	<span class="p">}</span>
@@ -5844,6 +5848,60 @@ Vars for each theme in the respective theme directory in <code class="highlighte
 
 <p>For more information, see the <a href="#css">CSS</a> chapter of this tutorial.</p>
 
+<h3 id="the-dependencies">The dependencies</h3>
+
+<p>You must import all other web components, used inside the <code class="highlighter-rouge">.hbs</code> template file. Otherwise, the internally used web components won’t be defined.</p>
+
+<p>Furthermore, in order to make use of the <a href="../advanced/scoping">Scoping</a> feature, you must list all the internally used web components in the <code class="highlighter-rouge">dependencies</code> static getter,
+as the framework reads the dependencies and scopes the tag names of the listed web components.</p>
+
+<p><b>For Example:</b> If the <code class="highlighter-rouge">ui5-icon</code> tag (or any other standard or custom UI5 Web component) is used inside the template, you must import the <code class="highlighter-rouge">Icon</code> web component and add it to the <code class="highlighter-rouge">dependencies</code> static getter as shown below.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/UI5Element.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// Template</span>
+<span class="k">import</span> <span class="nx">DemoTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/DemoTemplate.lit.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="c1">// Styles</span>
+<span class="k">import</span> <span class="nx">DemoCss</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/themes/Demo.css.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="nx">Icon</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Icon.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ui5-demo</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">properties</span><span class="p">:</span> <span class="p">{</span>
+	<span class="p">},</span>
+	<span class="na">slots</span><span class="p">:</span> <span class="p">{</span>
+	<span class="p">},</span>
+	<span class="na">events</span><span class="p">:</span> <span class="p">{</span>
+	<span class="p">},</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">Demo</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
+	
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">metadata</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">metadata</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">litRender</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">template</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">DemoTemplate</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">dependencies</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="p">[</span><span class="nx">Icon</span><span class="p">];</span> <span class="c1">// array of components used internally</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Demo</span><span class="p">;</span>
+</code></pre></div></div>
+
 <h3 id="defining-the-web-component">Defining the Web Component</h3>
 
 <p>Defining a Web Component is necessary in order to register it in the browser.</p>
@@ -5884,6 +5942,10 @@ Vars for each theme in the respective theme directory in <code class="highlighte
 
 	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">dependencies</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="p">[];</span> <span class="c1">// array of components used internally</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 
@@ -5946,6 +6008,10 @@ Vars for each theme in the respective theme directory in <code class="highlighte
 
 	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="nx">DemoCss</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kd">static</span> <span class="kd">get</span> <span class="nx">dependencies</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="p">[];</span> <span class="c1">// array of components used internally</span>
 	<span class="p">}</span>
 
 	<span class="kd">static</span> <span class="k">async</span> <span class="nx">onDefine</span><span class="p">()</span> <span class="p">{</span>
