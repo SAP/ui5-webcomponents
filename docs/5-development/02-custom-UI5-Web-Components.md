@@ -260,9 +260,9 @@ For more information, see the [CSS](#css) chapter of this tutorial.
 You must import all other web components, used inside the `.hbs` template file. Otherwise, the internally used web components won't be defined.
 
 Furthermore, in order to make use of the [Scoping](../advanced/scoping) feature, you must list all the internally used web components in the `dependencies` static getter,
-as the framework reads the dependencies and scope the tag names of the listed web components.
+as the framework reads the dependencies and scopes the tag names of the listed web components.
 
-<b>For Example:</b> If `ui5-icon` tag (or any other standard or custom UI5 Web component) is used inside the template, you must import the `Icon` web component and add it to the `dependencies` static getter as shown below.
+<b>For Example:</b> If the `ui5-icon` tag (or any other standard or custom UI5 Web component) is used inside the template, you must import the `Icon` web component and add it to the `dependencies` static getter as shown below.
 
 ```js
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
