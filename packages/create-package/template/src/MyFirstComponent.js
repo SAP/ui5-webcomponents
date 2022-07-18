@@ -10,6 +10,9 @@ import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_
 
 import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "INIT_PACKAGE_VAR_TAG",
 	properties: {
@@ -20,6 +23,19 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>INIT_PACKAGE_VAR_TAG</code> component is a demo component that displays some text.
+ *
+ * @constructor
+ * @alias demo.components.INIT_PACKAGE_VAR_CLASS_NAME
+ * @extends UI5Element
+ * @tagname INIT_PACKAGE_VAR_TAG
+ * @public
+ */
 class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	static get metadata() {
 		return metadata;
