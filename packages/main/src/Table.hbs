@@ -19,13 +19,15 @@
 			>
 				{{#if isMultiSelect}}
 					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
-						<ui5-checkbox class="ui5-table-select-all-checkbox"
-							?checked="{{_allRowsSelected}}"
-							@ui5-change="{{_selectAll}}"
-							aria-label="{{ariaLabelSelectAllText}}"
-							tabindex="-1"
-						>
-						</ui5-checkbox>
+						{{#if rows.length}}
+							<ui5-checkbox class="ui5-table-select-all-checkbox"
+								?checked="{{_allRowsSelected}}"
+								@ui5-change="{{_selectAll}}"
+								aria-label="{{ariaLabelSelectAllText}}"
+								tabindex="-1"
+							>
+							</ui5-checkbox>
+						{{/if}}
 					</th>
 				{{/if}}
 
