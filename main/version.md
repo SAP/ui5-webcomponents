@@ -1,7 +1,5 @@
-commit b07b896706ed1d2a580b83f7af8310c6eeffc73e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 19 09:14:39 2022 +0300
+commit cbf23d1b51590d9219e6d0efe33dc895ac595610
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Jul 19 11:27:24 2022 +0300
 
-    docs: add a11y limitation note (#5455)
-    
-    Added note for Windows High Contrast mode
+    fix(ui5-table): render selectAll checkbox only in case ui5-table is not empty (#5523)
