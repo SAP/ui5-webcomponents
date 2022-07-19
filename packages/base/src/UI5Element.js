@@ -409,7 +409,12 @@ class UI5Element extends HTMLElement {
 				this.removeAttribute(attrName);
 			}
 		} else if (isDescendantOf(propertyTypeClass, DataType)) {
-			this.setAttribute(attrName, propertyTypeClass.propertyToAttribute(newValue));
+			const newAttrValue = propertyTypeClass.propertyToAttribute(newValue);
+			if (newAttrValue === null) {
+				this.removeAttribute(attrName);
+			} else {
+				this.setAttribute(attrName, newAttrValue);
+			}
 		} else if (typeof newValue !== "object") {
 			if (attrValue !== newValue) {
 				this.setAttribute(attrName, newValue);
