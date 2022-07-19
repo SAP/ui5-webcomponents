@@ -449,7 +449,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
 			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
-			assert.strictEqual(await mcb.getProperty("valueStateText"), "This value is already selected.", "Value state text should be set to already selected");
+			assert.strictEqual(await mcb.getProperty("valueStateDefaultText"), "This value is already selected.", "Value state text should be set to already selected");
 
 			await browser.waitUntil(async() => {
 				return await input.getAttribute("value-state") === "None";
@@ -1380,6 +1380,60 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
+		});
+
+		it("Value state type should be added to the screen readers default value states announcement", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mCbWarning = await browser.$("#mcb-warning");
+			const mCbSuccess = await browser.$("#mcb-success");
+			const mCbError = await browser.$("#mcb-error");
+
+			let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-warning");
+			let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+			await mCbWarning.click();
+
+			let ariaHiddenText = await mCbWarning.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			let valueStateText = await popover.$("div").getHTML(false);
+
+			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+			assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
+
+			await mCbWarning.keys("Escape");
+			await mCbError.click();
+
+			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
+			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+			ariaHiddenText = await mCbError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			valueStateText = await popover.$("div").getHTML(false);
+
+			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+			assert.strictEqual(valueStateText.includes("Invalid entry"), true, "Displayed value state message text is correct");
+
+			await mCbError.keys("Escape");
+			await mCbSuccess.click();
+
+			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-success");
+			ariaHiddenText = await mCbSuccess.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+
+			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+		});
+
+		it("Value state type should be added to the screen readers custom value states announcement", async () => {
+			const mCbInformation = await browser.$("#mcb-information");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-information");
+
+			await mCbInformation.click();
+			await mCbInformation.keys("a");
+
+			const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
+			const valueStateText = await popoverHeader.$("div").getHTML(false);
+			const ariaHiddenText = await mCbInformation.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+
+			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+			assert.strictEqual(valueStateText.includes("Extra long text used as an information message"), true, "Displayed value state message text is correct");
 		});
 	});
 

@@ -36,6 +36,10 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_INFORMATION,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
@@ -1009,7 +1013,19 @@ class ComboBox extends UI5Element {
 		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
-	get valueStateText() {
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+		}
+
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+	}
+
+	get valueStateDefaultText() {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
@@ -1027,6 +1043,15 @@ class ComboBox extends UI5Element {
 			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			"Success": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
