@@ -1,7 +1,7 @@
-commit 0bfdde751625d2fe8ae7a4dd042b9f7d77c13a8f
+commit b07b896706ed1d2a580b83f7af8310c6eeffc73e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 18 15:38:14 2022 +0300
+Date:   Tue Jul 19 09:14:39 2022 +0300
 
-    docs: add info in component dev section (#5519)
+    docs: add a11y limitation note (#5455)
     
-    Add more details regarding declaring dependencies when developing UI5 Web Components as it's critical for many aspects (web component definition, scoping, etc.)
+    Added note for Windows High Contrast mode
