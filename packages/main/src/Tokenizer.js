@@ -186,7 +186,6 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._nMoreCount = this.overflownTokens.length;
-		this._showNMore = !this.expanded && this.showMore && this._nMoreCount > 0;
 	}
 
 	onEnterDOM() {
@@ -485,8 +484,9 @@ class Tokenizer extends UI5Element {
 	}
 
 	scrollToEnd() {
+		const expTokenizerScrollWidth = this.expandedContentDom && (this.effectiveDir !== "rtl" ? this.expandedContentDom.scrollWidth : -this.expandedContentDom.scrollWidth);
 		if (this._scrollEnablement.scrollContainer) {
-			this._scrollEnablement.scrollTo(this.expandedContentDom && this.expandedContentDom.scrollWidth, 0, 5, 10);
+			this._scrollEnablement.scrollTo(expTokenizerScrollWidth, 0, 5, 10);
 		}
 	}
 
