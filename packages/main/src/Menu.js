@@ -118,6 +118,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
 		/**
 		 * Defines the items of this component.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.IMenuItem[]}
 		 * @slot items
