@@ -1,5 +1,5 @@
-commit 81ab5858a5b172ac5b5913e645fe5be741317188
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Jul 19 20:38:03 2022 -0700
+commit ed2f32c445dfaca23f2b61f795b284da53ed9caf
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Wed Jul 20 05:38:37 2022 +0200
 
-    Translation Delivery (#5498)
+    docs(ui5-menu): document expected component for default slot (#5531)
