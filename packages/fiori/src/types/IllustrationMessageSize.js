@@ -16,6 +16,7 @@ const IllustrationMessageSizes = {
 	 * until changed by the app developer.
 	 *
 	 * @public
+	 * @type {Auto}
 	 */
 	Auto: "Auto",
 	/**
@@ -24,24 +25,28 @@ const IllustrationMessageSizes = {
 	 * <b>Note:</b> When <code>Base</code> is in use, no illustration is displayed.
 	 *
 	 * @public
+	 * @type {Base}
 	 */
 	Base: "Base",
 
 	/**
 	 * Spot <code>Illustration</code> size (S breakpoint). Suitable for cards (four columns).
 	 * @public
+	 * @type {Spot}
 	 */
 	Spot: "Spot",
 
 	/**
 	 * Dialog <code>Illustration</code> size (M breakpoint). Suitable for dialogs.
 	 * @public
+	 * @type {Dialog}
 	 */
 	Dialog: "Dialog",
 
 	/**
 	 * Scene <code>Illustration</code> size (L breakpoint). Suitable for a <code>Page</code> or a table.
 	 * @public
+	 * @type {Scene}
 	 */
 	Scene: "Scene",
 };
