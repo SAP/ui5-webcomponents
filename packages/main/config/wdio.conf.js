@@ -8,7 +8,4 @@ wdio.config.suites = {
        './test/specs/[^A-I]*.spec.js',
     ],
 };
-
-// From: [‘--disable-gpu’, ‘--headless’]
-wdio.config.capabilities[0]['goog:chromeOptions'].args = ['--disable-gpu']; 
 module.exports = wdio;

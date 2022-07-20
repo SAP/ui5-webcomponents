@@ -86,12 +86,16 @@ describe("Eventing", () => {
 
 		const changeCountText = await browser.$("#change-count").getText();
 		assert.strictEqual(changeCountText, "1", "Change was fired once");
+
+		const dialogOkButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+		await dialogOkButton.click();
 	});
 
 	it("Should fire input event with correct parameters when typing in internal input", async () => {
 		const combo = await browser.$("#input-cb");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#input-cb")
-
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#input-cb");
+		
+		await combo.scrollIntoView();
 		await combo.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
@@ -109,10 +113,7 @@ describe("Eventing", () => {
 		await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn").click();
 	});
 
-	// Uncomment those when the two issues are fixed:
-	// 1. [#5484] The combo box should restore the previous value in case the "Close" button is pressed after interaction in the mobile picker
-	// 2. [#5485] The combo box should fire change event when the "OK" button is pressed after interaction in the mobile picker
-	/* it("Should not fire change event when pressing the picker's Close button", async () => {
+	it("Should not fire change event when pressing the picker's Close button", async () => {
 		await browser.url("test/pages/ComboBox.html");
 		const combo = await browser.$("#change-cb");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
@@ -130,36 +131,55 @@ describe("Eventing", () => {
 		assert.notOk(await combo.getAttribute("value"), "The combo box does not have value attribute");
 
 		const changeText = await browser.$("#change-placeholder").getText();
-		assert.noOk(changeText, "No change in this field as no change event was fired");
+		assert.notOk(changeText, "No change in this field as no change event was fired");
 
 		const changeCountText = await browser.$("#change-count").getText();
 		assert.strictEqual(changeCountText, "0", "Change was fired once");
 	});
 
-	it("Should fire change event when pressing the picker's OK button", async () => {
-		const combo = await browser.$("#change-cb");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
+	// Uncomment when the issue is fixed
+	// 1. [#5485] The combo box should fire change event when the "OK" button is pressed after interaction in the mobile picker
+	// it("Should fire change event when pressing the picker's OK button", async () => {
+	// 	const combo = await browser.$("#change-cb");
+	// 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
+	// 	await combo.scrollIntoView();
+	// 	await combo.click();
+	// 	const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
+	// 	const dialogOkButton =await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+	// 	await dialogInput.setValue("");
+	// 	await dialogInput.keys("A");
+	// 	await dialogOkButton.click();
+	// 	assert.strictEqual(await combo.getAttribute("value"), "Argentina", "The combo box have correct value attribute");
+	// 	const changeText = await browser.$("#change-placeholder").getText();
+	// 	assert.strictEqual(changeText, "Argentina", "The field was changed as change event was fired");
+	// 	const changeCountText = await browser.$("#change-count").getText();
+	// 	assert.strictEqual(changeCountText, "1", "Change was fired once");
+	// 	assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
+	// });
 
-		await combo.scrollIntoView();
-		await combo.click();
+	it ("When select an item, then open the dialog again and delete the text, then press OK button, the value should be deleted.", async ()=> {
+		const cb = await browser.$("#combo2");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
+		
+		await cb.click();
+	
+		const resPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const dialogInput = await resPopover.$(".ui5-input-inner-phone");
+		const okBtn = await resPopover.$(".ui5-responsive-popover-footer").$("ui5-button");
+		await dialogInput.click();
+		await dialogInput.setValue('');
+		await dialogInput.keys('A');
+		await dialogInput.keys('ArrowDown');
+		await okBtn.click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		const dialogOkButton =await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
-
-		await dialogInput.setValue("");
-		await dialogInput.keys("A");
-		await dialogOkButton.click();
-
-		assert.strictEqual(await combo.getAttribute("value"), "Argentina", "The combo box have correct value attribute");
-
-		const changeText = await browser.$("#change-placeholder").getText();
-		assert.strictEqual(changeText, "Argentina", "The field was changed as change event was fired");
-
-		const changeCountText = await browser.$("#change-count").getText();
-		assert.strictEqual(changeCountText, "1", "Change was fired once");
-
-		assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
-	}); */
+		assert.strictEqual(await cb.getProperty("value"), "Algeria", "Value should be Algeria.");
+		await cb.click();
+		await dialogInput.click();
+		await dialogInput.keys('ArrowDown');
+		await dialogInput.keys('Backspace');
+		await okBtn.click();
+		assert.strictEqual(await cb.getProperty("value"), "", "Value should be empty.");
+	});
 });
 
 describe("Typeahead", () => {
@@ -239,4 +259,5 @@ describe("Value state header", () => {
 
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 	});
+
 });
