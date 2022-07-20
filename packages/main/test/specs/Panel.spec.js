@@ -131,6 +131,13 @@ describe("Panel general interaction", () => {
 			const header = await browser.$("#panel1").shadow$(".ui5-panel-header");
 			const title = await browser.$("#panel1").shadow$(".ui5-panel-header-title");
 			const button = await browser.$("#panel1").shadow$(".ui5-panel-header-button");
+			let resourceBundleText = null;
+
+			resourceBundleText = await browser.executeAsync(done => {
+				const panel = document.getElementById("panel1");
+				done(panel.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.PANEL_ICON));
+			});
+
 
 			assert.strictEqual(await panelRoot.getAttribute("role"), "form", "The correct accessible role is applied");
 
@@ -139,6 +146,7 @@ describe("Panel general interaction", () => {
 			assert.ok(await header.getAttribute("aria-expanded"), "aria-expanded should be set on the header");
 			assert.ok(await header.getAttribute("aria-controls"), "aria-controls should be set on the header");
 			assert.ok(await header.getAttribute("role"), "role should be set on the header");
+			assert.ok(await button.getAttribute("accessible-name"), resourceBundleText, "icon has correct aria-label set");
 
 			assert.strictEqual(await title.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
 		});
