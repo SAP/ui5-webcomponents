@@ -1,5 +1,5 @@
-commit 533469d109ac1f8a8c4debc37bfb3ad24978fcb1
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed Jul 20 15:46:33 2022 +0300
+commit c0f8a2afd9ca38280f69a6889d364e85eacb8fd6
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed Jul 20 17:05:07 2022 +0300
 
-    fix(ui5-panel): add tooltip to expand/collapse icon (#5543)
+    fix(ui5-select): announce value state type (#5538)
