@@ -125,7 +125,6 @@ const metadata = {
  * and each <code>ui5-menu-item</code> is represented by a list item (<code>ui5-li</code>) in that list. Therefore, you should only use
  * <code>ui5-menu-item</code> directly in your apps. The <code>ui5-li</code> list item is internal for the list, and not intended for public use.
  *
- * For the <code>ui5-menu-item</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/MenuItem.js";</code>
