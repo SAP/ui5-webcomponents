@@ -1,9 +1,13 @@
-commit 410dee1dc5f5402c3c04f9dac513892232333471
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed Jul 20 17:23:00 2022 +0300
+commit 9d66cbaf8f0ffe7295cdfc4e62a62e0ef2bf371a
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Jul 20 08:10:13 2022 -0700
 
-    fix(ui5-panel): enhance aria-labelledby handling (#5539)
+    Translation Delivery (#5536)
     
-    * fix(ui5-panel): enhance aria-labelledby handling
+    * chore: translation delivery
     
-    * fix(ui5-panel): adjust method name
+    Change-Id: Id171f6cdabdef61569db9e43fa902c571b34a57e
+    
+    * chore: translation delivery
+    
+    Change-Id: I56cd17bb71a2b111e0340ae070f55accf485a48e
