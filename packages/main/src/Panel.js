@@ -422,7 +422,11 @@ class Panel extends UI5Element {
 	}
 
 	get ariaLabelledbyReference() {
-		return (this.nonFocusableButton && this.headerText) ? `${this._id}-header-title` : undefined;
+		return (this.nonFocusableButton && this.headerText && !this.fixed) ? `${this._id}-header-title` : undefined;
+	}
+
+	get fixedPanelariaLabelledbyReference() {
+		return this.fixed && !this.effectiveAccessibleName ? `${this._id}-header-title` : undefined;
 	}
 
 	get header() {
