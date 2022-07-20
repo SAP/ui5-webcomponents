@@ -155,13 +155,23 @@ describe("Panel general interaction", () => {
 			const panelWithNativeHeader = await browser.$("#panel-expandable");
 			const nativeHeader = await panelWithNativeHeader.shadow$(".ui5-panel-header");
 			const panelWithNativeHeaderId = await panelWithNativeHeader.getProperty("_id");
+			const fixedPanel = await browser.$('#panel-fixed');
+			const fixedPanelRoot = await fixedPanel.shadow$(".ui5-panel-root");
+			const fixedPanelHeader = await fixedPanel.shadow$(".ui5-panel-header");
+			const fixedPanelHeaderTitle = await fixedPanel.shadow$(".ui5-panel-header-title");
+			const fixedPanelHeaderTitleId = await fixedPanelHeaderTitle.getProperty("id");
+			
 
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
+			assert.notOk(await fixedPanelHeader.getAttribute("aria-labelledby"), "aria-labelledby is not added to the header");
+			assert.strictEqual(await fixedPanelRoot.getAttribute("aria-labelledby"), fixedPanelHeaderTitleId, "aria-labelledby is set correctly");
 
 			await browser.$("#panel-expandable").setAttribute("accessible-name", "New accessible name");
+			fixedPanel.setAttribute("accessible-name", "Accessible name added");
 
 			assert.strictEqual(await panelWithNativeHeader.shadow$(".ui5-panel-root").getAttribute("aria-label"), "New accessible name", "aria-label is set correctly");
+			assert.strictEqual(await fixedPanelRoot.getAttribute("aria-label"), "Accessible name added", "aria-label is set correctly");
 		});
 
 		it("tests whether aria attributes are set correctly with fixed header", async () => {
