@@ -842,6 +842,10 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 		this._clearFocus();
 
+		if (isPhone() && this.value !== this._lastValue) {
+			this._fireChangeEvent();
+		}
+
 		this.responsivePopover.close();
 	}
 

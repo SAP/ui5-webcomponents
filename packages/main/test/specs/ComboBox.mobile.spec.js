@@ -134,9 +134,11 @@ describe("Eventing", () => {
 
 		const changeCountText = await browser.$("#change-count").getText();
 		assert.strictEqual(changeCountText, "0", "Change was fired once");
-	});
+	});*/
 
 	it("Should fire change event when pressing the picker's OK button", async () => {
+		await browser.url("test/pages/ComboBox.html");
+
 		const combo = await browser.$("#change-cb");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
 
@@ -159,7 +161,7 @@ describe("Eventing", () => {
 		assert.strictEqual(changeCountText, "1", "Change was fired once");
 
 		assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
-	}); */
+	});
 });
 
 describe("Typeahead", () => {
