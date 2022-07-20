@@ -1,9 +1,7 @@
-commit 62c4c20ea7fc418c915d416af0f5cdb9c7c5f5f9
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Wed Jul 20 05:47:20 2022 +0200
+commit bc726a9ab0df871669207c485c487f637d96359b
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Wed Jul 20 09:43:04 2022 +0300
 
-    fix(ui5-title): use correct font-family for Horizon Themes (#5457)
+    fix(ui5-radio-button): correct keyboard navigation in RTL (#5529)
     
-    SAPUI5 is using the bold font family for rendering Titles in the Horizon Themes. I think it would be better to use the sapFontHeaderFamily variable.
-    
-    Compare to: https://ui5.sap.com/#/entity/sap.m.Title/sample/sap.m.sample.TitleWrapping
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/5165
