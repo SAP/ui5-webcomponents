@@ -449,15 +449,17 @@ class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
+
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			this.applyInitialFocus();
+		}
+
 		this._addOpenedPopup();
 
 		this.opened = true;
 		this.open = true;
 
 		await renderFinished();
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			this.applyInitialFocus();
-		}
 		this.fireEvent("after-open", {}, false, false);
 	}
 
@@ -496,12 +498,10 @@ class Popup extends UI5Element {
 			this._removeOpenedPopup();
 		}
 
-		setTimeout(() => {
-			if (!this.preventFocusRestore && !preventFocusRestore) {
-				this.resetFocus();
-			}
-			this.fireEvent("after-close", {}, false, false);
-		});
+		if (!this.preventFocusRestore && !preventFocusRestore) {
+			this.resetFocus();
+		}
+		this.fireEvent("after-close", {}, false, false);
 	}
 
 	/**
