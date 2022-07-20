@@ -182,3 +182,33 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), `${labelText} ${rbText}`, "The ariaLabelText includes both the accessibleNameRef text and the radio button text.");
 	});
 });
+
+describe("RadioButton keyboard handling in RTL", () => {
+	before(async () => {
+		await browser.url(`test/pages/RadioButton.html`);
+	});
+
+	it("Arrow Left", async () => {
+		const rb = await browser.$("#rtlOptionA");
+		await rb.click();
+		await rb.keys("ArrowLeft");
+
+		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
+
+		await browser.$("#rtlOptionB").keys("ArrowLeft");
+
+		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
+	});
+
+	it("Arrow Right", async () => {
+		const rb = await browser.$("#rtlOptionA");
+		await rb.click();
+		await rb.keys("ArrowRight");
+
+		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
+
+		await browser.$("#rtlOptionC").keys("ArrowRight");
+
+		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
+	});
+});
