@@ -1,5 +1,5 @@
-commit 426b747169c675dab700c338dba2f1f8b827296b
-Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Wed Jul 20 12:47:08 2022 +0200
+commit 533469d109ac1f8a8c4debc37bfb3ad24978fcb1
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Jul 20 15:46:33 2022 +0300
 
-    docs(MenuItem): remove unnecessary sentence fragment (#5542)
+    fix(ui5-panel): add tooltip to expand/collapse icon (#5543)
