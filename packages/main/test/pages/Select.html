@@ -33,17 +33,31 @@
 	</ui5-select>
 
 	<h2>Error Select</h2>
-	<ui5-select id="mySelect2" value-state="Error">
+	<ui5-select id="errorSelect" value-state="Error">
 		<ui5-option selected>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Warning Select</h2>
-	<ui5-select id="mySelect3" value-state="Warning">
+	<ui5-select id="warningSelect" value-state="Warning">
 		<ui5-option>This option has text bigger than ui5-select's width</ui5-option>
 		<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 
+	</ui5-select>
+
+	<h2>Success Select</h2>
+	<ui5-select id="successSelect" value-state="Success">
+		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
+	</ui5-select>
+
+	<h2>Success Select</h2>
+	<ui5-select id="infoSelect" value-state="Information">
+		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Disabled Select</h2>
@@ -138,8 +152,8 @@
 	var input = document.getElementById('myInput');
 	var inputResult = document.getElementById('inputResult');
 	var select = document.getElementById('mySelect');
-	var select2 = document.getElementById('mySelect2');
-	var select3 = document.getElementById('mySelect3');
+	var select2 = document.getElementById('errorSelect');
+	var select3 = document.getElementById('warningSelect');
 	var lbl = document.getElementById('lblResult');
 	var counter = 0;
 
