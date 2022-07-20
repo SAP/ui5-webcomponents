@@ -189,6 +189,7 @@ const createBlockingStyle = () => {
 createBlockingStyle();
 
 const pageScrollingBlockers = new Set();
+const restoreFocusQueue = [];
 
 /**
  * @class
@@ -446,6 +447,8 @@ class Popup extends UI5Element {
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
+
+		await Promise.all(restoreFocusQueue);
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
@@ -475,7 +478,7 @@ class Popup extends UI5Element {
 	 * Hides the block layer (for modal popups only)
 	 * @public
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
+	async close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -500,7 +503,9 @@ class Popup extends UI5Element {
 
 		if (!this.preventFocusRestore && !preventFocusRestore) {
 			this.resetFocus();
+			await Promise.all(restoreFocusQueue);
 		}
+
 		this.fireEvent("after-close", {}, false, false);
 	}
 
@@ -521,8 +526,14 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		this._focusedElementBeforeOpen.focus();
-		this._focusedElementBeforeOpen = null;
+		restoreFocusQueue.push(new Promise(resolve => {
+			setTimeout(() => {
+				this._focusedElementBeforeOpen.focus();
+				this._focusedElementBeforeOpen = null;
+				restoreFocusQueue.shift();
+				resolve();
+			});
+		}));
 	}
 
 	/**

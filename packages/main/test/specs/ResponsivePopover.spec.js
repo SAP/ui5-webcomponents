@@ -33,7 +33,7 @@ describe("ResponsivePopover general interaction", () => {
 		assert.notOk(await header.isExisting(), "Header is not displayed.");
 	});
 
-	it("Initial focus prevented", async () => {
+	it("Initial focus NOT prevented", async () => {
 		const btnOpenPopover = await browser.$("#btnInitialFocus");
 		await btnOpenPopover.click();
 
@@ -41,11 +41,12 @@ describe("ResponsivePopover general interaction", () => {
 		assert.strictEqual(activeElementId, "simpleRPInitialFocus", "Initial focus is not prevented");
 	});
 
-	it("Initial focus not prevented", async () => {
+	it("Initial focus prevented", async () => {
 		const btnOpenPopover = await browser.$("#btnInitialFocusPrevented");
 		await btnOpenPopover.click();
 
 		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		// await browser.pause(30000)
 		assert.strictEqual(activeElementId, "btnInitialFocusPrevented", "Initial focus is prevented");
 	});
 

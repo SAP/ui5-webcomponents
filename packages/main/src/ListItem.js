@@ -199,7 +199,7 @@ class ListItem extends ListItemBase {
 
 		const itemActive = this.type === ListItemType.Active;
 
-		if (isSpace(event) || (isEnter(event) && event.target === this.getDomRef())) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 

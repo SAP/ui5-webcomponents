@@ -1,4 +1,5 @@
 import { isClickInRect } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import isNodeClickable from "@ui5/webcomponents-base/dist/util/isNodeClickable.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 
 let updateInterval = null;
@@ -45,6 +46,9 @@ const clickHandler = event => {
 		return;
 	}
 
+	// don't restore the focus if the clicked element will receive the focus
+	const preventFocusRestore = event.target.isUI5Element ? isNodeClickable(event.target.getDomRef()) : isNodeClickable(event.target);
+
 	// loop all open popovers
 	for (let i = (openedPopups.length - 1); i !== -1; i--) {
 		const popup = openedPopups[i].instance;
@@ -58,7 +62,7 @@ const clickHandler = event => {
 			break;
 		}
 
-		popup.close();
+		popup.close(false, false, preventFocusRestore);
 	}
 };
 
