@@ -425,7 +425,7 @@ class Panel extends UI5Element {
 		return (this.nonFocusableButton && this.headerText && !this.fixed) ? `${this._id}-header-title` : undefined;
 	}
 
-	get fixedPanelariaLabelledbyReference() {
+	get fixedPanelAriaLabelledbyReference() {
 		return this.fixed && !this.effectiveAccessibleName ? `${this._id}-header-title` : undefined;
 	}
 
