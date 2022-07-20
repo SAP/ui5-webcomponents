@@ -299,9 +299,9 @@ class UI5ElementMetadata {
 
 const validateAltTypes = (value, propData, fallbackValue) => {
 	let finalValue = fallbackValue;
-	const altTypes = propData.altTypes;
+	const altTypes = propData.altTypes || [];
 
-	for (let index; index < altTypes.length; index++) {
+	for (let index = 0; index < altTypes.length; index++) {
 		const type = altTypes[index];
 
 		if (type === Boolean && typeof value === "boolean") {
