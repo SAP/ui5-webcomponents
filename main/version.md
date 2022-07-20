@@ -1,7 +1,5 @@
-commit bc726a9ab0df871669207c485c487f637d96359b
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Wed Jul 20 09:43:04 2022 +0300
+commit 426b747169c675dab700c338dba2f1f8b827296b
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Wed Jul 20 12:47:08 2022 +0200
 
-    fix(ui5-radio-button): correct keyboard navigation in RTL (#5529)
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/5165
+    docs(MenuItem): remove unnecessary sentence fragment (#5542)
