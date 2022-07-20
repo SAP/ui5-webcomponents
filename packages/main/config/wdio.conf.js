@@ -9,4 +9,5 @@ wdio.config.suites = {
 		'./test/specs/[^A-I]*.spec.js',
 	],
 };
+
 module.exports = wdio;
