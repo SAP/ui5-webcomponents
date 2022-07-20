@@ -297,20 +297,45 @@ class UI5ElementMetadata {
 	}
 }
 
+const validateAltTypes = (value, propData, fallbackValue) => {
+	let finalValue = fallbackValue;
+	const altTypes = propData.altTypes;
+
+	for (let index; index < altTypes.length; index++) {
+		const type = altTypes[index];
+
+		if (type === Boolean && typeof value === "boolean") {
+			finalValue = value;
+			break;
+		} else if (type === String && (typeof value === "string" || typeof value === "undefined" || value === null)) {
+			finalValue = value;
+			break;
+		} else if (type === Object && typeof value === "object") {
+			finalValue = value;
+			break;
+		} else if (isDescendantOf(type, DataType) && type.isValid(value)) {
+			finalValue = value;
+			break;
+		}
+	}
+
+	return finalValue;
+};
+
 const validateSingleProperty = (value, propData) => {
 	const propertyType = propData.type;
 
 	if (propertyType === Boolean) {
-		return typeof value === "boolean" ? value : false;
+		return typeof value === "boolean" ? value : validateAltTypes(value, propData, false);
 	}
 	if (propertyType === String) {
-		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
+		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : validateAltTypes(value, propData, value.toString());
 	}
 	if (propertyType === Object) {
-		return typeof value === "object" ? value : propData.defaultValue;
+		return typeof value === "object" ? value : validateAltTypes(value, propData, propData.defaultValue);
 	}
 	if (isDescendantOf(propertyType, DataType)) {
-		return propertyType.isValid(value) ? value : propData.defaultValue;
+		return propertyType.isValid(value) ? value : validateAltTypes(value, propData, propData.defaultValue);
 	}
 };
 

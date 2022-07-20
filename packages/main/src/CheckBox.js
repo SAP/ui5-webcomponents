@@ -45,6 +45,13 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		test: {
+			type: String,
+			altTypes: [
+				Object,
+			],
+		},
+
 		/**
 		 * Defines the accessible aria name of the component.
 		 *
