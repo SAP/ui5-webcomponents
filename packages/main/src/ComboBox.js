@@ -835,10 +835,8 @@ class ComboBox extends UI5Element {
 			this.filterValue = this._selectedItemText;
 		}
 
-		if (isPhone() && this.value && this.value.length >= 1 && !this._selectedItemText) {
-			this.value = "";
-		} else {
-			this.value = this._selectedItemText;
+		if (isPhone() && event.target.getAttribute("icon") === "decline") {
+			this.value = this._lastValue;
 		}
 
 		this._isValueStateFocused = false;
