@@ -1,5 +1,5 @@
-commit ed2f32c445dfaca23f2b61f795b284da53ed9caf
+commit 4e1310fd2898a8627557a6f49c70cd8e9b0dc81e
 Author: Lukas Harbarth <lukas.harbarth@sap.com>
-Date:   Wed Jul 20 05:38:37 2022 +0200
+Date:   Wed Jul 20 05:46:50 2022 +0200
 
-    docs(ui5-menu): document expected component for default slot (#5531)
+    docs(IllustrationMessageSize): add type annotation (#5471)
