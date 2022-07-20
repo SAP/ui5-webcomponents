@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-option",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**
 		 * Defines the selected state of the component.
@@ -21,7 +21,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled component is noninteractive.
+		 * <b>Note:</b> A disabled component is hidden.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -65,6 +65,16 @@ const metadata = {
 		 * @public
 		 */
 		value: {
+			type: String,
+		},
+
+		/**
+		 * Defines the additional text displayed at the end of the option element.
+		 * @type {string}
+		 * @public
+		 * @since 1.3.0
+		 */
+		 additionalText: {
 			type: String,
 		},
 

@@ -4,7 +4,6 @@
 	?disabled="{{disabled}}"
 	data-sap-focus-ref
 	{{> ariaPressed}}
-	dir="{{effectiveDir}}"
 	@focusout={{_onfocusout}}
 	@focusin={{_onfocusin}}
 	@click={{_onclick}}
@@ -26,6 +25,7 @@
 		<ui5-icon
 			class="ui5-button-icon"
 			name="{{icon}}"
+			accessible-role="{{iconRole}}"
 			part="icon"
 			?show-tooltip={{showIconTooltip}}
 		></ui5-icon>

@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Card general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+		await browser.url(`test/pages/Card.html`);
 	});
 
 	it("tests initial rendering", async () => {
@@ -12,10 +11,10 @@ describe("Card general interaction", () => {
 		assert.ok(await card.isExisting(), "The component has shadow root.");
 	});
 
-	it("tests status not rendered, when action is set", async () => {
+	it("tests status is rendered, when action is set", async () => {
 		const status = await browser.$("#actionCardHeader").shadow$(".ui5-card-header-status");
 
-		assert.notOk(await status.isExisting(), "The status DOM is not rendered.");
+		assert.ok(await status.isExisting(), "The status DOM is rendered.");
 	});
 
 	it("tests header's click event with mouse click, Enter and Space", async () => {
@@ -41,6 +40,21 @@ describe("Card general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 
+	it("tests clicking on an action does not fire header's click event", async () => {
+		const action = await browser.$("#cardHeader3 [slot='action']");
+
+		const field = await browser.$("#field");
+		const fieldBefore = await field.getProperty("value");
+
+		await action.click();
+		await action.keys("Space");
+		await action.keys("Enter");
+
+		const fieldAfter = await field.getProperty("value");
+
+		assert.strictEqual(fieldAfter, fieldBefore, "The events count should remain unchanged as the action did not cause the header to fire click.");
+	});
+
 	it("tests aria-label", async () => {
 		const card = await browser.$("#textAreaAriaLabel").shadow$(".ui5-card-root");
 
@@ -60,21 +74,22 @@ describe("Card general interaction", () => {
 		const cardHeader = await $("#card2").$("ui5-card-header");
 
 		// Default value
-		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "3");
+		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "3");
 
-		await cardHeader.setAttribute("aria-level", 4);
-		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header").getAttribute("aria-level"), "4");
+		const cardHeaderTitle = await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title");
+		await cardHeaderTitle.setAttribute("aria-level", 4);
+		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "4");
 	});
 });
 
 describe("CardHeader", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+		await browser.url(`test/pages/Card.html`);
 	});
 
 	it("tests header aria-labelledby", async () => {
-		const header = await browser.$("#header").shadow$(".ui5-card-header");
-		const header2 = await browser.$("#header2").shadow$(".ui5-card-header");
+		const header = await browser.$("#header").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
+		const header2 = await browser.$("#header2").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
 		const headerId = await browser.$("#header").getProperty("_id");
 		const headerId2 = await browser.$("#header2").getProperty("_id");
 		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${headerId}-title ${headerId}-subtitle ${headerId}-status`;
@@ -88,7 +103,7 @@ describe("CardHeader", () => {
 });
 describe("Card Accessibility", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
+		await browser.url(`test/pages/Card.html`);
 	});
 
 	it("test accessibleName", async () => {

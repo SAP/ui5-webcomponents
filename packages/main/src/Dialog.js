@@ -1,6 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
@@ -26,7 +25,7 @@ const STEP_SIZE = 16;
  */
 const metadata = {
 	tag: "ui5-dialog",
-	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 * <br><br>
@@ -52,7 +51,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header text.
 		 * <br><br>
@@ -253,7 +252,7 @@ class Dialog extends Popup {
 	}
 
 	/**
-	 * Determines if the header of the dialog should be shown.
+	 * Determines if the header should be shown.
 	 */
 	get _displayHeader() {
 		return this.header.length || this.headerText || this.draggable || this.resizable;
@@ -269,6 +268,22 @@ class Dialog extends Popup {
 
 	get _showResizeHandle() {
 		return this.resizable && this.onDesktop;
+	}
+
+	get _minHeight() {
+		let minHeight = Number.parseInt(window.getComputedStyle(this.contentDOM).minHeight);
+
+		const header = this._root.querySelector(".ui5-popup-header-root");
+		if (header) {
+			minHeight += header.offsetHeight;
+		}
+
+		const footer = this._root.querySelector(".ui5-popup-footer-root");
+		if (footer) {
+			minHeight += footer.offsetHeight;
+		}
+
+		return minHeight;
 	}
 
 	_show() {
@@ -292,12 +307,12 @@ class Dialog extends Popup {
 
 	onEnterDOM() {
 		super.onEnterDOM();
-		this._attachResizeHandlers();
+		this._attachScreenResizeHandler();
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandler();
 	}
 
 	/**
@@ -306,22 +321,22 @@ class Dialog extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this._resizeHandlersAttached) {
+		if (this._screenResizeHandlerAttached) {
 			this._center();
 		}
 	}
 
-	_attachResizeHandlers() {
-		if (!this._resizeHandlersAttached) {
-			ResizeHandler.register(document.body, this._screenResizeHandler);
-			this._resizeHandlersAttached = true;
+	_attachScreenResizeHandler() {
+		if (!this._screenResizeHandlerAttached) {
+			window.addEventListener("resize", this._screenResizeHandler);
+			this._screenResizeHandlerAttached = true;
 		}
 	}
 
-	_detachResizeHandlers() {
-		if (this._resizeHandlersAttached) {
-			ResizeHandler.deregister(document.body, this._screenResizeHandler);
-			this._resizeHandlersAttached = false;
+	_detachScreenResizeHandler() {
+		if (this._screenResizeHandlerAttached) {
+			window.removeEventListener("resize", this._screenResizeHandler);
+			this._screenResizeHandlerAttached = false; // prevent dialog from repositioning during resizing
 		}
 	}
 
@@ -459,13 +474,12 @@ class Dialog extends Popup {
 	}
 
 	_resizeWithEvent(event) {
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandler();
 		this.addEventListener("ui5-before-close", this._revertSize);
 
 		const { top, left } = this.getBoundingClientRect(),
 			style = window.getComputedStyle(this),
 			minWidth = Number.parseFloat(style.minWidth),
-			minHeight = Number.parseFloat(style.minHeight),
 			maxWidth = window.innerWidth - left,
 			maxHeight = window.innerHeight - top;
 
@@ -488,7 +502,7 @@ class Dialog extends Popup {
 		}
 
 		width = clamp(width, minWidth, maxWidth);
-		height = clamp(height, minHeight, maxHeight);
+		height = clamp(height, this._minHeight, maxHeight);
 
 		Object.assign(this.style, {
 			width: `${width}px`,
@@ -497,7 +511,7 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseDragHandlers() {
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandler();
 
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
@@ -523,7 +537,6 @@ class Dialog extends Popup {
 			width,
 			height,
 			minWidth,
-			minHeight,
 		} = window.getComputedStyle(this);
 
 		this._initialX = event.clientX;
@@ -533,7 +546,7 @@ class Dialog extends Popup {
 		this._initialTop = top;
 		this._initialLeft = left;
 		this._minWidth = Number.parseFloat(minWidth);
-		this._minHeight = Number.parseFloat(minHeight);
+		this._cachedMinHeight = this._minHeight;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -571,7 +584,7 @@ class Dialog extends Popup {
 
 		const newHeight = clamp(
 			this._initialHeight + (clientY - this._initialY),
-			this._minHeight,
+			this._cachedMinHeight,
 			window.innerHeight - this._initialTop,
 		);
 
@@ -583,20 +596,20 @@ class Dialog extends Popup {
 	}
 
 	_onResizeMouseUp() {
-		this._initialX = null;
-		this._initialY = null;
-		this._initialWidth = null;
-		this._initialHeight = null;
-		this._initialTop = null;
-		this._initialLeft = null;
-		this._minWidth = null;
-		this._minHeight = null;
+		delete this._initialX;
+		delete this._initialY;
+		delete this._initialWidth;
+		delete this._initialHeight;
+		delete this._initialTop;
+		delete this._initialLeft;
+		delete this._minWidth;
+		delete this._cachedMinHeight;
 
 		this._detachMouseResizeHandlers();
 	}
 
 	_attachMouseResizeHandlers() {
-		this._detachResizeHandlers();
+		this._detachScreenResizeHandler();
 
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);

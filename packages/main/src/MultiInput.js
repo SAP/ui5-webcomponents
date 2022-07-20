@@ -42,7 +42,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Defines the component tokens.
 		 *
@@ -54,7 +54,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Fired when the value help icon is pressed
 		 * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
@@ -182,18 +182,17 @@ class MultiInput extends Input {
 
 		const isHomeInBeginning = isHome(event) && event.target.selectionStart === 0;
 
-		if (isLeft(event) || isHomeInBeginning) {
-			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens.
+		if (isHomeInBeginning) {
+			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
+			return this._focusFirstToken(event);
+		}
 
+		if (isLeft(event) || isBackSpace(event)) {
+			this._skipOpenSuggestions = true;
 			return this._handleLeft(event);
 		}
 
 		this._skipOpenSuggestions = false;
-		if (isBackSpace(event) && event.target.value === "") {
-			event.preventDefault();
-
-			this.tokenizer._focusLastToken();
-		}
 
 		if (isShow(event)) {
 			this.valueHelpPress();
@@ -243,15 +242,27 @@ class MultiInput extends Input {
 		}
 	}
 
-	_handleLeft() {
+	_handleLeft(event) {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 		const tokens = this.tokens;
 		const lastToken = tokens.length && tokens[tokens.length - 1];
 
 		if (cursorPosition === 0 && lastToken) {
-			// this.tokenizer._focusLastToken(); won't work as the tokens in the MultiInput use different slot and are not resolved properly
+			event.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
+		}
+	}
+
+	_focusFirstToken(event) {
+		const tokens = this.tokens;
+		const firstToken = tokens.length && tokens[0];
+
+		if (firstToken) {
+			event.preventDefault();
+
+			firstToken.focus();
+			this.tokenizer._itemNav.setCurrentItem(firstToken);
 		}
 	}
 

@@ -31,11 +31,12 @@
 				name="{{openIconName}}"
 				tabindex="-1"
 				accessible-name="{{openIconTitle}}"
+				accessible-role="button"
+				aria-hidden="{{_ariaHidden}}"
 				show-tooltip
 				@click="{{togglePicker}}"
 				input-icon
 				?pressed="{{_isPickerOpen}}"
-				dir="{{effectiveDir}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>

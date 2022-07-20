@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import {
@@ -27,6 +26,7 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -76,7 +76,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
 		 * Defines the component header text.
@@ -264,7 +264,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
 		 * Fired when an item is activated, unless the item's <code>type</code> property
@@ -284,7 +284,7 @@ const metadata = {
 		/**
 		 * Fired when the <code>Close</code> button of any item is clicked
 		 * <br><br>
-		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only,
+		 * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
 		 * not to be confused with <code>item-delete</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-close
@@ -301,7 +301,7 @@ const metadata = {
 		/**
 		 * Fired when the <code>Toggle</code> button of any item is clicked.
 		 * <br><br>
-		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
+		 * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-toggle
 		 * @param {HTMLElement} item the toggled item.
@@ -441,7 +441,7 @@ class List extends UI5Element {
 	}
 
 	static get styles() {
-		return listCss;
+		return [browserScrollbarCSS, listCss];
 	}
 
 	static async onDefine() {
@@ -597,15 +597,10 @@ class List extends UI5Element {
 	}
 
 	get growsOnScroll() {
-		return this.growing === ListGrowingMode.Scroll && !isIE();
+		return this.growing === ListGrowingMode.Scroll;
 	}
 
 	get growsWithButton() {
-		if (isIE()) {
-			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
-			return this.grows;
-		}
-
 		return this.growing === ListGrowingMode.Button;
 	}
 
@@ -614,7 +609,7 @@ class List extends UI5Element {
 	}
 
 	get busyIndPosition() {
-		if (isIE() || !this.grows) {
+		if (!this.grows) {
 			return "absolute";
 		}
 
@@ -893,6 +888,8 @@ class List extends UI5Element {
 	onItemFocused(event) {
 		const target = event.target;
 
+		event.stopPropagation();
+
 		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent("item-focused", { item: target });
 
@@ -942,7 +939,7 @@ class List extends UI5Element {
 	onForwardBefore(event) {
 		this.setPreviouslyFocusedItem(event.target);
 		this.focusBeforeElement();
-		event.stopImmediatePropagation();
+		event.stopPropagation();
 	}
 
 	onForwardAfter(event) {
@@ -954,6 +951,8 @@ class List extends UI5Element {
 			this.focusGrowingButton();
 			event.preventDefault();
 		}
+
+		event.stopPropagation();
 	}
 
 	focusBeforeElement() {

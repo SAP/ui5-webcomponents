@@ -1,4 +1,3 @@
 :root {
-	--_ui5_tokenizer_n_more_indicator_font_weight: normal;
-	--_ui5_tokenizer_n_more_indicator_color: var(--sapField_TextColor);
+	--_ui5_tokenizer_padding: 0.3125rem;
 }

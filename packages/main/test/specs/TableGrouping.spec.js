@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Table general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrouping.html`);
+		await browser.url(`test/pages/TableGrouping.html`);
 	});
 
 	it("Table group rows should be rendered", async () => {

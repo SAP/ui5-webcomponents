@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isAndroid, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -13,6 +13,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isBackSpace,
 	isDelete,
@@ -28,17 +29,22 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import * as Filters from "./ComboBoxFilters.js";
+import * as Filters from "./Filters.js";
 
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_INFORMATION,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
 	LIST_ITEM_SELECTED,
+	LIST_ITEM_GROUP_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -408,9 +414,12 @@ class ComboBox extends UI5Element {
 		this._initialRendering = true;
 		this._itemFocused = false;
 		this._selectionChanged = false;
+		this.FormSupport = undefined;
 	}
 
 	onBeforeRendering() {
+		this.FormSupport = getFeature("FormSupport");
+
 		if (this._initialRendering) {
 			this._filteredItems = this.items;
 		}
@@ -549,10 +558,6 @@ class ComboBox extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	_readonlyIconClick() {
-		this.inner.focus();
-	}
-
 	_input(event) {
 		const { value } = event.target;
 
@@ -571,7 +576,7 @@ class ComboBox extends UI5Element {
 		this._clearFocus();
 
 		// autocomplete
-		if (this._autocomplete) {
+		if (this._autocomplete && !isAndroid()) {
 			const item = this._getFirstMatchingItem(value);
 			this._applyAtomicValueAndSelection(item, value, true);
 
@@ -598,7 +603,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_startsWithMatchingItems(str) {
-		return Filters.StartsWith(str, this._filteredItems);
+		return Filters.StartsWith(str, this._filteredItems, "text");
 	}
 
 	_clearFocus() {
@@ -661,11 +666,11 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 		this._selectionChanged = true;
 
+		this._announceSelectedItem(indexOfItem);
+
 		if (isGroupItem && isOpen) {
 			return;
 		}
-
-		this._announceSelectedItem(indexOfItem);
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
@@ -780,8 +785,13 @@ class ComboBox extends UI5Element {
 
 		if (isEnter(event)) {
 			this._fireChangeEvent();
-			this._closeRespPopover();
-			this.focused = true;
+
+			if (this.responsivePopover.opened) {
+				this._closeRespPopover();
+				this.focused = true;
+			} else if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
 		}
 
 		if (isEscape(event)) {
@@ -841,7 +851,7 @@ class ComboBox extends UI5Element {
 
 	_filterItems(str) {
 		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
-		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter);
+		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
 
 		// Return the filtered items and their group items
 		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
@@ -929,6 +939,7 @@ class ComboBox extends UI5Element {
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
 
 		if (sameItemSelected && sameSelectionPerformed) {
+			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
 		}
 
@@ -959,10 +970,17 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem) {
+		const currentItem = this._filteredItems[indexOfItem];
+		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		if (isGroupItem) {
+			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
+		} else {
+			announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		}
 	}
 
 	get _headerTitleText() {
@@ -995,7 +1013,19 @@ class ComboBox extends UI5Element {
 		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
-	get valueStateText() {
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+		}
+
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+	}
+
+	get valueStateDefaultText() {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
@@ -1013,6 +1043,15 @@ class ComboBox extends UI5Element {
 			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			"Success": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
@@ -1079,6 +1118,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get styles() {
+		const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
 			popoverHeader: {
 				"width": `${this.offsetWidth}px`,
@@ -1086,6 +1126,10 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
+			},
+			suggestionsPopover: {
+				"min-width": `${this.offsetWidth}px`,
+				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
 		};
 	}

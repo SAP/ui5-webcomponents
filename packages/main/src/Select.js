@@ -109,7 +109,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.Select.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -408,6 +408,7 @@ class Select extends UI5Element {
 				value: opt.value,
 				textContent: opt.textContent,
 				title: opt.title,
+				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
@@ -503,7 +504,7 @@ class Select extends UI5Element {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this._getSelectedItemIndex(itemToSelect);
+			const nextIndex = this._filteredItems.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -546,7 +547,7 @@ class Select extends UI5Element {
 	}
 
 	_getSelectedItemIndex(item) {
-		return [].indexOf.call(item.parentElement.children, item);
+		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
 	}
 
 	_select(index) {
@@ -636,6 +637,7 @@ class Select extends UI5Element {
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this.focused = false;
 	}
 
 	_afterOpen() {
@@ -644,6 +646,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this.opened = false;
+		this.focused = true;
 		this._iconPressed = false;
 		this._listWidth = 0;
 
@@ -744,6 +747,9 @@ class Select extends UI5Element {
 			responsivePopoverHeader: {
 				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
+			},
+			responsivePopover: {
+				"min-width": `${this.offsetWidth}px`,
 			},
 		};
 	}

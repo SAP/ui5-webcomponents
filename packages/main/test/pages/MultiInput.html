@@ -7,13 +7,13 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-multi-input</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<link rel="stylesheet" type="text/css" href="styles/MultiInput.css">
+	<link rel="stylesheet" type="text/css" href="./styles/MultiInput.css">
 </head>
 
 <body class="multiinput1auto ui5-content-density-compact" >
@@ -195,6 +195,14 @@
 		<br>
 		<br>
 
+		<h1 class="sample-container-title">Multi Input with 2 tokens</h1>
+		<ui5-multi-input id="two-tokens" value="abc">
+			<ui5-token slot="tokens" id="firstToken" text="a"></ui5-token>
+			<ui5-token slot="tokens" id="secondToken" text="b"></ui5-token>
+		</ui5-multi-input>
+		<br>
+		<br>
+
 		<h1 class="sample-container-title">Multi Input with 5 tokens</h1>
 		<ui5-multi-input id="multiple-token">
 			<ui5-token slot="tokens" text="ea"></ui5-token>
@@ -255,6 +263,33 @@
 			<ui5-token slot="tokens" text="Not a menu">
 			</ui5-token>
 		</ui5-multi-input>
+	</div>
+
+	<div class="sample-container">
+
+		<h1 class="sample-container-title">Eventing</h1>
+
+		<ui5-multi-input id="mi-event">
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<span>Event:</span>
+		<br>
+		<input id="event-type">
+		<br>
+		<span>Count:</span>
+		<br>
+		<input id="event-count">
+		<br>
+		<span>Event target text:</span>
+		<br>
+		<input id="event-target-text">
+
 	</div>
 
 	<script>
@@ -331,14 +366,29 @@
 			document.getElementById("value-help-trigger-counter").value = ++valueHelpTriggerCounter;
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
+		const handleTokenDelete = (event) => {
 			var mi = event.target;
-
 			mi.removeChild(event.detail.token);
+		}
 
-			// discuss ?!
-			// mi.focus();
-		});
+		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
+		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
+
+		const handleTokenDelete2 = (event) => {
+			const eventType = document.getElementById("event-type");
+			const eventCount = document.getElementById("event-count");
+			const eventTargetText = document.getElementById("event-target-text");
+
+			eventType.value = event.type;
+			eventTargetText.value = event.detail.token.text;
+
+			if (!eventCount.value || isNaN(eventCount.value)) {
+				eventCount.value = 1;
+			} else {
+				eventCount.value = parseInt(eventCount.value) + 1;
+			}
+		}
+		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);
 	</script>
 </body>
 

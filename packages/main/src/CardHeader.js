@@ -4,7 +4,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
-import Icon from "./Icon.js";
 
 import {
 	AVATAR_TOOLTIP,
@@ -36,9 +35,6 @@ const metadata = {
 
 		/**
 		 * Defines an action, displayed in the right most part of the header.
-		 * <br><br>
-		 * <b>Note:</b> If set, the <code>status</code> text will not be displayed,
-		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -71,9 +67,6 @@ const metadata = {
 
 		/**
 		 * Defines the status text.
-		 * <br><br>
-		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
-		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -182,27 +175,23 @@ class CardHeader extends UI5Element {
 		};
 	}
 
-	get ariaHeaderRole() {
-		return this.interactive ? "button" : "heading";
+	get _root() {
+		return this.shadowRoot.querySelector(".ui5-card-header");
 	}
 
-	get _ariaLevel() {
-		if (this.interactive) {
-			return undefined;
-		}
-
-		return this.ariaLevel;
-	}
-
-	get ariaCardHeaderRoleDescription() {
+	get ariaRoleDescription() {
 		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
+	}
+
+	get ariaRoleFocusableElement() {
+		return this.interactive ? "button" : null;
 	}
 
 	get ariaCardAvatarLabel() {
 		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
-	get ariaLabelledByHeader() {
+	get ariaLabelledBy() {
 		const labels = [];
 
 		if (this.titleText) {
@@ -232,24 +221,29 @@ class CardHeader extends UI5Element {
 		return !!this.action.length;
 	}
 
-	static get dependencies() {
-		return [Icon];
-	}
-
 	static async onDefine() {
 		CardHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	_headerClick(event) {
-		event.stopImmediatePropagation(); // prevents the native browser "click" event from firing
+	_actionsFocusin() {
+		this._root.classList.add("ui5-card-header-hide-focus");
+	}
 
-		if (this.interactive) {
+	_actionsFocusout() {
+		this._root.classList.remove("ui5-card-header-hide-focus");
+	}
+
+	_click(event) {
+		// prevents the native browser "click" event from firing
+		event.stopImmediatePropagation();
+
+		if (this.interactive && this._root.contains(event.target)) {
 			this.fireEvent("click");
 		}
 	}
 
-	_headerKeydown(event) {
-		if (!this.interactive) {
+	_keydown(event) {
+		if (!this.interactive || !this._root.contains(event.target)) {
 			return;
 		}
 
@@ -268,8 +262,8 @@ class CardHeader extends UI5Element {
 		}
 	}
 
-	_headerKeyup(event) {
-		if (!this.interactive) {
+	_keyup(event) {
+		if (!this.interactive || !this._root.contains(event.target)) {
 			return;
 		}
 

@@ -14,8 +14,9 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
@@ -46,7 +47,7 @@ const metadata = {
 	tag: "ui5-date-picker",
 	altTag: "ui5-datepicker",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
 		 *
@@ -205,7 +206,7 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
@@ -235,7 +236,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
@@ -247,7 +248,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -267,7 +268,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -388,6 +389,12 @@ class DatePicker extends DateComponentBase {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
+	constructor() {
+		super();
+
+		this.FormSupport = undefined;
+	}
+
 	/**
 	 * @protected
 	 */
@@ -401,6 +408,8 @@ class DatePicker extends DateComponentBase {
 	}
 
 	onBeforeRendering() {
+		this.FormSupport = getFeature("FormSupport");
+
 		["minDate", "maxDate"].forEach(prop => {
 			if (this[prop] && !this.isValid(this[prop])) {
 				console.warn(`Invalid value for property "${prop}": ${this[prop]} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
@@ -414,7 +423,7 @@ class DatePicker extends DateComponentBase {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.value = this.normalizeValue(this.value);
+		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
 	}
 
@@ -471,7 +480,11 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
-		if (isPageUpShiftCtrl(event)) {
+		if (isEnter(event)) {
+			if (this.FormSupport) {
+				this.FormSupport.triggerFormSubmit(this);
+			}
+		} else if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._modifyDateValue(1, "year");
 		} else if (isPageUpShift(event)) {
@@ -662,16 +675,11 @@ class DatePicker extends DateComponentBase {
 		return this.phone;
 	}
 
-	get _isIE() {
-		return isIE();
-	}
-
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": HasPopup.Grid,
 			"ariaAutoComplete": "none",
-			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
@@ -695,6 +703,14 @@ class DatePicker extends DateComponentBase {
 	 */
 	get _shouldHideHeader() {
 		return false;
+	}
+
+	/**
+	 * Defines whether the value help icon is hidden
+	 * @private
+	 */
+	get _ariaHidden() {
+		return isDesktop();
 	}
 
 	async _respPopover() {

@@ -6,12 +6,12 @@
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
-<link rel="stylesheet" type="text/css" href="styles/List.css">
+<link rel="stylesheet" type="text/css" href="./styles/List.css">
 </head>
 
 <body class="list1auto">
@@ -230,6 +230,13 @@
 		<ui5-li-custom selected>
 				<ui5-radio-button text="Option C" disabled="disabled"></ui5-radio-button>
 		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-list growing="Button">
+		<ui5-button slot="header">Header button</ui5-button>
+		<ui5-li >Option 1</ui5-li>
+		<ui5-li >Option 2</ui5-li>
+		<ui5-li >Option 3</ui5-li>
 	</ui5-list>
 
 	<br />

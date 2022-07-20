@@ -18,6 +18,7 @@
 			class="ui5-dt-cal {{classes.dateTimeView}}"
 			id="{{_id}}-calendar"
 			primary-calendar-type="{{_primaryCalendarType}}"
+			secondary-calendar-type="{{secondaryCalendarType}}"
 			format-pattern="{{_formatPattern}}"
 			timestamp="{{_calendarTimestamp}}"
 			.selectionMode="{{_calendarSelectionMode}}"
@@ -44,6 +45,7 @@
 				value="{{_timeSelectionValue}}"
 				format-pattern="{{_formatPattern}}"
 				._currentSlider="{{_currentTimeSlider}}"
+				._calendarType="{{_primaryCalendarType}}"
 				@ui5-change="{{onTimeSelectionChange}}"
 				@ui5-slider-change="{{onTimeSliderChange}}"
 		></ui5-time-selection>
@@ -51,7 +53,7 @@
 {{/inline}}
 
 {{#*inline "footer"}}
-	<div slot="footer" class="ui5-dt-picker-footer">
+	<div slot="footer" class="ui5-dt-picker-footer {{classes.footer}}">
 		<ui5-button
 			id="ok"
 			class="ui5-dt-picker-action"

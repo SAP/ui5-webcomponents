@@ -1,12 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
 	isLeft,
@@ -135,6 +136,10 @@ const metadata = {
 		_currentSlider: {
 			type: String,
 			defaultValue: "hours",
+		},
+
+		_calendarType: {
+			type: CalendarType,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimeSelection.prototype */ {
@@ -435,10 +440,12 @@ class TimeSelection extends UI5Element {
 		let dateFormat;
 		if (this._isPattern) {
 			dateFormat = DateFormat.getInstance({
+				calendarType: this._calendarType,
 				pattern: this._formatPattern,
 			});
 		} else {
 			dateFormat = DateFormat.getInstance({
+				calendarType: this._calendarType,
 				style: this._formatPattern,
 			});
 		}
@@ -472,10 +479,6 @@ class TimeSelection extends UI5Element {
 
 	get periodSliderTitle() {
 		return TimeSelection.i18nBundle.getText(TIMEPICKER_PERIODS_LABEL);
-	}
-
-	get _isCyclic() {
-		return !isIE();
 	}
 
 	get classes() {

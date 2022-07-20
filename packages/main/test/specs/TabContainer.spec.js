@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("TabContainer general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TabContainer.html`);
+		await browser.url(`test/pages/TabContainer.html`);
 	});
 
 	it("tests initially selected tab", async () => {
@@ -129,7 +128,7 @@ describe("TabContainer general interaction", () => {
 
 		const newlySelectedItem = await tabcontainer.$("[selected]");
 
-		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Twelve", "The first item in the overflow is 12");
+		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Eleven", "The first item in the overflow is 11");
 
 	});
 

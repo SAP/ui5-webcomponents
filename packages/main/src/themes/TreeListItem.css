@@ -26,7 +26,7 @@
 	width: 0;
 	height: 0;
 	border-left: 0.375rem solid transparent;
-	border-bottom: .375rem solid var(--sapContent_IconColor);
+	border-bottom: .375rem solid var(--sapContent_NonInteractiveIconColor);
 	position: absolute;
 	right: 0.1875rem;
 	bottom: 0.125rem;
@@ -37,7 +37,7 @@
 }
 
 .ui5-li-root-tree {
-	padding-left: 0;
+	padding-inline-start: 0;
 }
 
 :host(:not([level="1"])) {
@@ -98,10 +98,4 @@
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-}
-
-/* RTL */
-.ui5-li-root-tree[dir="rtl"] {
-	padding-left: 1rem;
-	padding-right: 0;
 }

@@ -18,6 +18,9 @@ import {
 	RATING_INDICATOR_TOOLTIP_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
+import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/favorite.js";
+import "@ui5/webcomponents-icons/dist/unfavorite.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
@@ -192,6 +195,10 @@ class RatingIndicator extends UI5Element {
 		RatingIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	constructor() {
 		super();
 
@@ -231,7 +238,7 @@ class RatingIndicator extends UI5Element {
 			return;
 		}
 
-		this.value = parseInt(event.target.getAttribute("data-value"));
+		this.value = parseInt(event.target.getAttribute("data-ui5-value"));
 
 		if (this.value === 1 && this._liveValue === 1) {
 			this.value = 0;

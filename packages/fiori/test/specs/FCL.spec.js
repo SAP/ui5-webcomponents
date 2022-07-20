@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("FlexibleColumnLayout Behavior", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/FCL.html?sap-ui-animationMode=none`);
+		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
 	it("tests Desktop size 1400px", async () => {

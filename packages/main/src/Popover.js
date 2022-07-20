@@ -508,10 +508,6 @@ class Popover extends Popup {
 		return { width, height };
 	}
 
-	get contentDOM() {
-		return this.shadowRoot.querySelector(".ui5-popup-content");
-	}
-
 	get arrowDOM() {
 		return this.shadowRoot.querySelector(".ui5-popover-arrow");
 	}
@@ -782,7 +778,11 @@ class Popover extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this._ariaLabel ? undefined : "ui5-popup-header";
+		if (!this._ariaLabel && this._displayHeader) {
+			return "ui5-popup-header";
+		}
+
+		return undefined;
 	}
 
 	get _ariaModal() { // Required by Popup.js

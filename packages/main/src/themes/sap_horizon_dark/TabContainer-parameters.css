@@ -19,7 +19,4 @@
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 0.125rem solid var(--sapHighlightColor);
-
-	/* Overflow Item */
-	--_ui5_tc_overflowItem_focus_border: 0.75rem;
 }

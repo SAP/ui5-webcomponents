@@ -2,6 +2,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
+import WrappingType from "./types/WrappingType.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
@@ -74,7 +75,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
@@ -96,6 +97,21 @@ const metadata = {
 		 */
 		accessibleName: {
 			type: String,
+		},
+
+		/**
+		 * Defines if the text of the component should wrap, they truncate by default.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
+		 * @private
+		 * @since 1.5.0
+		 */
+		wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**

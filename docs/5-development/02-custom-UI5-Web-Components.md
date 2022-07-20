@@ -53,6 +53,10 @@ class Demo extends UI5Element {
 		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
 	}
 
+	static get dependencies() {
+		return []; // array of components used internally
+	}
+
 	get pleaseWaitText() {
 		return Demo.i18nBundle.getText(PLEASE_WAIT);
 	}
@@ -251,6 +255,61 @@ File | Descriptions
 
 For more information, see the [CSS](#css) chapter of this tutorial.
 
+### The dependencies
+
+You must import all other web components, used inside the `.hbs` template file. Otherwise, the internally used web components won't be defined.
+
+Furthermore, in order to make use of the [Scoping](../advanced/scoping) feature, you must list all the internally used web components in the `dependencies` static getter,
+as the framework reads the dependencies and scopes the tag names of the listed web components.
+
+<b>For Example:</b> If the `ui5-icon` tag (or any other standard or custom UI5 Web component) is used inside the template, you must import the `Icon` web component and add it to the `dependencies` static getter as shown below.
+
+```js
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+
+// Template
+import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
+// Styles
+import DemoCss from "./generated/themes/Demo.css.js";
+
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+
+const metadata = {
+	tag: "ui5-demo",
+	properties: {
+	},
+	slots: {
+	},
+	events: {
+	},
+};
+
+class Demo extends UI5Element {
+	
+	static get metadata() {
+		return metadata;
+	}
+
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DemoTemplate;
+	}
+
+	static get styles() {
+		return DemoCss;
+	}
+
+	static get dependencies() {
+		return [Icon]; // array of components used internally
+	}
+}
+
+export default Demo;
+```
+
 ### Defining the Web Component
 
 Defining a Web Component is necessary in order to register it in the browser.
@@ -292,6 +351,10 @@ class Demo extends UI5Element {
 
 	static get styles() {
 		return DemoCss;
+	}
+
+	static get dependencies() {
+		return []; // array of components used internally
 	}
 }
 
@@ -354,6 +417,10 @@ class Demo extends UI5Element {
 
 	static get styles() {
 		return DemoCss;
+	}
+
+	static get dependencies() {
+		return []; // array of components used internally
 	}
 
 	static async onDefine() {

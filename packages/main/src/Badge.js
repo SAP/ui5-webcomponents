@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import isDefaultSlotProvided from "@ui5/webcomponents-base/dist/util/isDefaultSlotProvided.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -46,13 +47,6 @@ const metadata = {
 		 * @private
 		 */
 		_iconOnly: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether the component is pressed.
-		 */
-		active: {
 			type: Boolean,
 		},
 	},
@@ -135,16 +129,8 @@ class Badge extends UI5Element {
 		this._iconOnly = this.iconOnly;
 	}
 
-	_onmousedown() {
-		this.active = true;
-	}
-
-	_onmouseup() {
-		this.active = false;
-	}
-
 	get hasText() {
-		return !!this.textContent.trim().length;
+		return isDefaultSlotProvided(this);
 	}
 
 	get hasIcon() {

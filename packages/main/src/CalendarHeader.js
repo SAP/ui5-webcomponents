@@ -78,6 +78,10 @@ const metadata = {
 			type: String,
 		},
 
+		_yearButtonTextSecType: {
+			type: String,
+		},
+
 		isYearButtonHidden: {
 			type: Boolean,
 		},
@@ -199,7 +203,7 @@ class CalendarHeader extends UI5Element {
 	get accInfo() {
 		return {
 			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType.info}` : `${this._monthButtonText}`,
+				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType.monthButtonInfo}` : `${this._monthButtonText}`,
 		};
 	}
 }

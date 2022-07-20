@@ -6,6 +6,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
+import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
 
@@ -19,6 +20,7 @@ const ILLUSTRATION_NOT_FOUND = "ILLUSTRATION_NOT_FOUND";
  */
 const metadata = {
 	tag: "ui5-illustrated-message",
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
@@ -172,6 +174,30 @@ const metadata = {
 			type: IllustrationMessageType,
 			defaultValue: IllustrationMessageType.BeforeSearch,
 		},
+		/**
+		 * Determines which illustration breakpoint variant is used.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Auto</code></li>
+		 * <li><code>Base</code></li>
+		 * <li><code>Spot</code></li>
+		 * <li><code>Dialog</code></li>
+		 * <li><code>Scene</code></li>
+		 * </ul>
+		 *
+		 * As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
+		 * elements of the component are displayed differently on the different breakpoints/illustration sizes.
+		 *
+		 * @type {IllustrationMessageSize}
+		 * @defaultvalue "Auto"
+		 * @public
+		 * @since 1.5.0
+		 */
+		size: {
+			type: IllustrationMessageSize,
+			defaultValue: IllustrationMessageSize.Auto,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
@@ -315,6 +341,10 @@ class IllustratedMessage extends UI5Element {
 
 		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData.title);
 		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData.subtitle);
+
+		if (this.size !== IllustrationMessageSize.Auto) {
+			this._handleCustomSize();
+		}
 	}
 
 	onEnterDOM() {
@@ -326,6 +356,10 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	handleResize() {
+		if (this.size !== IllustrationMessageSize.Auto) {
+			return;
+		}
+
 		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
 			this.media = IllustratedMessage.MEDIA.BASE;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.SPOT) {
@@ -333,6 +367,28 @@ class IllustratedMessage extends UI5Element {
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.DIALOG) {
 			this.media = IllustratedMessage.MEDIA.DIALOG;
 		} else {
+			this.media = IllustratedMessage.MEDIA.SCENE;
+		}
+	}
+
+	/**
+	 * Modifies the IM styles in accordance to the `size` property's value.
+	 * Note: The resize handler has no effect when size is different than "Auto".
+	 * @private
+	 * @since 1.5.0
+	 */
+	_handleCustomSize() {
+		switch (this.size) {
+		case IllustrationMessageSize.Base:
+			this.media = IllustratedMessage.MEDIA.BASE;
+			return;
+		case IllustrationMessageSize.Spot:
+			this.media = IllustratedMessage.MEDIA.SPOT;
+			return;
+		case IllustrationMessageSize.Dialog:
+			this.media = IllustratedMessage.MEDIA.DIALOG;
+			return;
+		default:
 			this.media = IllustratedMessage.MEDIA.SCENE;
 		}
 	}

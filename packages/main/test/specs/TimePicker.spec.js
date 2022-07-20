@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("TimePicker general interaction", () => {
 	it("input receives value in format pattern depending on the set language", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=bg`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=bg`);
 
 		const timepicker = await browser.$("#timepickerSetTime");
 		const setTimeButton = await browser.$("#setTimeButton");
@@ -14,7 +13,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests sliders value", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepicker");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
 		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -90,7 +89,8 @@ describe("TimePicker general interaction", () => {
 	it("tests change event", async () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepickerChange");
 		const timepicker = await browser.$("#timepickerChange");
-		const icon = await timepicker.shadow$("ui5-input").$("ui5-icon");
+		const input = await timepicker.shadow$("ui5-input");
+		const icon = await input.$("ui5-icon");
 		const changeResult = await browser.$("#changeResult");
 
 		// act - submit the same time
@@ -128,6 +128,15 @@ describe("TimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(await changeResult.getProperty("value"), "2", "Change fired as expected");
+
+		//act
+		await input.click();
+		await browser.keys("Backspace");
+		await browser.keys("7");
+		await browser.keys("Enter");
+
+		// assert
+		assert.strictEqual(await changeResult.getProperty("value"), "3", "Change fired as expected");
 	});
 
 	it("tests value state", async () => {
@@ -196,7 +205,7 @@ describe("TimePicker general interaction", () => {
 
 	it("test arrow navigation", async () => {
 		// arrange
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 
 		const timepicker = await browser.$("#timepicker3"); //picker with 4 sliders
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
@@ -217,7 +226,7 @@ describe("TimePicker general interaction", () => {
 
 	it("test closing the picker with the keyboard", async () => {
 		// arrange
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 
 		const timepicker = await browser.$("#timepicker3");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");

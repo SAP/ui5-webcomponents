@@ -1,4 +1,6 @@
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
+import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import {
 	isEnter,
@@ -19,12 +21,13 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarPart from "./CalendarPart.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 import styles from "./generated/themes/MonthPicker.css.js";
+
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-monthpicker",
-	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {Array}
@@ -46,7 +49,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * Fired when the user selects a month (space/enter/click).
 		 * @public
@@ -103,7 +106,7 @@ class MonthPicker extends CalendarPart {
 		}
 
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const monthsNames = localeData.getMonthsStandAlone("wide", this._primaryCalendarType);
 
 		const months = [];
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
@@ -131,6 +134,7 @@ class MonthPicker extends CalendarPart {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
+				nameInSecType: this.secondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};
@@ -153,6 +157,11 @@ class MonthPicker extends CalendarPart {
 		}
 
 		this._months = months;
+	}
+
+	_getDisplayedSecondaryMonthText(timestamp) {
+		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
+		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this.secondaryCalendarType);
 	}
 
 	onAfterRendering() {

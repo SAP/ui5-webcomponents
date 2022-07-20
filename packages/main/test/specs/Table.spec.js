@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Table general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+		await browser.url(`test/pages/Table.html`);
 	});
 
 	it("tests if column disapears when min-width is reacted (650px)", async () => {
@@ -79,9 +78,30 @@ describe("Table general interaction", () => {
 			"The aria-label value is correct.");
 	});
 
+	describe("Accessibility", () => {
+		before(async () => {
+			await browser.url(`test/pages/Table.html`);
+		});
+
+		it("Should apply aria-label from the accessibleName property", async () => {
+			const table = await browser.$("#tblLessColumns");
+			const innerTable = await table.shadow$("table");
+
+			assert.strictEqual(await innerTable.getAttribute("aria-label"), "Table label", "Table aria-label attribute is correct.");
+		});
+
+		it("Should apply aria-label from the accessibleNameRef property", async () => {
+			const table = await browser.$("#tbl");
+			const innerTable = await table.shadow$("table");
+			const tableLabel = await browser.$("#tableLabel");
+
+			assert.strictEqual(await innerTable.getAttribute("aria-label"), await tableLabel.getHTML(false), "Table aria-label attribute is correct.");
+		});
+	});
+
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
+			await browser.url(`test/pages/TableGrowingWithButton.html`);
 
 			const inputResult = await browser.$("#inputLoadMoreCounter");
 			const loadMoreTrigger = await browser.$("#tbl").shadow$("[growing-button-inner]");
@@ -108,7 +128,7 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on Scroll", () => {
 		it("tests the 'load-more' event", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithScroll.html`);
+			await browser.url(`test/pages/TableGrowingWithScroll.html`);
 
 			const inputResult = await browser.$("#inputLoadMoreCounter");
 			const btnScroll = await browser.$("#btnScroll");
@@ -125,7 +145,7 @@ describe("Table general interaction", () => {
 
 	describe("Table selection modes", () => {
 		it("test click over Active/Inactive row in SingleSelect mode", async () => {
-			await browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+			await browser.url("test/pages/TableSelection.html");
 			const table = await browser.$("#single");
 			const firstRow = await browser.$("#firstRowSingleSelect");
 			const thirdRow = await browser.$("#thirdRowSingleSelect");
@@ -373,7 +393,7 @@ describe("Table general interaction", () => {
 		});
 
 		it("test selectAll functionallity in MultiSelect mode", async () => {
-			await browser.url("http://localhost:8080/test-resources/pages/TableSelection.html");
+			await browser.url("test/pages/TableSelection.html");
 			const firstRow = await browser.$("#firstRowMultiSelect");
 			const secondRow = await browser.$("#secondRowMultiSelect");
 			const thirdRow = await browser.$("#thirdRowMultiSelect");
@@ -461,7 +481,7 @@ describe("Table general interaction", () => {
 		});
 
 		it ("tests adding spaces to input fields in a row", async () => {
-			await browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+			await browser.url(`test/pages/Table.html`);
 
 			const input = await browser.$("#myInput");
 			const inner = await input.shadow$("input");
@@ -478,7 +498,7 @@ describe("Table general interaction", () => {
 
 describe("Table keyboard interaction", () => {
 	it("Tab/Shift+Tab", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
 
@@ -539,7 +559,7 @@ describe("Table keyboard interaction", () => {
 	});
 
 	it("F7", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
 
@@ -566,7 +586,7 @@ describe("Table keyboard interaction", () => {
 	});
 
 	it("Ctrl + A", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
 		const firstRow = await browser.$("#firstRowMultiSelect");
@@ -602,74 +622,73 @@ describe("Table keyboard interaction", () => {
 	});
 
 	it("Alt + Up/Down", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
+		await browser.url(`test/pages/TableGrowingWithButton.html`);
 
-		setTimeout(async () => {
-			const table = await browser.$("#tbl");
-			const tableHeader = await table.shadow$(".ui5-table-header-row");
-			const firstRow = await table.$("ui5-table-row");
-			const secondRow = await table.$$("ui5-table-row")[1];
-			const moreButton = await table.shadow$('[id$="growingButton"]');
+		const table = await browser.$("#tbl");
+		const tableHeader = await table.shadow$(".ui5-table-header-row");
+		const firstRow = await table.$("ui5-table-row");
+		const secondRow = await table.$$("ui5-table-row")[1];
+		const moreButton = await table.shadow$('[id$="growingButton"]');
 
-			const firstCellFirstRowLabel = await firstRow.$("ui5-label");
+		const firstCellFirstRowLabel = await firstRow.$("ui5-label");
 
-			// Act
-			await firstCellFirstRowLabel.click();
+		// Act
+		await firstCellFirstRowLabel.waitForClickable({ timeout: 1600 });
+		await firstCellFirstRowLabel.click();
 
-			// Assert
-			assert.ok(await firstRow.isFocused(), "The first row is initially focused");
+		// Assert
+		assert.ok(await firstRow.isFocused(), "The first row is initially focused");
 
-			// [Alt] + [Up]
-			await browser.keys(["Alt", "Up"]);
+		// [Alt] + [Up]
+		await browser.keys(["Alt", "ArrowUp"]);
 
-			// Assert
-			assert.ok(await tableHeader.isFocused(), "Focus should move from first row to header");
-			assert.notOk(await firstRow.isFocused(), "The first row should not be focused");
+		// Assert
+		assert.ok(await tableHeader.isFocusedDeep(), "Focus should move from first row to header");
+		assert.notOk(await firstRow.isFocused(), "The first row should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Up"]);
+		// Act
+		await browser.keys(["Alt", "ArrowUp"]);
 
-			// Assert
-			assert.ok(await moreButton.isFocused(), "Focus should move from header to More button");
-			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
+		// Assert
+		assert.ok(await moreButton.isFocusedDeep(), "Focus should move from header to More button");
+		assert.notOk(await tableHeader.isFocusedDeep(), "The header should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Up"]);
+		// Act
+		await browser.keys(["Alt", "ArrowUp"]);
 
-			// Assert
-			assert.ok(await firstRow.isFocused(), "Focus should move from More button to last focused row");
-			assert.notOk(await moreButton.isFocused(), "The More button should not be focused");
+		// Assert
+		assert.ok(await firstRow.isFocused(), "Focus should move from More button to last focused row");
+		assert.notOk(await moreButton.isFocusedDeep(), "The More button should not be focused");
 
-			// [Alt] + [Down]
-			await browser.keys("ArrowDown");
+		// [Alt] + [Down]
+		await browser.keys("ArrowDown");
 
-			// Assert
-			assert.ok(await secondRow.isFocused(), "The second row is initially focused");
+		// Assert
+		assert.ok(await secondRow.isFocused(), "The second row is initially focused");
 
-			await browser.keys(["Alt", "Down"]);
+		await browser.keys(["Alt", "ArrowDown"]);
 
-			// Assert
-			assert.ok(await moreButton.isFocused(), "Focus should move from second row to More button");
-			assert.notOk(await secondRow.isFocused(), "The second row should not be focused");
+		// Assert
+		assert.ok(await moreButton.isFocusedDeep(), "Focus should move from second row to More button");
+		assert.notOk(await secondRow.isFocused(), "The second row should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Down"]);
+		// Act
+		await browser.keys(["Alt", "ArrowDown"]);
 
-			// Assert
-			assert.ok(await tableHeader.isFocused(), "Focus should move More button to header");
-			assert.notOk(await moreButton.isFocused(), "The More button should not be focused");
+		// Assert
+		assert.ok(await tableHeader.isFocusedDeep(), "Focus should move More button to header");
+		assert.notOk(await moreButton.isFocusedDeep(), "The More button should not be focused");
 
-			// Act
-			await browser.keys(["Alt", "Down"]);
+		// Act
+		await browser.keys(["Alt", "ArrowDown"]);
 
-			// Assert
-			assert.ok(await secondRow.isFocused(), "Focus should move from header to last focused row");
-			assert.notOk(await tableHeader.isFocused(), "The header should not be focused");
-		}, 1600);
+		// Assert
+		assert.ok(await secondRow.isFocused(), "Focus should move from header to last focused row");
+		assert.notOk(await tableHeader.isFocusedDeep(), "The header should not be focused");
 	});
 
 	it("SHIFT + UP/DOWN", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
 		const firstRow = await browser.$("#firstRowMultiSelect");
@@ -705,7 +724,7 @@ describe("Table keyboard interaction", () => {
 	});
 
 	it("CTRL + HOME/END", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
 		const tableHeader = await table.shadow$(".ui5-table-header-row");
@@ -726,7 +745,7 @@ describe("Table keyboard interaction", () => {
 	});
 
 	it("SHIFT + HOME/END", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/TableSelection.html`);
+		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
 		const firstRow = await browser.$("#firstRowMultiSelect");

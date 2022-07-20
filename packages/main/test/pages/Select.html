@@ -10,11 +10,11 @@
 		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-<link rel="stylesheet" type="text/css" href="styles/Select.css">
+	<script src="../../bundle.esm.js" type="module"></script>
+
+
+<link rel="stylesheet" type="text/css" href="./styles/Select.css">
 </head>
 
 <body class="select1auto">
@@ -27,7 +27,7 @@
 	<h2>Content size</h2>
 	<ui5-label id="lblResult"></ui5-label>
 	<ui5-select id="mySelect">
-		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option id="firstOption" selected>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
@@ -40,7 +40,11 @@
 	</ui5-select>
 
 	<h2>Warning Select</h2>
-	<ui5-select id="mySelect3" value-state="Warning"></ui5-select>
+	<ui5-select id="mySelect3" value-state="Warning">
+		<ui5-option>This option has text bigger than ui5-select's width</ui5-option>
+		<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+
+	</ui5-select>
 
 	<h2>Disabled Select</h2>
 	<ui5-select id="mySelect4" disabled value-state="Success"></ui5-select>
@@ -113,6 +117,15 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 </section>
+
+	<section>
+		<h2>Select with additional text</h2>
+		<ui5-select id="mySelect6">
+			<ui5-option additional-text="DZ">Algeria</ui5-option>
+			<ui5-option selected additional-text="AR">Argentina</ui5-option>
+			<ui5-option additional-text="AU">Australia</ui5-option>
+		</ui5-select>
+	</section>
 </body>
 <script>
 	var countries =  [{ key: "Aus", text: "Australia" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }];
@@ -209,5 +222,4 @@
 		select.innerHTML = initialItemsHTML;
 	});
 </script>
-</body>
 </html>

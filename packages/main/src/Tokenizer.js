@@ -295,7 +295,7 @@ class Tokenizer extends UI5Element {
 			this._handleEndShift(event);
 		}
 
-		this._handleItemNavigation(event, this.tokens);
+		this._handleItemNavigation(event, this._tokens);
 	}
 
 	_handleItemNavigation(event, tokens) {
@@ -516,6 +516,20 @@ class Tokenizer extends UI5Element {
 
 	get valueStateMessageText() {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	/**
+	 * This method is relevant for sap_horizon theme only
+	 */
+	 get _valueStateMessageIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get _isPhone() {

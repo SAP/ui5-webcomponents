@@ -400,11 +400,13 @@ class RadioButton extends UI5Element {
 			return this.toggle();
 		}
 
-		if (isDown(event) || isRight(event)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (isDown(event) || (!isRTL && isRight(event)) || (isRTL && isLeft(event))) {
 			this._handleDown(event);
 		}
 
-		if (isUp(event) || isLeft(event)) {
+		if (isUp(event) || (!isRTL && isLeft(event)) || (isRTL && isRight(event))) {
 			this._handleUp(event);
 		}
 	}

@@ -11,4 +11,6 @@
 	--_ui5_slider_handle_top: -0.75rem;
 	--_ui5_slider_progress_background: var(--sapSelectedColor);
 	--_ui5_slider_tickmark_top: -0.2525rem;
+	--_ui5_slider_handle_margin_left: -.9375rem;
+	--_ui5_range_slider_root_hover_handle_icon_display: none;
 }

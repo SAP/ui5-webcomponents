@@ -25,7 +25,10 @@
 
 		{{#if this.text}}
 			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
-				<span class="{{this.headerSemanticIconClasses}}"></span>
+				{{#if this.semanticIconName}}
+					<ui5-icon class="{{semanticIconClasses}}" name="{{semanticIconName}}"></ui5-icon>
+				{{/if}}
+
 				{{this.displayText}}
 			{{#if this.isSingleClickArea}}
 			<span class="ui5-tab-single-click-icon">
@@ -34,8 +37,8 @@
 			{{/if}}
 			</span>
 		{{/if}}
-
 	</div>
+
 	{{#if this.requiresExpandButton}}
 		<div class="ui5-tab-expand-button" @click="{{_onTabExpandButtonClick}}">
 			<ui5-button
@@ -43,6 +46,7 @@
 				icon="slim-arrow-down"
 				design="Transparent"
 				tabindex="-1"
+				?disabled="{{disabled}}"
 				aria-haspopup="true">
 			</ui5-button>
 		</div>

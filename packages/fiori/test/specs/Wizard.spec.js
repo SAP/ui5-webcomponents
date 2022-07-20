@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Wizard general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
+		await browser.url(`test/pages/Wizard_test.html`);
 	});
 
 	it("test initial state", async () => {
@@ -260,7 +259,7 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests no scrolling to step, if the step was not changed", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
+		await browser.url(`test/pages/Wizard_test.html`);
 
 		const wizard = await browser.$("#wizTest");
 		const wizardContentDOM = await wizard.shadow$(".ui5-wiz-content");
@@ -294,7 +293,7 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests small screen", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test_mobile.html`);
+		await browser.url(`test/pages/Wizard_test_mobile.html`);
 
 		const wizard = await browser.$("#wizTest");
 		const wizardDisabled = await browser.$("#wizTest2");

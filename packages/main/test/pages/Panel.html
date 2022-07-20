@@ -17,9 +17,9 @@
 		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -49,7 +49,7 @@
 
 <body class="panel1auto">
 
-<link rel="stylesheet" type="text/css" href="styles/Panel.css">
+<link rel="stylesheet" type="text/css" href="./styles/Panel.css">
 
 	<ui5-panel id="p1" collapsed accessible-role="Complementary" no-animation>
 
@@ -142,6 +142,16 @@
 			Some short text.
 		</ui5-label>
 
+	</ui5-panel>
+
+	<br>
+
+	<ui5-panel id="panel-expandable">
+		<!-- Content -->
+		<ui5-title>Panel without header and header text</ui5-title>
+		<ui5-label wrapping-type="Normal">
+			The panel consists only of a content part.
+		</ui5-label>
 	</ui5-panel>
 
 	<br>
