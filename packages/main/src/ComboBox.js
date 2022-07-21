@@ -839,13 +839,21 @@ class ComboBox extends UI5Element {
 			this.filterValue = this._selectedItemText;
 		}
 
-		if (isPhone() && event.target.getAttribute("icon") === "decline") {
+		if (isPhone() && event && event.target.getAttribute("icon") === "decline") {
 			this.value = this._lastValue;
+			this.filterValue = this._lastValue;
+		}
+
+		if (isPhone() && this.value !== this._lastValue) {
+			this._fireChangeEvent();
+		}
+
+		if (isPhone() && this.value === "undefined") {
+			this.value = "";
 		}
 
 		this._isValueStateFocused = false;
 		this._clearFocus();
-
 		this.responsivePopover.close();
 	}
 
@@ -941,7 +949,6 @@ class ComboBox extends UI5Element {
 
 		const sameItemSelected = this.value === this._selectedItemText;
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
-
 		if (sameItemSelected && sameSelectionPerformed) {
 			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
