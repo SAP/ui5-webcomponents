@@ -530,7 +530,13 @@ class Popup extends UI5Element {
 		restoreFocusQueue.push(new Promise(resolve => {
 			setTimeout(() => {
 				// don't restore the focus if the clicked element received the focus
-				const isActiveElemClickable = document.activeElement.isUI5Element ? isNodeClickable(document.activeElement.getFocusDomRef()) : isNodeClickable(document.activeElement);
+				let isActiveElemClickable;
+
+				if (document.activeElement.isUI5Element) {
+					isActiveElemClickable = isNodeClickable(document.activeElement.getFocusDomRef()) || isNodeClickable(document.activeElement.shadowRoot.activeElement);
+				} else {
+					isActiveElemClickable = isNodeClickable(document.activeElement);
+				}
 
 				if (this._focusedElementBeforeOpen && !isActiveElemClickable) {
 					this._focusedElementBeforeOpen.focus();
