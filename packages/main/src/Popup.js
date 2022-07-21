@@ -5,7 +5,7 @@ import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
-import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
@@ -322,7 +322,7 @@ class Popup extends UI5Element {
 	}
 
 	_onkeydown(e) {
-		if (!this.isOpen() || (e.target === this._root && isTabPrevious(e))) {
+		if ((isEnter(e) && !this.isOpen()) || (e.target === this._root && isTabPrevious(e))) {
 			e.preventDefault();
 		}
 	}
