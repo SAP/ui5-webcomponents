@@ -137,25 +137,33 @@ describe("Eventing", () => {
 		assert.strictEqual(changeCountText, "0", "Change was fired once");
 	});
 
-	// Uncomment when the issue is fixed
-	// 1. [#5485] The combo box should fire change event when the "OK" button is pressed after interaction in the mobile picker
-	// it("Should fire change event when pressing the picker's OK button", async () => {
-	// 	const combo = await browser.$("#change-cb");
-	// 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
-	// 	await combo.scrollIntoView();
-	// 	await combo.click();
-	// 	const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-	// 	const dialogOkButton =await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
-	// 	await dialogInput.setValue("");
-	// 	await dialogInput.keys("A");
-	// 	await dialogOkButton.click();
-	// 	assert.strictEqual(await combo.getAttribute("value"), "Argentina", "The combo box have correct value attribute");
-	// 	const changeText = await browser.$("#change-placeholder").getText();
-	// 	assert.strictEqual(changeText, "Argentina", "The field was changed as change event was fired");
-	// 	const changeCountText = await browser.$("#change-count").getText();
-	// 	assert.strictEqual(changeCountText, "1", "Change was fired once");
-	// 	assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
-	// });
+	/*	Uncomment when the issue is fixed
+	1. [#5485] The combo box should fire change event when the "OK" button is pressed after interaction in the mobile picker
+
+	it("Should fire change event when pressing the picker's OK button", async () => {
+		const combo = await browser.$("#change-cb");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
+
+		await combo.scrollIntoView();
+		await combo.click();
+
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
+		const dialogOkButton =await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+
+		await dialogInput.setValue("");
+		await dialogInput.keys("A");
+		await dialogOkButton.click();
+
+		assert.strictEqual(await combo.getAttribute("value"), "Argentina", "The combo box have correct value attribute");
+		const changeText = await browser.$("#change-placeholder").getText();
+
+		assert.strictEqual(changeText, "Argentina", "The field was changed as change event was fired");
+		const changeCountText = await browser.$("#change-count").getText();
+
+		assert.strictEqual(changeCountText, "1", "Change was fired once");
+		assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
+		
+	});	*/
 
 	it ("When select an item, then open the dialog again and delete the text, then press OK button, the value should be deleted.", async ()=> {
 		const cb = await browser.$("#combo2");
@@ -259,5 +267,4 @@ describe("Value state header", () => {
 
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 	});
-
 });
