@@ -182,12 +182,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible name of the component.
+		 * Defines the accessible aria name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.16
+		 * @public
+		 * @since 1.6.0
 		 */
 		accessibleName: {
 			type: String,
