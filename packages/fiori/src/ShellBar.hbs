@@ -13,7 +13,7 @@
 		{{#if hasMenuItems}}
 				{{#unless showLogoInMenuButton}}
 					<span class="ui5-shellbar-logo"
-						role="button"
+						role="{{accLogoRole}}"
 						aria-label="{{_logoText}}"
 						title="{{_logoText}}"
 						@click="{{_logoPress}}"
@@ -40,7 +40,11 @@
 						data-ui5-stable="menu"
 					>
 						{{#if showLogoInMenuButton}}
-							<span class="ui5-shellbar-logo" aria-label="{{_logoText}}" title="{{_logoText}}">
+							<span
+								class="ui5-shellbar-logo"
+								role="{{accLogoRole}}"
+								aria-label="{{_logoText}}"
+								title="{{_logoText}}">
 								<slot name="logo"></slot>
 							</span>
 						{{/if}}
@@ -60,7 +64,7 @@
 		{{#unless hasMenuItems}}
 			{{#if hasLogo}}
 				<span class="ui5-shellbar-logo"
-					role="button"
+					role="{{accLogoRole}}"
 					aria-label="{{_logoText}}"
 					title="{{_logoText}}"
 					@click="{{_logoPress}}"
