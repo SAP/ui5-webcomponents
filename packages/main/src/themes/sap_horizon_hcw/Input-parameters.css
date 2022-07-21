@@ -19,7 +19,7 @@
 	--_ui5-input_error_placeholder_color: var(--sapField_TextColor);
 	--_ui5_input_custom_icon_padding: .5rem .625rem;
 	--_ui5_input_value_state_error_hover_background: var(--sapField_InvalidBackground);
-	--_ui5_input_value_state_error_placeholder_font_weight: bold;
+	--_ui5_input_value_state_error_warning_placeholder_font_weight: bold;
 	--_ui5_input_focus_outline_color: var(--sapField_Active_BorderColor);
 }
 
