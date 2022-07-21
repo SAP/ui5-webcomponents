@@ -55,7 +55,7 @@ describe("Component Behavior", () => {
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
 			// assert
-			assert.strictEqual(await logoDOM.getAttribute("role"), "Custom Logo Role",
+			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
 				"Logo has the correct custom role.");
 		});
 	});
