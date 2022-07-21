@@ -9,7 +9,6 @@ import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import isNodeClickable from "@ui5/webcomponents-base/dist/util/isNodeClickable.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -190,7 +189,6 @@ const createBlockingStyle = () => {
 createBlockingStyle();
 
 const pageScrollingBlockers = new Set();
-const restoreFocusQueue = [];
 
 /**
  * @class
@@ -324,7 +322,7 @@ class Popup extends UI5Element {
 	}
 
 	_onkeydown(e) {
-		if (e.target === this._root && isTabPrevious(e)) {
+		if (!this.isOpen() || (e.target === this._root && isTabPrevious(e))) {
 			e.preventDefault();
 		}
 	}
@@ -449,7 +447,6 @@ class Popup extends UI5Element {
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 
-		await Promise.all(restoreFocusQueue);
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
@@ -504,7 +501,6 @@ class Popup extends UI5Element {
 
 		if (!this.preventFocusRestore && !preventFocusRestore) {
 			this.resetFocus();
-			await Promise.all(restoreFocusQueue);
 		}
 
 		this.fireEvent("after-close", {}, false, false);
@@ -527,26 +523,8 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		restoreFocusQueue.push(new Promise(resolve => {
-			setTimeout(() => {
-				// don't restore the focus if the clicked element received the focus
-				let isActiveElemClickable;
-
-				if (document.activeElement.isUI5Element) {
-					isActiveElemClickable = isNodeClickable(document.activeElement.getFocusDomRef()) || isNodeClickable(document.activeElement.shadowRoot.activeElement);
-				} else {
-					isActiveElemClickable = isNodeClickable(document.activeElement);
-				}
-
-				if (this._focusedElementBeforeOpen && !isActiveElemClickable) {
-					this._focusedElementBeforeOpen.focus();
-				}
-
-				this._focusedElementBeforeOpen = null;
-				restoreFocusQueue.shift();
-				resolve();
-			});
-		}));
+		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen = null;
 	}
 
 	/**
