@@ -528,9 +528,11 @@ class Popup extends UI5Element {
 
 		restoreFocusQueue.push(new Promise(resolve => {
 			setTimeout(() => {
-				this._focusedElementBeforeOpen.focus();
-				this._focusedElementBeforeOpen = null;
-				restoreFocusQueue.shift();
+				if (this._focusedElementBeforeOpen) {
+					this._focusedElementBeforeOpen.focus();
+					this._focusedElementBeforeOpen = null;
+					restoreFocusQueue.shift();
+				}
 				resolve();
 			});
 		}));
