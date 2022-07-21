@@ -685,7 +685,10 @@ class ViewSettingsDialog extends UI5Element {
 	 * <code>
 	 *  {sortOrder: "Ascending", sortBy: "Name", filters: [{Filter 1: ["Some filter 1", "Some filter 2"]}, {Filter 2: ["Some filter 4"]}]}
 	 * </code>
-	 * @param {Object} settings A value to be set as predefined settings.
+   * @param {Object} settings - predefined settings.
+   * @param {string} settings.sortOrder - sort order
+   * @param {string} settings.sortBy - sort by
+   * @param {Array.<Object>} settings.filters - filters
 	 * @public
 	 */
 	setConfirmedSettings(settings) {
