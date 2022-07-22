@@ -107,7 +107,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria hidden state of the component.
+		 * Defines the ARIA hidden state of the component.
 		 * Note: If the role is presentation the default value of aria-hidden will be true.
 		 * @private
 		 * @since 1.0.0-rc.15

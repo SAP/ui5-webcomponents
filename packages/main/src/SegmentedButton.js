@@ -26,7 +26,7 @@ const metadata = {
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""

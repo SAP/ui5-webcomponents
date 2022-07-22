@@ -105,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria role of the component.
+		 * Sets the accessible ARIA role of the component.
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
@@ -133,7 +133,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
