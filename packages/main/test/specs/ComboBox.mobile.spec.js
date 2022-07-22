@@ -86,9 +86,6 @@ describe("Eventing", () => {
 
 		const changeCountText = await browser.$("#change-count").getText();
 		assert.strictEqual(changeCountText, "1", "Change was fired once");
-
-		const dialogOkButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
-		await dialogOkButton.click();
 	});
 
 	it("Should fire input event with correct parameters when typing in internal input", async () => {
@@ -137,9 +134,6 @@ describe("Eventing", () => {
 		assert.strictEqual(changeCountText, "0", "Change was fired once");
 	});
 
-	/*	Uncomment when the issue is fixed
-	1. [#5485] The combo box should fire change event when the "OK" button is pressed after interaction in the mobile picker
-
 	it("Should fire change event when pressing the picker's OK button", async () => {
 		const combo = await browser.$("#change-cb");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb")
@@ -163,7 +157,7 @@ describe("Eventing", () => {
 		assert.strictEqual(changeCountText, "1", "Change was fired once");
 		assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
 		
-	});	*/
+	});
 
 	it ("When select an item, then open the dialog again and delete the text, then press OK button, the value should be deleted.", async ()=> {
 		const cb = await browser.$("#combo2");
@@ -174,6 +168,7 @@ describe("Eventing", () => {
 		const resPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialogInput = await resPopover.$(".ui5-input-inner-phone");
 		const okBtn = await resPopover.$(".ui5-responsive-popover-footer").$("ui5-button");
+
 		await dialogInput.click();
 		await dialogInput.setValue('');
 		await dialogInput.keys('A');
@@ -181,11 +176,11 @@ describe("Eventing", () => {
 		await okBtn.click();
 
 		assert.strictEqual(await cb.getProperty("value"), "Algeria", "Value should be Algeria.");
+		
 		await cb.click();
-		await dialogInput.click();
-		await dialogInput.keys('ArrowDown');
 		await dialogInput.keys('Backspace');
 		await okBtn.click();
+
 		assert.strictEqual(await cb.getProperty("value"), "", "Value should be empty.");
 	});
 });

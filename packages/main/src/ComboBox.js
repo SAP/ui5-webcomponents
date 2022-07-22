@@ -552,6 +552,11 @@ class ComboBox extends UI5Element {
 	}
 
 	_arrowClick() {
+
+		if (isPhone() && this.value && !this._lastValue) {
+			this._lastValue = this.value;
+			}
+
 		this.inner.focus();
 		this._resetFilter();
 
@@ -834,23 +839,20 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover(event) {
-		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
+		if (event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
 			this.value = this._selectedItemText;
 			this.filterValue = this._selectedItemText;
 		}
 
-		if (isPhone() && event && event.target.getAttribute("icon") === "decline") {
-			this.value = this._lastValue;
-			this.filterValue = this._lastValue;
+		if (event && event.target.classList.contains("ui5-responsive-popover-close-btn")) {
+			this.value = this._lastValue ?  this._lastValue : "";
+			this.filterValue = this._lastValue ?  this._lastValue : "" ;
 		}
 
-		if (isPhone() && this.value !== this._lastValue) {
+		if (isPhone()) {
 			this._fireChangeEvent();
 		}
 
-		if (isPhone() && this.value === "undefined") {
-			this.value = "";
-		}
 
 		this._isValueStateFocused = false;
 		this._clearFocus();
@@ -868,6 +870,7 @@ class ComboBox extends UI5Element {
 		// Return the filtered items and their group items
 		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
 	}
+
 
 	/**
 	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
