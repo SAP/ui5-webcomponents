@@ -340,6 +340,9 @@ describe("Popover general interaction", () => {
 		assert.notOk(await browser.$("#chainedPopover1").isDisplayedInViewport(), "'Chained popover 1' should be successfully closed")
 		
 		await browser.keys("Escape");
+		const activeElement = await browser.$(await browser.getActiveElement());
+
+		assert.strictEqual(await activeElement.getAttribute("id"), await openChainedPopover1.getAttribute("id"), "The focus should be correctly restored");
 	});
 });
 

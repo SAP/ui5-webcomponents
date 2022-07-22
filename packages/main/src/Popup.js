@@ -322,7 +322,11 @@ class Popup extends UI5Element {
 	}
 
 	_onkeydown(e) {
-		if ((isEnter(e) && !this.isOpen()) || (e.target === this._root && isTabPrevious(e))) {
+		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
+		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+
+		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
 			e.preventDefault();
 		}
 	}
@@ -476,7 +480,7 @@ class Popup extends UI5Element {
 	 * Hides the block layer (for modal popups only)
 	 * @public
 	 */
-	async close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
