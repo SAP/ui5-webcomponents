@@ -854,7 +854,7 @@ class ComboBox extends UI5Element {
 
 		this._isValueStateFocused = false;
 		this._clearFocus();
-		
+
 		this.responsivePopover.close();
 	}
 
