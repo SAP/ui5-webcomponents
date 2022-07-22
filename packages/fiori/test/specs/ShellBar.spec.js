@@ -27,16 +27,36 @@ describe("Component Behavior", () => {
 		await browser.url(`test/pages/ShellBar.html`);
 	});
 
-	describe("Аccessibility", () => {
+	describe("Accessibility", () => {
 		it("tests accessibilityTexts property", async () => {
 			const PROFILE_BTN_CUSTOM_TOOLTIP = "John Dow";
 			const LOGO_CUSTOM_TOOLTIP = "Custom logo title";
 			const sb = await browser.$("#sbAcc");
 
 			assert.strictEqual(await sb.getProperty("_profileText"), PROFILE_BTN_CUSTOM_TOOLTIP,
-				"Profile button tooltip can be cutomized.");
+				"Profile button tooltip can be customized.");
 			assert.strictEqual(await sb.getProperty("_logoText"), LOGO_CUSTOM_TOOLTIP,
-				"Logo tooltip can be cutomized.");
+				"Logo tooltip can be customized.");
+		});
+
+		it("tests acc default roles", async () => {
+			let sb = await browser.$("#sbAcc");
+
+			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
+
+			// assert
+			assert.strictEqual(await logoDOM.getAttribute("role"), "button",
+				"Logo has the correct default role.");
+		});
+
+		it("tests acc custom roles", async () => {
+			let sb = await browser.$("#sbAccRoles");
+
+			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
+
+			// assert
+			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
+				"Logo has the correct custom role.");
 		});
 	});
 

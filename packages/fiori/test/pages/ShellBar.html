@@ -223,9 +223,13 @@
 		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
 	</ui5-shellbar>
 
+	<ui5-shellbar id="sbAccRoles">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+	</ui5-shellbar>
+
 	<script>
 		mySearch.addEventListener("suggestionItemSelect", function (event) {
-			 console.log(event);
+			console.log(event);
 		});
 
 		shellbar.addEventListener("ui5-profileClick", function(event) {
@@ -304,6 +308,10 @@
 		sbAcc.accessibilityTexts = {
 			profileButtonTitle: "John Dow",
 			logoTitle: "Custom logo title",
+		};
+
+		sbAccRoles.accessibilityRoles = {
+			logoRole: "link"
 		};
 	</script>
 </body>
