@@ -555,6 +555,10 @@ class ComboBox extends UI5Element {
 		this.inner.focus();
 		this._resetFilter();
 
+		if (isPhone() && this.value && !this._lastValue) {
+			this._lastValue = this.value;
+		}
+
 		this._toggleRespPopover();
 	}
 
@@ -834,9 +838,18 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover(event) {
-		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
+		if (event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
 			this.value = this._selectedItemText;
 			this.filterValue = this._selectedItemText;
+		}
+
+		if (event && event.target.classList.contains("ui5-responsive-popover-close-btn")) {
+			this.value = this._lastValue ? this._lastValue : "";
+			this.filterValue = this._lastValue ? this._lastValue : "";
+		}
+
+		if (isPhone()) {
+			this._fireChangeEvent();
 		}
 
 		this._isValueStateFocused = false;
