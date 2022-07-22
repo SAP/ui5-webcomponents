@@ -854,6 +854,7 @@ class ComboBox extends UI5Element {
 
 		this._isValueStateFocused = false;
 		this._clearFocus();
+		
 		this.responsivePopover.close();
 	}
 
@@ -949,6 +950,7 @@ class ComboBox extends UI5Element {
 
 		const sameItemSelected = this.value === this._selectedItemText;
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
+
 		if (sameItemSelected && sameSelectionPerformed) {
 			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
