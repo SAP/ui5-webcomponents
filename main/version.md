@@ -1,7 +1,9 @@
-commit 967b4419433c1f02bc2e0fbd00696a12597e2fb1
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Thu Jul 21 17:00:00 2022 +0300
+commit eef5c50a928dade06636872f106ddd5ec81a893e
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Jul 22 11:15:19 2022 +0300
 
-    feat(ui5-radio-button): add accessibleName property (#5548)
+    feat(ui5-shellbar): new property accessibilityRoles (#5551)
     
-    Fixes: #5516
+    New property accessibilityRoles added to set custom role on the logo.
+    
+    Fixes: #4775
