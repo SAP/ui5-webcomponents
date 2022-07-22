@@ -50,6 +50,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
+import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -470,6 +471,7 @@ class MultiComboBox extends UI5Element {
 			Popover,
 			List,
 			StandardListItem,
+			GroupHeaderListItem,
 			ToggleButton,
 			Button,
 		];
