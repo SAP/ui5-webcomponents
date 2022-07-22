@@ -1,9 +1,9 @@
-commit eef5c50a928dade06636872f106ddd5ec81a893e
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Jul 22 11:15:19 2022 +0300
+commit 9c26e8e4fa672ecd4ffced9a21c834c2da1a60c5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jul 22 14:29:25 2022 +0300
 
-    feat(ui5-shellbar): new property accessibilityRoles (#5551)
+    fix(MultoComboBox): fix component scoping (#5553)
     
-    New property accessibilityRoles added to set custom role on the logo.
+    GroupHeaderListItem is used in the MultiComboboxPopoverTemplate and it should be part of the MultiCombobox dependencies in order to be identified and scoped, when Scoping is turned on.
     
-    Fixes: #4775
+    Fixes: #5521
