@@ -1196,10 +1196,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get accLogoRole() {
-		if (this.hasLogo) {
-			return this.accessibilityRoles.logoRole || "button";
-		}
-		return undefined;
+		return this.accessibilityRoles.logoRole || "button";
 	}
 
 	static get dependencies() {
