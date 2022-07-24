@@ -19,6 +19,7 @@
 
 .ui5-mp-item {
 	display: flex;
+	flex-direction: column;
 	width: calc(33.333% - 0.125rem);
 	height: var(--_ui5_month_picker_item_height);
 	color: var(--sapButton_Lite_TextColor);
@@ -37,11 +38,17 @@
 	border-radius: var(--_ui5_monthpicker_item_border_radius);
 }
 
+.ui5-dp-monthsectext {
+	font-size: 0.75rem;
+	color: var(--sapNeutralElementColor);
+}
+
 .ui5-mp-item:hover {
 	background-color: var(--sapList_Hover_Background);
 }
 
-.ui5-mp-item.ui5-mp-item--selected {
+.ui5-mp-item.ui5-mp-item--selected,
+.ui5-mp-item.ui5-mp-item--selected .ui5-dp-monthsectext {
 	box-shadow: var(--_ui5_monthpicker_item_selected_box_shadow);
 	font-weight: var(--_ui5_monthpicker_item_selected_font_wieght);
 	background-color: var(--_ui5_monthpicker_item_selected_background_color);

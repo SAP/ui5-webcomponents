@@ -265,6 +265,33 @@
 		</ui5-multi-input>
 	</div>
 
+	<div class="sample-container">
+
+		<h1 class="sample-container-title">Eventing</h1>
+
+		<ui5-multi-input id="mi-event">
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<span>Event:</span>
+		<br>
+		<input id="event-type">
+		<br>
+		<span>Count:</span>
+		<br>
+		<input id="event-count">
+		<br>
+		<span>Event target text:</span>
+		<br>
+		<input id="event-target-text">
+
+	</div>
+
 	<script>
 
 		var createTokenFromText = function (text) {
@@ -346,6 +373,22 @@
 
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
+
+		const handleTokenDelete2 = (event) => {
+			const eventType = document.getElementById("event-type");
+			const eventCount = document.getElementById("event-count");
+			const eventTargetText = document.getElementById("event-target-text");
+
+			eventType.value = event.type;
+			eventTargetText.value = event.detail.token.text;
+
+			if (!eventCount.value || isNaN(eventCount.value)) {
+				eventCount.value = 1;
+			} else {
+				eventCount.value = parseInt(eventCount.value) + 1;
+			}
+		}
+		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);
 	</script>
 </body>
 

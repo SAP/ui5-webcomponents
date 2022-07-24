@@ -82,11 +82,15 @@ class FormSupport {
 
 		if (currentElement) {
 			// eslint-disable-next-line no-undef
-			currentElement.dispatchEvent(new SubmitEvent("submit", {
+			const submitPrevented = !currentElement.dispatchEvent(new SubmitEvent("submit", {
 				bubbles: true,
 				cancelable: true,
 				submitter: element,
 			}));
+
+			if (submitPrevented) {
+				return;
+			}
 
 			currentElement.submit();
 		}

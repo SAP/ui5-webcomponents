@@ -15,6 +15,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import CalendarPart from "./CalendarPart.js";
@@ -65,9 +66,6 @@ const metadata = {
 	},
 };
 
-const PAGE_SIZE = 20; // Total years on a single page
-const ROW_SIZE = 4; // Years per row (5 rows of 4 years each)
-
 /**
  * @class
  *
@@ -97,27 +95,39 @@ class YearPicker extends CalendarPart {
 		this._buildYears();
 	}
 
+	_getPageSize() {
+		// Total years on a single page depending on using on one or two calendar type
+		return this.secondaryCalendarType ? 8 : 20;
+	}
+
+	_getRowSize() {
+		// Years per row (5 rows of 4 years each) for one claendar type and (4 row of 2 years each) for two calendar type
+		return this.secondaryCalendarType ? 2 : 4;
+	}
+
 	_buildYears() {
 		if (this._hidden) {
 			return;
 		}
-
+		const pageSize = this._getPageSize();
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
-
+		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, getLocale());
 		this._calculateFirstYear();
-		this._lastYear = this._firstYear + PAGE_SIZE - 1;
+		this._lastYear = this._firstYear + pageSize - 1;
 
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
 		const maxDate = this._maxDate; // store the value of the expensive getter
 		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
+		let tempDateInSecType;
+		let textInSecType;
 		tempDate.setYear(this._firstYear);
 
 		const intervals = [];
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
-		for (let i = 0; i < PAGE_SIZE; i++) {
+		for (let i = 0; i < pageSize; i++) {
 			timestamp = tempDate.valueOf() / 1000;
 
 			const isSelected = this.selectedDates.some(itemTimestamp => {
@@ -127,6 +137,13 @@ class YearPicker extends CalendarPart {
 			const isFocused = tempDate.getYear() === calendarDate.getYear();
 			const isDisabled = tempDate.getYear() < minDate.getYear() || tempDate.getYear() > maxDate.getYear();
 
+			if (this.secondaryCalendarType) {
+				tempDateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp, true);
+				textInSecType = tempDateInSecType.firstDate.getYear() === tempDateInSecType.lastDate.getYear
+					? `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)}`
+					: `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)} - ${oYearFormatInSecType.format(tempDateInSecType.lastDate.toLocalJSDate(), true)}`;
+			}
+
 			const year = {
 				timestamp: timestamp.toString(),
 				_tabIndex: isFocused ? "0" : "-1",
@@ -134,6 +151,7 @@ class YearPicker extends CalendarPart {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
+				yearInSecType: this.secondaryCalendarType && textInSecType,
 				disabled: isDisabled,
 				classes: "ui5-yp-item",
 			};
@@ -146,7 +164,10 @@ class YearPicker extends CalendarPart {
 				year.classes += " ui5-yp-item--disabled";
 			}
 
-			const intervalIndex = parseInt(i / ROW_SIZE);
+			if (this.secondaryCalendarType) {
+				year.classes += " ui5-yp-item-secondary-type";
+			}
+			const intervalIndex = parseInt(i / this._getRowSize());
 
 			if (intervals[intervalIndex]) {
 				intervals[intervalIndex].push(year);
@@ -161,24 +182,25 @@ class YearPicker extends CalendarPart {
 	}
 
 	_calculateFirstYear() {
+		const pageSize = this._getPageSize();
 		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear(); // 9999
 		const currentYear = this._calendarDate.getYear();
 
 		// 1. If first load - center the current year (set first year to be current year minus half page size)
 		if (!this._firstYear) {
-			this._firstYear = currentYear - PAGE_SIZE / 2;
+			this._firstYear = currentYear - pageSize / 2;
 		}
 
 		// 2. If out of range - change by a page (20) - do not center in order to keep the same position as the last page
 		if (currentYear < this._firstYear) {
-			this._firstYear -= PAGE_SIZE;
-		} else if (currentYear >= this._firstYear + PAGE_SIZE) {
-			this._firstYear += PAGE_SIZE;
+			this._firstYear -= pageSize;
+		} else if (currentYear >= this._firstYear + pageSize) {
+			this._firstYear += pageSize;
 		}
 
 		// 3. If the date was changed by more than 20 years - reset _firstYear completely
-		if (Math.abs(this._firstYear - currentYear) >= PAGE_SIZE) {
-			this._firstYear = currentYear - PAGE_SIZE / 2;
+		if (Math.abs(this._firstYear - currentYear) >= pageSize) {
+			this._firstYear = currentYear - pageSize / 2;
 		}
 
 		// Keep it in the range between the min and max year
@@ -186,8 +208,8 @@ class YearPicker extends CalendarPart {
 		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear());
 
 		// If first year is > 9980, make it 9980 to not show any years beyond 9999
-		if (this._firstYear > absoluteMaxYear - PAGE_SIZE + 1) {
-			this._firstYear = absoluteMaxYear - PAGE_SIZE + 1;
+		if (this._firstYear > absoluteMaxYear - pageSize + 1) {
+			this._firstYear = absoluteMaxYear - pageSize + 1;
 		}
 	}
 
@@ -199,6 +221,8 @@ class YearPicker extends CalendarPart {
 
 	_onkeydown(event) {
 		let preventDefault = true;
+		const pageSize = this._getPageSize();
+		const rowSize = this._getRowSize();
 
 		if (isEnter(event)) {
 			this._selectYear(event);
@@ -209,19 +233,19 @@ class YearPicker extends CalendarPart {
 		} else if (isRight(event)) {
 			this._modifyTimestampBy(1);
 		} else if (isUp(event)) {
-			this._modifyTimestampBy(-ROW_SIZE);
+			this._modifyTimestampBy(-rowSize);
 		} else if (isDown(event)) {
-			this._modifyTimestampBy(ROW_SIZE);
+			this._modifyTimestampBy(rowSize);
 		} else if (isPageUp(event)) {
-			this._modifyTimestampBy(-PAGE_SIZE);
+			this._modifyTimestampBy(-pageSize);
 		} else if (isPageDown(event)) {
-			this._modifyTimestampBy(PAGE_SIZE);
+			this._modifyTimestampBy(pageSize);
 		} else if (isHome(event) || isEnd(event)) {
 			this._onHomeOrEnd(isHome(event));
 		} else if (isHomeCtrl(event)) {
 			this._setTimestamp(parseInt(this._years[0][0].timestamp)); // first year of first row
 		} else if (isEndCtrl(event)) {
-			this._setTimestamp(parseInt(this._years[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last year of last row
+			this._setTimestamp(parseInt(this._years[pageSize / rowSize - 1][rowSize - 1].timestamp)); // last year of last row
 		} else {
 			preventDefault = false;
 		}
@@ -235,7 +259,7 @@ class YearPicker extends CalendarPart {
 		this._years.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
 			if (indexInRow !== -1) { // The current year is on this row
-				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) year on the row
+				const index = homePressed ? 0 : this._getRowSize() - 1; // select the first (if Home) or last (if End) year on the row
 				this._setTimestamp(parseInt(row[index].timestamp));
 			}
 		});
@@ -297,7 +321,7 @@ class YearPicker extends CalendarPart {
 	 * @protected
 	 */
 	_hasNextPage() {
-		return this._firstYear + PAGE_SIZE - 1 < this._maxDate.getYear();
+		return this._firstYear + this._getPageSize() - 1 < this._maxDate.getYear();
 	}
 
 	/**
@@ -306,7 +330,8 @@ class YearPicker extends CalendarPart {
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-PAGE_SIZE);
+		const pageSize = this._getPageSize();
+		this._modifyTimestampBy(-pageSize);
 	}
 
 	/**
@@ -315,7 +340,7 @@ class YearPicker extends CalendarPart {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(PAGE_SIZE);
+		this._modifyTimestampBy(this._getPageSize());
 	}
 }
 

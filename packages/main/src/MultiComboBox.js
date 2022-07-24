@@ -50,6 +50,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
+import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -65,6 +66,10 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_INFORMATION,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
@@ -269,7 +274,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -466,6 +471,7 @@ class MultiComboBox extends UI5Element {
 			Popover,
 			List,
 			StandardListItem,
+			GroupHeaderListItem,
 			ToggleButton,
 			Button,
 		];
@@ -1447,7 +1453,19 @@ class MultiComboBox extends UI5Element {
 		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
-	get valueStateText() {
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+		}
+
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+	}
+
+	get valueStateDefaultText() {
 		let key = this.valueState;
 
 		if (this._performingSelectionTwice) {
@@ -1517,6 +1535,15 @@ class MultiComboBox extends UI5Element {
 			"Error_Selection": MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR_ALREADY_SELECTED),
 			"Warning": MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			"Information": MultiComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			"Success": MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 

@@ -45,7 +45,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the item.
+		 * Defines the accessible ARIA name of the item.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined

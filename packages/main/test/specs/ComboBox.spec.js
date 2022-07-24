@@ -598,6 +598,33 @@ describe("Accessibility", async () => {
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
 
+	it ("Announce group item when accessed via keyboard", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$("[input-icon]");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
+		const itemAnnouncement1 = "Group Header A List item 1 of 17";
+		const itemAnnouncement2 = "Group Header Donut List item 6 of 17";
+
+		await arrow.click();
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
+
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
+	});
+
 	it ("Tests setting value programatically", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -622,6 +649,58 @@ describe("Accessibility", async () => {
 		await focusBtn.click();
 
 		assert.ok(await combo.getProperty("focused"), "ComboBox to be focused");
+	});
+
+	it("Value state type should be added to the screen readers default value states announcement", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cbWarning = await browser.$("#vs-warning-default");
+		const cbSuccess = await browser.$("#vs-success-default");
+		const cbInformation = await browser.$("#vs-information-default");
+
+		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
+		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await cbWarning.click();
+
+		let ariaHiddenText = await cbWarning.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+		let valueStateText = await popover.$("div").getHTML(false);
+
+		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
+
+		await cbWarning.keys("Escape");
+		await cbInformation.click();
+
+		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-information-default");
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		ariaHiddenText = await cbInformation.shadow$(".ui5-hidden-text").getHTML(false);
+		valueStateText = await popover.$("div").getHTML(false);
+
+		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText.includes("Informative entry"), true, "Displayed value state message text is correct");
+
+		await cbInformation.keys("Escape");
+		await cbSuccess.click();
+
+		ariaHiddenText = await cbSuccess.shadow$(".ui5-hidden-text").getHTML(false);
+		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+	});
+
+	it("Value state type should be added to the screen readers custom value states announcement", async () => {
+		const cbError = await browser.$("#value-state-error");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-error");
+
+		await cbError.click();
+		await cbError.keys("a");
+
+		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
+		const valueStateText = await popoverHeader.$("div").getHTML(false);
+		const ariaHiddenText = await cbError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+
+		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText.includes("Custom error"), true, "Displayed value state message text is correct");
 	});
 });
 

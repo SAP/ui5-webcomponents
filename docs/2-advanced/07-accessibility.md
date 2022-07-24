@@ -36,6 +36,17 @@ By doing so, you receive an input element with `role="combobox"` with all aria a
 In order to ease the setting of aria attributes, we have introduced properties that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility APIs section below.
 
 
+### **Invisible Messaging**
+The Invisible Message provides a way to programmaticaly expose dynamic content changes in a way that can be announced by screen readers. It marks the dynamic content changes as ARIA live regions so that you are able to inform the users of assistive technologies for a change that has happened to the UI.
+
+The Invisible Messaging service is designed to be used both internally in the components logic and from the applications. Using the service, you have to specify the message to be announced by the screen reader and the mode which will be inserted in the `aria-live` attribute via the `InvisibleMessage.announce(message, mode)` method. The possible modes to choose from are:
+* ` InvisibleMessageMode.Assertive` - indicates that updates to the region have the highest priority and should be presented to the user immediately.
+* `InvisibleMessageMode.Polite` - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
+
+According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the `announce` method.
+Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/)
+
+
 ### **Keyboard Handling**
 
 All standard UI elements and controls are designed to be keyboard-enabled. All suitable input channels (such as mouse, keyboard, or touch) are treated equally according to the capabilities of the device or the individual preferences of the user. For example, some users may prefer using the keyboard instead of a mouse, which lets them work faster.
@@ -97,6 +108,8 @@ The `accessible-name` property is currently supported in:
 * [Slider](https://sap.github.io/ui5-webcomponents/playground/components/Slider), 
 [Range Slider](https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
+
 
 
 ---
@@ -115,12 +128,14 @@ Will result in the shadow DOM as:
 ```
 
 The `accessible-name-ref` property is currently supported in:
+* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog), [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover)
 * User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
 * [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
 
 ---
 
@@ -313,5 +328,10 @@ In order to process the issues correctly, we would like to have the following in
 •	Browser: {...}
 
 •	Testing Tool
+
+## Note
+
+Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the SAPUI5 High Contrast theme and you are using browser different than Chrome and Edge this may cause conflicts, and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
+
 
 Next: [CSP](../csp)

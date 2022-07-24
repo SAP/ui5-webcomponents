@@ -72,6 +72,68 @@
 </section>
 
 <section>
+	<h3>Dynamic Message Strip Generator</h3>
+	<div class="snippet">
+		<div class="wrapper">
+			<ui5-button id="button1">Generate MessageStrip</ui5-button>
+		</div>
+		<script>
+			const container = document.querySelector(".wrapper");
+			const button =  document.querySelector("#button1");
+			button.addEventListener("click", function(event) {
+				let invisibleMessage =  window["sap-ui-webcomponents-bundle"].invisibleMessage;
+				const messageStrip = document.querySelector("#msgStrip");
+				const types = ["Information", "Warning", "Negative", "Positive"];
+				const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco.";
+				let type = types[Math.round(Math.random() * 3)];
+		
+				if (messageStrip) {
+					container.removeChild(messageStrip);
+				}
+		
+				let generatedMsgStrip = document.createElement("ui5-message-strip");
+				generatedMsgStrip.id = "msgStrip";
+				generatedMsgStrip.design = type;
+				generatedMsgStrip.textContent = text;
+
+				invisibleMessage.announce(`New Information Bar of type ${type} ${text}`, "Assertive");
+		
+				container.appendChild(generatedMsgStrip);
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+		<div class="wrapper">
+			<ui5-button id="button1">Generate MessageStrip</ui5-button>
+		</div>
+		<script>
+			const container = document.querySelector(".wrapper");
+			const button =  document.querySelector("#button1");
+			button.addEventListener("click", function(event) {
+				let invisibleMessage =  window["sap-ui-webcomponents-bundle"].invisibleMessage;
+				const messageStrip = document.querySelector("#msgStrip");
+				const types = ["Information", "Warning", "Negative", "Positive"];
+				const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco.";
+				let type = types[Math.round(Math.random() * 3)];
+		
+				if (messageStrip) {
+					container.removeChild(messageStrip);
+				}
+		
+				let generatedMsgStrip = document.createElement("ui5-message-strip");
+				generatedMsgStrip.id = "msgStrip";
+				generatedMsgStrip.design = type;
+				generatedMsgStrip.textContent = text;
+
+				invisibleMessage.announce(`New Information Bar of type ${type} ${text}`, "Assertive");
+		
+				container.appendChild(generatedMsgStrip);
+			});
+		</script>
+	</xmp></pre>
+</section>
+
+<section>
 	<h3>Custom MessageStrip</h3>
 	<div class="snippet">
 		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Information" hide-icon hide-close-button>You have new message.</ui5-message-strip>

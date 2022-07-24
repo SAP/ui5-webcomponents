@@ -116,6 +116,20 @@ const metadata = {
 		},
 
 		/**
+		 * An object of strings that defines additional accessibility roles for further customization.
+		 *
+		 * It supports the following fields:
+		 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.6.0
+		 */
+		accessibilityRoles: {
+			type: Object,
+		},
+
+		/**
 		 * An object of strings that defines several additional accessibility texts
 		 * for even further customization.
 		 *
@@ -1179,6 +1193,10 @@ class ShellBar extends UI5Element {
 				},
 			},
 		};
+	}
+
+	get accLogoRole() {
+		return this.accessibilityRoles.logoRole || "button";
 	}
 
 	static get dependencies() {

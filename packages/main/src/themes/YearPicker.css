@@ -44,11 +44,22 @@
 	border-radius: var(--_ui5_yearpicker_item_border_radius);
 }
 
+.ui5-yp-item-secondary-type {
+	flex-direction: column;
+	width: calc(50% - 0.125rem);
+}
+
+.ui5-yp-item-sec-type{
+	font-size: 0.75rem;
+	color: var(--sapNeutralElementColor);
+}
+
 .ui5-yp-item:hover {
 	background-color: var(--sapList_Hover_Background);
 }
 
-.ui5-yp-item.ui5-yp-item--selected {
+.ui5-yp-item.ui5-yp-item--selected,
+.ui5-yp-item.ui5-yp-item--selected .ui5-yp-item-sec-type {
 	background-color: var(--_ui5_yearpicker_item_selected_background_color);
 	color: var(--_ui5_yearpicker_item_selected_text_color);
 	box-shadow: var(--_ui5_yearpicker_item_selected_box_shadow);

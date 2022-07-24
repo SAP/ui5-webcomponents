@@ -6,6 +6,8 @@ const mkdirp = require("mkdirp");
 const prompts = require("prompts");
 const parser = require("npm-config-user-agent-parser");
 
+const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))).version;
+
 // from where all the files will be copied
 const TEMPLATE_DIR = path.join(`${__dirname}`, `template/`);
 
@@ -129,11 +131,11 @@ const createWebcomponentsPackage = async () => {
 			"./*": "./dist/*",
 		},
 		"dependencies": {
-			"@ui5/webcomponents-base": "1.1.1",
-			"@ui5/webcomponents-theming": "1.1.1",
+			"@ui5/webcomponents-base": version,
+			"@ui5/webcomponents-theming": version,
 		},
 		"devDependencies": {
-			"@ui5/webcomponents-tools": "1.1.1",
+			"@ui5/webcomponents-tools": version,
 			"chromedriver": "*",
 		},
 	};
