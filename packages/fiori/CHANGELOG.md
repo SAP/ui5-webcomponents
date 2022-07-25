@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Features
+
+* **ui5-bar:** implement resize handlers for each slot ([#5482](https://github.com/SAP/ui5-webcomponents/issues/5482)) ([a8a4acd](https://github.com/SAP/ui5-webcomponents/commit/a8a4acd))
+* **ui5-shellbar:** new property accessibilityRoles ([#5551](https://github.com/SAP/ui5-webcomponents/issues/5551)) ([eef5c50](https://github.com/SAP/ui5-webcomponents/commit/eef5c50)), closes [#4775](https://github.com/SAP/ui5-webcomponents/issues/4775)
+
+
+
+
+
 # [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
 
 
