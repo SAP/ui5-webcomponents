@@ -1,35 +1,30 @@
-name: Publish
+name: Release Snapshot
 
 on:
-  push:
-    branches:
-      - main
-jobs:
-  build:
-    if: "contains(github.event.head_commit.message, '#prerelease')"
-    runs-on: ubuntu-latest
+  workflow_dispatch
 
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: 12
+        node-version: 16
+        cache: 'yarn'
 
     - name: Install
-      run: yarn
+      run: yarn --frozen-lockfile
 
     - name: Build
       run: yarn build
-
-    - name: Auth
-      run: npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
       env:
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        ENABLE_CLDR: 1
 
-    - name: Publish to npm
+    - name: Publish
       env:
         NPM_USERNAME: ${{ secrets.NPM_USERNAME }}
         NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
         node ./.github/actions/pre-release.js
