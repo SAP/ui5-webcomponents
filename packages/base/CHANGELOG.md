@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Bug Fixes
+
+* **InvisibleMessage:** clear announcement after a while ([#5446](https://github.com/SAP/ui5-webcomponents/issues/5446)) ([af213f1](https://github.com/SAP/ui5-webcomponents/commit/af213f1))
+
+
+### Features
+
+* **InvisibleMessage:** make it available for application usage ([#5468](https://github.com/SAP/ui5-webcomponents/issues/5468)) ([c6bcc02](https://github.com/SAP/ui5-webcomponents/commit/c6bcc02))
+
+
+
+
+
 # [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
 
 
