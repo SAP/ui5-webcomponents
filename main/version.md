@@ -1,5 +1,5 @@
-commit 98ec2ba032dc7324c955e1acb9e93c3ee87eb392
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Jul 25 15:22:55 2022 +0300
+commit 469d9c5f36c27e0bc19e0de5cfac77e124e98c03
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 25 21:01:46 2022 +0300
 
-    docs(ui5-shellbar): document accessibilityRoles API (#5566)
+    docs: update playground with release info (#5568)
