@@ -1,4 +1,4 @@
-name: Publish Snapshot
+name: Release Snapshot
 
 on:
   workflow_dispatch
@@ -13,7 +13,7 @@ jobs:
         node-version: 16
         cache: 'yarn'
 
-    - name: Install Dependencies
+    - name: Install
       run: yarn --frozen-lockfile
 
     - name: Build
@@ -22,16 +22,9 @@ jobs:
         ENABLE_CLDR: 1
 
     - name: Publish
-        run: |
-          git config user.email ${{ secrets.GH_PUSH_EMAIL }}
-          git config user.name ${{ secrets.GH_PUSH_NAME }}
-          git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          current_branch=$(node -p -e "'${{ github.ref }}'.replace('refs/heads/', '')")
-          ${GITHUB_WORKSPACE}/node_modules/.bin/lerna publish "0.0.0-${git_hash}" \
-            --exact \
-            --no-push \
-            --no-git-tag-version \
-            --pre-dist-tag dev \
-            --allow-branch ${current_branch}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      env:
+        NPM_USERNAME: ${{ secrets.NPM_USERNAME }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        node ./.github/actions/pre-release.js
