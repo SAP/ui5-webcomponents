@@ -1,5 +1,5 @@
-commit 469d9c5f36c27e0bc19e0de5cfac77e124e98c03
+commit 998083e44eadddda86b645123e13f63f1d400b72
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 25 21:01:46 2022 +0300
+Date:   Mon Jul 25 21:42:59 2022 +0300
 
-    docs: update playground with release info (#5568)
+    ci: update release snapshot (#5569)
