@@ -8,6 +8,16 @@
 const IAvatar = "sap.ui.webcomponents.main.IAvatar";
 
 /**
+ * Interface for components that represent a badge,
+ * and as such may be optionally slotted inside other components.
+ *
+ * @name sap.ui.webcomponents.main.IBadge
+ * @interface
+ * @public
+ */
+const IBadge = "sap.ui.webcomponents.main.IBadge";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
  *
  * @name sap.ui.webcomponents.main.IBreadcrumbsItem
@@ -181,6 +191,7 @@ const ITreeItem = "sap.ui.webcomponents.main.ITreeItem";
 export {
 	IAvatar,
 	IBreadcrumbsItem,
+	IBadge,
 	IButton,
 	ICalendarDate,
 	IColorPaletteItem,
