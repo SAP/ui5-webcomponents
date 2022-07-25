@@ -66,20 +66,20 @@ For more information regarding the available themes and how to use them, see the
 The mapping of the accessibility APIs to ARIA attributes is described in the following table:
 
 
-| UI5 Web Components Property                   | HTML attribute  | Description                                                                                                                                                                                         |
-| --------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accessibleName`                              | `aria-label`    | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
-| `accessibleNameRef`                           | `aria-label`    | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
-| `accessibleRole`                              | `role`          | Sets the accessible aria role of the component.                                                                                                                                                     |
-| `accessibilityTexts`                          | `aria-label`    | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
-| `accessibilityAttributes`                     | `aria-expanded`, `aria-haspopup`, `aria-controls`    | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. |
-| `accessibilityRoles` (`FlexibleColumnLayout`) | `role`          | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
-| `required`                                    | `aria-required` | Defines whether the component is required.                                                                                                                                                          |
-| `readonly`                                    | `aria-readonly` | Defines whether the component is read-only.                                                                                                                                                         |
-| `disabled`                                    | `aria-disabled` | Defines whether the component is disabled.                                                                                                                                                          |
-| `checked`                                     | `aria-checked`  | Defines whether the component is checked.                                                                                                                                                           |
-| `level`, `headerLevel`                        | `aria-level`    | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
-| `interactive`                                 | `tabindex`      | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
+| UI5 Web Components Property | HTML attribute                                    | Description                                                                                                                                                                                         |
+| --------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessibleName`            | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
+| `accessibleNameRef`         | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
+| `accessibleRole`            | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |
+| `accessibilityTexts`        | `aria-label`                                      | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
+| `accessibilityAttributes`   | `aria-expanded`, `aria-haspopup`, `aria-controls` | An object of strings that defines several additional accessibility attribute values for customization depending on the use case.                                                                    |
+| `accessibilityRoles`        | `role`                                            | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
+| `required`                  | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
+| `readonly`                  | `aria-readonly`                                   | Defines whether the component is read-only.                                                                                                                                                         |
+| `disabled`                  | `aria-disabled`                                   | Defines whether the component is disabled.                                                                                                                                                          |
+| `checked`                   | `aria-checked`                                    | Defines whether the component is checked.                                                                                                                                                           |
+| `level`, `headerLevel`      | `aria-level`                                      | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
+| `interactive`               | `tabindex`                                        | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
 
 ### accessibleName
 
@@ -225,6 +225,10 @@ Results in the shadow DOM as:
     ...
 </div>
 ```
+
+The `accessibilityRoles` property is currently supported in:
+* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout)
+* [ShellBar](https://sap.github.io/ui5-webcomponents/playground/components/ShellBar) 
 
 ---
 
