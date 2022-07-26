@@ -275,20 +275,13 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 			await input.click();
 
-			let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-			let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
-			let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").clientWidth);
-			
-			// On the remote test execution there is 1px difference in the scroll position
-			// so the test is adjusted to pass on both remote and local environments
-			let isScrolledToStart = (tokenizerScrollContainerScrollLeft === tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth) || (tokenizerScrollContainerScrollLeft === tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth - 1);
+			let tokenizerContentScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+			assert.notEqual(tokenizerContentScrollLeft, 0, "tokenizer is scrolled to start");
 
-			assert.strictEqual(isScrolledToStart, true, "tokenizer is scrolled to end");
-	
 			await input.keys('Tab');
-			tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-			assert.strictEqual(tokenizerScrollContainerScrollLeft, 0, "tokenizer is scrolled to start");
+			tokenizerContentScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+			assert.strictEqual(tokenizerContentScrollLeft, 0, "tokenizer is scrolled to start");
 		});
 
 		it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
