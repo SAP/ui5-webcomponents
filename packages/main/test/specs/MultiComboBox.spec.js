@@ -67,10 +67,12 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			await browser.setWindowSize(400, 1250);
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1")
-			const showMore = await browser.$("#multi1").shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+			const mcb = await browser.$("#multi1");
+			const showMore = mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
 			const allPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
+			await mcb.scrollIntoView();
 			await showMore.click();
 
 			assert.ok(await allPopover.getProperty("opened"), "All popover should not be displayed");
@@ -263,6 +265,75 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual((await list.getProperty("items")).length, 4, "4 items should be shown");
 		});
+
+		it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await $("#more-mcb");
+			const input = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await input.click();
+
+			let tokenizerContentScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+			assert.notEqual(tokenizerContentScrollLeft, 0, "tokenizer is not scrolled to start");
+
+			await input.keys('Tab');
+
+			tokenizerContentScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+			assert.strictEqual(tokenizerContentScrollLeft, 0, "tokenizer is scrolled to start");
+		});
+
+		it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await $("#more-mcb");
+			const input = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await input.click();
+			await input.keys('ArrowLeft');
+
+			let scrollLeftFirstToken = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+			await input.keys('ArrowLeft');
+			let scrollLeftSecondToken = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+
+			assert.notEqual(scrollLeftFirstToken, scrollLeftSecondToken, "tokenizer is scrolled when navigating through the tokens");
+
+			await input.keys('ArrowRight');
+			let newScrollLeft =  await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+
+			assert.notEqual(newScrollLeft, scrollLeftSecondToken, "tokenizer is scrolled when navigating through the tokens");
+		})
+
+		it("tests if tokenizer is not expanded/collapsed when the suggestions are opened from a selected token", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await $("#more-mcb");
+			let tokenizer = await mcb.shadow$("ui5-tokenizer")
+			let tokens = await browser.$("#more-mcb").shadow$$(".ui5-multi-combobox-token");
+			const input = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await tokens[1].click();
+			await tokens[1].keys('F4');
+
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
+
+			await tokens[1].keys('F4');
+
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
+
+			await input.click();
+			await tokens[1].click();
+			await tokens[1].keys('F4');
+
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
+
+			await tokens[1].keys('F4');
+
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
+		})
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);

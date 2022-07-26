@@ -617,7 +617,7 @@ class MultiComboBox extends UI5Element {
 
 		if (!event.relatedTarget || !event.relatedTarget.hasAttribute("ui5-token")) {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
-			this._tokenizer.scrollToStart();
+			this._tokenizer.expanded = this._preventTokenizerToggle ? this._tokenizer.expanded : false;
 		}
 
 		if (allTokensAreBeingDeleted || lastTokenBeingDeleted) {
@@ -1064,7 +1064,7 @@ class MultiComboBox extends UI5Element {
 		const isCtrl = !!(event.metaKey || event.ctrlKey);
 
 		if (isRight(event)) {
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+			const lastTokenIndex = this._tokenizer.tokens.length - this._tokenizer.overflownTokens.length - 1;
 
 			if (event.target === this._tokenizer.tokens[lastTokenIndex]) {
 				setTimeout(() => {
@@ -1104,6 +1104,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
+			this._preventTokenizerToggle = true;
 			this._handleShow(event);
 		}
 	}
@@ -1226,6 +1227,7 @@ class MultiComboBox extends UI5Element {
 		this._toggle();
 
 		this._iconPressed = false;
+		this._preventTokenizerToggle = false;
 		this.filterSelected = false;
 	}
 
@@ -1406,6 +1408,7 @@ class MultiComboBox extends UI5Element {
 	inputFocusIn(event) {
 		if (!isPhone() || this.readonly) {
 			this.focused = true;
+			this._tokenizer.expanded = true;
 		} else {
 			this._innerInput.blur();
 		}
@@ -1421,7 +1424,7 @@ class MultiComboBox extends UI5Element {
 	inputFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
-
+			this._tokenizer.expanded = this.open;
 			// remove the value if user focus out the input and focus is not going in the popover
 			if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== event.relatedTarget)) {
 				this.value = "";
@@ -1570,7 +1573,18 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		return (this._isFocusInside || this.open) && !this.readonly;
+		if (isPhone() || this.readonly) {
+			return false;
+		}
+
+		if (this._preventTokenizerToggle) {
+			return this._tokenizer.expanded;
+		}
+
+		const isCurrentlyExpanded = !!this._tokenizer && this._tokenizer.expanded;
+		const shouldBeExpanded = this.focused || this.open || isCurrentlyExpanded;
+
+		return shouldBeExpanded;
 	}
 
 	get _valueStatePopoverHorizontalAlign() {
