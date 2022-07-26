@@ -1,7 +1,7 @@
-commit 1bb87f5a3ced8b11741deec6e64a6ad6a0af08cf
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Tue Jul 26 14:50:12 2022 +0300
+commit cab404fd4e554f19b4e50a9c3d12605390fbffb7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jul 26 16:26:33 2022 +0300
 
-    fix(ui5-popup): Synchronous opening of a popup from another popup with Enter key now works (#4975)
+    ci: add auto-close of stale issues (#5560)
     
-    Fixes #4861
+    The action is scheduled to run every day at 00:00 UTC and mark inactive issues for 21 days as "Stale" and close "author action", "wontfix" and "stale" issues after 28 days of inactivity.
