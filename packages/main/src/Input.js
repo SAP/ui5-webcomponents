@@ -1178,11 +1178,9 @@ class Input extends UI5Element {
 			return;
 		}
 
-		const innerInput = this.getInputDOMRefSync();
-		const value = this.valueBeforeAutoComplete || this.value;
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : value !== itemText;
+			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 
@@ -1193,7 +1191,6 @@ class Input extends UI5Element {
 			this.getInputDOMRefSync().value = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this._handleChange();
-			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
 		this.valueBeforeItemPreview = "";

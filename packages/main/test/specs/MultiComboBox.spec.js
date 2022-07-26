@@ -305,12 +305,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys('ArrowLeft');
 			let scrollLeftSecondToken = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-			assert.notEqual(scrollLeftFirstToken, scrollLeftSecondToken, "tokenizer is scrolled when navigating throught the tokens");
+			assert.notEqual(scrollLeftFirstToken, scrollLeftSecondToken, "tokenizer is scrolled when navigating through the tokens");
 
 			await input.keys('ArrowRight');
 			let newScrollLeft =  await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-			assert.notEqual(newScrollLeft, scrollLeftSecondToken, "tokenizer is scrolled when navigating throught the tokens");
+			assert.notEqual(newScrollLeft, scrollLeftSecondToken, "tokenizer is scrolled when navigating through the tokens");
 		})
 
 		it("tests if tokenizer is not expanded/collapsed when the suggestions are opened from a selected token", async () => {
@@ -325,21 +325,21 @@ describe("MultiComboBox general interaction", () => {
 			await tokens[1].click();
 			await tokens[1].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating throught the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
 			await tokens[1].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating throught the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
 			await input.click();
 			await tokens[1].click();
 			await tokens[1].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating throught the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 
 			await tokens[1].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating throught the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 		})
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {

@@ -377,13 +377,13 @@ describe("Keyboard handling", () => {
 
 		let scrollLeftThirdToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-		assert.notEqual(scrollLeftFirstToken, scrollLeftThirdToken, "tokenizer is scrolled when navigating throught the tokens");
+		assert.notEqual(scrollLeftFirstToken, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
 
 		await input.keys('ArrowRight');
 		await input.keys('ArrowRight');
 
 		let newScrollLeft =  await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-		assert.notEqual(newScrollLeft, scrollLeftThirdToken, "tokenizer is scrolled when navigating throught the tokens");
+		assert.notEqual(newScrollLeft, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
 	})
 });

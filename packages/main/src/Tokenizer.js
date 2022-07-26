@@ -483,10 +483,15 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
+	/**
+	 * Scrolls the container of the tokens to its end when expanded.
+	 * This method is used by MultiInput and MultiComboBox.
+	 * @private
+	 */
 	scrollToEnd() {
-		const expTokenizerScrollWidth = this.expandedContentDom && (this.effectiveDir !== "rtl" ? this.expandedContentDom.scrollWidth : -this.expandedContentDom.scrollWidth);
+		const expandedTokenizerScrollWidth = this.expandedContentDom && (this.effectiveDir !== "rtl" ? this.expandedContentDom.scrollWidth : -this.expandedContentDom.scrollWidth);
 		if (this._scrollEnablement.scrollContainer) {
-			this._scrollEnablement.scrollTo(expTokenizerScrollWidth, 0, 5, 10);
+			this._scrollEnablement.scrollTo(expandedTokenizerScrollWidth, 0, 5, 10);
 		}
 	}
 
