@@ -46,7 +46,6 @@ describe("ResponsivePopover general interaction", () => {
 		await btnOpenPopover.click();
 
 		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
-		// await browser.pause(30000)
 		assert.strictEqual(activeElementId, "btnInitialFocusPrevented", "Initial focus is prevented");
 	});
 
