@@ -1,7 +1,7 @@
-commit cab404fd4e554f19b4e50a9c3d12605390fbffb7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 26 16:26:33 2022 +0300
+commit a872c9be58ee38f2d81d65e1a977cf7c80a380fd
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Tue Jul 26 17:05:06 2022 +0300
 
-    ci: add auto-close of stale issues (#5560)
+    fix: correctly calculate accessibleNameRef (#5520)
     
-    The action is scheduled to run every day at 00:00 UTC and mark inactive issues for 21 days as "Stale" and close "author action", "wontfix" and "stale" issues after 28 days of inactivity.
+    Fixes #5452
