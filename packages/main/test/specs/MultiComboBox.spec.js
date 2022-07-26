@@ -276,7 +276,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 
 			let tokenizerContentScrollLeft = await browser.execute(() => document.querySelector("#more-mcb").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-			assert.notEqual(tokenizerContentScrollLeft, 0, "tokenizer is scrolled to start");
+			assert.notEqual(tokenizerContentScrollLeft, 0, "tokenizer is not scrolled to start");
 
 			await input.keys('Tab');
 
