@@ -17,8 +17,8 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.b9468b2a.js'></script>
-  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Avatar.html.004b655d.css'>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.7de48dce.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Avatar.html.62cc0573.css'>
 </head>
 
 <body class="avatar1auto">
@@ -163,6 +163,58 @@
 		<br>
 		<ui5-avatar id="myInteractiveAvatar" aria-haspopup="menu" interactive initials="L" size="L"></ui5-avatar>
 		<ui5-input id="click-event-2"></ui5-input>
+	</section>
+
+	<section>
+		<h3>Avatar - Visual affordance</h3>
+		<ui5-avatar initials="AB" color-scheme="Accent1">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="accelerated"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+
+		<ui5-avatar interactive size="L" initials="CD" color-scheme="Accent2">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="accept"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+	
+		<ui5-avatar size="XL">
+			<img src='https://sap.github.io/ui5-webcomponents/main/assets/John_Miller.fc9d0d73.png' alt="John Miller">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="bar-chart"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+
+		<br>
+
+		<ui5-avatar shape="Square" size="XS" initials="EF" color-scheme="Accent3">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="filter"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+
+		<ui5-avatar interactive shape="Square" initials="GH" color-scheme="Accent4">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="add-employee"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+	
+		<ui5-avatar shape="Square" size="L">
+			<img src='https://sap.github.io/ui5-webcomponents/main/assets/John_Miller.fc9d0d73.png' alt="John Miller">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="document"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+		<br><br>
+	</section>
+
+	<section>
+		<h3>Avatar - Custom visual affordance</h3>
+		<ui5-avatar initials="AB" color-scheme="Accent1">
+			<span slot="badge" class="custom-badge">1</span>
+		</ui5-avatar>
+		<br><br>
 	</section>
 
 	<script>
