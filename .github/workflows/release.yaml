@@ -31,8 +31,6 @@ jobs:
 
     - name: Publish
       env:
-        NPM_USERNAME: ${{ secrets.NPM_USERNAME }}
-        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
       run: |
         node ./.github/actions/release.js --version=${{ github.event.inputs.version }} --tag=${{ github.event.inputs.tag }}
