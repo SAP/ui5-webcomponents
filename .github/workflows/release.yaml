@@ -1,7 +1,15 @@
-name: Release Snapshot
+name: Release
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version'     
+        required: true
+      tag:
+          description: 'Tag'     
+          required: true
+          default: latest
 
 jobs:
   build-and-release:
@@ -27,4 +35,4 @@ jobs:
         NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        node ./.github/actions/pre-release.js
+        node ./.github/actions/release.js --version=${{ github.event.inputs.version }} --tag=${{ github.event.inputs.tag }}
