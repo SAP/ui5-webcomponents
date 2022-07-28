@@ -16,7 +16,7 @@ const metadata = {
 	fastNavigation: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
-		 * Defines the <code>ui5-bar</code> design.
+		 * Defines the component's design.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
@@ -181,6 +181,16 @@ class Bar extends UI5Element {
 	onBeforeRendering() {
 		// Next row is specific for IE11. Please remove after stop support and edit css file
 		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
+
+		this.startContent.forEach(slotItem => { ResizeHandler.deregister(slotItem, this._handleResizeBound); }, this);
+		this.middleContent.forEach(slotItem => { ResizeHandler.deregister(slotItem, this._handleResizeBound); }, this);
+		this.endContent.forEach(slotItem => { ResizeHandler.deregister(slotItem, this._handleResizeBound); }, this);
+	}
+
+	onAfterRendering() {
+		this.startContent.forEach(slotItem => { ResizeHandler.register(slotItem, this._handleResizeBound); }, this);
+		this.middleContent.forEach(slotItem => { ResizeHandler.register(slotItem, this._handleResizeBound); }, this);
+		this.endContent.forEach(slotItem => { ResizeHandler.register(slotItem, this._handleResizeBound); }, this);
 	}
 
 	onEnterDOM() {

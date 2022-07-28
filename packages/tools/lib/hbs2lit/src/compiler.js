@@ -12,8 +12,8 @@ const removeWhiteSpaces = (source) => {
 		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
-const hbs2lit = (file) => {
-	let sPreprocessed = includesReplacer.replace(file);
+const hbs2lit = async (file) => {
+	let sPreprocessed = await includesReplacer.replace(file);
 
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
@@ -30,7 +30,16 @@ const hbs2lit = (file) => {
 	lv.accept(ast);
 
 	for (let key in lv.blocks) {
-		result += lv.blocks[key] + "\n";
+		let block = lv.blocks[key];
+
+		if (block.match(/scopeTag/)) {
+			const matches = block.match(/^(.*?)( => )(.*?);$/);
+			const scopedCode = matches[3];
+			const normalCode = scopedCode.replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
+			block = `${matches[1]}${matches[2]}suffix ? ${scopedCode} : ${normalCode};`;
+		}
+
+		result += block + "\n";
 	}
 
 	result = svgProcessor.process(result);

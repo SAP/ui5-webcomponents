@@ -17,18 +17,18 @@
 	</script>
 
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<link rel="stylesheet" type="text/css" href="styles/RangeSlider.css">
+	<link rel="stylesheet" type="text/css" href="./styles/RangeSlider.css">
 </head>
 
 	<body class="rangeslider1auto">
 		<section class="group">
 			<h2>Basic Range Slider</h2>
-			<ui5-range-slider id="basic-range-slider" end-value="20"></ui5-range-slider>
+			<ui5-range-slider id="basic-range-slider" accessible-name="Basic Range Slider" end-value="20"></ui5-range-slider>
 
 			<h2>Range Slider with custom min and max properties and tooltip</h2>
 			<ui5-range-slider id="basic-range-slider-with-tooltip" min="50" max="200" show-tooltip></ui5-range-slider>

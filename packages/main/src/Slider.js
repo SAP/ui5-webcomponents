@@ -278,9 +278,6 @@ class Slider extends SliderBase {
 			handle: {
 				[this.directionStart]: `${this._handlePositionFromStart}%`,
 			},
-			tickmarks: {
-				"background": `${this._tickmarks}`,
-			},
 			label: {
 				"width": `${this._labelWidth}%`,
 			},
@@ -317,6 +314,21 @@ class Slider extends SliderBase {
 
 	static async onDefine() {
 		Slider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	get tickmarksObject() {
+		const count = this._tickmarksCount;
+		const arr = [];
+
+		if (this._hiddenTickmarks) {
+			return [true, false];
+		}
+
+		for (let i = 0; i <= count; i++) {
+			arr.push(this._effectiveMin + (i * this.step) <= this.value);
+		}
+
+		return arr;
 	}
 }
 

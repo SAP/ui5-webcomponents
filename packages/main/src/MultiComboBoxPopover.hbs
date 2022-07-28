@@ -1,9 +1,10 @@
 <ui5-responsive-popover
 	placement-type="Bottom"
-	horizontal-align="Stretch"
+	horizontal-align="Left"
 	class="{{classes.popover}}"
 	hide-arrow
 	_disable-initial-focus
+	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
 	@ui5-after-close={{_afterClosePicker}}
 	@ui5-before-open={{_beforeOpen}}
@@ -34,6 +35,7 @@
 						value-state="{{valueState}}"
 						@input="{{_inputLiveChange}}"
 						@change={{_inputChange}}
+						@keydown={{_onkeydown}}
 						aria-autocomplete="both"
 						aria-labelledby="{{_id}}-hiddenText-nMore"
 						aria-describedby="{{_id}}-valueStateDesc"
@@ -70,13 +72,21 @@
 	{{#if filterSelected}}
 		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 			{{#each selectedItems}}
-				{{> listItem}}
+				{{#if isGroupItem}}
+					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
+				{{else}}
+					{{> listItem}}
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 	{{else}}
 		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 			{{#each _filteredItems}}
-				{{> listItem}}
+				{{#if isGroupItem}}
+					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
+				{{else}}
+					{{> listItem}}
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 	{{/if}}
@@ -110,7 +120,7 @@
 
 {{#*inline "valueStateMessage"}}
 	{{#if shouldDisplayDefaultValueStateMessage}}
-		{{valueStateText}}
+		{{valueStateDefaultText}}
 	{{else}}
 		{{#each valueStateMessageText}}
 			{{this}}

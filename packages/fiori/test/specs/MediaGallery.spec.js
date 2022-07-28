@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("MediaGallery general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MediaGallery.html`);
+		await browser.url(`test/pages/MediaGallery.html`);
 	});
 
 	it("fires selection-change on thumbnail click", async () => {
@@ -135,7 +134,7 @@ describe("MediaGallery general interaction", () => {
 
 describe("MediaGallery layout", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/MediaGallery.html`);
+		await browser.url(`test/pages/MediaGallery.html`);
 	});
 
 	it("auto layout S size", async () => {

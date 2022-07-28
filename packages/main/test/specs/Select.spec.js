@@ -1,9 +1,21 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
+
+async function getResourceBundleTexts(keys) {
+	return browser.executeAsync((keys, done) => {
+		const select = document.getElementById("mySelect");
+
+		const texts = keys.reduce((result, key) => {
+			result[key] = select.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			return result;
+		}, {});
+		done(texts);
+
+	}, keys);
+}
 
 describe("Select general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 	});
 
 	it("fires change on selection", async () => {
@@ -24,7 +36,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("does not fire change, when clicking on selected item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -39,10 +51,10 @@ describe("Select general interaction", () => {
 	});
 
 	it("fires change on selection with keyboard handling", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
-		const select = await browser.$("#mySelect2").shadow$(".ui5-select-root");
-		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const select = await browser.$("#errorSelect").shadow$(".ui5-select-root");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const inputResult = await browser.$("#inputResult");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
@@ -66,11 +78,11 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection while closed with Arrow Up/Down", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const inputResult = await browser.$("#inputResult").shadow$("input");
-		const select = await browser.$("#mySelect2");
-		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const select = await browser.$("#errorSelect");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
@@ -90,13 +102,13 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection sync with selection announcement", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
 		const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const select = await browser.$("#mySelect2");
-		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const select = await browser.$("#errorSelect");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
@@ -226,7 +238,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection with typing more letters", async () => {
-		const select = await browser.$("#mySelect3");
+		const select = await browser.$("#warningSelect");
 		const EXPECTED_SELECTION_TEXT = "Brazil";
 
 		await select.click(); // Open select
@@ -235,12 +247,12 @@ describe("Select general interaction", () => {
 
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
-		const selectTextHtml = await selectText.getHTML(false);
+		const selectTextHtml = await selectText.getText();
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Typing text should change selection");
 	});
 
 	it("opens upon space", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -254,7 +266,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("toggles upon F4", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -271,7 +283,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("toggles upon ALT + UP", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -288,7 +300,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
@@ -321,7 +333,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("reverts value before open after clicking on escape", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const selectText = await browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
@@ -340,7 +352,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("fires change event after selection is change and picker if focussed out", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -356,7 +368,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("fires change event after selecting a previewed item", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		await browser.url(`test/pages/Select.html`);
 
 		const select = await browser.$("#mySelect");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
@@ -405,7 +417,7 @@ describe("Select general interaction", () => {
 		const select2 = await browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
 		const EXPECTED_ARIA_LABEL2 = "info text";
-		const EXPECTER_ARIA_ROLEDESCRIPTION = "Select ComboBox";
+		const EXPECTER_ARIA_ROLEDESCRIPTION = "Select Combo Box";
 
 		assert.strictEqual(await select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
@@ -416,8 +428,58 @@ describe("Select general interaction", () => {
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(await select2.getAttribute("aria-expanded"), "false",
 			"The aria-expanded is false by default.");
-			
 		assert.strictEqual(await select2.getAttribute("aria-roledescription"), EXPECTER_ARIA_ROLEDESCRIPTION,
 			"The aria-roledescription is correct.");
+	});
+
+	it("Tests value state type", async () => {
+		const successSelect = await browser.$("#successSelect");
+		const successSelectValueState = successSelect.shadow$(`#${await successSelect.getProperty('_id')}-valueStateDesc`);
+		const valueStateText = await successSelectValueState.getHTML(false);
+
+		const infoSelect = await browser.$("#infoSelect");
+		const infoSelectValueState = infoSelect.shadow$(`#${await infoSelect.getProperty('_id')}-valueStateDesc`);
+		const infoValueStateText = await infoSelectValueState.getHTML(false);
+
+		const errorSelect = await browser.$("#errorSelect");
+		const errorSelectValueState = errorSelect.shadow$(`#${await errorSelect.getProperty('_id')}-valueStateDesc`);
+		const errorValueStateText = await errorSelectValueState.getHTML(false);
+
+		const warningSelect = await browser.$("#warningSelect");
+		const warningSelectValueState = warningSelect.shadow$(`#${await warningSelect.getProperty('_id')}-valueStateDesc`);
+		const warningValueStateText = await warningSelectValueState.getHTML(false);
+
+		const keys = [
+			"VALUE_STATE_TYPE_SUCCESS",
+			"VALUE_STATE_TYPE_INFORMATION",
+			"VALUE_STATE_TYPE_ERROR",
+			"VALUE_STATE_TYPE_WARNING",
+		];
+		const texts = await getResourceBundleTexts(keys);
+		
+		assert.ok(valueStateText.includes(texts.VALUE_STATE_TYPE_SUCCESS),
+			"The value state text is correct.");
+		assert.ok(infoValueStateText.includes(texts.VALUE_STATE_TYPE_INFORMATION),
+			"The value state text is correct.");
+		assert.ok(errorValueStateText.includes(texts.VALUE_STATE_TYPE_ERROR),
+			"The value state text is correct.");
+		assert.ok(warningValueStateText.includes(texts.VALUE_STATE_TYPE_WARNING),
+			"The value state text is correct.");
+	});
+});
+
+describe("Attributes propagation", () => {
+	before(async () => {
+		await browser.url(`test/pages/Select.html`);
+	});
+
+	it("propagates additional-text attribute", async () => {
+		const EXPECTED_ADDITIONAL_TEXT = "DZ",
+			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect6"),
+			firstOption = await browser.$("#mySelect6 ui5-option:first-child"),
+			firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+
+		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
+		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
 	});
 });

@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Panel general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Panel.html`);
+		await browser.url(`test/pages/Panel.html`);
 	});
 
 	it("Changing the header text is reflected", async () => {
@@ -66,7 +65,7 @@ describe("Panel general interaction", () => {
 		await header.click();
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -95,7 +94,7 @@ describe("Panel general interaction", () => {
 		await icon.click();
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "1", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -132,6 +131,13 @@ describe("Panel general interaction", () => {
 			const header = await browser.$("#panel1").shadow$(".ui5-panel-header");
 			const title = await browser.$("#panel1").shadow$(".ui5-panel-header-title");
 			const button = await browser.$("#panel1").shadow$(".ui5-panel-header-button");
+			let resourceBundleText = null;
+
+			resourceBundleText = await browser.executeAsync(done => {
+				const panel = document.getElementById("panel1");
+				done(panel.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.PANEL_ICON));
+			});
+
 
 			assert.strictEqual(await panelRoot.getAttribute("role"), "form", "The correct accessible role is applied");
 
@@ -140,6 +146,7 @@ describe("Panel general interaction", () => {
 			assert.ok(await header.getAttribute("aria-expanded"), "aria-expanded should be set on the header");
 			assert.ok(await header.getAttribute("aria-controls"), "aria-controls should be set on the header");
 			assert.ok(await header.getAttribute("role"), "role should be set on the header");
+			assert.ok(await button.getAttribute("accessible-name"), resourceBundleText, "icon has correct aria-label set");
 
 			assert.strictEqual(await title.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
 		});
@@ -148,13 +155,23 @@ describe("Panel general interaction", () => {
 			const panelWithNativeHeader = await browser.$("#panel-expandable");
 			const nativeHeader = await panelWithNativeHeader.shadow$(".ui5-panel-header");
 			const panelWithNativeHeaderId = await panelWithNativeHeader.getProperty("_id");
+			const fixedPanel = await browser.$('#panel-fixed');
+			const fixedPanelRoot = await fixedPanel.shadow$(".ui5-panel-root");
+			const fixedPanelHeader = await fixedPanel.shadow$(".ui5-panel-header");
+			const fixedPanelHeaderTitle = await fixedPanel.shadow$(".ui5-panel-header-title");
+			const fixedPanelHeaderTitleId = await fixedPanelHeaderTitle.getProperty("id");
+			
 
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
+			assert.notOk(await fixedPanelHeader.getAttribute("aria-labelledby"), "aria-labelledby is not added to the header");
+			assert.strictEqual(await fixedPanelRoot.getAttribute("aria-labelledby"), fixedPanelHeaderTitleId, "aria-labelledby is set correctly");
 
 			await browser.$("#panel-expandable").setAttribute("accessible-name", "New accessible name");
+			fixedPanel.setAttribute("accessible-name", "Accessible name added");
 
 			assert.strictEqual(await panelWithNativeHeader.shadow$(".ui5-panel-root").getAttribute("aria-label"), "New accessible name", "aria-label is set correctly");
+			assert.strictEqual(await fixedPanelRoot.getAttribute("aria-label"), "Accessible name added", "aria-label is set correctly");
 		});
 
 		it("tests whether aria attributes are set correctly with fixed header", async () => {

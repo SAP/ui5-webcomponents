@@ -5,7 +5,7 @@ import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
-import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
@@ -23,7 +23,7 @@ import globalStyles from "./generated/themes/PopupGlobal.css.js";
  */
 const metadata = {
 	managedSlots: true,
-	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
 		 * Defines the content of the Popup.
@@ -36,7 +36,7 @@ const metadata = {
 			propertyName: "content",
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
 		/**
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
@@ -114,7 +114,7 @@ const metadata = {
 		 * @type {string}
 		 * @private
 		 */
-		 mediaRange: {
+		mediaRange: {
 			type: String,
 		},
 
@@ -129,7 +129,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
 		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
@@ -322,7 +322,11 @@ class Popup extends UI5Element {
 	}
 
 	_onkeydown(e) {
-		if (e.target === this._root && isTabPrevious(e)) {
+		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
+		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+
+		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
 			e.preventDefault();
 		}
 	}
@@ -446,6 +450,7 @@ class Popup extends UI5Element {
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
+
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
@@ -589,6 +594,10 @@ class Popup extends UI5Element {
 
 	get _root() {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
+	}
+
+	get contentDOM() {
+		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
 
 	get styles() {

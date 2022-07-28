@@ -15,7 +15,7 @@ import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
-const arrowSize = 8;
+const ARROW_SIZE = 8;
 
 /**
  * @public
@@ -303,10 +303,6 @@ class Popover extends Popup {
 		return 10; // px
 	}
 
-	static get ARROW_MARGIN() {
-		return 6; // px
-	}
-
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
 			const opener = document.getElementById(this.opener);
@@ -463,12 +459,8 @@ class Popover extends Popup {
 			top = Math.max(top, this._top);
 		}
 
-		const isVertical = this.actualPlacementType === PopoverPlacementType.Top || this.actualPlacementType === PopoverPlacementType.Bottom;
-		const borderRadius = Number.parseInt(window.getComputedStyle(this).getPropertyValue("border-radius"));
-		const arrow = this._clampArrowPlacement(placement.arrow, isVertical, this._top, this._left, popoverSize, borderRadius);
-
-		this.arrowTranslateX = arrow.x;
-		this.arrowTranslateY = arrow.y;
+		this.arrowTranslateX = placement.arrow.x;
+		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
 
@@ -481,59 +473,6 @@ class Popover extends Popup {
 		if (stretching && this._width) {
 			this.style.width = this._width;
 		}
-	}
-
-	/**
-	 * Restricts the arrow's coordinates within the bounds of the popover.
-	 * @private
-	 * @param {{x: number, y: number}} arrow arrow's coordinates
-	 * @param {boolean} isVertical if the popover is placed vertically relative to the opener
-	 * @param {number} top popover's top
-	 * @param {number} left popover's left
-	 * @param {{width: number, height: number}} popoverSize popover's width and height
-	 * @param {number} borderRadius value of the border-radius property
-	 * @returns {{x: number, y: number}} Arrow's coordinates
-	 */
-	_clampArrowPlacement({ x, y }, isVertical, top, left, { width, height }, borderRadius) {
-		const maxY = this._getArrowRange(height, borderRadius);
-		const maxX = this._getArrowRange(width, borderRadius);
-
-		if (isVertical) {
-			const popoverOnLeftBorderOffset = Popover.VIEWPORT_MARGIN - left;
-			const popoverOnRightBorderOffset = left + width + Popover.VIEWPORT_MARGIN - document.documentElement.clientWidth;
-
-			if (popoverOnLeftBorderOffset > 0) {
-				x = Math.max(x - popoverOnLeftBorderOffset, -maxX);
-			} else if (popoverOnRightBorderOffset > 0) {
-				x = Math.min(x + popoverOnRightBorderOffset, maxX);
-			}
-		}
-
-		if (!isVertical) {
-			const popoverOnTopBorderOffset = Popover.VIEWPORT_MARGIN - top;
-			const popoverOnBottomBorderOffset = top + height + Popover.VIEWPORT_MARGIN - document.documentElement.clientHeight;
-			if (popoverOnTopBorderOffset > 0) {
-				y = Math.max(y - popoverOnTopBorderOffset, -maxY);
-			} else if (popoverOnBottomBorderOffset > 0) {
-				y = Math.min(y + popoverOnBottomBorderOffset, maxY);
-			}
-		}
-
-		return {
-			x: Math.round(x),
-			y: Math.round(y),
-		};
-	}
-
-	/**
-	 * Returns the allowed range for the popover arrow based on its dimension.
-	 * @private
-	 * @param {number} dimension the height or width of the popover
-	 * @param {number} borderRadius border radius of the popover
-	 * @returns {number}
-	 */
-	_getArrowRange(dimension, borderRadius) {
-		return Math.floor((dimension / 2) - (borderRadius + Popover.ARROW_MARGIN));
 	}
 
 	/**
@@ -569,10 +508,6 @@ class Popover extends Popup {
 		return { width, height };
 	}
 
-	get contentDOM() {
-		return this.shadowRoot.querySelector(".ui5-popup-content");
-	}
-
 	get arrowDOM() {
 		return this.shadowRoot.querySelector(".ui5-popover-arrow");
 	}
@@ -605,7 +540,7 @@ class Popover extends Popup {
 			popoverSize.height = targetRect.height;
 		}
 
-		const arrowOffset = this.hideArrow ? 0 : arrowSize;
+		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
 
 		// calc popover positions
 		switch (placementType) {
@@ -673,7 +608,8 @@ class Popover extends Popup {
 			this._top = Math.round(top);
 		}
 
-		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
+		const borderRadius = Number.parseInt(window.getComputedStyle(this).getPropertyValue("border-radius"));
+		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical, borderRadius);
 
 		return {
 			arrow: arrowPos,
@@ -687,32 +623,49 @@ class Popover extends Popup {
 	 * Calculates the position for the arrow.
 	 * @private
 	 * @param targetRect BoundingClientRect of the target element
-	 * @param popoverSize Width and height of the popover
+	 * @param {{width: number, height: number}} popoverSize Width and height of the popover
 	 * @param left Left offset of the popover
 	 * @param top Top offset of the popover
-	 * @param isVertical if the popover is positioned vertically to the target element
+	 * @param isVertical If the popover is positioned vertically to the target element
+	 * @param {number} borderRadius Value of the border-radius property
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
-	getArrowPosition(targetRect, popoverSize, left, top, isVertical) {
+	getArrowPosition(targetRect, { width, height }, left, top, isVertical, borderRadius) {
 		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
 			arrowXCentered = true;
 		}
 
-		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + width >= targetRect.left + targetRect.width) {
 			arrowXCentered = true;
 		}
 
 		let arrowTranslateX = 0;
 		if (isVertical && arrowXCentered) {
-			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
+			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - width / 2;
 		}
 
 		let arrowTranslateY = 0;
 		if (!isVertical) {
-			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2;
+			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - height / 2;
 		}
+
+		// Restricts the arrow's translate value along each dimension,
+		// so that the arrow does not clip over the popover's rounded borders.
+		const safeRangeForArrowY = height / 2 - borderRadius - ARROW_SIZE / 2;
+		arrowTranslateY = clamp(
+			arrowTranslateY,
+			-safeRangeForArrowY,
+			safeRangeForArrowY,
+		);
+
+		const safeRangeForArrowX = width / 2 - borderRadius - ARROW_SIZE / 2;
+		arrowTranslateX = clamp(
+			arrowTranslateX,
+			-safeRangeForArrowX,
+			safeRangeForArrowX,
+		);
 
 		return {
 			x: Math.round(arrowTranslateX),
@@ -825,7 +778,11 @@ class Popover extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this._ariaLabel ? undefined : "ui5-popup-header";
+		if (!this._ariaLabel && this._displayHeader) {
+			return "ui5-popup-header";
+		}
+
+		return undefined;
 	}
 
 	get _ariaModal() { // Required by Popup.js

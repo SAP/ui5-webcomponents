@@ -15,12 +15,8 @@
 			"language": "EN"
 		}
 	</script>
-
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="styles/Badge.css">
+	<script src="../../bundle.esm.js" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/Badge.css">
 </head>
 
 <body class="badge1auto">
@@ -37,7 +33,7 @@
 		<ui5-badge color-scheme="9">Required</ui5-badge><br>
 		<ui5-badge color-scheme="10">IN WAREHOUSE</ui5-badge><br>
 
-		<ui5-badge color-scheme="1">
+		<ui5-badge id="badgeWithTextAndIcon" color-scheme="1">
 			<ui5-icon name="accept" slot="icon"></ui5-icon>Done
 		</ui5-badge>
 		<ui5-badge id="badgeIconOnly" color-scheme="2">
@@ -65,7 +61,6 @@
 
 	<h2>sap_horizon</h2>
 	<div class="sap_horizon">
-		<link rel="stylesheet" type="text/css" href="styles/Badge.css">
 		<ui5-badge color-scheme="1">Grey</ui5-badge>
 		<ui5-badge color-scheme="2">Blue</ui5-badge>
 		<ui5-badge color-scheme="3">Teal</ui5-badge>

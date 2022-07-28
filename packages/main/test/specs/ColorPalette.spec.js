@@ -1,13 +1,12 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ColorPalette interactions", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
+		await browser.url(`test/pages/ColorPalette.html`);
 	});
 
 	it("Test if selecting element works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
+		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 
@@ -17,7 +16,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
+		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -31,7 +30,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
+		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -47,7 +46,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
+		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -61,7 +60,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
+		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[9];

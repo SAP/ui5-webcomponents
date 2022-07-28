@@ -7,12 +7,25 @@ class FormSupport {
 	 * @param nativeInputUpdateCallback - determines how the native input's disabled and value properties are calculated
 	 */
 	static syncNativeHiddenInput(element, nativeInputUpdateCallback) {
-		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector("input[type=hidden][data-ui5-form-support]");
+		const needsNativeInput = !!element.name || element.required;
+		let nativeInput = element.querySelector("input[data-ui5-form-support]");
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
-			nativeInput.type = "hidden";
+
+			nativeInput.style.clip = "rect(0 0 0 0)";
+			nativeInput.style.clipPath = "inset(50%)";
+			nativeInput.style.height = "1px";
+			nativeInput.style.overflow = "hidden";
+			nativeInput.style.position = "absolute";
+			nativeInput.style.whiteSpace = "nowrap";
+			nativeInput.style.width = "1px";
+			nativeInput.style.bottom = "0";
+			nativeInput.setAttribute("tabindex", "-1");
+			nativeInput.required = element.required;
 			nativeInput.setAttribute("data-ui5-form-support", "");
+
+			nativeInput.addEventListener("focusin", event => element.focus());
+
 			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
 			element.appendChild(nativeInput);
 		}
@@ -62,17 +75,24 @@ class FormSupport {
 	}
 
 	static triggerFormSubmit(element) {
-		if (!element.submits) {
-			return;
-		}
 		let currentElement = element.parentElement;
 		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
 			currentElement = currentElement.parentElement;
 		}
+
 		if (currentElement) {
+			// eslint-disable-next-line no-undef
+			const submitPrevented = !currentElement.dispatchEvent(new SubmitEvent("submit", {
+				bubbles: true,
+				cancelable: true,
+				submitter: element,
+			}));
+
+			if (submitPrevented) {
+				return;
+			}
+
 			currentElement.submit();
-		} else {
-			console.error(`${element} is not within a form. Please add it in a form.`); // eslint-disable-line
 		}
 	}
 }

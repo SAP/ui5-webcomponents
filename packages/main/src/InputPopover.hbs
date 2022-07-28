@@ -30,13 +30,14 @@
 						.value="{{value}}"
 						?show-clear-icon={{showClearIcon}}
 						placeholder="{{placeholder}}"
-						@input="{{_handleInput}}"
+						@ui5-input="{{_handleInput}}"
 						@change="{{_handleChange}}"
 					></ui5-input>
 				</div>
 			</div>
 			{{#if hasValueStateMessage}}
-				<div class="row {{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+				<div class="{{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 					{{> valueStateMessage}}
 				</div>
 			{{/if}}

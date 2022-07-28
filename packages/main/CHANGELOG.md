@@ -3,6 +3,239 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Bug Fixes
+
+* **formEnablement:** correct submit event behaviour ([#5500](https://github.com/SAP/ui5-webcomponents/issues/5500)) ([07237ec](https://github.com/SAP/ui5-webcomponents/commit/07237ec))
+* **inputs:** adjust placeholder styling ([#5547](https://github.com/SAP/ui5-webcomponents/issues/5547)) ([c427344](https://github.com/SAP/ui5-webcomponents/commit/c427344))
+* **InvisibleMessage:** clear announcement after a while ([#5446](https://github.com/SAP/ui5-webcomponents/issues/5446)) ([af213f1](https://github.com/SAP/ui5-webcomponents/commit/af213f1))
+* **MultoComboBox:** fix component scoping ([#5553](https://github.com/SAP/ui5-webcomponents/issues/5553)) ([9c26e8e](https://github.com/SAP/ui5-webcomponents/commit/9c26e8e)), closes [#5521](https://github.com/SAP/ui5-webcomponents/issues/5521)
+* **ui5-card:** correct accessibility attribute ([#5479](https://github.com/SAP/ui5-webcomponents/issues/5479)) ([48ff032](https://github.com/SAP/ui5-webcomponents/commit/48ff032))
+* **ui5-combobox:** annouce group item's text when accessed via keyboard ([#5478](https://github.com/SAP/ui5-webcomponents/issues/5478)) ([0f60574](https://github.com/SAP/ui5-webcomponents/commit/0f60574))
+* **ui5-combobox:** correct ok and close buttons' behavior, as well as item select behavior on mobile ([#5541](https://github.com/SAP/ui5-webcomponents/issues/5541)) ([fdf25c3](https://github.com/SAP/ui5-webcomponents/commit/fdf25c3))
+* **ui5-combobox:** correctly fire change event on item press ([#5447](https://github.com/SAP/ui5-webcomponents/issues/5447)) ([0218c19](https://github.com/SAP/ui5-webcomponents/commit/0218c19)), closes [#5432](https://github.com/SAP/ui5-webcomponents/issues/5432)
+* **ui5-combobox:** simplify condition ([#5508](https://github.com/SAP/ui5-webcomponents/issues/5508)) ([514f632](https://github.com/SAP/ui5-webcomponents/commit/514f632))
+* **ui5-date-picker:** adjust background color ([#5466](https://github.com/SAP/ui5-webcomponents/issues/5466)) ([7ea3f49](https://github.com/SAP/ui5-webcomponents/commit/7ea3f49)), closes [#5396](https://github.com/SAP/ui5-webcomponents/issues/5396)
+* **ui5-date-picker:** adjust value help icon role ([#5419](https://github.com/SAP/ui5-webcomponents/issues/5419)) ([56cc995](https://github.com/SAP/ui5-webcomponents/commit/56cc995)), closes [#5378](https://github.com/SAP/ui5-webcomponents/issues/5378)
+* **ui5-input:** enhance lazy loading ([#5370](https://github.com/SAP/ui5-webcomponents/issues/5370)) ([73010dc](https://github.com/SAP/ui5-webcomponents/commit/73010dc))
+* **ui5-input, ui5-multi-input, ui5-combobox, ui5-multi-combobox:** announce value state type ([#5515](https://github.com/SAP/ui5-webcomponents/issues/5515)) ([82317d0](https://github.com/SAP/ui5-webcomponents/commit/82317d0)), closes [#5392](https://github.com/SAP/ui5-webcomponents/issues/5392)
+* **ui5-li:** correct accessibility attribute to checkbox ([#5475](https://github.com/SAP/ui5-webcomponents/issues/5475)) ([88f278b](https://github.com/SAP/ui5-webcomponents/commit/88f278b))
+* **ui5-li-groupheader:** use group role on UL nodes only ([#5518](https://github.com/SAP/ui5-webcomponents/issues/5518)) ([1010f73](https://github.com/SAP/ui5-webcomponents/commit/1010f73)), closes [#5400](https://github.com/SAP/ui5-webcomponents/issues/5400)
+* **ui5-list:** focus handling on nested lists ([#5502](https://github.com/SAP/ui5-webcomponents/issues/5502)) ([5d4ae79](https://github.com/SAP/ui5-webcomponents/commit/5d4ae79))
+* **ui5-panel:** add tooltip to expand/collapse icon ([#5543](https://github.com/SAP/ui5-webcomponents/issues/5543)) ([533469d](https://github.com/SAP/ui5-webcomponents/commit/533469d))
+* **ui5-panel:** enhance aria-labelledby handling ([#5539](https://github.com/SAP/ui5-webcomponents/issues/5539)) ([410dee1](https://github.com/SAP/ui5-webcomponents/commit/410dee1))
+* **ui5-radio-button:** correct keyboard navigation in RTL ([#5529](https://github.com/SAP/ui5-webcomponents/issues/5529)) ([bc726a9](https://github.com/SAP/ui5-webcomponents/commit/bc726a9))
+* **ui5-select:** announce value state type ([#5538](https://github.com/SAP/ui5-webcomponents/issues/5538)) ([c0f8a2a](https://github.com/SAP/ui5-webcomponents/commit/c0f8a2a))
+* **ui5-table:** render selectAll checkbox only in case ui5-table is not empty ([#5523](https://github.com/SAP/ui5-webcomponents/issues/5523)) ([cbf23d1](https://github.com/SAP/ui5-webcomponents/commit/cbf23d1))
+* **ui5-title:** use correct font-family for Horizon Themes ([#5457](https://github.com/SAP/ui5-webcomponents/issues/5457)) ([62c4c20](https://github.com/SAP/ui5-webcomponents/commit/62c4c20))
+
+
+### Features
+
+* **ui5-calendar:** show months and years from both primary and secon… ([#5412](https://github.com/SAP/ui5-webcomponents/issues/5412)) ([d5dc7ec](https://github.com/SAP/ui5-webcomponents/commit/d5dc7ec))
+* **ui5-panel:** remove header when not used ([#5513](https://github.com/SAP/ui5-webcomponents/issues/5513)) ([73757a4](https://github.com/SAP/ui5-webcomponents/commit/73757a4))
+* **ui5-radio-button:** add accessibleName property ([#5548](https://github.com/SAP/ui5-webcomponents/issues/5548)) ([967b441](https://github.com/SAP/ui5-webcomponents/commit/967b441)), closes [#5516](https://github.com/SAP/ui5-webcomponents/issues/5516)
+
+
+
+
+
+# [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
+
+
+### Bug Fixes
+
+* **formEnablement:** enable required attribute ([#5133](https://github.com/SAP/ui5-webcomponents/issues/5133)) ([ff044b0](https://github.com/SAP/ui5-webcomponents/commit/ff044b0)), closes [#3498](https://github.com/SAP/ui5-webcomponents/issues/3498)
+* **framework:** correct use of arrow keys for ItemNavigation in RTL ([#5408](https://github.com/SAP/ui5-webcomponents/issues/5408)) ([cec8119](https://github.com/SAP/ui5-webcomponents/commit/cec8119)), closes [#5166](https://github.com/SAP/ui5-webcomponents/issues/5166)
+* **ui5-avatar-group:** adapt width calculations in composite layouts ([#5357](https://github.com/SAP/ui5-webcomponents/issues/5357)) ([d176800](https://github.com/SAP/ui5-webcomponents/commit/d176800)), closes [#5333](https://github.com/SAP/ui5-webcomponents/issues/5333)
+* **ui5-badge:** correctly detect if default slot is provided ([#5334](https://github.com/SAP/ui5-webcomponents/issues/5334)) ([0dceaf5](https://github.com/SAP/ui5-webcomponents/commit/0dceaf5)), closes [#5328](https://github.com/SAP/ui5-webcomponents/issues/5328)
+* **ui5-button:** adjust icon role ([#5355](https://github.com/SAP/ui5-webcomponents/issues/5355)) ([1aac3c5](https://github.com/SAP/ui5-webcomponents/commit/1aac3c5)), closes [#5288](https://github.com/SAP/ui5-webcomponents/issues/5288)
+* **ui5-card:** refactor header to avoid nesting interactive elements ([#5301](https://github.com/SAP/ui5-webcomponents/issues/5301)) ([9b33bad](https://github.com/SAP/ui5-webcomponents/commit/9b33bad))
+* **ui5-carousel:** correct navigation buttons behavior ([#5302](https://github.com/SAP/ui5-webcomponents/issues/5302)) ([34027cd](https://github.com/SAP/ui5-webcomponents/commit/34027cd)), closes [#5125](https://github.com/SAP/ui5-webcomponents/issues/5125)
+* **ui5-checkbox:** correct label color in Horizon ([#5375](https://github.com/SAP/ui5-webcomponents/issues/5375)) ([659cd7f](https://github.com/SAP/ui5-webcomponents/commit/659cd7f)), closes [#5364](https://github.com/SAP/ui5-webcomponents/issues/5364)
+* **ui5-combobox:** change event is now fired on Enter if value is cha… ([#5284](https://github.com/SAP/ui5-webcomponents/issues/5284)) ([b8a4854](https://github.com/SAP/ui5-webcomponents/commit/b8a4854))
+* **ui5-combobox, ui5-multi-combobox:** adjust dropdown width according to the visual specification ([#5371](https://github.com/SAP/ui5-webcomponents/issues/5371)) ([e585304](https://github.com/SAP/ui5-webcomponents/commit/e585304))
+* **ui5-dialog:** add height to footer and samples achieving fiori footer design ([#5338](https://github.com/SAP/ui5-webcomponents/issues/5338)) ([03269f4](https://github.com/SAP/ui5-webcomponents/commit/03269f4))
+* **ui5-dialog:** improved shrinking dialog when resizing ([#5291](https://github.com/SAP/ui5-webcomponents/issues/5291)) ([997f2a2](https://github.com/SAP/ui5-webcomponents/commit/997f2a2)), closes [#5265](https://github.com/SAP/ui5-webcomponents/issues/5265)
+* **ui5-dialog:** make header text bold ([#5266](https://github.com/SAP/ui5-webcomponents/issues/5266)) ([42c0cbe](https://github.com/SAP/ui5-webcomponents/commit/42c0cbe)), closes [#5230](https://github.com/SAP/ui5-webcomponents/issues/5230)
+* **ui5-dialog:** reposition on screen resize ([#5283](https://github.com/SAP/ui5-webcomponents/issues/5283)) ([c2341e8](https://github.com/SAP/ui5-webcomponents/commit/c2341e8))
+* **ui5-input:** fix typeahead on mobile devices ([#5292](https://github.com/SAP/ui5-webcomponents/issues/5292)) ([edcdd24](https://github.com/SAP/ui5-webcomponents/commit/edcdd24))
+* **ui5-input:** refactor change event ([#5296](https://github.com/SAP/ui5-webcomponents/issues/5296)) ([17465e3](https://github.com/SAP/ui5-webcomponents/commit/17465e3))
+* **ui5-li:** correct accessible-name mappings ([#5280](https://github.com/SAP/ui5-webcomponents/issues/5280)) ([21ed1ee](https://github.com/SAP/ui5-webcomponents/commit/21ed1ee))
+* **ui5-link:** enable overstyling ([#5366](https://github.com/SAP/ui5-webcomponents/issues/5366)) ([a359ebf](https://github.com/SAP/ui5-webcomponents/commit/a359ebf)), closes [#5267](https://github.com/SAP/ui5-webcomponents/issues/5267) [#5218](https://github.com/SAP/ui5-webcomponents/issues/5218)
+* **ui5-panel:** set pointer cursor only over the header ([#5275](https://github.com/SAP/ui5-webcomponents/issues/5275)) ([04c23b9](https://github.com/SAP/ui5-webcomponents/commit/04c23b9))
+* **ui5-popover:** avoid dangling aria-labelledby attribute ([#5428](https://github.com/SAP/ui5-webcomponents/issues/5428)) ([21d5457](https://github.com/SAP/ui5-webcomponents/commit/21d5457)), closes [#3956](https://github.com/SAP/ui5-webcomponents/issues/3956)
+* **ui5-rating-indicator:** apply correct styles for focus in HC themes ([#5289](https://github.com/SAP/ui5-webcomponents/issues/5289)) ([4531582](https://github.com/SAP/ui5-webcomponents/commit/4531582))
+* **ui5-rating-indicator:** import ui5-icon as used in template ([#5320](https://github.com/SAP/ui5-webcomponents/issues/5320)) ([885e359](https://github.com/SAP/ui5-webcomponents/commit/885e359)), closes [#5318](https://github.com/SAP/ui5-webcomponents/issues/5318)
+* **ui5-slider, ui5-range-slider:** adjust padding to spec ([#5343](https://github.com/SAP/ui5-webcomponents/issues/5343)) ([bfbd23f](https://github.com/SAP/ui5-webcomponents/commit/bfbd23f)), closes [#4801](https://github.com/SAP/ui5-webcomponents/issues/4801)
+* **ui5-tabcontainer:** make disabled tabs focusable in overflow ([#5300](https://github.com/SAP/ui5-webcomponents/issues/5300)) ([c39917f](https://github.com/SAP/ui5-webcomponents/commit/c39917f))
+
+
+### Features
+
+* **ui5-datetime-picker:** make change events preventable ([#5286](https://github.com/SAP/ui5-webcomponents/issues/5286)) ([7395dc3](https://github.com/SAP/ui5-webcomponents/commit/7395dc3)), closes [#4684](https://github.com/SAP/ui5-webcomponents/issues/4684) [#5121](https://github.com/SAP/ui5-webcomponents/issues/5121)
+* **ui5-link, ui5-breadcrumbs:** add modifiers keys to click event ([#5228](https://github.com/SAP/ui5-webcomponents/issues/5228)) ([379cc7b](https://github.com/SAP/ui5-webcomponents/commit/379cc7b))
+* **ui5-multi-combobox:** implement type ahead (autocomplete) ([#5358](https://github.com/SAP/ui5-webcomponents/issues/5358)) ([b8e46f4](https://github.com/SAP/ui5-webcomponents/commit/b8e46f4))
+* **ui5-multi-combobox:** introduce grouping functionality ([#5250](https://github.com/SAP/ui5-webcomponents/issues/5250)) ([597a6f2](https://github.com/SAP/ui5-webcomponents/commit/597a6f2))
+
+
+
+
+
+# [1.4.0](https://github.com/SAP/ui5-webcomponents/compare/v1.3.1...v1.4.0) (2022-05-25)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** set aria-current to the focused element ([#5214](https://github.com/SAP/ui5-webcomponents/issues/5214)) ([20d8b83](https://github.com/SAP/ui5-webcomponents/commit/20d8b83))
+* **ui5-calendar:** adjust previous and next button styles ([#5226](https://github.com/SAP/ui5-webcomponents/issues/5226)) ([87f6b36](https://github.com/SAP/ui5-webcomponents/commit/87f6b36)), closes [#5117](https://github.com/SAP/ui5-webcomponents/issues/5117)
+* **ui5-calendar:** correct month button text localization ([#5246](https://github.com/SAP/ui5-webcomponents/issues/5246)) ([04f2b08](https://github.com/SAP/ui5-webcomponents/commit/04f2b08))
+* **ui5-calendar:** fix displayed month name ([#5212](https://github.com/SAP/ui5-webcomponents/issues/5212)) ([b03c3ea](https://github.com/SAP/ui5-webcomponents/commit/b03c3ea))
+* **ui5-color-palette:** align buttons to spec ([#5170](https://github.com/SAP/ui5-webcomponents/issues/5170)) ([9f7f382](https://github.com/SAP/ui5-webcomponents/commit/9f7f382)), closes [#4976](https://github.com/SAP/ui5-webcomponents/issues/4976)
+* **ui5-color-picker:** align the slider to horizon spec ([#5209](https://github.com/SAP/ui5-webcomponents/issues/5209)) ([fd97a42](https://github.com/SAP/ui5-webcomponents/commit/fd97a42))
+* **ui5-color-picker:** provide meaningful labels for the inner input components ([#5217](https://github.com/SAP/ui5-webcomponents/issues/5217)) ([a7de0cd](https://github.com/SAP/ui5-webcomponents/commit/a7de0cd)), closes [#5015](https://github.com/SAP/ui5-webcomponents/issues/5015) [#5023](https://github.com/SAP/ui5-webcomponents/issues/5023)
+* **ui5-input:** adjust maxLength property documentation ([#5253](https://github.com/SAP/ui5-webcomponents/issues/5253)) ([0c01d9f](https://github.com/SAP/ui5-webcomponents/commit/0c01d9f))
+* **ui5-input:** correct value-state styles in readonly and disabled ([#5208](https://github.com/SAP/ui5-webcomponents/issues/5208)) ([87bea32](https://github.com/SAP/ui5-webcomponents/commit/87bea32))
+* **ui5-input:** prevent exception if there are suggestion but property is false ([#5219](https://github.com/SAP/ui5-webcomponents/issues/5219)) ([eb57cef](https://github.com/SAP/ui5-webcomponents/commit/eb57cef))
+* **ui5-multi-combobox:** set correct height to items checkboxes ([#5216](https://github.com/SAP/ui5-webcomponents/issues/5216)) ([0946207](https://github.com/SAP/ui5-webcomponents/commit/0946207))
+* **ui5-panel:** animate just icon without button ([#5164](https://github.com/SAP/ui5-webcomponents/issues/5164)) ([fe4ce06](https://github.com/SAP/ui5-webcomponents/commit/fe4ce06))
+* **ui5-panel:** fix typo in css var name ([#5202](https://github.com/SAP/ui5-webcomponents/issues/5202)) ([854673d](https://github.com/SAP/ui5-webcomponents/commit/854673d)), closes [#5201](https://github.com/SAP/ui5-webcomponents/issues/5201)
+* **ui5-rating-indicator:** refactor rating-indicator to use SVG icons ([#5191](https://github.com/SAP/ui5-webcomponents/issues/5191)) ([0782cf7](https://github.com/SAP/ui5-webcomponents/commit/0782cf7))
+* **ui5-select:** correct Horizon popover styles ([#5186](https://github.com/SAP/ui5-webcomponents/issues/5186)) ([1c8870b](https://github.com/SAP/ui5-webcomponents/commit/1c8870b)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-select:** correct picker width ([#5240](https://github.com/SAP/ui5-webcomponents/issues/5240)) ([9bd9d24](https://github.com/SAP/ui5-webcomponents/commit/9bd9d24))
+* **ui5-select:** select correct item by typing text ([#5252](https://github.com/SAP/ui5-webcomponents/issues/5252)) ([24401b2](https://github.com/SAP/ui5-webcomponents/commit/24401b2))
+* **ui5-switch:** adjust additional description announcements ([#4927](https://github.com/SAP/ui5-webcomponents/issues/4927)) ([4fb44e8](https://github.com/SAP/ui5-webcomponents/commit/4fb44e8)), closes [#4887](https://github.com/SAP/ui5-webcomponents/issues/4887)
+* **ui5-tabcontainer:** provide unique names for each disabled slot ([#5241](https://github.com/SAP/ui5-webcomponents/issues/5241)) ([3582127](https://github.com/SAP/ui5-webcomponents/commit/3582127)), closes [#5178](https://github.com/SAP/ui5-webcomponents/issues/5178)
+* **ui5-table:** adjust colspan value in MultiSelect mode ([#5256](https://github.com/SAP/ui5-webcomponents/issues/5256)) ([405702c](https://github.com/SAP/ui5-webcomponents/commit/405702c))
+* **ui5-textarea:** adjust focus outline offset ([#5101](https://github.com/SAP/ui5-webcomponents/issues/5101)) ([cc5c3bd](https://github.com/SAP/ui5-webcomponents/commit/cc5c3bd))
+* **ui5-textarea:** adjust placeholder styling ([#5179](https://github.com/SAP/ui5-webcomponents/issues/5179)) ([fab2b61](https://github.com/SAP/ui5-webcomponents/commit/fab2b61))
+* **ui5-textarea:** prevent valueState if maxlenght is exceeded ([#5237](https://github.com/SAP/ui5-webcomponents/issues/5237)) ([ed9d74f](https://github.com/SAP/ui5-webcomponents/commit/ed9d74f))
+* fix passive listeners for mobile ([#5153](https://github.com/SAP/ui5-webcomponents/issues/5153)) ([3ffec52](https://github.com/SAP/ui5-webcomponents/commit/3ffec52))
+
+
+### Features
+
+* **inputs:** adjust dropdowns according to Horizon themes specification ([#5054](https://github.com/SAP/ui5-webcomponents/issues/5054)) ([7884022](https://github.com/SAP/ui5-webcomponents/commit/7884022))
+* **u5-badge:** implement SAP Horizon theme family ([#5143](https://github.com/SAP/ui5-webcomponents/issues/5143)) ([74470fe](https://github.com/SAP/ui5-webcomponents/commit/74470fe)), closes [#5006](https://github.com/SAP/ui5-webcomponents/issues/5006)
+* **ui5-avatar-group:** implement Horizon theme ([#5171](https://github.com/SAP/ui5-webcomponents/issues/5171)) ([78298af](https://github.com/SAP/ui5-webcomponents/commit/78298af)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-breadcrumbs:** implement Horizon theme ([#5066](https://github.com/SAP/ui5-webcomponents/issues/5066)) ([34c9d91](https://github.com/SAP/ui5-webcomponents/commit/34c9d91)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-calendar:** embed new horizon theme changes ([#5099](https://github.com/SAP/ui5-webcomponents/issues/5099)) ([b6f02e4](https://github.com/SAP/ui5-webcomponents/commit/b6f02e4))
+* **ui5-carousel:** implement SAP Horizon theme family ([#5061](https://github.com/SAP/ui5-webcomponents/issues/5061)) ([ad1ea9f](https://github.com/SAP/ui5-webcomponents/commit/ad1ea9f))
+* **ui5-color-palette:** implement Horizon theme ([#5149](https://github.com/SAP/ui5-webcomponents/issues/5149)) ([357e0d5](https://github.com/SAP/ui5-webcomponents/commit/357e0d5))
+* **ui5-color-picker:** implement horizon themes ([#5139](https://github.com/SAP/ui5-webcomponents/issues/5139)) ([4c561fa](https://github.com/SAP/ui5-webcomponents/commit/4c561fa))
+* **ui5-file-uploader:** implement SAP Horizon theme parameters ([#5086](https://github.com/SAP/ui5-webcomponents/issues/5086)) ([aff0af9](https://github.com/SAP/ui5-webcomponents/commit/aff0af9))
+* **ui5-input:** implement type ahead (autocomplete) ([#5211](https://github.com/SAP/ui5-webcomponents/issues/5211)) ([ec44888](https://github.com/SAP/ui5-webcomponents/commit/ec44888))
+* **ui5-list:** implement Horizon theme ([#5057](https://github.com/SAP/ui5-webcomponents/issues/5057)) ([27f8ea6](https://github.com/SAP/ui5-webcomponents/commit/27f8ea6)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-menu:** implement Horizon theme ([#5132](https://github.com/SAP/ui5-webcomponents/issues/5132)) ([26075fe](https://github.com/SAP/ui5-webcomponents/commit/26075fe))
+* **ui5-multi-combobox:** add "accessibleName" and "accessibleNameRef" properties ([#5187](https://github.com/SAP/ui5-webcomponents/issues/5187)) ([0d80a2c](https://github.com/SAP/ui5-webcomponents/commit/0d80a2c))
+* **ui5-progress-indicator:** implement Horizon theme ([#5140](https://github.com/SAP/ui5-webcomponents/issues/5140)) ([e1655c4](https://github.com/SAP/ui5-webcomponents/commit/e1655c4)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-rating-indicator:** implement small icons for readonly and disabled ([#5233](https://github.com/SAP/ui5-webcomponents/issues/5233)) ([405a598](https://github.com/SAP/ui5-webcomponents/commit/405a598))
+* **ui5-side-navigation:** implement SAP Horizon theme family ([#5081](https://github.com/SAP/ui5-webcomponents/issues/5081)) ([d8d9315](https://github.com/SAP/ui5-webcomponents/commit/d8d9315)), closes [#5006](https://github.com/SAP/ui5-webcomponents/issues/5006)
+* **ui5-sliderbase:** implements Horizon theme ([#5114](https://github.com/SAP/ui5-webcomponents/issues/5114)) ([9b2c705](https://github.com/SAP/ui5-webcomponents/commit/9b2c705))
+* **ui5-switch:** embed new horizon theme changes ([#5017](https://github.com/SAP/ui5-webcomponents/issues/5017)) ([73994e1](https://github.com/SAP/ui5-webcomponents/commit/73994e1))
+* **ui5-tabcontainer:** enable semantic icons in high contrast themes ([#5124](https://github.com/SAP/ui5-webcomponents/issues/5124)) ([3a13acf](https://github.com/SAP/ui5-webcomponents/commit/3a13acf)), closes [#2540](https://github.com/SAP/ui5-webcomponents/issues/2540)
+* **ui5-token:** implement Horizon themes ([#5068](https://github.com/SAP/ui5-webcomponents/issues/5068)) ([0d1b124](https://github.com/SAP/ui5-webcomponents/commit/0d1b124))
+
+
+
+
+
+## [1.3.1](https://github.com/SAP/ui5-webcomponents/compare/v1.3.0...v1.3.1) (2022-04-27)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
+# [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** align to latest sap_horizon specification ([#4951](https://github.com/SAP/ui5-webcomponents/issues/4951)) ([80c1f42](https://github.com/SAP/ui5-webcomponents/commit/80c1f42))
+* **ui5-avatar:** wrong border-radius ([#4877](https://github.com/SAP/ui5-webcomponents/issues/4877)) ([cb9f55f](https://github.com/SAP/ui5-webcomponents/commit/cb9f55f)), closes [#4873](https://github.com/SAP/ui5-webcomponents/issues/4873)
+* **ui5-card-header:** prevent events from action slot to trigger header's click event ([#4965](https://github.com/SAP/ui5-webcomponents/issues/4965)) ([547ce9e](https://github.com/SAP/ui5-webcomponents/commit/547ce9e)), closes [#4891](https://github.com/SAP/ui5-webcomponents/issues/4891)
+* **ui5-checkbox:** align to latest sap_horizon specification ([#4972](https://github.com/SAP/ui5-webcomponents/issues/4972)) ([be9e6bc](https://github.com/SAP/ui5-webcomponents/commit/be9e6bc))
+* **ui5-color-palette:** Adapt components with responsive paddings ([#4985](https://github.com/SAP/ui5-webcomponents/issues/4985)) ([9de7198](https://github.com/SAP/ui5-webcomponents/commit/9de7198)), closes [#4869](https://github.com/SAP/ui5-webcomponents/issues/4869)
+* **ui5-color-picker:** fix RTL visual issues ([#4966](https://github.com/SAP/ui5-webcomponents/issues/4966)) ([ae76500](https://github.com/SAP/ui5-webcomponents/commit/ae76500)), closes [#4892](https://github.com/SAP/ui5-webcomponents/issues/4892)
+* **ui5-combobox:** disable autocomplete on Android ([#5088](https://github.com/SAP/ui5-webcomponents/issues/5088)) ([7353188](https://github.com/SAP/ui5-webcomponents/commit/7353188))
+* **ui5-date-picker:** adjust initial value formatting ([#4967](https://github.com/SAP/ui5-webcomponents/issues/4967)) ([304e73b](https://github.com/SAP/ui5-webcomponents/commit/304e73b)), closes [#4958](https://github.com/SAP/ui5-webcomponents/issues/4958) [#4958](https://github.com/SAP/ui5-webcomponents/issues/4958)
+* **ui5-date-picker:** handle date selection via enter keyboard key ([#4863](https://github.com/SAP/ui5-webcomponents/issues/4863)) ([fc2cec0](https://github.com/SAP/ui5-webcomponents/commit/fc2cec0)), closes [#4826](https://github.com/SAP/ui5-webcomponents/issues/4826)
+* **ui5-date-picker:** remove aria-expanded attribute ([#4866](https://github.com/SAP/ui5-webcomponents/issues/4866)) ([381c884](https://github.com/SAP/ui5-webcomponents/commit/381c884)), closes [#4865](https://github.com/SAP/ui5-webcomponents/issues/4865)
+* **ui5-date-picker:** remove timezone test ([#4829](https://github.com/SAP/ui5-webcomponents/issues/4829)) ([14552cf](https://github.com/SAP/ui5-webcomponents/commit/14552cf))
+* **ui5-date*-picker:** adjust the date and time pickers accessibility attributes ([#4996](https://github.com/SAP/ui5-webcomponents/issues/4996)) ([229efcc](https://github.com/SAP/ui5-webcomponents/commit/229efcc)), closes [#4946](https://github.com/SAP/ui5-webcomponents/issues/4946)
+* **ui5-datetime-picker:** Adapt components with responsive paddings ([#4977](https://github.com/SAP/ui5-webcomponents/issues/4977)) ([6c5e516](https://github.com/SAP/ui5-webcomponents/commit/6c5e516)), closes [#4869](https://github.com/SAP/ui5-webcomponents/issues/4869)
+* **ui5-datetime-picker:** enable secondary calendar type ([#4970](https://github.com/SAP/ui5-webcomponents/issues/4970)) ([6a096cb](https://github.com/SAP/ui5-webcomponents/commit/6a096cb)), closes [#4959](https://github.com/SAP/ui5-webcomponents/issues/4959)
+* **ui5-input:** activeElement is now correct in case of nested components ([#5005](https://github.com/SAP/ui5-webcomponents/issues/5005)) ([199d974](https://github.com/SAP/ui5-webcomponents/commit/199d974))
+* **ui5-label:** prevent screenreader announcement of colon and asterisk ([#5072](https://github.com/SAP/ui5-webcomponents/issues/5072)) ([b5d5a3f](https://github.com/SAP/ui5-webcomponents/commit/b5d5a3f)), closes [#4830](https://github.com/SAP/ui5-webcomponents/issues/4830)
+* **ui5-li:** correct focus handling ([#4935](https://github.com/SAP/ui5-webcomponents/issues/4935)) ([2b82342](https://github.com/SAP/ui5-webcomponents/commit/2b82342))
+* **ui5-link:** remove double click event ([#5038](https://github.com/SAP/ui5-webcomponents/issues/5038)) ([4b95bc8](https://github.com/SAP/ui5-webcomponents/commit/4b95bc8)), closes [#4963](https://github.com/SAP/ui5-webcomponents/issues/4963) [#4963](https://github.com/SAP/ui5-webcomponents/issues/4963)
+* **ui5-list:** correct keyboard handling ([#4890](https://github.com/SAP/ui5-webcomponents/issues/4890)) ([8c27355](https://github.com/SAP/ui5-webcomponents/commit/8c27355))
+* **ui5-multi-combobox:** display placeholder consistently ([#4920](https://github.com/SAP/ui5-webcomponents/issues/4920)) ([359d1a3](https://github.com/SAP/ui5-webcomponents/commit/359d1a3)), closes [#4897](https://github.com/SAP/ui5-webcomponents/issues/4897)
+* **ui5-multi-input:** correct header paddings in nMore popover ([#5040](https://github.com/SAP/ui5-webcomponents/issues/5040)) ([b06d608](https://github.com/SAP/ui5-webcomponents/commit/b06d608))
+* **ui5-multi-input:** improve backspace and home handling ([#4646](https://github.com/SAP/ui5-webcomponents/issues/4646)) ([fa2a700](https://github.com/SAP/ui5-webcomponents/commit/fa2a700))
+* **ui5-popover:** fix auto close when opener is outside the viewport ([#4847](https://github.com/SAP/ui5-webcomponents/issues/4847)) ([c944efd](https://github.com/SAP/ui5-webcomponents/commit/c944efd)), closes [#4716](https://github.com/SAP/ui5-webcomponents/issues/4716)
+* **ui5-popover:** prevent arrow placement over popover's rounded corners ([#4960](https://github.com/SAP/ui5-webcomponents/issues/4960)) ([994871d](https://github.com/SAP/ui5-webcomponents/commit/994871d)), closes [#4599](https://github.com/SAP/ui5-webcomponents/issues/4599) [#4797](https://github.com/SAP/ui5-webcomponents/issues/4797)
+* **ui5-responsive-popover:** allow opening a popover from component ([#5070](https://github.com/SAP/ui5-webcomponents/issues/5070)) ([241a112](https://github.com/SAP/ui5-webcomponents/commit/241a112)), closes [#5028](https://github.com/SAP/ui5-webcomponents/issues/5028)
+* **ui5-tabcontainer:** add missing dependency in Tab ([#5069](https://github.com/SAP/ui5-webcomponents/issues/5069)) ([b03c56b](https://github.com/SAP/ui5-webcomponents/commit/b03c56b)), closes [#5037](https://github.com/SAP/ui5-webcomponents/issues/5037)
+* make listeners passive ([#5012](https://github.com/SAP/ui5-webcomponents/issues/5012)) ([30f2dc7](https://github.com/SAP/ui5-webcomponents/commit/30f2dc7))
+* **ui5-step-input:** align the min width to visual specification ([#4884](https://github.com/SAP/ui5-webcomponents/issues/4884)) ([197fef1](https://github.com/SAP/ui5-webcomponents/commit/197fef1)), closes [#4786](https://github.com/SAP/ui5-webcomponents/issues/4786)
+* **ui5-tabcontainer:** fix overflow button visibility ([#4836](https://github.com/SAP/ui5-webcomponents/issues/4836)) ([8e67748](https://github.com/SAP/ui5-webcomponents/commit/8e67748)), closes [#4690](https://github.com/SAP/ui5-webcomponents/issues/4690)
+* **ui5-time-picker:** firing change event after input change submit ([#4962](https://github.com/SAP/ui5-webcomponents/issues/4962)) ([2e3f428](https://github.com/SAP/ui5-webcomponents/commit/2e3f428)), closes [#4918](https://github.com/SAP/ui5-webcomponents/issues/4918)
+* correct responsive padding in some consumers of popups ([#4926](https://github.com/SAP/ui5-webcomponents/issues/4926)) ([b501153](https://github.com/SAP/ui5-webcomponents/commit/b501153)), closes [#4870](https://github.com/SAP/ui5-webcomponents/issues/4870)
+* **ui5-view-settings-dialog:** adjust scrollbar behavior  ([#4795](https://github.com/SAP/ui5-webcomponents/issues/4795)) ([8f58fd5](https://github.com/SAP/ui5-webcomponents/commit/8f58fd5)), closes [#4724](https://github.com/SAP/ui5-webcomponents/issues/4724) [#4725](https://github.com/SAP/ui5-webcomponents/issues/4725) [#4860](https://github.com/SAP/ui5-webcomponents/issues/4860)
+* **ui5-view-settings-dialog:** fixing comments from previous commit ([#4851](https://github.com/SAP/ui5-webcomponents/issues/4851)) ([3fc5814](https://github.com/SAP/ui5-webcomponents/commit/3fc5814))
+
+
+### Features
+
+* **inputs:** SAP Horizon themes implementation ([#5003](https://github.com/SAP/ui5-webcomponents/issues/5003)) ([26aff35](https://github.com/SAP/ui5-webcomponents/commit/26aff35))
+* **ui5-breadcrumbs:** add position numbering scheme "x of y" ([#4703](https://github.com/SAP/ui5-webcomponents/issues/4703)) ([35e2c96](https://github.com/SAP/ui5-webcomponents/commit/35e2c96))
+* **ui5-button:** Implement SAP Horizon theme parameters ([#4912](https://github.com/SAP/ui5-webcomponents/issues/4912)) ([43761ad](https://github.com/SAP/ui5-webcomponents/commit/43761ad))
+* **ui5-card:** implement SAP Horizon theme family ([#4974](https://github.com/SAP/ui5-webcomponents/issues/4974)) ([0137225](https://github.com/SAP/ui5-webcomponents/commit/0137225)), closes [#5006](https://github.com/SAP/ui5-webcomponents/issues/5006)
+* **ui5-checkbox:** implement required property ([#5055](https://github.com/SAP/ui5-webcomponents/issues/5055)) ([d6a56cb](https://github.com/SAP/ui5-webcomponents/commit/d6a56cb)), closes [#4895](https://github.com/SAP/ui5-webcomponents/issues/4895)
+* **ui5-dialog:** set horizon themes parameters ([#4925](https://github.com/SAP/ui5-webcomponents/issues/4925)) ([1f3d212](https://github.com/SAP/ui5-webcomponents/commit/1f3d212))
+* **ui5-icon:** implement Horizon theme ([#5080](https://github.com/SAP/ui5-webcomponents/issues/5080)) ([6db8956](https://github.com/SAP/ui5-webcomponents/commit/6db8956)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-input:** introduce openPicker() functionality ([#4971](https://github.com/SAP/ui5-webcomponents/issues/4971)) ([7e08a75](https://github.com/SAP/ui5-webcomponents/commit/7e08a75))
+* **ui5-link:** Implement SAP Horizon theme parameters ([#5011](https://github.com/SAP/ui5-webcomponents/issues/5011)) ([ee44117](https://github.com/SAP/ui5-webcomponents/commit/ee44117))
+* **ui5-menu:** Initial implementation ([#4742](https://github.com/SAP/ui5-webcomponents/issues/4742)) ([deac309](https://github.com/SAP/ui5-webcomponents/commit/deac309))
+* **ui5-message-strip:** apply SAP Horizon parameters ([#4941](https://github.com/SAP/ui5-webcomponents/issues/4941)) ([8919965](https://github.com/SAP/ui5-webcomponents/commit/8919965))
+* **ui5-multi-combobox:** Add cut/copy & paste handling ([#4854](https://github.com/SAP/ui5-webcomponents/issues/4854)) ([18c5912](https://github.com/SAP/ui5-webcomponents/commit/18c5912))
+* **ui5-multi-combobox:** Improve F4/Alt+Down focus handling ([#4825](https://github.com/SAP/ui5-webcomponents/issues/4825)) ([01b56f3](https://github.com/SAP/ui5-webcomponents/commit/01b56f3))
+* **ui5-multi-combobox, ui5-tokenizer:**  Handle 'Space' key combinations ([#4817](https://github.com/SAP/ui5-webcomponents/issues/4817)) ([0fbe1e1](https://github.com/SAP/ui5-webcomponents/commit/0fbe1e1))
+* **ui5-multi-combobox, ui5-tokenizer:** Complete arrow navigation functionality ([#4784](https://github.com/SAP/ui5-webcomponents/issues/4784)) ([25cc16c](https://github.com/SAP/ui5-webcomponents/commit/25cc16c))
+* **ui5-option:** add additional-text property ([#5065](https://github.com/SAP/ui5-webcomponents/issues/5065)) ([84d9f5f](https://github.com/SAP/ui5-webcomponents/commit/84d9f5f)), closes [#4999](https://github.com/SAP/ui5-webcomponents/issues/4999) [#4999](https://github.com/SAP/ui5-webcomponents/issues/4999)
+* **ui5-panel:** implement SAP Horizon themes ([#5058](https://github.com/SAP/ui5-webcomponents/issues/5058)) ([67565d5](https://github.com/SAP/ui5-webcomponents/commit/67565d5)), closes [#5007](https://github.com/SAP/ui5-webcomponents/issues/5007)
+* **ui5-radio-button:** implement new value states - Success and Information and implement Horizon theme ([#4913](https://github.com/SAP/ui5-webcomponents/issues/4913)) ([c85ad95](https://github.com/SAP/ui5-webcomponents/commit/c85ad95))
+* **ui5-select:** add aria-roledescription attribute ([#4921](https://github.com/SAP/ui5-webcomponents/issues/4921)) ([e19a914](https://github.com/SAP/ui5-webcomponents/commit/e19a914)), closes [#2910](https://github.com/SAP/ui5-webcomponents/issues/2910)
+* **ui5-tabcontainer:** enable nested tabs ([#4705](https://github.com/SAP/ui5-webcomponents/issues/4705)) ([3e715c4](https://github.com/SAP/ui5-webcomponents/commit/3e715c4))
+* **ui5-tabcontainer:** implement SAP Horizon theme family ([#4981](https://github.com/SAP/ui5-webcomponents/issues/4981)) ([0b90287](https://github.com/SAP/ui5-webcomponents/commit/0b90287))
+* **ui5-table:** Add 'accessibleName' and 'accessibleNameRef' properties ([#4994](https://github.com/SAP/ui5-webcomponents/issues/4994)) ([a4ef3cb](https://github.com/SAP/ui5-webcomponents/commit/a4ef3cb))
+* **ui5-table:** implement SAP Horizon themes ([#4992](https://github.com/SAP/ui5-webcomponents/issues/4992)) ([5c2a056](https://github.com/SAP/ui5-webcomponents/commit/5c2a056)), closes [#4938](https://github.com/SAP/ui5-webcomponents/issues/4938)
+* **ui5-textarea:** Horizon themes implementation ([#5018](https://github.com/SAP/ui5-webcomponents/issues/5018)) ([f5d56e2](https://github.com/SAP/ui5-webcomponents/commit/f5d56e2))
+* **ui5-toast:** implement SAP Horizon Dark and HC themes ([#4864](https://github.com/SAP/ui5-webcomponents/issues/4864)) ([346fa64](https://github.com/SAP/ui5-webcomponents/commit/346fa64))
+
+
+
+
+
+## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
+
+
+### Bug Fixes
+
+* **ui5-card-header:** prevent events from action slot to trigger header's click event ([#4965](https://github.com/SAP/ui5-webcomponents/issues/4965)) ([f87d898](https://github.com/SAP/ui5-webcomponents/commit/f87d898)), closes [#4891](https://github.com/SAP/ui5-webcomponents/issues/4891)
+* **ui5-date-picker:** adjust initial value formatting ([#4967](https://github.com/SAP/ui5-webcomponents/issues/4967)) ([3648b01](https://github.com/SAP/ui5-webcomponents/commit/3648b01)), closes [#4958](https://github.com/SAP/ui5-webcomponents/issues/4958) [#4958](https://github.com/SAP/ui5-webcomponents/issues/4958)
+* **ui5-datetime-picker:** enable secondary calendar type ([#4970](https://github.com/SAP/ui5-webcomponents/issues/4970)) ([6bc84f7](https://github.com/SAP/ui5-webcomponents/commit/6bc84f7)), closes [#4959](https://github.com/SAP/ui5-webcomponents/issues/4959)
+* **ui5-popover:** prevent arrow placement over popover's rounded corners ([#4960](https://github.com/SAP/ui5-webcomponents/issues/4960)) ([66604c3](https://github.com/SAP/ui5-webcomponents/commit/66604c3)), closes [#4599](https://github.com/SAP/ui5-webcomponents/issues/4599) [#4797](https://github.com/SAP/ui5-webcomponents/issues/4797)
+
+
+
+
+
 ## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
 
 

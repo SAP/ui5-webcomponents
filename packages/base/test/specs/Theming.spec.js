@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Theming works", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("Tests that the parameters for the default theme are embedded on boot", async () => {
@@ -30,4 +30,15 @@ describe("Theming works", () => {
 		assert.strictEqual(res, true, "Theme parameters changed");
 	});
 
+	it("Tests fallback to default theme when setting unknown theme", async () => {
+		const unknownTheme = 'sap_unknown_theme';
+		await browser.url(`test/pages/AllTestElements.html?sap-ui-theme=${unknownTheme}`);
+
+		const res = await browser.executeAsync( async (done) => {
+			const cssVarValue = getComputedStyle(document.documentElement).getPropertyValue('--var1');
+			done(cssVarValue);
+		});
+
+		assert.strictEqual(res, ' red', "Default theme parameters loaded");
+	});
 });

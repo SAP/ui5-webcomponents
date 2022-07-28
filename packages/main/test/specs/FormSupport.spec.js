@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Form support", () => {
 
 	it("Normal button does not submit forms", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/FormSupport.html`);
+		await browser.url(`test/pages/FormSupport.html`);
 
 		const noSubmitButton = await browser.$("#b1");
 		await noSubmitButton.click();
@@ -16,7 +15,7 @@ describe("Form support", () => {
 	});
 
 	it("Submit button does submit forms", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/FormSupport.html`);
+		await browser.url(`test/pages/FormSupport.html`);
 
 		const submitButton = await browser.$("#b2");
 		await submitButton.click();
@@ -26,6 +25,18 @@ describe("Form support", () => {
 			done(location.href.endsWith(expectedFormData));
 		});
 		assert.ok(formWasSubmitted, "For was submitted and URL changed");
+	});
+
+	it("Prevent default on submit event", async () => {
+		await browser.url(`test/pages/FormSupport.html`);
+
+		const noSubmitButton = await browser.$("#b3");
+		await noSubmitButton.click();
+
+		const hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html"));
+		});
+		assert.ok(hrefIsSame, "Form is not submitted when prevent default is called");
 	});
 
 });

@@ -4,7 +4,8 @@
 	content-only-on-desktop
 	_disable-initial-focus
 	placement-type="Bottom"
-	horizontal-align="Stretch"
+	horizontal-align="Left"
+	style="{{styles.suggestionsPopover}}"
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
 >
@@ -47,7 +48,8 @@
 		</div>
 
 		{{#if hasValueStateText}}
-			<div class="row {{classes.popoverValueState}}">
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
@@ -116,7 +118,7 @@
 
 {{#*inline "valueStateMessage"}}
 	{{#if shouldDisplayDefaultValueStateMessage}}
-		{{valueStateText}}
+		{{valueStateDefaultText}}
 	{{else}}
 		{{#each valueStateMessageText}}
 			{{this}}

@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("Toast general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Toast.html`);
+		await browser.url(`test/pages/Toast.html`);
 	});
 
 	it("tests open attribute before show", async () => {

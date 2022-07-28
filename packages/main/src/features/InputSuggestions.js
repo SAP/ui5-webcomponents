@@ -270,6 +270,8 @@ class Suggestions {
 
 	async _attachItemsListeners() {
 		const list = await this._getList();
+		list.removeEventListener("ui5-item-click", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-item-click", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
 		list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
@@ -303,6 +305,7 @@ class Suggestions {
 
 	_onClose() {
 		this._getComponent().onClose();
+		this._handledPress = false;
 	}
 
 	_applyFocus() {
@@ -562,6 +565,7 @@ class Suggestions {
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = null;
+		this.component.value = this.component.valueBeforeAutoComplete;
 
 		items && this._scrollItemIntoView(items[0]);
 		this._deselectItems();

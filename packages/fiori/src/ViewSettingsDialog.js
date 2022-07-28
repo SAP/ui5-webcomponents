@@ -41,7 +41,7 @@ import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js"
 const metadata = {
 	tag: "ui5-view-settings-dialog",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the initial sort order.
 		 *
@@ -112,9 +112,10 @@ const metadata = {
 		 */
 		_filterStepTwo: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the list of items against which the user could sort data.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
@@ -139,7 +140,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
 
 		/**
 		 * Fired when confirmation button is activated.
@@ -182,6 +183,14 @@ const metadata = {
 				filters: { type: Array },
 			},
 		},
+
+		/**
+		 * Fired before the component is opened. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#before-open
+		 */
+		"before-open": {},
 	},
 };
 
@@ -213,6 +222,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
  * @extends UI5Element
  * @tagname ui5-view-settings-dialog
+ * @appenddocs SortItem FilterItem FilterItemOption
  * @since 1.0.0-rc.16
  * @public
  */
@@ -312,8 +322,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _dialogTitle() {
-		const currentModeText = this._currentMode === ViewSettingsDialogMode.Sort ? VSD_DIALOG_TITLE_SORT : VSD_FILTER_BY;
-		return ViewSettingsDialog.i18nBundle.getText(currentModeText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
 	}
 
 	get _okButtonLabel() {
@@ -354,6 +363,12 @@ class ViewSettingsDialog extends UI5Element {
 
 	get _sortAscending() {
 		return !this.sortDescending;
+	}
+
+	get _title() {
+		return this.showBackButton
+			? this._filterByTitle
+			: this._dialogTitle;
 	}
 
 	/**
@@ -434,6 +449,10 @@ class ViewSettingsDialog extends UI5Element {
 		];
 	}
 
+	get expandContent() {
+		return this._filterStepTwo || !this.hasPagination;
+	}
+
 	get isModeSort() {
 		return this._currentMode === ViewSettingsDialogMode.Sort;
 	}
@@ -477,6 +496,7 @@ class ViewSettingsDialog extends UI5Element {
 			this._restoreSettings(this._confirmedSettings);
 		}
 
+		this.fireEvent("before-open", {}, true, false);
 		this._dialog.show(true);
 
 		this._dialog.querySelector("[ui5-list]").focusFirstItem();
@@ -509,8 +529,7 @@ class ViewSettingsDialog extends UI5Element {
 	_changeCurrentFilter(event) {
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
-			filter.selected = filter.text === event.detail.item.text;
-
+			filter.selected = filter.text === event.detail.item.innerText;
 			return filter;
 		});
 	}
@@ -656,6 +675,61 @@ class ViewSettingsDialog extends UI5Element {
 		});
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+	}
+
+	/**
+	 * Sets a JavaScript object, as settings to the <code>ui5-view-settings-dialog</code>.
+	 * This method can be used after the dialog is initially open, as the dialog need to set its initial settings.
+	 * The <code>ui5-view-settings-dialog</code> throws an event called "before-open", this can be used as trigger point.
+	 * The object should have the following format:
+	 * <code>{
+	 *	{ "sortOrder" : "Ascending", "sortBy" : "Name", "filters" : [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
+	 * }</code>
+	 * @param {string} settings A value to be set as predefined settings.
+	 * @public
+	 */
+	setConfirmedSettings(settings) {
+		if (settings && this._dialog && !this._dialog.isOpen()) {
+			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
+			if (settings.sortOrder) {
+				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
+					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
+						tempSettings.sortOrder[i].selected = true;
+					} else {
+						tempSettings.sortOrder[i].selected = false;
+					}
+				}
+			}
+
+			if (settings.sortBy) {
+				for (let i = 0; i < tempSettings.sortBy.length; i++) {
+					if (tempSettings.sortBy[i].text === settings.sortBy) {
+						tempSettings.sortBy[i].selected = true;
+					} else {
+						tempSettings.sortBy[i].selected = false;
+					}
+				}
+			}
+
+			if (settings.filters) {
+				const inputFilters = {};
+				for (let i = 0; i < settings.filters.length; i++) {
+					inputFilters[Object.keys(settings.filters[i])[0]] = settings.filters[i][Object.keys(settings.filters[i])[0]];
+				}
+
+				for (let i = 0; i < tempSettings.filters.length; i++) {
+					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
+						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
+							tempSettings.filters[i].filterOptions[j].selected = true;
+						} else {
+							tempSettings.filters[i].filterOptions[j].selected = false;
+						}
+					}
+				}
+			}
+
+			this._confirmedSettings = JSON.parse(JSON.stringify(tempSettings));
+		}
 	}
 }
 

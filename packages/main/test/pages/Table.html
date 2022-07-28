@@ -16,13 +16,13 @@
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
 
 </head>
 
-<link rel="stylesheet" type="text/css" href="styles/Table.css">
+<link rel="stylesheet" type="text/css" href="./styles/Table.css">
 
 <body class="table1auto">
 
@@ -34,7 +34,7 @@
 		<button id="toggleSticky" class="table3auto">Toggle Sticky Column Header</button>
 	</div>
 
-	<ui5-table class="demo-table" id="tbl">
+	<ui5-table class="demo-table" accessible-name-ref="tableLabel" id="tbl">
 		<!-- Columns -->
 		<ui5-table-column id="column-1" slot="columns" width="350px">
 			<ui5-label>Product</ui5-label>
@@ -80,7 +80,6 @@
 				</th>
 				<th>
 					<ui5-label>Price</ui5-label>
-				</th>
 				</th>
 			</tr>
 		</thead>
@@ -133,7 +132,7 @@
 
 	<!-- 1 column, but 3 cells -->
 	<ui5-title>1 column, but 3 cells</ui5-title>
-	<ui5-table class="demo-table" id="tblLessColumns">
+	<ui5-table class="demo-table" id="tblLessColumns" accessible-name="Table label">
 		<ui5-table-column id="column-1" slot="columns">
 			<ui5-label>City</ui5-label>
 		</ui5-table-column>
@@ -1069,8 +1068,8 @@
 				"SupplierName": "Alpha Printers",
 				"WeightMeasure": 23.2,
 				"WeightUnit": "KG",
-				"Description": "Copymaster",
-				"Name": "Copymaster",
+				"Description": "Flatbed scanner - A4 - 2400 dpi x 2400 dpi - 216 x 297 mm - add-on module",
+				"Name": "Jet Scan Professional",
 				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1085.jpg",
 				"Status": "Available",
 				"Quantity": 10,

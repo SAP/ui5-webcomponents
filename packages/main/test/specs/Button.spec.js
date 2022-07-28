@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
-
+// 
 
 describe("Button general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Button.html`);
+		await browser.url(`test/pages/Button.html`);
 	});
 
 	it("tests button's text rendering", async () => {
@@ -98,6 +97,13 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(await innerButton.getAttribute("aria-haspopup"), "dialog", "Attribute is reflected");
 		assert.strictEqual(await innerButton.getAttribute("aria-controls"), "registration-dialog", "Attribute is reflected");
+	});
+
+	it("tests button with text icon role", async () => {
+		const button = await browser.$("#attentionIconButton");
+		const icon = await button.shadow$("ui5-icon");
+
+		assert.ok(icon.getAttribute("accessible-role", "presentation"), "icon has proper role");
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {

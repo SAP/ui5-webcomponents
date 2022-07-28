@@ -17,7 +17,7 @@
 			aria-valuemin="{{min}}"
 			aria-valuemax="{{max}}"
 			aria-valuetext="From {{startValue}} to {{endValue}}"
-			aria-labelledby="{{_id}}-sliderDesc"
+			aria-labelledby="{{_ariaLabelledByProgressBarRefs}}"
 			aria-disabled="{{_ariaDisabled}}"
 		></div>
 	</div>
@@ -34,7 +34,7 @@
 		aria-valuemin="{{min}}"
 		aria-valuemax="{{max}}"
 		aria-valuenow="{{startValue}}"
-		aria-labelledby="{{_id}}-startHandleDesc"
+		aria-labelledby="{{_ariaLabelledByStartHandleRefs}}"
 		aria-disabled="{{_ariaDisabled}}"
 	>
 		<ui5-icon name="source-code" slider-icon></ui5-icon>
@@ -56,7 +56,7 @@
 		aria-valuemin="{{min}}"
 		aria-valuemax="{{max}}"
 		aria-valuenow="{{endValue}}"
-		aria-labelledby="{{_id}}-endHandleDesc"
+		aria-labelledby="{{_ariaLabelledByEndHandleRefs}}"
 		aria-disabled="{{_ariaDisabled}}"
 	>
 		<ui5-icon name="source-code" slider-icon></ui5-icon>

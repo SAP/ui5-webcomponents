@@ -8,6 +8,8 @@
 @import "./ShellBar-parameters.css";
 @import "./TimelineItem-parameters.css";
 @import "./SideNavigation-parameters.css";
-@import "../base/UploadCollection-parameters.css";
+@import "./UploadCollection-parameters.css";
+@import "../base/ViewSettingsDialog-parameters.css";
+@import "./Wizard-parameters.css";
 @import "./WizardTab-parameters.css";
 @import "./NotificationListItem-parameters.css";

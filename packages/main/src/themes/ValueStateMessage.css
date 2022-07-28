@@ -1,21 +1,17 @@
 .ui5-valuestatemessage-popover {
-	box-shadow: none;
+	box-shadow: var(--_ui5_value_state_message_popover_box_shadow);
 }
 
 .ui5-input-value-state-message-icon {
-	width: .875rem;
-	height: .875rem;
+	width: var(--_ui5_value_state_message_icon_width);
+	height: var(--_ui5_value_state_message_icon_height);
 	display: var(--_ui5_input_value_state_icon_display);
 	position: absolute;
-	padding-right: 0.5rem;
+	padding-right: 0.375rem;
 }
 
 .ui5-valuestatemessage-root .ui5-input-value-state-message-icon {
-	left: 0.5rem;
-}
-
-[ui5-responsive-popover] .ui5-valuestatemessage-header .ui5-input-value-state-message-icon {
-	left: 1rem;
+	left: var(--_ui5_input_value_state_icon_offset);
 }
 
 .ui5-input-value-state-message-icon[name="error"] {
@@ -51,6 +47,8 @@
 [ui5-responsive-popover] .ui5-valuestatemessage-header {
 	min-height: 2rem;
 	padding: var(--_ui5_value_state_header_padding);
+	border: var(--_ui5_value_state_header_border);
+	border-bottom: var(--_ui5_value_state_header_border_bottom);
 }
 
 .ui5-valuestatemessage--success {
@@ -70,9 +68,8 @@
 }
 
 .ui5-responsive-popover-header[focused], .ui5-responsive-popover-header:focus {
-	outline-offset: -0.125rem;
+	outline-offset: var(--_ui5_value_state_header_offset);
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	border-radius: var(--_ui5_value_state_message_focus_border_radius);
 }
 
 .ui5-valuestatemessage-popover::part(header),

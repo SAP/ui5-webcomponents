@@ -1,15 +1,14 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 
 describe("Avatar", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+		await browser.url(`test/pages/Avatar.html`);
 	});
 
 	it("tests rendering of image", async () => {
 		const avatar = await browser.$("#myAvatar1");
-		const image = await avatar.shadow$("slot");
+		const image = await avatar.shadow$('slot:not([name="badge"])');
 		const icon = await avatar.shadow$("ui5-avatar-icon");
 
 		// img tag is rendered, ui5-icon - not
@@ -19,7 +18,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of icon", async () => {
 		const avatar = await browser.$("#myAvatar2");
-		const image = await avatar.shadow$("slot");
+		const image = await avatar.shadow$('slot:not([name="badge"])');
 		const icon = await avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
@@ -29,7 +28,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image, when all set", async () => {
 		const avatar = await browser.$("#myAvatar3");
-		const image = await avatar.shadow$("slot");
+		const image = await avatar.shadow$('slot:not([name="badge"])');
 		const icon = await avatar.shadow$(".ui5-avatar-icon");
 		const initials = await avatar.shadow$(".ui5-avatar-initials");
 
@@ -91,7 +90,7 @@ describe("Avatar", () => {
 
 describe("ARIA attributes", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+		await browser.url(`test/pages/Avatar.html`);
 	});
 
 	it ("role set correctly", async () => {

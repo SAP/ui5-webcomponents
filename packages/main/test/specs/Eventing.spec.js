@@ -1,10 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Eventing", () => {
 
 	it("Default prevented", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Eventing.html`);
+		await browser.url(`test/pages/Eventing.html`);
 
 		const innerLink = await browser.$("#defaultPreventedLink");
 		await innerLink.click();
@@ -16,7 +15,7 @@ describe("Eventing", () => {
 	});
 
 	it("Default not prevented", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/Eventing.html`);
+		await browser.url(`test/pages/Eventing.html`);
 
 		const innerLink = await browser.$("#normalLink");
 		await innerLink.click();

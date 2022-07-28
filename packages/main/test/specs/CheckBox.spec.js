@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("CheckBox general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/CheckBox.html`);
+		await browser.url(`test/pages/CheckBox.html`);
 	});
 
 	it("tests checked default value is false", async () => {

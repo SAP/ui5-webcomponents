@@ -1,3 +1,5 @@
+import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
+import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -30,7 +32,7 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
 const metadata = {
 	tag: "ui5-calendar",
 	fastNavigation: true,
-	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.
 		 * Accepted property values are:<br>
@@ -86,9 +88,13 @@ const metadata = {
 		_headerYearButtonText: {
 			type: String,
 		},
+
+		_headerYearButtonTextSecType: {
+			type: String,
+		},
 	},
 	managedSlots: true,
-	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
 		 *
@@ -102,7 +108,7 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates change.
 		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
@@ -290,7 +296,7 @@ class Calendar extends CalendarPart {
 
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		this._headerMonthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
+		this._headerMonthButtonText = localeData.getMonthsStandAlone("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
@@ -302,6 +308,8 @@ class Calendar extends CalendarPart {
 		} else {
 			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
 		}
+
+		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
 
 	/**
@@ -340,6 +348,27 @@ class Calendar extends CalendarPart {
 		this._currentPickerDOM._showNextPage();
 	}
 
+	_setSecondaryCalendarTypeButtonText() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		this._headerMonthButtonTextInSexType = localeData.getMonthsStandAlone("wide", this.secondaryCalendarType)[this._calendarDate.getMonth()];
+
+		if (this._currentPicker === "year") {
+			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			rangeStart.setYear(this._currentPickerDOM._firstYear);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+
+			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true)
+				.firstDate;
+			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
+				.lastDate;
+			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
+		} else {
+			this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
+		}
+	}
+
 	get secondaryCalendarTypeButtonText() {
 		if (!this.secondaryCalendarType) {
 			return;
@@ -347,56 +376,15 @@ class Calendar extends CalendarPart {
 
 		const localDate = new Date(this._timestamp * 1000);
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-		const secondMonthInfo = this._getDisplayedSecondaryMonthText();
+		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, this._timestamp);
+		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this.secondaryCalendarType);
 		const secondYearText = secondYearFormat.format(localDate, true);
+
 		return {
 			yearButtonText: secondYearText,
 			monthButtonText: secondMonthInfo.text,
-			monthButtonInfo: secondMonthInfo.info,
+			monthButtonInfo: secondMonthInfo.textInfo,
 		};
-	}
-
-	_getDisplayedSecondaryMonthText() {
-		const month = this._getDisplayedSecondaryMonths();
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const pattern = localeData.getIntervalPattern();
-		const secondaryMonthsNames = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("abbreviated", this.secondaryCalendarType);
-		const secondaryMonthsNamesWide = getCachedLocaleDataInstance(getLocale()).getMonthsStandAlone("wide", this.secondaryCalendarType);
-
-		if (month.startMonth === month.endMonth) {
-			return {
-				text: localeData.getMonths("abbreviated", this.secondaryCalendarType)[month.startMonth],
-				textInfo: localeData.getMonths("wide", this.secondaryCalendarType)[month.startMonth],
-			};
-		}
-
-		return {
-			text: pattern.replace(/\{0\}/, secondaryMonthsNames[month.startMonth]).replace(/\{1\}/, secondaryMonthsNames[month.endMonth]),
-			textInfo: pattern.replace(/\{0\}/, secondaryMonthsNamesWide[month.startMonth]).replace(/\{1\}/, secondaryMonthsNamesWide[month.endMonth]),
-		};
-	}
-
-	_getDisplayedSecondaryMonths() {
-		const localDate = new Date(this._timestamp * 1000);
-		let firstDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
-		firstDate.setDate(1);
-		firstDate = new CalendarDate(firstDate, this.secondaryCalendarType);
-		const startMonth = firstDate.getMonth();
-
-		let lastDate = CalendarDate.fromLocalJSDate(localDate, this._primaryCalendarType);
-		lastDate.setDate(this._getDaysInMonth(lastDate));
-		lastDate = new CalendarDate(lastDate, this.secondaryCalendarType);
-		const endMonth = lastDate.getMonth();
-
-		return { startMonth, endMonth };
-	}
-
-	_getDaysInMonth(date) {
-		const tempCalendarDate = new CalendarDate(date);
-		tempCalendarDate.setDate(1);
-		tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);
-		tempCalendarDate.setDate(0);
-		return tempCalendarDate.getDate();
 	}
 
 	/**

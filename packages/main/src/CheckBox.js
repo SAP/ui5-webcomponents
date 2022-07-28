@@ -46,7 +46,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @public
@@ -81,6 +81,18 @@ const metadata = {
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the component is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.3.0
+		 */
+		required: {
 			type: Boolean,
 		},
 

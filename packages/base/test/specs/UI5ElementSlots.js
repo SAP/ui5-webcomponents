@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 describe("Slots work properly", () => {
 	before(async () => {
-		await browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+		await browser.url("test/pages/AllTestElements.html");
 	});
 
 	it("Tests that properties exist on the element for each slot", async () => {

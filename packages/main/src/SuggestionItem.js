@@ -9,7 +9,7 @@ import ListItemType from "./types/ListItemType.js";
  */
 const metadata = {
 	tag: "ui5-suggestion-item",
-	properties: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -100,7 +100,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br><br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
@@ -111,9 +111,9 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
-	events: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
 };
 

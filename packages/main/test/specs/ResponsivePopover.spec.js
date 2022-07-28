@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ResponsivePopover general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ResponsivePopover.html`);
+		await browser.url(`test/pages/ResponsivePopover.html`);
 	});
 
 	it("header and footer are displayed by default", async () => {
@@ -34,7 +33,7 @@ describe("ResponsivePopover general interaction", () => {
 		assert.notOk(await header.isExisting(), "Header is not displayed.");
 	});
 
-	it("Initial focus prevented", async () => {
+	it("Initial focus NOT prevented", async () => {
 		const btnOpenPopover = await browser.$("#btnInitialFocus");
 		await btnOpenPopover.click();
 
@@ -42,7 +41,7 @@ describe("ResponsivePopover general interaction", () => {
 		assert.strictEqual(activeElementId, "simpleRPInitialFocus", "Initial focus is not prevented");
 	});
 
-	it("Initial focus not prevented", async () => {
+	it("Initial focus prevented", async () => {
 		const btnOpenPopover = await browser.$("#btnInitialFocusPrevented");
 		await btnOpenPopover.click();
 

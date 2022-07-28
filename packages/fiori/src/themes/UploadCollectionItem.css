@@ -59,15 +59,17 @@
 }
 
 .ui5-uci-file-name {
-	width: 100%;
 	display: block;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontLargeSize);
-	color: var(--sapTextColor);
 	margin-bottom: 0.25rem;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+.ui5-uci-file-name-text {
+	color: var(--sapList_TextColor);
 }
 
 [ui5-link].ui5-uci-file-name {
@@ -80,9 +82,17 @@
 	font-size: var(--sapFontMediumSize);
 	color: var(--sapContent_LabelColor);
 	white-space: initial;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* Edit mode */
+
+.ui5-uci-edit-container {
+	display: flex;
+	align-items: center;
+}
+
 .ui5-uci-edit-container [ui5-input] {
 	width: 60%;
 	pointer-events: all;
@@ -111,17 +121,11 @@
 
 .ui5-uci-edit-buttons {
 	pointer-events: all;
-	margin-left: 1rem;
+	margin-inline-start: 1rem;
 }
 
 .ui5-uci-edit-rename-btn {
 	margin-right: 0.125rem;
-}
-
-/* Progress Box */
-.ui5-uci-progress-box {
-	width: 20%;
-	min-width: 4rem;
 }
 
 @media(max-width: 30rem) {
@@ -142,14 +146,13 @@
 		width: 100%;
 	}
 
-	.ui5-uci-edit-buttons,
-	.ui5-li-detailbtn,
-	.ui5-li-deletebtn {
-		margin-top: 0.75rem;
+	.ui5-uci-edit-buttons {
+		margin-inline-start: 0;
+		margin-block-start: var(--ui5_upload_collection_small_size_buttons_margin_block_start);
 	}
 
-	.ui5-uci-edit-buttons {
-		margin-left: 0;
+	.ui5-uci-edit-buttons [ui5-button] {
+		margin-block-end: var(--ui5_upload_collection_button_margin_block_end);
 	}
 }
 
@@ -163,4 +166,16 @@
 .ui5-uci-progress-labels {
 	display: flex;
 	justify-content: space-between;
+}
+
+[ui5-button] {
+	margin-inline: 0.5rem;
+}
+
+[ui5-button]:first-of-type {
+	margin-inline-start: 0;
+}
+
+[ui5-button]:last-of-type {
+	margin-inline-end: var(--ui5_upload_collection_last_button_inline_end);
 }

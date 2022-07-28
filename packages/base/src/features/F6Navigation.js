@@ -15,13 +15,13 @@ class F6Navigation {
 	}
 
 	async _keydownHandler(event) {
-		event.preventDefault();
-
 		if (isF6Next(event)) {
 			this.updateGroups();
 			if (this.groups.length < 1) {
 				return;
 			}
+
+			event.preventDefault();
 
 			const nextIndex = this.groups.indexOf(this.selectedGroup);
 			let nextElement = null;
@@ -45,6 +45,8 @@ class F6Navigation {
 			if (this.groups.length < 1) {
 				return;
 			}
+
+			event.preventDefault();
 
 			const nextIndex = this.groups.indexOf(this.selectedGroup);
 			let nextElement = null;

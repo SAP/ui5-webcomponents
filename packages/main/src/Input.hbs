@@ -1,5 +1,5 @@
 <div
-	class="ui5-input-root"
+	class="ui5-input-root ui5-input-focusable-element"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
@@ -28,7 +28,7 @@
 			aria-label="{{accInfo.input.ariaLabel}}"
 			aria-required="{{required}}"
 			@input="{{_handleInput}}"
-			@change="{{_handleNativeInputChange}}"
+			@change="{{_handleChange}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
@@ -39,12 +39,8 @@
 			max="{{nativeInputAttributes.max}}"
 		/>
 
-		{{#if readonly}}
-			<ui5-icon class="ui5-input-readonly-icon" name="not-editable"></ui5-icon>
-		{{/if}}
-
 		{{#if effectiveShowClearIcon}}
-			<ui5-icon @click={{_clear}} tabindex="-1" input-icon class="ui5-input-clear-icon" name="decline"></ui5-icon>
+			<ui5-icon @click={{_clear}} @mousedown={{_iconMouseDown}} tabindex="-1" input-icon class="ui5-input-clear-icon" name="decline"></ui5-icon>
 		{{/if}}
 
 		{{#if icon.length}}

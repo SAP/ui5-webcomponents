@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-breadcrumbs-item",
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
 
 		/**
 		 * Defines the link href.
@@ -45,7 +45,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the item.
+		 * Defines the accessible ARIA name of the item.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
@@ -77,7 +77,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcumbs</code>.
+ * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcrumbs</code>.
  *
  * @constructor
  * @author SAP SE

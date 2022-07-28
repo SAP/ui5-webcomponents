@@ -1,5 +1,4 @@
-const fs = require('fs');
-const mkdirp = require('mkdirp');
+const fs = require('fs').promises;
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
 const fileContent = `const assetParameters = ${JSON.stringify(assets)};
@@ -16,6 +15,11 @@ export {
 	SUPPORTED_LOCALES,
 };`;
 
-mkdirp.sync("dist/generated/");
-fs.writeFileSync("dist/generated/AssetParameters.js", fileContent);
+const generate = async () => {
+	await fs.mkdir("dist/generated/", { recursive: true });
+	return fs.writeFile("dist/generated/AssetParameters.js", fileContent);
+}
 
+generate().then(() => {
+	console.log("Assets parameters generated.");
+});

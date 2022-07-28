@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 const openPickerById = async (id, options) => {
 	await browser.$(`#${id}`).scrollIntoView();
@@ -46,7 +45,7 @@ const getTimeSlidersCount = async id => {
 
 describe("DateTimePicker general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DateTimePicker.html?sap-ui-language=en`);
 	});
 
 	it("tests picker opens/closes programmatically", async () => {
@@ -263,5 +262,35 @@ describe("DateTimePicker general interaction", () => {
 		// assert
 		const newValue = await dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 PM", "The new date/time is correctly selected.");
+	});
+
+	it("Secondary calendar type", async () => {
+		const picker = await browser.$("#secondaryCalendar");
+
+		// act
+		await openPickerById("secondaryCalendar");
+		await browser.keys("ArrowUp");
+		await browser.keys("Enter");
+		const submitBtn = await getSubmitButton("secondaryCalendar");
+		await submitBtn.click();
+
+		// assert
+		assert.strictEqual(await picker.shadow$("ui5-input").getValue(), "Sha. 17, 1443 AH, 10:27:26 AM", "Value change is applied.");
+	});
+
+	it("tests change event is prevented on submit when prevent default is called", async () => {
+		// test submit from empty value to current date/time value
+		await openPickerById("dtPreventDefault");
+
+		const picker = await getPicker("dtPreventDefault");
+		const pickerInput = await browser.$("#dtPreventDefault");
+		const submitBtn = await getSubmitButton("dtPreventDefault");
+
+		// act
+		await picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$("[data-sap-focus-ref]").click(); // select a date to enable the OK button
+		await submitBtn.click();
+
+		// assert
+		assert.strictEqual(await pickerInput.getProperty("value"), "", "Value should not be set");
 	});
 });

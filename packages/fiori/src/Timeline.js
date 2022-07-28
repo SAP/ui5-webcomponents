@@ -22,7 +22,7 @@ const metadata = {
 	tag: "ui5-timeline",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends  sap.ui.webcomponents.fiori.Timeline.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
 		/**
 		 * Defines the items orientation.
 		 *
@@ -45,7 +45,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""

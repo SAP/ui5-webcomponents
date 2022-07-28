@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("RadioButton general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/RadioButton.html`);
+		await browser.url(`test/pages/RadioButton.html`);
 	});
 
 	it("tests change event", async () => {
@@ -171,7 +170,7 @@ describe("RadioButton general interaction", () => {
 	it("tests accessibleNameRef", async () => {
 		const labelText = await browser.$("#lbl-rb-acc-name-ref").getText();
 		const rb = await browser.$("#rb-acc-name-ref");
-	
+
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText includes the accessibleNameRef text.");
 	});
 
@@ -179,7 +178,44 @@ describe("RadioButton general interaction", () => {
 		const labelText = await browser.$("#lbl-rb-acc-name-ref-with-text").getText();
 		const rb = await browser.$("#rb-acc-name-ref-with-text");
 		const rbText = await rb.getProperty("text");
-	
+
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), `${labelText} ${rbText}`, "The ariaLabelText includes both the accessibleNameRef text and the radio button text.");
+	});
+
+	it("tests accessibleNameRef when the radio button is wrapped by another custom element", async () => {
+		const labelText = await browser.$("#lbl-rb-acc-name-ref").getText();
+		const rb = await browser.$("#rb-acc-name-ref-wrapped");
+
+		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText of the wrapped radio button includes the accessibleNameRef text.");
+	});
+});
+
+describe("RadioButton keyboard handling in RTL", () => {
+	before(async () => {
+		await browser.url(`test/pages/RadioButton.html`);
+	});
+
+	it("Arrow Left", async () => {
+		const rb = await browser.$("#rtlOptionA");
+		await rb.click();
+		await rb.keys("ArrowLeft");
+
+		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
+
+		await browser.$("#rtlOptionB").keys("ArrowLeft");
+
+		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
+	});
+
+	it("Arrow Right", async () => {
+		const rb = await browser.$("#rtlOptionA");
+		await rb.click();
+		await rb.keys("ArrowRight");
+
+		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
+
+		await browser.$("#rtlOptionC").keys("ArrowRight");
+
+		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
 	});
 });

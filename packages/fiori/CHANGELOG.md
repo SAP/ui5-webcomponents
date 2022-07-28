@@ -3,6 +3,106 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Features
+
+* **ui5-bar:** implement resize handlers for each slot ([#5482](https://github.com/SAP/ui5-webcomponents/issues/5482)) ([a8a4acd](https://github.com/SAP/ui5-webcomponents/commit/a8a4acd))
+* **ui5-shellbar:** new property accessibilityRoles ([#5551](https://github.com/SAP/ui5-webcomponents/issues/5551)) ([eef5c50](https://github.com/SAP/ui5-webcomponents/commit/eef5c50)), closes [#4775](https://github.com/SAP/ui5-webcomponents/issues/4775)
+
+
+
+
+
+# [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
+
+
+### Bug Fixes
+
+* **f6navigation:** prevent default behavior on windows OS ([#5424](https://github.com/SAP/ui5-webcomponents/issues/5424)) ([a494f85](https://github.com/SAP/ui5-webcomponents/commit/a494f85))
+* **ui5-shellbar:** correct accessibility DOM ([#5395](https://github.com/SAP/ui5-webcomponents/issues/5395)) ([aba5fb5](https://github.com/SAP/ui5-webcomponents/commit/aba5fb5))
+* **ui5-timeline-item:** align text in title link ([51954b7](https://github.com/SAP/ui5-webcomponents/commit/51954b7)), closes [#5163](https://github.com/SAP/ui5-webcomponents/issues/5163)
+
+
+### Features
+
+* **ui5-illustrated-message:** implement size property ([#5405](https://github.com/SAP/ui5-webcomponents/issues/5405)) ([c58690d](https://github.com/SAP/ui5-webcomponents/commit/c58690d))
+* **ui5-view-settings-dialog:** Implement behaviour for external setting of confirmed settings ([#5222](https://github.com/SAP/ui5-webcomponents/issues/5222)) ([7fbb235](https://github.com/SAP/ui5-webcomponents/commit/7fbb235))
+
+
+
+
+
+# [1.4.0](https://github.com/SAP/ui5-webcomponents/compare/v1.3.1...v1.4.0) (2022-05-25)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** make component language aware ([#5158](https://github.com/SAP/ui5-webcomponents/issues/5158)) ([5b6502b](https://github.com/SAP/ui5-webcomponents/commit/5b6502b))
+* **ui5-page:** remove unnecessary scrollbar ([#5258](https://github.com/SAP/ui5-webcomponents/issues/5258)) ([8ef6289](https://github.com/SAP/ui5-webcomponents/commit/8ef6289))
+
+
+### Features
+
+* **ui5-notifications:** implement SAP Horizon theme ([#5067](https://github.com/SAP/ui5-webcomponents/issues/5067)) ([ccdfe4c](https://github.com/SAP/ui5-webcomponents/commit/ccdfe4c))
+* **ui5-shellbar:** implement Horizon theme ([#5197](https://github.com/SAP/ui5-webcomponents/issues/5197)) ([d278c09](https://github.com/SAP/ui5-webcomponents/commit/d278c09)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-side-navigation:** implement SAP Horizon theme family ([#5081](https://github.com/SAP/ui5-webcomponents/issues/5081)) ([d8d9315](https://github.com/SAP/ui5-webcomponents/commit/d8d9315)), closes [#5006](https://github.com/SAP/ui5-webcomponents/issues/5006)
+* **ui5-timeline:** implement Horizon theme ([#5155](https://github.com/SAP/ui5-webcomponents/issues/5155)) ([e557f71](https://github.com/SAP/ui5-webcomponents/commit/e557f71))
+* **ui5-upload-collection:** implement SAP Horizon theme family ([#5148](https://github.com/SAP/ui5-webcomponents/issues/5148)) ([7956864](https://github.com/SAP/ui5-webcomponents/commit/7956864))
+
+
+
+
+
+## [1.3.1](https://github.com/SAP/ui5-webcomponents/compare/v1.3.0...v1.3.1) (2022-04-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** correct column border styles for RTL ([#4919](https://github.com/SAP/ui5-webcomponents/issues/4919)) ([660f639](https://github.com/SAP/ui5-webcomponents/commit/660f639)), closes [#4906](https://github.com/SAP/ui5-webcomponents/issues/4906)
+* **ui5-illustrated-message:** remove offensive characters ([#4929](https://github.com/SAP/ui5-webcomponents/issues/4929)) ([cbf5b02](https://github.com/SAP/ui5-webcomponents/commit/cbf5b02))
+* **ui5-illustrated-message:** updated illustrations ([#4950](https://github.com/SAP/ui5-webcomponents/issues/4950)) ([6ff4e1b](https://github.com/SAP/ui5-webcomponents/commit/6ff4e1b))
+* **ui5-media-gallery:** correct overflow label ([#4903](https://github.com/SAP/ui5-webcomponents/issues/4903)) ([4f28a6e](https://github.com/SAP/ui5-webcomponents/commit/4f28a6e))
+* **ui5-page:** Allow developers to be able to overwrite responsive paddings ([#5056](https://github.com/SAP/ui5-webcomponents/issues/5056)) ([b09dd35](https://github.com/SAP/ui5-webcomponents/commit/b09dd35))
+* **ui5-shellbar:** searchfield placeholder color ([#5079](https://github.com/SAP/ui5-webcomponents/issues/5079)) ([aba6aab](https://github.com/SAP/ui5-webcomponents/commit/aba6aab))
+* **ui5-shellbar, ui5-breadcrumbs, ui5-barcode-scanner-dialog:** align popover paddings ([#4894](https://github.com/SAP/ui5-webcomponents/issues/4894)) ([b947d1b](https://github.com/SAP/ui5-webcomponents/commit/b947d1b)), closes [#4872](https://github.com/SAP/ui5-webcomponents/issues/4872)
+* **ui5-view-settings-dialog:** adjust scrollbar behavior  ([#4795](https://github.com/SAP/ui5-webcomponents/issues/4795)) ([8f58fd5](https://github.com/SAP/ui5-webcomponents/commit/8f58fd5)), closes [#4724](https://github.com/SAP/ui5-webcomponents/issues/4724) [#4725](https://github.com/SAP/ui5-webcomponents/issues/4725) [#4860](https://github.com/SAP/ui5-webcomponents/issues/4860)
+* **ui5-view-settings-dialog:** fixing comments from previous commit ([#4851](https://github.com/SAP/ui5-webcomponents/issues/4851)) ([3fc5814](https://github.com/SAP/ui5-webcomponents/commit/3fc5814))
+* **ui5-view-settings-dialog:** including title in initial reading ([#4827](https://github.com/SAP/ui5-webcomponents/issues/4827)) ([685d4ba](https://github.com/SAP/ui5-webcomponents/commit/685d4ba)), closes [#4660](https://github.com/SAP/ui5-webcomponents/issues/4660)
+* **ui5-view-settings-dialog:** replacement of the slot with ui5 li element ([#5013](https://github.com/SAP/ui5-webcomponents/issues/5013)) ([839ddf8](https://github.com/SAP/ui5-webcomponents/commit/839ddf8)), closes [#4888](https://github.com/SAP/ui5-webcomponents/issues/4888)
+* **ui5-view-settings-dialog:** visual alignment ([#4867](https://github.com/SAP/ui5-webcomponents/issues/4867)) ([8a628df](https://github.com/SAP/ui5-webcomponents/commit/8a628df)), closes [#4102](https://github.com/SAP/ui5-webcomponents/issues/4102) [#3744](https://github.com/SAP/ui5-webcomponents/issues/3744) [#4838](https://github.com/SAP/ui5-webcomponents/issues/4838)
+* correct responsive padding in some consumers of popups ([#4926](https://github.com/SAP/ui5-webcomponents/issues/4926)) ([b501153](https://github.com/SAP/ui5-webcomponents/commit/b501153)), closes [#4870](https://github.com/SAP/ui5-webcomponents/issues/4870)
+
+
+### Features
+
+* **ui5-fcl:** implement Horizon theme ([#5071](https://github.com/SAP/ui5-webcomponents/issues/5071)) ([7a2a568](https://github.com/SAP/ui5-webcomponents/commit/7a2a568)), closes [#5008](https://github.com/SAP/ui5-webcomponents/issues/5008)
+* **ui5-wizard:** implement SAP Horizon theme ([#5076](https://github.com/SAP/ui5-webcomponents/issues/5076)) ([801069d](https://github.com/SAP/ui5-webcomponents/commit/801069d))
+
+
+
+
+
+## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** remove offensive characters ([#4929](https://github.com/SAP/ui5-webcomponents/issues/4929)) ([a33c7a5](https://github.com/SAP/ui5-webcomponents/commit/a33c7a5))
+
+
+
+
+
 ## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Bug Fixes
+
+* **InvisibleMessage:** clear announcement after a while ([#5446](https://github.com/SAP/ui5-webcomponents/issues/5446)) ([af213f1](https://github.com/SAP/ui5-webcomponents/commit/af213f1))
+
+
+### Features
+
+* **InvisibleMessage:** make it available for application usage ([#5468](https://github.com/SAP/ui5-webcomponents/issues/5468)) ([c6bcc02](https://github.com/SAP/ui5-webcomponents/commit/c6bcc02))
+
+
+
+
+
+# [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
+
+
+### Bug Fixes
+
+* **f6navigation:** prevent default behavior on windows OS ([#5424](https://github.com/SAP/ui5-webcomponents/issues/5424)) ([a494f85](https://github.com/SAP/ui5-webcomponents/commit/a494f85))
+* **framework:** correct use of arrow keys for ItemNavigation in RTL ([#5408](https://github.com/SAP/ui5-webcomponents/issues/5408)) ([cec8119](https://github.com/SAP/ui5-webcomponents/commit/cec8119)), closes [#5166](https://github.com/SAP/ui5-webcomponents/issues/5166)
+* cldr url ([#5397](https://github.com/SAP/ui5-webcomponents/issues/5397)) ([a4df0bd](https://github.com/SAP/ui5-webcomponents/commit/a4df0bd))
+* **ui5-badge:** correctly detect if default slot is provided ([#5334](https://github.com/SAP/ui5-webcomponents/issues/5334)) ([0dceaf5](https://github.com/SAP/ui5-webcomponents/commit/0dceaf5)), closes [#5328](https://github.com/SAP/ui5-webcomponents/issues/5328)
+
+
+
+
+
+# [1.4.0](https://github.com/SAP/ui5-webcomponents/compare/v1.3.1...v1.4.0) (2022-05-25)
+
+
+### Bug Fixes
+
+* **framework:** use fonts from proper SDK URL ([#5141](https://github.com/SAP/ui5-webcomponents/issues/5141)) ([2e49248](https://github.com/SAP/ui5-webcomponents/commit/2e49248))
+* **framework:** fix keydown events for all inputs ([#5188](https://github.com/SAP/ui5-webcomponents/issues/5188)) ([11dfe94](https://github.com/SAP/ui5-webcomponents/commit/11dfe94))
+* **framework:** fix fallback to default theme ([#5185](https://github.com/SAP/ui5-webcomponents/issues/5185)) ([0fc2f0d](https://github.com/SAP/ui5-webcomponents/commit/0fc2f0d)), closes [#5136](https://github.com/SAP/ui5-webcomponents/issues/5136) [#5136](https://github.com/SAP/ui5-webcomponents/issues/5136)
+
+
+
+
+## [1.3.1](https://github.com/SAP/ui5-webcomponents/compare/v1.3.0...v1.3.1) (2022-04-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.3.0](https://github.com/SAP/ui5-webcomponents/compare/v1.2.4...v1.3.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **framework:** make listeners passive ([#5012](https://github.com/SAP/ui5-webcomponents/issues/5012)) ([30f2dc7](https://github.com/SAP/ui5-webcomponents/commit/30f2dc7))
+* **framework:** fix F6 navigation on windows browsers ([#4886](https://github.com/SAP/ui5-webcomponents/issues/4886)) ([36fd3d1](https://github.com/SAP/ui5-webcomponents/commit/36fd3d1))
+* **framework:** fix submit event handling in forms ([#4942](https://github.com/SAP/ui5-webcomponents/issues/4942)) ([883809f](https://github.com/SAP/ui5-webcomponents/commit/883809f))
+* **framework:** add 72-* font as system styles ([#4934](https://github.com/SAP/ui5-webcomponents/issues/4934)) ([4b45d32](https://github.com/SAP/ui5-webcomponents/commit/4b45d32))
+* **framework:** fix scoping of self tag ([#4952](https://github.com/SAP/ui5-webcomponents/issues/4952)) ([8d53e95](https://github.com/SAP/ui5-webcomponents/commit/8d53e95))
+
+
+### Features
+
+* **framework:** configure default icon collection per theme ([#5031](https://github.com/SAP/ui5-webcomponents/issues/5031)) ([7f84b83](https://github.com/SAP/ui5-webcomponents/commit/7f84b83))
+
+
+
+
+
+## [1.2.4](https://github.com/SAP/ui5-webcomponents/compare/v1.2.3...v1.2.4) (2022-03-30)
+
+
+### Bug Fixes
+
+* **framework:** fix scoping of self tag ([#4952](https://github.com/SAP/ui5-webcomponents/issues/4952)) ([cdb9e2a](https://github.com/SAP/ui5-webcomponents/commit/cdb9e2a))
+* **ui5-card-header:** prevent events from action slot to trigger header's click event ([#4965](https://github.com/SAP/ui5-webcomponents/issues/4965)) ([f87d898](https://github.com/SAP/ui5-webcomponents/commit/f87d898)), closes [#4891](https://github.com/SAP/ui5-webcomponents/issues/4891)
+* **ui5-popover:** prevent arrow placement over popover's rounded corners ([#4960](https://github.com/SAP/ui5-webcomponents/issues/4960)) ([66604c3](https://github.com/SAP/ui5-webcomponents/commit/66604c3)), closes [#4599](https://github.com/SAP/ui5-webcomponents/issues/4599) [#4797](https://github.com/SAP/ui5-webcomponents/issues/4797)
+
+
+
+
+
 ## [1.2.3](https://github.com/SAP/ui5-webcomponents/compare/v1.2.2...v1.2.3) (2022-03-23)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

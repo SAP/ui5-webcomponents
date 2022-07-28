@@ -1,9 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
+import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 
 // Templates
@@ -203,6 +208,7 @@ class Tab extends UI5Element {
 	static get dependencies() {
 		return [
 			Icon,
+			Button,
 			CustomListItem,
 		];
 	}
@@ -246,7 +252,7 @@ class Tab extends UI5Element {
 	}
 
 	get _effectiveSlotName() {
-		return this.isOnSelectedTabPath ? this._individualSlot : "disabled-slot";
+		return this.isOnSelectedTabPath ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
 	get _defaultSlotName() {
@@ -267,7 +273,7 @@ class Tab extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef() {
-		return this._getTabInStripDomRef;
+		return this._tabInStripDomRef;
 	}
 
 	getFocusDomRef() {
@@ -369,11 +375,24 @@ class Tab extends UI5Element {
 		return classes.join(" ");
 	}
 
-	get headerSemanticIconClasses() {
-		const classes = ["ui5-tab-strip-item-semanticIcon"];
+	get semanticIconName() {
+		switch (this.design) {
+		case SemanticColor.Positive:
+			return "sys-enter-2";
+		case SemanticColor.Negative:
+			return "error";
+		case SemanticColor.Critical:
+			return "alert";
+		default:
+			return null;
+		}
+	}
 
-		if (this.design !== SemanticColor.Default) {
-			classes.push(`ui5-tab-strip-item-semanticIcon--${this.design.toLowerCase()}`);
+	get semanticIconClasses() {
+		const classes = ["ui5-tab-semantic-icon"];
+
+		if (this.design !== SemanticColor.Default && this.design !== SemanticColor.Neutral) {
+			classes.push(`ui5-tab-semantic-icon--${this.design.toLowerCase()}`);
 		}
 
 		return classes.join(" ");
@@ -382,11 +401,11 @@ class Tab extends UI5Element {
 	get overflowClasses() {
 		const classes = ["ui5-tab-overflow-item"];
 
-		if (this.design !== SemanticColor.Default) {
+		if (this.design !== SemanticColor.Default && this.design !== SemanticColor.Neutral) {
 			classes.push(`ui5-tab-overflow-item--${this.design.toLowerCase()}`);
 		}
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-tab-overflow-item--disabled");
 		}
 
@@ -398,7 +417,7 @@ class Tab extends UI5Element {
 	}
 
 	get overflowState() {
-		return (this.disabled || this.isSingleClickArea) ? "Inactive" : "Active";
+		return (this.disabled || this.isSingleClickArea) ? ListItemType.Inactive : ListItemType.Active;
 	}
 }
 

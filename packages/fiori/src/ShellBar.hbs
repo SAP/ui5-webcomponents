@@ -1,6 +1,5 @@
 <div
 	class="{{classes.wrapper}}"
-	dir="{{effectiveDir}}"
 	role="banner"
 	aria-label="{{_shellbarText}}"
 	part="root"
@@ -11,48 +10,78 @@
 				<slot name="startButton"></slot>
 		{{/if}}
 
-		{{#if hasFocusableLogo}}
-			<span class="ui5-shellbar-logo"
-				role="button"
-				aria-label="{{_logoText}}"
-				title="{{_logoText}}"
-				@click="{{_logoPress}}"
-				@keydown="{{_logoKeydown}}"
-				@keyup="{{_logoKeyup}}"
-				tabindex="0"
-				data-ui5-stable="logo"
-			>
-				<slot name="logo"></slot>
-			</span>
-		{{/if}}
-
-		{{#if showArrowDown}}
-			<button tabindex="{{menuBtnTabindex}}"
-				class="{{classes.button}}"
-				@click="{{_header.press}}"
-				aria-haspopup="{{menuBtnHasPopup}}"
-				aria-expanded="{{menuPopoverExpanded}}"
-				data-ui5-stable="menu"
-			>
-				{{#if hasNonFocusableLogo}}
-					<span
-						class="ui5-shellbar-logo"
+		{{#if hasMenuItems}}
+				{{#unless showLogoInMenuButton}}
+					<span class="ui5-shellbar-logo"
+						role="{{accLogoRole}}"
 						aria-label="{{_logoText}}"
 						title="{{_logoText}}"
+						@click="{{_logoPress}}"
+						@keydown="{{_logoKeydown}}"
+						@keyup="{{_logoKeyup}}"
+						tabindex="0"
+						data-ui5-stable="logo"
 					>
 						<slot name="logo"></slot>
 					</span>
-				{{/if}}
+				{{/unless}}
 
-				{{#if primaryTitle}}
-					<h1 class="ui5-shellbar-menu-button-title">
-						<bdi>{{primaryTitle}}</bdi>
+				{{#if showTitleInMenuButton}}
+					<h1 class="ui5-hidden-text">
+						{{primaryTitle}}
 					</h1>
 				{{/if}}
 
-				<span class="ui5-shellbar-menu-button-arrow"></span>
-			</button>
+				{{#if showMenuButton}}
+					<button class="{{classes.button}}"
+						@click="{{_header.press}}"
+						aria-haspopup="menu"
+						aria-expanded="{{_menuPopoverExpanded}}"
+						data-ui5-stable="menu"
+					>
+						{{#if showLogoInMenuButton}}
+							<span
+								class="ui5-shellbar-logo"
+								role="{{accLogoRole}}"
+								aria-label="{{_logoText}}"
+								title="{{_logoText}}">
+								<slot name="logo"></slot>
+							</span>
+						{{/if}}
+
+
+						{{#if showTitleInMenuButton}}
+							<div class="ui5-shellbar-menu-button-title">
+								{{primaryTitle}}
+							</div>
+						{{/if}}
+
+						<span class="ui5-shellbar-menu-button-arrow"></span>
+					</button>
+				{{/if}}
 		{{/if}}
+
+		{{#unless hasMenuItems}}
+			{{#if hasLogo}}
+				<span class="ui5-shellbar-logo"
+					role="{{accLogoRole}}"
+					aria-label="{{_logoText}}"
+					title="{{_logoText}}"
+					@click="{{_logoPress}}"
+					@keydown="{{_logoKeydown}}"
+					@keyup="{{_logoKeyup}}"
+					tabindex="0"
+					data-ui5-stable="logo"
+				>
+					<slot name="logo"></slot>
+				</span>
+			{{/if}}
+			{{#if primaryTitle}}
+				<h1 class="ui5-shellbar-title">
+					<bdi>{{primaryTitle}}</bdi>
+				</h1>
+			{{/if}}
+		{{/unless}}
 
 		{{#if secondaryTitle}}
 			<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
@@ -191,7 +220,7 @@
 {{/inline}}
 
 {{#*inline "coPilot"}}
-	<svg @click="{{_coPilotClick}}" focusable="false" width="44" role="presentation" aria-hidden="true" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
+	<svg @click="{{_coPilotClick}}" focusable="false" width="48" role="presentation" aria-hidden="true" height="48" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
 		<defs>
 			<linearGradient id="f" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" class="ui5-shellbar-co-pilot-color1 ui5-shellbar-co-pilot-opaicty7"/><stop offset="80%" class="ui5-shellbar-co-pilot-color2 ui5-shellbar-co-pilot-opaicty7"/></linearGradient>
 			<linearGradient id="e" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" class="ui5-shellbar-co-pilot-color1 ui5-shellbar-co-pilot-opaicty36"/><stop offset="80%" class="ui5-shellbar-co-pilot-color2 ui5-shellbar-co-pilot-opaicty36"/></linearGradient>

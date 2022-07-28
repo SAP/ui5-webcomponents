@@ -103,6 +103,10 @@ const isIOS = () => {
 	return iOS;
 };
 
+const isAndroid = () => {
+	return android || androidPhone;
+};
+
 export {
 	supportsTouch,
 	isIE,
@@ -113,4 +117,5 @@ export {
 	isDesktop,
 	isCombi,
 	isIOS,
+	isAndroid,
 };

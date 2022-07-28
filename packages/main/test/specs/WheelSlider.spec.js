@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Wheel Slider general interaction", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/WheelSlider_Test_Page.html`);
+		await browser.url(`test/pages/WheelSlider_Test_Page.html`);
 	});
 
 	before(async () => {

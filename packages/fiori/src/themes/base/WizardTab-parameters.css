@@ -6,6 +6,6 @@
 	--_ui5_wiz_tab_icon_color: var(--sapSelectedColor);
 	--_ui5_wiz_tab_active_separator_color: var(--sapSelectedColor);
 	--_ui5_wiz_tab_title_color: var(--sapContent_LabelColor);
-	--_ui5_wiz_tab_title_font_weight: normal;
+	--_ui5_wiz_tab_title_font_family: var(--sapFontFamily);
 	--_ui5_wiz_tab_focus_border_radius: 0;
 }

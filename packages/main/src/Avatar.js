@@ -26,7 +26,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
-		 * Defines if the avatar is interactive (focusable and pressable)
+		 * Defines if the avatar is interactive (focusable and pressable).
 		 * @type {boolean}
 		 * @defaultValue false
 		 * @public
@@ -44,9 +44,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the name of the UI5 Icon, that would be displayed.
+		 * Defines the name of the UI5 Icon, that will be displayed.
 		 * <br>
-		 * <b>Note:</b> If <code>image</code> slot is provided, the property would be ignored.
+		 * <b>Note:</b> If <code>image</code> slot is provided, the property will be ignored.
 		 * <br>
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
@@ -208,6 +208,34 @@ const metadata = {
 			propertyName: "image",
 			type: HTMLElement,
 		},
+		/**
+		 * Defines the optional badge that will be used for visual affordance.
+		 * <b>Note:</b> While the slot allows for custom badges, to achieve
+		 * the Fiori design, please use <code>ui5-badge</code> with <code>ui5-icon</code>
+		 * in the corresponding <code>icon</code> slot, without text nodes.
+		 * <br><br>
+		 * Example:
+		 * <br><br>
+		 * &lt;ui5-avatar><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp&lt;/ui5-badge><br>
+		 * &lt;/ui5-avatar>
+		 * <br><br>
+		 * <ui5-avatar initials="AB" color-scheme="Accent1">
+		 * <ui5-badge slot="badge">
+		 * <ui5-icon slot="icon" name="accelerated"></ui5-icon>
+		 * </ui5-badge>
+		 * </ui5-avatar>
+		 *
+		 * @type {HTMLElement}
+		 * @slot badge
+		 * @public
+		 * @since 1.7.0
+		 */
+		badge: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 		/**
@@ -226,7 +254,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * An image-like control that has different display options for representing images and icons
+ * An image-like component that has different display options for representing images and icons
  * in different shapes and sizes, depending on the use case.
  *
  * The shape can be circular or square. There are several predefined sizes, as well as an option to

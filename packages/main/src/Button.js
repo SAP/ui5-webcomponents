@@ -4,7 +4,6 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import {
 	isPhone,
 	isTablet,
@@ -12,6 +11,7 @@ import {
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import isDefaultSlotProvided from "@ui5/webcomponents-base/dist/util/isDefaultSlotProvided.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -20,7 +20,6 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import buttonIECss from "./generated/themes/Button.ie11.css.js";
 
 let isGlobalHandlerAttached = false;
 let activeButton = null;
@@ -71,12 +70,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed as graphical element within the component.
+		 * Defines the icon, displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 * Example:
 		 *
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * See all the available icons within the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -99,7 +98,7 @@ const metadata = {
 
 		/**
 		 * When set to <code>true</code>, the component will
-		 * automatically submit the nearest form element upon <code>press</code>.
+		 * automatically submit the nearest HTML form element on <code>press</code>.
 		 * <br><br>
 		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
@@ -158,7 +157,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -327,7 +326,7 @@ class Button extends UI5Element {
 	}
 
 	static get styles() {
-		return [buttonCss, isLegacyBrowser() && buttonIECss];
+		return buttonCss;
 	}
 
 	static get render() {
@@ -356,6 +355,20 @@ class Button extends UI5Element {
 
 			isGlobalHandlerAttached = true;
 		}
+
+		const handleTouchStartEvent = event => {
+			event.isMarked = "button";
+			if (this.nonInteractive) {
+				return;
+			}
+
+			this.active = true;
+		};
+
+		this._ontouchstart = {
+			handleEvent: handleTouchStartEvent,
+			passive: true,
+		};
 	}
 
 	onEnterDOM() {
@@ -378,7 +391,7 @@ class Button extends UI5Element {
 		}
 		event.isMarked = "button";
 		const FormSupport = getFeature("FormSupport");
-		if (FormSupport) {
+		if (FormSupport && this.submits) {
 			FormSupport.triggerFormSubmit(this);
 		}
 
@@ -395,15 +408,6 @@ class Button extends UI5Element {
 		event.isMarked = "button";
 		this.active = true;
 		activeButton = this; // eslint-disable-line
-	}
-
-	_ontouchstart(event) {
-		event.isMarked = "button";
-		if (this.nonInteractive) {
-			return;
-		}
-
-		this.active = true;
 	}
 
 	_ontouchend(event) {
@@ -457,11 +461,16 @@ class Button extends UI5Element {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
+	get iconRole() {
+		if (!this.icon) {
+			return "";
+		}
+
+		return this.isIconOnly ? "img" : "presentation";
+	}
+
 	get isIconOnly() {
-		return !Array.from(this.childNodes).filter(node => {
-			return node.nodeType !== Node.COMMENT_NODE
-			&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0);
-		}).length;
+		return !isDefaultSlotProvided(this);
 	}
 
 	static typeTextMappings() {

@@ -1,6 +1,5 @@
 const datepicker = require("../pageobjects/DatePickerTestPage");
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("Date Picker Tests", () => {
 	before(async () => {
@@ -17,6 +16,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
 		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
+		assert.notOk(await innerInput.getAttribute("aria-controls"), "aria-controls attribute isn't rendered.");
 		assert.notOk(await innerInput.getAttribute("aria-expanded"), "aria-expanded attribute isn't rendered.");
 	});
 
@@ -32,7 +32,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("input receives value in format pattern depending on the set language", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp16";
 
 		const setDateButton = await browser.$("#b1");
@@ -217,7 +217,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("respect first day of the week - monday", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=bg`);
 		datepicker.id = "#dp7_1";
 
 		const root = await datepicker.getRoot();
@@ -793,13 +793,13 @@ describe("Date Picker Tests", () => {
 		const root = await datepicker.getRoot();
 		await root.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (1)");
 
 		await input.click();
 		await root.setProperty("value", "Jan 1, 2000");
 		await root.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
 
 		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
@@ -936,7 +936,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPicker day name attribute", async () => {
-		// await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		// await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		// datepicker.id = "#dp13";
@@ -955,7 +955,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPiker day number attribute", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
@@ -977,7 +977,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DatePicker dates and week number", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
@@ -1088,27 +1088,27 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
-		datepicker.id = "#dp33";
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.doubleClick();
-		await browser.keys("Jan 1, 2000");
+	// it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
+	// 	datepicker.id = "#dp33";
+	// 	const innerInput = await datepicker.getInnerInput();
+	// 	await innerInput.doubleClick();
+	// 	await browser.keys("Jan 1, 2000");
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
+	// 	await valueHelpIcon.click();
 
-		await browser.keys("ArrowDown");
+	// 	await browser.keys("ArrowDown");
 
-		const displayedDay = await datepicker.getDisplayedDay(13);
-		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
+	// 	const displayedDay = await datepicker.getDisplayedDay(13);
+	// 	assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
-		await browser.keys("Escape");
-		await innerInput.doubleClick();
-		await browser.keys("Backspace");
-	});
+	// 	await browser.keys("Escape");
+	// 	await innerInput.doubleClick();
+	// 	await browser.keys("Backspace");
+	// });
 
 	it("Value state changes only on submit", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
@@ -1137,7 +1137,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp7_1";
 
 		const input = await datepicker.getInput();
@@ -1153,5 +1153,12 @@ describe("Date Picker Tests", () => {
 		await innerInput.doubleClick();
 		await browser.keys("Backspace");
 		await browser.keys("Enter");
+	});
+
+	it("Invalid initial value isn't cleared due to formatting", async () => {
+		datepicker.id = "#dp20";
+		const input = await datepicker.getInput();
+
+		assert.equal(await input.getProperty("value"), "Invalid value", "the value isn't changed");
 	});
 });

@@ -10,13 +10,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-	<link rel="stylesheet" type="text/css" href="styles/Avatar.css">
+	<link rel="stylesheet" type="text/css" href="./styles/Avatar.css">
 </head>
 
 <body class="avatar1auto">
@@ -163,6 +163,58 @@
 		<ui5-input id="click-event-2"></ui5-input>
 	</section>
 
+	<section>
+		<h3>Avatar - Visual affordance</h3>
+		<ui5-avatar initials="AB" color-scheme="Accent1">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="accelerated"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+
+		<ui5-avatar interactive size="L" initials="CD" color-scheme="Accent2">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="accept"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+	
+		<ui5-avatar size="XL">
+			<img src="./img/John_Miller.png" alt="John Miller">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="bar-chart"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+
+		<br>
+
+		<ui5-avatar shape="Square" size="XS" initials="EF" color-scheme="Accent3">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="filter"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+
+		<ui5-avatar interactive shape="Square" initials="GH" color-scheme="Accent4">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="add-employee"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+	
+		<ui5-avatar shape="Square" size="L">
+			<img src="./img/John_Miller.png" alt="John Miller">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="document"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+		<br><br>
+	</section>
+
+	<section>
+		<h3>Avatar - Custom visual affordance</h3>
+		<ui5-avatar initials="AB" color-scheme="Accent1">
+			<span slot="badge" class="custom-badge">1</span>
+		</ui5-avatar>
+		<br><br>
+	</section>
+
 	<script>
 		var avatar = document.getElementById("interactive-avatar"),
 			myInteractiveAvatar = document.getElementById("myInteractiveAvatar"),
@@ -185,7 +237,7 @@
 		});
 	</script>
 
-	<link rel="stylesheet" type="text/css" href="styles/Avatar.css">
+	<link rel="stylesheet" type="text/css" href="./styles/Avatar.css">
 
 	<ui5-avatar size="XL" shape="Circle">
 		<img src="./img/Lamp_avatar_01.jpg" alt="Woman 1" class="avatar-image">

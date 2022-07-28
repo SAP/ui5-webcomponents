@@ -6,8 +6,11 @@
 
 :host {
 	font-family: "72override", var(--sapFontFamily);
-	background-color: var(--_ui5_panel_background_color);
+	background-color: var(--sapGroup_TitleBackground);
 	border-radius: var(--_ui5_panel_border_radius);
+}
+
+:host(:not([collapsed])) {
 	border-bottom: var(--_ui5_panel_border_bottom);
 }
 
@@ -16,31 +19,25 @@
 }
 
 .ui5-panel-header {
-	height: var(--_ui5_panel_header_height);
+	min-height: var(--_ui5_panel_header_height);
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	outline: none;
 	box-sizing: border-box;
-	padding-right: 1rem;
-	padding-left: .25rem;
-	border-bottom: 1px solid transparent;
+	padding-right: var(--_ui5_panel_header_padding_right);
 }
 
 .ui5-panel-header-icon {
-	color: var(--sapContent_IconColor);
+	color: var(--_ui5_panel_icon_color);
 }
 
 .ui5-panel-header-button-animated {
 	transition: transform 0.4s ease-out;
 }
 
-:host(:not([_has-header])) .ui5-panel-header-button {
-	pointer-events: none;
-}
-
-:host(:not([_has-header]):not([fixed])) {
+:host(:not([_has-header]):not([fixed])) .ui5-panel-header {
 	cursor: pointer;
 }
 
@@ -54,12 +51,9 @@
 	border-radius: var(--_ui5_panel_border_radius_expanded);
 }
 
-:host(:not([collapsed])) .ui5-panel-header-button {
-	transform: rotate(90deg);
-}
-
-:host(:not([collapsed])) [dir="rtl"] .ui5-panel-header-button {
-	transform: rotate(-90deg);
+:host(:not([collapsed])) .ui5-panel-header-button:not(.ui5-panel-header-button-with-icon),
+:host(:not([collapsed])) .ui5-panel-header-icon-wrapper [ui5-icon] {
+	transform: var(--_ui5_panel_toggle_btn_rotation);
 }
 
 :host([fixed]) .ui5-panel-header-title {
@@ -72,10 +66,10 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-family: "72override", var(--sapFontHeaderFamily);
-	font-size: var(--sapFontHeader5Size);
+	font-size: var(--sapGroup_Title_FontSize);
 	font-weight: normal;
 	color: var(--sapGroup_TitleTextColor);
-	font-weight: var(--_ui5_panel_title_font_weight);
+	font-weight: normal;
 }
 
 .ui5-panel-content {
@@ -92,9 +86,46 @@
 	align-items: center;
 	flex-shrink: 0;
 	width: var(--_ui5_panel_button_root_width);
-	margin-right: .25rem;
+	height: var(--_ui5_panel_button_root_width);
+	padding: var(--_ui5_panel_header_button_wrapper_padding);
+	box-sizing: border-box;
 }
 
-:host([fixed]:not([collapsed]):not([_has-header])) .ui5-panel-header {
+:host([fixed]:not([collapsed]):not([_has-header])) .ui5-panel-header,
+:host([collapsed]) .ui5-panel-header {
 	border-bottom: 0.0625rem solid var(--sapGroup_TitleBorderColor);
+}
+
+:host([collapsed]) .ui5-panel-header {
+	border-bottom-left-radius: var(--_ui5_panel_border_radius);
+	border-bottom-right-radius: var(--_ui5_panel_border_radius);
+}
+
+:host(:not([fixed]):not([collapsed])) .ui5-panel-header {
+	border-bottom: var(--_ui5_panel_default_header_border);
+}
+
+[ui5-button].ui5-panel-header-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: initial;
+	height: 100%;
+	width: 100%;
+}
+
+.ui5-panel-header-icon-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui5-panel-header-icon-wrapper,
+.ui5-panel-header-icon-wrapper .ui5-panel-header-icon {
+	color: inherit;
+}
+
+.ui5-panel-header-icon-wrapper,
+[ui5-button].ui5-panel-header-button-with-icon [ui5-icon] {
+	pointer-events: none;
 }

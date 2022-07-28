@@ -6,7 +6,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -239,7 +238,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>FlexibleColumnLayout</code> implements the master-detail-detail paradigm by displaying up to three pages in separate columns.
+ * The <code>FlexibleColumnLayout</code> implements the list-detail-detail paradigm by displaying up to three pages in separate columns.
  * There are several possible layouts that can be changed either with the component API, or by pressing the arrows, displayed between the columns.
  *
  * <h3>Usage</h3>
@@ -564,7 +563,6 @@ class FlexibleColumnLayout extends UI5Element {
 		return {
 			root: {
 				"ui5-fcl-root": true,
-				"ui5-fcl--ie": isIE(),
 			},
 			columns: {
 				start: {

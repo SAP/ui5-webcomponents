@@ -20,7 +20,7 @@
                 id="{{this._id}}-link-wrapper">
                 
                 <ui5-link
-                    @click="{{../_onLinkPress}}"
+                    @ui5-click="{{../_onLinkPress}}"
                     href="{{this.href}}"
                     target="{{this.target}}"
                     id="{{this._id}}-link"
@@ -33,9 +33,8 @@
 
         {{#if _endsWithCurrentLocationLabel}}
         <li class="ui5-breadcrumbs-current-location" @click="{{../_onLabelPress}}">
-            <span aria-label="{{_currentLocationAccName}}" role="link" id="{{this._id}}-labelWrapper">
-                <ui5-label
-                    aria-current="page">
+            <span aria-current="page" aria-label="{{_currentLocationAccName}}" role="link" id="{{this._id}}-labelWrapper">
+                <ui5-label>
                     {{_currentLocationText}}
                 </ui5-label>
             </span>

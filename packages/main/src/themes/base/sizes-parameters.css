@@ -23,6 +23,7 @@
 	 --_ui5_color-palette-item-hover-height: 2.375rem;
 	 --_ui5_color-palette-item-margin: calc((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2);
 	 --_ui5_color-palette-row-width: 12rem;
+	 --_ui5_color-palette-swatch-container-padding: 0.3125rem 0.6875rem;
 
 	 /* DateTimePicker */
 	--_ui5_datetime_picker_width: 40.0625rem;
@@ -33,6 +34,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.75rem;
+    --_ui5_dialog_footer_height: 2.75rem;
 
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
@@ -40,21 +42,30 @@
 	--_ui5_list_no_data_height: 3rem;
 	--_ui5_list_item_cb_margin_right: 0;
 	--_ui5_list_item_title_size: var(--sapFontLargeSize);
+	--_ui5_list_no_data_font_size: var(--sapFontLargeSize);
 	--_ui5_list_item_img_size: 3rem;
-	--_ui5_list_item_img_margin: 0.5rem 0.75rem 0.5rem 0rem;
+	--_ui5_list_item_img_top_margin: 0.5rem;
+	--_ui5_list_item_img_bottom_margin: 0.5rem;
+	--_ui5_list_item_img_hn_margin: 0.75rem;
 	--_ui5_list_item_dropdown_base_height: 2.5rem;
 	--_ui5_list_item_base_height: 2.75rem;
 	--_ui5_list_item_icon_size: 1.125rem;
+	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
+	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
 	--_ui5_group_header_list_item_height: 2.75rem;
 	--_ui5_list_busy_row_height: 3rem;
 	--_ui5_month_picker_item_height: 3rem;
+	--_ui5_list_buttons_left_space: 0.125rem;
 
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.75rem;
 
+	/* Notifications */
+	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
+
 	--_ui5_year_picker_item_height: 3rem;
-	--_ui5_tokenizer_root_padding: 0.1875rem;
+	--_ui5_tokenizer_padding: 0.25rem;
 	--_ui5_token_height: 1.625rem;
 	--_ui5_token_icon_size: .75rem;
 	--_ui5_token_icon_padding: 0.25rem 0.5rem;
@@ -66,24 +77,53 @@
 	--_ui5_tl_li_margin_bottom: 1.625rem;
 
 	/*switch*/
+	--_ui5_switch_height: var(--_ui5_switch_height);
+	--_ui5_switch_width: var(--_ui5_switch_width);
+	--_ui5_switch_with_label_width: var(--_ui5_switch_with_label_width);
+
+	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_outline_top);
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);
+
+	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
+	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
+	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_width);
+	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_height);
+	--_ui5_switch_min_width: var(--_ui5_switch_min_width);
+
+	--_ui5_switch_handle_height: var(--_ui5_switch_handle_height);
+	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_width);
+	--_ui5_switch_handle_width: var(--_ui5_switch_handle_width);
+	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_height);
+
+	--_ui5_switch_text_active_left: var(--_ui5_switch_text_active_left);
+
+	--_ui5_switch_text_font_size: var(--_ui5_switch_text_font_size);
+	--_ui5_switch_text_width: var(--_ui5_switch_text_width);
+
 	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
-	--_ui5_switch_text_on_left: calc(-100% + 1.9125rem);
-	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.875rem);
-	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
-	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
+
+
+	--_ui5_switch_transform: var(--_ui5_switch_transform);
+	--_ui5_switch_transform_with_label: var(--_ui5_switch_transform_with_label);
+	--_ui5_switch_rtl_transform: var(--_ui5_switch_rtl_transform);
+	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_rtl_transform_with_label);
 
 	--_ui5_tc_item_text: 3rem;
 	--_ui5_tc_item_height: 4.75rem;
 	--_ui5_tc_item_text_only_height: 2.75rem;
 	--_ui5_tc_item_text_only_with_additional_text_height: 3.75rem;
-	--_ui5_tc_item_text_line_height: normal;
+	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_circle_size: 2.75rem;
 	--_ui5_tc_item_icon_size: 1.25rem;
 	--_ui5_tc_item_add_text_margin_top: 0.375rem;
 
 	/* TextArea */
-	--_ui5_textarea_padding: 0.5625rem 0.6875rem;
+	--_ui5_textarea_padding: 0.5rem 0.625rem;
+	--_ui5_textarea_margin: .25rem 0;
+
+	/* Panel */
+	--_ui5_panel_header_height: 2.75rem;
 
 	/* Radio Button */
 	--_ui5_radio_button_height: 2.75rem;
@@ -92,7 +132,7 @@
 	--_ui5_radio_button_inner_size: 2.75rem;
 	--_ui5_radio_button_svg_size: 1.375rem;
 	--_ui5_radio_button_label_width: calc(100% - 2.75rem);
-	--_ui5_radio_button_rtl_focus_right: 0.5rem;
+	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.6875rem;
 
 	/* Responsive Popover */
 	--_ui5-responsive_popover_header_height: 2.75rem;
@@ -106,6 +146,9 @@
 	--_ui5_load_more_text_font_size: var(--sapFontMediumSize);
 	--_ui5_load_more_desc_padding:  0.375rem 2rem 0.875rem 2rem;
 	--ui5_table_header_row_height: 2.75rem;
+	--ui5_table_row_height: 2.75rem;
+	--ui5_table_focus_outline_offset: -0.125rem;
+	--ui5_table_group_row_height: 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
@@ -121,6 +164,10 @@
 
 	/* SegmentedButton */
 	--_ui5_segmented_btn_border_radius: 0.375rem;
+
+	/* SplitButton */
+	--_ui5_split_button_middle_separator_top: 0;
+	--_ui5_split_button_middle_separator_height: 2.25rem;
 }
 
 [data-ui5-compact-size],
@@ -159,9 +206,11 @@
 	--_ui5_color-palette-item-hover-height: 1.625rem;
 	--_ui5_color-palette-item-margin: calc((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2);
 	--_ui5_color-palette-row-width: 8.125rem;
+	--_ui5_color-palette-swatch-container-padding: 0.1875rem 0.8125rem;
 	--_ui5_color-palette-item-hover-margin: 0;
 	--_ui5_color-palette-row-height: 7.5rem;
 	--_ui5_color-palette-button-height: 2rem;
+	--_ui5_color_picker_slider_container_margin_top: -4px;
 
 	/* Custom List Item */
 	--_ui5_custom_list_item_rb_min_width: 2rem;
@@ -182,42 +231,63 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.5rem;
+    --_ui5_dialog_footer_height: 2.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
 	--_ui5_input_inner_padding: 0 0.5rem;
 	--_ui5_input_icon_min_width: var(--_ui5_input_compact_min_width);
-	--_ui5_input_icon_padding: .25rem .5rem;
+	--_ui5_input_icon_padding: .25rem .4375rem;
+	--_ui5_input_error_warning_icon_padding: .1875rem .375rem .1875rem .4375rem;
+	--_ui5_input_information_icon_padding: .1875rem .375rem .1875rem .4375rem;
+	--_ui5_input_custom_icon_padding: .25rem .5rem;
+	--_ui5_input_error_warning_custom_icon_padding: .1875rem .5rem;
+	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
 	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
+
+	/* Menu */
+	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;
+
+	/* Notifications */
+	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
 
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.5rem;
 
 	/* TextArea */
 	--_ui5_textarea_padding: .1875rem .5rem;
+	--_ui5_textarea_margin: .1875rem 0;
 
 	/* List */
 	--_ui5_list_no_data_height: 2rem;
 	--_ui5_list_item_cb_margin_right: .5rem;
 	--_ui5_list_item_title_size: var(--sapFontSize);
-	--_ui5_list_item_img_margin: 0.55rem 0.75rem 0.5rem 0rem;
+	--_ui5_list_item_img_top_margin: 0.55rem;
+	--_ui5_list_no_data_font_size: var(--sapFontSize);
 	--_ui5_list_item_dropdown_base_height: 2rem;
 	--_ui5_list_item_base_height: 2rem;
 	--_ui5_list_item_icon_size: 1rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
+	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
 	--_ui5_list_busy_row_height: 2rem;
+	--_ui5_list_buttons_left_space: 0.125rem;
 
 	--_ui5_month_picker_item_height: 2rem;
-	--_ui5_panel_header_height: 2rem;
 	--_ui5_year_picker_item_height: 2rem;
+	--_ui5_panel_header_height: 2.5rem;
 
-	--_ui5_tokenizer_root_padding: 0.125rem;
-	--_ui5_token_height: 1.125rem;
-
+	--_ui5_token_height: 1.25rem;
+	--_ui5_token_top_margin: 0.125rem;
+	--_ui5_token_bottom_margin: 0.125rem;
+	--_ui5_token_right_margin: 0.25rem;
+	--_ui5_token_left_padding: 0.25rem;
+	--_ui5_token_readonly_padding: 0.25rem;
+	--_ui5_token_focus_offset: -0.125rem;
 	--_ui5_token_icon_size: .75rem;
-	--_ui5_token_icon_padding: 0.1rem 0.25rem;
+	--_ui5_token_icon_padding: 0.125rem 0.25rem;
 	--_ui5_token_wrapper_right_padding: 0.25rem;
 	--_ui5_token_wrapper_left_padding: 0;
+	--_ui5_token_outline_offset: -0.125rem;
 
 	--_ui5_tl_bubble_padding: .5rem;
 	--_ui5_tl_indicator_before_bottom: -.5rem;
@@ -234,16 +304,31 @@
 	/*switch*/
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
-	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
-	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
-	--_ui5_switch_text_on_left: calc(-100% + 1.5625rem);
-	--_ui5_switch_slide_transform: translateX(100%) translateX(-1.5rem);
-	--_ui5_switch_no_label_width: var(--_ui5_switch_compact_no_label_width);
-	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.5rem);
-	--_ui5_switch_text_right: calc(-100% + 1.5625rem);
+	--_ui5_switch_with_label_width: var(--_ui5_switch_compact_with_label_width);
 
-	--_ui5_switch_root_outline_top_bottom: var(--_ui5_switch_compact_root_outline_top_bottom);
-	--_ui5_switch_root_outline_left_right: var(--_ui5_switch_compact_root_outline_left_right);
+	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_compact_outline_top);
+	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_compact_outline_bottom);
+
+	--_ui5_switch_track_width: var(--_ui5_switch_track_compact_width);
+	--_ui5_switch_track_height: var(--_ui5_switch_track_compact_height);
+	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_compact_width);
+	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_compact_height);
+	--_ui5_switch_min_width: var(--_ui5_switch_compact_min_width);
+
+	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
+	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_compact_width);
+	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
+	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_compact_height);
+
+	--_ui5_switch_text_active_left: var(--_ui5_switch_text_compact_active_left);
+
+	--_ui5_switch_text_font_size: var(--_ui5_switch_text_compact_font_size);
+	--_ui5_switch_text_width: var(--_ui5_switch_text_compact_width);
+
+	--_ui5_switch_transform: var(--_ui5_switch_compact_transform);
+	--_ui5_switch_transform_with_label: var(--_ui5_switch_compact_transform_with_label);
+	--_ui5_switch_rtl_transform: var(--_ui5_switch_compact_rtl_transform);
+	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_compact_rtl_transform_with_label);
 
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
@@ -262,8 +347,7 @@
 	--_ui5_radio_button_inner_size: 2rem;
 	--_ui5_radio_button_svg_size: 1rem;
 	--_ui5_radio_button_label_width: calc(100% - 2rem + 1px);
-	--_ui5_radio_button_rtl_focus_right: 0.375rem;
-
+	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.5rem;
 
 	/* Responsive Popover */
 	--_ui5-responsive_popover_header_height: 2.5rem;
@@ -274,13 +358,16 @@
 	/* Slider */
 	--_ui5_slider_handle_height: 1.25rem;
 	--_ui5_slider_handle_width: 1.25rem;
-	--_ui5_slider_handle_top: -0.6425rem;
-	--_ui5_slider_handle_margin_left: -0.7825rem;
+	--_ui5_slider_handle_top: -.5rem;
 	--_ui5_slider_tooltip_height: 1rem;
 	--_ui5_slider_tooltip_padding: 0.25rem;
-	--_ui5_slider_tooltip_bottom: 1.825rem;
+	/* --_ui5_slider_tooltip_bottom: 1.875rem; */
 	--_ui5_slider_progress_outline_offset: -0.625rem;
 	--_ui5_slider_outer_height: 1.3125rem;
+
+	/* SplitButton */
+	--_ui5_split_button_middle_separator_top: 0;
+	--_ui5_split_button_middle_separator_height: 1.625rem;
 
 	/* StepInput */
 	--_ui5_step_input_min_width: 6rem;
@@ -290,6 +377,7 @@
 	--_ui5_load_more_text_font_size: var(--sapFontSize);
 	--_ui5_load_more_desc_padding: 0 2rem 0.875rem 2rem;
 	--ui5_table_header_row_height: 2rem;
+	--ui5_table_row_height: 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;
@@ -302,4 +390,10 @@
 	--_ui5_timeline_tli_indicator_before_right: -0.5rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -0.75rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -0.8125rem;
+
+	/* ViewSettingsDialog */
+	--_ui5_vsd_header_container: 2.5rem;
+	--_ui5_vsd_sub_header_container_height: 2rem;
+	--_ui5_vsd_header_height: 4rem;
+	--_ui5_vsd_expand_content_height: 25.4375rem;
 }

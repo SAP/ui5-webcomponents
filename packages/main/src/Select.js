@@ -30,6 +30,10 @@ import {
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
@@ -109,7 +113,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.Select.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -179,7 +183,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @since 1.0.0-rc.9
@@ -408,6 +412,7 @@ class Select extends UI5Element {
 				value: opt.value,
 				textContent: opt.textContent,
 				title: opt.title,
+				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
 			};
@@ -503,7 +508,7 @@ class Select extends UI5Element {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this._getSelectedItemIndex(itemToSelect);
+			const nextIndex = this._filteredItems.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -546,7 +551,7 @@ class Select extends UI5Element {
 	}
 
 	_getSelectedItemIndex(item) {
-		return [].indexOf.call(item.parentElement.children, item);
+		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
 	}
 
 	_select(index) {
@@ -636,6 +641,7 @@ class Select extends UI5Element {
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this.focused = false;
 	}
 
 	_afterOpen() {
@@ -644,6 +650,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this.opened = false;
+		this.focused = true;
 		this._iconPressed = false;
 		this._listWidth = 0;
 
@@ -666,15 +673,40 @@ class Select extends UI5Element {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": Select.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": Select.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
 	get valueStateText() {
+		let valueStateText;
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			valueStateText = this.valueStateDefaultText;
+		} else {
+			valueStateText = this.valueStateMessageText.map(el => el.textContent).join(" ");
+		}
+
+		return `${this.valueStateTypeText} ${valueStateText}`;
+	}
+
+	get valueStateDefaultText() {
 		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTypeText() {
+		return this.valueStateTypeMappings[this.valueState];
 	}
 
 	get hasValueState() {
@@ -744,6 +776,9 @@ class Select extends UI5Element {
 			responsivePopoverHeader: {
 				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
+			},
+			responsivePopover: {
+				"min-width": `${this.offsetWidth}px`,
 			},
 		};
 	}

@@ -1,9 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./_port.js");
 
 describe("ProductSwitch general interaction", async () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ProductSwitch.html`);
+		await browser.url(`test/pages/ProductSwitch.html`);
 	});
 
 	it("tests desktopColumns attribute", async () => {
@@ -24,7 +23,7 @@ describe("ProductSwitch general interaction", async () => {
 
 describe("ARIA attributes", () => {
 	before(async () => {
-		await browser.url(`http://localhost:${PORT}/test-resources/pages/ProductSwitch.html`);
+		await browser.url(`test/pages/ProductSwitch.html`);
 	});
 
 	it ("role and aria-label set correctly", async () => {

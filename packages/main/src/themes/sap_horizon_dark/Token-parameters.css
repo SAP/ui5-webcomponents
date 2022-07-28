@@ -1,28 +1,19 @@
 @import "../base/Token-parameters.css";
 
 :root {
-	--_ui5_token_background: var(--sapButton_TokenBackground);
-	--_ui5_token_border_radius: var(--sapButton_BorderCornerRadius);
 	--_ui5_token_focus_outline_width: 0.0625rem;
-	--_ui5_token_text_color: var(--sapTextColor);
-	--_ui5_token_icon_color: var(--sapContent_IconColor);
-	--_ui5_token_hover_background: var(--sapButton_TokenBackground);
 	--_ui5_token_hover_border_color: var(--sapButton_TokenBorderColor);
-	--_ui5_token_top_margin: 0.125rem;
-	--_ui5_token_bottom_margin: 0.125rem;
 	--_ui5_token_selected_focus_outline: none;
 	--_ui5_token_focus_outline: none;
+	--_ui5_token_outline_offset: 0.125rem;
 	--_ui5_token_selected_hover_background: var(--sapButton_Selected_Background);
 	--_ui5_token_selected_hover_border_color: var(--sapButton_Selected_BorderColor);
-	--_ui5_token_selected_box_shadow: 0 0 0.0625rem 0 rgba(0,112,242,0.72);
-	--_ui5_token_focused_border: 2px solid var(--sapButton_Selected_BorderColor);
-	--_ui5_token_focused_selected_border: 2px solid var(--sapButton_Selected_BorderColor);
+	--ui5_token_focus_pseudo_element_content: '';
+	--_ui5_token_focus_outline_border_radius: 0.625rem;
 }
 
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_token_height: 1.25rem;
-	--_ui5_token_top_margin: 0.0625rem;
-	--_ui5_token_bottom_margin: 0.0625rem;
+	--_ui5_token_outline_offset: 0;
 }

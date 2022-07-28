@@ -24,7 +24,7 @@ import styles from "./generated/themes/ListItem.css.js";
  */
 const metadata = {
 	languageAware: true,
-	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
@@ -87,10 +87,29 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @private
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @since 1.3.0
+		 *
+		 */
+		accessibleRole: {
+			type: String,
+		},
+
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
+
+		_ariaHasPopup: {
+			type: String,
+			noAttribute: true,
+		},
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -147,6 +166,15 @@ class ListItem extends ListItemBase {
 			if (this.active) {
 				this.active = false;
 			}
+		};
+
+		const handleTouchStartEvent = event => {
+			this._onmousedown(event);
+		};
+
+		this._ontouchstart = {
+			handleEvent: handleTouchStartEvent,
+			passive: true,
 		};
 	}
 
@@ -210,10 +238,6 @@ class ListItem extends ListItemBase {
 			return;
 		}
 		this.deactivate();
-	}
-
-	_ontouchstart(event) {
-		this._onmousedown(event);
 	}
 
 	_ontouchend(event) {
@@ -352,14 +376,25 @@ class ListItem extends ListItemBase {
 		return ListItem.i18nBundle.getText(DELETE);
 	}
 
+	get _accessibleNameRef() {
+		if (this.accessibleName) {
+			// accessibleName is set - return labels excluding content
+			return `${this._id}-invisibleText`;
+		}
+
+		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
+		return `${this._id}-content ${this._id}-invisibleText`;
+	}
+
 	get _accInfo() {
 		return {
-			role: this.role,
+			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
+			ariaHaspopup: this._ariaHasPopup || undefined,
 		};
 	}
 
