@@ -3,17 +3,17 @@ import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "./Runtimes.js";
 
-const shouldUpdate = styleRuntimeIndex => {
-	const styleCreatedByOldRuntime = styleRuntimeIndex === undefined; // The style was created by an old runtime (that does not set info on it)
-	const currentRuntimeIsNewer = compareRuntimes(getCurrentRuntimeIndex(), parseInt(styleRuntimeIndex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
-	return styleCreatedByOldRuntime || currentRuntimeIsNewer;
+const shouldUpdate = runtimeINdex => {
+	const createdByOldRuntime = runtimeINdex === undefined; // The style/link/stylesheet was created by an old runtime (that does not set info on it)
+	const currentRuntimeIsNewer = compareRuntimes(getCurrentRuntimeIndex(), parseInt(runtimeINdex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
+	return createdByOldRuntime || currentRuntimeIsNewer;
 };
 
 const getStyleId = (name, value) => {
 	return value ? `${name}|${value}` : name;
 };
 
-const createStyle = (data, name, value = "", theme = "") => {
+const createStyle = (data, name, value = "", theme = undefined) => {
 	const content = typeof data === "string" ? data : data.content;
 	const currentRuntimeIndex = getCurrentRuntimeIndex();
 
@@ -21,7 +21,9 @@ const createStyle = (data, name, value = "", theme = "") => {
 		const attributes = {};
 		attributes[name] = value;
 		attributes["data-ui5-runtime-index"] = currentRuntimeIndex;
-		attributes["data-ui5-theme"] = theme;
+		if (theme) {
+			attributes["data-ui5-theme"] = theme;
+		}
 		const href = getUrl(data.packageName, data.fileName);
 		createLinkInHead(href, attributes);
 	} else if (document.adoptedStyleSheets) {
@@ -29,18 +31,22 @@ const createStyle = (data, name, value = "", theme = "") => {
 		stylesheet.replaceSync(content);
 		stylesheet._ui5StyleId = getStyleId(name, value); // set an id so that we can find the style later
 		stylesheet._ui5RuntimeIndex = currentRuntimeIndex;
-		stylesheet._ui5Theme = theme;
+		if (theme) {
+			stylesheet._ui5Theme = theme;
+		}
 		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 	} else {
 		const attributes = {};
 		attributes[name] = value;
 		attributes["data-ui5-runtime-index"] = currentRuntimeIndex;
-		attributes["data-ui5-theme"] = theme;
+		if (theme) {
+			attributes["data-ui5-theme"] = theme;
+		}
 		createStyleInHead(content, attributes);
 	}
 };
 
-const updateStyle = (data, name, value = "", theme = "") => {
+const updateStyle = (data, name, value = "", theme = undefined) => {
 	const content = typeof data === "string" ? data : data.content;
 	const currentRuntimeIndex = getCurrentRuntimeIndex();
 
@@ -102,7 +108,7 @@ const removeStyle = (name, value = "") => {
 	}
 };
 
-const createOrUpdateStyle = (data, name, value = "", theme = "") => {
+const createOrUpdateStyle = (data, name, value = "", theme = undefined) => {
 	if (hasStyle(name, value)) {
 		updateStyle(data, name, value, theme);
 	} else {
