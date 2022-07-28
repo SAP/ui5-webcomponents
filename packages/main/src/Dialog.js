@@ -4,6 +4,7 @@ import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import Icon from "./Icon.js";
@@ -122,6 +123,20 @@ const metadata = {
 		 */
 		onDesktop: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the state of the <code>Dialog</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		state: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 	},
 };
@@ -286,6 +301,21 @@ class Dialog extends Popup {
 		return minHeight;
 	}
 
+	get hasValueState() {
+		return this.state !== ValueState.None;
+	}
+
+	get _dialogStateIcon() {
+		const iconPerValueState = {
+			Error: "error",
+			Warning: "alert",
+			Success: "sys-enter-2",
+			Information: "information",
+		};
+
+		return iconPerValueState[this.state];
+	}
+
 	_show() {
 		super._show();
 		this._center();
@@ -295,6 +325,9 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
+		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
+			this.role = "alertdialog";
+		}
 	}
 
 	onAfterRendering() {
