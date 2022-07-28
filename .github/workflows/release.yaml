@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version'     
+        required: true
+      tag:
+          description: 'Tag'     
+          required: true
+          default: latest
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+
+    - name: Install
+      run: yarn --frozen-lockfile
+
+    - name: Build
+      run: yarn build
+      env:
+        ENABLE_CLDR: 1
+
+    - name: Publish
+      env:
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+      run: |
+        node ./.github/actions/release.js --version=${{ github.event.inputs.version }} --tag=${{ github.event.inputs.tag }}
