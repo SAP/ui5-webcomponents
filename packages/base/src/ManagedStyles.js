@@ -1,9 +1,13 @@
 import createStyleInHead from "./util/createStyleInHead.js";
 import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
-import { shouldUpdateResource } from "./SharedResourcePolicy.js";
-import SharedResourceType from "./types/SharedResourceType.js";
-import { getCurrentRuntimeIndex } from "./Runtimes.js";
+import { getCurrentRuntimeIndex, compareRuntimes } from "./Runtimes.js";
+
+const shouldUpdate = styleRuntimeIndex => {
+	const styleCreatedByOldRuntime = styleRuntimeIndex === undefined; // The style was created by an old runtime (that does not set info on it)
+	const currentRuntimeIsNewer = compareRuntimes(getCurrentRuntimeIndex(), parseInt(styleRuntimeIndex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
+	return styleCreatedByOldRuntime || currentRuntimeIsNewer;
+};
 
 const getStyleId = (name, value) => {
 	return value ? `${name}|${value}` : name;
@@ -42,27 +46,27 @@ const updateStyle = (data, name, value = "", theme = "") => {
 
 	if (shouldUseLinks()) {
 		const link = document.querySelector(`head>link[${name}="${value}"]`);
-		const resourceRuntimeIndex = link.getAttribute("data-ui5-runtime-index");
-		const resourceTheme = link.getAttribute("data-ui5-theme");
-		if (resourceTheme !== theme || shouldUpdateResource(SharedResourceType.ThemeProperties, resourceRuntimeIndex)) {
+		const linkRuntimeIndex = link.getAttribute("data-ui5-runtime-index");
+		const linkTheme = link.getAttribute("data-ui5-theme");
+		if (linkTheme !== theme || shouldUpdate(linkRuntimeIndex)) {
 			link.href = getUrl(data.packageName, data.fileName);
 			link.setAttribute("data-ui5-runtime-index", currentRuntimeIndex);
 			link.setAttribute("data-ui5-theme", theme);
 		}
 	} else if (document.adoptedStyleSheets) {
 		const stylesheet = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === getStyleId(name, value));
-		const resourceRuntimeIndex = stylesheet._ui5RuntimeIndex;
-		const resourceTheme = stylesheet._ui5Theme;
-		if (resourceTheme !== theme || shouldUpdateResource(SharedResourceType.ThemeProperties, resourceRuntimeIndex)) {
+		const stylesheetRuntimeIndex = stylesheet._ui5RuntimeIndex;
+		const stylesheetTheme = stylesheet._ui5Theme;
+		if (stylesheetTheme !== theme || shouldUpdate(stylesheetRuntimeIndex)) {
 			stylesheet.replaceSync(content || "");
 			stylesheet._ui5RuntimeIndex = currentRuntimeIndex;
 			stylesheet._ui5Theme = theme;
 		}
 	} else {
 		const style = document.querySelector(`head>style[${name}="${value}"]`);
-		const resourceRuntimeIndex = style.getAttribute("data-ui5-runtime-index");
-		const resourceTheme = style.getAttribute("data-ui5-theme");
-		if (resourceTheme !== theme || shouldUpdateResource(SharedResourceType.ThemeProperties, resourceRuntimeIndex)) {
+		const styleRuntimeIndex = style.getAttribute("data-ui5-runtime-index");
+		const styleTheme = style.getAttribute("data-ui5-theme");
+		if (styleTheme !== theme || shouldUpdate(styleRuntimeIndex)) {
 			style.textContent = content || "";
 			style.setAttribute("data-ui5-runtime-index", currentRuntimeIndex);
 			style.setAttribute("data-ui5-theme", theme);
