@@ -3,6 +3,7 @@ import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { getThemingRoot } from "./ThemingRoot.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
 
@@ -18,7 +19,7 @@ const loadThemeBase = async theme => {
 
 	const cssData = await getThemeProperties(BASE_THEME_PACKAGE, theme);
 	if (cssData) {
-		createOrUpdateStyle(cssData, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+		createOrUpdateStyle(cssData, "data-ui5-theme-properties", BASE_THEME_PACKAGE, getThemingRoot());
 	}
 };
 
@@ -35,7 +36,7 @@ const loadComponentPackages = async theme => {
 
 		const cssData = await getThemeProperties(packageName, theme);
 		if (cssData) {
-			createOrUpdateStyle(cssData, "data-ui5-theme-properties", packageName);
+			createOrUpdateStyle(cssData, "data-ui5-theme-properties", packageName, getThemingRoot());
 		}
 	});
 };

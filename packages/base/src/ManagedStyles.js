@@ -6,8 +6,11 @@ const getStyleId = (name, value) => {
 	return value ? `${name}|${value}` : name;
 };
 
-const createStyle = (data, name, value = "") => {
-	const content = typeof data === "string" ? data : data.content;
+const createStyle = (data, name, value = "", themingRoot = ":root") => {
+	let content = typeof data === "string" ? data : data.content;
+	if (themingRoot !== ":root") {
+		content = content.replace(/:root/g, themingRoot);
+	}
 
 	if (shouldUseLinks()) {
 		const attributes = {};
@@ -26,8 +29,11 @@ const createStyle = (data, name, value = "") => {
 	}
 };
 
-const updateStyle = (data, name, value = "") => {
-	const content = typeof data === "string" ? data : data.content;
+const updateStyle = (data, name, value = "", themingRoot = ":root") => {
+	let content = typeof data === "string" ? data : data.content;
+	if (themingRoot !== ":root") {
+		content = content.replace(/:root/g, themingRoot);
+	}
 
 	if (shouldUseLinks()) {
 		document.querySelector(`head>link[${name}="${value}"]`).href = getUrl(data.packageName, data.fileName);
@@ -66,11 +72,11 @@ const removeStyle = (name, value = "") => {
 	}
 };
 
-const createOrUpdateStyle = (data, name, value = "") => {
+const createOrUpdateStyle = (data, name, value = "", themingRoot = ":root") => {
 	if (hasStyle(name, value)) {
-		updateStyle(data, name, value);
+		updateStyle(data, name, value, themingRoot);
 	} else {
-		createStyle(data, name, value);
+		createStyle(data, name, value, themingRoot);
 	}
 };
 
