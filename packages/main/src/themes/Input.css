@@ -25,7 +25,7 @@
 	background-color: var(--_ui5_input_background_color);
 }
 
-:host([focused]) {
+:host([focused]:not(.focus-within)) {
 	border-color: var(--_ui5_input_focused_border_color);
 	background-color: var(--sapField_Focus_Background);
 }
@@ -34,7 +34,7 @@
 	position: relative;
 }
 
-:host([focused]) .ui5-input-focusable-element::after {
+:host([focused]:not(.focus-within)) .ui5-input-focusable-element::after {
 	content: var(--ui5_input_focus_pseudo_element_content);
 	position: absolute;
 	pointer-events: none;

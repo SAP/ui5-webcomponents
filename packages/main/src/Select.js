@@ -641,7 +641,7 @@ class Select extends UI5Element {
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
-		this.focused = false;
+		this.classList.add("focus-within");
 	}
 
 	_afterOpen() {
@@ -650,7 +650,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this.opened = false;
-		this.focused = true;
+		this.classList.remove("focus-within");
 		this._iconPressed = false;
 		this._listWidth = 0;
 
