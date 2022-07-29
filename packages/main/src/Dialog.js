@@ -22,6 +22,16 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
 const STEP_SIZE = 16;
 
 /**
+ * Defines the icons corresponding to the dialog's state.
+ */
+const ICON_PER_STATE = {
+	Error: "error",
+	Warning: "alert",
+	Success: "sys-enter-2",
+	Information: "information",
+};
+
+/**
  * @public
  */
 const metadata = {
@@ -306,14 +316,11 @@ class Dialog extends Popup {
 	}
 
 	get _dialogStateIcon() {
-		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
-			Information: "information",
-		};
+		return ICON_PER_STATE[this.state];
+	}
 
-		return iconPerValueState[this.state];
+	get _role() {
+		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
 	}
 
 	_show() {
@@ -325,9 +332,7 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
-			this.role = "alertdialog";
-		}
+		this.role = this._role;
 	}
 
 	onAfterRendering() {
