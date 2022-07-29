@@ -466,7 +466,7 @@ class Button extends UI5Element {
 			return "";
 		}
 
-		return this.isIconOnly ? "img" : "presentation";
+		return this.showIconTooltip ? "img" : "presentation";
 	}
 
 	get isIconOnly() {
