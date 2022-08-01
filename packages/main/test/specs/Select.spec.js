@@ -1,5 +1,18 @@
 const assert = require("chai").assert;
 
+async function getResourceBundleTexts(keys) {
+	return browser.executeAsync((keys, done) => {
+		const select = document.getElementById("mySelect");
+
+		const texts = keys.reduce((result, key) => {
+			result[key] = select.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key])
+			return result;
+		}, {});
+		done(texts);
+
+	}, keys);
+}
+
 describe("Select general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/Select.html`);
@@ -40,8 +53,8 @@ describe("Select general interaction", () => {
 	it("fires change on selection with keyboard handling", async () => {
 		await browser.url(`test/pages/Select.html`);
 
-		const select = await browser.$("#mySelect2").shadow$(".ui5-select-root");
-		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const select = await browser.$("#errorSelect").shadow$(".ui5-select-root");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const inputResult = await browser.$("#inputResult");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
@@ -68,8 +81,8 @@ describe("Select general interaction", () => {
 		await browser.url(`test/pages/Select.html`);
 
 		const inputResult = await browser.$("#inputResult").shadow$("input");
-		const select = await browser.$("#mySelect2");
-		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const select = await browser.$("#errorSelect");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
@@ -94,8 +107,8 @@ describe("Select general interaction", () => {
 		const btn = await browser.$("#myBtn2");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
 		const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const select = await browser.$("#mySelect2");
-		const selectText = await browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const select = await browser.$("#errorSelect");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
@@ -225,7 +238,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection with typing more letters", async () => {
-		const select = await browser.$("#mySelect3");
+		const select = await browser.$("#warningSelect");
 		const EXPECTED_SELECTION_TEXT = "Brazil";
 
 		await select.click(); // Open select
@@ -417,6 +430,41 @@ describe("Select general interaction", () => {
 			"The aria-expanded is false by default.");
 		assert.strictEqual(await select2.getAttribute("aria-roledescription"), EXPECTER_ARIA_ROLEDESCRIPTION,
 			"The aria-roledescription is correct.");
+	});
+
+	it("Tests value state type", async () => {
+		const successSelect = await browser.$("#successSelect");
+		const successSelectValueState = successSelect.shadow$(`#${await successSelect.getProperty('_id')}-valueStateDesc`);
+		const valueStateText = await successSelectValueState.getHTML(false);
+
+		const infoSelect = await browser.$("#infoSelect");
+		const infoSelectValueState = infoSelect.shadow$(`#${await infoSelect.getProperty('_id')}-valueStateDesc`);
+		const infoValueStateText = await infoSelectValueState.getHTML(false);
+
+		const errorSelect = await browser.$("#errorSelect");
+		const errorSelectValueState = errorSelect.shadow$(`#${await errorSelect.getProperty('_id')}-valueStateDesc`);
+		const errorValueStateText = await errorSelectValueState.getHTML(false);
+
+		const warningSelect = await browser.$("#warningSelect");
+		const warningSelectValueState = warningSelect.shadow$(`#${await warningSelect.getProperty('_id')}-valueStateDesc`);
+		const warningValueStateText = await warningSelectValueState.getHTML(false);
+
+		const keys = [
+			"VALUE_STATE_TYPE_SUCCESS",
+			"VALUE_STATE_TYPE_INFORMATION",
+			"VALUE_STATE_TYPE_ERROR",
+			"VALUE_STATE_TYPE_WARNING",
+		];
+		const texts = await getResourceBundleTexts(keys);
+		
+		assert.ok(valueStateText.includes(texts.VALUE_STATE_TYPE_SUCCESS),
+			"The value state text is correct.");
+		assert.ok(infoValueStateText.includes(texts.VALUE_STATE_TYPE_INFORMATION),
+			"The value state text is correct.");
+		assert.ok(errorValueStateText.includes(texts.VALUE_STATE_TYPE_ERROR),
+			"The value state text is correct.");
+		assert.ok(warningValueStateText.includes(texts.VALUE_STATE_TYPE_WARNING),
+			"The value state text is correct.");
 	});
 });
 

@@ -60,7 +60,7 @@
 		</ui5-combobox>
 
 		<ui5-combobox id="" class="combobox2auto" disabled value="disabled"></ui5-combobox>
-		<ui5-combobox id="" class="combobox2auto" placeholder="Hello World"></ui5-combobox>
+		<ui5-combobox id="placeholder_test" class="combobox2auto" placeholder="Hello World"></ui5-combobox>
 		<ui5-combobox id="" class="combobox2auto" readonly value="readonly"></ui5-combobox>
 		<ui5-combobox id="" class="combobox2auto" required value="required"></ui5-combobox>
 		<ui5-combobox id="value-state-error" class="combobox2auto" value-state="Error">
@@ -71,10 +71,10 @@
 			<ui5-cb-item text="Bahrain"></ui5-cb-item>
 			<ui5-cb-item text="Belgium"></ui5-cb-item>
 			<ui5-cb-item text="Bosnia and Herzegovina"></ui5-cb-item>
-			<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
-			<div slot="valueStateMessage">Information message 2. This is a <a href="#test2">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+			<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
+			<div slot="valueStateMessage">Additionl custom error value state message with a <a href="#">Link</a>. Extra long text used as an error message. Extra long text used as an error message - 2. Extra long text used as an error message - 3.</div>
 		</ui5-combobox>
-		<ui5-combobox id="" class="combobox2auto" value-state="Warning">
+		<ui5-combobox id="vs-warning-default" class="combobox2auto" value-state="Warning">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Australia"></ui5-cb-item>
@@ -82,8 +82,8 @@
 			<ui5-cb-item text="Bahrain"></ui5-cb-item>
 			<ui5-cb-item text="Belgium"></ui5-cb-item>
 		</ui5-combobox>
-		<ui5-combobox id="" class="combobox2auto" value-state="Information"></ui5-combobox>
-		<ui5-combobox id="" class="combobox2auto" value-state="Success"></ui5-combobox>
+		<ui5-combobox id="vs-information-default" class="combobox2auto" value-state="Information"></ui5-combobox>
+		<ui5-combobox id="vs-success-default" class="combobox2auto" value-state="Success"></ui5-combobox>
 	</div>
 
 	<div class="demo-section">
@@ -249,8 +249,12 @@
 			// set busy state
 			event.target.loading = true;
 
+			if (!value) {
+				return;
+			}
+
 			// load data
-			const items = (await(await fetch("https://restcountries.eu/rest/v2/?fields=name")).json());
+			const items = (await(await fetch(`https://restcountries.com/v3.1/name/${value}`)).json());
 
 			// cleanup old items
 			while (document.getElementById("lazy").firstChild) {
@@ -260,7 +264,7 @@
 			// fill new items
 			items.map(data => {
 				const element = document.createElement("ui5-cb-item");
-				element.setAttribute("text", data.name);
+				element.setAttribute("text", data.name.common);
 
 				document.getElementById("lazy").appendChild(element);
 			});

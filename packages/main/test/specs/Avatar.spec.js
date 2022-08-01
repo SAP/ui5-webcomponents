@@ -8,7 +8,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image", async () => {
 		const avatar = await browser.$("#myAvatar1");
-		const image = await avatar.shadow$("slot");
+		const image = await avatar.shadow$('slot:not([name="badge"])');
 		const icon = await avatar.shadow$("ui5-avatar-icon");
 
 		// img tag is rendered, ui5-icon - not
@@ -18,7 +18,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of icon", async () => {
 		const avatar = await browser.$("#myAvatar2");
-		const image = await avatar.shadow$("slot");
+		const image = await avatar.shadow$('slot:not([name="badge"])');
 		const icon = await avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
@@ -28,7 +28,7 @@ describe("Avatar", () => {
 
 	it("tests rendering of image, when all set", async () => {
 		const avatar = await browser.$("#myAvatar3");
-		const image = await avatar.shadow$("slot");
+		const image = await avatar.shadow$('slot:not([name="badge"])');
 		const icon = await avatar.shadow$(".ui5-avatar-icon");
 		const initials = await avatar.shadow$(".ui5-avatar-initials");
 

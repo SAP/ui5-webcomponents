@@ -36,6 +36,17 @@ By doing so, you receive an input element with `role="combobox"` with all aria a
 In order to ease the setting of aria attributes, we have introduced properties that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility APIs section below.
 
 
+### **Invisible Messaging**
+The Invisible Message provides a way to programmaticaly expose dynamic content changes in a way that can be announced by screen readers. It marks the dynamic content changes as ARIA live regions so that you are able to inform the users of assistive technologies for a change that has happened to the UI.
+
+The Invisible Messaging service is designed to be used both internally in the components logic and from the applications. Using the service, you have to specify the message to be announced by the screen reader and the mode which will be inserted in the `aria-live` attribute via the `InvisibleMessage.announce(message, mode)` method. The possible modes to choose from are:
+* ` InvisibleMessageMode.Assertive` - indicates that updates to the region have the highest priority and should be presented to the user immediately.
+* `InvisibleMessageMode.Polite` - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
+
+According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the `announce` method.
+Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/)
+
+
 ### **Keyboard Handling**
 
 All standard UI elements and controls are designed to be keyboard-enabled. All suitable input channels (such as mouse, keyboard, or touch) are treated equally according to the capabilities of the device or the individual preferences of the user. For example, some users may prefer using the keyboard instead of a mouse, which lets them work faster.
@@ -55,20 +66,20 @@ For more information regarding the available themes and how to use them, see the
 The mapping of the accessibility APIs to ARIA attributes is described in the following table:
 
 
-| UI5 Web Components Property                   | HTML attribute  | Description                                                                                                                                                                                         |
-| --------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accessibleName`                              | `aria-label`    | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
-| `accessibleNameRef`                           | `aria-label`    | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
-| `accessibleRole`                              | `role`          | Sets the accessible aria role of the component.                                                                                                                                                     |
-| `accessibilityTexts`                          | `aria-label`    | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
-| `accessibilityAttributes`                     | `aria-expanded`, `aria-haspopup`, `aria-controls`    | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. |
-| `accessibilityRoles` (`FlexibleColumnLayout`) | `role`          | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
-| `required`                                    | `aria-required` | Defines whether the component is required.                                                                                                                                                          |
-| `readonly`                                    | `aria-readonly` | Defines whether the component is read-only.                                                                                                                                                         |
-| `disabled`                                    | `aria-disabled` | Defines whether the component is disabled.                                                                                                                                                          |
-| `checked`                                     | `aria-checked`  | Defines whether the component is checked.                                                                                                                                                           |
-| `level`, `headerLevel`                        | `aria-level`    | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
-| `interactive`                                 | `tabindex`      | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
+| UI5 Web Components Property | HTML attribute                                    | Description                                                                                                                                                                                         |
+| --------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessibleName`            | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
+| `accessibleNameRef`         | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
+| `accessibleRole`            | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |
+| `accessibilityTexts`        | `aria-label`                                      | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
+| `accessibilityAttributes`   | `aria-expanded`, `aria-haspopup`, `aria-controls` | An object of strings that defines several additional accessibility attribute values for customization depending on the use case.                                                                    |
+| `accessibilityRoles`        | `role`                                            | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
+| `required`                  | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
+| `readonly`                  | `aria-readonly`                                   | Defines whether the component is read-only.                                                                                                                                                         |
+| `disabled`                  | `aria-disabled`                                   | Defines whether the component is disabled.                                                                                                                                                          |
+| `checked`                   | `aria-checked`                                    | Defines whether the component is checked.                                                                                                                                                           |
+| `level`, `headerLevel`      | `aria-level`                                      | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
+| `interactive`               | `tabindex`                                        | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
 
 ### accessibleName
 
@@ -97,6 +108,8 @@ The `accessible-name` property is currently supported in:
 * [Slider](https://sap.github.io/ui5-webcomponents/playground/components/Slider), 
 [Range Slider](https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
+
 
 
 ---
@@ -115,12 +128,14 @@ Will result in the shadow DOM as:
 ```
 
 The `accessible-name-ref` property is currently supported in:
+* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog), [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover)
 * User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
 * [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
 * [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
 
 ---
 
@@ -210,6 +225,10 @@ Results in the shadow DOM as:
     ...
 </div>
 ```
+
+The `accessibilityRoles` property is currently supported in:
+* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout)
+* [ShellBar](https://sap.github.io/ui5-webcomponents/playground/components/ShellBar) 
 
 ---
 
@@ -313,5 +332,10 @@ In order to process the issues correctly, we would like to have the following in
 •	Browser: {...}
 
 •	Testing Tool
+
+## Note
+
+Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the SAPUI5 High Contrast theme and you are using browser different than Chrome and Edge this may cause conflicts, and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
+
 
 Next: [CSP](../csp)

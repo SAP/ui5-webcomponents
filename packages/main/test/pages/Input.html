@@ -99,8 +99,8 @@
 		show-suggestions
 		value-state="Error"
 		placeholder="Search for a country ...">
-	<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
-	<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+	<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
+	<div slot="valueStateMessage">Additionl custom error value state message with a <a href="#">Link</a>. Extra long text used as an error message. Extra long text used as an error message - 2. Extra long text used as an error message - 3.</div>
 	</ui5-input>
 
 	<h3>Input with long suggestions with valueState and ui5-li</h3>
@@ -348,10 +348,10 @@
 		<ui5-input placeholder="No Value State"></ui5-input>
 		<ui5-input placeholder="Disabled" disabled></ui5-input>
 		<ui5-input placeholder="ReadnOnly" readonly></ui5-input>
-		<ui5-input placeholder="Error ValueState" value-state="Error"></ui5-input>
-		<ui5-input placeholder="Warning ValueState" value-state="Warning"></ui5-input>
-		<ui5-input placeholder="Success ValueState" value-state="Success"></ui5-input>
-		<ui5-input placeholder="Information ValueState" value-state="Information"></ui5-input>
+		<ui5-input id="vs-error-default" placeholder="Error ValueState" value-state="Error"></ui5-input>
+		<ui5-input id="vs-warning-default" placeholder="Warning ValueState" value-state="Warning"></ui5-input>
+		<ui5-input id="vs-success-default" placeholder="Success ValueState" value-state="Success"></ui5-input>
+		<ui5-input id="vs-information-default" placeholder="Information ValueState" value-state="Information"></ui5-input>
 	</div>
 
 	<br>
@@ -392,6 +392,18 @@
 
 			<button id="clear-icon-disabled-toggle">Toggle disabled</button>
 		</span>
+		<br />
+		<br />
+		<span>Input with suggestions and clear icon</span>
+		<br />
+		<ui5-input id="clear-input-suggestions" show-suggestions show-clear-icon placeholder="Type to show clear icon...">
+			<ui5-suggestion-item text="text 1"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 2"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 3"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 4"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 5"></ui5-suggestion-item>
+		</ui5-input>
+		<br />
 	</div>
 
 	<h3>Input with openPicker() on focusin</h3>

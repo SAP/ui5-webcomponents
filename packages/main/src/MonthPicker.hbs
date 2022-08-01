@@ -20,7 +20,14 @@
 					role="gridcell"
 					aria-selected="{{this.ariaSelected}}"
 				>
-					{{this.name}}
+					<span class="ui5-dp-monthtext">
+						{{this.name}}
+					</span>
+					{{#if this.nameInSecType}}
+						<span class="ui5-dp-monthtext ui5-dp-monthsectext">
+							{{this.nameInSecType}}
+						</span>
+					{{/if}}
 				</div>
 			{{/each}}
 

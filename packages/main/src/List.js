@@ -888,6 +888,8 @@ class List extends UI5Element {
 	onItemFocused(event) {
 		const target = event.target;
 
+		event.stopPropagation();
+
 		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent("item-focused", { item: target });
 
@@ -937,7 +939,7 @@ class List extends UI5Element {
 	onForwardBefore(event) {
 		this.setPreviouslyFocusedItem(event.target);
 		this.focusBeforeElement();
-		event.stopImmediatePropagation();
+		event.stopPropagation();
 	}
 
 	onForwardAfter(event) {
@@ -949,6 +951,8 @@ class List extends UI5Element {
 			this.focusGrowingButton();
 			event.preventDefault();
 		}
+
+		event.stopPropagation();
 	}
 
 	focusBeforeElement() {

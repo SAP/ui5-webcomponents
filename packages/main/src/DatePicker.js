@@ -16,7 +16,7 @@ import {
 	isF4,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
@@ -248,7 +248,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		change: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -268,7 +268,7 @@ const metadata = {
 		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 		*/
 		input: {
-			details: {
+			detail: {
 				value: {
 					type: String,
 				},
@@ -703,6 +703,14 @@ class DatePicker extends DateComponentBase {
 	 */
 	get _shouldHideHeader() {
 		return false;
+	}
+
+	/**
+	 * Defines whether the value help icon is hidden
+	 * @private
+	 */
+	get _ariaHidden() {
+		return isDesktop();
 	}
 
 	async _respPopover() {

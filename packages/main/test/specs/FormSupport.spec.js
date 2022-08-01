@@ -27,4 +27,16 @@ describe("Form support", () => {
 		assert.ok(formWasSubmitted, "For was submitted and URL changed");
 	});
 
+	it("Prevent default on submit event", async () => {
+		await browser.url(`test/pages/FormSupport.html`);
+
+		const noSubmitButton = await browser.$("#b3");
+		await noSubmitButton.click();
+
+		const hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html"));
+		});
+		assert.ok(hrefIsSame, "Form is not submitted when prevent default is called");
+	});
+
 });

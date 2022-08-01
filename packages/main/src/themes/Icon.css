@@ -38,7 +38,7 @@
  * as some icons should not be mirrored in RTL (f.e. checkmark, search, etc.).
  * That means, we can have "RTL" set globally and "LTR" set internally for the Icon ShadowDom
   * html dir=rtl
- * 		ui5-icon
+ * 		[ui5-icon]
  * 			#shadowroot
  * 				svg dir=ltr
  * In this case, we need to explicitly check for it as the global CSS definitions (rtl-parameters.css)

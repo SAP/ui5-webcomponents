@@ -507,6 +507,64 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
 	});
 
+	it("Value state type should be added to the screen readers default value states announcement", async () => {
+		const inputError = await browser.$("#vs-error-default");
+		const inputWarning = await browser.$("#vs-warning-default");
+		const inputSuccess = await browser.$("#vs-success-default");
+		const inputInformation = await browser.$("#vs-information-default");
+
+		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-error-default");
+		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		await inputError.click();
+
+		let ariaHiddenText = await inputError.shadow$(".ui5-hidden-text").getText();
+		let valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText, "Value State Error Invalid entry", "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText, "Invalid entry", "Displayed value state message text is correct");
+
+		await inputWarning.click();
+
+		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		ariaHiddenText = await inputWarning.shadow$(".ui5-hidden-text").getText();
+		valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText, "Value State Warning Warning issued", "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText, "Warning issued", "Displayed value state message text is correct");
+
+		await inputInformation.click();
+
+		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-information-default");
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		ariaHiddenText = await inputInformation.shadow$(".ui5-hidden-text").getText();
+		valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText, "Value State Information Informative entry", "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText, "Informative entry", "Displayed value state message text is correct");
+	
+		await inputSuccess.click();
+		assert.strictEqual(await inputSuccess.shadow$(".ui5-hidden-text").getText(), "Value State Success", "Hidden screen reader text is correct");
+	});
+
+	it("Value state type should be added to the screen readers custom value states announcement", async () => {
+		const inputError = await browser.$("#inputError");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
+
+		inputError.click();
+		inputError.keys("a");
+
+		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
+		const valueStateText = await popoverHeader.$("div").getText();
+		const ariaHiddenText = await inputError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getText();
+
+		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");
+	});
+
 	it("Tests autocomplete(type-ahead)", async () => {
 		let hasSelection;
 
@@ -1188,5 +1246,25 @@ describe("Lazy loading", () => {
 		await browser.pause(3000);
 
 		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
+	});
+
+	it("Should not close picker when items are updated", async () => {
+		const input = await $("#field1");
+		const inner = await input.shadow$("input");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field1");
+		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+
+		await inner.click();
+		await inner.keys("S");
+
+		
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+			timeout: 2000,
+			timeoutMsg: "Popover should be displayed"
+		});
+
+		await inner.keys("b");
+
+		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
 	});
 });

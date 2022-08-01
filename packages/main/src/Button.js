@@ -157,7 +157,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -466,7 +466,7 @@ class Button extends UI5Element {
 			return "";
 		}
 
-		return this.isIconOnly ? "img" : "presentation";
+		return this.showIconTooltip ? "img" : "presentation";
 	}
 
 	get isIconOnly() {

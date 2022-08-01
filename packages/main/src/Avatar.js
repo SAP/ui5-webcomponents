@@ -208,6 +208,34 @@ const metadata = {
 			propertyName: "image",
 			type: HTMLElement,
 		},
+		/**
+		 * Defines the optional badge that will be used for visual affordance.
+		 * <b>Note:</b> While the slot allows for custom badges, to achieve
+		 * the Fiori design, please use <code>ui5-badge</code> with <code>ui5-icon</code>
+		 * in the corresponding <code>icon</code> slot, without text nodes.
+		 * <br><br>
+		 * Example:
+		 * <br><br>
+		 * &lt;ui5-avatar><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp&lt;/ui5-badge><br>
+		 * &lt;/ui5-avatar>
+		 * <br><br>
+		 * <ui5-avatar initials="AB" color-scheme="Accent1">
+		 * <ui5-badge slot="badge">
+		 * <ui5-icon slot="icon" name="accelerated"></ui5-icon>
+		 * </ui5-badge>
+		 * </ui5-avatar>
+		 *
+		 * @type {HTMLElement}
+		 * @slot badge
+		 * @public
+		 * @since 1.7.0
+		 */
+		badge: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 		/**

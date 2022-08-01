@@ -75,7 +75,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
@@ -109,7 +109,7 @@ const metadata = {
 		 * @private
 		 * @since 1.5.0
 		 */
-		 wrappingType: {
+		wrappingType: {
 			type: WrappingType,
 			defaultValue: WrappingType.None,
 		},

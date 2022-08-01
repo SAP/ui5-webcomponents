@@ -37,10 +37,6 @@
 	transition: transform 0.4s ease-out;
 }
 
-:host(:not([_has-header])) .ui5-panel-header-button {
-	pointer-events: none;
-}
-
 :host(:not([_has-header]):not([fixed])) .ui5-panel-header {
 	cursor: pointer;
 }

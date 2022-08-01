@@ -103,7 +103,7 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
-			watch: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.test" "nps watch.src" "nps watch.props" "nps watch.styles"',
+			watch: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.props" "nps watch.styles"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		}
 	};
