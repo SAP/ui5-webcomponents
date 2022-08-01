@@ -1,7 +1,9 @@
-commit 954753ef2abc70df3d41f0876e05b8344bd353b4
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Aug 1 09:36:22 2022 +0300
+commit 96902528a87ea5eebdf82d75306205c8fd0df9d7
+Author: Marco Beier <marco-beier@t-online.de>
+Date:   Mon Aug 1 15:16:11 2022 +0200
 
-    docs(ui5-menu): improve documentation (#5590)
+    Docs: housekeeping - fix broken links (#5491)
     
-    fixes: #5557
+    * docs: fix broken links
+    
+    * docs: fix more broken links
