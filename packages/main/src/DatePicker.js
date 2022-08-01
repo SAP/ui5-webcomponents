@@ -15,6 +15,8 @@ import {
 	isShow,
 	isF4,
 	isEnter,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -474,6 +476,10 @@ class DatePicker extends DateComponentBase {
 			} else {
 				this._toggleAndFocusInput();
 			}
+		}
+
+		if (this._getInput() === event.target && this.isOpen() && isTabNext(event) || isTabPrevious(event)) {
+			this.closePicker();
 		}
 
 		if (this.isOpen()) {
