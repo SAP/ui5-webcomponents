@@ -180,7 +180,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Menu.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Menu.js";</code>
  *
  * @constructor
  * @author SAP SE
