@@ -1,7 +1,7 @@
-commit 77039457ce0492894e416cdd0ecac0f9baaf8746
+commit 954753ef2abc70df3d41f0876e05b8344bd353b4
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Aug 1 08:18:11 2022 +0300
+Date:   Mon Aug 1 09:36:22 2022 +0300
 
-    fix(ui5-button): announce is now correct when button is icon only with tooltip (#5592)
+    docs(ui5-menu): improve documentation (#5590)
     
-    fixes: #5386
+    fixes: #5557
