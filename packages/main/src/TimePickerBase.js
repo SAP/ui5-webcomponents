@@ -350,7 +350,7 @@ class TimePickerBase extends UI5Element {
 			this.togglePicker();
 		}
 
-		if ((this._getInput() === event.target && this.isOpen()) && (isTabNext(event) || isTabPrevious(event))) {
+		if ((this._getInput() === e.target && this.isOpen()) && (isTabNext(e) || isTabPrevious(e))) {
 			this.closePicker();
 		}
 
