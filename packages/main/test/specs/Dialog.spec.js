@@ -501,7 +501,7 @@ describe("Dialog States", () => {
 		const openDialog = await browser.$("#btn-error-state");
 		await openDialog.click();
 
-		assert.strictEqual(await browser.$("#dialog-error-state").getProperty("role"), "alertdialog", "error dialog has correct role");
+		assert.strictEqual(await browser.$("#dialog-error-state").shadow$(".ui5-popup-root").getProperty("role"), "alertdialog", "error dialog has correct role");
 
 		await browser.keys("Escape");
 	});
@@ -510,7 +510,7 @@ describe("Dialog States", () => {
 		const openDialog = await browser.$("#btn-info-state");
 		await openDialog.click();
 
-		assert.strictEqual(await browser.$("#dialog-info-state").getProperty("role"), "dialog", "information dialog has correct role");
+		assert.strictEqual(await browser.$("#dialog-info-state").shadow$(".ui5-popup-root").getProperty("role"), "dialog", "information dialog has correct role");
 
 		await browser.keys("Escape");
 	});
@@ -519,7 +519,7 @@ describe("Dialog States", () => {
 		const openDialog = await browser.$("#btn-success-state");
 		await openDialog.click();
 
-		assert.strictEqual(await browser.$("#dialog-success-state").getProperty("role"), "dialog", "success dialog has correct role");
+		assert.strictEqual(await browser.$("#dialog-success-state").shadow$(".ui5-popup-root").getProperty("role"), "dialog", "success dialog has correct role");
 
 		await browser.keys("Escape");
 	});
@@ -528,7 +528,7 @@ describe("Dialog States", () => {
 		const openDialog = await browser.$("#btn-warn-state");
 		await openDialog.click();
 
-		assert.strictEqual(await browser.$("#dialog-warn-state").getProperty("role"), "alertdialog", "warning dialog has correct role");
+		assert.strictEqual(await browser.$("#dialog-warn-state").shadow$(".ui5-popup-root").getProperty("role"), "alertdialog", "warning dialog has correct role");
 
 		await browser.keys("Escape");
 	});

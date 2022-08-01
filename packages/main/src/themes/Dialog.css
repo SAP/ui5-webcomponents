@@ -4,7 +4,7 @@
 	max-height: 94%;
 	max-width: 90%;
 	flex-direction: column;
-	box-shadow: var(--sapContent_HeaderShadow);
+	box-shadow: var(--sapContent_Shadow3);
 	border-radius: var(--sapElement_BorderCornerRadius);
 }
 
@@ -57,7 +57,7 @@
 }
 
 .ui5-dialog-value-state-icon {
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 }
 
 :host([state="Error"]) .ui5-dialog-value-state-icon {

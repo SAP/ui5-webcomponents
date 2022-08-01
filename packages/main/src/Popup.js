@@ -119,20 +119,6 @@ const metadata = {
 		},
 
 		/**
-		 * Used to define the role of the popup.
-		 *
-		 * @private
-		 * @type {string}
-		 * @defaultvalue "dialog"
-		 * @since 1.0.0-rc.9
-		 *
-		 */
-		role: {
-			type: String,
-			defaultValue: "dialog",
-		},
-
-		/**
 		 * @private
 		 */
 		_disableInitialFocus: {

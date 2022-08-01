@@ -6,8 +6,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popup from "./Popup.js";
-import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/resize-corner.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -25,12 +29,11 @@ const STEP_SIZE = 16;
  * Defines the icons corresponding to the dialog's state.
  */
 const ICON_PER_STATE = {
-	Error: "error",
-	Warning: "alert",
-	Success: "sys-enter-2",
-	Information: "information",
+	[ValueState.Error]: "error",
+	[ValueState.Warning]: "alert",
+	[ValueState.Success]: "sys-enter-2",
+	[ValueState.Information]: "information",
 };
-
 /**
  * @public
  */
@@ -332,7 +335,6 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-		this.role = this._role;
 	}
 
 	onAfterRendering() {
