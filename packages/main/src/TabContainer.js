@@ -430,7 +430,7 @@ class TabContainer extends UI5Element {
 			item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 			return !item.isSeparator;
 		});
-		
+
 		allTabs.forEach((tab, index, arr) => {
 			tab._isInline = this.tabLayout === TabLayout.Inline;
 			tab._mixedMode = this.mixedMode;
@@ -516,7 +516,6 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderFocusin(event) {
-		console.log(event.composedPath())
 		let target = event.target;
 
 		const tab = getTab(event.target);
