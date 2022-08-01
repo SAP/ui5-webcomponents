@@ -1,7 +1,7 @@
-commit 1b5caf761079017d7edbe4bff2fa9949390896f8
+commit 77039457ce0492894e416cdd0ecac0f9baaf8746
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Aug 1 08:17:43 2022 +0300
+Date:   Mon Aug 1 08:18:11 2022 +0300
 
-    fix(ui5-menu): opening a submenu no longer throws a console error (#5591)
+    fix(ui5-button): announce is now correct when button is icon only with tooltip (#5592)
     
-    fixes: #5582
+    fixes: #5386
