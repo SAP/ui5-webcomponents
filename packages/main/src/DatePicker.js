@@ -478,7 +478,7 @@ class DatePicker extends DateComponentBase {
 			}
 		}
 
-		if (this._getInput() === event.target && this.isOpen() && isTabNext(event) || isTabPrevious(event)) {
+		if ((this._getInput() === event.target && this.isOpen()) && (isTabNext(event) || isTabPrevious(event))) {
 			this.closePicker();
 		}
 
