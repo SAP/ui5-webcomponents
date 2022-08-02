@@ -1,9 +1,5 @@
-commit 96902528a87ea5eebdf82d75306205c8fd0df9d7
-Author: Marco Beier <marco-beier@t-online.de>
-Date:   Mon Aug 1 15:16:11 2022 +0200
+commit 8a4ccdb6d0139b996abcd5fb299232f2370360ee
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Aug 2 09:39:43 2022 +0300
 
-    Docs: housekeeping - fix broken links (#5491)
-    
-    * docs: fix broken links
-    
-    * docs: fix more broken links
+    fix: regenarete base styles on change (#5599)
