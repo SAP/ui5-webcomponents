@@ -146,6 +146,9 @@ const metadata = {
 
 		/**
 		 * Defines the opener id of the element that the popover is shown at
+		 * <b>Node:</b> The supplied id must belong to the same HTML <code>document</code> as the <code>ui5-popover</code>
+		 * <b>Note:</b> If both <code>opener</code> and <code>openerRef</code> properties are set,
+		 * <code>openerRef</code> will be used and <code>opener</code> will be ignored
 		 * @public
 		 * @type {String}
 		 * @defaultvalue ""
@@ -153,6 +156,20 @@ const metadata = {
 		 */
 		opener: {
 			type: String,
+		},
+
+		/**
+		 * Defines the opener DOM reference of the element that the popover is shown at.
+		 * Use this property whenever the opener element is in a different HTML <code>document</code>
+		 * compared to the <code>ui5-popover</code>.
+		 * <b>Note:</b> If both <code>opener</code> and <code>openerRef</code> properties are set,
+		 * <code>openerRef</code> will be used and <code>opener</code> will be ignored
+		 * @public
+		 * @type {Object}
+		 * @since 1.7.0
+		 */
+		openerRef: {
+			type: Object,
 		},
 
 		/**
@@ -305,7 +322,7 @@ class Popover extends Popup {
 
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
-			const opener = document.getElementById(this.opener);
+			const opener = this.openerRef || this.getRootNode().getElementById(this.opener);
 			if (!opener) {
 				console.warn("Valid opener id is required."); // eslint-disable-line
 				return;
