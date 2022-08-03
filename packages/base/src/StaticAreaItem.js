@@ -2,6 +2,7 @@ import "./StaticArea.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
+import getEffectiveScrollbarStyle from "./util/getEffectiveScrollbarStyle.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 
@@ -38,6 +39,7 @@ class StaticAreaItem extends HTMLElement {
 		if (this._rendered) {
 			this._updateContentDensity();
 			this._updateDirection();
+			this._updateScrollbarStyles();
 			updateShadowRoot(this.ownerElement, true);
 		}
 	}
@@ -62,6 +64,14 @@ class StaticAreaItem extends HTMLElement {
 			this.setAttribute("dir", dir);
 		} else {
 			this.removeAttribute("dir");
+		}
+	}
+
+	_updateScrollbarStyles() {
+		if (getEffectiveScrollbarStyle(this.ownerElement) === "native") {
+			this.classList.add("sapUiNativeScrollbars");
+		} else {
+			this.classList.remove("sapUiNativeScrollbars");
 		}
 	}
 

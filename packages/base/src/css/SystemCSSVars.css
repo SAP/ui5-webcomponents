@@ -1,5 +1,6 @@
 :root {
     --_ui5_content_density:cozy;
+    --_ui5_scrollbar_style:custom;
 }
 
 [data-ui5-compact-size],
@@ -14,4 +15,8 @@
 
 [dir="ltr"] {
     --_ui5_dir:ltr;
+}
+
+.sapUiNativeScrollbars {
+    --_ui5_scrollbar_style:native;
 }
