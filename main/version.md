@@ -1,9 +1,13 @@
-commit 1706174a9f052f293d87338b7cb00241b911d9d4
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed Aug 3 15:17:03 2022 +0300
+commit c680e7cb3a1e1cc6e34ff1ac11b106c8314c04e9
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Wed Aug 3 16:06:22 2022 +0300
 
-    fix(ui5-slider, ui5-range-slider): apply correct handle's icon (#5612)
+    feat(ui5-dialog): add state property (#5587)
     
-    * fix(ui5-slider, ui5-range-slider): apply correct handle's icon
+    * feat(ui5-dialog): add state property
     
-    * fix(ui5-slider): import used icon
+    Dialogs now support the alertdialog role according to their state property
+    
+    * Address code review comments
+    
+    * Address review comments
