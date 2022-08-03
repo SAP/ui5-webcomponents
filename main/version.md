@@ -1,7 +1,9 @@
-commit 72756520d7d7183bcee8db94ccd7e0e817024ff5
+commit c8f417819a8628afeff2ca496a4d72335190463e
 Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Wed Aug 3 11:26:43 2022 +0300
+Date:   Wed Aug 3 13:17:06 2022 +0300
 
-    fix(ui5-input): additional check added for robustness (#5619)
+    fix(ui5-multiinput): prevented token-delete event firing when readonly (#5613)
     
-    Fixes: #5580
+    The token-delete event is not fired when the ui5-multiinput component has readonly attribute added.
+    
+    Fixes: #5448
