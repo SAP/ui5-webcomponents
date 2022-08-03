@@ -376,6 +376,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
+		if (!this.constructor.isAttributeObserved(name)) {
+			return;
+		}
+
 		const properties = this.constructor.getMetadata().getProperties();
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
@@ -411,7 +415,9 @@ class UI5Element extends HTMLElement {
 		} else if (isDescendantOf(propertyTypeClass, DataType)) {
 			const newAttrValue = propertyTypeClass.propertyToAttribute(newValue);
 			if (newAttrValue === null) {
+				this.constructor.unobserveAttribute(attrName);
 				this.removeAttribute(attrName);
+				this.constructor.observeAttribute(attrName);
 			} else {
 				this.setAttribute(attrName, newAttrValue);
 			}
@@ -764,6 +770,21 @@ class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
+	}
+
+	static unobserveAttribute(attrName) {
+		this.unobservedAttributes = this.unobservedAttributes || [];
+		this.unobservedAttributes.push(attrName);
+	}
+
+	static observeAttribute(attrName) {
+		if (Array.isArray(this.unobservedAttributes)) {
+			this.unobservedAttributes = this.unobservedAttributes.filter(attr => attr !== attrName);
+		}
+	}
+
+	static isAttributeObserved(attrName) {
+		return !(this.unobservedAttributes || []).includes(attrName);
 	}
 
 	/**
