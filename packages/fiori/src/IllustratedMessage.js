@@ -222,6 +222,18 @@ const metadata = {
 		subtitle: {
 			type: HTMLElement,
 		},
+		/**
+		 * Defines the title of the component.
+		 * <br><br>
+		 * <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
+		 * @type {HTMLElement}
+		 * @slot title
+		 * @public
+		 * @since 1.7.0
+		 */
+		title: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		//
@@ -410,6 +422,10 @@ class IllustratedMessage extends UI5Element {
 		return !!this.subtitle.length;
 	}
 
+	get hasFormattedTitle() {
+		return !!this.title.length;
+	}
+
 	get effectiveTitleText() {
 		return this.titleText ? this.titleText : this.illustrationTitle;
 	}
@@ -419,11 +435,11 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	get hasTitle() {
-		return this.titleText || this.illustrationTitle;
+		return this.hasFormattedTitle || this.titleText || this.illustrationTitle;
 	}
 
 	get hasSubtitle() {
-		return this.subtitleText || this.illustrationSubtitle;
+		return this.hasFormattedSubtitle || this.subtitleText || this.illustrationSubtitle;
 	}
 
 	get hasActions() {
