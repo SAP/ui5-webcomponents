@@ -4,9 +4,14 @@ import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popup from "./Popup.js";
-import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/resize-corner.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -20,6 +25,15 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const STEP_SIZE = 16;
 
+/**
+ * Defines the icons corresponding to the dialog's state.
+ */
+const ICON_PER_STATE = {
+	[ValueState.Error]: "error",
+	[ValueState.Warning]: "alert",
+	[ValueState.Success]: "sys-enter-2",
+	[ValueState.Information]: "information",
+};
 /**
  * @public
  */
@@ -122,6 +136,20 @@ const metadata = {
 		 */
 		onDesktop: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the state of the <code>Dialog</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		state: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 	},
 };
@@ -284,6 +312,18 @@ class Dialog extends Popup {
 		}
 
 		return minHeight;
+	}
+
+	get hasValueState() {
+		return this.state !== ValueState.None;
+	}
+
+	get _dialogStateIcon() {
+		return ICON_PER_STATE[this.state];
+	}
+
+	get _role() {
+		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
 	}
 
 	_show() {
