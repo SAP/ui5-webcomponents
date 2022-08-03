@@ -1,10 +1,7 @@
-commit d794c0b84ea03581cd969a84dc5c05383ec91b60
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 2 10:03:40 2022 +0300
+commit 16ec3a8b1a84fd9b32cc635050f5ff2aefc4c5c2
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed Aug 3 10:13:06 2022 +0300
 
-    feat(icons): update to 4.14.0 5.0.2 SAP-Icons font (#5605)
+    feat(ui5-illustrated-message): introduce title slot (#5611)
     
-    Adopt new version of v4 and v5 icons according to SAP-Icons Fonts 4.14.0 and 5.0.2.
-    
-    - add new icons: direction-arrows, gender, male, female, male, binary, rotate
-    - update existing icons
+    Closes: #5503
