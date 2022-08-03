@@ -1,9 +1,9 @@
-commit c8f417819a8628afeff2ca496a4d72335190463e
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Wed Aug 3 13:17:06 2022 +0300
+commit 1706174a9f052f293d87338b7cb00241b911d9d4
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Aug 3 15:17:03 2022 +0300
 
-    fix(ui5-multiinput): prevented token-delete event firing when readonly (#5613)
+    fix(ui5-slider, ui5-range-slider): apply correct handle's icon (#5612)
     
-    The token-delete event is not fired when the ui5-multiinput component has readonly attribute added.
+    * fix(ui5-slider, ui5-range-slider): apply correct handle's icon
     
-    Fixes: #5448
+    * fix(ui5-slider): import used icon
