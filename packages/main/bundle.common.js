@@ -17,7 +17,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 // import parse from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
 
-// const bg = "https://ui5.sap.com/resources/sap/ui/core/messagebundle_bg.properties";
+// const bg = "https://sdk.openui5.org/resources/sap/ui/core/messagebundle_bg.properties";
 // registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
 // 	const props = await (await fetch(bg)).text();
 // 	return parse(props);

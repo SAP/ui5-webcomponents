@@ -7,7 +7,7 @@ const instances = new Map();
 /**
  * Fetches and returns а LocaleData object for the required locale
  * For more information on this object's API, please see:
- * https://ui5.sap.com/#/api/sap.ui.core.LocaleData
+ * https://sdk.openui5.org/api/sap.ui.core.LocaleData
  *
  * @param lang - if left empty, will use the configured/current locale
  * @returns {LocaleData}
