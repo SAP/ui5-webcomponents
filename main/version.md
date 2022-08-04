@@ -1,9 +1,18 @@
-commit e4175cdf000ace65758e75fb70545edd872197b8
+commit d6f7ad6b4a3ab25c0b01a2358d00e632cbfc8eb8
 Author: Florian Vogt <florian.vogt@sap.com>
-Date:   Thu Aug 4 14:33:37 2022 +0200
+Date:   Thu Aug 4 15:39:53 2022 +0200
 
-    fix: remove woff files and woff/ttf usage (#5629)
+    refactor: use new sdk url (#5620)
     
-    Because IE11 is not supported anymore, woff files can be removed.
+    let's use the latest promoted the SDK url. 🎉
     
-    In OpenUI5 this was achieved with SAP/openui5@e843fb8
+    Last month (July 2022) two new SDK deployments were rolled out. See blog post Short and Powerful: Convenient URLs for SAPUI5/OpenUI5 CDN.
+    
+    Former SDK deployments:
+    
+    sapui5.hana.ondemand.com, sapui5.netweaver.ondemand.com are substituted by ui5.sap.com
+    openui5.hana.ondemand.com is substituted by sdk.openui5.org
+    openui5nightly.hana.ondemand.com is substituted by sdk.openui5.org/nightly/
+    The former SDK deployments will continue to work, there is no actual change implemented or planned as of now.
+    
+    However, only the new SDK URLs should be promoted in future.
