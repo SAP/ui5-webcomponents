@@ -343,6 +343,7 @@ const metadata = {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				targetItem: { type: HTMLElement }, // protected, holds the event target item
 				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
@@ -692,6 +693,7 @@ class List extends UI5Element {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: event.detail.selectionComponentPressed,
+				targetItem: event.detail.item,
 				key: event.detail.key,
 			});
 		}

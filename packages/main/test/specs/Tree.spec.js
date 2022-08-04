@@ -85,6 +85,21 @@ describe("Tree proxies properties to list", () => {
 
 		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected when we prevent the click event.");
 	});
+
+	it("selectionChange event provides targetItem parameter", async () => {
+		const selectionChangeTargetItemResult = await browser.$("#selectionChangeTargetItemResult");
+		const tree = await browser.$("#treeIndeterminate");
+		const listItems = await tree.shadow$$("ui5-li-tree");
+		const firstTreeItem = await tree.$("#item1");
+		let firstTreeItemId, targetItemId;
+
+		await listItems[0].click();
+
+		firstTreeItemId = await firstTreeItem.getProperty("id");
+		targetItemId = await selectionChangeTargetItemResult.getProperty("value");
+
+		assert.strictEqual(targetItemId, firstTreeItemId, "targetItem parameter holds correct tree item");
+	});
 });
 
 describe("Tree has screen reader support", () => {
