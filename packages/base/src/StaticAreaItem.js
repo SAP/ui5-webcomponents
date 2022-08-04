@@ -69,9 +69,9 @@ class StaticAreaItem extends HTMLElement {
 
 	_updateScrollbarStyles() {
 		if (getEffectiveScrollbarStyle(this.ownerElement) === "native") {
-			this.classList.add("sapUiNativeScrollbars");
+			this.classList.add("ui5-content-native-scrollbars");
 		} else {
-			this.classList.remove("sapUiNativeScrollbars");
+			this.classList.remove("ui5-content-native-scrollbars");
 		}
 	}
 

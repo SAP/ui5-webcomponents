@@ -615,7 +615,7 @@ class Popup extends UI5Element {
 		return {
 			root: {
 				"ui5-popup-root": true,
-				"sapUiNativeScrollbars": getEffectiveScrollbarStyle(this) === "native",
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(this) === "native",
 			},
 			content: {
 				"ui5-popup-content": true,

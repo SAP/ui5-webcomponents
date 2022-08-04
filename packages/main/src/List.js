@@ -628,7 +628,7 @@ class List extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"sapUiNativeScrollbars": getEffectiveScrollbarStyle(this) === "native",
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(this) === "native",
 			},
 		};
 	}
