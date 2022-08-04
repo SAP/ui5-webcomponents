@@ -74,6 +74,7 @@ class UI5Element extends HTMLElement {
 			deferredResolve = resolve;
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
+		this._doNotSyncAttributes = new Set(); // attributes that are excluded from attributeChangedCallback synchronization
 
 		this._initializeState();
 		this._upgradeAllProperties();
@@ -376,7 +377,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
-		if (!this.constructor.isAttributeObserved(name)) {
+		if (this._doNotSyncAttributes.has(name)) { // This attribute is mutated internally, not by the user
 			return;
 		}
 
@@ -414,10 +415,10 @@ class UI5Element extends HTMLElement {
 			}
 		} else if (isDescendantOf(propertyTypeClass, DataType)) {
 			const newAttrValue = propertyTypeClass.propertyToAttribute(newValue);
-			if (newAttrValue === null) {
-				this.constructor.unobserveAttribute(attrName);
-				this.removeAttribute(attrName);
-				this.constructor.observeAttribute(attrName);
+			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
+				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
+				this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
+				this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 			} else {
 				this.setAttribute(attrName, newAttrValue);
 			}
@@ -770,21 +771,6 @@ class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
-	}
-
-	static unobserveAttribute(attrName) {
-		this.unobservedAttributes = this.unobservedAttributes || [];
-		this.unobservedAttributes.push(attrName);
-	}
-
-	static observeAttribute(attrName) {
-		if (Array.isArray(this.unobservedAttributes)) {
-			this.unobservedAttributes = this.unobservedAttributes.filter(attr => attr !== attrName);
-		}
-	}
-
-	static isAttributeObserved(attrName) {
-		return !(this.unobservedAttributes || []).includes(attrName);
 	}
 
 	/**
