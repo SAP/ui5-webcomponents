@@ -90,7 +90,7 @@ registerIconLoader("my-custom-icons", () => {
             "collection": "my-custom-icons",
             "data": {
                 "mark": {
-                    path: [ 
+                    paths: [ 
                         // SVG path1, SVG path2, SVG path3...
                     ],
     }
