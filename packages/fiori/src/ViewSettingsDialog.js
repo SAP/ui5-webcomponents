@@ -683,7 +683,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * The <code>ui5-view-settings-dialog</code> throws an event called "before-open", this can be used as trigger point.
 	 * The object should have the following format:
 	 * <code>
-	 *  {sortOrder: "Ascending", sortBy: "Name", filters: [{Filter 1: ["Some filter 1", "Some filter 2"]}, {Filter 2: ["Some filter 4"]}]}
+	 *  {sortOrder: "Ascending", sortBy: "Name", filters: [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
 	 * </code>
    * @param {Object} settings - predefined settings.
    * @param {string} settings.sortOrder - sort order
