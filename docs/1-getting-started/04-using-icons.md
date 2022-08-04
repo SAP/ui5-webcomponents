@@ -72,4 +72,40 @@ For example:
 <ui5-avatar icon="business-suite/coins"></ui5-avatar>
 ```
 
+## Custom Icon Collections
+
+Currently we use SVGs to display all standard icons. 
+In addition, we provide an API to register custom SVG icon collections via the `registerIconLoader` method as follows:
+
+1. Register custom icon collection loader
+
+The loader must return an object with the following fields:
+- `collection` name
+- `data` object that describes the icons: names and SVG paths
+
+```js
+import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+registerIconLoader("my-custom-icons", () => {
+    return {
+            "collection": "my-custom-icons",
+            "data": {
+                "mark": {
+                    path: [ 
+                        // SVG path1, SVG path2, SVG path3...
+                    ],
+    }
+});
+```
+
+2. Use the custom icons
+
+After the SVG icons collection is registered, you can use the custom icons everywhere you usually use the standard icons in UI5 Web Components (e.g. ui5-icon, ui5-button, etc):
+
+```html
+<ui5-icon name="my-custom-icons/mark"></ui5-icon>
+<ui5-button icon="my-custom-icons/mark"></ui5-button>
+<ui5-avatar icon="my-custom-icons/mark"></ui5-avatar>
+<ui5-li icon="my-custom-icons/mark"></ui5-li>
+```
+
 Next: [Using Additional Assets](../using-assets)
