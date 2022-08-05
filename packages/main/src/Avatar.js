@@ -54,7 +54,7 @@ const metadata = {
 		 * <br>
 		 * <pre>&lt;ui5-avatar icon="employee"></pre>
 		 *
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public

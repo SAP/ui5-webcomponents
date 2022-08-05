@@ -50,6 +50,18 @@
 		<br>
 		<br>
 
+		<h1 class="sample-container-title">Readonly Multi Input with tokens</h1>
+		<ui5-multi-input id="readonly-mi" readonly>
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+			<ui5-token slot="tokens" text="Dolor"></ui5-token>
+			<ui5-token slot="tokens" text="Lorem"></ui5-token>
+			<ui5-token slot="tokens" text="Ipsum"></ui5-token>
+		</ui5-multi-input>
+
+
+		<br>
+		<br>
+
 		<h1 class="sample-container-title">Multi Input with 11 tokens (overflowing)</h1>
 		<ui5-multi-input id="basic-overflow">
 			<ui5-token slot="tokens" text="Amet"></ui5-token>
@@ -373,6 +385,7 @@
 
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
+		document.getElementById("readonly-mi").addEventListener("ui5-token-delete", handleTokenDelete);
 
 		const handleTokenDelete2 = (event) => {
 			const eventType = document.getElementById("event-type");

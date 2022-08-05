@@ -996,7 +996,7 @@ class Input extends UI5Element {
 	_handleInput(event) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
-		const eventType = event.inputType || event.detail.inputType;
+		const eventType = event.inputType || (event.detail && event.detail.inputType);
 
 		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;

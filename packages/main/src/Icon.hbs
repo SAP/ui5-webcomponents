@@ -20,6 +20,8 @@
 	{{/if}}
 
 	<g role="presentation">
-		<path d="{{pathData}}"/>
+		{{#each pathData}}
+			<path d="{{this}}"></path>
+		{{/each}}
 	</g>
 </svg>
