@@ -36,7 +36,7 @@ const _fillRegistry = bundleData => {
 		const iconData = bundleData.data[iconName];
 
 		registerIcon(iconName, {
-			pathData: iconData.path,
+			pathData: iconData.path || iconData.paths,
 			ltr: iconData.ltr,
 			accData: iconData.acc,
 			collection: bundleData.collection,

@@ -121,7 +121,7 @@ const metadata = {
 		 */
 		pathData: {
 			type: String,
-			noAttribute: true,
+			multiple: true,
 		},
 
 		/**
@@ -373,7 +373,7 @@ class Icon extends UI5Element {
 
 		// in case a new valid name is set, show the icon
 		this.invalid = false;
-		this.pathData = iconData.pathData;
+		this.pathData = Array.isArray(iconData.pathData) ? iconData.pathData : [iconData.pathData];
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
