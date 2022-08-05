@@ -144,12 +144,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_tabIndex: {
-			type: String,
-			defaultValue: "-1",
-			noAttribute: true,
-		},
-
 		_selected: {
 			type: Boolean,
 		},
@@ -205,6 +199,14 @@ class Tab extends UI5Element {
 		return css;
 	}
 
+	set _tabIndex(val) {
+		this.getTabInStripDomRef().setAttribute("tabindex", val);
+	}
+
+	get _tabIndex() {
+		return this.getTabInStripDomRef().getAttribute("tabindex");
+	}
+
 	static get dependencies() {
 		return [
 			Icon,
@@ -228,6 +230,7 @@ class Tab extends UI5Element {
 	}
 
 	get stripPresentation() {
+		// TODO: check who is `this` for the ._realTab assignment
 		return executeTemplate(this.constructor.stripTemplate, this);
 	}
 
@@ -274,14 +277,14 @@ class Tab extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef() {
-		return this._getRealDomRef();
+		return this._getElementInStrip();
 	}
 
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
-		if (this._getRealDomRef) {
-			focusedDomRef = this._getRealDomRef();
+		if (this._getElementInStrip) {
+			focusedDomRef = this._getElementInStrip();
 		}
 
 		return focusedDomRef;

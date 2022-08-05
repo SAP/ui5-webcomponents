@@ -66,7 +66,7 @@ class TabSeparator extends UI5Element {
 	 * @public
 	 */
 	getTabInStripDomRef() {
-		return this._getRealDomRef();
+		return this._getElementInStrip();
 	}
 
 	get stableDomRef() {
