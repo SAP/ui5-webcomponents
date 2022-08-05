@@ -19,6 +19,4 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Lint
-      run: | 
-      yarn workspace @ui5/webcomponents nps scope.lint
-      yarn workspace @ui5/webcomponents-fiori nps scope.lint
+      run: yarn lint:scope
