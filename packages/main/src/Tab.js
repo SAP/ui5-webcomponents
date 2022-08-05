@@ -230,7 +230,7 @@ class Tab extends UI5Element {
 	}
 
 	get stripPresentation() {
-		// TODO: check who is `this` for the ._realTab assignment
+		// check who is `this` for the ._realTab assignment
 		return executeTemplate(this.constructor.stripTemplate, this);
 	}
 

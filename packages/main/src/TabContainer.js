@@ -441,7 +441,7 @@ class TabContainer extends UI5Element {
 			tab._mixedMode = this.mixedMode;
 			tab._posinset = index + 1;
 			tab._setsize = arr.length;
-			tab._realTab = this._selectedTab; // TODO: check this
+			tab._realTab = this._selectedTab; // check this
 			tab._isTopLevelTab = items.some(i => i === tab);
 			walk(items, _tab => {
 				_tab._realTab = tab._realTab;
@@ -529,9 +529,7 @@ class TabContainer extends UI5Element {
 		} else {
 			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
 		}
-		// this.responsivePopover.initialFocus = this._overflowItems.find(item => !item.isSeparator)._id;
 	}
-
 
 	_onTabStripKeyDown(event) {
 		const tab = getTab(event.target);
@@ -703,9 +701,8 @@ class TabContainer extends UI5Element {
 
 		this._overflowItems = this.items.filter(item => {
 			const stripRef = item.getTabInStripDomRef();
-			if (stripRef && stripRef.hasAttribute(overflowAttr)) {
-				return true;
-			}
+
+			return stripRef && stripRef.hasAttribute(overflowAttr);
 		});
 
 		this._addStyleIndent(this._overflowItems);
