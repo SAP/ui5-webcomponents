@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+jobs:
+  lint-scoping:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+
+    - name: Install Dependencies
+      run: yarn --frozen-lockfile
+
+    - name: Lint
+      run: | 
+      yarn workspace @ui5/webcomponents nps scope.lint && yarn workspace @ui5/webcomponents-fiori nps scope.lint
