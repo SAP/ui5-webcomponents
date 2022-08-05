@@ -4,9 +4,9 @@ By default some of the components provide additional CSS styles, which are appli
 
 ## Setting default scrollbar styles to components
 
-To use native scrollbar styles, you have to add HTML attribute data-ui5-native-scrollbars or CSS style class .ui5-content-native-scrollbars on the component itself, the body, html or any other relevant region of your application.
+To use native scrollbar styles, you have to add the HTML attribute `data-ui5-native-scrollbars` or CSS style class `.ui5-content-native-scrollbars` on the component itself, the body, html or any other relevant region of your application.
 
-**Note: Because of some browser restrictions this setting takes affect if it is applied before initially rendering of the compontents, which are using it.**
+**Note: Because of some browser restrictions this setting takes affect if it is applied before the initial rendering of the compontents, which are using it.**
 
 Example 1:
 ```
