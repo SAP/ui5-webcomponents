@@ -311,6 +311,8 @@
       
     
       
+    
+      
         
       
     
@@ -350,6 +352,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -936,6 +940,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1787,6 +1793,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2056,6 +2064,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2844,6 +2854,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3133,6 +3145,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -4019,6 +4033,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.6.0.md/" class="navigation-list-link">
@@ -4369,6 +4385,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5758,6 +5776,46 @@ Generally, importing all icons is required only if you do not know in advance wh
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"alert"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
 <span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"tnt/actor"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;ui5-avatar</span> <span class="na">icon=</span><span class="s">"business-suite/coins"</span><span class="nt">&gt;&lt;/ui5-avatar&gt;</span>
+</code></pre></div></div>
+
+<h2 id="custom-icon-collections">Custom Icon Collections</h2>
+
+<p>Currently we use SVGs to display all standard icons. 
+In addition, we provide an API to register custom SVG icon collections via the <code class="highlighter-rouge">registerIconLoader</code> method as follows:</p>
+
+<ol>
+  <li>Register custom icon collection loader</li>
+</ol>
+
+<p>The loader must return an object with the following fields:</p>
+<ul>
+  <li><code class="highlighter-rouge">collection</code> name</li>
+  <li><code class="highlighter-rouge">data</code> object that describes the icons: names and SVG paths</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">registerIconLoader</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/asset-registries/Icons.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">registerIconLoader</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-custom-icons</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+            <span class="dl">"</span><span class="s2">collection</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-custom-icons</span><span class="dl">"</span><span class="p">,</span>
+            <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="dl">"</span><span class="s2">mark</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">paths</span><span class="p">:</span> <span class="p">[</span> 
+                        <span class="c1">// SVG path1, SVG path2, SVG path3...</span>
+                    <span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Use the custom icons</li>
+</ol>
+
+<p>After the SVG icons collection is registered, you can use the custom icons everywhere you usually use the standard icons in UI5 Web Components (e.g. ui5-icon, ui5-button, etc):</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"my-custom-icons/mark"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"my-custom-icons/mark"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-avatar</span> <span class="na">icon=</span><span class="s">"my-custom-icons/mark"</span><span class="nt">&gt;&lt;/ui5-avatar&gt;</span>
+<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"my-custom-icons/mark"</span><span class="nt">&gt;&lt;/ui5-li&gt;</span>
 </code></pre></div></div>
 
 <p>Next: <a href="../using-assets">Using Additional Assets</a></p>

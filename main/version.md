@@ -1,18 +1,14 @@
-commit d6f7ad6b4a3ab25c0b01a2358d00e632cbfc8eb8
-Author: Florian Vogt <florian.vogt@sap.com>
-Date:   Thu Aug 4 15:39:53 2022 +0200
+commit ce17ca559ce507b8e10f20d7f80dab48908a8305
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Aug 5 10:01:46 2022 +0300
 
-    refactor: use new sdk url (#5620)
+    feat(ui5-icon): support SVGs with multiple paths  (#5630)
     
-    let's use the latest promoted the SDK url. 🎉
+    Background:
+    We received several questions on how to use custom icon collections as the built-in standard icons within UI5 Web Components APIs. From one hand side, we used to lack proper documentation on the matter, but also we are restrictive on the SVG type - the Icon web component can display an SVG with a single path only.
+    Changes:
+    enhance the Icon web component to support multiple paths SVGs
+    document how one can register a custom icon collection
     
-    Last month (July 2022) two new SDK deployments were rolled out. See blog post Short and Powerful: Convenient URLs for SAPUI5/OpenUI5 CDN.
-    
-    Former SDK deployments:
-    
-    sapui5.hana.ondemand.com, sapui5.netweaver.ondemand.com are substituted by ui5.sap.com
-    openui5.hana.ondemand.com is substituted by sdk.openui5.org
-    openui5nightly.hana.ondemand.com is substituted by sdk.openui5.org/nightly/
-    The former SDK deployments will continue to work, there is no actual change implemented or planned as of now.
-    
-    However, only the new SDK URLs should be promoted in future.
+    FIXES: #5347
+    Partially Addresses: #5526
