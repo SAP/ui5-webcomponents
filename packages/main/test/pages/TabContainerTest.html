@@ -26,10 +26,12 @@
 	<section>
 		<h2>Text only Start And End Overflow</h2>
 		<ui5-button>focus stop</ui5-button>
-		<ui5-tabcontainer id="tabContainerStartAndEndOverflow" tabs-overflow-mode="StartAndEnd" collapsed fixed>
+		<ui5-tabcontainer id="tabContainerStartAndEndOverflow" collapsed fixed>
 			<ui5-tab text="One"></ui5-tab>
 			<ui5-tab text="Two"></ui5-tab>
-			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Three">
+				<ui5-tab text="3.1" slot="subTabs"></ui5-tab>
+			</ui5-tab>
 			<ui5-tab text="Four"></ui5-tab>
 			<ui5-tab text="Five"></ui5-tab>
 			<ui5-tab text="Six"></ui5-tab>

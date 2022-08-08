@@ -484,7 +484,7 @@ class TabContainer extends UI5Element {
 				this._setInitialFocus(this._getSelectedInPopover());
 			}
 
-			this.responsivePopover.showAt(tab);
+			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef());
 			return;
 		}
 		this._onHeaderItemSelect(tab);
@@ -525,9 +525,10 @@ class TabContainer extends UI5Element {
 
 	_setInitialFocus(selectedInPopover) {
 		if (selectedInPopover.length) {
-			this.responsivePopover.initialFocus = selectedInPopover[0].id;
+			// this.responsivePopover.initialFocus = selectedInPopover[0].id;
 		} else {
-			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
+			// this.responsivePopover.initialFocus = this._overflowItems.find(tab => !tab.isSeparator)._id;
+			// this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
 		}
 	}
 
