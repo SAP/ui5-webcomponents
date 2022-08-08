@@ -1,7 +1,5 @@
-commit dc73fe284ef23200c734f4d62308bd9ace2e0fcf
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Fri Aug 5 10:27:49 2022 +0300
+commit 6f1b250813d858baaeabada4996daecfb8da9a08
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Mon Aug 8 09:16:52 2022 +0300
 
-    fix(ui5-tree): include `targetItem` in `selection-change` event (#5631)
-    
-    Fixes #5430
+    fix(ui5-panel): recognizable panel heading (#5628)
