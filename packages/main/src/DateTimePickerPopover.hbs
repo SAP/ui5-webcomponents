@@ -5,8 +5,8 @@
 	{{#if phone}}
 		<div class="ui5-dt-picker-header">
 			<ui5-segmented-button class="ui5-dt-picker-toggle-button">
-				<ui5-toggle-button key="Date" ?pressed="{{showDateView}}" @click="{{_dateTimeSwitchChange}}">{{btnDateLabel}}</ui5-toggle-button>
-				<ui5-toggle-button key="Time" ?pressed="{{showTimeView}}" @click="{{_dateTimeSwitchChange}}">{{btnTimeLabel}}</ui5-toggle-button>
+				<ui5-toggle-button key="Date" ?pressed="{{showDateView}}" @ui5-click="{{_dateTimeSwitchChange}}">{{btnDateLabel}}</ui5-toggle-button>
+				<ui5-toggle-button key="Time" ?pressed="{{showTimeView}}" @ui5-click="{{_dateTimeSwitchChange}}">{{btnTimeLabel}}</ui5-toggle-button>
 			</ui5-segmented-button>
 		</div>
 	{{/if}}
@@ -59,7 +59,7 @@
 			class="ui5-dt-picker-action"
 			design="Emphasized"
 			?disabled="{{_submitDisabled}}"
-			@click="{{_submitClick}}"
+			@ui5-click="{{_submitClick}}"
 		>
 			{{btnOKLabel}}
 		</ui5-button>
@@ -68,7 +68,7 @@
 			id="cancel"
 			class="ui5-dt-picker-action"
 			design="Transparent"
-			@click="{{_cancelClick}}"
+			@ui5-click="{{_cancelClick}}"
 		>
 			{{btnCancelLabel}}
 		</ui5-button>

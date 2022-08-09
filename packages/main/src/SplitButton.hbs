@@ -17,7 +17,7 @@
 		tabindex="-1"
 		?disabled="{{disabled}}"
 		?active="{{_textButtonActive}}"
-		@click="{{_fireClick}}"
+		@ui5-click="{{_fireClick}}"
 		@touchstart={{_textButtonPress}}
 		@mousedown={{_textButtonPress}}
 		@mouseup={{_textButtonRelease}}
@@ -40,7 +40,7 @@
 			?active="{{_arrowButtonActive}}"
 			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
 			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
-			@click="{{_fireArrowClick}}"
+			@ui5-click="{{_fireArrowClick}}"
 			@focusin={{_setTabIndexValue}}
 			@focusout={{_onFocusOut}}
 		>

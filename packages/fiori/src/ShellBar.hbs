@@ -117,7 +117,7 @@
 							<slot name="searchField"></slot>
 						</div>
 						<ui5-button
-							@click={{_handleCancelButtonPress}}
+							@ui5-click={{_handleCancelButtonPress}}
 							class="ui5-shellbar-button"
 							data-ui5-stable="cancel-search"
 						>
@@ -139,7 +139,7 @@
 					data-ui5-text="Search"
 					data-ui5-notifications-count="{{notificationsCount}}"
 					data-ui5-stable="toggle-search"
-					@click={{_handleSearchIconPress}}
+					@ui5-click={{_handleSearchIconPress}}
 					tooltip="{{_searchText}}"
 					.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
 				></ui5-button>
@@ -156,7 +156,7 @@
 					data-ui5-notifications-count="{{../notificationsCount}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
 					data-ui5-stable="{{stableDomRef}}"
-					@click={{this.press}}
+					@ui5-click={{this.press}}
 				></ui5-button>
 			{{/each}}
 
@@ -168,7 +168,7 @@
 				icon="sap-icon://bell"
 				data-ui5-text="Notifications"
 				data-ui5-notifications-count="{{notificationsCount}}"
-				@click={{_handleNotificationsPress}}
+				@ui5-click={{_handleNotificationsPress}}
 				tooltip="{{_notificationsText}}"
 				data-ui5-stable="notifications"
 			></ui5-button>
@@ -179,7 +179,7 @@
 				style="{{styles.items.overflow}}"
 				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
 				icon="sap-icon://overflow"
-				@click="{{_handleOverflowPress}}"
+				@ui5-click="{{_handleOverflowPress}}"
 				tooltip="{{_overflowText}}"
 				.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
 				data-ui5-stable="overflow"
@@ -196,7 +196,7 @@
 				class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch"
 				icon="sap-icon://grid"
 				data-ui5-text="Product Switch"
-				@click={{_handleProductSwitchPress}}
+				@ui5-click={{_handleProductSwitchPress}}
 				tooltip="{{_productsText}}"
 				data-ui5-stable="product-switch"
 			></ui5-button>
@@ -209,7 +209,7 @@
 	<ui5-button
 		profile-btn
 		id="{{this._id}}-item-3"
-		@click={{_handleProfilePress}}
+		@ui5-click={{_handleProfilePress}}
 		style="{{styles.items.profile}}"
 		tooltip="{{_profileText}}"
 		class="ui5-shellbar-button ui5-shellbar-image-button"

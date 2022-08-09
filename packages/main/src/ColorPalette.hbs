@@ -9,7 +9,7 @@
 			<ui5-button 
 				class="ui5-cp-default-color-button"
 				design="Transparent" 
-				@click={{_onDefaultColorClick}}
+				@ui5-click={{_onDefaultColorClick}}
 				@keydown={{_onDefaultColorKeyDown}}>Default color</ui5-button>
 			<div class="ui5-cp-separator"></div>
 		</div>
@@ -33,7 +33,7 @@
 			<ui5-button
 				design="Transparent"
 				class="ui5-cp-more-colors"
-				@click="{{_openMoreColorsDialog}}"
+				@ui5-click="{{_openMoreColorsDialog}}"
 				@keydown={{_onMoreColorsKeyDown}}
 			>{{colorPaleteMoreColorsText}}</ui5-button>
 		</div>

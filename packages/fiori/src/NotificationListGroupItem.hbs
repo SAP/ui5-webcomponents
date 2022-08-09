@@ -12,7 +12,7 @@
 		<ui5-button
 			icon="navigation-right-arrow"
 			design="Transparent"
-			@click="{{_onBtnToggleClick}}"
+			@ui5-click="{{_onBtnToggleClick}}"
 			class="ui5-nli-group-toggle-btn"
 			tooltip="{{toggleBtnAccessibleName}}"
 			aria-label="{{toggleBtnAccessibleName}}"
@@ -40,7 +40,7 @@
 				<ui5-button
 					icon="overflow"
 					design="Transparent"
-					@click="{{_onBtnOverflowClick}}"
+					@ui5-click="{{_onBtnOverflowClick}}"
 					class="ui5-nli-overflow-btn"
 					tooltip="{{overflowBtnAccessibleName}}"
 					aria-label="{{overflowBtnAccessibleName}}"
@@ -52,7 +52,7 @@
 						class="ui5-nli-action"
 						?disabled="{{this.disabled}}"
 						design="{{this.design}}"
-						@click="{{this.press}}"
+						@ui5-click="{{this.press}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 					>
 						{{this.text}}
@@ -65,7 +65,7 @@
 			<ui5-button
 				icon="decline"
 				design="Transparent"
-				@click="{{_onBtnCloseClick}}"
+				@ui5-click="{{_onBtnCloseClick}}"
 				tooltip="{{closeBtnAccessibleName}}"
 				aria-label="{{closeBtnAccessibleName}}"
 				close-btn

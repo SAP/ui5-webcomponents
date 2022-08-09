@@ -27,7 +27,7 @@
 	></ui5-time-selection>
 
 	<div slot="footer" class="ui5-time-picker-footer" @keydown={{_onfooterkeydown}}>
-		<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
-		<ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
+		<ui5-button id="submit" design="Emphasized" @ui5-click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
+		<ui5-button id="close" design="Transparent" @ui5-click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
 	</div>
 </ui5-responsive-popover>

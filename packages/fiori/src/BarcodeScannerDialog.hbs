@@ -6,7 +6,7 @@
 		<video class="ui5-barcode-scanner-dialog-video"></video>
 	</div>
 	<div slot="footer" class="ui5-barcode-scanner-dialog-footer">
-		<ui5-button design="Transparent" @click={{_closeDialog}}>{{_cancelButtonText}}</ui5-button>
+		<ui5-button design="Transparent" @ui5-click={{_closeDialog}}>{{_cancelButtonText}}</ui5-button>
 	</div>
 	<ui5-busy-indicator
 		?active={{loading}}

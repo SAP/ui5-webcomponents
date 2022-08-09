@@ -16,7 +16,7 @@
 					?disabled="{{this.disabled}}"
 					design="Transparent"
 					data-ui5-header-tab-ref-id="{{accInfo.ariaPosinset}}"
-					@click="{{../_onOverflowStepButtonClick}}"
+					@ui5-click="{{../_onOverflowStepButtonClick}}"
 				>
 				{{this.titleText}}
 				</ui5-button>
@@ -26,7 +26,7 @@
 	<div slot="footer" class="ui5-responsive-popover-footer">
 		<ui5-button
 			design="Transparent"
-			@click="{{_closeRespPopover}}"
+			@ui5-click="{{_closeRespPopover}}"
 		>Cancel</ui5-button>
 	</div>
 </ui5-responsive-popover>

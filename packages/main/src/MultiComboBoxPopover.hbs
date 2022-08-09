@@ -18,7 +18,7 @@
 					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
-					@click="{{handleCancel}}"
+					@ui5-click="{{handleCancel}}"
 				>
 				</ui5-button>
 			</div>
@@ -47,7 +47,7 @@
 						icon="multiselect-all"
 						design="Transparent"
 						?pressed={{_showAllItemsButtonPressed}}
-						@click="{{filterSelectedItems}}"
+						@ui5-click="{{filterSelectedItems}}"
 					></ui5-toggle-button>
 				</div>
 			{{#if hasValueStateMessage}}
@@ -95,7 +95,7 @@
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
 				design="Transparent"
-				@click="{{handleOK}}"
+				@ui5-click="{{handleOK}}"
 			>{{_dialogOkButton}}</ui5-button>
 		</div>
 	{{/if}}

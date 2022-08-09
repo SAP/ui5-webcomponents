@@ -40,7 +40,7 @@
 				<ui5-button
 					design="Transparent"
 					icon="edit"
-					@click="{{onDetailClick}}"
+					@ui5-click="{{onDetailClick}}"
 				></ui5-button>
 			</div>
 		{{/if}}
@@ -94,7 +94,7 @@
 				design="Transparent"
 				icon="decline"
 				?disabled="{{disableDeleteButton}}"
-				@click="{{onDelete}}"
+				@ui5-click="{{onDelete}}"
 				tooltip="{{deleteText}}"
 			></ui5-button>
 		</div>

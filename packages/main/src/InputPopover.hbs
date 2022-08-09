@@ -18,7 +18,7 @@
 					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
-					@click="{{_closeRespPopover}}"
+					@ui5-click="{{_closeRespPopover}}"
 				>
 				</ui5-button>
 			</div>
@@ -31,7 +31,7 @@
 						?show-clear-icon={{showClearIcon}}
 						placeholder="{{placeholder}}"
 						@ui5-input="{{_handleInput}}"
-						@change="{{_handleChange}}"
+						@ui5-change="{{_handleChange}}"
 					></ui5-input>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 			<div slot="footer" class="ui5-responsive-popover-footer">
 				<ui5-button
 					design="Transparent"
-					@click="{{_closeRespPopover}}"
+					@ui5-click="{{_closeRespPopover}}"
 				>OK</ui5-button>
 			</div>
 		{{/if}}

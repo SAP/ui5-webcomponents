@@ -13,7 +13,7 @@
 						design="Transparent"
 						icon="nav-back"
 						class="ui5-vsd-back-button"
-						@click="{{_navigateToFilters}}"
+						@ui5-click="{{_navigateToFilters}}"
 					></ui5-button>
 				{{/if}}
 				<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_title}}</ui5-title>
@@ -21,7 +21,7 @@
 			<div class="ui5-vsd-header-end">
 				<ui5-button
 					design="Transparent"
-					@click="{{_resetSettings}}"
+					@ui5-click="{{_resetSettings}}"
 					?disabled={{_disableResetButton}}
 					>
 						{{_resetButtonLabel}}
@@ -111,11 +111,11 @@
 	<div slot="footer" class="ui5-vsd-footer">
 		<ui5-button
 			design="Emphasized"
-			@click="{{_confirmSettings}}"
+			@ui5-click="{{_confirmSettings}}"
 		>{{_okButtonLabel}}</ui5-button>
 		<ui5-button
 			design="Transparent"
-			@click="{{_cancelSettings}}"
+			@ui5-click="{{_cancelSettings}}"
 		>{{_cancelButtonLabel}}</ui5-button>
 	</div>
 
