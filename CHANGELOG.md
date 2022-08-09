@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.7](https://github.com/SAP/ui5-webcomponents/compare/v1.2.6...v1.2.7) (2022-08-09)
+
+
+### Bug Fixes
+
+* **ui5-date*-picker:** adjust the date and time pickers accessibility attributes ([#4996](https://github.com/SAP/ui5-webcomponents/issues/4996)) ([3ae9928](https://github.com/SAP/ui5-webcomponents/commit/3ae9928d3b53286148e61431a02187641921183f)), closes [#4946](https://github.com/SAP/ui5-webcomponents/issues/4946)
+* **ui5-switch:** adjust additional description announcements ([#4927](https://github.com/SAP/ui5-webcomponents/issues/4927)) ([dd0b9b5](https://github.com/SAP/ui5-webcomponents/commit/dd0b9b52aa0ebd1fbe92f8151770559307c8120f)), closes [#4887](https://github.com/SAP/ui5-webcomponents/issues/4887)
+
+
+### Features
+
+* **ui5-link:** Implement SAP Horizon theme parameters ([#5011](https://github.com/SAP/ui5-webcomponents/issues/5011)) ([9d40cff](https://github.com/SAP/ui5-webcomponents/commit/9d40cff51703838cce95178401807ab66011a740))
+
+
+
+
+
 ## [1.2.6](https://github.com/SAP/ui5-webcomponents/compare/v1.2.5...v1.2.6) (2022-05-18)
 
 
