@@ -22,7 +22,7 @@
 					</div>
 				{{else }}
 					{{#if fileNameClickable}}
-						<ui5-link class="ui5-uci-file-name" @click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
+						<ui5-link class="ui5-uci-file-name" @ui5-click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
 					{{else}}
 						<span class="ui5-uci-file-name ui5-uci-file-name-text">{{fileName}}</span>
 					{{/if}}
