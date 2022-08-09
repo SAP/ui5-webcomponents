@@ -441,6 +441,14 @@ class Panel extends UI5Element {
 		return (this.header.length || this.fixed) ? "-1" : "0";
 	}
 
+	get headingWrapperAriaLevel() {
+		return !this._hasHeader ? this.headerAriaLevel : undefined;
+	}
+
+	get headingWrapperRole() {
+		return !this._hasHeader ? "heading" : undefined;
+	}
+
 	get nonFixedInternalHeader() {
 		return !this._hasHeader && !this.fixed;
 	}
