@@ -46,6 +46,8 @@ import TabsOverflowMode from "./types/TabsOverflowMode.js";
 const tabStyles = [];
 const staticAreaTabStyles = [];
 
+const PAGE_UP_DOWN_SIZE = 5;
+
 /**
  * @public
  */
@@ -370,6 +372,7 @@ class TabContainer extends UI5Element {
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this._getFocusableRefs(),
+			skipItemsSize: PAGE_UP_DOWN_SIZE,
 		});
 	}
 
@@ -397,9 +400,7 @@ class TabContainer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this.isModeStartAndEnd) {
-			this._setItemsForStrip();
-		}
+		this._setItemsForStrip();
 
 		if (!this.shadowRoot.contains(document.activeElement)) {
 			const focusStart = this._getRootTab(this._selectedTab);
@@ -441,7 +442,7 @@ class TabContainer extends UI5Element {
 			tab._mixedMode = this.mixedMode;
 			tab._posinset = index + 1;
 			tab._setsize = arr.length;
-			tab._realTab = this._selectedTab; // check this
+			tab._realTab = this._selectedTab;
 			tab._isTopLevelTab = items.some(i => i === tab);
 			walk(items, _tab => {
 				_tab._realTab = tab._realTab;
@@ -481,7 +482,7 @@ class TabContainer extends UI5Element {
 			if (this.responsivePopover.opened) {
 				this.responsivePopover.close();
 			} else {
-				this._setInitialFocus(this._getSelectedInPopover());
+				this._setPopoverInitialFocus();
 			}
 
 			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef());
@@ -515,21 +516,27 @@ class TabContainer extends UI5Element {
 		this._addStyleIndent(this._overflowItems);
 
 		this.responsivePopover = await this._respPopover();
-		if (this.responsivePopover.opened) {
+		if (this.responsivePopover.isOpen()) {
 			this.responsivePopover.close();
 		} else {
-			this._setInitialFocus(this._getSelectedInPopover());
+			this._setPopoverInitialFocus();
 		}
 		this.responsivePopover.showAt(button);
 	}
 
-	_setInitialFocus(selectedInPopover) {
-		if (selectedInPopover.length) {
-			// this.responsivePopover.initialFocus = selectedInPopover[0].id;
-		} else {
-			// this.responsivePopover.initialFocus = this._overflowItems.find(tab => !tab.isSeparator)._id;
-			// this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
-		}
+	async _setPopoverInitialFocus() {
+		const selectedTabInOverflow = this._getSelectedTabInOverflow();
+		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
+
+		this.responsivePopover.initialFocus = `${tab._realTab._id}-li`;
+	}
+
+	_getSelectedTabInOverflow() {
+		return this.responsivePopover.content[0].items.find(item => (item._realTab && item._realTab.selected));
+	}
+
+	_getFirstFocusableItemInOverflow() {
+		return this.responsivePopover.content[0].items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
 	_onTabStripKeyDown(event) {
@@ -578,22 +585,15 @@ class TabContainer extends UI5Element {
 
 	_onHeaderItemSelect(tab) {
 		if (!tab.hasAttribute("disabled")) {
-			this._onItemSelect(tab);
-
-			if (!this.isModeStartAndEnd) {
-				this._setItemsForStrip();
-			}
+			this._onItemSelect(tab.id);
 		}
 	}
 
 	async _onOverflowListItemClick(event) {
 		event.preventDefault(); // cancel the item selection
-		const { item } = event.detail;
 
-		this._onItemSelect(item);
+		this._onItemSelect(event.detail.item.id.slice(0, -3)); // strip "-li" from end of id
 		await this.responsivePopover.close();
-
-		this._setItemsForStrip();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
 
@@ -613,9 +613,9 @@ class TabContainer extends UI5Element {
 		return result;
 	}
 
-	_onItemSelect(target) {
-		const selectedIndex = findIndex(this._allItemsAndSubItems, item => item.__id === target.id);
-		const selectedTabIndex = findIndex(this._allItemsAndSubItems, item => item.__id === target.id);
+	_onItemSelect(selectedTabId) {
+		const selectedIndex = findIndex(this._allItemsAndSubItems, item => item.__id === selectedTabId);
+		const selectedTabIndex = findIndex(this._allItemsAndSubItems, item => item.__id === selectedTabId);
 		const selectedTab = this._allItemsAndSubItems[selectedIndex];
 
 		// update selected items
@@ -721,13 +721,9 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {
-			this.responsivePopover.initialFocus = this.responsivePopover.content[0].items.filter(item => item.classList.contains("ui5-tab-overflow-item"))[0].id;
+			this._setPopoverInitialFocus();
 			this.responsivePopover.showAt(opener);
 		}
-	}
-
-	_getSelectedInPopover() {
-		return this.responsivePopover.content[0].items.filter(item => (item._realTab && item._realTab.selected));
 	}
 
 	_addStyleIndent(tabs) {
@@ -787,7 +783,6 @@ class TabContainer extends UI5Element {
 		});
 
 		const hasOverflow = tabStrip.offsetWidth < allItemsWidth;
-
 		if (!hasOverflow) {
 			this._closeRespPopover();
 			return;
@@ -1059,11 +1054,7 @@ class TabContainer extends UI5Element {
 		const focusableRefs = [];
 
 		if (!this._getStartOverflow().hasAttribute("hidden")) {
-			if (this._getCustomStartOverflowBtnDOM()) {
-				focusableRefs.push(this._getCustomStartOverflowBtnDOM());
-			} else {
-				focusableRefs.push(this._getStartOverflowBtnDOM());
-			}
+			focusableRefs.push(this.startOverflowButton[0] || this._getStartOverflowBtnDOM());
 		}
 
 		this._getTabs().forEach(tab => {
@@ -1076,11 +1067,7 @@ class TabContainer extends UI5Element {
 		});
 
 		if (!this._getEndOverflow().hasAttribute("hidden")) {
-			if (this._getCustomEndOverflowBtnDOM()) {
-				focusableRefs.push(this._getCustomEndOverflowBtnDOM());
-			} else {
-				focusableRefs.push(this._getEndOverflowBtnDOM());
-			}
+			focusableRefs.push(this.overflowButton[0] || this._getEndOverflowBtnDOM());
 		}
 
 		return focusableRefs;
@@ -1106,16 +1093,8 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-tc__overflow--end");
 	}
 
-	_getCustomStartOverflowBtnDOM() {
-		return this.shadowRoot.querySelector("slot[name=startOverflowButton]");
-	}
-
 	_getStartOverflowBtnDOM() {
 		return this._getStartOverflow().querySelector("[ui5-button]");
-	}
-
-	_getCustomEndOverflowBtnDOM() {
-		return this.shadowRoot.querySelector("slot[name=overflowButton]");
 	}
 
 	_getEndOverflowBtnDOM() {

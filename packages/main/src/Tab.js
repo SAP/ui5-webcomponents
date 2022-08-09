@@ -230,7 +230,6 @@ class Tab extends UI5Element {
 	}
 
 	get stripPresentation() {
-		// check who is `this` for the ._realTab assignment
 		return executeTemplate(this.constructor.stripTemplate, this);
 	}
 
@@ -269,7 +268,7 @@ class Tab extends UI5Element {
 
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
-	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>undefined</code>.
+	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
 	 *
 	 * @function
@@ -277,7 +276,11 @@ class Tab extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef() {
-		return this._getElementInStrip();
+		if (this._getElementInStrip) {
+			return this._getElementInStrip();
+		}
+
+		return null;
 	}
 
 	getFocusDomRef() {
