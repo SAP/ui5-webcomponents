@@ -1,5 +1,5 @@
-commit 6f1b250813d858baaeabada4996daecfb8da9a08
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Mon Aug 8 09:16:52 2022 +0300
+commit b685860f56ad8669969a5d7df087ea26cdaf8351
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Tue Aug 9 09:20:50 2022 +0300
 
-    fix(ui5-panel): recognizable panel heading (#5628)
+    fix(ui5-breadcrumbs): current location misalignment is fixed (#5585)
