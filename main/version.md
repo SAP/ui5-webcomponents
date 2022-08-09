@@ -1,5 +1,5 @@
-commit b685860f56ad8669969a5d7df087ea26cdaf8351
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Tue Aug 9 09:20:50 2022 +0300
+commit 5741351de161d3a464a9a303efc1b0a125c5868d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Aug 9 10:15:07 2022 +0300
 
-    fix(ui5-breadcrumbs): current location misalignment is fixed (#5585)
+    chore: upgrade chromedriver to 103 (#5645)
