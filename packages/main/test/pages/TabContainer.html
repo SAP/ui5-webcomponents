@@ -772,9 +772,9 @@
 			resultIdx.innerHTML = event.detail.tabIndex;
 		});
 
-		document.getElementById("densityToggle").addEventListener("click", function (event) {
-			document.body.classList.toggle("sapUiSizeCompact");
-		})
+		document.getElementById("densityToggle").addEventListener("ui5-click", function (event) {
+			document.body.classList.toggle("sapUiSizeCompact")
+		});
 
 		const selectFirstTabBtn = document.getElementById("selectFirst");
 		const selectLastTabBtn = document.getElementById("selectLast");

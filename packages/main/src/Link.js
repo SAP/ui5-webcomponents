@@ -349,6 +349,7 @@ class Link extends UI5Element {
 			shiftKey,
 		} = event;
 
+		event.stopImmediatePropagation();
 		event.isMarked = "link";
 
 		const executeEvent = this.fireEvent("click", {
@@ -373,7 +374,7 @@ class Link extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event)) {
+		if (isEnter(event) && !this.href) {
 			this._onclick(event);
 		} else if (isSpace(event)) {
 			event.preventDefault();
@@ -393,6 +394,7 @@ class Link extends UI5Element {
 		if (this.href && !event.defaultPrevented) {
 			const customEvent = new MouseEvent("click");
 
+			customEvent.stopImmediatePropagation();
 			this.getDomRef().dispatchEvent(customEvent);
 		}
 	}
