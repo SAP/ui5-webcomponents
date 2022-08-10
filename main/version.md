@@ -1,5 +1,5 @@
-commit 5741351de161d3a464a9a303efc1b0a125c5868d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Aug 9 10:15:07 2022 +0300
+commit 74fd5b91fd83bf28c0f4347df92b3721eb11577d
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Aug 10 10:09:06 2022 +0300
 
-    chore: upgrade chromedriver to 103 (#5645)
+    fix(ui5-link): multiple click events (#5642)
