@@ -593,11 +593,12 @@ class TabContainer extends UI5Element {
 		event.preventDefault(); // cancel the item selection
 
 		this._onItemSelect(event.detail.item.id.slice(0, -3)); // strip "-li" from end of id
-		await this.responsivePopover.close();
+
+		this.responsivePopover.close();
+		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-
-		selectedTopLevel.focus();
+		selectedTopLevel.getTabInStripDomRef().focus();
 	}
 
 	_getAllSubItems(items, result = [], level = 1) {
@@ -784,7 +785,6 @@ class TabContainer extends UI5Element {
 
 		const hasOverflow = tabStrip.offsetWidth < allItemsWidth;
 		if (!hasOverflow) {
-			this._closeRespPopover();
 			return;
 		}
 
@@ -1039,11 +1039,6 @@ class TabContainer extends UI5Element {
 
 		this._startOverflowText = `+${startOverflowItemsCount}`;
 		this._endOverflowText = `+${endOverflowItemsCount}`;
-	}
-
-	async _closeRespPopover() {
-		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.close();
 	}
 
 	_getFocusableRefs() {
