@@ -99,7 +99,7 @@ const metadata = {
 		/**
 		* Defines whether the component is displayed as partially checked.
 		* <br><br>
-		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
 		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
 		* and <code>checked</code> properties:
 		* <ul>
