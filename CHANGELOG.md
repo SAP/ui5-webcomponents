@@ -506,7 +506,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-rating-indicator:** not round values are correctly visualised in RTL mode ([#4330](https://github.com/SAP/ui5-webcomponents/issues/4330)) ([d901386](https://github.com/SAP/ui5-webcomponents/commit/d901386))
 * **ui5-slider, ui5-range-slider:** remove focus outline on mobile ([#4458](https://github.com/SAP/ui5-webcomponents/issues/4458)) ([a295dc1](https://github.com/SAP/ui5-webcomponents/commit/a295dc1))
 * **ui5-table:** adjust header row's height according to the visual specification ([#4424](https://github.com/SAP/ui5-webcomponents/issues/4424)) ([175fce3](https://github.com/SAP/ui5-webcomponents/commit/175fce3))
-* **ui5-table:** check select all checkbox, when all rows are selected programmatically ([#4455](https://github.com/SAP/ui5-webcomponents/issues/4455)) ([7baabfa](https://github.com/SAP/ui5-webcomponents/commit/7baabfa))
+* **ui5-table:** check select all checkbox, when all rows are selected programatically ([#4455](https://github.com/SAP/ui5-webcomponents/issues/4455)) ([7baabfa](https://github.com/SAP/ui5-webcomponents/commit/7baabfa))
 * **ui5-tabcontainer, ui5-shellbar:** adding stable selectors for tab container and shellbar ([#4369](https://github.com/SAP/ui5-webcomponents/issues/4369)) ([9abdaba](https://github.com/SAP/ui5-webcomponents/commit/9abdaba))
 * **ui5-textarea:** apply specified scrollbar stylings ([#4477](https://github.com/SAP/ui5-webcomponents/issues/4477)) ([84018fc](https://github.com/SAP/ui5-webcomponents/commit/84018fc))
 * **ui5-textarea:** calc properly TextArea's size for showExceeds property ([#4152](https://github.com/SAP/ui5-webcomponents/issues/4152)) ([6f06963](https://github.com/SAP/ui5-webcomponents/commit/6f06963))
@@ -794,7 +794,7 @@ import "@ui5/webcomponents-icons/dist/v5/accept.svg"; // for SAPIcons5.0
 * **ui5-carousel:** add "hidePageIndicator" property ([#3268](https://github.com/SAP/ui5-webcomponents/issues/3268)) ([e13a4c9](https://github.com/SAP/ui5-webcomponents/commit/e13a4c9)), closes [#3158](https://github.com/SAP/ui5-webcomponents/issues/3158)
 * **ui5-checkbox:** add "indeterminate" state ([#3309](https://github.com/SAP/ui5-webcomponents/issues/3309)) ([42a1326](https://github.com/SAP/ui5-webcomponents/commit/42a1326)), closes [#3217](https://github.com/SAP/ui5-webcomponents/issues/3217)
 * **ui5-checkbox:** add "Success" value state ([#3278](https://github.com/SAP/ui5-webcomponents/issues/3278)) ([580e289](https://github.com/SAP/ui5-webcomponents/commit/580e289)), closes [#3198](https://github.com/SAP/ui5-webcomponents/issues/3198) [#3198](https://github.com/SAP/ui5-webcomponents/issues/3198)
-* **ui5-combobox:** enable setting value programmatically ([#3253](https://github.com/SAP/ui5-webcomponents/issues/3253)) ([d85561a](https://github.com/SAP/ui5-webcomponents/commit/d85561a))
+* **ui5-combobox:** enable setting value programatically ([#3253](https://github.com/SAP/ui5-webcomponents/issues/3253)) ([d85561a](https://github.com/SAP/ui5-webcomponents/commit/d85561a))
 * **ui5-combobox:** add suggestions grouping ([#3469](https://github.com/SAP/ui5-webcomponents/issues/3469)) ([5e3f391](https://github.com/SAP/ui5-webcomponents/commit/5e3f391)), closes [#3371](https://github.com/SAP/ui5-webcomponents/issues/3371)
 * **ui5-dialog:** add keyboard support for "draggable" and "resizable" ([#3483](https://github.com/SAP/ui5-webcomponents/issues/3483)) ([8580fd8](https://github.com/SAP/ui5-webcomponents/commit/8580fd8))
 * **ui5-dialog:** enable labeling of custom header ([#3155](https://github.com/SAP/ui5-webcomponents/issues/3155)) ([9943ee7](https://github.com/SAP/ui5-webcomponents/commit/9943ee7)), closes [#2838](https://github.com/SAP/ui5-webcomponents/issues/2838)
@@ -956,7 +956,7 @@ The "change" event has been renamed to "item-click".
 The "showMoreColors" and "showRecentColors" property have been removed - ColorPalettePopover component will be introduced in future to provide this functionality. In addition, the "value" property has been also removed.
 * **ui5-color-palette-item:** remove "stableDomRef" as not needed ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([862a452](https://github.com/SAP/ui5-webcomponents/commit/862a452))
 The "stableDomRef" property has been removed. If previously used, just call "getDomRef" on the ColorPaletteItem to get its DOM reference.
-* **ui5-combobox:** enable setting value programmatically ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([d85561a]d85561a(https://github.com/SAP/ui5-webcomponents/commit/d85561a))
+* **ui5-combobox:** enable setting value programatically ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([d85561a]d85561a(https://github.com/SAP/ui5-webcomponents/commit/d85561a))
 The "filterValue" property has been removed. The "value" property should be used as now it represents the "live" value of the component.
 * **ui5-dialog:** rename the "open" method to "show" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([0ecc508](https://github.com/SAP/ui5-webcomponents/commit/0ecc508))
 The public method "open" has been renamed to "show".
