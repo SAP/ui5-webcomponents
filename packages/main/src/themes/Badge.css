@@ -134,9 +134,9 @@
 }
 
 /* ---Slotted Badges--- */
-/* ui5-avatar - Badge icon styles */
+/* [ui5-avatar] - Badge icon styles */
 /* Make icon take full width minus padding.
- ui5-avatar is the only component using an icon for badge,
+ [ui5-avatar] is the only component using an icon for badge,
  therefore no additional scoping is needed. */
 :host([slot="badge"]) ::slotted([ui5-icon][slot="icon"]) {
 	width: 100%;
