@@ -559,7 +559,7 @@ class TextArea extends UI5Element {
 		return {
 			root: {
 				"ui5-textarea-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(this) === "native",
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,

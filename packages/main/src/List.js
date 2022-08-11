@@ -629,7 +629,7 @@ class List extends UI5Element {
 		return {
 			root: {
 				"ui5-list-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(this) === "native",
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
 	}

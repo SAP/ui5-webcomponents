@@ -16,9 +16,3 @@
 [dir="ltr"] {
     --_ui5_dir:ltr;
 }
-
-.sapUiNativeScrollbars,
-[data-ui5-native-scrollbars],
-.ui5-content-native-scrollbars {
-    --_ui5_scrollbar_style:native;
-}

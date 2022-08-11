@@ -1,5 +1,5 @@
-const GLOBAL_SCROLLBAR_STYLE_CSS_VAR = "--_ui5_scrollbar_style";
+const NO_SCROLLBAR_STYLE_CLASS = "ui5-content-native-scrollbars";
 
-const getEffectiveScrollbarStyle = el => getComputedStyle(el).getPropertyValue(GLOBAL_SCROLLBAR_STYLE_CSS_VAR);
+const getEffectiveScrollbarStyle = () => document.body.classList.contains(NO_SCROLLBAR_STYLE_CLASS);
 
 export default getEffectiveScrollbarStyle;
