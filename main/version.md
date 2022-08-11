@@ -1,10 +1,5 @@
-commit 05efd15150f479d9a52917a5e6209b41ec85375a
+commit 8c913396271978cec572d48ad90ae948cc1d1da9
 Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Aug 11 15:01:13 2022 +0300
+Date:   Thu Aug 11 15:23:41 2022 +0300
 
-    chore: remove 'X-UA-Compatible' meta element (#5663)
-    
-    Element `<meta http-equiv="X-UA-Compatible" content="IE=edge">` has been
-    removed from all files.
-    
-    See https://github.com/SAP/openui5/commit/e07ec6797746b7a286a39264579ae923cb404e2a
+    docs: fix spelling of programmatically (#5664)
