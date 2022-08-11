@@ -1,5 +1,6 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
@@ -145,14 +146,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the opener id of the element that the popover is shown at
+		 * Defines the ID or DOM Reference of the element that the popover is shown at
 		 * @public
-		 * @type {String}
+		 * @type {DOMReference}
 		 * @defaultvalue ""
 		 * @since 1.2.0
 		 */
 		opener: {
-			type: String,
+			type: DOMReference,
 		},
 
 		/**
@@ -305,7 +306,7 @@ class Popover extends Popup {
 
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
-			const opener = document.getElementById(this.opener);
+			const opener = this.opener instanceof HTMLElement ? this.opener : this.getRootNode().getElementById(this.opener);
 			if (!opener) {
 				console.warn("Valid opener id is required."); // eslint-disable-line
 				return;
