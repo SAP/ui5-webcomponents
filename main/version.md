@@ -1,5 +1,9 @@
-commit 9786ad4d65023f1e4b6743c1b8442edeb5543353
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Aug 11 15:55:11 2022 +0300
+commit 9e47011d4e012d281c6ba9e840d24770bf3b88e5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Aug 11 16:40:23 2022 +0300
 
-    chore: fix css comments of Badge (#5666)
+    ci: lint scoping on PRs (#5639)
+    
+    It's good to perform a check for styles breaking the scoping as this is an spect often forgotten by developers. There are two places to enable this scoping lint - on git push locally or as a github action upon PR creation. Currently it's done via pre-push check.
+    
+    FIXES: #4574
