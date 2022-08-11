@@ -322,7 +322,7 @@ class Panel extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._toggleOpen();
+			event.preventDefault();
 		}
 
 		if (isSpace(event)) {
@@ -333,6 +333,10 @@ class Panel extends UI5Element {
 	_headerKeyUp(event) {
 		if (!this.shouldToggle(event.target)) {
 			return;
+		}
+
+		if (isEnter(event)) {
+			this._toggleOpen();
 		}
 
 		if (isSpace(event)) {
