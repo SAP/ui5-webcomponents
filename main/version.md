@@ -1,5 +1,5 @@
-commit 3484b74c8ec940c2d5bd9cef72cc4185a703bcd4
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Aug 11 11:00:36 2022 +0300
+commit 1a4de12b37a2cb82be2af010758f4641acf7385d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Aug 11 11:43:38 2022 +0300
 
-    fix(i18n): usage of quotes in texts (#5655)
+    feat(ui5-popover): new type DOMReference for opener (#5609)
