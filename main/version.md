@@ -1,5 +1,5 @@
-commit 8c913396271978cec572d48ad90ae948cc1d1da9
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Aug 11 15:23:41 2022 +0300
+commit 9786ad4d65023f1e4b6743c1b8442edeb5543353
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Aug 11 15:55:11 2022 +0300
 
-    docs: fix spelling of programmatically (#5664)
+    chore: fix css comments of Badge (#5666)
