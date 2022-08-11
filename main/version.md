@@ -1,7 +1,10 @@
-commit 137d8f395b7ebd6df2f180a6fcec83bdb959b931
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Aug 11 13:30:02 2022 +0300
+commit 05efd15150f479d9a52917a5e6209b41ec85375a
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Thu Aug 11 15:01:13 2022 +0300
 
-    fix(ui5-panel): toggle ui5-panel correctly on Enter key (#5660)
+    chore: remove 'X-UA-Compatible' meta element (#5663)
     
-    fix(ui5-panel): toggle panel correctly on Enter
+    Element `<meta http-equiv="X-UA-Compatible" content="IE=edge">` has been
+    removed from all files.
+    
+    See https://github.com/SAP/openui5/commit/e07ec6797746b7a286a39264579ae923cb404e2a
