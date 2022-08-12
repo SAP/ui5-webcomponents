@@ -18,7 +18,7 @@
 
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.876b4d99.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.860dd97e.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/TabContainer.html.ea36d413.css'>
 </head>
 
@@ -324,7 +324,7 @@
 			<ui5-tab text="Date of Delivery">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Date of Manifacture">
+			<ui5-tab text="Date of Manufacture">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Value">
@@ -524,7 +524,7 @@
 			<ui5-tab text="Date of Delivery">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Date of Manifacture">
+			<ui5-tab text="Date of Manufacture">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Value">
@@ -727,6 +727,44 @@
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
 		</ui5-tabcontainer>
+
+		<section>
+			<ui5-title>Select tabs programmatically</ui5-title>
+			<ui5-tabcontainer id="tcSmall" style="width: 200px;">
+				<ui5-tab id="firstTab" text="First tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Second tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Third tab" selected>
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Fourth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Fifth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Sixth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+				<ui5-tab id="nestedTabParent" text="Seventh tab">
+					<ui5-button>Button 1</ui5-button>
+
+					<ui5-tab id="nestedTab" slot="subTabs" text="Nested tab">
+						<ui5-button>Button 1</ui5-button>
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab id="lastTab" text="Eighth tab">
+					<ui5-button>Button 1</ui5-button>
+				</ui5-tab>
+			</ui5-tabcontainer>
+		
+			<ui5-button id="selectFirst">Select First Tab</ui5-button>
+			<ui5-button id="selectLast">Select Last Tab</ui5-button>
+			<ui5-button id="selectNested">Select a Nested Tab</ui5-button>
+		</section>
 	</section>
 
 	<script>
@@ -737,7 +775,44 @@
 
 		document.getElementById("densityToggle").addEventListener("ui5-click", function (event) {
 			document.body.classList.toggle("sapUiSizeCompact")
+		});
+
+		const selectFirstTabBtn = document.getElementById("selectFirst");
+		const selectLastTabBtn = document.getElementById("selectLast");
+		const selectNestedTabBtn = document.getElementById("selectNested");
+
+		function walk(tabs, callback) {
+			[...tabs].forEach(tab => {
+				callback(tab);
+				if (tab.subTabs) {
+					walk(tab.subTabs, callback);
+			}});
+		};
+		
+		function getTabSelectorCallback(target) {
+			return (tab) => tab.selected = tab === target;
+		}
+
+		selectFirstTabBtn.addEventListener("click", () => {
+			const tabContainer = document.getElementById("tcSmall");
+			const firstTab = tabContainer.querySelector("#firstTab");
+
+			walk(tabContainer.items, getTabSelectorCallback(firstTab));
 		})
+
+		selectLastTabBtn.addEventListener("click", () => {
+			const tabContainer = document.getElementById("tcSmall");
+			const lastTab = tabContainer.querySelector("#lastTab");
+
+			walk(tabContainer.items, getTabSelectorCallback(lastTab));
+		});
+
+		selectNestedTabBtn.addEventListener("click", () => {
+			const tabContainer = document.getElementById("tcSmall");
+			const nestedTab = tabContainer.querySelector("#nestedTab");
+
+			walk(tabContainer.items, getTabSelectorCallback(nestedTab));
+		});
 	</script>
 </body>
 
