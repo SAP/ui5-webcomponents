@@ -805,6 +805,71 @@ describe("Input general interaction", () => {
 
 		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
 	});
+
+	it("Private property for input value should be in sync, when value gets updated programatically - #5635", async () => {
+		const inputChange = await browser.$("#input-change-1").shadow$("input");
+		const clearButton = await browser.$("#clear-button");
+		const changeCount = await browser.$("#input-change-count-1");
+
+		await inputChange.click();
+		await inputChange.keys("1");
+		await inputChange.keys("2");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called");
+
+		// clear the input
+		await clearButton.click();
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is not called again, since the value is changed programatically");
+
+		// Type the same value once again.
+		await inputChange.click();
+		await inputChange.keys("1");
+		await inputChange.keys("2");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called now, since the value is updated");
+	});
+
+	it("Change event should be fired only once, when a user types a value identical to a item and presses ENTER - #3732", async () => {
+		const inputChange = await browser.$("#input-change-2").shadow$("input");
+		const changeCount = await browser.$("#input-change-count-2");
+
+		await inputChange.click();
+		await inputChange.keys("s");
+		await inputChange.keys("o");
+		await inputChange.keys("f");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called only once");
+	});
+
+	it("Value should be updated correctly, when using DEL - #4340", async () => {
+		const inputChange = await browser.$("#input-change-3").shadow$("input");
+		const changeValue = await browser.$("#input-change-value-3");
+
+		await inputChange.click();
+
+		// go to previous element
+		await inputChange.keys(["Shift", "Tab"]);
+
+		// go to input
+		await browser.keys("Tab");
+
+		// delete value
+		await inputChange.keys("Delete");
+
+		// focus out
+		await inputChange.keys("Tab");
+
+		// Assert
+		assert.strictEqual(await changeValue.getHTML(false), "", "The change event should pass a correct value");
+	});
 });
 
 describe("Input arrow navigation", () => {
