@@ -264,8 +264,9 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
-		 * @param {Integer} tabIndex The selected <code>tab</code> index.
+		 * @param {Integer} tabIndex The selected <code>tab</code> index. This index is valid for an array containing all tabs and their subTabs.
 		 * @public
+		 * @allowPreventDefault
 		 */
 		"tab-select": {
 			detail: {
@@ -601,6 +602,30 @@ class TabContainer extends UI5Element {
 		selectedTopLevel.getTabInStripDomRef().focus();
 	}
 
+	/**
+	 * Returns all slotted tabs and their subTabs in a flattened array.
+	 * The order of tabs is depth-first. For example, given the following slotted elements:
+	 * <code>
+	 * 	<ui5-tabcontainer>
+	 * 		<ui5-tab id="First">
+	 * 			...
+	 * 			<ui5-tab slot="subTabs" id="Nested">...</ui5-tab>
+	 * 		</ui5-tab>
+	 * 		<ui5-tab id="Second">...</ui5-tab>
+	 * 		<ui5-tab-separator id="sep"></ui5-tab-separator>
+	 * 		<ui5-tab id="Third">...</ui5-tab>
+	 * 	</ui5-tabcontainer>
+	 * </code>
+	 * Calling <code>allItems</code> on this TabContainer will return the instances in the following order:
+	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
+	 * @public
+	 *
+	 * @returns {sap.ui.webcomponents.main.ITab[]}
+	 */
+	get allItems() {
+		return this._getAllSubItems(this.items);
+	}
+
 	_getAllSubItems(items, result = [], level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
@@ -615,42 +640,43 @@ class TabContainer extends UI5Element {
 	}
 
 	_onItemSelect(selectedTabId) {
-		const selectedIndex = findIndex(this._allItemsAndSubItems, item => item.__id === selectedTabId);
-		const selectedTabIndex = findIndex(this._allItemsAndSubItems, item => item.__id === selectedTabId);
-		const selectedTab = this._allItemsAndSubItems[selectedIndex];
+		const previousTab = this._selectedTab;
+		const selectedTabIndex = this._allItemsAndSubItems.findIndex(item => item.__id === selectedTabId);
+		const selectedTab = this._allItemsAndSubItems[selectedTabIndex];
 
-		// update selected items
-		this._allItemsAndSubItems
-			.forEach((item, index) => {
-				const selected = selectedIndex === index;
-				item.selected = selected;
+		const selectionSuccessful = this.selectTab(selectedTab, selectedTabIndex);
+		if (!selectionSuccessful) {
+			return;
+		}
 
-				if (item._selected) {
-					item._selected = false;
-				}
-			});
+		// update selected property on all items
+		this._allItemsAndSubItems.forEach((item, index) => {
+			const selected = selectedTabIndex === index;
+			item.selected = selected;
+
+			if (item._selected) {
+				item._selected = false;
+			}
+		});
 
 		if (this.fixed) {
-			this.selectTab(selectedTab, selectedTabIndex);
 			return;
 		}
 
 		if (!this.animate) {
-			this.toggle(selectedTab);
+			this.toggle(selectedTab, previousTab);
 		} else {
-			this.toggleAnimated(selectedTab);
+			this.toggleAnimated(selectedTab, previousTab);
 		}
-
-		this.selectTab(selectedTab, selectedTabIndex);
 	}
 
-	async toggleAnimated(selectedTab) {
+	async toggleAnimated(selectedTab, previousTab) {
 		const content = this.shadowRoot.querySelector(".ui5-tc__content");
 		let animationPromise = null;
 
 		this._animationRunning = true;
 
-		if (selectedTab === this._selectedTab) {
+		if (selectedTab === previousTab) {
 			// click on already selected tab - animate both directions
 			this.collapsed = !this.collapsed;
 			animationPromise = this.collapsed ? this.slideContentUp(content) : this.slideContentDown(content);
@@ -665,21 +691,31 @@ class TabContainer extends UI5Element {
 		this._animationRunning = false;
 	}
 
-	toggle(selectedTab) {
-		if (selectedTab === this._selectedTab) {
+	toggle(selectedTab, previousTab) {
+		if (selectedTab === previousTab) {
 			this.collapsed = !this.collapsed;
 		} else {
 			this.collapsed = false;
 		}
 	}
 
+	/**
+	 * Fires the <code>tab-select</code> event and changes the internal reference for the currently selected tab.
+	 * If the event is prevented, the current tab is not changed.
+	 * @private
+	 *
+	 * @param {object} selectedTab selected tab instance
+	 * @param {number} selectedTabIndex selected tab index for an array containing all tabs and sub tabs. <b>Note:</b> Use the method <code>allTabs</code> to get this array.
+	 * @returns {boolean} true if the tab selection is successful, false if it was prevented
+	 */
 	selectTab(selectedTab, selectedTabIndex) {
+		if (!this.fireEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
+			return false;
+		}
+
 		// select the tab
 		this._selectedTab = selectedTab;
-		this.fireEvent("tab-select", {
-			tab: selectedTab,
-			tabIndex: selectedTabIndex,
-		});
+		return true;
 	}
 
 	slideContentDown(element) {
@@ -1199,18 +1235,6 @@ const getTab = el => {
 	}
 
 	return false;
-};
-
-const findIndex = (arr, predicate) => {
-	for (let i = 0; i < arr.length; i++) {
-		const result = predicate(arr[i]);
-
-		if (result) {
-			return i;
-		}
-	}
-
-	return -1;
 };
 
 const walk = (tabs, callback) => {
