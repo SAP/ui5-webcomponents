@@ -587,7 +587,7 @@ class SliderBase extends UI5Element {
 		if (this.isPropertyUpdated("min", "max", ...values)) {
 			this.storePropertyState("min", "max");
 
-			// Here the value props are changed programatically (not by user interaction)
+			// Here the value props are changed programmatically (not by user interaction)
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
 			// min and max bounderies and update the previous state reference.
 			values.forEach(valueType => {
@@ -614,7 +614,7 @@ class SliderBase extends UI5Element {
 	 * current state is changed due to a user action.
 	 *
 	 * Check if the previously saved state is outdated. That would mean
-	 * a property has been changed programatically because the previous state
+	 * a property has been changed programmatically because the previous state
 	 * is always updated in the interaction handlers.
 	 *
 	 * Will return true if any of the properties is not equal to its previously
