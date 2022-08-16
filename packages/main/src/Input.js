@@ -279,7 +279,7 @@ const metadata = {
 		 */
 		_innerValue: {
 			type: String,
-			noAttribute: true
+			noAttribute: true,
 		},
 
 		/**
@@ -1035,12 +1035,6 @@ class Input extends UI5Element {
 
 		// ---- Special cases of numeric Input ----
 		// ---------------- Start -----------------
-		console.log(event);
-		console.log("--- Before ---");
-		console.log("value: " , this.value);
-		console.log("inner: " ,this._innerValue);
-		console.log("previous: ", this.previousValue);
-		console.log("event: ", event.target.value);
 
 		// When the last character after the delimiter is removed.
 		// In such cases, we want to skip the re-rendering of the
@@ -1052,12 +1046,6 @@ class Input extends UI5Element {
 			this.value = event.target.value;
 			this._keepInnerValue = true;
 		}
-
-		console.log("--- After ---");
-		console.log("value: " , this.value);
-		console.log("inner: " ,this._innerValue);
-		console.log("previous: ", this.previousValue);
-		console.log("event: ", event.target.value);
 
 		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
 			// Issue: when the user removes the character(s) after the delimiter of numeric Input,
@@ -1297,8 +1285,6 @@ class Input extends UI5Element {
 	}
 
 	async fireEventByAction(action, event) {
-		//await this.getInputDOMRef();
-
 		if (this.disabled || this.readonly) {
 			return;
 		}
