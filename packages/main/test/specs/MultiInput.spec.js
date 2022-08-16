@@ -423,4 +423,18 @@ describe("Keyboard handling", () => {
 
 		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
 	});
+
+	it("should text field always when focus in" , async () => {
+		const mi = $("#one-token");
+		const inner = mi.shadow$("input");
+
+		await mi.scrollIntoView();
+		await inner.click();
+		await inner.keys("ArrowLeft");
+
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("Tab");
+
+		assert.ok(await mi.getProperty("focused"), "input field should be focused");
+	});
 });
