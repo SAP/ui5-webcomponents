@@ -74,6 +74,7 @@ class UI5Element extends HTMLElement {
 			deferredResolve = resolve;
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
+		this._doNotSyncAttributes = new Set(); // attributes that are excluded from attributeChangedCallback synchronization
 
 		this._initializeState();
 		this._upgradeAllProperties();
@@ -376,6 +377,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
+		if (this._doNotSyncAttributes.has(name)) { // This attribute is mutated internally, not by the user
+			return;
+		}
+
 		const properties = this.constructor.getMetadata().getProperties();
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
@@ -409,7 +414,14 @@ class UI5Element extends HTMLElement {
 				this.removeAttribute(attrName);
 			}
 		} else if (isDescendantOf(propertyTypeClass, DataType)) {
-			this.setAttribute(attrName, propertyTypeClass.propertyToAttribute(newValue));
+			const newAttrValue = propertyTypeClass.propertyToAttribute(newValue);
+			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
+				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
+				this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
+				this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
+			} else {
+				this.setAttribute(attrName, newAttrValue);
+			}
 		} else if (typeof newValue !== "object") {
 			if (attrValue !== newValue) {
 				this.setAttribute(attrName, newValue);

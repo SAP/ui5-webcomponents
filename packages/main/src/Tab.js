@@ -144,12 +144,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_tabIndex: {
-			type: String,
-			defaultValue: "-1",
-			noAttribute: true,
-		},
-
 		_selected: {
 			type: Boolean,
 		},
@@ -203,6 +197,14 @@ class Tab extends UI5Element {
 
 	static get styles() {
 		return css;
+	}
+
+	set _tabIndex(val) {
+		this.getTabInStripDomRef().setAttribute("tabindex", val);
+	}
+
+	get _tabIndex() {
+		return this.getTabInStripDomRef().getAttribute("tabindex");
 	}
 
 	static get dependencies() {
@@ -266,6 +268,7 @@ class Tab extends UI5Element {
 
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
+	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
 	 *
 	 * @function
@@ -273,14 +276,18 @@ class Tab extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef() {
-		return this._tabInStripDomRef;
+		if (this._getElementInStrip) {
+			return this._getElementInStrip();
+		}
+
+		return null;
 	}
 
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
-		if (this._getTabContainerHeaderItemCallback) {
-			focusedDomRef = this._getTabContainerHeaderItemCallback();
+		if (this._getElementInStrip) {
+			focusedDomRef = this._getElementInStrip();
 		}
 
 		return focusedDomRef;

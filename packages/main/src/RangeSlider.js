@@ -183,7 +183,7 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Check if the previously saved state is outdated. That would mean
 	 * either it is the initial rendering or that a property has been changed
-	 * programatically - because the previous state is always updated in
+	 * programmatically - because the previous state is always updated in
 	 * the interaction handlers.
 	 *
 	 * Normalize current properties, update the previously stored state.

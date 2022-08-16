@@ -101,7 +101,7 @@ const metadata = {
  * <li>typing in the input field</li>
  * </ul>
  *
- * Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property
+ * Programmatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property
  *
  * <h3>Formatting</h3>
  *
