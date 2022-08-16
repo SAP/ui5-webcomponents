@@ -269,6 +269,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the inner stored value of the component.
+		 * <br><br>
+		 * <b>Note:</b> The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		_innerValue: {
+			type: String,
+			noAttribute: true
+		},
+
+		/**
 		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
@@ -640,6 +654,8 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this._handleResizeBound = this._handleResize.bind(this);
+
+		this._keepInnerValue = false;
 	}
 
 	onEnterDOM() {
@@ -651,6 +667,10 @@ class Input extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (!this._keepInnerValue) {
+			this._innerValue = this.value;
+		}
+
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
@@ -914,6 +934,8 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
+		this._keepInnerValue = false;
+
 		if (this.showClearIcon && !this.effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
@@ -997,6 +1019,7 @@ class Input extends UI5Element {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 		const eventType = event.inputType || (event.detail && event.detail.inputType);
+		this._keepInnerValue = false;
 
 		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
@@ -1007,8 +1030,34 @@ class Input extends UI5Element {
 			return;
 		}
 
+		// ---- Special cases of numeric Input ----
+		// ---------------- Start -----------------
+		console.log(event);
+		console.log("--- Before ---");
+		console.log("value: " , this.value);
+		console.log("inner: " ,this._innerValue);
+		console.log("previous: ", this.previousValue);
+		console.log("event: ", event.target.value);
+
+		// When the last character after the delimiter is removed.
+		// In such cases, we want to skip the re-rendering of the
+		// component as this leads to cursor repositioning and causes user experience issues.
+		if (this.isTypeNumber
+			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")
+			&& !event.target.value.includes(".")
+			&& this.value.includes(".")) {
+			this.value = event.target.value;
+			this._keepInnerValue = true;
+		}
+
+		console.log("--- After ---");
+		console.log("value: " , this.value);
+		console.log("inner: " ,this._innerValue);
+		console.log("previous: ", this.previousValue);
+		console.log("event: ", event.target.value);
+
 		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
-			// Issue: when the user removes the character(s) after the delimeter of numeric Input,
+			// Issue: when the user removes the character(s) after the delimiter of numeric Input,
 			// the native input is firing event with an empty value and we have to manually handle this case,
 			// otherwise the entire input will be cleared as we sync the "value".
 
@@ -1038,6 +1087,7 @@ class Input extends UI5Element {
 				return;
 			}
 		}
+		// ----------------- End ------------------
 
 		if (event.target === inputDomRef) {
 			this.focused = true;
@@ -1244,7 +1294,7 @@ class Input extends UI5Element {
 	}
 
 	async fireEventByAction(action, event) {
-		await this.getInputDOMRef();
+		//await this.getInputDOMRef();
 
 		if (this.disabled || this.readonly) {
 			return;
