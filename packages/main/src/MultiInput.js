@@ -179,6 +179,7 @@ class MultiInput extends Input {
 
 	innerFocusIn() {
 		this.expandedTokenizer = true;
+		this.focused = true;
 		this.tokenizer.scrollToEnd();
 	}
 

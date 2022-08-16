@@ -379,8 +379,6 @@ describe("Keyboard handling", () => {
 	});
 
 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
-		await browser.url(`test/pages/MultiInput.html`);
-
 		const minput = await $("#basic-overflow");
 		const input = minput.shadow$("input");
 
@@ -404,4 +402,25 @@ describe("Keyboard handling", () => {
 
 		assert.notEqual(newScrollLeft, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
 	})
+
+	it("should change input's value when set in selection change event", async () => {
+		const input = $("#suggestion-token");
+		const innerInput = input.shadow$("input");
+
+		await input.scrollIntoView();
+		await innerInput.click();
+		await innerInput.keys('a');
+		await innerInput.keys("Enter");
+
+		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
+		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
+
+		await innerInput.keys("ArrowLeft");
+
+		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
+
+		await innerInput.keys("ArrowRight");
+
+		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
+	});
 });

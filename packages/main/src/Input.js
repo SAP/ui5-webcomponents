@@ -826,7 +826,6 @@ class Input extends UI5Element {
 		}
 
 		if (!itemPressed) {
-			this.fireEventByAction(this.ACTION_ENTER, event);
 			this.lastConfirmedValue = this.value;
 
 			if (this.FormSupport) {
