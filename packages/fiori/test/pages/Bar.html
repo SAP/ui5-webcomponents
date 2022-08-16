@@ -16,6 +16,14 @@
 
 <body class="bar1auto">
 	<section>
+		<ui5-bar design="Header">
+		<ui5-title id="titleElement" slot="startContent">Title</ui5-title>
+		<ui5-label>Title</ui5-label>
+		<ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+		</ui5-bar>
+	</section>
+
+	 <section>
 		<ui5-title level="3">Header design</ui5-title>
 		<ui5-bar design="Header">
 			<ui5-title id="titleElement" slot="startContent">Title</ui5-title>
@@ -58,6 +66,21 @@
 			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
 			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
 		</ui5-bar>
+	</section>
+
+	<section>
+		<ui5-bar>
+			<ui5-title id="titleElement" slot="startContent">...</ui5-title>
+		  </ui5-bar>
+		<ui5-button id="loadButton">Change Title</ui5-button>
+		<script>
+			const loadButton = document.getElementById("loadButton");
+			const titleElement = document.getElementById("titleElement");
+
+			loadButton.addEventListener("click", () => {
+ 				 titleElement.innerHTML = "a very long text message which would get cut off";
+			});
+		</script>
 	</section>
 </body>
 </html>
