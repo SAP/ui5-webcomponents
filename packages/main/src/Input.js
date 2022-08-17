@@ -1125,6 +1125,7 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 
 		filterValue = filterValue || "";
+		this._innerValue = value;
 		this.value = value;
 
 		innerInput.value = value;
