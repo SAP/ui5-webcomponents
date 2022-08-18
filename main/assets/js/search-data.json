@@ -506,16 +506,16 @@
   "73": {
     "id": "73",
     "title": "Components",
-    "content": "&lt;!DOCTYPE html&gt; Default values test page Primary button Toggle button Press me Hello world Hello world Required Primary button Hello world Press me New Items Laptop HP Discounted Items Hello world I am a native heading! UI5 Hello world Toggle button Product Supplier Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Components/",
-    "relUrl": "/playground/main/pages/Components/"
+    "content": "&lt;!DOCTYPE html&gt; Default values test page",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/fiori/pages/Components/",
+    "relUrl": "/playground/fiori/pages/Components/"
   },
   "74": {
     "id": "74",
     "title": "Components",
-    "content": "&lt;!DOCTYPE html&gt; Default values test page",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/fiori/pages/Components/",
-    "relUrl": "/playground/fiori/pages/Components/"
+    "content": "&lt;!DOCTYPE html&gt; Default values test page Primary button Toggle button Press me Hello world Hello world Required Primary button Hello world Press me New Items Laptop HP Discounted Items Hello world I am a native heading! UI5 Hello world Toggle button Product Supplier Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Components/",
+    "relUrl": "/playground/main/pages/Components/"
   },
   "75": {
     "id": "75",
@@ -758,7 +758,7 @@
   "109": {
     "id": "109",
     "title": "Input",
-    "content": "&lt;!DOCTYPE html&gt; ui5-input Input with suggestions: type &#39;a&#39; Event [suggestionItemSelect] :: N/A Event [change] :: N/A Event [input] :: N/A Input in Cozy Change event count: Input in Compact Input suggestions with ui5-li Cozy Compact Condensed Inactive Compact Inactive Condensed Input suggestions with grouping Input suggestions with highlighing Input disabled Input maxLength = 5 Input valueState Success Input valueState Information Test &#39;change&#39; event Input with valueState and Dynamic suggestions Custom error value state message with a Link. Additionl custom error value state message with a Link. Extra long text used as an error message. Extra long text used as an error message - 2. Extra long text used as an error message - 3. Input with long suggestions with valueState and ui5-li Cozy Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. Condensed Cozy Compact Condensed Input with disabled autocomplete (type-ahead) Cozy Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. Condensed CozyTwo Compact Condensed &#39;change&#39; event result &#39;suggestionItemSelect&#39; event result on group item Test &#39;input&#39; event Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. &#39;input&#39; test result Input test change with suggestions Input test change Input test change result Input test ESC Input readonly Input required Input type &#39;Number&#39; Input type &#39;Password&#39; Input type &#39;Email&#39; Input type &#39;Tel&#39; Input type &#39;URL&#39; Input With aria-label Readonly input with value state Inputs alignment Press Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Input with multiple icons Input firing submit event and submit action on &#39;ENTER&#39; in a form Test scroll pos Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Test accessibleName and accessibleNameRef Enter name: Input suggestions with highlighing and XSS test Test width of suggestions popover Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Input in a Dialog Open Dialog Cozy Compact Condensed Inactive Compact Inactive Condensed Short Input With Centered Text Test Backspace Click sap_horizon add xss item NO XSS Inputs with clear icon Change: 0 Input: 0 Toggle readonly Toggle disabled Input with suggestions and clear icon Input with openPicker() on focusin Recent Items No recent users Input - change event handling Clear Change event count: Change event count: Change event value:",
+    "content": "&lt;!DOCTYPE html&gt; ui5-input Input with suggestions: type &#39;a&#39; Event [suggestionItemSelect] :: N/A Event [change] :: N/A Event [input] :: N/A Input in Cozy Change event count: Input in Compact Input suggestions with ui5-li Cozy Compact Condensed Inactive Compact Inactive Condensed Input suggestions with grouping Input suggestions with highlighing Input disabled Input maxLength = 5 Input valueState Success Input valueState Information Test &#39;change&#39; event Input with valueState and Dynamic suggestions Custom error value state message with a Link. Additionl custom error value state message with a Link. Extra long text used as an error message. Extra long text used as an error message - 2. Extra long text used as an error message - 3. Input with long suggestions with valueState and ui5-li Cozy Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. Condensed Cozy Compact Condensed Input with disabled autocomplete (type-ahead) Cozy Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. Condensed CozyTwo Compact Condensed &#39;change&#39; event result &#39;selection-item-select&#39; event result &#39;suggestionItemSelect&#39; event result on group item Test &#39;input&#39; event Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. &#39;input&#39; test result Input test change with suggestions Input test change Input test change result Input test ESC Input readonly Input required Input type &#39;Number&#39; Input type &#39;Password&#39; Input type &#39;Email&#39; Input type &#39;Tel&#39; Input type &#39;URL&#39; Input With aria-label Readonly input with value state Inputs alignment Press Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Input with multiple icons Input firing submit event and submit action on &#39;ENTER&#39; in a form Test scroll pos Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Cozy Compact Condensed Test accessibleName and accessibleNameRef Enter name: Input suggestions with highlighing and XSS test Test width of suggestions popover Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Input in a Dialog Open Dialog Cozy Compact Condensed Inactive Compact Inactive Condensed Short Input With Centered Text Test Backspace Click sap_horizon add xss item NO XSS Inputs with clear icon Change: 0 Input: 0 Toggle readonly Toggle disabled Input with suggestions and clear icon Input with openPicker() on focusin Recent Items No recent users Input - change event handling Clear Change event count: Change event count: Change event value:",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Input/",
     "relUrl": "/playground/main/pages/Input/"
   },
@@ -1114,10 +1114,10 @@
   },
   "160": {
     "id": "160",
-    "title": "Advanced",
-    "content": "Advanced Concepts This section outlines more advanced concepts, related to application development with UI5 Web Components.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/advanced",
-    "relUrl": "/playground/advanced"
+    "title": "Development",
+    "content": "UI5 Web Components Custom Development This section explains how to create your own custom UI5 Web Components packages and develop your own UI5 Web Components.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/development",
+    "relUrl": "/playground/development"
   },
   "161": {
     "id": "161",
@@ -1135,24 +1135,24 @@
   },
   "163": {
     "id": "163",
+    "title": "Getting started",
+    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
+    "relUrl": "/playground/getting-started"
+  },
+  "164": {
+    "id": "164",
     "title": "Contributing",
     "content": "Contributing to the UI5 Web Components Project Contributions are welcome! This section explains our conventions, how to run the project locally, and more.",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/contributing",
     "relUrl": "/playground/contributing"
   },
-  "164": {
-    "id": "164",
-    "title": "Development",
-    "content": "UI5 Web Components Custom Development This section explains how to create your own custom UI5 Web Components packages and develop your own UI5 Web Components.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/development",
-    "relUrl": "/playground/development"
-  },
   "165": {
     "id": "165",
-    "title": "Getting started",
-    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
-    "relUrl": "/playground/getting-started"
+    "title": "Advanced",
+    "content": "Advanced Concepts This section outlines more advanced concepts, related to application development with UI5 Web Components.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/advanced",
+    "relUrl": "/playground/advanced"
   },
   "166": {
     "id": "166",
