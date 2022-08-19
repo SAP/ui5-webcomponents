@@ -36,15 +36,6 @@ const metadata = {
 			type: BarDesign,
 			defaultValue: BarDesign.Header,
 		},
-
-		/**
-		 * Defines if the component middle area needs to be centered between start and end area
-		 * @type {boolean}
-		 * @private
-		 */
-		_shrinked: {
-			type: Boolean,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
@@ -163,15 +154,11 @@ class Bar extends UI5Element {
 	handleResize() {
 		const bar = this.getDomRef();
 		const barWidth = bar.offsetWidth;
-		this._shrinked = Array.from(bar.children).some(slot => {
+		const needShrinked = Array.from(bar.children).some(slot => {
 			return slot.offsetWidth > barWidth / 3;
 		});
 
-		if (this._shrinked) {
-			bar.classList.add("ui5-bar-root-shrinked");
-		} else {
-			bar.classList.remove("ui5-bar-root-shrinked");
-		}
+		bar.classList.toggle("ui5-bar-root-shrinked", needShrinked);
 	}
 
 	get classes() {

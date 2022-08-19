@@ -70,15 +70,15 @@
 
 	<section>
 		<ui5-bar>
-			<ui5-title id="titleElement" slot="startContent">...</ui5-title>
+			<ui5-title id="titleElementWithLongText" slot="startContent">...</ui5-title>
 		  </ui5-bar>
 		<ui5-button id="loadButton">Change Title</ui5-button>
 		<script>
 			const loadButton = document.getElementById("loadButton");
-			const titleElement = document.getElementById("titleElement");
+			const titleElementWithLongText = document.getElementById("titleElementWithLongText");
 
 			loadButton.addEventListener("click", () => {
- 				 titleElement.innerHTML = "a very long text message which would get cut off";
+				titleElementWithLongText.innerHTML = "a very long text message which would get cut off";
 			});
 		</script>
 	</section>
