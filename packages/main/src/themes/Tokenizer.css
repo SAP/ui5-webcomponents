@@ -44,12 +44,8 @@
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
-	overflow: auto;
-	padding-inline-start: var(--_ui5_tokenizer_padding);
-}
-
-.ui5-tokenizer--content.ui5-tokenizer-nmore--content {
 	overflow: hidden;
+	padding-inline-start: var(--_ui5_tokenizer_padding);
 }
 
 .ui5-tokenizer-more-text {

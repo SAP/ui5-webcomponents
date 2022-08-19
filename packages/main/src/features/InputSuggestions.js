@@ -259,8 +259,24 @@ class Suggestions {
 	}
 
 	/* Private methods */
-	onItemPress(oEvent) {
-		this.onItemSelected(oEvent.detail.selectedItems[0], false /* keyboardUsed */);
+	onItemPress(event) {
+		let pressedItem;
+		const isPressEvent = event.type === "ui5-item-click";
+
+		// Only use the press event if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
+		// Also we have to check if the selection-change is fired by the list's 'item-click' event handling, to avoid double handling on our side
+		if ((isPressEvent && !event.detail.item.selected) || (this._handledPress && !isPressEvent)) {
+			return;
+		}
+
+		if (isPressEvent && event.detail.item.selected) {
+			pressedItem = event.detail.item;
+			this._handledPress = true;
+		} else {
+			pressedItem = event.detail.selectedItems[0];
+		}
+
+		this.onItemSelected(pressedItem, false /* keyboardUsed */);
 	}
 
 	_beforeOpen() {
@@ -270,6 +286,8 @@ class Suggestions {
 
 	async _attachItemsListeners() {
 		const list = await this._getList();
+		list.removeEventListener("ui5-item-click", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-item-click", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
 		list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
@@ -303,6 +321,7 @@ class Suggestions {
 
 	_onClose() {
 		this._getComponent().onClose();
+		this._handledPress = false;
 	}
 
 	_applyFocus() {

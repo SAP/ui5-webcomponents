@@ -4,7 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Popover</title>
 
 	<script data-ui5-config type="application/json">
@@ -428,6 +427,21 @@
 		<span>Hello world</span>
 	</ui5-popover>
 
+	<br>
+	<br>
+
+	<ui5-button id="openChainedPopover1">Open chained popover 1</ui5-button>
+	<ui5-popover id="chainedPopover1">
+		Chained Popover 1
+		<ui5-list id="openChainedPopover2List">
+			<ui5-li>Open chained popover 2</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+	<ui5-popover id="chainedPopover2" placement-type="Bottom">
+		Chained Popover 2
+		<ui5-button id="closeChainedPopover2">Close chained popover 2</ui5-button>
+	</ui5-popover>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -573,6 +587,25 @@
 			popAccNameRef.showAt(btnAccNameRef);
 		});
 
+		openChainedPopover1.addEventListener("click", function () {
+			chainedPopover1.showAt(openChainedPopover1);
+		});
+
+		openChainedPopover2List.addEventListener("ui5-item-click", function () {
+			chainedPopover1.close();
+			chainedPopover2.showAt(openChainedPopover1);
+		});
+
+		closeChainedPopover2.addEventListener("click", function () {
+			chainedPopover2.close();
+		});
+
+		chainedPopover2.addEventListener("after-close", function () {
+			var toast = document.createElement("ui5-toast");
+			toast.appendChild(document.createTextNode("Closed chained popover 2"));
+			document.body.appendChild(toast);
+			toast.show();
+		});
 	</script>
 </body>
 

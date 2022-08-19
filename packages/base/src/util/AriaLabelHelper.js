@@ -1,5 +1,3 @@
-import findNodeOwner from "./findNodeOwner.js";
-
 const getEffectiveAriaLabelText = el => {
 	if (!el.accessibleNameRef) {
 		if (el.accessibleName) {
@@ -15,12 +13,12 @@ const getEffectiveAriaLabelText = el => {
 /**
  *
  * @param {HTMLElement} el Defines the HTMLElement, for which you need to get all related texts
- * @param {HTMLElement} ownerDocument (Optional) Defines the HTMLElement(might document or custom element) where the you want to search for the texts.
+ * @param {Document|HTMLElement} ownerDocument (Optional) Defines the document or element where you want to search for the texts
  * @param {String} readyIds (Optional) Defines a string of elements ids. The text of these elements will be returned. If used you should provide either el or ownerDocument
  */
 const getAriaLabelledByTexts = (el, ownerDocument, readyIds = "") => {
 	const ids = (readyIds && readyIds.split(" ")) || el.accessibleNameRef.split(" ");
-	const owner = ownerDocument || findNodeOwner(el);
+	const owner = ownerDocument || el.getRootNode();
 	let result = "";
 
 	ids.forEach((elementId, index) => {

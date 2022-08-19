@@ -30,6 +30,10 @@ import {
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
@@ -179,7 +183,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @since 1.0.0-rc.9
@@ -669,15 +673,40 @@ class Select extends UI5Element {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": Select.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": Select.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
 	get valueStateText() {
+		let valueStateText;
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			valueStateText = this.valueStateDefaultText;
+		} else {
+			valueStateText = this.valueStateMessageText.map(el => el.textContent).join(" ");
+		}
+
+		return `${this.valueStateTypeText} ${valueStateText}`;
+	}
+
+	get valueStateDefaultText() {
 		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTypeText() {
+		return this.valueStateTypeMappings[this.valueState];
 	}
 
 	get hasValueState() {

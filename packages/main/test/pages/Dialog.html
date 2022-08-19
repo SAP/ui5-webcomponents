@@ -3,7 +3,6 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<title>Dialog</title>
@@ -450,7 +449,42 @@
 		</div>
 		<span>Hello World!</span>
 	</ui5-dialog>
+<div>
+	<div>
+		<ui5-label>Dialog states</ui5-label>
+	</div>
+	<ui5-button id="btn-error-state">Dialog with Error State</ui5-button>
+	<ui5-dialog id="dialog-error-state" state="Error">
+		<div slot="header">
+			<ui5-title level="H2">Error</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-dialog>
 
+	<ui5-button id="btn-info-state">Dialog with Information State</ui5-button>
+	<ui5-dialog id="dialog-info-state" state="Information">
+		<div slot="header">
+			<ui5-title level="H2">Information</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-dialog>
+
+	<ui5-button id="btn-success-state">Dialog with Success State</ui5-button>
+	<ui5-dialog id="dialog-success-state" state="Success">
+		<div slot="header">
+			<ui5-title level="H2">Success</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-dialog>
+
+	<ui5-button id="btn-warn-state">Dialog with Warning State</ui5-button>
+	<ui5-dialog id="dialog-warn-state" state="Warning">
+		<div slot="header">
+			<ui5-title level="H2">Warning</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-dialog>
+</div>
 	<div id="scrollHelper" class="dialog9scrollHelper">
 		<span>Scroll Helper</span>
 		<ui5-button id="scrolledBtn" class="scrolledBtn">open</ui5-button>
@@ -582,6 +616,22 @@
 
 		window["scrolledBtn"].addEventListener("click", function () {
 			window["dialog"].show();
+		});
+
+		window["btn-error-state"].addEventListener("click", function () {
+			window["dialog-error-state"].show();
+		});
+
+		window["btn-info-state"].addEventListener("click", function () {
+			window["dialog-info-state"].show();
+		});
+
+		window["btn-success-state"].addEventListener("click", function () {
+			window["dialog-success-state"].show();
+		});
+
+		window["btn-warn-state"].addEventListener("click", function () {
+				window["dialog-warn-state"].show();
 		});
 
 	</script>

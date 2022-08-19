@@ -28,7 +28,7 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-For a full list of the icons in the `tnt` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
+For a full list of the icons in the `tnt` collection, click [here](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)

@@ -335,7 +335,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @public
@@ -603,9 +603,6 @@ class Input extends UI5Element {
 		// Indicates if the user selection has been canceled with [ESC].
 		this.suggestionSelectionCanceled = false;
 
-		// Indicates if the change event has already been fired
-		this._changeFiredValue = null;
-
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
 
@@ -771,6 +768,12 @@ class Input extends UI5Element {
 	}
 
 	_onkeyup(event) {
+		// The native Delete event does not update the value property "on time".
+		// So, the (native) change event is always fired with the old value
+		if (isDelete(event)) {
+			this.value = event.target.value;
+		}
+
 		this._keyDown = false;
 		this._backspaceKeyDown = false;
 	}
@@ -967,8 +970,8 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (this._changeFiredValue !== this.getInputDOMRefSync().value) {
-			this._changeFiredValue = this.getInputDOMRefSync().value;
+		if (this.previousValue !== this.getInputDOMRefSync().value) {
+			this.previousValue = this.getInputDOMRefSync().value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -996,7 +999,7 @@ class Input extends UI5Element {
 	_handleInput(event) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
-		const eventType = event.inputType || event.detail.inputType;
+		const eventType = event.inputType || (event.detail && event.detail.inputType);
 
 		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
@@ -1183,9 +1186,11 @@ class Input extends UI5Element {
 			return;
 		}
 
+		const innerInput = this.getInputDOMRefSync();
+		const value = this.valueBeforeAutoComplete || this.value;
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
+			? this.valueBeforeItemSelection !== itemText : value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 
@@ -1196,6 +1201,7 @@ class Input extends UI5Element {
 			this.getInputDOMRefSync().value = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this._handleChange();
+			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
 		this.valueBeforeItemPreview = "";

@@ -22,6 +22,9 @@
     -webkit-flex: 1;
     -webkit-box-flex: 1;
     flex: 1 1 auto;
+    /* Fix extra height in ul -> li element */
+    font-size: 0;
+    align-self: center;
 }
 
 .ui5-breadcrumbs-current-location > span:focus {

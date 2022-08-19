@@ -182,12 +182,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.16
+		 * @public
+		 * @since 1.6.0
 		 */
 		accessibleName: {
 			type: String,
@@ -400,11 +400,13 @@ class RadioButton extends UI5Element {
 			return this.toggle();
 		}
 
-		if (isDown(event) || isRight(event)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (isDown(event) || (!isRTL && isRight(event)) || (isRTL && isLeft(event))) {
 			this._handleDown(event);
 		}
 
-		if (isUp(event) || isLeft(event)) {
+		if (isUp(event) || (!isRTL && isLeft(event)) || (isRTL && isRight(event))) {
 			this._handleUp(event);
 		}
 	}

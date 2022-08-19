@@ -625,7 +625,7 @@ describe("Accessibility", async () => {
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
 
-	it ("Tests setting value programatically", async () => {
+	it ("Tests setting value programmatically", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");

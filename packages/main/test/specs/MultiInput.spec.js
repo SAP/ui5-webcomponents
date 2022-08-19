@@ -38,6 +38,8 @@ describe("MultiInput general interaction", () => {
 	});
 
 	it ("fires value-help-trigger on icon press", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+
 		const label = await browser.$("#basic-event-listener");
 		const icon = await browser.$("#basic-overflow-and-icon").shadow$("ui5-icon");
 		const EXPECTED_TEXT = "value help icon press"
@@ -138,6 +140,43 @@ describe("MultiInput general interaction", () => {
 
 		assert.strictEqual(await mi1.getAttribute("placeholder"), "Placeholder", "a token is added after selection");
 		assert.strictEqual(await mi2.getAttribute("placeholder"), "", "a token is added after selection");
+	});
+
+	it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+
+		const minput = await $("#basic-overflow");
+		const input = minput.shadow$("input");
+
+		await minput.scrollIntoView();
+		await input.click();
+
+		let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+		let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
+		let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").getBoundingClientRect().width);
+
+		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
+
+		await input.keys('Tab');
+		tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+
+		assert.strictEqual(tokenizerScrollContainerScrollLeft, 0, "tokenizer is scrolled to start");
+	});
+
+	it("should NOT fire token-delete when MI is readonly", async () => {
+		const input = await browser.$("#readonly-mi");
+		const innerInput = await input.shadow$("input");
+		const deleteIcon = input.$$("ui5-token")[0].shadow$("ui5-icon");
+
+		// Act
+		await deleteIcon.click();
+		await browser.keys("Backspace");
+		await browser.keys("Backspace");
+		await browser.keys("Delete");
+		tokens = await input.$$("ui5-token");
+
+		// Assert
+		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
 	});
 });
 
@@ -338,4 +377,31 @@ describe("Keyboard handling", () => {
 
 		assert.strictEqual(tokens.length, 1, "The tokenizer has one token");
 	});
+
+	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+
+		const minput = await $("#basic-overflow");
+		const input = minput.shadow$("input");
+
+		await minput.scrollIntoView();
+		await input.click();
+		await input.keys('ArrowLeft');
+
+		let scrollLeftFirstToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+
+		await input.keys('ArrowLeft');
+		await input.keys('ArrowLeft');
+
+		let scrollLeftThirdToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+
+		assert.notEqual(scrollLeftFirstToken, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
+
+		await input.keys('ArrowRight');
+		await input.keys('ArrowRight');
+
+		let newScrollLeft =  await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+
+		assert.notEqual(newScrollLeft, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
+	})
 });

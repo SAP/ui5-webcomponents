@@ -20,7 +20,7 @@ Provides assets for the rich `SAP-icons` icon collection.
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
 just the ones that your app will actually use.
 
-For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
+For a full list of the icons in the `SAP-icons` collection, click [here](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
 ## Provided assets
 

@@ -22,6 +22,9 @@
 	--_ui5-input_disabled_background: var(--sapField_ReadOnly_Background);
 	--_ui5_input_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
 	--_ui5_input_value_state_error_hover_background: var(--sapField_InvalidBackground);
+	--_ui5_input_value_state_error_warning_placeholder_font_weight: bold;
+	--_ui5_input_placeholder_style: normal;
+	--_ui5-input_error_placeholder_color: var(--sapField_TextColor);
 }
 
 [data-ui5-compact-size],

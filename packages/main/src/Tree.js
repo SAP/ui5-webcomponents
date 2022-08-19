@@ -221,12 +221,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Tree#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
+		 * @param {HTMLElement} targetItem The item triggering the event.
 		 * @public
 		 */
 		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				targetItem: { type: HTMLElement },
 			},
 		},
 	},
@@ -382,6 +384,7 @@ class Tree extends UI5Element {
 	_onListSelectionChange(event) {
 		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
 		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
+		const targetItem = event.detail.targetItem.treeItem;
 
 		previouslySelectedItems.forEach(item => {
 			item.selected = false;
@@ -393,6 +396,7 @@ class Tree extends UI5Element {
 		this.fireEvent("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
+			targetItem,
 		});
 	}
 

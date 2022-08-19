@@ -142,6 +142,10 @@ class MultiInput extends Input {
 		const focusedToken = event.detail.ref;
 		const selectedTokens = this.tokens.filter(token => token.selected);
 
+		if (this._readonly) {
+			return;
+		}
+
 		if (selectedTokens.indexOf(focusedToken) === -1) {
 			selectedTokens.push(focusedToken);
 		}
@@ -175,6 +179,7 @@ class MultiInput extends Input {
 
 	innerFocusIn() {
 		this.expandedTokenizer = true;
+		this.tokenizer.scrollToEnd();
 	}
 
 	_onkeydown(event) {
@@ -217,8 +222,6 @@ class MultiInput extends Input {
 				return this.tokenizer._handleArrowCtrl(event.target, this.tokens, true);
 			}
 		}
-
-		this.tokenizer._handleItemNavigation(event, tokens);
 
 		if (isCtrl && ["c", "x"].includes(event.key.toLowerCase())) {
 			event.preventDefault();

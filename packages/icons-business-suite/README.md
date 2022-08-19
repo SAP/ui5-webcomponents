@@ -28,7 +28,7 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="business-suite/1x2-grid-layout"></ui5-icon>
 ```
 
-For a full list of the icons in the `business-suite` collection, click [here](https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
+For a full list of the icons in the `business-suite` collection, click [here](https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
