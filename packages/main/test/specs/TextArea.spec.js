@@ -242,11 +242,11 @@ describe("when enabled", () => {
 				const textAreaInner = await browser.$("#show-max-length-0").shadow$("textarea");
 				const counter = await browser.$("#show-max-length-0").shadow$(".ui5-textarea-exceeded-text");
 
+				let count = parseInt(await counter.getText());
 				assert.strictEqual(count, 4, "0 characters remaining");
 
 				await textAreaInner.setValue(`1234`);
-
-				const count = parseInt(await counter.getText());
+				count = parseInt(await counter.getText());
 
 				assert.strictEqual(count, 4, "4 symbols should exceed");
 			});
