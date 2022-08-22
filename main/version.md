@@ -1,19 +1,5 @@
-commit 52db67087dfbcd61770755b6220a73fe1fe0195a
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Mon Aug 22 09:32:03 2022 +0300
+commit 10eca7aa9b0d33c3bd41404f7549ab2291ca37f2
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Aug 22 11:11:01 2022 +0300
 
-    fix(ui5-textarea): show exceeded text when maxLength is 0 (#5691)
-    
-    * fix(ui5-textarea): show exceeded text when maxLength is 0
-    
-    related to #5384
-    
-    * fix(ui5-textarea): show exceeded text when maxLength is 0
-    
-    * fix(ui5-textarea): show exceeded text when maxLength is 0
-    
-    fix test
-    
-    * fix(ui5-textarea): show exceeded text when maxLength is 0
-    
-    fix test
+    chore: remove redundant double negation and warning (#5694)
