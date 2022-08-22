@@ -6078,6 +6078,18 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          allItems
+                            <br>
+                                 <code>all-items</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Returns all slotted tabs and their subTabs in a flattened array. The order of tabs is depth-first. For example, given the following slotted elements: <code> <ui5-tabcontainer> <ui5-tab id="First"> ... <ui5-tab slot="subTabs" id="Nested">...</ui5-tab> </ui5-tab> <ui5-tab id="Second">...</ui5-tab> <ui5-tab-separator id="sep"></ui5-tab-separator> <ui5-tab id="Third">...</ui5-tab> </ui5-tabcontainer> </code> Calling <code>allItems</code> on this TabContainer will return the instances in the following order: <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           collapsed
                             <br>
                         </div>
@@ -6087,7 +6099,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Defines whether the tab content is collapsed.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           fixed
                             <br>
@@ -6098,7 +6110,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Defines whether the tabs are in a fixed state that is not expandable/collapsible by user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showOverflow
                             <br>
@@ -6110,7 +6122,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Defines whether the overflow select list is displayed. <br><br> The overflow select list represents a list, where all tabs are displayed so that it's easier for the user to select a specific tab.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           tabLayout
                             <br>
@@ -6126,7 +6138,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
             <br><br> Available options are: <ul> <li><code>Standard</code></li> <li><code>Inline</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           tabsOverflowMode
                             <br>
@@ -6203,7 +6215,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <tr class="api-table-event-param">
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">tabIndex</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Integer <br/> <strong class="api-table-event-description bold">description:</strong> The selected <code>tab</code> index.</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Integer <br/> <strong class="api-table-event-description bold">description:</strong> The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.</div>
                           </div>
                         </tr>
                   </div>

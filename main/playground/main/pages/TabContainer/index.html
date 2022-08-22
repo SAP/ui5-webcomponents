@@ -12,13 +12,9 @@
 			"language": "EN"
 		}
 	</script>
-
-
 	
-
-
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.253b155f.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.2c5ec3cd.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/TabContainer.html.ea36d413.css'>
 </head>
 
@@ -129,7 +125,7 @@
 					<ui5-tab slot="subTabs" text="Fourteen 1.1">1.1</ui5-tab>
 				</ui5-tab>
 				<ui5-tab slot="subTabs" text="Fourteen 2">2
-					<ui5-tab  slot="subTabs" text="Fourteen 2.1">2.1
+					<ui5-tab slot="subTabs" text="Fourteen 2.1">2.1
 						<ui5-tab slot="subTabs" text="Fourteen 2.1.1">2.1.1</ui5-tab>
 					</ui5-tab>
 					<ui5-tab slot="subTabs" text="Fourteen 2.2">2.2</ui5-tab>
@@ -236,6 +232,7 @@
 
 	<section>
 		<h2>Tab Container</h2>
+		<ui5-checkbox text="prevent tab-select event" id="cbPrevent"></ui5-checkbox>
 		<ui5-tabcontainer id="tabContainer1" fixed collapsed>
 			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
@@ -318,7 +315,7 @@
 			<ui5-tab text="Availability">
 				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Date of Expire">
+			<ui5-tab text="Expiration Date">
 				<ui5-button>Button 3</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Date of Delivery">
@@ -333,10 +330,10 @@
 			<ui5-tab text="Price">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Net profit">
+			<ui5-tab text="Net Profit">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Company name">
+			<ui5-tab text="Company Name">
 				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Warehouse Location">
@@ -511,44 +508,44 @@
 		<h3>TabContainer in Compact</h3>
 		<div>
 			<ui5-tabcontainer>
-			<ui5-tab text="Products ID">
-				<ui5-button>Button 11</ui5-button>
-				<ui5-button>Button 12</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Availability">
-				<ui5-button>Button 2</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Date of Expire">
-				<ui5-button>Button 3</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Date of Delivery">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Date of Manufacture">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Value">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Price">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Net profit">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Company name">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Warehouse Location">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Address">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-			<ui5-tab text="Country">
-				<ui5-button>Button 4</ui5-button>
-			</ui5-tab>
-		</ui5-tabcontainer>
+				<ui5-tab text="Products ID">
+					<ui5-button>Button 11</ui5-button>
+					<ui5-button>Button 12</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Availability">
+					<ui5-button>Button 2</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Expiration Date">
+					<ui5-button>Button 3</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Date of Delivery">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Date of Manufacture">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Value">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Price">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Net Profit">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Company Name">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Warehouse Location">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Address">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+				<ui5-tab text="Country">
+					<ui5-button>Button 4</ui5-button>
+				</ui5-tab>
+			</ui5-tabcontainer>
 
 			<ui5-tabcontainer id="tabContainer1Compact" fixed collapsed>
 				<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
@@ -760,7 +757,7 @@
 					<ui5-button>Button 1</ui5-button>
 				</ui5-tab>
 			</ui5-tabcontainer>
-		
+
 			<ui5-button id="selectFirst">Select First Tab</ui5-button>
 			<ui5-button id="selectLast">Select Last Tab</ui5-button>
 			<ui5-button id="selectNested">Select a Nested Tab</ui5-button>
@@ -768,9 +765,20 @@
 	</section>
 
 	<script>
-		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
+		document.getElementById("tabContainer1").addEventListener("ui5-tab-select", async function (event) {
 			result.innerHTML = event.detail.tab.text;
 			resultIdx.innerHTML = event.detail.tabIndex;
+		});
+
+		let preventTabSelect = false;
+		document.getElementById("cbPrevent").addEventListener("ui5-change", event => {
+			preventTabSelect = event.target.checked;
+		});
+
+		document.getElementById("tabContainer1").addEventListener("ui5-tab-select", event => {
+			if (preventTabSelect) {
+				event.preventDefault();
+			}
 		});
 
 		document.getElementById("densityToggle").addEventListener("ui5-click", function (event) {
