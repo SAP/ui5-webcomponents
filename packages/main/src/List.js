@@ -13,6 +13,7 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -621,6 +622,15 @@ class List extends UI5Element {
 		return {
 			busyInd: {
 				position: this.busyIndPosition,
+			},
+		};
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-list-root": true,
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
 	}
