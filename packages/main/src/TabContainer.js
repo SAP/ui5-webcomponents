@@ -264,7 +264,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
-		 * @param {Integer} tabIndex The selected <code>tab</code> index. This index is valid for an array containing all tabs and their subTabs.
+		 * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
 		 * @public
 		 * @allowPreventDefault
 		 */
