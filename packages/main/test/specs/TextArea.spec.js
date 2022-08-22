@@ -237,6 +237,19 @@ describe("when enabled", () => {
 
 				assert.strictEqual(count, 4, "4 symbols should exceed");
 			});
+
+			it("Shows exceeded text when maxLength is 0", async () => {
+				const textAreaInner = await browser.$("#show-max-length-0").shadow$("textarea");
+				const counter = await browser.$("#show-max-length-0").shadow$(".ui5-textarea-exceeded-text");
+
+				let count = parseInt(await counter.getText());
+				assert.strictEqual(count, 0, "0 characters remaining");
+
+				await textAreaInner.setValue(`1234`);
+				count = parseInt(await counter.getText());
+
+				assert.strictEqual(count, 4, "4 symbols should exceed");
+			});
 		});
 	});
 });

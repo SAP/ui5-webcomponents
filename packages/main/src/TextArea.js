@@ -534,9 +534,9 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxlength || 0;
+			const maxLength = this.maxlength;
 
-			if (maxLength) {
+			if (maxLength !== null) {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
