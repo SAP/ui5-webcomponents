@@ -16,6 +16,8 @@ import {
 	isPageDownShiftCtrl,
 	isTabNext,
 	isTabPrevious,
+	isF6Next,
+	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import Icon from "./Icon.js";
@@ -350,7 +352,7 @@ class TimePickerBase extends UI5Element {
 			this.togglePicker();
 		}
 
-		if ((this._getInput() === e.target && this.isOpen()) && (isTabNext(e) || isTabPrevious(e))) {
+		if ((this._getInput() === e.target && this.isOpen()) && (isTabNext(e) || isTabPrevious(e)) && (isF6Next(e) || isF6Previous(e))) {
 			this.closePicker();
 		}
 
