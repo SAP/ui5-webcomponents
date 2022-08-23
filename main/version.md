@@ -1,9 +1,7 @@
-commit f746016d6311080fc189079943c273e7e6e21946
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 23 16:34:39 2022 +0300
+commit b60ff3ff0bfd48af58838ef1b40d4bbe5f7cab76
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Aug 23 16:56:04 2022 +0300
 
-    fix(ui5-li-notification): align actions' texts to the left (#5706)
+    feat(ui5-carousel): add new CSS Shadow part (#5700)
     
-    The change aligns actions' texts to the left.
-    
-    FIXES: #5704
+    * feat(ui5-carousel): add content part

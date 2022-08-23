@@ -11,8 +11,8 @@
 	
 
 
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.2f36b2bb.js'></script>
-  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Carousel.html.077504fe.css'>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.7adff00e.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Carousel.html.fcdd32a7.css'>
 </head>
 
 <body class="carousel1auto">
@@ -527,6 +527,30 @@
 				<br />
 				<ui5-input></ui5-input>
 			</div>
+		</ui5-card>
+	</ui5-carousel>
+
+	<ui5-title class="carousel2auto">Content Part - used to align the content items</ui5-title>
+	<ui5-carousel class="carouselContentLeftAligned" items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
+		<ui5-card class="myCard">
+			<ui5-card-header slot="header" status="1 of 11" title-text="Quick Links" subtitle-text="quick links" interactive>
+			</ui5-card-header>
+			<ui5-list separators="Inner">
+				<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+				<ui5-li icon="opportunity">Segmentation Models</ui5-li>
+				<ui5-li icon="line-charts">Marketing plans</ui5-li>
+			</ui5-list>
+			<ui5-input value="0"></ui5-input>
+		</ui5-card>
+
+		<ui5-card class="myCard">
+			<ui5-card-header slot="header" status="2 of 11" title-text="Quick Links" subtitle-text="quick links">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			</ui5-card-header>
+			<ui5-list separators="Inner">
+				<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+				<ui5-li icon="opportunity">Segmentation Models</ui5-li>
+			</ui5-list>
 		</ui5-card>
 	</ui5-carousel>
 
