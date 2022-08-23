@@ -2,7 +2,7 @@
 @import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../sap_horizon/AvatarGroup-parameters.css";
-@import "../base/Badge-parameters.css";
+@import "./Badge-parameters.css";
 @import "./Breadcrumbs-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
