@@ -1,7 +1,9 @@
-commit f74837c5201c0313972e6219c6e4c5aab1470ca5
+commit f746016d6311080fc189079943c273e7e6e21946
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 23 14:46:37 2022 +0300
+Date:   Tue Aug 23 16:34:39 2022 +0300
 
-    refactor(ui5-card-header): add new CSS Shadow part (#5705)
+    fix(ui5-li-notification): align actions' texts to the left (#5706)
     
-    Recently we got a request from the MDK colleagues to customize the background of the CardHeader and to make this possible we add a new shadow part (as we have for the title, status and sub-status texts).
+    The change aligns actions' texts to the left.
+    
+    FIXES: #5704
