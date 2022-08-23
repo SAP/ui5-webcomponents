@@ -1,5 +1,7 @@
-commit 583a63ddc93717fe3a7f047888ca964a53091415
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Aug 22 14:44:02 2022 +0300
+commit 02816a944f392aded156d4725fef86f9c5382746
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue Aug 23 09:50:45 2022 +0300
 
-    fix: correct imports of horizon Badge CSS files (#5673)
+    fix(ui5-calendar): align year and month picker focus to horizon (#5692)
+    
+    fixes: #5644
