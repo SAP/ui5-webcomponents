@@ -16,7 +16,6 @@
 	line-height: 1.4;
 	letter-spacing: normal;
 	word-spacing: normal;
-	margin: var(--_ui5_textarea_margin);
 }
 
 :host([disabled]) {
@@ -56,7 +55,8 @@
 }
 
 .ui5-textarea-root {
-	height: 100%;
+	width: 100%;
+	height: auto;
 	min-height: var(--_ui5_input_height);
 	display: inline-flex;
 	vertical-align: top;
@@ -66,13 +66,20 @@
 	border-color: inherit;
 }
 
+.wrapper {
+	box-sizing: border-box;
+	width: 100%;
+	border-bottom: 2px solid transparent;
+	display: flex;
+	height: calc(100% - 1.5rem);
+}
+
 .ui5-textarea-inner {
 	width: 100%;
 	height: 100%;
 	min-width: 6rem;
 	margin: 0;
 	padding: var(--_ui5_textarea_padding);
-	box-sizing: border-box;
 	color: inherit;
 	font-size: inherit;
 	font-family: inherit;
@@ -100,7 +107,14 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+	padding-bottom: 0.6875rem;
+    overflow: hidden;
 }
+
+:host([growing][show-exceeded-text]) .ui5-textarea-inner {
+	height: calc(100% - 48px);
+}
+
 
 .ui5-textarea-mirror {
 	line-height: 1.4;
@@ -111,7 +125,7 @@
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
-	box-sizing: border-box;
+	min-height: 40px;
 }
 
 :host([readonly]) {
@@ -310,7 +324,6 @@
 }
 
 .ui5-textarea-exceeded-text {
-	overflow: hidden;
 	align-self: flex-end;
 	padding: 0.125rem 0.125rem 0.5rem;
 	color: var(--sapContent_LabelColor);

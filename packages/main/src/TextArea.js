@@ -494,7 +494,7 @@ class TextArea extends UI5Element {
 
 	async openPopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-inner"));
+		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-root"));
 	}
 
 	async closePopover() {
@@ -565,16 +565,9 @@ class TextArea extends UI5Element {
 	}
 
 	get styles() {
-		const lineHeight = 1.4 * 16;
-		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
-
 		return {
 			mirror: {
 				"max-height": this._maxHeight,
-			},
-			main: {
-				width: "100%",
-				height: (this.rows && !this.growing) ? `${mainHeight}px` : "100%",
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
