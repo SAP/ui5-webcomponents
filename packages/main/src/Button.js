@@ -461,14 +461,6 @@ class Button extends UI5Element {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
-	get iconRole() {
-		if (!this.icon) {
-			return "";
-		}
-
-		return this.showIconTooltip ? "img" : "presentation";
-	}
-
 	get isIconOnly() {
 		return !isDefaultSlotProvided(this);
 	}
