@@ -480,7 +480,7 @@ class DatePicker extends DateComponentBase {
 			}
 		}
 
-		if ((this._getInput().isEqualNode(event.target) && this.isOpen()) && (isTabNext(event) || isTabPrevious(event)) && (isF6Next(event) || isF6Previous(event))) {
+		if ((this._getInput().isEqualNode(event.target) && this.isOpen()) && (isTabNext(event) || isTabPrevious(event) || isF6Next(event) || isF6Previous(event))) {
 			this.closePicker();
 		}
 
