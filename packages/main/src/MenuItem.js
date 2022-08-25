@@ -78,7 +78,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the any of the element siblings have icon.
+		 * Indicates if any of the element siblings have icon.
 		 * @type {boolean}
 		 * @private
 		 */
