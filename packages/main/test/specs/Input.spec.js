@@ -122,6 +122,18 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "2", "change is called once");
 	});
 
+	it("deletes autocomplete when backspace is pressed with a meta key", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#myInput").shadow$("input");
+
+		await input.click();
+		await input.keys("A");
+		await input.keys(["Alt", "Backspace"]);
+
+		assert.strictEqual(await input.getValue(), "A", "autocomplete is deleted");
+	});
+
 	it("fires input", async () => {
 		await browser.url(`test/pages/Input.html`);
 

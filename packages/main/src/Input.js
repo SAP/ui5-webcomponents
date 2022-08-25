@@ -999,8 +999,9 @@ class Input extends UI5Element {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 		const eventType = event.inputType || (event.detail && event.detail.inputType);
+		const allowedEventTypes = ["deleteContentBackward", "deleteSoftLineBackward", "deleteWordBackward"];
 
-		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
+		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
 		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
