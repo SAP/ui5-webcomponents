@@ -426,8 +426,10 @@
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 
-
-
+/* Center content (use case: input height is custom) */
+.ui5-input-content {
+	align-items: center
+}
 
 /* Chrome, Safari, Edge, Opera */
 [inner-input]::-webkit-outer-spin-button,
