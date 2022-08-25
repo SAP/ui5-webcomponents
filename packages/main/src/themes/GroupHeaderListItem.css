@@ -16,6 +16,7 @@
 	font-size: var(--sapFontHeader6Size);
 	font-weight: normal;
 	line-height: 2rem;
+	margin: 0;
 }
 
 .ui5-ghli-title {
