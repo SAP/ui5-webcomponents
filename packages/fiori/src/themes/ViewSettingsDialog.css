@@ -64,8 +64,12 @@
 	height: 100%;
 }
 
-[ui5-ul-groupheader] {
+[ui5-li-groupheader] {
 	overflow: hidden;
+}
+
+[ui5-li-groupheader]::part(native-li){
+	margin: 0;
 }
 
 [ui5-dialog]::part(content) {
