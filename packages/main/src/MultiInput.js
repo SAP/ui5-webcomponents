@@ -179,6 +179,7 @@ class MultiInput extends Input {
 
 	innerFocusIn() {
 		this.expandedTokenizer = true;
+		this.focused = true;
 		this.tokenizer.scrollToEnd();
 	}
 
@@ -277,6 +278,9 @@ class MultiInput extends Input {
 
 		if (!insideDOM && !insideShadowDom) {
 			this.expandedTokenizer = false;
+
+			// we need to reset tabindex setting by tokenizer
+			this.tokenizer._itemNav._currentIndex = -1;
 		}
 	}
 
