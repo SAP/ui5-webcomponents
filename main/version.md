@@ -1,12 +1,9 @@
-commit 5b446f52d2634ba400f2fbe2938d48fdd6c056af
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Thu Aug 25 10:52:09 2022 +0300
+commit 22170f4c9ca591de8c807a5495c95443de51e056
+Author: Boyan Rakilovski <boyanrakilovski@gmail.com>
+Date:   Thu Aug 25 16:09:50 2022 +0300
 
-    fix(ui5-button): adjust icon role (#5714)
+    Revert "fix(ui5-button): adjust icon role" (#5722)
     
-    - The ui5-button icon has role "presentation"
-    in all cases as per specification.
+    Revert "fix(ui5-button): adjust icon role (#5714)"
     
-    Fixes: #5505
-    Fixes: #5596
-    Fixes: #5687
+    This reverts commit 5b446f52d2634ba400f2fbe2938d48fdd6c056af.
