@@ -1,7 +1,8 @@
-commit b60ff3ff0bfd48af58838ef1b40d4bbe5f7cab76
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Aug 23 16:56:04 2022 +0300
+commit 46b175f8a6e1ff52adb6b1bf237e8df5fc482455
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Aug 25 10:11:55 2022 +0300
 
-    feat(ui5-carousel): add new CSS Shadow part (#5700)
+    fix(ui5-input): allows changing value in selection change event handler (#5677)
     
-    * feat(ui5-carousel): add content part
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5563
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5571
