@@ -1,9 +1,9 @@
-commit 22170f4c9ca591de8c807a5495c95443de51e056
-Author: Boyan Rakilovski <boyanrakilovski@gmail.com>
-Date:   Thu Aug 25 16:09:50 2022 +0300
+commit d69932c02afec12d0b9d6c600459abe1a1673395
+Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
+Date:   Thu Aug 25 18:30:22 2022 +0300
 
-    Revert "fix(ui5-button): adjust icon role" (#5722)
+    fix(ui5-list): unexpected spaces between group items (#5726)
     
-    Revert "fix(ui5-button): adjust icon role (#5714)"
+    There are spaces that should not be, between the items with different GroupHeaders. It is caused by #3869.
     
-    This reverts commit 5b446f52d2634ba400f2fbe2938d48fdd6c056af.
+    Fixes: #5720
