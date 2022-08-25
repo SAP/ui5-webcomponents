@@ -2,6 +2,7 @@
 	<div
 		data-ui5-cal-header-btn-prev
 		class="{{classes.prevButton}}"
+		role="button"
 		@mousedown={{onPrevButtonClick}}
 		title="{{_prevButtonText}}"
 	>
@@ -14,6 +15,7 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			?hidden="{{isMonthButtonHidden}}"
 			tabindex="0"
+			role="button"
 			aria-label="{{accInfo.ariaLabelMonthButton}}"
 			@click={{onMonthButtonClick}}
 			@keydown={{onMonthButtonKeyDown}}
@@ -29,6 +31,7 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			?hidden="{{isYearButtonHidden}}"
 			tabindex="0"
+			role="button"
 			@click={{onYearButtonClick}}
 			@keydown={{onYearButtonKeyDown}}
 			@keyup={{onYearButtonKeyUp}}
@@ -43,6 +46,7 @@
 	<div
 		data-ui5-cal-header-btn-next
 		class="{{classes.nextButton}}"
+		role="button"
 		@mousedown={{onNextButtonClick}}
 		title={{_nextButtonText}}
 	>
