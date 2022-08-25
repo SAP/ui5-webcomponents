@@ -217,6 +217,8 @@ class Dialog extends Popup {
 
 		this._resizeMouseMoveHandler = this._onResizeMouseMove.bind(this);
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
+
+		this._dragStartHandler = this._handleDragStart.bind(this);
 	}
 
 	static get metadata() {
@@ -348,11 +350,15 @@ class Dialog extends Popup {
 	onEnterDOM() {
 		super.onEnterDOM();
 		this._attachScreenResizeHandler();
+
+		this.addEventListener("dragstart", this._dragStartHandler);
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
 		this._detachScreenResizeHandler();
+
+		this.removeEventListener("dragstart", this._dragStartHandler);
 	}
 
 	/**
@@ -646,6 +652,12 @@ class Dialog extends Popup {
 		delete this._cachedMinHeight;
 
 		this._detachMouseResizeHandlers();
+	}
+
+	_handleDragStart(event) {
+		if (this.draggable) {
+			event.preventDefault();
+		}
 	}
 
 	_attachMouseResizeHandlers() {
