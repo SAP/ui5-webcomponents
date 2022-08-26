@@ -36,15 +36,6 @@ const metadata = {
 			type: BarDesign,
 			defaultValue: BarDesign.Header,
 		},
-
-		/**
-		 * Defines if the component middle area needs to be centered between start and end area
-		 * @type {boolean}
-		 * @private
-		 */
-		_shrinked: {
-			type: Boolean,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
@@ -163,17 +154,17 @@ class Bar extends UI5Element {
 	handleResize() {
 		const bar = this.getDomRef();
 		const barWidth = bar.offsetWidth;
-
-		this._shrinked = Array.from(bar.children).some(element => {
-			return barWidth / 3 < element.offsetWidth;
+		const needShrinked = Array.from(bar.children).some(slot => {
+			return slot.offsetWidth > barWidth / 3;
 		});
+
+		bar.classList.toggle("ui5-bar-root-shrinked", needShrinked);
 	}
 
 	get classes() {
 		return {
 			root: {
 				"ui5-bar-root": true,
-				"ui5-bar-root-shrinked": this._shrinked,
 			},
 		};
 	}
@@ -181,25 +172,23 @@ class Bar extends UI5Element {
 	onBeforeRendering() {
 		// Next row is specific for IE11. Please remove after stop support and edit css file
 		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
-
-		this.startContent.forEach(slotItem => { ResizeHandler.deregister(slotItem, this._handleResizeBound); }, this);
-		this.middleContent.forEach(slotItem => { ResizeHandler.deregister(slotItem, this._handleResizeBound); }, this);
-		this.endContent.forEach(slotItem => { ResizeHandler.deregister(slotItem, this._handleResizeBound); }, this);
-	}
-
-	onAfterRendering() {
-		this.startContent.forEach(slotItem => { ResizeHandler.register(slotItem, this._handleResizeBound); }, this);
-		this.middleContent.forEach(slotItem => { ResizeHandler.register(slotItem, this._handleResizeBound); }, this);
-		this.endContent.forEach(slotItem => { ResizeHandler.register(slotItem, this._handleResizeBound); }, this);
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+
+		this.getDomRef().querySelectorAll(".ui5-bar-content-container").forEach(slot => {
+			ResizeHandler.register(slot, this._handleResizeBound);
+		}, this);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
-	}
+
+		this.getDomRef().querySelectorAll(".ui5-bar-content-container").forEach(slot => {
+			ResizeHandler.deregister(slot, this._handleResizeBound);
+		}, this);
+	 }
 }
 
 Bar.define();
