@@ -1,25 +1,25 @@
-::-webkit-scrollbar:horizontal {
+:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar:horizontal {
 	height: var(--sapScrollBar_Dimension);
 }
 
-::-webkit-scrollbar:vertical {
+:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar:vertical {
 	width: var(--sapScrollBar_Dimension);
 }
 
-::-webkit-scrollbar {
+:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 	border-left: var(--browser_scrollbar_border);
 }
 
-::-webkit-scrollbar-thumb {
+:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-thumb {
 	border-radius: var(--browser_scrollbar_border_radius);
 	background-color: var(--sapScrollBar_FaceColor);
 }
 
-::-webkit-scrollbar-thumb:hover {
+:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-thumb:hover {
 	background-color: var(--sapScrollBar_Hover_FaceColor);
 }
 
-::-webkit-scrollbar-corner {
+:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-corner {
 	background-color: var(--sapScrollBar_TrackColor);
 }

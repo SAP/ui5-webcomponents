@@ -75,7 +75,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 *
-		 * See all the available icons within the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * See all the available icons within the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -466,7 +466,7 @@ class Button extends UI5Element {
 			return "";
 		}
 
-		return this.isIconOnly ? "img" : "presentation";
+		return this.showIconTooltip ? "img" : "presentation";
 	}
 
 	get isIconOnly() {

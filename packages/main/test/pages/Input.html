@@ -3,7 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-input</title>
 
 
@@ -125,6 +124,9 @@
 
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
+
+	<h3> 'selection-item-select' event result</h3>
+	<ui5-input id="input-selection-event-test"></ui5-input>
 
 	<h3> 'suggestionItemSelect' event result on group item</h3>
 	<ui5-input id="inputResultGrouping"></ui5-input>
@@ -412,6 +414,26 @@
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
 	</ui5-input>
 
+	<h3>Input - change event handling</h3>
+
+	<ui5-input id="input-change-1"></ui5-input>
+	<ui5-button id="clear-button">Clear</ui5-button>
+	<div>
+		Change event count: <span id="input-change-count-1"></span>
+	</div>
+
+	<ui5-input show-suggestions id="input-change-2">
+		<ui5-suggestion-item text="SOF"></ui5-suggestion-item>
+		<ui5-suggestion-item text="USA"></ui5-suggestion-item>
+	</ui5-input>
+	<div>
+		Change event count: <span id="input-change-count-2"></span>
+	</div>
+
+	<ui5-input id="input-change-3" type="Number" value="12.4"></ui5-input>
+	<div>
+		Change event value: <span id="input-change-value-3"></span>
+	</div>
 	<script>
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
@@ -592,6 +614,11 @@
 			compactClearIconInput.toggleAttribute("readonly");
 		});
 
+		document.getElementById("myInput").addEventListener("ui5-suggestion-item-select", event => {
+			const resultInput = document.getElementById("input-selection-event-test");
+			resultInput.setAttribute("value", parseInt(resultInput.getAttribute("value") || 0) + 1);
+		});
+
 		const openPickerInput = document.getElementById("openPickerInput");
 		let recentItems = [];
 		openPickerInput.addEventListener("input", handleSuggestions);
@@ -662,6 +689,25 @@
 			handleSuggestions();
 			openPickerInput.openPicker();
 		}
+
+		document.getElementById("clear-button").addEventListener("click", event => {
+			document.getElementById("input-change-1").value = "";
+		});
+
+		document.getElementById("input-change-1").addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("input-change-count-1");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+		});
+
+		document.getElementById("input-change-2").addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("input-change-count-2");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+		});
+
+		document.getElementById("input-change-3").addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("input-change-value-3");
+			changeCount.innerText = event.target.value;
+		});
 	</script>
 </body>
 </html>

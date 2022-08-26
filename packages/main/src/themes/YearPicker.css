@@ -76,7 +76,7 @@
 }
 
 .ui5-yp-item.ui5-yp-item--selected:focus::after {
-	border-color: var(--sapContent_ContrastFocusColor);
+	border-color: var(--_ui5_yearpicker_item_focus_after_border);
 }
 
 .ui5-yp-item.ui5-yp-item--selected:hover {

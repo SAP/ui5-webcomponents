@@ -129,7 +129,7 @@ describe("Panel general interaction", () => {
 		it("tests whether aria attributes are set correctly with native header", async () => {
 			const panelRoot = await browser.$("#panel1").shadow$(".ui5-panel-root");
 			const header = await browser.$("#panel1").shadow$(".ui5-panel-header");
-			const title = await browser.$("#panel1").shadow$(".ui5-panel-header-title");
+			const heading = await browser.$("#panel1").shadow$(".ui5-panel-heading-wrapper");
 			const button = await browser.$("#panel1").shadow$(".ui5-panel-header-button");
 			let resourceBundleText = null;
 
@@ -148,7 +148,8 @@ describe("Panel general interaction", () => {
 			assert.ok(await header.getAttribute("role"), "role should be set on the header");
 			assert.ok(await button.getAttribute("accessible-name"), resourceBundleText, "icon has correct aria-label set");
 
-			assert.strictEqual(await title.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
+			assert.strictEqual(await heading.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
+			assert.strictEqual(await heading.getAttribute("role"), "heading", "heading role is set correctly");
 		});
 
 		it("tests aria label attributes", async () => {
@@ -186,9 +187,12 @@ describe("Panel general interaction", () => {
 			const panelRoot = await browser.$("#panel2").shadow$(".ui5-panel-root");
 			const button = await browser.$("#panel2").shadow$(".ui5-panel-header-button").shadow$(".ui5-button-root");
 			const header = await browser.$("#panel2").shadow$(".ui5-panel-header");
+			const heading = await browser.$("#panel2").shadow$(".ui5-panel-heading-wrapper");
 
 			assert.notOk(await header.getAttribute("aria-expanded"), "aria-expanded shouldn't be set on the header");
 			assert.notOk(await header.getAttribute("aria-controls"), "aria-controls shouldn't be set on the header");
+			assert.notOk(await heading.getAttribute("aria-level"), "aria-level should not be set when a header slot is used");
+			assert.notOk(await heading.getAttribute("role"), "heading role should not be set when a header slot is used");
 
 			assert.ok(await button.getAttribute("aria-expanded"), "aria-expanded should be set on the button");
 			assert.ok(await button.getAttribute("aria-controls"), "aria-controls should be set on the button");

@@ -142,6 +142,10 @@ class MultiInput extends Input {
 		const focusedToken = event.detail.ref;
 		const selectedTokens = this.tokens.filter(token => token.selected);
 
+		if (this._readonly) {
+			return;
+		}
+
 		if (selectedTokens.indexOf(focusedToken) === -1) {
 			selectedTokens.push(focusedToken);
 		}
@@ -175,6 +179,7 @@ class MultiInput extends Input {
 
 	innerFocusIn() {
 		this.expandedTokenizer = true;
+		this.focused = true;
 		this.tokenizer.scrollToEnd();
 	}
 
@@ -273,6 +278,9 @@ class MultiInput extends Input {
 
 		if (!insideDOM && !insideShadowDom) {
 			this.expandedTokenizer = false;
+
+			// we need to reset tabindex setting by tokenizer
+			this.tokenizer._itemNav._currentIndex = -1;
 		}
 	}
 

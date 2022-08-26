@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
 	<title>Bar test page</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
 
@@ -18,6 +16,14 @@
 
 <body class="bar1auto">
 	<section>
+		<ui5-bar design="Header">
+		<ui5-title id="titleElement" slot="startContent">Title</ui5-title>
+		<ui5-label>Title</ui5-label>
+		<ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+		</ui5-bar>
+	</section>
+
+	 <section>
 		<ui5-title level="3">Header design</ui5-title>
 		<ui5-bar design="Header">
 			<ui5-title id="titleElement" slot="startContent">Title</ui5-title>
@@ -60,6 +66,21 @@
 			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
 			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
 		</ui5-bar>
+	</section>
+
+	<section>
+		<ui5-bar>
+			<ui5-title id="titleElementWithLongText" slot="startContent">...</ui5-title>
+		  </ui5-bar>
+		<ui5-button id="loadButton">Change Title</ui5-button>
+		<script>
+			const loadButton = document.getElementById("loadButton");
+			const titleElementWithLongText = document.getElementById("titleElementWithLongText");
+
+			loadButton.addEventListener("click", () => {
+				titleElementWithLongText.innerHTML = "a very long text message which would get cut off";
+			});
+		</script>
 	</section>
 </body>
 </html>
