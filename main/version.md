@@ -1,7 +1,7 @@
-commit 36cb3d20b2c51920f7bb31b2a44895060e456977
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Aug 29 12:31:34 2022 +0200
+commit 274170508f944d1cbcd3df7e2a66d7cc55a9c2cd
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Mon Aug 29 15:30:57 2022 +0300
 
-    fix(ui5-menu): prevent closing sub menu when hovering over icon (#5670)
+    fix(ui5-avatar-group): width calculations for (non-)Chromium browsers adjusted (#5737)
     
-    Fixes: #5669
+    Fixes #5643
