@@ -38,6 +38,7 @@
 	border-radius: 50%;
 	display: inline-flex;
 	text-overflow: initial;
+	z-index: 0; /* prevent last visible avatar from covering half of the button */
 }
 
 ::slotted([ui5-button][focused]),
