@@ -1,5 +1,5 @@
-commit b6efba285ef03c4a873dca92b328cb5c3d1ddf78
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Fri Aug 26 10:39:50 2022 +0300
+commit fe69683e29d4ce441734a13023731add4e5be41b
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Aug 29 13:04:37 2022 +0300
 
-    fix(ui5-bar): adjust resizing behavior (#5678)
+    chore: rename icon correctly (#5742)
