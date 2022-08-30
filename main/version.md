@@ -1,7 +1,9 @@
-commit 274170508f944d1cbcd3df7e2a66d7cc55a9c2cd
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Mon Aug 29 15:30:57 2022 +0300
+commit f8ab6ede3ff8ee1b972c0cdeb8399d446b4888b0
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Tue Aug 30 17:23:25 2022 +0300
 
-    fix(ui5-avatar-group): width calculations for (non-)Chromium browsers adjusted (#5737)
+    fix(ui5-select): selected option in dropdown is now read out (#5589)
     
-    Fixes #5643
+    * fix(ui5-select): selected option in dropdown is now read out
+    
+    * fix(ui5-select): selected option in dropdown is now read out
