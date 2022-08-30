@@ -143,8 +143,8 @@
 
 .ui5-dp-item.ui5-dp-item--now::before {
 	position: absolute;
-	inset: 0;
-	border: 0.125rem solid var(--sapLegend_CurrentDateTime);
+	inset: var(--_ui5_daypicker_item_now_not_selected_inset);
+	border: 0.125rem solid var(--_ui5_daypicker_item_now_border_color);
 	content: "";
 	border-radius: var(--_ui5_daypicker_item_border_radius);
 }
@@ -196,7 +196,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--now:focus::after {
-	inset: 0.1875rem;
+	inset: var(--_ui5_daypicker_item_now_inset);
 	border-radius: var(--_ui5_daypicker_item_now_border_radius_focus_after);
 	border: var(--_ui5_daypicker_item_now_border_focus_after);
 	position: absolute;
@@ -206,7 +206,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now:focus::after {
-	inset: 0.1875;
+	inset: var(--_ui5_daypicker_item_now_inset);
 	border-radius: var(--_ui5_day_picker_item_selected_now_border_radios_foucs);
 	border: var(--_ui5_day_picker_item_selected_now_border_foucs);
 	position: absolute;
