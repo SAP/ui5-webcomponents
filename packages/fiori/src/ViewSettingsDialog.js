@@ -646,8 +646,8 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_restoreSettings(settings) {
 		this._currentSettings = JSON.parse(JSON.stringify(settings));
-		this._currentMode = ViewSettingsDialogMode.Sort
-		this._filterStepTwo = false
+		this._currentMode = ViewSettingsDialogMode.Sort;
+		this._filterStepTwo = false;
 	}
 
 	/**
