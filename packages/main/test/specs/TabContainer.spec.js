@@ -30,6 +30,27 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await resultIdx.getText(), SELECTED_TAB_INDEX, "Tab index is retrieved correctly.");
 	});
 
+	it("tests preventing tabSelect", async() => {
+		// Setup
+		const cbPrevent = await browser.$("#cbPrevent");
+		await cbPrevent.click();
+
+		const selectedTab = await browser.$("#tabContainer1").shadow$(".ui5-tab-strip-item--selected");
+		const newTab = await browser.$("#tabContainer1").shadow$(".ui5-tab-strip-item:nth-child(1)");
+
+		assert.notStrictEqual(await newTab.getProperty("id"), await selectedTab.getProperty("id"), "tabs to test are different");
+
+		// Act
+		await newTab.click();
+
+		// Assert
+		assert.ok(await selectedTab.hasClass("ui5-tab-strip-item--selected"), "previously selected tab is still selected");
+		assert.notOk(await newTab.hasClass("ui5-tab-strip-item--selected"), "clicked tab is not selected");
+	
+		// Clean-up
+		await cbPrevent.click();
+	});
+
 	it("tests custom media ranges", async () => {
 		await browser.setWindowSize(520, 1080);
 		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "S", "media-range=S");

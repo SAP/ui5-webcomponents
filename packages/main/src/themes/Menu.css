@@ -15,6 +15,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	padding-inline-start: 0.5rem;
+	pointer-events: none;
 	float: var(--_ui5-menu_item_icon_float); /* TODO: refactor icon positioning as float and inline-block are incompatible */
 }
 

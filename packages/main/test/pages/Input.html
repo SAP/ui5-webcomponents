@@ -125,6 +125,9 @@
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
 
+	<h3> 'selection-item-select' event result</h3>
+	<ui5-input id="input-selection-event-test"></ui5-input>
+
 	<h3> 'suggestionItemSelect' event result on group item</h3>
 	<ui5-input id="inputResultGrouping"></ui5-input>
 
@@ -609,6 +612,11 @@
 
 		document.getElementById("clear-icon-readonly-toggle").addEventListener("click", event => {
 			compactClearIconInput.toggleAttribute("readonly");
+		});
+
+		document.getElementById("myInput").addEventListener("ui5-suggestion-item-select", event => {
+			const resultInput = document.getElementById("input-selection-event-test");
+			resultInput.setAttribute("value", parseInt(resultInput.getAttribute("value") || 0) + 1);
 		});
 
 		const openPickerInput = document.getElementById("openPickerInput");
