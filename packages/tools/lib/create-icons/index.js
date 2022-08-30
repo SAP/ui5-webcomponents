@@ -56,6 +56,14 @@ declare const _default: "${collection}/${name}";
 export default _default;
 export { pathData, ltr, accData };`
 
+const collectionTypeDefinitionTemplate = (name, accData) => `declare const pathData: string;
+declare const ltr: boolean;
+declare const accData: ${accData ? '{ key: string; defaultText: string; }' : null}
+declare const _default: "${name}";
+
+export default _default;
+export { pathData, ltr, accData };`
+
 
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 	<path d="${pathData}"/>
@@ -81,7 +89,7 @@ const createIcons = async (file) => {
 
 		if (json.version) {
 			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name)));
-            promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), typeDefinitionTemplate(name, acc, json.collection)));
+            promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(name, acc)));
 		}
 	}
 
