@@ -63,8 +63,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
-const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
-
 /**
  * @public
  */
