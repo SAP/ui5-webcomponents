@@ -999,7 +999,21 @@ class Input extends UI5Element {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 		const eventType = event.inputType || (event.detail && event.detail.inputType);
-		const allowedEventTypes = ["deleteContentBackward", "deleteSoftLineBackward", "deleteWordBackward"];
+
+		const allowedEventTypes = [
+			"deleteWordBackward",
+			"deleteWordForward",
+			"deleteSoftLineBackward",
+			"deleteSoftLineForward",
+			"deleteEntireSoftLine",
+			"deleteHardLineBackward",
+			"deleteHardLineForward",
+			"deleteByDrag",
+			"deleteByCut",
+			"deleteContent",
+			"deleteContentBackward",
+			"deleteContentForward",
+		];
 
 		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
