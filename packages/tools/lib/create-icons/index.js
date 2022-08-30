@@ -54,9 +54,7 @@ declare const accData: ${accData ? '{ key: string; defaultText: string; }' : nul
 declare const _default: "${collection}/${name}";
 
 export default _default;
-export { pathData, ltr, accData };
-
-`
+export { pathData, ltr, accData };`
 
 
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
