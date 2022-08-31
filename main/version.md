@@ -1,5 +1,5 @@
-commit e4bfc82a555cceb8091f908adb20b9a7a6564800
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Aug 31 14:15:30 2022 +0300
+commit da0c22264a5e41bb07d29ffbfffa86b75558a0e9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Aug 31 16:08:02 2022 +0300
 
-    feat(icons-business-suite): add new icons (#5763)
+    chore: commit css vars usage info (#5760)
