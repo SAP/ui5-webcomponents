@@ -61,14 +61,14 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
-		 * @since 1.6.0
+		 * @since 1.7.0
 		 */
 		 accessibleName: {
 			type: String,
 		},
 
 		/**
-		 * Indicates if any of the element siblings have children items.
+		 * Indicates whether any of the element siblings have children items.
 		 * @type {boolean}
 		 * @private
 		 */
@@ -78,7 +78,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if any of the element siblings have icon.
+		 * Indicates whether any of the element siblings have icon.
 		 * @type {boolean}
 		 * @private
 		 */
