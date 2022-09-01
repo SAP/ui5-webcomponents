@@ -52,6 +52,9 @@
 	<script>
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {
 			document.getElementById("labelChange").innerHTML = Number(document.getElementById("labelChange").innerHTML) + 1;
+		});
+
+		document.getElementById('daterange-picker4').addEventListener('ui5-change', function(e) {
 			document.getElementById("labelDate").innerHTML = e.detail.value;
 		});
 	</script>
