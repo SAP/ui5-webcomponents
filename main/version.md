@@ -1,7 +1,7 @@
-commit 0a7fcac976f56c3598ebe20af9acde4d8d1cd2d0
+commit 4943ef94683b197e1a3ee6c9995e05187d9b52d2
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Sep 1 16:38:03 2022 +0300
+Date:   Thu Sep 1 16:42:23 2022 +0300
 
-    fix(ui5-date-picker): focus out now closes the popup (#5603)
+    fix(ui5-time-picker): remove ampm translation (#5751)
     
-    fixes: #5532
+    fixes: #5181
