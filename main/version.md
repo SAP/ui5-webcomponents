@@ -1,7 +1,7 @@
-commit d7a8e10e069a8d6df8aff4acf2d2de2eaa7d081d
+commit 0a7fcac976f56c3598ebe20af9acde4d8d1cd2d0
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Sep 1 16:38:17 2022 +0300
+Date:   Thu Sep 1 16:38:03 2022 +0300
 
-    fix(ui5-view-settings-dialog): focus correct page on open (#5746)
+    fix(ui5-date-picker): focus out now closes the popup (#5603)
     
-    fixes: #5451
+    fixes: #5532
