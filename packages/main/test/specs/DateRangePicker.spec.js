@@ -215,4 +215,16 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(monthButton.innerHTML, monthName, "The month is not changed after selecting the first date in the future");
 	});
 
+
+
+	it("Month is not changed in multiselect mode", async () => {
+		await browser.url(`test/pages/DateRangePicker.html`);
+		const daterangepicker = await browser.$("#daterange-picker1");
+		await daterangepicker.click();
+		await daterangepicker.keys(["7 Sep 2022", "Enter"]);
+		browser.saveScreenshot('screenshot.jpg');
+		assert.equal(await daterangepicker.getProperty("value"), "7 Sep 2022", "works with one date");
+		assert.equal(await browser.$("#labelDate").getHTML(false), "7 Sep 2022", "works with one date");
+	});
+
 });
