@@ -55,6 +55,24 @@ describe("ViewSettingsDialog general interaction", () => {
 		await browser.keys("Escape");
 	});
 
+	it("test ViewSettingsDialog - sort page is opened by default", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialog");
+		const viewSettingsDialog = await browser.$("#vsd");
+		await btnOpenDialog.click();
+
+		await viewSettingsDialog.shadow$("ui5-dialog").$("ui5-segmented-button").$$("ui5-segmented-button-item")[1].click();
+
+		await viewSettingsDialog.shadow$("ui5-dialog").$("ui5-list").$("ui5-li").click();
+		await viewSettingsDialog.shadow$("ui5-dialog").$("ui5-list").$("ui5-li").click();
+		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$("ui5-button").click();
+		await btnOpenDialog.click();
+
+		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();
+		assert.include(sortByLiText, "Name", "sortBy should  have an option selected");
+
+		await browser.keys("Escape");
+	});
+
 	it("test ViewSettingsDialog change selected settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const viewSettingsDialog = await browser.$("#vsd");
