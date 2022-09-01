@@ -57,6 +57,7 @@
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
 				icon="{{this.item.icon}}"
+				accessible-name={{this.item.ariaLabelledByText}}
 				accessible-role="menuitem"
 				._ariaHasPopup={{this.ariaHasPopup}}
 				?disabled={{this.item.disabled}}

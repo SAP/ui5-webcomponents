@@ -56,7 +56,19 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the any of the element siblings have children items.
+		 * Defines the accessible ARIA name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.7.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Indicates whether any of the element siblings have children items.
 		 * @type {boolean}
 		 * @private
 		 */
@@ -66,7 +78,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the any of the element siblings have icon.
+		 * Indicates whether any of the element siblings have icon.
 		 * @type {boolean}
 		 * @private
 		 */
@@ -153,6 +165,10 @@ class MenuItem extends UI5Element {
 
 	get subMenuOpened() {
 		return !!Object.keys(this._subMenu).length;
+	}
+
+	get ariaLabelledByText() {
+		return `${this.text} ${this.accessibleName}`.trim();
 	}
 }
 
