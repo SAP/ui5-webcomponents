@@ -98,6 +98,10 @@ const metadata = {
 		 * If this property is set to true, the Dialog will be draggable by its header.
 		 * <br><br>
 		 * <b>Note:</b> The component can be draggable only in desktop mode.
+		 * <br><br>
+		 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
+		 * When "draggable" is set to true, the native browser "draggable"
+		 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.9
