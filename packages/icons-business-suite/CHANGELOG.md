@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/SAP/ui5-webcomponents/compare/v1.6.0...v1.7.0) (2022-09-02)
+
+
+### Features
+
+* **icons-business-suite:** add new icons ([#5763](https://github.com/SAP/ui5-webcomponents/issues/5763)) ([e4bfc82](https://github.com/SAP/ui5-webcomponents/commit/e4bfc82a555cceb8091f908adb20b9a7a6564800))
+
+
+
+
+
 # [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-business-suite
