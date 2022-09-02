@@ -98,6 +98,10 @@ const metadata = {
 		 * If this property is set to true, the Dialog will be draggable by its header.
 		 * <br><br>
 		 * <b>Note:</b> The component can be draggable only in desktop mode.
+		 * <br><br>
+		 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
+		 * When "draggable" is set to true, the native browser "draggable"
+		 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.9
@@ -217,6 +221,8 @@ class Dialog extends Popup {
 
 		this._resizeMouseMoveHandler = this._onResizeMouseMove.bind(this);
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
+
+		this._dragStartHandler = this._handleDragStart.bind(this);
 	}
 
 	static get metadata() {
@@ -348,11 +354,15 @@ class Dialog extends Popup {
 	onEnterDOM() {
 		super.onEnterDOM();
 		this._attachScreenResizeHandler();
+
+		this.addEventListener("dragstart", this._dragStartHandler);
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
 		this._detachScreenResizeHandler();
+
+		this.removeEventListener("dragstart", this._dragStartHandler);
 	}
 
 	/**
@@ -646,6 +656,12 @@ class Dialog extends Popup {
 		delete this._cachedMinHeight;
 
 		this._detachMouseResizeHandlers();
+	}
+
+	_handleDragStart(event) {
+		if (this.draggable) {
+			event.preventDefault();
+		}
 	}
 
 	_attachMouseResizeHandlers() {

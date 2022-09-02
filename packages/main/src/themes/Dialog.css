@@ -30,6 +30,10 @@
 	cursor: auto;
 }
 
+:host([draggable]) .ui5-popup-root {
+	user-select: text;
+}
+
 .ui5-popup-root {
 	display: flex;
 	flex-direction: column;
