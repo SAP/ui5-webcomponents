@@ -23,13 +23,14 @@
 	</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.53e5aa9f.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.5e02404b.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/DateRangePicker.html.1b5072fd.css'>
 </head>
 <body class="daterangepicker1auto">
 	<div style='width:500px;'>
 		<div>
 			<label id='labelChange'>0</label>
+			<label id='labelDate'></label>
 		</div>
 		<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
 		<h3>daterange-picker with delimiter @</h3>
@@ -53,6 +54,10 @@
 	<script>
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {
 			document.getElementById("labelChange").innerHTML = Number(document.getElementById("labelChange").innerHTML) + 1;
+		});
+
+		document.getElementById('daterange-picker4').addEventListener('ui5-change', function(e) {
+			document.getElementById("labelDate").innerHTML = e.detail.value;
 		});
 	</script>
 </body>

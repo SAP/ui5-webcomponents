@@ -1,9 +1,5 @@
-commit 50578bad73e7890cb6d2b90c3b4d985c37f2c6cd
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Sep 1 12:26:59 2022 -0700
+commit ce8a446b32cd56b2e6d547c8f75b1f56b5426c99
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Sep 2 11:04:36 2022 +0300
 
-    Translation Delivery (#5771)
-    
-    chore: translation delivery
-    
-    Change-Id: Ic0d0b0b1381af3c75012125eedb81df44235d193
+    fix(ui5-daterange-picker): handle single date value (#5769)
