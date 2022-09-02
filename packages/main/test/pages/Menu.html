@@ -4,7 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Menu</title>
 
 	<script src="../../bundle.esm.js" type="module"></script>
@@ -16,7 +15,7 @@
 <body class="responsivepopover2auto">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
-		<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
+		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section>
 			<ui5-menu-item text="Open Locally" icon="open-folder">

@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -534,9 +535,9 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxlength || 0;
+			const maxLength = this.maxlength;
 
-			if (maxLength) {
+			if (maxLength !== null) {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
@@ -556,6 +557,10 @@ class TextArea extends UI5Element {
 
 	get classes() {
 		return {
+			root: {
+				"ui5-textarea-root": true,
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+			},
 			valueStateMsg: {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,

@@ -491,3 +491,45 @@ describe("Responsive paddings", () => {
 		await browser.$("#btnCloseDialogNoPaddings").click();
 	});
 });
+
+describe("Dialog States", () => {
+	before(async () => {
+		await browser.url(`test/pages/Dialog.html`);
+	});
+
+	it("tests error state dialog accessibility role", async () => {
+		const openDialog = await browser.$("#btn-error-state");
+		await openDialog.click();
+
+		assert.strictEqual(await browser.$("#dialog-error-state").shadow$(".ui5-popup-root").getProperty("role"), "alertdialog", "error dialog has correct role");
+
+		await browser.keys("Escape");
+	});
+
+	it("tests information state dialog accessibility role", async () => {
+		const openDialog = await browser.$("#btn-info-state");
+		await openDialog.click();
+
+		assert.strictEqual(await browser.$("#dialog-info-state").shadow$(".ui5-popup-root").getProperty("role"), "dialog", "information dialog has correct role");
+
+		await browser.keys("Escape");
+	});
+
+	it("tests success state dialog accessibility role", async () => {
+		const openDialog = await browser.$("#btn-success-state");
+		await openDialog.click();
+
+		assert.strictEqual(await browser.$("#dialog-success-state").shadow$(".ui5-popup-root").getProperty("role"), "dialog", "success dialog has correct role");
+
+		await browser.keys("Escape");
+	});
+
+	it("tests warning state dialog accessibility role", async () => {
+		const openDialog = await browser.$("#btn-warn-state");
+		await openDialog.click();
+
+		assert.strictEqual(await browser.$("#dialog-warn-state").shadow$(".ui5-popup-root").getProperty("role"), "alertdialog", "warning dialog has correct role");
+
+		await browser.keys("Escape");
+	});
+});

@@ -2,12 +2,10 @@
 <html>
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
 	<title>ui5-tree</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
@@ -113,6 +111,17 @@
 	Prevented events counter
 	<ui5-input id="prevented-counter" value="0"></ui5-input>
 
+	<ui5-tree id="treeIndeterminate" mode="MultiSelect">
+		<div slot="header" class="hdr">
+			<ui5-title>Tree with indeterminate items</ui5-title>
+		</div>
+		<ui5-tree-item id="item1" text="Item 1" indeterminate selected></ui5-tree-item>
+		<ui5-tree-item id="item2" text="Item 2" indeterminate selected></ui5-tree-item>
+		<ui5-tree-item id="item3" text="Item 3"></ui5-tree-item>
+		<ui5-tree-item id="item4" text="Item 4" indeterminate selected></ui5-tree-item>
+	</ui5-tree>
+	<ui5-input id="selectionChangeTargetItemResult" placeholder="selectionChange targetItem result"></ui5-input>
+
 	<script>
 		const mouseOverInput = document.getElementById("mouseover-counter");
 		const mouseOutInput = document.getElementById("mouseout-counter");
@@ -151,6 +160,7 @@
 
 		document.getElementById("tree").addEventListener("selectionChange", function(event) {
 			console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
+			console.log("Selection change target item is: ", event.detail.targetItem);
 		});
 
 		document.getElementById("modeSelect").addEventListener("change", function(event) {
@@ -212,6 +222,11 @@
 		preventableClickTree.addEventListener("ui5-itemClick", function (event) {
 			event.preventDefault();
 			preventedCounter.value++;
+		});
+
+		var indetereminateTree = document.getElementById("treeIndeterminate");
+		indetereminateTree.addEventListener("ui5-selectionChange", function(event) {
+			selectionChangeTargetItemResult.value = event.detail.targetItem.id;
 		});
 	</script>
 

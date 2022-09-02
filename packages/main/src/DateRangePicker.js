@@ -294,8 +294,14 @@ class DateRangePicker extends DatePicker {
 		const valuesArray = [];
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
-		valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(this._effectiveDelimiter);
-		valuesArray[1] = partsArray.slice(partsArray.length / 2).join(this._effectiveDelimiter);
+		// if format successfully parse the value, the value contains only single date
+		if (this.getFormat().parse(value)) {
+			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
+			valuesArray[1] = "";
+		} else {
+			valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(this._effectiveDelimiter);
+			valuesArray[1] = partsArray.slice(partsArray.length / 2).join(this._effectiveDelimiter);
+		}
 
 		return valuesArray;
 	}

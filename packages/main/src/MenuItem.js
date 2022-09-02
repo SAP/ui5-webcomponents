@@ -22,7 +22,7 @@ const metadata = {
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 <b>* Example:</b>
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -56,7 +56,19 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the any of the element siblings have children items.
+		 * Defines the accessible ARIA name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.7.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Indicates whether any of the element siblings have children items.
 		 * @type {boolean}
 		 * @private
 		 */
@@ -66,7 +78,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the any of the element siblings have icon.
+		 * Indicates whether any of the element siblings have icon.
 		 * @type {boolean}
 		 * @private
 		 */
@@ -127,7 +139,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/MenuItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/MenuItem.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -153,6 +165,10 @@ class MenuItem extends UI5Element {
 
 	get subMenuOpened() {
 		return !!Object.keys(this._subMenu).length;
+	}
+
+	get ariaLabelledByText() {
+		return `${this.text} ${this.accessibleName}`.trim();
 	}
 }
 

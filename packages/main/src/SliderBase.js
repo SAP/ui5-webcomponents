@@ -4,7 +4,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import "@ui5/webcomponents-icons/dist/source-code.js";
+import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -587,7 +587,7 @@ class SliderBase extends UI5Element {
 		if (this.isPropertyUpdated("min", "max", ...values)) {
 			this.storePropertyState("min", "max");
 
-			// Here the value props are changed programatically (not by user interaction)
+			// Here the value props are changed programmatically (not by user interaction)
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
 			// min and max bounderies and update the previous state reference.
 			values.forEach(valueType => {
@@ -614,7 +614,7 @@ class SliderBase extends UI5Element {
 	 * current state is changed due to a user action.
 	 *
 	 * Check if the previously saved state is outdated. That would mean
-	 * a property has been changed programatically because the previous state
+	 * a property has been changed programmatically because the previous state
 	 * is always updated in the interaction handlers.
 	 *
 	 * Will return true if any of the properties is not equal to its previously

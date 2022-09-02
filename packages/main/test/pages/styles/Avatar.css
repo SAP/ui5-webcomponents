@@ -31,3 +31,10 @@
 .avatar5auto {
     object-fit: contain;
 }
+
+.custom-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 0, 0);
+}

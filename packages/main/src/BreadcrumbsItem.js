@@ -77,7 +77,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcumbs</code>.
+ * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcrumbs</code>.
  *
  * @constructor
  * @author SAP SE

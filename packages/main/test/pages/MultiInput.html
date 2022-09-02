@@ -4,7 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-multi-input</title>
 
 
@@ -43,9 +42,21 @@
 		<br>
 
 		<h1 class="sample-container-title">Multi Input with 1 token</h1>
-		<ui5-multi-input>
+		<ui5-multi-input id="one-token">
 			<ui5-token slot="tokens" text="Amet"></ui5-token>
 		</ui5-multi-input>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Readonly Multi Input with tokens</h1>
+		<ui5-multi-input id="readonly-mi" readonly>
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+			<ui5-token slot="tokens" text="Dolor"></ui5-token>
+			<ui5-token slot="tokens" text="Lorem"></ui5-token>
+			<ui5-token slot="tokens" text="Ipsum"></ui5-token>
+		</ui5-multi-input>
+
 
 		<br>
 		<br>
@@ -373,6 +384,7 @@
 
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
+		document.getElementById("readonly-mi").addEventListener("ui5-token-delete", handleTokenDelete);
 
 		const handleTokenDelete2 = (event) => {
 			const eventType = document.getElementById("event-type");

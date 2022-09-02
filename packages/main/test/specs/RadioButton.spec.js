@@ -181,6 +181,13 @@ describe("RadioButton general interaction", () => {
 
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), `${labelText} ${rbText}`, "The ariaLabelText includes both the accessibleNameRef text and the radio button text.");
 	});
+
+	it("tests accessibleNameRef when the radio button is wrapped by another custom element", async () => {
+		const labelText = await browser.$("#lbl-rb-acc-name-ref").getText();
+		const rb = await browser.$("#rb-acc-name-ref-wrapped");
+
+		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText of the wrapped radio button includes the accessibleNameRef text.");
+	});
 });
 
 describe("RadioButton keyboard handling in RTL", () => {

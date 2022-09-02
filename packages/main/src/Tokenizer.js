@@ -25,6 +25,10 @@ import {
 	isEndShift,
 	isHomeCtrl,
 	isEndCtrl,
+	isRight,
+	isLeft,
+	isUp,
+	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -225,7 +229,16 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
+		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom : this.narrowContentDom;
+
+		if (this.expanded) {
+			this._expandedScrollWidth = this.expandedContentDom.scrollWidth;
+			this.scrollToEnd();
+		}
+
+		if (!this.expanded) {
+			this.scrollToStart();
+		}
 	}
 
 	_delete(event) {
@@ -320,6 +333,11 @@ class Tokenizer extends UI5Element {
 
 			return this._toggleTokenSelection(tokens);
 		}
+
+		if (isLeft(event) || isRight(event) || isUp(event) || isDown(event)) {
+			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused), tokens, (isRight(event) || isDown(event)));
+			this._scrollToToken(tokens[nextTokenIdx]);
+		}
 	}
 
 	_handleHome(tokens, endKeyPressed) {
@@ -384,6 +402,8 @@ class Tokenizer extends UI5Element {
 		}
 
 		setTimeout(() => tokens[nextIndex].focus(), 0);
+
+		this._scrollToToken(tokens[nextIndex]);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
@@ -398,6 +418,8 @@ class Tokenizer extends UI5Element {
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
 		setTimeout(() => tokens[nextIndex].focus(), 0);
+
+		this._scrollToToken(tokens[nextIndex]);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
@@ -407,6 +429,7 @@ class Tokenizer extends UI5Element {
 
 	_onmousedown(event) {
 		this._itemNav.setCurrentItem(event.target);
+		this._scrollToToken(event.target);
 	}
 
 	_toggleTokenSelection(tokens) {
@@ -455,7 +478,41 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	scrollToStart() {
-		this.contentDom.scrollLeft = 0;
+		if (this._scrollEnablement.scrollContainer) {
+			this._scrollEnablement.scrollTo(0, 0);
+		}
+	}
+
+	/**
+	 * Scrolls the container of the tokens to its end when expanded.
+	 * This method is used by MultiInput and MultiComboBox.
+	 * @private
+	 */
+	scrollToEnd() {
+		const expandedTokenizerScrollWidth = this.expandedContentDom && (this.effectiveDir !== "rtl" ? this.expandedContentDom.scrollWidth : -this.expandedContentDom.scrollWidth);
+		if (this._scrollEnablement.scrollContainer) {
+			this._scrollEnablement.scrollTo(expandedTokenizerScrollWidth, 0, 5, 10);
+		}
+	}
+
+	/**
+	 * Scrolls token to the visible area of the container.
+	 * Adds 4 pixels to the scroll position to ensure padding and border visibility on both ends
+	 * @private
+	 */
+	_scrollToToken(token) {
+		if (!this.expandedContentDom) {
+			return;
+		}
+
+		const tokenRect = token.getBoundingClientRect();
+		const tokenContainerRect = this.expandedContentDom.getBoundingClientRect();
+
+		if (tokenRect.left < tokenContainerRect.left) {
+			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 5), 0);
+		} else if (tokenRect.right > tokenContainerRect.right) {
+			this._scrollEnablement.scrollTo(this.expandedContentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
+		}
 	}
 
 	async closeMorePopover() {
@@ -474,6 +531,14 @@ class Tokenizer extends UI5Element {
 
 	get contentDom() {
 		return this.shadowRoot.querySelector(".ui5-tokenizer--content");
+	}
+
+	get expandedContentDom() {
+		return this.shadowRoot.querySelector(".ui5-tokenizer-expanded--content");
+	}
+
+	get narrowContentDom() {
+		return this.shadowRoot.querySelector(".ui5-tokenizer-nmore--content");
 	}
 
 	get tokenizerLabel() {
@@ -497,14 +562,14 @@ class Tokenizer extends UI5Element {
 		});
 
 		return this._getTokens().filter(token => {
-			const isRTL = this.effectiveDir === "rtl";
-			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = parseInt(tokenRect[elementEnd]);
-			const parentEnd = parseInt(parentRect[elementEnd]);
+			const tokenEnd = parseInt(tokenRect.right);
+			const parentEnd = parseInt(parentRect.right);
+			const tokenStart = parseInt(tokenRect.left);
+			const parentStart = parseInt(parentRect.left);
 
-			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
+			token.overflows = !this.expanded && ((tokenStart < parentStart) || (tokenEnd > parentEnd));
 
 			return token.overflows;
 		});
@@ -549,7 +614,8 @@ class Tokenizer extends UI5Element {
 			},
 			content: {
 				"ui5-tokenizer--content": true,
-				"ui5-tokenizer-nmore--content": this.showMore,
+				"ui5-tokenizer-expanded--content": !this.showNMore,
+				"ui5-tokenizer-nmore--content": this.showNMore,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,

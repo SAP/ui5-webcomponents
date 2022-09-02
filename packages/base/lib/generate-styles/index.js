@@ -3,7 +3,7 @@ const path = require('path');
 const CleanCSS = require('clean-css');
 
 const generate = async () => {
-	await fs.mkdir("dist/generated/css/");
+	await fs.mkdir("dist/generated/css/", {recursive: true});
 
 	const files = (await fs.readdir("src/css/")).filter(file => file.endsWith(".css"));
 	const filesPromises = files.map(async file => {

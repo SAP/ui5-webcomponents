@@ -408,6 +408,62 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
+	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+		const changeEventResult = await browser.$("#inputResult").shadow$("input");
+		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("C");
+		await browser.pause(300);
+
+		const firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		await firstSuggestion.click();
+
+		valueNotSelected = await browser.execute(() =>{
+			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart === 0;
+		});
+
+		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
+		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
+		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
+	});
+
+	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+		const changeEventResult = await browser.$("#inputResult").shadow$("input");
+		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("C");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+
+		const secondSuggestion = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
+		await secondSuggestion.click();
+
+		valueNotSelected = await browser.execute(() =>{
+			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart === 0;
+		});
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Cuba", "Item is selected");
+		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
+		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
+		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
+	});
 
 	it("should remove input's focus when group header item is clicked", async () => {
 		await browser.url(`test/pages/Input.html`);
@@ -804,6 +860,71 @@ describe("Input general interaction", () => {
 		await input.click();
 
 		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+	});
+
+	it("Private property for input value should be in sync, when value gets updated programatically - #5635", async () => {
+		const inputChange = await browser.$("#input-change-1").shadow$("input");
+		const clearButton = await browser.$("#clear-button");
+		const changeCount = await browser.$("#input-change-count-1");
+
+		await inputChange.click();
+		await inputChange.keys("1");
+		await inputChange.keys("2");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called");
+
+		// clear the input
+		await clearButton.click();
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is not called again, since the value is changed programatically");
+
+		// Type the same value once again.
+		await inputChange.click();
+		await inputChange.keys("1");
+		await inputChange.keys("2");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called now, since the value is updated");
+	});
+
+	it("Change event should be fired only once, when a user types a value identical to a item and presses ENTER - #3732", async () => {
+		const inputChange = await browser.$("#input-change-2").shadow$("input");
+		const changeCount = await browser.$("#input-change-count-2");
+
+		await inputChange.click();
+		await inputChange.keys("s");
+		await inputChange.keys("o");
+		await inputChange.keys("f");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called only once");
+	});
+
+	it("Value should be updated correctly, when using DEL - #4340", async () => {
+		const inputChange = await browser.$("#input-change-3").shadow$("input");
+		const changeValue = await browser.$("#input-change-value-3");
+
+		await inputChange.click();
+
+		// go to previous element
+		await inputChange.keys(["Shift", "Tab"]);
+
+		// go to input
+		await browser.keys("Tab");
+
+		// delete value
+		await inputChange.keys("Delete");
+
+		// focus out
+		await inputChange.keys("Tab");
+
+		// Assert
+		assert.strictEqual(await changeValue.getHTML(false), "", "The change event should pass a correct value");
 	});
 });
 

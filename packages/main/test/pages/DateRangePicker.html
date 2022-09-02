@@ -3,7 +3,6 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>DateRangePicker test page</title>
 
 	<script>
@@ -29,6 +28,7 @@
 	<div style='width:500px;'>
 		<div>
 			<label id='labelChange'>0</label>
+			<label id='labelDate'></label>
 		</div>
 		<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
 		<h3>daterange-picker with delimiter @</h3>
@@ -52,6 +52,10 @@
 	<script>
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {
 			document.getElementById("labelChange").innerHTML = Number(document.getElementById("labelChange").innerHTML) + 1;
+		});
+
+		document.getElementById('daterange-picker4').addEventListener('ui5-change', function(e) {
+			document.getElementById("labelDate").innerHTML = e.detail.value;
 		});
 	</script>
 </body>

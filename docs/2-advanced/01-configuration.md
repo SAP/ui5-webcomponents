@@ -43,7 +43,7 @@ import "@ui5/webcomponents/dist/Assets.js";
 import "@ui5/webcomponents-fiori/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](./5.%20Basic%20-%20Using%20assets.md) section.
+For more about assets, see the dedicated [Assets](../../getting-started/using-assets) section.
 
  - Configure the additional theme either via the [configuration script](#script) or [module imports](#imports).
 
@@ -78,7 +78,7 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 import "@ui5/webcomponents-icons/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](./5.%20Basic%20-%20Using%20assets.md) section.
+For more about assets, see the dedicated [Assets](../../getting-started/using-assets) section.
 
 - Configure the additional language either via the [configuration script](#script) or [module imports](#imports).
 
@@ -111,7 +111,7 @@ You can always override the calendar type for each instance via component-specif
 
 The `Gregorian` calendar type is built in all date-related UI5 Web Components.
 
-Calendar types are opt-in features, see [Using Features](./5.%20Basic%20-%20Using%20features.md) for details.
+Calendar types are opt-in features, see [Using Features](../../getting-started/using-features) for details.
 Setting another calendar type via configuration or component properties requires that the respective calendar type be explicitly imported.
 
 Example:

@@ -2,7 +2,11 @@
 	{{#if tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/if}}
-	<div class="{{classes.header}}" id="{{_id}}-header">
+	<div
+		class="{{classes.header}}"
+		id="{{_id}}-header"
+		@focusin="{{_onHeaderFocusin}}"
+	>
 		<div
 			class="ui5-tc__overflow ui5-tc__overflow--start"
 			@click="{{_onOverflowClick}}"

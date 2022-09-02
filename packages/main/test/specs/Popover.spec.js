@@ -329,6 +329,21 @@ describe("Popover general interaction", () => {
 
 		assert.ok(true, "popover is opened");
 	});
+
+	it("tests that ENTER on list item that opens another popover doesn't trigger click event inside the focused element of that popover", async () => {
+		const openChainedPopover1 = await browser.$("#openChainedPopover1");
+		await openChainedPopover1.scrollIntoView();
+		await openChainedPopover1.click();
+		await browser.keys("Enter");
+	
+		assert.ok(await browser.$("#chainedPopover2").isDisplayedInViewport(), "'Chained popover 2' opened with ENTER key should remain open")
+		assert.notOk(await browser.$("#chainedPopover1").isDisplayedInViewport(), "'Chained popover 1' should be successfully closed")
+		
+		await browser.keys("Escape");
+		const activeElement = await browser.$(await browser.getActiveElement());
+
+		assert.strictEqual(await activeElement.getAttribute("id"), await openChainedPopover1.getAttribute("id"), "The focus should be correctly restored");
+	});
 });
 
 describe("Acc", () => {

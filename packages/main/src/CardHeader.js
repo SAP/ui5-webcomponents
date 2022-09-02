@@ -133,6 +133,7 @@ const metadata = {
  * <br>
  * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
  * <ul>
+ * <li>root - Used to style the root DOM element of the CardHeader</li>
  * <li>title - Used to style the title of the CardHeader</li>
  * <li>subtitle - Used to style the subtitle of the CardHeader</li>
  * <li>status - Used to style the status of the CardHeader</li>

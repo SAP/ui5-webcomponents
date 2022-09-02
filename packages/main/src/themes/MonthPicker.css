@@ -65,7 +65,7 @@
 }
 
 .ui5-mp-item.ui5-mp-item--selected:focus::after {
-	border-color: var(--sapContent_ContrastFocusColor);
+	border-color: var(--_ui5_monthpicker_item_focus_after_border);
 }
 
 .ui5-mp-item.ui5-mp-item--selected:hover {

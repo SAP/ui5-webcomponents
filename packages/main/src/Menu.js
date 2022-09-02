@@ -180,7 +180,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Menu.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Menu.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -397,11 +397,11 @@ class Menu extends UI5Element {
 	}
 
 	_prepareSubMenuDesktopTablet(item, opener, actionId) {
-		if (actionId !== this._subMenuOpenerId || item.hasChildren) {
+		if (actionId !== this._subMenuOpenerId || (item && item.hasChildren)) {
 			// close opened sub-menu if there is any opened
 			this._closeItemSubMenu(this._openedSubMenuItem, true);
 		}
-		if (item.hasChildren) {
+		if (item && item.hasChildren) {
 			// create new sub-menu
 			this._createSubMenu(item, actionId);
 			this._openItemSubMenu(item, opener, actionId);
@@ -434,7 +434,7 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const item = event.target.associatedItem;
 
-			if (item.hasChildren && item._subMenu) {
+			if (item && item.hasChildren && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
 				this._closeItemSubMenu(item);

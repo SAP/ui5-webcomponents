@@ -75,7 +75,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 *
-		 * See all the available icons within the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * See all the available icons within the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -114,7 +114,7 @@ const metadata = {
 		/**
 		 * Defines the tooltip of the component.
 		 * <br>
-		 * <b>Note:</b> We recommend setting tooltip to icon-only components.
+		 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
@@ -466,7 +466,7 @@ class Button extends UI5Element {
 			return "";
 		}
 
-		return this.isIconOnly ? "img" : "presentation";
+		return this.showIconTooltip ? "img" : "presentation";
 	}
 
 	get isIconOnly() {

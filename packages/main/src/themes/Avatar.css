@@ -1,6 +1,7 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	box-sizing: border-box;
+	position: relative;
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
@@ -210,4 +211,54 @@
 
 .ui5-avatar-initials {
 	color: inherit;
+}
+
+/* Slotted Badge */
+::slotted([slot="badge"]) {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 1.125rem;
+	height: 1.125rem;
+	background: var(--sapButton_Emphasized_Background);
+	border: var(--sapButton_Emphasized_Background);
+	border-radius: 1rem;
+	color: var(--sapContent_BadgeTextColor);
+	justify-content: center;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSmallSize);
+}
+
+::slotted([ui5-badge][slot="badge"]) {
+	padding: 0.1875rem;
+}
+
+:host([_size="L"]) ::slotted([slot="badge"]),
+:host([size="L"]) ::slotted([slot="badge"]) {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+:host([_size="XL"]) ::slotted([slot="badge"]),
+:host([size="XL"]) ::slotted([slot="badge"]) {
+	padding: 0.375rem;
+	width: 1.75rem;
+	height: 1.75rem;
+}
+
+:host([shape="Square"]) ::slotted([slot="badge"]) {
+	bottom: -0.125rem;
+	right: -0.125rem;
+}
+
+:host([_size="L"][shape="Square"]) ::slotted([slot="badge"]),
+:host([size="L"][shape="Square"]) ::slotted([slot="badge"]) {
+	bottom: -0.1875rem;
+	right: -0.1875rem;
+}
+
+:host([_size="XL"][shape="Square"]) ::slotted([slot="badge"]),
+:host([size="XL"][shape="Square"]) ::slotted([slot="badge"]) {
+	bottom: -0.25rem;
+	right: -0.25rem;
 }

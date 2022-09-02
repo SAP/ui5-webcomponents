@@ -37,7 +37,7 @@ class I18nBundle {
 		}
 		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
 
-		return formatMessage(messageText, params);
+		return params.length ? formatMessage(messageText, params) : messageText;
 	}
 }
 

@@ -17,7 +17,7 @@ const packageName = "${packageName}";
 
 registerIcon(name, { pathData, ltr, collection, packageName });
 
-export default "${name}";
+export default "${collection}/${name}";
 export { pathData, ltr, accData };`;
 
 
@@ -33,7 +33,7 @@ const packageName = "${packageName}";
 
 registerIcon(name, { pathData, ltr, accData, collection, packageName });
 
-export default "${name}";
+export default "${collection}/${name}";
 export { pathData, ltr, accData };`;
 
 

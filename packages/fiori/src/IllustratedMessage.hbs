@@ -3,7 +3,11 @@
 		{{{effectiveIllustration}}}
 	</div>
 	{{#if hasTitle}}
-	<ui5-title level="H2" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+			{{#if hasFormattedTitle}}
+				<slot name="title"></slot>
+			{{else}}
+				<ui5-title level="H2" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+			{{/if}}
 	{{/if}}
 
 	{{#if hasSubtitle}}
