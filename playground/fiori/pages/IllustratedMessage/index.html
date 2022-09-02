@@ -2,7 +2,6 @@
 <html>
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
@@ -13,7 +12,7 @@
 	
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/assets/bundle.esm.1852c361.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/assets/bundle.esm.8bd48b4e.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/assets/test/pages/IllustratedMessage.html.ebec5a1c.css'>
 </head>
 
@@ -132,6 +131,10 @@
 	<ui5-illustrated-message id="illustratedMsg2" name="UnableToUpload" title="Something went wrong...">
 		<div slot="subtitle">Please try again or contact us at <ui5-link>example@example.com</ui5-link></div>
 		<ui5-button icon="refresh">Try again</ui5-button>
+	</ui5-illustrated-message>
+
+	<ui5-illustrated-message id="illustratedMsg3" name="UnableToUpload">
+		<ui5-title slot="title" level="H1">This is a slotted title</ui5-title>
 	</ui5-illustrated-message>
 
 	<script>
