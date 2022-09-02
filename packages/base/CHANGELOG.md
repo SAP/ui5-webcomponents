@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/SAP/ui5-webcomponents/compare/v1.6.0...v1.7.0) (2022-09-02)
+
+
+### Bug Fixes
+
+* correctly calculate accessibleNameRef ([#5520](https://github.com/SAP/ui5-webcomponents/issues/5520)) ([a872c9b](https://github.com/SAP/ui5-webcomponents/commit/a872c9be58ee38f2d81d65e1a977cf7c80a380fd)), closes [#5452](https://github.com/SAP/ui5-webcomponents/issues/5452)
+* **i18n:** usage of quotes in texts ([#5655](https://github.com/SAP/ui5-webcomponents/issues/5655)) ([3484b74](https://github.com/SAP/ui5-webcomponents/commit/3484b74c8ec940c2d5bd9cef72cc4185a703bcd4))
+* regenarete base styles on change ([#5599](https://github.com/SAP/ui5-webcomponents/issues/5599)) ([8a4ccdb](https://github.com/SAP/ui5-webcomponents/commit/8a4ccdb6d0139b996abcd5fb299232f2370360ee))
+* remove woff files and woff/ttf usage ([#5629](https://github.com/SAP/ui5-webcomponents/issues/5629)) ([e4175cd](https://github.com/SAP/ui5-webcomponents/commit/e4175cdf000ace65758e75fb70545edd872197b8))
+
+
+### Features
+
+* **framework:** reset scrollbar styles class ([#5623](https://github.com/SAP/ui5-webcomponents/issues/5623)) ([c3f3063](https://github.com/SAP/ui5-webcomponents/commit/c3f306383f971744886b99cc60911dcba924720b))
+* **ui5-icon:** support SVGs with multiple paths  ([#5630](https://github.com/SAP/ui5-webcomponents/issues/5630)) ([ce17ca5](https://github.com/SAP/ui5-webcomponents/commit/ce17ca559ce507b8e10f20d7f80dab48908a8305)), closes [#5347](https://github.com/SAP/ui5-webcomponents/issues/5347) [#5526](https://github.com/SAP/ui5-webcomponents/issues/5526)
+* **ui5-popover:** new type DOMReference for opener ([#5609](https://github.com/SAP/ui5-webcomponents/issues/5609)) ([1a4de12](https://github.com/SAP/ui5-webcomponents/commit/1a4de12b37a2cb82be2af010758f4641acf7385d))
+
+
+
+
+
 # [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
 
 

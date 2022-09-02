@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/SAP/ui5-webcomponents/compare/v1.6.0...v1.7.0) (2022-09-02)
+
+
+### Bug Fixes
+
+* **ui5-input:** fix item selection bugs ([#5372](https://github.com/SAP/ui5-webcomponents/issues/5372)) ([274efaa](https://github.com/SAP/ui5-webcomponents/commit/274efaaa212e3152d27665f1809e649a75f67001))
+
+
+
+
+
 # [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
 
 **Note:** Version bump only for package @ui5/webcomponents-theming
