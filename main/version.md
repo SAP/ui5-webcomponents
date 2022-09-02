@@ -1,5 +1,5 @@
-commit ce8a446b32cd56b2e6d547c8f75b1f56b5426c99
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Sep 2 11:04:36 2022 +0300
+commit 1a087de48a08ea1347c00267da8dcb4285f9d2b0
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Sep 2 16:09:07 2022 +0300
 
-    fix(ui5-daterange-picker): handle single date value (#5769)
+    chore: release v1.7.0 (#5775)
