@@ -9,6 +9,7 @@ import {
 	isPageUp,
 } from "../Keys.js";
 import getActiveElement from "../util/getActiveElement.js";
+import { isSlot, getSlottedElements } from "../util/SlotsHelper.js";
 
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
@@ -335,7 +336,13 @@ class ItemNavigation {
 			this._currentIndex = 0;
 		}
 
-		const currentItem = items[this._currentIndex];
+		let currentItem = items[this._currentIndex];
+
+		if (isSlot(currentItem)) {
+			currentItem = getSlottedElements(currentItem)[0];
+		} else {
+			currentItem = items[this._currentIndex];
+		}
 
 		if (!currentItem) {
 			return;
