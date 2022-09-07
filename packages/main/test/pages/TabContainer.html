@@ -760,6 +760,11 @@
 			<ui5-button id="selectLast">Select Last Tab</ui5-button>
 			<ui5-button id="selectNested">Select a Nested Tab</ui5-button>
 		</section>
+		<section>
+			<ui5-title>Empty Tab Container</ui5-title>
+			<ui5-tabcontainer id="tabContainerEmpty">
+			</ui5-tabcontainer>
+		</section>
 	</section>
 
 	<script>
@@ -794,7 +799,7 @@
 					walk(tab.subTabs, callback);
 			}});
 		};
-		
+
 		function getTabSelectorCallback(target) {
 			return (tab) => tab.selected = tab === target;
 		}
