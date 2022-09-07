@@ -1,17 +1,15 @@
 <div
 	class="ui5-textarea-root"
-	style="{{styles.main}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
 
 
-	<div class="wrapper">
+	<div class="wrapper" style="{{styles.main}}">
 		{{#if growing}}
 			<div id="{{_id}}-mirror" style="{{styles.mirror}}" class="ui5-textarea-mirror" aria-hidden="true">
 				{{#each _mirrorText}}
 					{{this.text}}
-
 					<br />
 				{{/each}}
 			</div>
@@ -23,7 +21,7 @@
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
 			aria-label="{{ariaLabelText}}"
-			aria-describedby="{{ariaDescribedBy}}"
+			aria-describedby="{{ariaDescribedBy}}"	
 			aria-invalid="{{ariaInvalid}}"
 			aria-required="{{required}}"
 			maxlength="{{_exceededTextProps.calcedMaxLength}}"

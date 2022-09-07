@@ -68,8 +68,9 @@
 
 .wrapper {
 	box-sizing: border-box;
+	border-color: inherit;
 	width: 100%;
-	border-bottom: 2px solid transparent;
+	padding-bottom: 2px;
 	display: flex;
 	height: calc(100% - 1.5rem);
 }
