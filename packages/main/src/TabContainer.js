@@ -619,6 +619,7 @@ class TabContainer extends UI5Element {
 	 * Calling <code>allItems</code> on this TabContainer will return the instances in the following order:
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
+	 * @readonly
 	 *
 	 * @returns {sap.ui.webcomponents.main.ITab[]}
 	 */
