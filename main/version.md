@@ -1,7 +1,5 @@
-commit cfb8951f0acb30e1ebf54a18c2e9a3f5cf88cba1
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Sep 8 13:00:06 2022 +0300
+commit 026c001f48110a69be39bf4f5a4bdbd55deddcf5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Sep 8 16:18:57 2022 +0300
 
-    fix(ui5-tabcontainer): fixed error when no tabs (#5793)
-    
-    * fix(ui5-tabcontainer): fixed error when no tabs
+    chore: release v1.7.1 (#5797)
