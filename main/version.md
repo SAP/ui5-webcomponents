@@ -1,5 +1,7 @@
-commit 026c001f48110a69be39bf4f5a4bdbd55deddcf5
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Sep 8 16:18:57 2022 +0300
+commit a6895025300e707d63c0ab4f413b07f6a6f96563
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Sep 8 17:22:22 2022 +0300
 
-    chore: release v1.7.1 (#5797)
+    fix(ui5-textarea): announce value state type (#5798)
+    
+    issue: #5716
