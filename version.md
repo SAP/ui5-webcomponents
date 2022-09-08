@@ -1,5 +1,5 @@
-commit d2f3be566991d7792fce79b66850def477a30eff
+commit 6fa211eb18fabdfe4be815900bf742161599f433
 Author: ilhan007 <ilhan.myumyun@sap.com>
-Date:   Fri Sep 2 16:07:23 2022 +0300
+Date:   Thu Sep 8 15:25:35 2022 +0300
 
-    Merge branch 'release-1.7.0' into latest-release-website
+    Merge branch 'main' into latest-release-website
