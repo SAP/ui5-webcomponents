@@ -378,17 +378,20 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// update selected tab
 		this._allItemsAndSubItems = this._getAllSubItems(this.items);
-		if (this._allItemsAndSubItems.length) {
-			const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
-			if (selectedTabs.length) {
-				this._selectedTab = selectedTabs[0];
-			} else {
-				this._selectedTab = this._allItemsAndSubItems[0];
-				this._selectedTab._selected = true;
-			}
+		if (!this._allItemsAndSubItems.length) {
+			return;
 		}
+
+		// update selected tab
+		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
+		if (selectedTabs.length) {
+			this._selectedTab = selectedTabs[0];
+		} else {
+			this._selectedTab = this._allItemsAndSubItems[0];
+			this._selectedTab._selected = true;
+		}
+
 		this._setItemsPrivateProperties(this.items);
 
 		if (!this._animationRunning) {
@@ -401,6 +404,10 @@ class TabContainer extends UI5Element {
 	}
 
 	onAfterRendering() {
+		if (!this.items.length) {
+			return;
+		}
+
 		this._setItemsForStrip();
 
 		if (!this.shadowRoot.contains(document.activeElement)) {
