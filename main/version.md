@@ -1,7 +1,5 @@
-commit 9e0c79fe7bf623d9b113be5b6df4a569293babbc
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Fri Sep 2 17:32:52 2022 +0300
+commit 8a848f0b7a7a8c8a316b89ff7537d07589b7fbe0
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Thu Sep 8 08:52:34 2022 +0200
 
-    fix(ui5-dialog): fixed text selection when the dialog is draggable (#5724)
-    
-    * fix(ui5-dialog): fixed selection of the content when the dialog is draggable
+    docs(ui5-tabcontainer): mark allItems as readonly (#5776)
