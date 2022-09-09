@@ -49,7 +49,7 @@ html {
     /* REM Units based on 16px root font size. */
 
     :root {
-        --background-image: url("../Landing\ 2560.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ 2560.svg");
         --background-size: cover;
         --body-width: 2560px;
         --body-height: 5872px;
@@ -220,7 +220,7 @@ html {
 @media screen and (max-width: 1920px) {
 
     :root {
-        --background-image: url("../Landing\ 1920-\ New\ content.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ 1920-\ New\ content.svg");
         --background-size: cover;
         --body-width: 1850px;
         --body-height: 4550px;
@@ -290,7 +290,7 @@ html {
 
 @media screen and (max-width: 1440px) {
     :root {
-        --background-image: url("../Landing\ 1440px\ -\ v2.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ v2.svg");
         --body-height: 3930px;
         --navbar-large-text-font-size: 1.375rem;
         --top-content-container-width: 40.563rem;
@@ -348,7 +348,7 @@ html {
 
 @media screen and (max-width: 1160px) {
     :root {
-        --background-image: url("../Landing\ 1440px\ -\ 1160px-v2.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ 1160px-v2.svg");
         --navbar-link-font-size: 1rem;
         --navbar-left-container-display: none;
         --navbar-left-container-justify-content: flex-end;
@@ -412,7 +412,7 @@ html {
 
 @media screen and (max-width: 950px) {
     :root {
-        --background-image: url("../Landing\ 1440px\ -\ 950px\ -\ v2\ 1.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ 950px\ -\ v2\ 1.svg");
         --top-content-container-width: 35.563rem;
         --top-content-container-height: 16.5rem;
         --top-illustration-text-font-size: 1.1rem;
@@ -438,7 +438,7 @@ html {
 
 @media screen and (max-width: 768px) {
     body {
-        --background-image: url("../Landing\ 768px.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ 768px.svg");
         --body-height: 2509px;
         --navbar-link-font-size: 0.875rem;
         --navbar-font-size: 0.875rem;
@@ -526,7 +526,7 @@ html {
 
 @media screen and (max-width: 667px) {
     body {
-        --background-image: url("../Landing\ -\ 667px.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px.svg");
         --body-height: 3072px;
         --navbar-height: 3rem;
         --navbar-link-font-size: 0.75rem;
@@ -612,7 +612,7 @@ html {
 
 @media screen and (max-width: 448px) {
     body {
-        --background-image: url("../Landing\ -\ 667px-test.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px-test.svg");
         --testimonials-container-title-font-size: 1.35rem;
         --testimonials-width: 18rem;
         --testimonials-slide-text-font-size: 0.75rem;
@@ -626,7 +626,7 @@ html {
 
 @media screen and (max-width: 386px) {
     body {
-        --background-image: url("../Landing\ -\ 375px.svg");
+        --background-image: url("../illustrations/background-svgs/Landing\ -\ 375px.svg");
         --body-height: 3072px;
         --top-content-container-width: 11.563rem;
         --top-content-container-height: 11.5rem;
