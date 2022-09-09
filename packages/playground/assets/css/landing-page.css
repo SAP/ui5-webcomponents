@@ -727,6 +727,7 @@ html {
 /* THE 'Check it' BUTTON */
 .navbar .item.button {
     display: flex;
+    justify-content: center;
     width: var(--navbar-check-it-button-width);
     height: var(--navbar-check-it-button-height);
     font-size: var(--navbar-font-size);
