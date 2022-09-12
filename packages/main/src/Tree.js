@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import TreeItem from "./TreeItem.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
@@ -75,6 +76,31 @@ const metadata = {
 		 */
 		footerText: {
 			type: String,
+		},
+
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -323,6 +349,10 @@ class Tree extends UI5Element {
 
 	get _role() {
 		return "tree";
+	}
+
+	get _label() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	_onListItemStepIn(event) {
