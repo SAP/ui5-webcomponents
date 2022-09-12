@@ -29,7 +29,7 @@
 
 .ui5-table-popin-row td {
 	padding-top: .5rem;
-	padding-left: 1rem;
+	padding-inline-start: 1rem;
 }
 
 .ui5-table-popin-row:last-child td {
@@ -61,7 +61,7 @@
 }
 
 :host(:not([mode="MultiSelect"])) ::slotted([ui5-table-cell]:not([popined]):first-child) {
-	padding-left: 1rem;
+	padding-inline-start: 1rem;
 }
 
 /** Hover **/
