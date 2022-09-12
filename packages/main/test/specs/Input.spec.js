@@ -309,6 +309,55 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await input4.getProperty("value"), "-1", "Removed properly");
 	});
 
+	it("tests removing fractional part of numeric value with 'e' notation and minus signs", async () => {
+		const input = await browser.$("#input-number35");
+		const inputResult = await browser.$("#input-number35_eventValue");
+
+		await input.click();
+
+
+
+		// -1.33e-2
+		// Press Backspace to remove the "2" character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Value is empty string");
+
+		// -1.33e-
+		// Press Backspace to remove the "-" character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Value is empty string");
+
+		// -1.33e
+		// Press Backspace to remove the "e" character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1.33", "Value is -1.33");
+
+		// -1.33
+		// Press Backspace to remove the number "3"
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1.3", "Value is -1.3");
+
+		// -1.3
+		// Press Backspace to remove the number "3"
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1", "Value is -1");
+
+		// -1.
+		// Press Backspace to remove the "." character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1", "Value is -1");
+
+		// -1
+		// Press Backspace to remove the number "1"
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Value is empty string");
+
+		// -
+		// Press 2 to add the number "2"
+		await input.keys("2");
+		assert.strictEqual(await inputResult.getProperty("value"), "-2", "Value is -2");
+	});
+
 	it("handles suggestions", async () => {
 		await browser.url(`test/pages/Input.html`);
 
@@ -601,7 +650,7 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(ariaHiddenText, "Value State Information Informative entry", "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText, "Informative entry", "Displayed value state message text is correct");
-	
+
 		await inputSuccess.click();
 		assert.strictEqual(await inputSuccess.shadow$(".ui5-hidden-text").getText(), "Value State Success", "Hidden screen reader text is correct");
 	});
@@ -1378,7 +1427,6 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await inner.keys("S");
 
-		
 		await browser.waitUntil(() => respPopover.getProperty("opened"), {
 			timeout: 2000,
 			timeoutMsg: "Popover should be displayed"

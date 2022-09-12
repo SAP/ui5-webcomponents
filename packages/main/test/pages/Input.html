@@ -342,6 +342,8 @@
 	<ui5-input id="input-number32" type="Number" value="4.3"></ui5-input><br>
 	<ui5-input id="input-number33" type="Number" value=".33"></ui5-input><br>
 	<ui5-input id="input-number34" type="Number" value="-1.33"></ui5-input><br>
+	<ui5-input id="input-number35" type="Number" value="-1.33e-2"></ui5-input><br>
+	<ui5-input id="input-number35_eventValue" value="-1.33e-2"></ui5-input><br>
 
 	<h3>sap_horizon</h3>
 
@@ -707,6 +709,11 @@
 		document.getElementById("input-change-3").addEventListener("ui5-change", (event) => {
 			const changeCount = document.getElementById("input-change-value-3");
 			changeCount.innerText = event.target.value;
+		});
+
+		document.getElementById("input-number35").addEventListener("ui5-input", event => {
+			const resultInput = document.getElementById("input-number35_eventValue");
+			resultInput.value = event.target.value;
 		});
 	</script>
 </body>
