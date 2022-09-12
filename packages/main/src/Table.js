@@ -35,7 +35,7 @@ import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being us
 import {
 	LOAD_MORE_TEXT,
 	ARIA_LABEL_SELECT_ALL_CHECKBOX,
-	TABLE_HEADER_ROW_TEXT,
+	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -1132,7 +1132,7 @@ class Table extends UI5Element {
 
 	get ariaLabelText() {
 		const rowsCount = this.rows.length + 1;
-		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_TEXT, rowsCount);
+		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_INFORMATION, rowsCount);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");
