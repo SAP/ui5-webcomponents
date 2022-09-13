@@ -69,6 +69,7 @@ html {
         --navbar-right-container-display: flex;
         --navbar-right-container-align-items: center;
         --navbar-right-container-justify-content: flex-end;
+        --navbar-button-display: none;
         --navbar-button-width: 5rem;
         --navbar-button-height: 2rem;
         --navbar-button-cursor: pointer;
@@ -448,7 +449,7 @@ html {
         --navbar-font-size: 0.875rem;
         --top-content-container-width: 25.563rem;
         --top-content-container-height: 10.5rem;
-        --top-content-description-width: 100%;
+        --top-content-description-width: 90%;
         --top-content-margin-top: 2.875rem;
         --top-content-margin-inline-start: 2.688rem;
         --top-content-button-mt: 1.125rem;
@@ -460,12 +461,12 @@ html {
         --top-content-illustrations-container-mt: -5rem;
         --top-content-illustrations-header-font-size: 1.75rem;
         --top-content-illustrations-text-font-size: 1;
-        --top-content-illustration-1-margin-inline-start: 25rem;
+        --top-content-illustration-1-margin-inline-start: 22rem;
         --top-content-illustration-1-margin-top: 21.5rem;
         --top-content-illustration-1-title-margin-bottom: 0.75rem;
         --top-content-illustration-2-margin-top: 13.75rem;
-        --top-content-illustration-2-margin-rigth: 23.25rem;
-        --top-content-illustration-3-margin-inline-start: 24.25rem;
+        --top-content-illustration-2-margin-rigth: 21.25rem;
+        --top-content-illustration-3-margin-inline-start: 20.25rem;
         --top-content-illustration-3-margin-top: 12.30rem;
         --mid-content-example-container-margin-top: 7rem;
         --mid-content-example-header-font-size: 1.5rem;
@@ -529,7 +530,7 @@ html {
 
 /* ---------------------------------------- 667PX ---------------------------------------- */
 
-@media screen and (max-width: 667px) {
+@media screen and (max-width: 631px) {
     body {
         --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px.svg");
         --body-height: 3072px;
@@ -677,6 +678,7 @@ html {
 
 /* THE 'Blog' BUTTON */
 .navbar-button {
+    display: var(--navbar-button-display);
     width: var(--navbar-button-width);
     height: var(--navbar-button-height);
     border: var(--navbar-button-border);
