@@ -1,49 +1,44 @@
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector(`ui5-icon[name="navigation-left-arrow"]`).addEventListener("click", function() {
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(`ui5-icon[name="navigation-left-arrow"]`).addEventListener("click", function () {
         rotateLeft();
     });
 
-    document.querySelector(`ui5-icon[name="navigation-right-arrow"]`).addEventListener("click", function() {
+    document.querySelector(`ui5-icon[name="navigation-right-arrow"]`).addEventListener("click", function () {
         rotateRight();
     });
 })
 
-function testimonials() {
-    return document.querySelector(".testimonial");
-}
-
 function rotateLeft() {
-    var testimonials = document.querySelectorAll(".testimonial"),
-        selectedIndex;
+    var slides = document.querySelectorAll(".slide"), selectedIndex;
 
-    testimonials.forEach(function(item, index) {
-        if (item.classList.contains("visible")) {
-            item.classList.remove("visible");
+    slides.forEach(function (item, index) {
+        if (item.classList.contains("active")) {
+            item.classList.remove("active");
             selectedIndex = index;
         }
     });
 
     if (selectedIndex === 0) {
-        testimonials[testimonials.length - 1].classList.add("visible");
+        slides[slides.length - 1].classList.add("active");
     } else {
-        testimonials[selectedIndex - 1].classList.add("visible");
+        slides[selectedIndex - 1].classList.add("active");
     }
 }
 
 function rotateRight() {
-    var testimonials = document.querySelectorAll(".testimonial"),
+    var slides = document.querySelectorAll(".slide"),
         selectedIndex;
 
-    testimonials.forEach(function(item, index) {
-        if (item.classList.contains("visible")) {
-            item.classList.remove("visible");
+    slides.forEach(function (item, index) {
+        if (item.classList.contains("active")) {
+            item.classList.remove("active");
             selectedIndex = index;
         }
     });
 
-    if (selectedIndex === testimonials.length - 1) {
-        testimonials[0].classList.add("visible");
+    if (selectedIndex === slides.length - 1) {
+        slides[0].classList.add("active");
     } else {
-        testimonials[selectedIndex + 1].classList.add("visible");
+        slides[selectedIndex + 1].classList.add("active");
     }
 }
