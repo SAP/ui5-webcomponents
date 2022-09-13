@@ -98,6 +98,7 @@ html {
         --top-content-container-width: 47.563rem;
         --top-content-container-height: 15.5rem;
         --top-content-container-justify-content: center;
+        --top-content-description-width: 100%;
         --top-content-margin-top: 8.875rem;
         --top-content-margin-inline-start: 14.688rem;
         --top-content-button-mt: 1.125rem;
@@ -118,9 +119,10 @@ html {
         --top-content-illustration-1-title-margin-bottom: 2.125rem;
         --top-content-illustration-2-margin-top: 34rem;
         --top-content-illustration-2-margin-rigth: 43rem;
+        --top-content-illustration-2-text-align: right;
         --top-content-illustration-3-margin-inline-start: 45rem;
         --top-content-illustration-3-margin-top: 34.5rem;
-        --top-content-illustrations-text-align: right;
+        --top-content-illustrations-text-align: left;
         --top-content-illustrations-white-space: nowrap;
         --mid-content-example-container-width: 100%;
         --mid-content-example-container-height: 20rem;
@@ -414,7 +416,9 @@ html {
     :root {
         --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ 950px\ -\ v2\ 1.svg");
         --top-content-container-width: 35.563rem;
-        --top-content-container-height: 16.5rem;
+        --top-content-container-height: 17.75rem;
+        --top-content-description-width: 75%;
+        --top-content-margin-top: 4.875rem;
         --top-illustration-text-font-size: 1.1rem;
         --top-content-illustration-1-margin-top: 8rem;
         --top-content-illustration-1-margin-inline-start: 26rem;
@@ -444,6 +448,7 @@ html {
         --navbar-font-size: 0.875rem;
         --top-content-container-width: 25.563rem;
         --top-content-container-height: 10.5rem;
+        --top-content-description-width: 100%;
         --top-content-margin-top: 2.875rem;
         --top-content-margin-inline-start: 2.688rem;
         --top-content-button-mt: 1.125rem;
@@ -544,6 +549,7 @@ html {
         --top-content-illustration-1-title-margin-bottom: 0.25rem;
         --top-content-illustration-2-margin-top: 17.75rem;
         --top-content-illustration-2-margin-rigth: 0;
+        --top-content-illustration-2-text-align: center;
         --top-content-illustration-3-margin-inline-start: 0;
         --top-content-illustration-3-margin-top: 20.30rem;
         --top-content-illustrations-text-align: center;
@@ -765,6 +771,7 @@ html {
 
 .top-content-container .description {
     margin-bottom: var(--top-content-margin-bottom);
+    width: var(--top-content-description-width);
 }
 
 .top-content-container .orange {
@@ -820,7 +827,7 @@ html {
 .illustration-text-2 {
     margin-top: var(--top-content-illustration-2-margin-top);
     margin-inline-end: var(--top-content-illustration-2-margin-rigth);
-    text-align: var(--top-content-illustrations-text-align);
+    text-align: var(--top-content-illustration-2-text-align);
 }
 
 .illustration-text-2 .title {
