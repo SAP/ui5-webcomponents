@@ -1,5 +1,5 @@
-commit 2e3452a98463aa3b78231651ac63771d3cbc5c1a
-Author: Stanislav Bodurov <stbodurov@icloud.com>
-Date:   Wed Sep 14 10:34:33 2022 +0300
+commit 886f11d287b26950bf7981d064814b1fa44ef212
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Sep 14 13:07:42 2022 +0300
 
-    feat(ui5-tree): introduce `accessibleName` and  `accessibleNameRef` properties (#5804)
+    refactor: use the UMD bundle for zxing (#5809)
