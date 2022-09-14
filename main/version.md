@@ -1,5 +1,5 @@
-commit ada58044524348c9edce0cb12aaa5f7eb057938b
-Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
-Date:   Tue Sep 13 18:57:23 2022 +0300
+commit 2e3452a98463aa3b78231651ac63771d3cbc5c1a
+Author: Stanislav Bodurov <stbodurov@icloud.com>
+Date:   Wed Sep 14 10:34:33 2022 +0300
 
-    fix(playground): reworked playground landing page design and responsveness (#5801)
+    feat(ui5-tree): introduce `accessibleName` and  `accessibleNameRef` properties (#5804)
