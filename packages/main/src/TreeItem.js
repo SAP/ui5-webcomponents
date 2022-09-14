@@ -114,6 +114,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Defines the tooltip of the component.
 		 * @type {string}
 		 * @defaultvalue ""

@@ -108,6 +108,7 @@ The `accessible-name` property is currently supported in:
 * [Slider](https://sap.github.io/ui5-webcomponents/playground/components/Slider), 
 [Range Slider](https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Tree](https://sap.github.io/ui5-webcomponents/playground/components/Tree)
 * [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
 
 
@@ -135,6 +136,7 @@ The `accessible-name-ref` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
 * [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
+* [Tree](https://sap.github.io/ui5-webcomponents/playground/components/Tree)
 * [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
 
 ---
