@@ -5,4 +5,5 @@
 	--ui5_table_header_row_font_weight: normal;
 	--ui5_table_header_row_border_bottom_color: var(--sapList_BorderColor);
 	--ui5_table_header_row_border_width: 1px;
+	--_ui5_table_load_more_border-bottom: none;
 }

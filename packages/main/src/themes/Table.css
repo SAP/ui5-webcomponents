@@ -76,6 +76,10 @@ tr {
 	opacity: 0.72;
 }
 
+:host [growing-button] {
+	border-bottom: var(--_ui5_table_load_more_border-bottom);
+}
+
 .ui5-table-select-all-column {
 	width: var(--ui5_table_multiselect_column_width);
 	text-align: center;
