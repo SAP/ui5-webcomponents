@@ -1,5 +1,7 @@
-commit 83b244c300cd179c0584d0bf6d302e3631fb3581
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 15 16:58:59 2022 +0300
+commit 676adcd1e706e528440c9a75edb5713ef538460d
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Sep 16 15:21:17 2022 +0300
 
-    fix(ui5-panel): improve focus outline visualization (#5811)
+    fix(ui5-illustrated-message): removed redundant scrollbar in RTL (#5819)
+    
+    Fixes: #5788
