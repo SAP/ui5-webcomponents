@@ -1,7 +1,8 @@
-commit 676adcd1e706e528440c9a75edb5713ef538460d
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Sep 16 15:21:17 2022 +0300
+commit d2fc095515de7c77f06a4d423f59702b14460a91
+Author: Henrique Mattos <henrique@visualworks.com.br>
+Date:   Mon Sep 19 07:10:58 2022 +0200
 
-    fix(ui5-illustrated-message): removed redundant scrollbar in RTL (#5819)
+    fix(framework): remove .com from URL font-face 72Black (#5822)
     
-    Fixes: #5788
+    The refactoring to use the new SDK URL left a `.com` after the new
+    domain `sdk.openui5.org`.
