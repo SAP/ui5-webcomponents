@@ -69,11 +69,11 @@ const metadata = {
 		/**
 		 * Defines the component options.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Only one selected option is allowed.
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {sap.ui.webcomponents.main.ISelectOption[]}
 		 * @slot options
@@ -87,10 +87,10 @@ const metadata = {
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
@@ -117,7 +117,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is noninteractive.
 		 *
 		 * @type {boolean}
@@ -132,11 +132,11 @@ const metadata = {
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 * The value of the component will be the value of the currently selected <code>ui5-option</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-select</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -151,7 +151,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -262,7 +262,7 @@ const metadata = {
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
- * <br>
+ * <br />
  * <ul>
  * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.</li>
  * <li>[UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.</li>
@@ -271,11 +271,11 @@ const metadata = {
  * <li>[HOME] - Navigates to first option</li>
  * <li>[END] - Navigates to the last option</li>
  * </ul>
- * <br>
+ * <br />
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
  * @constructor
  * @author SAP SE

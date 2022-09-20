@@ -30,7 +30,7 @@ const metadata = {
 
 		/**
 		 * Defines the component header area.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 		 *
 		 * @type {HTMLElement[]}
@@ -58,7 +58,7 @@ const metadata = {
 		/**
 		 * This property is used to set the header text of the component.
 		 * The text is visible in both expanded and collapsed states.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
@@ -121,7 +121,7 @@ const metadata = {
 		/**
 		 * Defines the "aria-level" of component heading,
 		 * set by the <code>headerText</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 * @type {TitleLevel}
 		 * @defaultvalue "H2"
@@ -206,13 +206,13 @@ const metadata = {
  *
  * <h3>Structure</h3>
  * The panel's header area consists of a title bar with a header text or custom header.
- * <br>
+ * <br />
  * The header is clickable and can be used to toggle between the expanded and collapsed state. It includes an icon which rotates depending on the state.
- * <br>
+ * <br />
  * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
- * <br>
+ * <br />
  * The content area can contain an arbitrary set of controls.
- * <br><b>Note:</b> The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
+ * <br /><b>Note:</b> The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
  * <h3>Responsive Behavior</h3>
  * <ul>
@@ -232,7 +232,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-panel</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>header - Used to style the wrapper of the header</li>
@@ -245,7 +245,7 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *

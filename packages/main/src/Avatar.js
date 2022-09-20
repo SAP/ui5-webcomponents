@@ -45,13 +45,13 @@ const metadata = {
 
 		/**
 		 * Defines the name of the UI5 Icon, that will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> If <code>image</code> slot is provided, the property will be ignored.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
-		 * <br><br>
+		 * <br /><br />
 		 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
-		 * <br>
+		 * <br />
 		 * <pre>&lt;ui5-avatar icon="employee"></pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -65,7 +65,7 @@ const metadata = {
 
 		/**
 		 * Defines the displayed initials.
-		 * <br>
+		 * <br />
 		 * Up to two Latin letters can be displayed as initials.
 		 *
 		 * @type {string}
@@ -78,7 +78,7 @@ const metadata = {
 
 		/**
 		 * Defines the shape of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Circle</code></li>
@@ -95,7 +95,7 @@ const metadata = {
 
 		/**
 		 * Defines predefined size of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>XS</code></li>
@@ -123,7 +123,7 @@ const metadata = {
 
 		/**
 		 * Defines the background color of the desired image.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Accent1</code></li>
@@ -170,7 +170,7 @@ const metadata = {
 
 		/**
 		 * Defines the aria-haspopup value of the component when <code>interactive</code> property is <code>true</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * @type String
 		 * @since 1.0.0-rc.15
 		 * @protected
@@ -213,15 +213,15 @@ const metadata = {
 		 * <b>Note:</b> While the slot allows for custom badges, to achieve
 		 * the Fiori design, please use <code>ui5-badge</code> with <code>ui5-icon</code>
 		 * in the corresponding <code>icon</code> slot, without text nodes.
-		 * <br><br>
+		 * <br/><br/>
 		 * Example:
-		 * <br><br>
-		 * &lt;ui5-avatar><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp&lt;/ui5-badge><br>
+		 * <br/><br/>
+		 * &lt;ui5-avatar><br/>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br/>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br/>
+		 * &nbsp;&nbsp;&nbsp;&nbsp&lt;/ui5-badge><br/>
 		 * &lt;/ui5-avatar>
-		 * <br><br>
+		 * <br/><br/>
 		 * <ui5-avatar initials="AB" color-scheme="Accent1">
 		 * <ui5-badge slot="badge">
 		 * <ui5-icon slot="icon" name="accelerated"></ui5-icon>
@@ -260,14 +260,14 @@ const metadata = {
  * The shape can be circular or square. There are several predefined sizes, as well as an option to
  * set a custom size.
  *
- * <br><br>
+ * <br /><br />
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
  * <li>[SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
  * </ul>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *

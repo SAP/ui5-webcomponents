@@ -48,7 +48,7 @@ const metadata = {
 
 		/**
 		 * Defines hierarchies with nested sub tabs.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITab[]}
@@ -111,7 +111,7 @@ const metadata = {
 
 		/**
 		 * Defines the component's design color.
-		 * <br><br>
+		 * <br /><br />
 		 * The design is applied to:
 		 * <ul>
 		 * <li>the component icon</li>
@@ -119,10 +119,10 @@ const metadata = {
 		 * <li>the tab selection line</li>
 		 * </ul>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * Available designs are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The design depends on the current theme.
 		 * @type {SemanticColor}
 		 * @defaultvalue "Default"

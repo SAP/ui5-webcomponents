@@ -38,7 +38,7 @@ const metadata = {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -81,7 +81,7 @@ const metadata = {
 		/**
 		 * By default there will be drag and drop overlay shown over the <code>ui5-upload-collection</code> when files
 		 * are dragged. If you don't intend to use drag and drop, set this property.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
 		 * <code>ui5-upload-collection</code> only displays an overlay.
 		 *
@@ -121,7 +121,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the items of the <code>ui5-upload-collection</code>.
-		 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
+		 * <br /><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.fiori.IUploadCollectionItem[]}
 		 * @slot items
@@ -134,7 +134,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-upload-collection</code> header.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>header</code> slot is provided,
 		 * the labelling of the <code>UploadCollection</code> is a responsibility of the application developer.
 		 * <code>accessibleName</code> should be used.
@@ -150,7 +150,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Fired when an element is dropped inside the drag and drop overlay.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.UploadCollection#drop
@@ -163,7 +163,7 @@ const metadata = {
 
 		/**
 		 * Fired when the Delete button of any item is pressed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
 		 * @event sap.ui.webcomponents.fiori.UploadCollection#item-delete
@@ -201,7 +201,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code> (for <code>ui5-upload-collection-item</code>)
  *
  * @constructor

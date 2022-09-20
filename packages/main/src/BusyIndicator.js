@@ -50,7 +50,7 @@ const metadata = {
 		/**
 		 * Defines the size of the component.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 *
 		 * <ul>
@@ -113,9 +113,9 @@ const metadata = {
  * <h3>Usage</h3>
  * For the <code>ui5-busy-indicator</code> you can define the size, the text and whether it is shown or hidden.
  * In order to hide it, use the "active" property.
- * <br><br>
+ * <br /><br />
  * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busy-indicator</code> instance.
- * <br>
+ * <br />
  * <b>Note:</b> Since <code>ui5-busy-indicator</code> has <code>display: inline-block;</code> by default and no width of its own,
  * whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
  *

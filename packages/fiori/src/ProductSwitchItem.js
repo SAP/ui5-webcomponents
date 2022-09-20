@@ -37,9 +37,9 @@ const metadata = {
 
 		/**
 		 * Defines the icon to be displayed as a graphical element within the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Example:
-		 * <br>
+		 * <br />
 		 * <pre>ui5-product-switch-item icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -54,7 +54,7 @@ const metadata = {
 
 		/**
 		 * Defines a target where the <code>targetSrc</code> content must be open.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>_self</code></li>
@@ -133,15 +133,15 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-product-switch-item</code> web component represents the items displayed in the
  * <code>ui5-product-switch</code> web component.
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
- * <br><br>
+ * <br /><br />
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-product-switch</code> provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
+ * <br />
  * <ul>
  * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
  * </ul>

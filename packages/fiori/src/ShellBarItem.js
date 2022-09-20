@@ -61,7 +61,7 @@ const metadata = {
  * @class
  * The <code>ui5-shellbar-item</code> represents a custom item, that
  * might be added to the <code>ui5-shellbar</code>.
- * <br><br>
+ * <br /><br />
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
  * @constructor

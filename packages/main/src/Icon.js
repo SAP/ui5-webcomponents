@@ -32,34 +32,34 @@ const metadata = {
 
 		/**
 		 * Defines the unique identifier (icon name) of the component.
-		 * <br>
+		 * <br />
 		 *
 		 * To browse all available icons, see the
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Icons</ui5-link>,
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">SAP Fiori Tools</ui5-link> and
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Business Suite</ui5-link> collections.
-		 * <br>
+		 * <br/>
 		 *
 		 * Example:
-		 * <br>
+		 * <br />
 		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> To use the SAP Fiori Tools icons,
 		 * you need to set the <code>tnt</code> prefix in front of the icon's name.
-		 * <br>
+		 * <br />
 		 *
 		 * Example:
-		 * <br>
+		 * <br />
 		 * <code>name='tnt/antenna'</code>, <code>name='tnt/actor'</code>, <code>name='tnt/api'</code>.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> To use the SAP Business Suite icons,
 		 * you need to set the <code>business-suite</code> prefix in front of the icon's name.
-		 * <br>
+		 * <br />
 		 *
 		 * Example:
-		 * <br>
+		 * <br />
 		 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
 		 * @type {string}
 		 * @defaultvalue ""
@@ -72,7 +72,7 @@ const metadata = {
 		/**
 		 * Defines the text alternative of the component.
 		 * If not provided a default text alternative will be set, if present.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Every icon should have a text alternative in order to
 		 * calculate its accessible name.
 		 *
@@ -171,17 +171,17 @@ const metadata = {
  *
  * The <code>ui5-icon</code> component represents an SVG icon.
  * There are two main scenarios how the <code>ui5-icon</code> component is used:
- * as a purely decorative element, <br>
+ * as a purely decorative element, <br />
  * or as an interactive element that can be focused and clicked.
  *
  * <h3>Usage</h3>
  *
  * 1. <b>Get familiar with the icons collections.</b>
- * <br>
+ * <br />
  * Before displaying an icon, you need to explore the icons collections to find and import the desired icon.
- * <br>
+ * <br />
  * Currently there are 3 icons collection, available as 3 npm packages:
- * <br>
+ * <br />
  *
  * <ul>
  * <li>
@@ -199,42 +199,42 @@ const metadata = {
  * </ul>
  *
  * 2. <b>After exploring the icons collections, add one or more of the packages as dependencies to your project.</b>
- * <br>
- * <code>npm i @ui5/webcomponents-icons</code><br>
- * <code>npm i @ui5/webcomponents-icons-tnt</code><br>
+ * <br />
+ * <code>npm i @ui5/webcomponents-icons</code><br />
+ * <code>npm i @ui5/webcomponents-icons-tnt</code><br />
  * <code>npm i @ui5/webcomponents-icons-business-suite</code>
- * <br><br>
+ * <br /><br />
  *
  * 3. <b>Then, import the desired icon</b>.
- * <br>
+ * <br />
  * <code>import "@ui5/{package_name}/dist/{icon_name}.js";</code>
- * <br><br>
+ * <br /><br />
  *
  * <b>For Example</b>:
- * <br>
+ * <br />
  *
  * For the standard "SAP-icons" icon collection, import an icon from the <code>@ui5/webcomponents-icons</code> package:
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-icons/dist/employee.js";</code>
- * <br><br>
+ * <br /><br />
  *
  * For the "tnt" (SAP Fiori Tools) icon collection, import an icon from the <code>@ui5/webcomponents-icons-tnt</code> package:
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
- * <br><br>
+ * <br /><br />
  *
  * For the "business-suite" (SAP Business Suite) icon collection, import an icon from the <code>@ui5/webcomponents-icons-business-suite</code> package:
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-icons-business-suite/dist/ab-testing.js";</code>
- * <br><br>
+ * <br /><br />
  *
- * 4. <b>Display the icon using the <code>ui5-icon</code> web component.</b><br>
- * Set the icon collection ("SAP-icons", "tnt" or "business-suite" - "SAP-icons" is the default icon collection and can be skipped)<br>
+ * 4. <b>Display the icon using the <code>ui5-icon</code> web component.</b><br />
+ * Set the icon collection ("SAP-icons", "tnt" or "business-suite" - "SAP-icons" is the default icon collection and can be skipped)<br />
  * and the icon name to the <code>name</code> property.
- * <br><br>
+ * <br /><br />
  *
- * <code>&lt;ui5-icon name="employee">&lt;/ui5-icon></code><br>
- * <code>&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon></code><br>
+ * <code>&lt;ui5-icon name="employee">&lt;/ui5-icon></code><br />
+ * <code>&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon></code><br />
  * <code>&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon></code>
  *
  * <h3>Keyboard Handling</h3>
