@@ -72,7 +72,7 @@
 	width: 100%;
 	padding-bottom: 2px;
 	display: flex;
-	height: calc(100% - 1.5rem);
+	height: 100%;
 }
 
 .ui5-textarea-inner {
@@ -108,7 +108,6 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding-bottom: 0.6875rem;
     overflow: hidden;
 }
 
@@ -126,7 +125,6 @@
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
-	min-height: 40px;
 }
 
 :host([readonly]) {
