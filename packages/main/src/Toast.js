@@ -24,7 +24,7 @@ const metadata = {
 		/**
 		 * Defines the duration in milliseconds for which component
 		 * remains on the screen before it's automatically closed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
 		 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 		 *
@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Defines the placement of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>TopStart</code></li>
@@ -92,7 +92,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}

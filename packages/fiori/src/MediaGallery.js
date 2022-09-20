@@ -39,10 +39,10 @@ const metadata = {
 		/**
 		 * Defines the component items.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Only one selected item is allowed.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
 		 *
 		 * @type {sap.ui.webcomponents.fiori.IMediaGalleryItem[]}
@@ -73,7 +73,7 @@ const metadata = {
 		/**
 		 * If enabled, a <code>display-area-click</code> event is fired
 		 * when the user clicks or taps on the display area.
-		 * <br>
+		 * <br />
 		 * The display area is the central area that contains
 		 * the enlarged content of the currently selected item.
 		 *
@@ -87,7 +87,7 @@ const metadata = {
 
 		/**
 		 * Determines the layout of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Auto</code></li>
@@ -107,7 +107,7 @@ const metadata = {
 		/**
 		 * Determines the horizontal alignment of the thumbnails menu
 		 * vs. the central display area.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Left</code></li>
@@ -126,7 +126,7 @@ const metadata = {
 		/**
 		 * Determines the vertical alignment of the thumbnails menu
 		 * vs. the central display area.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Top</code></li>
@@ -146,7 +146,7 @@ const metadata = {
 		 * Determines the actual applied layout type
 		 * (esp. needed when the app did not specify a fixed layout type
 		 * but selected <code>Auto</code> layout type).
-		 * <br><br>
+		 * <br /><br />
 		 * Possible values are:
 		 * <ul>
 		 * <li><code>Vertical</code></li>
@@ -205,7 +205,7 @@ const metadata = {
 		"overflow-click": {},
 
 		/**
-		 * Fired when the display area is clicked.<br>
+		 * Fired when the display area is clicked.<br />
 		 * The display area is the central area that contains
 		 * the enlarged content of the currently selected item.
 		 *
@@ -227,28 +227,28 @@ const metadata = {
  *
  * The items are initially displayed as thumbnails. When the user selects a thumbnail, the corresponding item
  * is displayed in larger size.
- * <br>
+ * <br />
  * The component is responsive by default and adjusts the position of the menu with respect to viewport size,
  * but the application is able to further customize the layout via the provided API.
  *
 * <h3>Keyboard Handling</h3>
  * The <code>ui5-media-gallery</code> provides advanced keyboard handling.
- * <br>
+ * <br />
  * When the thumbnails menu is focused the following keyboard
  * shortcuts allow the user to navigate through the thumbnail items:
- * <br>
+ * <br />
  *
  * <ul>
  * <li>[UP/DOWN] - Navigates up and down the items</li>
  * <li>[HOME] - Navigates to first item</li>
  * <li>[END] - Navigates to the last item</li>
- * <li>[SPACE/ENTER] - Select an item
+ * <li>[SPACE/ENTER] - Select an item </li>
  * </ul>
- * <br>
+ * <br />
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/MediaGallery";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem";</code>
  *
  * @constructor

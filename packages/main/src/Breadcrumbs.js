@@ -47,7 +47,7 @@ const metadata = {
 		/**
 		 * Defines the component items.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
 		 * @type {sap.ui.webcomponents.main.IBreadcrumbsItem[]}
 		 * @slot items
@@ -65,7 +65,7 @@ const metadata = {
 		/**
 		 * Defines the visual indication and behavior of the breadcrumbs.
 		 * Available options are <code>Standard</code> (by default) and <code>NoCurrentPage</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
 		 * The last item contains only plain text and is not a link.
 		 *
@@ -81,7 +81,7 @@ const metadata = {
 		/**
 		 * Determines the visual style of the separator between the breadcrumb items.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Slash</code></li>
@@ -148,15 +148,15 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  * Enables users to navigate between items by providing a list of links to previous steps in the user's navigation path.
  * It helps the user to be aware of their location within the application and allows faster navigation.
- * <br><br>
+ * <br /><br />
  * The last three steps can be accessed as links directly, while the remaining links prior to them are available
  * in a drop-down menu.
- * <br><br>
+ * <br /><br />
  * You can choose the type of separator to be used from a number of predefined options.
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-breadcrumbs</code> provides advanced keyboard handling.
- * <br>
+ * <br />
  * <ul>
  * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - If the dropdown arrow is focused - opens/closes the drop-down.</li>
  * <li>[SPACE, ENTER] - Activates the focused item and triggers the <code>item-click</code> event.</li>
@@ -168,7 +168,7 @@ const metadata = {
  * <li>[HOME] - Navigates to the first item.</li>
  * <li>[END] - Navigates to the last item.</li>
  * </ul>
- * <br>
+ * <br />
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Breadcrumbs

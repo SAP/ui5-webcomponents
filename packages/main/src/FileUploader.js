@@ -35,7 +35,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * Comma-separated list of file types that the component should accept.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
 		 * @type {string}
 		 * @defaultvalue ""
@@ -57,7 +57,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -81,11 +81,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -120,7 +120,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -162,10 +162,10 @@ const metadata = {
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
@@ -214,10 +214,10 @@ const metadata = {
  * The component consists of input field, but you can provide an HTML element by your choice
  * to trigger the file upload, by using the default slot.
  * Furthermore, you can set the property "hideInput" to "true" to hide the input field.
- * <br>
+ * <br />
  * To get all selected files, you can simply use the read-only "files" property.
  * To restrict the types of files the user can select, you can use the "accept" property.
- * <br>
+ * <br />
  * And, similar to all input based components, the FileUploader supports "valueState", "placeholder", "name", and "disabled" properties.
  *
  * For the <code>ui5-file-uploader</code>

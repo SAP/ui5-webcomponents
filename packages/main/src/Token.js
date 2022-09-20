@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A read-only component can not be deleted or selected,
 		 * but still provides visual feedback upon user interaction.
 		 *

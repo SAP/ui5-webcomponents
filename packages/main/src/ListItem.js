@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the visual indication and behavior of the list items.
 		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *

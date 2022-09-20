@@ -86,7 +86,7 @@ const metadata = {
 		/**
 		 * Defines the visibility of the navigation arrows.
 		 * If set to true the navigation arrows will be hidden.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
 		 * In this case, the user can swipe to navigate through the items.
 		 * @type {boolean}
@@ -123,15 +123,15 @@ const metadata = {
 
 		/**
 		 * Defines the position of arrows.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Content</code></li>
 		 * <li><code>Navigation</code></li>
 		 * </ul>
-		 * <br>
+		 * <br />
 		 * When set to "Content", the arrows are placed on the sides of the current page.
-		 * <br>
+		 * <br />
 		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
 		 * @type {CarouselArrowsPlacement}
 		 * @defaultvalue "Content"
@@ -208,7 +208,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  * The Carousel allows the user to browse through a set of items.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
- * <br>
+ * <br />
  * There are several ways to perform navigation:
  * <ul>
  * <li>on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.</li>
@@ -236,12 +236,12 @@ const metadata = {
  * <h4>Basic Navigation</h4>
  * When the <code>ui5-carousel</code> is focused the user can navigate between the items
  * with the following keyboard shortcuts:
- * <br>
+ * <br />
  *
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br/>
  * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>content - Used to style the content of the component</li>
@@ -251,7 +251,7 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <ul>
  * <li>[UP/DOWN] - Navigates to previous and next item</li>

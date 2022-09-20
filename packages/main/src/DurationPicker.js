@@ -126,7 +126,7 @@ const pad = number => {
  * <li>Using the sliders that opens in a popup</li>
  * <li>Typing it in directly in the input field</li>
  * </ul>
- * <br><br>
+ * <br /><br />
  * When the user makes an entry and chooses the enter key, the sliders shows the corresponding time.
  * When the user directly triggers the sliders display, the actual time is displayed.
  *
@@ -134,7 +134,7 @@ const pad = number => {
  *
  * <h3>Keyboard handling</h3>
  * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
- * <br>
+ * <br />
  * When closed:
  * <ul>
  * <li>[PAGEUP] - Increments hours by 1. If max value is reached, the slider doesn't increment.</li>

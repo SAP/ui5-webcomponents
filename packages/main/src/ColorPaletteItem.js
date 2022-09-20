@@ -20,7 +20,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
 		/**
 		 * Defines the colour of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The value should be a valid CSS color.
 		 *
 		 * @type {CSSColor}
