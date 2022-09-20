@@ -70,7 +70,6 @@
 	box-sizing: border-box;
 	border-color: inherit;
 	width: 100%;
-	padding-bottom: 2px;
 	display: flex;
 	height: 100%;
 }
@@ -115,6 +114,9 @@
 	height: calc(100% - 48px);
 }
 
+/* :host([growing][show-exceeded-text]) .wrapper {
+	height: calc(100% + 48px);
+} */
 
 .ui5-textarea-mirror {
 	line-height: 1.4;

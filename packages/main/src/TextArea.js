@@ -570,11 +570,13 @@ class TextArea extends UI5Element {
 
 		return {
 			mirror: {
-				"max-height": this._maxHeight,
+				"max-height": this._maxHeight ? this._maxHeight : "100%",
+				"min-height": (this.rows) ? `${mainHeight}px` : this.showExceededText && "48px",
+
 			},
 			main: {
 				width: "100%",
-				height: (this.rows) ? `${mainHeight}px` : "100%",
+				height: (this.rows) ? `${mainHeight}px` : !this.showExceededText && "100%",
 			},
 			focusDiv: {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
