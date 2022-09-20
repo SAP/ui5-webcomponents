@@ -64,7 +64,7 @@ const metadata = {
 
 		/**
 		 * Defines if the <code>notification</code> is new or has been already read.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
 		 * if set to true - it has a normal font.
 		 * @type {boolean}
@@ -102,7 +102,7 @@ const metadata = {
 
 		/**
 		 * Defines the actions, displayed in the top-right area.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
 		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}

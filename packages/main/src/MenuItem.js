@@ -20,7 +20,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
-		 * <br><br>
+		 * <br /><br />
 		 <b>* Example:</b>
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -45,7 +45,7 @@ const metadata = {
 
 		/**
 		 * Defines whether <code>ui5-menu-item</code> is in disabled state.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled <code>ui5-menu-item</code> is noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false

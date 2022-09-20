@@ -57,7 +57,7 @@ const metadata = {
 
 		/**
 		 * Indicates whether the user can interact with the component or not.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -70,7 +70,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -107,7 +107,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -116,7 +116,7 @@ const metadata = {
 		 * <li><code>Success</code></li>
 		 * <li><code>Information</code></li>
 		 * </ul>
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>maxlength</code> property is set,
 		 * the component turns into "Warning" state once the characters exceeds the limit.
 		 * In this case, only the "Error" state is considered and can be applied.
@@ -132,7 +132,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of visible text lines for the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Notes:</b>
 		 * <ul>
 		 * <li>If the <code>growing</code> property is enabled, this property defines the minimum rows to be displayed
@@ -164,7 +164,7 @@ const metadata = {
 		/**
 		 * Determines whether the characters exceeding the maximum allowed character count are visible
 		 * in the component.
-		 * <br><br>
+		 * <br /><br />
 		 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
 		 * <code>maxlength</code> property.
 		 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
@@ -180,7 +180,7 @@ const metadata = {
 
 		/**
 		 * Enables the component to automatically grow and shrink dynamically with its content.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If set to <code>true</code>, the CSS <code>height</code> property is ignored.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -205,11 +205,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -288,10 +288,10 @@ const metadata = {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the component has
 		 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
 		 * @type {HTMLElement[]}
@@ -341,14 +341,14 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-textarea</code> component is used to enter multiple lines of text.
- * <br><br>
+ * <br /><br />
  * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
  * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
  *
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-textarea</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>textarea - Used to style the native textarea</li>

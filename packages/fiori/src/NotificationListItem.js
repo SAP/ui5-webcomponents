@@ -43,7 +43,7 @@ const metadata = {
 		 * Defines if the <code>titleText</code> and <code>description</code> should wrap,
 		 * they truncate by default.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
 		 * and a <code>ShowMore/Less</code> button would be displayed.
 		 * @type {WrappingType}
@@ -78,9 +78,9 @@ const metadata = {
 		/**
 		 * Defines the avatar, displayed in the <code>ui5-li-notification</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
 		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
 		 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
@@ -108,7 +108,7 @@ const metadata = {
 		 * Defines the content of the <code>ui5-li-notification</code>,
 		 * usually a description of the notification.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -130,11 +130,11 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-li-notification</code> is a type of list item, meant to display notifications.
- * <br>
+ * <br />
  *
  * The component has a rich set of various properties that allows the user to set <code>avatar</code>, <code>titleText</code>, descriptive <code>content</code>
  * and <code>footnotes</code> to fully describe a notification.
- * <br>
+ * <br />
  *
  * The user can:
  * <ul>
@@ -150,7 +150,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-li-notification</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>title-text - Used to style the titleText of the notification list item</li>
@@ -159,7 +159,7 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/NotificationListItem.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE

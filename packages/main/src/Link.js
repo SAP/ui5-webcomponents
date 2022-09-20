@@ -24,7 +24,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is disabled.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When disabled, the click event cannot be triggered by the user.
 		 *
 		 * @type {boolean}
@@ -37,7 +37,7 @@ const metadata = {
 
 		/**
 		 * Defines the component href.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
 		 * @type {string}
@@ -50,7 +50,7 @@ const metadata = {
 
 		/**
 		 * Defines the component target.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Notes:</b>
 		 *
 		 * <ul>
@@ -73,7 +73,7 @@ const metadata = {
 
 		/**
 		 * Defines the component design.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
 		 * @type {LinkDesign}
@@ -188,7 +188,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br /><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -237,11 +237,11 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * You can set the <code>ui5-link</code> to be enabled or disabled.
- * <br><br>
+ * <br /><br />
  * To create a visual hierarchy in large lists of links, you can set the less important links as
  * <code>Subtle</code> or the more important ones as <code>Emphasized</code>,
  * by using the <code>design</code> property.
- * <br><br>
+ * <br /><br />
  * If the <code>href</code> property is set, the link behaves as the HTML
  * anchor tag (<code>&lt;a&gt;&lt;a&#47;&gt;</code>) and opens the specified URL in the given target frame (<code>target</code> property).
  * To specify where the linked content is opened, you can use the <code>target</code> property.

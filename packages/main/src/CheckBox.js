@@ -59,7 +59,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is disabled.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -72,7 +72,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A red-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -98,7 +98,7 @@ const metadata = {
 
 		/**
 		* Defines whether the component is displayed as partially checked.
-		* <br><br>
+		* <br/><br/>
 		* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
 		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
 		* and <code>checked</code> properties:
@@ -119,7 +119,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component is checked.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The property can be changed with user interaction,
 		 * either by cliking/tapping on the component, or by
 		 * pressing the Enter or Space key.
@@ -146,7 +146,7 @@ const metadata = {
 		/**
 		 * Defines the value state of the component.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 *
 		 * <ul>
@@ -168,7 +168,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component text wraps when there is not enough space.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
@@ -187,11 +187,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -242,12 +242,12 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * Allows the user to set a binary value, such as true/false or yes/no for an item.
- * <br><br>
+ * <br /><br />
  * The <code>ui5-checkbox</code> component consists of a box and a label that describes its purpose.
  * If it's checked, an indicator is displayed inside the box.
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
- * <br><br>
+ * <br /><br />
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
  * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  *
@@ -256,20 +256,20 @@ const metadata = {
  * You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default.
  * In case you prefer text to wrap, set the <code>wrappingType</code> property to "Normal".
  * The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends.
- * <br><br>
+ * <br /><br />
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
  * <code>true</code>,
  * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
  *
- * <br><br>
+ * <br /><br />
  * <h3>Keyboard Handling</h3>
  *
  * The user can use the following keyboard shortcuts to toggle the checked state of the <code>ui5-checkbox</code>.
  * <ul>
  * <li>[SPACE, ENTER] - Toggles between different states: checked, not checked.</li>
  * </ul>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *

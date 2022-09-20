@@ -10,7 +10,7 @@ const metadata = {
 
 		/**
 		 * Defines the link href.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
 		 * @type {string}
@@ -23,7 +23,7 @@ const metadata = {
 
 		/**
 		 * Defines the link target.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>_self</code></li>
@@ -32,7 +32,7 @@ const metadata = {
 		 * <li><code>_parent</code></li>
 		 * <li><code>_search</code></li>
 		 * </ul>
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 		 *
 		 * @type {string}
@@ -58,7 +58,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}

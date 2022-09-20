@@ -31,7 +31,7 @@ const metadata = {
 		},
 		/**
 		* Defines whether the selection of a tree node is displayed as partially selected.
-		* <br><br>
+		* <br/><br/>
 		* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
 		* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
 		* and <code>selected</code> properties:
@@ -40,7 +40,7 @@ const metadata = {
 		* <li> If a tree node has <code>selected</code> set to <code>true</code> and <code>indeterminate</code> set to <code>false</code>, it is displayed as selected.
 		* <li> If a tree node has <code>selected</code> set to <code>false</code>, it is displayed as not selected regardless of the value of the <code>indeterminate</code> property.
 		* </ul>
-		* <br>
+		* <br />
 		* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
 		* @type {boolean}
 		* @defaultvalue false
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
-		 * <br>
+		 * <br />
 		 * <i>Note:</i> This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
 		 * Set this to <code>true</code> for nodes you intend to load lazily, when the user clicks the expand button.
 		 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
@@ -101,7 +101,7 @@ const metadata = {
 
 		/**
 		 * Defines the state of the <code>additionalText</code>.
-		 * <br>
+		 * <br />
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"

@@ -89,12 +89,12 @@ const metadata = {
  *
  * The <code>BarcodeScannerDialog</code> component provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API.
  * Opening the dialog launches the device camera and scans for known barcode formats.
- * <br>
- * <br>
+ * <br />
+ * <br />
  * A <code>scanSuccess</code> event fires whenever a barcode is identified
  * and a <code>scanError</code> event fires when the scan failed (for example, due to missing permisions).
- * <br>
- * <br>
+ * <br />
+ * <br />
  * Internally, the component  uses the zxing-js/library third party OSS.
  *
  * For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.

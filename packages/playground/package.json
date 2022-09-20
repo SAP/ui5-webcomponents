@@ -15,7 +15,15 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-vite": "^0.2.2",
+    "@storybook/web-components": "^6.5.9",
+    "babel-loader": "^8.2.5",
     "copy-and-watch": "^0.1.5",
+    "lit-html": "^2.2.7",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2"
   },
@@ -41,6 +49,13 @@
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
     "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
-    "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\""
+    "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\"",
+    "prepare:samples:next": "node ./build-scripts-storybook/samples-prepare.js",
+    "prepare:documentation:next": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.11"
   }
 }

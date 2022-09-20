@@ -73,7 +73,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * Users can use the <code>ui5-segmented-button-item</code> as part of a <code>ui5-segmented-button</code>.
- * <br><br>
+ * <br /><br />
  * Clicking or tapping on a <code>ui5-segmented-button-item</code> changes its state to <code>pressed</code>.
  * The item returns to its initial state when the user clicks or taps on it again.
  * By applying additional custom CSS-styling classes, apps can give a different style to any

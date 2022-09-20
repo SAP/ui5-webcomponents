@@ -45,7 +45,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is disabled.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -58,7 +58,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -72,7 +72,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is checked or not.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The property value can be changed with user interaction,
 		 * either by clicking/tapping on the component,
 		 * or by using the Space or Enter key.
@@ -99,7 +99,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -122,19 +122,19 @@ const metadata = {
 		 * Defines the name of the component.
 		 * Radio buttons with the same <code>name</code> will form a radio button group.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radio buttons in same group.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * Only one radio button can be selected per group.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect when submitting forms, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form.
@@ -151,7 +151,7 @@ const metadata = {
 		 * Defines the form value of the component.
 		 * When a form with a radio button group is submitted, the group's value
 		 * will be the value of the currently selected radio button.
-		 * <br>
+		 * <br />
 		 * <b>Important:</b> For the <code>value</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -165,7 +165,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component text wraps when there is not enough space.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
@@ -254,16 +254,16 @@ const metadata = {
  * <code>change</code> event is fired.
  * When a <code>ui5-radio-button</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
- * <br>
+ * <br />
  * <b>Note:</b> If <code>ui5-radio-button</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
  * Once the <code>ui5-radio-button</code> is on focus, it might be selected by pressing the Space and Enter keys.
- * <br>
+ * <br />
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
- * <br>
+ * <br />
  * <b>Note:</b> On entering radio button group, the focus goes to the currently selected radio button.
  *
  * <h3>ES6 Module Import</h3>

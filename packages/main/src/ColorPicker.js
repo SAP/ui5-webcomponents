@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines the currently selected color of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 		 * @type {CSSColor}
 		 * @public
@@ -140,7 +140,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * <h4>When to use:</h4
+ * <h4>When to use:</h4>
  * Use the color picker if:
  * <ul>
  * <li> users need to select any color freely.</li>

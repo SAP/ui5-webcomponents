@@ -28,7 +28,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITableCell[]}
@@ -55,13 +55,13 @@ const metadata = {
 		},
 		/**
 		 * Defines the visual indication and behavior of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Active</code></li>
 		 * <li><code>Inactive</code></li>
 		 * </ul>
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
 		 *
@@ -155,7 +155,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-table-row</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>row - Used to style the native <code>tr</code> element</li>

@@ -89,7 +89,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 
 | Assets | Module | Notes
 |------------|-----------|----------- 
-| `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br><br> *Automatically imports also:<br> `@ui5/webcomponents-localization/dist/Assets.js` <br> and <br> `@ui5/webcomponents-theming/dist/Assets.js`*
+| `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br /><br /> *Automatically imports also:<br /> `@ui5/webcomponents-localization/dist/Assets.js` <br /> and <br /> `@ui5/webcomponents-theming/dist/Assets.js`*
 
 ## Provided features
 
