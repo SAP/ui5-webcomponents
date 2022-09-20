@@ -1,5 +1,9 @@
-commit debf472f18f6a91a5eadee6d7f64da8563d4d0f7
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Sep 20 09:26:29 2022 +0300
+commit 2de4a045f56e2f166d3e846ff11e6f9d76e98009
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Tue Sep 20 08:59:33 2022 +0200
 
-    fix(ui5-table): adjust samples according to the guidelines (#5828)
+    feat(icons): create type-definitions for icon imports (#5753)
+    
+    Created TypeDefinitions for all icon packages. This helps TypeScript users to better use the Icon Name Export feature which was introduced with #5747
+    
+    Fixes #5335
