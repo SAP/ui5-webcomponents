@@ -1,5 +1,5 @@
-commit 51165df780d92404c63e16a09dbfe579c533456c
-Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
-Date:   Tue Sep 20 08:44:53 2022 +0300
+commit debf472f18f6a91a5eadee6d7f64da8563d4d0f7
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Sep 20 09:26:29 2022 +0300
 
-    feat(ui5-illustrated-message): accessible-name-ref added (#5765)
+    fix(ui5-table): adjust samples according to the guidelines (#5828)
