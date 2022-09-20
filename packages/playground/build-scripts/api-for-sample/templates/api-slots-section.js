@@ -3,8 +3,8 @@ module.exports = {
   {{#if slots}}
     <h3 class="comment-api-title space-top" >Slots</h3>
 	<p class="small-space-top" >
-	  This Element provides slot(s). This means it can display its child nodes.<br>
-	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+	  This Element provides slot(s). This means it can display its child nodes.<br />
+	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br />
 	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
 	</p>
 

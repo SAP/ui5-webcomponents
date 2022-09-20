@@ -57,7 +57,7 @@ const metadata = {
 		 * Defines whether the side content is positioned before the main content (left side
 		 * in LTR mode), or after the the main content (right side in LTR mode).
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>The available values are:</b>
 		 *
 		 * <ul>
@@ -78,7 +78,7 @@ const metadata = {
 		/**
 		 * Defines on which breakpoints the side content is visible.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>The available values are:</b>
 		 *
 		 * <ul>
@@ -102,7 +102,7 @@ const metadata = {
 		/**
 		 * Defines on which breakpoints the side content falls down below the main content.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>The available values are:</b>
 		 *
 		 * <ul>
@@ -259,26 +259,26 @@ const metadata = {
  *
  * <h3>Responsive Behavior</h3>
  *
- * Screen width > 1440px
+ * Screen width greater than 1440px
  *
  * <ul><li>Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px
  * each).</li>
  * <li>If the application defines a trigger, the side content can be hidden.</li></ul>
  *
- * Screen width <= 1440px and > 1024px
+ * Screen width less than or equal to 1440px and greater than 1024px
  *
  * <ul><li>Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of
  * 320px each). If the side content width falls below 320 px, it automatically slides
  * under the main content, unless the app development team specifies that it should
  * disappear.</li></ul>
  *
- * Screen width <= 1024px and > 720px
+ * Screen width less than or equal to 1024px and greater than 720px
  *
  * <ul><li>The side content ratio is fixed to 340px, and the main content takes the rest
  * of the width. Only if the <code>sideContentFallDown</code> is set to <code>OnMinimumWidth</code>
- * and screen width is <= 960px and > 720px the side content falls below the main content.</li></ul>
+ * and screen width is less than or equal to 960px and greater than 720px the side content falls below the main content.</li></ul>
  *
- * Screen width <= 720px (for example on a mobile device)
+ * Screen width less than or equal to 720px (for example on a mobile device)
  *
  * <ul><li>In this case, the side content automatically disappears from the screen (unless
  * specified to stay under the content by setting of <code>sideContentVisibility</code>

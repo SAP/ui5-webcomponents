@@ -18,7 +18,7 @@ const metadata = {
 
 		/**
 		 * Defines whether an asterisk character is added to the component text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
 		 * @type {boolean}
@@ -48,7 +48,7 @@ const metadata = {
 
 		/**
 		 * Defines whether colon is added to the component text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Usually used in forms.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -61,7 +61,7 @@ const metadata = {
 
 		/**
 		 * Defines the labeled input by providing its ID.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 		 *
 		 * @type {string}
@@ -75,7 +75,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br /><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -96,7 +96,7 @@ const metadata = {
  * providing valuable information to the user.
  * Usually it is placed next to a value holder, such as a text field.
  * It informs the user about what data is displayed or expected in the value holder.
- * <br><br>
+ * <br /><br />
  * The <code>ui5-label</code> appearance can be influenced by properties,
  * such as <code>required</code> and <code>wrappingType</code>.
  * The appearance of the Label can be configured in a limited way by using the design property.

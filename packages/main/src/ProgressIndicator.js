@@ -73,7 +73,7 @@ const metadata = {
 		},
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>

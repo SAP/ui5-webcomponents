@@ -59,7 +59,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITab[]}
@@ -128,12 +128,12 @@ const metadata = {
 
 		/**
 		 * Defines the placement of the tab strip relative to the actual tabs' content.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
 		 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
 		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Top</code></li>
@@ -152,7 +152,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the overflow select list is displayed.
-		 * <br><br>
+		 * <br /><br />
 		 * The overflow select list represents a list, where all tabs are displayed
 		 * so that it's easier for the user to select a specific tab.
 		 *
@@ -169,12 +169,12 @@ const metadata = {
 		/**
 		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * The content and the <code>additionalText</code> would be displayed vertically by defualt,
 		 * but when set to <code>Inline</code>, they would be displayed horizontally.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Standard</code></li>
@@ -194,12 +194,12 @@ const metadata = {
 		 * Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible.
 		 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * Only one overflow at the end would be displayed by default,
 		 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>End</code></li>
@@ -302,7 +302,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-tabcontainer</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>content - Used to style the content of the component</li>
@@ -314,14 +314,14 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>)
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor

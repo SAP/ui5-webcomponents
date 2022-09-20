@@ -59,7 +59,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-time-picker</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -111,10 +111,10 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
@@ -414,7 +414,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Checks if a value is valid against the current <code>formatPattern</code> value.
 	 *
-	 * <br><br>
+	 * <br /><br />
 	 * <b>Note:</b> an empty string is considered as valid value.
 	 * @param {string} value The value to be tested against the current date format
 	 * @public

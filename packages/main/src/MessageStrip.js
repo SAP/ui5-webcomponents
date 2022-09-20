@@ -34,7 +34,7 @@ const metadata = {
 
 		/**
 		 * Defines the component type.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
 		 *
@@ -76,7 +76,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -89,10 +89,10 @@ const metadata = {
 
 		/**
 		 * Defines the content to be displayed as graphical element within the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If no icon is given, the default icon for the component type will be used.
 		 * The SAP-icons font provides numerous options.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -138,7 +138,7 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
