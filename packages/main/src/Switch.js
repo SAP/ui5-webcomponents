@@ -26,7 +26,7 @@ const metadata = {
 
 		/**
 		 * Defines the component design.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>Graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 *
@@ -41,7 +41,7 @@ const metadata = {
 
 		/**
 		 * Defines if the component is checked.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The property can be changed with user interaction,
 		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
@@ -54,7 +54,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is disabled.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is noninteractive.
 		 *
 		 * @type {boolean}
@@ -68,7 +68,7 @@ const metadata = {
 		/**
 		 * Defines the text, displayed when the component is checked.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 		 * @type {string}
@@ -81,7 +81,7 @@ const metadata = {
 
 		/**
 		 * Defines the text, displayed when the component is not checked.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 		 * @type {string}
@@ -138,12 +138,12 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-switch</code> component is used for changing between binary states.
- * <br>
+ * <br />
  * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
  * but texts longer than 3 letters will be cutted off.
- * <br>
+ * <br />
  * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (<code>&lt;ui5-switch style="width: 200px"></code>), and set widths, depending on the texts they would use.
- * <br>
+ * <br />
  * Note: the component would not automatically stretch to fit the whole text width.
  *
  * <h3>Keyboard Handling</h3>
@@ -152,7 +152,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>slider - Used to style the track, where the handle is being slid</li>

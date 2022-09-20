@@ -118,7 +118,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
 		/**
 		 * Defines the items of this component.
-		 * <br><br>
+		 * <br/><br/>
 		 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.IMenuItem[]}
@@ -176,7 +176,7 @@ const metadata = {
  * <li><code>Arrow Left</code> or <code>Escape</code> - Closes the currently opened sub-menu.</li>
  * </ul>
  * Note: if the text ditrection is set to Right-to-left (RTL), <code>Arrow Right</code> and <code>Arrow Left</code> functionality is swapped.
- * <br>
+ * <br />
  *
  * <h3>ES6 Module Import</h3>
  *

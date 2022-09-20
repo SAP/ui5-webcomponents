@@ -26,7 +26,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the header text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Determines on which side the component is placed at.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Left</code></li>
@@ -59,7 +59,7 @@ const metadata = {
 
 		/**
 		 * Determines the horizontal alignment of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Center</code></li>
@@ -79,7 +79,7 @@ const metadata = {
 
 		/**
 		 * Determines the vertical alignment of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Center</code></li>
@@ -263,7 +263,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-popover</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>header - Used to style the header of the component</li>

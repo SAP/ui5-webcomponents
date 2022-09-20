@@ -26,7 +26,7 @@ const metadata = {
 		/**
 		 * Defines the items orientation.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * Available options are:
 		 * <ul>

@@ -35,7 +35,7 @@ const metadata = {
 
 		/**
 		 * The indicated value of the rating.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
 		 * <ul>
 		 * <li>1.0 - 1.2 -> 1</li>
@@ -66,7 +66,7 @@ const metadata = {
 		/**
 		 * Defines whether the component is disabled.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -78,7 +78,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -145,13 +145,13 @@ const metadata = {
  *
  * <h3>Responsive Behavior</h3>
  * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
- * <br>
+ * <br />
  * Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
  *
  * <h3>Keyboard Handling</h3>
  * When the <code>ui5-rating-indicator</code> is focused, the user can change the rating
  * with the following keyboard shortcuts:
- * <br>
+ * <br />
  *
  * <ul>
  * <li>[RIGHT/UP] - Increases the value of the rating by one step. If the highest value is reached, does nothing</li>

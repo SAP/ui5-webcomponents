@@ -21,7 +21,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -36,7 +36,7 @@ const metadata = {
 		/**
 		 * Defines the mode of the row
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * Available options are:
 		 * <ul>
@@ -84,7 +84,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-table-group-row</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>group-row - Used to style the native <code>tr</code> element.</li>

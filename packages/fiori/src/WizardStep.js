@@ -8,7 +8,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 		/**
 		 * Defines the <code>titleText</code> of the step.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> The text is displayed in the <code>ui5-wizard</code> navigation header.
 		 *
@@ -23,7 +23,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>subtitleText</code> of the step.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
 		 *
@@ -38,10 +38,10 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> of the step.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> The icon is displayed in the <code>ui5-wizard</code> navigation header.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * The SAP-icons font provides numerous options.
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -56,7 +56,7 @@ const metadata = {
 		/**
 		 * Defines if the step is <code>disabled</code>. When disabled the step is displayed,
 		 * but the user can't select the step by clicking or navigate to it with scrolling.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
 		 * In this case the <code>selected</code> property would take precedence.
@@ -71,7 +71,7 @@ const metadata = {
 
 		/**
 		 * Defines the step's <code>selected</code> state - the step that is currently active.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
 		 * In this case the <code>selected</code> property would take precedence.
@@ -87,7 +87,7 @@ const metadata = {
 		/**
 		 * When <code>branching</code> is enabled a dashed line would be displayed after the step,
 		 * meant to indicate that the next step is not yet known and depends on user choice in the current step.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> It is recommended to use <code>branching</code> on the last known step
 		 * and later add new steps when it becomes clear how the wizard flow should continue.

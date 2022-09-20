@@ -42,7 +42,7 @@ const metadata = {
 
 		/**
 		 * Determines the layout of the item container.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Square</code></li>
@@ -150,15 +150,15 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-media-gallery-item</code> web component represents the items displayed in the
  * <code>ui5-media-gallery</code> web component.
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> <code>ui5-media-gallery-item</code> is not supported when used outside of <code>ui5-media-gallery</code>.
- * <br><br>
+ * <br /><br />
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-media-gallery</code> provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
+ * <br />
  * <ul>
  * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
  * </ul>

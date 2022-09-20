@@ -19,7 +19,7 @@ module.exports = {
               {{#if this.readonly}}
                 (readonly)
               {{/if}}
-                <br>
+                <br />
               {{#if (toKebabCase this.name)}}
                   {{#unless this.noattribute}}
                      <code>{{toKebabCase this.name}}</code>

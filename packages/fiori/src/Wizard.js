@@ -68,14 +68,14 @@ const metadata = {
 
 		/**
 		 * Defines the threshold to switch between steps upon user scrolling.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>For Example:</b>
-		 * <br>
+		 * <br />
 		 * (1) To switch to the next step, when half of the step is scrolled out - set <code>step-switch-threshold="0.5"</code>.
 		 * (2) To switch to the next step, when the entire current step is scrolled out - set <code>step-switch-threshold="1"</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Supported values are between 0.5 and 1
 		 * and values out of the range will be normalized to 0.5 and 1 respectively.
 		 * @private
@@ -104,7 +104,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the steps.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 		 *
 		 * @type {sap.ui.webcomponents.fiori.IWizardStep[]}
@@ -158,12 +158,12 @@ const metadata = {
  * </ul>
  *
  * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
- * <br>
+ * <br />
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
  * <h3>Keyboard Handling</h3>
  * The user can navigate using the following keyboard shortcuts:
- * <br>
+ * <br />
  *
  * <h4>Wizard Progress Navigation</h4>
  * <ul>
@@ -186,22 +186,22 @@ const metadata = {
  * <h3>Scrolling</h3>
  * The component handles user scrolling by selecting the closest step, based on the current scroll position
  * and scrolls to particular place, when the user clicks on the step within the navigation area.
- * <br><br>
+ * <br /><br />
  *
  * <b>Important:</b> In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height.
  * The component or its parent has to be given percentage or absolute height. Otherwise, the component will be scrolled out with the entire page.
- * <br><br>
+ * <br /><br />
  * <b>For example:</b>
- * <br><br>
- * <code>&lt;ui5-dialog style="height: 80%"&gt;<br></code>
- * <code>&#9;&lt;ui5-wizard&gt;&lt;/ui5-wizard&gt;<br></code>
+ * <br /><br />
+ * <code>&lt;ui5-dialog style="height: 80%"&gt;<br /></code>
+ * <code>&#9;&lt;ui5-wizard&gt;&lt;/ui5-wizard&gt;<br /></code>
  * <code>&lt;/ui5-dialog&gt;</code>
  *
  * <h4>Moving to next step</h4>
  * The <code>ui5-wizard-step</code> provides the necessary API and it's up to the user of the component to use it to move to the next step.
  * You have to set its <code>selected</code> property (and remove the <code>disabled</code> one if set) to <code>true</code>.
  * The <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
- * <br><br>
+ * <br /><br />
  *
  * The Fiori 3 guidelines recommends having a "nextStep" button in the content area.
  * You can place a button, or any other type of element to trigger step change, inside the <code>ui5-wizard-step</code>,

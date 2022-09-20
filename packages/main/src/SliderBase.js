@@ -41,7 +41,7 @@ const metadata = {
 		},
 		/**
 		 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 		 *
 		 * @type {Integer}
@@ -54,7 +54,7 @@ const metadata = {
 		},
 		/**
 		 * Displays a label with a value on every N-th step.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The step and tickmarks properties must be enabled.
 		 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 		 * tickmark will be labelled, which means every 4th value number.
@@ -69,7 +69,7 @@ const metadata = {
 		},
 		/**
 		 * Enables tickmarks visualization for each step.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The step must be a positive number.
 		 *
 		 * @type {boolean}

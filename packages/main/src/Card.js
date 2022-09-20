@@ -35,7 +35,7 @@ const metadata = {
 
 		/**
 		 * Defines the header of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.15
@@ -97,7 +97,7 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/CardHeader.js";</code> (for <code>ui5-card-header</code>)
  *
  * @constructor

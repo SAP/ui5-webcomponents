@@ -42,7 +42,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 		 * <code>accessibleName</code> should be used.
 		 *
@@ -68,7 +68,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
@@ -81,7 +81,7 @@ const metadata = {
 
 		/**
 		 * Determines whether the component should be stretched to fullscreen.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The component will be stretched to approximately
 		 * 90% of the viewport.
 		 *
@@ -96,9 +96,9 @@ const metadata = {
 		/**
 		 * Determines whether the component is draggable.
 		 * If this property is set to true, the Dialog will be draggable by its header.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The component can be draggable only in desktop mode.
-		 * <br><br>
+		 * <br/><br/>
 		 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
 		 * When "draggable" is set to true, the native browser "draggable"
 		 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
@@ -115,9 +115,9 @@ const metadata = {
 		 * Configures the component to be resizable.
 		 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
 		 * In RTL languages, the resize handle will be placed in the bottom left corner.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The component can be resizable only in desktop mode.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -144,7 +144,7 @@ const metadata = {
 
 		/**
 		 * Defines the state of the <code>Dialog</code>.
-		 * <br>
+		 * <br/>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
@@ -168,7 +168,7 @@ const metadata = {
  * the main screen is dimmed/blocked.
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
- * <br><br>
+ * <br /><br />
  * The <code>ui5-dialog</code> is modal, which means that user action is required before returning to the parent window is possible.
  * The content of the <code>ui5-dialog</code> is fully customizable.
  *
@@ -185,7 +185,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-dialog</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>header - Used to style the header of the component</li>

@@ -52,12 +52,12 @@ const metadata = {
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
- * <br>
+ * <br />
  *
  * When the <code>ui5-daterange-picker</code> input field is focused the user can
  * increment or decrement respectively the range start or end date, depending on where the cursor is.
  * The following shortcuts are available:
- * <br>
+ * <br />
  * <ul>
  * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
  * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>

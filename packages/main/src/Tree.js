@@ -22,7 +22,7 @@ const metadata = {
 		 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
 		 * the tree modes are exactly the same as the list modes, and are all applicable.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 *
 		 * <ul>
@@ -56,7 +56,7 @@ const metadata = {
 
 		/**
 		 * Defines the component header text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If the <code>header</code> slot is set, this property is ignored.
 		 *
 		 * @type {string}
@@ -138,7 +138,7 @@ const metadata = {
 
 		/**
 		 * Defines the items of the component. Tree items may have other tree items as children.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
@@ -153,7 +153,7 @@ const metadata = {
 
 		/**
 		 * Defines the component header.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When the <code>header</code> slot is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
@@ -226,7 +226,7 @@ const metadata = {
 
 		/**
 		 * Fired when the Delete button of any tree item is pressed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
@@ -290,7 +290,7 @@ const metadata = {
  * <li>[RIGHT] - Drills down the tree by expanding the tree nodes.</li>
  * <li>[LEFT] - Goes up the tree and collapses the tree nodes.</li>
  * </ul>
- * <br>
+ * <br />
  *
  * The user can use the following keyboard shortcuts to perform selection,
  * when the <code>mode</code> property is in use:
@@ -301,7 +301,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Tree.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
  *
  * @constructor

@@ -50,7 +50,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>primaryTitle</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
 		 * @type {string}
 		 * @defaultvalue ""
@@ -62,7 +62,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>secondaryTitle</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
 		 * @type {string}
 		 * @defaultvalue ""
@@ -105,7 +105,7 @@ const metadata = {
 
 		/**
 		 * Defines, if the product CoPilot icon would be displayed.
-		 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
+		 * <br /><b>Note:</b> By default the co-pilot is displayed as static SVG.
 		 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -204,7 +204,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 		 *
@@ -247,7 +247,7 @@ const metadata = {
 
 		/**
 		 * Defines the items displayed in menu after a click on the primary title.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 		 *
@@ -380,7 +380,7 @@ const metadata = {
  *
  * The <code>ui5-shellbar</code> is meant to serve as an application header
  * and includes numerous built-in features, such as: logo, profile image/icon, title, search field, notifications and so on.
- * <br><br>
+ * <br /><br />
  *
  * <h3>Stable DOM Refs</h3>
  *
@@ -397,7 +397,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-shellbar</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>root - Used to style the outermost wrapper of the <code>ui5-shellbar</code></li>
@@ -409,7 +409,7 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>

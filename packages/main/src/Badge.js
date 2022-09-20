@@ -23,7 +23,7 @@ const metadata = {
 		 * Defines the color scheme of the component.
 		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color</code> and <code>border-color</code>.
 		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 		 * @type {string}
 		 * @defaultvalue "1"
@@ -54,7 +54,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br /><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
