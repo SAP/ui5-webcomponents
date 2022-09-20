@@ -20,10 +20,10 @@ const metadata = {
 
 		/**
 		 * Defines the icon of the item.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * The SAP-icons font provides numerous options.
-		 * <br>
+		 * <br/>
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @public
 		 * @type {string}

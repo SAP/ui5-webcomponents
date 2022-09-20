@@ -65,7 +65,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -122,7 +122,7 @@ const metadata = {
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * component has no value.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
@@ -138,11 +138,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -157,7 +157,7 @@ const metadata = {
 
 		/**
 		 * Defines the visibility of the week numbers column.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.
@@ -213,10 +213,10 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
@@ -301,7 +301,7 @@ const metadata = {
  * <li>Using the calendar that opens in a popup</li>
  * <li>Typing it in directly in the input field</li>
  * </ul>
- * <br><br>
+ * <br /><br />
  * When the user makes an entry and presses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.
  *
@@ -309,10 +309,10 @@ const metadata = {
  *
  * If a date is entered by typing it into
  * the input field, it must fit to the used date format.
- * <br><br>
+ * <br /><br />
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
  * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
+ * <br /><br />
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
@@ -323,12 +323,12 @@ const metadata = {
  * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
- * <br>
+ * <br />
  *
  * If the <code>ui5-date-picker</code> input field is focused and its corresponding picker dialog is not opened,
  * then users can increment or decrement the date referenced by <code>dateValue</code> property
  * by using the following shortcuts:
- * <br>
+ * <br />
  * <ul>
  * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
  * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
@@ -342,19 +342,19 @@ const metadata = {
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
  * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
  * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
- * <br><br>
+ * <br /><br />
  *
  * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
- * <br><br>
+ * <br /><br />
  *
  * Or, you can use the global configuration and set the <code>calendarType</code> key:
- * <br>
+ * <br />
  * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
  * {
  *	"calendarType": "Japanese"

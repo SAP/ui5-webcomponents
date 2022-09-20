@@ -118,7 +118,7 @@ const metadata = {
 
 		/**
 		 * The upload progress in percentage.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Expected values are in the interval [0, 100].
 		 *
 		 * @type {Integer}
@@ -169,7 +169,7 @@ const metadata = {
 
 		/**
 		 * A thumbnail, which will be shown in the beginning of the <code>ui5-upload-collection-item</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-icon</code> or <code>img</code> for the intended design.
 		 *
 		 * @type {HTMLElement}
@@ -183,7 +183,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		/**
 		 * Fired when the file name is clicked.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.UploadCollectionItem#file-name-click
@@ -193,7 +193,7 @@ const metadata = {
 
 		/**
 		 * Fired when the <code>fileName</code> property gets changed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> An edit button is displayed on each item,
 		 * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
 		 *
@@ -204,7 +204,7 @@ const metadata = {
 
 		/**
 		 * Fired when the terminate button is pressed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
 		 *
 		 * @event
@@ -214,7 +214,7 @@ const metadata = {
 
 		/**
 		 * Fired when the retry button is pressed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
 		 * @event
 		 * @public

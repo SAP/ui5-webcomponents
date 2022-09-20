@@ -35,7 +35,7 @@ const metadata = {
 		/**
 		 * Defines the component design.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>The available values are:</b>
 		 *
 		 * <ul>
@@ -72,7 +72,7 @@ const metadata = {
 		/**
 		 * Defines the icon, displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
-		 * <br><br>
+		 * <br /><br />
 		 * Example:
 		 *
 		 * See all the available icons within the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -99,7 +99,7 @@ const metadata = {
 		/**
 		 * When set to <code>true</code>, the component will
 		 * automatically submit the nearest HTML form element on <code>press</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -113,7 +113,7 @@ const metadata = {
 
 		/**
 		 * Defines the tooltip of the component.
-		 * <br>
+		 * <br/>
 		 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -248,7 +248,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -264,7 +264,7 @@ const metadata = {
 		/**
 		 * Fired when the component is activated either with a
 		 * mouse/tap or by using the Enter or Space key.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
 		 * property is set to <code>true</code>.
 		 *
@@ -290,10 +290,10 @@ const metadata = {
  *
  * For the <code>ui5-button</code> UI, you can define text, icon, or both. You can also specify
  * whether the text or the icon is displayed first.
- * <br><br>
+ * <br /><br />
  * You can choose from a set of predefined types that offer different
  * styling to correspond to the triggered action.
- * <br><br>
+ * <br /><br />
  * You can set the <code>ui5-button</code> as enabled or disabled. An enabled
  * <code>ui5-button</code> can be pressed by clicking or tapping it. The button changes
  * its style to provide visual feedback to the user that it is pressed or hovered over with
@@ -302,7 +302,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-button</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>button - Used to style the native button element</li>

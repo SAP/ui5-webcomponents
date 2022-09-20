@@ -60,7 +60,7 @@
     "resolve": "^1.20.0",
     "rimraf": "^3.0.2",
     "slash": "3.0.0",
-    "vite": "^2.9.12",
+    "vite": "^3.0.4",
     "wdio-chromedriver-service": "^7.3.2",
     "zx": "^4.3.0"
   },

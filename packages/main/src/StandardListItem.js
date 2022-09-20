@@ -25,7 +25,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 		 *
 		 * @type {boolean}
@@ -52,7 +52,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>image</code> source URI.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
 		 *
 		 * @type {string}
@@ -74,7 +74,7 @@ const metadata = {
 
 		/**
 		 * Defines the state of the <code>additionalText</code>.
-		 * <br>
+		 * <br/>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
@@ -102,7 +102,7 @@ const metadata = {
 		/**
 		 * Defines if the text of the component should wrap, they truncate by default.
 		 *
-		 * <br><br>
+		 * <br/><br/>
 		 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
 		 * @type {WrappingType}
 		 * @defaultvalue "None"
@@ -126,7 +126,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -150,7 +150,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-li</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>title - Used to style the title of the list item</li>

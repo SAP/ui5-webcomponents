@@ -89,7 +89,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-li-notification-group</code> is a special type of list item,
  * that unlike others can group items within self, usually <code>ui5-li-notification</code> items.
- * <br>
+ * <br />
  *
  * The component consists of:
  * <ul>
@@ -106,7 +106,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-li-notification-group</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>title-text - Used to style the titleText of the notification list group item</li>
@@ -115,7 +115,7 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE

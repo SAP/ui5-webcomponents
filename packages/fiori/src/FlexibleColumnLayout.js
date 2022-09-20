@@ -42,10 +42,10 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the columns layout and their proportion.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 599px,
 		 * two columns between 599px and 1023px and three columns for sizes bigger than 1023px.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>OneColumn</code></li>
@@ -58,7 +58,7 @@ const metadata = {
 		 * <li><code>MidColumnFullScreen</code></li>
 		 * <li><code>EndColumnFullScreen</code></li>
 		 * </ul>
-		 * <br><br>
+		 * <br /><br />
 		 * <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
 		 * in 67%/33% proportion.
 		 * @type {FCLLayout}
@@ -252,7 +252,7 @@ const metadata = {
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
  *
- * <br><br>
+ * <br /><br />
  * <h3>Keyboard Handling</h3>
  *
  * <h4>Basic Navigation</h4>
@@ -267,7 +267,7 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -489,7 +489,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	 * Returns the current column layout, based on both the <code>layout</code> property and the screen size.
-	 * <br><br>
+	 * <br /><br />
 	 * <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
 	 * where the numbers represents the width of the start, middle and end columns.
 	 * @readonly

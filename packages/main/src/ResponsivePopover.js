@@ -63,7 +63,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-responsive-popover</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>header - Used to style the header of the component</li>

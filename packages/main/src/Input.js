@@ -84,14 +84,14 @@ const metadata = {
 
 		/**
 		 * Defines the suggestion items.
-		 * <br><br>
+		 * <br /><br />
 		 * Example:
-		 * <br><br>
-		 * &lt;ui5-input show-suggestions><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br>
+		 * <br /><br />
+		 * &lt;ui5-input show-suggestions><br />
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br />
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br />
 		 * &lt;/ui5-input>
-		 * <br>
+		 * <br />
 		 * <ui5-input show-suggestions>
 		 * <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
 		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
@@ -100,16 +100,16 @@ const metadata = {
 		 * <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
 		 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 		 * </ui5-input>
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The suggestions would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>&lt;ui5-suggestion-item&gt;</code> and <code>&lt;ui5-suggestion-group-item&gt;</code> are recommended to be used as suggestion items.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Importing the Input Suggestions Support feature:
-		 * <br>
+		 * <br />
 		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
-		 * <br>
+		 * <br />
 		 * automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.
 		 *
 		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
@@ -133,13 +133,13 @@ const metadata = {
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If the component has <code>suggestionItems</code>,
 		 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 		 * @type {HTMLElement[]}
@@ -155,7 +155,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -169,7 +169,7 @@ const metadata = {
 		/**
 		 * Defines if characters within the suggestions are to be highlighted
 		 * in case the input value matches parts of the suggestions text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> takes effect when <code>showSuggestions</code> is set to <code>true</code>
 		 *
 		 * @type {boolean}
@@ -194,7 +194,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -234,7 +234,7 @@ const metadata = {
 		 * Defines the HTML type of the component.
 		 * Available options are: <code>Text</code>, <code>Email</code>,
 		 * <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Notes:</b>
 		 * <ul>
 		 * <li>The particular effect of this property differs depending on the browser
@@ -254,7 +254,7 @@ const metadata = {
 
 		/**
 		 * Defines the value of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
@@ -267,7 +267,7 @@ const metadata = {
 
 		/**
 		 * Defines the inner stored value of the component.
-		 * <br><br>
+		 * <br/><br/>
 		 * <b>Note:</b> The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
 		 *
 		 * @type {string}
@@ -281,7 +281,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -303,11 +303,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -322,7 +322,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component should show suggestions, if such are present.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> You need to import the <code>InputSuggestions</code> module
 		 * from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
 		 * @type {boolean}
@@ -335,7 +335,7 @@ const metadata = {
 
 		/**
 		 * Sets the maximum number of characters available in the input field.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
 		 * @type {Integer}
 		 * @since 1.0.0-rc.5
@@ -525,16 +525,16 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-input</code> component allows the user to enter and edit text or numeric values in one line.
- * <br>
+ * <br />
  * Additionally, you can provide <code>suggestionItems</code>,
  * that are displayed in a popover right under the input.
- * <br><br>
+ * <br /><br />
  * The text field can be editable or read-only (<code>readonly</code> property),
  * and it can be enabled or disabled (<code>disabled</code> property).
  * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
  * don't forget to import the <code>InputSuggestions</code> module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
@@ -542,7 +542,7 @@ const metadata = {
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-input</code> provides the following keyboard shortcuts:
- * <br>
+ * <br />
  *
  * <ul>
  * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
@@ -558,7 +558,7 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Input.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> (optional - for input suggestions support)
  *
  * @constructor

@@ -24,7 +24,7 @@ const metadata = {
 		/**
 		 * Defines the visual indication and behavior of the item.
 		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while when <code>Inactive</code> or <code>Detail</code> - will not.
 		 *
@@ -50,7 +50,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -64,7 +64,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>icon</code> should be displayed in the beginning of the item or in the end.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 		 *
 		 * @type {boolean}
@@ -77,7 +77,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>image</code> source URI.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
 		 *
 		 * @type {string}
@@ -99,7 +99,7 @@ const metadata = {
 
 		/**
 		 * Defines the state of the <code>additionalText</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
