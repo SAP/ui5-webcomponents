@@ -146,6 +146,11 @@ class MultiInput extends Input {
 			return;
 		}
 
+		if (focusedToken) { // if there are no details, the event is triggered by a click
+			this.fireEvent("token-delete", { token: focusedToken });
+			return;
+		}
+
 		if (selectedTokens.indexOf(focusedToken) === -1) {
 			selectedTokens.push(focusedToken);
 		}
