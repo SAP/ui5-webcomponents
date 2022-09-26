@@ -190,7 +190,8 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_selectItem(event) {
-		const isTargetSegmentedButtonItem = event.target.tagName === 'UI5-SEGMENTED-BUTTON-ITEM';
+		const isTargetSegmentedButtonItem = event.target.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+
 		if (event.target.disabled || event.target === this.getDomRef() || !isTargetSegmentedButtonItem) {
 			return;
 		}
@@ -211,7 +212,7 @@ class SegmentedButton extends UI5Element {
 		return this;
 	}
 
-	_onmouseup(event){
+	_onmouseup(event) {
 		this._selectItem(event);
 		this.selectedItem.focus();
 	}
