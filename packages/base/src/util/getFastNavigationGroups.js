@@ -14,7 +14,7 @@ const isElementVisible = $el => {
 		&& style.visibility !== "hidden";
 };
 
-const findFastNavigationGroups = async (container, startFromContainer) => {
+const findFastNavigationGroups = (container, startFromContainer) => {
 	let child,
 		assignedElements,
 		index = 0;
@@ -46,7 +46,7 @@ const findFastNavigationGroups = async (container, startFromContainer) => {
 		}
 
 		if (child.nodeType === 1) {
-			await findFastNavigationGroups(child, false);
+			findFastNavigationGroups(child, false);
 		}
 
 		child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
@@ -54,10 +54,10 @@ const findFastNavigationGroups = async (container, startFromContainer) => {
 	/* eslint-disable no-await-in-loop */
 };
 
-const getFastNavigationGroups = async container => {
+const getFastNavigationGroups = container => {
 	groups = [];
 
-	await findFastNavigationGroups(container, true);
+	findFastNavigationGroups(container, true);
 
 	return groups;
 };
