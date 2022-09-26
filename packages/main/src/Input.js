@@ -1013,6 +1013,7 @@ class Input extends UI5Element {
 			"deleteContent",
 			"deleteContentBackward",
 			"deleteContentForward",
+			"historyUndo",
 		];
 
 		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
