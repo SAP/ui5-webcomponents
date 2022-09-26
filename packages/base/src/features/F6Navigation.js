@@ -17,7 +17,7 @@ class F6Navigation {
 
 	async _keydownHandler(event) {
 		if (isF6Next(event)) {
-			await this.updateGroups();
+			this.updateGroups();
 
 			if (this.groups.length < 1) {
 				return;
@@ -43,7 +43,7 @@ class F6Navigation {
 		}
 
 		if (isF6Previous(event)) {
-			await this.updateGroups();
+			this.updateGroups();
 
 			if (this.groups.length < 1) {
 				return;
@@ -85,9 +85,9 @@ class F6Navigation {
 		document.removeEventListener("keydown", this.keydownHandler);
 	}
 
-	async updateGroups() {
+	updateGroups() {
 		this.setSelectedGroup(document.activeElement);
-		this.groups = await getFastNavigationGroups(document.body);
+		this.groups = getFastNavigationGroups(document.body);
 	}
 
 	setSelectedGroup(element) {
