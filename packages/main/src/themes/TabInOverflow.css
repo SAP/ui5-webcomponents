@@ -9,7 +9,8 @@
 	opacity: var(--sapContent_DisabledOpacity);
 }
 
-.ui5-tab-overflow-item[hidden] {
+.ui5-tab-overflow-item[hidden],
+.ui5-tab-overflow-design-description {
 	display: none;
 }
 
