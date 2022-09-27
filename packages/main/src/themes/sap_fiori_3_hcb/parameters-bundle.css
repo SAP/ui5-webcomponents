@@ -14,7 +14,7 @@
 @import "./ColorPicker-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
-@import "../base/Dialog-parameters.css";
+@import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
