@@ -1016,7 +1016,23 @@ class Input extends UI5Element {
 		const eventType = event.inputType || (event.detail && event.detail.inputType);
 		this._keepInnerValue = false;
 
-		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
+		const allowedEventTypes = [
+			"deleteWordBackward",
+			"deleteWordForward",
+			"deleteSoftLineBackward",
+			"deleteSoftLineForward",
+			"deleteEntireSoftLine",
+			"deleteHardLineBackward",
+			"deleteHardLineForward",
+			"deleteByDrag",
+			"deleteByCut",
+			"deleteContent",
+			"deleteContentBackward",
+			"deleteContentForward",
+			"historyUndo",
+		];
+
+		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
 		// ---- Special cases of numeric Input ----
