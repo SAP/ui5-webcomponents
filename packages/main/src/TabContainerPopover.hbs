@@ -7,7 +7,7 @@
 	_hide-header
 	class="ui5-tab-container-responsive-popover"
 >
-	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
+	<ui5-list separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
 		{{#each _overflowItems}}
 			{{overflowPresentation}}
 		{{/each}}

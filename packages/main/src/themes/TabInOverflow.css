@@ -1,4 +1,5 @@
 @import "./TabSemanticIcon.css";
+@import "./InvisibleTextStyles.css";
 
 .ui5-tab-overflow-item {
 	color: var(--_ui5_tc_overflowItem_default_color);
@@ -9,8 +10,7 @@
 	opacity: var(--sapContent_DisabledOpacity);
 }
 
-.ui5-tab-overflow-item[hidden],
-.ui5-tab-overflow-design-description {
+.ui5-tab-overflow-item[hidden] {
 	display: none;
 }
 
