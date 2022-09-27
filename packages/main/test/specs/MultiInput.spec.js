@@ -364,7 +364,7 @@ describe("Keyboard handling", () => {
 
 		tokens = await input.$$("ui5-token");
 
-		assert.equal(await tokens.length, 1, "should have one tokens");
+		assert.equal(tokens.length, 1, "should have one tokens");
 		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
 		assert.equal(await secondToken.getProperty("text"), "bb", "The selected token should not be deleted.");
 	});
