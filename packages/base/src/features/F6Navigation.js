@@ -91,11 +91,21 @@ class F6Navigation {
 	}
 
 	setSelectedGroup(element) {
+		element = this.deepActive(element);
+
 		while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== document.querySelector("html")) {
 			element = element.parentElement ? element.parentNode : element.parentNode.host;
 		}
 
 		this.selectedGroup = element;
+	}
+
+	deepActive(element) {
+		if (element.shadowRoot) {
+			return this.deepActive(element.shadowRoot);
+		}
+
+		return element.activeElement
 	}
 
 	destroy() {

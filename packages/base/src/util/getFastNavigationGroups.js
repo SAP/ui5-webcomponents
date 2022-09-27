@@ -1,7 +1,7 @@
 let groups = [];
 
-const isFastNavGroup = $el => {
-	return $el.hasAttribute("data-sap-ui-fastnavgroup") && $el.getAttribute("data-sap-ui-fastnavgroup") === "true";
+const isFastNavGroupElemenet = $el => {
+	return $el.getAttribute("data-sap-ui-fastnavgroup") === "true";
 };
 
 const isElementVisible = $el => {
@@ -23,7 +23,7 @@ const findFastNavigationGroups = (container, startFromContainer) => {
 		return;
 	}
 
-	if (isFastNavGroup(container)) {
+	if (isFastNavGroupElemenet(container)) {
 		groups.push(container);
 	}
 
@@ -38,7 +38,6 @@ const findFastNavigationGroups = (container, startFromContainer) => {
 		child = container.firstElementChild;
 	}
 
-	/* eslint-disable no-await-in-loop */
 	while (child) {
 		const originalChild = child;
 		if (!child) {
@@ -51,7 +50,6 @@ const findFastNavigationGroups = (container, startFromContainer) => {
 
 		child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
 	}
-	/* eslint-disable no-await-in-loop */
 };
 
 const getFastNavigationGroups = container => {
