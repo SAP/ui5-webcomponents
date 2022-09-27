@@ -1,9 +1,7 @@
-commit 2de4a045f56e2f166d3e846ff11e6f9d76e98009
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Tue Sep 20 08:59:33 2022 +0200
+commit df0fff656392664c6ea1d8e63538dd787a37d0cf
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Sep 27 11:34:27 2022 +0300
 
-    feat(icons): create type-definitions for icon imports (#5753)
+    fix(ui5-input): enable autocomplete deletion by Meta/Alt + backspace (#5729)
     
-    Created TypeDefinitions for all icon packages. This helps TypeScript users to better use the Icon Name Export feature which was introduced with #5747
-    
-    Fixes #5335
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5450

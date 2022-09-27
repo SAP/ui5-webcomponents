@@ -1135,38 +1135,38 @@
   },
   "163": {
     "id": "163",
-    "title": "Frameworks",
-    "content": "Usage with Frameworks In this section, you can find framework-specific tutorials on how to get started with UI5 Web Components. We have created a bunch of tutorials that cover the integration of UI5 Web Components with some of the most popular existing frameworks. In these tutorials, you will find some framework-specific features &amp; learn how to use them. You might want to check them before you start active development.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/frameworks",
-    "relUrl": "/playground/frameworks"
-  },
-  "164": {
-    "id": "164",
     "title": "Customizing",
     "content": "Providing Custom Resources This section shows ways (other than the public APIs) to customize UI5 Web Components. Start with: Custom Theming with UI Theme Designer",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/customizing",
     "relUrl": "/playground/customizing"
   },
+  "164": {
+    "id": "164",
+    "title": "Advanced",
+    "content": "Advanced Concepts This section outlines more advanced concepts, related to application development with UI5 Web Components.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/advanced",
+    "relUrl": "/playground/advanced"
+  },
   "165": {
     "id": "165",
-    "title": "Getting started",
-    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
-    "relUrl": "/playground/getting-started"
-  },
-  "166": {
-    "id": "166",
     "title": "Contributing",
     "content": "Contributing to the UI5 Web Components Project Contributions are welcome! This section explains our conventions, how to run the project locally, and more.",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/contributing",
     "relUrl": "/playground/contributing"
   },
+  "166": {
+    "id": "166",
+    "title": "Frameworks",
+    "content": "Usage with Frameworks In this section, you can find framework-specific tutorials on how to get started with UI5 Web Components. We have created a bunch of tutorials that cover the integration of UI5 Web Components with some of the most popular existing frameworks. In these tutorials, you will find some framework-specific features &amp; learn how to use them. You might want to check them before you start active development.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/frameworks",
+    "relUrl": "/playground/frameworks"
+  },
   "167": {
     "id": "167",
-    "title": "Advanced",
-    "content": "Advanced Concepts This section outlines more advanced concepts, related to application development with UI5 Web Components.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/advanced",
-    "relUrl": "/playground/advanced"
+    "title": "Getting started",
+    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
+    "relUrl": "/playground/getting-started"
   },
   "168": {
     "id": "168",
