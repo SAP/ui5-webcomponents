@@ -118,5 +118,9 @@ describe("Menu Accessibility", () => {
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(
+			await listItems[0].getAttribute("accessible-name"),
+			"New File Opens a file explorer",
+			"There is additional description added");
 	});
 });

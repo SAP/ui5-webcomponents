@@ -8,6 +8,7 @@ import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 
 import {
 	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
@@ -376,13 +377,21 @@ class AvatarGroup extends UI5Element {
 		// if in "Group" mode overflow button size is equal to the offset from second item
 		if (this._isGroup) {
 			let item = this.items[1];
+			let ltrEffectiveWidth;
 
 			// in some cases when second avatar is overflowed the offset of the button is the right one
 			if (!item || item.hidden) {
 				item = button;
 			}
 
-			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : item.offsetLeft - this.offsetLeft;
+			ltrEffectiveWidth = item.offsetLeft;
+
+			if (!isChrome()) {
+				// additional subtractions required for non-Chromium browsers
+				ltrEffectiveWidth = item.offsetLeft - this.offsetLeft;
+			}
+
+			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : ltrEffectiveWidth;
 		}
 
 		return button.offsetWidth;
@@ -518,6 +527,7 @@ class AvatarGroup extends UI5Element {
 	 */
 	_getWidthToItem(item) {
 		const isRTL = this.effectiveDir === "rtl";
+		let ltrWidthToItem;
 
 		if (isRTL) {
 			// in RTL the total width is equal to difference of the parent container width and
@@ -526,7 +536,15 @@ class AvatarGroup extends UI5Element {
 		}
 
 		// in LTR the width is equal to item.offsetLeft
-		return item.offsetLeft - this.offsetLeft;
+		ltrWidthToItem = item.offsetLeft;
+
+		if (!isChrome()) {
+			// for non-Chromium browsers offsetLeft may differ
+			// to normalize it, the Avatar Group's offset-left is subtracted
+			ltrWidthToItem = item.offsetLeft - this.offsetLeft;
+		}
+
+		return ltrWidthToItem;
 	}
 
 	/**

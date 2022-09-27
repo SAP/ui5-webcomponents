@@ -28,7 +28,6 @@ import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
 	TIMEPICKER_SECONDS_LABEL,
-	TIMEPICKER_PERIODS_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -478,7 +477,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get periodSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_PERIODS_LABEL);
+		return "AM/PM";
 	}
 
 	get classes() {

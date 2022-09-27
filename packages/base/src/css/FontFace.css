@@ -62,5 +62,5 @@
     font-style: bold;
     font-weight: 900;
     src: local('72Black'),
-    url(https://sdk.openui5.org.com/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black.woff2?ui5-webcomponents) format("woff2");
+    url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black.woff2?ui5-webcomponents) format("woff2");
 }

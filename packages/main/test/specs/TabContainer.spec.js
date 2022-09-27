@@ -16,6 +16,10 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab matches.");
 	});
 
+	it("tests empty tab container", async () => {
+		assert.ok(await browser.$("#tabContainerEmpty").isDisplayed(), "Empty tab container is rendered.");
+	});
+
 	it("tests tabSelect event", async () => {
 		const item = await browser.$("#tabContainer1").shadow$(".ui5-tab-strip-item:nth-child(3)");
 		const result = await browser.$("#result");
@@ -46,7 +50,7 @@ describe("TabContainer general interaction", () => {
 		// Assert
 		assert.ok(await selectedTab.hasClass("ui5-tab-strip-item--selected"), "previously selected tab is still selected");
 		assert.notOk(await newTab.hasClass("ui5-tab-strip-item--selected"), "clicked tab is not selected");
-	
+
 		// Clean-up
 		await cbPrevent.click();
 	});
@@ -229,7 +233,7 @@ describe("TabContainer general interaction", () => {
 		// Setup
 		const getTabInStripDomRef = tab => tab.getTabInStripDomRef();
 		const getElementInBrowser = el => document.querySelector(el);
-	
+
 		const tabContainer = await browser.$("#tcSmall");
 		await tabContainer.scrollIntoView();
 

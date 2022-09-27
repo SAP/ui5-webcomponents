@@ -6,6 +6,8 @@
 	line-height: normal;
 	letter-spacing: normal;
 	word-spacing: normal;
+	height: var(--_ui5_input_height);
+	border-radius: var(--_ui5_input_border_radius);
 }
 
 :host {
@@ -26,11 +28,21 @@
 	background: var(--_ui5-datepicker-hover-background);
 }
 
+.ui5-date-picker-root {
+	border-radius: inherit;
+	height: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+}
+
 :host .ui5-date-picker-input {
 	width: 100%;
 	min-width: 12.5625rem;
 	color: inherit;
 	background-color: inherit;
+	border-radius: inherit;
+	height: inherit;
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;

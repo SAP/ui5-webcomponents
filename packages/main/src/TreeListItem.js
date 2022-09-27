@@ -104,6 +104,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Defines whether the toggle button is shown at the end, rather than at the beginning of the item
 		 *
 		 * @protected
@@ -288,6 +300,10 @@ class TreeListItem extends ListItem {
 		return this.textContent.length && !this._minimal;
 	}
 
+	get _ariaLabel() {
+		return TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+	}
+
 	get _accInfo() {
 		return {
 			role: "treeitem",
@@ -296,7 +312,7 @@ class TreeListItem extends ListItem {
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
-			listItemAriaLabel: TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
+			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 		};
 	}
 
