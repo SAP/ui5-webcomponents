@@ -26,8 +26,6 @@ jobs:
 
     - name: Build
       run: yarn build
-      env:
-        ENABLE_CLDR: 1
 
     - name: Publish
       env:
