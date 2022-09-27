@@ -105,7 +105,7 @@ class F6Navigation {
 			return this.deepActive(element.shadowRoot);
 		}
 
-		return element.activeElement
+		return element.activeElement;
 	}
 
 	destroy() {
