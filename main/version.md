@@ -1,7 +1,7 @@
-commit 0aa3d3da5247e106f121498a1bc6dbc957849a4f
+commit 885b20feaaf3df125b6206310dc33889e441799a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Sep 27 15:12:26 2022 +0300
+Date:   Tue Sep 27 15:12:06 2022 +0300
 
-    chore: remove CLDR warning and ENABLE_CLDR usage (#5848)
+    fix(ui5-static-area-item): add tag as attr on the host (#5845)
     
-    ENABLE_CLDR variable does not have any effect since the rollup to vite switch so it should be removed.
+    The change was done upon stakeholder's request (via internal communication channel) and the use case is the same as with the standard components - to have stable query selectors no matter the scoping suffix that is set.
