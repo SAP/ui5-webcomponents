@@ -1,7 +1,7 @@
-commit df0fff656392664c6ea1d8e63538dd787a37d0cf
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Sep 27 11:34:27 2022 +0300
+commit 0aa3d3da5247e106f121498a1bc6dbc957849a4f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Sep 27 15:12:26 2022 +0300
 
-    fix(ui5-input): enable autocomplete deletion by Meta/Alt + backspace (#5729)
+    chore: remove CLDR warning and ENABLE_CLDR usage (#5848)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5450
+    ENABLE_CLDR variable does not have any effect since the rollup to vite switch so it should be removed.
