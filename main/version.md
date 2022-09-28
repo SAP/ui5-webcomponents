@@ -1,7 +1,19 @@
-commit 885b20feaaf3df125b6206310dc33889e441799a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Sep 27 15:12:06 2022 +0300
+commit d694a8884782c576bbef720068bbbd62db3602a3
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Sep 28 09:25:46 2022 +0300
 
-    fix(ui5-static-area-item): add tag as attr on the host (#5845)
+    fix(ui5-tokenizer): return correct token on delete event (#5744)
     
-    The change was done upon stakeholder's request (via internal communication channel) and the use case is the same as with the standard components - to have stable query selectors no matter the scoping suffix that is set.
+    * fix(ui5-tokenizer): return correct token on delete event
+    
+    * fix(ui5-tokenizer): return correct token on delete event
+    
+    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
+    
+    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
+    
+    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
+    
+    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
+    
+    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
