@@ -55,6 +55,7 @@
 
 [ui5-tree]::part(toggle-icon) {
     color: var(--sapContent_NonInteractiveIconColor);
+    flex-shrink: 0;
 }
 
 [ui5-tree]::part(icon) {
