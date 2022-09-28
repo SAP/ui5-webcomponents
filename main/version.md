@@ -1,19 +1,5 @@
-commit d694a8884782c576bbef720068bbbd62db3602a3
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Sep 28 09:25:46 2022 +0300
+commit 212b2ef49d54f6328220a6d713e3ce8be5f8ab36
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Sep 28 11:25:59 2022 +0300
 
-    fix(ui5-tokenizer): return correct token on delete event (#5744)
-    
-    * fix(ui5-tokenizer): return correct token on delete event
-    
-    * fix(ui5-tokenizer): return correct token on delete event
-    
-    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
-    
-    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
-    
-    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
-    
-    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
-    
-    * fix(ui5-tokenizer): return correct token on delete event in MultiInput
+    fix(ui5-multi-combobox): apply focus when invoked explicitly (#5850)
