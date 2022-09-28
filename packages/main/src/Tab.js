@@ -337,6 +337,10 @@ class Tab extends UI5Element {
 			labels.push(`${this._id}-icon`);
 		}
 
+		if (this._designDescription) {
+			labels.push(`${this._id}-designDescription`);
+		}
+
 		return labels.join(" ");
 	}
 
@@ -393,6 +397,14 @@ class Tab extends UI5Element {
 		default:
 			return null;
 		}
+	}
+
+	get _designDescription() {
+		if (this.design === SemanticColor.Default) {
+			return null;
+		}
+
+		return this.design;
 	}
 
 	get semanticIconClasses() {
