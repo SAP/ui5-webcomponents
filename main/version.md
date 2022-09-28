@@ -1,7 +1,7 @@
-commit e633b8b3003136f6ad7696a0d12af807e38c18dc
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Wed Sep 28 15:11:14 2022 +0300
+commit 8a69be21c683ed98a522e2391eeb61901acb0e7d
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Wed Sep 28 15:11:58 2022 +0300
 
-    fix(ui5-tabcontainer): fixed tabs accessibility issues (#5846)
+    fix(ui5-side-navigation): toggle icon no longer shrinks with long text (#5837)
     
-    * fix(ui5-tabcontainer): fixed tabs accessibility issues
+    Fixes #5825
