@@ -1,7 +1,5 @@
-commit 8a69be21c683ed98a522e2391eeb61901acb0e7d
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Wed Sep 28 15:11:58 2022 +0300
+commit 2ec2233291e37ac6c2f9243ab334ae086d9619e4
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Sep 28 15:49:00 2022 +0300
 
-    fix(ui5-side-navigation): toggle icon no longer shrinks with long text (#5837)
-    
-    Fixes #5825
+    chore: upgrade Chromedriver to 105.0.1 (#5856)
