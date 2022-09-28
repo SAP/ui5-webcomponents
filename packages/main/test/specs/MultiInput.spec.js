@@ -349,6 +349,29 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
 	});
 
+	it ("Clicking delete icon should delete token and place the focus on the previous one", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const secondToken = await browser.$("#two-tokens ui5-token#secondToken");
+		const deleteIcon = input.$$("ui5-token")[0].shadow$("ui5-icon");
+		let tokens;
+
+		await input.setProperty("value", "");
+		await innerInput.click();
+		await innerInput.keys("ArrowLeft");
+		await innerInput.keys("Space");
+
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+
+		await deleteIcon.click();
+
+		tokens = await input.$$("ui5-token");
+
+		assert.equal(tokens.length, 1, "should have one tokens");
+		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
+		assert.equal(await secondToken.getProperty("text"), "bb", "The selected token should not be deleted.");
+	});
+
 	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");

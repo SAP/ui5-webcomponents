@@ -242,14 +242,40 @@ class Tokenizer extends UI5Element {
 	}
 
 	_delete(event) {
+		if (!event.detail) { // if there are no details, the event is triggered by a click
+			this._tokenClickDelete(event, event.target);
+			return;
+		}
+
 		if (this._selectedTokens.length) {
-			this._selectedTokens.forEach(token => this._tokenDelete(event, token));
+			this._selectedTokens.forEach(token => this._tokenKeyboardDelete(event, token));
 		} else {
-			this._tokenDelete(event);
+			this._tokenKeyboardDelete(event);
 		}
 	}
 
-	_tokenDelete(event, token) {
+	_tokenClickDelete(event, token) {
+		const tokens = this._getVisibleTokens();
+		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(event.target); // The index of the token that just got deleted
+		const nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1; // The index of the next token that needs to be focused next due to the deletion
+		const nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
+
+		this._handleCurrentItemAfterDeletion(nextToken);
+
+		this.fireEvent("token-delete", { ref: token || event.target });
+	}
+
+	_handleCurrentItemAfterDeletion(nextToken) {
+		if (nextToken && !isPhone()) {
+			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
+
+			setTimeout(() => {
+				nextToken.focus();
+			}, 0);
+		}
+	}
+
+	_tokenKeyboardDelete(event, token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
 
 		const tokens = this._getVisibleTokens();
@@ -272,13 +298,7 @@ class Tokenizer extends UI5Element {
 			nextToken = notSelectedTokens[0];
 		}
 
-		if (nextToken && !isPhone()) {
-			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
-
-			setTimeout(() => {
-				nextToken.focus();
-			}, 0);
-		}
+		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this.fireEvent("token-delete", { ref: token || event.target });
 	}
