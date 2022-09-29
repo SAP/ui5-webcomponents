@@ -16,6 +16,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
+// import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 
 import {
 	VALUE_STATE_INFORMATION,
@@ -405,11 +406,7 @@ class TextArea extends UI5Element {
 		this._mirrorText = this._tokenizeText(this.value);
 
 		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
-
-		if (this.growingMaxLines) {
-			// this should be complex calc between line height and paddings - TODO: make it stable
-			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
-		}
+		this._setCSSParams();
 
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
@@ -482,6 +479,11 @@ class TextArea extends UI5Element {
 		if (this.displayValueStateMessagePopover) {
 			this._width = this.offsetWidth;
 		}
+	}
+
+	_setCSSParams() {
+		this.style.setProperty("--_textarea_rows", this.rows || "2");
+		this.style.setProperty("--_textarea_growing_max_lines", this.growingMaxLines);
 	}
 
 	toggleValueStateMessage(toggle) {
@@ -565,23 +567,7 @@ class TextArea extends UI5Element {
 	}
 
 	get styles() {
-		const lineHeight = 1.4 * 16;
-		const mainHeight = (this.rows * lineHeight);
-
 		return {
-			mirror: {
-				"max-height": this._maxHeight ? this._maxHeight : "100%",
-				"min-height": (this.rows) ? `${mainHeight}px` : this.showExceededText && "48px",
-
-			},
-			main: {
-				width: "100%",
-				height: (this.rows) ? `${mainHeight}px` : !this.showExceededText && "100%",
-			},
-			focusDiv: {
-				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
-				"max-height": (this._maxHeight),
-			},
 			valueStateMsgPopover: {
 				"max-width": `${this._width}px`,
 			},

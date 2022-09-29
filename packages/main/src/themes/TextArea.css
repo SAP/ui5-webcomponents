@@ -13,8 +13,8 @@
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--sapField_BorderCornerRadius);
 	box-sizing: border-box;
-	line-height: 1.4;
-	letter-spacing: normal;
+	line-height: var(--_ui5_textarea_line_height);
+	Letter-spacing: normal;
 	word-spacing: normal;
 }
 
@@ -66,18 +66,26 @@
 	border-color: inherit;
 }
 
-.wrapper {
-	box-sizing: border-box;
+.ui5-textarea-wrapper {
+	box-sizing: content-box;
 	border-color: inherit;
 	width: 100%;
+	/* Horizon Only */
+	/* padding-bottom: 2px; */
 	display: flex;
 	height: 100%;
 }
 
+:host([growing]) .ui5-textarea-wrapper {
+	position: relative;
+}
+
 .ui5-textarea-inner {
+	box-sizing: content-box;
 	width: 100%;
 	height: 100%;
 	min-width: 6rem;
+	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize));
 	margin: 0;
 	padding: var(--_ui5_textarea_padding);
 	color: inherit;
@@ -99,34 +107,65 @@
 	background-color: var(--sapField_Background);
 }
 
-:host([growing]) .ui5-textarea-root {
-	position: relative;
-}
-
 :host([growing]) .ui5-textarea-inner {
+	box-sizing: border-box;
+	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
-    overflow: hidden;
+	overflow: hidden;
 }
-
-:host([growing][show-exceeded-text]) .ui5-textarea-inner {
-	height: calc(100% - 48px);
-}
-
-/* :host([growing][show-exceeded-text]) .wrapper {
-	height: calc(100% + 48px);
-} */
 
 .ui5-textarea-mirror {
-	line-height: 1.4;
+	box-sizing: content-box;
+	line-height: var(--_ui5_textarea_line_height);
 	visibility: hidden;
 	width: 100%;
+	max-height: 100%;
+	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize));
 	word-break: break-all;
 	padding: var(--_ui5_textarea_padding);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
+}
+
+:host([rows]) .ui5-textarea-inner {
+	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize));
+}
+
+/* If the 'rows' property is not set it defaults to 2 in the native TextArea element */
+:host:not([rows]) .ui5-textarea-inner {
+	min-height: calc(2 * var(--_ui5_textarea_line_height)) * var(--sapFontSize);
+}
+
+:host([growing]):not([growing-max-lines]) .ui5-textarea-inner {
+	max-height: 100%;
+}
+
+:host([growing-max-lines]) .ui5-textarea-inner, :host([growing-max-lines]) .ui5-textarea-mirror  {
+	max-height: calc((var(--_textarea_growing_max_lines) * var(--_ui5_textarea_line_height)) * var(--sapFontSize));
+}
+
+:host([rows = "1"]) .ui5-textarea-inner {
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize));
+}
+
+:host(:not([growing])[rows = "1"]) .ui5-textarea-inner {
+	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize));
+}
+
+:host([growing-max-lines = "1"]) .ui5-textarea-inner {
+	height: 100%;
+	max-height: 100%;
+}
+
+:host(:not([growing]):not([growing-max-lines])[show-exceeded-text]) .ui5-textarea-inner {
+	height: calc(100% - 48px);
+}
+
+:host(:not([growing]):not([growing-max-lines])[rows = "1"][show-exceeded-text]) .ui5-textarea-inner {
+	height: calc((var(--_ui5_textarea_line_height) * var(--sapFontSize)) - 48px);
 }
 
 :host([readonly]) {

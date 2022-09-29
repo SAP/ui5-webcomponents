@@ -23,4 +23,5 @@
 	--_ui5_textarea_disabled_background_color: var(--sapField_ReadOnly_Background);
 	--_ui5_textarea_error_hover_background_color: var(--sapField_Hover_Background);
 	--_ui5_textarea_error_focused_background_color: var(--sapField_Focus_Background);
+	--_ui5_textarea_line_height: 1.4;
 }
