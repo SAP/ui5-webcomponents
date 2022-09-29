@@ -1,7 +1,7 @@
-commit 996714eb9345e3efd796cf8b3c46c8e198fd18e2
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Sep 29 09:56:42 2022 +0300
+commit b1aa6e70086689678175506b230479c8dbff6f99
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Thu Sep 29 10:58:31 2022 +0300
 
-    fix(ui5-tabcontainer): fix closing overflow on mobile (#5855)
+    fix(ui5-breadcrumbs-popover): aligned footer items (#5821)
     
-    Fixes #5854
+    FIXES: #5810
