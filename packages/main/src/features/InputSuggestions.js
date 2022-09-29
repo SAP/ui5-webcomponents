@@ -239,7 +239,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: this.selectedItemIndex + 1,
 			listSize: allItems.length,
-			itemText: item.textContent,
+			itemText: this._getRealItems()[this.selectedItemIndex].description,
 		};
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
@@ -436,7 +436,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: nextIdx + 1,
 			listSize: items.length,
-			itemText: currentItem.textContent,
+			itemText: this._getRealItems()[items.indexOf(currentItem)].description,
 		};
 
 		if (previousItem) {
@@ -539,7 +539,7 @@ class Suggestions {
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
 			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
 
-		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
+		return `${this.accInfo.itemText} ${itemPositionText} ${itemSelectionText}`;
 	}
 
 	getRowText(suggestion) {
