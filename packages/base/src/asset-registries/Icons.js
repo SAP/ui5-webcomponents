@@ -46,7 +46,7 @@ const _fillRegistry = bundleData => {
 };
 
 // set
-const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
+const registerIcon = (name, { pathData, ltr, accData, collection, packageName, customTemplate, viewBox } = {}) => { // eslint-disable-line
 	if (!collection) {
 		collection = getEffectiveDefaultIconCollection();
 	}
@@ -57,6 +57,8 @@ const registerIcon = (name, { pathData, ltr, accData, collection, packageName } 
 		ltr,
 		accData,
 		packageName,
+		customTemplate,
+		viewBox,
 	});
 };
 
