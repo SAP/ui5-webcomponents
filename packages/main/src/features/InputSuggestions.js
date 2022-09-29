@@ -537,7 +537,7 @@ class Suggestions {
 	get itemSelectionAnnounce() {
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 
-		return `${itemPositionText} ${this.accInfo.itemText}`;
+		return `${this.accInfo.itemText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion) {
