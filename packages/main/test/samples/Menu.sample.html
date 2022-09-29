@@ -111,4 +111,41 @@
 	</xmp></pre>
 </section>
 
+<section>
+	<h3>Menu with additional text on menu items</h3>
+	<div class="snippet">
+		<ui5-button id="btnOpenAdditionalText" class="samples-margin">Open Menu</ui5-button> <br/>
+		<ui5-menu id="menuAdditionalText">
+			<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
+			<ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
+			<ui5-menu-item text="Open" icon="open-folder" starts-section></ui5-menu-item>
+			<ui5-menu-item text="Close"></ui5-menu-item>
+			<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+			<ui5-menu-item text="Exit" icon="journey-arrive" additional-text="Ctrl+X"></ui5-menu-item>
+		</ui5-menu>
+		<script>
+			btnOpenAdditionalText.addEventListener("click", function(event) {
+				menuAdditionalText.showAt(btnOpenAdditionalText);
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="btnOpenAdditionalText">Open Menu</ui5-button> <br/>
+<ui5-menu id="menuAdditionalText">
+	<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
+	<ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
+	<ui5-menu-item text="Open" icon="open-folder" starts-section></ui5-menu-item>
+	<ui5-menu-item text="Close"></ui5-menu-item>
+	<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+	<ui5-menu-item text="Exit" icon="journey-arrive" additional-text="Ctrl+X"></ui5-menu-item>
+</ui5-menu>
+<script>
+	btnOpenAdditionalText.addEventListener("click", function(event) {
+		menuAdditionalText.showAt(btnOpenAdditionalText);
+	});
+</script>
+	</xmp></pre>
+</section>
+
+
 <!-- JSDoc marker -->

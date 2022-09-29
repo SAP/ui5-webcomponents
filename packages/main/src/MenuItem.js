@@ -18,6 +18,28 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
+		 * @type {string}
+		 * @public
+		 * @since 1.8.0
+		 */
+		additionalText: {
+			type: String,
+		},
+
+		/**
+		 * Defines whether an additional text should be hidden.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.8.0
+		 */
+		 hideAdditionalText: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
@@ -165,6 +187,10 @@ class MenuItem extends UI5Element {
 
 	get subMenuOpened() {
 		return !!Object.keys(this._subMenu).length;
+	}
+
+	get _additionalText() {
+		return this.hasChildren || this.hideAdditionalText ? "" : this.additionalText;
 	}
 
 	get ariaLabelledByText() {
