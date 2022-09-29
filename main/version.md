@@ -1,5 +1,5 @@
-commit 6225e10011b668da92584f434f33640000ed2310
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 29 12:44:49 2022 +0300
+commit d8b7200f30c16d94b7f15ddbdf9808d8efbaa38c
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Sep 29 17:28:38 2022 +0300
 
-    fix(ui5-input): announce suggestion text once (#5817)
+    feat(main): add support for custom SVG icons (#5865)
