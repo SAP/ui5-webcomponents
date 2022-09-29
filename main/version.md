@@ -1,7 +1,5 @@
-commit b1aa6e70086689678175506b230479c8dbff6f99
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Thu Sep 29 10:58:31 2022 +0300
+commit 6225e10011b668da92584f434f33640000ed2310
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Sep 29 12:44:49 2022 +0300
 
-    fix(ui5-breadcrumbs-popover): aligned footer items (#5821)
-    
-    FIXES: #5810
+    fix(ui5-input): announce suggestion text once (#5817)
