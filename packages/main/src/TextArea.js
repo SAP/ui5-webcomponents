@@ -16,7 +16,6 @@ import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
-// import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 
 import {
 	VALUE_STATE_INFORMATION,
@@ -496,7 +495,7 @@ class TextArea extends UI5Element {
 
 	async openPopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-root .wrapper"));
+		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-root .ui5-textarea-wrapper"));
 	}
 
 	async closePopover() {
