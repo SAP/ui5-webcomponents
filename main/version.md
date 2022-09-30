@@ -1,5 +1,5 @@
-commit d8b7200f30c16d94b7f15ddbdf9808d8efbaa38c
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Sep 29 17:28:38 2022 +0300
+commit f44f57b27850de03e430d08e3e9adc71d60296fe
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Sep 30 10:14:26 2022 +0300
 
-    feat(main): add support for custom SVG icons (#5865)
+    feat(f6navigation): improve fastgroup navigation (#5844)
