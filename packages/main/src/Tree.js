@@ -348,7 +348,7 @@ class Tree extends UI5Element {
 	}
 
 	get _role() {
-		return "tree";
+		return this._minimal ? "menubar" : "tree";
 	}
 
 	get _label() {

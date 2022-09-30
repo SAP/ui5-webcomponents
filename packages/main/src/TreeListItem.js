@@ -301,12 +301,13 @@ class TreeListItem extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return this._minimal ? "Navigation List Menu Item" : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
+		// this.textContent should be added when this._minimal
 		return {
-			role: "treeitem",
+			role: this._minimal ? "menuitemradio" : "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
 			posinset: this._posinset,
