@@ -19,8 +19,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
-		 * <b>Note:</b> The additional text would not be displayed if the <code>hideAdditionalText</code>
-		 * property is set to <code>true</code>.
+		 * <b>Note:</b> The additional text would not be displayed if the item has a submenu.
 		 *
 		 * @type {string}
 		 * @public
@@ -28,21 +27,6 @@ const metadata = {
 		 */
 		additionalText: {
 			type: String,
-		},
-
-		/**
-		 * Defines whether an additional text should be hidden.
-		 * <b>Note:</b> This property might be useful when the additional text must be hidden in some
-		 * situations - for example to hide additional text on mobile devices when it is used for
-		 * displaying of keyboard shortcuts.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.8.0
-		 */
-		 hideAdditionalText: {
-			type: Boolean,
 		},
 
 		/**
@@ -196,7 +180,7 @@ class MenuItem extends UI5Element {
 	}
 
 	get _additionalText() {
-		return this.hasChildren || this.hideAdditionalText ? "" : this.additionalText;
+		return this.hasChildren ? "" : this.additionalText;
 	}
 
 	get ariaLabelledByText() {
