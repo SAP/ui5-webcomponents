@@ -518,10 +518,6 @@ class RadioButton extends UI5Element {
 	get strokeWidth() {
 		return this.valueState === "None" ? "1" : "2";
 	}
-
-	get _effectiveDisabled() {
-
-	}
 }
 
 RadioButton.define();
