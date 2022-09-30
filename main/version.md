@@ -1,17 +1,11 @@
-commit 0dca9b2c87509be9ec3725681d8aa2dd23e59219
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Fri Sep 30 14:04:47 2022 +0300
+commit bf991b6bb519e4cc849a542d67f4954efc4b55e3
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Fri Sep 30 17:07:42 2022 +0300
 
-    fix(ui5-radio-button): correct syncing radio group when exiting DOM (#5859)
+    feat(ui5-menu-item): implement additional text (#5867)
     
-    In frameworks like React, conditional rendering such as:
-    ```js
-    <div>
-    { falsyValue && <RadioButton /> }
-    </div>
-    ```
-     will remove radio buttons from the DOM completely.
+    * feat(ui5-menu-item): implement additional text
     
-    With this fix, buttons from the same group will have the correct tabindex set when they are placed back in the DOM.
+    * feat(ui5-menu-item): fix comments
     
-    Fixes #5803
+    * feat(ui5-menu-item): remove redundant hideAdditionalText property
