@@ -1,5 +1,5 @@
-commit 2309d0f1fee1f4997f69127410b89ffcf8659e42
+commit 6bee48fa6de8690663d71d3b9ca87ac9923e0b18
 Author: ilhan007 <ilhan.myumyun@sap.com>
-Date:   Fri Sep 30 16:49:00 2022 +0300
+Date:   Fri Sep 30 19:26:52 2022 +0300
 
-    docs: set playground default theme to sap_horizon
+    chore: set sap_horizon to landing page as well
