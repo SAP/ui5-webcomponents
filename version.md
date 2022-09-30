@@ -1,5 +1,5 @@
-commit 6fa211eb18fabdfe4be815900bf742161599f433
+commit 2309d0f1fee1f4997f69127410b89ffcf8659e42
 Author: ilhan007 <ilhan.myumyun@sap.com>
-Date:   Thu Sep 8 15:25:35 2022 +0300
+Date:   Fri Sep 30 16:49:00 2022 +0300
 
-    Merge branch 'main' into latest-release-website
+    docs: set playground default theme to sap_horizon
