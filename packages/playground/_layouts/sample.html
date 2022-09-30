@@ -26,14 +26,14 @@ layout: default
             <div class="setting">
                 <ui5-label for="themeSwitch">Theme:</ui5-label>
                 <ui5-select id="themeSwitch">
-                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
-                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
-                    <ui5-option value="sap_fiori_3_hcb">Quartz High Contrast Black</ui5-option>
-                    <ui5-option value="sap_fiori_3_hcw">Quartz High Contrast White</ui5-option>
                     <ui5-option value="sap_horizon">Morning Horizon (Light)</ui5-option>
                     <ui5-option value="sap_horizon_dark">Evening Horizon (Dark)</ui5-option>
                     <ui5-option value="sap_horizon_hcb">Horizon High Contrast Black</ui5-option>
                     <ui5-option value="sap_horizon_hcw">Horizon High Contrast White</ui5-option>
+                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
+                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
+                    <ui5-option value="sap_fiori_3_hcb">Quartz High Contrast Black</ui5-option>
+                    <ui5-option value="sap_fiori_3_hcw">Quartz High Contrast White</ui5-option>
                 </ui5-select>
             </div>
             <div class="setting">
@@ -59,6 +59,13 @@ layout: default
 </ui5-dialog>
 
 <!-- UI5 Web Components Assests -->
+
+<script data-ui5-config type="application/json">
+    {
+      "theme": "sap_horizon"
+    }
+</script>
+
 <script type="module" src="{{ "/assets/js/ui5-webcomponents/bundle.esm.js" | absolute_url }}"></script>
 
 <link rel="stylesheet" href="{{ "/assets/css/api.css" | absolute_url }}">
