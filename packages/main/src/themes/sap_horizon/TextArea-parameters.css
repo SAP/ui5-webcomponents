@@ -23,7 +23,6 @@
 	--_ui5_textarea_custom_icon_padding: .625rem .625rem .5625rem .625rem;
 	--_ui5_textarea_error_warning_custom_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_textarea_focus_outline_color: var(--sapField_Active_BorderColor);
-	--_ui5_textarea_focus_outline: var(--_ui5_textarea_focus_after_width) solid var(--sapContent_FocusColor);
 }
 
 [data-ui5-compact-size],

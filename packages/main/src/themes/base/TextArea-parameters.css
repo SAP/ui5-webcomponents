@@ -24,22 +24,21 @@
 	--_ui5_textarea_error_hover_background_color: var(--sapField_Hover_Background);
 	--_ui5_textarea_error_focused_background_color: var(--sapField_Focus_Background);
 	
-	--__ui5_textarea_hover_border: var(--sapField_BorderWidth) var(--sapField_BorderStyle) var(--sapField_Hover_BorderColor);
-	--__ui5_textarea_hover_box_shadow: none;
-	--__ui5_textarea_value_state_error_hover_background: var(--sapField_Hover_Background);
-	--__ui5_textarea_background_color: var(--sapField_Background);
-	--__ui5_textarea_border_radius: var(--sapField_BorderCornerRadius);
-	--__ui5_textarea_focus_border_radius: 0;
+	--_ui5_textarea_hover_border: var(--sapField_BorderWidth) var(--sapField_BorderStyle) var(--sapField_Hover_BorderColor);
+	--_ui5_textarea_hover_box_shadow: none;
+	--_ui5_textarea_value_state_error_hover_background: var(--sapField_Hover_Background);
+	--_ui5_textarea_background_color: var(--sapField_Background);
+	--_ui5_textarea_border_radius: var(--sapField_BorderCornerRadius);
+	--_ui5_textarea_focus_border_radius_textarea_focus_offset: 0;
 	--_ui5-textarea-border: 2px solid transparent; /* The value of this variable defaults to sap_horizon theme, because if it defaults to fiori, then a flickering of the border is present*/
-	--__ui5_textarea_placeholder_style: italic;
-	--__ui5_textarea_placeholder_color: var(--sapField_PlaceholderTextColor);
-	--__ui5_textarea_bottom_border_height: 0;
-	--__ui5_textarea_bottom_border_color: transparent;
-	--__ui5_textarea_focused_border_color: var(--sapField_Hover_BorderColor);
-	--__ui5_textarea_state_border_width: 0.125rem;
-	--__ui5_textarea_information_border_width: 0.125rem;
-	--__ui5_textarea_error_warning_border_style: solid;
-
+	--_ui5_textarea_placeholder_style: italic;
+	--_ui5_textarea_placeholder_color: var(--sapField_PlaceholderTextColor);
+	--_ui5_textarea_bottom_border_height: 0;
+	--_ui5_textarea_bottom_border_color: transparent;
+	--_ui5_textarea_focused_border_color: var(--sapField_Hover_BorderColor);
+	--_ui5_textarea_state_border_width: 0.125rem;
+	--_ui5_textarea_information_border_width: 0.125rem;
+	--_ui5_textarea_error_warning_border_style: solid;
 
 	--_ui5_textarea_line_height: 1.4;
 	--_ui5_textarea_wrapper_border: none;
@@ -63,7 +62,7 @@
 	--_ui5_textarea_focused_value_state_information_border_color: var(--sapField_InformationColor);
 	--_ui5-textarea-value-state-information-border-width: 1px;
 	--_ui5-textarea-background-image: none;
-	--_ui5_textarea_focus_offset: 1px;
+	--_ui5_textarea_focus_offset: 2px;
 	--_ui5_textarea_value_state_error_placeholder_font_weight: normal;
 	--_ui5_textarea_focus_outline_color: var(--sapContent_FocusColor);
 }

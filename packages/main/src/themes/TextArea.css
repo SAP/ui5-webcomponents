@@ -30,9 +30,9 @@
 	background-color: var(--_ui5_textarea_disabled_background_color);
 }
 
-:host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper {
+:host(:not([value-state]):not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
-	background-color: var(--__ui5_textarea_background_color);
+	background-color: var(--_ui5_textarea_background_color);
 }
 
 :host(:not([value-state]):not([readonly]):not([focused]):hover) .ui5-textarea-wrapper {
@@ -61,12 +61,13 @@
 }
 
 .ui5-textarea-wrapper {
+	position: relative;
 	box-sizing: content-box;
 	width: 100%;
 	border-bottom: var(--_ui5_textarea_wrapper_border);
 	display: flex;
 	height: 100%;
-	background-color: var(--__ui5_textarea_background_color);
+	background-color: var(--_ui5_textarea_background_color);
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--sapField_BorderCornerRadius);
 	outline: none;
@@ -92,10 +93,6 @@
 	right: var(--_ui5_textarea_focus_offset);
 }
 
-:host([growing]) .ui5-textarea-wrapper {
-	position: relative;
-}
-
 .ui5-textarea-inner {
 	box-sizing: content-box;
 	width: 100%;
@@ -113,7 +110,6 @@
 	overflow: auto;
 	resize: none;
 	border-color: inherit;
-	border-radius: inherit;
 	border-width: var(--_ui5_textarea_inner_border_width);
 	border-style: var(--sapField_BorderStyle);
 	line-height: inherit;
@@ -133,7 +129,6 @@
 }
 
 :host([focused]) .ui5-textarea-inner:focus-visible {
-	border: none;
 	outline: none;
 }
 
@@ -187,10 +182,6 @@
 
 :host(:not([growing]):not([growing-max-lines])[rows = "1"][show-exceeded-text]) .ui5-textarea-inner {
 	height: calc((var(--_ui5_textarea_line_height) * var(--sapFontSize)) - 48px);
-}
-
-:host(:not([growing]):not([growing-max-lines])[show-exceeded-text]) .ui5-textarea-wrapper::after  {
-	height: calc(100% - 30px);
 }
 
 :host([readonly]) {
@@ -337,11 +328,14 @@
 	box-shadow: var(--_ui5_textarea_value_state_success_hover_box_shadow);
 }
 
+:host([value-state][value-state="Success"]) .ui5-textarea-inner {
+	border-radius: var(--sapField_BorderCornerRadius);
+}
+
 :host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
 	background: var(--sapField_InformationBackgroundStyle);
 	background-color: var(--sapField_InformationBackground);
 	border-color: var(--_ui5_textarea_value_state_information_border_color);
-	border-width: var(--_ui5_textarea_information_border_width);
 }
 
 :host([value-state="Information"][focused]:not([readonly])) .ui5-textarea-wrapper {
