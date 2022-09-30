@@ -238,7 +238,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: this.selectedItemIndex + 1,
 			listSize: allItems.length,
-			itemText: item.textContent,
+			itemText: this._getRealItems()[this.selectedItemIndex].description,
 		};
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
@@ -435,7 +435,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: nextIdx + 1,
 			listSize: items.length,
-			itemText: currentItem.textContent,
+			itemText: this._getRealItems()[items.indexOf(currentItem)].description,
 		};
 
 		if (previousItem) {
