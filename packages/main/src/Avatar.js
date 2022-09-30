@@ -344,13 +344,21 @@ class Avatar extends UI5Element {
 	}
 
 	get validInitials() {
-		const validInitials = /^[a-zA-Z]{1,2}$/;
+		// initials should consist of only 1,2 or 3 latin letters
+		const validInitials = /^[a-zA-Z]{1,3}$/,
+			  areInitialsValid = this.initials && validInitials.test(this.initials);
 
-		if (this.initials && validInitials.test(this.initials)) {
+		if (areInitialsValid) {
 			return this.initials;
 		}
 
-		return null;
+		if (!areInitialsValid) {
+			// if initials are not valid,an icon should be shown inside the avatar
+			this.icon = "employee";
+			return this.icon;
+		}
+
+		return this;
 	}
 
 	get accessibleNameText() {
@@ -368,6 +376,23 @@ class Avatar extends UI5Element {
 
 	onBeforeRendering() {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+	}
+
+	onEnterDOM() {
+		this._checkInitialsWidth();
+	}
+
+	_checkInitialsWidth() {
+		// if initials` width is bigger than the avatar,
+		// an icon should be shown inside the avatar
+		const avatar = this.getDomRef(),
+			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		if (this.initials && this.initials.length === 3 && this.size === "XS") {
+			if (avatarInitials.scrollWidth > avatar.scrollWidth) {
+				this.icon = "employee";
+			}
+		}
+		return this.icon;
 	}
 
 	_onClickHandler(event) {
