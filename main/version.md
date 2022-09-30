@@ -1,10 +1,21 @@
-commit d2e7b4fe2a3966d4eb8c97fcb141b1bed86de981
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 30 11:38:46 2022 +0300
+commit cfe6b2b3845686437fc53b87ec5b2f991d521dd9
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Sep 30 01:53:38 2022 -0700
 
-    build: improve i18n texts update at dev time (#5862)
+    Translation Delivery (#5834)
     
-    Prior to this PR, changing the messagebundle.properties file does not take effect as the default i18n texts are generated based on the locale specific file (for "en" - messagebundle_en.properties).
-    Now, the output is based on both the source messagebundle.properties and the locale specific files. As a result, changing the messagebundle.properties file will take immediate effect.
+    * chore: translation delivery
     
-    Note: as the messagebundle.properties file is always written in English, this improvement only makes sense for the "en" locale.
+    Change-Id: Ia4a02b89c476fd46065c7c4a2e72b1e0a6bee341
+    
+    * chore: translation delivery
+    
+    Change-Id: Iae8297990fd6083daf989aadc2ee9eb19e06a659
+    
+    * chore: translation delivery
+    
+    Change-Id: I1ae1799a360bad76801d08e94c39dab9bd3cb0ab
+    
+    * chore: translation delivery
+    
+    Change-Id: I17c8510582e58d1e19c7c9c80ad682035ab39a94
