@@ -1,5 +1,9 @@
-commit f44f57b27850de03e430d08e3e9adc71d60296fe
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Sep 30 10:14:26 2022 +0300
+commit e04added4ff84ffca490e3ce03d4dd54cffb600c
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Sep 30 10:49:59 2022 +0300
 
-    feat(f6navigation): improve fastgroup navigation (#5844)
+    fix(ui5-input,ui5-combobox): remove 'selected' announcement (#5864)
+    
+    * fix(ui5-input,ui5-combobox): remove 'selected' announcement
+    
+    * fix(ui5-input): resolve merge conflict
