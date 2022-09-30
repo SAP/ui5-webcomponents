@@ -14,7 +14,6 @@ import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
-	LIST_ITEM_SELECTED,
 } from "../generated/i18n/i18n-defaults.js";
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -536,10 +535,9 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
-			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 
-		return `${this.accInfo.itemText} ${itemPositionText} ${itemSelectionText}`;
+		return `${this.accInfo.itemText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion) {
