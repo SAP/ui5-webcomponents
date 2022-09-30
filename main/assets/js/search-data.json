@@ -1185,7 +1185,7 @@
   "170": {
     "id": "170",
     "title": "Radio Button",
-    "content": "&lt;!DOCTYPE html&gt; ui5-radio-button Radios within a group Group1 - None pre-selection Group 2 Group 3 Group 4 Group 5 - Value states N/A 0 Standalone Radios Not Grouped accessibleName accessibleNameRef Label for this radio button: Label for this radio button: *Params - for compact add &#39;ui5-content-density-compact&#39; class to any dom element - for belize use &#39;sap-ui-theme=sap_belize&#39; Navigation in RTL",
+    "content": "&lt;!DOCTYPE html&gt; ui5-radio-button Radios within a group Group1 - None pre-selection Group 2 Group 3 Group 4 Group 5 - Value states N/A 0 Standalone Radios Not Grouped accessibleName accessibleNameRef Label for this radio button: Label for this radio button: *Params - for compact add &#39;ui5-content-density-compact&#39; class to any dom element - for belize use &#39;sap-ui-theme=sap_belize&#39; Navigation in RTL add/remove radio buttons in DOM",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/RadioButton/",
     "relUrl": "/playground/main/pages/RadioButton/"
   },
