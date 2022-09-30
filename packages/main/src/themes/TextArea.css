@@ -30,11 +30,6 @@
 	background-color: var(--_ui5_textarea_disabled_background_color);
 }
 
-:host([focused]) .ui5-textarea-wrapper {
-	outline: var(--_ui5_textarea_focus_outline);
-	outline-offset: var(--_ui5_textarea_focus_outline_offset);
-}
-
 :host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--__ui5_textarea_background_color);
@@ -62,6 +57,7 @@
 	border-radius: inherit;
 	border-color: inherit;
 	position: relative;
+	outline: none;
 }
 
 .ui5-textarea-wrapper {
@@ -73,6 +69,7 @@
 	background-color: var(--__ui5_textarea_background_color);
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--sapField_BorderCornerRadius);
+	outline: none;
 }
 
 :host([focused]) .ui5-textarea-wrapper {
@@ -80,6 +77,7 @@
 	background-image: none;
 	box-shadow: var(--_ui5_textarea_focus_box_shadow);
 }
+
 
 :host([focused]) .ui5-textarea-wrapper::after {
 	content: var(--_ui5_textarea_focus_pseudo_element_content);
@@ -92,7 +90,6 @@
 	bottom: var(--_ui5_textarea_focus_offset);
 	left: var(--_ui5_textarea_focus_offset);
 	right: var(--_ui5_textarea_focus_offset);
-	background: transparent;
 }
 
 :host([growing]) .ui5-textarea-wrapper {
@@ -123,6 +120,7 @@
 	letter-spacing: inherit;
 	word-spacing: inherit;
 	background: transparent;
+	outline: none;
 }
 
 :host([growing]) .ui5-textarea-inner {
@@ -132,6 +130,11 @@
 	top: 0;
 	left: 0;
 	overflow: hidden;
+}
+
+:host([focused]) .ui5-textarea-inner:focus-visible {
+	border: none;
+	outline: none;
 }
 
 .ui5-textarea-mirror {
