@@ -1,5 +1,5 @@
-commit 6bee48fa6de8690663d71d3b9ca87ac9923e0b18
+commit 6780556e8a7024669043486ed9b969d8c72658de
 Author: ilhan007 <ilhan.myumyun@sap.com>
-Date:   Fri Sep 30 19:26:52 2022 +0300
+Date:   Fri Sep 30 19:48:46 2022 +0300
 
-    chore: set sap_horizon to landing page as well
+    chore: fix typo
