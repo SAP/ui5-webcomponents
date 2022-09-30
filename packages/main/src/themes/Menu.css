@@ -17,8 +17,7 @@
 	padding-inline-start: 0.5rem;
 	pointer-events: none;
 	position: absolute;
-	right: var(--_ui5_menu_item_submenu_icon_right);
- 	/* float: var(--_ui5-menu_item_icon_float); /* TODO: refactor icon positioning as float and inline-block are incompatible */
+	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
 }
 
 .ui5-menu-item-no-icon-end {
@@ -28,17 +27,11 @@
 	vertical-align: middle;
 	padding-inline-start: 0.5rem;
 	pointer-events: none;
-	right: var(--_ui5_menu_item_submenu_icon_right);
+	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
 }
 
 .ui5-menu-item[additional-text] .ui5-menu-item-no-icon-end {
 	display: none;
-}
-
-[rtl].ui5-menu-item-icon-end,
-[rtl].ui5-menu-item-no-icon-end {
-	right: initial;
-	left:  var(--_ui5_menu_item_submenu_icon_right);
 }
 
 .ui5-menu-item-dummy-icon {
@@ -113,7 +106,7 @@
 }
 
 .ui5-menu-item::part(additional-text) {
-	margin: 0 0 0 1rem;
+	margin-inline-start: var(--_ui5_menu_item_additional_text_start_margin);
 	color: var(--sapContent_LabelColor);
 	min-width: max-content;
 }

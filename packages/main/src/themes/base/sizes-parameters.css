@@ -247,6 +247,7 @@
 
 	/* Menu */
 	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;
+	--_ui5_menu_item_submenu_icon_right: 0.75rem;
 
 	/* Notifications */
 	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
