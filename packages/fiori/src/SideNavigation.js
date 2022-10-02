@@ -216,7 +216,7 @@ class SideNavigation extends UI5Element {
 			subItems: item.items,
 		};
 	}
-	
+
 	get accSideNavigationPopoverText() {
 		return "Navigation";
 	}
