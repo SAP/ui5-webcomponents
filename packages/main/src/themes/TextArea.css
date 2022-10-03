@@ -26,8 +26,7 @@
 }
 
 :host([disabled]) .ui5-textarea-wrapper {
-	background: var(--sapField_BackgroundStyle);
-	background-color: var(--_ui5_textarea_disabled_background_color);
+	background: var(--_ui5_textarea_disabled_background);
 }
 
 :host(:not([value-state]):not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
@@ -188,11 +187,11 @@
 	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
-:host([readonly][focused]) .ui5-textarea-root .ui5-textarea-inner {
+:host([readonly][focused]) .ui5-textarea-root .ui5-textarea-wrapper {
 	background-image: none;
 }
 
-:host([readonly]) .ui5-textarea-root .ui5-textarea-inner {
+:host([readonly]) .ui5-textarea-root .ui5-textarea-wrapper {
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--sapField_ReadOnly_Background);
 }

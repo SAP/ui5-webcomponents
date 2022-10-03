@@ -1,0 +1,6 @@
+@import "../base/TextArea-parameters.css";
+
+:root {
+	--_ui5-textarea_disabled_background: var(--sapField_ReadOnly_Background);
+	--_ui5_textarea_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
+}
