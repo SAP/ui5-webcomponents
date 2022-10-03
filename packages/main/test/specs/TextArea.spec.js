@@ -135,10 +135,11 @@ describe("when enabled", () => {
 
 	it("fires change", async () => {
 		const textarea = await browser.$("#textarea-change");
+		const textAreaInner = await browser.$("#textarea-change").shadow$("textarea");
 		const changeResult = await browser.$("#changeResult");
 
 		// Start typing.
-		await textarea.click();
+		await textAreaInner.click();
 		await textarea.keys("a");
 		await textarea.keys("b");
 		await textarea.keys("c");
@@ -147,7 +148,7 @@ describe("when enabled", () => {
 		await changeResult.click();
 
 		// Get back and continue typing.
-		await textarea.click();
+		await textAreaInner.click();
 		await textarea.keys("d");
 		await textarea.keys("e");
 		await textarea.keys("f");
@@ -160,9 +161,10 @@ describe("when enabled", () => {
 
 	it("fires input", async () => {
 		const textarea = await browser.$("#textarea-input");
+		const textAreaInner = await browser.$("#textarea-input").shadow$("textarea");
 		const inputResult = await browser.$("#inputResult");
 
-		await textarea.click();
+		await textAreaInner.click();
 		await textarea.keys("a");
 		await textarea.keys("b");
 		await textarea.keys("c");
@@ -209,7 +211,7 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`\n5\n6`);
 			const size6lines = await textArea.getSize();
 
-			assert.isBelow(initialSize.height, size2lines.height, "TA should grow when having 2 lines of text");
+			assert.strictEqual(initialSize.height, size2lines.height, "TA should grow when having 2 lines of text");
 			assert.isBelow(size2lines.height, size4lines.height, "TA should grow up to 4 lines");
 			assert.strictEqual(size6lines.height, size4lines.height, "TA should not grow more than 4 lines");
 		});
