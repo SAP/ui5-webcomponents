@@ -305,7 +305,6 @@ class TreeListItem extends ListItem {
 	}
 
 	get _accInfo() {
-
 		// this.textContent should be added when this._minimal ???
 		const accInfoSettings = {
 			role: this._minimal ? "menuitemradio" : "treeitem",
