@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import shallowEqual from "@ui5/webcomponents-base/dist/util/ObjectComparison.js";
 
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -306,7 +307,7 @@ class IllustratedMessage extends UI5Element {
 		super();
 
 		this._handleResize = this.handleResize.bind(this);
-		this._lastKnownBCRForMedia = {};
+		this._lastKnownBCRForMedia = {}; // this will store the last known BoundingClientRect data of the IllustratedMessage DOM node for a given media (e.g. "Spot")
 	}
 
 	static get metadata() {
@@ -403,8 +404,8 @@ class IllustratedMessage extends UI5Element {
 		} else {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
-
-		if (!(this._lastKnownBCRForMedia[newMedia] && this._shallowEqual(bcr, this._lastKnownBCRForMedia[newMedia]))) {
+		const lastKnownBCR = this._lastKnownBCRForMedia[newMedia];
+		if (!(lastKnownBCR && shallowEqual(bcr, lastKnownBCR))) {
 			this.media = newMedia;
 			this._storeLastKnownBCRForMedia(bcr, newMedia);
 		}
@@ -412,20 +413,6 @@ class IllustratedMessage extends UI5Element {
 
 	_storeLastKnownBCRForMedia(bcr, media) {
 		this._lastKnownBCRForMedia[media] = { ...bcr };
-	}
-
-	_shallowEqual(object1, object2) {
-		const keys1 = Object.keys(object1);
-		const keys2 = Object.keys(object2);
-		if (keys1.length !== keys2.length) {
-			return false;
-		}
-		return keys1.every(key => {
-			if (object1[key] !== object2[key]) {
-				return false;
-			}
-			return true;
-		});
 	}
 
 	_setSVGAccAttrs() {
