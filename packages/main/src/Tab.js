@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -404,7 +405,7 @@ class Tab extends UI5Element {
 			return null;
 		}
 
-		return this.design;
+		return Tab.i18nBundle.getText(`TAB_ARIA_DESIGN_${this.design.toUpperCase()}`);
 	}
 
 	get semanticIconClasses() {
@@ -437,6 +438,10 @@ class Tab extends UI5Element {
 
 	get overflowState() {
 		return (this.disabled || this.isSingleClickArea) ? ListItemType.Inactive : ListItemType.Active;
+	}
+
+	static async onDefine() {
+		Tab.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
