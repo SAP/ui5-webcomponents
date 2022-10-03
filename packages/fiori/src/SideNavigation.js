@@ -218,7 +218,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	get accSideNavigationPopoverText() {
-		return "Navigation";
+		return "Navigation"; // make translatable
 	}
 
 	handleTreeItemClick(event) {

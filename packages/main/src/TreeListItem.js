@@ -301,7 +301,7 @@ class TreeListItem extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this._minimal ? "Navigation List Menu Item" : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return this._minimal ? "Navigation List Menu Item" : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL); // make translatable
 	}
 
 	get _accInfo() {
