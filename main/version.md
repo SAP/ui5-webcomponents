@@ -1,9 +1,5 @@
-commit 8664564b86ff10edb99cf896f9a783661a8791d4
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Sun Oct 2 23:50:19 2022 -0700
+commit 3f255d9410f1c583a58db5d6c2c4a7232c929995
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Oct 3 13:08:27 2022 +0300
 
-    Translation Delivery (#5875)
-    
-    chore: translation delivery
-    
-    Change-Id: I20e25b3580b617e2ca309011da37d2146790c4ae
+    fix(ui5-icon): visualize the icons properly in Safari (#5871)
