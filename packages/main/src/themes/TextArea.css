@@ -268,14 +268,26 @@
 }
 
 :host([value-state="Error"]:not([readonly]):not([focused]):hover) .ui5-textarea-wrapper {
-	background-color: var(--_ui5_textarea_value_state_error_hover_background);
+	background-color: var(--_ui5_textarea_error_hover_background_color);
 	box-shadow: var(--_ui5_textarea_value_state_error_hover_box_shadow);
 }
 
+:host([value-state="Error"]) .ui5-textarea-inner,
+:host([value-state="Warning"]) .ui5-textarea-inner {
+	font-weight: var(--_ui5_textarea_error_warning_font_style);
+	text-indent: var(--_ui5_textarea_error_warning_text_indent);
+}
+
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper,
-:host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper,
-:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
+:host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
 	border-style: var(--_ui5_textarea_error_warning_border_style);
+	border-width: var(--_ui5_textarea_state_border_width);
+}
+
+:host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
+:host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
+:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
+	border-style: none;
 }
 
 :host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
@@ -340,6 +352,11 @@
 :host([value-state="Information"][focused]:not([readonly])) .ui5-textarea-wrapper {
 	background-color: var(--_ui5_textarea_focused_value_state_information_background);
 	border-color: var(--_ui5_textarea_focused_value_state_information_border_color);
+}
+
+:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
+	border-width: var(--_ui5_textarea_information_border_width);
+	border-style: var(--_ui5_textarea_error_warning_border_style);
 }
 
 :host([value-state="Information"]:not([readonly])) .ui5-textarea-wrapper::before{
