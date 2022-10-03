@@ -305,8 +305,9 @@ class TreeListItem extends ListItem {
 	}
 
 	get _accInfo() {
-		// this.textContent should be added when this._minimal
-		return {
+
+		// this.textContent should be added when this._minimal ???
+		const accInfoSettings = {
 			role: this._minimal ? "menuitemradio" : "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
@@ -315,6 +316,14 @@ class TreeListItem extends ListItem {
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 		};
+
+		if (this._minimal) {
+			accInfoSettings.ariaChecked = this.selected;
+		} else {
+			accInfoSettings.ariaSelected = this.selected;
+		}
+
+		return accInfoSettings;
 	}
 
 	_toggleClick(event) {
