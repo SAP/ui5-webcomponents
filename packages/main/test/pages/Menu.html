@@ -15,15 +15,16 @@
 <body class="responsivepopover2auto">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
-		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" icon="add-document"></ui5-menu-item>
-		<ui5-menu-item text="New Folder" icon="add-folder" disabled></ui5-menu-item>
+
+		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
+		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section>
-			<ui5-menu-item text="Open Locally" icon="open-folder">
+			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
 				<ui5-menu-item text="Open from E"></ui5-menu-item>
 			</ui5-menu-item>
-			<ui5-menu-item text="Open from Cloud"></ui5-menu-item>
+			<ui5-menu-item text="Open from Cloud" additional-text="Ctrl+L"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Save" icon="save">
 			<ui5-menu-item text="Save Locally" icon="save">
@@ -33,8 +34,8 @@
 			</ui5-menu-item>
 			<ui5-menu-item text="Save on Cloud" icon="upload-to-cloud"></ui5-menu-item>
 		</ui5-menu-item>
-		<ui5-menu-item text="Close"></ui5-menu-item>
-		<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+		<ui5-menu-item text="Close" additional-text="Ctrl+W"></ui5-menu-item>
+		<ui5-menu-item text="Preferences" icon="action-settings" starts-section disabled></ui5-menu-item>
 		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
 

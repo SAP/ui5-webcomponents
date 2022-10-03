@@ -582,8 +582,8 @@ describe("Accessibility", async () => {
 		const arrow = await combo.shadow$("[input-icon]");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const itemAnnouncement1 = "List item 1 of 11 Selected";
-		const itemAnnouncement2 = "List item 2 of 11 Selected";
+		const itemAnnouncement1 = "List item 1 of 11";
+		const itemAnnouncement2 = "List item 2 of 11";
 
 		await arrow.click();
 

@@ -18,6 +18,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
+		 * <b>Note:</b> The additional text would not be displayed if the item has a submenu.
+		 *
+		 * @type {string}
+		 * @public
+		 * @since 1.8.0
+		 */
+		additionalText: {
+			type: String,
+		},
+
+		/**
 		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
@@ -165,6 +177,10 @@ class MenuItem extends UI5Element {
 
 	get subMenuOpened() {
 		return !!Object.keys(this._subMenu).length;
+	}
+
+	get _additionalText() {
+		return this.hasChildren ? "" : this.additionalText;
 	}
 
 	get ariaLabelledByText() {

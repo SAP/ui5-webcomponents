@@ -276,4 +276,57 @@ describe("Value update", () => {
 		// assert
 		assert.strictEqual(await textarea.getProperty("value"), "", "Value is reverted");
 	});
+
+	it("Value state type should be added to the screen readers default value states announcement", async () => {
+		const tAreaError = await browser.$("#basic-textarea-error");
+		const tAreaWarning = await browser.$("#basic-textarea-warning");
+		const tAreaSuccess = await browser.$("#basic-textarea-success");
+		const tAreaInformation = await browser.$("#basic-textarea-info");
+
+		await tAreaError.click();
+
+		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea-error");
+		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		let ariaHiddenText = await tAreaError.shadow$(".ui5-hidden-text").getText();
+		let valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText, "Value State Error Invalid entry", "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText, "Invalid entry", "Displayed value state message text is correct");
+
+		await tAreaWarning.click();
+
+		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea-warning");
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		ariaHiddenText = await tAreaWarning.shadow$(".ui5-hidden-text").getText();
+		valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText, "Value State Warning Warning issued", "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText, "Warning issued", "Displayed value state message text is correct");
+
+		await tAreaInformation.click();
+
+		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea-info");
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		ariaHiddenText = await tAreaInformation.shadow$(".ui5-hidden-text").getText();
+		valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText, "Value State Information Informative entry", "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText, "Informative entry", "Displayed value state message text is correct");
+
+		// With custom value state message
+		const tAreaCustomError = await browser.$("#textarea-value-state-msg");
+		await tAreaCustomError.click();
+
+		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#textarea-value-state-msg");
+		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		ariaHiddenText = await tAreaCustomError.shadow$(".ui5-hidden-text").getText();
+		valueStateText = await popover.$("div").getText();
+
+		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
+		assert.strictEqual(valueStateText.includes("Extra long text"), true, "Displayed value state message text is correct");
+	});
 });

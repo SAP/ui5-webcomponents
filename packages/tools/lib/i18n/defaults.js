@@ -22,6 +22,15 @@ const generate = async () => {
 	} catch (e) {
 	}
 
+	// Merge messagebundle.properties and messagebundle_en.properties files to generate the default texts.
+	// Note:
+	// (1) at DEV time, it's intuituve to work with the source bundle file - the messagebundle.properties,
+	// and see the changes there take effect.
+	// (2) as the messagebundle.properties file is always written in English,
+	// it makes sense to consider the messagebundle.properties content only when the default language is "en".
+	if (defaultLanguage === "en") {
+		defaultLanguageProperties = Object.assign({}, defaultLanguageProperties, properties);  
+	}
 
 	/*
 	 * Returns the single text object to enable single export.

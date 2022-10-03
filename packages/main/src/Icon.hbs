@@ -2,7 +2,7 @@
 	class="ui5-icon-root"
 	tabindex="{{tabIndex}}"
 	dir="{{_dir}}"
-	viewBox="0 0 512 512"
+	viewBox="{{viewBox}}"
 	role="{{effectiveAccessibleRole}}"
 	focusable="false"
 	preserveAspectRatio="xMidYMid meet"
@@ -20,6 +20,10 @@
 	{{/if}}
 
 	<g role="presentation">
+		{{#if customSvg}}
+			{{customSvg}}
+		{{/if}}
+
 		{{#each pathData}}
 			<path d="{{this}}"></path>
 		{{/each}}

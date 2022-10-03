@@ -188,6 +188,30 @@ describe("RadioButton general interaction", () => {
 
 		assert.strictEqual(await rb.getProperty("ariaLabelText"), labelText, "The ariaLabelText of the wrapped radio button includes the accessibleNameRef text.");
 	});
+
+	it("correctly assigns tabindex when the whole group has been removed from DOM and added back to DOM", async () => {
+		const rbSwitch = await browser.$("#rbGroupSwitch");
+		await rbSwitch.click();
+
+		const rbContainer = await browser.$("#rbGroupContainer");
+		let radioButtons = await rbContainer.$$("ui5-radio-button");
+		let radioButtonsShadowRoots = await Promise.all(radioButtons.map(rb => rb.shadow$(`.ui5-radio-root`)));
+
+		assert.strictEqual(await radioButtonsShadowRoots[0].getAttribute("tabindex"), "0", `first radio button has tabindex="0"`);
+		assert.strictEqual(await radioButtonsShadowRoots[1].getAttribute("tabindex"), "-1", `second radio button has tabindex="-1"`);
+		assert.strictEqual(await radioButtonsShadowRoots[2].getAttribute("tabindex"), "-1", `third radio button has tabindex="-1"`);
+
+		// toggle the radio buttons from the DOM
+		await rbSwitch.click();
+		await rbSwitch.click();
+
+		radioButtons = await rbContainer.$$(`ui5-radio-button`);
+		radioButtonsShadowRoots = await Promise.all(radioButtons.map(rb => rb.shadow$(`.ui5-radio-root`)));
+		
+		assert.strictEqual(await radioButtonsShadowRoots[0].getAttribute("tabindex"), "0", `first radio button has tabindex="0"`);
+		assert.strictEqual(await radioButtonsShadowRoots[1].getAttribute("tabindex"), "-1", `second radio button has tabindex="-1"`);
+		assert.strictEqual(await radioButtonsShadowRoots[2].getAttribute("tabindex"), "-1", `third radio button has tabindex="-1"`);
+	});
 });
 
 describe("RadioButton keyboard handling in RTL", () => {

@@ -9,6 +9,7 @@
 	--_ui5_panel_icon_color: var(--sapContent_IconColor);
 	--_ui5_panel_header_padding_right: 0.5rem;
 	--_ui5_panel_header_button_wrapper_padding: .25rem;
+	--_ui5_panel_focus_offset: 1px;
 }
 
 [data-ui5-compact-size],

@@ -23,8 +23,6 @@ jobs:
 
     - name: Build
       run: yarn build
-      env:
-        ENABLE_CLDR: 1
 
     - name: Test
       run: yarn test:${{ matrix.suite }}

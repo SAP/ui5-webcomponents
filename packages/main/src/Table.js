@@ -35,7 +35,7 @@ import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being us
 import {
 	LOAD_MORE_TEXT,
 	ARIA_LABEL_SELECT_ALL_CHECKBOX,
-	TABLE_HEADER_ROW_TEXT,
+	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -516,7 +516,7 @@ class Table extends UI5Element {
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
 		const columnSettingsString = JSON.stringify(columnSettings);
-		const rowsCount = this.rows.length;
+		const rowsCount = this.rows.length + 1;
 		const selectedRows = this.selectedRows;
 
 		this.rows.forEach((row, index) => {
@@ -525,7 +525,7 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 1, rowsCount);
+			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
@@ -1131,7 +1131,8 @@ class Table extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const rowsCount = this.rows.length + 1;
+		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_INFORMATION, rowsCount);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");

@@ -56,9 +56,10 @@
 				.associatedItem="{{this.item}}"
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
-				icon="{{this.item.icon}}"
+				.icon="{{this.item.icon}}"
 				accessible-name={{this.item.ariaLabelledByText}}
 				accessible-role="menuitem"
+				.additionalText="{{this.item._additionalText}}"
 				._ariaHasPopup={{this.ariaHasPopup}}
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}

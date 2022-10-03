@@ -101,7 +101,7 @@
 }
 
 .ui5-illustrated-message-util {
-    position: absolute;
+    position: fixed;
     top: -9999px;
     left: -9999px;
 }

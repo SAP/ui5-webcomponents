@@ -1,4 +1,5 @@
 @import "./TabSemanticIcon.css";
+@import "./InvisibleTextStyles.css";
 
 .ui5-tab-overflow-item {
 	color: var(--_ui5_tc_overflowItem_default_color);

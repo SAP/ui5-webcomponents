@@ -71,6 +71,9 @@
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
 		</ui5-multi-combobox>
+		<br>
+		<br>
+		<ui5-button id="focus-mcb">Focus MultiComboBox</ui5-button>
 	</div>
 
 	<div class="demo-section">
@@ -408,6 +411,8 @@
 		const mcb1 = document.getElementById("mcb1");
 		const btn2 = document.getElementById("sel2");
 		const mcb1_2 = document.getElementById("mcb1_2");
+		const btnfocusMCB = document.getElementById("focus-mcb");
+		const mcbFocus = document.getElementById("multi1");
 
 		let selected = mcb1.hasAttribute("selected");
 		btn.addEventListener("click", () => {
@@ -427,6 +432,10 @@
 				mcb1_2.removeAttribute("selected");
 			}
 			selected2 = !selected2;
+		});
+
+		btnfocusMCB.addEventListener("click", () => {
+			mcbFocus.focus();
 		});
 	</script>
 

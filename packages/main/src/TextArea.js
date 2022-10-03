@@ -19,9 +19,14 @@ import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 
 import {
+	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
 } from "./generated/i18n/i18n-defaults.js";
@@ -619,10 +624,14 @@ class TextArea extends UI5Element {
 		}
 
 		if (this.hasCustomValueState) {
-			return this.valueStateMessageText.map(el => el.textContent).join(" ");
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 		}
 
-		return this.valueStateText;
+		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+	}
+
+	get valueStateDefaultText() {
+		return this.valueStateTextMappings[this.valueState];
 	}
 
 	get ariaInvalid() {
@@ -649,14 +658,6 @@ class TextArea extends UI5Element {
 		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
-	get valueStateText() {
-		if (this.valueState !== ValueState.Error) {
-			return this.valueStateTextMappings()[ValueState.Warning];
-		}
-
-		return this.valueStateTextMappings()[this.valueState];
-	}
-
 	get _valueStatePopoverHorizontalAlign() {
 		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
@@ -675,11 +676,21 @@ class TextArea extends UI5Element {
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
-	valueStateTextMappings() {
+	get valueStateTextMappings() {
 		return {
+			"Success": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			"Success": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 

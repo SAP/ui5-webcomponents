@@ -15,18 +15,12 @@ const M_ISO639_OLD_TO_NEW = {
 	"in": "id",
 };
 
-const DEV_MODE = false;
-
 const _showAssetsWarningOnce = localeId => {
 	if (warningShown) {
 		return;
 	}
 
-	if (!DEV_MODE) {
-		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`); /* eslint-disable-line */
-	} else {
-		console.warn(`[LocaleData] Note: in dev mode, CLDR assets might be disabled for performance reasons. Try running "ENABLE_CLDR=1 yarn start" to test CLDR assets.`); /* eslint-disable-line */
-	}
+	console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`); /* eslint-disable-line */
 
 	warningShown = true;
 };

@@ -48,6 +48,23 @@ export default "${name}";
 export { pathData, ltr, accData };`;
 
 
+const typeDefinitionTemplate = (name, accData, collection) => `declare const pathData: string;
+declare const ltr: boolean;
+declare const accData: ${accData ? '{ key: string; defaultText: string; }' : null}
+declare const _default: "${collection}/${name}";
+
+export default _default;
+export { pathData, ltr, accData };`
+
+const collectionTypeDefinitionTemplate = (name, accData) => `declare const pathData: string;
+declare const ltr: boolean;
+declare const accData: ${accData ? '{ key: string; defaultText: string; }' : null}
+declare const _default: "${name}";
+
+export default _default;
+export { pathData, ltr, accData };`
+
+
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 	<path d="${pathData}"/>
 </svg>`;
@@ -68,9 +85,11 @@ const createIcons = async (file) => {
 
 		promises.push(fs.writeFile(path.join(destDir, `${name}.js`), content));
 		promises.push(fs.writeFile(path.join(destDir, `${name}.svg`), svgTemplate(pathData)));
+		promises.push(fs.writeFile(path.join(destDir, `${name}.d.ts`), typeDefinitionTemplate(name, acc, json.collection)));
 
 		if (json.version) {
 			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name)));
+            promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(name, acc)));
 		}
 	}
 

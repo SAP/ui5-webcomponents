@@ -63,8 +63,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
-const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
-
 /**
  * @public
  */
@@ -266,6 +264,20 @@ const metadata = {
 		 */
 		value: {
 			type: String,
+		},
+
+		/**
+		 * Defines the inner stored value of the component.
+		 * <br><br>
+		 * <b>Note:</b> The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		_innerValue: {
+			type: String,
+			noAttribute: true,
 		},
 
 		/**
@@ -618,9 +630,6 @@ class Input extends UI5Element {
 		// The value that the user is typed in the input
 		this.valueBeforeAutoComplete = "";
 
-		// Indicates, if the user pressed the BACKSPACE key.
-		this._backspaceKeyDown = false;
-
 		// Indicates, if the user is typing. Gets reset once popup is closed
 		this.isTyping = false;
 
@@ -637,6 +646,8 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this._handleResizeBound = this._handleResize.bind(this);
+
+		this._keepInnerValue = false;
 	}
 
 	onEnterDOM() {
@@ -648,6 +659,10 @@ class Input extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (!this._keepInnerValue) {
+			this._innerValue = this.value;
+		}
+
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
@@ -755,7 +770,6 @@ class Input extends UI5Element {
 		}
 
 		if (isBackSpace(event)) {
-			this._backspaceKeyDown = true;
 			this._selectedText = window.getSelection().toString();
 		}
 
@@ -775,7 +789,6 @@ class Input extends UI5Element {
 		}
 
 		this._keyDown = false;
-		this._backspaceKeyDown = false;
 	}
 
 	/* Event handling */
@@ -916,6 +929,8 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
+		this._keepInnerValue = false;
+
 		if (this.showClearIcon && !this.effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
@@ -999,47 +1014,59 @@ class Input extends UI5Element {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 		const eventType = event.inputType || (event.detail && event.detail.inputType);
+		this._keepInnerValue = false;
 
-		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
+		const allowedEventTypes = [
+			"deleteWordBackward",
+			"deleteWordForward",
+			"deleteSoftLineBackward",
+			"deleteSoftLineForward",
+			"deleteEntireSoftLine",
+			"deleteHardLineBackward",
+			"deleteHardLineForward",
+			"deleteByDrag",
+			"deleteByCut",
+			"deleteContent",
+			"deleteContentBackward",
+			"deleteContentForward",
+			"historyUndo",
+		];
+
+		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
-		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
-			// For input with type="Number", if the delimiter is entered second time,
-			// the inner input is firing event with empty value
-			return;
+		// ---- Special cases of numeric Input ----
+		// ---------------- Start -----------------
+
+		// When the last character after the delimiter is removed.
+		// In such cases, we want to skip the re-rendering of the
+		// component as this leads to cursor repositioning and causes user experience issues.
+
+		// There are few scenarios:
+		// Example: type "123.4" and press BACKSPACE - the native input is firing event with the whole part as value (123).
+		// Pressing BACKSPACE again will remove the delimiter and the native input will fire event with the whole part as value again (123).
+		// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with the whole part as value (123).
+		// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value.
+		const delimiterCase = this.isTypeNumber
+			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")
+			&& !event.target.value.includes(".")
+			&& this.value.includes(".");
+
+		// Handle special numeric notation with "e", example "12.5e12"
+		const eNotationCase = emptyValueFiredOnNumberInput && event.data === "e";
+
+		// Handle special numeric notation with "-", example "-3"
+		// When pressing BACKSPACE, the native input fires event with empty value
+		const minusRemovalCase = emptyValueFiredOnNumberInput
+			&& this.value.startsWith("-")
+			&& this.value.length === 2
+			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward");
+
+		if (delimiterCase || eNotationCase || minusRemovalCase) {
+			this.value = event.target.value;
+			this._keepInnerValue = true;
 		}
-
-		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
-			// Issue: when the user removes the character(s) after the delimeter of numeric Input,
-			// the native input is firing event with an empty value and we have to manually handle this case,
-			// otherwise the entire input will be cleared as we sync the "value".
-
-			// There are tree scenarios:
-			// Example: type "123.4" and press BACKSPACE - the native input is firing event with empty value.
-			// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with empty value.
-			// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value,
-			// but this time that's really the case.
-
-			// Perform manual handling in case of floating number
-			// and if the user did not select the entire input value
-			if (this._selectedText.indexOf(",") > -1) {
-				this._selectedText = this._selectedText.replace(",", ".");
-			}
-
-			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
-				const newValue = this.removeFractionalPart(this.value);
-
-				// update state
-				this.value = newValue;
-				this.highlightValue = newValue;
-				this.valueBeforeItemPreview = newValue;
-
-				// fire events
-				this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
-				this.fireEvent("value-changed");
-				return;
-			}
-		}
+		// ----------------- End ------------------
 
 		if (event.target === inputDomRef) {
 			this.focused = true;
@@ -1086,6 +1113,7 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 
 		filterValue = filterValue || "";
+		this._innerValue = value;
 		this.value = value;
 
 		innerInput.value = value;
@@ -1249,8 +1277,6 @@ class Input extends UI5Element {
 	}
 
 	async fireEventByAction(action, event) {
-		await this.getInputDOMRef();
-
 		if (this.disabled || this.readonly) {
 			return;
 		}

@@ -14,7 +14,7 @@ th {
 }
 
 :host([first]) th {
-	padding-left: 1rem;
+	padding-inline-start: 1rem;
 }
 
 th ::slotted([ui5-label]) {
