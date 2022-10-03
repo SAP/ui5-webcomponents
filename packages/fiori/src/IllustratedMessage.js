@@ -306,6 +306,7 @@ class IllustratedMessage extends UI5Element {
 		super();
 
 		this._handleResize = this.handleResize.bind(this);
+		this._lastKnownBCRForMedia = {};
 	}
 
 	static get metadata() {
@@ -386,15 +387,45 @@ class IllustratedMessage extends UI5Element {
 			return;
 		}
 
+		this._applyMedia();
+	}
+
+	_applyMedia() {
+		const bcr = this.getBoundingClientRect().toJSON();
+		let newMedia = '';
+
 		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
-			this.media = IllustratedMessage.MEDIA.BASE;
+			newMedia = IllustratedMessage.MEDIA.BASE;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.SPOT) {
-			this.media = IllustratedMessage.MEDIA.SPOT;
+			newMedia = IllustratedMessage.MEDIA.SPOT;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.DIALOG) {
-			this.media = IllustratedMessage.MEDIA.DIALOG;
+			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
-			this.media = IllustratedMessage.MEDIA.SCENE;
+			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
+
+		if (!(this._lastKnownBCRForMedia[newMedia] && this._shallowEqual(bcr, this._lastKnownBCRForMedia[newMedia]))) {
+			this.media = newMedia;
+			this._storeLastKnownBCRForMedia(bcr, newMedia);
+		}
+	}
+
+	_storeLastKnownBCRForMedia(bcr, media) {
+		this._lastKnownBCRForMedia[media] = Object.assign({}, bcr);
+	}
+
+	_shallowEqual(object1, object2) {
+		const keys1 = Object.keys(object1);
+		const keys2 = Object.keys(object2);
+		if (keys1.length !== keys2.length) {
+			return false;
+		}
+		for (let key of keys1) {
+			if (object1[key] !== object2[key]) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	_setSVGAccAttrs() {
