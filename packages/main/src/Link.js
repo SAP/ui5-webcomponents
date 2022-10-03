@@ -129,7 +129,7 @@ const metadata = {
 		/**
 		 * Defines the ARIA role of the component.
 		 *
-		 * <b>Note:</b> Use "button" role in cases when navigation isn't expected to occur and the <code>href</code> property isn't defined.
+		 * <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
 		 *
 		 * @type {string}
 		 * @defaultvalue "link"
