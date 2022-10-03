@@ -1,11 +1,9 @@
-commit bf991b6bb519e4cc849a542d67f4954efc4b55e3
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Fri Sep 30 17:07:42 2022 +0300
+commit 8664564b86ff10edb99cf896f9a783661a8791d4
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Sun Oct 2 23:50:19 2022 -0700
 
-    feat(ui5-menu-item): implement additional text (#5867)
+    Translation Delivery (#5875)
     
-    * feat(ui5-menu-item): implement additional text
+    chore: translation delivery
     
-    * feat(ui5-menu-item): fix comments
-    
-    * feat(ui5-menu-item): remove redundant hideAdditionalText property
+    Change-Id: I20e25b3580b617e2ca309011da37d2146790c4ae
