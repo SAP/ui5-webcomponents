@@ -105,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the accessible aria role of the component.
+		 * Sets the accessible ARIA role of the component.
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
@@ -133,7 +133,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -322,7 +322,7 @@ class Panel extends UI5Element {
 		}
 
 		if (isEnter(event)) {
-			this._toggleOpen();
+			event.preventDefault();
 		}
 
 		if (isSpace(event)) {
@@ -333,6 +333,10 @@ class Panel extends UI5Element {
 	_headerKeyUp(event) {
 		if (!this.shouldToggle(event.target)) {
 			return;
+		}
+
+		if (isEnter(event)) {
+			this._toggleOpen();
 		}
 
 		if (isSpace(event)) {
@@ -422,7 +426,11 @@ class Panel extends UI5Element {
 	}
 
 	get ariaLabelledbyReference() {
-		return (this.nonFocusableButton && this.headerText) ? `${this._id}-header-title` : undefined;
+		return (this.nonFocusableButton && this.headerText && !this.fixed) ? `${this._id}-header-title` : undefined;
+	}
+
+	get fixedPanelAriaLabelledbyReference() {
+		return this.fixed && !this.effectiveAccessibleName ? `${this._id}-header-title` : undefined;
 	}
 
 	get header() {
@@ -437,8 +445,20 @@ class Panel extends UI5Element {
 		return (this.header.length || this.fixed) ? "-1" : "0";
 	}
 
+	get headingWrapperAriaLevel() {
+		return !this._hasHeader ? this.headerAriaLevel : undefined;
+	}
+
+	get headingWrapperRole() {
+		return !this._hasHeader ? "heading" : undefined;
+	}
+
 	get nonFixedInternalHeader() {
 		return !this._hasHeader && !this.fixed;
+	}
+
+	get hasHeaderOrHeaderText() {
+		return this._hasHeader || this.headerText;
 	}
 
 	get nonFocusableButton() {

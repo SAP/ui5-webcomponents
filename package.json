@@ -23,6 +23,9 @@
     "build:fiori": "yarn workspace @ui5/webcomponents-fiori build",
     "lint:main": "yarn workspace @ui5/webcomponents lint",
     "lint:fiori": "yarn workspace @ui5/webcomponents-fiori lint",
+    "lint:scope": "npm-run-all --parallel lint:scope:main lint:scope:fiori",
+    "lint:scope:main": "yarn workspace @ui5/webcomponents nps scope.lint",
+    "lint:scope:fiori": "yarn workspace @ui5/webcomponents-fiori nps scope.lint",
     "bundle:main": "yarn workspace @ui5/webcomponents nps build.bundle",
     "bundle:fiori": "yarn workspace @ui5/webcomponents-fiori nps build.bundle",
     "build:playground": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
@@ -57,10 +60,10 @@
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
     "copy-css": "copy-and-watch \"packages/base/dist/css/**/*\" packages/main/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/main/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/main/dist/resources/css/main/ && copy-and-watch \"packages/base/dist/css/**/*\" packages/fiori/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/fiori/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/fiori/dist/resources/css/main/",
-    "prerelease": "node ./.github/actions/pre-release.js",
+    "release": "node ./.github/actions/release.js",
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
-    "husky:lint": "yarn lint",
+    "husky:lint": "yarn lint && yarn lint:scope",
     "husky:pre-push": "npm-run-all --sequential husky:commit-msg husky:lint"
   },
   "devDependencies": {

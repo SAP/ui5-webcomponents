@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -18,9 +19,14 @@ import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 
 import {
+	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
 } from "./generated/i18n/i18n-defaults.js";
@@ -217,7 +223,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @public
@@ -535,9 +541,9 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxlength || 0;
+			const maxLength = this.maxlength;
 
-			if (maxLength) {
+			if (maxLength !== null) {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
@@ -557,6 +563,10 @@ class TextArea extends UI5Element {
 
 	get classes() {
 		return {
+			root: {
+				"ui5-textarea-root": true,
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+			},
 			valueStateMsg: {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -601,10 +611,14 @@ class TextArea extends UI5Element {
 		}
 
 		if (this.hasCustomValueState) {
-			return this.valueStateMessageText.map(el => el.textContent).join(" ");
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 		}
 
-		return this.valueStateText;
+		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+	}
+
+	get valueStateDefaultText() {
+		return this.valueStateTextMappings[this.valueState];
 	}
 
 	get ariaInvalid() {
@@ -631,14 +645,6 @@ class TextArea extends UI5Element {
 		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
-	get valueStateText() {
-		if (this.valueState !== ValueState.Error) {
-			return this.valueStateTextMappings()[ValueState.Warning];
-		}
-
-		return this.valueStateTextMappings()[this.valueState];
-	}
-
 	get _valueStatePopoverHorizontalAlign() {
 		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
@@ -657,11 +663,21 @@ class TextArea extends UI5Element {
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
-	valueStateTextMappings() {
+	get valueStateTextMappings() {
 		return {
+			"Success": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			"Success": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 

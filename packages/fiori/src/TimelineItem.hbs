@@ -31,7 +31,7 @@
 
 {{#*inline "name"}}
 	{{#if nameClickable}}
-		<ui5-link @click="{{onNamePress}}" class="ui5-tli-title-name-clickable">{{name}}&nbsp;</ui5-link>
+		<ui5-link @ui5-click="{{onNamePress}}" class="ui5-tli-title-name-clickable">{{name}}&nbsp;</ui5-link>
 	{{else}}
 		<span class="ui5-tli-title-name">{{name}}&nbsp;</span>
 	{{/if}}

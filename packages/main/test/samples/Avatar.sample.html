@@ -9,6 +9,13 @@
 	ui5-avatar:not(:defined) {
 		visibility: hidden;
 	}
+
+	.custom-badge {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: rgb(255, 0, 0);
+	}
 </style>
 
 <div class="component-package">@ui5/webcomponents</div>
@@ -157,6 +164,64 @@
 </ui5-avatar>
 <ui5-avatar id="myCustomAvatar1" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)">
 	<img src="../../../assets/images/avatars/Lamp_avatar_01.jpg" alt="Lamp" style="object-fit: contain">
+</ui5-avatar>
+</xmp></pre>
+</section>
+
+<section>
+	<h4>Avatar with Visual Affordance</h4>
+	<div class="snippet">
+		<ui5-avatar shape="Circle">
+			<img src="../../../assets/images/avatars/woman_avatar_3.png" alt="Woman 3">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="filter"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+		<ui5-avatar initials="AB" size="L" shape="Circle">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="document"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+		<ui5-avatar shape="Square">
+			<img src="../../../assets/images/avatars/woman_avatar_4.png" alt="Woman 4">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="accept"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+		<ui5-avatar initials="CD" size="L" shape="Square">
+			<ui5-badge slot="badge">
+				<ui5-icon slot="icon" name="employee"></ui5-icon>
+			</ui5-badge>
+		</ui5-avatar>
+		<ui5-avatar initials="AB" color-scheme="Accent1">
+			<span slot="badge" class="custom-badge">1</span>
+		</ui5-avatar>
+	</div>
+<pre class="prettyprint lang-html"><xmp>
+<ui5-avatar shape="Circle">
+	<img src="../../../assets/images/avatars/woman_avatar_3.png" alt="Woman 3">
+	<ui5-badge slot="badge">
+		<ui5-icon slot="icon" name="filter"></ui5-icon>
+	</ui5-badge>
+</ui5-avatar>
+<ui5-avatar initials="AB" size="L" shape="Circle">
+	<ui5-badge slot="badge">
+		<ui5-icon slot="icon" name="document"></ui5-icon>
+	</ui5-badge>
+</ui5-avatar>
+<ui5-avatar shape="Square">
+	<img src="../../../assets/images/avatars/woman_avatar_4.png" alt="Woman 4">
+	<ui5-badge slot="badge">
+		<ui5-icon slot="icon" name="accept"></ui5-icon>
+	</ui5-badge>
+</ui5-avatar>
+<ui5-avatar initials="CD" size="L" shape="Square">
+	<ui5-badge slot="badge">
+		<ui5-icon slot="icon" name="employee"></ui5-icon>
+	</ui5-badge>
+</ui5-avatar>
+<ui5-avatar initials="AB" color-scheme="Accent1">
+	<span slot="badge" class="custom-badge">1</span>
 </ui5-avatar>
 </xmp></pre>
 </section>

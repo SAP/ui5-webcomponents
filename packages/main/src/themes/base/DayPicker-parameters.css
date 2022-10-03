@@ -38,4 +38,7 @@
 	--_ui5_daypicker_item_selected_between_hover_background: inherit;
 	--_ui5_daypicker_item_now_box_shadow: inset 0 0 0 0.0625rem var(--_ui5_daypicker_item_selected_border_color);
 	--_ui5_daypicker_item_selected_text_outline: none;
+	--_ui5_daypicker_item_now_not_selected_inset: 0;
+	--_ui5_daypicker_item_now_inset: 0.1875rem;
+	--_ui5_daypicker_item_now_border_color: var(--sapLegend_CurrentDateTime);
 }

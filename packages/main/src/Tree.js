@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import TreeItem from "./TreeItem.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
@@ -75,6 +76,31 @@ const metadata = {
 		 */
 		footerText: {
 			type: String,
+		},
+
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -221,12 +247,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Tree#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
+		 * @param {HTMLElement} targetItem The item triggering the event.
 		 * @public
 		 */
 		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				targetItem: { type: HTMLElement },
 			},
 		},
 	},
@@ -323,6 +351,10 @@ class Tree extends UI5Element {
 		return "tree";
 	}
 
+	get _label() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	_onListItemStepIn(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
@@ -382,6 +414,7 @@ class Tree extends UI5Element {
 	_onListSelectionChange(event) {
 		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
 		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
+		const targetItem = event.detail.targetItem.treeItem;
 
 		previouslySelectedItems.forEach(item => {
 			item.selected = false;
@@ -393,6 +426,7 @@ class Tree extends UI5Element {
 		this.fireEvent("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
+			targetItem,
 		});
 	}
 

@@ -633,9 +633,8 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Resets the control settings to their initial state.
 	 */
-	_resetSettings() {
+	 _resetSettings() {
 		this._restoreSettings(this._initialSettings);
-		this._filterStepTwo = false;
 		this._recentlyFocused = this._sortOrder;
 		this._focusRecentlyUsedControl();
 	}
@@ -647,6 +646,8 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_restoreSettings(settings) {
 		this._currentSettings = JSON.parse(JSON.stringify(settings));
+		this._currentMode = ViewSettingsDialogMode.Sort;
+		this._filterStepTwo = false;
 	}
 
 	/**
@@ -682,10 +683,13 @@ class ViewSettingsDialog extends UI5Element {
 	 * This method can be used after the dialog is initially open, as the dialog need to set its initial settings.
 	 * The <code>ui5-view-settings-dialog</code> throws an event called "before-open", this can be used as trigger point.
 	 * The object should have the following format:
-	 * <code>{
-	 *	{ "sortOrder" : "Ascending", "sortBy" : "Name", "filters" : [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
-	 * }</code>
-	 * @param {string} settings A value to be set as predefined settings.
+	 * <code>
+	 *  {sortOrder: "Ascending", sortBy: "Name", filters: [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
+	 * </code>
+   * @param {Object} settings - predefined settings.
+   * @param {string} settings.sortOrder - sort order
+   * @param {string} settings.sortBy - sort by
+   * @param {Array.<Object>} settings.filters - filters
 	 * @public
 	 */
 	setConfirmedSettings(settings) {

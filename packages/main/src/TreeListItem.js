@@ -92,7 +92,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
@@ -101,6 +101,18 @@ const metadata = {
 		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		 accessibleName: {
+			type: String,
 		},
 
 		/**
@@ -288,6 +300,10 @@ class TreeListItem extends ListItem {
 		return this.textContent.length && !this._minimal;
 	}
 
+	get _ariaLabel() {
+		return TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+	}
+
 	get _accInfo() {
 		return {
 			role: "treeitem",
@@ -296,7 +312,7 @@ class TreeListItem extends ListItem {
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
-			listItemAriaLabel: TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL),
+			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 		};
 	}
 

@@ -238,6 +238,15 @@ const metadata = {
  * with the following keyboard shortcuts:
  * <br>
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>content - Used to style the content of the component</li>
+ * </ul>
+ *
  * * <h4>Fast Navigation</h4>
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:

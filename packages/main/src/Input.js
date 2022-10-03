@@ -46,6 +46,10 @@ import {
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS,
 	INPUT_SUGGESTIONS_TITLE,
 	INPUT_SUGGESTIONS_ONE_HIT,
@@ -58,8 +62,6 @@ import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-
-const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
 
 /**
  * @public
@@ -265,6 +267,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the inner stored value of the component.
+		 * <br><br>
+		 * <b>Note:</b> The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		_innerValue: {
+			type: String,
+			noAttribute: true,
+		},
+
+		/**
 		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
@@ -331,7 +347,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @public
@@ -599,9 +615,6 @@ class Input extends UI5Element {
 		// Indicates if the user selection has been canceled with [ESC].
 		this.suggestionSelectionCanceled = false;
 
-		// Indicates if the change event has already been fired
-		this._changeFiredValue = null;
-
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
 
@@ -616,9 +629,6 @@ class Input extends UI5Element {
 
 		// The value that the user is typed in the input
 		this.valueBeforeAutoComplete = "";
-
-		// Indicates, if the user pressed the BACKSPACE key.
-		this._backspaceKeyDown = false;
 
 		// Indicates, if the user is typing. Gets reset once popup is closed
 		this.isTyping = false;
@@ -636,6 +646,8 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this._handleResizeBound = this._handleResize.bind(this);
+
+		this._keepInnerValue = false;
 	}
 
 	onEnterDOM() {
@@ -647,6 +659,10 @@ class Input extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (!this._keepInnerValue) {
+			this._innerValue = this.value;
+		}
+
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
@@ -754,7 +770,6 @@ class Input extends UI5Element {
 		}
 
 		if (isBackSpace(event)) {
-			this._backspaceKeyDown = true;
 			this._selectedText = window.getSelection().toString();
 		}
 
@@ -767,8 +782,13 @@ class Input extends UI5Element {
 	}
 
 	_onkeyup(event) {
+		// The native Delete event does not update the value property "on time".
+		// So, the (native) change event is always fired with the old value
+		if (isDelete(event)) {
+			this.value = event.target.value;
+		}
+
 		this._keyDown = false;
-		this._backspaceKeyDown = false;
 	}
 
 	/* Event handling */
@@ -819,7 +839,6 @@ class Input extends UI5Element {
 		}
 
 		if (!itemPressed) {
-			this.fireEventByAction(this.ACTION_ENTER, event);
 			this.lastConfirmedValue = this.value;
 
 			if (this.FormSupport) {
@@ -910,6 +929,8 @@ class Input extends UI5Element {
 		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
 		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
+		this._keepInnerValue = false;
+
 		if (this.showClearIcon && !this.effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
@@ -963,8 +984,8 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (this._changeFiredValue !== this.getInputDOMRefSync().value) {
-			this._changeFiredValue = this.getInputDOMRefSync().value;
+		if (this.previousValue !== this.getInputDOMRefSync().value) {
+			this.previousValue = this.getInputDOMRefSync().value;
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -992,48 +1013,44 @@ class Input extends UI5Element {
 	_handleInput(event) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
-		const eventType = event.inputType || event.detail.inputType;
+		const eventType = event.inputType || (event.detail && event.detail.inputType);
+		this._keepInnerValue = false;
 
 		this._shouldAutocomplete = eventType !== "deleteContentBackward" && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
-		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
-			// For input with type="Number", if the delimiter is entered second time,
-			// the inner input is firing event with empty value
-			return;
+		// ---- Special cases of numeric Input ----
+		// ---------------- Start -----------------
+
+		// When the last character after the delimiter is removed.
+		// In such cases, we want to skip the re-rendering of the
+		// component as this leads to cursor repositioning and causes user experience issues.
+
+		// There are few scenarios:
+		// Example: type "123.4" and press BACKSPACE - the native input is firing event with the whole part as value (123).
+		// Pressing BACKSPACE again will remove the delimiter and the native input will fire event with the whole part as value again (123).
+		// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with the whole part as value (123).
+		// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value.
+		const delimiterCase = this.isTypeNumber
+			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")
+			&& !event.target.value.includes(".")
+			&& this.value.includes(".");
+
+		// Handle special numeric notation with "e", example "12.5e12"
+		const eNotationCase = emptyValueFiredOnNumberInput && event.data === "e";
+
+		// Handle special numeric notation with "-", example "-3"
+		// When pressing BACKSPACE, the native input fires event with empty value
+		const minusRemovalCase = emptyValueFiredOnNumberInput
+			&& this.value.startsWith("-")
+			&& this.value.length === 2
+			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward");
+
+		if (delimiterCase || eNotationCase || minusRemovalCase) {
+			this.value = event.target.value;
+			this._keepInnerValue = true;
 		}
-
-		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
-			// Issue: when the user removes the character(s) after the delimeter of numeric Input,
-			// the native input is firing event with an empty value and we have to manually handle this case,
-			// otherwise the entire input will be cleared as we sync the "value".
-
-			// There are tree scenarios:
-			// Example: type "123.4" and press BACKSPACE - the native input is firing event with empty value.
-			// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with empty value.
-			// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value,
-			// but this time that's really the case.
-
-			// Perform manual handling in case of floating number
-			// and if the user did not select the entire input value
-			if (this._selectedText.indexOf(",") > -1) {
-				this._selectedText = this._selectedText.replace(",", ".");
-			}
-
-			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
-				const newValue = this.removeFractionalPart(this.value);
-
-				// update state
-				this.value = newValue;
-				this.highlightValue = newValue;
-				this.valueBeforeItemPreview = newValue;
-
-				// fire events
-				this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
-				this.fireEvent("value-changed");
-				return;
-			}
-		}
+		// ----------------- End ------------------
 
 		if (event.target === inputDomRef) {
 			this.focused = true;
@@ -1080,6 +1097,7 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 
 		filterValue = filterValue || "";
+		this._innerValue = value;
 		this.value = value;
 
 		innerInput.value = value;
@@ -1179,9 +1197,11 @@ class Input extends UI5Element {
 			return;
 		}
 
+		const innerInput = this.getInputDOMRefSync();
+		const value = this.valueBeforeAutoComplete || this.value;
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : this.valueBeforeAutoComplete !== itemText;
+			? this.valueBeforeItemSelection !== itemText : value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 
@@ -1192,6 +1212,7 @@ class Input extends UI5Element {
 			this.getInputDOMRefSync().value = itemText;
 			this.fireEvent(this.EVENT_INPUT);
 			this._handleChange();
+			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
 		this.valueBeforeItemPreview = "";
@@ -1240,8 +1261,6 @@ class Input extends UI5Element {
 	}
 
 	async fireEventByAction(action, event) {
-		await this.getInputDOMRef();
-
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -1377,6 +1396,15 @@ class Input extends UI5Element {
 
 	onClose() {}
 
+	get valueStateTypeMappings() {
+		return {
+			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+		};
+	}
+
 	valueStateTextMappings() {
 		return {
 			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
@@ -1450,15 +1478,15 @@ class Input extends UI5Element {
 	}
 
 	get ariaValueStateHiddenText() {
-		if (!this.hasValueStateMessage) {
+		if (!this.hasValueState) {
 			return;
 		}
 
 		if (this.shouldDisplayDefaultValueStateMessage) {
-			return this.valueStateText;
+			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateText}`;
 		}
 
-		return this.valueStateMessageText.map(el => el.textContent).join(" ");
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 	}
 
 	get itemSelectionAnnounce() {

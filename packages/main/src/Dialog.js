@@ -4,9 +4,14 @@ import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popup from "./Popup.js";
-import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/resize-corner.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -20,6 +25,15 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const STEP_SIZE = 16;
 
+/**
+ * Defines the icons corresponding to the dialog's state.
+ */
+const ICON_PER_STATE = {
+	[ValueState.Error]: "error",
+	[ValueState.Warning]: "alert",
+	[ValueState.Success]: "sys-enter-2",
+	[ValueState.Information]: "information",
+};
 /**
  * @public
  */
@@ -84,6 +98,10 @@ const metadata = {
 		 * If this property is set to true, the Dialog will be draggable by its header.
 		 * <br><br>
 		 * <b>Note:</b> The component can be draggable only in desktop mode.
+		 * <br><br>
+		 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
+		 * When "draggable" is set to true, the native browser "draggable"
+		 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.9
@@ -122,6 +140,20 @@ const metadata = {
 		 */
 		onDesktop: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the state of the <code>Dialog</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		state: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 	},
 };
@@ -189,6 +221,8 @@ class Dialog extends Popup {
 
 		this._resizeMouseMoveHandler = this._onResizeMouseMove.bind(this);
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
+
+		this._dragStartHandler = this._handleDragStart.bind(this);
 	}
 
 	static get metadata() {
@@ -286,6 +320,18 @@ class Dialog extends Popup {
 		return minHeight;
 	}
 
+	get hasValueState() {
+		return this.state !== ValueState.None;
+	}
+
+	get _dialogStateIcon() {
+		return ICON_PER_STATE[this.state];
+	}
+
+	get _role() {
+		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
+	}
+
 	_show() {
 		super._show();
 		this._center();
@@ -308,11 +354,15 @@ class Dialog extends Popup {
 	onEnterDOM() {
 		super.onEnterDOM();
 		this._attachScreenResizeHandler();
+
+		this.addEventListener("dragstart", this._dragStartHandler);
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
 		this._detachScreenResizeHandler();
+
+		this.removeEventListener("dragstart", this._dragStartHandler);
 	}
 
 	/**
@@ -606,6 +656,12 @@ class Dialog extends Popup {
 		delete this._cachedMinHeight;
 
 		this._detachMouseResizeHandlers();
+	}
+
+	_handleDragStart(event) {
+		if (this.draggable) {
+			event.preventDefault();
+		}
 	}
 
 	_attachMouseResizeHandlers() {

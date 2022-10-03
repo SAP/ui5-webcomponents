@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/SAP/ui5-webcomponents/compare/v1.7.0...v1.7.1) (2022-09-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [1.7.0](https://github.com/SAP/ui5-webcomponents/compare/v1.6.0...v1.7.0) (2022-09-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Features
+
+* **ui5-calendar:** show months and years from both primary and secon… ([#5412](https://github.com/SAP/ui5-webcomponents/issues/5412)) ([d5dc7ec](https://github.com/SAP/ui5-webcomponents/commit/d5dc7ec))
+
+
+
+
+
 # [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

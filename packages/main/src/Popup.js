@@ -4,8 +4,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
-import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
@@ -322,7 +323,11 @@ class Popup extends UI5Element {
 	}
 
 	_onkeydown(e) {
-		if (e.target === this._root && isTabPrevious(e)) {
+		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
+		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+
+		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
 			e.preventDefault();
 		}
 	}
@@ -446,6 +451,7 @@ class Popup extends UI5Element {
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
+
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
@@ -591,6 +597,10 @@ class Popup extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
 	}
 
+	get _role() {
+		return "dialog";
+	}
+
 	get contentDOM() {
 		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
@@ -609,6 +619,7 @@ class Popup extends UI5Element {
 		return {
 			root: {
 				"ui5-popup-root": true,
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			content: {
 				"ui5-popup-content": true,

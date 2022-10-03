@@ -15,8 +15,12 @@ import {
 	isShow,
 	isF4,
 	isEnter,
+	isTabNext,
+	isTabPrevious,
+	isF6Next,
+	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
@@ -476,6 +480,10 @@ class DatePicker extends DateComponentBase {
 			}
 		}
 
+		if ((this._getInput().isEqualNode(event.target) && this.isOpen()) && (isTabNext(event) || isTabPrevious(event) || isF6Next(event) || isF6Previous(event))) {
+			this.closePicker();
+		}
+
 		if (this.isOpen()) {
 			return;
 		}
@@ -703,6 +711,14 @@ class DatePicker extends DateComponentBase {
 	 */
 	get _shouldHideHeader() {
 		return false;
+	}
+
+	/**
+	 * Defines whether the value help icon is hidden
+	 * @private
+	 */
+	get _ariaHidden() {
+		return isDesktop();
 	}
 
 	async _respPopover() {

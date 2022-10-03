@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/SAP/ui5-webcomponents/compare/v1.7.0...v1.7.1) (2022-09-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.7.0](https://github.com/SAP/ui5-webcomponents/compare/v1.6.0...v1.7.0) (2022-09-02)
+
+
+### Bug Fixes
+
+* **ui5-bar:** adjust resizing behavior ([#5678](https://github.com/SAP/ui5-webcomponents/issues/5678)) ([b6efba2](https://github.com/SAP/ui5-webcomponents/commit/b6efba285ef03c4a873dca92b328cb5c3d1ddf78))
+* **ui5-li-notification:** align actions' texts to the left ([#5706](https://github.com/SAP/ui5-webcomponents/issues/5706)) ([f746016](https://github.com/SAP/ui5-webcomponents/commit/f746016d6311080fc189079943c273e7e6e21946)), closes [#5704](https://github.com/SAP/ui5-webcomponents/issues/5704)
+* **ui5-link:** multiple click events ([#5642](https://github.com/SAP/ui5-webcomponents/issues/5642)) ([74fd5b9](https://github.com/SAP/ui5-webcomponents/commit/74fd5b91fd83bf28c0f4347df92b3721eb11577d))
+* **ui5-view-settings-dialog:** focus correct page on open ([#5746](https://github.com/SAP/ui5-webcomponents/issues/5746)) ([d7a8e10](https://github.com/SAP/ui5-webcomponents/commit/d7a8e10e069a8d6df8aff4acf2d2de2eaa7d081d)), closes [#5451](https://github.com/SAP/ui5-webcomponents/issues/5451)
+* **ui5-view-settings-dialog:** update setConfirmedSettings param string type from String to Object and description sample code ([#5534](https://github.com/SAP/ui5-webcomponents/issues/5534)) ([da16e2c](https://github.com/SAP/ui5-webcomponents/commit/da16e2c6ea44cd4c500931b1ae2db17434391125))
+
+
+### Features
+
+* **ui5-illustrated-message:** introduce title slot ([#5611](https://github.com/SAP/ui5-webcomponents/issues/5611)) ([16ec3a8](https://github.com/SAP/ui5-webcomponents/commit/16ec3a8b1a84fd9b32cc635050f5ff2aefc4c5c2)), closes [#5503](https://github.com/SAP/ui5-webcomponents/issues/5503)
+
+
+
+
+
+# [1.6.0](https://github.com/SAP/ui5-webcomponents/compare/v1.5.0...v1.6.0) (2022-07-25)
+
+
+### Features
+
+* **ui5-bar:** implement resize handlers for each slot ([#5482](https://github.com/SAP/ui5-webcomponents/issues/5482)) ([a8a4acd](https://github.com/SAP/ui5-webcomponents/commit/a8a4acd))
+* **ui5-shellbar:** new property accessibilityRoles ([#5551](https://github.com/SAP/ui5-webcomponents/issues/5551)) ([eef5c50](https://github.com/SAP/ui5-webcomponents/commit/eef5c50)), closes [#4775](https://github.com/SAP/ui5-webcomponents/issues/4775)
+
+
+
+
+
 # [1.5.0](https://github.com/SAP/ui5-webcomponents/compare/v1.4.0...v1.5.0) (2022-07-03)
 
 

@@ -215,4 +215,26 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(monthButton.innerHTML, monthName, "The month is not changed after selecting the first date in the future");
 	});
 
+	it("startDateValue and endDateValue getters when single value", async () => {
+		await browser.url(`test/pages/DateRangePicker.html`);
+		const daterangepicker = await browser.$("#daterange-picker4");
+
+		await daterangepicker.click();
+		await browser.keys("27/09/2019");
+		await browser.keys("Enter");
+
+		await daterangepicker.waitForClickable({ timeout: 1000 });
+		const res = await browser.executeAsync(done => {
+			const myDRP = document.getElementById("daterange-picker4");
+			const startDateValue = myDRP.startDateValue;
+			const endDateValue = myDRP.endDateValue;
+			const drpValue = myDRP.value;
+
+			done({startDateValue, endDateValue, drpValue});
+		});
+
+		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "First date is correct");
+		assert.equal(res.endDateValue, null, "Second date is correct");
+		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
+	});
 });

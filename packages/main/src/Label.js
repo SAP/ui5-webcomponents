@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -145,8 +144,7 @@ class Label extends UI5Element {
 			return;
 		}
 
-		const ownerNode = findNodeOwner(this);
-		const elementToFocus = ownerNode.querySelector(`#${this.for}`);
+		const elementToFocus = this.getRootNode().querySelector(`#${this.for}`);
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}

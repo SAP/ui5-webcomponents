@@ -36,6 +36,10 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_INFORMATION,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
@@ -213,7 +217,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the accessible aria name of the component.
+		 * Defines the accessible ARIA name of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -551,6 +555,10 @@ class ComboBox extends UI5Element {
 		this.inner.focus();
 		this._resetFilter();
 
+		if (isPhone() && this.value && !this._lastValue) {
+			this._lastValue = this.value;
+		}
+
 		this._toggleRespPopover();
 	}
 
@@ -830,9 +838,18 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover(event) {
-		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
+		if (event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
 			this.value = this._selectedItemText;
 			this.filterValue = this._selectedItemText;
+		}
+
+		if (event && event.target.classList.contains("ui5-responsive-popover-close-btn")) {
+			this.value = this._lastValue ? this._lastValue : "";
+			this.filterValue = this._lastValue ? this._lastValue : "";
+		}
+
+		if (isPhone()) {
+			this._fireChangeEvent();
 		}
 
 		this._isValueStateFocused = false;
@@ -972,7 +989,11 @@ class ComboBox extends UI5Element {
 		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		isGroupItem ? announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite") : announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		if (isGroupItem) {
+			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
+		} else {
+			announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+		}
 	}
 
 	get _headerTitleText() {
@@ -1005,7 +1026,19 @@ class ComboBox extends UI5Element {
 		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
-	get valueStateText() {
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+		}
+
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+	}
+
+	get valueStateDefaultText() {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
@@ -1023,6 +1056,15 @@ class ComboBox extends UI5Element {
 			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get valueStateTypeMappings() {
+		return {
+			"Success": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 

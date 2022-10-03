@@ -15,3 +15,7 @@ ui5-carousel {
 .carousel2auto {
     margin-top: 2rem;
 }
+
+.carouselContentLeftAligned::part(content) {
+	align-items: flex-start;
+}

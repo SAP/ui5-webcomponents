@@ -53,7 +53,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
 		 * @type {string}
 		 * @public
@@ -100,7 +100,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br><br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15

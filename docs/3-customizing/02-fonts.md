@@ -13,8 +13,7 @@ For example:
 		font-style: normal;
 		font-weight: 400;
 		src: local("72"),
-			url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff2?ui5-webcomponents) format("woff2"),
-			url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff?ui5-webcomponents) format("woff");
+			url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff2?ui5-webcomponents) format("woff2");
 	}
 	
 	................
@@ -49,8 +48,7 @@ In order to use the `72-Light` font in your app and have an additional setting (
             font-weight: 200;
             font-display: swap;
             src: local("72-Light"),
-            url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff2?ui5-webcomponents) format("woff2"),
-            url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff?ui5-webcomponents) format("woff");
+            url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff2?ui5-webcomponents) format("woff2");
         }
     </style>
 ```
