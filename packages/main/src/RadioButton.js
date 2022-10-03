@@ -4,7 +4,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isSpace,
 	isEnter,
@@ -486,7 +486,7 @@ class RadioButton extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return [getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this), this.text].filter(Boolean).join(" ");
+		return [getEffectiveAriaLabelText(this), this.text].filter(Boolean).join(" ");
 	}
 
 	get ariaDescribedBy() {
