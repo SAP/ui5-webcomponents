@@ -128,9 +128,9 @@ const metadata = {
 
 		/**
 		 * Defines the ARIA role of the component.
-		 * 
+		 *
 		 * <b>Note:</b> Use "button" role in cases when navigation isn't expected to occur and the <code>href</code> property isn't defined.
-		 * 
+		 *
 		 * @type {string}
 		 * @defaultvalue "link"
 		 * @public
@@ -138,7 +138,7 @@ const metadata = {
 		 */
 		accessibleRole: {
 			type: String,
-			defaultValue: "link"
+			defaultValue: "link",
 		},
 
 		/**
