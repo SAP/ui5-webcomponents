@@ -392,7 +392,7 @@ class IllustratedMessage extends UI5Element {
 
 	_applyMedia() {
 		const bcr = this.getBoundingClientRect().toJSON();
-		let newMedia = '';
+		let newMedia = "";
 
 		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
@@ -411,7 +411,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	_storeLastKnownBCRForMedia(bcr, media) {
-		this._lastKnownBCRForMedia[media] = Object.assign({}, bcr);
+		this._lastKnownBCRForMedia[media] = { ...bcr };
 	}
 
 	_shallowEqual(object1, object2) {
@@ -420,12 +420,12 @@ class IllustratedMessage extends UI5Element {
 		if (keys1.length !== keys2.length) {
 			return false;
 		}
-		for (let key of keys1) {
+		return keys1.every(key => {
 			if (object1[key] !== object2[key]) {
 				return false;
 			}
-		}
-		return true;
+			return true;
+		});
 	}
 
 	_setSVGAccAttrs() {
