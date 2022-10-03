@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* **framework:** remove .com from URL font-face 72Black ([#5822](https://github.com/SAP/ui5-webcomponents/issues/5822)) ([d2fc095](https://github.com/SAP/ui5-webcomponents/commit/d2fc095515de7c77f06a4d423f59702b14460a91))
+* **ui5-static-area-item:** add tag as attr on the host ([#5845](https://github.com/SAP/ui5-webcomponents/issues/5845)) ([885b20f](https://github.com/SAP/ui5-webcomponents/commit/885b20feaaf3df125b6206310dc33889e441799a))
+
+
+### Features
+
+* **f6navigation:** improve fastgroup navigation ([#5844](https://github.com/SAP/ui5-webcomponents/issues/5844)) ([f44f57b](https://github.com/SAP/ui5-webcomponents/commit/f44f57b27850de03e430d08e3e9adc71d60296fe))
+* **main:** add support for custom SVG icons ([#5865](https://github.com/SAP/ui5-webcomponents/issues/5865)) ([d8b7200](https://github.com/SAP/ui5-webcomponents/commit/d8b7200f30c16d94b7f15ddbdf9808d8efbaa38c))
+
+
+
+
+
 ## [1.7.1](https://github.com/SAP/ui5-webcomponents/compare/v1.7.0...v1.7.1) (2022-09-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
