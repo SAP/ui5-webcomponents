@@ -387,7 +387,7 @@ class Avatar extends UI5Element {
 		// an icon should be shown inside the avatar
 		const avatar = this.getDomRef(),
 			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
-		if (this.initials && this.initials.length === 3 && this.size === "XS") {
+		if (this.initials && this.initials.length === 3) {
 			if (avatarInitials.scrollWidth > avatar.scrollWidth) {
 				this.icon = "employee";
 			}
