@@ -323,11 +323,19 @@ class RadioButton extends UI5Element {
 		this._enableFormSupport();
 	}
 
-	syncGroup() {
+	onExitDOM() {
+		this.syncGroup(true);
+	}
+
+	syncGroup(forceRemove) {
 		const oldGroup = this._name;
 		const currentGroup = this.name;
 		const oldChecked = this._checked;
 		const currentChecked = this.checked;
+
+		if (forceRemove) {
+			RadioButtonGroup.removeFromGroup(this, oldGroup);
+		}
 
 		if (currentGroup !== oldGroup) {
 			if (oldGroup) {

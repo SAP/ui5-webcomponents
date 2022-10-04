@@ -3,15 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-
 	<title>ui5-radio-button</title>
-
-
 	<script src="../../bundle.esm.js" type="module"></script>
-
-
-	<script>// delete Document.prototype.adoptedStyleSheets;</script>
-
 	<link rel="stylesheet" type="text/css" href="./styles/RadioButton.css">
 </head>
 
@@ -134,22 +127,43 @@
 		<ui5-radio-button id="rtlOptionC" name="rtlGroup" text="Option C"></ui5-radio-button>
 	</div>
 
+	<ui5-label>add/remove radio buttons in DOM</ui5-label>
+	<ui5-switch id="rbGroupSwitch"></ui5-switch>
+
+	<div id="rbGroupContainer"></div>
+
 	<script>
 		var counter = 0;
 		var groupEventCounter = 0;
 
-		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function(radio) {
-			radio.addEventListener("ui5-change", function(event) {
+		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function (radio) {
+			radio.addEventListener("ui5-change", function (event) {
 				counter += 1;
 				window["field"].value = counter;
 			});
 		})
 
-		radioGroup.addEventListener("ui5-change", function(e) {
+		radioGroup.addEventListener("ui5-change", function (e) {
 			var radio = e.target;
 			lblRadioGroup.innerHTML = radio.text;
 			lblEventCounter.innerHTML = ++groupEventCounter;
 		});
+
+		var rbGroupSwitch = document.getElementById("rbGroupSwitch");
+		var rbGroupContainer = document.getElementById("rbGroupContainer");
+
+		rbGroupSwitch.addEventListener("ui5-change", function (e) {
+			rbGroupContainer.innerHTML = e.target.checked ? createRbGroup() : "";
+		});
+
+		function createRbGroup() {
+			return `
+				<ui5-radio-button name="sameGroup" text="A"></ui5-radio-button>
+				<ui5-radio-button name="sameGroup" text="B"></ui5-radio-button>
+				<ui5-radio-button name="sameGroup" text="C"></ui5-radio-button>
+			`;
+		}
+
 </script>
 </body>
 </html>

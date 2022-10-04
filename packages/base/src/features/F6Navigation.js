@@ -1,6 +1,7 @@
 import { registerFeature } from "../FeaturesRegistry.js";
 import { isF6Next, isF6Previous } from "../Keys.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
+import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 
 class F6Navigation {
 	init() {
@@ -17,6 +18,7 @@ class F6Navigation {
 	async _keydownHandler(event) {
 		if (isF6Next(event)) {
 			this.updateGroups();
+
 			if (this.groups.length < 1) {
 				return;
 			}
@@ -42,6 +44,7 @@ class F6Navigation {
 
 		if (isF6Previous(event)) {
 			this.updateGroups();
+
 			if (this.groups.length < 1) {
 				return;
 			}
@@ -84,19 +87,25 @@ class F6Navigation {
 
 	updateGroups() {
 		this.setSelectedGroup(document.activeElement);
-		this.setGroups();
-	}
-
-	setGroups() {
-		this.groups = Array.from(document.querySelectorAll("[data-sap-ui-fastnavgroup='true']")).filter(group => group.clientWidth && window.getComputedStyle(group).visibility !== "hidden");
+		this.groups = getFastNavigationGroups(document.body);
 	}
 
 	setSelectedGroup(element) {
+		element = this.deepActive(element);
+
 		while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== document.querySelector("html")) {
 			element = element.parentElement ? element.parentNode : element.parentNode.host;
 		}
 
 		this.selectedGroup = element;
+	}
+
+	deepActive(element) {
+		if (element.shadowRoot) {
+			return this.deepActive(element.shadowRoot);
+		}
+
+		return element.activeElement;
 	}
 
 	destroy() {

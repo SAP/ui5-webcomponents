@@ -14,7 +14,6 @@ import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
-	LIST_ITEM_SELECTED,
 } from "../generated/i18n/i18n-defaults.js";
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -239,7 +238,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: this.selectedItemIndex + 1,
 			listSize: allItems.length,
-			itemText: item.textContent,
+			itemText: this._getRealItems()[this.selectedItemIndex].description,
 		};
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
@@ -436,7 +435,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: nextIdx + 1,
 			listSize: items.length,
-			itemText: currentItem.textContent,
+			itemText: this._getRealItems()[items.indexOf(currentItem)].description,
 		};
 
 		if (previousItem) {
@@ -536,10 +535,9 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
-			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 
-		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
+		return `${this.accInfo.itemText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion) {

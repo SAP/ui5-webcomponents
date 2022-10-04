@@ -29,6 +29,8 @@
 
 .ui5-icon-root {
 	display:flex;
+	height: 100%;
+	width: 100%;
 	outline: none;
 	vertical-align: top;
 }

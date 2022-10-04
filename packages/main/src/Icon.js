@@ -3,8 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
-
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
@@ -354,9 +354,16 @@ class Icon extends UI5Element {
 			/* eslint-disable-next-line */
 			return console.warn("Icon name property is required", this);
 		}
+
 		let iconData = getIconDataSync(name);
 		if (!iconData) {
 			iconData = await getIconData(name);
+		}
+
+		this.viewBox = iconData.viewBox || "0 0 512 512";
+		if (iconData.customTemplate) {
+			iconData.pathData = [];
+			this.customSvg = executeTemplate(iconData.customTemplate, this);
 		}
 
 		if (iconData === ICON_NOT_FOUND) {

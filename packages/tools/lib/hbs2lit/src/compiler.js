@@ -17,6 +17,14 @@ const hbs2lit = async (file) => {
 
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
+	// icons hack
+	if (sPreprocessed.startsWith("<g ") || sPreprocessed.startsWith("<g>")) {
+		return `
+		let block0 = () => {
+			return svg\`${sPreprocessed}\`
+		}`;
+	}
+
 	const ast = Handlebars.parse(sPreprocessed);
 
 	const pv = new PartialsVisitor();

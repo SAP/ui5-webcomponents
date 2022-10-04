@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
+
+
+### Features
+
+* **icons:** create type-definitions for icon imports ([#5753](https://github.com/SAP/ui5-webcomponents/issues/5753)) ([2de4a04](https://github.com/SAP/ui5-webcomponents/commit/2de4a045f56e2f166d3e846ff11e6f9d76e98009)), closes [#5747](https://github.com/SAP/ui5-webcomponents/issues/5747) [#5335](https://github.com/SAP/ui5-webcomponents/issues/5335)
+* **main:** add support for custom SVG icons ([#5865](https://github.com/SAP/ui5-webcomponents/issues/5865)) ([d8b7200](https://github.com/SAP/ui5-webcomponents/commit/d8b7200f30c16d94b7f15ddbdf9808d8efbaa38c))
+
+
+
+
+
 ## [1.7.1](https://github.com/SAP/ui5-webcomponents/compare/v1.7.0...v1.7.1) (2022-09-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools
