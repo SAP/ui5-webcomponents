@@ -1,5 +1,5 @@
-commit e71e3bf178a40cb10e16b6a416ea19c212e6851d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 3 18:06:26 2022 +0300
+commit 5f61d1190e4d592ad69a256b8890840869d5cfb7
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Oct 4 09:29:30 2022 +0300
 
-    docs: set sap_horizon as default theme in playground (#5874)
+    fix(ui5-input): type composition characters correctly (#5869)
