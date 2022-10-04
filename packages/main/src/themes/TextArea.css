@@ -125,8 +125,7 @@
 
 :host([growing]) .ui5-textarea-inner {
 	box-sizing: border-box;
-	height: 100%;
-	position: absolute;
+  	position: absolute;
 	top: 0;
 	left: 0;
 }
@@ -141,7 +140,7 @@
 	visibility: hidden;
 	width: 100%;
 	max-height: 100%;
-	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)) + (2 * var(--_ui5_textarea_inner_border_width)));
+	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)));
 	word-break: break-all;
 	padding: var(--_ui5_textarea_padding);
 	font-size: var(--sapFontSize);
