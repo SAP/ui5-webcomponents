@@ -318,6 +318,8 @@
       
     
       
+    
+      
         
       
     
@@ -357,6 +359,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -949,6 +953,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1817,6 +1823,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" class="navigation-list-link">
@@ -2090,6 +2098,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2886,6 +2896,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3179,6 +3191,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -4081,6 +4095,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.7.0.md/" class="navigation-list-link">
@@ -4444,6 +4460,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5827,6 +5845,42 @@
 	</code></pre></figure></pre>
 </section>
 
+<section>
+	<h3>Menu with additional text on menu items</h3>
+	<div class="snippet">
+		<ui5-button id="btnOpenAdditionalText" class="samples-margin">Open Menu</ui5-button> <br/>
+		<ui5-menu id="menuAdditionalText">
+			<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
+			<ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
+			<ui5-menu-item text="Open" icon="open-folder" starts-section></ui5-menu-item>
+			<ui5-menu-item text="Close"></ui5-menu-item>
+			<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+			<ui5-menu-item text="Exit" icon="journey-arrive" additional-text="Ctrl+X"></ui5-menu-item>
+		</ui5-menu>
+		<script>
+			btnOpenAdditionalText.addEventListener("click", function(event) {
+				menuAdditionalText.showAt(btnOpenAdditionalText);
+			});
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"btnOpenAdditionalText"</span><span class="nt">&gt;</span>Open Menu<span class="nt">&lt;/ui5-button&gt;</span> <span class="nt">&lt;br/&gt;</span>
+<span class="nt">&lt;ui5-menu</span> <span class="na">id=</span><span class="s">"menuAdditionalText"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-menu-item</span> <span class="na">text=</span><span class="s">"New File"</span> <span class="na">icon=</span><span class="s">"add-document"</span> <span class="na">additional-text=</span><span class="s">"Ctrl+N"</span><span class="nt">&gt;&lt;/ui5-menu-item&gt;</span>
+	<span class="nt">&lt;ui5-menu-item</span> <span class="na">text=</span><span class="s">"New Folder"</span> <span class="na">icon=</span><span class="s">"add-folder"</span> <span class="na">additional-text=</span><span class="s">"Ctrl+F"</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-menu-item&gt;</span>
+	<span class="nt">&lt;ui5-menu-item</span> <span class="na">text=</span><span class="s">"Open"</span> <span class="na">icon=</span><span class="s">"open-folder"</span> <span class="na">starts-section</span><span class="nt">&gt;&lt;/ui5-menu-item&gt;</span>
+	<span class="nt">&lt;ui5-menu-item</span> <span class="na">text=</span><span class="s">"Close"</span><span class="nt">&gt;&lt;/ui5-menu-item&gt;</span>
+	<span class="nt">&lt;ui5-menu-item</span> <span class="na">text=</span><span class="s">"Preferences"</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">starts-section</span><span class="nt">&gt;&lt;/ui5-menu-item&gt;</span>
+	<span class="nt">&lt;ui5-menu-item</span> <span class="na">text=</span><span class="s">"Exit"</span> <span class="na">icon=</span><span class="s">"journey-arrive"</span> <span class="na">additional-text=</span><span class="s">"Ctrl+X"</span><span class="nt">&gt;&lt;/ui5-menu-item&gt;</span>
+<span class="nt">&lt;/ui5-menu&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="nx">btnOpenAdditionalText</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">menuAdditionalText</span><span class="p">.</span><span class="nx">showAt</span><span class="p">(</span><span class="nx">btnOpenAdditionalText</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+
 
     <div class="page-container">
       <div class="api-container">
@@ -5995,6 +6049,19 @@ The <code>ui5-menu</code> provides advanced keyboard handling. The user can use 
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          additionalText
+                            <br>
+                                 <code>additional-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>additionalText</code>, displayed in the end of the menu item. <b>Note:</b> The additional text would not be displayed if the item has a submenu.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.8.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           disabled
                             <br>
                         </div>
@@ -6004,7 +6071,7 @@ The <code>ui5-menu</code> provides advanced keyboard handling. The user can use 
                             Defines whether <code>ui5-menu-item</code> is in disabled state. <br><br> <b>Note:</b> A disabled <code>ui5-menu-item</code> is noninteractive.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           icon
                             <br>
@@ -6015,7 +6082,7 @@ The <code>ui5-menu</code> provides advanced keyboard handling. The user can use 
                             Defines the icon to be displayed as graphical element within the component. The SAP-icons font provides numerous options. <br><br> <b>* Example:</b> See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           startsSection
                             <br>
@@ -6027,7 +6094,7 @@ The <code>ui5-menu</code> provides advanced keyboard handling. The user can use 
                             Defines whether a visual separator should be rendered before the item.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>

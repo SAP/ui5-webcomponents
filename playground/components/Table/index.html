@@ -318,6 +318,8 @@
       
     
       
+    
+      
         
       
     
@@ -357,6 +359,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -949,6 +953,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1817,6 +1823,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" class="navigation-list-link">
@@ -2090,6 +2098,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2886,6 +2896,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3179,6 +3191,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -4081,6 +4095,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.7.0.md/" class="navigation-list-link">
@@ -4444,6 +4460,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5736,6 +5754,10 @@
 	.hcb .header {
 		color: #fff;
 	}
+	
+	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+		text-align: end;
+	}
 </style>
 
 <header>
@@ -5758,7 +5780,7 @@
 
 		<ui5-table class="demo-table" id="tbl">
 			<!-- Columns -->
-			<ui5-table-column slot="columns" style="width: 12rem">
+			<ui5-table-column slot="columns">
 				<span style="line-height: 1.4rem">Product</span>
 			</ui5-table-column>
 
@@ -5766,15 +5788,15 @@
 				<span style="line-height: 1.4rem">Supplier</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+			<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin class="table-header-text-alignment">
 				<span style="line-height: 1.4rem">Dimensions</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin>
+			<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin class="table-header-text-alignment">
 				<span style="line-height: 1.4rem">Weight</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" >
+			<ui5-table-column slot="columns" class="table-header-text-alignment">
 				<span style="line-height: 1.4rem">Price</span>
 			</ui5-table-column>
 
@@ -5790,7 +5812,7 @@
 
 <span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">id=</span><span class="s">"table"</span><span class="nt">&gt;</span>
 	<span class="c">&lt;!-- Columns --&gt;</span>
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">style=</span><span class="s">"width: 12rem"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
 	<span class="nt">&lt;/ui5-table-column&gt;</span>
 
@@ -5798,40 +5820,40 @@
 		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Supplier<span class="nt">&lt;/span&gt;</span>
 	<span class="nt">&lt;/ui5-table-column&gt;</span>
 
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Dimensions"</span> <span class="na">demand-popin</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Dimensions"</span> <span class="na">demand-popin</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Dimensions<span class="nt">&lt;/span&gt;</span>
 	<span class="nt">&lt;/ui5-table-column&gt;</span>
 
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Weight"</span> <span class="na">demand-popin</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Weight"</span> <span class="na">demand-popin</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Weight<span class="nt">&lt;/span&gt;</span>
 	<span class="nt">&lt;/ui5-table-column&gt;</span>
 
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
 	<span class="nt">&lt;/ui5-table-column&gt;</span>
 
 	<span class="nt">&lt;ui5-table-row&gt;</span>
 		<span class="nt">&lt;ui5-table-cell&gt;</span>Notebook Basic 15HT-1000<span class="nt">&lt;/ui5-table-cell&gt;</span>
 		<span class="nt">&lt;ui5-table-cell&gt;</span>Very Best Screens<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>30 x 18 x 3cm<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>4.2KG<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>956EUR<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>30 x 18 x 3cm<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>4.2KG<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>956EUR<span class="nt">&lt;/ui5-table-cell&gt;</span>
 	<span class="nt">&lt;/ui5-table-row&gt;</span>
 
 	<span class="nt">&lt;ui5-table-row&gt;</span>
 		<span class="nt">&lt;ui5-table-cell&gt;</span>Notebook Basic 17HT-1001<span class="nt">&lt;/ui5-table-cell&gt;</span>
 		<span class="nt">&lt;ui5-table-cell&gt;</span>Very Best Screens<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>29 x 17 x 3.1cm<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>4.5KG<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>1249EUR<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>29 x 17 x 3.1cm<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>4.5KG<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>1249EUR<span class="nt">&lt;/ui5-table-cell&gt;</span>
 	<span class="nt">&lt;/ui5-table-row&gt;</span>
 
 	<span class="nt">&lt;ui5-table-row&gt;</span>
 		<span class="nt">&lt;ui5-table-cell&gt;</span>Notebook Basic 18HT-1002<span class="nt">&lt;/ui5-table-cell&gt;</span>
 		<span class="nt">&lt;ui5-table-cell&gt;</span>Very Best Screens<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>28 x 19 x 2.5cm<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>4.2KG<span class="nt">&lt;/ui5-table-cell&gt;</span>
-		<span class="nt">&lt;ui5-table-cell&gt;</span>1570EUR<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>28 x 19 x 2.5cm<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>4.2KG<span class="nt">&lt;/ui5-table-cell&gt;</span>
+		<span class="nt">&lt;ui5-table-cell</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>1570EUR<span class="nt">&lt;/ui5-table-cell&gt;</span>
 	<span class="nt">&lt;/ui5-table-row&gt;</span>
 
 	...
@@ -5852,15 +5874,15 @@
 				<span>Supplier</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin>
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin class="table-header-text-alignment">
 				<span>Dimensions</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin>
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin class="table-header-text-alignment">
 				<span>Weight</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" >
+			<ui5-table-column slot="columns" class="table-header-text-alignment">
 				<span>Price</span>
 			</ui5-table-column>
 		</ui5-table>
@@ -5883,15 +5905,15 @@
 				<span>Supplier</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin>
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin class="table-header-text-alignment">
 				<span>Dimensions</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin>
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin class="table-header-text-alignment">
 				<span>Weight</span>
 			</ui5-table-column>
 
-			<ui5-table-column slot="columns" >
+			<ui5-table-column slot="columns" class="table-header-text-alignment">
 				<span>Price</span>
 			</ui5-table-column>
 		</ui5-table>
@@ -5906,7 +5928,7 @@
 		<div class="snippet flex-column">
 			<ui5-table class="demo-table" no-data-text="No Data">
 				<!-- Columns -->
-				<ui5-table-column slot="columns" style="width: 12rem">
+				<ui5-table-column slot="columns">
 					<span style="line-height: 1.4rem">Product</span>
 				</ui5-table-column>
 
@@ -5929,7 +5951,7 @@
 		</div>
 
 		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">no-data-text=</span><span class="s">"No Data"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">style=</span><span class="s">"width: 12rem"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
 	<span class="nt">&lt;/ui5-table-column&gt;</span>
 
@@ -6216,16 +6238,16 @@
 							+ '<span class="middle" >' + product.SupplierName + '</span>'
 						+ '</ui5-table-cell>'
 
-						+ '<ui5-table-cell>'
+						+ '<ui5-table-cell style="text-align: right">'
 							+ '<span class="middle" >' + product.Width + ' x ' + product.Depth + ' x ' + product.Height + product.DimUnit + '</span>'
 						+ '</ui5-table-cell>'
 
-						+ '<ui5-table-cell>'
+						+ '<ui5-table-cell style="text-align: right">'
 							+ '<span style="color: #2b7c2b" class="middle">'
 								+ '<b>' + product.WeightMeasure + '</b>' + product.WeightUnit + '</span>'
 						+ '</ui5-table-cell>'
 
-						+ '<ui5-table-cell>'
+						+ '<ui5-table-cell style="text-align: right">'
 							+ '<span class="middle" >'
 								+ '<b>' + product.Price + '</b>' + product.CurrencyCode + '</span>'
 						+ '</ui5-table-cell>'
@@ -6254,17 +6276,17 @@
 				<ui5-label>Supplier</ui5-label>
 			</ui5-table-column>
 
-			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin class="table-header-text-alignment">
 				<div class="column-content">
 					<ui5-label>Dimensions</ui5-label>
 				</div>
 			</ui5-table-column>
 
-			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
+			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin class="table-header-text-alignment">
 				<ui5-label>Weight</ui5-label>
 			</ui5-table-column>
 
-			<ui5-table-column id="column-5" slot="columns">
+			<ui5-table-column id="column-5" slot="columns" class="table-header-text-alignment">
 				<ui5-label>Price</ui5-label>
 			</ui5-table-column>
 		</ui5-table>
@@ -6533,7 +6555,7 @@
 		function init(rows) {
 			var result = '';
 			products2.ProductCollection.slice(0, rows).forEach(function (product, index, arr) {
-				var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");
+				var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell >\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell style='text-align: right'>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell style='text-align: right'>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell style='text-align: right'>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");
 				result += test;
 			});
 
@@ -6574,17 +6596,17 @@
 				<ui5-label>Supplier</ui5-label>
 			</ui5-table-column>
 
-			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin class="table-header-text-alignment">
 				<div class="column-content">
 					<ui5-label>Dimensions</ui5-label>
 				</div>
 			</ui5-table-column>
 
-			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
+			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin class="table-header-text-alignment">
 				<ui5-label>Weight</ui5-label>
 			</ui5-table-column>
 
-			<ui5-table-column id="column-5" slot="columns">
+			<ui5-table-column id="column-5" slot="columns" class="table-header-text-alignment">
 				<ui5-label>Price</ui5-label>
 			</ui5-table-column>
 		</ui5-table>
@@ -7157,7 +7179,7 @@
 		function fill(rows) {
 			var result = '';
 			products3.ProductCollection.slice(0, rows).forEach(function (product, index, arr) {
-				var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");
+				var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell style='text-align: right'>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell style='text-align: right'>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell style='text-align: right'>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");
 				result += test;
 			});
 

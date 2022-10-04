@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* **playground:** reworked playground landing page design and responsveness ([#5801](https://github.com/SAP/ui5-webcomponents/issues/5801)) ([ada5804](https://github.com/SAP/ui5-webcomponents/commit/ada58044524348c9edce0cb12aaa5f7eb057938b))
+
+
+
+
+
+## [1.7.1](https://github.com/SAP/ui5-webcomponents/compare/v1.7.0...v1.7.1) (2022-09-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 # [1.7.0](https://github.com/SAP/ui5-webcomponents/compare/v1.6.0...v1.7.0) (2022-09-02)
 
 
