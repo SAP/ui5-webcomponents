@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
 	isPhone,
-	isSafari,
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -1284,20 +1283,9 @@ class Input extends UI5Element {
 		const inputValue = await this.getInputValue();
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
-		const input = await this.getInputDOMRef();
-		const cursorPosition = input.selectionStart;
-
 		this.value = inputValue;
 		this.highlightValue = inputValue;
 		this.valueBeforeItemPreview = inputValue;
-
-		if (isSafari()) {
-			// When setting the value by hand, Safari moves the cursor when typing in the middle of the text (See #1761)
-			setTimeout(() => {
-				input.selectionStart = cursorPosition;
-				input.selectionEnd = cursorPosition;
-			}, 0);
-		}
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
