@@ -1,0 +1,49 @@
+import { action } from "@storybook/addon-actions";
+import { Story, Preview, ArgsTable } from "@storybook/addon-docs";
+import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+
+import argTypes from "./argsTypes.js";
+import Description from "./Description.md";
+
+<Meta title="Components/List/CustomListItem" argTypes={argTypes} />
+
+export const Template = (args) =>
+  html`
+<ui5-list>
+  <ui5-li-custom
+    accessible-name="${ifDefined(args.accessibleName)}"
+    ?selected="${ifDefined(args.selected)}"
+    ?disabled="${ifDefined(args.disabled)}"
+    type="${ifDefined(args.type)}"
+    @ui5-detail-click="${ifDefined(args["ui5-detail-click"])}"
+  >
+    ${unsafeHTML(args.defaultSlot)}
+  </ui5-li-custom>
+</ui5-list>
+  `;
+
+# CustomListItem
+
+<Preview>
+  <Story
+    name="Basic"
+    args={{
+      selected: true,
+      ["ui5-detail-click"]: (e) => action("ui5-detail-click")(e.detail),
+      defaultSlot: `<ui5-radio-button text="Option C" disabled="disabled"></ui5-radio-button>`,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Preview>
+
+<Description />
+
+<br />
+<br />
+
+## Properties
+
+<ArgsTable story="." />
