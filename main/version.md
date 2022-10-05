@@ -1,13 +1,13 @@
-commit 6ce8b2dee9cbf0ccbe2d310a241f02c173d85cd9
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Oct 4 10:37:15 2022 +0300
+commit 73d7a1589d4a80e1724f0b3b8564b6ffa09288d6
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Oct 5 05:55:07 2022 -0700
 
-    feat(ui5-link): make acceessibleRole property public (#5879)
+    Translation Delivery (#5886)
     
-    * feat(ui5-link): make acceessibleRole property public
+    * chore: translation delivery
     
-    - The previously private accessibleRole property is now made public, in order to enable
-    application developers to configure a given ui5-link element to be interpreted as button
-    by the accessibility tools.
+    Change-Id: I77ad153470a312cdc5313394dbb645a532723869
     
-    Fixes: #5686
+    * chore: translation delivery
+    
+    Change-Id: I159be7d9798c76e36932022ddfbcd52c04dd568e
