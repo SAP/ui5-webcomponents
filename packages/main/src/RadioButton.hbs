@@ -3,6 +3,7 @@
 	aria-checked="{{checked}}"
 	aria-disabled="{{ariaDisabled}}"
 	aria-describedby="{{ariaDescribedBy}}"
+	aria-label="{{ariaLabelText}}"
 	tabindex="{{tabIndex}}"
 	@click="{{_onclick}}"
 	@keydown="{{_onkeydown}}"
@@ -17,7 +18,7 @@
 			<circle class="ui5-radio-svg-outer" cx="50%" cy="50%" r="50%" />
 			<circle class="ui5-radio-svg-inner" cx="50%" cy="50%" />
 		</svg>
-		<input type='radio' ?checked="{{checked}}" ?readonly="{{ariaReadonly}}" ?disabled="{{ariaDisabled}}" name="{{name}}" aria-label="{{ariaLabelText}}" data-sap-no-tab-ref/>
+		<input type='radio' ?checked="{{checked}}" ?readonly="{{ariaReadonly}}" ?disabled="{{ariaDisabled}}" name="{{name}}"  data-sap-no-tab-ref/>
 	</div>
 
 	{{#if text}}
