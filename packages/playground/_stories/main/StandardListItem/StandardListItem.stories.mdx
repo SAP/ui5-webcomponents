@@ -1,0 +1,59 @@
+import { action } from "@storybook/addon-actions";
+import { Story, Preview, ArgsTable } from "@storybook/addon-docs";
+import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+
+import argTypes from "./argsTypes.js";
+import Description from "./Description.md";
+
+<Meta title="Components/List/StandardListItem" argTypes={argTypes} />
+
+export const Template = (args) =>
+  html`
+<ui5-list>
+  <ui5-li
+    accessible-name="${ifDefined(args.accessibleName)}"
+    accessible-text="${ifDefined(args.accessibleText)}"
+    additional-text="${ifDefined(args.additionalText)}"
+    additional-text-state="${ifDefined(args.additionalTextState)}"
+    description="${ifDefined(args.description)}"
+    icon="${ifDefined(args.icon)}"
+    ?icon-end="${ifDefined(args.iconEnd)}"
+    image="${ifDefined(args.image)}"
+    ?selected="${ifDefined(args.selected)}"
+    ?disabled="${ifDefined(args.disabled)}"
+    type="${ifDefined(args.type)}"
+    @ui5-detail-click="${ifDefined(args["ui5-detail-click"])}"
+  >
+    ${unsafeHTML(args.defaultSlot)}
+  </ui5-li>
+</ui5-list>
+  `;
+
+# StandardListItem
+
+<Preview>
+  <Story
+    name="Basic"
+    args={{
+      defaultSlot: "Standard List Item",
+      image: "../../../assets/images/avatars/man_avatar_1.png",
+      icon: "navigation-right-arrow",
+      iconEnd: true,
+      additionalText: "Reuqired",
+      additionalTextState: "Warning",
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Preview>
+
+<Description />
+
+<br />
+<br />
+
+## Properties
+
+<ArgsTable story="." />

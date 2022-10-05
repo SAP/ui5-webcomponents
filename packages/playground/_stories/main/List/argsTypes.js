@@ -157,7 +157,7 @@ export default {
             category: "Properties"
         },
     },
-    default: {
+    defaultSlot: {
         description:
             "Defines the items of the component. <br/><br/> <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.",
         control: "sap.ui.webcomponents.main.IListItem[]",
