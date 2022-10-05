@@ -249,6 +249,11 @@ const metadata = {
 			defaultValue: "list",
 		},
 
+		ariaRoledescription: {
+			type: String,
+			defaultValue: undefined,
+		},
+
 		/**
 		 * Defines if the entire list is in view port.
 		 * @private

@@ -6,6 +6,7 @@
 			id="ui5-sn-items-tree"
 			class="ui5-sn-items-tree"
 			mode="None"
+			aria-roledescription="Navigation List Menu Bar"
 			?_minimal="{{collapsed}}"
 			_toggle-button-end
 			@ui5-item-click="{{handleTreeItemClick}}"
@@ -19,6 +20,7 @@
 					?has-children="{{this.item.items.length}}"
 					?expanded="{{this.item.expanded}}"
 					?selected="{{this.selected}}"
+					aria-roledescription="Navigation List Menu Item"
 				>
 					{{#unless ../collapsed}}
 						{{#each this.item.items}}
@@ -28,6 +30,7 @@
 								title="{{this._tooltip}}"
 								icon="{{this.icon}}"
 								?selected="{{this.selected}}"
+								aria-roledescription="Navigation List Menu Item"
 							>
 							</ui5-tree-item>
 						{{/each}}

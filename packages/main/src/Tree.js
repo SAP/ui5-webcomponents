@@ -103,6 +103,11 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		ariaRoledescription: {
+			type: String,
+			defaultValue: undefined,
+		},
+
 		/**
 		 * An array, containing a flat structure of list items to render
 		 *

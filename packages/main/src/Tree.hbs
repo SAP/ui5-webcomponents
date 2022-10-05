@@ -5,6 +5,7 @@
     .noDataText="{{noDataText}}"
     .accessibleRole="{{_role}}"
     .accessibleName="{{_label}}"
+	aria-roledescription="{{ariaRoleDescription}}"
     @ui5-item-click="{{_onListItemClick}}"
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-selection-change="{{_onListSelectionChange}}"
@@ -34,6 +35,7 @@
             @ui5-step-out="{{../_onListItemStepOut}}"
             @mouseover="{{../_onListItemMouseOver}}"
             @mouseout="{{../_onListItemMouseOut}}"
+			aria-roledescription="{{this.treeItem.ariaRoleDescription}}"
             exportparts="icon, toggle-icon"
         >
             {{> treeListItemContent}}

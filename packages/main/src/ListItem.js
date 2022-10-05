@@ -87,6 +87,11 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
+		ariaRoledescription: {
+			type: String,
+			defaultValue: undefined,
+		},
+
 		/**
 		 * Used to define the role of the list item.
 		 *

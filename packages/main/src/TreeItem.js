@@ -135,6 +135,11 @@ const metadata = {
 		title: {
 			type: String,
 		},
+
+		ariaRoledescription: {
+			type: String,
+			defaultValue: undefined,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
