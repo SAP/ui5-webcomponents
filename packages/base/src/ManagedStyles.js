@@ -3,9 +3,9 @@ import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "./Runtimes.js";
 
-const shouldUpdate = runtimeINdex => {
-	const createdByOldRuntime = runtimeINdex === undefined; // The style/link/stylesheet was created by an old runtime (that does not set info on it)
-	const currentRuntimeIsNewer = compareRuntimes(getCurrentRuntimeIndex(), parseInt(runtimeINdex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
+const shouldUpdate = runtimeIndex => {
+	const createdByOldRuntime = runtimeIndex === undefined; // The style/link/stylesheet was created by an old runtime (that does not set info on it)
+	const currentRuntimeIsNewer = compareRuntimes(getCurrentRuntimeIndex(), parseInt(runtimeIndex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
 	return createdByOldRuntime || currentRuntimeIsNewer;
 };
 
