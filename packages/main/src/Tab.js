@@ -6,7 +6,7 @@ import {
 	TAB_ARIA_DESIGN_POSITIVE,
 	TAB_ARIA_DESIGN_NEGATIVE,
 	TAB_ARIA_DESIGN_CRITICAL,
-	TAB_ARIA_DESIGN_NEUTRAL
+	TAB_ARIA_DESIGN_NEUTRAL,
 } from "./generated/i18n/i18n-defaults.js";
 
 import "@ui5/webcomponents-icons/dist/error.js";
